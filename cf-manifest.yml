@@ -1,0 +1,6 @@
+---
+applications:
+- name: a2b-internal
+  buildpacks:
+  - dotnet_core_buildpack
+  memory: 256M
