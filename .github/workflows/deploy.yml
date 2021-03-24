@@ -11,12 +11,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install CloudFoundry CLI
+        shell: bash
+        id: install-cf-cli
+        run: |
+          wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
+          echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+          sudo apt-get update
+          sudo apt-get install cf7-cli
       - name: Deploy Code
-        uses: citizen-of-planet-earth/cf-cli-action@v2
-        with:
-          cf_api: https://api.london.cloud.service.gov.uk
-          cf_username: ${{ secrets.CF_USER }}
-          cf_password: ${{ secrets.CF_PASSWORD }}
-          cf_org: dfe
-          cf_space: a2b-internal-dev
-          command: push -f cf-manifest.yml -p DummyDeployment 
+        run: |
+          cf api https://api.london.cloud.service.gov.uk
+          cf auth "${{ secrets.CF_USER }}" "${{ secrets.CF_PASSWORD }}"
+          cf target -o dfe -s apply-to-become-an-academy-internal-dev
+          cf push -f cf-manifest.yml \
+          --var username=${{ secrets.USERNAME }} \
+          --var password=${{ secrets.PASSWORD }} 
