@@ -4,3 +4,7 @@ applications:
   buildpacks:
   - dotnet_core_buildpack
   memory: 256M
+  env:
+    username: ((username))
+    password: ((password))
+    ASPNETCORE_ENVIRONMENT: Development
