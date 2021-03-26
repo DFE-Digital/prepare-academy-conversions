@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"compile-sass": "node-sass ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot/scss/main.scss ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot/css/main.css"
+	},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DFE-Digital/a2b-internal.git"
@@ -20,9 +21,5 @@
     "govuk-frontend": "^3.11.0",
     "node-sass": "^5.0.0",
     "sass": "^1.32.8"
-  },
- "scripts" : {
-"compile-sass" : "node-sass ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot/scss/main.scss ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot/css/main.css"
-
-}
   }
+}
