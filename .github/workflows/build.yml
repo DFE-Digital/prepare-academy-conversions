@@ -18,8 +18,8 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore DummyDeployment/DummyDeployment.sln
+      run: dotnet restore ApplyToBecomeInternal/ApplyToBecomeInternal.sln
     - name: Build
-      run: dotnet build DummyDeployment/DummyDeployment.sln --no-restore
+      run: dotnet build ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-restore
     - name: Test
-      run: dotnet test DummyDeployment/DummyDeployment.sln --no-build --verbosity normal
+      run: dotnet test ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --verbosity normal
