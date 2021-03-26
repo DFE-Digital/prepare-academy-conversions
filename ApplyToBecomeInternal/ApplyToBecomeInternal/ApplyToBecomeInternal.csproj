@@ -40,4 +40,12 @@
 	  <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\LICENSE.txt" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="wwwroot\assets\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="LigerShark.WebOptimizer.Core" Version="3.0.304" />
+	</ItemGroup>
+
 </Project>
