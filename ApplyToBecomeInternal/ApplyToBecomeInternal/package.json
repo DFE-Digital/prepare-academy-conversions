@@ -1,0 +1,19 @@
+{
+  "name": "applytobecomeinternal",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-css": "sass wwwroot/css/"
+  },
+  "author": "DfE",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.2.0",
+    "govuk-frontend": "^3.11.0",
+    "gulp": "^4.0.2",
+    "gulp-dart-sass": "^1.0.2",
+    "gulp-rename": "^2.0.0",
+    "sass": "^1.32.8"
+  }
+}
