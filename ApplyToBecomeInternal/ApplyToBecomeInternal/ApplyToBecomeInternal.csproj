@@ -4,6 +4,11 @@
 		<TargetFramework>net5.0</TargetFramework>
 	</PropertyGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\ApplyToBecome.Data.Mock\ApplyToBecome.Data.Mock.csproj"/>
+		<ProjectReference Include="..\ApplyToBecome.Data\ApplyToBecome.Data.csproj"/>
+	</ItemGroup>
+
 <!--	<Target Name="BuildFrontEnd" BeforeTargets="Build">-->
 <!--		<Exec WorkingDirectory="$(ProjectDir)" Command="npx gulp build-fe"/>-->
 <!--	</Target>-->

@@ -1,3 +1,5 @@
+using ApplyToBecome.Data;
+using ApplyToBecome.Data.Mock;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +20,9 @@ namespace ApplyToBecomeInternal
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllersWithViews();
+
+			services.AddSingleton<ITrusts, MockTrusts>();
+			services.AddSingleton<IProjects, MockProjects>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

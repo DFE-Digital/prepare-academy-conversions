@@ -1,20 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using ApplyToBecome.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ApplyToBecomeInternal.Controllers
 {
 	public class TaskListController : Controller
 	{
-		private readonly ILogger<TaskListController> _logger;
+		private readonly IProjects _projects;
 
-		public TaskListController(ILogger<TaskListController> logger)
+		public TaskListController(IProjects projects)
 		{
-			_logger = logger;
+			_projects = projects;
 		}
 
 		public IActionResult Index()
 		{
-			return View();
+			var project = _projects.GetProjectById(0);
+			return View(project);
 		}
 	}
 }
