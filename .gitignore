@@ -440,3 +440,11 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# CSS files (because we're using SASS)
+*.css
+*.css.map
+
+# govuk frontend stuff
+/ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot/assets
+/ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot/js/govuk.js
