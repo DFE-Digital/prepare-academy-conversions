@@ -1,4 +1,5 @@
 using ApplyToBecome.Data.Models;
+using System;
 using System.Collections.Generic;
 
 namespace ApplyToBecome.Data.Mock
@@ -21,7 +22,9 @@ namespace ApplyToBecome.Data.Mock
 					{
 						Id = 200,
 						Name = "Dynamics Academy Trust"
-					}
+					},
+					ApplicationReceivedDate = new DateTime(2021,3,1),
+					AssignedDate = new DateTime(2021,3,3)
 				},
 				new Project {
 					Id = 1,
@@ -36,7 +39,9 @@ namespace ApplyToBecome.Data.Mock
 					{
 						Id = 201,
 						Name = "Oak Hill Trust"
-					}
+					},
+					ApplicationReceivedDate = new DateTime(2021,3,1),
+					AssignedDate = new DateTime(2021,3,3)
 				},
 				new Project {
 					Id = 2,
@@ -51,7 +56,9 @@ namespace ApplyToBecome.Data.Mock
 					{
 						Id = 202,
 						Name = "Kingfisher learning trust"
-					}
+					},
+					ApplicationReceivedDate = new DateTime(2021,3,1),
+					AssignedDate = new DateTime(2021,3,3)
 				},
 				new Project {
 					Id = 3,
@@ -66,7 +73,9 @@ namespace ApplyToBecome.Data.Mock
 					{
 						Id = 203,
 						Name = "Oak Hill Trust"
-					}
+					},
+					ApplicationReceivedDate = new DateTime(2021,3,1),
+					AssignedDate = new DateTime(2021,3,3)
 				},
 				new Project {
 					Id = 4,
