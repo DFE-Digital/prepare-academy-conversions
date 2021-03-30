@@ -1,9 +1,6 @@
 ﻿using ApplyToBecome.Data;
+using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Controllers
 {
@@ -18,9 +15,9 @@ namespace ApplyToBecomeInternal.Controllers
 		public IActionResult Index()
 		{
 			var ongoingProjects = _projects.GetAllProjects();
-			ViewBag.TotalOngoingProjects = ongoingProjects.Count();
+			var dashboardViewModel = new DashboardViewModel(ongoingProjects);
 
-			return View(ongoingProjects);
+			return View(dashboardViewModel);
 		}
 	}
 }
