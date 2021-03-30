@@ -1,8 +1,8 @@
-﻿
+﻿@model DashboardViewModel
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
-		<h1 class="govuk-heading-xl">Academy conversion projects (4)</h1>
+		<h1 class="govuk-heading-xl">Academy conversion projects (@Model.ProjectCount) </h1>
 		<table class="govuk-table">
 			<thead class="govuk-table__head">
 				<tr class="govuk-table__row">
@@ -11,57 +11,27 @@
 				</tr>
 			</thead>
 			<tbody class="govuk-table__body">
-				<tr class="govuk-table__row">
-					<td class="govuk-table__cell">
-						<h2 class="govuk-caption-l govuk-!-margin-bottom-0 govuk-!-margin-top-1"><strong><a class="govuk-link" href="#">St. Wilfrid's Primary School</a></strong> AS_102062</h2>
-						<p class="govuk-!-margin-top-2 govuk--!-margin-bottom-0">
-							Application to join a trust: Dynamics Academy Trust<br>
-							Local authority: Warrington
-						</p>
-					</td>
-					<td class="govuk-table__cell govuk-table__cell--numeric">
-						<p class="govuk-tag govuk-tag--blue govuk-!-margin-top-0  govuk-!-margin-bottom-3">Pre HTB</p>
-						<p class="govuk-hint govuk-!-margin-top-0">
-							Application received: 01 March 2021<br>
-							Assigned to me: 03 March 2021
-						</p>
-					</td>
-				</tr>
-
-				<tr class="govuk-table__row">
-					<td class="govuk-table__cell">
-						<h2 class="govuk-caption-l govuk-!-margin-bottom-0 govuk-!-margin-top-1"><strong><a class="govuk-link" href="#">St. Wilfrid's Primary School</a></strong> AS_102062</h2>
-						<p class="govuk-!-margin-top-2 govuk--!-margin-bottom-0">
-							Application to join a trust: Dynamics Academy Trust<br>
-							Local authority: Warrington
-						</p>
-					</td>
-					<td class="govuk-table__cell govuk-table__cell--numeric">
-						<p class="govuk-tag govuk-tag--blue govuk-!-margin-top-0  govuk-!-margin-bottom-3">Pre HTB</p>
-						<p class="govuk-hint govuk-!-margin-top-0">
-							Application received: 01 March 2021<br>
-							Assigned to me: 03 March 2021
-						</p>
-					</td>
-				</tr>
-
-				<tr class="govuk-table__row">
-					<td class="govuk-table__cell">
-						<h2 class="govuk-caption-l govuk-!-margin-bottom-0 govuk-!-margin-top-1"><strong><a class="govuk-link" href="#">St. Wilfrid's Primary School</a></strong> AS_102062</h2>
-						<p class="govuk-!-margin-top-2 govuk--!-margin-bottom-0">
-							Application to join a trust: Dynamics Academy Trust<br>
-							Local authority: Warrington
-						</p>
-					</td>
-					<td class="govuk-table__cell govuk-table__cell--numeric">
-						<p class="govuk-tag govuk-tag--blue govuk-!-margin-top-0  govuk-!-margin-bottom-3">Pre HTB</p>
-						<p class="govuk-hint govuk-!-margin-top-0">
-							Application received: 01 March 2021<br>
-							Assigned to me: 03 March 2021
-						</p>
-					</td>
-				</tr>
-
+				@{ 
+					foreach(var project in Model.Projects)
+					{
+					<tr class="govuk-table__row">
+						<td class="govuk-table__cell">
+							<h2 class="govuk-caption-l govuk-!-margin-bottom-0 govuk-!-margin-top-1"><strong><a class="govuk-link" href="#">@project.School.Name</a></strong> @project.School.URN</h2>
+							<p class="govuk-!-margin-top-2 govuk--!-margin-bottom-0">
+								Application to join a trust: @project.Trust.Name<br>
+								Local authority: @project.School.LocalAuthority
+							</p>
+						</td>
+						<td class="govuk-table__cell govuk-table__cell--numeric">
+							<p class="govuk-tag govuk-tag--blue govuk-!-margin-top-0  govuk-!-margin-bottom-3">Pre HTB</p>
+							<p class="govuk-hint govuk-!-margin-top-0">
+								Application received: 01 March 2021<br>
+								Assigned to me: 03 March 2021
+							</p>
+						</td>
+					</tr>
+					}
+				}
 			</tbody>
 		</table>
 	</div>
