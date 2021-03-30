@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace ApplyToBecomeInternal.Models
 {
-	public class DashboardViewModel
+	public class ProjectListViewModel
 	{
-		public DashboardViewModel(IEnumerable<Project> projects)
+		public ProjectListViewModel(IEnumerable<Project> projects)
 		{
 			Projects = projects;
 		}
