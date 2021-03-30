@@ -19,7 +19,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 
 			var dashboardViewModel = new DashboardViewModel(projects);
 
-			dashboardViewModel.ProjectCount.Should().Be(1);
+			dashboardViewModel.ProjectCount.Should().Be(3);
 		}
 	}
 }
