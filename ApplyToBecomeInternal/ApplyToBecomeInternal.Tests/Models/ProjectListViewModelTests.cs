@@ -6,7 +6,7 @@ using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Models
 {
-	public class DashboardViewModelTests
+	public class ProjectListViewModelTests
 	{
 		[Fact]
 		public void Constructor_WithProjectCollection_SetsCount()
@@ -17,9 +17,9 @@ namespace ApplyToBecomeInternal.Tests.Models
 				new Project()
 			};
 
-			var dashboardViewModel = new DashboardViewModel(projects);
+			var projectListViewModel = new ProjectListViewModel(projects);
 
-			dashboardViewModel.ProjectCount.Should().Be(3);
+			projectListViewModel.ProjectCount.Should().Be(3);
 		}
 	}
 }
