@@ -17,7 +17,10 @@ namespace ApplyToBecomeInternal.Controllers
 		}
 		public IActionResult Index()
 		{
-			return View();
+			var ongoingProjects = _projects.GetAllProjects();
+			ViewBag.TotalOngoingProjects = ongoingProjects.Count();
+
+			return View(ongoingProjects);
 		}
 	}
 }
