@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.Extensions.Hosting
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment hostingEnv
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8"/>
@@ -48,7 +51,7 @@
 		</div>
 	</div>
 </footer>
-<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="@(hostingEnv.IsDevelopment() ? "~/js/site.min.js" : "~/js/site.js")" asp-append-version="true"></script>
 <script src="~/js/govuk.js"></script>
 <script>
 window.GOVUKFrontend.initAll()
