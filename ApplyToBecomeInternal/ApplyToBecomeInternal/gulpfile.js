@@ -26,6 +26,7 @@ gulp.task("copy-gov-fe-assets", copyGovukAssets);
 gulp.task("build-fe", () => {
 	return async.series([
 		(next) => buildSass().on("end", next),
-		(next) => copyGovukAssets().on("end", next)
+		(next) => copyGovukAssets().on("end", next),
+		(next) => gulp.src(["wwwroot/js/site.js"]).pipe(uglify()).pipe(rename("site.min.js")).pipe(gulp.dest("wwwroot/js")).on("end", next)
 	])
 });
