@@ -10,7 +10,8 @@ jobs:
     environment: Dev
     steps:
       - uses: actions/checkout@v2
-
+      - Build Frontend
+        cd ApplyToBecomeInternal/ApplyToBecomeInternal; npm install; npm run build
       - name: Install CloudFoundry CLI
         shell: bash
         id: install-cf-cli
