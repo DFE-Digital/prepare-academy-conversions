@@ -10,7 +10,11 @@ jobs:
     environment: Dev
     steps:
       - uses: actions/checkout@v2
-
+      - name: Setup node.js
+        uses: actions/setup-node@v1
+            with: node-version: '14.x'
+      - name: Build Frontend
+        run: cd ApplyToBecomeInternal/ApplyToBecomeInternal; npm install; npm run build
       - name: Install CloudFoundry CLI
         shell: bash
         id: install-cf-cli
