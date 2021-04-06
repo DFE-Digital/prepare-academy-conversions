@@ -12,9 +12,9 @@ namespace ApplyToBecomeInternal.Tests.Models
 		public void Constructor_WithProjectCollection_SetsCount()
 		{
 			var projects = new[] {
-				new Project(),
-				new Project(),
-				new Project()
+				new Project {School = new School(), Trust = new Trust()},
+				new Project {School = new School(), Trust = new Trust()},
+				new Project {School = new School(), Trust = new Trust()}
 			};
 
 			var projectListViewModel = new ProjectListViewModel(projects);
