@@ -16,7 +16,7 @@ namespace ApplyToBecomeInternal.Controllers
 		public IActionResult Index(int id)
 		{
 			var project = _projects.GetProjectById(id);
-			var viewModel = new TaskListViewModel(project);
+			var viewModel = new ProjectViewModel(project);
 
 			return View(viewModel);
 		}
