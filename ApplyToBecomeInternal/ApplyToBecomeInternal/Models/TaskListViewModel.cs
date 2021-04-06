@@ -7,8 +7,10 @@ namespace ApplyToBecomeInternal.Models
 		public TaskListViewModel(Project project)
 		{
 			SchoolName = project.School.Name;
+			SchoolURN = project.School.URN;
 		}
 
 		public string SchoolName { get; }
+		public string SchoolURN { get; }
 	}
 }
