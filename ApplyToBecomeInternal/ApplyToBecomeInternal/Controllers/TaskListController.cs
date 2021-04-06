@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ApplyToBecomeInternal.Controllers
 {
+	[Route("/task-list/")]
 	public class TaskListController : Controller
 	{
 		private readonly IProjects _projects;
@@ -13,6 +14,7 @@ namespace ApplyToBecomeInternal.Controllers
 			_projects = projects;
 		}
 
+		[HttpGet("{id}")]
 		public IActionResult Index(int id)
 		{
 			var project = _projects.GetProjectById(id);
