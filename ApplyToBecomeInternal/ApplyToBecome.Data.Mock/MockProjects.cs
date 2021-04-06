@@ -1,6 +1,7 @@
 using ApplyToBecome.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ApplyToBecome.Data.Mock
 {
@@ -97,7 +98,8 @@ namespace ApplyToBecome.Data.Mock
 
 		public Project GetProjectById(int id)
 		{
-			return new Project {School = new School {Name = "Mock school"}};
+			var projects = GetAllProjects();
+			return projects.Where(x => x.Id == id).FirstOrDefault();
 		}
 	}
 }

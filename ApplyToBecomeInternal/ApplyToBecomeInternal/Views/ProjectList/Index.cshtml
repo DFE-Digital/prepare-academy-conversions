@@ -18,7 +18,7 @@
 					{
 					<tr class="govuk-table__row">
 						<td class="govuk-table__cell">
-							<h2 class="govuk-caption-l govuk-!-margin-bottom-0 govuk-!-margin-top-1"><strong><a class="govuk-link" href="#">@project.School.Name</a></strong> @project.School.URN</h2>
+							<h2 class="govuk-caption-l govuk-!-margin-bottom-0 govuk-!-margin-top-1"><strong><a class="govuk-link" asp-controller="TaskList" asp-action="Index" asp-route-id="@project.Id">@project.School.Name</a></strong> @project.School.URN</h2>
 							<p class="govuk-!-margin-top-2 govuk--!-margin-bottom-0">
 								Application to join a trust: @project.Trust.Name<br>
 								Local authority: @project.School.LocalAuthority
