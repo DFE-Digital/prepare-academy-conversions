@@ -8,10 +8,10 @@ namespace ApplyToBecomeInternal.Models
 	{
 		public ProjectListViewModel(IEnumerable<Project> projects)
 		{
-			Projects = projects;
+			Projects = projects.Select(project => new ProjectViewModel(project));
 		}
 
-		public IEnumerable<Project> Projects { get; }
+		public IEnumerable<ProjectViewModel> Projects { get; }
 		public int ProjectCount => Projects.Count();
 	}
 }
