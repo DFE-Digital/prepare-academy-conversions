@@ -9,5 +9,6 @@ namespace ApplyToBecome.Data.Models
 		public Trust Trust { get; set; }
 		public DateTime ApplicationReceivedDate { get; set; }
 		public DateTime AssignedDate { get; set; }
+		public ProjectPhase Phase { get; set; }
 	}
 }
