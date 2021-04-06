@@ -1,4 +1,4 @@
-# Apply to Become and academy, internal service
+# Apply to Become an academy, internal service
 Internal service for managing applications for schools to become academies.
 
 ## Requirements
