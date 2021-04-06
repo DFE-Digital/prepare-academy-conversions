@@ -1,4 +1,5 @@
 ﻿using ApplyToBecome.Data;
+using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApplyToBecomeInternal.Controllers
@@ -12,10 +13,12 @@ namespace ApplyToBecomeInternal.Controllers
 			_projects = projects;
 		}
 
-		public IActionResult Index()
+		public IActionResult Index(int id)
 		{
-			var project = _projects.GetProjectById(0);
-			return View(project);
+			var project = _projects.GetProjectById(id);
+			var viewModel = new TaskListViewModel(project);
+
+			return View(viewModel);
 		}
 	}
 }
