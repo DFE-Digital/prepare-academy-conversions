@@ -22,5 +22,12 @@ namespace ApplyToBecomeInternal.Controllers
 
 			return View(viewModel);
 		}
+
+
+		[HttpGet("{id}/preview-htb-template")]
+		public IActionResult PreviewHTBTemplate(int id)
+		{
+			return View();
+		}
 	}
 }
