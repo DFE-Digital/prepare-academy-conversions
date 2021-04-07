@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.Controllers
 		}
 
 
-		[HttpGet("{id}/preview-htb-template")]
+		[HttpGet("{id}/preview-headteacher-board-template")]
 		public IActionResult PreviewHTBTemplate(int id)
 		{
 			return View();
