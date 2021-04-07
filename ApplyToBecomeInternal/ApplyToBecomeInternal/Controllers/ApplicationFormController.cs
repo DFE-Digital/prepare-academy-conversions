@@ -4,15 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Controllers
 {
-	[Route("/task-list/")]
-	public class TaskListController : Controller
+	[Route("/application-form/")]
+	public class ApplicationFormController : Controller
 	{
 		private readonly IProjects _projects;
 
-		public TaskListController(IProjects projects)
+		public ApplicationFormController(IProjects projects)
 		{
 			_projects = projects;
 		}
@@ -21,16 +22,9 @@ namespace ApplyToBecomeInternal.Controllers
 		public IActionResult Index(int id)
 		{
 			var project = _projects.GetProjectById(id);
-			var viewModel = new ProjectViewModel(project, section: "TaskList");
+			var viewModel = new ProjectViewModel(project, section: "ApplicationForm");
 
 			return View(viewModel);
-		}
-
-
-		[HttpGet("{id}/preview-headteacher-board-template")]
-		public IActionResult PreviewHTBTemplate(int id)
-		{
-			return View();
 		}
 	}
 }
