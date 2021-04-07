@@ -9,6 +9,7 @@
   "author": "DfE",
   "license": "ISC",
   "dependencies": {
+    "@ministryofjustice/frontend": "^0.2.2",
     "async": "^3.2.0",
     "govuk-frontend": "^3.11.0",
     "gulp": "^4.0.2",
