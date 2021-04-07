@@ -11,6 +11,8 @@ namespace ApplyToBecomeInternal.Models
 			{ProjectPhase.PreHTB, "Pre HTB"},
 			{ProjectPhase.PostHTB, "Post HTB"}
 		};
+
+		private string _section;
 		
 		public ProjectViewModel(Project project)
 		{
@@ -23,6 +25,19 @@ namespace ApplyToBecomeInternal.Models
 			AssignedDate = FormatDate(project.AssignedDate);
 			Phase = _projectPhaseText[project.Phase];
 		}
+		public ProjectViewModel(Project project, string section)
+		{
+			Id = project.Id.ToString();
+			TrustName = project.Trust.Name;
+			SchoolName = project.School.Name;
+			SchoolURN = project.School.URN;
+			LocalAuthority = project.School.LocalAuthority;
+			ApplicationReceivedDate = FormatDate(project.ApplicationReceivedDate);
+			AssignedDate = FormatDate(project.AssignedDate);
+			Phase = _projectPhaseText[project.Phase];
+			Section = section;
+		}
+
 
 		private static string FormatDate(DateTime dateTime) => dateTime.ToString("dd MMMM yyyy");
 
@@ -34,5 +49,14 @@ namespace ApplyToBecomeInternal.Models
 		public string ApplicationReceivedDate { get; }
 		public string AssignedDate { get; }
 		public string Phase { get; }
+		public string Section
+		{
+			get { return _section; } 
+			private set 
+			{
+				if (value == "ProjectNotes" || value == "TaskList" || value == "ApplicationForm")
+					_section = value;
+			}  
+		}
 	}
 }
