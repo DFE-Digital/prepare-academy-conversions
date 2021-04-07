@@ -1,0 +1,21 @@
+﻿@model ProjectViewModel;
+@{
+	ViewData["Title"] = "Project Notes";
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-full">
+		<span class="govuk-caption-xl">@Model.SchoolURN</span>
+		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+			@Model.SchoolName
+			<strong class="govuk-tag govuk-tag--grey">@Model.Phase</strong>
+		</h1>
+		<div class="moj-primary-navigation">
+			<div class="govuk-!-margin-bottom-7">
+				<partial name="/Views/Shared/_Submenu.cshtml" />
+
+			</div>
+		</div>
+	</div>
+</div>
+
