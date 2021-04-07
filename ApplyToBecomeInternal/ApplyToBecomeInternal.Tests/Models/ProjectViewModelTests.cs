@@ -48,5 +48,41 @@ namespace ApplyToBecomeInternal.Tests.Models
 
 			viewModel.Phase.Should().Be("Post HTB");
 		}
+
+		[Theory]
+		[InlineData("TaskList")]
+		[InlineData("ApplicationForm")]
+		[InlineData("ProjectNotes")]
+
+		public void Constructor_WithProjectAndSection_SetsProjectViewTAndSection(string sectionRequest)
+		{
+			var project = new Project
+			{
+				School = new School { },
+				Trust = new Trust { }
+			};
+
+			var viewModel = new ProjectViewModel(project, sectionRequest);
+
+			viewModel.Section.Should().Be(sectionRequest);
+		}
+
+		[Theory]
+		[InlineData("xxxx")]
+		[InlineData("dddd")]
+		[InlineData("yyyy")]
+
+		public void Constructor_WithProjectAndIncorrectSection_SetsProjectViewAndSectionToNull(string sectionRequest)
+		{
+			var project = new Project
+			{
+				School = new School { },
+				Trust = new Trust { }
+			};
+
+			var viewModel = new ProjectViewModel(project, sectionRequest);
+
+			viewModel.Section.Should().BeNull();
+		}
 	}
 }
