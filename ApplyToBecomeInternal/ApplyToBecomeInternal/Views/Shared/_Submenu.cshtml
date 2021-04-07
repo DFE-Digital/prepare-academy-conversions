@@ -1,0 +1,52 @@
+﻿@model ProjectViewModel;
+
+
+<nav class="moj-primary-navigation" aria-label="Primary navigation">
+
+	<ul class="moj-primary-navigation__list">
+
+		@{ if (Model.Section == "ProjectNotes")
+			{
+				<li class="moj-primary-navigation__item">
+					<a class="moj-primary-navigation__link" asp-controller="TaskList" asp-action="Index" asp-route-id="@Model.Id">Task List</a>
+				</li>
+
+				<li class="moj-primary-navigation__item">
+					<a class="moj-primary-navigation__link" asp-controller="ApplicationForm" asp-action="Index" asp-route-id="@Model.Id">Application Form</a>
+				</li>
+
+				<li class="moj-primary-navigation__item">
+					<a class="moj-primary-navigation__link" aria-current="page" asp-controller="ProjectNotes" asp-action="Index" asp-route-id="@Model.Id">Project Notes</a>
+				</li>
+			}
+			else if (Model.Section == "ApplicationForm")
+			{
+				<li class="moj-primary-navigation__item">
+					<a class="moj-primary-navigation__link" asp-controller="TaskList" asp-action="Index" asp-route-id="@Model.Id">Task List</a>
+				</li>
+
+				<li class="moj-primary-navigation__item">
+					<a class="moj-primary-navigation__link" aria-current="page" asp-controller="ApplicationForm" asp-action="Index" asp-route-id="@Model.Id">Application Form</a>
+				</li>
+
+				<li class="moj-primary-navigation__item">
+					<a class="moj-primary-navigation__link" asp-controller="ProjectNotes" asp-action="Index" asp-route-id="@Model.Id">Project Notes</a>
+				</li>
+			}
+			else
+			{
+				<li class="moj-primary-navigation__item">
+					<a class="moj-primary-navigation__link" aria-current="page" asp-controller="TaskList" asp-action="Index" asp-route-id="@Model.Id">Task List</a>
+				</li>
+
+				<li class="moj-primary-navigation__item">
+					<a class="moj-primary-navigation__link" asp-controller="ApplicationForm" asp-action="Index" asp-route-id="@Model.Id">Application Form</a>
+				</li>
+
+				<li class="moj-primary-navigation__item">
+					<a class="moj-primary-navigation__link" asp-controller="ProjectNotes" asp-action="Index" asp-route-id="@Model.Id">Project Notes</a>
+				</li>
+			}
+		}
+	</ul>
+</nav>
