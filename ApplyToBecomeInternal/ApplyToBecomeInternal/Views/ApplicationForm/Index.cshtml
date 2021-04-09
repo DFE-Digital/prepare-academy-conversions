@@ -1,18 +1,18 @@
-﻿@model ProjectViewModel;
+﻿@model ApplicationFormViewModel;
 @{
 	ViewData["Title"] = "Application Form";
 }
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
-		<span class="govuk-caption-xl">@Model.SchoolURN</span>
+		<span class="govuk-caption-xl">@Model.Project.SchoolURN</span>
 		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-			@Model.SchoolName
-			<strong class="govuk-tag govuk-tag--grey">@Model.Phase</strong>
+			@Model.Project.SchoolName
+			<strong class="govuk-tag govuk-tag--grey">@Model.Project.Phase</strong>
 		</h1>
 		<div class="moj-primary-navigation">
 			<div class="govuk-!-margin-bottom-7">
-				<partial name="/Views/Shared/_Submenu.cshtml" />
+				<partial name="/Views/Shared/_SubMenu.cshtml" model="Model.SubMenu" />
 
 			</div>
 		</div>
