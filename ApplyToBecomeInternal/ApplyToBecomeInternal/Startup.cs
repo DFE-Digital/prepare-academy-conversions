@@ -19,7 +19,11 @@ namespace ApplyToBecomeInternal
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+#if DEBUG
+			services.AddControllersWithViews().AddRazorRuntimeCompilation();
+#else
 			services.AddControllersWithViews();
+#endif
 
 			services.AddSingleton<ITrusts, MockTrusts>();
 			services.AddSingleton<IProjects, MockProjects>();

@@ -9,6 +9,10 @@
 		<ProjectReference Include="..\ApplyToBecome.Data\ApplyToBecome.Data.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.14" />
+	</ItemGroup>
+
 <!--	<Target Name="BuildFrontEnd" BeforeTargets="Build">-->
 <!--		<Exec WorkingDirectory="$(ProjectDir)" Command="npx gulp build-fe"/>-->
 <!--	</Target>-->
