@@ -1,9 +1,6 @@
 ﻿using ApplyToBecome.Data;
 using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ApplyToBecomeInternal.Controllers
 {
@@ -21,9 +18,9 @@ namespace ApplyToBecomeInternal.Controllers
 		public IActionResult Index(int id)
 		{
 			var project = _projects.GetProjectById(id);
-			var viewModel = new ProjectViewModel(project, section: "TaskList");
-
-			return View(viewModel);
+			var projectViewModel = new ProjectViewModel(project);
+			var taskListViewModel = new TaskListViewModel(projectViewModel);
+			return View(taskListViewModel);
 		}
 
 

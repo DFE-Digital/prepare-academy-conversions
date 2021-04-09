@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ApplyToBecome.Data;
+﻿using ApplyToBecome.Data;
 using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,9 +18,9 @@ namespace ApplyToBecomeInternal.Controllers
 		public IActionResult Index(int id)
 		{
 			var project = _projects.GetProjectById(id);
-			var viewModel = new ProjectViewModel(project, section: "ProjectNotes");
-
-			return View(viewModel);
+			var projectViewModel = new ProjectViewModel(project);
+			var projectNotesViewModel = new ProjectNotesViewModel(projectViewModel);
+			return View(projectNotesViewModel);
 		}
 	}
 }
