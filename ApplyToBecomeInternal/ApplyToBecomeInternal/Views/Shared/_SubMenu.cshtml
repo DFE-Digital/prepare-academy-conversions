@@ -1,7 +1,7 @@
 ﻿@using ApplyToBecomeInternal.Models.Shared
 @model SubMenuViewModel;
 
-<nav class="moj-primary-navigation" aria-label="Primary navigation">
+<nav class="moj-primary-navigation govuk-!-margin-bottom-7" aria-label="Primary navigation">
 	<ul class="moj-primary-navigation__list">
 		<li class="moj-primary-navigation__item">
 			<a class="moj-primary-navigation__link" @(Model.Page==SubMenuPage.TaskList? "aria-current=\"page\"" : string.Empty) href="/task-list/@Model.ProjectId">Task List</a>
