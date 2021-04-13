@@ -1,18 +1,18 @@
 ﻿@using ApplyToBecomeInternal.Models.Shared
 @model SubMenuViewModel;
 
-<nav class="moj-primary-navigation govuk-!-margin-bottom-7" aria-label="Primary navigation">
-	<ul class="moj-primary-navigation__list">
-		<li class="moj-primary-navigation__item">
-			<a class="moj-primary-navigation__link" @(Model.Page==SubMenuPage.TaskList? "aria-current=\"page\"" : string.Empty) href="/task-list/@Model.ProjectId">Task List</a>
+<nav class="moj-sub-navigation" aria-label="Sub navigation">
+	<ul class="moj-sub-navigation__list">
+		<li class="moj-sub-navigation__item">
+			<a class="moj-sub-navigation__link" @(Model.Page==SubMenuPage.TaskList? "aria-current=page" : string.Empty) href="/task-list/@Model.ProjectId">Task list</a>
 		</li>
 
-		<li class="moj-primary-navigation__item">
-			<a class="moj-primary-navigation__link" @(Model.Page == SubMenuPage.ApplicationForm? "aria-current=\"page\"" : string.Empty) href="/application-form/@Model.ProjectId">Application Form</a>
+		<li class="moj-sub-navigation__item">
+			<a class="moj-sub-navigation__link" @(Model.Page == SubMenuPage.ApplicationForm? "aria-current=page" : string.Empty) href="/application-form/@Model.ProjectId">Application form</a>
 		</li>
 
-		<li class="moj-primary-navigation__item">
-			<a class="moj-primary-navigation__link" @(Model.Page == SubMenuPage.ProjectNotes? "aria-current=\"page\"" : string.Empty) href="/project-notes/@Model.ProjectId" >Project Notes</a>
+		<li class="moj-sub-navigation__item">
+			<a class="moj-sub-navigation__link" @(Model.Page == SubMenuPage.ProjectNotes? "aria-current=page" : string.Empty) href="/project-notes/@Model.ProjectId" >Project notes</a>
 		</li>
 	</ul>
 </nav>
