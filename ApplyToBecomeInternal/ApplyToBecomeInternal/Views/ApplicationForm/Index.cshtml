@@ -5,7 +5,11 @@
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
-		<partial name="_ProjectHeader" model="Model.Project"/>
+		@section BeforeMain
+		{
+			<partial name="_Navigation" model="Model.Navigation" />
+		}		
+		<partial name="_ProjectHeader" model="Model.Project" />
 		<partial name="/Views/Shared/_SubMenu.cshtml" model="Model.SubMenu" />
 	</div>
 </div>
