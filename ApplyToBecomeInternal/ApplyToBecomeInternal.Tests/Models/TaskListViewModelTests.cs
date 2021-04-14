@@ -16,5 +16,18 @@ namespace ApplyToBecomeInternal.Tests.Models
 			var taskListViewModel = new TaskListViewModel(projectViewModel);
 			taskListViewModel.SubMenu.Page.Should().Be(SubMenuPage.TaskList);
 		}
+
+
+		[Fact]
+		public void Constructor_WithProjectViewModel_SetsNavigationViewModelToProjectsListContentAndUrl()
+		{
+			var project = new Project { School = new School(), Trust = new Trust() };
+			var projectViewModel = new ProjectViewModel(project);
+			var taskListViewModel = new TaskListViewModel(projectViewModel);
+			var expectedContent = "Back to all conversion projects";
+			var expectedUrl = "/projectlist";
+			taskListViewModel.Navigation.Content.Should().Be(expectedContent);
+			taskListViewModel.Navigation.Url.Should().Be(expectedUrl);
+		}
 	}
 }
