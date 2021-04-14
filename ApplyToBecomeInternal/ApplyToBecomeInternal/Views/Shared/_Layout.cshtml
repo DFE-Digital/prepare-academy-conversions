@@ -4,10 +4,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Academy conversions - @ViewData["Title"]</title>
-	<link rel="stylesheet" href="~/css/site.css"/>
+	<link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body class="govuk-template__body  js-enabled">
 	<header class="govuk-header " role="banner" data-module="govuk-header">
@@ -29,6 +29,7 @@
 	</header>
 
 	<div class="govuk-width-container">
+		@await RenderSectionAsync("BeforeMain", required: false)
 		<main class="govuk-main-wrapper gov-main-wrapper--auto-spacing" id="main-content" role="main">
 			@RenderBody()
 		</main>
