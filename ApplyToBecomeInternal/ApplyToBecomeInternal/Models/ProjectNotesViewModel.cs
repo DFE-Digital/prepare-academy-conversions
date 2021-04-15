@@ -9,7 +9,7 @@ namespace ApplyToBecomeInternal.Models
 		{
 			Project = project;
 			SubMenu = new SubMenuViewModel(project.Id, SubMenuPage.ProjectNotes);
-			Navigation = new NavigationViewModel(NavigationContent.ProjectsList);
+			Navigation = new NavigationViewModel(NavigationTarget.ProjectsList);
 		}
 
 		public ProjectViewModel Project { get; }
