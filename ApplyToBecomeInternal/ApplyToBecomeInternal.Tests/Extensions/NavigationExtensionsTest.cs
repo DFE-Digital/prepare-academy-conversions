@@ -1,9 +1,6 @@
 ﻿using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models.Shared;
 using FluentAssertions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Extensions
@@ -12,10 +9,10 @@ namespace ApplyToBecomeInternal.Tests.Extensions
 	{
 
 		[Theory]
-		[InlineData(NavigationContent.ProjectsList, "Back to all conversion projects", "/projectlist")]
-		public void CustomNavigationAttribute_NavigationEnum_ReturnAttributeValues(NavigationContent navigation, string expectedCopy, string expectedUrl)
+		[InlineData(NavigationTarget.ProjectsList, "Back to all conversion projects", "/projectlist")]
+		public void CustomNavigationAttribute_NavigationEnum_ReturnAttributeValues(NavigationTarget navigation, string expectedCopy, string expectedUrl)
 		{
-			var actual = NavigationExtensions.GetAttribute<NavigationAttribute>(navigation);
+			var actual = navigation.GetContent();
 			actual.Content.Should().Be(expectedCopy);
 			actual.Url.Should().Be(expectedUrl);
 		}

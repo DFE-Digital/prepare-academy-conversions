@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Models.Shared
 {
@@ -12,7 +9,8 @@ namespace ApplyToBecomeInternal.Models.Shared
 			Content = content;
 			Url = url;
 		}
-		public string Content { get; private set; }
-		public string Url { get; private set; }
+		
+		public string Content { get; }
+		public string Url { get; }
 	}
 }
