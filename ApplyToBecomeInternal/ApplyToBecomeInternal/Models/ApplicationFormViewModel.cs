@@ -29,7 +29,7 @@ namespace ApplyToBecomeInternal.Models
 
 		public ProjectViewModel Project { get; }
 		public SubMenuViewModel SubMenu { get; }
-		public NavigationViewModel Navigation { get; set; }
+		public NavigationViewModel Navigation { get; }
 		public IEnumerable<BaseFormSection> Sections { get; }
 	}
 }

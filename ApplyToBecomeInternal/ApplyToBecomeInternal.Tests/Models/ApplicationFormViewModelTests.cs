@@ -23,7 +23,8 @@ namespace ApplyToBecomeInternal.Tests.Models
 		{
 			var project = new Project { School = new School(), Trust = new Trust() };
 			var projectViewModel = new ProjectViewModel(project);
-			var applicationFormViewModel = new ApplicationFormViewModel(projectViewModel);
+			var application = new Application();
+			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);
 			var expectedContent = "Back to all conversion projects";
 			var expectedUrl = "/projectlist";
 			applicationFormViewModel.Navigation.Content.Should().Be(expectedContent);
