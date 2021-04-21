@@ -13,7 +13,16 @@ namespace ApplyToBecomeInternal.Tests.Models
 		{
 			var project = new Project {School = new School(), Trust = new Trust()};
 			var projectViewModel = new ProjectViewModel(project);
-			var application = new Application {School = new School(), Trust = new Trust(), Details = new ApplicationDetails {EvidenceDocument = new Link()}};
+			var application = new Application
+			{
+				School = new School(),
+				Trust = new Trust(),
+				Details = new ApplicationDetails {EvidenceDocument = new Link()},
+				Approver = new ContactDetails(),
+				HeadTeacher = new ContactDetails(),
+				DateForConversion = new DateForConversion(),
+				GoverningBodyChair = new ContactDetails()
+			};
 			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);
 			applicationFormViewModel.SubMenu.Page.Should().Be(SubMenuPage.ApplicationForm);
 		}
@@ -23,7 +32,16 @@ namespace ApplyToBecomeInternal.Tests.Models
 		{
 			var project = new Project { School = new School(), Trust = new Trust() };
 			var projectViewModel = new ProjectViewModel(project);
-			var application = new Application {School = new School(), Trust = new Trust(), Details = new ApplicationDetails {EvidenceDocument = new Link()}};
+			var application = new Application
+			{
+				School = new School(),
+				Trust = new Trust(),
+				Details = new ApplicationDetails {EvidenceDocument = new Link()},
+				Approver = new ContactDetails(),
+				HeadTeacher = new ContactDetails(),
+				DateForConversion = new DateForConversion(),
+				GoverningBodyChair = new ContactDetails()
+			};
 			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);
 			const string expectedContent = "Back to all conversion projects";
 			const string expectedUrl = "/projectlist";
