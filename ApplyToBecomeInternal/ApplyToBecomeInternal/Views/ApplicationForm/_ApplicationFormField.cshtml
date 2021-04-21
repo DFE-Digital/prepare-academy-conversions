@@ -1,11 +1,19 @@
-@model ApplyToBecomeInternal.Models.ApplicationForm.FormField
-
+@using ApplyToBecomeInternal.Models.ApplicationForm
+@model FormField
 
 <div class="govuk-summary-list__row">
 	<dt class="govuk-summary-list__key">
 		@Model.Title
 	</dt>
 	<dd class="govuk-summary-list__value">
-		@Model.Content
+		@switch (Model)
+		{
+			case LinkFormField link:
+				<a href="@link.Url">@link.Content</a>
+				break;
+			default:
+				<text>@Model.Content</text>
+				break;
+		}
 	</dd>
 </div>
