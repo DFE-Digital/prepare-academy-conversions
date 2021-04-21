@@ -7,10 +7,12 @@ namespace ApplyToBecomeInternal.Controllers
 	[Route("/application-form/")]
 	public class ApplicationFormController : Controller
 	{
+		private readonly IApplications _applications;
 		private readonly IProjects _projects;
 
-		public ApplicationFormController(IProjects projects)
+		public ApplicationFormController(IApplications applications, IProjects projects)
 		{
+			_applications = applications;
 			_projects = projects;
 		}
 
@@ -19,7 +21,10 @@ namespace ApplyToBecomeInternal.Controllers
 		{
 			var project = _projects.GetProjectById(id);
 			var projectViewModel = new ProjectViewModel(project);
-			var applicationFormViewModel = new ApplicationFormViewModel(projectViewModel);
+
+			var application = _applications.GetApplication(id.ToString());
+			
+			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);
 			return View(applicationFormViewModel);
 		}
 	}

@@ -1,20 +1,35 @@
+using ApplyToBecome.Data.Models;
+using ApplyToBecomeInternal.Models.ApplicationForm;
+using ApplyToBecomeInternal.Models.ApplicationForm.Sections;
 using ApplyToBecomeInternal.Models.Shared;
+using System.Collections.Generic;
 
 namespace ApplyToBecomeInternal.Models
 {
 	public class ApplicationFormViewModel
 	{
-
-		public ApplicationFormViewModel(ProjectViewModel project)
+		public ApplicationFormViewModel(Application application, ProjectViewModel project)
 		{
 			Project = project;
 			SubMenu = new SubMenuViewModel(project.Id, SubMenuPage.ApplicationForm);
 			Navigation = new NavigationViewModel(NavigationTarget.ProjectsList);
+			Sections = new BaseFormSection[]
+			{
+				new ApplicationFormSection(application),
+				new AboutConversionSection(application),
+				new FurtherInformationSection(application),
+				new FinanceSection(application),
+				new FuturePupilNumberSection(application),
+				new LandAndBuildingsSection(application),
+				new PreOpeningSupportGrantSection(application),
+				new ConsultationSection(application),
+				new DeclarationSection(application) 
+			};
 		}
 
 		public ProjectViewModel Project { get; }
 		public SubMenuViewModel SubMenu { get; }
 		public NavigationViewModel Navigation { get; set; }
-
+		public IEnumerable<BaseFormSection> Sections { get; }
 	}
 }

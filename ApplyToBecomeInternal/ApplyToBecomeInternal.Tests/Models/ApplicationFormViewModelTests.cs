@@ -9,11 +9,12 @@ namespace ApplyToBecomeInternal.Tests.Models
 	public class ApplicationFormViewModelTests
 	{
 		[Fact]
-		public void Constructor_WithProjectViewModel_SetsSubMenuViewModelPageToApplicationForm()
+		public void Constructor_WithProjectViewModelAndApplication_SetsSubMenuViewModelPageToApplicationForm()
 		{
 			var project = new Project {School = new School(), Trust = new Trust()};
 			var projectViewModel = new ProjectViewModel(project);
-			var applicationFormViewModel = new ApplicationFormViewModel(projectViewModel);
+			var application = new Application();
+			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);
 			applicationFormViewModel.SubMenu.Page.Should().Be(SubMenuPage.ApplicationForm);
 		}
 
