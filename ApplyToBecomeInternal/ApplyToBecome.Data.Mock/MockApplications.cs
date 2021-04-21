@@ -16,10 +16,7 @@ namespace ApplyToBecome.Data.Mock
 				},
 				LeadApplicant = "Garth Brown",
 				Details = new ApplicationDetails{
-					EvidenceDocument = new Link{
-						Name = "consent_dynamics.docx",
-						Url = "#"
-					},
+					EvidenceDocument = new Link("consent_dynamics.docx", "#"),
 					ChangesToGovernance = false,
 					ChangesAtLocalLevel = true
 				}
