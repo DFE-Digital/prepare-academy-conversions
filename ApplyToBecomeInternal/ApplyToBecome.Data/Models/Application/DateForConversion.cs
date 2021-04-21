@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ApplyToBecome.Data.Models
+namespace ApplyToBecome.Data.Models.Application
 {
 	public class DateForConversion
 	{

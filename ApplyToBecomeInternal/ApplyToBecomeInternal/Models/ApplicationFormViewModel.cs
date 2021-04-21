@@ -1,4 +1,4 @@
-using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.Application;
 using ApplyToBecomeInternal.Models.ApplicationForm;
 using ApplyToBecomeInternal.Models.ApplicationForm.Sections;
 using ApplyToBecomeInternal.Models.Shared;

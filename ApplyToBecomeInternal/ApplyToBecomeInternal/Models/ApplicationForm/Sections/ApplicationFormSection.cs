@@ -1,4 +1,4 @@
-using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.Application;
 using ApplyToBecomeInternal.Extensions;
 using System.Collections.Generic;
 
