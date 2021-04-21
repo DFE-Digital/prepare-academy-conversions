@@ -27,6 +27,7 @@ namespace ApplyToBecomeInternal
 
 			services.AddSingleton<ITrusts, MockTrusts>();
 			services.AddSingleton<IProjects, MockProjects>();
+			services.AddSingleton<IApplications, MockApplications>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
