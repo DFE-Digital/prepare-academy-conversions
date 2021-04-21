@@ -1,4 +1,4 @@
-namespace ApplyToBecome.Data.Models
+namespace ApplyToBecome.Data.Models.Application
 {
 	public class Application
 	{

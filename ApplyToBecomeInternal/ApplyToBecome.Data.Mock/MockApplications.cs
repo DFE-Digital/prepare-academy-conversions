@@ -1,4 +1,5 @@
 using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.Application;
 
 namespace ApplyToBecome.Data.Mock
 {
