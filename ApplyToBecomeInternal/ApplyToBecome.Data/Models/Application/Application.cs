@@ -13,6 +13,6 @@ namespace ApplyToBecome.Data.Models.Application
 		public string SchoolToTrustRationale { get; set; }
 
 		public bool WillSchoolChangeName { get; set; }
-
+		public FinancialInformation FinancialInformation { get; set; }
 	}
 }
