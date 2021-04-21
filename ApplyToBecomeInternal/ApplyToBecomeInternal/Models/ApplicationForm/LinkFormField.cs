@@ -1,3 +1,5 @@
+using ApplyToBecome.Data.Models.Application;
+
 namespace ApplyToBecomeInternal.Models.ApplicationForm
 {
 	public class LinkFormField : FormField
@@ -6,7 +8,11 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm
 		{
 			Url = url;
 		}
-		
+
+		public LinkFormField(string title, Link link) : this(title, link.Name, link.Url)
+		{
+		}
+
 		public string Url { get; }
 	}
 }
