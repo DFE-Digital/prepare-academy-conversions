@@ -20,7 +20,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 				LeadApplicant = "Garth Brown",
 				Details = new ApplicationDetails
 				{
-					EvidenceDocument = new Link {Name = "consent_dynamics.docx", Url = "#"}, ChangesToGovernance = false, ChangesAtLocalLevel = true
+					EvidenceDocument = new Link("consent_dynamics.docx", "#"), ChangesToGovernance = false, ChangesAtLocalLevel = true
 				}
 			};
 			var formSection = new ApplicationFormSection(application);

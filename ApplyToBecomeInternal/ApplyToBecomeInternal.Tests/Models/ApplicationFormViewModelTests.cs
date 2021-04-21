@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 			{
 				School = new School(),
 				Trust = new Trust(),
-				Details = new ApplicationDetails {EvidenceDocument = new Link()},
+				Details = new ApplicationDetails {EvidenceDocument = new Link("", "")},
 				Approver = new ContactDetails(),
 				HeadTeacher = new ContactDetails(),
 				DateForConversion = new DateForConversion(),
@@ -37,7 +37,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 			{
 				School = new School(),
 				Trust = new Trust(),
-				Details = new ApplicationDetails {EvidenceDocument = new Link()},
+				Details = new ApplicationDetails {EvidenceDocument = new Link("", "")},
 				Approver = new ContactDetails(),
 				HeadTeacher = new ContactDetails(),
 				DateForConversion = new DateForConversion(),
