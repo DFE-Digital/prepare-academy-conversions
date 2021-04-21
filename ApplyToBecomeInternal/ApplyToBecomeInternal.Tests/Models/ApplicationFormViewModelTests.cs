@@ -13,7 +13,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 		{
 			var project = new Project {School = new School(), Trust = new Trust()};
 			var projectViewModel = new ProjectViewModel(project);
-			var application = new Application();
+			var application = new Application {School = new School(), Trust = new Trust(), Details = new ApplicationDetails {EvidenceDocument = new Link()}};
 			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);
 			applicationFormViewModel.SubMenu.Page.Should().Be(SubMenuPage.ApplicationForm);
 		}
@@ -23,10 +23,10 @@ namespace ApplyToBecomeInternal.Tests.Models
 		{
 			var project = new Project { School = new School(), Trust = new Trust() };
 			var projectViewModel = new ProjectViewModel(project);
-			var application = new Application();
+			var application = new Application {School = new School(), Trust = new Trust(), Details = new ApplicationDetails {EvidenceDocument = new Link()}};
 			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);
-			var expectedContent = "Back to all conversion projects";
-			var expectedUrl = "/projectlist";
+			const string expectedContent = "Back to all conversion projects";
+			const string expectedUrl = "/projectlist";
 			applicationFormViewModel.Navigation.Content.Should().Be(expectedContent);
 			applicationFormViewModel.Navigation.Url.Should().Be(expectedUrl);
 		}

@@ -1,4 +1,5 @@
 using ApplyToBecome.Data.Models;
+using ApplyToBecomeInternal.Extensions;
 using System.Collections.Generic;
 
 namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
@@ -14,15 +15,15 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 
 		private static IEnumerable<FormField> GenerateBaseFields(Application application) =>
 			new[] {
-				new FormField("Application to join", application.GetField("")),
-				new FormField("Lead applicant", application.GetField("")),
+				new FormField("Application to join", $"{application.Trust.Name} with {application.School.Name}"),
+				new FormField("Lead applicant", application.LeadApplicant),
 			};
 
 		private static IEnumerable<FormField> GenerateDetailsFields(Application application) =>
 			new[] {
-				new FormField("Upload evidence that the trust consents to the school joining", application.GetField("")),
-				new FormField("Will there be any changes to the governance of the trust due to the school joining?", application.GetField("")),
-				new FormField("Will there be any changes at a local level due to this school joining?", application.GetField("")),
+				new LinkFormField("Upload evidence that the trust consents to the school joining", application.Details.EvidenceDocument.Name, application.Details.EvidenceDocument.Url),
+				new FormField("Will there be any changes to the governance of the trust due to the school joining?", application.Details.ChangesToGovernance.ToYesNoString()),
+				new FormField("Will there be any changes at a local level due to this school joining?", application.Details.ChangesAtLocalLevel.ToYesNoString()),
 			};
 
 	}
