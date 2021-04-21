@@ -21,7 +21,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 
 		private static IEnumerable<FormField> GenerateDetailsFields(Application application) =>
 			new[] {
-				new LinkFormField("Upload evidence that the trust consents to the school joining", application.Details.EvidenceDocument.Name, application.Details.EvidenceDocument.Url),
+				new LinkFormField("Upload evidence that the trust consents to the school joining", application.Details.EvidenceDocument),
 				new FormField("Will there be any changes to the governance of the trust due to the school joining?", application.Details.ChangesToGovernance.ToYesNoString()),
 				new FormField("Will there be any changes at a local level due to this school joining?", application.Details.ChangesAtLocalLevel.ToYesNoString()),
 			};
