@@ -37,7 +37,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 				DateForConversion = new DateForConversion
 				{
 					HasPreferredDate = true,
-					PreferredDate = DateTime.UtcNow
+					PreferredDate = new DateTime(2021,04,20)
 				},
 				SchoolToTrustRationale = "This is a rationale",
 				WillSchoolChangeName = true
@@ -64,7 +64,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 
 			var expectedFieldsDateForConversion = new[] {
 				new FormField("Do you want the conversion to happen on a particular date", "Yes"),
-				new FormField("Preferred date", "21/4/2021")
+				new FormField("Preferred date", "20/04/2021")
 			};
 
 			var expectedFieldsReasonForJoining = new FormField("Why does the school want to join this trust in particular?", "This is a rationale");
