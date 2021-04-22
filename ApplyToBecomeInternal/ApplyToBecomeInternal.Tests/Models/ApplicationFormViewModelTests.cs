@@ -32,7 +32,8 @@ namespace ApplyToBecomeInternal.Tests.Models
 					NextFinancialYear = new ForecastFinancialYear(new DateTime(), 0, FinancialYearState.Surplus, 0, FinancialYearState.Surplus),
 				},
 				FuturePupilNumbers = new FuturePupilNumbers(),
-				LandAndBuildings = new LandAndBuildings()
+				LandAndBuildings = new LandAndBuildings(),
+				Declaration = new Declaration(true, "")
 			};
 			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);
 			applicationFormViewModel.SubMenu.Page.Should().Be(SubMenuPage.ApplicationForm);
@@ -60,7 +61,8 @@ namespace ApplyToBecomeInternal.Tests.Models
 					NextFinancialYear = new ForecastFinancialYear(new DateTime(), 0, FinancialYearState.Surplus, 0, FinancialYearState.Surplus),
 				},
 				FuturePupilNumbers = new FuturePupilNumbers(),
-				LandAndBuildings = new LandAndBuildings()
+				LandAndBuildings = new LandAndBuildings(),
+				Declaration = new Declaration(true, "")
 			};
 			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);
 			const string expectedContent = "Back to all conversion projects";

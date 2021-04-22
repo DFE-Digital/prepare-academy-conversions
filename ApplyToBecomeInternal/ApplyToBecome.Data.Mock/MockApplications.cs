@@ -91,7 +91,8 @@ namespace ApplyToBecome.Data.Mock
 					IsInBuildingSchoolsForFutureProgramme = false
 				},
 				FundsPaidToSchoolOrTrust = "To the trust the school is joining",
-				HasGovernmentConsultedStakeholders = true
+				HasGovernmentConsultedStakeholders = true,
+				Declaration = new Declaration(true, "Garth Brown")
 			};
 		}
 	}
