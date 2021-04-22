@@ -9,7 +9,7 @@
 		@switch (Model)
 		{
 			case LinkFormField link:
-				<a href="@link.Url">@link.Content</a>
+				<a class="govuk-link" href="@link.Url">@link.Content</a>
 				break;
 			default:
 				<text>@Model.Content</text>
