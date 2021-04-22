@@ -39,7 +39,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			new[]
 			{
 				new FormField("Do you want the conversion to happen on a particular date", "Yes"),
-				new FormField("Preferred date", application.DateForConversion.PreferredDate.ToString("dd/MM/yyyy"))
+				new FormField("Preferred date", application.DateForConversion.PreferredDate.ToUkDateString())
 			};
 
 		private IEnumerable<FormField> GenerateReasonsForJoiningFields(Application application) =>
