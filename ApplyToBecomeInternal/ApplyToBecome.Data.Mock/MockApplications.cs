@@ -90,6 +90,7 @@ namespace ApplyToBecome.Data.Mock
 					IsInPrioritySchoolBuildingProgramme = false,
 					IsInBuildingSchoolsForFutureProgramme = false
 				},
+				FundsPaidToSchoolOrTrust = "To the trust the school is joining",
 				HasGovernmentConsultedStakeholders = true
 			};
 		}
