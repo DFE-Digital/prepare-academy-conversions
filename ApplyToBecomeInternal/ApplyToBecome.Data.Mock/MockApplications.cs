@@ -63,6 +63,15 @@ namespace ApplyToBecome.Data.Mock
 					EqualitiesImpactAssessmentResult = "Considered unlikely",
 					AdditionalInformation = null
 				},
+				Finances = new Finances
+				{
+					PreviousFinancialYear = new FinancialYear(new DateTime(2020, 03, 31), 169093, FinancialYearState.Surplus),
+					CurrentFinancialYear = new ForecastFinancialYear(new DateTime(2021, 03, 31), 143931, FinancialYearState.Surplus, 0, FinancialYearState.Surplus),
+					NextFinancialYear = new ForecastFinancialYear(new DateTime(2022, 03, 31), 169093, FinancialYearState.Surplus, 0, FinancialYearState.Surplus),
+					ExistingLoans = false,
+					ExistingLeases = true,
+					OngoingInvestigations = false
+				},
 				FuturePupilNumbers = new FuturePupilNumbers
 				{
 					Year1 = 189,
@@ -70,7 +79,18 @@ namespace ApplyToBecome.Data.Mock
 					Year3 = 189,
 					ProjectionReasoning = "spreadsheets 'n' shit",
 					PublishedAdmissionsNumber = 210
-				}
+				},
+				LandAndBuildings = new LandAndBuildings
+				{
+					BuildingAndLandOwner = "The Diocese of Warrington owns the building and the land. The LA owns the playing fields.",
+					HasCurrentPlannedBuildingWorks = true,
+					HasSharedFacilitiesOnSite = false,
+					HasSchoolGrants = false,
+					HasPrivateFinanceInitiativeScheme = false,
+					IsInPrioritySchoolBuildingProgramme = false,
+					IsInBuildingSchoolsForFutureProgramme = false
+				},
+				HasGovernmentConsultedStakeholders = true
 			};
 		}
 	}
