@@ -3,6 +3,7 @@ using ApplyToBecome.Data.Models.Application;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Models.Shared;
 using FluentAssertions;
+using System;
 using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Models
@@ -24,6 +25,12 @@ namespace ApplyToBecomeInternal.Tests.Models
 				DateForConversion = new DateForConversion(),
 				GoverningBodyChair = new ContactDetails(),
 				FurtherInformation = new FurtherInformation {DioceseLetterOfConsent = new Link("", ""), SchoolConsent = new Link("", "")},
+				Finances = new Finances
+				{
+					PreviousFinancialYear = new FinancialYear(new DateTime(), 0, FinancialYearState.Surplus),
+					CurrentFinancialYear = new ForecastFinancialYear(new DateTime(), 0, FinancialYearState.Surplus, 0, FinancialYearState.Surplus),
+					NextFinancialYear = new ForecastFinancialYear(new DateTime(), 0, FinancialYearState.Surplus, 0, FinancialYearState.Surplus),
+				},
 				LandAndBuildings = new LandAndBuildings()
 			};
 			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);
@@ -45,6 +52,12 @@ namespace ApplyToBecomeInternal.Tests.Models
 				DateForConversion = new DateForConversion(),
 				GoverningBodyChair = new ContactDetails(),
 				FurtherInformation = new FurtherInformation {DioceseLetterOfConsent = new Link("", ""), SchoolConsent = new Link("", "")},
+				Finances = new Finances
+				{
+					PreviousFinancialYear = new FinancialYear(new DateTime(), 0, FinancialYearState.Surplus),
+					CurrentFinancialYear = new ForecastFinancialYear(new DateTime(), 0, FinancialYearState.Surplus, 0, FinancialYearState.Surplus),
+					NextFinancialYear = new ForecastFinancialYear(new DateTime(), 0, FinancialYearState.Surplus, 0, FinancialYearState.Surplus),
+				},
 				LandAndBuildings = new LandAndBuildings()
 			};
 			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);
