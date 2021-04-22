@@ -23,7 +23,8 @@ namespace ApplyToBecomeInternal.Tests.Models
 				HeadTeacher = new ContactDetails(),
 				DateForConversion = new DateForConversion(),
 				GoverningBodyChair = new ContactDetails(),
-				FurtherInformation = new FurtherInformation {DioceseLetterOfConsent = new Link("", ""), SchoolConsent = new Link("", "")}
+				FurtherInformation = new FurtherInformation {DioceseLetterOfConsent = new Link("", ""), SchoolConsent = new Link("", "")},
+				LandAndBuildings = new LandAndBuildings()
 			};
 			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);
 			applicationFormViewModel.SubMenu.Page.Should().Be(SubMenuPage.ApplicationForm);
@@ -43,7 +44,8 @@ namespace ApplyToBecomeInternal.Tests.Models
 				HeadTeacher = new ContactDetails(),
 				DateForConversion = new DateForConversion(),
 				GoverningBodyChair = new ContactDetails(),
-				FurtherInformation = new FurtherInformation {DioceseLetterOfConsent = new Link("", ""), SchoolConsent = new Link("", "")}
+				FurtherInformation = new FurtherInformation {DioceseLetterOfConsent = new Link("", ""), SchoolConsent = new Link("", "")},
+				LandAndBuildings = new LandAndBuildings()
 			};
 			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);
 			const string expectedContent = "Back to all conversion projects";
