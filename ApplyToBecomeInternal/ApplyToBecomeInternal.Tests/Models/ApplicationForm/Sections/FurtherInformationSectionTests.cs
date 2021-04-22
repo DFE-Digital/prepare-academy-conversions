@@ -14,7 +14,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 		{
 			var application = new Application
 			{
-				FinancialInformation = new FinancialInformation
+				FurtherInformation = new FurtherInformation
 				{
 					WhatWillSchoolBringToTrust = "the school will bring these things to the trust",
 					HasUnpublishedOfstedInspection = false,
@@ -30,7 +30,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 					MainFeederSchools = "n/a as we are a primary school",
 					SchoolConsent = new Link("consent.docx", "#"),
 					EqualitiesImpactAssessmentResult = "Considered unlikely",
-					FurtherInformation = null
+					AdditionalInformation = null
 				}
 			};
 
