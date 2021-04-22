@@ -1,6 +1,6 @@
 namespace ApplyToBecome.Data.Models.Application
 {
-	public class FinancialInformation
+	public class FurtherInformation
 	{
 		public string WhatWillSchoolBringToTrust { get; set; }
 		public bool HasUnpublishedOfstedInspection { get; set; }
@@ -16,6 +16,6 @@ namespace ApplyToBecome.Data.Models.Application
 		public string MainFeederSchools { get; set; }
 		public Link SchoolConsent { get; set; }
 		public string EqualitiesImpactAssessmentResult { get; set; }
-		public string FurtherInformation { get; set; }
+		public string AdditionalInformation { get; set; }
 	}
 }
