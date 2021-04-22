@@ -15,5 +15,6 @@ namespace ApplyToBecome.Data.Models.Application
 		public bool WillSchoolChangeName { get; set; }
 		public FurtherInformation FurtherInformation { get; set; }
 		public bool HasGovernmentConsultedStakeholders { get; set; }
+		public LandAndBuildings LandAndBuildings { get; set; }
 	}
 }
