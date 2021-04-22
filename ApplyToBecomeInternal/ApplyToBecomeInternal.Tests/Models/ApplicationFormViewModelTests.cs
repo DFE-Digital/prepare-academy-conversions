@@ -31,6 +31,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 					CurrentFinancialYear = new ForecastFinancialYear(new DateTime(), 0, FinancialYearState.Surplus, 0, FinancialYearState.Surplus),
 					NextFinancialYear = new ForecastFinancialYear(new DateTime(), 0, FinancialYearState.Surplus, 0, FinancialYearState.Surplus),
 				},
+				FuturePupilNumbers = new FuturePupilNumbers(),
 				LandAndBuildings = new LandAndBuildings()
 			};
 			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);
@@ -58,6 +59,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 					CurrentFinancialYear = new ForecastFinancialYear(new DateTime(), 0, FinancialYearState.Surplus, 0, FinancialYearState.Surplus),
 					NextFinancialYear = new ForecastFinancialYear(new DateTime(), 0, FinancialYearState.Surplus, 0, FinancialYearState.Surplus),
 				},
+				FuturePupilNumbers = new FuturePupilNumbers(),
 				LandAndBuildings = new LandAndBuildings()
 			};
 			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);

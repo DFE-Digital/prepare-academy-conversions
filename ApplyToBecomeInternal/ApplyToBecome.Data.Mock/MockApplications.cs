@@ -62,6 +62,14 @@ namespace ApplyToBecome.Data.Mock
 					SchoolConsent = new Link("consent.docx", "#"),
 					EqualitiesImpactAssessmentResult = "Considered unlikely",
 					AdditionalInformation = null
+				},
+				FuturePupilNumbers = new FuturePupilNumbers
+				{
+					Year1 = 189,
+					Year2 = 189,
+					Year3 = 189,
+					ProjectionReasoning = "spreadsheets 'n' shit",
+					PublishedAdmissionsNumber = 210
 				}
 			};
 		}
