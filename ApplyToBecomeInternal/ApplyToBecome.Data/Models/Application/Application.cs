@@ -19,5 +19,6 @@ namespace ApplyToBecome.Data.Models.Application
 		public LandAndBuildings LandAndBuildings { get; set; }
 		public string FundsPaidToSchoolOrTrust { get; set; }
 		public FuturePupilNumbers FuturePupilNumbers { get; set; }
+		public Declaration Declaration { get; set; }
 	}
 }
