@@ -8,43 +8,50 @@ namespace ApplyToBecome.Data.Mock
 	{
 		public Application GetApplication(string id)
 		{
-			return new Application{
-				School = new School{
+			return new Application
+			{
+				School = new School
+				{
 					Name = "St Wilfrid's Primary School"
 				},
-				Trust = new Trust{
+				Trust = new Trust
+				{
 					Name = "Dynamics Trust",
 				},
 				LeadApplicant = "Garth Brown",
-				Details = new ApplicationDetails{
+				Details = new ApplicationDetails
+				{
 					EvidenceDocument = new Link("consent_dynamics.docx", "#"),
 					ChangesToGovernance = false,
 					ChangesAtLocalLevel = true
 				},
-				HeadTeacher = new ContactDetails
+				ConversionInformation = new ConversionInformation
 				{
-					Name = "Garth Brown",
-					EmailAddress = "garth.brown@stwilfridsprimary.edu.uk",
-					TelephoneNumber = "09876 64547563"
+					HeadTeacher = new ContactDetails
+					{
+						Name = "Garth Brown",
+						EmailAddress = "garth.brown@stwilfridsprimary.edu.uk",
+						TelephoneNumber = "09876 64547563"
+					},
+					GoverningBodyChair = new ContactDetails
+					{
+						Name = "Arna Siggurdottier",
+						EmailAddress = "arna.siggurdottier@dynamicstrust.co.uk",
+						TelephoneNumber = "0972 345 119"
+					},
+					Approver = new ContactDetails
+					{
+						Name = "Garth Brown",
+						EmailAddress = "garth.brown@stwilfridsprimary.edu.uk",
+					},
+					DateForConversion = new DateForConversion
+					{
+						HasPreferredDate = true,
+						PreferredDate = new DateTime(2021,04,20)
+					},
+					SchoolToTrustRationale = "This is a rationale",
+					WillSchoolChangeName = true
 				},
-				GoverningBodyChair = new ContactDetails
-				{
-					Name = "Arna Siggurdottier",
-					EmailAddress = "arna.siggurdottier@dynamicstrust.co.uk",
-					TelephoneNumber = "0972 345 119"
-				},
-				Approver = new ContactDetails
-				{
-					Name = "Garth Brown",
-					EmailAddress = "garth.brown@stwilfridsprimary.edu.uk",
-				},
-				DateForConversion = new DateForConversion
-				{
-					HasPreferredDate = true,
-					PreferredDate = new DateTime(2021,04,20)
-				},
-				SchoolToTrustRationale = "This is a rationale",
-				WillSchoolChangeName = true,
 				FurtherInformation = new FurtherInformation
 				{
 					WhatWillSchoolBringToTrust = "the school will bring these things to the trust",

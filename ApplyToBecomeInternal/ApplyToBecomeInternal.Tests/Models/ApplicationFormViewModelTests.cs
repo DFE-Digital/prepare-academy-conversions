@@ -20,10 +20,13 @@ namespace ApplyToBecomeInternal.Tests.Models
 				School = new School(),
 				Trust = new Trust(),
 				Details = new ApplicationDetails {EvidenceDocument = new Link("", "")},
-				Approver = new ContactDetails(),
-				HeadTeacher = new ContactDetails(),
-				DateForConversion = new DateForConversion(),
-				GoverningBodyChair = new ContactDetails(),
+				ConversionInformation = new ConversionInformation
+				{
+					Approver = new ContactDetails(),
+					HeadTeacher = new ContactDetails(),
+					DateForConversion = new DateForConversion(),
+					GoverningBodyChair = new ContactDetails()
+				},
 				FurtherInformation = new FurtherInformation {DioceseLetterOfConsent = new Link("", ""), SchoolConsent = new Link("", "")},
 				Finances = new Finances
 				{
@@ -49,10 +52,13 @@ namespace ApplyToBecomeInternal.Tests.Models
 				School = new School(),
 				Trust = new Trust(),
 				Details = new ApplicationDetails {EvidenceDocument = new Link("", "")},
-				Approver = new ContactDetails(),
-				HeadTeacher = new ContactDetails(),
-				DateForConversion = new DateForConversion(),
-				GoverningBodyChair = new ContactDetails(),
+				ConversionInformation = new ConversionInformation
+				{
+					Approver = new ContactDetails(),
+					HeadTeacher = new ContactDetails(),
+					DateForConversion = new DateForConversion(),
+					GoverningBodyChair = new ContactDetails()
+				},
 				FurtherInformation = new FurtherInformation {DioceseLetterOfConsent = new Link("", ""), SchoolConsent = new Link("", "")},
 				Finances = new Finances
 				{

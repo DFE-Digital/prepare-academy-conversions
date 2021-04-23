@@ -6,13 +6,7 @@ namespace ApplyToBecome.Data.Models.Application
 		public Trust Trust { get; set; }
 		public string LeadApplicant { get; set; }
 		public ApplicationDetails Details { get; set; }
-		public ContactDetails HeadTeacher { get; set; }
-		public ContactDetails GoverningBodyChair { get; set; }
-		public ContactDetails Approver { get; set; }
-		public DateForConversion DateForConversion { get; set; }
-		public string SchoolToTrustRationale { get; set; }
-
-		public bool WillSchoolChangeName { get; set; }
+		public ConversionInformation ConversionInformation { get; set; }
 		public FurtherInformation FurtherInformation { get; set; }
 		public bool HasGovernmentConsultedStakeholders { get; set; }
 		public Finances Finances { get; set; }

@@ -25,33 +25,33 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 		private IEnumerable<FormField> GenerateContactFields(Application application) =>
 			new[]
 			{
-				new FormField("Name of headteacher", application.HeadTeacher.Name),
-				new FormField("Headteacher's email address", application.HeadTeacher.EmailAddress),
-				new FormField("Headteacher's telephone number", application.HeadTeacher.TelephoneNumber),
-				new FormField("Name of the chair of the Governing Body", application.GoverningBodyChair.Name),
-				new FormField("Chair's email address", application.GoverningBodyChair.EmailAddress),
-				new FormField("Chair's phone number", application.GoverningBodyChair.TelephoneNumber),
-				new FormField("Approver's name", application.Approver.Name),
-				new FormField("Approver's email address", application.Approver.EmailAddress)          
+				new FormField("Name of headteacher", application.ConversionInformation.HeadTeacher.Name),
+				new FormField("Headteacher's email address", application.ConversionInformation.HeadTeacher.EmailAddress),
+				new FormField("Headteacher's telephone number", application.ConversionInformation.HeadTeacher.TelephoneNumber),
+				new FormField("Name of the chair of the Governing Body", application.ConversionInformation.GoverningBodyChair.Name),
+				new FormField("Chair's email address", application.ConversionInformation.GoverningBodyChair.EmailAddress),
+				new FormField("Chair's phone number", application.ConversionInformation.GoverningBodyChair.TelephoneNumber),
+				new FormField("Approver's name", application.ConversionInformation.Approver.Name),
+				new FormField("Approver's email address", application.ConversionInformation.Approver.EmailAddress)          
 			};
 
 		private IEnumerable<FormField> GenerateConversionDateFields(Application application) =>
 			new[]
 			{
 				new FormField("Do you want the conversion to happen on a particular date", "Yes"),
-				new FormField("Preferred date", application.DateForConversion.PreferredDate.ToUkDateString())
+				new FormField("Preferred date", application.ConversionInformation.DateForConversion.PreferredDate.ToUkDateString())
 			};
 
 		private IEnumerable<FormField> GenerateReasonsForJoiningFields(Application application) =>
 			new[]
 			{
-				new FormField("Why does the school want to join this trust in particular?", application.SchoolToTrustRationale)
+				new FormField("Why does the school want to join this trust in particular?", application.ConversionInformation.SchoolToTrustRationale)
 			};
 
 		private IEnumerable<FormField> GenerateNameChangesFields(Application application) =>
 			new[]
 			{
-				 new FormField("Is the school planning to change its name when it becomes an academy?", BooleanExtensions.ToYesNoString(application.WillSchoolChangeName))
+				 new FormField("Is the school planning to change its name when it becomes an academy?", application.ConversionInformation.WillSchoolChangeName.ToYesNoString())
 			};
 	}
 }

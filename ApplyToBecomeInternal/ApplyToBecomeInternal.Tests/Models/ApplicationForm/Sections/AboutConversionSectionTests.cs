@@ -17,30 +17,33 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			var application = new Application
 			{
 				School = new School { Name = "St Wilfrid's Primary School" },
-				HeadTeacher = new ContactDetails
+				ConversionInformation = new ConversionInformation
 				{
-					Name = "Garth Brown",
-					EmailAddress = "garth.brown@stwilfridsprimary.edu.uk",
-					TelephoneNumber = "09876 64547563"
-				},
-				GoverningBodyChair = new ContactDetails
-				{
-					Name = "Arna Siggurdottier",
-					EmailAddress = "arna.siggurdottier@dynamicstrust.co.uk",
-					TelephoneNumber = "0972 345 119"
-				},
-				Approver = new ContactDetails
-				{
-					Name = "Garth Brown",
-					EmailAddress = "garth.brown@stwilfridsprimary.edu.uk",
-				},
-				DateForConversion = new DateForConversion
-				{
-					HasPreferredDate = true,
-					PreferredDate = new DateTime(2021,04,20)
-				},
-				SchoolToTrustRationale = "This is a rationale",
-				WillSchoolChangeName = true
+					HeadTeacher = new ContactDetails
+					{
+						Name = "Garth Brown",
+						EmailAddress = "garth.brown@stwilfridsprimary.edu.uk",
+						TelephoneNumber = "09876 64547563"
+					},
+					GoverningBodyChair = new ContactDetails
+					{
+						Name = "Arna Siggurdottier",
+						EmailAddress = "arna.siggurdottier@dynamicstrust.co.uk",
+						TelephoneNumber = "0972 345 119"
+					},
+					Approver = new ContactDetails
+					{
+						Name = "Garth Brown",
+						EmailAddress = "garth.brown@stwilfridsprimary.edu.uk",
+					},
+					DateForConversion = new DateForConversion
+					{
+						HasPreferredDate = true,
+						PreferredDate = new DateTime(2021,04,20)
+					},
+					SchoolToTrustRationale = "This is a rationale",
+					WillSchoolChangeName = true
+				}
 			};
 
 			var formSection = new AboutConversionSection(application);
