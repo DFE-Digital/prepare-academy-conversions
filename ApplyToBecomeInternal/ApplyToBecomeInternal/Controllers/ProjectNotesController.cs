@@ -22,5 +22,14 @@ namespace ApplyToBecomeInternal.Controllers
 			var projectNotesViewModel = new ProjectNotesViewModel(projectViewModel);
 			return View(projectNotesViewModel);
 		}
+
+		[HttpGet("{id}/new-project-note")]
+		public IActionResult NewNote(int id)
+		{
+			var project = _projects.GetProjectById(id);
+			var projectViewModel = new ProjectViewModel(project);
+			var newProjectNotesViewModel = new NewProjectNoteViewModel(projectViewModel);
+			return View(newProjectNotesViewModel);
+		}
 	}
 }
