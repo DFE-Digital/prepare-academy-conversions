@@ -10,6 +10,7 @@ namespace ApplyToBecomeInternal.Tests.Extensions
 
 		[Theory]
 		[InlineData(NavigationTarget.ProjectsList, "Back to all conversion projects", "/projectlist")]
+		[InlineData(NavigationTarget.ProjectNotes, "Back", "/project-notes/{id}")]
 		public void CustomNavigationAttribute_NavigationEnum_ReturnAttributeValues(NavigationTarget navigation, string expectedCopy, string expectedUrl)
 		{
 			var actual = navigation.GetContent();
