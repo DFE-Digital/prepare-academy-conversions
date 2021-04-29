@@ -1,9 +1,6 @@
 ﻿using ApplyToBecome.Data.Models;
 using ApplyToBecomeInternal.Models;
 using FluentAssertions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Models

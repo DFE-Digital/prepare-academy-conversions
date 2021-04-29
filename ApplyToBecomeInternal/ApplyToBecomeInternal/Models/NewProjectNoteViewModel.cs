@@ -1,8 +1,5 @@
 ﻿using ApplyToBecomeInternal.Models.Shared;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Models
 {
@@ -11,10 +8,11 @@ namespace ApplyToBecomeInternal.Models
 		public NewProjectNoteViewModel(ProjectViewModel project)
 		{
 			Project = project;
-			Navigation = new NavigationViewModel(NavigationTarget.ProjectNotes, project.Id);
+			var templateData = new[] {new KeyValuePair<string, string>("id", project.Id)};
+			Navigation = new NavigationViewModel(NavigationTarget.ProjectNotes, templateData);
 		}
 		public ProjectViewModel Project { get; }
-		public NavigationViewModel Navigation { get; set; }
+		public NavigationViewModel Navigation { get; }
 
 	}
 }
