@@ -11,6 +11,9 @@ namespace ApplyToBecomeInternal.Tests.Models
 			{"template {s}", new[]{("s", "string")}, "template string"},
 			{"{t} {s}", new[]{("t", "template"), ("s", "string")}, "template string"},
 			{"template string", new (string, string)[0], "template string"},
+			{"{t} {s}", new[]{("t", "{s}"), ("s", "string")}, "{s} string"},
+			{"template {s} {s}", new[]{("s", "string")}, "template string string"},
+			{"{s} {t} {s} {t}", new[]{("t", "template"), ("s", "string")}, "string template string template"},
 		};
 
 		[Theory]
