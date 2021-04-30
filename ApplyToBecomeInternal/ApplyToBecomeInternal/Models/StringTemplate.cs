@@ -1,3 +1,4 @@
+using ApplyToBecomeInternal.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,13 +21,8 @@ namespace ApplyToBecomeInternal.Models
 			foreach ((string key, string _) in _data)
 			{
 				string fullKey = GetFullKey(key);
-				for (int index = 0;; index += fullKey.Length)
-				{
-					index = _template.IndexOf(fullKey, index);
-					if (index == -1)
-						break;
-					indices[index] = key;
-				}
+				foreach (int i in _template.AllIndicesOf(fullKey)) 
+					indices[i] = key;
 			}
 
 			var sortedIndices = indices.OrderBy(pair => pair.Key);
