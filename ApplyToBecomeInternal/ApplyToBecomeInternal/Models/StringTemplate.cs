@@ -11,7 +11,7 @@ namespace ApplyToBecomeInternal.Models
 		
 		public StringTemplate(string template) => _template = template;
 		
-		private static string GetFullKey(string key) => $"{{{key}}}";
+		private static string GetFullKey(string key) => $"{{{key}}}"; // {key}
 
 		public void Set(string key, string value) => _data[key] = value;
 
