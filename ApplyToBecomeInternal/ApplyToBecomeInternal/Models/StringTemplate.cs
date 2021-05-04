@@ -18,10 +18,10 @@ namespace ApplyToBecomeInternal.Models
 		public override string ToString()
 		{
 			var indices = new Dictionary<int, string>();
-			foreach ((string key, string _) in _data)
+			foreach (var (key, _) in _data)
 			{
-				string fullKey = GetFullKey(key);
-				foreach (int i in _template.AllIndicesOf(fullKey)) 
+				var fullKey = GetFullKey(key);
+				foreach (var i in _template.AllIndicesOf(fullKey)) 
 					indices[i] = key;
 			}
 
@@ -29,7 +29,7 @@ namespace ApplyToBecomeInternal.Models
 
 			var indexAdjustment = 0;
 			var result = _template;
-			foreach ((int index, string key) in sortedIndices)
+			foreach (var (index, key) in sortedIndices)
 			{
 				var fullKey = GetFullKey(key);
 				result = result.Remove(index + indexAdjustment, fullKey.Length);

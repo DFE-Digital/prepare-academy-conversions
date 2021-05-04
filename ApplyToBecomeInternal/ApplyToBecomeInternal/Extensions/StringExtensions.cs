@@ -6,7 +6,7 @@ namespace ApplyToBecomeInternal.Extensions
 	{
 		public static IEnumerable<int> AllIndicesOf(this string str, string value)
 		{
-			for (int index = 0;; index += value.Length)
+			for (var index = 0;; index += value.Length)
 			{
 				index = str.IndexOf(value, index);
 				if (index == -1)
