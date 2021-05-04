@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using ApplyToBecomeInternal.Models;
+using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApplyToBecomeInternal.Controllers

@@ -1,4 +1,4 @@
-using ApplyToBecomeInternal.Models.Shared;
+using ApplyToBecomeInternal.Models.Navigation;
 
 namespace ApplyToBecomeInternal.Extensions
 {

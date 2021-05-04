@@ -1,7 +1,6 @@
 using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Models.Application;
-using ApplyToBecomeInternal.Models;
-using ApplyToBecomeInternal.Models.Shared;
+using ApplyToBecomeInternal.ViewModels;
 using FluentAssertions;
 using System;
 using Xunit;

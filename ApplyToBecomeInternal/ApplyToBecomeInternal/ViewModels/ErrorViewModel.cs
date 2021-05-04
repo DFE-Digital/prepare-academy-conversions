@@ -1,4 +1,4 @@
-namespace ApplyToBecomeInternal.Models
+namespace ApplyToBecomeInternal.ViewModels
 {
 	public class ErrorViewModel
 	{

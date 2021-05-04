@@ -1,7 +1,7 @@
-﻿using ApplyToBecomeInternal.Models.Shared;
+﻿using ApplyToBecomeInternal.Models.Navigation;
 using System.Collections.Generic;
 
-namespace ApplyToBecomeInternal.Models
+namespace ApplyToBecomeInternal.ViewModels
 {
 	public class NewProjectNoteViewModel
 	{

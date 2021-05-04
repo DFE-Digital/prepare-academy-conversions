@@ -1,5 +1,5 @@
 ﻿using ApplyToBecomeInternal.Extensions;
-using ApplyToBecomeInternal.Models.Shared;
+using ApplyToBecomeInternal.Models.Navigation;
 using FluentAssertions;
 using Xunit;
 
