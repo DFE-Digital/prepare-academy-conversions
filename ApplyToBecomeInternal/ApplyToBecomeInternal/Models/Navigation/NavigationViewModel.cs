@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ApplyToBecomeInternal.Models.Shared
+namespace ApplyToBecomeInternal.Models.Navigation
 {
 	public class NavigationViewModel
 	{

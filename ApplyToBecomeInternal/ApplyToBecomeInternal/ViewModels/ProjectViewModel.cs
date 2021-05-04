@@ -2,7 +2,7 @@ using ApplyToBecome.Data.Models;
 using System;
 using System.Collections.Generic;
 
-namespace ApplyToBecomeInternal.Models
+namespace ApplyToBecomeInternal.ViewModels
 {
 	public class ProjectViewModel
 	{

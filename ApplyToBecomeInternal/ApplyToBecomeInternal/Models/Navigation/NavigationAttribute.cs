@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ApplyToBecomeInternal.Models.Shared
+namespace ApplyToBecomeInternal.Models.Navigation
 {
 	public class NavigationAttribute : Attribute
 	{

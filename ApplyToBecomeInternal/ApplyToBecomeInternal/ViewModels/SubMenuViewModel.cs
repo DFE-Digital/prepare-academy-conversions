@@ -1,4 +1,4 @@
-namespace ApplyToBecomeInternal.Models.Shared
+namespace ApplyToBecomeInternal.ViewModels
 {
 	public class SubMenuViewModel
 	{

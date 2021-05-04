@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ApplyToBecomeInternal.Models
+namespace ApplyToBecomeInternal.ViewModels
 {
 	public class ProjectListViewModel
 	{

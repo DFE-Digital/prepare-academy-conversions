@@ -1,4 +1,4 @@
-namespace ApplyToBecomeInternal.Models.Shared
+namespace ApplyToBecomeInternal.ViewModels
 {
 	public enum SubMenuPage
 	{

@@ -1,6 +1,6 @@
-using ApplyToBecomeInternal.Models.Shared;
+using ApplyToBecomeInternal.Models.Navigation;
 
-namespace ApplyToBecomeInternal.Models
+namespace ApplyToBecomeInternal.ViewModels
 {
 	public class ProjectNotesViewModel
 	{
