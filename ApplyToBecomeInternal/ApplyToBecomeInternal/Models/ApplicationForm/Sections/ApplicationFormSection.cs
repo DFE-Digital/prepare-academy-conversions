@@ -6,7 +6,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 {
 	public class ApplicationFormSection : BaseFormSection
 	{
-		public ApplicationFormSection(Application application) : base("School application Form", GenerateBaseFields(application))
+		public ApplicationFormSection(Application application) : base("School application form", GenerateBaseFields(application))
 		{
 			SubSections = new[] { 
 				new FormSubSection("Details", GenerateDetailsFields(application))
