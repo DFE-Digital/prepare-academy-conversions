@@ -4,22 +4,31 @@
 <nav class="moj-sub-navigation" aria-label="Sub navigation">
 	<ul class="moj-sub-navigation__list">
 		<li class="moj-sub-navigation__item">
-			<sub-menu title="Task list" 
-					  current-page="@Model.Page == SubMenuPage.TaskList ? SubMenuPage.TaskList : SubMenuPage.NotHighlighted" 
-					  url="/task-list/@Model.ProjectId">
-			</sub-menu>
+			<sub-menu-link class="moj-sub-navigation__link"
+					  asp-controller="TaskList"
+					  asp-route-id="@Model.ProjectId"
+					  highlighted="@Model.Page == SubMenuPage.TaskList"
+					  >
+				Task list
+			</sub-menu-link>
 		</li>
 		<li class="moj-sub-navigation__item">
-			<sub-menu title="School application form" 
-					  current-page="@Model.Page == SubMenuPage.SchoolApplicationForm ? SubMenuPage.SchoolApplicationForm : SubMenuPage.NotHighlighted" 
-					  url="/school-application-form/@Model.ProjectId">
-			</sub-menu>
+			<sub-menu-link class="moj-sub-navigation__link"
+					  asp-controller="ApplicationForm" 
+					  asp-route-id="@Model.ProjectId"
+					  highlighted="@Model.Page == SubMenuPage.SchoolApplicationForm"
+					  >
+				School application form
+			</sub-menu-link>
 		</li>
 		<li class="moj-sub-navigation__item">
-			<sub-menu title="Project notes" 
-					  current-page="@Model.Page == SubMenuPage.ProjectNotes ? SubMenuPage.ProjectNotes : SubMenuPage.NotHighlighted" 
-					  url="/project-notes/@Model.ProjectId">
-			</sub-menu>
+			<sub-menu-link class="moj-sub-navigation__link"
+					  asp-controller="ProjectNotes" 
+					  asp-route-id="@Model.ProjectId"
+					  highlighted="@Model.Page == SubMenuPage.ProjectNotes"
+					  >
+				Project notes
+			</sub-menu-link>
 		</li>
 
 	</ul>
