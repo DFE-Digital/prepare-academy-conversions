@@ -11,7 +11,7 @@ namespace ApplyToBecomeInternal.ViewModels
 		public ApplicationFormViewModel(Application application, ProjectViewModel project)
 		{
 			Project = project;
-			SubMenu = new SubMenuViewModel(project.Id, SubMenuPage.ApplicationForm);
+			SubMenu = new SubMenuViewModel(project.Id, SubMenuPage.SchoolApplicationForm);
 			Navigation = new NavigationViewModel(NavigationTarget.ProjectsList);
 			Sections = new BaseFormSection[]
 			{

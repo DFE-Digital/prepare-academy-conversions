@@ -38,7 +38,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 				Declaration = new Declaration(true, "")
 			};
 			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);
-			applicationFormViewModel.SubMenu.Page.Should().Be(SubMenuPage.ApplicationForm);
+			applicationFormViewModel.SubMenu.Page.Should().Be(SubMenuPage.SchoolApplicationForm);
 		}
 
 		[Fact]
