@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ApplyToBecomeInternal.Controllers
 {
-	[Route("/application-form/")]
+	[Route("/school-application-form/")]
 	public class ApplicationFormController : Controller
 	{
 		private readonly IApplications _applications;
