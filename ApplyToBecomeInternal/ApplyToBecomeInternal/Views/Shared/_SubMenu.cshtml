@@ -4,15 +4,32 @@
 <nav class="moj-sub-navigation" aria-label="Sub navigation">
 	<ul class="moj-sub-navigation__list">
 		<li class="moj-sub-navigation__item">
-			<a class="moj-sub-navigation__link" @(Model.Page==SubMenuPage.TaskList? "aria-current=page" : string.Empty) href="/task-list/@Model.ProjectId">Task list</a>
+			<sub-menu-link class="moj-sub-navigation__link"
+					  asp-controller="TaskList"
+					  asp-route-id="@Model.ProjectId"
+					  highlighted="@Model.Page == SubMenuPage.TaskList"
+					  >
+				Task list
+			</sub-menu-link>
+		</li>
+		<li class="moj-sub-navigation__item">
+			<sub-menu-link class="moj-sub-navigation__link"
+					  asp-controller="ApplicationForm" 
+					  asp-route-id="@Model.ProjectId"
+					  highlighted="@Model.Page == SubMenuPage.SchoolApplicationForm"
+					  >
+				School application form
+			</sub-menu-link>
+		</li>
+		<li class="moj-sub-navigation__item">
+			<sub-menu-link class="moj-sub-navigation__link"
+					  asp-controller="ProjectNotes" 
+					  asp-route-id="@Model.ProjectId"
+					  highlighted="@Model.Page == SubMenuPage.ProjectNotes"
+					  >
+				Project notes
+			</sub-menu-link>
 		</li>
 
-		<li class="moj-sub-navigation__item">
-			<a class="moj-sub-navigation__link" @(Model.Page == SubMenuPage.ApplicationForm? "aria-current=page" : string.Empty) href="/application-form/@Model.ProjectId">Application form</a>
-		</li>
-
-		<li class="moj-sub-navigation__item">
-			<a class="moj-sub-navigation__link" @(Model.Page == SubMenuPage.ProjectNotes? "aria-current=page" : string.Empty) href="/project-notes/@Model.ProjectId" >Project notes</a>
-		</li>
 	</ul>
 </nav>

@@ -37,7 +37,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 				new FormField("Will there be any changes at a local level due to this school joining?", "Yes"),
 			};
 
-			formSection.Heading.Should().Be("Application Form");
+			formSection.Heading.Should().Be("School application form");
 			formSection.Fields.Should().BeEquivalentTo(expectedFields);
 			formSection.SubSections.Should().HaveCount(1);
 			formSection.SubSections.First().Heading.Should().Be("Details");
