@@ -1,6 +1,8 @@
 ﻿using ApplyToBecome.Data;
+using ApplyToBecome.Data.Models.ProjectNotes;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace ApplyToBecomeInternal.Controllers
 {
@@ -30,6 +32,17 @@ namespace ApplyToBecomeInternal.Controllers
 			var projectViewModel = new ProjectViewModel(project);
 			var newProjectNotesViewModel = new NewProjectNoteViewModel(projectViewModel);
 			return View(newProjectNotesViewModel);
+		}
+		
+		[HttpPost("{id}")]
+		public IActionResult Index(int id, string title, string body)
+		{
+			ProjectNote note = new ProjectNote(title, body);
+
+			var project = _projects.UpdateProjectWithNewNote(id, note);
+			var projectViewModel = new ProjectViewModel(project);
+			var projectNotesViewModel = new ProjectNotesViewModel(projectViewModel);
+			return View(projectNotesViewModel);
 		}
 	}
 }
