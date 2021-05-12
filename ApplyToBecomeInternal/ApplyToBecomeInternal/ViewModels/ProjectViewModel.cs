@@ -1,4 +1,5 @@
 using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.ProjectNotes;
 using System;
 using System.Collections.Generic;
 
@@ -22,6 +23,7 @@ namespace ApplyToBecomeInternal.ViewModels
 			ApplicationReceivedDate = FormatDate(project.ApplicationReceivedDate);
 			AssignedDate = FormatDate(project.AssignedDate);
 			Phase = _projectPhaseText[project.Phase];
+			Notes = project.Notes;
 		}
 
 
@@ -35,5 +37,6 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string ApplicationReceivedDate { get; }
 		public string AssignedDate { get; }
 		public string Phase { get; }
+		public List<ProjectNote> Notes { get; set; }
 	}
 }
