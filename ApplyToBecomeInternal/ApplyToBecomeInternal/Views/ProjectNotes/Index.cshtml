@@ -3,9 +3,28 @@
 	ViewData["Title"] = "Project Notes";
 }
 
+@{
+
+	@if (Model.Project.Notes.Count > 0)
+	{
+		<div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+			<div class="govuk-notification-banner__header">
+				<h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+					Success
+				</h2>
+			</div>
+			<div class="govuk-notification-banner__content">
+				<h3 class="govuk-notification-banner__heading">
+					Note added
+				</h3>
+			</div>
+		</div>
+	}
+}
+
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
-		@section BeforeMain 
+		@section BeforeMain
 		{
 			<partial name="_Navigation" model="Model.Navigation" />
 		}
@@ -18,3 +37,20 @@
 	<h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">Project notes</h2>
 	<a asp-controller="ProjectNotes" asp-action="NewNote" asp-route-id="@Model.Project.Id" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">Add note</a>
 </div>
+
+@{ if (Model.Project.Notes != null)
+	{
+		foreach(var note in Model.Project.Notes)
+		{
+		<div class="app-notes__note">
+			<h2 class="govuk-heading-s govuk-!-margin-bottom-1">
+				<a class="govuk-link govuk-link--no-visited-state">
+					@note.Title
+				</a>
+			</h2>
+			<p class="govuk-!-margin-bottom-1">@note.Body</p>
+			<p class="govuk-body-s">@note.Author, @note.DateAndTime</p>
+		</div>
+		}
+	}
+}
