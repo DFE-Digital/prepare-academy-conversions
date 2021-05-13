@@ -1,8 +1,6 @@
 using ApplyToBecome.Data.Models;
-using ApplyToBecome.Data.Models.ProjectNotes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ApplyToBecome.Data.Mock
 {
@@ -52,11 +50,5 @@ namespace ApplyToBecome.Data.Mock
 		public IEnumerable<Project> GetAllProjects() => _projects;
 
 		public Project GetProjectById(int id) => _projects[id] ?? throw new Exception();
-
-		public void UpdateProjectWithNewNote(int id, ProjectNote note)
-		{
-			var project = _projects.Where(x => x.Id == id).FirstOrDefault();
-			project.AddNote(note);
-		}
 	}
 }
