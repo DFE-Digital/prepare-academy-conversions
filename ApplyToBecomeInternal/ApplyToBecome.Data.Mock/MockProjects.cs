@@ -16,7 +16,6 @@ namespace ApplyToBecome.Data.Mock
 				Trust = new Trust {Id = 200, Name = "Dynamics Academy Trust"},
 				ApplicationReceivedDate = new DateTime(2021, 3, 1),
 				AssignedDate = new DateTime(2021, 3, 3),
-				Notes = new List<ProjectNote>()
 			},
 			new Project
 			{
@@ -25,7 +24,6 @@ namespace ApplyToBecome.Data.Mock
 				Trust = new Trust {Id = 201, Name = "Oak Hill Trust"},
 				ApplicationReceivedDate = new DateTime(2021, 3, 1),
 				AssignedDate = new DateTime(2021, 3, 3),
-				Notes = new List<ProjectNote>()
 			},
 			new Project
 			{
@@ -34,7 +32,6 @@ namespace ApplyToBecome.Data.Mock
 				Trust = new Trust {Id = 202, Name = "Kingfisher learning trust"},
 				ApplicationReceivedDate = new DateTime(2021, 3, 1),
 				AssignedDate = new DateTime(2021, 3, 3),
-				Notes = new List<ProjectNote>()
 			},
 			new Project
 			{
@@ -43,7 +40,6 @@ namespace ApplyToBecome.Data.Mock
 				Trust = new Trust {Id = 203, Name = "Oak Hill Trust"},
 				ApplicationReceivedDate = new DateTime(2021, 3, 1),
 				AssignedDate = new DateTime(2021, 3, 3),
-				Notes = new List<ProjectNote>()
 			},
 			new Project
 			{
@@ -60,7 +56,8 @@ namespace ApplyToBecome.Data.Mock
 		public Project UpdateProjectWithNewNote(int id, ProjectNote note)
 		{
 			var project = _projects.Where(x => x.Id == id).FirstOrDefault();
-			project.Notes.Add(note);
+			project.AddNote(note);
+
 			return project;
 		}
 	}
