@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ApplyToBecome.Data.Models.ProjectNotes
 {
@@ -15,7 +16,7 @@ namespace ApplyToBecome.Data.Models.ProjectNotes
 
 		private string FormatDateAndTime(DateTime date)
 		{
-			return $"{date.Day} {date.ToString("Y")} at {date.ToString("t")}";
+			return $"{date.Day} {date.ToString("Y")} at {date.ToString("t")}{date.ToString("tt").ToLower()}";
 		}
 
 		public string Title { get; set; }
