@@ -19,9 +19,10 @@ namespace ApplyToBecomeInternal.Controllers
 		[HttpGet("{id}")]
 		public IActionResult Index(int id)
 		{
+			var newNote = (bool)(TempData["newNote"] ?? false);
 			var project = _projects.GetProjectById(id);
 			var projectViewModel = new ProjectViewModel(project);
-			var projectNotesViewModel = new ProjectNotesViewModel(projectViewModel);
+			var projectNotesViewModel = new ProjectNotesViewModel(projectViewModel, newNote);
 			return View(projectNotesViewModel);
 		}
 
@@ -35,14 +36,12 @@ namespace ApplyToBecomeInternal.Controllers
 		}
 		
 		[HttpPost("{id}")]
-		public IActionResult Index(int id, string title, string body)
+		public IActionResult SaveNote(int id, string title, string body)
 		{
 			ProjectNote note = new ProjectNote(title, body);
-
 			var project = _projects.UpdateProjectWithNewNote(id, note);
-			var projectViewModel = new ProjectViewModel(project);
-			var projectNotesViewModel = new ProjectNotesViewModel(projectViewModel);
-			return View(projectNotesViewModel);
+			TempData["newNote"] = true;
+			return RedirectToAction(nameof(Index), new { id });
 		}
 	}
 }

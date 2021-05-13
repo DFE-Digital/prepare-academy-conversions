@@ -15,7 +15,7 @@
 		<h1 class="govuk-heading-l">
 			Project notes
 		</h1>
-		<form method="post" asp-controller="ProjectNotes" asp-action="SaveAndDisplayNote">
+		<form method="post" asp-controller="ProjectNotes" asp-action="SaveNote">
 			<div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="40">
 				<div class="govuk-form-group">
 					<label class="govuk-label govuk-label--m">
@@ -32,7 +32,7 @@
 					<textarea class="govuk-textarea govuk-js-character-count" id="body" name="body" rows="5" aria-describedby="body-info"></textarea><div id="body-info" class="govuk-hint govuk-character-count__message" aria-live="polite">You have 500 characters remaining</div>
 				</div>
 			</div>
-			<button asp-controller="ProjectNotes" asp-action="Index" asp-route-id="@Model.Project.Id" class="govuk-button govuk-button" data-module="govuk-button">
+			<button asp-controller="ProjectNotes" asp-action="SaveNote" asp-route-id="@Model.Project.Id" class="govuk-button govuk-button" data-module="govuk-button">
 				Save note
 			</button>
 		</form>
