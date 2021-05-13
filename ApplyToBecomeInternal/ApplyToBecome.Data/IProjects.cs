@@ -1,5 +1,4 @@
 using ApplyToBecome.Data.Models;
-using ApplyToBecome.Data.Models.ProjectNotes;
 using System.Collections.Generic;
 
 namespace ApplyToBecome.Data
@@ -8,6 +7,5 @@ namespace ApplyToBecome.Data
 	{
 		IEnumerable<Project> GetAllProjects();
 		Project GetProjectById(int id);
-		void UpdateProjectWithNewNote(int id, ProjectNote note);
 	}
 }

@@ -1,9 +1,7 @@
 using ApplyToBecome.Data.Models;
-using ApplyToBecome.Data.Models.ProjectNotes;
 using ApplyToBecomeInternal.ViewModels;
 using FluentAssertions;
 using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Models
@@ -19,13 +17,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 				Trust = new Trust{Name = "Trust Name"},
 				ApplicationReceivedDate = new DateTime(2020, 12, 12),
 				AssignedDate = new DateTime(2021, 04, 02),
-				Phase = ProjectPhase.PreHTB,
-				Notes = new []
-				{
-					new ProjectNote("note title", "note body"),
-					new ProjectNote("second note title", "note body"),
-					new ProjectNote("third note title", "note body")
-				}
+				Phase = ProjectPhase.PreHTB
 			};
 			
 			var viewModel = new ProjectViewModel(project);
@@ -37,7 +29,6 @@ namespace ApplyToBecomeInternal.Tests.Models
 			viewModel.ApplicationReceivedDate.Should().Be("12 December 2020");
 			viewModel.AssignedDate.Should().Be("02 April 2021");
 			viewModel.Phase.Should().Be("Pre HTB");
-			viewModel.Notes.Should().HaveCount(3);
 		}
 
 		[Fact]
