@@ -20,7 +20,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 				ApplicationReceivedDate = new DateTime(2020, 12, 12),
 				AssignedDate = new DateTime(2021, 04, 02),
 				Phase = ProjectPhase.PreHTB,
-				Notes = new List<ProjectNote>()
+				Notes = new []
 				{
 					new ProjectNote("note title", "note body"),
 					new ProjectNote("second note title", "note body"),

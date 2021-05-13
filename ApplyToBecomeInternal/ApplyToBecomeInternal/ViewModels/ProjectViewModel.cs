@@ -37,6 +37,6 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string ApplicationReceivedDate { get; }
 		public string AssignedDate { get; }
 		public string Phase { get; }
-		public List<ProjectNote> Notes { get; set; }
+		public IEnumerable<ProjectNote> Notes { get; set; }
 	}
 }
