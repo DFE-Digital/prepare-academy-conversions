@@ -5,7 +5,7 @@
 
 @{
 
-	@if (Model.Project.Notes.Count > 0)
+	@if (Model.NewNote)
 	{
 		<div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
 			<div class="govuk-notification-banner__header">
@@ -38,19 +38,17 @@
 	<a asp-controller="ProjectNotes" asp-action="NewNote" asp-route-id="@Model.Project.Id" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">Add note</a>
 </div>
 
-@{ if (Model.Project.Notes != null)
+<div class="app-notes">
+	@foreach(var note in Model.Project.Notes)
 	{
-		foreach(var note in Model.Project.Notes)
-		{
-		<div class="app-notes__note">
-			<h2 class="govuk-heading-s govuk-!-margin-bottom-1">
-				<a class="govuk-link govuk-link--no-visited-state">
-					@note.Title
-				</a>
-			</h2>
-			<p class="govuk-!-margin-bottom-1">@note.Body</p>
-			<p class="govuk-body-s">@note.Author, @note.DateAndTime</p>
-		</div>
-		}
+	<div class="app-notes__note">
+		<h2 class="govuk-heading-s govuk-!-margin-bottom-1">
+			<a class="govuk-link govuk-link--no-visited-state">
+				@note.Title
+			</a>
+		</h2>
+		<p class="govuk-!-margin-bottom-1 govuk-body-m">@note.Body</p>
+		<p class="govuk-body-s">@note.Author, @note.DateAndTime</p>
+	</div>
 	}
-}
+</div>
