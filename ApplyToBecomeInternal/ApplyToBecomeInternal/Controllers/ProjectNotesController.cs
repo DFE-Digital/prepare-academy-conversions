@@ -39,7 +39,7 @@ namespace ApplyToBecomeInternal.Controllers
 		public IActionResult SaveNote(int id, string title, string body)
 		{
 			ProjectNote note = new ProjectNote(title, body);
-			var project = _projects.UpdateProjectWithNewNote(id, note);
+			_projects.UpdateProjectWithNewNote(id, note);
 			TempData["newNote"] = true;
 			return RedirectToAction(nameof(Index), new { id });
 		}
