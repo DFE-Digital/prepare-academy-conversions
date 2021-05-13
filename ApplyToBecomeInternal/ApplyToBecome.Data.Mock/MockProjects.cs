@@ -53,12 +53,10 @@ namespace ApplyToBecome.Data.Mock
 
 		public Project GetProjectById(int id) => _projects[id] ?? throw new Exception();
 
-		public Project UpdateProjectWithNewNote(int id, ProjectNote note)
+		public void UpdateProjectWithNewNote(int id, ProjectNote note)
 		{
 			var project = _projects.Where(x => x.Id == id).FirstOrDefault();
 			project.AddNote(note);
-
-			return project;
 		}
 	}
 }

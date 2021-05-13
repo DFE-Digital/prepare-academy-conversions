@@ -8,6 +8,6 @@ namespace ApplyToBecome.Data
 	{
 		IEnumerable<Project> GetAllProjects();
 		Project GetProjectById(int id);
-		Project UpdateProjectWithNewNote(int id, ProjectNote note);
+		void UpdateProjectWithNewNote(int id, ProjectNote note);
 	}
 }
