@@ -8,10 +8,12 @@ namespace ApplyToBecomeInternal.Controllers
 	public class TaskListController : Controller
 	{
 		private readonly IProjects _projects;
+		private readonly IApplications _applications;
 
-		public TaskListController(IProjects projects)
+		public TaskListController(IProjects projects, IApplications applications)
 		{
 			_projects = projects;
+			_applications = applications;
 		}
 
 		[HttpGet("{id}")]
@@ -27,7 +29,24 @@ namespace ApplyToBecomeInternal.Controllers
 		[HttpGet("{id}/preview-headteacher-board-template")]
 		public IActionResult PreviewHTBTemplate(int id)
 		{
-			return View();
+			var project = _projects.GetProjectById(id);
+			var projectViewModel = new ProjectViewModel(project);
+
+			var application = _applications.GetApplication(id.ToString());
+
+			var applicationFormViewModel = new ApplicationFormViewModel(application, projectViewModel);
+
+			return View(applicationFormViewModel);
+		}
+
+		[HttpGet("{id}/preview-headteacher-board-template/generate-headteacher-board-template")]
+		public IActionResult GenerateHTBTemplate(int id)
+		{
+			var project = _projects.GetProjectById(id);
+			var projectViewModel = new ProjectViewModel(project);
+			var generateHtbTemplateViewModel = new GenerateHTBTemplateViewModel(projectViewModel);
+
+			return View(generateHtbTemplateViewModel);
 		}
 	}
 }
