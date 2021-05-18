@@ -29,9 +29,9 @@ namespace ApplyToBecomeInternal.Controllers
 		{
 			var project = _projects.GetProjectById(id);
 			var projectViewModel = new ProjectViewModel(project);
-			var taskListViewModel = new PreviewHTBTemplateViewModel(projectViewModel);
+			var previewHtbTemplateViewModel = new PreviewHTBTemplateViewModel(projectViewModel);
 
-			return View(taskListViewModel);
+			return View(previewHtbTemplateViewModel);
 		}
 
 		[HttpGet("{id}/preview-headteacher-board-template/generate-headteacher-board-template")]
