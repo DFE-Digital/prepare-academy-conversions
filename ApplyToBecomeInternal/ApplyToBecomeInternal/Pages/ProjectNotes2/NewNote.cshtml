@@ -1,0 +1,41 @@
+﻿@page "/project-notes2/{id:int}/new-note"
+@model ApplyToBecomeInternal.Pages.ProjectNotes2.NewNoteModel
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-full">
+		@section BeforeMain
+		{
+			<partial name="_Navigation" model="Model.Navigation" />
+		}
+	</div>
+</div>
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+		<h1 class="govuk-heading-l">
+			Project notes
+		</h1>
+		<form method="post">
+			<div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="40">
+				<div class="govuk-form-group">
+					<label class="govuk-label govuk-label--m" for="subject">
+						Subject
+					</label>
+					<textarea class="govuk-textarea govuk-js-character-count" id="subject" name="subject" rows="1" aria-describedby="subject-info subject-hint"></textarea><div id="subject-info" class="govuk-hint govuk-character-count__message" aria-live="polite">You have 40 characters remaining</div>
+				</div>
+			</div>
+			<div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="500">
+				<div class="govuk-form-group">
+					<label class="govuk-label govuk-label--m" for="body">
+						Note
+					</label>
+					<textarea class="govuk-textarea govuk-js-character-count" id="body" name="body" rows="5" aria-describedby="body-info"></textarea><div id="body-info" class="govuk-hint govuk-character-count__message" aria-live="polite">You have 500 characters remaining</div>
+				</div>
+			</div>
+			<a asp-controller="ProjectNotes" asp-action="Index" asp-route-id="@Model.Project.Id" role="button" draggable="false" class="govuk-button govuk-button" data-module="govuk-button">
+				Save note
+			</a>
+		</form>
+	</div>
+</div>

@@ -2,9 +2,13 @@ using ApplyToBecome.Data;
 using ApplyToBecome.Data.Mock;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Text.RegularExpressions;
 
 namespace ApplyToBecomeInternal
 {
@@ -19,11 +23,13 @@ namespace ApplyToBecomeInternal
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddRazorPages().AddRazorRuntimeCompilation();
 #if DEBUG
 			services.AddControllersWithViews().AddRazorRuntimeCompilation();
 #else
 			services.AddControllersWithViews();
 #endif
+			
 
 			services.AddSingleton<ITrusts, MockTrusts>();
 			services.AddSingleton<IProjects, MockProjects>();
@@ -52,6 +58,7 @@ namespace ApplyToBecomeInternal
 
 			app.UseEndpoints(endpoints =>
 			{
+				endpoints.MapRazorPages();
 				endpoints.MapControllerRoute(
 					name: "default",
 					pattern: "{controller=Home}/{action=Index}/{id?}");

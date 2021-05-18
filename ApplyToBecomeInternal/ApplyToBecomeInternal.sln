@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplyToBecome.Data", "Apply
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplyToBecome.Data.Mock", "ApplyToBecome.Data.Mock\ApplyToBecome.Data.Mock.csproj", "{D44886FE-D996-4C4F-A28D-2FA7638D8194}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplyToBecomeInternal.Tests", "ApplyToBecomeInternal.Tests\ApplyToBecomeInternal.Tests.csproj", "{6B9F02FA-B258-402E-924F-E7980CB877E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplyToBecomeInternal.Tests", "ApplyToBecomeInternal.Tests\ApplyToBecomeInternal.Tests.csproj", "{6B9F02FA-B258-402E-924F-E7980CB877E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplyToBecome.Data.Tests", "ApplyToBecome.Data.Tests\ApplyToBecome.Data.Tests.csproj", "{38ED5863-485E-4630-B10A-2B0D5026B36A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplyToBecome.Data.Tests", "ApplyToBecome.Data.Tests\ApplyToBecome.Data.Tests.csproj", "{38ED5863-485E-4630-B10A-2B0D5026B36A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
