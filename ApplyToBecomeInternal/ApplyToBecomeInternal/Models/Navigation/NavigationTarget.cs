@@ -7,6 +7,9 @@
 		[Navigation(content: "Back", url: "/project-notes/{id}")]
 		ProjectNotes,
 		[Navigation(content: "Back", url: "/task-list/{id}/preview-headteacher-board-template")]
-		PreviewHTBTemplate
+		PreviewHTBTemplate,
+		[Navigation(content: "Back", url: "/task-list/{id}")]
+		TaskList
+
 	}
 }
