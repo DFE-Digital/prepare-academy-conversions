@@ -1,10 +1,19 @@
-@model object
+@model ApplyToBecomeInternal.ViewModels.PreviewHTBTemplateViewModel;
 
 @{
 	ViewBag.Title = "Preview headteacher board template";
 }
-<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-	Preview headteacher board (HTB) template
-</h1>
 
-<a href="#" class="govuk-button govuk-!-margin-bottom-2">Generate HTB papers</a>
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-full">
+		@section BeforeMain
+		{
+			<partial name="_Navigation" model="Model.Navigation" />
+		}
+		<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+			Preview headteacher board (HTB) template
+		</h1>
+		<a asp-controller="TaskList" asp-action="GenerateHTBTemplate" asp-route-id="@Model.Project.Id" class="govuk-button govuk-!-margin-bottom-2">Generate HTB papers</a>
+	</div>
+</div>
+

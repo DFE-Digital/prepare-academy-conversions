@@ -9,7 +9,7 @@ namespace ApplyToBecomeInternal.Controllers
 	{
 		private readonly IProjects _projects;
 
-		public TaskListController(IProjects projects)
+		public TaskListController(IProjects projects, IApplications applications)
 		{
 			_projects = projects;
 		}
@@ -27,7 +27,21 @@ namespace ApplyToBecomeInternal.Controllers
 		[HttpGet("{id}/preview-headteacher-board-template")]
 		public IActionResult PreviewHTBTemplate(int id)
 		{
-			return View();
+			var project = _projects.GetProjectById(id);
+			var projectViewModel = new ProjectViewModel(project);
+			var previewHtbTemplateViewModel = new PreviewHTBTemplateViewModel(projectViewModel);
+
+			return View(previewHtbTemplateViewModel);
+		}
+
+		[HttpGet("{id}/preview-headteacher-board-template/generate-headteacher-board-template")]
+		public IActionResult GenerateHTBTemplate(int id)
+		{
+			var project = _projects.GetProjectById(id);
+			var projectViewModel = new ProjectViewModel(project);
+			var generateHtbTemplateViewModel = new GenerateHTBTemplateViewModel(projectViewModel);
+
+			return View(generateHtbTemplateViewModel);
 		}
 	}
 }

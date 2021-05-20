@@ -1,4 +1,5 @@
 using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.GenerateHTBTemplate;
 using ApplyToBecomeInternal.ViewModels;
 using FluentAssertions;
 using System;
@@ -17,7 +18,28 @@ namespace ApplyToBecomeInternal.Tests.Models
 				Trust = new Trust{Name = "Trust Name"},
 				ApplicationReceivedDate = new DateTime(2020, 12, 12),
 				AssignedDate = new DateTime(2021, 04, 02),
-				Phase = ProjectPhase.PreHTB
+				Phase = ProjectPhase.PreHTB,
+				ProjectDocuments = new[]
+				{
+					new DocumentDetails
+					{
+						Name = "Wilfreds-Dynamics-HTB-temp-13-March-2021.docx",
+						Type = "Word document",
+						Size = "267kb"
+					},
+					new DocumentDetails
+					{
+						Name = "Dynamics-trust-temp-13March2021.docx",
+						Type = "Word document",
+						Size = "112kb"
+					},
+					new DocumentDetails
+					{
+						Name = "Dynamics-trust-update-May-2021.docx",
+						Type = "Word document",
+						Size = "854kb"
+					}
+				}
 			};
 			
 			var viewModel = new ProjectViewModel(project);
@@ -29,6 +51,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 			viewModel.ApplicationReceivedDate.Should().Be("12 December 2020");
 			viewModel.AssignedDate.Should().Be("02 April 2021");
 			viewModel.Phase.Should().Be("Pre HTB");
+			viewModel.ProjectDocuments.Should().HaveCount(3);
 		}
 
 		[Fact]
@@ -45,7 +68,6 @@ namespace ApplyToBecomeInternal.Tests.Models
 			};
 
 			var viewModel = new ProjectViewModel(project);
-
 			viewModel.Phase.Should().Be("Post HTB");
 		}
 	}
