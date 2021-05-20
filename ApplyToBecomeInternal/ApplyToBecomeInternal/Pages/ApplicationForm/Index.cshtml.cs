@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using ApplyToBecome.Data;
 using ApplyToBecomeInternal.Models.ApplicationForm;
 using ApplyToBecomeInternal.Models.ApplicationForm.Sections;
-using ApplyToBecomeInternal.Models.Navigation;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -21,7 +20,6 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 
 		public ProjectViewModel Project { get; set; }
 		public SubMenuViewModel SubMenu { get; set; }
-		public NavigationViewModel Navigation { get; set; }
 		public IEnumerable<BaseFormSection> Sections { get; set; }
 
 		public void OnGet(int id)
@@ -30,7 +28,6 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 
 			Project = new ProjectViewModel(project);
 			SubMenu = new SubMenuViewModel(Project.Id, SubMenuPage.SchoolApplicationForm);
-			Navigation = new NavigationViewModel(NavigationTarget.ProjectsList);
 
 			var application = _applications.GetApplication(id.ToString());
 			Sections = new BaseFormSection[]

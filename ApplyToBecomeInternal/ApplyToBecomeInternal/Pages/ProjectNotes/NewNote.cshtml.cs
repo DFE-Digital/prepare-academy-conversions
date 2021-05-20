@@ -1,6 +1,6 @@
 using ApplyToBecome.Data;
 using ApplyToBecome.Data.Models.ProjectNotes;
-using ApplyToBecomeInternal.Models.Navigation;
+using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -20,7 +20,6 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 		}
 
 		public ProjectViewModel Project { get; set; }
-		public NavigationViewModel Navigation { get; set; }
 
 		[BindProperty]
 		public string subject { get; set; }
@@ -34,7 +33,6 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 
 			Project = new ProjectViewModel(project);
 			var templateData = new[] { new KeyValuePair<string, string>("id", Project.Id) };
-			Navigation = new NavigationViewModel(NavigationTarget.ProjectNotes, templateData);
 		}
 
 		public IActionResult OnPost(int id)
@@ -42,7 +40,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 			var note = new ProjectNote(subject, body);
 			_projectNotes.SaveNote(id, note);
 			TempData["newNote"] = true;
-			return RedirectToPage("/ProjectNotes/Index", new { id = id });
+			return RedirectToPage(Links.ProjectNotes.Index.Page, new { id = id });
 		}
 	}
 }

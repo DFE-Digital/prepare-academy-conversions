@@ -5,7 +5,7 @@
 	<div class="govuk-grid-column-full">
 		@section BeforeMain
 		{
-			<partial name="_Navigation" model="Model.Navigation" />
+			<a asp-page="@Links.ProjectNotes.Index.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.ProjectNotes.Index.BackText</a>
 		}
 	</div>
 </div>

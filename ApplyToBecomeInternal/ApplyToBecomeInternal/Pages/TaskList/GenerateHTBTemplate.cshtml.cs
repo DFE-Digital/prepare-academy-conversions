@@ -1,8 +1,6 @@
 using ApplyToBecome.Data;
-using ApplyToBecomeInternal.Models.Navigation;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Collections.Generic;
 
 namespace ApplyToBecomeInternal.Pages.TaskList
 {
@@ -11,7 +9,6 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 		private readonly IProjects _projects;
 
 		public ProjectViewModel Project { get; set; }
-		public NavigationViewModel Navigation { get; set; }
 
 		public GenerateHTBTemplateModel(IProjects projects)
 		{
@@ -22,8 +19,6 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 		{
 			var project = _projects.GetProjectById(id);
 			Project = new ProjectViewModel(project);
-			var templateData = new[] { new KeyValuePair<string, string>("id", Project.Id) };
-			Navigation = new NavigationViewModel(NavigationTarget.PreviewHTBTemplate, templateData);
 		}
 	}
 }

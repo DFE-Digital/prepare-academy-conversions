@@ -1,6 +1,5 @@
 using ApplyToBecome.Data;
 using ApplyToBecome.Data.Models.ProjectNotes;
-using ApplyToBecomeInternal.Models.Navigation;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
@@ -20,7 +19,6 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 
 		public ProjectViewModel Project { get; set; }
 		public SubMenuViewModel SubMenu { get; set; }
-		public NavigationViewModel Navigation { get; set; }
 
 		public bool NewNote { get; set; }
 		public IEnumerable<ProjectNote> Notes { get; set; }
@@ -31,7 +29,6 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 
 			Project = new ProjectViewModel(project);
 			SubMenu = new SubMenuViewModel(Project.Id, SubMenuPage.ProjectNotes);
-			Navigation = new NavigationViewModel(NavigationTarget.ProjectsList);
 
 			NewNote = (bool)(TempData["newNote"] ?? false);
 			Notes = _projectNotes.GetNotesForProject(id);
