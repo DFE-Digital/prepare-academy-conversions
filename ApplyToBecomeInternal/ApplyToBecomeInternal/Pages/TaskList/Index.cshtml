@@ -1,5 +1,5 @@
-﻿@page "/task-list2/{id:int}"
-@model ApplyToBecomeInternal.Pages.TaskList2.IndexModel
+﻿@page "/task-list/{id:int}"
+@model ApplyToBecomeInternal.Pages.TaskList.IndexModel
 @{
 	ViewData["Title"] = "Task List";
 }
@@ -133,6 +133,6 @@
 		<h2 class="app-task-list__section">
 			Preview and generate HTB template
 		</h2>
-		<a asp-page="/TaskList2/PreviewHTBTemplate" asp-route-id="@Model.Project.Id" class="govuk-button govuk-!-margin-bottom-2">Preview HTB template</a>
+		<a asp-page="/TaskList/PreviewHTBTemplate" asp-route-id="@Model.Project.Id" class="govuk-button govuk-!-margin-bottom-2">Preview HTB template</a>
 	</div>
 </div>

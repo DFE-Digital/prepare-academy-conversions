@@ -19,8 +19,6 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 			_projects = projects;
 		}
 
-		public IProjects Projects => _projects;
-
 		public ProjectViewModel Project { get; set; }
 		public SubMenuViewModel SubMenu { get; set; }
 		public NavigationViewModel Navigation { get; set; }
@@ -28,14 +26,13 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 
 		public void OnGet(int id)
         {
-			var project = Projects.GetProjectById(id);
-			var projectViewModel = new ProjectViewModel(project);
+			var project = _projects.GetProjectById(id);
+
+			Project = new ProjectViewModel(project);
+			SubMenu = new SubMenuViewModel(Project.Id, SubMenuPage.SchoolApplicationForm);
+			Navigation = new NavigationViewModel(NavigationTarget.ProjectsList);
 
 			var application = _applications.GetApplication(id.ToString());
-
-			Project = projectViewModel;
-			SubMenu = new SubMenuViewModel(projectViewModel.Id, SubMenuPage.SchoolApplicationForm);
-			Navigation = new NavigationViewModel(NavigationTarget.ProjectsList);
 			Sections = new BaseFormSection[]
 			{
 				new ApplicationFormSection(application),

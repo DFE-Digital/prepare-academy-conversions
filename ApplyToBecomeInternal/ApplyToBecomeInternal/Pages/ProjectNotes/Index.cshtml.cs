@@ -1,31 +1,40 @@
 using ApplyToBecome.Data;
+using ApplyToBecome.Data.Models.ProjectNotes;
 using ApplyToBecomeInternal.Models.Navigation;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
 
-namespace ApplyToBecomeInternal.Pages.ProjectNotes2
+namespace ApplyToBecomeInternal.Pages.ProjectNotes
 {
 	public class IndexModel : PageModel
     {
 		private readonly IProjects _projects;
+		private readonly IProjectNotes _projectNotes;
 
-		public IndexModel(IProjects projects)
+		public IndexModel(IProjects projects, IProjectNotes projectNotes)
 		{
 			_projects = projects;
+			_projectNotes = projectNotes;
 		}
 
 		public ProjectViewModel Project { get; set; }
 		public SubMenuViewModel SubMenu { get; set; }
 		public NavigationViewModel Navigation { get; set; }
 
+		public bool NewNote { get; set; }
+		public IEnumerable<ProjectNote> Notes { get; set; }
+
 		public void OnGet(int id)
         {
 			var project = _projects.GetProjectById(id);
-			var projectViewModel = new ProjectViewModel(project);
 
-			Project = projectViewModel;
-			SubMenu = new SubMenuViewModel(projectViewModel.Id, SubMenuPage.ProjectNotes);
+			Project = new ProjectViewModel(project);
+			SubMenu = new SubMenuViewModel(Project.Id, SubMenuPage.ProjectNotes);
 			Navigation = new NavigationViewModel(NavigationTarget.ProjectsList);
+
+			NewNote = (bool)(TempData["newNote"] ?? false);
+			Notes = _projectNotes.GetNotesForProject(id);
 		}
     }
 }

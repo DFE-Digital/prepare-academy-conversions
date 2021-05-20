@@ -4,7 +4,7 @@ using ApplyToBecome.Data;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ApplyToBecomeInternal.Pages.ProjectList2
+namespace ApplyToBecomeInternal.Pages.ProjectList
 {
 	public class IndexModel : PageModel
     {

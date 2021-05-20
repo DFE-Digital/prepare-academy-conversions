@@ -3,7 +3,7 @@ using ApplyToBecomeInternal.Models.Navigation;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ApplyToBecomeInternal.Pages.TaskList2
+namespace ApplyToBecomeInternal.Pages.TaskList
 {
 	public class IndexModel : PageModel
     {
@@ -21,9 +21,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList2
 		public void OnGet(int id)
         {
 			var project = _projects.GetProjectById(id);
-			var projectViewModel = new ProjectViewModel(project);
-			Project = projectViewModel;
-			SubMenu = new SubMenuViewModel(projectViewModel.Id, SubMenuPage.TaskList);
+			Project = new ProjectViewModel(project);
+			SubMenu = new SubMenuViewModel(Project.Id, SubMenuPage.TaskList);
 			Navigation = new NavigationViewModel(NavigationTarget.ProjectsList);
 		}
     }
