@@ -10,20 +10,22 @@ namespace ApplyToBecomeInternal
 {
 	public class Startup
 	{
-		public Startup(IConfiguration configuration)
+		public Startup(IConfiguration configuration, IWebHostEnvironment env)
 		{
 			Configuration = configuration;
+			_env = env;
 		}
 
 		public IConfiguration Configuration { get; }
+		private readonly IWebHostEnvironment _env;
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-#if DEBUG
-			services.AddControllersWithViews().AddRazorRuntimeCompilation();
-#else
-			services.AddControllersWithViews();
-#endif
+			var razorPages = services.AddRazorPages();
+			if (_env.IsDevelopment())
+			{
+				razorPages.AddRazorRuntimeCompilation();
+			}
 
 			services.AddSingleton<ITrusts, MockTrusts>();
 			services.AddSingleton<IProjects, MockProjects>();
@@ -39,7 +41,7 @@ namespace ApplyToBecomeInternal
 			}
 			else
 			{
-				app.UseExceptionHandler("/Error/Index");
+				app.UseExceptionHandler("/Error");
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
@@ -53,9 +55,7 @@ namespace ApplyToBecomeInternal
 
 			app.UseEndpoints(endpoints =>
 			{
-				endpoints.MapControllerRoute(
-					name: "default",
-					pattern: "{controller=Home}/{action=Index}/{id?}");
+				endpoints.MapRazorPages();
 			});
 		}
 	}
