@@ -1,25 +1,18 @@
 using ApplyToBecome.Data;
 using ApplyToBecomeInternal.ViewModels;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ApplyToBecomeInternal.Pages.TaskList
 {
-	public class IndexModel : PageModel
-    {
-		private readonly IProjects _projects;
-
-		public ProjectViewModel Project { get; set; }
+	public class IndexModel : BaseProjectPageModel
+	{
 		public SubMenuViewModel SubMenu { get; set; }
 
-		public IndexModel(IProjects projects)
-		{
-			_projects = projects;
-		}
+		public IndexModel(IProjects projects) : base(projects) { }
 
-		public void OnGet(int id)
+		public override void OnGet(int id)
         {
-			var project = _projects.GetProjectById(id);
-			Project = new ProjectViewModel(project);
+			base.OnGet(id);
+
 			SubMenu = new SubMenuViewModel(Project.Id, SubMenuPage.TaskList);
 		}
     }

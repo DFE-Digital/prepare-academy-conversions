@@ -3,30 +3,25 @@ using ApplyToBecome.Data;
 using ApplyToBecomeInternal.Models.ApplicationForm;
 using ApplyToBecomeInternal.Models.ApplicationForm.Sections;
 using ApplyToBecomeInternal.ViewModels;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ApplyToBecomeInternal.Pages.ApplicationForm
 {
-	public class IndexModel : PageModel
-    {
+	public class IndexModel : BaseProjectPageModel
+	{
 		private readonly IApplications _applications;
-		private readonly IProjects _projects;
 
-		public IndexModel(IApplications applications, IProjects projects)
+		public IndexModel(IApplications applications, IProjects projects) : base(projects)
 		{
 			_applications = applications;
-			_projects = projects;
 		}
 
-		public ProjectViewModel Project { get; set; }
 		public SubMenuViewModel SubMenu { get; set; }
 		public IEnumerable<BaseFormSection> Sections { get; set; }
 
-		public void OnGet(int id)
+		public override void OnGet(int id)
         {
-			var project = _projects.GetProjectById(id);
+			base.OnGet(id);
 
-			Project = new ProjectViewModel(project);
 			SubMenu = new SubMenuViewModel(Project.Id, SubMenuPage.SchoolApplicationForm);
 
 			var application = _applications.GetApplication(id.ToString());
