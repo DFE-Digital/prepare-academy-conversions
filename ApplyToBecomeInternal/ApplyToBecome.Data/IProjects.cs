@@ -1,11 +1,12 @@
 using ApplyToBecome.Data.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ApplyToBecome.Data
 {
 	public interface IProjects
 	{
-		IEnumerable<Project> GetAllProjects();
-		Project GetProjectById(int id);
+		Task<IEnumerable<Project>> GetAllProjects();
+		Task<Project> GetProjectById(int id);
 	}
 }

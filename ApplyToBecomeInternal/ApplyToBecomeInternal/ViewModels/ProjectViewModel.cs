@@ -27,7 +27,7 @@ namespace ApplyToBecomeInternal.ViewModels
 		}
 
 
-		private static string FormatDate(DateTime dateTime) => dateTime.ToString("dd MMMM yyyy");
+		private static string FormatDate(DateTime? dateTime) => dateTime.HasValue ? dateTime.Value.ToString("dd MMMM yyyy") : "";
 
 		public string Id { get; }
 		public string TrustName { get; }

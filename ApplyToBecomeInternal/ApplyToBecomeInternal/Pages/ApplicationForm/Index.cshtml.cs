@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ApplyToBecome.Data;
 using ApplyToBecomeInternal.Models.ApplicationForm;
 using ApplyToBecomeInternal.Models.ApplicationForm.Sections;
@@ -18,9 +19,9 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 		public SubMenuViewModel SubMenu { get; set; }
 		public IEnumerable<BaseFormSection> Sections { get; set; }
 
-		public override void OnGet(int id)
+		public override async Task OnGetAsync(int id)
         {
-			base.OnGet(id);
+			await base.OnGetAsync(id);
 
 			SubMenu = new SubMenuViewModel(Project.Id, SubMenuPage.SchoolApplicationForm);
 

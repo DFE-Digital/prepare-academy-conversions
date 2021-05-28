@@ -1,10 +1,12 @@
 using ApplyToBecome.Data;
 using ApplyToBecome.Data.Mock;
+using ApplyToBecomeInternal.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace ApplyToBecomeInternal
 {
@@ -28,9 +30,15 @@ namespace ApplyToBecomeInternal
 			}
 
 			services.AddSingleton<ITrusts, MockTrusts>();
-			services.AddSingleton<IProjects, MockProjects>();
 			services.AddSingleton<IApplications, MockApplications>();
 			services.AddSingleton<IProjectNotes, MockProjectNotes>();
+
+			services.AddHttpClient<IProjects, ProjectsService>(client =>
+			{
+				var tramsApiOptions = Configuration.GetSection(TramsApiOptions.Name).Get<TramsApiOptions>();
+				client.BaseAddress = new Uri(tramsApiOptions.Endpoint);
+				client.DefaultRequestHeaders.Add("ApiKey", tramsApiOptions.ApiKey);
+			});
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

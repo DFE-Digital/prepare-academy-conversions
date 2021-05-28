@@ -8,3 +8,4 @@ applications:
     username: ((username))
     password: ((password))
     ASPNETCORE_ENVIRONMENT: Development
+    TramsApi__Endpoint: https://trams-external-api.azurewebsites.net

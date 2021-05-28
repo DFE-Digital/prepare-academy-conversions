@@ -1,5 +1,6 @@
 using ApplyToBecome.Data;
 using ApplyToBecomeInternal.ViewModels;
+using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList
 {
@@ -9,9 +10,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 
 		public IndexModel(IProjects projects) : base(projects) { }
 
-		public override void OnGet(int id)
+		public override async Task OnGetAsync(int id)
         {
-			base.OnGet(id);
+			await base.OnGetAsync(id);
 
 			SubMenu = new SubMenuViewModel(Project.Id, SubMenuPage.TaskList);
 		}
