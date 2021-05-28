@@ -2,6 +2,7 @@ using ApplyToBecome.Data;
 using ApplyToBecome.Data.Models.ProjectNotes;
 using ApplyToBecomeInternal.ViewModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.ProjectNotes
 {
@@ -19,9 +20,9 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 		public bool NewNote { get; set; }
 		public IEnumerable<ProjectNote> Notes { get; set; }
 
-		public override void OnGet(int id)
+		public override async Task OnGetAsync(int id)
         {
-			base.OnGet(id);
+			await base.OnGetAsync(id);
 
 			SubMenu = new SubMenuViewModel(Project.Id, SubMenuPage.ProjectNotes);
 

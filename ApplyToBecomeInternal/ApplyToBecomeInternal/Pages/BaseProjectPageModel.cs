@@ -1,6 +1,7 @@
 ﻿using ApplyToBecome.Data;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages
 {
@@ -15,9 +16,9 @@ namespace ApplyToBecomeInternal.Pages
 			_projects = projects;
 		}
 
-		public virtual void OnGet(int id)
+		public virtual async Task OnGetAsync(int id)
 		{
-			var project = _projects.GetProjectById(id);
+			var project = await _projects.GetProjectById(id);
 			Project = new ProjectViewModel(project);
 		}
 	}

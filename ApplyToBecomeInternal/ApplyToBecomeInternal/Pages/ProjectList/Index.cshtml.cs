@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ApplyToBecome.Data;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -18,9 +19,9 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 			_projects = projects;
 		}
 
-		public void OnGet()
+		public async Task OnGetAsync()
         {
-			var ongoingProjects = _projects.GetAllProjects();
+			var ongoingProjects = await _projects.GetAllProjects();
 			Projects = ongoingProjects.Select(project => new ProjectViewModel(project)).ToList();
 		}
     }
