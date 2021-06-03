@@ -24,6 +24,11 @@
 			public static LinkItem PreviewHTBTemplate = new LinkItem { BackText = "Back", Page = "/TaskList/PreviewHTBTemplate" };
 			public static LinkItem GenerateHTBTemplate = new LinkItem { BackText = "Back", Page = "/TaskList/GenerateHTBTemplate" };
 		}
+
+		public static class Rationale
+		{
+			public static LinkItem Index = new LinkItem { BackText = "Back", Page = "/TaskList/Rationale" };
+		}
 	}
 
 	public class LinkItem
