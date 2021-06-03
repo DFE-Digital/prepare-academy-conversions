@@ -33,12 +33,16 @@ namespace ApplyToBecomeInternal
 			services.AddSingleton<IApplications, MockApplications>();
 			services.AddSingleton<IProjectNotes, MockProjectNotes>();
 
-			services.AddHttpClient<IProjects, ProjectsService>(client =>
+			services.AddHttpClient("TramsClient", (sp, client) =>
 			{
-				var tramsApiOptions = Configuration.GetSection(TramsApiOptions.Name).Get<TramsApiOptions>();
+				var configuration = sp.GetRequiredService<IConfiguration>();
+				var tramsApiOptions = configuration.GetSection(TramsApiOptions.Name).Get<TramsApiOptions>();
 				client.BaseAddress = new Uri(tramsApiOptions.Endpoint);
 				client.DefaultRequestHeaders.Add("ApiKey", tramsApiOptions.ApiKey);
 			});
+
+			services.AddScoped<SchoolPerformanceService>();
+			services.AddScoped<IProjects, ProjectsService>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

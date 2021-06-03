@@ -10,9 +10,9 @@ namespace ApplyToBecome.Data
 	{
 		private readonly HttpClient _httpClient;
 
-		public ProjectsService(HttpClient httpClient)
+		public ProjectsService(IHttpClientFactory httpClientFactory)
 		{
-			_httpClient = httpClient;
+			_httpClient = httpClientFactory.CreateClient("TramsClient");
 		}
 
 		public async Task<IEnumerable<Project>> GetAllProjects()
