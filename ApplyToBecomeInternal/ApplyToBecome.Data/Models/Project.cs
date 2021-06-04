@@ -13,5 +13,6 @@ namespace ApplyToBecome.Data.Models
 		public DateTime? AssignedDate { get; set; }
 		public ProjectPhase Phase { get; set; }
 		public IEnumerable<DocumentDetails> ProjectDocuments { get; set; }
+		public Rationale Rationale { get; set; }
 	}
 }

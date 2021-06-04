@@ -39,19 +39,26 @@ namespace ApplyToBecomeInternal.Tests.Models
 						Type = "Word document",
 						Size = "854kb"
 					}
+				},
+				Rationale = new Rationale
+				{
+					ProjectRationale = "Rationale for the project",
+					TrustRationale = "Rationale for the trust"
 				}
 			};
-			
+
 			var viewModel = new ProjectViewModel(project);
 			viewModel.Id.Should().Be("1");
 			viewModel.TrustName.Should().Be("Trust Name");
 			viewModel.SchoolName.Should().Be("School Name");
 			viewModel.SchoolURN.Should().Be("URN");
-			viewModel.LocalAuthority.Should().Be("Local Authority"); 
+			viewModel.LocalAuthority.Should().Be("Local Authority");
 			viewModel.ApplicationReceivedDate.Should().Be("12 December 2020");
 			viewModel.AssignedDate.Should().Be("02 April 2021");
 			viewModel.Phase.Should().Be("Pre HTB");
 			viewModel.ProjectDocuments.Should().HaveCount(3);
+			viewModel.ProjectRationale.Should().Be("Rationale for the project");
+			viewModel.TrustRationale.Should().Be("Rationale for the trust");
 		}
 
 		[Fact]
