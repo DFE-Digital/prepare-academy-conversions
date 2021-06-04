@@ -48,7 +48,7 @@
 				Outcome for pupils
 			</dt>
 			<dd class="govuk-summary-list__value">
-				<p class="govuk-body">@DisplayOfstedRating(Model.SchoolPerformance.PersonalDevelopment)</p>
+				<p id="outcome-for-pupils" class="govuk-body">@Model.SchoolPerformance.PersonalDevelopment.DisplayOfstedRating()</p>
 			</dd>
 			<dd class="govuk-summary-list__actions">
 			</dd>
@@ -58,7 +58,7 @@
 				Quality of teaching, learning and assessment
 			</dt>
 			<dd class="govuk-summary-list__value">
-				<p class="govuk-body">@DisplayOfstedRating(Model.SchoolPerformance.QualityOfEducation)</p>
+				<p id="quality-of-teaching-learning-and-assessment" class="govuk-body">@Model.SchoolPerformance.QualityOfEducation.DisplayOfstedRating()</p>
 			</dd>
 			<dd class="govuk-summary-list__actions">
 			</dd>
@@ -68,7 +68,7 @@
 				Effectiveness of leadership and management
 			</dt>
 			<dd class="govuk-summary-list__value">
-				<p class="govuk-body">@DisplayOfstedRating(Model.SchoolPerformance.EffectivenessOfLeadershipAndManagement)</p>
+				<p id="effectiveness-of-leadership-and-management" class="govuk-body">@Model.SchoolPerformance.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating()</p>
 			</dd>
 			<dd class="govuk-summary-list__actions">
 			</dd>
@@ -78,7 +78,7 @@
 				Personal development, behaviour and welfare
 			</dt>
 			<dd class="govuk-summary-list__value">
-				<p class="govuk-body">@DisplayOfstedRating(Model.SchoolPerformance.BehaviourAndAttitudes)</p>
+				<p id="personal-development-behaviour-and-welfare" class="govuk-body">@Model.SchoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating()</p>
 			</dd>
 			<dd class="govuk-summary-list__actions">
 			</dd>
@@ -88,7 +88,7 @@
 				Early years provision
 			</dt>
 			<dd class="govuk-summary-list__value">
-				<p class="govuk-body">@DisplayOfstedRating(Model.SchoolPerformance.EarlyYearsProvision)</p>
+				<p id="early-years-provision" class="govuk-body">@Model.SchoolPerformance.EarlyYearsProvision.DisplayOfstedRating()</p>
 			</dd>
 			<dd class="govuk-summary-list__actions">
 			</dd>
@@ -98,7 +98,7 @@
 				Overall effectiveness
 			</dt>
 			<dd class="govuk-summary-list__value">
-				<p class="govuk-body">@DisplayOfstedRating(Model.SchoolPerformance.OverallEffectiveness)</p>
+				<p id="overall-effectiveness" class="govuk-body">@Model.SchoolPerformance.OverallEffectiveness.DisplayOfstedRating()</p>
 			</dd>
 			<dd class="govuk-summary-list__actions">
 			</dd>
@@ -128,18 +128,3 @@
 
 	</div>
 </div>
-
-@functions
-{
-	private static string DisplayOfstedRating(string ofstedRating)
-	{
-		return ofstedRating switch
-		{
-			"1" => "Outstanding",
-			"2" => "Good",
-			"3" => "Requires improvement",
-			"4" => "Inadequate",
-			_ => ""
-		};
-	}
-}
