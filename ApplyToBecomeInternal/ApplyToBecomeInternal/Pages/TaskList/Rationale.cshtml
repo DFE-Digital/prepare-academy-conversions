@@ -1,16 +1,54 @@
 @page "/task-list/{id:int}/rationale"
 @model ApplyToBecomeInternal.Pages.TaskList.IndexModel
 
-<span class="govuk-caption-l">@Model.Project.SchoolName</span>
-<h1 class="govuk-heading-l">
-	Confirm project and trust rationale
-</h1>
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-full">
+	    @section BeforeMain
+        {
+            <a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.TaskList.Index.BackText</a>
+        }
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-full">
+				<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+				<h1 class="govuk-heading-l">
+					Confirm project and trust rationale
+				</h1>
+				<div class="govuk-body">
+					<p>
+						This information is pre-populated from the
+						<a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+					</p>
+				</div>
+			</div>
+		</div>
+		<dl class="govuk-summary-list">
+			<div class="govuk-summary-list__row">
+		    <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
+		      Rationale for project
+		    </dt>
+		    <dd class="govuk-summary-list__value govuk-!-width-full">
+				@Model.Project.ProjectRationale
+			</dd>
+		    <dd class="govuk-summary-list__actions">
+		      <a class="govuk-link" href="">
+		        Change<span class="govuk-visually-hidden">project rationale</span>
+		      </a>
+		    </dd>
+		  </div>
 
-<p>
-	This information is pre-populated from the
-	@* sort this link *@
-	<a href="/related/application_newtab" target="_blank">school's application form (opens in a new tab)</a>.
-</p>
-
-
-
+		  <div class="govuk-summary-list__row">
+		    <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
+		      Rationale for the trust or sponsor
+		    </dt>
+		      <dd class="govuk-summary-list__value  govuk-!-width-two-thirds">
+		          @Model.Project.TrustRationale
+		      </dd>
+		    <dd class="govuk-summary-list__actions">
+		      <a class="govuk-link" href="">
+		        Change<span class="govuk-visually-hidden">sponsor rationale</span>
+		      </a>
+		    </dd>
+		  </div>
+		</dl>
+	</div>
+</div>

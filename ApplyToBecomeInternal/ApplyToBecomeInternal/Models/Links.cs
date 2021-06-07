@@ -20,9 +20,14 @@
 
 		public static class TaskList
 		{
-			public static LinkItem Index = new LinkItem { BackText = "Back", Page = "/TaskList/Index" };
+			public static LinkItem Index = new LinkItem { BackText = "Back to task list", Page = "/TaskList/Index" };
 			public static LinkItem PreviewHTBTemplate = new LinkItem { BackText = "Back", Page = "/TaskList/PreviewHTBTemplate" };
 			public static LinkItem GenerateHTBTemplate = new LinkItem { BackText = "Back", Page = "/TaskList/GenerateHTBTemplate" };
+		}
+
+		public static class SchoolApplicationForm
+		{
+			public static LinkItem Index = new LinkItem { BackText = "Back", Page = "/ApplicationForm/Index" };
 		}
 
 		public static class Rationale
