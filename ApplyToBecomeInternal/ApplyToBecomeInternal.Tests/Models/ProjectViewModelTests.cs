@@ -71,7 +71,8 @@ namespace ApplyToBecomeInternal.Tests.Models
 				Trust = new Trust {Name = "Trust Name"},
 				ApplicationReceivedDate = new DateTime(2020, 12, 12),
 				AssignedDate = new DateTime(2021, 04, 02),
-				Phase = ProjectPhase.PostHTB
+				Phase = ProjectPhase.PostHTB,
+				Rationale = new Rationale {ProjectRationale = "Rationale for the project", TrustRationale = "Rationale for the trust"}
 			};
 
 			var viewModel = new ProjectViewModel(project);
