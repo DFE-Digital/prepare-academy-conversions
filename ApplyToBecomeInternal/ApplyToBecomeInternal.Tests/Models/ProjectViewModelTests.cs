@@ -42,8 +42,8 @@ namespace ApplyToBecomeInternal.Tests.Models
 				},
 				Rationale = new Rationale
 				{
-					ProjectRationale = "Rationale for the project",
-					TrustRationale = "Rationale for the trust"
+					RationaleForProject = "Rationale for the project",
+					RationaleForTrust = "Rationale for the trust"
 				}
 			};
 
@@ -57,8 +57,8 @@ namespace ApplyToBecomeInternal.Tests.Models
 			viewModel.AssignedDate.Should().Be("02 April 2021");
 			viewModel.Phase.Should().Be("Pre HTB");
 			viewModel.ProjectDocuments.Should().HaveCount(3);
-			viewModel.ProjectRationale.Should().Be("Rationale for the project");
-			viewModel.TrustRationale.Should().Be("Rationale for the trust");
+			viewModel.RationaleForProject.Should().Be("Rationale for the project");
+			viewModel.RationaleForTrust.Should().Be("Rationale for the trust");
 		}
 
 		[Fact]
@@ -72,7 +72,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 				ApplicationReceivedDate = new DateTime(2020, 12, 12),
 				AssignedDate = new DateTime(2021, 04, 02),
 				Phase = ProjectPhase.PostHTB,
-				Rationale = new Rationale {ProjectRationale = "Rationale for the project", TrustRationale = "Rationale for the trust"}
+				Rationale = new Rationale {RationaleForProject = "Rationale for the project", RationaleForTrust = "Rationale for the trust"}
 			};
 
 			var viewModel = new ProjectViewModel(project);

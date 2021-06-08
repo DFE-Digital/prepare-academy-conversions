@@ -27,9 +27,9 @@
 		      Rationale for project
 		    </dt>
 				<dd class="govuk-summary-list__value govuk-!-width-full">
-					@if (!string.IsNullOrEmpty(@Model.Project.ProjectRationale))
+					@if (!string.IsNullOrEmpty(@Model.Project.RationaleForProject))
 					{
-						@Model.Project.ProjectRationale
+						@Model.Project.RationaleForProject
 					}
 					else
 					{
@@ -49,9 +49,9 @@
 		      Rationale for the trust or sponsor
 		    </dt>
 		      <dd class="govuk-summary-list__value govuk-!-width-two-thirds">
-			      @if (!string.IsNullOrEmpty(@Model.Project.TrustRationale))
+			      @if (!string.IsNullOrEmpty(@Model.Project.RationaleForTrust))
 			      {
-				      @Model.Project.TrustRationale
+				      @Model.Project.RationaleForTrust
 			      }
 			      else
 			      {

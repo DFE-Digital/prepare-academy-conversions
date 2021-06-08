@@ -2,7 +2,7 @@ namespace ApplyToBecome.Data.Models
 {
 	public class Rationale
 	{
-		public string ProjectRationale { get; set; }
-		public string TrustRationale { get; set; }
+		public string RationaleForProject { get; set; }
+		public string RationaleForTrust { get; set; }
 	}
 }

@@ -24,8 +24,8 @@ namespace ApplyToBecomeInternal.ViewModels
 			AssignedDate = FormatDate(project.AssignedDate);
 			Phase = _projectPhaseText[project.Phase];
 			ProjectDocuments = project.ProjectDocuments;
-			ProjectRationale = project.Rationale.ProjectRationale;
-			TrustRationale = project.Rationale.TrustRationale;
+			RationaleForProject = project.Rationale.RationaleForProject;
+			RationaleForTrust = project.Rationale.RationaleForTrust;
 		}
 
 
@@ -40,7 +40,7 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string AssignedDate { get; }
 		public string Phase { get; }
 		public IEnumerable<DocumentDetails> ProjectDocuments { get; set; }
-		public string ProjectRationale { get; set; }
-		public string TrustRationale { get; set; }
+		public string RationaleForProject { get; set; }
+		public string RationaleForTrust { get; set; }
 	}
 }
