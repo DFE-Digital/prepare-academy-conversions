@@ -1,4 +1,5 @@
-﻿using ApplyToBecome.Data.Models;
+﻿using AngleSharp.Dom;
+using ApplyToBecome.Data.Models;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Tests.Helpers;
 using AutoFixture;
@@ -26,6 +27,30 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 		{
 			_client = factory.CreateClient();
 			_server = factory.WMServer;
+		}
+
+		[Fact]
+		public async Task Should_navigate_to_school_performance_ofsted_information_from_task_list()
+		{
+			var (id, _) = SetupMockServer();
+
+			var response = await _client.GetAsync($"/task-list/{id}");
+			var document = await HtmlHelper.GetDocumentAsync(response);
+
+			var schoolPerformancePage = await document.NavigateAsync("School performance (Ofsted information)");
+			schoolPerformancePage.Url.Should().Be($"{document.Origin}/task-list/{id}/school-performance/ofsted-information");
+		}
+
+		[Fact]
+		public async Task Should_navigate_back_to_task_list_from_school_performance_ofsted_information()
+		{
+			var (id, _) = SetupMockServer();
+
+			var response = await _client.GetAsync($"/task-list/{id}/school-performance/ofsted-information");
+			var document = await HtmlHelper.GetDocumentAsync(response);
+
+			var taskList = await document.NavigateAsync("Back to task list");
+			taskList.Url.Should().Be($"{document.Origin}/task-list/{id}");
 		}
 
 		[Fact]

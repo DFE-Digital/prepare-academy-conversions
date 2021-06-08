@@ -20,7 +20,7 @@
 
 		public static class TaskList
 		{
-			public static LinkItem Index = new LinkItem { Page = "/TaskList/Index" };
+			public static LinkItem Index = new LinkItem { BackText = "Back to task list", Page = "/TaskList/Index" };
 			public static LinkItem PreviewHTBTemplate = new LinkItem { Page = "/TaskList/PreviewHTBTemplate" };
 			public static LinkItem GenerateHTBTemplate = new LinkItem { Page = "/TaskList/GenerateHTBTemplate" };
 		}

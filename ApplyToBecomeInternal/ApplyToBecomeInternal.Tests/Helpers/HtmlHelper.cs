@@ -1,6 +1,7 @@
 ﻿using AngleSharp;
 using AngleSharp.Html.Dom;
 using AngleSharp.Io;
+using AngleSharp.Io.Network;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -12,8 +13,11 @@ namespace ApplyToBecomeInternal.Tests.Helpers
 	{
 		public static async Task<IHtmlDocument> GetDocumentAsync(HttpResponseMessage response)
 		{
-			var content = await response.Content.ReadAsStringAsync();
-			var document = await BrowsingContext.New()
+			var requester = new HttpClientRequester();
+			var config = AngleSharp.Configuration.Default.WithRequester(requester).WithDefaultLoader(new LoaderOptions { IsResourceLoadingEnabled = true });
+
+						var content = await response.Content.ReadAsStringAsync();
+			var document = await BrowsingContext.New(config)
 				.OpenAsync(ResponseFactory, CancellationToken.None);
 			return (IHtmlDocument)document;
 
