@@ -6,6 +6,7 @@ using AutoFixture;
 using AutoFixture.Kernel;
 using FluentAssertions;
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Reflection;
 using System.Text.Json;
@@ -44,6 +45,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 		[Fact]
 		public async Task Should_navigate_back_to_task_list_from_school_performance_ofsted_information()
 		{
+			Debug.Print("VIV: " + System.Globalization.CultureInfo.CurrentCulture);
+			Debug.Print("VIV: " + System.Globalization.CultureInfo.DefaultThreadCurrentCulture);
+			Debug.Print("VIV: " + System.Globalization.CultureInfo.CurrentUICulture);
+			Debug.Print("VIV: " + System.Globalization.CultureInfo.DefaultThreadCurrentUICulture);
+
 			var (id, _) = SetupMockServer();
 
 			var response = await _client.GetAsync($"/task-list/{id}/school-performance/ofsted-information");
