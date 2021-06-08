@@ -11,9 +11,9 @@ namespace ApplyToBecomeInternal.Tests.Helpers
 {
 	internal static class HtmlHelper
 	{
-		public static async Task<IHtmlDocument> GetDocumentAsync(HttpResponseMessage response)
+		public static async Task<IHtmlDocument> GetDocumentAsync(HttpClient client, HttpResponseMessage response)
 		{
-			var requester = new HttpClientRequester();
+			var requester = new HttpClientRequester(client);
 			var config = AngleSharp.Configuration.Default.WithRequester(requester).WithDefaultLoader(new LoaderOptions { IsResourceLoadingEnabled = true });
 
 						var content = await response.Content.ReadAsStringAsync();
