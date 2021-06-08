@@ -26,9 +26,17 @@
 		    <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
 		      Rationale for project
 		    </dt>
-		    <dd class="govuk-summary-list__value govuk-!-width-full">
-				@Model.Project.ProjectRationale
-			</dd>
+				<dd class="govuk-summary-list__value govuk-!-width-full">
+					@if (!string.IsNullOrEmpty(@Model.Project.ProjectRationale))
+					{
+						@Model.Project.ProjectRationale
+					}
+					else
+					{
+						<span class="empty">Empty</span>
+					}
+
+				</dd>
 		    <dd class="govuk-summary-list__actions">
 		      <a class="govuk-link" href="">
 		        Change<span class="govuk-visually-hidden">project rationale</span>
@@ -40,8 +48,15 @@
 		    <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
 		      Rationale for the trust or sponsor
 		    </dt>
-		      <dd class="govuk-summary-list__value  govuk-!-width-two-thirds">
-		          @Model.Project.TrustRationale
+		      <dd class="govuk-summary-list__value govuk-!-width-two-thirds">
+			      @if (!string.IsNullOrEmpty(@Model.Project.TrustRationale))
+			      {
+				      @Model.Project.TrustRationale
+			      }
+			      else
+			      {
+				      <span class="empty">Empty</span>
+			      }
 		      </dd>
 		    <dd class="govuk-summary-list__actions">
 		      <a class="govuk-link" href="">
