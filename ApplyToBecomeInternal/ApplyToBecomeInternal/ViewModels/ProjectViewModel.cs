@@ -7,7 +7,7 @@ namespace ApplyToBecomeInternal.ViewModels
 {
 	public class ProjectViewModel
 	{
-		private readonly Dictionary<ProjectPhase, string> _projectPhaseText = new Dictionary<ProjectPhase, string> 
+		private readonly Dictionary<ProjectPhase, string> _projectPhaseText = new Dictionary<ProjectPhase, string>
 		{
 			{ProjectPhase.PreHTB, "Pre HTB"},
 			{ProjectPhase.PostHTB, "Post HTB"}
@@ -24,6 +24,8 @@ namespace ApplyToBecomeInternal.ViewModels
 			AssignedDate = FormatDate(project.AssignedDate);
 			Phase = _projectPhaseText[project.Phase];
 			ProjectDocuments = project.ProjectDocuments;
+			RationaleForProject = project.Rationale.RationaleForProject;
+			RationaleForTrust = project.Rationale.RationaleForTrust;
 		}
 
 
@@ -38,5 +40,7 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string AssignedDate { get; }
 		public string Phase { get; }
 		public IEnumerable<DocumentDetails> ProjectDocuments { get; set; }
+		public string RationaleForProject { get; set; }
+		public string RationaleForTrust { get; set; }
 	}
 }

@@ -1,4 +1,4 @@
-﻿namespace ApplyToBecomeInternal.Models
+namespace ApplyToBecomeInternal.Models
 {
 	public static class Links
 	{
@@ -28,6 +28,16 @@
 		public static class SchoolPerformance
 		{
 			public static LinkItem Index = new LinkItem { Page = "/SchoolPerformance/Index" };
+		}
+
+		public static class SchoolApplicationForm
+		{
+			public static LinkItem Index = new LinkItem { BackText = "Back", Page = "/ApplicationForm/Index" };
+		}
+
+		public static class Rationale
+		{
+			public static LinkItem Index = new LinkItem { BackText = "Back", Page = "/TaskList/Rationale" };
 		}
 	}
 
