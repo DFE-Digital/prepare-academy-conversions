@@ -1,6 +1,8 @@
 ﻿using ApplyToBecome.Data.Models;
 using AutoFixture;
+using System;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
@@ -17,7 +19,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		public BasicTests(IntegrationTestingWebApplicationFactory factory)
 		{
 			_client = factory.CreateClient();
-			_server = WireMockServer.Start(5080);
+			_server = factory.WMServer;
 		}
 
 		[Theory]
@@ -35,7 +37,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		private void SetupMockServer()
 		{
 			var projects = new Fixture().CreateMany<Project>();
-			var body = System.Text.Json.JsonSerializer.Serialize(projects);
+			var body = JsonSerializer.Serialize(projects);
 			_server
 				.Given(Request.Create()
 					.WithPath("/conversion-projects")

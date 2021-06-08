@@ -1,17 +1,27 @@
-﻿using ApplyToBecome.Data;
-using ApplyToBecomeInternal.Configuration;
+﻿using ApplyToBecomeInternal.Tests.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using WireMock.Server;
 
 namespace ApplyToBecomeInternal.Tests
 {
-	public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Startup>
+	public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Startup>, IDisposable
 	{
+		private readonly WireMockServer _server;
+		private readonly int _port;
+
+		public IntegrationTestingWebApplicationFactory()
+		{
+			_port = PortHelper.AllocateNext();
+			_server = WireMockServer.Start(_port);
+		}
+
+		public WireMockServer WMServer => _server;
+
 		protected override void ConfigureWebHost(IWebHostBuilder builder)
 		{
 			builder.ConfigureAppConfiguration(config =>
@@ -22,23 +32,22 @@ namespace ApplyToBecomeInternal.Tests
 				config.Sources.Clear();
 				config
 					.AddJsonFile(configPath)
+					.AddInMemoryCollection(new Dictionary<string, string>
+					{
+						{ "TramsApi:Endpoint", $"http://localhost:{_port}" }
+					})
 					.AddEnvironmentVariables();
 			});
+		}
 
-			builder.ConfigureTestServices(services =>
+		protected override void Dispose(bool disposing)
+		{
+			base.Dispose(disposing);
+
+			if (disposing)
 			{
-				services.AddHttpClient<IProjects, ProjectsService>(client =>
-				{
-					var serviceProvider = services.BuildServiceProvider();
-					using (var scope = serviceProvider.CreateScope())
-					{
-						var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-						var tramsApiOptions = config.GetSection(TramsApiOptions.Name).Get<TramsApiOptions>();
-						client.BaseAddress = new Uri(tramsApiOptions.Endpoint);
-						client.DefaultRequestHeaders.Add("ApiKey", tramsApiOptions.ApiKey);
-					}
-				});
-			});
+				_server.Stop();
+			}
 		}
 	}
 }

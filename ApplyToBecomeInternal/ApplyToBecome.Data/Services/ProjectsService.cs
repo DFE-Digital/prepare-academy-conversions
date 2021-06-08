@@ -4,15 +4,15 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace ApplyToBecome.Data
+namespace ApplyToBecome.Data.Services
 {
 	public class ProjectsService : IProjects
 	{
 		private readonly HttpClient _httpClient;
 
-		public ProjectsService(HttpClient httpClient)
+		public ProjectsService(IHttpClientFactory httpClientFactory)
 		{
-			_httpClient = httpClient;
+			_httpClient = httpClientFactory.CreateClient("TramsClient");
 		}
 
 		public async Task<IEnumerable<Project>> GetAllProjects()
