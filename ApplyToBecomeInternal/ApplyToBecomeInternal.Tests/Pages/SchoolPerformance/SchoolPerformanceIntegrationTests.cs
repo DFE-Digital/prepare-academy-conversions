@@ -1,4 +1,5 @@
-﻿using AngleSharp.Dom;
+﻿using AngleSharp;
+using AngleSharp.Dom;
 using ApplyToBecome.Data.Models;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Tests.Helpers;
@@ -22,11 +23,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 	{
 		private readonly HttpClient _client;
 		private readonly WireMockServer _server;
+		private readonly IBrowsingContext _browsingContext;
 
 		public SchoolPerformanceIntegrationTests(IntegrationTestingWebApplicationFactory factory)
 		{
 			_client = factory.CreateClient();
 			_server = factory.WMServer;
+			_browsingContext = HtmlHelper.CreateBrowsingContext(_client);
 		}
 
 		[Fact]
@@ -35,7 +38,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 			var (id, _) = SetupMockServer();
 
 			var response = await _client.GetAsync($"/task-list/{id}");
-			var document = await HtmlHelper.GetDocumentAsync(response);
+			var document = await _browsingContext.GetDocumentAsync(response);
 
 			var schoolPerformancePage = await document.NavigateAsync("School performance (Ofsted information)");
 			schoolPerformancePage.Url.Should().Be($"{document.Origin}/task-list/{id}/school-performance/ofsted-information");
@@ -47,7 +50,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 			var (id, _) = SetupMockServer();
 
 			var response = await _client.GetAsync($"/task-list/{id}/school-performance/ofsted-information");
-			var document = await HtmlHelper.GetDocumentAsync(response);
+			var document = await _browsingContext.GetDocumentAsync(response);
 
 			var taskList = await document.NavigateAsync("Back to task list");
 			taskList.Url.Should().Be($"{document.Origin}/task-list/{id}");
@@ -59,7 +62,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 			var (id, schoolPerformance) = SetupMockServer();
 
 			var response = await _client.GetAsync($"/task-list/{id}/school-performance/ofsted-information");
-			var document = await HtmlHelper.GetDocumentAsync(response);
+			var document = await _browsingContext.GetDocumentAsync(response);
 
 			document.QuerySelector("#outcome-for-pupils").TextContent.Should().Be(schoolPerformance.PersonalDevelopment.DisplayOfstedRating());
 			document.QuerySelector("#quality-of-teaching-learning-and-assessment").TextContent.Should().Be(schoolPerformance.QualityOfEducation.DisplayOfstedRating());

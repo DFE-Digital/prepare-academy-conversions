@@ -10,7 +10,7 @@ using FluentAssertions;
 using System.Net;
 using ApplyToBecome.Data.Services;
 using ApplyToBecome.Data.Tests.TestDoubles;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace ApplyToBecome.Data.Tests.Services
 {
@@ -39,7 +39,7 @@ namespace ApplyToBecome.Data.Tests.Services
 
 			_mockHandler
 				.Expect($"/establishment/urn/{project.School.URN}")
-				.Respond("application/json", JsonConvert.SerializeObject(establishmentMockData));
+				.Respond("application/json", JsonSerializer.Serialize(establishmentMockData));
 
 			var schoolPerformance = await _schoolPerformanceService.GetSchoolPerformanceByUrn(project.School.URN);
 
