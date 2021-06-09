@@ -7,7 +7,7 @@ namespace ApplyToBecomeInternal.Pages
 {
 	public class BaseProjectPageModel : PageModel
 	{
-		private readonly IProjects _projects;
+		protected readonly IProjects _projects;
 
 		public ProjectViewModel Project { get; set; }
 

@@ -1,2 +1,50 @@
-@page "task-list/{id:int}/confirm-project-trust-rationale/project-rationale"
+﻿@page "/task-list/{id:int}/confirm-project-trust-rationale/project-rationale"
+@model ApplyToBecomeInternal.Pages.TaskList.Rationale.RationaleForProjectModel
+@{
+}
 
+@section BeforeMain
+{
+	<a asp-page="@Links.Rationale.Index.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.Rationale.Index.BackText</a>
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			<span class="govuk-caption-l">St. Wilfrid's Primary School</span>
+			<h1 class="govuk-heading-l">Write the rationale for the project</h1>
+
+			<p class="govuk-hint">Edit the school's rationale to add your own analysis</p>
+
+			<div class="govuk-form-group">
+				<textarea class="govuk-textarea" id="project-rationale" name="project-rationale" rows="15" data-module="moj-rich-text-editor" data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers">@Model.Project.RationaleForProject</textarea>
+			</div>
+
+			<button class="govuk-button" data-module="govuk-button">
+				Save and continue
+			</button>
+		</form>
+	</div>
+
+	<div class="govuk-grid-column-one-third">
+		<aside class="app-related-items" role="complementary">
+			<h2 class="govuk-heading-s" id="subsection-title">
+				Useful information
+			</h2>
+			<nav role="navigation" aria-labelledby="subsection-title">
+				<ul class="govuk-list govuk-!-font-size-16">
+					<li>
+						<a class="govuk-link" href="#">
+
+						</a>
+					</li>
+					<li>
+						<p class="govuk-body-s"><a href="/related/application_newtab" target="application">School application form (opens in a new tab)</a></p>
+					</li>
+
+				</ul>
+			</nav>
+
+		</aside>
+	</div>
+</div>

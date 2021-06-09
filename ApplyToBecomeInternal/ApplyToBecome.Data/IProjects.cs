@@ -8,5 +8,6 @@ namespace ApplyToBecome.Data
 	{
 		Task<IEnumerable<Project>> GetAllProjects();
 		Task<Project> GetProjectById(int id);
+		Task UpdateProject(int id, Project project);
 	}
 }

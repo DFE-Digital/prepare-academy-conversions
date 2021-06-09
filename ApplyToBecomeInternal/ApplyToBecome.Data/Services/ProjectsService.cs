@@ -24,5 +24,23 @@ namespace ApplyToBecome.Data.Services
 		{
 			return await _httpClient.GetFromJsonAsync<Project>($"conversion-projects/{id}");
 		}
+
+		public async Task UpdateProject(int id, Project project)
+		{
+			await _httpClient.PutAsJsonAsync($"conversion-projects/{id}", new UpdateAcademyConversionProjectRequest
+			{
+				Id = id,
+				RationaleForProject = project.Rationale.RationaleForProject,
+				RationaleForTrust = project.Rationale.RationaleForTrust,
+			});
+		}
+
+		public class UpdateAcademyConversionProjectRequest
+		{
+			public long Id { get; set; }
+
+			public string RationaleForProject { get; set; }
+			public string RationaleForTrust { get; set; }
+		}
 	}
 }
