@@ -44,7 +44,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		}
 
 		[Fact]
-		public async Task Should_navigate_to_project_for_rationale_from_rationale()
+		public async Task Should_navigate_to_rationale_for_project_from_rationale()
 		{
 			var project = _fixture.Create<Project>();
 			var id = SetupMockServer(project);
@@ -57,7 +57,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		}
 
 		[Fact]
-		public async Task Should_navigate_back_to_rationale_from_project_for_rationale()
+		public async Task Should_navigate_back_to_rationale_from_rationale_for_project()
 		{
 			var project = _fixture.Create<Project>();
 			var id = SetupMockServer(project);
