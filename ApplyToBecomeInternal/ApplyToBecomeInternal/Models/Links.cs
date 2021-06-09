@@ -27,7 +27,7 @@ namespace ApplyToBecomeInternal.Models
 
 		public static class SchoolPerformance
 		{
-			public static LinkItem Index = new LinkItem { Page = "TaskList/SchoolPerformance/Index" };
+			public static LinkItem Index = new LinkItem { Page = "/TaskList/SchoolPerformance/Index" };
 		}
 
 		public static class SchoolApplicationForm
