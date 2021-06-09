@@ -38,8 +38,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 			var response = await _client.GetAsync($"/task-list/{id}");
 			var document = await _browsingContext.GetDocumentAsync(response);
 
-			var schoolPerformancePage = await document.NavigateAsync("Rationale");
-			schoolPerformancePage.Url.Should().Be($"{document.Origin}/task-list/{id}/rationale");
+			var rationalePage = await document.NavigateAsync("Rationale");
+			rationalePage.Url.Should().Be($"{document.Origin}/task-list/{id}/rationale");
 		}
 
 		[Fact]
