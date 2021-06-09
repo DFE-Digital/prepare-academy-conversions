@@ -29,11 +29,11 @@
 				<dd class="govuk-summary-list__value govuk-!-width-full">
 					@if (!string.IsNullOrEmpty(@Model.Project.RationaleForProject))
 					{
-						@Model.Project.RationaleForProject
+						<span id="rationale-for-project">@Model.Project.RationaleForProject</span>
 					}
 					else
 					{
-						<span class="empty">Empty</span>
+						<span id="rationale-for-project-empty" class="empty">Empty</span>
 					}
 
 				</dd>
@@ -51,11 +51,11 @@
 		      <dd class="govuk-summary-list__value govuk-!-width-two-thirds">
 			      @if (!string.IsNullOrEmpty(@Model.Project.RationaleForTrust))
 			      {
-				      @Model.Project.RationaleForTrust
+				      <span id="rationale-for-trust">@Model.Project.RationaleForTrust</span>
 			      }
 			      else
 			      {
-				      <span class="empty">Empty</span>
+				      <span id="rationale-for-trust-empty" class="empty">Empty</span>
 			      }
 		      </dd>
 		    <dd class="govuk-summary-list__actions">
