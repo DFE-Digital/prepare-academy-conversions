@@ -17,6 +17,13 @@ namespace AngleSharp.Dom
 			return await link.NavigateAsync();
 		}
 
+		public static async Task<IDocument> NavigateAsync(this IHtmlDocument document, string linkText, int index)
+		{
+			var anchors = document.QuerySelectorAll("a");
+			var link = anchors.Where(a => a.TextContent.Contains(linkText)).ElementAt(index) as IHtmlAnchorElement;
+			return await link.NavigateAsync();
+		}
+
 		public static async Task<IHtmlDocument> GetDocumentAsync(this IBrowsingContext browsingContext, HttpResponseMessage response)
 		{
 			var content = await response.Content.ReadAsStringAsync();
