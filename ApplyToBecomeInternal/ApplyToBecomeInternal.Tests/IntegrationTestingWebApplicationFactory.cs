@@ -5,6 +5,9 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
+using WireMock.RequestBuilders;
+using WireMock.ResponseBuilders;
 using WireMock.Server;
 
 namespace ApplyToBecomeInternal.Tests
@@ -19,8 +22,6 @@ namespace ApplyToBecomeInternal.Tests
 			_port = PortHelper.AllocateNext();
 			_server = WireMockServer.Start(_port);
 		}
-
-		public WireMockServer WMServer => _server;
 
 		protected override void ConfigureWebHost(IWebHostBuilder builder)
 		{
@@ -38,6 +39,30 @@ namespace ApplyToBecomeInternal.Tests
 					})
 					.AddEnvironmentVariables();
 			});
+		}
+
+		public void AddGetWithJsonResponse<TResponseBody>(string path, TResponseBody responseBody)
+		{
+			_server
+				.Given(Request.Create()
+					.WithPath(path)
+					.UsingGet())
+				.RespondWith(Response.Create()
+					.WithStatusCode(200)
+					.WithHeader("Content-Type", "application/json")
+					.WithBody(JsonSerializer.Serialize(responseBody)));
+		}
+
+		public void AddPutWithJsonRequest<TRequestBody>(string path, TRequestBody requestBody)
+		{
+			_server
+				.Given(Request.Create()
+					.WithPath(path)
+					.WithBody(JsonSerializer.Serialize(requestBody))
+					.UsingPut())
+				.RespondWith(Response.Create()
+					.WithStatusCode(204)
+					.WithHeader("Content-Type", "application/json"));
 		}
 
 		protected override void Dispose(bool disposing)
