@@ -24,5 +24,5 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Rationale
 
 			return RedirectToPage(Links.Rationale.Index.Page, new { id = id });
 		}
-    }
+	}
 }
