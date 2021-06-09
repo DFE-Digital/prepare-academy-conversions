@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages
 {
-	public abstract class BaseProjectPageModel : PageModel
+	public class BaseProjectPageModel : PageModel
 	{
 		private readonly IProjects _projects;
 

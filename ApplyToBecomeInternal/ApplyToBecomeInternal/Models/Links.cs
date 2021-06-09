@@ -27,17 +27,18 @@ namespace ApplyToBecomeInternal.Models
 
 		public static class SchoolPerformance
 		{
-			public static LinkItem Index = new LinkItem { Page = "/SchoolPerformance/Index" };
+			public static LinkItem Index = new LinkItem { Page = "TaskList/SchoolPerformance/Index" };
 		}
 
 		public static class SchoolApplicationForm
 		{
-			public static LinkItem Index = new LinkItem { BackText = "Back", Page = "/ApplicationForm/Index" };
+			public static LinkItem Index = new LinkItem { Page = "/ApplicationForm/Index" };
 		}
 
 		public static class Rationale
 		{
-			public static LinkItem Index = new LinkItem { BackText = "Back", Page = "/TaskList/Rationale" };
+			public static LinkItem Index = new LinkItem { Page = "/TaskList/Rationale/Index" };
+			public static LinkItem RationaleForProject = new LinkItem {Page = "TaskList/Rationale/RationaleForProject"};
 		}
 	}
 

@@ -1,5 +1,5 @@
 @page "/task-list/{id:int}/rationale"
-@model ApplyToBecomeInternal.Pages.TaskList.IndexModel
+@model ApplyToBecomeInternal.Pages.BaseProjectPageModel
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
@@ -29,16 +29,16 @@
 				<dd class="govuk-summary-list__value govuk-!-width-full">
 					@if (!string.IsNullOrEmpty(@Model.Project.RationaleForProject))
 					{
-						@Model.Project.RationaleForProject
+						<span id="rationale-for-project">@Model.Project.RationaleForProject</span>
 					}
 					else
 					{
-						<span class="empty">Empty</span>
+						<span id="rationale-for-project-empty" class="empty">Empty</span>
 					}
 
 				</dd>
 		    <dd class="govuk-summary-list__actions">
-		      <a class="govuk-link" href="">
+		      <a class="govuk-link" asp-page="@Links.Rationale.RationaleForProject.Page" asp-route-id="@Model.Project.Id">
 		        Change<span class="govuk-visually-hidden">project rationale</span>
 		      </a>
 		    </dd>
@@ -51,11 +51,11 @@
 		      <dd class="govuk-summary-list__value govuk-!-width-two-thirds">
 			      @if (!string.IsNullOrEmpty(@Model.Project.RationaleForTrust))
 			      {
-				      @Model.Project.RationaleForTrust
+				      <span id="rationale-for-trust">@Model.Project.RationaleForTrust</span>
 			      }
 			      else
 			      {
-				      <span class="empty">Empty</span>
+				      <span id="rationale-for-trust-empty" class="empty">Empty</span>
 			      }
 		      </dd>
 		    <dd class="govuk-summary-list__actions">
