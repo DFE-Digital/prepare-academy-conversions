@@ -18,8 +18,18 @@ namespace ApplyToBecomeInternal.Pages
 
 		public virtual async Task OnGetAsync(int id)
 		{
+			await SetProject(id);
+		}
+
+		protected async Task SetProject(int id)
+		{
 			var project = await _projects.GetProjectById(id);
-			Project = new ProjectViewModel(project);
+			if (!project.Success)
+			{
+				// 404 logic
+			}
+
+			Project = new ProjectViewModel(project.Body);
 		}
 	}
 }

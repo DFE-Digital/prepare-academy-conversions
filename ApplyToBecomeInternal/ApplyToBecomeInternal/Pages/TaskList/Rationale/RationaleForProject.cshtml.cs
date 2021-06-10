@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using ApplyToBecome.Data;
+using ApplyToBecome.Data.Models;
 using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,20 +8,26 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Rationale
 {
 	public class RationaleForProjectModel : BaseProjectPageModel
 	{
-		public RationaleForProjectModel(IProjects projects) : base(projects)
-		{
-		}
+		public RationaleForProjectModel(IProjects projects) : base(projects) { }
 
 		[BindProperty(Name = "project-rationale")]
 		public string RationaleForProject { get; set; }
 
+		public bool ShowError { get; set; }
+
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			var project = await _projects.GetProjectById(id);
+			var response = await _projects.UpdateProject(id, new UpdateProject
+			{
+				RationaleForProject = RationaleForProject
+			});
 
-			project.Rationale.RationaleForProject = RationaleForProject;
-
-			await _projects.UpdateProject(id, project);
+			if (!response.Success)
+			{
+				ShowError = true;
+				await SetProject(id);
+				return Page();
+			}
 
 			return RedirectToPage(Links.Rationale.Index.Page, new { id = id });
 		}

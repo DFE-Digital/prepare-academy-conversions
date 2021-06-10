@@ -1,5 +1,6 @@
 ﻿using ApplyToBecome.Data.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -15,32 +16,40 @@ namespace ApplyToBecome.Data.Services
 			_httpClient = httpClientFactory.CreateClient("TramsClient");
 		}
 
-		public async Task<IEnumerable<Project>> GetAllProjects()
+		public async Task<ApiResponse<IEnumerable<Project>>> GetAllProjects()
 		{
-			return await _httpClient.GetFromJsonAsync<IEnumerable<Project>>("conversion-projects");
-		}
-
-		public async Task<Project> GetProjectById(int id)
-		{
-			return await _httpClient.GetFromJsonAsync<Project>($"conversion-projects/{id}");
-		}
-
-		public async Task UpdateProject(int id, Project project)
-		{
-			await _httpClient.PutAsJsonAsync($"conversion-projects/{id}", new UpdateAcademyConversionProjectRequest
+			var response = await _httpClient.GetAsync("conversion-projects");
+			if (!response.IsSuccessStatusCode)
 			{
-				Id = id,
-				RationaleForProject = project.Rationale.RationaleForProject,
-				RationaleForTrust = project.Rationale.RationaleForTrust,
-			});
+				return new ApiResponse<IEnumerable<Project>>(response.StatusCode, Enumerable.Empty<Project>());
+			}
+
+			var projects = await response.Content.ReadFromJsonAsync<IEnumerable<Project>>();
+			return new ApiResponse<IEnumerable<Project>>(response.StatusCode, projects);
 		}
 
-		public class UpdateAcademyConversionProjectRequest
+		public async Task<ApiResponse<Project>> GetProjectById(int id)
 		{
-			public long Id { get; set; }
+			var response = await _httpClient.GetAsync($"conversion-projects/{id}");
+			if (!response.IsSuccessStatusCode)
+			{
+				return new ApiResponse<Project>(response.StatusCode, null);
+			}
 
-			public string RationaleForProject { get; set; }
-			public string RationaleForTrust { get; set; }
+			var project = await response.Content.ReadFromJsonAsync<Project>();
+			return new ApiResponse<Project>(response.StatusCode, project);
+		}
+
+		public async Task<ApiResponse<Project>> UpdateProject(int id, UpdateProject updateProject)
+		{
+			var response = await _httpClient.PatchAsync($"conversion-projects/{id}", JsonContent.Create(updateProject));
+			if (!response.IsSuccessStatusCode)
+			{
+				return new ApiResponse<Project>(response.StatusCode, null);
+			}
+
+			var project = await response.Content.ReadFromJsonAsync<Project>();
+			return new ApiResponse<Project>(response.StatusCode, project);
 		}
 	}
 }

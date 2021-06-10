@@ -39,6 +39,7 @@ namespace ApplyToBecomeInternal.Models
 		{
 			public static LinkItem Index = new LinkItem { Page = "/TaskList/Rationale/Index" };
 			public static LinkItem RationaleForProject = new LinkItem { Page = "/TaskList/Rationale/RationaleForProject" };
+			public static LinkItem RationaleForTrust = new LinkItem { Page = "/TaskList/Rationale/RationaleForTrust" };
 		}
 	}
 

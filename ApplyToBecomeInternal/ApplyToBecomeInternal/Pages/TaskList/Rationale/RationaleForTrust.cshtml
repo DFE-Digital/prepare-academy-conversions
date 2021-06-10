@@ -1,7 +1,7 @@
-﻿@page "/task-list/{id:int}/confirm-project-trust-rationale/project-rationale"
-@model ApplyToBecomeInternal.Pages.TaskList.Rationale.RationaleForProjectModel
+﻿@page "/task-list/{id:int}/confirm-project-trust-rationale/trust-rationale"
+@model ApplyToBecomeInternal.Pages.TaskList.Rationale.RationaleForTrustModel
 @{
-	ViewData["Title"] = "Project rationale";
+	ViewData["Title"] = "Trust or sponsor rationale";
 }
 
 @section BeforeMain
@@ -18,17 +18,17 @@
 	<div class="govuk-grid-column-two-thirds">
 		<form method="post">
 			<span class="govuk-caption-l">@Model.Project.SchoolName</span>
-			<h1 class="govuk-heading-l">Write the rationale for the project</h1>
+			<h1 class="govuk-heading-l">Write the rationale for the trust or sponsor</h1>
 
-			<p class="govuk-hint">Edit the school's rationale to add your own analysis</p>
+			<p class="govuk-hint">Explain why the trust is a good match for the school.</p>
 
 			<div class="govuk-form-group">
 				<textarea class="govuk-textarea"
-						  id="project-rationale"
-						  name="project-rationale"
+						  id="trust-rationale"
+						  name="trust-rationale"
 						  rows="15"
 						  data-module="moj-rich-text-editor"
-						  data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers">@Model.Project.RationaleForProject</textarea>
+						  data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers">@Model.Project.RationaleForTrust</textarea>
 			</div>
 
 			<button class="govuk-button" data-module="govuk-button">

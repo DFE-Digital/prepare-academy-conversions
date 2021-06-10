@@ -11,29 +11,29 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		[Fact]
 		public async Task Should_navigate_to_rationale_from_task_list()
 		{
-			var project = Factory.AddGetProject();
+			var project = AddGetProject();
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
+			await NavigateAsync("Rationale");
 
-			var rationalePage = await NavigateAsync("Rationale");
-			rationalePage.Url.Should().BeUrl($"/task-list/{project.Id}/rationale");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/rationale");
 		}
 
 		[Fact]
 		public async Task Should_navigate_back_to_task_list_from_rationale()
 		{
-			var project = Factory.AddGetProject();
+			var project = AddGetProject();
 
 			await OpenUrlAsync($"/task-list/{project.Id}/rationale");
+			await NavigateAsync("Back to task list");
 
-			var taskList = await NavigateAsync("Back to task list");
-			taskList.Url.Should().BeUrl($"/task-list/{project.Id}");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
 
 		[Fact]
 		public async Task Should_display_rationale()
 		{
-			var project = Factory.AddGetProject();
+			var project = AddGetProject();
 
 			await OpenUrlAsync($"/task-list/{project.Id}/rationale");
 
@@ -44,7 +44,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		[Fact]
 		public async Task Should_display_empty_when_rationale_not_prepopulated()
 		{
-			var project = Factory.AddGetProject(project =>
+			var project = AddGetProject(project =>
 			{
 				project.Rationale.RationaleForProject = null;
 				project.Rationale.RationaleForTrust = null;

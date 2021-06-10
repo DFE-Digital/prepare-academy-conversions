@@ -16,9 +16,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 			var (id, _) = SetupMockServer();
 
 			await OpenUrlAsync($"/task-list/{id}");
-
-			var schoolPerformancePage = await NavigateAsync("School performance (Ofsted information)");
-			schoolPerformancePage.Url.Should().BeUrl($"/task-list/{id}/school-performance/ofsted-information");
+			await NavigateAsync("School performance (Ofsted information)");
+			
+			Document.Url.Should().BeUrl($"/task-list/{id}/school-performance/ofsted-information");
 		}
 
 		[Fact]
@@ -27,9 +27,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 			var (id, _) = SetupMockServer();
 
 			await OpenUrlAsync($"/task-list/{id}/school-performance/ofsted-information");
+			await NavigateAsync("Back to task list");
 
-			var taskList = await NavigateAsync("Back to task list");
-			taskList.Url.Should().BeUrl($"/task-list/{id}");
+			Document.Url.Should().BeUrl($"/task-list/{id}");
 		}
 
 		[Fact]
@@ -49,8 +49,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 
 		private (int, SchoolPerformanceModel) SetupMockServer()
 		{
-			var project = Factory.AddGetProject();
-			var schoolPerformance = Factory.AddGetSchoolPerformance(project.School.URN);
+			var project = AddGetProject();
+			var schoolPerformance = AddGetSchoolPerformance(project.School.URN);
 
 			return (project.Id, schoolPerformance);
 		}

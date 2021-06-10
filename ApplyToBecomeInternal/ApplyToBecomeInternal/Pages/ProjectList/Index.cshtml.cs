@@ -21,8 +21,13 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 
 		public async Task OnGetAsync()
         {
-			var ongoingProjects = await _projects.GetAllProjects();
-			Projects = ongoingProjects.Select(project => new ProjectViewModel(project)).ToList();
+			var response = await _projects.GetAllProjects();
+			if (!response.Success)
+			{
+				// 500 maybe?
+			}
+
+			Projects = response.Body.Select(project => new ProjectViewModel(project)).ToList();
 		}
     }
 }

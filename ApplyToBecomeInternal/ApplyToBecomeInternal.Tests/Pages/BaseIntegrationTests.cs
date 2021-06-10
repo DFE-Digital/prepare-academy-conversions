@@ -1,7 +1,9 @@
 ﻿using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
-using ApplyToBecomeInternal.Tests.Helpers;
+using AngleSharp.Io;
+using AngleSharp.Io.Network;
+using AutoFixture;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -9,22 +11,23 @@ using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Pages
 {
-	public abstract class BaseIntegrationTests : IClassFixture<IntegrationTestingWebApplicationFactory>
+	public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTestingWebApplicationFactory>
 	{
-		protected readonly IntegrationTestingWebApplicationFactory Factory;
-		protected readonly HttpClient HttpClient;
-		protected readonly IBrowsingContext BrowsingContext;
+		private readonly IntegrationTestingWebApplicationFactory _factory;
+		private readonly IBrowsingContext _browsingContext;
+		private readonly Fixture _fixture;
 
 		protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory)
 		{
-			Factory = factory;
-			HttpClient = factory.CreateClient();
-			BrowsingContext = HtmlHelper.CreateBrowsingContext(HttpClient);
+			_factory = factory;
+			var httpClient = factory.CreateClient();
+			_browsingContext = CreateBrowsingContext(httpClient);
+			_fixture = new Fixture();
 		}
 
 		public async Task<IDocument> OpenUrlAsync(string url)
 		{
-			return await BrowsingContext.OpenAsync($"http://localhost{url}");
+			return await _browsingContext.OpenAsync($"http://localhost{url}");
 		}
 
 		public async Task<IDocument> NavigateAsync(string linkText, int? index = null)
@@ -38,6 +41,15 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			return await link.NavigateAsync();
 		}
 
-		public IDocument Document => BrowsingContext.Active;
+		private IBrowsingContext CreateBrowsingContext(HttpClient httpClient)
+		{
+			var config = AngleSharp.Configuration.Default
+				.WithRequester(new HttpClientRequester(httpClient))
+				.WithDefaultLoader(new LoaderOptions { IsResourceLoadingEnabled = true });
+
+			return BrowsingContext.New(config);
+		}
+
+		public IDocument Document => _browsingContext.Active;
 	}
 }
