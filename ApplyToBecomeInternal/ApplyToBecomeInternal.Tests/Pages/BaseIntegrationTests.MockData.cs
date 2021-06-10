@@ -42,6 +42,11 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			return (project, request);
 		}
 
+		public void AddPatchError(int id)
+		{
+			_factory.AddErrorResponse($"/conversion-projects/{id}", "patch");
+		}
+
 		public SchoolPerformanceModel AddGetSchoolPerformance(string urn)
 		{
 			_fixture.Customizations.Add(new OfstedRatingSpecimenBuilder());

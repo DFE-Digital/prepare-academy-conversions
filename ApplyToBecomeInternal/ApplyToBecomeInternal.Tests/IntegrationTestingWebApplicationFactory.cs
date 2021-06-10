@@ -69,6 +69,16 @@ namespace ApplyToBecomeInternal.Tests
 					.WithBody(JsonSerializer.Serialize(responseBody)));
 		}
 
+		public void AddErrorResponse(string path, string method)
+		{
+			_server
+				.Given(Request.Create()
+					.WithPath(path)
+					.UsingMethod(method))
+				.RespondWith(Response.Create()
+					.WithStatusCode(500));
+		}
+
 		private static int AllocateNext()
 		{
 			lock (_sync)

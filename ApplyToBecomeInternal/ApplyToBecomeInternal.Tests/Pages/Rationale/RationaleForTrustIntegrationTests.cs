@@ -29,6 +29,19 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		}
 
 		[Fact]
+		public async Task Should_show_error_summary_when_there_is_an_API_error()
+		{
+			var project = AddGetProject();
+			AddPatchError(project.Id);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/trust-rationale");
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+		}
+
+		[Fact]
 		public async Task Should_navigate_back_to_rationale_from_rationale_for_trust()
 		{
 			var project = AddGetProject();

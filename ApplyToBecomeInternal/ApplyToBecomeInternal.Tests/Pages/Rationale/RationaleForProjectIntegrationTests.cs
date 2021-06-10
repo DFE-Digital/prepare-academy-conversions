@@ -54,5 +54,18 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/rationale");
 		}
+
+		[Fact]
+		public async Task Should_show_error_summary_when_there_is_an_API_error()
+		{
+			var project = AddGetProject();
+			AddPatchError(project.Id);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/project-rationale");
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+		}
 	}
 }
