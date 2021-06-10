@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using ApplyToBecome.Data;
 using ApplyToBecome.Data.Models;
@@ -11,6 +12,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Rationale
 		public RationaleForProjectModel(IProjects projects) : base(projects) { }
 
 		[BindProperty(Name = "project-rationale")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string RationaleForProject { get; set; }
 
 		public bool ShowError { get; set; }
