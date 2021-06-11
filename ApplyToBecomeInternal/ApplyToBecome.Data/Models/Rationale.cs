@@ -4,5 +4,6 @@ namespace ApplyToBecome.Data.Models
 	{
 		public string RationaleForProject { get; set; }
 		public string RationaleForTrust { get; set; }
+		public bool RationaleMarkAsComplete { get; set; }
 	}
 }
