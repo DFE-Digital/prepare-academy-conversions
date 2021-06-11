@@ -13,13 +13,14 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		[Fact]
 		public async Task Should_navigate_to_and_update_rationale_for_trust()
 		{
-			var (project, request) = AddGetAndPatchProject(r => r.RationaleForTrust);
+			var project = AddGetProject();
+			var request = AddPatchProject(project, r => r.RationaleForTrust);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/rationale");
 			await NavigateAsync("Change", 1);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale/trust-rationale");
-			var textArea = Document.QuerySelector("#trust-rationale") as IHtmlTextAreaElement;
+			var textArea = Document.QuerySelector<IHtmlTextAreaElement>("#trust-rationale");
 			textArea.TextContent.Should().Be(project.Rationale.RationaleForTrust);
 
 			textArea.Value = request.RationaleForTrust;

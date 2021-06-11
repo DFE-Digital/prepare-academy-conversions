@@ -6,11 +6,11 @@
 	<dd class="govuk-summary-list__value govuk-!-width-full">
 		@if (!Model.IsEmpty)
 		{
-			<span id="rationale-for-project">@Model.Value</span>
+			<span id="@Model.Id">@Model.Value</span>
 		}
 		else
 		{
-			<span id="rationale-for-project-empty" class="empty">Empty</span>
+			<span id="@Model.Id-empty" class="empty">Empty</span>
 		}
 	</dd>
 	<dd class="govuk-summary-list__actions">

@@ -1,6 +1,6 @@
 @page "/task-list/{id:int}/rationale"
 @using ApplyToBecomeInternal.ViewModels
-@model ApplyToBecomeInternal.Pages.TaskList.Rationale.IndexPageModel
+@model ApplyToBecomeInternal.Pages.TaskList.Rationale.RationaleSummaryPageModel
 @{
 	ViewData["Title"] = "Rationale summary";
 }
@@ -33,12 +33,14 @@
 		</div>
 		<dl class="govuk-summary-list">
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"rationale-for-project",
 				"Rationale for project",
 				Model.Project.RationaleForProject,
 				Links.Rationale.RationaleForProject.Page,
 				Model.Project.Id,
 				"project rationale"))
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"rationale-for-trust",
 				"Rationale for the trust or sponsor",
 				Model.Project.RationaleForTrust,
 				Links.Rationale.RationaleForTrust.Page,

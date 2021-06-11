@@ -28,18 +28,21 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			return project;
 		}
 
-		public (Project, UpdateProject) AddGetAndPatchProject<TProperty>(Expression<Func<UpdateProject, TProperty>> expression)
+		public UpdateProject AddPatchProject<TProperty>(Project project, Expression<Func<UpdateProject, TProperty>> expectedValue)
 		{
-			var project = _fixture.Create<Project>();
+			return AddPatchProject(project, expectedValue, _fixture.Create<TProperty>());
+		}
+
+		public UpdateProject AddPatchProject<TProperty>(Project project, Expression<Func<UpdateProject, TProperty>> expectedValue, TProperty value)
+		{
 			var request = _fixture
 				.Build<UpdateProject>()
 				.OmitAutoProperties()
-				.With(expression)
+				.With(expectedValue, value)
 				.Create();
 
-			_factory.AddGetWithJsonResponse($"/conversion-projects/{project.Id}", project);
 			_factory.AddPatchWithJsonRequest($"/conversion-projects/{project.Id}", request, project);
-			return (project, request);
+			return request;
 		}
 
 		public void AddPatchError(int id)

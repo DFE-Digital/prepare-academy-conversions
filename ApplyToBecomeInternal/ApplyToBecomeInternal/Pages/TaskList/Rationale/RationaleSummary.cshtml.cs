@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Rationale
 {
-	public class IndexPageModel : BaseProjectPageModel
+	public class RationaleSummaryPageModel : BaseProjectPageModel
 	{
-		public IndexPageModel(IProjects projects) : base(projects) { }
+		public RationaleSummaryPageModel(IProjects projects) : base(projects) { }
 		
 		[BindProperty(Name = "rationale-status-htb")]
 		public bool RationaleMarkAsComplete { get; set; }

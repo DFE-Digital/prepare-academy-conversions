@@ -66,13 +66,11 @@
 			</li>
 			<li class="app-task-list__item">
 				<span class="app-task-list__task-name">
-					<a class="govuk-link" asp-page="@Links.Rationale.Index.Page" asp-route-id="@Model.Project.Id" aria-describedby="rationale-status">
+					<a class="govuk-link" asp-page="@Links.Rationale.RationaleSummary.Page" asp-route-id="@Model.Project.Id" aria-describedby="rationale-status">
 						Rationale
 					</a>
 				</span>
-				<strong class="govuk-tag @Model.Project.RationaleTaskListStatus.CssClass app-task-list__tag" id="rationale-status">
-					@Model.Project.RationaleTaskListStatus.Status
-				</strong>
+				<strong class="govuk-tag @Model.Project.RationaleTaskListStatus.CssClass app-task-list__tag" id="rationale-status">@Model.Project.RationaleTaskListStatus.Status</strong>
 			</li>
 			<li class="app-task-list__item">
 				<span class="app-task-list__task-name">
