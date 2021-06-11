@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages
 {
-	public abstract class BaseProjectPageModel : PageModel
+	public class BaseProjectPageModel : PageModel
 	{
-		private readonly IProjects _projects;
+		protected readonly IProjects _projects;
 
 		public ProjectViewModel Project { get; set; }
 
@@ -18,8 +18,18 @@ namespace ApplyToBecomeInternal.Pages
 
 		public virtual async Task OnGetAsync(int id)
 		{
+			await SetProject(id);
+		}
+
+		protected async Task SetProject(int id)
+		{
 			var project = await _projects.GetProjectById(id);
-			Project = new ProjectViewModel(project);
+			if (!project.Success)
+			{
+				// 404 logic
+			}
+
+			Project = new ProjectViewModel(project.Body);
 		}
 	}
 }
