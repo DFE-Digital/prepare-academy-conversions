@@ -36,7 +36,7 @@ namespace ApplyToBecomeInternal.ViewModels
 			{
 				RationaleTaskListStatus = TaskListItemViewModel.Completed;
 			}
-			else if (string.IsNullOrWhiteSpace(RationaleForProject) && string.IsNullOrWhiteSpace(RationaleForProject))
+			else if (string.IsNullOrWhiteSpace(RationaleForProject) && string.IsNullOrWhiteSpace(RationaleForTrust))
 			{
 				RationaleTaskListStatus = TaskListItemViewModel.NotStarted;
 			}

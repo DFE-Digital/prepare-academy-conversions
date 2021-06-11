@@ -11,7 +11,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		public RationaleSummaryIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
 
 		[Fact]
-		public async Task Should_be_in_progress_display_rationale_when_rationale_populated()
+		public async Task Should_be_in_progress_and_display_rationale_when_rationale_populated()
 		{
 			var project = AddGetProject(p => p.Rationale.RationaleMarkAsComplete = false);
 
