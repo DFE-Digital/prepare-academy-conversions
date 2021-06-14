@@ -10,7 +10,7 @@ using FluentAssertions;
 using System.Net;
 using ApplyToBecome.Data.Services;
 using ApplyToBecome.Data.Tests.TestDoubles;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace ApplyToBecome.Data.Tests.Services
 {
@@ -32,33 +32,33 @@ namespace ApplyToBecome.Data.Tests.Services
 
 		[Theory]
 		[AutoData]
-		public async Task Should_get_school_performance_by_urn(Project project, EstablishmentMockData establishmentMockData)
+		public async Task Should_get_school_performance_by_urn(AcademyConversionProject project, EstablishmentMockData establishmentMockData)
 		{
 			establishmentMockData.misEstablishment.OfstedLastInspection = establishmentMockData.misEstablishment.OfstedLastInspection.Value.Date;
 			establishmentMockData.ofstedLastInspection = establishmentMockData.misEstablishment.OfstedLastInspection.Value;
 
 			_mockHandler
-				.Expect($"/establishment/urn/{project.School.URN}")
-				.Respond("application/json", JsonSerializer.Serialize(establishmentMockData));
+				.Expect($"/establishment/urn/{project.Urn}")
+				.Respond("application/json", JsonConvert.SerializeObject(establishmentMockData));
 
-			var schoolPerformance = await _schoolPerformanceService.GetSchoolPerformanceByUrn(project.School.URN);
+			var schoolPerformance = await _schoolPerformanceService.GetSchoolPerformanceByUrn(project.Urn.ToString());
 
 			schoolPerformance.Should().BeEquivalentTo(establishmentMockData.misEstablishment);
 		}
 
 		[Theory]
 		[AutoData]
-		public async Task Should_log_warning_when_school_performance_not_found(Project project)
+		public async Task Should_log_warning_when_school_performance_not_found(AcademyConversionProject project)
 		{
 			_mockHandler
-				.Expect($"/establishment/urn/{project.School.URN}")
+				.Expect($"/establishment/urn/{project.Urn}")
 				.Respond(HttpStatusCode.NotFound);
 
-			await _schoolPerformanceService.GetSchoolPerformanceByUrn(project.School.URN);
+			await _schoolPerformanceService.GetSchoolPerformanceByUrn(project.Urn.ToString());
 
 			_testLogger.Sink.LogEntries
 				.Should()
-				.ContainSingle(log => log.Message.Equals($"Unable to get school performance information for establishment with URN: {project.School.URN}"));
+				.ContainSingle(log => log.Message.Equals($"Unable to get school performance information for establishment with URN: {project.Urn}"));
 		}
 
 		public class EstablishmentMockData

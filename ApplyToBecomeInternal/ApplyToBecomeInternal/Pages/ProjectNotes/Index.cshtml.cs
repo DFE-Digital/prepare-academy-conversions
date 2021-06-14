@@ -1,5 +1,6 @@
 using ApplyToBecome.Data;
 using ApplyToBecome.Data.Models.ProjectNotes;
+using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 	{
 		private readonly IProjectNotes _projectNotes;
 
-		public IndexModel(IProjects projects, IProjectNotes projectNotes) : base(projects)
+		public IndexModel(AcademyConversionProjectRepository repository, IProjectNotes projectNotes) : base(repository)
 		{
 			_projectNotes = projectNotes;
 		}

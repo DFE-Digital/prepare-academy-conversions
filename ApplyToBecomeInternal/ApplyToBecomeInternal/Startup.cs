@@ -43,7 +43,7 @@ namespace ApplyToBecomeInternal
 			});
 
 			services.AddScoped<SchoolPerformanceService>();
-			services.AddScoped<IProjects, ProjectsService>();
+			services.AddScoped<AcademyConversionProjectRepository>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

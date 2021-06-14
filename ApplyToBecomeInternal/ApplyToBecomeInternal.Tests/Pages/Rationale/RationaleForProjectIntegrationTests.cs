@@ -17,7 +17,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/project-rationale");
 
-			Document.QuerySelector("#project-rationale").TextContent.Should().Be(project.Rationale.RationaleForProject);
+			Document.QuerySelector("#project-rationale").TextContent.Should().Be(project.RationaleForProject);
 		}
 
 		[Fact]

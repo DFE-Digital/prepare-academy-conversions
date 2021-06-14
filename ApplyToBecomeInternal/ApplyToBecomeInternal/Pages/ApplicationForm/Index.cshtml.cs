@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApplyToBecome.Data;
+using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models.ApplicationForm;
 using ApplyToBecomeInternal.Models.ApplicationForm.Sections;
 using ApplyToBecomeInternal.ViewModels;
@@ -11,7 +12,7 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 	{
 		private readonly IApplications _applications;
 
-		public IndexModel(IApplications applications, IProjects projects) : base(projects)
+		public IndexModel(IApplications applications, AcademyConversionProjectRepository repository) : base(repository)
 		{
 			_applications = applications;
 		}

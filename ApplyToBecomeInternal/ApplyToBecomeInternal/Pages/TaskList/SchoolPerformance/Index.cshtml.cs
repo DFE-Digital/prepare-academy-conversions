@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using ApplyToBecome.Data;
 using ApplyToBecome.Data.Services;
 using SchoolPerformanceModel = ApplyToBecome.Data.Models.SchoolPerformance;
 
@@ -9,7 +8,7 @@ namespace ApplyToBecomeInternal.Pages.SchoolPerformance
 	{
 		private readonly SchoolPerformanceService _schoolPerformanceService;
 
-		public IndexModel(SchoolPerformanceService schoolPerformanceService, IProjects projects) : base(projects)
+		public IndexModel(SchoolPerformanceService schoolPerformanceService, AcademyConversionProjectRepository repository) : base(repository)
 		{
 			_schoolPerformanceService = schoolPerformanceService;
 		}

@@ -50,7 +50,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 		private (int, SchoolPerformanceModel) SetupMockServer()
 		{
 			var project = AddGetProject();
-			var schoolPerformance = AddGetSchoolPerformance(project.School.URN);
+			var schoolPerformance = AddGetSchoolPerformance(project.Urn.ToString());
 
 			return (project.Id, schoolPerformance);
 		}

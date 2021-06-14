@@ -21,7 +21,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale/trust-rationale");
 			var textArea = Document.QuerySelector<IHtmlTextAreaElement>("#trust-rationale");
-			textArea.TextContent.Should().Be(project.Rationale.RationaleForTrust);
+			textArea.TextContent.Should().Be(project.RationaleForTrust);
 
 			textArea.Value = request.RationaleForTrust;
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using ApplyToBecome.Data;
 using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +9,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Rationale
 {
 	public class RationaleForTrustModel : BaseProjectPageModel
 	{
-		public RationaleForTrustModel(IProjects projects) : base(projects) { }
+		public RationaleForTrustModel(AcademyConversionProjectRepository repository) : base(repository) { }
 
 		[BindProperty(Name = "trust-rationale")]
 		[DisplayFormat(ConvertEmptyStringToNull = false)]
@@ -19,7 +19,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Rationale
 
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			var response = await _projects.UpdateProject(id, new UpdateProject
+			var response = await _repository.UpdateProject(id, new UpdateAcademyConversionProject
 			{
 				RationaleForTrust = RationaleForTrust
 			});

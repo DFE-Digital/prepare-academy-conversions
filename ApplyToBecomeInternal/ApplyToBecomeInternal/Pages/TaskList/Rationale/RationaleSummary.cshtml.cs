@@ -1,5 +1,5 @@
-﻿using ApplyToBecome.Data;
-using ApplyToBecome.Data.Models;
+﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -8,7 +8,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Rationale
 {
 	public class RationaleSummaryPageModel : BaseProjectPageModel
 	{
-		public RationaleSummaryPageModel(IProjects projects) : base(projects) { }
+		public RationaleSummaryPageModel(AcademyConversionProjectRepository repository) : base(repository) { }
 		
 		[BindProperty(Name = "rationale-status-htb")]
 		public bool RationaleMarkAsComplete { get; set; }
@@ -17,7 +17,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Rationale
 
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			var response = await _projects.UpdateProject(id, new UpdateProject
+			var response = await _repository.UpdateProject(id, new UpdateAcademyConversionProject
 			{
 				RationaleMarkAsComplete = RationaleMarkAsComplete
 			});

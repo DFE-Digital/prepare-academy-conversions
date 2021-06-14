@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ApplyToBecome.Data;
+using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -12,16 +12,16 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 		public IEnumerable<ProjectViewModel> Projects { get; set; }
 		public int ProjectCount => Projects.Count();
 
-		private readonly IProjects _projects;
+		private readonly AcademyConversionProjectRepository _repository;
 
-		public IndexModel(IProjects projects)
+		public IndexModel(AcademyConversionProjectRepository repository)
 		{
-			_projects = projects;
+			_repository = repository;
 		}
 
 		public async Task OnGetAsync()
         {
-			var response = await _projects.GetAllProjects();
+			var response = await _repository.GetAllProjects();
 			if (!response.Success)
 			{
 				// 500 maybe?

@@ -1,4 +1,4 @@
-using ApplyToBecome.Data;
+using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.ViewModels;
 using System.Threading.Tasks;
 
@@ -8,7 +8,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 	{
 		public SubMenuViewModel SubMenu { get; set; }
 
-		public IndexModel(IProjects projects) : base(projects) { }
+		public IndexModel(AcademyConversionProjectRepository repository) : base(repository) { }
 
 		public override async Task OnGetAsync(int id)
         {

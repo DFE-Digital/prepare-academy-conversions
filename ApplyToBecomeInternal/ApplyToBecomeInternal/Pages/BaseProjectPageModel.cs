@@ -1,4 +1,5 @@
 ﻿using ApplyToBecome.Data;
+using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
@@ -7,13 +8,13 @@ namespace ApplyToBecomeInternal.Pages
 {
 	public class BaseProjectPageModel : PageModel
 	{
-		protected readonly IProjects _projects;
+		protected readonly AcademyConversionProjectRepository _repository;
 
 		public ProjectViewModel Project { get; set; }
 
-		public BaseProjectPageModel(IProjects projects)
+		public BaseProjectPageModel(AcademyConversionProjectRepository repository)
 		{
-			_projects = projects;
+			_repository = repository;
 		}
 
 		public virtual async Task OnGetAsync(int id)
@@ -23,7 +24,7 @@ namespace ApplyToBecomeInternal.Pages
 
 		protected async Task SetProject(int id)
 		{
-			var project = await _projects.GetProjectById(id);
+			var project = await _repository.GetProjectById(id);
 			if (!project.Success)
 			{
 				// 404 logic

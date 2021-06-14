@@ -13,7 +13,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		[Fact]
 		public async Task Should_be_in_progress_and_display_rationale_when_rationale_populated()
 		{
-			var project = AddGetProject(p => p.Rationale.RationaleMarkAsComplete = false);
+			var project = AddGetProject(p => p.RationaleMarkAsComplete = false);
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
@@ -22,8 +22,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 
 			await NavigateAsync("Rationale");
 
-			Document.QuerySelector("#rationale-for-project").TextContent.Should().Be(project.Rationale.RationaleForProject);
-			Document.QuerySelector("#rationale-for-trust").TextContent.Should().Be(project.Rationale.RationaleForTrust);
+			Document.QuerySelector("#rationale-for-project").TextContent.Should().Be(project.RationaleForProject);
+			Document.QuerySelector("#rationale-for-trust").TextContent.Should().Be(project.RationaleForTrust);
 		}
 
 		[Fact]
@@ -31,7 +31,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		{
 			var project = AddGetProject(project =>
 			{
-				project.Rationale.RationaleMarkAsComplete = true;
+				project.RationaleMarkAsComplete = true;
 			});
 			AddPatchProject(project, r => r.RationaleMarkAsComplete, true);
 
@@ -53,9 +53,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		{
 			var project = AddGetProject(project =>
 			{
-				project.Rationale.RationaleForProject = null;
-				project.Rationale.RationaleForTrust = null;
-				project.Rationale.RationaleMarkAsComplete = false;
+				project.RationaleForProject = null;
+				project.RationaleForTrust = null;
+				project.RationaleMarkAsComplete = false;
 			});
 			AddPatchProject(project, r => r.RationaleMarkAsComplete, false);
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ApplyToBecome.Data.Models
 {
-	public class Project
+	/*public class Project
 	{
 		public int Id { get; set; }
 		public School School { get; set; }
@@ -14,5 +14,5 @@ namespace ApplyToBecome.Data.Models
 		public ProjectPhase Phase { get; set; }
 		public IEnumerable<DocumentDetails> ProjectDocuments { get; set; }
 		public Rationale Rationale { get; set; }
-	}
+	}*/
 }
