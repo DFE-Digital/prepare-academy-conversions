@@ -26,6 +26,24 @@ namespace ApplyToBecomeInternal.ViewModels
 			ProjectDocuments = project.ProjectDocuments;
 			RationaleForProject = project.Rationale.RationaleForProject;
 			RationaleForTrust = project.Rationale.RationaleForTrust;
+			RationaleMarkAsComplete = project.Rationale.RationaleMarkAsComplete;
+			SetRationaleTaskListStatus();
+		}
+
+		private void SetRationaleTaskListStatus()
+		{
+			if (RationaleMarkAsComplete)
+			{
+				RationaleTaskListStatus = TaskListItemViewModel.Completed;
+			}
+			else if (string.IsNullOrWhiteSpace(RationaleForProject) && string.IsNullOrWhiteSpace(RationaleForTrust))
+			{
+				RationaleTaskListStatus = TaskListItemViewModel.NotStarted;
+			}
+			else
+			{
+				RationaleTaskListStatus = TaskListItemViewModel.InProgress;
+			}
 		}
 
 
@@ -42,5 +60,7 @@ namespace ApplyToBecomeInternal.ViewModels
 		public IEnumerable<DocumentDetails> ProjectDocuments { get; set; }
 		public string RationaleForProject { get; set; }
 		public string RationaleForTrust { get; set; }
+		public bool RationaleMarkAsComplete { get; set; }
+		public TaskListItemViewModel RationaleTaskListStatus { get; set; }
 	}
 }

@@ -1,0 +1,66 @@
+@page "/task-list/{id:int}/rationale"
+@using ApplyToBecomeInternal.ViewModels
+@model ApplyToBecomeInternal.Pages.TaskList.Rationale.RationaleSummaryPageModel
+@{
+	ViewData["Title"] = "Rationale summary";
+}
+
+@section BeforeMain
+        {
+	<a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.TaskList.Index.BackText</a>
+}
+
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-full">
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-full">
+				<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+				<h1 class="govuk-heading-l">
+					Confirm project and trust rationale
+				</h1>
+				<div class="govuk-body">
+					<p>
+						This information is pre-populated from the
+						<a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+					</p>
+				</div>
+			</div>
+		</div>
+		<dl class="govuk-summary-list">
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"rationale-for-project",
+				"Rationale for project",
+				Model.Project.RationaleForProject,
+				Links.Rationale.RationaleForProject.Page,
+				Model.Project.Id,
+				"project rationale"))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"rationale-for-trust",
+				"Rationale for the trust or sponsor",
+				Model.Project.RationaleForTrust,
+				Links.Rationale.RationaleForTrust.Page,
+				Model.Project.Id,
+				"sponsor rationale"))
+		</dl>
+		<form method="post">
+			<div class="govuk-form-group">
+				<div class="govuk-checkboxes">
+					<div class="govuk-checkboxes__item">
+						<input class="govuk-checkboxes__input" id="rationale-status-htb" name="rationale-status-htb" type="checkbox" value="true" checked="@Model.Project.RationaleMarkAsComplete">
+						<label class="govuk-label govuk-checkboxes__label" for="rationale-status-htb">
+							Mark this section as complete, you can still make changes later
+						</label>
+					</div>
+				</div>
+			</div>
+			<button class="govuk-button" data-module="govuk-button">
+				Confirm and continue
+			</button>
+		</form>
+	</div>
+</div>

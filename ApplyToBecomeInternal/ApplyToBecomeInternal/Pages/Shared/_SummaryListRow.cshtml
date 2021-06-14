@@ -1,0 +1,21 @@
+﻿@model ApplyToBecomeInternal.ViewModels.SummaryListRowViewModel
+<div class="govuk-summary-list__row">
+	<dt class="govuk-summary-list__key govuk-!-width-one-quarter">
+		@Model.Key
+	</dt>
+	<dd class="govuk-summary-list__value govuk-!-width-full">
+		@if (!Model.IsEmpty)
+		{
+			<span id="@Model.Id">@Model.Value</span>
+		}
+		else
+		{
+			<span id="@Model.Id-empty" class="empty">Empty</span>
+		}
+	</dd>
+	<dd class="govuk-summary-list__actions">
+		<a class="govuk-link" asp-page="@Model.Page" asp-route-id="@Model.RouteId">
+			Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
+		</a>
+	</dd>
+</div>

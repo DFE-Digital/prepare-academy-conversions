@@ -45,10 +45,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		[Fact]
 		public async Task Should_update_rationale_for_project()
 		{
-			var (project, request) = AddGetAndPatchProject(r => r.RationaleForProject);
+			var project = AddGetProject();
+			var request = AddPatchProject(project, r => r.RationaleForProject);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/project-rationale");
-			var textArea = Document.QuerySelector("#project-rationale") as IHtmlTextAreaElement;
+			var textArea = Document.QuerySelector<IHtmlTextAreaElement>("#project-rationale");
 			textArea.Value = request.RationaleForProject;
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
