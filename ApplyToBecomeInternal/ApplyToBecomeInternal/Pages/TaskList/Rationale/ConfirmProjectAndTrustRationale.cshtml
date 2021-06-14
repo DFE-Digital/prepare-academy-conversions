@@ -7,7 +7,7 @@
 
 @section BeforeMain
 {
-	<a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.TaskList.Index.BackText</a>
+	<a back-link-for="@Links.TaskList.Index"></a>
 }
 
 @if (Model.ShowError)

@@ -1,0 +1,28 @@
+﻿@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_Layout";
+}
+
+@section BeforeMain
+{
+	@await RenderSectionAsync("BeforeMain", required: false)
+}
+
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+			@RenderBody()
+			<button class="govuk-button" data-module="govuk-button">
+				Save and continue
+			</button>
+		</form>
+	</div>
+
+	<partial name="_UsefulInformation" />
+</div>

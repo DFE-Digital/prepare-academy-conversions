@@ -6,7 +6,7 @@
 
 @section BeforeMain
 {
-	<a asp-page="@Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.BackText</a>
+	<a back-link-for="@Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts"></a>
 }
 
 @if (Model.ShowError)

@@ -1,18 +1,13 @@
 ﻿@page "/task-list/{id:int}/confirm-school-pupil-forecasts"
 @using ApplyToBecomeInternal.ViewModels
-@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@model ApplyToBecomeInternal.Pages.BaseAcademyConversionProjectPageModel
 @{
 	ViewData["Title"] = "Confirm school pupil forecasts";
 }
 
 @section BeforeMain
 {
-	<a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.TaskList.Index.BackText</a>
-}
-
-@if (Model.ShowError)
-{
-	<partial name="_ErrorSummary" />
+	<a back-link-for="@Links.TaskList.Index"></a>
 }
 
 <div class="govuk-grid-row">
