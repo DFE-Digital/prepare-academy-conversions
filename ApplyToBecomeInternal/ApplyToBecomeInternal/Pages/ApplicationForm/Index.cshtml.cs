@@ -8,7 +8,7 @@ using ApplyToBecomeInternal.ViewModels;
 
 namespace ApplyToBecomeInternal.Pages.ApplicationForm
 {
-	public class IndexModel : BaseProjectPageModel
+	public class IndexModel : BaseAcademyConversionProjectPageModel
 	{
 		private readonly IApplications _applications;
 

@@ -1,5 +1,5 @@
 ﻿@page "/task-list/{id:int}/risks-issues"
-@model ApplyToBecomeInternal.Pages.TaskList.RisksAndIssues.RisksAndIssuesModel
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
 	ViewData["Title"] = "Risks and issues";
 }
@@ -29,6 +29,7 @@
 						  data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers">@Model.Project.RisksAndIssues</textarea>
 			</div>
 
+			<input name="SuccessPage" type="hidden" value="@Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page" />
 			<button class="govuk-button" data-module="govuk-button">
 				Save and continue
 			</button>

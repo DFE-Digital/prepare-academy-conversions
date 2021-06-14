@@ -1,6 +1,6 @@
 @page "/task-list/{id:int}/confirm-project-trust-rationale"
 @using ApplyToBecomeInternal.ViewModels
-@model ApplyToBecomeInternal.Pages.TaskList.Rationale.ConfirmProjectAndTrustRationalePageModel
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
 	ViewData["Title"] = "Confirm project and trust rationale";
 }
@@ -53,13 +53,17 @@
 			<div class="govuk-form-group">
 				<div class="govuk-checkboxes">
 					<div class="govuk-checkboxes__item">
-						<input class="govuk-checkboxes__input" id="rationale-status-htb" name="rationale-status-htb" type="checkbox" value="true" checked="@Model.Project.RationaleMarkAsComplete">
-						<label class="govuk-label govuk-checkboxes__label" for="rationale-status-htb">
+						<input name="rationale-complete-hidden" type="hidden" value="false" />
+						<input class="govuk-checkboxes__input" id="rationale-complete" name="rationale-complete" type="checkbox" value="true" checked="@Model.Project.RationaleMarkAsComplete">
+
+						<label class="govuk-label govuk-checkboxes__label" for="rationale-complete">
 							Mark this section as complete, you can still make changes later
 						</label>
 					</div>
 				</div>
 			</div>
+
+			<input name="SuccessPage" type="hidden" value="@Links.TaskList.Index.Page" />
 			<button class="govuk-button" data-module="govuk-button">
 				Confirm and continue
 			</button>

@@ -2,7 +2,7 @@ using ApplyToBecome.Data.Services;
 
 namespace ApplyToBecomeInternal.Pages.TaskList
 {
-	public class PreviewHTBTemplateModel : BaseProjectPageModel
+	public class PreviewHTBTemplateModel : BaseAcademyConversionProjectPageModel
 	{
 		public PreviewHTBTemplateModel(AcademyConversionProjectRepository repository) : base(repository) { }
     }

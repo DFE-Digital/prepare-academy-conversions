@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.ProjectNotes
 {
-	public class IndexModel : BaseProjectPageModel
+	public class IndexModel : BaseAcademyConversionProjectPageModel
 	{
 		private readonly IProjectNotes _projectNotes;
 

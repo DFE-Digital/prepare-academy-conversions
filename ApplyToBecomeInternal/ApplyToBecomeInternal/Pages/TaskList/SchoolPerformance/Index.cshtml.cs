@@ -4,7 +4,7 @@ using SchoolPerformanceModel = ApplyToBecome.Data.Models.SchoolPerformance;
 
 namespace ApplyToBecomeInternal.Pages.SchoolPerformance
 {
-	public class IndexModel : BaseProjectPageModel
+	public class IndexModel : BaseAcademyConversionProjectPageModel
 	{
 		private readonly SchoolPerformanceService _schoolPerformanceService;
 

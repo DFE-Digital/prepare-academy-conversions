@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList
 {
-	public class IndexModel : BaseProjectPageModel
+	public class IndexModel : BaseAcademyConversionProjectPageModel
 	{
 		public SubMenuViewModel SubMenu { get; set; }
 

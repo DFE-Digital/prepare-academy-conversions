@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ApplyToBecomeInternal.Pages.ProjectNotes
 {
-	public class NewNoteModel : BaseProjectPageModel
+	public class NewNoteModel : BaseAcademyConversionProjectPageModel
 	{
 		private readonly IProjectNotes _projectNotes;
 

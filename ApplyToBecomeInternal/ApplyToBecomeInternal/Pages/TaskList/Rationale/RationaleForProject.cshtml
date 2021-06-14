@@ -1,5 +1,5 @@
 ﻿@page "/task-list/{id:int}/confirm-project-trust-rationale/project-rationale"
-@model ApplyToBecomeInternal.Pages.TaskList.Rationale.RationaleForProjectModel
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
 	ViewData["Title"] = "Project rationale";
 }
@@ -31,6 +31,7 @@
 						  data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers">@Model.Project.RationaleForProject</textarea>
 			</div>
 
+			<input name="SuccessPage" type="hidden" value="@Links.RationaleSection.ConfirmProjectAndTrustRationale.Page" />
 			<button class="govuk-button" data-module="govuk-button">
 				Save and continue
 			</button>

@@ -41,7 +41,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 
 			await NavigateAsync("Rationale");
 
-			Document.QuerySelector<IHtmlInputElement>("#rationale-status-htb").IsChecked.Should().BeTrue();
+			Document.QuerySelector<IHtmlInputElement>("#rationale-complete").IsChecked.Should().BeTrue();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -68,7 +68,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 
 			Document.QuerySelector("#rationale-for-project-empty").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#rationale-for-trust-empty").TextContent.Should().Be("Empty"); 
-			Document.QuerySelector<IHtmlInputElement>("#rationale-status-htb").IsChecked.Should().BeFalse();
+			Document.QuerySelector<IHtmlInputElement>("#rationale-complete").IsChecked.Should().BeFalse();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
