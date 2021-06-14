@@ -1,5 +1,5 @@
 ﻿@page "/task-list/{id:int}"
-@model ApplyToBecomeInternal.Pages.TaskList.IndexModel
+@model ApplyToBecomeInternal.Pages.BaseAcademyConversionProjectPageModel
 @{
 	ViewData["Title"] = "Task List";
 }
@@ -11,7 +11,8 @@
 			<a asp-page="@Links.ProjectList.Index.Page" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
 		}
 		<partial name="_ProjectHeader" model="Model.Project" />
-		<partial name="/Pages/Shared/_SubMenu.cshtml" model="Model.SubMenu" />
+		
+		<partial name="/Pages/Shared/_SubMenu.cshtml" model="new SubMenuViewModel(Model.Project.Id, SubMenuPage.TaskList)" />
 	</div>
 	<div class="govuk-grid-column-two-thirds">
 		<h2 class="govuk-heading-l govuk-!-margin-bottom-2">Task list</h2>

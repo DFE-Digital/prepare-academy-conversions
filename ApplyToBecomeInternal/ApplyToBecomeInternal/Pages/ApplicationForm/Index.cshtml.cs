@@ -4,7 +4,6 @@ using ApplyToBecome.Data;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models.ApplicationForm;
 using ApplyToBecomeInternal.Models.ApplicationForm.Sections;
-using ApplyToBecomeInternal.ViewModels;
 
 namespace ApplyToBecomeInternal.Pages.ApplicationForm
 {
@@ -17,14 +16,11 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 			_applications = applications;
 		}
 
-		public SubMenuViewModel SubMenu { get; set; }
 		public IEnumerable<BaseFormSection> Sections { get; set; }
 
 		public override async Task OnGetAsync(int id)
         {
 			await base.OnGetAsync(id);
-
-			SubMenu = new SubMenuViewModel(Project.Id, SubMenuPage.SchoolApplicationForm);
 
 			var application = _applications.GetApplication(id.ToString());
 			Sections = new BaseFormSection[]
