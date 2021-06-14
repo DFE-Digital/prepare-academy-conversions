@@ -35,11 +35,17 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem Index = new LinkItem { Page = "/ApplicationForm/Index" };
 		}
 
-		public static class Rationale
+		public static class RationaleSection
 		{
-			public static LinkItem RationaleSummary = new LinkItem { Page = "/TaskList/Rationale/RationaleSummary" };
+			public static LinkItem ConfirmProjectAndTrustRationale = new LinkItem { Page = "/TaskList/Rationale/ConfirmProjectAndTrustRationale" };
 			public static LinkItem RationaleForProject = new LinkItem { Page = "/TaskList/Rationale/RationaleForProject" };
 			public static LinkItem RationaleForTrust = new LinkItem { Page = "/TaskList/Rationale/RationaleForTrust" };
+		}
+
+		public static class RisksAndIssuesSection
+		{
+			public static LinkItem ConfirmRisksAndIssues = new LinkItem { Page = "/TaskList/RisksAndIssues/ConfirmRisksAndIssues" };
+			public static LinkItem RisksAndIssues = new LinkItem { Page = "/TaskList/RisksAndIssues/RisksAndIssues" };
 		}
 	}
 

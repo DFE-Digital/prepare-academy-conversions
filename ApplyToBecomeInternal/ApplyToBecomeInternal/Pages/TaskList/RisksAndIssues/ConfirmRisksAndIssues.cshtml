@@ -1,12 +1,12 @@
-@page "/task-list/{id:int}/rationale"
+﻿@page "/task-list/{id:int}/confirm-risks-issues"
 @using ApplyToBecomeInternal.ViewModels
-@model ApplyToBecomeInternal.Pages.TaskList.Rationale.RationaleSummaryPageModel
+@model ApplyToBecomeInternal.Pages.TaskList.RisksAndIssues.ConfirmRisksAndIssuesModel
 @{
-	ViewData["Title"] = "Rationale summary";
+	ViewData["Title"] = "Confirm risks and issues";
 }
 
 @section BeforeMain
-        {
+{
 	<a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.TaskList.Index.BackText</a>
 }
 
@@ -21,37 +21,31 @@
 			<div class="govuk-grid-column-full">
 				<span class="govuk-caption-l">@Model.Project.SchoolName</span>
 				<h1 class="govuk-heading-l">
-					Confirm project and trust rationale
+					Confirm risks and issues
 				</h1>
-				<div class="govuk-body">
-					<p>
-						This information is pre-populated from the
-						<a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
-					</p>
-				</div>
 			</div>
 		</div>
 		<dl class="govuk-summary-list">
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"rationale-for-project",
-				"Rationale for project",
-				Model.Project.RationaleForProject,
-				Links.Rationale.RationaleForProject.Page,
+				"risks-and-issues",
+				"Risks and issues",
+				Model.Project.RisksAndIssues,
+				Links.RisksAndIssuesSection.RisksAndIssues.Page,
 				Model.Project.Id,
-				"project rationale"))
+				"risks and issues"))
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
 				"rationale-for-trust",
-				"Rationale for the trust or sponsor",
-				Model.Project.RationaleForTrust,
-				Links.Rationale.RationaleForTrust.Page,
-				Model.Project.Id,
-				"sponsor rationale"))
+				"Has an Equalities Impact Assessment been considered?",
+				Model.Project.EqualitiesImpactAssessmentConsidered,
+				null,
+				null,
+				null))
 		</dl>
 		<form method="post">
 			<div class="govuk-form-group">
 				<div class="govuk-checkboxes">
 					<div class="govuk-checkboxes__item">
-						<input class="govuk-checkboxes__input" id="rationale-status-htb" name="rationale-status-htb" type="checkbox" value="true" checked="@Model.Project.RationaleMarkAsComplete">
+						<input class="govuk-checkboxes__input" id="rationale-status-htb" name="rationale-status-htb" type="checkbox" value="true" checked="@Model.Project.RisksAndIssuesMarkAsComplete">
 						<label class="govuk-label govuk-checkboxes__label" for="rationale-status-htb">
 							Mark this section as complete, you can still make changes later
 						</label>

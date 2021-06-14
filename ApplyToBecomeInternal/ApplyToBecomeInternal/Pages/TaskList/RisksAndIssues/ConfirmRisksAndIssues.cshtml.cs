@@ -1,17 +1,17 @@
-﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace ApplyToBecomeInternal.Pages.TaskList.Rationale
+namespace ApplyToBecomeInternal.Pages.TaskList.RisksAndIssues
 {
-	public class RationaleSummaryPageModel : BaseProjectPageModel
+    public class ConfirmRisksAndIssuesModel : BaseProjectPageModel
 	{
-		public RationaleSummaryPageModel(AcademyConversionProjectRepository repository) : base(repository) { }
-		
-		[BindProperty(Name = "rationale-status-htb")]
-		public bool RationaleMarkAsComplete { get; set; }
+		public ConfirmRisksAndIssuesModel(AcademyConversionProjectRepository repository) : base(repository) { }
+
+		[BindProperty(Name = "risks-status")]
+		public bool RisksAndIssuesMarkAsComplete { get; set; }
 
 		public bool ShowError { get; set; }
 
@@ -19,7 +19,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Rationale
 		{
 			var response = await _repository.UpdateProject(id, new UpdateAcademyConversionProject
 			{
-				RationaleMarkAsComplete = RationaleMarkAsComplete
+				RisksAndIssuesMarkAsComplete = RisksAndIssuesMarkAsComplete
 			});
 
 			if (!response.Success)

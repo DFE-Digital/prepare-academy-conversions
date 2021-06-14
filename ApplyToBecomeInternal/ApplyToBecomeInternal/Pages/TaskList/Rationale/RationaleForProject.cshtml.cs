@@ -31,7 +31,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Rationale
 				return Page();
 			}
 
-			return RedirectToPage(Links.Rationale.RationaleSummary.Page, new { id });
+			return RedirectToPage(Links.RationaleSection.ConfirmProjectAndTrustRationale.Page, new { id });
 		}
 	}
 }

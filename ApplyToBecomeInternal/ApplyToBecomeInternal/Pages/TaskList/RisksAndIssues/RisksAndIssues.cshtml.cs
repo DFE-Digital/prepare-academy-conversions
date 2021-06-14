@@ -5,15 +5,15 @@ using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ApplyToBecomeInternal.Pages.TaskList.Rationale
+namespace ApplyToBecomeInternal.Pages.TaskList.RisksAndIssues
 {
-	public class RationaleForTrustModel : BaseProjectPageModel
-	{
-		public RationaleForTrustModel(AcademyConversionProjectRepository repository) : base(repository) { }
+	public class RisksAndIssuesModel : BaseProjectPageModel
+    {
+		public RisksAndIssuesModel(AcademyConversionProjectRepository repository) : base(repository) { }
 
-		[BindProperty(Name = "trust-rationale")]
+		[BindProperty(Name = "project-rationale")]
 		[DisplayFormat(ConvertEmptyStringToNull = false)]
-		public string RationaleForTrust { get; set; }
+		public string RisksAndIssues { get; set; }
 
 		public bool ShowError { get; set; }
 
@@ -21,7 +21,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Rationale
 		{
 			var response = await _repository.UpdateProject(id, new UpdateAcademyConversionProject
 			{
-				RationaleForTrust = RationaleForTrust
+				RisksAndIssues = RisksAndIssues
 			});
 
 			if (!response.Success)
@@ -31,7 +31,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Rationale
 				return Page();
 			}
 
-			return RedirectToPage(Links.RationaleSection.ConfirmProjectAndTrustRationale.Page, new { id });
+			return RedirectToPage(Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page, new { id });
 		}
 	}
 }
