@@ -87,7 +87,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.RisksAndIssues
 		}
 
 		[Fact]
-		public async Task Should_navigate_between_task_list_and_rationale_summary()
+		public async Task Should_navigate_between_task_list_and_confirm_risks_and_issues()
 		{
 			var project = AddGetProject();
 

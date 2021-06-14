@@ -81,7 +81,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/rationale");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -96,7 +96,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 			await OpenUrlAsync($"/task-list/{project.Id}");
 			await NavigateAsync("Rationale");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/rationale");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale");
 
 			await NavigateAsync("Back to task list");
 
