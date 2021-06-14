@@ -6,9 +6,9 @@ using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 {
-	public class RationaleSummaryIntegrationTests : BaseIntegrationTests
+	public class ConfirmProjectAndTrustRationaleIntegrationTests : BaseIntegrationTests
 	{
-		public RationaleSummaryIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ConfirmProjectAndTrustRationaleIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
 
 		[Fact]
 		public async Task Should_be_in_progress_and_display_rationale_when_rationale_populated()

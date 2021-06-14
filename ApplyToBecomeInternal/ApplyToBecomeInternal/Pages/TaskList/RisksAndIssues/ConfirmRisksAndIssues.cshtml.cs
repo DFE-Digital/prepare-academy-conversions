@@ -10,7 +10,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.RisksAndIssues
 	{
 		public ConfirmRisksAndIssuesModel(AcademyConversionProjectRepository repository) : base(repository) { }
 
-		[BindProperty(Name = "risks-status")]
+		[BindProperty(Name = "risks-and-issues-complete")]
 		public bool RisksAndIssuesMarkAsComplete { get; set; }
 
 		public bool ShowError { get; set; }

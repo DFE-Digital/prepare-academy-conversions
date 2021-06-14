@@ -34,7 +34,7 @@
 				Model.Project.Id,
 				"risks and issues"))
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"rationale-for-trust",
+				"equalities-impact-assessment-considered",
 				"Has an Equalities Impact Assessment been considered?",
 				Model.Project.EqualitiesImpactAssessmentConsidered,
 				null,
@@ -45,8 +45,8 @@
 			<div class="govuk-form-group">
 				<div class="govuk-checkboxes">
 					<div class="govuk-checkboxes__item">
-						<input class="govuk-checkboxes__input" id="rationale-status-htb" name="rationale-status-htb" type="checkbox" value="true" checked="@Model.Project.RisksAndIssuesMarkAsComplete">
-						<label class="govuk-label govuk-checkboxes__label" for="rationale-status-htb">
+						<input class="govuk-checkboxes__input" id="risks-and-issues-complete" name="risks-and-issues-complete" type="checkbox" value="true" checked="@Model.Project.RisksAndIssuesMarkAsComplete">
+						<label class="govuk-label govuk-checkboxes__label" for="risks-and-issues-complete">
 							Mark this section as complete, you can still make changes later
 						</label>
 					</div>

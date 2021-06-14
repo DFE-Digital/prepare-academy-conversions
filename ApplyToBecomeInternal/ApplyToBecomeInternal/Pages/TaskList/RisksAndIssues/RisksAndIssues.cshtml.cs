@@ -11,7 +11,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.RisksAndIssues
     {
 		public RisksAndIssuesModel(AcademyConversionProjectRepository repository) : base(repository) { }
 
-		[BindProperty(Name = "project-rationale")]
+		[BindProperty(Name = "risks-and-issues")]
 		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string RisksAndIssues { get; set; }
 
