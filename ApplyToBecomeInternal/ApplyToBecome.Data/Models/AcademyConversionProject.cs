@@ -84,6 +84,8 @@ namespace ApplyToBecome.Data.Models
 		public int? YearTwoProjectedPupilNumbers { get; set; }
 		public int? YearThreeProjectedCapacity { get; set; }
 		public int? YearThreeProjectedPupilNumbers { get; set; }
+		public int? YearFourProjectedCapacity { get; set; }
+		public int? YearFourProjectedPupilNumbers { get; set; }
 		public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
 		//key stage performance tables

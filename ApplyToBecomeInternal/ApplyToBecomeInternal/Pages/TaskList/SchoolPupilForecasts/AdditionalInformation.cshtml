@@ -1,0 +1,55 @@
+﻿@page "/task-list/{id:int}/confirm-school-pupil-forecasts/additional-information"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	ViewData["Title"] = "Confirm school pupil forecasts";
+}
+
+@section BeforeMain
+{
+	<a asp-page="@Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.BackText</a>
+}
+
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+		<h1 class="govuk-heading-l">
+			School pupil forecasts
+		</h1>
+		<div class="govuk-body">
+			<p>
+				This information comes from TRAMS and the
+				<a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+				The table will populate into your headteacher board (HTB) template.
+			</p>
+			<p>
+				You can add <a href="#additional-information">additional information</a> if you need to, this will also go into your HTB template.
+			</p>
+		</div>
+	</div>
+	<div class="govuk-grid-column-full">
+		<partial name="_SchoolPupilForecastsTable" model="Model.Project" />
+	</div>
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			<h3 class="govuk-heading-m">Additional information</h3>
+			<p class="govuk-body">This information will populate into your HTB template under the school pupil forecasts section.</p>
+
+			<div class="govuk-form-group">
+				<textarea class="govuk-textarea"
+						  id="additional-information"
+						  name="school-pupil-forecasts-additional-information"
+						  rows="5">@Model.Project.SchoolPupilForecastsAdditionalInformation</textarea>
+			</div>
+
+			<input name="SuccessPage" type="hidden" value="@Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.Page" />
+			<button class="govuk-button" data-module="govuk-button">
+				Save and continue
+			</button>
+		</form>
+	</div>
+</div>

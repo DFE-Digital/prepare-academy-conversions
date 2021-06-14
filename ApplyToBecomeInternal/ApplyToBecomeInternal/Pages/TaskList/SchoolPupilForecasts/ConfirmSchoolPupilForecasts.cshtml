@@ -1,0 +1,54 @@
+﻿@page "/task-list/{id:int}/confirm-school-pupil-forecasts"
+@using ApplyToBecomeInternal.ViewModels
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	ViewData["Title"] = "Confirm school pupil forecasts";
+}
+
+@section BeforeMain
+{
+	<a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.TaskList.Index.BackText</a>
+}
+
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+		<h1 class="govuk-heading-l">
+			School pupil forecasts
+		</h1>
+		<div class="govuk-body">
+			<p>
+				This information comes from TRAMS and the
+				<a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+				The table will populate into your headteacher board (HTB) template.
+			</p>
+			<p>
+				You can add <a href="#additional-information">additional information</a> if you need to, this will also go into your HTB template.
+			</p>
+		</div>
+	</div>
+	<div class="govuk-grid-column-full">
+		<partial name="_SchoolPupilForecastsTable" model="Model.Project" />
+	</div>
+	<div class="govuk-grid-column-two-thirds">
+		<h3 class="govuk-heading-m">Additional information</h3>
+		<p class="govuk-body">This information will populate into your HTB template under the school pupil forecasts section.</p>
+	</div>
+	<div class="govuk-grid-column-full">
+		<dl class="govuk-summary-list">
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"additional-information",
+				"Additional information",
+				Model.Project.SchoolPupilForecastsAdditionalInformation,
+				Links.SchoolPupilForecastsSection.AdditionalInformation.Page,
+				Model.Project.Id,
+				"additional information"))
+		</dl>
+		<a class="govuk-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</a>
+	</div>
+</div>
