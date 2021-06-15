@@ -14,10 +14,25 @@ namespace ApplyToBecomeInternal.Models
 		public DateTime? BaselineDate { get; set; }
 
 		//la summary page
-		public DateTime? SentDate { get; set; }
-		public DateTime? ReturnedDate { get; set; }
-		public string Comments { get; set; }
-		public string AdditionalInfo { get; set; }
+		[BindProperty(Name = "la-info-template-sent-date")]
+		[ModelBinder(BinderType = typeof(DateInputModelBinder))]
+		public DateTime? LocalAuthorityInformationTemplateSentDate { get; set; }
+
+		[BindProperty(Name = "la-info-template-returned-date")]
+		[ModelBinder(BinderType = typeof(DateInputModelBinder))]
+		public DateTime? LocalAuthorityInformationTemplateReturnedDate { get; set; }
+
+		[BindProperty(Name = "la-info-template-comments")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
+		public string LocalAuthorityInformationTemplateComments { get; set; }
+
+		[BindProperty(Name = "la-info-template-sharepoint-link")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
+		public string LocalAuthorityInformationTemplateLink { get; set; }
+
+		[BindProperty(Name = "la-info-template-complete")]
+		[ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
+		public bool? LocalAuthorityInformationTemplateSectionComplete { get; set; }
 
 		//school/trust info
 		public string RecommendationForProject { get; set; }
@@ -25,7 +40,7 @@ namespace ApplyToBecomeInternal.Models
 		public string ClearedBy { get; set; }
 		public bool? IsAoRequired { get; set; }
 		public DateTime? ProposedAcademyOpeningDate { get; set; }
-		public bool? SchoolAndTrustInformationMarkAsComplete { get; set; }
+		public bool? SchoolAndTrustInformationSectionComplete { get; set; }
 
 		//general info
 		public string PublishedAdmissionNumber { get; set; }
@@ -34,7 +49,7 @@ namespace ApplyToBecomeInternal.Models
 		public bool? IsThisADiocesanTrust { get; set; }
 		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
 		public string MemberOfParliamentParty { get; set; }
-		public bool? GeneralInformationMarkAsComplete { get; set; }
+		public bool? GeneralInformationSectionComplete { get; set; }
 
 		//school performance ofsted information
 		public string SchoolPerformanceAdditionalInformation { get; set; }
@@ -49,10 +64,11 @@ namespace ApplyToBecomeInternal.Models
 		public string RationaleForTrust { get; set; }
 
 		[BindProperty(Name = "rationale-complete")]
-		public bool? RationaleMarkAsComplete { get; set; }
+		[ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
+		public bool? RationaleSectionComplete { get; set; }
 
-		[BindProperty(Name = "rationale-complete-hidden")]
-		public bool? RationaleMarkAsCompleteHidden { get; set; }
+		/*[BindProperty(Name = "rationale-complete-hidden")]
+		public bool? RationaleSectionCompleteHidden { get; set; }*/
 
 		// risk and issues
 		[BindProperty(Name = "risks-and-issues")]
@@ -60,10 +76,11 @@ namespace ApplyToBecomeInternal.Models
 		public string RisksAndIssues { get; set; }
 
 		[BindProperty(Name = "risks-and-issues-complete")]
-		public bool? RisksAndIssuesMarkAsComplete { get; set; }
+		[ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
+		public bool? RisksAndIssuesSectionComplete { get; set; }
 
-		[BindProperty(Name = "risks-and-issues-complete-hidden")]
-		public bool? RisksAndIssuesMarkAsCompleteHidden { get; set; }
+		/*[BindProperty(Name = "risks-and-issues-complete-hidden")]
+		public bool? RisksAndIssuesSectionCompleteHidden { get; set; }*/
 
 		// school budget info
 		public decimal? RevenueCarryForwardAtEndMarchCurrentYear { get; set; }

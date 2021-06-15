@@ -24,13 +24,22 @@ namespace ApplyToBecomeInternal.ViewModels
 			AssignedDate = FormatDate(project.AssignedDate);
 			Phase = project.ProjectStatus;
 			//ProjectDocuments = project.ProjectDocuments;
+
+			LocalAuthorityInformationTemplateSentDate = project.LocalAuthorityInformationTemplateSentDate;
+			LocalAuthorityInformationTemplateReturnedDate = project.LocalAuthorityInformationTemplateReturnedDate;
+			LocalAuthorityInformationTemplateComments = project.LocalAuthorityInformationTemplateComments;
+			LocalAuthorityInformationTemplateLink = project.LocalAuthorityInformationTemplateLink;
+			LocalAuthorityInformationTemplateSectionComplete = project.LocalAuthorityInformationTemplateSectionComplete ?? false;
+
+			SetLocalAuthorityInformationTemplateTaskListStatus();
+
 			RationaleForProject = project.RationaleForProject;
 			RationaleForTrust = project.RationaleForTrust;
-			RationaleMarkAsComplete = project.RationaleMarkAsComplete ?? false;
+			RationaleSectionComplete = project.RationaleSectionComplete ?? false;
 			SetRationaleTaskListStatus();
 			RisksAndIssues = project.RisksAndIssues;
 			EqualitiesImpactAssessmentConsidered = project.EqualitiesImpactAssessmentConsidered;
-			RisksAndIssuesMarkAsComplete = project.RisksAndIssuesMarkAsComplete ?? false;
+			RisksAndIssuesSectionComplete = project.RisksAndIssuesSectionComplete ?? false;
 			SetRisksAndIssuesTaskListStatus();
 
 			CurrentYearCapacity = project.CurrentYearCapacity;
@@ -46,9 +55,28 @@ namespace ApplyToBecomeInternal.ViewModels
 			SchoolPupilForecastsAdditionalInformation = project.SchoolPupilForecastsAdditionalInformation;
 		}
 
+		private void SetLocalAuthorityInformationTemplateTaskListStatus()
+		{
+			if (LocalAuthorityInformationTemplateSectionComplete)
+			{
+				LocalAuthorityInformationTemplateTaskListStatus = TaskListItemViewModel.Completed;
+			}
+			else if (!LocalAuthorityInformationTemplateSentDate.HasValue 
+				&& !LocalAuthorityInformationTemplateReturnedDate.HasValue 
+				&& string.IsNullOrWhiteSpace(LocalAuthorityInformationTemplateComments) 
+				&& string.IsNullOrWhiteSpace(LocalAuthorityInformationTemplateLink))
+			{
+				LocalAuthorityInformationTemplateTaskListStatus = TaskListItemViewModel.NotStarted;
+			}
+			else
+			{
+				LocalAuthorityInformationTemplateTaskListStatus = TaskListItemViewModel.InProgress;
+			}
+		}
+
 		private void SetRationaleTaskListStatus()
 		{
-			if (RationaleMarkAsComplete)
+			if (RationaleSectionComplete)
 			{
 				RationaleTaskListStatus = TaskListItemViewModel.Completed;
 			}
@@ -64,7 +92,7 @@ namespace ApplyToBecomeInternal.ViewModels
 
 		private void SetRisksAndIssuesTaskListStatus()
 		{
-			if (RisksAndIssuesMarkAsComplete)
+			if (RisksAndIssuesSectionComplete)
 			{
 				RisksAndIssuesTaskListStatus = TaskListItemViewModel.Completed;
 			}
@@ -91,15 +119,22 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string Phase { get; }
 		public IEnumerable<DocumentDetails> ProjectDocuments { get; set; }
 
+		public DateTime? LocalAuthorityInformationTemplateSentDate { get; set; }
+		public DateTime? LocalAuthorityInformationTemplateReturnedDate { get; set; }
+		public string LocalAuthorityInformationTemplateComments { get; set; }
+		public string LocalAuthorityInformationTemplateLink { get; set; }
+		public bool LocalAuthorityInformationTemplateSectionComplete { get; set; }
+		public TaskListItemViewModel LocalAuthorityInformationTemplateTaskListStatus { get; set; }
+
 		public string RationaleForProject { get; set; }
 		public string RationaleForTrust { get; set; }
-		public bool RationaleMarkAsComplete { get; set; }
+		public bool RationaleSectionComplete { get; set; }
 		public TaskListItemViewModel RationaleTaskListStatus { get; set; }
 
 		// risk and issues
 		public string RisksAndIssues { get; set; }
 		public string EqualitiesImpactAssessmentConsidered { get; set; }
-		public bool RisksAndIssuesMarkAsComplete { get; set; }
+		public bool RisksAndIssuesSectionComplete { get; set; }
 		public TaskListItemViewModel RisksAndIssuesTaskListStatus { get; set; }
 
 		// pupil schools forecast

@@ -13,7 +13,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.RisksAndIssues
 		[Fact]
 		public async Task Should_be_in_progress_and_display_risks_and_issues()
 		{
-			var project = AddGetProject(p => p.RisksAndIssuesMarkAsComplete = false);
+			var project = AddGetProject(p => p.RisksAndIssuesSectionComplete = false);
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
@@ -31,9 +31,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.RisksAndIssues
 		{
 			var project = AddGetProject(project =>
 			{
-				project.RisksAndIssuesMarkAsComplete = true;
+				project.RisksAndIssuesSectionComplete = true;
 			});
-			AddPatchProject(project, r => r.RisksAndIssuesMarkAsComplete, true);
+			AddPatchProject(project, r => r.RisksAndIssuesSectionComplete, true);
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
@@ -54,9 +54,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.RisksAndIssues
 			var project = AddGetProject(project =>
 			{
 				project.RisksAndIssues = null;
-				project.RisksAndIssuesMarkAsComplete = false;
+				project.RisksAndIssuesSectionComplete = false;
 			});
-			AddPatchProject(project, r => r.RisksAndIssuesMarkAsComplete, false);
+			AddPatchProject(project, r => r.RisksAndIssuesSectionComplete, false);
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 

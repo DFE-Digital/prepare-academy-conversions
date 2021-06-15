@@ -35,6 +35,12 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem Index = new LinkItem { Page = "/ApplicationForm/Index" };
 		}
 
+		public static class LocalAuthorityInformationTemplateSection
+		{
+			public static LinkItem ConfirmLocalAuthorityInformationTemplateDates = new LinkItem { Page = "/TaskList/LocalAuthorityInformationTemplate/ConfirmLocalAuthorityInformationTemplateDates" };
+			public static LinkItem RecordLocalAuthorityInformationTemplateDates = new LinkItem { Page = "/TaskList/LocalAuthorityInformationTemplate/RecordLocalAuthorityInformationTemplateDates" };
+		}
+
 		public static class RationaleSection
 		{
 			public static LinkItem ConfirmProjectAndTrustRationale = new LinkItem { Page = "/TaskList/Rationale/ConfirmProjectAndTrustRationale" };

@@ -1,0 +1,41 @@
+﻿@model ApplyToBecomeInternal.ViewModels.DateInputViewModel
+@{
+	var (day, month, year) = Model.Value.HasValue
+		? (Model.Value.Value.Day.ToString(), Model.Value.Value.Day.ToString(), Model.Value.Value.Day.ToString())
+		: ("", "", "");
+}
+
+<fieldset class="govuk-fieldset" role="group" aria-describedby="@Model.Id-hint">
+	<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+		@Model.Title
+	</legend>
+	<div id="@Model.Id-hint" class="govuk-hint">
+		@Model.Hint
+	</div>
+	<div class="govuk-date-input" id="@Model.Id">
+		<div class="govuk-date-input__item">
+			<div class="govuk-form-group">
+				<label class="govuk-label govuk-date-input__label" for="@Model.Id-day">
+					Day
+				</label>
+				<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="@Model.Id-day" name="@Model.Name-day" value="@day" type="text" pattern="[0-9]*" inputmode="numeric">
+			</div>
+		</div>
+		<div class="govuk-date-input__item">
+			<div class="govuk-form-group">
+				<label class="govuk-label govuk-date-input__label" for="@Model.Id-month">
+					Month
+				</label>
+				<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="@Model.Id-month" name="@Model.Name-month" value="@month" type="text" pattern="[0-9]*" inputmode="numeric">
+			</div>
+		</div>
+		<div class="govuk-date-input__item">
+			<div class="govuk-form-group">
+				<label class="govuk-label govuk-date-input__label" for="@Model.Id-year">
+					Year
+				</label>
+				<input class="govuk-input govuk-date-input__input govuk-input--width-4" id="@Model.Id-year" name="@Model.Name-year" value="@year" type="text" pattern="[0-9]*" inputmode="numeric">
+			</div>
+		</div>
+	</div>
+</fieldset>
