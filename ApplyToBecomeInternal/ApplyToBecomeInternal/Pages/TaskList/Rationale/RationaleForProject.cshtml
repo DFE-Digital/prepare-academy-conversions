@@ -1,12 +1,12 @@
 ﻿@page "/task-list/{id:int}/confirm-project-trust-rationale/project-rationale"
-@model ApplyToBecomeInternal.Pages.TaskList.Rationale.RationaleForProjectModel
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
 	ViewData["Title"] = "Project rationale";
 }
 
 @section BeforeMain
 {
-	<a asp-page="@Links.Rationale.RationaleSummary.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.Rationale.RationaleSummary.BackText</a>
+	<a asp-page="@Links.RationaleSection.ConfirmProjectAndTrustRationale.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.RationaleSection.ConfirmProjectAndTrustRationale.BackText</a>
 }
 
 @if (Model.ShowError)
@@ -31,6 +31,7 @@
 						  data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers">@Model.Project.RationaleForProject</textarea>
 			</div>
 
+			<input name="SuccessPage" type="hidden" value="@Links.RationaleSection.ConfirmProjectAndTrustRationale.Page" />
 			<button class="govuk-button" data-module="govuk-button">
 				Save and continue
 			</button>

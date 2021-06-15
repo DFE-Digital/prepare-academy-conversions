@@ -10,16 +10,16 @@ namespace ApplyToBecomeInternal.Tests.Pages
 {
 	public abstract partial class BaseIntegrationTests
 	{
-		protected IEnumerable<Project> AddGetProjects()
+		protected IEnumerable<AcademyConversionProject> AddGetProjects()
 		{
-			var projects = _fixture.CreateMany<Project>();
+			var projects = _fixture.CreateMany<AcademyConversionProject>();
 			_factory.AddGetWithJsonResponse("/conversion-projects", projects);
 			return projects;
 		}
 
-		public Project AddGetProject(Action<Project> postSetup = null)
+		public AcademyConversionProject AddGetProject(Action<AcademyConversionProject> postSetup = null)
 		{
-			var project = _fixture.Create<Project>();
+			var project = _fixture.Create<AcademyConversionProject>();
 			if (postSetup != null)
 			{
 				postSetup(project);
@@ -28,15 +28,15 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			return project;
 		}
 
-		public UpdateProject AddPatchProject<TProperty>(Project project, Expression<Func<UpdateProject, TProperty>> expectedValue)
+		public UpdateAcademyConversionProject AddPatchProject<TProperty>(AcademyConversionProject project, Expression<Func<UpdateAcademyConversionProject, TProperty>> expectedValue)
 		{
 			return AddPatchProject(project, expectedValue, _fixture.Create<TProperty>());
 		}
 
-		public UpdateProject AddPatchProject<TProperty>(Project project, Expression<Func<UpdateProject, TProperty>> expectedValue, TProperty value)
+		public UpdateAcademyConversionProject AddPatchProject<TProperty>(AcademyConversionProject project, Expression<Func<UpdateAcademyConversionProject, TProperty>> expectedValue, TProperty value)
 		{
 			var request = _fixture
-				.Build<UpdateProject>()
+				.Build<UpdateAcademyConversionProject>()
 				.OmitAutoProperties()
 				.With(expectedValue, value)
 				.Create();

@@ -16,17 +16,17 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 			var project = AddGetProject();
 			var request = AddPatchProject(project, r => r.RationaleForTrust);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/rationale");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale");
 			await NavigateAsync("Change", 1);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale/trust-rationale");
 			var textArea = Document.QuerySelector<IHtmlTextAreaElement>("#trust-rationale");
-			textArea.TextContent.Should().Be(project.Rationale.RationaleForTrust);
+			textArea.TextContent.Should().Be(project.RationaleForTrust);
 
 			textArea.Value = request.RationaleForTrust;
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/rationale");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale");
 		}
 
 		[Fact]
@@ -50,7 +50,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/trust-rationale");
 			await NavigateAsync("Back");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/rationale");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale");
 		}
 	}
 }

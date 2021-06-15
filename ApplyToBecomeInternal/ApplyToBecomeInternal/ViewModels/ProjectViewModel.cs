@@ -13,21 +13,25 @@ namespace ApplyToBecomeInternal.ViewModels
 			{ProjectPhase.PostHTB, "Post HTB"}
 		};
 
-		public ProjectViewModel(Project project)
+		public ProjectViewModel(AcademyConversionProject project)
 		{
 			Id = project.Id.ToString();
-			TrustName = project.Trust.Name;
-			SchoolName = project.School.Name;
-			SchoolURN = project.School.URN;
-			LocalAuthority = project.School.LocalAuthority;
+			//TrustName = project.Trust.Name;
+			SchoolName = project.SchoolName;
+			SchoolURN = project.Urn.ToString();
+			LocalAuthority = project.LocalAuthority;
 			ApplicationReceivedDate = FormatDate(project.ApplicationReceivedDate);
 			AssignedDate = FormatDate(project.AssignedDate);
-			Phase = _projectPhaseText[project.Phase];
-			ProjectDocuments = project.ProjectDocuments;
-			RationaleForProject = project.Rationale.RationaleForProject;
-			RationaleForTrust = project.Rationale.RationaleForTrust;
-			RationaleMarkAsComplete = project.Rationale.RationaleMarkAsComplete;
+			Phase = project.ProjectStatus;
+			//ProjectDocuments = project.ProjectDocuments;
+			RationaleForProject = project.RationaleForProject;
+			RationaleForTrust = project.RationaleForTrust;
+			RationaleMarkAsComplete = project.RationaleMarkAsComplete ?? false;
 			SetRationaleTaskListStatus();
+			RisksAndIssues = project.RisksAndIssues;
+			EqualitiesImpactAssessmentConsidered = project.EqualitiesImpactAssessmentConsidered;
+			RisksAndIssuesMarkAsComplete = project.RisksAndIssuesMarkAsComplete ?? false;
+			SetRisksAndIssuesTaskListStatus();
 		}
 
 		private void SetRationaleTaskListStatus()
@@ -46,6 +50,22 @@ namespace ApplyToBecomeInternal.ViewModels
 			}
 		}
 
+		private void SetRisksAndIssuesTaskListStatus()
+		{
+			if (RisksAndIssuesMarkAsComplete)
+			{
+				RisksAndIssuesTaskListStatus = TaskListItemViewModel.Completed;
+			}
+			else if (string.IsNullOrWhiteSpace(RisksAndIssues))
+			{
+				RisksAndIssuesTaskListStatus = TaskListItemViewModel.NotStarted;
+			}
+			else
+			{
+				RisksAndIssuesTaskListStatus = TaskListItemViewModel.InProgress;
+			}
+		}
+
 
 		private static string FormatDate(DateTime? dateTime) => dateTime.HasValue ? dateTime.Value.ToString("dd MMMM yyyy") : "";
 
@@ -58,9 +78,16 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string AssignedDate { get; }
 		public string Phase { get; }
 		public IEnumerable<DocumentDetails> ProjectDocuments { get; set; }
+
 		public string RationaleForProject { get; set; }
 		public string RationaleForTrust { get; set; }
 		public bool RationaleMarkAsComplete { get; set; }
 		public TaskListItemViewModel RationaleTaskListStatus { get; set; }
+
+		// risk and issues
+		public string RisksAndIssues { get; set; }
+		public string EqualitiesImpactAssessmentConsidered { get; set; }
+		public bool RisksAndIssuesMarkAsComplete { get; set; }
+		public TaskListItemViewModel RisksAndIssuesTaskListStatus { get; set; }
 	}
 }

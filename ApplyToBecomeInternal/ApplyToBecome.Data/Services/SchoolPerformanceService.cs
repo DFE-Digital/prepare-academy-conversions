@@ -1,8 +1,8 @@
 ﻿using ApplyToBecome.Data.Models;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace ApplyToBecome.Data.Services
@@ -27,16 +27,18 @@ namespace ApplyToBecome.Data.Services
 				return new SchoolPerformance();
 			}
 
-			var content = await response.Content.ReadAsStringAsync();
-
-			var jToken = JToken.Parse(content);
-			var schoolPerformance = jToken.SelectToken("misEstablishment").ToObject<SchoolPerformance>() ?? new SchoolPerformance();
-			var ofstedLastInspection = jToken.SelectToken("ofstedLastInspection").Value<string>();
-
-			if (DateTime.TryParse(ofstedLastInspection, out var ofstedLastInspectionDate))
-				schoolPerformance.OfstedLastInspection = ofstedLastInspectionDate;
+			var content = await response.Content.ReadFromJsonAsync<EstablishmentData>();
+			var schoolPerformance = content.misEstablishment;
+			schoolPerformance.OfstedLastInspection = content.ofstedLastInspection;
 
 			return schoolPerformance;
+		}
+
+		private class EstablishmentData
+		{
+			public SchoolPerformance misEstablishment { get; set; }
+
+			public DateTime ofstedLastInspection { get; set; }
 		}
 	}
 }

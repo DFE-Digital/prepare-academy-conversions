@@ -1,15 +1,16 @@
 using ApplyToBecome.Data;
 using ApplyToBecome.Data.Models.ProjectNotes;
+using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApplyToBecomeInternal.Pages.ProjectNotes
 {
-	public class NewNoteModel : BaseProjectPageModel
+	public class NewNoteModel : BaseAcademyConversionProjectPageModel
 	{
 		private readonly IProjectNotes _projectNotes;
 
-		public NewNoteModel(IProjects projects, IProjectNotes projectNotes) : base(projects)
+		public NewNoteModel(AcademyConversionProjectRepository repository, IProjectNotes projectNotes) : base(repository)
 		{
 			_projectNotes = projectNotes;
 		}

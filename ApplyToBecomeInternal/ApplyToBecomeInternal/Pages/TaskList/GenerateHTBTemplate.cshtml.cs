@@ -1,9 +1,9 @@
-using ApplyToBecome.Data;
+using ApplyToBecome.Data.Services;
 
 namespace ApplyToBecomeInternal.Pages.TaskList
 {
-	public class GenerateHTBTemplateModel : BaseProjectPageModel
+	public class GenerateHTBTemplateModel : BaseAcademyConversionProjectPageModel
 	{
-		public GenerateHTBTemplateModel(IProjects projects) : base(projects) { }
+		public GenerateHTBTemplateModel(AcademyConversionProjectRepository repository) : base(repository) { }
 	}
 }

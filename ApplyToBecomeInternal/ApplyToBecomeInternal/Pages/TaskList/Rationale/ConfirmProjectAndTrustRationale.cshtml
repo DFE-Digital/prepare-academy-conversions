@@ -1,12 +1,12 @@
-@page "/task-list/{id:int}/rationale"
+@page "/task-list/{id:int}/confirm-project-trust-rationale"
 @using ApplyToBecomeInternal.ViewModels
-@model ApplyToBecomeInternal.Pages.TaskList.Rationale.RationaleSummaryPageModel
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
-	ViewData["Title"] = "Rationale summary";
+	ViewData["Title"] = "Confirm project and trust rationale";
 }
 
 @section BeforeMain
-        {
+{
 	<a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.TaskList.Index.BackText</a>
 }
 
@@ -36,28 +36,34 @@
 				"rationale-for-project",
 				"Rationale for project",
 				Model.Project.RationaleForProject,
-				Links.Rationale.RationaleForProject.Page,
+				Links.RationaleSection.RationaleForProject.Page,
 				Model.Project.Id,
-				"project rationale"))
+				"project rationale",
+				true))
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
 				"rationale-for-trust",
 				"Rationale for the trust or sponsor",
 				Model.Project.RationaleForTrust,
-				Links.Rationale.RationaleForTrust.Page,
+				Links.RationaleSection.RationaleForTrust.Page,
 				Model.Project.Id,
-				"sponsor rationale"))
+				"sponsor rationale",
+				true))
 		</dl>
 		<form method="post">
 			<div class="govuk-form-group">
 				<div class="govuk-checkboxes">
 					<div class="govuk-checkboxes__item">
-						<input class="govuk-checkboxes__input" id="rationale-status-htb" name="rationale-status-htb" type="checkbox" value="true" checked="@Model.Project.RationaleMarkAsComplete">
-						<label class="govuk-label govuk-checkboxes__label" for="rationale-status-htb">
+						<input name="rationale-complete-hidden" type="hidden" value="false" />
+						<input class="govuk-checkboxes__input" id="rationale-complete" name="rationale-complete" type="checkbox" value="true" checked="@Model.Project.RationaleMarkAsComplete">
+
+						<label class="govuk-label govuk-checkboxes__label" for="rationale-complete">
 							Mark this section as complete, you can still make changes later
 						</label>
 					</div>
 				</div>
 			</div>
+
+			<input name="SuccessPage" type="hidden" value="@Links.TaskList.Index.Page" />
 			<button class="govuk-button" data-module="govuk-button">
 				Confirm and continue
 			</button>

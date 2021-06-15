@@ -6,14 +6,14 @@ using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 {
-	public class RationaleSummaryIntegrationTests : BaseIntegrationTests
+	public class ConfirmProjectAndTrustRationaleIntegrationTests : BaseIntegrationTests
 	{
-		public RationaleSummaryIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ConfirmProjectAndTrustRationaleIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
 
 		[Fact]
 		public async Task Should_be_in_progress_and_display_rationale_when_rationale_populated()
 		{
-			var project = AddGetProject(p => p.Rationale.RationaleMarkAsComplete = false);
+			var project = AddGetProject(p => p.RationaleMarkAsComplete = false);
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
@@ -22,8 +22,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 
 			await NavigateAsync("Rationale");
 
-			Document.QuerySelector("#rationale-for-project").TextContent.Should().Be(project.Rationale.RationaleForProject);
-			Document.QuerySelector("#rationale-for-trust").TextContent.Should().Be(project.Rationale.RationaleForTrust);
+			Document.QuerySelector("#rationale-for-project").TextContent.Should().Be(project.RationaleForProject);
+			Document.QuerySelector("#rationale-for-trust").TextContent.Should().Be(project.RationaleForTrust);
 		}
 
 		[Fact]
@@ -31,7 +31,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		{
 			var project = AddGetProject(project =>
 			{
-				project.Rationale.RationaleMarkAsComplete = true;
+				project.RationaleMarkAsComplete = true;
 			});
 			AddPatchProject(project, r => r.RationaleMarkAsComplete, true);
 
@@ -41,7 +41,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 
 			await NavigateAsync("Rationale");
 
-			Document.QuerySelector<IHtmlInputElement>("#rationale-status-htb").IsChecked.Should().BeTrue();
+			Document.QuerySelector<IHtmlInputElement>("#rationale-complete").IsChecked.Should().BeTrue();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -53,9 +53,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		{
 			var project = AddGetProject(project =>
 			{
-				project.Rationale.RationaleForProject = null;
-				project.Rationale.RationaleForTrust = null;
-				project.Rationale.RationaleMarkAsComplete = false;
+				project.RationaleForProject = null;
+				project.RationaleForTrust = null;
+				project.RationaleMarkAsComplete = false;
 			});
 			AddPatchProject(project, r => r.RationaleMarkAsComplete, false);
 
@@ -68,7 +68,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 
 			Document.QuerySelector("#rationale-for-project-empty").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#rationale-for-trust-empty").TextContent.Should().Be("Empty"); 
-			Document.QuerySelector<IHtmlInputElement>("#rationale-status-htb").IsChecked.Should().BeFalse();
+			Document.QuerySelector<IHtmlInputElement>("#rationale-complete").IsChecked.Should().BeFalse();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -81,7 +81,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/rationale");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -96,7 +96,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 			await OpenUrlAsync($"/task-list/{project.Id}");
 			await NavigateAsync("Rationale");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/rationale");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale");
 
 			await NavigateAsync("Back to task list");
 
