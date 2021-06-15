@@ -1,42 +1,23 @@
 ﻿@page "/task-list/{id:int}/confirm-project-trust-rationale/project-rationale"
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
+	Layout = "_QuestionLayout";
 	ViewData["Title"] = "Project rationale";
 }
 
 @section BeforeMain
 {
-	<a asp-page="@Links.RationaleSection.ConfirmProjectAndTrustRationale.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.RationaleSection.ConfirmProjectAndTrustRationale.BackText</a>
+	<a back-link-for="@Links.RationaleSection.ConfirmProjectAndTrustRationale"></a>
 }
 
-@if (Model.ShowError)
-{
-	<partial name="_ErrorSummary" />
-}
-
-<div class="govuk-grid-row">
-	<div class="govuk-grid-column-two-thirds">
-		<form method="post">
-			<span class="govuk-caption-l">@Model.Project.SchoolName</span>
-			<h1 class="govuk-heading-l">Write the rationale for the project</h1>
-
-			<p class="govuk-hint">Edit the school's rationale to add your own analysis</p>
-
-			<div class="govuk-form-group">
-				<textarea class="govuk-textarea"
-						  id="project-rationale"
-						  name="project-rationale"
-						  rows="15"
-						  data-module="moj-rich-text-editor"
-						  data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers">@Model.Project.RationaleForProject</textarea>
-			</div>
-
-			<input name="SuccessPage" type="hidden" value="@Links.RationaleSection.ConfirmProjectAndTrustRationale.Page" />
-			<button class="govuk-button" data-module="govuk-button">
-				Save and continue
-			</button>
-		</form>
-	</div>
-
-	<partial name="_UsefulInformation" />
+<h1 class="govuk-heading-l">Write the rationale for the project</h1>
+<p class="govuk-hint">Edit the school's rationale to add your own analysis</p>
+<div class="govuk-form-group">
+	<textarea class="govuk-textarea"
+			  id="project-rationale"
+			  name="project-rationale"
+			  rows="15"
+			  data-module="moj-rich-text-editor"
+			  data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers">@Model.Project.RationaleForProject</textarea>
 </div>
+<input name="SuccessPage" type="hidden" value="@Links.RationaleSection.ConfirmProjectAndTrustRationale.Page" />

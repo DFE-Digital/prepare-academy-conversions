@@ -2,7 +2,7 @@
 {
 	public class SummaryListRowViewModel
 	{
-		public SummaryListRowViewModel(string id, string key, string value, string page, string routeId, string hiddenText, bool altLayout = false)
+		public SummaryListRowViewModel(string id, string key, string value, string page = null, string routeId = null, string hiddenText = null, bool altLayout = false)
 		{
 			Id = id;
 			Key = key;

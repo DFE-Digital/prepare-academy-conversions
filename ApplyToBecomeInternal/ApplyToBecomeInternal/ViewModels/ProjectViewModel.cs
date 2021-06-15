@@ -32,6 +32,18 @@ namespace ApplyToBecomeInternal.ViewModels
 			EqualitiesImpactAssessmentConsidered = project.EqualitiesImpactAssessmentConsidered;
 			RisksAndIssuesMarkAsComplete = project.RisksAndIssuesMarkAsComplete ?? false;
 			SetRisksAndIssuesTaskListStatus();
+
+			CurrentYearCapacity = project.CurrentYearCapacity;
+			CurrentYearPupilNumbers = project.CurrentYearPupilNumbers;
+			YearOneProjectedCapacity = project.YearOneProjectedCapacity;
+			YearOneProjectedPupilNumbers = project.YearOneProjectedPupilNumbers;
+			YearTwoProjectedCapacity = project.YearTwoProjectedCapacity;
+			YearTwoProjectedPupilNumbers = project.YearTwoProjectedPupilNumbers;
+			YearThreeProjectedCapacity = project.YearThreeProjectedCapacity;
+			YearThreeProjectedPupilNumbers = project.YearThreeProjectedPupilNumbers;
+			YearFourProjectedCapacity = project.YearFourProjectedCapacity;
+			YearFourProjectedPupilNumbers = project.YearFourProjectedPupilNumbers;
+			SchoolPupilForecastsAdditionalInformation = project.SchoolPupilForecastsAdditionalInformation;
 		}
 
 		private void SetRationaleTaskListStatus()
@@ -89,5 +101,18 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string EqualitiesImpactAssessmentConsidered { get; set; }
 		public bool RisksAndIssuesMarkAsComplete { get; set; }
 		public TaskListItemViewModel RisksAndIssuesTaskListStatus { get; set; }
+
+		// pupil schools forecast
+		public int? CurrentYearCapacity { get; set; }
+		public int? CurrentYearPupilNumbers { get; set; }
+		public int? YearOneProjectedCapacity { get; set; }
+		public int? YearOneProjectedPupilNumbers { get; set; }
+		public int? YearTwoProjectedCapacity { get; set; }
+		public int? YearTwoProjectedPupilNumbers { get; set; }
+		public int? YearThreeProjectedCapacity { get; set; }
+		public int? YearThreeProjectedPupilNumbers { get; set; }
+		public int? YearFourProjectedCapacity { get; set; }
+		public int? YearFourProjectedPupilNumbers { get; set; }
+		public string SchoolPupilForecastsAdditionalInformation { get; set; }
 	}
 }

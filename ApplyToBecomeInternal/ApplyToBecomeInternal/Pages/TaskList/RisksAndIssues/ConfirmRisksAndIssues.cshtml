@@ -7,7 +7,7 @@
 
 @section BeforeMain
 {
-	<a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.TaskList.Index.BackText</a>
+	<a back-link-for="@Links.TaskList.Index"></a>
 }
 
 @if (Model.ShowError)
@@ -17,14 +17,10 @@
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
-		<div class="govuk-grid-row">
-			<div class="govuk-grid-column-full">
-				<span class="govuk-caption-l">@Model.Project.SchoolName</span>
-				<h1 class="govuk-heading-l">
-					Confirm risks and issues
-				</h1>
-			</div>
-		</div>
+		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+		<h1 class="govuk-heading-l">
+			Confirm risks and issues
+		</h1>
 		<dl class="govuk-summary-list">
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
 				"risks-and-issues",
@@ -36,10 +32,7 @@
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
 				"equalities-impact-assessment-considered",
 				"Has an Equalities Impact Assessment been considered?",
-				Model.Project.EqualitiesImpactAssessmentConsidered,
-				null,
-				null,
-				null))
+				Model.Project.EqualitiesImpactAssessmentConsidered))
 		</dl>
 		<form method="post">
 			<div class="govuk-form-group">

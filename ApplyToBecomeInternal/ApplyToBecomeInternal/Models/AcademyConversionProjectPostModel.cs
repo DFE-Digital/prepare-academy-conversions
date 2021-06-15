@@ -73,6 +73,8 @@ namespace ApplyToBecomeInternal.Models
 		public string SchoolBudgetInformationAdditionalInformation { get; set; }
 
 		// pupil schools forecast
+		[BindProperty(Name = "school-pupil-forecasts-additional-information")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
 		//key stage performance tables
