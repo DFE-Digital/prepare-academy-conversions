@@ -1,6 +1,7 @@
 ﻿using ApplyToBecome.Data.Models;
 using ApplyToBecomeInternal.Tests.Customisations;
 using AutoFixture;
+using AutoFixture.Dsl;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -39,6 +40,19 @@ namespace ApplyToBecomeInternal.Tests.Pages
 				.Build<UpdateAcademyConversionProject>()
 				.OmitAutoProperties()
 				.With(expectedValue, value)
+				.Create();
+
+			_factory.AddPatchWithJsonRequest($"/conversion-projects/{project.Id}", request, project);
+			return request;
+		}
+
+		public UpdateAcademyConversionProject AddPatchProjectMany(AcademyConversionProject project, Func<IPostprocessComposer<UpdateAcademyConversionProject>, IPostprocessComposer<UpdateAcademyConversionProject>> postProcess)
+		{
+			var composer = _fixture
+				.Build<UpdateAcademyConversionProject>()
+				.OmitAutoProperties();
+
+			var request = postProcess(composer)
 				.Create();
 
 			_factory.AddPatchWithJsonRequest($"/conversion-projects/{project.Id}", request, project);

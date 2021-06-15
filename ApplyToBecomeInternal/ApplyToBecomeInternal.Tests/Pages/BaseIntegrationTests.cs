@@ -15,7 +15,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 	{
 		private readonly IntegrationTestingWebApplicationFactory _factory;
 		private readonly IBrowsingContext _browsingContext;
-		private readonly Fixture _fixture;
+		protected readonly Fixture _fixture;
 
 		protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory)
 		{

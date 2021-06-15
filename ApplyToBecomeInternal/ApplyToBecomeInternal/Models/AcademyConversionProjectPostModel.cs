@@ -67,9 +67,6 @@ namespace ApplyToBecomeInternal.Models
 		[ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
 		public bool? RationaleSectionComplete { get; set; }
 
-		/*[BindProperty(Name = "rationale-complete-hidden")]
-		public bool? RationaleSectionCompleteHidden { get; set; }*/
-
 		// risk and issues
 		[BindProperty(Name = "risks-and-issues")]
 		[DisplayFormat(ConvertEmptyStringToNull = false)]
@@ -78,9 +75,6 @@ namespace ApplyToBecomeInternal.Models
 		[BindProperty(Name = "risks-and-issues-complete")]
 		[ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
 		public bool? RisksAndIssuesSectionComplete { get; set; }
-
-		/*[BindProperty(Name = "risks-and-issues-complete-hidden")]
-		public bool? RisksAndIssuesSectionCompleteHidden { get; set; }*/
 
 		// school budget info
 		public decimal? RevenueCarryForwardAtEndMarchCurrentYear { get; set; }

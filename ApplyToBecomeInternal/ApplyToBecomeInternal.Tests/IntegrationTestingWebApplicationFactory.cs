@@ -61,7 +61,7 @@ namespace ApplyToBecomeInternal.Tests
 			_server
 				.Given(Request.Create()
 					.WithPath(path)
-					.WithBody(new JsonMatcher(requestBody, true))
+					.WithBody(new JsonMatcher(JsonSerializer.Serialize(requestBody), true))
 					.UsingPatch())
 				.RespondWith(Response.Create()
 					.WithStatusCode(200)

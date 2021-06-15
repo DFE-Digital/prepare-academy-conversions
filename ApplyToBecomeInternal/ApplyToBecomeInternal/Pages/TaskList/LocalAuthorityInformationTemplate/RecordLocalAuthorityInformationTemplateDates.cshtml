@@ -1,11 +1,18 @@
 ﻿@page "/task-list/{id:int}/record-local-authority-information-template-dates"
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
+	ViewData["Title"] = "Record dates for local authority information template";
 }
 @section BeforeMain
 {
 	<a back-link-for="@Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates"></a>
 }
+
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
@@ -28,8 +35,8 @@
 	</div>
 	<div class="govuk-form-group">
 		@await Html.PartialAsync("_DateInput", new DateInputViewModel(
-			"la-info-template-returned-date", 
-			"la-info-template-returned-date", 
+			"la-info-template-returned-date",
+			"la-info-template-returned-date",
 			Model.Project.LocalAuthorityInformationTemplateReturnedDate,
 			"Date you want the template returned to you",
 			"For example, 27 3 2021"))
