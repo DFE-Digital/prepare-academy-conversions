@@ -14,7 +14,6 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string Status { get; }
 		public string CssClass { get; }
 
-		public static TaskListItemViewModel ReferenceOnly => new TaskListItemViewModel("Reference Only", "govuk-tag--grey");
 		public static TaskListItemViewModel NotStarted => new TaskListItemViewModel("Not Started", "govuk-tag--grey");
 		public static TaskListItemViewModel InProgress => new TaskListItemViewModel("In Progress", "govuk-tag--blue");
 		public static TaskListItemViewModel Completed => new TaskListItemViewModel("Completed", "");
@@ -29,6 +28,98 @@ namespace ApplyToBecomeInternal.ViewModels
 			}
 
 			return Status.Equals(other.Status) && CssClass.Equals(other.CssClass);
+		}
+
+		public static TaskListItemViewModel GetLocalAuthorityInformationTemplateTaskListStatus(ProjectViewModel project)
+		{
+			if (project.LocalAuthorityInformationTemplateSectionComplete)
+			{
+				return Completed;
+			}
+			else if (!project.LocalAuthorityInformationTemplateSentDate.HasValue
+				&& !project.LocalAuthorityInformationTemplateReturnedDate.HasValue
+				&& string.IsNullOrWhiteSpace(project.LocalAuthorityInformationTemplateComments)
+				&& string.IsNullOrWhiteSpace(project.LocalAuthorityInformationTemplateLink))
+			{
+				return NotStarted;
+			}
+			else
+			{
+				return InProgress;
+			}
+		}
+
+		public static TaskListItemViewModel GetGeneralInformationTaskListStatus(ProjectViewModel project)
+		{
+			if (project.GeneralInformationSectionComplete)
+			{
+				return Completed;
+			}
+			else if (string.IsNullOrWhiteSpace(project.PublishedAdmissionNumber)
+				&& string.IsNullOrWhiteSpace(project.ViabilityIssues)
+				&& string.IsNullOrWhiteSpace(project.FinancialSurplusOrDeficit)
+				&& !project.IsThisADiocesanTrust.HasValue
+				&& !project.DistanceFromSchoolToTrustHeadquarters.HasValue)
+			{
+				return NotStarted;
+			}
+			else
+			{
+				return InProgress;
+			}
+		}
+
+		public static TaskListItemViewModel GetRationaleTaskListStatus(ProjectViewModel project)
+		{
+			if (project.RationaleSectionComplete)
+			{
+				return Completed;
+			}
+			else if (string.IsNullOrWhiteSpace(project.RationaleForProject) 
+				&& string.IsNullOrWhiteSpace(project.RationaleForTrust))
+			{
+				return NotStarted;
+			}
+			else
+			{
+				return InProgress;
+			}
+		}
+
+		public static TaskListItemViewModel GetRisksAndIssuesTaskListStatus(ProjectViewModel project)
+		{
+			if (project.RisksAndIssuesSectionComplete)
+			{
+				return Completed;
+			}
+			else if (string.IsNullOrWhiteSpace(project.RisksAndIssues))
+			{
+				return NotStarted;
+			}
+			else
+			{
+				return InProgress;
+			}
+		}
+
+		public static TaskListItemViewModel GetSchoolBudgetInformationTaskListStatus(ProjectViewModel project)
+		{
+			if (project.SchoolBudgetInformationSectionComplete)
+			{
+				return Completed;
+			}
+			else if (project.RevenueCarryForwardAtEndMarchCurrentYear == 0
+				&& project.ProjectedRevenueBalanceAtEndMarchNextYear == 0
+				&& project.CapitalCarryForwardAtEndMarchCurrentYear == 0
+				&& project.CapitalCarryForwardAtEndMarchNextYear == 0
+				&& string.IsNullOrWhiteSpace(project.SchoolBudgetInformationAdditionalInformation))
+			{
+				return NotStarted;
+			}
+			else
+			{
+				return InProgress;
+			}
 		}
 	}
 }

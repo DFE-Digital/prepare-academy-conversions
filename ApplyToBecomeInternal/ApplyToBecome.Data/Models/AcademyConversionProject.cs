@@ -43,8 +43,6 @@ namespace ApplyToBecome.Data.Models
 		public string SchoolPhase { get; set; }
 		public string AgeRange { get; set; }
 		public string SchoolType { get; set; }
-		public int ActualPupilNumbers { get; set; }
-		public int Capacity { get; set; }
 		public string PublishedAdmissionNumber { get; set; }
 		public decimal? PercentageFreeSchoolMeals { get; set; }
 		public string PartOfPfiScheme { get; set; }
