@@ -9,6 +9,11 @@
 	<a back-link-for="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation"></a>
 }
 
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<span class="govuk-caption-l">@Model.Project.SchoolName</span>

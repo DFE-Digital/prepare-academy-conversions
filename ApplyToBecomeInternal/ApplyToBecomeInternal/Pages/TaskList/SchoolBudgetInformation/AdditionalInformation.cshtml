@@ -10,6 +10,11 @@
 	<a back-link-for="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation"></a>
 }
 
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
@@ -66,9 +71,9 @@
 
 			<div class="govuk-form-group">
 				<textarea class="govuk-textarea"
-							id="additional-information"
-							name="school-budget-information-additional-information"
-							rows="5">@Model.Project.SchoolBudgetInformationAdditionalInformation</textarea>
+						  id="additional-information"
+						  name="school-budget-information-additional-information"
+						  rows="5">@Model.Project.SchoolBudgetInformationAdditionalInformation</textarea>
 			</div>
 
 			<input name="SuccessPage" type="hidden" value="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page" />

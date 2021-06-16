@@ -119,7 +119,11 @@ namespace ApplyToBecomeInternal.ViewModels
 			{
 				SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.Completed;
 			}
-			else if (string.IsNullOrWhiteSpace(RisksAndIssues))
+			else if (RevenueCarryForwardAtEndMarchCurrentYear == 0
+				&& ProjectedRevenueBalanceAtEndMarchNextYear == 0
+				&& CapitalCarryForwardAtEndMarchCurrentYear == 0
+				&& CapitalCarryForwardAtEndMarchNextYear == 0
+				&& string.IsNullOrWhiteSpace(SchoolBudgetInformationAdditionalInformation))
 			{
 				SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.NotStarted;
 			}

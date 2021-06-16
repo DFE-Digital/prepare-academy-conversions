@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using WireMock.Matchers;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
@@ -53,20 +53,22 @@ namespace ApplyToBecomeInternal.Tests
 				.RespondWith(Response.Create()
 					.WithStatusCode(200)
 					.WithHeader("Content-Type", "application/json")
-					.WithBody(JsonSerializer.Serialize(responseBody)));
+					.WithBody(JsonConvert.SerializeObject(responseBody)));
 		}
+
+		
 
 		public void AddPatchWithJsonRequest<TRequestBody, TResponseBody>(string path, TRequestBody requestBody, TResponseBody responseBody)
 		{
 			_server
 				.Given(Request.Create()
 					.WithPath(path)
-					.WithBody(new JsonMatcher(JsonSerializer.Serialize(requestBody), true))
+					.WithBody(new JsonMatcher(JsonConvert.SerializeObject(requestBody), true))
 					.UsingPatch())
 				.RespondWith(Response.Create()
 					.WithStatusCode(200)
 					.WithHeader("Content-Type", "application/json")
-					.WithBody(JsonSerializer.Serialize(responseBody)));
+					.WithBody(JsonConvert.SerializeObject(responseBody)));
 		}
 
 		public void AddErrorResponse(string path, string method)
