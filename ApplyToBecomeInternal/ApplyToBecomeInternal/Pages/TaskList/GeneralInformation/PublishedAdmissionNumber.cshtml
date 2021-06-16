@@ -1,0 +1,20 @@
+﻿@page "/task-list/{id:int}/confirm-general-information/published-admission-number"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	ViewData["Title"] = "Published admission number";
+}
+
+@section BeforeMain
+{
+	<a back-link-for="@Links.GeneralInformationSection.ConfirmGeneralInformation"></a>
+}
+
+<h1 class="govuk-heading-l">Update the school's published admission number (PAN) if it's not correct</h1>
+<div class="govuk-form-group">
+	<div id="published-admission-number-hint" class="govuk-hint">
+		For example, 30
+	</div>
+	<input class="govuk-input govuk-input--width-5" id="published-admission-number" name="published-admission-number" type="text" value="@Model.Project.PublishedAdmissionNumber" aria-describedby="published-admission-number-hint">
+</div>
+<input name="SuccessPage" type="hidden" value="@Links.GeneralInformationSection.ConfirmGeneralInformation.Page" />

@@ -53,10 +53,10 @@
 				"Capacity",
 				Model.Project.CurrentYearCapacity.ToString()))
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"published-admission-numbers",
+				"published-admission-number",
 				"Published admission number (PAN)",
 				Model.Project.PublishedAdmissionNumber,
-				Links.GeneralInformationSection.PublishedAdmissionNumbers.Page,
+				Links.GeneralInformationSection.PublishedAdmissionNumber.Page,
 				Model.Project.Id,
 				"published admission numbers",
 				true))
@@ -78,7 +78,7 @@
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
 				"financial-surplus-or-deficit",
 				"Financial deficit",
-				Model.Project.FinancialSurplusOrDeficit,
+				Model.Project.FinancialDeficit,
 				Links.GeneralInformationSection.FinancialDeficit.Page,
 				Model.Project.Id,
 				"financial surplus or deficit"))

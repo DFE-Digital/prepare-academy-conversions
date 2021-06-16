@@ -1,0 +1,41 @@
+﻿@page "/task-list/{id:int}/confirm-general-information/distance-to-trust-headquarters"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	ViewData["Title"] = "Distance to trust headquarters";
+}
+
+@section BeforeMain
+{
+	<a back-link-for="@Links.GeneralInformationSection.ConfirmGeneralInformation"></a>
+}
+
+<h1 class="govuk-heading-l">What is the distance from the school to the trust headquaters?</h1>
+<div class="govuk-form-group">
+	<div id="distance-to-trust-headquarters-hint" class="govuk-hint">
+		For example, 20
+	</div>
+	<div class="govuk-input__wrapper">
+		<input class="govuk-input govuk-input--width-5" 
+			   id="distance-to-trust-headquarters" 
+			   name="distance-to-trust-headquarters" 
+			   type="text" 
+			   value="@Model.Project.DistanceFromSchoolToTrustHeadquarters"
+			   aria-describedby="distance-to-trust-headquarters-hint">
+		<div class="govuk-input__suffix" aria-hidden="true">miles</div>
+	</div>
+</div>
+<div class="govuk-form-group">
+	<label class="govuk-label govuk-label--m" for="distance-to-trust-headquarters-additional-information">
+		Additional information (optional)
+	</label>
+	<div id="distance-to-trust-headquarters-additional-information-hint" class="govuk-hint">
+		This information will populate into your HTB template under the distance to the trust headquarters section.
+	</div>
+	<textarea class="govuk-textarea" 
+			  id="distance-to-trust-headquarters-additional-information-detail" 
+			  name="distance-to-trust-headquarters-additional-information-detail" 
+			  rows="5" 
+			  aria-describedby="distance-to-trust-headquarters-additional-information-hint">@Model.Project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation</textarea>
+</div>
+<input name="SuccessPage" type="hidden" value="@Links.GeneralInformationSection.ConfirmGeneralInformation.Page" />

@@ -47,10 +47,11 @@ namespace ApplyToBecome.Data.Models
 		public decimal? PercentageFreeSchoolMeals { get; set; }
 		public string PartOfPfiScheme { get; set; }
 		public string ViabilityIssues { get; set; }
-		public string FinancialSurplusOrDeficit { get; set; }
+		public string FinancialDeficit { get; set; }
 		public bool? IsThisADiocesanTrust { get; set; }
 		public decimal? PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust { get; set; }
 		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
+		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
 		public string MemberOfParliamentParty { get; set; }
 		public bool? GeneralInformationSectionComplete { get; set; }
 

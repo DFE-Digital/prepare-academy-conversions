@@ -1,0 +1,30 @@
+﻿@page "/task-list/{id:int}/confirm-general-information/financial-deficit"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	ViewData["Title"] = "Financial deficit";
+}
+
+@section BeforeMain
+{
+	<a back-link-for="@Links.GeneralInformationSection.ConfirmGeneralInformation"></a>
+}
+
+<h1 class="govuk-heading-l">Is there a financial deficit at the school in its current financial year?</h1>
+<div class="govuk-form-group">
+	<div class="govuk-radios">
+		<div class="govuk-radios__item">
+			<input class="govuk-radios__input" id="financial-deficit" name="financial-deficit" type="radio" value="Yes" checked="@(Model.Project.FinancialDeficit == "Yes")">
+			<label class="govuk-label govuk-radios__label" for="financial-deficit">
+				Yes
+			</label>
+		</div>
+		<div class="govuk-radios__item">
+			<input class="govuk-radios__input" id="financial-deficit-2" name="financial-deficit" type="radio" value="No" checked="@(Model.Project.FinancialDeficit == "No")">
+			<label class="govuk-label govuk-radios__label" for="financial-deficit-2">
+				No
+			</label>
+		</div>
+	</div>
+</div>
+<input name="SuccessPage" type="hidden" value="@Links.GeneralInformationSection.ConfirmGeneralInformation.Page" />

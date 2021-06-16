@@ -44,20 +44,24 @@ namespace ApplyToBecomeInternal.Models
 
 		//general info
 
-		[BindProperty(Name = "published-admission-numbers")]
+		[BindProperty(Name = "published-admission-number")]
 		public string PublishedAdmissionNumber { get; set; }
 
 		[BindProperty(Name = "viability-issues")]
 		public string ViabilityIssues { get; set; }
 
-		[BindProperty(Name = "financial-surplus-or-deficit")]
-		public string FinancialSurplusOrDeficit { get; set; }
+		[BindProperty(Name = "financial-deficit")]
+		public string FinancialDeficit { get; set; }
 
 		[BindProperty(Name = "diocesan-multi-academy-trust")]
+		[ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
 		public bool? IsThisADiocesanTrust { get; set; }
 
 		[BindProperty(Name = "distance-to-trust-headquarters")]
 		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
+
+		[BindProperty(Name = "distance-to-trust-headquarters-additional-information")]
+		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
 
 		[BindProperty(Name = "general-information-complete")]
 		[ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]

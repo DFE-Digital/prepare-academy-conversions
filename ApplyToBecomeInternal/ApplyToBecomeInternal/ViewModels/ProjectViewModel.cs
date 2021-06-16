@@ -39,7 +39,7 @@ namespace ApplyToBecomeInternal.ViewModels
 			PercentageFreeSchoolMeals = project.PercentageFreeSchoolMeals;
 			PartOfPfiScheme = project.PartOfPfiScheme;
 			ViabilityIssues = project.ViabilityIssues;
-			FinancialSurplusOrDeficit = project.FinancialSurplusOrDeficit;
+			FinancialDeficit = project.FinancialDeficit;
 			IsThisADiocesanTrust = project.IsThisADiocesanTrust;
 			PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust = project.PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust;
 			DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters;
@@ -105,10 +105,11 @@ namespace ApplyToBecomeInternal.ViewModels
 		public decimal? PercentageFreeSchoolMeals { get; set; }
 		public string PartOfPfiScheme { get; set; }
 		public string ViabilityIssues { get; set; }
-		public string FinancialSurplusOrDeficit { get; set; }
+		public string FinancialDeficit { get; set; }
 		public bool? IsThisADiocesanTrust { get; set; }
 		public decimal? PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust { get; set; }
 		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
+		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
 		public string MemberOfParliamentParty { get; set; }
 		public bool GeneralInformationSectionComplete { get; set; }
 		public TaskListItemViewModel GeneralInformationTaskListStatus { get; set; }

@@ -57,7 +57,7 @@ namespace ApplyToBecomeInternal.ViewModels
 			}
 			else if (string.IsNullOrWhiteSpace(project.PublishedAdmissionNumber)
 				&& string.IsNullOrWhiteSpace(project.ViabilityIssues)
-				&& string.IsNullOrWhiteSpace(project.FinancialSurplusOrDeficit)
+				&& string.IsNullOrWhiteSpace(project.FinancialDeficit)
 				&& !project.IsThisADiocesanTrust.HasValue
 				&& !project.DistanceFromSchoolToTrustHeadquarters.HasValue)
 			{
