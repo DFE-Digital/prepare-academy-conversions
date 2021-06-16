@@ -75,6 +75,7 @@ namespace ApplyToBecome.Data.Models
 		public decimal? CapitalCarryForwardAtEndMarchCurrentYear { get; set; }
 		public decimal? CapitalCarryForwardAtEndMarchNextYear { get; set; }
 		public string SchoolBudgetInformationAdditionalInformation { get; set; }
+		public bool? SchoolBudgetInformationSectionComplete { get; set; }
 
 		// pupil schools forecast
 		public int? CurrentYearCapacity { get; set; }

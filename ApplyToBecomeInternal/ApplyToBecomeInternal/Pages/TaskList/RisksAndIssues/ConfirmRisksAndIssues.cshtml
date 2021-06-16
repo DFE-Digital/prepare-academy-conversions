@@ -36,15 +36,11 @@
 		</dl>
 		<form method="post">
 			<div class="govuk-form-group">
-				<div class="govuk-checkboxes">
-					<div class="govuk-checkboxes__item">
-						<input name="risks-and-issues-complete-hidden" type="hidden" value="false" />
-						<input class="govuk-checkboxes__input" id="risks-and-issues-complete" name="risks-and-issues-complete" type="checkbox" value="true" checked="@Model.Project.RisksAndIssuesSectionComplete">
-						<label class="govuk-label govuk-checkboxes__label" for="risks-and-issues-complete">
-							Mark this section as complete, you can still make changes later
-						</label>
-					</div>
-				</div>
+				@await Html.PartialAsync("_CheckboxInput", new CheckboxInputViewModel(
+					"risks-and-issues-complete",
+					"risks-and-issues-complete",
+					Model.Project.RisksAndIssuesSectionComplete,
+					"Mark this section as complete, you can still make changes later"))
 			</div>
 
 			<input name="SuccessPage" type="hidden" value="@Links.TaskList.Index.Page" />

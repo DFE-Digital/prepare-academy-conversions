@@ -54,6 +54,13 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem RisksAndIssues = new LinkItem { Page = "/TaskList/RisksAndIssues/RisksAndIssues" };
 		}
 
+		public static class SchoolBudgetInformationSection
+		{
+			public static LinkItem ConfirmSchoolBudgetInformation = new LinkItem { Page = "/TaskList/SchoolBudgetInformation/ConfirmSchoolBudgetInformation" };
+			public static LinkItem UpdateSchoolBudgetInformation = new LinkItem { Page = "/TaskList/SchoolBudgetInformation/UpdateSchoolBudgetInformation" };
+			public static LinkItem AdditionalInformation = new LinkItem { Page = "/TaskList/SchoolBudgetInformation/AdditionalInformation" };
+		}
+
 		public static class SchoolPupilForecastsSection
 		{
 			public static LinkItem ConfirmSchoolPupilForecasts = new LinkItem { Page = "/TaskList/SchoolPupilForecasts/ConfirmSchoolPupilForecasts" };

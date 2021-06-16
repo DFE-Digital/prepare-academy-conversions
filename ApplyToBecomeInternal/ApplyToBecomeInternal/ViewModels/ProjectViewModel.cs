@@ -30,7 +30,6 @@ namespace ApplyToBecomeInternal.ViewModels
 			LocalAuthorityInformationTemplateComments = project.LocalAuthorityInformationTemplateComments;
 			LocalAuthorityInformationTemplateLink = project.LocalAuthorityInformationTemplateLink;
 			LocalAuthorityInformationTemplateSectionComplete = project.LocalAuthorityInformationTemplateSectionComplete ?? false;
-
 			SetLocalAuthorityInformationTemplateTaskListStatus();
 
 			RationaleForProject = project.RationaleForProject;
@@ -53,6 +52,14 @@ namespace ApplyToBecomeInternal.ViewModels
 			YearFourProjectedCapacity = project.YearFourProjectedCapacity;
 			YearFourProjectedPupilNumbers = project.YearFourProjectedPupilNumbers;
 			SchoolPupilForecastsAdditionalInformation = project.SchoolPupilForecastsAdditionalInformation;
+
+			RevenueCarryForwardAtEndMarchCurrentYear = project.RevenueCarryForwardAtEndMarchCurrentYear ?? 0;
+			ProjectedRevenueBalanceAtEndMarchNextYear = project.ProjectedRevenueBalanceAtEndMarchNextYear ?? 0;
+			CapitalCarryForwardAtEndMarchCurrentYear = project.CapitalCarryForwardAtEndMarchCurrentYear ?? 0;
+			CapitalCarryForwardAtEndMarchNextYear = project.CapitalCarryForwardAtEndMarchNextYear ?? 0;
+			SchoolBudgetInformationAdditionalInformation = project.SchoolBudgetInformationAdditionalInformation;
+			SchoolBudgetInformationSectionComplete = project.SchoolBudgetInformationSectionComplete ?? false;
+			SetSchoolBudgetInformationTaskListStatus();
 		}
 
 		private void SetLocalAuthorityInformationTemplateTaskListStatus()
@@ -106,6 +113,21 @@ namespace ApplyToBecomeInternal.ViewModels
 			}
 		}
 
+		private void SetSchoolBudgetInformationTaskListStatus()
+		{
+			if (SchoolBudgetInformationSectionComplete)
+			{
+				SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.Completed;
+			}
+			else if (string.IsNullOrWhiteSpace(RisksAndIssues))
+			{
+				SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.NotStarted;
+			}
+			else
+			{
+				SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.InProgress;
+			}
+		}
 
 		private static string FormatDate(DateTime? dateTime) => dateTime.HasValue ? dateTime.Value.ToString("dd MMMM yyyy") : "";
 
@@ -149,5 +171,14 @@ namespace ApplyToBecomeInternal.ViewModels
 		public int? YearFourProjectedCapacity { get; set; }
 		public int? YearFourProjectedPupilNumbers { get; set; }
 		public string SchoolPupilForecastsAdditionalInformation { get; set; }
+
+		//school budget info
+		public decimal RevenueCarryForwardAtEndMarchCurrentYear { get; set; }
+		public decimal ProjectedRevenueBalanceAtEndMarchNextYear { get; set; }
+		public decimal CapitalCarryForwardAtEndMarchCurrentYear { get; set; }
+		public decimal CapitalCarryForwardAtEndMarchNextYear { get; set; }
+		public string SchoolBudgetInformationAdditionalInformation { get; set; }
+		public bool SchoolBudgetInformationSectionComplete { get; set; }
+		public TaskListItemViewModel SchoolBudgetInformationTaskListStatus { get; set; }
 	}
 }

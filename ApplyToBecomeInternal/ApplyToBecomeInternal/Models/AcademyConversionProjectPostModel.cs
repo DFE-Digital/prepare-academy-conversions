@@ -77,11 +77,24 @@ namespace ApplyToBecomeInternal.Models
 		public bool? RisksAndIssuesSectionComplete { get; set; }
 
 		// school budget info
+		[BindProperty(Name = "finance-current-year-2021")]
 		public decimal? RevenueCarryForwardAtEndMarchCurrentYear { get; set; }
+
+		[BindProperty(Name = "finance-following-year-2022")]
 		public decimal? ProjectedRevenueBalanceAtEndMarchNextYear { get; set; }
+
+		[BindProperty(Name = "finance-forward-2021")]
 		public decimal? CapitalCarryForwardAtEndMarchCurrentYear { get; set; }
+
+		[BindProperty(Name = "finance-forward-2022")]
 		public decimal? CapitalCarryForwardAtEndMarchNextYear { get; set; }
+
+		[BindProperty(Name = "school-budget-information-additional-information")]
 		public string SchoolBudgetInformationAdditionalInformation { get; set; }
+
+		[BindProperty(Name = "school-budget-information-complete")]
+		[ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
+		public bool? SchoolBudgetInformationSectionComplete { get; set; }
 
 		// pupil schools forecast
 		[BindProperty(Name = "school-pupil-forecasts-additional-information")]
