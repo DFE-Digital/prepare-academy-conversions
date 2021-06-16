@@ -24,13 +24,21 @@ namespace ApplyToBecomeInternal.ViewModels
 			AssignedDate = FormatDate(project.AssignedDate);
 			Phase = project.ProjectStatus;
 			//ProjectDocuments = project.ProjectDocuments;
+
+			LocalAuthorityInformationTemplateSentDate = project.LocalAuthorityInformationTemplateSentDate;
+			LocalAuthorityInformationTemplateReturnedDate = project.LocalAuthorityInformationTemplateReturnedDate;
+			LocalAuthorityInformationTemplateComments = project.LocalAuthorityInformationTemplateComments;
+			LocalAuthorityInformationTemplateLink = project.LocalAuthorityInformationTemplateLink;
+			LocalAuthorityInformationTemplateSectionComplete = project.LocalAuthorityInformationTemplateSectionComplete ?? false;
+			SetLocalAuthorityInformationTemplateTaskListStatus();
+
 			RationaleForProject = project.RationaleForProject;
 			RationaleForTrust = project.RationaleForTrust;
-			RationaleMarkAsComplete = project.RationaleMarkAsComplete ?? false;
+			RationaleSectionComplete = project.RationaleSectionComplete ?? false;
 			SetRationaleTaskListStatus();
 			RisksAndIssues = project.RisksAndIssues;
 			EqualitiesImpactAssessmentConsidered = project.EqualitiesImpactAssessmentConsidered;
-			RisksAndIssuesMarkAsComplete = project.RisksAndIssuesMarkAsComplete ?? false;
+			RisksAndIssuesSectionComplete = project.RisksAndIssuesSectionComplete ?? false;
 			SetRisksAndIssuesTaskListStatus();
 
 			CurrentYearCapacity = project.CurrentYearCapacity;
@@ -44,11 +52,38 @@ namespace ApplyToBecomeInternal.ViewModels
 			YearFourProjectedCapacity = project.YearFourProjectedCapacity;
 			YearFourProjectedPupilNumbers = project.YearFourProjectedPupilNumbers;
 			SchoolPupilForecastsAdditionalInformation = project.SchoolPupilForecastsAdditionalInformation;
+
+			RevenueCarryForwardAtEndMarchCurrentYear = project.RevenueCarryForwardAtEndMarchCurrentYear ?? 0;
+			ProjectedRevenueBalanceAtEndMarchNextYear = project.ProjectedRevenueBalanceAtEndMarchNextYear ?? 0;
+			CapitalCarryForwardAtEndMarchCurrentYear = project.CapitalCarryForwardAtEndMarchCurrentYear ?? 0;
+			CapitalCarryForwardAtEndMarchNextYear = project.CapitalCarryForwardAtEndMarchNextYear ?? 0;
+			SchoolBudgetInformationAdditionalInformation = project.SchoolBudgetInformationAdditionalInformation;
+			SchoolBudgetInformationSectionComplete = project.SchoolBudgetInformationSectionComplete ?? false;
+			SetSchoolBudgetInformationTaskListStatus();
+		}
+
+		private void SetLocalAuthorityInformationTemplateTaskListStatus()
+		{
+			if (LocalAuthorityInformationTemplateSectionComplete)
+			{
+				LocalAuthorityInformationTemplateTaskListStatus = TaskListItemViewModel.Completed;
+			}
+			else if (!LocalAuthorityInformationTemplateSentDate.HasValue 
+				&& !LocalAuthorityInformationTemplateReturnedDate.HasValue 
+				&& string.IsNullOrWhiteSpace(LocalAuthorityInformationTemplateComments) 
+				&& string.IsNullOrWhiteSpace(LocalAuthorityInformationTemplateLink))
+			{
+				LocalAuthorityInformationTemplateTaskListStatus = TaskListItemViewModel.NotStarted;
+			}
+			else
+			{
+				LocalAuthorityInformationTemplateTaskListStatus = TaskListItemViewModel.InProgress;
+			}
 		}
 
 		private void SetRationaleTaskListStatus()
 		{
-			if (RationaleMarkAsComplete)
+			if (RationaleSectionComplete)
 			{
 				RationaleTaskListStatus = TaskListItemViewModel.Completed;
 			}
@@ -64,7 +99,7 @@ namespace ApplyToBecomeInternal.ViewModels
 
 		private void SetRisksAndIssuesTaskListStatus()
 		{
-			if (RisksAndIssuesMarkAsComplete)
+			if (RisksAndIssuesSectionComplete)
 			{
 				RisksAndIssuesTaskListStatus = TaskListItemViewModel.Completed;
 			}
@@ -78,6 +113,25 @@ namespace ApplyToBecomeInternal.ViewModels
 			}
 		}
 
+		private void SetSchoolBudgetInformationTaskListStatus()
+		{
+			if (SchoolBudgetInformationSectionComplete)
+			{
+				SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.Completed;
+			}
+			else if (RevenueCarryForwardAtEndMarchCurrentYear == 0
+				&& ProjectedRevenueBalanceAtEndMarchNextYear == 0
+				&& CapitalCarryForwardAtEndMarchCurrentYear == 0
+				&& CapitalCarryForwardAtEndMarchNextYear == 0
+				&& string.IsNullOrWhiteSpace(SchoolBudgetInformationAdditionalInformation))
+			{
+				SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.NotStarted;
+			}
+			else
+			{
+				SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.InProgress;
+			}
+		}
 
 		private static string FormatDate(DateTime? dateTime) => dateTime.HasValue ? dateTime.Value.ToString("dd MMMM yyyy") : "";
 
@@ -91,15 +145,22 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string Phase { get; }
 		public IEnumerable<DocumentDetails> ProjectDocuments { get; set; }
 
+		public DateTime? LocalAuthorityInformationTemplateSentDate { get; set; }
+		public DateTime? LocalAuthorityInformationTemplateReturnedDate { get; set; }
+		public string LocalAuthorityInformationTemplateComments { get; set; }
+		public string LocalAuthorityInformationTemplateLink { get; set; }
+		public bool LocalAuthorityInformationTemplateSectionComplete { get; set; }
+		public TaskListItemViewModel LocalAuthorityInformationTemplateTaskListStatus { get; set; }
+
 		public string RationaleForProject { get; set; }
 		public string RationaleForTrust { get; set; }
-		public bool RationaleMarkAsComplete { get; set; }
+		public bool RationaleSectionComplete { get; set; }
 		public TaskListItemViewModel RationaleTaskListStatus { get; set; }
 
 		// risk and issues
 		public string RisksAndIssues { get; set; }
 		public string EqualitiesImpactAssessmentConsidered { get; set; }
-		public bool RisksAndIssuesMarkAsComplete { get; set; }
+		public bool RisksAndIssuesSectionComplete { get; set; }
 		public TaskListItemViewModel RisksAndIssuesTaskListStatus { get; set; }
 
 		// pupil schools forecast
@@ -114,5 +175,14 @@ namespace ApplyToBecomeInternal.ViewModels
 		public int? YearFourProjectedCapacity { get; set; }
 		public int? YearFourProjectedPupilNumbers { get; set; }
 		public string SchoolPupilForecastsAdditionalInformation { get; set; }
+
+		//school budget info
+		public decimal RevenueCarryForwardAtEndMarchCurrentYear { get; set; }
+		public decimal ProjectedRevenueBalanceAtEndMarchNextYear { get; set; }
+		public decimal CapitalCarryForwardAtEndMarchCurrentYear { get; set; }
+		public decimal CapitalCarryForwardAtEndMarchNextYear { get; set; }
+		public string SchoolBudgetInformationAdditionalInformation { get; set; }
+		public bool SchoolBudgetInformationSectionComplete { get; set; }
+		public TaskListItemViewModel SchoolBudgetInformationTaskListStatus { get; set; }
 	}
 }

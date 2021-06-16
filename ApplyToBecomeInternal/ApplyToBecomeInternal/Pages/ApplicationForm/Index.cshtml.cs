@@ -4,6 +4,7 @@ using ApplyToBecome.Data;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models.ApplicationForm;
 using ApplyToBecomeInternal.Models.ApplicationForm.Sections;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ApplyToBecomeInternal.Pages.ApplicationForm
 {
@@ -18,9 +19,9 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 
 		public IEnumerable<BaseFormSection> Sections { get; set; }
 
-		public override async Task OnGetAsync(int id)
+		public override async Task<IActionResult> OnGetAsync(int id)
         {
-			await base.OnGetAsync(id);
+			var result = await base.OnGetAsync(id);
 
 			var application = _applications.GetApplication(id.ToString());
 			Sections = new BaseFormSection[]
@@ -35,6 +36,8 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 				new ConsultationSection(application),
 				new DeclarationSection(application)
 			};
+
+			return result;
 		}
     }
 }

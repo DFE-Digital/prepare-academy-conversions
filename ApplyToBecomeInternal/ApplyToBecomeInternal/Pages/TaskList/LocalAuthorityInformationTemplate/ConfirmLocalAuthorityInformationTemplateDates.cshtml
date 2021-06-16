@@ -1,0 +1,70 @@
+﻿@page "/task-list/{id:int}/confirm-local-authority-information-template-dates"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	ViewData["Title"] = "Confirm local authority information template dates";
+}
+@section BeforeMain
+{
+	<a back-link-for="@Links.TaskList.Index"></a>
+}
+
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+		<h1 class="govuk-heading-l">
+			Confirm local authority information template dates
+		</h1>
+	</div>
+	<div class="govuk-grid-column-full">
+		<dl class="govuk-summary-list">
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+							"la-info-template-sent-date",
+							"Date you sent the template",
+							Model.Project.LocalAuthorityInformationTemplateSentDate.ToDateString(),
+							Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page,
+							Model.Project.Id,
+							"date LA proforma was sent to LA"))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+							"la-info-template-returned-date",
+							"Date you want the template returned",
+							Model.Project.LocalAuthorityInformationTemplateReturnedDate.ToDateString(),
+							Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page,
+							Model.Project.Id,
+							"date LA proforma was sent back from LA"))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+							"la-info-template-comments",
+							"Comments (optional)",
+							Model.Project.LocalAuthorityInformationTemplateComments,
+							Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page,
+							Model.Project.Id,
+							"comments"))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+							"la-info-template-sharepoint-link",
+							"Add a link to where you have stored the template in Sharepoint",
+							Model.Project.LocalAuthorityInformationTemplateLink,
+							Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page,
+							Model.Project.Id,
+							"sharepoint link"))
+		</dl>
+	</div>
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			<div class="govuk-form-group">
+				@await Html.PartialAsync("_CheckboxInput", new CheckboxInputViewModel(
+					"la-info-template-complete",
+					"la-info-template-complete",
+					Model.Project.LocalAuthorityInformationTemplateSectionComplete,
+					"Mark this section as complete, you can still make changes later"))
+			</div>
+			<input name="SuccessPage" type="hidden" value="@Links.TaskList.Index.Page" />
+			<button class="govuk-button" data-module="govuk-button">
+				Confirm and continue
+			</button>
+		</form>
+	</div>
+</div>

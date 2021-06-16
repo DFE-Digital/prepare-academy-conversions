@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using ApplyToBecome.Data.Services;
+using Microsoft.AspNetCore.Mvc;
 using SchoolPerformanceModel = ApplyToBecome.Data.Models.SchoolPerformance;
 
 namespace ApplyToBecomeInternal.Pages.SchoolPerformance
@@ -15,11 +16,13 @@ namespace ApplyToBecomeInternal.Pages.SchoolPerformance
 
 		public SchoolPerformanceModel SchoolPerformance { get; private set; }
 
-		public override async Task OnGetAsync(int id)
+		public override async Task<IActionResult> OnGetAsync(int id)
 		{
-			await base.OnGetAsync(id);
+			var result = await base.OnGetAsync(id);
 
 			SchoolPerformance = await _schoolPerformanceService.GetSchoolPerformanceByUrn(Project.SchoolURN);
+
+			return result;
 		}
 	}
 }

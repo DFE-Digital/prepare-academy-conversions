@@ -25,13 +25,20 @@
 		<ol class="app-task-list govuk-!-margin-bottom-8">
 			<li class="app-task-list__item">
 				<span class="app-task-list__task-name">
-					<a class="govuk-link" href="#" aria-describedby="LA-infromation-template">
-						Record dates for the LA information template
-					</a>
+					@if (Model.Project.LocalAuthorityInformationTemplateTaskListStatus.Equals(TaskListItemViewModel.NotStarted))
+					{
+						<a class="govuk-link" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" aria-describedby="LA-infromation-template">
+							Record dates for the LA information template
+						</a>
+					}
+					else
+					{
+						<a class="govuk-link" asp-page="@Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" aria-describedby="LA-infromation-template">
+							Record dates for the LA information template
+						</a>
+					}
 				</span>
-				<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="LA-infromation-template">
-					Not Started
-				</strong>
+				<strong class="govuk-tag @Model.Project.LocalAuthorityInformationTemplateTaskListStatus.CssClass app-task-list__tag" id="la-info-template-status">@Model.Project.LocalAuthorityInformationTemplateTaskListStatus.Status</strong>
 			</li>
 		</ol>
 
@@ -83,11 +90,11 @@
 			</li>
 			<li class="app-task-list__item">
 				<span class="app-task-list__task-name">
-					<a class="govuk-link" href="#" aria-describedby="school-budget-information">
+					<a class="govuk-link" asp-page="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-budget-information">
 						School budget information
 					</a>
 				</span>
-				<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="school-budget-informatiion">Reference only</strong>
+				<strong class="govuk-tag @Model.Project.SchoolBudgetInformationTaskListStatus.CssClass app-task-list__tag" id="school-budget-information-status">@Model.Project.SchoolBudgetInformationTaskListStatus.Status</strong>
 			</li>
 			<li class="app-task-list__item">
 				<span class="app-task-list__task-name">

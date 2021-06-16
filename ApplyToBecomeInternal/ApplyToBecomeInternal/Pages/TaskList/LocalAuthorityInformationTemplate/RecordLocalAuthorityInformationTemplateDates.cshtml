@@ -1,0 +1,63 @@
+﻿@page "/task-list/{id:int}/record-local-authority-information-template-dates"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	ViewData["Title"] = "Record dates for local authority information template";
+}
+@section BeforeMain
+{
+	<a back-link-for="@Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates"></a>
+}
+
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+		<h1 class="govuk-heading-l">
+			Record dates for the local authority information template
+		</h1>
+		<p class="govuk-body">
+			Send the local authority information template like you normally would on your email. Then record the date you sent it and when you want it returned to you.
+		</p>
+	</div>
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			<div class="govuk-form-group">
+				@await Html.PartialAsync("_DateInput", new DateInputViewModel(
+					"la-info-template-sent-date",
+					"la-info-template-sent-date",
+					Model.Project.LocalAuthorityInformationTemplateSentDate,
+					"Date you sent the template",
+					"For example, 27 3 2021"))
+			</div>
+			<div class="govuk-form-group">
+				@await Html.PartialAsync("_DateInput", new DateInputViewModel(
+					"la-info-template-returned-date",
+					"la-info-template-returned-date",
+					Model.Project.LocalAuthorityInformationTemplateReturnedDate,
+					"Date you want the template returned to you",
+					"For example, 27 3 2021"))
+			</div>
+			<div class="govuk-form-group">
+				<label class="govuk-label govuk-fieldset__legend--s" for="la-info-template-comments">
+					Comments (optional)
+				</label>
+				<textarea class="govuk-textarea" id="la-info-template-comments" name="la-info-template-comments" rows="5">@Model.Project.LocalAuthorityInformationTemplateComments</textarea>
+			</div>
+			<div class="govuk-form-group">
+				<label class="govuk-label govuk-fieldset__legend--s" for="la-info-template-sharepoint-link">
+					Add a link to where you have stored the template in Sharepoint
+				</label>
+				<input class="govuk-input" id="la-info-template-sharepoint-link" name="la-info-template-sharepoint-link" type="text" value="@Model.Project.LocalAuthorityInformationTemplateLink">
+			</div>
+
+			<input name="SuccessPage" type="hidden" value="@Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates.Page" />
+			<button class="govuk-button" data-module="govuk-button">
+				Save and continue
+			</button>
+		</form>
+	</div>
+</div>

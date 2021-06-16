@@ -2,6 +2,7 @@ using ApplyToBecome.Data;
 using ApplyToBecome.Data.Models.ProjectNotes;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,12 +20,14 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 		public bool NewNote { get; set; }
 		public IEnumerable<ProjectNote> Notes { get; set; }
 
-		public override async Task OnGetAsync(int id)
+		public override async Task<IActionResult> OnGetAsync(int id)
         {
-			await base.OnGetAsync(id);
+			var result = await base.OnGetAsync(id);
 
 			NewNote = (bool)(TempData["newNote"] ?? false);
 			Notes = _projectNotes.GetNotesForProject(id);
+
+			return result;
 		}
     }
 }

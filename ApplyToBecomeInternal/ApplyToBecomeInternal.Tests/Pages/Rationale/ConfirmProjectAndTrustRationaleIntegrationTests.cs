@@ -13,7 +13,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		[Fact]
 		public async Task Should_be_in_progress_and_display_rationale_when_rationale_populated()
 		{
-			var project = AddGetProject(p => p.RationaleMarkAsComplete = false);
+			var project = AddGetProject(p => p.RationaleSectionComplete = false);
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
@@ -31,9 +31,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		{
 			var project = AddGetProject(project =>
 			{
-				project.RationaleMarkAsComplete = true;
+				project.RationaleSectionComplete = true;
 			});
-			AddPatchProject(project, r => r.RationaleMarkAsComplete, true);
+			AddPatchProject(project, r => r.RationaleSectionComplete, true);
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
@@ -55,9 +55,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 			{
 				project.RationaleForProject = null;
 				project.RationaleForTrust = null;
-				project.RationaleMarkAsComplete = false;
+				project.RationaleSectionComplete = false;
 			});
-			AddPatchProject(project, r => r.RationaleMarkAsComplete, false);
+			AddPatchProject(project, r => r.RationaleSectionComplete, false);
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 

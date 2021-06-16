@@ -1,0 +1,96 @@
+﻿@page "/task-list/{id:int}/confirm-school-budget-information"
+@using ApplyToBecomeInternal.ViewModels
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	ViewData["Title"] = "Confirm school budget information";
+}
+
+@section BeforeMain
+{
+	<a back-link-for="@Links.TaskList.Index"></a>
+}
+
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+		<h1 class="govuk-heading-l">
+			Confirm school budget information
+		</h1>
+		<div class="govuk-body">
+			<p>
+				This information comes from the
+				<a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+				The table will populate into your headteacher board (HTB) template.
+			</p>
+			<p>
+				You can add <a href="#additional-information">additional information</a> if you need to, this will also go into your HTB template.
+			</p>
+		</div>
+	</div>
+	<div class="govuk-grid-column-full">
+		<dl class="govuk-summary-list">
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+							"finance-current-year-2021",
+							"Revenue carry forward at end-March (current year) 2021",
+							Model.Project.RevenueCarryForwardAtEndMarchCurrentYear.ToMoneyString(true),
+							Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page,
+							Model.Project.Id,
+							"Revenue carry forward at end-March (current year) 2021"))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+							"finance-following-year-2022",
+							"Projected revenue balance at end-March (following year) 2022",
+							Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear.ToMoneyString(true),
+							Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page,
+							Model.Project.Id,
+							"Projected revenue balance at end-March (following year) 2022"))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+							"finance-forward-2021",
+							"Capital carry forward at end-March (current year)",
+							Model.Project.CapitalCarryForwardAtEndMarchCurrentYear.ToMoneyString(true),
+							Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page,
+							Model.Project.Id,
+							"Capital carry forward at end-March (current year)"))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+							"finance-forward-2022",
+							"Projected capital balance at end-March (following year)",
+							Model.Project.CapitalCarryForwardAtEndMarchNextYear.ToMoneyString(true),
+							Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page,
+							Model.Project.Id,
+							"Projected capital balance at end-March (following year)"))
+		</dl>
+	</div>
+	<div class="govuk-grid-column-two-thirds">
+		<h3 class="govuk-heading-m">Additional information</h3>
+		<p class="govuk-body">This information will populate into your HTB template under the school budget information section.</p>
+	</div>
+	<div class="govuk-grid-column-full">
+		<dl class="govuk-summary-list">
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"additional-information",
+				"Additional information",
+				Model.Project.SchoolBudgetInformationAdditionalInformation,
+				Links.SchoolBudgetInformationSection.AdditionalInformation.Page,
+				Model.Project.Id,
+				"additional information"))
+		</dl>
+		<form method="post">
+			<div class="govuk-form-group">
+				@await Html.PartialAsync("_CheckboxInput", new CheckboxInputViewModel(
+					"school-budget-information-complete",
+					"school-budget-information-complete",
+					Model.Project.SchoolBudgetInformationSectionComplete,
+					"Mark this section as complete, you can still make changes later"))
+			</div>
+
+			<input name="SuccessPage" type="hidden" value="@Links.TaskList.Index.Page" />
+			<button class="govuk-button" data-module="govuk-button">
+				Confirm and continue
+			</button>
+		</form>
+	</div>
+</div>

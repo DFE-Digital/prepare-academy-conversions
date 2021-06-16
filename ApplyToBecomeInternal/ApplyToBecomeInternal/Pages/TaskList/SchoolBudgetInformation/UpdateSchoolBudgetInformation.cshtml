@@ -1,0 +1,69 @@
+﻿@page "/task-list/{id:int}/confirm-school-budget-information/update-school-budget-information"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	ViewData["Title"] = "Update school budget information";
+}
+
+@section BeforeMain
+{
+	<a back-link-for="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation"></a>
+}
+
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+		<h1 class="govuk-heading-l">
+			School budget information
+		</h1>
+	</div>
+	<div class="govuk-grid-column-full">
+		<form method="post">
+			<div class="govuk-form-group">
+				<label class="govuk-label govuk-label--s" for="finance-current-year-2021">
+					Revenue carry forward at end-March (current year) 2021
+				</label>
+				<div class="govuk-input__wrapper">
+					<div class="govuk-input__prefix" aria-hidden="true">£</div>
+					<input class="govuk-input govuk-input--width-10" id="finance-current-year-2021" name="finance-current-year-2021" type="text" value="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear.ToMoneyString()">
+				</div>
+			</div>
+			<div class="govuk-form-group">
+				<label class="govuk-label govuk-label--s" for="finance-following-year-2022">
+					Projected revenue balance at end-March (following year) 2022
+				</label>
+				<div class="govuk-input__wrapper">
+					<div class="govuk-input__prefix" aria-hidden="true">£</div>
+					<input class="govuk-input govuk-input--width-10" id="finance-following-year-2022" name="finance-following-year-2022" type="text" value="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear.ToMoneyString()">
+				</div>
+			</div>
+			<div class="govuk-form-group">
+				<label class="govuk-label govuk-label--s" for="finance-forward-2021">
+					Capital carry forward at end-March (current year)
+				</label>
+				<div class="govuk-input__wrapper">
+					<div class="govuk-input__prefix" aria-hidden="true">£</div>
+					<input class="govuk-input govuk-input--width-10" id="finance-forward-2021" name="finance-forward-2021" type="text" value="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear.ToMoneyString()">
+				</div>
+			</div>
+			<div class="govuk-form-group">
+				<label class="govuk-label govuk-label--s" for="finance-forward-2022">
+					Projected capital balance at end-March (following year)
+				</label>
+				<div class="govuk-input__wrapper">
+					<div class="govuk-input__prefix" aria-hidden="true">£</div>
+					<input class="govuk-input govuk-input--width-10" id="finance-forward-2022" name="finance-forward-2022" type="text" value="@Model.Project.CapitalCarryForwardAtEndMarchNextYear.ToMoneyString()">
+				</div>
+			</div>
+
+			<input name="SuccessPage" type="hidden" value="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page" />
+			<button class="govuk-button" data-module="govuk-button">
+				Save and continue
+			</button>
+		</form>
+	</div>
+</div>
