@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace ApplyToBecomeInternal.Extensions
 {
@@ -16,16 +15,16 @@ namespace ApplyToBecomeInternal.Extensions
 			{
 				return "";
 			}
-			return string.Format("{0}%", value);
+			return string.Format("{0:G0}%", value);
 		}
 
-		public static string ToSafeString<T>(this Nullable<T> value) where T : struct
+		public static string ToSafeString(this decimal? value)
 		{
 			if (!value.HasValue)
 			{
 				return "";
 			}
-			return value.Value.ToString();
+			return value.Value.ToString("G0");
 		}
 	}
 }

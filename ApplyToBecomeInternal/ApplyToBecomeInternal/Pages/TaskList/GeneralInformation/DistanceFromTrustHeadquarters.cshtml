@@ -20,7 +20,7 @@
 			   id="distance-to-trust-headquarters" 
 			   name="distance-to-trust-headquarters" 
 			   type="text" 
-			   value="@Model.Project.DistanceFromSchoolToTrustHeadquarters"
+			   value="@Model.Project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()"
 			   aria-describedby="distance-to-trust-headquarters-hint">
 		<div class="govuk-input__suffix" aria-hidden="true">miles</div>
 	</div>
@@ -33,8 +33,8 @@
 		This information will populate into your HTB template under the distance to the trust headquarters section.
 	</div>
 	<textarea class="govuk-textarea" 
-			  id="distance-to-trust-headquarters-additional-information-detail" 
-			  name="distance-to-trust-headquarters-additional-information-detail" 
+			  id="distance-to-trust-headquarters-additional-information" 
+			  name="distance-to-trust-headquarters-additional-information" 
 			  rows="5" 
 			  aria-describedby="distance-to-trust-headquarters-additional-information-hint">@Model.Project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation</textarea>
 </div>

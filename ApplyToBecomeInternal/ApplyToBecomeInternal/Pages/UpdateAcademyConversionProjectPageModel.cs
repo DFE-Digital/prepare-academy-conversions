@@ -58,6 +58,7 @@ namespace ApplyToBecomeInternal.Pages
 				FinancialDeficit = AcademyConversionProject.FinancialDeficit,
 				IsThisADiocesanTrust = AcademyConversionProject.IsThisADiocesanTrust,
 				DistanceFromSchoolToTrustHeadquarters = AcademyConversionProject.DistanceFromSchoolToTrustHeadquarters,
+				DistanceFromSchoolToTrustHeadquartersAdditionalInformation = AcademyConversionProject.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
 				GeneralInformationSectionComplete = AcademyConversionProject.GeneralInformationSectionComplete,
 				SchoolPerformanceAdditionalInformation = AcademyConversionProject.SchoolPerformanceAdditionalInformation,
 				RationaleForProject = AcademyConversionProject.RationaleForProject,

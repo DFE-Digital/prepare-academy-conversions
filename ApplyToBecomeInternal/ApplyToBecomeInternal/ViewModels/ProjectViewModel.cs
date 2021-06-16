@@ -43,6 +43,7 @@ namespace ApplyToBecomeInternal.ViewModels
 			IsThisADiocesanTrust = project.IsThisADiocesanTrust;
 			PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust = project.PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust;
 			DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters;
+			DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
 			MemberOfParliamentParty = project.MemberOfParliamentParty;
 			GeneralInformationSectionComplete = project.GeneralInformationSectionComplete ?? false;
 			GeneralInformationTaskListStatus = TaskListItemViewModel.GetGeneralInformationTaskListStatus(this);

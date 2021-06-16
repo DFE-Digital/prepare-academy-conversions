@@ -76,12 +76,12 @@
 				Model.Project.Id,
 				"viability issues"))
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"financial-surplus-or-deficit",
+				"financial-deficit",
 				"Financial deficit",
 				Model.Project.FinancialDeficit,
 				Links.GeneralInformationSection.FinancialDeficit.Page,
 				Model.Project.Id,
-				"financial surplus or deficit"))
+				"financial deficit"))
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
 				"diocesan-multi-academy-trust",
 				"Is this a diocesan multi-academy trust (MAT)?",
