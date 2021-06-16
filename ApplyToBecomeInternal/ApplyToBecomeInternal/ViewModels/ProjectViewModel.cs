@@ -30,16 +30,33 @@ namespace ApplyToBecomeInternal.ViewModels
 			LocalAuthorityInformationTemplateComments = project.LocalAuthorityInformationTemplateComments;
 			LocalAuthorityInformationTemplateLink = project.LocalAuthorityInformationTemplateLink;
 			LocalAuthorityInformationTemplateSectionComplete = project.LocalAuthorityInformationTemplateSectionComplete ?? false;
-			SetLocalAuthorityInformationTemplateTaskListStatus();
+			LocalAuthorityInformationTemplateTaskListStatus = TaskListItemViewModel.GetLocalAuthorityInformationTemplateTaskListStatus(this);
+
+			SchoolPhase = project.SchoolPhase;
+			AgeRange = project.AgeRange;
+			SchoolType = project.SchoolType;
+			PublishedAdmissionNumber = project.PublishedAdmissionNumber;
+			PercentageFreeSchoolMeals = project.PercentageFreeSchoolMeals;
+			PartOfPfiScheme = project.PartOfPfiScheme;
+			ViabilityIssues = project.ViabilityIssues;
+			FinancialDeficit = project.FinancialDeficit;
+			IsThisADiocesanTrust = project.IsThisADiocesanTrust;
+			PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust = project.PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust;
+			DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters;
+			DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
+			MemberOfParliamentParty = project.MemberOfParliamentParty;
+			GeneralInformationSectionComplete = project.GeneralInformationSectionComplete ?? false;
+			GeneralInformationTaskListStatus = TaskListItemViewModel.GetGeneralInformationTaskListStatus(this);
 
 			RationaleForProject = project.RationaleForProject;
 			RationaleForTrust = project.RationaleForTrust;
 			RationaleSectionComplete = project.RationaleSectionComplete ?? false;
-			SetRationaleTaskListStatus();
+			RationaleTaskListStatus = TaskListItemViewModel.GetRationaleTaskListStatus(this);
+
 			RisksAndIssues = project.RisksAndIssues;
 			EqualitiesImpactAssessmentConsidered = project.EqualitiesImpactAssessmentConsidered;
 			RisksAndIssuesSectionComplete = project.RisksAndIssuesSectionComplete ?? false;
-			SetRisksAndIssuesTaskListStatus();
+			RisksAndIssuesTaskListStatus = TaskListItemViewModel.GetRisksAndIssuesTaskListStatus(this);
 
 			CurrentYearCapacity = project.CurrentYearCapacity;
 			CurrentYearPupilNumbers = project.CurrentYearPupilNumbers;
@@ -59,78 +76,7 @@ namespace ApplyToBecomeInternal.ViewModels
 			CapitalCarryForwardAtEndMarchNextYear = project.CapitalCarryForwardAtEndMarchNextYear ?? 0;
 			SchoolBudgetInformationAdditionalInformation = project.SchoolBudgetInformationAdditionalInformation;
 			SchoolBudgetInformationSectionComplete = project.SchoolBudgetInformationSectionComplete ?? false;
-			SetSchoolBudgetInformationTaskListStatus();
-		}
-
-		private void SetLocalAuthorityInformationTemplateTaskListStatus()
-		{
-			if (LocalAuthorityInformationTemplateSectionComplete)
-			{
-				LocalAuthorityInformationTemplateTaskListStatus = TaskListItemViewModel.Completed;
-			}
-			else if (!LocalAuthorityInformationTemplateSentDate.HasValue 
-				&& !LocalAuthorityInformationTemplateReturnedDate.HasValue 
-				&& string.IsNullOrWhiteSpace(LocalAuthorityInformationTemplateComments) 
-				&& string.IsNullOrWhiteSpace(LocalAuthorityInformationTemplateLink))
-			{
-				LocalAuthorityInformationTemplateTaskListStatus = TaskListItemViewModel.NotStarted;
-			}
-			else
-			{
-				LocalAuthorityInformationTemplateTaskListStatus = TaskListItemViewModel.InProgress;
-			}
-		}
-
-		private void SetRationaleTaskListStatus()
-		{
-			if (RationaleSectionComplete)
-			{
-				RationaleTaskListStatus = TaskListItemViewModel.Completed;
-			}
-			else if (string.IsNullOrWhiteSpace(RationaleForProject) && string.IsNullOrWhiteSpace(RationaleForTrust))
-			{
-				RationaleTaskListStatus = TaskListItemViewModel.NotStarted;
-			}
-			else
-			{
-				RationaleTaskListStatus = TaskListItemViewModel.InProgress;
-			}
-		}
-
-		private void SetRisksAndIssuesTaskListStatus()
-		{
-			if (RisksAndIssuesSectionComplete)
-			{
-				RisksAndIssuesTaskListStatus = TaskListItemViewModel.Completed;
-			}
-			else if (string.IsNullOrWhiteSpace(RisksAndIssues))
-			{
-				RisksAndIssuesTaskListStatus = TaskListItemViewModel.NotStarted;
-			}
-			else
-			{
-				RisksAndIssuesTaskListStatus = TaskListItemViewModel.InProgress;
-			}
-		}
-
-		private void SetSchoolBudgetInformationTaskListStatus()
-		{
-			if (SchoolBudgetInformationSectionComplete)
-			{
-				SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.Completed;
-			}
-			else if (RevenueCarryForwardAtEndMarchCurrentYear == 0
-				&& ProjectedRevenueBalanceAtEndMarchNextYear == 0
-				&& CapitalCarryForwardAtEndMarchCurrentYear == 0
-				&& CapitalCarryForwardAtEndMarchNextYear == 0
-				&& string.IsNullOrWhiteSpace(SchoolBudgetInformationAdditionalInformation))
-			{
-				SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.NotStarted;
-			}
-			else
-			{
-				SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.InProgress;
-			}
+			SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.GetSchoolBudgetInformationTaskListStatus(this);
 		}
 
 		private static string FormatDate(DateTime? dateTime) => dateTime.HasValue ? dateTime.Value.ToString("dd MMMM yyyy") : "";
@@ -151,6 +97,23 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string LocalAuthorityInformationTemplateLink { get; set; }
 		public bool LocalAuthorityInformationTemplateSectionComplete { get; set; }
 		public TaskListItemViewModel LocalAuthorityInformationTemplateTaskListStatus { get; set; }
+
+		//general info
+		public string SchoolPhase { get; set; }
+		public string AgeRange { get; set; }
+		public string SchoolType { get; set; }
+		public string PublishedAdmissionNumber { get; set; }
+		public decimal? PercentageFreeSchoolMeals { get; set; }
+		public string PartOfPfiScheme { get; set; }
+		public string ViabilityIssues { get; set; }
+		public string FinancialDeficit { get; set; }
+		public bool? IsThisADiocesanTrust { get; set; }
+		public decimal? PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust { get; set; }
+		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
+		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
+		public string MemberOfParliamentParty { get; set; }
+		public bool GeneralInformationSectionComplete { get; set; }
+		public TaskListItemViewModel GeneralInformationTaskListStatus { get; set; }
 
 		public string RationaleForProject { get; set; }
 		public string RationaleForTrust { get; set; }

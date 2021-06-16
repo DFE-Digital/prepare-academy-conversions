@@ -47,7 +47,7 @@
 			<li class="app-task-list__item">
 				<span class="app-task-list__task-name">
 					<a class="govuk-link" href="#" aria-describedby="project-overview">
-						Conversion overview
+						School and trust information and project dates
 					</a>
 				</span>
 				<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="project-overview">
@@ -56,13 +56,11 @@
 			</li>
 			<li class="app-task-list__item">
 				<span class="app-task-list__task-name">
-					<a class="govuk-link" href="#" aria-describedby="general-information">
+					<a class="govuk-link" asp-page="@Links.GeneralInformationSection.ConfirmGeneralInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="general-information">
 						General information
 					</a>
 				</span>
-				<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="general-information">
-					Not Started
-				</strong>
+				<strong class="govuk-tag @Model.Project.GeneralInformationTaskListStatus.CssClass app-task-list__tag" id="general-information-status">@Model.Project.GeneralInformationTaskListStatus.Status</strong>
 			</li>
 			<li class="app-task-list__item">
 				<span class="app-task-list__task-name">
@@ -111,14 +109,6 @@
 					</a>
 				</span>
 				<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="performance-tables">Reference only</strong>
-			</li>
-			<li class="app-task-list__item">
-				<span class="app-task-list__task-name">
-					<a class="govuk-link" href="#" aria-describedby="supporting-information">
-						Upload supporting documents (optional)
-					</a>
-				</span>
-				<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="supporting-information">Not started</strong>
 			</li>
 		</ol>
 		<h2 class="app-task-list__section">

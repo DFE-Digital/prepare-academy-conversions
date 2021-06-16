@@ -1,3 +1,4 @@
+using ApplyToBecomeInternal.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -25,19 +26,19 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPupilForecasts
 			var rows = Document.QuerySelectorAll("tbody tr");
 			rows[0].Children[1].TextContent.Should().Be(project.CurrentYearCapacity.ToString());
 			rows[0].Children[2].TextContent.Should().Be(project.CurrentYearPupilNumbers.ToString());
-			rows[0].Children[3].TextContent.Should().Be(string.Format("{0:F0}%", 100 / project.CurrentYearCapacity * project.CurrentYearPupilNumbers));
+			rows[0].Children[3].TextContent.Should().Be(project.CurrentYearPupilNumbers.AsPercentageOf(project.CurrentYearCapacity));
 			rows[1].Children[1].TextContent.Should().Be(project.YearOneProjectedCapacity.ToString());
 			rows[1].Children[2].TextContent.Should().Be(project.YearOneProjectedPupilNumbers.ToString());
-			rows[1].Children[3].TextContent.Should().Be(string.Format("{0:F0}%", 100 / project.YearOneProjectedCapacity * project.YearOneProjectedPupilNumbers));
+			rows[1].Children[3].TextContent.Should().Be(project.YearOneProjectedPupilNumbers.AsPercentageOf(project.YearOneProjectedCapacity));
 			rows[2].Children[1].TextContent.Should().Be(project.YearTwoProjectedCapacity.ToString());
 			rows[2].Children[2].TextContent.Should().Be(project.YearTwoProjectedPupilNumbers.ToString());
-			rows[2].Children[3].TextContent.Should().Be(string.Format("{0:F0}%", 100 / project.YearTwoProjectedCapacity * project.YearTwoProjectedPupilNumbers));
+			rows[2].Children[3].TextContent.Should().Be(project.YearTwoProjectedPupilNumbers.AsPercentageOf(project.YearTwoProjectedCapacity));
 			rows[3].Children[1].TextContent.Should().Be(project.YearThreeProjectedCapacity.ToString());
 			rows[3].Children[2].TextContent.Should().Be(project.YearThreeProjectedPupilNumbers.ToString());
-			rows[3].Children[3].TextContent.Should().Be(string.Format("{0:F0}%", 100 / project.YearThreeProjectedCapacity * project.YearThreeProjectedPupilNumbers));
+			rows[3].Children[3].TextContent.Should().Be(project.YearThreeProjectedPupilNumbers.AsPercentageOf(project.YearThreeProjectedCapacity));
 			rows[4].Children[1].TextContent.Should().Be(project.YearFourProjectedCapacity.ToString());
 			rows[4].Children[2].TextContent.Should().Be(project.YearFourProjectedPupilNumbers.ToString());
-			rows[4].Children[3].TextContent.Should().Be(string.Format("{0:F0}%", 100 / project.YearFourProjectedCapacity * project.YearFourProjectedPupilNumbers));
+			rows[4].Children[3].TextContent.Should().Be(project.YearFourProjectedPupilNumbers.AsPercentageOf(project.YearFourProjectedCapacity));
 		}
 
 		[Fact]

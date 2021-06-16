@@ -29,10 +29,10 @@ namespace ApplyToBecome.Data.Models
 		//general info
 		public string PublishedAdmissionNumber { get; set; }
 		public string ViabilityIssues { get; set; }
-		public string FinancialSurplusOrDeficit { get; set; }
+		public string FinancialDeficit { get; set; }
 		public bool? IsThisADiocesanTrust { get; set; }
 		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
-		public string MemberOfParliamentParty { get; set; }
+		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
 		public bool? GeneralInformationSectionComplete { get; set; }
 
 		//school performance ofsted information

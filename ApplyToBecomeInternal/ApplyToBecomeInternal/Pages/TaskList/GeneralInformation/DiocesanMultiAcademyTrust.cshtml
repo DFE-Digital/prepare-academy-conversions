@@ -1,0 +1,30 @@
+﻿@page "/task-list/{id:int}/confirm-general-information/diocesan-multi-academy-trust"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	ViewData["Title"] = "Diocesan multi-academy trust";
+}
+
+@section BeforeMain
+{
+	<a back-link-for="@Links.GeneralInformationSection.ConfirmGeneralInformation"></a>
+}
+
+<h1 class="govuk-heading-l">Is this a diocesan multi-academy trust (MAT)?</h1>
+<div class="govuk-form-group">
+	<div class="govuk-radios">
+		<div class="govuk-radios__item">
+			<input class="govuk-radios__input" id="diocesan-multi-academy-trust" name="diocesan-multi-academy-trust" type="radio" value="true" checked="@(Model.Project.IsThisADiocesanTrust == true)">
+			<label class="govuk-label govuk-radios__label" for="diocesan-multi-academy-trust">
+				Yes
+			</label>
+		</div>
+		<div class="govuk-radios__item">
+			<input class="govuk-radios__input" id="diocesan-multi-academy-trust-2" name="diocesan-multi-academy-trust" type="radio" value="false" checked="@(Model.Project.IsThisADiocesanTrust == false)">
+			<label class="govuk-label govuk-radios__label" for="diocesan-multi-academy-trust-2">
+				No
+			</label>
+		</div>
+	</div>
+</div>
+<input name="SuccessPage" type="hidden" value="@Links.GeneralInformationSection.ConfirmGeneralInformation.Page" />

@@ -1,17 +1,5 @@
 @model ApplyToBecomeInternal.ViewModels.ProjectViewModel
 
-@functions
-{
-	public string CalulatePercentageFull(int? capacity, int? pupilNumbers)
-	{
-		if (!capacity.HasValue || !pupilNumbers.HasValue)
-		{
-			return "";
-		}
-		return string.Format("{0:F0}%", 100 / capacity * pupilNumbers);
-	}
-}
-
 <table class="govuk-table">
 	<thead class="govuk-table__head">
 		<tr class="govuk-table__row">
@@ -26,31 +14,31 @@
 			<th scope="row" class="govuk-table__header ">Current year</th>
 			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.CurrentYearCapacity</td>
 			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.CurrentYearPupilNumbers</td>
-			<td class="govuk-table__cell govuk-table__cell--numeric">@CalulatePercentageFull(Model.CurrentYearCapacity, Model.CurrentYearPupilNumbers)</td>
+			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.CurrentYearPupilNumbers.AsPercentageOf(Model.CurrentYearCapacity)</td>
 		</tr>
 		<tr class="govuk-table__row">
 			<th scope="row" class="govuk-table__header">2021 to 2022 forecast</th>
 			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearOneProjectedCapacity</td>
 			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearOneProjectedPupilNumbers</td>
-			<td class="govuk-table__cell govuk-table__cell--numeric">@CalulatePercentageFull(Model.YearOneProjectedCapacity, Model.YearOneProjectedPupilNumbers)</td>
+			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearOneProjectedPupilNumbers.AsPercentageOf(Model.YearOneProjectedCapacity)</td>
 		</tr>
 		<tr class="govuk-table__row">
 			<th scope="row" class="govuk-table__header">2022 to 2023 forecast</th>
 			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearTwoProjectedCapacity</td>
 			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearTwoProjectedPupilNumbers</td>
-			<td class="govuk-table__cell govuk-table__cell--numeric">@CalulatePercentageFull(Model.YearTwoProjectedCapacity, Model.YearTwoProjectedPupilNumbers)</td>
+			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearTwoProjectedPupilNumbers.AsPercentageOf(Model.YearTwoProjectedCapacity)</td>
 		</tr>
 		<tr class="govuk-table__row">
 			<th scope="row" class="govuk-table__header">2023 to 2024 forecast</th>
 			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearThreeProjectedCapacity</td>
 			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearThreeProjectedPupilNumbers</td>
-			<td class="govuk-table__cell govuk-table__cell--numeric">@CalulatePercentageFull(Model.YearThreeProjectedCapacity, Model.YearThreeProjectedPupilNumbers)</td>
+			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearThreeProjectedPupilNumbers.AsPercentageOf(Model.YearThreeProjectedCapacity)</td>
 		</tr>
 		<tr class="govuk-table__row">
 			<th scope="row" class="govuk-table__header">2023 to 2024 forecast</th>
 			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearFourProjectedCapacity</td>
 			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearFourProjectedPupilNumbers</td>
-			<td class="govuk-table__cell govuk-table__cell--numeric">@CalulatePercentageFull(Model.YearFourProjectedCapacity, Model.YearFourProjectedPupilNumbers)</td>
+			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearFourProjectedPupilNumbers.AsPercentageOf(Model.YearFourProjectedCapacity)</td>
 		</tr>
 	</tbody>
 </table>

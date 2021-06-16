@@ -1,0 +1,30 @@
+﻿@page "/task-list/{id:int}/confirm-general-information/viability-issues"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	ViewData["Title"] = "Viability issues";
+}
+
+@section BeforeMain
+{
+	<a back-link-for="@Links.GeneralInformationSection.ConfirmGeneralInformation"></a>
+}
+
+<h1 class="govuk-heading-l">Are there viability issues at the school?</h1>
+<div class="govuk-form-group">
+	<div class="govuk-radios">
+		<div class="govuk-radios__item">
+			<input class="govuk-radios__input" id="viability-issues" name="viability-issues" type="radio" value="Yes" checked="@(Model.Project.ViabilityIssues == "Yes")">
+			<label class="govuk-label govuk-radios__label" for="viability-issues">
+				Yes
+			</label>
+		</div>
+		<div class="govuk-radios__item">
+			<input class="govuk-radios__input" id="viability-issues-2" name="viability-issues" type="radio" value="No" checked="@(Model.Project.ViabilityIssues == "No")">
+			<label class="govuk-label govuk-radios__label" for="viability-issues-2">
+				No
+			</label>
+		</div>
+	</div>
+</div>
+<input name="SuccessPage" type="hidden" value="@Links.GeneralInformationSection.ConfirmGeneralInformation.Page" />

@@ -1,0 +1,123 @@
+@page "/task-list/{id:int}/confirm-general-information"
+@using ApplyToBecomeInternal.ViewModels
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	ViewData["Title"] = "Confirm general information";
+}
+
+@section BeforeMain
+{
+	<a back-link-for="@Links.TaskList.Index"></a>
+}
+
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-full">
+		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+		<h1 class="govuk-heading-l">
+			Confirm general information
+		</h1>
+		<div class="govuk-body">
+			<p>
+				This information is pre-populated from TRAMS and the
+				<a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+			</p>
+		</div>
+		<dl class="govuk-summary-list">
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"school-phase",
+				"School phase",
+				Model.Project.SchoolPhase))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"age-range",
+				"Age range",
+				Model.Project.AgeRange))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"school-type",
+				"School type",
+				Model.Project.SchoolType))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"number-on-roll",
+				"Number on roll (NOR)",
+				Model.Project.CurrentYearPupilNumbers.ToString()))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"percentage-school-full",
+				"Percentage the school is full",
+				Model.Project.CurrentYearPupilNumbers.AsPercentageOf(Model.Project.CurrentYearCapacity)))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"capacity",
+				"Capacity",
+				Model.Project.CurrentYearCapacity.ToString()))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"published-admission-number",
+				"Published admission number (PAN)",
+				Model.Project.PublishedAdmissionNumber,
+				Links.GeneralInformationSection.PublishedAdmissionNumber.Page,
+				Model.Project.Id,
+				"published admission numbers",
+				true))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"percentage-free-school-meals",
+				"Percentage of free school meals at the school (%FSM)",
+				Model.Project.PercentageFreeSchoolMeals.ToPercentage()))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"part-of-pfi",
+				"Part of a private finance initiative (PFI) scheme",
+				Model.Project.PartOfPfiScheme))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"viability-issues",
+				"Viability issues",
+				Model.Project.ViabilityIssues,
+				Links.GeneralInformationSection.ViabilityIssues.Page,
+				Model.Project.Id,
+				"viability issues"))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"financial-deficit",
+				"Financial deficit",
+				Model.Project.FinancialDeficit,
+				Links.GeneralInformationSection.FinancialDeficit.Page,
+				Model.Project.Id,
+				"financial deficit"))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"diocesan-multi-academy-trust",
+				"Is this a diocesan multi-academy trust (MAT)?",
+				Model.Project.IsThisADiocesanTrust.ToYesNoString(),
+				Links.GeneralInformationSection.DiocesanMultiAcademyTrust.Page,
+				Model.Project.Id,
+				"diocesan multi-academy trust"))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"percentage-in-diocesan-trust",
+				"Percentage of good or outstanding schools in the diocesan trust",
+				Model.Project.PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust.ToPercentage()))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"distance-to-trust-headquarters",
+				"Distance from the school to the trust headquarters",
+				Model.Project.DistanceFromSchoolToTrustHeadquarters.ToSafeString(),
+				Links.GeneralInformationSection.DistanceFromTrustHeadquarters.Page,
+				Model.Project.Id,
+				"distance to trust headquarters"))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"member-of-parliament-party",
+				"MP (party)",
+				Model.Project.MemberOfParliamentParty))
+		</dl>
+		<form method="post">
+			<div class="govuk-form-group">
+				@await Html.PartialAsync("_CheckboxInput", new CheckboxInputViewModel(
+					"general-information-complete",
+					"general-information-complete",
+					Model.Project.GeneralInformationSectionComplete,
+					"Mark this section as complete, you can still make changes later"))
+			</div>
+
+			<input name="SuccessPage" type="hidden" value="@Links.TaskList.Index.Page" />
+			<button class="govuk-button" data-module="govuk-button">
+				Confirm and continue
+			</button>
+		</form>
+	</div>
+</div>
