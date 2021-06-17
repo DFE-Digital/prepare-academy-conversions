@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.ViewModels
 			Id = project.Id.ToString();
 			//TrustName = project.Trust.Name;
 			SchoolName = project.SchoolName;
-			SchoolURN = project.Urn.ToString();
+			SchoolURN = project.Urn;
 			LocalAuthority = project.LocalAuthority;
 			ApplicationReceivedDate = FormatDate(project.ApplicationReceivedDate);
 			AssignedDate = FormatDate(project.AssignedDate);
@@ -121,7 +121,7 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string Author { get; set; }
 		public string Version { get; set; }
 		public string ClearedBy { get; set; }
-		public bool? AcademyOrderRequired { get; set; }
+		public string AcademyOrderRequired { get; set; }
 		public DateTime? PreviousHeadTeacherBoardDate { get; set; }
 		public string PreviousHeadTeacherBoardLink { get; set; }
 		public string TrustReferenceNumber { get; set; }

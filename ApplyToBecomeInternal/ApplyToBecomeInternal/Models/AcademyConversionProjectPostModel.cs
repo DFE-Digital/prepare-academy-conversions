@@ -50,7 +50,7 @@ namespace ApplyToBecomeInternal.Models
 		public string ClearedBy { get; set; }
 
 		[BindProperty(Name = "academy-order-required")]
-		public bool? AcademyOrderRequired { get; set; }
+		public string AcademyOrderRequired { get; set; }
 
 		[BindProperty(Name = "proposed-academy-opening-date")]
 		public DateTime? ProposedAcademyOpeningDate { get; set; }

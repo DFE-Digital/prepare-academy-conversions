@@ -17,7 +17,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#rationale-status").TextContent.Should().Be("In Progress");
+			Document.QuerySelector("#rationale-status").TextContent.Trim().Should().Be("In Progress");
 			Document.QuerySelector("#rationale-status").ClassName.Should().Contain("blue");
 
 			await NavigateAsync("Rationale");
@@ -37,7 +37,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#rationale-status").TextContent.Should().Be("Completed");
+			Document.QuerySelector("#rationale-status").TextContent.Trim().Should().Be("Completed");
 
 			await NavigateAsync("Rationale");
 
@@ -61,7 +61,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#rationale-status").TextContent.Should().Be("Not Started");
+			Document.QuerySelector("#rationale-status").TextContent.Trim().Should().Be("Not Started");
 			Document.QuerySelector("#rationale-status").ClassName.Should().Contain("grey");
 
 			await NavigateAsync("Rationale");

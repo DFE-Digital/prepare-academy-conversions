@@ -16,7 +16,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPupilForecasts
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#school-pupil-forecasts-status").TextContent.Should().Be("Reference only");
+			Document.QuerySelector("#school-pupil-forecasts-status").TextContent.Trim().Should().Be("Reference only");
 			Document.QuerySelector("#school-pupil-forecasts-status").ClassName.Should().Contain("grey");
 
 			await NavigateAsync("School pupil forecasts");

@@ -56,7 +56,7 @@
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
 				"academy-order-required",
 				"Is an academy order (AO) required?",
-				Model.Project.AcademyOrderRequired.ToYesNoString(),
+				Model.Project.AcademyOrderRequired,
 				Links.SchoolAndTrustInformationSection.AcademyOrderRequired.Page,
 				Model.Project.Id,
 				"academy order required"))
@@ -76,7 +76,7 @@
 				"School name",
 				Model.Project.SchoolName))
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"unique-reference-name",
+				"unique-reference-number",
 				"Unique reference number (URN)",
 				Model.Project.SchoolURN))
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
@@ -100,7 +100,7 @@
 				"Sponsor name",
 				Model.Project.SponsorName))
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"academt-type-and-route",
+				"academy-type-and-route",
 				"Academy type and route",
 				Model.Project.AcademyTypeAndRoute))
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(

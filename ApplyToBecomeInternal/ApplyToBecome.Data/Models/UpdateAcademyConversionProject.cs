@@ -22,7 +22,7 @@ namespace ApplyToBecome.Data.Models
 		public string RecommendationForProject { get; set; }
 		public string Author { get; set; }
 		public string ClearedBy { get; set; }
-		public bool? AcademyOrderRequired { get; set; }
+		public string AcademyOrderRequired { get; set; }
 		public DateTime? ProposedAcademyOpeningDate { get; set; }
 		public bool? SchoolAndTrustInformationSectionComplete { get; set; }
 
