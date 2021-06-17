@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.ViewModels
 			Id = project.Id.ToString();
 			//TrustName = project.Trust.Name;
 			SchoolName = project.SchoolName;
-			SchoolURN = project.Urn;
+			SchoolURN = project.Urn.ToString();
 			LocalAuthority = project.LocalAuthority;
 			ApplicationReceivedDate = FormatDate(project.ApplicationReceivedDate);
 			AssignedDate = FormatDate(project.AssignedDate);

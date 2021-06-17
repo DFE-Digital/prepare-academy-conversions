@@ -11,16 +11,17 @@
 }
 
 @{
-	var today = DateTime.Today;
-	var firstDate = new DateTime(today.Year, today.Month == 12 ? 1 : today.Month + 1, 1);
-	var range = Enumerable.Range(0, 12);
+	var firstDate = DateTime.Today.FirstOfMonth(1);
 }
 
 @functions{
-	public DateTime? NextDate(int i, DateTime baseDate)
+	private string Id(int i)
 	{
-		var month = baseDate.Month + i == 12 ? 12 : (baseDate.Month + i) % 12;
-		return new DateTime(baseDate.Year, month, 1);
+		if (i == 1)
+		{
+			return "proposed-academy-opening-date";
+		}
+		return $"proposed-academy-opening-date-{i}";
 	}
 }
 
@@ -29,12 +30,12 @@
 <div class="govuk-form-group">
 	<fieldset class="govuk-fieldset">
 		<div class="govuk-radios">
-			@foreach (var i in range)
+			@foreach (var i in Enumerable.Range(0, 12))
 			{
-				var nextDate = @NextDate(i, firstDate);
+				var nextDate = firstDate.FirstOfMonth(i);
 				<div class="govuk-radios__item">
 					<input class="govuk-radios__input"
-						   id="proposed-academy-opening-date-@i"
+						   id="@Id(i + 1)"
 						   name="proposed-academy-opening-date"
 						   type="radio"
 						   asp-for="Project.ProposedAcademyOpeningDate"

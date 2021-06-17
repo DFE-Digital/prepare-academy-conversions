@@ -13,21 +13,22 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		[Fact]
 		public async Task Should_navigate_to_and_update_diocesan_multi_academy_trust()
 		{
-			var project = AddGetProject(p => p.IsThisADiocesanTrust = false);
-			var request = AddPatchProject(project, r => r.IsThisADiocesanTrust, true);
+			var (selected, toSelect) = RandomRadioButtons("diocesan-multi-academy-trust", "true", "false");
+			var project = AddGetProject(p => p.IsThisADiocesanTrust = bool.Parse(selected.Value));
+			var request = AddPatchProject(project, r => r.IsThisADiocesanTrust, bool.Parse(toSelect.Value));
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");
 			await NavigateAsync("Change", 3);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/diocesan-multi-academy-trust");
-			Document.QuerySelector<IHtmlInputElement>("#diocesan-multi-academy-trust").IsChecked.Should().BeFalse();
-			Document.QuerySelector<IHtmlInputElement>("#diocesan-multi-academy-trust-2").IsChecked.Should().BeTrue();
+			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked.Should().BeFalse();
+			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked.Should().BeTrue();
 
-			Document.QuerySelector<IHtmlInputElement>("#diocesan-multi-academy-trust-2").IsChecked = false;
-			Document.QuerySelector<IHtmlInputElement>("#diocesan-multi-academy-trust").IsChecked = true;
+			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked = false;
+			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked = true;
 
-			Document.QuerySelector<IHtmlInputElement>("#diocesan-multi-academy-trust").IsChecked.Should().BeTrue();
-			Document.QuerySelector<IHtmlInputElement>("#diocesan-multi-academy-trust-2").IsChecked.Should().BeFalse();
+			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked.Should().BeTrue();
+			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked.Should().BeFalse();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 

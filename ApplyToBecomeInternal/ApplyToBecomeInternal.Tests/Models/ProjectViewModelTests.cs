@@ -15,7 +15,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 				Id = 1,
 				SchoolName = "School Name", 
 				LocalAuthority = "Local Authority", 
-				Urn = "12345",
+				Urn = 12345,
 				ApplicationReceivedDate = new DateTime(2020, 12, 12),
 				AssignedDate = new DateTime(2021, 04, 02),
 				ProjectStatus = "Pre HTB",

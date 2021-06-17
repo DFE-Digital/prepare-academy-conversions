@@ -12,11 +12,23 @@ namespace ApplyToBecomeInternal.Extensions
 			{
 				return string.Empty;
 			}
+			return ToDateString(dateTime.Value, includeDayOfWeek);
+		}
+
+		public static string ToDateString(this DateTime dateTime, bool includeDayOfWeek = false)
+		{
 			if (includeDayOfWeek)
 			{
-				return dateTime.Value.ToString("dddd d MMMM yyyy");
+				return dateTime.ToString("dddd d MMMM yyyy");
 			}
-			return dateTime.Value.ToString("d MMMM yyyy");
+			return dateTime.ToString("d MMMM yyyy");
+		}
+
+		public static DateTime FirstOfMonth(this DateTime thisMonth, int monthsToAdd)
+		{
+			var month = thisMonth.Month + monthsToAdd == 12 ? 12 : (thisMonth.Month + monthsToAdd) % 12;
+			var yearsToAdd = (thisMonth.Month + monthsToAdd - 1) / 12;
+			return new DateTime(thisMonth.Year + yearsToAdd, month, 1);
 		}
 	}
 }

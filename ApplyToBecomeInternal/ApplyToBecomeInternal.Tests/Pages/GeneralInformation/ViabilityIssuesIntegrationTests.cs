@@ -13,21 +13,22 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		[Fact]
 		public async Task Should_navigate_to_and_update_viability_issues()
 		{
-			var project = AddGetProject(p => p.ViabilityIssues = "No");
-			var request = AddPatchProject(project, r => r.ViabilityIssues, "Yes");
+			var (selected, toSelect) = RandomRadioButtons("viability-issues", "Yes", "No");
+			var project = AddGetProject(p => p.ViabilityIssues = selected.Value);
+			var request = AddPatchProject(project, r => r.ViabilityIssues, toSelect.Value);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");
 			await NavigateAsync("Change", 1);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/viability-issues");
-			Document.QuerySelector<IHtmlInputElement>("#viability-issues").IsChecked.Should().BeFalse();
-			Document.QuerySelector<IHtmlInputElement>("#viability-issues-2").IsChecked.Should().BeTrue();
+			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked.Should().BeFalse();
+			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked.Should().BeTrue();
 
-			Document.QuerySelector<IHtmlInputElement>("#viability-issues-2").IsChecked = false;
-			Document.QuerySelector<IHtmlInputElement>("#viability-issues").IsChecked = true;
+			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked = false;
+			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked = true;
 
-			Document.QuerySelector<IHtmlInputElement>("#viability-issues").IsChecked.Should().BeTrue();
-			Document.QuerySelector<IHtmlInputElement>("#viability-issues-2").IsChecked.Should().BeFalse();
+			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked.Should().BeTrue();
+			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked.Should().BeFalse();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
