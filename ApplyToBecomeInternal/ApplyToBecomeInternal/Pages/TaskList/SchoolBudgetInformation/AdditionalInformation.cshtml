@@ -73,7 +73,8 @@
 				<textarea class="govuk-textarea"
 						  id="additional-information"
 						  name="school-budget-information-additional-information"
-						  rows="5">@Model.Project.SchoolBudgetInformationAdditionalInformation</textarea>
+						  asp-for="Project.SchoolBudgetInformationAdditionalInformation"
+						  rows="5"></textarea>
 			</div>
 
 			<input name="SuccessPage" type="hidden" value="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page" />

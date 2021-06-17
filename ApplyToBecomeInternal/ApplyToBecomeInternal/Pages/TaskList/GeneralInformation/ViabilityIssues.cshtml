@@ -14,13 +14,13 @@
 <div class="govuk-form-group">
 	<div class="govuk-radios">
 		<div class="govuk-radios__item">
-			<input class="govuk-radios__input" id="viability-issues" name="viability-issues" type="radio" value="Yes" checked="@(Model.Project.ViabilityIssues == "Yes")">
+			<input class="govuk-radios__input" id="viability-issues" name="viability-issues" type="radio" value="Yes" asp-for="Project.ViabilityIssues">
 			<label class="govuk-label govuk-radios__label" for="viability-issues">
 				Yes
 			</label>
 		</div>
 		<div class="govuk-radios__item">
-			<input class="govuk-radios__input" id="viability-issues-2" name="viability-issues" type="radio" value="No" checked="@(Model.Project.ViabilityIssues == "No")">
+			<input class="govuk-radios__input" id="viability-issues-2" name="viability-issues" type="radio" value="No" asp-for="Project.ViabilityIssues">
 			<label class="govuk-label govuk-radios__label" for="viability-issues-2">
 				No
 			</label>

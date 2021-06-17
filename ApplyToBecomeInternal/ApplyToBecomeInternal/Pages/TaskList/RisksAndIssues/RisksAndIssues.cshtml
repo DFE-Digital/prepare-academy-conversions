@@ -21,9 +21,10 @@
 	<textarea class="govuk-textarea"
 			  id="risks-and-issues"
 			  name="risks-and-issues"
+			  asp-for="Project.RisksAndIssues"
 			  rows="15"
 			  data-module="moj-rich-text-editor"
-			  data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers">@Model.Project.RisksAndIssues</textarea>
+			  data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers"></textarea>
 </div>
 
 <input name="SuccessPage" type="hidden" value="@Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page" />
