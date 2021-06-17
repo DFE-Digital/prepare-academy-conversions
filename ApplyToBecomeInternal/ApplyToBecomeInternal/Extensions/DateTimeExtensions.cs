@@ -6,13 +6,17 @@ namespace ApplyToBecomeInternal.Extensions
 	{
 		public static string ToUkDateString(this DateTime dateTime) => dateTime.ToString("dd/MM/yyyy");
 
-		public static string ToDateString(this DateTime? dateTime)
+		public static string ToDateString(this DateTime? dateTime, bool includeDayOfWeek = false)
 		{
 			if (!dateTime.HasValue)
 			{
 				return string.Empty;
 			}
-			return dateTime.Value.ToString("dd MMM yyyy");
+			if (includeDayOfWeek)
+			{
+				return dateTime.Value.ToString("dddd d MMMM yyyy");
+			}
+			return dateTime.Value.ToString("d MMMM yyyy");
 		}
 	}
 }

@@ -1,0 +1,50 @@
+﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/proposed-academy-opening-date"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	ViewData["Title"] = "Set academy opening date";
+}
+
+@section BeforeMain
+{
+	<a back-link-for="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation"></a>
+}
+
+@{
+	var today = DateTime.Today;
+	var firstDate = new DateTime(today.Year, today.Month == 12 ? 1 : today.Month + 1, 1);
+	var range = Enumerable.Range(0, 12);
+}
+
+@functions{
+	public DateTime? NextDate(int i, DateTime baseDate)
+	{
+		var month = baseDate.Month + i == 12 ? 12 : (baseDate.Month + i) % 12;
+		return new DateTime(baseDate.Year, month, 1);
+	}
+}
+
+<h1 class="govuk-heading-l">Choose the opening date for the academy</h1>
+<p class="govuk-body">Acadamies must open on the first day of every month. You should tell the school and the trust what the opening date will be if you change their preferred date.</p>
+<div class="govuk-form-group">
+	<fieldset class="govuk-fieldset">
+		<div class="govuk-radios">
+			@foreach (var i in range)
+			{
+				var nextDate = @NextDate(i, firstDate);
+				<div class="govuk-radios__item">
+					<input class="govuk-radios__input"
+						   id="proposed-academy-opening-date-@i"
+						   name="proposed-academy-opening-date"
+						   type="radio"
+						   asp-for="Project.ProposedAcademyOpeningDate"
+						   value="@nextDate">
+					<label class="govuk-label govuk-radios__label" for="proposed-academy-opening-date">
+						@nextDate.ToDateString(true)
+					</label>
+				</div>
+			}
+		</div>
+	</fieldset>
+</div>
+<input name="SuccessPage" type="hidden" value="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page" />

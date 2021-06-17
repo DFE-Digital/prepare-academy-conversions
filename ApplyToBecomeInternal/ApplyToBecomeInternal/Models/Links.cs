@@ -44,7 +44,7 @@ namespace ApplyToBecomeInternal.Models
 		public static class SchoolAndTrustInformationSection
 		{
 			public static LinkItem ConfirmSchoolAndTrustInformation = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/ConfirmSchoolAndTrustInformation" };
-			public static LinkItem ProjectRecommendation = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/ConfirmSchoolAndTrustInformation" };
+			public static LinkItem ProjectRecommendation = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/ProjectRecommendation" };
 			public static LinkItem Author = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/Author" };
 			public static LinkItem ClearedBy = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/ClearedBy" };
 			public static LinkItem AcademyOrderRequired = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/AcademyOrderRequired" };

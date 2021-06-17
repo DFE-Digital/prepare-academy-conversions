@@ -1,0 +1,30 @@
+﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/academy-order-required"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	ViewData["Title"] = "Academy order required";
+}
+
+@section BeforeMain
+{
+	<a back-link-for="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation"></a>
+}
+
+<h1 class="govuk-heading-l">Is an academy order required for this conversion?</h1>
+<div class="govuk-form-group">
+	<div class="govuk-radios">
+		<div class="govuk-radios__item">
+			<input class="govuk-radios__input" id="academy-order-required" name="academy-order-required" type="radio" value="true" asp-for="Project.RecommendationForProject">
+			<label class="govuk-label govuk-radios__label" for="academy-order-required">
+				Yes
+			</label>
+		</div>
+		<div class="govuk-radios__item">
+			<input class="govuk-radios__input" id="academy-order-required-2" name="academy-order-required" type="radio" value="false" asp-for="Project.RecommendationForProject">
+			<label class="govuk-label govuk-radios__label" for="academy-order-required-2">
+				No
+			</label>
+		</div>
+	</div>
+</div>
+<input name="SuccessPage" type="hidden" value="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page" />

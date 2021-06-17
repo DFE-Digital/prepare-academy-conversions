@@ -9,6 +9,8 @@ namespace ApplyToBecomeInternal.Models
 		public string ProjectStatus { get; set; }
 		public DateTime? ApplicationReceivedDate { get; set; }
 		public DateTime? AssignedDate { get; set; }
+
+		[BindProperty(Name = "head-teacher-board-date")]
 		public DateTime? HeadTeacherBoardDate { get; set; }
 		public DateTime? OpeningDate { get; set; }
 		public DateTime? BaselineDate { get; set; }
@@ -48,7 +50,7 @@ namespace ApplyToBecomeInternal.Models
 		public string ClearedBy { get; set; }
 
 		[BindProperty(Name = "academy-order-required")]
-		public bool? IsAcademyOrderRequired { get; set; }
+		public bool? AcademyOrderRequired { get; set; }
 
 		[BindProperty(Name = "proposed-academy-opening-date")]
 		public DateTime? ProposedAcademyOpeningDate { get; set; }

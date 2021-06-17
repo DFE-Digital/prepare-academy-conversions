@@ -58,7 +58,7 @@ namespace ApplyToBecomeInternal.ViewModels
 			else if (string.IsNullOrWhiteSpace(project.RecommendationForProject)
 				&& string.IsNullOrWhiteSpace(project.Author)
 				&& string.IsNullOrWhiteSpace(project.ClearedBy)
-				&& !project.IsAcademyOrderRequired.HasValue
+				&& !project.AcademyOrderRequired.HasValue
 				&& !project.HeadTeacherBoardDate.HasValue
 				&& !project.PreviousHeadTeacherBoardDate.HasValue)
 			{

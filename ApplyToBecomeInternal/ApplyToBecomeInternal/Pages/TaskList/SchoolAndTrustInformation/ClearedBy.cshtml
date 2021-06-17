@@ -1,0 +1,25 @@
+﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/clear-head-teacher-board-template"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	ViewData["Title"] = "Clear HTB template";
+}
+
+@section BeforeMain
+{
+	<a back-link-for="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation"></a>
+}
+
+<h1 class="govuk-heading-l">Enter the full name of the person who will clear the HTB template</h1>
+<div class="govuk-form-group">
+	<div id="cleared-by-hint" class="govuk-hint">
+		Entering the person's name will not send the template to them. You will still need to add the template to Sharepoint when you download it.
+	</div>
+	<input id="cleared-by"
+		   name="cleared-by"
+		   type="text"
+		   asp-for="Project.ClearedBy"
+		   class="govuk-input govuk-input--width-20"
+		   aria-describedby="cleared-by-hint" />
+</div>
+<input name="SuccessPage" type="hidden" value="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page" />

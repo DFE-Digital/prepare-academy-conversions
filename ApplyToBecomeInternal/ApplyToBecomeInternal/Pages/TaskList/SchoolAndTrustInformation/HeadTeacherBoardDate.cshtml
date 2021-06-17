@@ -1,0 +1,55 @@
+﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/head-teacher-board-date"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	ViewData["Title"] = "Head teacher board date";
+}
+
+@section BeforeMain
+{
+	<a back-link-for="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation"></a>
+}
+
+@{
+	var today = DateTime.Today;
+	var firstDate = new DateTime(today.Year, today.Month == 12 ? 1 : today.Month + 1, 1);
+	var range = Enumerable.Range(0, 12);
+}
+
+@functions{
+	public DateTime? NextDate(int i, DateTime baseDate)
+	{
+		var month = baseDate.Month + i == 12 ? 12 : (baseDate.Month + i) % 12;
+		return new DateTime(baseDate.Year, month, 1);
+	}
+}
+
+<h1 class="govuk-heading-l">Choose the HTB date for this project</h1>
+<p class="govuk-body">Read through the school's application form to help you choose the best HTB date to aim for.</p>
+<div class="govuk-form-group">
+	<fieldset class="govuk-fieldset">
+		<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+			<h2 class="govuk-fieldset__heading">
+				Region: North
+			</h2>
+		</legend>
+		<div class="govuk-radios">
+			@foreach (var i in range)
+			{
+				var nextDate = @NextDate(i, firstDate);
+				<div class="govuk-radios__item">
+					<input class="govuk-radios__input"
+						   id="head-teacher-board-date-@i"
+						   name="head-teacher-board-date"
+						   type="radio"
+						   asp-for="Project.HeadTeacherBoardDate"
+						   value="@nextDate">
+					<label class="govuk-label govuk-radios__label" for="head-teacher-board-date">
+						@nextDate.ToDateString(true)
+					</label>
+				</div>
+			}
+		</div>
+	</fieldset>
+</div>
+<input name="SuccessPage" type="hidden" value="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page" />

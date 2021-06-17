@@ -24,6 +24,7 @@ namespace ApplyToBecomeInternal.ViewModels
 			AssignedDate = FormatDate(project.AssignedDate);
 			Phase = project.ProjectStatus;
 			//ProjectDocuments = project.ProjectDocuments;
+			HeadTeacherBoardDate = project.HeadTeacherBoardDate;
 
 			LocalAuthorityInformationTemplateSentDate = project.LocalAuthorityInformationTemplateSentDate;
 			LocalAuthorityInformationTemplateReturnedDate = project.LocalAuthorityInformationTemplateReturnedDate;
@@ -36,7 +37,7 @@ namespace ApplyToBecomeInternal.ViewModels
 			Author = project.Author;
 			Version = project.Version;
 			ClearedBy = project.ClearedBy;
-			IsAcademyOrderRequired = project.IsAcademyOrderRequired;
+			AcademyOrderRequired = project.AcademyOrderRequired;
 			PreviousHeadTeacherBoardDate = project.PreviousHeadTeacherBoardDate;
 			PreviousHeadTeacherBoardLink = project.PreviousHeadTeacherBoardLink;
 			TrustReferenceNumber = project.TrustReferenceNumber;
@@ -120,7 +121,7 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string Author { get; set; }
 		public string Version { get; set; }
 		public string ClearedBy { get; set; }
-		public bool? IsAcademyOrderRequired { get; set; }
+		public bool? AcademyOrderRequired { get; set; }
 		public DateTime? PreviousHeadTeacherBoardDate { get; set; }
 		public string PreviousHeadTeacherBoardLink { get; set; }
 		public string TrustReferenceNumber { get; set; }

@@ -56,7 +56,7 @@
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
 				"academy-order-required",
 				"Is an academy order (AO) required?",
-				Model.Project.IsAcademyOrderRequired.ToYesNoString(),
+				Model.Project.AcademyOrderRequired.ToYesNoString(),
 				Links.SchoolAndTrustInformationSection.AcademyOrderRequired.Page,
 				Model.Project.Id,
 				"academy order required"))
@@ -106,7 +106,7 @@
 			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
 				"proposed-academy-opening-date",
 				"Proposed academy opening date",
-				Model.Project.ProposedAcademyOpeningDate.ToDateString(),
+				Model.Project.ProposedAcademyOpeningDate.ToDateString(true),
 				Links.SchoolAndTrustInformationSection.ProposedAcademyOpeningDate.Page,
 				Model.Project.Id,
 				"proposed academy opening date"))
