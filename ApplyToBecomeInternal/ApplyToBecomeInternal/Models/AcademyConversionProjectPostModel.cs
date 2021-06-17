@@ -9,6 +9,8 @@ namespace ApplyToBecomeInternal.Models
 		public string ProjectStatus { get; set; }
 		public DateTime? ApplicationReceivedDate { get; set; }
 		public DateTime? AssignedDate { get; set; }
+
+		[BindProperty(Name = "head-teacher-board-date")]
 		public DateTime? HeadTeacherBoardDate { get; set; }
 		public DateTime? OpeningDate { get; set; }
 		public DateTime? BaselineDate { get; set; }
@@ -35,11 +37,26 @@ namespace ApplyToBecomeInternal.Models
 		public bool? LocalAuthorityInformationTemplateSectionComplete { get; set; }
 
 		//school/trust info
+		[BindProperty(Name = "project-recommendation")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string RecommendationForProject { get; set; }
+
+		[BindProperty(Name = "author")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string Author { get; set; }
+
+		[BindProperty(Name = "cleared-by")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string ClearedBy { get; set; }
-		public bool? IsAoRequired { get; set; }
+
+		[BindProperty(Name = "academy-order-required")]
+		public string AcademyOrderRequired { get; set; }
+
+		[BindProperty(Name = "proposed-academy-opening-date")]
 		public DateTime? ProposedAcademyOpeningDate { get; set; }
+
+		[BindProperty(Name = "school-and-trust-information-complete")]
+		[ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
 		public bool? SchoolAndTrustInformationSectionComplete { get; set; }
 
 		//general info

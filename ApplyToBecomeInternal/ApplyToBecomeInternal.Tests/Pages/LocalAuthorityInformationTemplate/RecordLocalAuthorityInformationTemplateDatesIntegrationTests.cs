@@ -29,7 +29,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#la-info-template-status").TextContent.Should().Be("Not Started");
+			Document.QuerySelector("#la-info-template-status").TextContent.Trim().Should().Be("Not Started");
 			Document.QuerySelector("#la-info-template-status").ClassName.Should().Contain("grey");
 
 			await NavigateAsync("Record dates for the LA information template");

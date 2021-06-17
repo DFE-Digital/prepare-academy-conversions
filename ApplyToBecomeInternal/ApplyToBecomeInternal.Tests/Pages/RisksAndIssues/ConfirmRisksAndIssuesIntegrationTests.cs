@@ -17,7 +17,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.RisksAndIssues
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#risks-and-issues-status").TextContent.Should().Be("In Progress");
+			Document.QuerySelector("#risks-and-issues-status").TextContent.Trim().Should().Be("In Progress");
 			Document.QuerySelector("#risks-and-issues-status").ClassName.Should().Contain("blue");
 
 			await NavigateAsync("Risks and issues");
@@ -37,7 +37,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.RisksAndIssues
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#risks-and-issues-status").TextContent.Should().Be("Completed");
+			Document.QuerySelector("#risks-and-issues-status").TextContent.Trim().Should().Be("Completed");
 
 			await NavigateAsync("Risks and issues");
 
@@ -60,7 +60,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.RisksAndIssues
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#risks-and-issues-status").TextContent.Should().Be("Not Started");
+			Document.QuerySelector("#risks-and-issues-status").TextContent.Trim().Should().Be("Not Started");
 			Document.QuerySelector("#risks-and-issues-status").ClassName.Should().Contain("grey");
 
 			await NavigateAsync("Risks and issues");

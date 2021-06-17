@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#la-info-template-status").TextContent.Should().Be("In Progress");
+			Document.QuerySelector("#la-info-template-status").TextContent.Trim().Should().Be("In Progress");
 			Document.QuerySelector("#la-info-template-status").ClassName.Should().Contain("blue");
 
 			await NavigateAsync("Record dates for the LA information template");
@@ -39,7 +39,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#la-info-template-status").TextContent.Should().Be("Completed");
+			Document.QuerySelector("#la-info-template-status").TextContent.Trim().Should().Be("Completed");
 
 			await NavigateAsync("Record dates for the LA information template");
 

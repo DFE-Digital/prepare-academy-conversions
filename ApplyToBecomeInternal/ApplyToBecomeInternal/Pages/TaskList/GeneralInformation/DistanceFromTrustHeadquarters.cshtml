@@ -35,7 +35,8 @@
 	<textarea class="govuk-textarea" 
 			  id="distance-to-trust-headquarters-additional-information" 
 			  name="distance-to-trust-headquarters-additional-information" 
+			  asp-for="Project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation"
 			  rows="5" 
-			  aria-describedby="distance-to-trust-headquarters-additional-information-hint">@Model.Project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation</textarea>
+			  aria-describedby="distance-to-trust-headquarters-additional-information-hint"></textarea>
 </div>
 <input name="SuccessPage" type="hidden" value="@Links.GeneralInformationSection.ConfirmGeneralInformation.Page" />

@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#school-budget-information-status").TextContent.Should().Be("In Progress");
+			Document.QuerySelector("#school-budget-information-status").TextContent.Trim().Should().Be("In Progress");
 			Document.QuerySelector("#school-budget-information-status").ClassName.Should().Contain("blue");
 
 			await NavigateAsync("School budget information");
@@ -41,7 +41,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#school-budget-information-status").TextContent.Should().Be("Completed");
+			Document.QuerySelector("#school-budget-information-status").TextContent.Trim().Should().Be("Completed");
 
 			await NavigateAsync("School budget information");
 
@@ -68,7 +68,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#school-budget-information-status").TextContent.Should().Be("Not Started");
+			Document.QuerySelector("#school-budget-information-status").TextContent.Trim().Should().Be("Not Started");
 			Document.QuerySelector("#school-budget-information-status").ClassName.Should().Contain("grey");
 
 			await NavigateAsync("School budget information");

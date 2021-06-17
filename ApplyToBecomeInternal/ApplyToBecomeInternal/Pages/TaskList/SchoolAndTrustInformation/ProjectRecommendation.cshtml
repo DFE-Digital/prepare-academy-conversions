@@ -1,0 +1,36 @@
+﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/project-recommendation"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	ViewData["Title"] = "Recommendation";
+}
+
+@section BeforeMain
+{
+	<a back-link-for="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation"></a>
+}
+
+<h1 class="govuk-heading-l">What is the recommendation for this project?</h1>
+<div class="govuk-form-group">
+	<div class="govuk-radios">
+		<div class="govuk-radios__item">
+			<input class="govuk-radios__input" id="project-recommendation" name="project-recommendation" type="radio" value="Approve" asp-for="Project.RecommendationForProject">
+			<label class="govuk-label govuk-radios__label" for="project-recommendation">
+				Approve
+			</label>
+		</div>
+		<div class="govuk-radios__item">
+			<input class="govuk-radios__input" id="project-recommendation-2" name="project-recommendation" type="radio" value="Defer" asp-for="Project.RecommendationForProject">
+			<label class="govuk-label govuk-radios__label" for="project-recommendation-2">
+				Defer
+			</label>
+		</div>
+		<div class="govuk-radios__item">
+			<input class="govuk-radios__input" id="project-recommendation-3" name="project-recommendation" type="radio" value="Decline" asp-for="Project.RecommendationForProject">
+			<label class="govuk-label govuk-radios__label" for="project-recommendation-3">
+				Decline
+			</label>
+		</div>
+	</div>
+</div>
+<input name="SuccessPage" type="hidden" value="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page" />

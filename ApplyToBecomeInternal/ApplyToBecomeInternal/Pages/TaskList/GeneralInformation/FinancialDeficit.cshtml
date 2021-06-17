@@ -14,13 +14,13 @@
 <div class="govuk-form-group">
 	<div class="govuk-radios">
 		<div class="govuk-radios__item">
-			<input class="govuk-radios__input" id="financial-deficit" name="financial-deficit" type="radio" value="Yes" checked="@(Model.Project.FinancialDeficit == "Yes")">
+			<input class="govuk-radios__input" id="financial-deficit" name="financial-deficit" type="radio" value="Yes" asp-for="Project.FinancialDeficit">
 			<label class="govuk-label govuk-radios__label" for="financial-deficit">
 				Yes
 			</label>
 		</div>
 		<div class="govuk-radios__item">
-			<input class="govuk-radios__input" id="financial-deficit-2" name="financial-deficit" type="radio" value="No" checked="@(Model.Project.FinancialDeficit == "No")">
+			<input class="govuk-radios__input" id="financial-deficit-2" name="financial-deficit" type="radio" value="No" asp-for="Project.FinancialDeficit">
 			<label class="govuk-label govuk-radios__label" for="financial-deficit-2">
 				No
 			</label>

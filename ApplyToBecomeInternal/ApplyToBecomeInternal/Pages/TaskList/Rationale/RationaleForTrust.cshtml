@@ -16,8 +16,9 @@
 	<textarea class="govuk-textarea"
 			  id="trust-rationale"
 			  name="trust-rationale"
+			  asp-for="Project.RationaleForTrust"
 			  rows="15"
 			  data-module="moj-rich-text-editor"
-			  data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers">@Model.Project.RationaleForTrust</textarea>
+			  data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers"></textarea>
 </div>
 <input name="SuccessPage" type="hidden" value="@Links.RationaleSection.ConfirmProjectAndTrustRationale.Page" />

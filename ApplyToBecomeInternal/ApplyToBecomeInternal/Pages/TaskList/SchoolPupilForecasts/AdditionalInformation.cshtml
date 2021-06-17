@@ -43,7 +43,8 @@
 				<textarea class="govuk-textarea"
 						  id="additional-information"
 						  name="school-pupil-forecasts-additional-information"
-						  rows="5">@Model.Project.SchoolPupilForecastsAdditionalInformation</textarea>
+						  asp-for="Project.SchoolPupilForecastsAdditionalInformation"
+						  rows="5"></textarea>
 			</div>
 
 			<input name="SuccessPage" type="hidden" value="@Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.Page" />

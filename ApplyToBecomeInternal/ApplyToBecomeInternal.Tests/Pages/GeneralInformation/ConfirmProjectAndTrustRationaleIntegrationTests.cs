@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#general-information-status").TextContent.Should().Be("In Progress");
+			Document.QuerySelector("#general-information-status").TextContent.Trim().Should().Be("In Progress");
 			Document.QuerySelector("#general-information-status").ClassName.Should().Contain("blue");
 
 			await NavigateAsync("General information");
@@ -48,7 +48,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#general-information-status").TextContent.Should().Be("Completed");
+			Document.QuerySelector("#general-information-status").TextContent.Trim().Should().Be("Completed");
 
 			await NavigateAsync("General information");
 
@@ -85,7 +85,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#general-information-status").TextContent.Should().Be("Not Started");
+			Document.QuerySelector("#general-information-status").TextContent.Trim().Should().Be("Not Started");
 			Document.QuerySelector("#general-information-status").ClassName.Should().Contain("grey");
 
 			await NavigateAsync("General information");
