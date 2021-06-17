@@ -41,6 +41,17 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem RecordLocalAuthorityInformationTemplateDates = new LinkItem { Page = "/TaskList/LocalAuthorityInformationTemplate/RecordLocalAuthorityInformationTemplateDates" };
 		}
 
+		public static class SchoolAndTrustInformationSection
+		{
+			public static LinkItem ConfirmSchoolAndTrustInformation = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/ConfirmSchoolAndTrustInformation" };
+			public static LinkItem ProjectRecommendation = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/ConfirmSchoolAndTrustInformation" };
+			public static LinkItem Author = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/Author" };
+			public static LinkItem ClearedBy = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/ClearedBy" };
+			public static LinkItem AcademyOrderRequired = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/AcademyOrderRequired" };
+			public static LinkItem HeadTeacherBoardDate = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/HeadTeacherBoardDate" };
+			public static LinkItem ProposedAcademyOpeningDate = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/ProposedAcademyOpeningDate" };
+		}
+
 		public static class GeneralInformationSection
 		{
 			public static LinkItem ConfirmGeneralInformation = new LinkItem { Page = "/TaskList/GeneralInformation/ConfirmGeneralInformation" };

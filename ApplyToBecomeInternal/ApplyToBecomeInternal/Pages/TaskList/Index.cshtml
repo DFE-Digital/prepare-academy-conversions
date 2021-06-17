@@ -46,12 +46,12 @@
 		<ol class="app-task-list govuk-!-margin-bottom-8" aria-label="list of tasks">
 			<li class="app-task-list__item">
 				<span class="app-task-list__task-name">
-					<a class="govuk-link" href="#" aria-describedby="project-overview">
+					<a class="govuk-link" asp-page="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="project-overview">
 						School and trust information and project dates
 					</a>
 				</span>
-				<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="project-overview">
-					Not Started
+				<strong class="govuk-tag @Model.Project.SchoolAndTrustInformationTaskListStatus.CssClass app-task-list__tag" id="school-and-trust-information-status">
+					@Model.Project.SchoolAndTrustInformationTaskListStatus.Status
 				</strong>
 			</li>
 			<li class="app-task-list__item">
@@ -60,7 +60,9 @@
 						General information
 					</a>
 				</span>
-				<strong class="govuk-tag @Model.Project.GeneralInformationTaskListStatus.CssClass app-task-list__tag" id="general-information-status">@Model.Project.GeneralInformationTaskListStatus.Status</strong>
+				<strong class="govuk-tag @Model.Project.GeneralInformationTaskListStatus.CssClass app-task-list__tag" id="general-information-status">
+					@Model.Project.GeneralInformationTaskListStatus.Status
+				</strong>
 			</li>
 			<li class="app-task-list__item">
 				<span class="app-task-list__task-name">
@@ -76,7 +78,9 @@
 						Rationale
 					</a>
 				</span>
-				<strong class="govuk-tag @Model.Project.RationaleTaskListStatus.CssClass app-task-list__tag" id="rationale-status">@Model.Project.RationaleTaskListStatus.Status</strong>
+				<strong class="govuk-tag @Model.Project.RationaleTaskListStatus.CssClass app-task-list__tag" id="rationale-status">
+					@Model.Project.RationaleTaskListStatus.Status
+				</strong>
 			</li>
 			<li class="app-task-list__item">
 				<span class="app-task-list__task-name">
@@ -84,7 +88,9 @@
 						Risks and issues
 					</a>
 				</span>
-				<strong class="govuk-tag @Model.Project.RisksAndIssuesTaskListStatus.CssClass app-task-list__tag" id="risks-and-issues-status">@Model.Project.RisksAndIssuesTaskListStatus.Status</strong>
+				<strong class="govuk-tag @Model.Project.RisksAndIssuesTaskListStatus.CssClass app-task-list__tag" id="risks-and-issues-status">
+					@Model.Project.RisksAndIssuesTaskListStatus.Status
+				</strong>
 			</li>
 			<li class="app-task-list__item">
 				<span class="app-task-list__task-name">
@@ -92,7 +98,9 @@
 						School budget information
 					</a>
 				</span>
-				<strong class="govuk-tag @Model.Project.SchoolBudgetInformationTaskListStatus.CssClass app-task-list__tag" id="school-budget-information-status">@Model.Project.SchoolBudgetInformationTaskListStatus.Status</strong>
+				<strong class="govuk-tag @Model.Project.SchoolBudgetInformationTaskListStatus.CssClass app-task-list__tag" id="school-budget-information-status">
+					@Model.Project.SchoolBudgetInformationTaskListStatus.Status
+				</strong>
 			</li>
 			<li class="app-task-list__item">
 				<span class="app-task-list__task-name">

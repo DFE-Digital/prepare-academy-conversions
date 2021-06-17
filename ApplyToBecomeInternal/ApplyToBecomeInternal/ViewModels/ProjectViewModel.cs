@@ -32,6 +32,22 @@ namespace ApplyToBecomeInternal.ViewModels
 			LocalAuthorityInformationTemplateSectionComplete = project.LocalAuthorityInformationTemplateSectionComplete ?? false;
 			LocalAuthorityInformationTemplateTaskListStatus = TaskListItemViewModel.GetLocalAuthorityInformationTemplateTaskListStatus(this);
 
+			RecommendationForProject = project.RecommendationForProject;
+			Author = project.Author;
+			Version = project.Version;
+			ClearedBy = project.ClearedBy;
+			IsAcademyOrderRequired = project.IsAcademyOrderRequired;
+			PreviousHeadTeacherBoardDate = project.PreviousHeadTeacherBoardDate;
+			PreviousHeadTeacherBoardLink = project.PreviousHeadTeacherBoardLink;
+			TrustReferenceNumber = project.TrustReferenceNumber;
+			NameOfTrust = project.NameOfTrust;
+			SponsorReferenceNumber = project.SponsorReferenceNumber;
+			SponsorName = project.SponsorName;
+			AcademyTypeAndRoute = project.AcademyTypeAndRoute;
+			ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate;
+			SchoolAndTrustInformationSectionComplete = project.SchoolAndTrustInformationSectionComplete ?? false;
+			SchoolAndTrustInformationTaskListStatus = TaskListItemViewModel.GetSchoolAndTrustInformationTaskListStatus(this);
+
 			SchoolPhase = project.SchoolPhase;
 			AgeRange = project.AgeRange;
 			SchoolType = project.SchoolType;
@@ -89,6 +105,7 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string ApplicationReceivedDate { get; }
 		public string AssignedDate { get; }
 		public string Phase { get; }
+		public DateTime? HeadTeacherBoardDate { get; set; }
 		public IEnumerable<DocumentDetails> ProjectDocuments { get; set; }
 
 		public DateTime? LocalAuthorityInformationTemplateSentDate { get; set; }
@@ -97,6 +114,23 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string LocalAuthorityInformationTemplateLink { get; set; }
 		public bool LocalAuthorityInformationTemplateSectionComplete { get; set; }
 		public TaskListItemViewModel LocalAuthorityInformationTemplateTaskListStatus { get; set; }
+
+		//school/trust info
+		public string RecommendationForProject { get; set; }
+		public string Author { get; set; }
+		public string Version { get; set; }
+		public string ClearedBy { get; set; }
+		public bool? IsAcademyOrderRequired { get; set; }
+		public DateTime? PreviousHeadTeacherBoardDate { get; set; }
+		public string PreviousHeadTeacherBoardLink { get; set; }
+		public string TrustReferenceNumber { get; set; }
+		public string NameOfTrust { get; set; }
+		public string SponsorReferenceNumber { get; set; }
+		public string SponsorName { get; set; }
+		public string AcademyTypeAndRoute { get; set; }
+		public DateTime? ProposedAcademyOpeningDate { get; set; }
+		public bool SchoolAndTrustInformationSectionComplete { get; set; }
+		public TaskListItemViewModel SchoolAndTrustInformationTaskListStatus { get; set; }
 
 		//general info
 		public string SchoolPhase { get; set; }

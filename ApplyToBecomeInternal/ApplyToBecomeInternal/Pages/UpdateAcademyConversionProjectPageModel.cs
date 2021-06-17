@@ -50,7 +50,7 @@ namespace ApplyToBecomeInternal.Pages
 				RecommendationForProject = AcademyConversionProject.RecommendationForProject,
 				Author = AcademyConversionProject.Author,
 				ClearedBy = AcademyConversionProject.ClearedBy,
-				IsAoRequired = AcademyConversionProject.IsAoRequired,
+				IsAcademyOrderRequired = AcademyConversionProject.IsAcademyOrderRequired,
 				ProposedAcademyOpeningDate = AcademyConversionProject.ProposedAcademyOpeningDate,
 				SchoolAndTrustInformationSectionComplete = AcademyConversionProject.SchoolAndTrustInformationSectionComplete,
 				PublishedAdmissionNumber = AcademyConversionProject.PublishedAdmissionNumber,

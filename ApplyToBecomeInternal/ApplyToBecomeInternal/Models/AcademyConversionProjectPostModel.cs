@@ -35,11 +35,26 @@ namespace ApplyToBecomeInternal.Models
 		public bool? LocalAuthorityInformationTemplateSectionComplete { get; set; }
 
 		//school/trust info
+		[BindProperty(Name = "project-recommendation")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string RecommendationForProject { get; set; }
+
+		[BindProperty(Name = "author")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string Author { get; set; }
+
+		[BindProperty(Name = "cleared-by")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string ClearedBy { get; set; }
-		public bool? IsAoRequired { get; set; }
+
+		[BindProperty(Name = "academy-order-required")]
+		public bool? IsAcademyOrderRequired { get; set; }
+
+		[BindProperty(Name = "proposed-academy-opening-date")]
 		public DateTime? ProposedAcademyOpeningDate { get; set; }
+
+		[BindProperty(Name = "school-and-trust-information-complete")]
+		[ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
 		public bool? SchoolAndTrustInformationSectionComplete { get; set; }
 
 		//general info
