@@ -1,7 +1,7 @@
 ﻿@model ApplyToBecomeInternal.ViewModels.DateInputViewModel
 @{
 	var (day, month, year) = Model.Value.HasValue
-		? (Model.Value.Value.Day.ToString(), Model.Value.Value.Day.ToString(), Model.Value.Value.Day.ToString())
+		? (Model.Value.Value.Day.ToString(), Model.Value.Value.Month.ToString(), Model.Value.Value.Year.ToString())
 		: ("", "", "");
 }
 
