@@ -10,7 +10,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 {
 	public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : BaseIntegrationTests
 	{
-		public RecordLocalAuthorityInformationTemplateDatesIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) 
+		public RecordLocalAuthorityInformationTemplateDatesIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{
 			_fixture.Customizations.Add(new RandomDateBuilder(DateTime.Now.AddMonths(-24), DateTime.Now.AddMonths(6)));
 		}
@@ -62,7 +62,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 				.With(r => r.LocalAuthorityInformationTemplateReturnedDate)
 				.With(r => r.LocalAuthorityInformationTemplateComments)
 				.With(r => r.LocalAuthorityInformationTemplateLink));
-				
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
 			await NavigateAsync("Change", 0);
@@ -81,6 +80,29 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
+		}
+
+		[Fact]
+		public async Task Should_display_prepopulated_la_template_information()
+		{
+			var project = AddGetProject(project =>
+			{
+				project.LocalAuthorityInformationTemplateSentDate = DateTime.Now;
+				project.LocalAuthorityInformationTemplateReturnedDate = DateTime.Now.AddDays(10);
+				project.LocalAuthorityInformationTemplateComments = "template comments";
+				project.LocalAuthorityInformationTemplateLink = "https://www.google.com";
+			});
+
+			await OpenUrlAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+
+			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-day").Value.Should().Be(project.LocalAuthorityInformationTemplateSentDate.Value.Day.ToString());
+			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-month").Value.Should().Be(project.LocalAuthorityInformationTemplateSentDate.Value.Month.ToString());
+			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-year").Value.Should().Be(project.LocalAuthorityInformationTemplateSentDate.Value.Year.ToString());
+			Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-day").Value.Should().Be(project.LocalAuthorityInformationTemplateReturnedDate.Value.Day.ToString());
+			Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-month").Value.Should().Be(project.LocalAuthorityInformationTemplateReturnedDate.Value.Month.ToString());
+			Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-year").Value.Should().Be(project.LocalAuthorityInformationTemplateReturnedDate.Value.Year.ToString());
+			Document.QuerySelector("#la-info-template-comments").TextContent.Should().Be(project.LocalAuthorityInformationTemplateComments);
+			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sharepoint-link").Value.Should().Be(project.LocalAuthorityInformationTemplateLink);
 		}
 
 		[Fact]
