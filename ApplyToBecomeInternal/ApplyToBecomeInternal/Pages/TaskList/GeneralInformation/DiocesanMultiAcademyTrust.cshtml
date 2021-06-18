@@ -14,13 +14,13 @@
 <div class="govuk-form-group">
 	<div class="govuk-radios">
 		<div class="govuk-radios__item">
-			<input class="govuk-radios__input" id="diocesan-multi-academy-trust" name="diocesan-multi-academy-trust" type="radio" value="true" checked="@(Model.Project.IsThisADiocesanTrust == true)">
+			<input class="govuk-radios__input" id="diocesan-multi-academy-trust" name="diocesan-multi-academy-trust" type="radio" value="true" asp-for="Project.IsThisADiocesanTrust">
 			<label class="govuk-label govuk-radios__label" for="diocesan-multi-academy-trust">
 				Yes
 			</label>
 		</div>
 		<div class="govuk-radios__item">
-			<input class="govuk-radios__input" id="diocesan-multi-academy-trust-2" name="diocesan-multi-academy-trust" type="radio" value="false" checked="@(Model.Project.IsThisADiocesanTrust == false)">
+			<input class="govuk-radios__input" id="diocesan-multi-academy-trust-2" name="diocesan-multi-academy-trust" type="radio" value="false" asp-for="Project.IsThisADiocesanTrust">
 			<label class="govuk-label govuk-radios__label" for="diocesan-multi-academy-trust-2">
 				No
 			</label>

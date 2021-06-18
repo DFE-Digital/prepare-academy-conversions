@@ -45,13 +45,21 @@
 				<label class="govuk-label govuk-fieldset__legend--s" for="la-info-template-comments">
 					Comments (optional)
 				</label>
-				<textarea class="govuk-textarea" id="la-info-template-comments" name="la-info-template-comments" rows="5">@Model.Project.LocalAuthorityInformationTemplateComments</textarea>
+				<textarea class="govuk-textarea" 
+						  id="la-info-template-comments" 
+						  name="la-info-template-comments" 
+						  asp-for="Project.LocalAuthorityInformationTemplateComments"
+						  rows="5"></textarea>
 			</div>
 			<div class="govuk-form-group">
 				<label class="govuk-label govuk-fieldset__legend--s" for="la-info-template-sharepoint-link">
 					Add a link to where you have stored the template in Sharepoint
 				</label>
-				<input class="govuk-input" id="la-info-template-sharepoint-link" name="la-info-template-sharepoint-link" type="text" value="@Model.Project.LocalAuthorityInformationTemplateLink">
+				<input class="govuk-input" 
+					   id="la-info-template-sharepoint-link" 
+					   name="la-info-template-sharepoint-link" 
+					   asp-for="Project.LocalAuthorityInformationTemplateLink"
+					   type="text">
 			</div>
 
 			<input name="SuccessPage" type="hidden" value="@Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates.Page" />

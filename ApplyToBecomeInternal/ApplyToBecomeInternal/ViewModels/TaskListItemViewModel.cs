@@ -49,6 +49,27 @@ namespace ApplyToBecomeInternal.ViewModels
 			}
 		}
 
+		public static TaskListItemViewModel GetSchoolAndTrustInformationTaskListStatus(ProjectViewModel project)
+		{
+			if (project.SchoolAndTrustInformationSectionComplete)
+			{
+				return Completed;
+			}
+			else if (string.IsNullOrWhiteSpace(project.RecommendationForProject)
+				&& string.IsNullOrWhiteSpace(project.Author)
+				&& string.IsNullOrWhiteSpace(project.ClearedBy)
+				&& string.IsNullOrWhiteSpace(project.AcademyOrderRequired)
+				&& !project.HeadTeacherBoardDate.HasValue
+				&& !project.PreviousHeadTeacherBoardDate.HasValue)
+			{
+				return NotStarted;
+			}
+			else
+			{
+				return InProgress;
+			}
+		}
+
 		public static TaskListItemViewModel GetGeneralInformationTaskListStatus(ProjectViewModel project)
 		{
 			if (project.GeneralInformationSectionComplete)

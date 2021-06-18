@@ -1,0 +1,129 @@
+@page "/task-list/{id:int}/confirm-school-trust-information-project-dates"
+@using ApplyToBecomeInternal.ViewModels
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	ViewData["Title"] = "Confirm school and trust information and project dates";
+}
+
+@section BeforeMain
+{
+	<a back-link-for="@Links.TaskList.Index"></a>
+}
+
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-full">
+		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+		<h1 class="govuk-heading-l">
+			Confirm school and trust information and project dates
+		</h1>
+		<div class="govuk-body">
+			<p>
+				This information is pre-populated from TRAMS and the
+				<a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+			</p>
+		</div>
+		<dl class="govuk-summary-list">
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"project-recommendation",
+				"Recommendation",
+				Model.Project.RecommendationForProject,
+				Links.SchoolAndTrustInformationSection.ProjectRecommendation.Page,
+				Model.Project.Id,
+				"recommendation"))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"author",
+				"Author",
+				Model.Project.Author,
+				Links.SchoolAndTrustInformationSection.Author.Page,
+				Model.Project.Id,
+				"author"))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"version",
+				"Version",
+				Model.Project.Version))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"cleared-by",
+				"Cleared by",
+				Model.Project.ClearedBy,
+				Links.SchoolAndTrustInformationSection.ClearedBy.Page,
+				Model.Project.Id,
+				"cleared by"))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"academy-order-required",
+				"Is an academy order (AO) required?",
+				Model.Project.AcademyOrderRequired,
+				Links.SchoolAndTrustInformationSection.AcademyOrderRequired.Page,
+				Model.Project.Id,
+				"academy order required"))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"head-teacher-board-date",
+				"Date of HTB",
+				Model.Project.HeadTeacherBoardDate.ToDateString(),
+				Links.SchoolAndTrustInformationSection.HeadTeacherBoardDate.Page,
+				Model.Project.Id,
+				"head teacher baord date"))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"previous-head-teacher-board",
+				"Previous HTB",
+				Model.Project.PreviousHeadTeacherBoardDate.ToDateString()))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"school-name",
+				"School name",
+				Model.Project.SchoolName))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"unique-reference-number",
+				"Unique reference number (URN)",
+				Model.Project.SchoolURN))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"local-authority",
+				"Local authority",
+				Model.Project.LocalAuthority))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"trust-reference-number",
+				"Trust reference number",
+				Model.Project.TrustReferenceNumber))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"name-of-trust",
+				"Name of trust",
+				Model.Project.NameOfTrust))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"sponsor-reference-number",
+				"Sponsor reference number",
+				Model.Project.SponsorReferenceNumber))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"sponsor-name",
+				"Sponsor name",
+				Model.Project.SponsorName))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"academy-type-and-route",
+				"Academy type and route",
+				Model.Project.AcademyTypeAndRoute))
+			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
+				"proposed-academy-opening-date",
+				"Proposed academy opening date",
+				Model.Project.ProposedAcademyOpeningDate.ToDateString(true),
+				Links.SchoolAndTrustInformationSection.ProposedAcademyOpeningDate.Page,
+				Model.Project.Id,
+				"proposed academy opening date"))
+		</dl>
+		<form method="post">
+			<div class="govuk-form-group">
+				@await Html.PartialAsync("_CheckboxInput", new CheckboxInputViewModel(
+					"school-and-trust-information-complete",
+					"school-and-trust-information-complete",
+					Model.Project.SchoolAndTrustInformationSectionComplete,
+					"Mark this section as complete, you can still make changes later"))
+			</div>
+
+			<input name="SuccessPage" type="hidden" value="@Links.TaskList.Index.Page" />
+			<button class="govuk-button" data-module="govuk-button">
+				Confirm and continue
+			</button>
+		</form>
+	</div>
+</div>

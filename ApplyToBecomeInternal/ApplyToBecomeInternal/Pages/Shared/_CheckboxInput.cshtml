@@ -2,7 +2,7 @@
 <div class="govuk-checkboxes">
 	<div class="govuk-checkboxes__item">
 		<input name="@Model.Name-hidden" type="hidden" value="false" />
-		<input class="govuk-checkboxes__input" id="@Model.Id" name="@Model.Name" type="checkbox" value="true" checked="@Model.Value">
+		<input class="govuk-checkboxes__input" id="@Model.Id" name="@Model.Name" type="checkbox" value="true" asp-for="Value">
 		<label class="govuk-label govuk-checkboxes__label" for="@Model.Id">
 			@Model.Label
 		</label>

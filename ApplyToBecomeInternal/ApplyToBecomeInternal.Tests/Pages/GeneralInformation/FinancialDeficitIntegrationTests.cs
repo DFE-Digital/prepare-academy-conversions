@@ -13,21 +13,22 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		[Fact]
 		public async Task Should_navigate_to_and_update_financial_deficit()
 		{
-			var project = AddGetProject(p => p.FinancialDeficit = "No");
-			var request = AddPatchProject(project, r => r.FinancialDeficit, "Yes");
+			var (selected, toSelect) = RandomRadioButtons("financial-deficit", "Yes", "No");
+			var project = AddGetProject(p => p.FinancialDeficit = selected.Value);
+			var request = AddPatchProject(project, r => r.FinancialDeficit, toSelect.Value);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");
 			await NavigateAsync("Change", 2);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/financial-deficit");
-			Document.QuerySelector<IHtmlInputElement>("#financial-deficit").IsChecked.Should().BeFalse();
-			Document.QuerySelector<IHtmlInputElement>("#financial-deficit-2").IsChecked.Should().BeTrue();
+			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked.Should().BeFalse();
+			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked.Should().BeTrue();
 
-			Document.QuerySelector<IHtmlInputElement>("#financial-deficit-2").IsChecked = false;
-			Document.QuerySelector<IHtmlInputElement>("#financial-deficit").IsChecked = true;
+			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked = false;
+			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked = true;
 
-			Document.QuerySelector<IHtmlInputElement>("#financial-deficit").IsChecked.Should().BeTrue();
-			Document.QuerySelector<IHtmlInputElement>("#financial-deficit-2").IsChecked.Should().BeFalse();
+			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked.Should().BeTrue();
+			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked.Should().BeFalse();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 

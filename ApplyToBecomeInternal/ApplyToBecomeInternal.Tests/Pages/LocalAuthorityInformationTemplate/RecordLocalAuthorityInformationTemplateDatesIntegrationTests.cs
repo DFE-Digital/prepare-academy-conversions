@@ -1,4 +1,4 @@
-﻿using AngleSharp.Dom;
+using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using ApplyToBecomeInternal.Tests.Customisations;
 using FluentAssertions;
@@ -29,7 +29,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#la-info-template-status").TextContent.Should().Be("Not Started");
+			Document.QuerySelector("#la-info-template-status").TextContent.Trim().Should().Be("Not Started");
 			Document.QuerySelector("#la-info-template-status").ClassName.Should().Contain("grey");
 
 			await NavigateAsync("Record dates for the LA information template");
@@ -62,6 +62,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 				.With(r => r.LocalAuthorityInformationTemplateReturnedDate)
 				.With(r => r.LocalAuthorityInformationTemplateComments)
 				.With(r => r.LocalAuthorityInformationTemplateLink));
+
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
 			await NavigateAsync("Change", 0);
