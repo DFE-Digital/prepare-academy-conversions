@@ -6,9 +6,9 @@
 }
 @section BeforeMain
 {
-	@if (ViewData["Referer"].ToString()?.Contains("local-authority-information") == true)
+	@if (ViewData["Referer"]?.ToString()?.Contains("local-authority-information") == true)
     {
-	    <a back-link-for="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates"></a>
+		<a back-link-for="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates"></a>
     }
 	else
     {
