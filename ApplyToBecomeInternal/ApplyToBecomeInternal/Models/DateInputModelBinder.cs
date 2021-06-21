@@ -35,7 +35,15 @@ namespace ApplyToBecomeInternal.Models
 			{
 				if (modelType == typeof(DateTime?))
 				{
-					bindingContext.Result = ModelBindingResult.Success(null);
+					if (IsEmptyDate())
+					{
+						var date = default(DateTime);
+						bindingContext.Result = ModelBindingResult.Success(date);
+					}
+					else
+					{
+						bindingContext.Result = ModelBindingResult.Success(null);
+					}
 				}
 				else
 				{
@@ -58,13 +66,6 @@ namespace ApplyToBecomeInternal.Models
 			if (dayValid && monthValid && yearValid)
 			{
 				var date = new DateTime(year, month, day);
-				bindingContext.Result = ModelBindingResult.Success(date);
-			}
-			else if (dayValueProviderResult.FirstValue == string.Empty
-			         && monthValueProviderResult.FirstValue == string.Empty
-			         && yearValueProviderResult.FirstValue == string.Empty)
-			{
-				var date = default(DateTime);
 				bindingContext.Result = ModelBindingResult.Success(date);
 			}
 			else
@@ -208,6 +209,13 @@ namespace ApplyToBecomeInternal.Models
 					|| dayValueProviderResult == ValueProviderResult.None
 					&& monthValueProviderResult == ValueProviderResult.None
 					&& yearValueProviderResult == ValueProviderResult.None;
+			}
+
+			bool IsEmptyDate()
+			{
+				return dayValueProviderResult.FirstValue == string.Empty
+				       && monthValueProviderResult.FirstValue == string.Empty
+				       && yearValueProviderResult.FirstValue == string.Empty;
 			}
 		}
 	}
