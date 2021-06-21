@@ -128,5 +128,31 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
+
+		[Fact]
+		public async Task Should_set_dates_to_default_date_when_cleared()
+		{
+			var project = AddGetProject();
+
+			AddPatchProjectMany(project, composer =>
+				composer
+				.With(r => r.LocalAuthorityInformationTemplateSentDate, default(DateTime))
+				.With(r => r.LocalAuthorityInformationTemplateReturnedDate, default(DateTime))
+				.With(r => r.LocalAuthorityInformationTemplateComments, project.LocalAuthorityInformationTemplateComments)
+				.With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink));
+
+			await OpenUrlAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+
+			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-day").Value = string.Empty;
+			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-month").Value = string.Empty;
+			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-year").Value = string.Empty;
+			Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-day").Value = string.Empty;
+			Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-month").Value = string.Empty;
+			Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-year").Value = string.Empty;
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
+		}
 	}
 }
