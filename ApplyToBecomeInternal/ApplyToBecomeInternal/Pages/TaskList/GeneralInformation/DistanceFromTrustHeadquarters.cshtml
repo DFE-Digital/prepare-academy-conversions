@@ -26,17 +26,8 @@
 		<div class="govuk-input__suffix" aria-hidden="true">miles</div>
 	</div>
 </div>
-<div class="govuk-form-group">
-	<label class="govuk-label govuk-label--m" for="distance-to-trust-headquarters-additional-information">
-		Additional information (optional)
-	</label>
-	<div id="distance-to-trust-headquarters-additional-information-hint" class="govuk-hint">
-		This information will populate into your HTB template under the distance to the trust headquarters section.
-	</div>
-	<textarea class="govuk-textarea" 
-			  id="distance-to-trust-headquarters-additional-information" 
-			  name="distance-to-trust-headquarters-additional-information" 
-			  asp-for="Project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation"
-			  rows="5" 
-			  aria-describedby="distance-to-trust-headquarters-additional-information-hint"></textarea>
-</div>
+<govuk-textarea-input name="distance-to-trust-headquarters-additional-information" 
+					  asp-for="Project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation" 
+					  rows="5" 
+					  label="Additional information (optional)" 
+					  hint="This information will populate into your HTB template under the distance to the trust headquarters section." />

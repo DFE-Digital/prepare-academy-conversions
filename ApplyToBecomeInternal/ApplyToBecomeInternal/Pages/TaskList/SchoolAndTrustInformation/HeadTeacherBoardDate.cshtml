@@ -13,17 +13,8 @@
 
 @{
 	var firstDate = DateTime.Today.FirstOfMonth(1);
-}
-
-@functions{
-	private string Id(int i)
-	{
-		if (i == 1)
-		{
-			return "head-teacher-board-date";
-		}
-		return $"head-teacher-board-date-{i}";
-	}
+	var values = Enumerable.Range(0, 12).Select(i => firstDate.FirstOfMonth(i).ToString()).ToArray();
+	var labels = Enumerable.Range(0, 12).Select(i => firstDate.FirstOfMonth(i).ToDateString(true)).ToArray();
 }
 
 <h1 class="govuk-heading-l">Choose the HTB date for this project</h1>
@@ -35,22 +26,6 @@
 				Region: North
 			</h2>
 		</legend>
-		<div class="govuk-radios">
-			@foreach (var i in Enumerable.Range(0, 12))
-			{
-				var nextDate = firstDate.FirstOfMonth(i);
-				<div class="govuk-radios__item">
-					<input class="govuk-radios__input"
-						   id="@Id(i + 1)"
-						   name="head-teacher-board-date"
-						   type="radio"
-						   asp-for="Project.HeadTeacherBoardDate"
-						   value="@nextDate">
-					<label class="govuk-label govuk-radios__label" for="head-teacher-board-date">
-						@nextDate.ToDateString(true)
-					</label>
-				</div>
-			}
-		</div>
+		<govuk-radios-input name="head-teacher-board-date" asp-for="Project.HeadTeacherBoardDate" values="@values" labels="@labels" />
 	</fieldset>
 </div>

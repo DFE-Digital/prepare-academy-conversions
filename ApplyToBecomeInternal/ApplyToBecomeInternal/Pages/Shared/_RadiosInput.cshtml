@@ -14,11 +14,14 @@
 }
 <div class="govuk-form-group @(showError ? "govuk-form-group--error" : "")">
 	<fieldset class="govuk-fieldset">
-		<legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-			<h1 class="govuk-fieldset__heading">
-				@Model.
-			</h1>
-		</legend>
+		@if (!string.IsNullOrWhiteSpace(Model.Label))
+		{
+			<legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+				<h1 class="govuk-fieldset__heading">
+					@Model.Label
+				</h1>
+			</legend>
+		}
 		@if (showError)
 		{
 			<span id="@Model.Id-error" class="govuk-error-message">
@@ -29,9 +32,9 @@
 			@for (var i = 0; i < Model.Values.Length; i++)
 			{
 				<div class="govuk-radios__item">
-					<input class="govuk-radios__input" id="@Id(Model.Id, i)" name="@Model.Name" type="radio" value="@Model.Values[i]" checked="@(Model.Value == Model.Values[i])">
+					<input class="govuk-radios__input" id="@Id(Model.Id, i)" name="@Model.Name" type="radio" value="@Model.Values[i]" checked="@(Model.Values[i].Equals(Model.Value, StringComparison.OrdinalIgnoreCase))">
 					<label class="govuk-label govuk-radios__label" for="@Id(Model.Id, i)">
-						@Model.Values[i]
+						@Model.Labels[i]
 					</label>
 				</div>
 			}

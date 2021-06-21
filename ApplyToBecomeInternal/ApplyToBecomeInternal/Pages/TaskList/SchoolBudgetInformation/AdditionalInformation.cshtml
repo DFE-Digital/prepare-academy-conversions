@@ -45,15 +45,8 @@
 			<h3 class="govuk-heading-m">Additional information</h3>
 			<p class="govuk-body">This information will populate into your HTB template under the school budget information section.</p>
 
-			<div class="govuk-form-group">
-				<textarea class="govuk-textarea"
-						  id="additional-information"
-						  name="school-budget-information-additional-information"
-						  asp-for="Project.SchoolBudgetInformationAdditionalInformation"
-						  rows="5"></textarea>
-			</div>
+			<govuk-textarea-input name="school-budget-information-additional-information" asp-for="Project.SchoolBudgetInformationAdditionalInformation" rows="5" />
 
-			
 			<button class="govuk-button" data-module="govuk-button">
 				Save and continue
 			</button>

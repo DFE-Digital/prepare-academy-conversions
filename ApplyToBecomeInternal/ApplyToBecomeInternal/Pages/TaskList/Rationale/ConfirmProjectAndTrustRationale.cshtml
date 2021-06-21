@@ -1,5 +1,4 @@
 @page "/task-list/{id:int}/confirm-project-trust-rationale"
-@using ApplyToBecomeInternal.ViewModels
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
 	Model.SuccessPage = Links.TaskList.Index.Page;
@@ -33,15 +32,8 @@
 			<govuk-summary-list-row name="rationale-for-trust" label="Rationale for the trust or sponsor" value="@Model.Project.RationaleForTrust" alt-layout="true" asp-page="@Links.RationaleSection.RationaleForTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="sponsor rationale" />
 		</dl>
 		<form method="post">
-			<div class="govuk-form-group">
-				@await Html.PartialAsync("_CheckboxInput", new CheckboxInputViewModel(
-					"rationale-complete",
-					"rationale-complete",
-					Model.Project.RationaleSectionComplete,
-					"Mark this section as complete, you can still make changes later"))
-			</div>
+			<govuk-checkbox-input name="rationale-complete" asp-for="Project.RationaleSectionComplete" label="Mark this section as complete, you can still make changes later" />
 
-			
 			<button class="govuk-button" data-module="govuk-button">
 				Confirm and continue
 			</button>

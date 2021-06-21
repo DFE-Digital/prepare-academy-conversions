@@ -12,9 +12,4 @@
 }
 
 <h1 class="govuk-heading-l">Update the school's published admission number (PAN) if it's not correct</h1>
-<div class="govuk-form-group">
-	<div id="published-admission-number-hint" class="govuk-hint">
-		For example, 30
-	</div>
-	<input class="govuk-input govuk-input--width-5" id="published-admission-number" name="published-admission-number" type="text" asp-for="Project.PublishedAdmissionNumber" aria-describedby="published-admission-number-hint">
-</div>
+<govuk-text-input name="published-admission-number" asp-for="Project.PublishedAdmissionNumber" width="5" hint="For example, 30" />

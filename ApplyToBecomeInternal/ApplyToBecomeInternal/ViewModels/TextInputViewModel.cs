@@ -8,5 +8,6 @@
 		public string Label { get; set; }
 		public string ErrorMessage { get; set; }
 		public int Width { get; set; }
+		public string Hint { get; set; }
 	}
 }

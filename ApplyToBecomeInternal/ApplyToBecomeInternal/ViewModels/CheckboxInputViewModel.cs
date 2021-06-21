@@ -2,17 +2,10 @@
 {
 	public class CheckboxInputViewModel
 	{
-		public CheckboxInputViewModel(string id, string name, bool value, string label)
-		{
-			Id = id;
-			Name = name;
-			Value = value;
-			Label = label;
-		}
-
-		public string Id { get; }
-		public string Name { get; }
-		public bool Value { get; }
-		public string Label { get; }
+		public string Id { get; set; }
+		public string Name { get; set; }
+		public string Value { get; set; }
+		public string Label { get; set; }
+		public string ErrorMessage { get; set; }
 	}
 }

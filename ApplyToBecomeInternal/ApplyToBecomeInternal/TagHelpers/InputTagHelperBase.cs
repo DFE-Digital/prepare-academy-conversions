@@ -22,6 +22,9 @@ namespace ApplyToBecomeInternal.TagHelpers
 		[HtmlAttributeName("asp-for")]
 		public ModelExpression For { get; set; }
 
+		[HtmlAttributeName("hint")]
+		public string Hint { get; set; }
+
 		[ViewContext]
 		public ViewContext ViewContext { get; set; }
 

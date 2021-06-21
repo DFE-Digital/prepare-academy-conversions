@@ -13,12 +13,4 @@
 
 <h1 class="govuk-heading-l">Write the rationale for the project</h1>
 <p class="govuk-hint">Edit the school's rationale to add your own analysis</p>
-<div class="govuk-form-group">
-	<textarea class="govuk-textarea"
-			  id="project-rationale"
-			  name="project-rationale"
-			  asp-for="Project.RationaleForProject"
-			  rows="15"
-			  data-module="moj-rich-text-editor"
-			  data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers"></textarea>
-</div>
+<govuk-textarea-input name="project-rationale" asp-for="Project.RationaleForProject" rows="15" />

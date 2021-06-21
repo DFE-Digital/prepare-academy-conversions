@@ -4,6 +4,8 @@
 	Layout = "_QuestionLayout";
 	Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
 	ViewData["Title"] = "Diocesan multi-academy trust";
+	var values = new[] { "true", "false" };
+	var labels = new[] { "Yes", "No" };
 }
 
 @section BeforeMain
@@ -12,19 +14,4 @@
 }
 
 <h1 class="govuk-heading-l">Is this a diocesan multi-academy trust (MAT)?</h1>
-<div class="govuk-form-group">
-	<div class="govuk-radios">
-		<div class="govuk-radios__item">
-			<input class="govuk-radios__input" id="diocesan-multi-academy-trust" name="diocesan-multi-academy-trust" type="radio" value="true" asp-for="Project.IsThisADiocesanTrust">
-			<label class="govuk-label govuk-radios__label" for="diocesan-multi-academy-trust">
-				Yes
-			</label>
-		</div>
-		<div class="govuk-radios__item">
-			<input class="govuk-radios__input" id="diocesan-multi-academy-trust-2" name="diocesan-multi-academy-trust" type="radio" value="false" asp-for="Project.IsThisADiocesanTrust">
-			<label class="govuk-label govuk-radios__label" for="diocesan-multi-academy-trust-2">
-				No
-			</label>
-		</div>
-	</div>
-</div>
+<govuk-radios-input name="diocesan-multi-academy-trust" asp-for="Project.IsThisADiocesanTrust" values="@values" labels="@labels" />

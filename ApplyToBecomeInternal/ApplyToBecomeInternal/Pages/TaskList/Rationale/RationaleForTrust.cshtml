@@ -13,12 +13,5 @@
 
 <h1 class="govuk-heading-l">Write the rationale for the trust or sponsor</h1>
 <p class="govuk-hint">Explain why the trust is a good match for the school.</p>
-<div class="govuk-form-group">
-	<textarea class="govuk-textarea"
-			  id="trust-rationale"
-			  name="trust-rationale"
-			  asp-for="Project.RationaleForTrust"
-			  rows="15"
-			  data-module="moj-rich-text-editor"
-			  data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers"></textarea>
-</div>
+
+<govuk-textarea-input name="trust-rationale" asp-for="Project.RationaleForTrust" rows="15" />

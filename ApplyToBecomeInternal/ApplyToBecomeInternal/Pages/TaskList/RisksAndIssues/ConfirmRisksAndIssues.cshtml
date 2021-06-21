@@ -1,5 +1,4 @@
 ﻿@page "/task-list/{id:int}/confirm-risks-issues"
-@using ApplyToBecomeInternal.ViewModels
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
 	Model.SuccessPage = Links.TaskList.Index.Page;
@@ -27,15 +26,8 @@
 			<govuk-summary-list-row name="equalities-impact-assessment-considered" label="Has an Equalities Impact Assessment been considered?" asp-for="Project.EqualitiesImpactAssessmentConsidered" />
 		</dl>
 		<form method="post">
-			<div class="govuk-form-group">
-				@await Html.PartialAsync("_CheckboxInput", new CheckboxInputViewModel(
-					"risks-and-issues-complete",
-					"risks-and-issues-complete",
-					Model.Project.RisksAndIssuesSectionComplete,
-					"Mark this section as complete, you can still make changes later"))
-			</div>
+			<govuk-checkbox-input name="risks-and-issues-complete" asp-for="Project.RisksAndIssuesSectionComplete" label="Mark this section as complete, you can still make changes later" />
 
-			
 			<button class="govuk-button" data-module="govuk-button">
 				Confirm and continue
 			</button>

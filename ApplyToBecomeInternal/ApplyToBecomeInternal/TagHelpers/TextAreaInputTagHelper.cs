@@ -22,7 +22,8 @@ namespace ApplyToBecomeInternal.TagHelpers
 				Name = Name,
 				Label = Label,
 				Value = For.Model?.ToString(),
-				Rows = Rows
+				Rows = Rows,
+				Hint = Hint
 			};
 
 			if (ViewContext.ModelState.TryGetValue(Name, out var entry) && entry.Errors.Count > 0)
