@@ -5,7 +5,7 @@
 }
 @section BeforeMain
 {
-	<a back-link-for="@Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates"></a>
+	<a back-link-for="@Links.TaskList.Index"></a>
 }
 
 @if (Model.ShowError)
@@ -45,9 +45,9 @@
 				<label class="govuk-label govuk-fieldset__legend--s" for="la-info-template-comments">
 					Comments (optional)
 				</label>
-				<textarea class="govuk-textarea" 
-						  id="la-info-template-comments" 
-						  name="la-info-template-comments" 
+				<textarea class="govuk-textarea"
+						  id="la-info-template-comments"
+						  name="la-info-template-comments"
 						  asp-for="Project.LocalAuthorityInformationTemplateComments"
 						  rows="5"></textarea>
 			</div>
@@ -55,9 +55,9 @@
 				<label class="govuk-label govuk-fieldset__legend--s" for="la-info-template-sharepoint-link">
 					Add a link to where you have stored the template in Sharepoint
 				</label>
-				<input class="govuk-input" 
-					   id="la-info-template-sharepoint-link" 
-					   name="la-info-template-sharepoint-link" 
+				<input class="govuk-input"
+					   id="la-info-template-sharepoint-link"
+					   name="la-info-template-sharepoint-link"
 					   asp-for="Project.LocalAuthorityInformationTemplateLink"
 					   type="text">
 			</div>

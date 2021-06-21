@@ -63,7 +63,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 				.With(r => r.LocalAuthorityInformationTemplateComments)
 				.With(r => r.LocalAuthorityInformationTemplateLink));
 
-
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
 			await NavigateAsync("Change", 0);
 
@@ -102,7 +101,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 			Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-day").Value.Should().Be(project.LocalAuthorityInformationTemplateReturnedDate.Value.Day.ToString());
 			Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-month").Value.Should().Be(project.LocalAuthorityInformationTemplateReturnedDate.Value.Month.ToString());
 			Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-year").Value.Should().Be(project.LocalAuthorityInformationTemplateReturnedDate.Value.Year.ToString());
-			Document.QuerySelector("#la-info-template-comments").TextContent.Should().Be(project.LocalAuthorityInformationTemplateComments);
+			Document.QuerySelector<IHtmlTextAreaElement>("#la-info-template-comments").Value.Should().Be(project.LocalAuthorityInformationTemplateComments);
 			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sharepoint-link").Value.Should().Be(project.LocalAuthorityInformationTemplateLink);
 		}
 
