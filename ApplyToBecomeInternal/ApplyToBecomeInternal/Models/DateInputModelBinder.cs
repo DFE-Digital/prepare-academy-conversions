@@ -31,9 +31,7 @@ namespace ApplyToBecomeInternal.Models
 			var monthValueProviderResult = bindingContext.ValueProvider.GetValue(monthModelName);
 			var yearValueProviderResult = bindingContext.ValueProvider.GetValue(yearModelName);
 
-			if (dayValueProviderResult == ValueProviderResult.None
-				&& monthValueProviderResult == ValueProviderResult.None
-				&& yearValueProviderResult == ValueProviderResult.None)
+			if (IsOptionalOrFieldTypeMismatch())
 			{
 				if (modelType == typeof(DateTime?))
 				{
@@ -192,6 +190,17 @@ namespace ApplyToBecomeInternal.Models
 
 					return false;
 				}
+			}
+
+			bool IsOptionalOrFieldTypeMismatch()
+			{
+				return string.IsNullOrWhiteSpace(dayValueProviderResult.FirstValue)
+					&& string.IsNullOrWhiteSpace(monthValueProviderResult.FirstValue)
+					&& string.IsNullOrWhiteSpace(yearValueProviderResult.FirstValue)
+					&& !bindingContext.ModelMetadata.IsRequired
+					|| dayValueProviderResult == ValueProviderResult.None
+					&& monthValueProviderResult == ValueProviderResult.None
+					&& yearValueProviderResult == ValueProviderResult.None;
 			}
 		}
 	}
