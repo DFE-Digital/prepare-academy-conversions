@@ -14,7 +14,7 @@ namespace ApplyToBecomeInternal.Tests.Customisations
 
 			var i = new Random().Next();
 
-			return "12349".Substring(i % 5, 1);
+			return "1234".Substring(i % 4, 1);
 		}
 	}
 }

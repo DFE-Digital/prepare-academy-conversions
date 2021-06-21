@@ -69,6 +69,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			_fixture.Customizations.Add(new OfstedRatingSpecimenBuilder());
 			var establishmentMockData = _fixture.Create<EstablishmentMockData>();
 			_factory.AddGetWithJsonResponse($"/establishment/urn/{urn}", establishmentMockData);
+			establishmentMockData.misEstablishment.OfstedLastInspection = establishmentMockData.ofstedLastInspection;
 			return establishmentMockData.misEstablishment;
 		}
 

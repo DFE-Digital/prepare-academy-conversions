@@ -4,7 +4,7 @@ using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
+namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 {
 	public class AdditionalInformationIntegrationTests : BaseIntegrationTests
 	{
@@ -14,19 +14,19 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 		public async Task Should_navigate_to_and_update_additional_information()
 		{
 			var project = AddGetProject();
-			var request = AddPatchProject(project, r => r.SchoolBudgetInformationAdditionalInformation);
+			var request = AddPatchProject(project, r => r.SchoolPerformanceAdditionalInformation);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information");
-			await NavigateAsync("Change", 4);
+			await OpenUrlAsync($"/task-list/{project.Id}/school-performance-ofsted-information");
+			await NavigateAsync("Change", 0);
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information/additional-information");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-performance-ofsted-information/additional-information");
 			var textArea = Document.QuerySelector<IHtmlTextAreaElement>("#additional-information");
-			textArea.TextContent.Should().Be(project.SchoolBudgetInformationAdditionalInformation);
+			textArea.TextContent.Should().Be(project.SchoolPerformanceAdditionalInformation);
 
-			textArea.Value = request.SchoolBudgetInformationAdditionalInformation;
+			textArea.Value = request.SchoolPerformanceAdditionalInformation;
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-performance-ofsted-information");
 		}
 
 		[Fact]
@@ -35,7 +35,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information");
+			await OpenUrlAsync($"/task-list/{project.Id}/school-performance-ofsted-information/additional-information");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -47,10 +47,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information/additional-information");
+			await OpenUrlAsync($"/task-list/{project.Id}/school-performance-ofsted-information/additional-information");
 			await NavigateAsync("Back");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-performance-ofsted-information");
 		}
 	}
 }

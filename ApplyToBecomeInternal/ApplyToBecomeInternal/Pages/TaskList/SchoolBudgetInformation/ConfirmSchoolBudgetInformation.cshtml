@@ -45,7 +45,9 @@
 		<p class="govuk-body">This information will populate into your HTB template under the school budget information section.</p>
 	</div>
 	<div class="govuk-grid-column-full">
-		
+		<dl class="govuk-summary-list">
+			<govuk-summary-list-row id="additional-information" name="school-budget-information-additional-information" label="Additional information" value="@Model.Project.SchoolBudgetInformationAdditionalInformation" asp-page="@Links.SchoolBudgetInformationSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
+		</dl>
 		<form method="post">
 			<govuk-checkbox-input name="school-budget-information-complete" asp-for="Project.SchoolBudgetInformationSectionComplete" label="Mark this section as complete, you can still make changes later"/>
 			

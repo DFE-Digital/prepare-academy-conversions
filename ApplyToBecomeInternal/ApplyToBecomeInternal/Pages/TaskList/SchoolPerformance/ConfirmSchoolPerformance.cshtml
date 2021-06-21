@@ -30,7 +30,7 @@
 	</div>
 	<div class="govuk-grid-column-full">
 		<dl class="govuk-summary-list">
-			<govuk-summary-list-row name="school-performance-additional-information" label="Additional information" value="@Model.Project.SchoolPerformanceAdditionalInformation" asp-page="@Links.SchoolPerformance.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
+			<govuk-summary-list-row id="additional-information" name="school-performance-additional-information" label="Additional information" value="@Model.Project.SchoolPerformanceAdditionalInformation" asp-page="@Links.SchoolPerformance.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
 		</dl>
 		<a class="govuk-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</a>
 	</div>
