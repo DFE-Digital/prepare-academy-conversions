@@ -18,10 +18,12 @@ namespace ApplyToBecomeInternal.Models
 		//la summary page
 		[BindProperty(Name = "la-info-template-sent-date")]
 		[ModelBinder(BinderType = typeof(DateInputModelBinder))]
+		[Display(Name = "Date you sent the template")]
 		public DateTime? LocalAuthorityInformationTemplateSentDate { get; set; }
 
 		[BindProperty(Name = "la-info-template-returned-date")]
 		[ModelBinder(BinderType = typeof(DateInputModelBinder))]
+		[Display(Name = "Date you want the template returned")]
 		public DateTime? LocalAuthorityInformationTemplateReturnedDate { get; set; }
 
 		[BindProperty(Name = "la-info-template-comments")]

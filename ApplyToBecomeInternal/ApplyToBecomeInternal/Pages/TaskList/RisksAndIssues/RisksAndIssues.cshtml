@@ -2,6 +2,7 @@
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
 	Layout = "_QuestionLayout";
+	Model.SuccessPage = Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page;
 	ViewData["Title"] = "Risks and issues";
 }
 
@@ -12,14 +13,5 @@
 
 <h1 class="govuk-heading-l">Write about any risks or issues for this conversion</h1>
 
-<div class="govuk-form-group">
-	<textarea class="govuk-textarea"
-			  id="risks-and-issues"
-			  name="risks-and-issues"
-			  asp-for="Project.RisksAndIssues"
-			  rows="15"
-			  data-module="moj-rich-text-editor"
-			  data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers"></textarea>
-</div>
+<govuk-textarea-input name="risks-and-issues" asp-for="Project.RisksAndIssues" rows="15" />
 
-<input name="SuccessPage" type="hidden" value="@Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page" />

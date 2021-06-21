@@ -1,0 +1,32 @@
+﻿@model ApplyToBecomeInternal.ViewModels.TextInputViewModel
+@{
+	var showHint = !string.IsNullOrWhiteSpace(Model.Hint);
+	var showError = !string.IsNullOrWhiteSpace(Model.ErrorMessage);
+	var width = Model.Width > 0 ? $"govuk-input--width-{Model.Width}" : "";
+}
+<div class="govuk-form-group @(showError ? "govuk-form-group--error" : "")">
+	@if (!string.IsNullOrWhiteSpace(Model.Label))
+	{
+		<label class="govuk-label" for="@Model.Id">
+			@Model.Label
+		</label>
+	}
+	@if (showHint)
+	{
+		<div id="@Model.Id-hint" class="govuk-hint">
+			@Model.Hint
+		</div>
+	}
+	@if (showError)
+	{
+		<span id="@Model.Id-error" class="govuk-error-message">
+			<span class="govuk-visually-hidden">Error:</span> @Model.ErrorMessage
+		</span>
+	}
+	<input class="govuk-input @width @(showError ? "govuk-input--error" : "")"
+		   id="@Model.Id"
+		   name="@Model.Name"
+		   value="@Model.Value"
+		   type="text"
+		   aria-describedby="@(showHint ? $"{Model.Id}-hint": "")">
+</div>

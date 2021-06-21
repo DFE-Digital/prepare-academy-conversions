@@ -1,5 +1,4 @@
 ﻿@page "/task-list/{id:int}/confirm-school-pupil-forecasts"
-@using ApplyToBecomeInternal.ViewModels
 @model ApplyToBecomeInternal.Pages.BaseAcademyConversionProjectPageModel
 @{
 	ViewData["Title"] = "Confirm school pupil forecasts";
@@ -36,13 +35,7 @@
 	</div>
 	<div class="govuk-grid-column-full">
 		<dl class="govuk-summary-list">
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"additional-information",
-				"Additional information",
-				Model.Project.SchoolPupilForecastsAdditionalInformation,
-				Links.SchoolPupilForecastsSection.AdditionalInformation.Page,
-				Model.Project.Id,
-				"additional information"))
+			<govuk-summary-list-row name="additional-information" label="Additional information" value="@Model.Project.SchoolPupilForecastsAdditionalInformation" asp-page="@Links.SchoolPupilForecastsSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
 		</dl>
 		<a class="govuk-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</a>
 	</div>

@@ -1,22 +1,17 @@
-﻿using System;
-
-namespace ApplyToBecomeInternal.ViewModels
+﻿namespace ApplyToBecomeInternal.ViewModels
 {
 	public class DateInputViewModel
 	{
-		public DateInputViewModel(string id, string name, DateTime? value, string title, string hint)
-		{
-			Id = id;
-			Name = name;
-			Value = value;
-			Title = title;
-			Hint = hint;
-		}
-
-		public string Id { get; }
-		public string Name { get; }
-		public DateTime? Value { get; }
-		public string Title { get; }
-		public string Hint { get; }
+		public string Id { get; set; }
+		public string Name { get; set; }
+		public string Day { get; set; }
+		public string Month { get; set; }
+		public string Year { get; set; }
+		public string Label { get; set; }
+		public string Hint { get; set; }
+		public string ErrorMessage { get; set; }
+		public bool DayInvalid { get; set; }
+		public bool MonthInvalid { get; set; }
+		public bool YearInvalid { get; set; }
 	}
 }

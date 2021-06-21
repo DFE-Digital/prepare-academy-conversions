@@ -4,7 +4,7 @@ using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
+namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 {
 	public class AuthorIntegrationTests : BaseIntegrationTests
 	{

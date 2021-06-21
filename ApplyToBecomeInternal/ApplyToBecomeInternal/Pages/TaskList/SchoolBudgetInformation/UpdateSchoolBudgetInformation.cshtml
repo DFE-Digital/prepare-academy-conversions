@@ -1,6 +1,7 @@
 ﻿@page "/task-list/{id:int}/confirm-school-budget-information/update-school-budget-information"
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
+	Model.SuccessPage = Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page;
 	ViewData["Title"] = "Update school budget information";
 }
 
@@ -60,7 +61,7 @@
 				</div>
 			</div>
 
-			<input name="SuccessPage" type="hidden" value="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page" />
+			
 			<button class="govuk-button" data-module="govuk-button">
 				Save and continue
 			</button>
