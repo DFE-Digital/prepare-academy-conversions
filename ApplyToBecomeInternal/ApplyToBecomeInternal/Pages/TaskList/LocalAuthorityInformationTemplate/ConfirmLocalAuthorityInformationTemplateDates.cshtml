@@ -5,7 +5,14 @@
 }
 @section BeforeMain
 {
-	<a back-link-for="@Links.TaskList.Index"></a>
+	@if (ViewData["Referer"].ToString()?.Contains("local-authority-information") == true)
+    {
+	    <a back-link-for="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates"></a>
+    }
+	else
+    {
+	    <a back-link-for="@Links.TaskList.Index"></a>
+    }
 }
 
 @if (Model.ShowError)
