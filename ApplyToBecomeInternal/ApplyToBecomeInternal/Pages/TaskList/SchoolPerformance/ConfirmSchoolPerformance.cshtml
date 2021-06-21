@@ -1,0 +1,37 @@
+﻿@page "/task-list/{id:int}/school-performance-ofsted-information"
+@inject ApplyToBecome.Data.Services.SchoolPerformanceService schoolPerformanceService
+@model ApplyToBecomeInternal.Pages.BaseAcademyConversionProjectPageModel
+@{
+	ViewData["Title"] = "School performance ofsted information";
+	var schoolPerformance = await schoolPerformanceService.GetSchoolPerformanceByUrn(Model.Project.SchoolURN);
+}
+
+@section BeforeMain
+{
+	<a back-link-for="@Links.TaskList.Index"></a>
+}
+
+<div class="govuk-grid-row">
+	<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+	<h1 class="govuk-heading-l">School performance (Ofsted information)</h1>
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<p class="govuk-body">This information comes from TRAMS. The table will populate into your headteacher board (HTB) template.</p>
+			<p class="govuk-body">You can add <a href="#additional_info">additional information</a> if you need to, this will also go into your HTB template.</p>
+			<p class="govuk-body-s">TRAMS last updated on: 23 March 2021</p><br>
+		</div>
+	</div>
+	<div class="govuk-grid-column-full">
+		<partial name="_SchoolPerformanceSummaryList" model="@Model.Project.SchoolURN" />
+	</div>
+	<div class="govuk-grid-column-two-thirds">
+		<h3 class="govuk-heading-m">Additional information</h3>
+		<p class="govuk-body">This information will populate into your HTB template under the school pupil forecasts section.</p>
+	</div>
+	<div class="govuk-grid-column-full">
+		<dl class="govuk-summary-list">
+			<govuk-summary-list-row name="school-performance-additional-information" label="Additional information" value="@Model.Project.SchoolPerformanceAdditionalInformation" asp-page="@Links.SchoolPerformance.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
+		</dl>
+		<a class="govuk-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</a>
+	</div>
+</div>

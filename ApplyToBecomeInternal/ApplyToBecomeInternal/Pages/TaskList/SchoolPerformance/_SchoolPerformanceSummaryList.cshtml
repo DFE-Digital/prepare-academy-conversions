@@ -1,0 +1,15 @@
+@model string
+@inject ApplyToBecome.Data.Services.SchoolPerformanceService schoolPerformanceService
+@{ 
+	var schoolPerformance = await schoolPerformanceService.GetSchoolPerformanceByUrn(Model);
+}
+
+<dl class="govuk-summary-list">
+	<govuk-summary-list-row id="ofsted-inspection-date" label="Ofsted inspection date" value="@schoolPerformance.OfstedLastInspection?.ToString("d MMMM yyyy")" />
+	<govuk-summary-list-row id="overall-effectiveness" label="Overall effectiveness" value="@schoolPerformance.OverallEffectiveness.DisplayOfstedRating()" />
+	<govuk-summary-list-row id="effectiveness-of-leadership-and-management" label="Effectiveness of leadership and management" value="@schoolPerformance.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating()" />
+	<govuk-summary-list-row id="quality-of-teaching-learning-and-assessment" label="Quality of teaching, learning and assessment" value="@schoolPerformance.QualityOfEducation.DisplayOfstedRating()" />
+	<govuk-summary-list-row id="personal-development-behaviour-and-welfare" label="Personal development, behaviour and welfare" value="@schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating()" />
+	<govuk-summary-list-row id="outcome-for-pupils" label="Outcome for pupils" value="@schoolPerformance.PersonalDevelopment.DisplayOfstedRating()" />
+	<govuk-summary-list-row id="early-years-provision" label="Early years provision" value="@schoolPerformance.EarlyYearsProvision.DisplayOfstedRating()" />
+</dl>

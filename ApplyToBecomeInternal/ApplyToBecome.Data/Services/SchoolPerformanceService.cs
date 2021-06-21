@@ -29,7 +29,7 @@ namespace ApplyToBecome.Data.Services
 
 			var content = await response.Content.ReadFromJsonAsync<EstablishmentData>();
 			var schoolPerformance = content.misEstablishment;
-			schoolPerformance.OfstedLastInspection = content.ofstedLastInspection;
+			//schoolPerformance.OfstedLastInspection = content.ofstedLastInspection;
 
 			return schoolPerformance;
 		}
@@ -38,7 +38,7 @@ namespace ApplyToBecome.Data.Services
 		{
 			public SchoolPerformance misEstablishment { get; set; }
 
-			public DateTime ofstedLastInspection { get; set; }
+			//public DateTime ofstedLastInspection { get; set; }
 		}
 	}
 }

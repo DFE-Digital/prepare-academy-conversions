@@ -1,0 +1,50 @@
+﻿@page "/task-list/{id:int}/school-performance-ofsted-information/additional-information"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Model.SuccessPage = Links.SchoolPerformance.ConfirmSchoolPerformance.Page;
+	ViewData["Title"] = "School performance ofsted information additional information";
+}
+
+@section BeforeMain
+{
+	<a back-link-for="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation"></a>
+}
+
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+		<h1 class="govuk-heading-l">
+			Confirm school budget information
+		</h1>
+		<div class="govuk-body">
+			<p>
+				This information comes from the
+				<a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+				The table will populate into your headteacher board (HTB) template.
+			</p>
+			<p>
+				You can add <a href="#additional-information">additional information</a> if you need to, this will also go into your HTB template.
+			</p>
+		</div>
+	</div>
+	<div class="govuk-grid-column-full">
+		<partial name="_SchoolPerformanceSummaryList" model="@Model.Project.SchoolURN" />
+	</div>
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			<h3 class="govuk-heading-m">Additional information</h3>
+			<p class="govuk-body">This information will populate into your HTB template under the school budget information section.</p>
+
+			<govuk-textarea-input id="additional-information" name="school-budget-information-additional-information" asp-for="Project.SchoolBudgetInformationAdditionalInformation" rows="5" />
+
+			<button class="govuk-button" data-module="govuk-button">
+				Save and continue
+			</button>
+		</form>
+	</div>
+</div>

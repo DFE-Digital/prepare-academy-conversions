@@ -7,12 +7,6 @@ namespace ApplyToBecomeInternal.ViewModels
 {
 	public class ProjectViewModel
 	{
-		private readonly Dictionary<ProjectPhase, string> _projectPhaseText = new Dictionary<ProjectPhase, string>
-		{
-			{ProjectPhase.PreHTB, "Pre HTB"},
-			{ProjectPhase.PostHTB, "Post HTB"}
-		};
-
 		public ProjectViewModel(AcademyConversionProject project)
 		{
 			Id = project.Id.ToString();
@@ -64,6 +58,8 @@ namespace ApplyToBecomeInternal.ViewModels
 			MemberOfParliamentParty = project.MemberOfParliamentParty;
 			GeneralInformationSectionComplete = project.GeneralInformationSectionComplete ?? false;
 			GeneralInformationTaskListStatus = TaskListItemViewModel.GetGeneralInformationTaskListStatus(this);
+
+			SchoolPerformanceAdditionalInformation = project.SchoolPerformanceAdditionalInformation;
 
 			RationaleForProject = project.RationaleForProject;
 			RationaleForTrust = project.RationaleForTrust;
@@ -149,6 +145,9 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string MemberOfParliamentParty { get; set; }
 		public bool GeneralInformationSectionComplete { get; set; }
 		public TaskListItemViewModel GeneralInformationTaskListStatus { get; set; }
+
+		//school performance ofsted information
+		public string SchoolPerformanceAdditionalInformation { get; set; }
 
 		public string RationaleForProject { get; set; }
 		public string RationaleForTrust { get; set; }
