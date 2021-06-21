@@ -27,8 +27,8 @@ namespace ApplyToBecomeInternal.Models
 			var monthValueProviderResult  = bindingContext.ValueProvider.GetValue(monthModelName);
 			var yearValueProviderResult  = bindingContext.ValueProvider.GetValue(yearModelName);
 
-			if (dayValueProviderResult  == ValueProviderResult.None 
-				&& monthValueProviderResult  == ValueProviderResult.None 
+			if (dayValueProviderResult  == ValueProviderResult.None
+				&& monthValueProviderResult  == ValueProviderResult.None
 				&& yearValueProviderResult  == ValueProviderResult.None)
 			{
 				if (modelType == typeof(DateTime?))
@@ -50,6 +50,13 @@ namespace ApplyToBecomeInternal.Models
 			if (TryParseYear() && TryParseMonth() && TryParseDay())
 			{
 				var date = new DateTime(year, month, day);
+				bindingContext.Result = ModelBindingResult.Success(date);
+			}
+			else if (dayValueProviderResult.FirstValue == string.Empty
+			         && monthValueProviderResult.FirstValue == string.Empty
+			         && yearValueProviderResult.FirstValue == string.Empty)
+			{
+				var date = default(DateTime);
 				bindingContext.Result = ModelBindingResult.Success(date);
 			}
 			else
