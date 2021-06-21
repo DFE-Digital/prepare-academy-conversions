@@ -119,14 +119,14 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 		}
 
 		[Fact]
-		public async Task Should_navigate_back_to_confirm_la_info_template_from_la_info_template()
+		public async Task Should_navigate_back_to_task_list_from_la_info_template()
 		{
 			var project = AddGetProject();
 
 			await OpenUrlAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
-			await NavigateAsync("Back");
+			await NavigateAsync("Back to task list");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
 	}
 }
