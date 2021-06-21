@@ -26,7 +26,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 
 			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.SchoolPerformanceAdditionalInformation);
 
-			var spans = Document.QuerySelectorAll<IHtmlSpanElement>("span");
 			Document.QuerySelector("#ofsted-inspection-date").TextContent.Should().Be(schoolPerformance.OfstedLastInspection.ToDateString());
 			Document.QuerySelector("#overall-effectiveness").TextContent.Should().Be(schoolPerformance.OverallEffectiveness.DisplayOfstedRating());
 			Document.QuerySelector("#quality-of-teaching-learning-and-assessment").TextContent.Should().Be(schoolPerformance.QualityOfEducation.DisplayOfstedRating());
