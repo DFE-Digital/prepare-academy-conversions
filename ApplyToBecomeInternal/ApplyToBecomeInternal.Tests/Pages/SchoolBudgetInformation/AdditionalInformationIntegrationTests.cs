@@ -20,7 +20,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 			await NavigateAsync("Change", 4);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information/additional-information");
-			var textArea = Document.QuerySelector<IHtmlTextAreaElement>("#additional-information");
+			var textArea = Document.QuerySelector<IHtmlTextAreaElement>("#school-budget-information-additional-information");
 			textArea.TextContent.Should().Be(project.SchoolBudgetInformationAdditionalInformation);
 
 			textArea.Value = request.SchoolBudgetInformationAdditionalInformation;

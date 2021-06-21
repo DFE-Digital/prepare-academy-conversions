@@ -1,6 +1,7 @@
 ﻿@page "/task-list/{id:int}/confirm-school-pupil-forecasts/additional-information"
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
+	Model.SuccessPage = Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.Page;
 	ViewData["Title"] = "School pupil forecasts additional information";
 }
 
@@ -39,15 +40,8 @@
 			<h3 class="govuk-heading-m">Additional information</h3>
 			<p class="govuk-body">This information will populate into your HTB template under the school pupil forecasts section.</p>
 
-			<div class="govuk-form-group">
-				<textarea class="govuk-textarea"
-						  id="additional-information"
-						  name="school-pupil-forecasts-additional-information"
-						  asp-for="Project.SchoolPupilForecastsAdditionalInformation"
-						  rows="5"></textarea>
-			</div>
-
-			<input name="SuccessPage" type="hidden" value="@Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.Page" />
+			<govuk-textarea-input name="school-pupil-forecasts-additional-information" asp-for="Project.SchoolPupilForecastsAdditionalInformation" rows="5" />
+			
 			<button class="govuk-button" data-module="govuk-button">
 				Save and continue
 			</button>

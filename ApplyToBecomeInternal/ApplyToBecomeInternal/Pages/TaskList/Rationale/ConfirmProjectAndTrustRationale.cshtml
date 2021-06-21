@@ -1,7 +1,7 @@
 @page "/task-list/{id:int}/confirm-project-trust-rationale"
-@using ApplyToBecomeInternal.ViewModels
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
+	Model.SuccessPage = Links.TaskList.Index.Page;
 	ViewData["Title"] = "Confirm project and trust rationale";
 }
 
@@ -28,33 +28,12 @@
 			</p>
 		</div>
 		<dl class="govuk-summary-list">
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"rationale-for-project",
-				"Rationale for project",
-				Model.Project.RationaleForProject,
-				Links.RationaleSection.RationaleForProject.Page,
-				Model.Project.Id,
-				"project rationale",
-				true))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"rationale-for-trust",
-				"Rationale for the trust or sponsor",
-				Model.Project.RationaleForTrust,
-				Links.RationaleSection.RationaleForTrust.Page,
-				Model.Project.Id,
-				"sponsor rationale",
-				true))
+			<govuk-summary-list-row name="rationale-for-project" label="Rationale for project" value="@Model.Project.RationaleForProject" alt-layout="true" asp-page="@Links.RationaleSection.RationaleForProject.Page" asp-route-id="@Model.Project.Id" hidden-text="project rationale" />
+			<govuk-summary-list-row name="rationale-for-trust" label="Rationale for the trust or sponsor" value="@Model.Project.RationaleForTrust" alt-layout="true" asp-page="@Links.RationaleSection.RationaleForTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="sponsor rationale" />
 		</dl>
 		<form method="post">
-			<div class="govuk-form-group">
-				@await Html.PartialAsync("_CheckboxInput", new CheckboxInputViewModel(
-					"rationale-complete",
-					"rationale-complete",
-					Model.Project.RationaleSectionComplete,
-					"Mark this section as complete, you can still make changes later"))
-			</div>
+			<govuk-checkbox-input name="rationale-complete" asp-for="Project.RationaleSectionComplete" label="Mark this section as complete, you can still make changes later" />
 
-			<input name="SuccessPage" type="hidden" value="@Links.TaskList.Index.Page" />
 			<button class="govuk-button" data-module="govuk-button">
 				Confirm and continue
 			</button>

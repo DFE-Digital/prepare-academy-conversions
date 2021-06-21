@@ -1,6 +1,7 @@
 ﻿using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
+using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -8,23 +9,44 @@ namespace ApplyToBecomeInternal.Pages
 {
 	public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProjectPageModel
 	{
-		public UpdateAcademyConversionProjectPageModel(AcademyConversionProjectRepository repository) : base(repository) { }
+		private readonly ErrorService _errorService;
+
+		public UpdateAcademyConversionProjectPageModel(AcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
+		{
+			_errorService = errorService;
+		}
 
 		[BindProperty]
 		public AcademyConversionProjectPostModel AcademyConversionProject { get; set; }
 
-		[BindProperty]
-		public string SuccessPage { get; set; }
+		public bool ShowError => _errorService.HasErrors();
 
-		public bool ShowError { get; set; }
+		public string SuccessPage
+		{
+			get
+			{
+				return TempData[nameof(SuccessPage)].ToString();
+			}
+			set
+			{
+				TempData[nameof(SuccessPage)] = value;
+			}
+		}
 
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
+			_errorService.AddErrors(Request.Form.Keys, ModelState);
+			if (_errorService.HasErrors())
+			{
+				await SetProject(id);
+				return Page();
+			}
+
 			var response = await _repository.UpdateProject(id, Build());
 
 			if (!response.Success)
 			{
-				ShowError = true;
+				_errorService.AddTramsError();
 				await SetProject(id);
 				return Page();
 			}

@@ -1,7 +1,7 @@
 ﻿@page "/task-list/{id:int}/confirm-risks-issues"
-@using ApplyToBecomeInternal.ViewModels
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
+	Model.SuccessPage = Links.TaskList.Index.Page;
 	ViewData["Title"] = "Confirm risks and issues";
 }
 
@@ -22,28 +22,12 @@
 			Confirm risks and issues
 		</h1>
 		<dl class="govuk-summary-list">
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"risks-and-issues",
-				"Risks and issues",
-				Model.Project.RisksAndIssues,
-				Links.RisksAndIssuesSection.RisksAndIssues.Page,
-				Model.Project.Id,
-				"risks and issues"))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"equalities-impact-assessment-considered",
-				"Has an Equalities Impact Assessment been considered?",
-				Model.Project.EqualitiesImpactAssessmentConsidered))
+			<govuk-summary-list-row name="risks-and-issues" label="Risks and issues" value="@Model.Project.RisksAndIssues" asp-page="@Links.RisksAndIssuesSection.RisksAndIssues.Page" asp-route-id="@Model.Project.Id" hidden-text="risks and issues" />
+			<govuk-summary-list-row name="equalities-impact-assessment-considered" label="Has an Equalities Impact Assessment been considered?" asp-for="Project.EqualitiesImpactAssessmentConsidered" />
 		</dl>
 		<form method="post">
-			<div class="govuk-form-group">
-				@await Html.PartialAsync("_CheckboxInput", new CheckboxInputViewModel(
-					"risks-and-issues-complete",
-					"risks-and-issues-complete",
-					Model.Project.RisksAndIssuesSectionComplete,
-					"Mark this section as complete, you can still make changes later"))
-			</div>
+			<govuk-checkbox-input name="risks-and-issues-complete" asp-for="Project.RisksAndIssuesSectionComplete" label="Mark this section as complete, you can still make changes later" />
 
-			<input name="SuccessPage" type="hidden" value="@Links.TaskList.Index.Page" />
 			<button class="govuk-button" data-module="govuk-button">
 				Confirm and continue
 			</button>

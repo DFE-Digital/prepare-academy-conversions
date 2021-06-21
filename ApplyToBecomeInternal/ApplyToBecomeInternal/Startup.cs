@@ -2,6 +2,7 @@ using ApplyToBecome.Data;
 using ApplyToBecome.Data.Mock;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Configuration;
+using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,12 @@ namespace ApplyToBecomeInternal
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			var razorPages = services.AddRazorPages();
+			var razorPages = services.AddRazorPages()
+				.AddViewOptions(options =>
+				{
+					options.HtmlHelperOptions.ClientValidationEnabled = false;
+				});
+
 			if (_env.IsDevelopment())
 			{
 				razorPages.AddRazorRuntimeCompilation();
@@ -42,6 +48,7 @@ namespace ApplyToBecomeInternal
 				client.DefaultRequestHeaders.Add("ApiKey", tramsApiOptions.ApiKey);
 			});
 
+			services.AddScoped<ErrorService>();
 			services.AddScoped<SchoolPerformanceService>();
 			services.AddScoped<AcademyConversionProjectRepository>();
 		}

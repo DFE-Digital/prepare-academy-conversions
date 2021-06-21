@@ -1,7 +1,7 @@
 ﻿@page "/task-list/{id:int}/confirm-school-budget-information"
-@using ApplyToBecomeInternal.ViewModels
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
+	Model.SuccessPage = Links.TaskList.Index.Page;
 	ViewData["Title"] = "Confirm school budget information";
 }
 
@@ -34,34 +34,10 @@
 	</div>
 	<div class="govuk-grid-column-full">
 		<dl class="govuk-summary-list">
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-							"finance-current-year-2021",
-							"Revenue carry forward at end-March (current year) 2021",
-							Model.Project.RevenueCarryForwardAtEndMarchCurrentYear.ToMoneyString(true),
-							Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page,
-							Model.Project.Id,
-							"Revenue carry forward at end-March (current year) 2021"))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-							"finance-following-year-2022",
-							"Projected revenue balance at end-March (following year) 2022",
-							Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear.ToMoneyString(true),
-							Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page,
-							Model.Project.Id,
-							"Projected revenue balance at end-March (following year) 2022"))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-							"finance-forward-2021",
-							"Capital carry forward at end-March (current year)",
-							Model.Project.CapitalCarryForwardAtEndMarchCurrentYear.ToMoneyString(true),
-							Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page,
-							Model.Project.Id,
-							"Capital carry forward at end-March (current year)"))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-							"finance-forward-2022",
-							"Projected capital balance at end-March (following year)",
-							Model.Project.CapitalCarryForwardAtEndMarchNextYear.ToMoneyString(true),
-							Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page,
-							Model.Project.Id,
-							"Projected capital balance at end-March (following year)"))
+			<govuk-summary-list-row name="finance-current-year-2021" label="Revenue carry forward at end-March (current year) 2021" value="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Revenue carry forward at end-March (current year) 2021" />
+			<govuk-summary-list-row name="finance-following-year-2022" label="Projected revenue balance at end-March (following year) 2022" value="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Projected revenue balance at end-March (following year) 2022" />
+			<govuk-summary-list-row name="finance-forward-2021" label="Capital carry forward at end-March (current year)" value="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Capital carry forward at end-March (current year)" />
+			<govuk-summary-list-row name="finance-forward-2022" label="Projected capital balance at end-March (following year)" value="@Model.Project.CapitalCarryForwardAtEndMarchNextYear.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Projected capital balance at end-March (following year)" />
 		</dl>
 	</div>
 	<div class="govuk-grid-column-two-thirds">
@@ -70,24 +46,11 @@
 	</div>
 	<div class="govuk-grid-column-full">
 		<dl class="govuk-summary-list">
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"additional-information",
-				"Additional information",
-				Model.Project.SchoolBudgetInformationAdditionalInformation,
-				Links.SchoolBudgetInformationSection.AdditionalInformation.Page,
-				Model.Project.Id,
-				"additional information"))
+			<govuk-summary-list-row name="additional-information" label="Additional information" value="@Model.Project.SchoolBudgetInformationAdditionalInformation" asp-page="@Links.SchoolBudgetInformationSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
 		</dl>
 		<form method="post">
-			<div class="govuk-form-group">
-				@await Html.PartialAsync("_CheckboxInput", new CheckboxInputViewModel(
-					"school-budget-information-complete",
-					"school-budget-information-complete",
-					Model.Project.SchoolBudgetInformationSectionComplete,
-					"Mark this section as complete, you can still make changes later"))
-			</div>
-
-			<input name="SuccessPage" type="hidden" value="@Links.TaskList.Index.Page" />
+			<govuk-checkbox-input name="school-budget-information-complete" asp-for="Project.SchoolBudgetInformationSectionComplete" label="Mark this section as complete, you can still make changes later"/>
+			
 			<button class="govuk-button" data-module="govuk-button">
 				Confirm and continue
 			</button>

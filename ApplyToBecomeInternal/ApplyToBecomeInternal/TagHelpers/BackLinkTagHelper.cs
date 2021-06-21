@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace ApplyToBecomeInternal.Extensions
+namespace ApplyToBecomeInternal.TagHelpers
 {
 	[HtmlTargetElement("a", Attributes = "back-link-for")]
 	public class BackLinkTagHelper : AnchorTagHelper

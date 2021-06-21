@@ -1,7 +1,7 @@
 @page "/task-list/{id:int}/confirm-school-trust-information-project-dates"
-@using ApplyToBecomeInternal.ViewModels
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
+	Model.SuccessPage = Links.TaskList.Index.Page;
 	ViewData["Title"] = "Confirm school and trust information and project dates";
 }
 
@@ -28,99 +28,26 @@
 			</p>
 		</div>
 		<dl class="govuk-summary-list">
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"project-recommendation",
-				"Recommendation",
-				Model.Project.RecommendationForProject,
-				Links.SchoolAndTrustInformationSection.ProjectRecommendation.Page,
-				Model.Project.Id,
-				"recommendation"))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"author",
-				"Author",
-				Model.Project.Author,
-				Links.SchoolAndTrustInformationSection.Author.Page,
-				Model.Project.Id,
-				"author"))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"version",
-				"Version",
-				Model.Project.Version))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"cleared-by",
-				"Cleared by",
-				Model.Project.ClearedBy,
-				Links.SchoolAndTrustInformationSection.ClearedBy.Page,
-				Model.Project.Id,
-				"cleared by"))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"academy-order-required",
-				"Is an academy order (AO) required?",
-				Model.Project.AcademyOrderRequired,
-				Links.SchoolAndTrustInformationSection.AcademyOrderRequired.Page,
-				Model.Project.Id,
-				"academy order required"))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"head-teacher-board-date",
-				"Date of HTB",
-				Model.Project.HeadTeacherBoardDate.ToDateString(),
-				Links.SchoolAndTrustInformationSection.HeadTeacherBoardDate.Page,
-				Model.Project.Id,
-				"head teacher baord date"))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"previous-head-teacher-board",
-				"Previous HTB",
-				Model.Project.PreviousHeadTeacherBoardDate.ToDateString()))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"school-name",
-				"School name",
-				Model.Project.SchoolName))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"unique-reference-number",
-				"Unique reference number (URN)",
-				Model.Project.SchoolURN))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"local-authority",
-				"Local authority",
-				Model.Project.LocalAuthority))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"trust-reference-number",
-				"Trust reference number",
-				Model.Project.TrustReferenceNumber))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"name-of-trust",
-				"Name of trust",
-				Model.Project.NameOfTrust))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"sponsor-reference-number",
-				"Sponsor reference number",
-				Model.Project.SponsorReferenceNumber))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"sponsor-name",
-				"Sponsor name",
-				Model.Project.SponsorName))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"academy-type-and-route",
-				"Academy type and route",
-				Model.Project.AcademyTypeAndRoute))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"proposed-academy-opening-date",
-				"Proposed academy opening date",
-				Model.Project.ProposedAcademyOpeningDate.ToDateString(true),
-				Links.SchoolAndTrustInformationSection.ProposedAcademyOpeningDate.Page,
-				Model.Project.Id,
-				"proposed academy opening date"))
+			<govuk-summary-list-row name="project-recommendation" label="Recommendation" value="@Model.Project.RecommendationForProject" asp-page="@Links.SchoolAndTrustInformationSection.ProjectRecommendation.Page" asp-route-id="@Model.Project.Id" hidden-text="recommendation" />
+			<govuk-summary-list-row name="author" label="Author" value="@Model.Project.Author" asp-page="@Links.SchoolAndTrustInformationSection.Author.Page" asp-route-id="@Model.Project.Id" hidden-text="author" />
+			<govuk-summary-list-row name="version" label="Version" asp-for="Project.Version" />
+			<govuk-summary-list-row name="cleared-by" label="Cleared by" value="@Model.Project.ClearedBy" asp-page="@Links.SchoolAndTrustInformationSection.ClearedBy.Page" asp-route-id="@Model.Project.Id" hidden-text="cleared by" />
+			<govuk-summary-list-row name="academy-order-required" label="Is an academy order (AO) required?" value="@Model.Project.AcademyOrderRequired" asp-page="@Links.SchoolAndTrustInformationSection.AcademyOrderRequired.Page" asp-route-id="@Model.Project.Id" hidden-text="academy order required" />
+			<govuk-summary-list-row name="head-teacher-board-date" label="Date of HTB" value="@Model.Project.HeadTeacherBoardDate.ToDateString()" asp-page="@Links.SchoolAndTrustInformationSection.HeadTeacherBoardDate.Page" asp-route-id="@Model.Project.Id" hidden-text="head teacher board date" />
+			<govuk-summary-list-row name="previous-head-teacher-board" label="Previous HTB" value="@Model.Project.PreviousHeadTeacherBoardDate.ToDateString()" />
+			<govuk-summary-list-row name="school-name" label="School name" asp-for="Project.SchoolName" />
+			<govuk-summary-list-row name="unique-reference-number" label="Unique reference number (URN)" asp-for="Project.SchoolURN" />
+			<govuk-summary-list-row name="local-authority" label="Local authority" asp-for="Project.LocalAuthority" />
+			<govuk-summary-list-row name="trust-reference-number" label="Trust reference number" asp-for="Project.TrustReferenceNumber" />
+			<govuk-summary-list-row name="name-of-trust" label="Name of trust" asp-for="Project.NameOfTrust" />
+			<govuk-summary-list-row name="sponsor-reference-number" label="Sponsor reference number" asp-for="Project.SponsorReferenceNumber" />
+			<govuk-summary-list-row name="sponsor-name" label="Sponsor name" asp-for="Project.SponsorName" />
+			<govuk-summary-list-row name="academy-type-and-route" label="Academy type and route" asp-for="Project.AcademyTypeAndRoute" />
+			<govuk-summary-list-row name="proposed-academy-opening-date" label="Proposed academy opening date" value="@Model.Project.ProposedAcademyOpeningDate.ToDateString(true)" asp-page="@Links.SchoolAndTrustInformationSection.ProposedAcademyOpeningDate.Page" asp-route-id="@Model.Project.Id" hidden-text="proposed academy opening date" />
 		</dl>
 		<form method="post">
-			<div class="govuk-form-group">
-				@await Html.PartialAsync("_CheckboxInput", new CheckboxInputViewModel(
-					"school-and-trust-information-complete",
-					"school-and-trust-information-complete",
-					Model.Project.SchoolAndTrustInformationSectionComplete,
-					"Mark this section as complete, you can still make changes later"))
-			</div>
+			<govuk-checkbox-input name="school-and-trust-information-complete" asp-for="Project.SchoolAndTrustInformationSectionComplete" label="Mark this section as complete, you can still make changes later" />
 
-			<input name="SuccessPage" type="hidden" value="@Links.TaskList.Index.Page" />
 			<button class="govuk-button" data-module="govuk-button">
 				Confirm and continue
 			</button>

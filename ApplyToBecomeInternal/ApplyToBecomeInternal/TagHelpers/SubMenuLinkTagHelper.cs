@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace ApplyToBecomeInternal.Extensions
+namespace ApplyToBecomeInternal.TagHelpers
 {
 	public class SubMenuLinkTagHelper : AnchorTagHelper
 	{

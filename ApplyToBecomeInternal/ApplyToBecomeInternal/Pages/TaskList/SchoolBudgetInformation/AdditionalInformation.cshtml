@@ -1,7 +1,7 @@
 ﻿@page "/task-list/{id:int}/confirm-school-budget-information/additional-information"
-@using ApplyToBecomeInternal.ViewModels
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
+	Model.SuccessPage = Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page;
 	ViewData["Title"] = "School budget information additional information";
 }
 
@@ -34,34 +34,10 @@
 	</div>
 	<div class="govuk-grid-column-full">
 		<dl class="govuk-summary-list">
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-							"revenue-carry-forward-current-year",
-							"Revenue carry forward at end-March (current year) 2021",
-							Model.Project.RevenueCarryForwardAtEndMarchCurrentYear.ToMoneyString(true),
-							Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page,
-							Model.Project.Id,
-							"Revenue carry forward at end-March (current year) 2021"))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-							"projected-revenue-balance-next-year",
-							"Projected revenue balance at end-March (following year) 2022",
-							Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear.ToMoneyString(true),
-							Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page,
-							Model.Project.Id,
-							"Projected revenue balance at end-March (following year) 2022"))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-							"capital-carry-forward-current-year",
-							"Capital carry forward at end-March (current year)",
-							Model.Project.CapitalCarryForwardAtEndMarchCurrentYear.ToMoneyString(true),
-							Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page,
-							Model.Project.Id,
-							"Capital carry forward at end-March (current year)"))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-							"projected-capital-balance-next-year",
-							"Projected capital balance at end-March (following year)",
-							Model.Project.CapitalCarryForwardAtEndMarchNextYear.ToMoneyString(true),
-							Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page,
-							Model.Project.Id,
-							"Projected capital balance at end-March (following year)"))
+			<govuk-summary-list-row name="revenue-carry-forward-current-year" label="Revenue carry forward at end-March (current year) 2021" value="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Revenue carry forward at end-March (current year) 2021" />
+			<govuk-summary-list-row name="projected-revenue-balance-next-year" label="Projected revenue balance at end-March (following year) 2022" value="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Projected revenue balance at end-March (following year) 2022" />
+			<govuk-summary-list-row name="capital-carry-forward-current-year" label="Capital carry forward at end-March (current year)" value="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Capital carry forward at end-March (current year)" />
+			<govuk-summary-list-row name="projected-capital-balance-next-year" label="Projected capital balance at end-March (following year)" value="@Model.Project.CapitalCarryForwardAtEndMarchNextYear.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Projected capital balance at end-March (following year)" />
 		</dl>
 	</div>
 	<div class="govuk-grid-column-two-thirds">
@@ -69,15 +45,8 @@
 			<h3 class="govuk-heading-m">Additional information</h3>
 			<p class="govuk-body">This information will populate into your HTB template under the school budget information section.</p>
 
-			<div class="govuk-form-group">
-				<textarea class="govuk-textarea"
-						  id="additional-information"
-						  name="school-budget-information-additional-information"
-						  asp-for="Project.SchoolBudgetInformationAdditionalInformation"
-						  rows="5"></textarea>
-			</div>
+			<govuk-textarea-input name="school-budget-information-additional-information" asp-for="Project.SchoolBudgetInformationAdditionalInformation" rows="5" />
 
-			<input name="SuccessPage" type="hidden" value="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page" />
 			<button class="govuk-button" data-module="govuk-button">
 				Save and continue
 			</button>
