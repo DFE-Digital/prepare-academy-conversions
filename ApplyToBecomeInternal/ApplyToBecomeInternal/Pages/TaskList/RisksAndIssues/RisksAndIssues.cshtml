@@ -2,6 +2,7 @@
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
 	Layout = "_QuestionLayout";
+	Model.SuccessPage = Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page;
 	ViewData["Title"] = "Risks and issues";
 }
 
@@ -22,4 +23,3 @@
 			  data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers"></textarea>
 </div>
 
-<input name="SuccessPage" type="hidden" value="@Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page" />

@@ -2,6 +2,7 @@
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
 	Layout = "_QuestionLayout";
+	Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
 	ViewData["Title"] = "Published admission number";
 }
 
@@ -17,4 +18,3 @@
 	</div>
 	<input class="govuk-input govuk-input--width-5" id="published-admission-number" name="published-admission-number" type="text" asp-for="Project.PublishedAdmissionNumber" aria-describedby="published-admission-number-hint">
 </div>
-<input name="SuccessPage" type="hidden" value="@Links.GeneralInformationSection.ConfirmGeneralInformation.Page" />

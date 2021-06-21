@@ -1,6 +1,7 @@
 ﻿@page "/task-list/{id:int}/confirm-school-pupil-forecasts/additional-information"
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
+	Model.SuccessPage = Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.Page;
 	ViewData["Title"] = "School pupil forecasts additional information";
 }
 
@@ -47,7 +48,7 @@
 						  rows="5"></textarea>
 			</div>
 
-			<input name="SuccessPage" type="hidden" value="@Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.Page" />
+			
 			<button class="govuk-button" data-module="govuk-button">
 				Save and continue
 			</button>

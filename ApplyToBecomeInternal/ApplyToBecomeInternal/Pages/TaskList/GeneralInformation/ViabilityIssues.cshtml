@@ -2,6 +2,7 @@
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
 	Layout = "_QuestionLayout";
+	Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
 	ViewData["Title"] = "Viability issues";
 }
 
@@ -27,4 +28,3 @@
 		</div>
 	</div>
 </div>
-<input name="SuccessPage" type="hidden" value="@Links.GeneralInformationSection.ConfirmGeneralInformation.Page" />

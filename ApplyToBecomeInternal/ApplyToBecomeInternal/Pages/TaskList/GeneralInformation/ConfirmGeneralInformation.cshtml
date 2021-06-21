@@ -2,6 +2,7 @@
 @using ApplyToBecomeInternal.ViewModels
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
+	Model.SuccessPage = Links.TaskList.Index.Page;
 	ViewData["Title"] = "Confirm general information";
 }
 
@@ -28,82 +29,21 @@
 			</p>
 		</div>
 		<dl class="govuk-summary-list">
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"school-phase",
-				"School phase",
-				Model.Project.SchoolPhase))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"age-range",
-				"Age range",
-				Model.Project.AgeRange))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"school-type",
-				"School type",
-				Model.Project.SchoolType))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"number-on-roll",
-				"Number on roll (NOR)",
-				Model.Project.CurrentYearPupilNumbers.ToString()))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"percentage-school-full",
-				"Percentage the school is full",
-				Model.Project.CurrentYearPupilNumbers.AsPercentageOf(Model.Project.CurrentYearCapacity)))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"capacity",
-				"Capacity",
-				Model.Project.CurrentYearCapacity.ToString()))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"published-admission-number",
-				"Published admission number (PAN)",
-				Model.Project.PublishedAdmissionNumber,
-				Links.GeneralInformationSection.PublishedAdmissionNumber.Page,
-				Model.Project.Id,
-				"published admission numbers",
-				true))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"percentage-free-school-meals",
-				"Percentage of free school meals at the school (%FSM)",
-				Model.Project.PercentageFreeSchoolMeals.ToPercentage()))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"part-of-pfi",
-				"Part of a private finance initiative (PFI) scheme",
-				Model.Project.PartOfPfiScheme))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"viability-issues",
-				"Viability issues",
-				Model.Project.ViabilityIssues,
-				Links.GeneralInformationSection.ViabilityIssues.Page,
-				Model.Project.Id,
-				"viability issues"))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"financial-deficit",
-				"Financial deficit",
-				Model.Project.FinancialDeficit,
-				Links.GeneralInformationSection.FinancialDeficit.Page,
-				Model.Project.Id,
-				"financial deficit"))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"diocesan-multi-academy-trust",
-				"Is this a diocesan multi-academy trust (MAT)?",
-				Model.Project.IsThisADiocesanTrust.ToYesNoString(),
-				Links.GeneralInformationSection.DiocesanMultiAcademyTrust.Page,
-				Model.Project.Id,
-				"diocesan multi-academy trust"))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"percentage-in-diocesan-trust",
-				"Percentage of good or outstanding schools in the diocesan trust",
-				Model.Project.PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust.ToPercentage()))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"distance-to-trust-headquarters",
-				"Distance from the school to the trust headquarters",
-				Model.Project.DistanceFromSchoolToTrustHeadquarters.ToSafeString(),
-				Links.GeneralInformationSection.DistanceFromTrustHeadquarters.Page,
-				Model.Project.Id,
-				"distance to trust headquarters"))
-			@await Html.PartialAsync("_SummaryListRow", new SummaryListRowViewModel(
-				"member-of-parliament-party",
-				"MP (party)",
-				Model.Project.MemberOfParliamentParty))
+			<govuk-summary-list-row name="school-phase" label="School phase" asp-for="Project.SchoolPhase" />
+			<govuk-summary-list-row name="age-range" label="Age range" asp-for="Project.AgeRange" />
+			<govuk-summary-list-row name="school-type" label="School type" asp-for="Project.SchoolType" />
+			<govuk-summary-list-row name="number-on-roll" label="Number on roll (NOR)" asp-for="Project.CurrentYearPupilNumbers" />
+			<govuk-summary-list-row name="percentage-school-full" label="Percentage the school is full" value="@Model.Project.CurrentYearPupilNumbers.AsPercentageOf(Model.Project.CurrentYearCapacity)" />
+			<govuk-summary-list-row name="capacity" label="Capacity" value="@Model.Project.CurrentYearCapacity.ToString()" />
+			<govuk-summary-list-row name="published-admission-number" label="Published admission number (PAN)" asp-for="Project.PublishedAdmissionNumber" asp-page="@Links.GeneralInformationSection.PublishedAdmissionNumber.Page" asp-route-id="@Model.Project.Id" hidden-text="published admission numbers" />
+			<govuk-summary-list-row name="percentage-free-school-meals" label="Percentage of free school meals at the school (%FSM)" value="@Model.Project.PercentageFreeSchoolMeals.ToPercentage()" />
+			<govuk-summary-list-row name="part-of-pfi" label="Part of a private finance initiative (PFI) scheme" asp-for="Project.PartOfPfiScheme" />
+			<govuk-summary-list-row name="viability-issues" label="Viability issues" asp-for="Project.ViabilityIssues" asp-page="@Links.GeneralInformationSection.ViabilityIssues.Page" asp-route-id="@Model.Project.Id" hidden-text="viability issues" />
+			<govuk-summary-list-row name="financial-deficit" label="Financial deficit" asp-for="Project.FinancialDeficit" asp-page="@Links.GeneralInformationSection.FinancialDeficit.Page" asp-route-id="@Model.Project.Id" hidden-text="financial deficit" />
+			<govuk-summary-list-row name="diocesan-multi-academy-trust" label="Is this a diocesan multi-academy trust (MAT)?" value="@Model.Project.IsThisADiocesanTrust.ToYesNoString()" asp-page="@Links.GeneralInformationSection.DiocesanMultiAcademyTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="diocesan multi-academy trust" />
+			<govuk-summary-list-row name="percentage-in-diocesan-trust" label="Percentage of good or outstanding schools in the diocesan trust" value="@Model.Project.PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust.ToPercentage()" />
+			<govuk-summary-list-row name="distance-to-trust-headquarters" label="Distance from the school to the trust headquarters" value="@Model.Project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()" asp-page="@Links.GeneralInformationSection.DistanceFromTrustHeadquarters.Page" asp-route-id="@Model.Project.Id" hidden-text="distance to trust headquarters" />
+			<govuk-summary-list-row name="member-of-parliament-party" label="MP (party)" asp-for="Project.MemberOfParliamentParty" />
 		</dl>
 		<form method="post">
 			<div class="govuk-form-group">
@@ -114,7 +54,7 @@
 					"Mark this section as complete, you can still make changes later"))
 			</div>
 
-			<input name="SuccessPage" type="hidden" value="@Links.TaskList.Index.Page" />
+			
 			<button class="govuk-button" data-module="govuk-button">
 				Confirm and continue
 			</button>

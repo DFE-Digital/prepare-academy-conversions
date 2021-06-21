@@ -2,6 +2,7 @@
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
 	Layout = "_QuestionLayout";
+	Model.SuccessPage = Links.RationaleSection.ConfirmProjectAndTrustRationale.Page;
 	ViewData["Title"] = "Trust or sponsor rationale";
 }
 
@@ -21,4 +22,3 @@
 			  data-module="moj-rich-text-editor"
 			  data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers"></textarea>
 </div>
-<input name="SuccessPage" type="hidden" value="@Links.RationaleSection.ConfirmProjectAndTrustRationale.Page" />
