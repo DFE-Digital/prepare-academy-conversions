@@ -3,6 +3,7 @@
 @{
 	Model.SuccessPage = Links.TaskList.Index.Page;
 	ViewData["Title"] = "Confirm school budget information";
+	var kw = WidthOverride.TwoThirds;
 }
 
 @section BeforeMain
@@ -14,13 +15,13 @@
 {
 	<partial name="_ErrorSummary" />
 }
+<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+<h1 class="govuk-heading-l">
+	Confirm school budget information
+</h1>
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
-		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
-		<h1 class="govuk-heading-l">
-			Confirm school budget information
-		</h1>
 		<div class="govuk-body">
 			<p>
 				This information comes from the
@@ -34,10 +35,10 @@
 	</div>
 	<div class="govuk-grid-column-full">
 		<dl class="govuk-summary-list">
-			<govuk-summary-list-row name="finance-current-year-2021" label="Revenue carry forward at end-March (current year) 2021" value="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Revenue carry forward at end-March (current year) 2021" />
-			<govuk-summary-list-row name="finance-following-year-2022" label="Projected revenue balance at end-March (following year) 2022" value="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Projected revenue balance at end-March (following year) 2022" />
-			<govuk-summary-list-row name="finance-forward-2021" label="Capital carry forward at end-March (current year)" value="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Capital carry forward at end-March (current year)" />
-			<govuk-summary-list-row name="finance-forward-2022" label="Projected capital balance at end-March (following year)" value="@Model.Project.CapitalCarryForwardAtEndMarchNextYear.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Projected capital balance at end-March (following year)" />
+			<govuk-summary-list-row name="finance-current-year-2021" label="Revenue carry forward at end-March (current year) 2021" key-width="@kw" value="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Revenue carry forward at end-March (current year) 2021" />
+			<govuk-summary-list-row name="finance-following-year-2022" label="Projected revenue balance at end-March (following year) 2022" key-width="@kw" value="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Projected revenue balance at end-March (following year) 2022" />
+			<govuk-summary-list-row name="finance-forward-2021" label="Capital carry forward at end-March (current year)" key-width="@kw" value="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Capital carry forward at end-March (current year)" />
+			<govuk-summary-list-row name="finance-forward-2022" label="Projected capital balance at end-March (following year)" key-width="@kw" value="@Model.Project.CapitalCarryForwardAtEndMarchNextYear.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Projected capital balance at end-March (following year)" />
 		</dl>
 	</div>
 	<div class="govuk-grid-column-two-thirds">
@@ -46,11 +47,11 @@
 	</div>
 	<div class="govuk-grid-column-full">
 		<dl class="govuk-summary-list">
-			<govuk-summary-list-row name="additional-information" label="Additional information" value="@Model.Project.SchoolBudgetInformationAdditionalInformation" asp-page="@Links.SchoolBudgetInformationSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
+			<govuk-summary-list-row id="additional-information" name="school-budget-information-additional-information" label="Additional information" value="@Model.Project.SchoolBudgetInformationAdditionalInformation" asp-page="@Links.SchoolBudgetInformationSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
 		</dl>
 		<form method="post">
-			<govuk-checkbox-input name="school-budget-information-complete" asp-for="Project.SchoolBudgetInformationSectionComplete" label="Mark this section as complete, you can still make changes later"/>
-			
+			<govuk-checkbox-input name="school-budget-information-complete" asp-for="Project.SchoolBudgetInformationSectionComplete" label="Mark this section as complete, you can still make changes later" />
+
 			<button class="govuk-button" data-module="govuk-button">
 				Confirm and continue
 			</button>

@@ -14,13 +14,13 @@
 {
 	<partial name="_ErrorSummary" />
 }
+<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+<h1 class="govuk-heading-l">
+	Confirm risks and issues
+</h1>
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
-		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
-		<h1 class="govuk-heading-l">
-			Confirm risks and issues
-		</h1>
 		<dl class="govuk-summary-list">
 			<govuk-summary-list-row name="risks-and-issues" label="Risks and issues" value="@Model.Project.RisksAndIssues" asp-page="@Links.RisksAndIssuesSection.RisksAndIssues.Page" asp-route-id="@Model.Project.Id" hidden-text="risks and issues" />
 			<govuk-summary-list-row name="equalities-impact-assessment-considered" label="Has an Equalities Impact Assessment been considered?" asp-for="Project.EqualitiesImpactAssessmentConsidered" />

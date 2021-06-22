@@ -1,9 +1,9 @@
 ﻿@model ApplyToBecomeInternal.ViewModels.SummaryListRowViewModel
 <div class="govuk-summary-list__row">
-	<dt class="govuk-summary-list__key @(Model.AltLayout ? "govuk-!-width-one-quarter" : "")">
+	<dt class="govuk-summary-list__key @Model.KeyWidth">
 		@Model.Key
 	</dt>
-	<dd class="govuk-summary-list__value @(Model.AltLayout ? "govuk-!-width-full" : "")">
+	<dd class="govuk-summary-list__value @Model.ValueWidth">
 		@if (!Model.IsEmpty)
 		{
 			<span id="@Model.Id">@Model.Value</span>

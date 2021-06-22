@@ -1,0 +1,16 @@
+@model string
+@inject ApplyToBecome.Data.Services.SchoolPerformanceService schoolPerformanceService
+@{ 
+	var schoolPerformance = await schoolPerformanceService.GetSchoolPerformanceByUrn(Model);
+	var kw = WidthOverride.TwoThirds;
+}
+
+<dl class="govuk-summary-list">
+	<govuk-summary-list-row id="ofsted-inspection-date" label="Ofsted inspection date" key-width="@kw" value="@schoolPerformance.OfstedLastInspection?.ToString("d MMMM yyyy")" />
+	<govuk-summary-list-row id="overall-effectiveness" label="Overall effectiveness" key-width="@kw" value="@schoolPerformance.OverallEffectiveness.DisplayOfstedRating()" />
+	<govuk-summary-list-row id="effectiveness-of-leadership-and-management" label="Effectiveness of leadership and management" key-width="@kw" value="@schoolPerformance.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating()" />
+	<govuk-summary-list-row id="quality-of-teaching-learning-and-assessment" label="Quality of teaching, learning and assessment" key-width="@kw" value="@schoolPerformance.QualityOfEducation.DisplayOfstedRating()" />
+	<govuk-summary-list-row id="personal-development-behaviour-and-welfare" label="Personal development, behaviour and welfare" key-width="@kw" value="@schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating()" />
+	<govuk-summary-list-row id="outcome-for-pupils" label="Outcome for pupils" key-width="@kw" value="@schoolPerformance.PersonalDevelopment.DisplayOfstedRating()" />
+	<govuk-summary-list-row id="early-years-provision" label="Early years provision" key-width="@kw" value="@schoolPerformance.EarlyYearsProvision.DisplayOfstedRating()" />
+</dl>

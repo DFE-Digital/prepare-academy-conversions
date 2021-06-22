@@ -14,9 +14,6 @@ namespace ApplyToBecomeInternal.TagHelpers
 	{
 		private readonly ErrorService _errorService;
 
-		[HtmlAttributeName("hint")]
-		public string Hint { get; set; }
-
 		public DateInputTagHelper(IHtmlHelper htmlHelper, ErrorService errorService) : base(htmlHelper)
 		{
 			_errorService = errorService;

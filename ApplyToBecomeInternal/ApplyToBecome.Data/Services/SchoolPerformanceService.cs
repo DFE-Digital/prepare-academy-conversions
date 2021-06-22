@@ -28,8 +28,10 @@ namespace ApplyToBecome.Data.Services
 			}
 
 			var content = await response.Content.ReadFromJsonAsync<EstablishmentData>();
-			var schoolPerformance = content.misEstablishment;
-			schoolPerformance.OfstedLastInspection = content.ofstedLastInspection;
+			var schoolPerformance = content.misEstablishment ?? new SchoolPerformance();
+
+			if (DateTime.TryParse(content.ofstedLastInspection, out var ofstedLastInspection))
+				schoolPerformance.OfstedLastInspection = ofstedLastInspection;
 
 			return schoolPerformance;
 		}
@@ -38,7 +40,7 @@ namespace ApplyToBecome.Data.Services
 		{
 			public SchoolPerformance misEstablishment { get; set; }
 
-			public DateTime ofstedLastInspection { get; set; }
+			public string ofstedLastInspection { get; set; }
 		}
 	}
 }

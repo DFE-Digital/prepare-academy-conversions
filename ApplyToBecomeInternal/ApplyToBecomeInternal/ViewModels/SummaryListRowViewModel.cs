@@ -9,6 +9,7 @@
 		public string Page { get; set; }
 		public string RouteId { get; set; }
 		public string HiddenText { get; set; }
-		public bool AltLayout { get; set; }
+		public string KeyWidth { get; set; }
+		public string ValueWidth { get; set; }
 	}
 }

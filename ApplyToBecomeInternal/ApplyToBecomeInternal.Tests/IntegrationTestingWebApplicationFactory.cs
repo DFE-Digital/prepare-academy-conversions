@@ -9,13 +9,15 @@ using WireMock.Matchers;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 using WireMock.Server;
+using Xunit;
 
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 namespace ApplyToBecomeInternal.Tests
 {
 	public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Startup>, IDisposable
 	{
 		private static int _currentPort = 5080;
-		private static object _sync = new object();
+		private static readonly object _sync = new object();
 
 		private readonly WireMockServer _server;
 		private readonly int _port; 

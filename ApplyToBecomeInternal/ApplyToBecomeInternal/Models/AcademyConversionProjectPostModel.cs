@@ -87,6 +87,7 @@ namespace ApplyToBecomeInternal.Models
 		public bool? GeneralInformationSectionComplete { get; set; }
 
 		//school performance ofsted information
+		[BindProperty(Name = "school-performance-additional-information")]
 		public string SchoolPerformanceAdditionalInformation { get; set; }
 
 		// rationale

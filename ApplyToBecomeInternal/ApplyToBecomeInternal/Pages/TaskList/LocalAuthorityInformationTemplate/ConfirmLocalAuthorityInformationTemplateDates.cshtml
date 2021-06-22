@@ -20,14 +20,12 @@
 {
 	<partial name="_ErrorSummary" />
 }
+<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+<h1 class="govuk-heading-l">
+	Confirm local authority information template dates
+</h1>
 
 <div class="govuk-grid-row">
-	<div class="govuk-grid-column-two-thirds">
-		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
-		<h1 class="govuk-heading-l">
-			Confirm local authority information template dates
-		</h1>
-	</div>
 	<div class="govuk-grid-column-full">
 		<dl class="govuk-summary-list">
 			<govuk-summary-list-row name="la-info-template-sent-date" label="Date you sent the template" value="@Model.Project.LocalAuthorityInformationTemplateSentDate.ToDateString()" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" hidden-text="date LA proforma was sent to LA" />

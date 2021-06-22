@@ -3,6 +3,8 @@
 @{
 	Model.SuccessPage = Links.TaskList.Index.Page;
 	ViewData["Title"] = "Confirm project and trust rationale";
+	var kw = WidthOverride.OneQuarter;
+	var vw = WidthOverride.Full;
 }
 
 @section BeforeMain
@@ -14,13 +16,13 @@
 {
 	<partial name="_ErrorSummary" />
 }
+<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+<h1 class="govuk-heading-l">
+	Confirm project and trust rationale
+</h1>
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
-		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
-		<h1 class="govuk-heading-l">
-			Confirm project and trust rationale
-		</h1>
 		<div class="govuk-body">
 			<p>
 				This information is pre-populated from the
@@ -28,8 +30,8 @@
 			</p>
 		</div>
 		<dl class="govuk-summary-list">
-			<govuk-summary-list-row name="rationale-for-project" label="Rationale for project" value="@Model.Project.RationaleForProject" alt-layout="true" asp-page="@Links.RationaleSection.RationaleForProject.Page" asp-route-id="@Model.Project.Id" hidden-text="project rationale" />
-			<govuk-summary-list-row name="rationale-for-trust" label="Rationale for the trust or sponsor" value="@Model.Project.RationaleForTrust" alt-layout="true" asp-page="@Links.RationaleSection.RationaleForTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="sponsor rationale" />
+			<govuk-summary-list-row name="rationale-for-project" key-width="@kw" value-width="@vw" label="Rationale for project" value="@Model.Project.RationaleForProject" asp-page="@Links.RationaleSection.RationaleForProject.Page" asp-route-id="@Model.Project.Id" hidden-text="project rationale" />
+			<govuk-summary-list-row name="rationale-for-trust" key-width="@kw" value-width="@vw" label="Rationale for the trust or sponsor" value="@Model.Project.RationaleForTrust" asp-page="@Links.RationaleSection.RationaleForTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="sponsor rationale" />
 		</dl>
 		<form method="post">
 			<govuk-checkbox-input name="rationale-complete" asp-for="Project.RationaleSectionComplete" label="Mark this section as complete, you can still make changes later" />

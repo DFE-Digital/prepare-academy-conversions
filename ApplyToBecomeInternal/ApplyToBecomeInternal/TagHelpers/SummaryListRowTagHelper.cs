@@ -21,8 +21,11 @@ namespace ApplyToBecomeInternal.TagHelpers
 		[HtmlAttributeName("hidden-text")]
 		public string HiddenText { get; set; }
 
-		[HtmlAttributeName("alt-layout")]
-		public bool AltLayout { get; set; }
+		[HtmlAttributeName("key-width")]
+		public string KeyWidth { get; set; }
+
+		[HtmlAttributeName("value-width")]
+		public string ValueWidth { get; set; }
 
 		public SummaryListRowTagHelper(IHtmlHelper htmlHelper) : base(htmlHelper) { }
 
@@ -38,7 +41,8 @@ namespace ApplyToBecomeInternal.TagHelpers
 				Page = Page,
 				RouteId = RouteId,
 				HiddenText = HiddenText,
-				AltLayout = AltLayout
+				KeyWidth = KeyWidth,
+				ValueWidth = ValueWidth
 			};
 
 			return await _htmlHelper.PartialAsync("_SummaryListRow", model);
