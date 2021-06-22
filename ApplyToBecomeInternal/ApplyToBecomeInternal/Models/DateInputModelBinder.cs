@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -31,13 +31,19 @@ namespace ApplyToBecomeInternal.Models
 			var monthValueProviderResult = bindingContext.ValueProvider.GetValue(monthModelName);
 			var yearValueProviderResult = bindingContext.ValueProvider.GetValue(yearModelName);
 
-			if (dayValueProviderResult == ValueProviderResult.None
-				&& monthValueProviderResult == ValueProviderResult.None
-				&& yearValueProviderResult == ValueProviderResult.None)
+			if (IsOptionalOrFieldTypeMismatch())
 			{
 				if (modelType == typeof(DateTime?))
 				{
-					bindingContext.Result = ModelBindingResult.Success(null);
+					if (IsEmptyDate())
+					{
+						var date = default(DateTime);
+						bindingContext.Result = ModelBindingResult.Success(date);
+					}
+					else
+					{
+						bindingContext.Result = ModelBindingResult.Success(null);
+					}
 				}
 				else
 				{
@@ -192,6 +198,24 @@ namespace ApplyToBecomeInternal.Models
 
 					return false;
 				}
+			}
+
+			bool IsOptionalOrFieldTypeMismatch()
+			{
+				return string.IsNullOrWhiteSpace(dayValueProviderResult.FirstValue)
+					&& string.IsNullOrWhiteSpace(monthValueProviderResult.FirstValue)
+					&& string.IsNullOrWhiteSpace(yearValueProviderResult.FirstValue)
+					&& !bindingContext.ModelMetadata.IsRequired
+					|| dayValueProviderResult == ValueProviderResult.None
+					&& monthValueProviderResult == ValueProviderResult.None
+					&& yearValueProviderResult == ValueProviderResult.None;
+			}
+
+			bool IsEmptyDate()
+			{
+				return dayValueProviderResult.FirstValue == string.Empty
+				       && monthValueProviderResult.FirstValue == string.Empty
+				       && yearValueProviderResult.FirstValue == string.Empty;
 			}
 		}
 	}
