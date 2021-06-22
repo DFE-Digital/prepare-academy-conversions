@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.TagHelpers;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -8,13 +9,15 @@ namespace ApplyToBecomeInternal.TagHelpers
 	{
 		public SubMenuLinkTagHelper(IHtmlGenerator generator) : base(generator){}
 
-		private readonly string _page = "page";
-		public bool Highlighted { get; set; }
+		private const string PAGE = "page";
 
 		public override void Process(TagHelperContext context, TagHelperOutput output)
 		{
-			if(Highlighted)
-				output.Attributes.SetAttribute("aria-current", _page);
+			var page = ViewContext.RouteData.Values[PAGE].ToString();
+			if (page == Page)
+			{
+				output.Attributes.SetAttribute("aria-current", PAGE);
+			}
 
 			output.TagName = "a";
 
