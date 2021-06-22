@@ -14,13 +14,13 @@
 {
 	<partial name="_ErrorSummary" />
 }
+<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+<h1 class="govuk-heading-l">
+	School pupil forecasts
+</h1>
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
-		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
-		<h1 class="govuk-heading-l">
-			School pupil forecasts
-		</h1>
 		<div class="govuk-body">
 			<p>
 				This information comes from TRAMS and the
@@ -41,7 +41,7 @@
 			<p class="govuk-body">This information will populate into your HTB template under the school pupil forecasts section.</p>
 
 			<govuk-textarea-input id="additional-information" name="school-pupil-forecasts-additional-information" asp-for="Project.SchoolPupilForecastsAdditionalInformation" rows="5" />
-			
+
 			<button class="govuk-button" data-module="govuk-button">
 				Save and continue
 			</button>

@@ -9,19 +9,17 @@
 @section BeforeMain
 {
 	<a back-link-for="@Links.TaskList.Index"></a>
-}
-
+}	
+<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+<h1 class="govuk-heading-l">School performance (Ofsted information)</h1>
+	
 <div class="govuk-grid-row">
-	<span class="govuk-caption-l">@Model.Project.SchoolName</span>
-	<h1 class="govuk-heading-l">School performance (Ofsted information)</h1>
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-two-thirds">
-			<p class="govuk-body">This information comes from TRAMS. The table will populate into your headteacher board (HTB) template.</p>
-			<p class="govuk-body">You can add <a href="#additional_info">additional information</a> if you need to, this will also go into your HTB template.</p>
-			<p class="govuk-body-s">TRAMS last updated on: 23 March 2021</p><br>
-		</div>
+	<div class="govuk-grid-column-two-thirds">
+		<p class="govuk-body">This information comes from TRAMS. The table will populate into your headteacher board (HTB) template.</p>
+		<p class="govuk-body">You can add <a href="#additional-information">additional information</a> if you need to, this will also go into your HTB template.</p>
+		<p class="govuk-body-s">TRAMS last updated on: 23 March 2021</p><br>
 	</div>
-	<div class="govuk-grid-column-full">
+	<div class="govuk-grid-column-two-thirds">
 		<partial name="_SchoolPerformanceSummaryList" model="@Model.Project.SchoolURN" />
 	</div>
 	<div class="govuk-grid-column-two-thirds">

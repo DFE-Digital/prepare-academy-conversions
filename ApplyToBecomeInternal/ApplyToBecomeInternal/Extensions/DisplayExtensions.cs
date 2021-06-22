@@ -10,7 +10,7 @@
 				"2" => "Good",
 				"3" => "Requires improvement",
 				"4" => "Inadequate",
-				_ => ""
+				_ => "No data"
 			};
 		}
 	}
