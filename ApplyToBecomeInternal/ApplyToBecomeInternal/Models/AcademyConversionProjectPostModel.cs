@@ -88,7 +88,6 @@ namespace ApplyToBecomeInternal.Models
 
 		//school performance ofsted information
 		[BindProperty(Name = "school-performance-additional-information")]
-		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string SchoolPerformanceAdditionalInformation { get; set; }
 
 		// rationale
