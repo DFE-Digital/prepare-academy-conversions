@@ -1,35 +1,29 @@
-﻿@using ApplyToBecomeInternal.ViewModels
-@model ApplyToBecomeInternal.ViewModels.SubMenuViewModel;
+﻿@{
+	var id = ViewContext.RouteData.Values["id"];
+}
 
 <nav class="moj-sub-navigation" aria-label="Sub navigation">
 	<ul class="moj-sub-navigation__list">
 		<li class="moj-sub-navigation__item">
 			<sub-menu-link class="moj-sub-navigation__link"
-					  asp-page="/TaskList/Index"
-					  asp-route-id="@Model.ProjectId"
-					  highlighted="@Model.Page == SubMenuPage.TaskList"
-					  >
+					  asp-page="@Links.TaskList.Index.Page"
+					  asp-route-id="@id">
 				Task list
 			</sub-menu-link>
 		</li>
 		<li class="moj-sub-navigation__item">
 			<sub-menu-link class="moj-sub-navigation__link"
-					  asp-page="/ApplicationForm/Index" 
-					  asp-route-id="@Model.ProjectId"
-					  highlighted="@Model.Page == SubMenuPage.SchoolApplicationForm"
-					  >
+					  asp-page="@Links.ApplicationForm.Index.Page" 
+					  asp-route-id="@id">
 				School application form
 			</sub-menu-link>
 		</li>
 		<li class="moj-sub-navigation__item">
 			<sub-menu-link class="moj-sub-navigation__link"
-					  asp-page="/ProjectNotes/Index" 
-					  asp-route-id="@Model.ProjectId"
-					  highlighted="@Model.Page == SubMenuPage.ProjectNotes"
-					  >
+					  asp-page="@Links.ProjectNotes.Index.Page" 
+					  asp-route-id="@id">
 				Project notes
 			</sub-menu-link>
 		</li>
-
 	</ul>
 </nav>

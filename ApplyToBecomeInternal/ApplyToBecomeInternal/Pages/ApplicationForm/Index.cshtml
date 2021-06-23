@@ -4,16 +4,14 @@
 	ViewData["Title"] = "School application form";
 }
 
-<div class="govuk-grid-row">
-	<div class="govuk-grid-column-full">
-		@section BeforeMain
-		{
-			<a asp-page="@Links.ProjectList.Index.Page" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
-		}
-		<partial name="_ProjectHeader" model="Model.Project" />
+@section BeforeMain
+{
+	<a asp-page="@Links.ProjectList.Index.Page" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
+}
 
-		<partial name="/Pages/Shared/_SubMenu.cshtml" model="new SubMenuViewModel(Model.Project.Id, SubMenuPage.SchoolApplicationForm)" />
-	</div>
+<partial name="_ProjectHeader" model="Model.Project" />
+
+<div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
 		@foreach (var formSection in Model.Sections)
 		{
