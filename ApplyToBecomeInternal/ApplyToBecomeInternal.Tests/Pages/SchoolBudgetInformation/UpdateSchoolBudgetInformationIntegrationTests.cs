@@ -66,5 +66,28 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
 		}
+
+		[Fact]
+		public async Task Should_set_decimal_fields_to_default_decimal_in_update_request_when_cleared()
+		{
+			var project = AddGetProject();
+			AddPatchProjectMany(project, composer =>
+				composer
+				.With(r => r.RevenueCarryForwardAtEndMarchCurrentYear, default(decimal))
+				.With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear, default(decimal))
+				.With(r => r.CapitalCarryForwardAtEndMarchCurrentYear, default(decimal))
+				.With(r => r.CapitalCarryForwardAtEndMarchNextYear, default(decimal)));
+
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
+
+			Document.QuerySelector<IHtmlInputElement>("#finance-current-year-2021").Value = string.Empty;
+			Document.QuerySelector<IHtmlInputElement>("#finance-following-year-2022").Value = string.Empty;
+			Document.QuerySelector<IHtmlInputElement>("#finance-forward-2021").Value = string.Empty;
+			Document.QuerySelector<IHtmlInputElement>("#finance-forward-2022").Value = string.Empty;
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
+		}
 	}
 }
