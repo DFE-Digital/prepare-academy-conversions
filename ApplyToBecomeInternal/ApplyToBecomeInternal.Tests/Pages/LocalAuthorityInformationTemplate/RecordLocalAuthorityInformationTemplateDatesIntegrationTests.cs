@@ -130,7 +130,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 		}
 
 		[Fact]
-		public async Task Should_set_dates_to_default_date_when_cleared()
+		public async Task Should_set_dates_to_default_date_in_update_request_when_cleared()
 		{
 			var project = AddGetProject();
 

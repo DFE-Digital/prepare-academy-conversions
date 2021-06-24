@@ -26,7 +26,7 @@ namespace ApplyToBecomeInternal.Models
 
 			if (decimalResult.FirstValue == string.Empty)
 			{
-				bindingContext.Result = ModelBindingResult.Success(default(decimal));
+				bindingContext.Result = ModelBindingResult.Success(0.0m);
 				return Task.CompletedTask;
 			}
 
