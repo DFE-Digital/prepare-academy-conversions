@@ -9,6 +9,13 @@ namespace ApplyToBecomeInternal.Models
 {
 	public class DecimalInputModelBinder : IModelBinder
 	{
+		private readonly ILoggerFactory _loggerFactory;
+
+		public DecimalInputModelBinder(ILoggerFactory loggerFactory)
+		{
+			_loggerFactory = loggerFactory;
+		}
+
 		public Task BindModelAsync(ModelBindingContext bindingContext)
 		{
 			if (bindingContext == null)
@@ -30,7 +37,7 @@ namespace ApplyToBecomeInternal.Models
 				return Task.CompletedTask;
 			}
 
-			return (new DecimalModelBinder(NumberStyles.Any, new LoggerFactory())).BindModelAsync(bindingContext);
+			return (new DecimalModelBinder(NumberStyles.Any, _loggerFactory)).BindModelAsync(bindingContext);
 		}
 	}
 }
