@@ -8,11 +8,11 @@ namespace ApplyToBecomeInternal.Pages
 {
 	public class BaseAcademyConversionProjectPageModel : PageModel
 	{
-		protected readonly AcademyConversionProjectRepository _repository;
+		protected readonly IAcademyConversionProjectRepository _repository;
 
 		public ProjectViewModel Project { get; set; }
 
-		public BaseAcademyConversionProjectPageModel(AcademyConversionProjectRepository repository)
+		public BaseAcademyConversionProjectPageModel(IAcademyConversionProjectRepository repository)
 		{
 			_repository = repository;
 		}

@@ -12,7 +12,7 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 	{
 		private readonly IApplications _applications;
 
-		public IndexModel(IApplications applications, AcademyConversionProjectRepository repository) : base(repository)
+		public IndexModel(IApplications applications, IAcademyConversionProjectRepository repository) : base(repository)
 		{
 			_applications = applications;
 		}

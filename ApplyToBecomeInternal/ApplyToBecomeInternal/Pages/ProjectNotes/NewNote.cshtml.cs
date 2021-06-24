@@ -10,7 +10,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 	{
 		private readonly IProjectNotes _projectNotes;
 
-		public NewNoteModel(AcademyConversionProjectRepository repository, IProjectNotes projectNotes) : base(repository)
+		public NewNoteModel(IAcademyConversionProjectRepository repository, IProjectNotes projectNotes) : base(repository)
 		{
 			_projectNotes = projectNotes;
 		}

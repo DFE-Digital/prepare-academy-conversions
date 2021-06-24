@@ -12,9 +12,9 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 		public IEnumerable<ProjectViewModel> Projects { get; set; }
 		public int ProjectCount => Projects.Count();
 
-		private readonly AcademyConversionProjectRepository _repository;
+		private readonly IAcademyConversionProjectRepository _repository;
 
-		public IndexModel(AcademyConversionProjectRepository repository)
+		public IndexModel(IAcademyConversionProjectRepository repository)
 		{
 			_repository = repository;
 		}

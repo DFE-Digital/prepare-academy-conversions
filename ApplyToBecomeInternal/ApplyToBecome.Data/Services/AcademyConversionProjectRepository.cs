@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ApplyToBecome.Data.Services
 {
-	public class AcademyConversionProjectRepository
+	public class AcademyConversionProjectRepository : IAcademyConversionProjectRepository
 	{
 		private readonly HttpClient _httpClient;
 
@@ -51,5 +51,14 @@ namespace ApplyToBecome.Data.Services
 			var project = await response.Content.ReadFromJsonAsync<AcademyConversionProject>();
 			return new ApiResponse<AcademyConversionProject>(response.StatusCode, project);
 		}
+	}
+
+	public interface IAcademyConversionProjectRepository
+	{
+		Task<ApiResponse<IEnumerable<AcademyConversionProject>>> GetAllProjects();
+
+		Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id);
+
+		Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject);
 	}
 }

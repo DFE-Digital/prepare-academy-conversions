@@ -10,9 +10,9 @@ namespace ApplyToBecomeInternal.ViewComponents
 	public class GeneralInformationViewComponent : ViewComponent
 	{
 		private readonly GeneralInformationService _generalInformationService;
-		private readonly AcademyConversionProjectRepository _repository;
+		private readonly IAcademyConversionProjectRepository _repository;
 
-		public GeneralInformationViewComponent(GeneralInformationService generalInformationService, AcademyConversionProjectRepository repository)
+		public GeneralInformationViewComponent(GeneralInformationService generalInformationService, IAcademyConversionProjectRepository repository)
 		{
 			_generalInformationService = generalInformationService;
 			_repository = repository;

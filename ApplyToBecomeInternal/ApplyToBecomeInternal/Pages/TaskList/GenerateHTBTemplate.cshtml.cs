@@ -4,6 +4,6 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 {
 	public class GenerateHTBTemplateModel : BaseAcademyConversionProjectPageModel
 	{
-		public GenerateHTBTemplateModel(AcademyConversionProjectRepository repository) : base(repository) { }
+		public GenerateHTBTemplateModel(IAcademyConversionProjectRepository repository) : base(repository) { }
 	}
 }
