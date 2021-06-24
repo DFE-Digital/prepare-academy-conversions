@@ -116,18 +116,27 @@ namespace ApplyToBecomeInternal.Models
 
 		// school budget info
 		[BindProperty(Name = "finance-current-year-2021")]
+		[ModelBinder(BinderType = typeof(DecimalInputModelBinder))]
+		[Display(Name = "Revenue carry forward at end-March (current year)")]
 		public decimal? RevenueCarryForwardAtEndMarchCurrentYear { get; set; }
 
 		[BindProperty(Name = "finance-following-year-2022")]
+		[ModelBinder(BinderType = typeof(DecimalInputModelBinder))]
+		[Display(Name = "Projected revenue balance at end-March (following year)")]
 		public decimal? ProjectedRevenueBalanceAtEndMarchNextYear { get; set; }
 
 		[BindProperty(Name = "finance-forward-2021")]
+		[ModelBinder(BinderType = typeof(DecimalInputModelBinder))]
+		[Display(Name = "Capital carry forward at end-March (current year)")]
 		public decimal? CapitalCarryForwardAtEndMarchCurrentYear { get; set; }
 
 		[BindProperty(Name = "finance-forward-2022")]
+		[ModelBinder(BinderType = typeof(DecimalInputModelBinder))]
+		[Display(Name = "Projected capital balance at end-March (following year)")]
 		public decimal? CapitalCarryForwardAtEndMarchNextYear { get; set; }
 
 		[BindProperty(Name = "school-budget-information-additional-information")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string SchoolBudgetInformationAdditionalInformation { get; set; }
 
 		[BindProperty(Name = "school-budget-information-complete")]
