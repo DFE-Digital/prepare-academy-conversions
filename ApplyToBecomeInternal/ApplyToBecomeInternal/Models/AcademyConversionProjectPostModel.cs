@@ -134,6 +134,7 @@ namespace ApplyToBecomeInternal.Models
 		public decimal? CapitalCarryForwardAtEndMarchNextYear { get; set; }
 
 		[BindProperty(Name = "school-budget-information-additional-information")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string SchoolBudgetInformationAdditionalInformation { get; set; }
 
 		[BindProperty(Name = "school-budget-information-complete")]
