@@ -43,19 +43,12 @@ namespace ApplyToBecomeInternal.ViewModels
 			SchoolAndTrustInformationSectionComplete = project.SchoolAndTrustInformationSectionComplete ?? false;
 			SchoolAndTrustInformationTaskListStatus = TaskListItemViewModel.GetSchoolAndTrustInformationTaskListStatus(this);
 
-			SchoolPhase = project.SchoolPhase;
-			AgeRange = project.AgeRange;
-			SchoolType = project.SchoolType;
 			PublishedAdmissionNumber = project.PublishedAdmissionNumber;
-			PercentageFreeSchoolMeals = project.PercentageFreeSchoolMeals;
 			PartOfPfiScheme = project.PartOfPfiScheme;
 			ViabilityIssues = project.ViabilityIssues;
 			FinancialDeficit = project.FinancialDeficit;
-			IsThisADiocesanTrust = project.IsThisADiocesanTrust;
-			PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust = project.PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust;
 			DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters;
 			DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
-			MemberOfParliamentParty = project.MemberOfParliamentParty;
 			GeneralInformationSectionComplete = project.GeneralInformationSectionComplete ?? false;
 			GeneralInformationTaskListStatus = TaskListItemViewModel.GetGeneralInformationTaskListStatus(this);
 
@@ -142,7 +135,7 @@ namespace ApplyToBecomeInternal.ViewModels
 		public decimal? PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust { get; set; }
 		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
 		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
-		public string MemberOfParliamentParty { get; set; }
+		public string ParliamentaryConstituency { get; set; }
 		public bool GeneralInformationSectionComplete { get; set; }
 		public TaskListItemViewModel GeneralInformationTaskListStatus { get; set; }
 

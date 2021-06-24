@@ -15,13 +15,14 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		public async Task Should_navigate_to_and_update_distance_to_trust_headquarters()
 		{
 			var project = AddGetProject();
+			AddGetEstablishmentResponse(project.Urn.ToString());
 			var request = AddPatchProjectMany(project, composer =>
 				composer
 				.With(r => r.DistanceFromSchoolToTrustHeadquarters)
 				.With(r => r.DistanceFromSchoolToTrustHeadquartersAdditionalInformation));
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");
-			await NavigateAsync("Change", 4);
+			await NavigateAsync("Change", 3);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/distance-to-trust-headquarters");
 			Document.QuerySelector<IHtmlInputElement>("#distance-to-trust-headquarters").Value.Should().Be(project.DistanceFromSchoolToTrustHeadquarters.ToSafeString());

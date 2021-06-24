@@ -50,6 +50,7 @@ namespace ApplyToBecomeInternal
 
 			services.AddScoped<ErrorService>();
 			services.AddScoped<SchoolPerformanceService>();
+			services.AddScoped<GeneralInformationService>();
 			services.AddScoped<AcademyConversionProjectRepository>();
 		}
 

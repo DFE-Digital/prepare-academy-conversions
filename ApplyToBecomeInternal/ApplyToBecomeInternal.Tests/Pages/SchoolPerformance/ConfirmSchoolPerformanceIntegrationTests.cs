@@ -2,6 +2,7 @@
 using AngleSharp.Html.Dom;
 using ApplyToBecomeInternal.Extensions;
 using FluentAssertions;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,7 +16,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 		public async Task Should_be_reference_only_and_display_school_performance()
 		{
 			var project = AddGetProject();
-			var schoolPerformance = AddGetSchoolPerformance(project.Urn.ToString());
+			var schoolPerformance = AddGetEstablishmentResponse(project.Urn.ToString());
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
@@ -26,13 +27,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 
 			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.SchoolPerformanceAdditionalInformation);
 
-			Document.QuerySelector("#ofsted-inspection-date").TextContent.Should().Be(schoolPerformance.OfstedLastInspection.ToDateString());
-			Document.QuerySelector("#overall-effectiveness").TextContent.Should().Be(schoolPerformance.OverallEffectiveness.DisplayOfstedRating());
-			Document.QuerySelector("#quality-of-teaching-learning-and-assessment").TextContent.Should().Be(schoolPerformance.QualityOfEducation.DisplayOfstedRating());
-			Document.QuerySelector("#effectiveness-of-leadership-and-management").TextContent.Should().Be(schoolPerformance.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating());
-			Document.QuerySelector("#personal-development-behaviour-and-welfare").TextContent.Should().Be(schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating());
-			Document.QuerySelector("#outcome-for-pupils").TextContent.Should().Be(schoolPerformance.PersonalDevelopment.DisplayOfstedRating());
-			Document.QuerySelector("#early-years-provision").TextContent.Should().Be(schoolPerformance.EarlyYearsProvision.DisplayOfstedRating());
+			Document.QuerySelector("#ofsted-inspection-date").TextContent.Should().Be(DateTime.Parse(schoolPerformance.OfstedLastInspection).ToDateString());
+			Document.QuerySelector("#overall-effectiveness").TextContent.Should().Be(schoolPerformance.MISEstablishment.OverallEffectiveness.DisplayOfstedRating());
+			Document.QuerySelector("#quality-of-teaching-learning-and-assessment").TextContent.Should().Be(schoolPerformance.MISEstablishment.QualityOfEducation.DisplayOfstedRating());
+			Document.QuerySelector("#effectiveness-of-leadership-and-management").TextContent.Should().Be(schoolPerformance.MISEstablishment.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating());
+			Document.QuerySelector("#personal-development-behaviour-and-welfare").TextContent.Should().Be(schoolPerformance.MISEstablishment.BehaviourAndAttitudes.DisplayOfstedRating());
+			Document.QuerySelector("#outcome-for-pupils").TextContent.Should().Be(schoolPerformance.MISEstablishment.PersonalDevelopment.DisplayOfstedRating());
+			Document.QuerySelector("#early-years-provision").TextContent.Should().Be(schoolPerformance.MISEstablishment.EarlyYearsProvision.DisplayOfstedRating());
 		}
 
 		[Fact]

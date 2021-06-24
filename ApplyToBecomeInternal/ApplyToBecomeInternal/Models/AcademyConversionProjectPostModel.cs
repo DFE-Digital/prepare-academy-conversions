@@ -64,6 +64,7 @@ namespace ApplyToBecomeInternal.Models
 		//general info
 
 		[BindProperty(Name = "published-admission-number")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string PublishedAdmissionNumber { get; set; }
 
 		[BindProperty(Name = "viability-issues")]
