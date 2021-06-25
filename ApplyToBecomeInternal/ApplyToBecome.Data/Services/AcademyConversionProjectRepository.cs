@@ -52,13 +52,4 @@ namespace ApplyToBecome.Data.Services
 			return new ApiResponse<AcademyConversionProject>(response.StatusCode, project);
 		}
 	}
-
-	public interface IAcademyConversionProjectRepository
-	{
-		Task<ApiResponse<IEnumerable<AcademyConversionProject>>> GetAllProjects();
-
-		Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id);
-
-		Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject);
-	}
 }

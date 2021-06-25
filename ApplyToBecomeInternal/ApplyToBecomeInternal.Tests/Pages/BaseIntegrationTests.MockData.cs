@@ -1,4 +1,5 @@
 ﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.Establishment;
 using ApplyToBecomeInternal.Tests.Customisations;
 using AutoFixture;
 using AutoFixture.Dsl;

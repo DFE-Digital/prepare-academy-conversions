@@ -1,4 +1,5 @@
 ﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.Establishment;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
