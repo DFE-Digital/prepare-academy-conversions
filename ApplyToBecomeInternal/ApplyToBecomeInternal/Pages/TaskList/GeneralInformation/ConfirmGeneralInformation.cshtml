@@ -3,7 +3,6 @@
 @{
 	Model.SuccessPage = Links.TaskList.Index.Page;
 	ViewData["Title"] = "Confirm general information";
-	var kw = WidthOverride.TwoThirds;
 }
 
 @section BeforeMain
@@ -28,23 +27,7 @@
 				<a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
 			</p>
 		</div>
-		<dl class="govuk-summary-list">
-			<govuk-summary-list-row name="school-phase" label="School phase" key-width="@kw" asp-for="Project.SchoolPhase" />
-			<govuk-summary-list-row name="age-range" label="Age range" key-width="@kw" asp-for="Project.AgeRange" />
-			<govuk-summary-list-row name="school-type" label="School type" key-width="@kw" asp-for="Project.SchoolType" />
-			<govuk-summary-list-row name="number-on-roll" label="Number on roll (NOR)" key-width="@kw" asp-for="Project.CurrentYearPupilNumbers" />
-			<govuk-summary-list-row name="percentage-school-full" label="Percentage the school is full" key-width="@kw" value="@Model.Project.CurrentYearPupilNumbers.AsPercentageOf(Model.Project.CurrentYearCapacity)" />
-			<govuk-summary-list-row name="capacity" label="Capacity" key-width="@kw" value="@Model.Project.CurrentYearCapacity.ToString()" />
-			<govuk-summary-list-row name="published-admission-number" label="Published admission number (PAN)" key-width="@kw" asp-for="Project.PublishedAdmissionNumber" asp-page="@Links.GeneralInformationSection.PublishedAdmissionNumber.Page" asp-route-id="@Model.Project.Id" hidden-text="published admission numbers" />
-			<govuk-summary-list-row name="percentage-free-school-meals" label="Percentage of free school meals at the school (%FSM)" key-width="@kw" value="@Model.Project.PercentageFreeSchoolMeals.ToPercentage()" />
-			<govuk-summary-list-row name="part-of-pfi" label="Part of a private finance initiative (PFI) scheme" key-width="@kw" asp-for="Project.PartOfPfiScheme" />
-			<govuk-summary-list-row name="viability-issues" label="Viability issues" key-width="@kw" asp-for="Project.ViabilityIssues" asp-page="@Links.GeneralInformationSection.ViabilityIssues.Page" asp-route-id="@Model.Project.Id" hidden-text="viability issues" />
-			<govuk-summary-list-row name="financial-deficit" label="Financial deficit" key-width="@kw" asp-for="Project.FinancialDeficit" asp-page="@Links.GeneralInformationSection.FinancialDeficit.Page" asp-route-id="@Model.Project.Id" hidden-text="financial deficit" />
-			<govuk-summary-list-row name="diocesan-multi-academy-trust" label="Is this a diocesan multi-academy trust (MAT)?" key-width="@kw" value="@Model.Project.IsThisADiocesanTrust.ToYesNoString()" asp-page="@Links.GeneralInformationSection.DiocesanMultiAcademyTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="diocesan multi-academy trust" />
-			<govuk-summary-list-row name="percentage-in-diocesan-trust" label="Percentage of good or outstanding schools in the diocesan trust" key-width="@kw" value="@Model.Project.PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust.ToPercentage()" />
-			<govuk-summary-list-row name="distance-to-trust-headquarters" label="Distance from the school to the trust headquarters" key-width="@kw" value="@Model.Project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()" asp-page="@Links.GeneralInformationSection.DistanceFromTrustHeadquarters.Page" asp-route-id="@Model.Project.Id" hidden-text="distance to trust headquarters" />
-			<govuk-summary-list-row name="member-of-parliament-party" label="MP (party)" key-width="@kw" asp-for="Project.MemberOfParliamentParty" />
-		</dl>
+		<vc:general-information />
 		<form method="post">
 			<govuk-checkbox-input name="general-information-complete" asp-for="Project.GeneralInformationSectionComplete" label="Mark this section as complete, you can still make changes later" />
 

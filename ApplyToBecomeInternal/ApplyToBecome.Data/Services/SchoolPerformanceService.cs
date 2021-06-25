@@ -2,45 +2,34 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace ApplyToBecome.Data.Services
 {
-	public class SchoolPerformanceService
+	public class SchoolPerformanceService : EstablishmentServiceBase
 	{
-		private readonly HttpClient _httpClient;
-		private readonly ILogger<SchoolPerformanceService> _logger;
-
-		public SchoolPerformanceService(IHttpClientFactory httpClientFactory, ILogger<SchoolPerformanceService> logger)
-		{
-			_httpClient = httpClientFactory.CreateClient("TramsClient");
-			_logger = logger;
-		}
+		public SchoolPerformanceService(IHttpClientFactory httpClientFactory, ILogger<SchoolPerformanceService> logger) : base(httpClientFactory, logger) { }
 
 		public async Task<SchoolPerformance> GetSchoolPerformanceByUrn(string urn)
 		{
-			var response = await _httpClient.GetAsync($"/establishment/urn/{urn}");
-			if (!response.IsSuccessStatusCode)
+			var establishment = await GetEstablishmentByUrn(urn);
+			var schoolPerformance = new SchoolPerformance();
+
+			if (establishment.MISEstablishment != null)
 			{
-				_logger.LogWarning("Unable to get school performance information for establishment with URN: {urn}", urn);
-				return new SchoolPerformance();
+				schoolPerformance.BehaviourAndAttitudes = establishment.MISEstablishment.BehaviourAndAttitudes;
+				schoolPerformance.EarlyYearsProvision = establishment.MISEstablishment.EarlyYearsProvision;
+				schoolPerformance.EffectivenessOfLeadershipAndManagement = establishment.MISEstablishment.EffectivenessOfLeadershipAndManagement;
+				schoolPerformance.OverallEffectiveness = establishment.MISEstablishment.OverallEffectiveness;
+				schoolPerformance.PersonalDevelopment = establishment.MISEstablishment.PersonalDevelopment;
+				schoolPerformance.QualityOfEducation = establishment.MISEstablishment.QualityOfEducation;
+				schoolPerformance.SixthFormProvision = establishment.MISEstablishment.SixthFormProvision;
 			}
 
-			var content = await response.Content.ReadFromJsonAsync<EstablishmentData>();
-			var schoolPerformance = content.misEstablishment ?? new SchoolPerformance();
-
-			if (DateTime.TryParse(content.ofstedLastInspection, out var ofstedLastInspection))
+			if (DateTime.TryParse(establishment.OfstedLastInspection, out var ofstedLastInspection))
 				schoolPerformance.OfstedLastInspection = ofstedLastInspection;
 
 			return schoolPerformance;
-		}
-
-		private class EstablishmentData
-		{
-			public SchoolPerformance misEstablishment { get; set; }
-
-			public string ofstedLastInspection { get; set; }
 		}
 	}
 }

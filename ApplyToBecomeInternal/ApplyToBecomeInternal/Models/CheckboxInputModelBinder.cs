@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using System;
 using System.Threading.Tasks;
 
@@ -63,8 +64,6 @@ namespace ApplyToBecomeInternal.Models
 			}
 
 			return Task.CompletedTask;
-
-
 		}
 	}
 }

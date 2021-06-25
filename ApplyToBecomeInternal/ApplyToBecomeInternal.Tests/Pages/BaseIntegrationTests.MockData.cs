@@ -1,11 +1,11 @@
 ﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.Establishment;
 using ApplyToBecomeInternal.Tests.Customisations;
 using AutoFixture;
 using AutoFixture.Dsl;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using SchoolPerformanceModel = ApplyToBecome.Data.Models.SchoolPerformance;
 
 namespace ApplyToBecomeInternal.Tests.Pages
 {
@@ -64,20 +64,24 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			_factory.AddErrorResponse($"/conversion-projects/{id}", "patch");
 		}
 
-		public SchoolPerformanceModel AddGetSchoolPerformance(string urn)
+		public EstablishmentResponse AddGetEstablishmentResponse(string urn, bool empty = false)
 		{
-			_fixture.Customizations.Add(new OfstedRatingSpecimenBuilder());
-			var establishmentMockData = _fixture.Create<EstablishmentMockData>();
-			_factory.AddGetWithJsonResponse($"/establishment/urn/{urn}", establishmentMockData);
-			establishmentMockData.misEstablishment.OfstedLastInspection = establishmentMockData.ofstedLastInspection;
-			return establishmentMockData.misEstablishment;
-		}
-
-		private class EstablishmentMockData
-		{
-			public SchoolPerformanceModel misEstablishment { get; set; }
-
-			public DateTime ofstedLastInspection { get; set; }
+			EstablishmentResponse establishmentResponse;
+			if (empty)
+			{
+				establishmentResponse = _fixture.Build<EstablishmentResponse>().OmitAutoProperties().Create();
+			}
+			else
+			{
+				_fixture.Customizations.Add(new OfstedRatingSpecimenBuilder());
+				establishmentResponse = _fixture.Build<EstablishmentResponse>().Create();
+				establishmentResponse.OfstedLastInspection = _fixture.Create<DateTime>().ToShortDateString();
+				establishmentResponse.Census.NumberOfPupils = _fixture.Create<int>().ToString();
+				establishmentResponse.SchoolCapacity = _fixture.Create<int>().ToString();
+			}
+			
+			_factory.AddGetWithJsonResponse($"/establishment/urn/{urn}", establishmentResponse);
+			return establishmentResponse;
 		}
 	}
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ApplyToBecome.Data.Services
 {
-	public class AcademyConversionProjectRepository
+	public class AcademyConversionProjectRepository : IAcademyConversionProjectRepository
 	{
 		private readonly HttpClient _httpClient;
 

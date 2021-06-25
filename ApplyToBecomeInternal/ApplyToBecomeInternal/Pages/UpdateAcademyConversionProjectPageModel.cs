@@ -11,7 +11,7 @@ namespace ApplyToBecomeInternal.Pages
 	{
 		private readonly ErrorService _errorService;
 
-		public UpdateAcademyConversionProjectPageModel(AcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
+		public UpdateAcademyConversionProjectPageModel(IAcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
 		{
 			_errorService = errorService;
 		}

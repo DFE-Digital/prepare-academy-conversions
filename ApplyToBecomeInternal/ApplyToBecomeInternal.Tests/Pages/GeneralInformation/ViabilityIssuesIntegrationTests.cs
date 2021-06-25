@@ -15,6 +15,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		{
 			var (selected, toSelect) = RandomRadioButtons("viability-issues", "Yes", "No");
 			var project = AddGetProject(p => p.ViabilityIssues = selected.Value);
+			AddGetEstablishmentResponse(project.Urn.ToString());
 			var request = AddPatchProject(project, r => r.ViabilityIssues, toSelect.Value);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");

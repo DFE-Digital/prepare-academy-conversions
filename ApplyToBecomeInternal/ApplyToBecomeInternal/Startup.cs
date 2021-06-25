@@ -36,6 +36,8 @@ namespace ApplyToBecomeInternal
 				razorPages.AddRazorRuntimeCompilation();
 			}
 
+			services.AddHttpContextAccessor();
+
 			services.AddSingleton<ITrusts, MockTrusts>();
 			services.AddSingleton<IApplications, MockApplications>();
 			services.AddSingleton<IProjectNotes, MockProjectNotes>();
@@ -50,7 +52,9 @@ namespace ApplyToBecomeInternal
 
 			services.AddScoped<ErrorService>();
 			services.AddScoped<SchoolPerformanceService>();
-			services.AddScoped<AcademyConversionProjectRepository>();
+			services.AddScoped<GeneralInformationService>();
+			services.AddScoped<IAcademyConversionProjectRepository, AcademyConversionProjectRepository>();
+			services.Decorate<IAcademyConversionProjectRepository, AcademyConversionProjectItemsCacheDecorator>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

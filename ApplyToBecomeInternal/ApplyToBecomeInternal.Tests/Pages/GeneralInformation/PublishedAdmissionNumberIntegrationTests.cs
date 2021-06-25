@@ -14,6 +14,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		public async Task Should_navigate_to_and_update_published_admission_number()
 		{
 			var project = AddGetProject();
+			AddGetEstablishmentResponse(project.Urn.ToString());
 			var request = AddPatchProject(project, r => r.PublishedAdmissionNumber);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");
