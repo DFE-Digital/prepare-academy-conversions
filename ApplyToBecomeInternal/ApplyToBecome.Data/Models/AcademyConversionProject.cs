@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ApplyToBecome.Data.Models
 {
@@ -82,7 +83,10 @@ namespace ApplyToBecome.Data.Models
 		public int? YearFourProjectedPupilNumbers { get; set; }
 		public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
-		//key stage performance tables
+		// key stage performance tables
 		public bool? KeyStagePerformanceTablesAdditionalInformation { get; set; }
+
+		// project notes
+		public IEnumerable<ProjectNote> ProjectNotes { get; set; }
 	}
 }
