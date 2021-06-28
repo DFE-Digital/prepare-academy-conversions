@@ -148,7 +148,16 @@ namespace ApplyToBecomeInternal.Models
 		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
-		//key stage performance tables
+		// key stage performance tables
 		public bool? KeyStagePerformanceTablesAdditionalInformation { get; set; }
+
+		// project note
+		[BindProperty(Name = "project-note-subject")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
+		public string ProjectNoteSubject { get; set; }
+
+		[BindProperty(Name = "project-note-body")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
+		public string ProjectNoteBody { get; set; }
 	}
 }
