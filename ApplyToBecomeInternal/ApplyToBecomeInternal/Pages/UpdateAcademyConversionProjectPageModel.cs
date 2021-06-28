@@ -52,13 +52,10 @@ namespace ApplyToBecomeInternal.Pages
 				return Page();
 			}
 
-			if (Request.Query.ContainsKey("return") && Request.Query["return"].Count == 1)
+			var (returnPage, fragment) = GetReturnPageAndFragment();
+			if (!string.IsNullOrWhiteSpace(returnPage))
 			{
-				var returnPage = Request.Query["return"][0];
-				var page = WebUtility.UrlDecode(returnPage);
-				Request.Query.TryGetValue("fragment", out var fragment);
-				var f = fragment.Count == 1 ? fragment[0] : null;
-				return RedirectToPage(page, null, new { id }, f);
+				return RedirectToPage(returnPage, null, new { id }, fragment);
 			}
 
 			return RedirectToPage(SuccessPage, new { id });
@@ -107,6 +104,13 @@ namespace ApplyToBecomeInternal.Pages
 				SchoolPupilForecastsAdditionalInformation = AcademyConversionProject.SchoolPupilForecastsAdditionalInformation,
 				KeyStagePerformanceTablesAdditionalInformation = AcademyConversionProject.KeyStagePerformanceTablesAdditionalInformation,
 			};
+		}
+
+		private (string, string) GetReturnPageAndFragment()
+		{
+			Request.Query.TryGetValue("return", out var returnQuery);
+			Request.Query.TryGetValue("fragment", out var fragmentQuery);
+			return (returnQuery, fragmentQuery);
 		}
 	}
 }
