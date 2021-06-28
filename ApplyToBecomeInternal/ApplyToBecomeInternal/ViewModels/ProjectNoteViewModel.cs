@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace ApplyToBecomeInternal.Models
+namespace ApplyToBecomeInternal.ViewModels
 {
-	public class ProjectNote
+	public class ProjectNoteViewModel
 	{
-		public ProjectNote(string title, string body, string author, DateTime date)
+		public ProjectNoteViewModel(string title, string body, string author, DateTime date)
 		{
 			Subject = title;
 			Note = body;
@@ -14,7 +14,7 @@ namespace ApplyToBecomeInternal.Models
 
 		private string FormatDateAndTime(DateTime date)
 		{
-			return $"{date.Day} {date.ToString("Y")} at {date.ToString("t")}{date.ToString("tt").ToLower()}";
+			return $"{date.Day} {date:Y} at {date:t}{date.ToString("tt").ToLower()}";
 		}
 
 		public string Subject { get; set; }
