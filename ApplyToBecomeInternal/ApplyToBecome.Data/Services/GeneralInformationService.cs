@@ -1,19 +1,22 @@
 ﻿using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Models.Establishment;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ApplyToBecome.Data.Services
 {
-	public class GeneralInformationService : EstablishmentServiceBase
+	public class GeneralInformationService
 	{
-		public GeneralInformationService(IHttpClientFactory httpClientFactory, ILogger<SchoolPerformanceService> logger) : base(httpClientFactory, logger) { }
+		private readonly IGetEstablishment _getEstablishment;
+
+		public GeneralInformationService(IGetEstablishment getEstablishment)
+		{
+			_getEstablishment = getEstablishment;
+		}
 
 		public async Task<GeneralInformation> GetGeneralInformationByUrn(string urn)
 		{
-			var establishment = await GetEstablishmentByUrn(urn);
+			var establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
 			var generalInformation = new GeneralInformation
 			{
 				SchoolPhase = establishment.PhaseOfEducation?.Name,

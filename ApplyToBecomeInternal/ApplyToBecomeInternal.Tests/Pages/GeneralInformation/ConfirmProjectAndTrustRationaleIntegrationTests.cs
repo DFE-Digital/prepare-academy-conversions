@@ -88,21 +88,21 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 
 			await NavigateAsync("General information");
 
-			Document.QuerySelector("#school-phase-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#age-range-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#school-type-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#number-on-roll-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#percentage-school-full-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#capacity-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#published-admission-number-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#percentage-free-school-meals-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#part-of-pfi-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#viability-issues-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#financial-deficit-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#diocesan-multi-academy-trust-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#percentage-in-diocesan-trust-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#distance-to-trust-headquarters-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#parliamentary-constituency-empty").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#school-phase").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#age-range").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#school-type").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#number-on-roll").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#percentage-school-full").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#capacity").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#published-admission-number").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#percentage-free-school-meals").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#part-of-pfi").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#viability-issues").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#financial-deficit").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#diocesan-multi-academy-trust").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#percentage-in-diocesan-trust").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#parliamentary-constituency").TextContent.Should().Be("Empty");
 			Document.QuerySelector<IHtmlInputElement>("#general-information-complete").IsChecked.Should().BeFalse();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();

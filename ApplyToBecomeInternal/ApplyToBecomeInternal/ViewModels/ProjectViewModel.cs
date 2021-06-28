@@ -44,7 +44,6 @@ namespace ApplyToBecomeInternal.ViewModels
 			SchoolAndTrustInformationTaskListStatus = TaskListItemViewModel.GetSchoolAndTrustInformationTaskListStatus(this);
 
 			PublishedAdmissionNumber = project.PublishedAdmissionNumber;
-			PartOfPfiScheme = project.PartOfPfiScheme;
 			ViabilityIssues = project.ViabilityIssues;
 			FinancialDeficit = project.FinancialDeficit;
 			DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters;
@@ -123,19 +122,11 @@ namespace ApplyToBecomeInternal.ViewModels
 		public TaskListItemViewModel SchoolAndTrustInformationTaskListStatus { get; set; }
 
 		//general info
-		public string SchoolPhase { get; set; }
-		public string AgeRange { get; set; }
-		public string SchoolType { get; set; }
 		public string PublishedAdmissionNumber { get; set; }
-		public decimal? PercentageFreeSchoolMeals { get; set; }
-		public string PartOfPfiScheme { get; set; }
 		public string ViabilityIssues { get; set; }
 		public string FinancialDeficit { get; set; }
-		public bool? IsThisADiocesanTrust { get; set; }
-		public decimal? PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust { get; set; }
 		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
 		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
-		public string ParliamentaryConstituency { get; set; }
 		public bool GeneralInformationSectionComplete { get; set; }
 		public TaskListItemViewModel GeneralInformationTaskListStatus { get; set; }
 

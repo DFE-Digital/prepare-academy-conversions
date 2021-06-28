@@ -3,6 +3,7 @@ using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages
@@ -49,6 +50,15 @@ namespace ApplyToBecomeInternal.Pages
 				_errorService.AddTramsError();
 				await SetProject(id);
 				return Page();
+			}
+
+			if (Request.Query.ContainsKey("return") && Request.Query["return"].Count == 1)
+			{
+				var returnPage = Request.Query["return"][0];
+				var page = WebUtility.UrlDecode(returnPage);
+				Request.Query.TryGetValue("fragment", out var fragment);
+				var f = fragment.Count == 1 ? fragment[0] : null;
+				return RedirectToPage(page, null, new { id }, f);
 			}
 
 			return RedirectToPage(SuccessPage, new { id });

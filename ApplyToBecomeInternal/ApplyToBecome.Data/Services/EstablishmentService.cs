@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace ApplyToBecome.Data.Services
 {
-	public abstract class EstablishmentServiceBase
+	public class EstablishmentService : IGetEstablishment
 	{
 		private readonly HttpClient _httpClient;
 		private readonly ILogger<SchoolPerformanceService> _logger;
 
-		protected EstablishmentServiceBase(IHttpClientFactory httpClientFactory, ILogger<SchoolPerformanceService> logger)
+		public EstablishmentService(IHttpClientFactory httpClientFactory, ILogger<SchoolPerformanceService> logger)
 		{
 			_httpClient = httpClientFactory.CreateClient("TramsClient");
 			_logger = logger;
 		}
 
-		protected async Task<EstablishmentResponse> GetEstablishmentByUrn(string urn)
+		public async Task<EstablishmentResponse> GetEstablishmentByUrn(string urn)
 		{
 			var response = await _httpClient.GetAsync($"/establishment/urn/{urn}");
 			if (!response.IsSuccessStatusCode)
