@@ -40,7 +40,6 @@ namespace ApplyToBecomeInternal
 
 			services.AddSingleton<ITrusts, MockTrusts>();
 			services.AddSingleton<IApplications, MockApplications>();
-			services.AddSingleton<IProjectNotes, MockProjectNotes>();
 
 			services.AddHttpClient("TramsClient", (sp, client) =>
 			{
