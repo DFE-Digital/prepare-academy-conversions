@@ -1,32 +1,20 @@
-using ApplyToBecome.Data;
-using ApplyToBecome.Data.Models.ProjectNotes;
 using ApplyToBecome.Data.Services;
-using ApplyToBecomeInternal.Models;
+using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.ProjectNotes
 {
-	public class NewNoteModel : BaseAcademyConversionProjectPageModel
+	public class NewNoteModel : UpdateAcademyConversionProjectPageModel
 	{
-		private readonly IProjectNotes _projectNotes;
-
-		public NewNoteModel(IAcademyConversionProjectRepository repository, IProjectNotes projectNotes) : base(repository)
+		public NewNoteModel(IAcademyConversionProjectRepository repository, ErrorService errorService) : base(repository, errorService)
 		{
-			_projectNotes = projectNotes;
 		}
 
-		[BindProperty]
-		public string subject { get; set; }
-
-		[BindProperty]
-		public string body { get; set; }
-
-		public IActionResult OnPost(int id)
+		public override async Task<IActionResult> OnPostAsync(int id)
 		{
-			var note = new ProjectNote(subject, body);
-			_projectNotes.SaveNote(id, note);
 			TempData["newNote"] = true;
-			return RedirectToPage(Links.ProjectNotes.Index.Page, new { id = id });
+			return await base.OnPostAsync(id);
 		}
 	}
 }
