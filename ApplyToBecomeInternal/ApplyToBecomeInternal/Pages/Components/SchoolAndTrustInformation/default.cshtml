@@ -1,0 +1,23 @@
+﻿@model SchoolAndTrustInformationViewModel
+@{
+	var kw = WidthOverride.TwoThirds;
+}
+
+<dl class="govuk-summary-list">
+	<govuk-summary-list-row name="project-recommendation" label="Recommendation" key-width="@kw" value="@Model.RecommendationForProject" asp-page="@Links.SchoolAndTrustInformationSection.ProjectRecommendation.Page" asp-route-id="@Model.Id" hidden-text="recommendation" />
+	<govuk-summary-list-row name="author" label="Author" key-width="@kw" value="@Model.Author" asp-page="@Links.SchoolAndTrustInformationSection.Author.Page" asp-route-id="@Model.Id" hidden-text="author" />
+	
+	<govuk-summary-list-row name="cleared-by" label="Cleared by" key-width="@kw" value="@Model.ClearedBy" asp-page="@Links.SchoolAndTrustInformationSection.ClearedBy.Page" asp-route-id="@Model.Id" hidden-text="cleared by" />
+	<govuk-summary-list-row name="academy-order-required" label="Is an academy order (AO) required?" key-width="@kw" value="@Model.AcademyOrderRequired" asp-page="@Links.SchoolAndTrustInformationSection.AcademyOrderRequired.Page" asp-route-id="@Model.Id" hidden-text="academy order required" />
+	<govuk-summary-list-row name="head-teacher-board-date" label="Date of HTB" key-width="@kw" value="@Model.HeadTeacherBoardDate" asp-page="@Links.SchoolAndTrustInformationSection.HeadTeacherBoardDate.Page" asp-route-id="@Model.Id" hidden-text="head teacher board date" />
+	<govuk-summary-list-row name="previous-head-teacher-board" label="Previous HTB" key-width="@kw" value="@Model.PreviousHeadTeacherBoardDate" />
+	<govuk-summary-list-row name="school-name" label="School name" key-width="@kw" asp-for="SchoolName" />
+	<govuk-summary-list-row name="unique-reference-number" label="Unique reference number (URN)" key-width="@kw" asp-for="SchoolUrn" />
+	<govuk-summary-list-row name="local-authority" label="Local authority" key-width="@kw" asp-for="LocalAuthority" />
+	<govuk-summary-list-row name="trust-reference-number" label="Trust reference number" key-width="@kw" asp-for="TrustReferenceNumber" />
+	<govuk-summary-list-row name="name-of-trust" label="Name of trust" key-width="@kw" asp-for="NameOfTrust" />
+	<govuk-summary-list-row name="sponsor-reference-number" label="Sponsor reference number" key-width="@kw" asp-for="SponsorReferenceNumber" />
+	<govuk-summary-list-row name="sponsor-name" label="Sponsor name" key-width="@kw" asp-for="SponsorName" />
+	<govuk-summary-list-row name="academy-type-and-route" label="Academy type and route" key-width="@kw" asp-for="AcademyTypeAndRoute" />
+	<govuk-summary-list-row name="proposed-academy-opening-date" label="Proposed academy opening date" key-width="@kw" value="@Model.ProposedAcademyOpeningDate" asp-page="@Links.SchoolAndTrustInformationSection.ProposedAcademyOpeningDate.Page" asp-route-id="@Model.Id" hidden-text="proposed academy opening date" />
+</dl>

@@ -65,7 +65,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.RisksAndIssues
 
 			await NavigateAsync("Risks and issues");
 
-			Document.QuerySelector("#risks-and-issues-empty").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#risks-and-issues").TextContent.Should().Be("Empty");
 			Document.QuerySelector<IHtmlInputElement>("#risks-and-issues-complete").IsChecked.Should().BeFalse();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();

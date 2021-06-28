@@ -40,6 +40,7 @@ namespace ApplyToBecomeInternal.TagHelpers
 				Value = value,
 				Page = Page,
 				RouteId = RouteId,
+				Return = ViewContext.ViewData["Return"]?.ToString(),
 				HiddenText = HiddenText,
 				KeyWidth = KeyWidth,
 				ValueWidth = ValueWidth

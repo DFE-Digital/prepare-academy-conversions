@@ -77,7 +77,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 			Document.QuerySelector("#finance-following-year-2022").TextContent.Should().Be(0m.ToMoneyString(true));
 			Document.QuerySelector("#finance-forward-2021").TextContent.Should().Be(0m.ToMoneyString(true));
 			Document.QuerySelector("#finance-forward-2022").TextContent.Should().Be(0m.ToMoneyString(true));
-			Document.QuerySelector("#additional-information-empty").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#additional-information").TextContent.Should().Be("Empty");
 			Document.QuerySelector<IHtmlInputElement>("#school-budget-information-complete").IsChecked.Should().BeFalse();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();

@@ -8,7 +8,7 @@
 
 @section BeforeMain
 {
-	<a back-link-for="@Links.TaskList.Index"></a>
+	<govuk-back-link link-item="@Links.TaskList.Index" />
 }	
 <span class="govuk-caption-l">@Model.Project.SchoolName</span>
 <h1 class="govuk-heading-l">School performance (Ofsted information)</h1>
@@ -20,7 +20,7 @@
 		<p class="govuk-body-s">TRAMS last updated on: 23 March 2021</p><br>
 	</div>
 	<div class="govuk-grid-column-two-thirds">
-		<partial name="_SchoolPerformanceSummaryList" model="@Model.Project.SchoolURN" />
+		<vc:school-performance show-additional-information="false" />
 	</div>
 	<div class="govuk-grid-column-two-thirds">
 		<h3 class="govuk-heading-m">Additional information</h3>
