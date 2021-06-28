@@ -3,6 +3,7 @@ using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages
@@ -33,7 +34,7 @@ namespace ApplyToBecomeInternal.Pages
 			}
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id)
+		public virtual async Task<IActionResult> OnPostAsync(int id)
 		{
 			_errorService.AddErrors(Request.Form.Keys, ModelState);
 			if (_errorService.HasErrors())
@@ -96,6 +97,11 @@ namespace ApplyToBecomeInternal.Pages
 				SchoolBudgetInformationSectionComplete = AcademyConversionProject.SchoolBudgetInformationSectionComplete,
 				SchoolPupilForecastsAdditionalInformation = AcademyConversionProject.SchoolPupilForecastsAdditionalInformation,
 				KeyStagePerformanceTablesAdditionalInformation = AcademyConversionProject.KeyStagePerformanceTablesAdditionalInformation,
+				ProjectNote = (!string.IsNullOrEmpty(AcademyConversionProject.ProjectNoteSubject) || !string.IsNullOrEmpty(AcademyConversionProject.ProjectNoteBody)) ?
+					new ProjectNote
+					{
+						Subject = AcademyConversionProject.ProjectNoteSubject, Note = AcademyConversionProject.ProjectNoteBody, Author = "", Date = DateTime.Now
+					} : null
 			};
 		}
 	}
