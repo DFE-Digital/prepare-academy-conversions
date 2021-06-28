@@ -1,5 +1,4 @@
 using ApplyToBecome.Data.Models;
-using ApplyToBecome.Data.Models.GenerateHTBTemplate;
 using System;
 using System.Collections.Generic;
 
@@ -95,7 +94,6 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string AssignedDate { get; }
 		public string Phase { get; }
 		public DateTime? HeadTeacherBoardDate { get; set; }
-		public IEnumerable<DocumentDetails> ProjectDocuments { get; set; }
 
 		public DateTime? LocalAuthorityInformationTemplateSentDate { get; set; }
 		public DateTime? LocalAuthorityInformationTemplateReturnedDate { get; set; }
