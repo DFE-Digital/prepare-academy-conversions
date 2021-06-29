@@ -13,7 +13,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 		public AddProjectNoteIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
 
 		[Fact]
-		public async Task Should_navigate_to_add_note_from_project_notes_and_back_to_project_list()
+		public async Task Should_navigate_to_add_note_from_project_notes_and_back_to_project_notes()
 		{
 			var project = AddGetProject();
 
