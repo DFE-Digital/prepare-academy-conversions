@@ -6,7 +6,7 @@
 
 @section BeforeMain
 {
-	<a back-link-for="@Links.TaskList.Index"></a>
+	<govuk-back-link link-item="@Links.TaskList.Index" />
 }
 <span class="govuk-caption-l">@Model.Project.SchoolName</span>
 <h1 class="govuk-heading-l">
@@ -35,7 +35,7 @@
 	</div>
 	<div class="govuk-grid-column-full">
 		<dl class="govuk-summary-list">
-			<govuk-summary-list-row name="additional-information" label="Additional information" value="@Model.Project.SchoolPupilForecastsAdditionalInformation" asp-page="@Links.SchoolPupilForecastsSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
+			<govuk-summary-list-row id="additional-information" name="school-pupil-forecasts-additional-information" label="Additional information" value="@Model.Project.SchoolPupilForecastsAdditionalInformation" asp-page="@Links.SchoolPupilForecastsSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
 		</dl>
 		<a class="govuk-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</a>
 	</div>

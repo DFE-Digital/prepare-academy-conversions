@@ -25,7 +25,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 
 			Document.QuerySelector("#project-recommendation").TextContent.Should().Be(project.RecommendationForProject);
 			Document.QuerySelector("#author").TextContent.Should().Be(project.Author);
-			Document.QuerySelector("#version").TextContent.Should().Be(project.Version);
 			Document.QuerySelector("#cleared-by").TextContent.Should().Be(project.ClearedBy);
 			Document.QuerySelector("#academy-order-required").TextContent.Should().Be(project.AcademyOrderRequired);
 			Document.QuerySelector("#head-teacher-board-date").TextContent.Should().Be(project.HeadTeacherBoardDate.ToDateString());
@@ -35,6 +34,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			Document.QuerySelector("#local-authority").TextContent.Should().Be(project.LocalAuthority);
 			Document.QuerySelector("#trust-reference-number").TextContent.Should().Be(project.TrustReferenceNumber);
 			Document.QuerySelector("#name-of-trust").TextContent.Should().Be(project.NameOfTrust);
+			Document.QuerySelector("#sponsor-reference-number").TextContent.Should().Be(project.SponsorReferenceNumber);
 			Document.QuerySelector("#sponsor-name").TextContent.Should().Be(project.SponsorName);
 			Document.QuerySelector("#academy-type-and-route").TextContent.Should().Be(project.AcademyTypeAndRoute);
 			Document.QuerySelector("#proposed-academy-opening-date").TextContent.Should().Be(project.ProposedAcademyOpeningDate.ToDateString(true));
@@ -66,7 +66,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			{
 				project.RecommendationForProject = null;
 				project.Author = null;
-				project.Version = null;
 				project.ClearedBy = null;
 				project.AcademyOrderRequired = null;
 				project.HeadTeacherBoardDate = null;
@@ -76,6 +75,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 				project.LocalAuthority = null;
 				project.TrustReferenceNumber = null;
 				project.NameOfTrust = null;
+				project.SponsorReferenceNumber = null;
 				project.SponsorName = null;
 				project.AcademyTypeAndRoute = null;
 				project.ProposedAcademyOpeningDate = null;
@@ -90,21 +90,21 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 
 			await NavigateAsync("School and trust information and project dates");
 
-			Document.QuerySelector("#project-recommendation-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#author-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#version-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#cleared-by-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#academy-order-required-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#head-teacher-board-date-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#previous-head-teacher-board-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#school-name-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#unique-reference-number-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#local-authority-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#trust-reference-number-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#name-of-trust-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#sponsor-name-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#academy-type-and-route-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#proposed-academy-opening-date-empty").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#project-recommendation").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#author").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#cleared-by").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#academy-order-required").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#head-teacher-board-date").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#previous-head-teacher-board").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#school-name").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#unique-reference-number").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#local-authority").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#trust-reference-number").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#name-of-trust").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#sponsor-reference-number").TextContent.Should().Be("Not applicable");
+			Document.QuerySelector("#sponsor-name").TextContent.Should().Be("Not applicable");
+			Document.QuerySelector("#academy-type-and-route").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#proposed-academy-opening-date").TextContent.Should().Be("Empty");
 			Document.QuerySelector<IHtmlInputElement>("#school-and-trust-information-complete").IsChecked.Should().BeFalse();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();

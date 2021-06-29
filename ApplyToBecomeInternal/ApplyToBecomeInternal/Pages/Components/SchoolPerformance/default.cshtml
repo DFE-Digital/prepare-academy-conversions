@@ -1,0 +1,18 @@
+﻿@model SchoolPerformanceViewModel
+@{
+	var kw = WidthOverride.TwoThirds;
+}
+
+<dl class="govuk-summary-list">
+	<govuk-summary-list-row id="ofsted-inspection-date" label="Ofsted inspection date" key-width="@kw" value="@Model.OfstedLastInspection" />
+	<govuk-summary-list-row id="overall-effectiveness" label="Overall effectiveness" key-width="@kw" value="@Model.OverallEffectiveness" />
+	<govuk-summary-list-row id="effectiveness-of-leadership-and-management" label="Effectiveness of leadership and management" key-width="@kw" value="@Model.EffectivenessOfLeadershipAndManagement" />
+	<govuk-summary-list-row id="quality-of-teaching-learning-and-assessment" label="Quality of teaching, learning and assessment" key-width="@kw" value="@Model.QualityOfEducation" />
+	<govuk-summary-list-row id="personal-development-behaviour-and-welfare" label="Personal development, behaviour and welfare" key-width="@kw" value="@Model.BehaviourAndAttitudes" />
+	<govuk-summary-list-row id="outcome-for-pupils" label="Outcome for pupils" key-width="@kw" value="@Model.PersonalDevelopment" />
+	<govuk-summary-list-row id="early-years-provision" label="Early years provision" key-width="@kw" value="@Model.EarlyYearsProvision" />
+	@if (Model.ShowAdditionalInformation)
+	{
+		<govuk-summary-list-row name="school-performance-additional-information" label="Additional information" key-width="@kw" value="@Model.AdditionalInformation" asp-page="@Links.SchoolPerformance.AdditionalInformation.Page" asp-route-id="@Model.Id" hidden-text="additional information" />
+	}
+</dl>

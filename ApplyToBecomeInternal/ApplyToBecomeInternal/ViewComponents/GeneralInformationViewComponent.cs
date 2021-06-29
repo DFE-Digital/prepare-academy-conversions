@@ -53,7 +53,7 @@ namespace ApplyToBecomeInternal.ViewComponents
 				ParliamentaryConstituency = generalInformation.ParliamentaryConstituency
 			};
 
-			return View("GeneralInformationSummaryList", viewModel);
+			return View(viewModel);
 		}
 	}
 }

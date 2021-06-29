@@ -50,6 +50,8 @@ namespace ApplyToBecomeInternal
 			});
 
 			services.AddScoped<ErrorService>();
+			services.AddScoped<IGetEstablishment, EstablishmentService>();
+			services.Decorate<IGetEstablishment, GetEstablishmentItemCacheDecorator>();
 			services.AddScoped<SchoolPerformanceService>();
 			services.AddScoped<GeneralInformationService>();
 			services.AddScoped<IAcademyConversionProjectRepository, AcademyConversionProjectRepository>();

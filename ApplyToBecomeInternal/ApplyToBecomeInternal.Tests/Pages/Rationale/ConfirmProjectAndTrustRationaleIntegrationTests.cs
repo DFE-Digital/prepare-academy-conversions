@@ -66,8 +66,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 
 			await NavigateAsync("Rationale");
 
-			Document.QuerySelector("#rationale-for-project-empty").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#rationale-for-trust-empty").TextContent.Should().Be("Empty"); 
+			Document.QuerySelector("#rationale-for-project").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#rationale-for-trust").TextContent.Should().Be("Empty"); 
 			Document.QuerySelector<IHtmlInputElement>("#rationale-complete").IsChecked.Should().BeFalse();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();

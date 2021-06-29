@@ -10,15 +10,24 @@
 		}
 		else
 		{
-			<span id="@Model.Id-empty" class="empty">Empty</span>
+			<span id="@Model.Id" class="empty">Empty</span>
 		}
 	</dd>
 	<dd class="govuk-summary-list__actions">
 		@if (!string.IsNullOrEmpty(Model.Page) && !string.IsNullOrEmpty(Model.RouteId))
 		{
-			<a class="govuk-link" asp-page="@Model.Page" asp-route-id="@Model.RouteId">
-				Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
-			</a>
+			if (ViewData["IncludeFragment"] is bool includeFragment && includeFragment)
+			{
+				<a class="govuk-link" asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return" asp-route-fragment="@Model.Id">
+					Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
+				</a>
+			}
+			else
+			{
+				<a class="govuk-link" asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return">
+					Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
+				</a>
+			}
 		}
 	</dd>
 </div>

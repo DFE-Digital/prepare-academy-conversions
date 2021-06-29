@@ -8,11 +8,11 @@
 {
 	@if (ViewData["Referer"]?.ToString()?.Contains("local-authority-information") == true)
     {
-		<a back-link-for="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates"></a>
+		<govuk-back-link link-item="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates" />
     }
 	else
     {
-	    <a back-link-for="@Links.TaskList.Index"></a>
+	    <govuk-back-link link-item="@Links.TaskList.Index" />
     }
 }
 

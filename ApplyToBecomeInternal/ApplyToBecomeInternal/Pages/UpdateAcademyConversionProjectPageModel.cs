@@ -1,9 +1,10 @@
-﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages
@@ -50,6 +51,12 @@ namespace ApplyToBecomeInternal.Pages
 				_errorService.AddTramsError();
 				await SetProject(id);
 				return Page();
+			}
+
+			var (returnPage, fragment) = GetReturnPageAndFragment();
+			if (!string.IsNullOrWhiteSpace(returnPage))
+			{
+				return RedirectToPage(returnPage, null, new { id }, fragment);
 			}
 
 			return RedirectToPage(SuccessPage, new { id });
@@ -103,6 +110,13 @@ namespace ApplyToBecomeInternal.Pages
 						Subject = AcademyConversionProject.ProjectNoteSubject, Note = AcademyConversionProject.ProjectNoteBody, Author = ""
 					} : null
 			};
+		}
+
+		private (string, string) GetReturnPageAndFragment()
+		{
+			Request.Query.TryGetValue("return", out var returnQuery);
+			Request.Query.TryGetValue("fragment", out var fragmentQuery);
+			return (returnQuery, fragmentQuery);
 		}
 	}
 }
