@@ -7,124 +7,124 @@ namespace ApplyToBecomeInternal.Models
 {
 	public class HtbTemplate
 	{
-		[PlaceholderText("SchoolUrn")]
+		[DocumentText("SchoolUrn")]
 		public string SchoolUrn { get; set; }
-		[PlaceholderText("SchoolName")]
+		[DocumentText("SchoolName")]
 		public string SchoolName { get; set; }
-		[PlaceholderText("LocalAuthority")]
+		[DocumentText("LocalAuthority")]
 		public string LocalAuthority { get; set; }
 		public string ApplicationReferenceNumber { get; set; }
 		public string ProjectStatus { get; set; }
 		public string ApplicationReceivedDate { get; set; }
 		public string AssignedDate { get; set; }
-		[PlaceholderText("HeadTeacherBoardDate")]
+		[DocumentText("HeadTeacherBoardDate")]
 		public string HeadTeacherBoardDate { get; set; }
 		public string OpeningDate { get; set; }
 		public string BaselineDate { get; set; }
 
 		//school/trust info
-		[PlaceholderText("RecommendationForProject")]
+		[DocumentText("RecommendationForProject")]
 		public string RecommendationForProject { get; set; }
-		[PlaceholderText("Author")]
+		[DocumentText("Author")]
 		public string Author { get; set; }
-		[PlaceholderText("Version")]
+		[DocumentText("Version")]
 		public string Version { get; set; }
-		[PlaceholderText("ClearedBy")]
+		[DocumentText("ClearedBy")]
 		public string ClearedBy { get; set; }
-		[PlaceholderText("AcademyOrderRequired")]
+		[DocumentText("AcademyOrderRequired")]
 		public string AcademyOrderRequired { get; set; }
-		[PlaceholderText("PreviousHeadTeacherBoardDate")]
+		[DocumentText("PreviousHeadTeacherBoardDate")]
 		public string PreviousHeadTeacherBoardDate { get; set; }
 		public string PreviousHeadTeacherBoardLink { get; set; }
-		[PlaceholderText("TrustReferenceNumber")]
+		[DocumentText("TrustReferenceNumber")]
 		public string TrustReferenceNumber { get; set; }
-		[PlaceholderText("TrustName")]
+		[DocumentText("TrustName")]
 		public string NameOfTrust { get; set; }
-		[PlaceholderText("SponsorReferenceNumber")]
+		[DocumentText("SponsorReferenceNumber")]
 		public string SponsorReferenceNumber { get; set; }
-		[PlaceholderText("SponsorName")]
+		[DocumentText("SponsorName")]
 		public string SponsorName { get; set; }
-		[PlaceholderText("AcademyTypeAndRoute")]
+		[DocumentText("AcademyTypeAndRoute")]
 		public string AcademyTypeAndRoute { get; set; }
-		[PlaceholderText("ProposedAcademyOpeningDate")]
+		[DocumentText("ProposedAcademyOpeningDate")]
 		public string ProposedAcademyOpeningDate { get; set; }
 
 		//general info
-		[PlaceholderText("SchoolPhase")]
+		[DocumentText("SchoolPhase")]
 		public string SchoolPhase { get; set; }
-		[PlaceholderText("AgeRange")]
+		[DocumentText("AgeRange")]
 		public string AgeRange { get; set; }
-		[PlaceholderText("SchoolType")]
+		[DocumentText("SchoolType")]
 		public string SchoolType { get; set; }
-		[PlaceholderText("NumberOnRoll")]
+		[DocumentText("NumberOnRoll")]
 		public string NumberOnRoll { get; set; }
-		[PlaceholderText("PercentageSchoolFull")]
+		[DocumentText("PercentageSchoolFull")]
 		public string PercentageSchoolFull { get; set; }
-		[PlaceholderText("SchoolCapacity")]
+		[DocumentText("SchoolCapacity")]
 		public string SchoolCapacity { get; set; }
-		[PlaceholderText("PublishedAdmissionNumber")]
+		[DocumentText("PublishedAdmissionNumber")]
 		public string PublishedAdmissionNumber { get; set; }
-		[PlaceholderText("PercentageFreeSchoolMeals")]
+		[DocumentText("PercentageFreeSchoolMeals")]
 		public string PercentageFreeSchoolMeals { get; set; }
-		[PlaceholderText("PartOfPfiScheme")]
+		[DocumentText("PartOfPfiScheme")]
 		public string PartOfPfiScheme { get; set; }
-		[PlaceholderText("ViabilityIssues")]
+		[DocumentText("ViabilityIssues")]
 		public string ViabilityIssues { get; set; }
-		[PlaceholderText("FinancialDeficit")]
+		[DocumentText("FinancialDeficit")]
 		public string FinancialDeficit { get; set; }
-		[PlaceholderText("IsSchoolLinkedToADiocese")]
+		[DocumentText("IsSchoolLinkedToADiocese")]
 		public string IsSchoolLinkedToADiocese { get; set; }
-		[PlaceholderText("PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust")]
+		[DocumentText("PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust")]
 		public string PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust { get; set; }
-		[PlaceholderText("DistanceFromSchoolToTrustHeadquarters")]
+		[DocumentText("DistanceFromSchoolToTrustHeadquarters")]
 		public string DistanceFromSchoolToTrustHeadquarters { get; set; }
-		[PlaceholderText("DistanceFromSchoolToTrustHeadquartersAdditionalInformation")]
+		[DocumentText("DistanceFromSchoolToTrustHeadquartersAdditionalInformation")]
 		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
-		[PlaceholderText("ParliamentaryConstituency")]
+		[DocumentText("ParliamentaryConstituency")]
 		public string ParliamentaryConstituency { get; set; }
 
 		//school performance ofsted information
-		[PlaceholderText("PersonalDevelopment")]
+		[DocumentText("PersonalDevelopment")]
 		public string PersonalDevelopment { get; set; }
-		[PlaceholderText("BehaviourAndAttitudes")]
+		[DocumentText("BehaviourAndAttitudes")]
 		public string BehaviourAndAttitudes { get; set; }
-		[PlaceholderText("EarlyYearsProvision")]
+		[DocumentText("EarlyYearsProvision")]
 		public string EarlyYearsProvision { get; set; }
-		[PlaceholderText("OfstedLastInspection")]
+		[DocumentText("OfstedLastInspection")]
 		public string OfstedLastInspection { get; set; }
-		[PlaceholderText("EffectivenessOfLeadershipAndManagement")]
+		[DocumentText("EffectivenessOfLeadershipAndManagement")]
 		public string EffectivenessOfLeadershipAndManagement { get; set; }
-		[PlaceholderText("OverallEffectiveness")]
+		[DocumentText("OverallEffectiveness")]
 		public string OverallEffectiveness { get; set; }
-		[PlaceholderText("QualityOfEducation")]
+		[DocumentText("QualityOfEducation")]
 		public string QualityOfEducation { get; set; }
-		[PlaceholderText("SixthFormProvision")]
+		[DocumentText("SixthFormProvision")]
 		public string SixthFormProvision { get; set; }
-		[PlaceholderText("SchoolPerformanceAdditionalInformation")]
+		[DocumentText("SchoolPerformanceAdditionalInformation")]
 		public string SchoolPerformanceAdditionalInformation { get; set; }
 
 		// rationale
-		[PlaceholderText("RationaleForProject")]
+		[DocumentText("RationaleForProject", IsRichText = true)]
 		public string RationaleForProject { get; set; }
-		[PlaceholderText("RationaleForTrust")]
+		[DocumentText("RationaleForTrust", IsRichText = true)]
 		public string RationaleForTrust { get; set; }
 
 		// risk and issues
-		[PlaceholderText("RisksAndIssues")]
+		[DocumentText("RisksAndIssues", IsRichText = true)]
 		public string RisksAndIssues { get; set; }
-		[PlaceholderText("EqualitiesImpactAssessmentConsidered")]
+		[DocumentText("EqualitiesImpactAssessmentConsidered")]
 		public string EqualitiesImpactAssessmentConsidered { get; set; }
 
 		// school budget info
-		[PlaceholderText("RevenueCarryForwardAtEndMarchCurrentYear")]
+		[DocumentText("RevenueCarryForwardAtEndMarchCurrentYear")]
 		public string RevenueCarryForwardAtEndMarchCurrentYear { get; set; }
-		[PlaceholderText("ProjectedRevenueBalanceAtEndMarchNextYear")]
+		[DocumentText("ProjectedRevenueBalanceAtEndMarchNextYear")]
 		public string ProjectedRevenueBalanceAtEndMarchNextYear { get; set; }
-		[PlaceholderText("CapitalCarryForwardAtEndMarchCurrentYear")]
+		[DocumentText("CapitalCarryForwardAtEndMarchCurrentYear")]
 		public string CapitalCarryForwardAtEndMarchCurrentYear { get; set; }
-		[PlaceholderText("CapitalCarryForwardAtEndMarchNextYear")]
+		[DocumentText("CapitalCarryForwardAtEndMarchNextYear")]
 		public string CapitalCarryForwardAtEndMarchNextYear { get; set; }
-		[PlaceholderText("SchoolBudgetInformationAdditionalInformation")]
+		[DocumentText("SchoolBudgetInformationAdditionalInformation")]
 		public string SchoolBudgetInformationAdditionalInformation { get; set; }
 
 		public static HtbTemplate Build(AcademyConversionProject project, SchoolPerformance schoolPerformance, GeneralInformation generalInformation)

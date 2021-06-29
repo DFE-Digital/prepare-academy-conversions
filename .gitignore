@@ -450,7 +450,7 @@ $RECYCLE.BIN/
 
 # govuk frontend stuff
 /ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot/assets
-/ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot/js/govuk.js
+/ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot/dist
 
 # minified js
 *.min.js

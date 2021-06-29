@@ -6,7 +6,7 @@
 	<dd class="govuk-summary-list__value @Model.ValueWidth">
 		@if (!Model.IsEmpty)
 		{
-			<span id="@Model.Id">@Model.Value</span>
+			<span id="@Model.Id">@Html.Raw(Model.Value)</span>
 		}
 		else
 		{

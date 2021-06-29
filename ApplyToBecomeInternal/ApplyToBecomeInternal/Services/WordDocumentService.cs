@@ -1,4 +1,5 @@
-﻿using ApplyToBecomeInternal.Extensions;
+﻿using AngleSharp.Html.Parser;
+using ApplyToBecomeInternal.Extensions;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System;
@@ -20,11 +21,34 @@ namespace ApplyToBecomeInternal.Services
 
 			foreach (var text in texts)
 			{
-				var property = properties.FirstOrDefault(p => text.InnerText.Contains($"{p.GetCustomAttribute<PlaceholderTextAttribute>().Placeholder}", StringComparison.OrdinalIgnoreCase));
+				var property = properties.FirstOrDefault(p => text.InnerText.Contains($"{p.GetCustomAttribute<DocumentTextAttribute>().Placeholder}", StringComparison.OrdinalIgnoreCase));
 				if (property != null)
 				{
-					var attribute = property.GetCustomAttribute<PlaceholderTextAttribute>();
-					text.Text = text.Text.Replace($"{attribute.Placeholder}", property.GetValue(document).ToStringOrDefault(attribute.Default), StringComparison.OrdinalIgnoreCase);
+					var replaced = false;
+					var attribute = property.GetCustomAttribute<DocumentTextAttribute>();
+					if (attribute.IsRichText)
+					{
+						var value = property.GetValue(document).ToStringOrDefault(attribute.Default);
+						var htmlDocument = new HtmlParser().ParseDocument(value);
+						if (htmlDocument.Body.ChildElementCount > 0)
+						{
+							var run = text.Parent as Run;
+							var paragraph = run.Parent as Paragraph;
+							var visitor = new HtmlToOpenXmlVisitor(wordDoc.MainDocumentPart, paragraph.ParagraphProperties, run.RunProperties);
+							htmlDocument.Accept(visitor);
+							var parent = paragraph.Parent;
+							parent.RemoveChild(paragraph);
+							foreach (var element in visitor.OpenXmlElements)
+							{
+								parent.Append(element);
+							}
+							replaced = true;
+						}
+					}
+					if (!replaced)
+					{
+						text.Text = text.Text.Replace($"{attribute.Placeholder}", property.GetValue(document).ToStringOrDefault(attribute.Default), StringComparison.OrdinalIgnoreCase);
+					}					
 				}
 			}
 
@@ -43,7 +67,7 @@ namespace ApplyToBecomeInternal.Services
 		{
 			var assembly = Assembly.GetExecutingAssembly();
 			var resourceName = assembly.GetManifestResourceNames().FirstOrDefault(n => n.Contains(template, StringComparison.OrdinalIgnoreCase));
-			var templateStream = assembly.GetManifestResourceStream(resourceName);
+			using var templateStream = assembly.GetManifestResourceStream(resourceName);
 			var ms = new MemoryStream();
 			templateStream.CopyTo(ms);
 			return ms;
@@ -52,15 +76,15 @@ namespace ApplyToBecomeInternal.Services
 		private PropertyInfo[] GetProperties<TDocument>()
 		{
 			return typeof(TDocument).GetProperties()
-				.Where(p => p.GetCustomAttribute<PlaceholderTextAttribute>() != null)
+				.Where(p => p.GetCustomAttribute<DocumentTextAttribute>() != null)
 				.ToArray();
 		}
 
-		public class PlaceholderTextAttribute : Attribute
+		public class DocumentTextAttribute : Attribute
 		{
 			private readonly string _placeholder;
 
-			public PlaceholderTextAttribute(string placeholder)
+			public DocumentTextAttribute(string placeholder)
 			{
 				_placeholder = placeholder;
 			}
@@ -68,6 +92,7 @@ namespace ApplyToBecomeInternal.Services
 			public string Placeholder => $"[{_placeholder}]";
 
 			public string Default { get; set; }
+			public bool IsRichText { get; set; }
 		}
 	}
 }

@@ -12,6 +12,9 @@ namespace ApplyToBecomeInternal.TagHelpers
 		[HtmlAttributeName("rows")]
 		public int Rows { get; set; }
 
+		[HtmlAttributeName("rich-text")]
+		public bool RichText { get; set; }
+
 		public TextAreaInputTagHelper(IHtmlHelper htmlHelper) : base(htmlHelper) { }
 
 		protected override async Task<IHtmlContent> RenderContentAsync()
@@ -23,7 +26,8 @@ namespace ApplyToBecomeInternal.TagHelpers
 				Label = Label,
 				Value = For.Model?.ToString(),
 				Rows = Rows,
-				Hint = Hint
+				Hint = Hint,
+				RichText = RichText
 			};
 
 			if (ViewContext.ModelState.TryGetValue(Name, out var entry) && entry.Errors.Count > 0)
