@@ -153,11 +153,9 @@ namespace ApplyToBecomeInternal.Models
 
 		// project note
 		[BindProperty(Name = "project-note-subject")]
-		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string ProjectNoteSubject { get; set; }
 
 		[BindProperty(Name = "project-note-body")]
-		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string ProjectNoteBody { get; set; }
 	}
 }
