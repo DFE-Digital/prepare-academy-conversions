@@ -3,8 +3,6 @@ using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages
