@@ -4,14 +4,10 @@
 	Model.SuccessPage = Links.ProjectNotes.Index.Page;
 }
 
-<div class="govuk-grid-row">
-	<div class="govuk-grid-column-full">
-		@section BeforeMain
-		{
-			<a asp-page="@Links.ProjectNotes.Index.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.ProjectNotes.Index.BackText</a>
-		}
-	</div>
-</div>
+@section BeforeMain
+{
+	<a back-link-for="@Links.ProjectNotes.Index"></a>
+}
 
 @if (Model.ShowError)
 {

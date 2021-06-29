@@ -6,7 +6,7 @@
 
 @section BeforeMain
 {
-	<a asp-page="@Links.ProjectList.Index.Page" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
+	<a back-link-for="@Links.ProjectList.Index"></a>
 }
 
 @if (Model.NewNote)
