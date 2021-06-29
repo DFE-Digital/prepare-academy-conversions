@@ -98,9 +98,9 @@ namespace ApplyToBecomeInternal.Pages
 				SchoolPupilForecastsAdditionalInformation = AcademyConversionProject.SchoolPupilForecastsAdditionalInformation,
 				KeyStagePerformanceTablesAdditionalInformation = AcademyConversionProject.KeyStagePerformanceTablesAdditionalInformation,
 				ProjectNote = (!string.IsNullOrEmpty(AcademyConversionProject.ProjectNoteSubject) || !string.IsNullOrEmpty(AcademyConversionProject.ProjectNoteBody)) ?
-					new ProjectNote
+					new UpdateProjectNote
 					{
-						Subject = AcademyConversionProject.ProjectNoteSubject, Note = AcademyConversionProject.ProjectNoteBody, Author = "", Date = DateTime.Now
+						Subject = AcademyConversionProject.ProjectNoteSubject, Note = AcademyConversionProject.ProjectNoteBody, Author = ""
 					} : null
 			};
 		}
