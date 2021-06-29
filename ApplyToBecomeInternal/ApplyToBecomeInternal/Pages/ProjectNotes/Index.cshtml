@@ -33,19 +33,18 @@
 </div>
 
 <div class="app-notes">
+	@{ var index = 0;}
 	@foreach (var note in Model.Project.ProjectNotes)
 	{
 		<div class="app-notes__note">
 			<h2 class="govuk-heading-s govuk-!-margin-bottom-1">
-				<a class="govuk-link govuk-link--no-visited-state">
-					@note.Subject
-				</a>
+				<a class="govuk-link govuk-link--no-visited-state" id="@("project-note-subject-" + index)">@note.Subject</a>
 			</h2>
-			<p class="govuk-!-margin-bottom-1 govuk-body-m">@note.Note</p>
-			<p class="govuk-body-s">
+			<p class="govuk-!-margin-bottom-1 govuk-body-m" id="@("project-note-body-" + index)">@note.Note</p>
+			<p class="govuk-body-s" id="@("project-note-date-" + index)">
 				@if (!string.IsNullOrEmpty(note.Author))
 				{
-					<span>@note.Author, @note.Date</span>
+					@(note.Author + ", " + note.Date)
 				}
 				else
 				{
@@ -53,5 +52,6 @@
 				}
 			</p>
 		</div>
+		index++;
 	}
 </div>
