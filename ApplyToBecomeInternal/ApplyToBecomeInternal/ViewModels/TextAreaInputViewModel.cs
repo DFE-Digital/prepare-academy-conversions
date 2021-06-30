@@ -9,5 +9,6 @@
 		public string ErrorMessage { get; set; }
 		public int Rows { get; set; }
 		public string Hint { get; set; }
+		public bool RichText { get; set; }
 	}
 }

@@ -5,14 +5,24 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\htb-template.docx" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\ApplyToBecome.Data.Mock\ApplyToBecome.Data.Mock.csproj" />
 		<ProjectReference Include="..\ApplyToBecome.Data\ApplyToBecome.Data.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.14" />
+	  <PackageReference Include="AngleSharp" Version="0.16.0" />
+	  <PackageReference Include="DocumentFormat.OpenXml" Version="2.13.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.16" />
 	  <PackageReference Include="Scrutor" Version="3.3.0" />
 	  <PackageReference Include="System.Net.Http.Json" Version="3.2.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\htb-template.docx" />
 	</ItemGroup>
 
 <!--	<Target Name="BuildFrontEnd" BeforeTargets="Build">-->

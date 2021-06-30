@@ -1,9 +1,10 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 @import "../../node_modules/govuk-frontend/govuk/all";
-@import "_summary-card.scss";
-@import "_task-list.scss";
 @import "../../node_modules/@ministryofjustice/frontend/moj/all";
+@import "attachment.scss";
+@import "summary-card.scss";
+@import "task-list.scss";
 
 .moj-sub-navigation__link {
 	font-weight: bold;

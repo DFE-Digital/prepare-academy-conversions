@@ -19,7 +19,7 @@
 	<link rel="apple-touch-icon" href="/assets/images/govuk-apple-touch-icon.png">
 
 	<title>@ViewData["Title"] - Academy conversions - GOV.UK</title>
-	<link rel="stylesheet" href="~/css/site.css" />
+	<link rel="stylesheet" href="~/dist/site.css" />
 </head>
 <body class="govuk-template__body js-enabled">
 	<header class="govuk-header " role="banner" data-module="govuk-header">
@@ -65,11 +65,7 @@
 			</div>
 		</div>
 	</footer>
-	<script src="@(hostingEnv.IsDevelopment() ? "~/js/site.min.js" : "~/js/site.js")" asp-append-version="true"></script>
-	<script src="~/js/govuk.js"></script>
-	<script>
-		window.GOVUKFrontend.initAll()
-	</script>
-	@await RenderSectionAsync("Scripts", required: false)
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js" integrity="sha512-ju6u+4bPX50JQmgU97YOGAXmRMrD9as4LE05PdC3qycsGQmjGlfm041azyB1VfCXpkpt1i9gqXCT6XuxhBJtKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="~/dist/site.js"></script>
 </body>
 </html>
