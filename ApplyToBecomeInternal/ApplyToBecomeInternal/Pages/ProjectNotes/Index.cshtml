@@ -25,6 +25,7 @@
 	</div>
 }
 
+@* how to handle this as need the project for the header header *@
 <partial name="_ProjectHeader" model="Model.Project" />
 
 <div class="govuk-grid-column-two-thirds-full">
@@ -34,7 +35,7 @@
 
 <div class="app-notes">
 	@{ var index = 0;}
-	@foreach (var note in Model.Project.ProjectNotes)
+	@foreach (var note in Model.ProjectNotes)
 	{
 		<div class="app-notes__note">
 			<h2 class="govuk-heading-s govuk-!-margin-bottom-1">

@@ -102,11 +102,6 @@ namespace ApplyToBecomeInternal.Pages
 				SchoolBudgetInformationSectionComplete = AcademyConversionProject.SchoolBudgetInformationSectionComplete,
 				SchoolPupilForecastsAdditionalInformation = AcademyConversionProject.SchoolPupilForecastsAdditionalInformation,
 				KeyStagePerformanceTablesAdditionalInformation = AcademyConversionProject.KeyStagePerformanceTablesAdditionalInformation,
-				ProjectNote = (!string.IsNullOrEmpty(AcademyConversionProject.ProjectNoteSubject) || !string.IsNullOrEmpty(AcademyConversionProject.ProjectNoteBody)) ?
-					new AddProjectNote
-					{
-						Subject = AcademyConversionProject.ProjectNoteSubject, Note = AcademyConversionProject.ProjectNoteBody, Author = ""
-					} : null
 			};
 		}
 

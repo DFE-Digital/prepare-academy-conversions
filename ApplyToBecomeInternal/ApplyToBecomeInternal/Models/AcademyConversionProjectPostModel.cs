@@ -150,12 +150,5 @@ namespace ApplyToBecomeInternal.Models
 
 		// key stage performance tables
 		public bool? KeyStagePerformanceTablesAdditionalInformation { get; set; }
-
-		// project note
-		[BindProperty(Name = "project-note-subject")]
-		public string ProjectNoteSubject { get; set; }
-
-		[BindProperty(Name = "project-note-body")]
-		public string ProjectNoteBody { get; set; }
 	}
 }

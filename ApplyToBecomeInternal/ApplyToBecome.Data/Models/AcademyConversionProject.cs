@@ -85,8 +85,5 @@ namespace ApplyToBecome.Data.Models
 
 		// key stage performance tables
 		public bool? KeyStagePerformanceTablesAdditionalInformation { get; set; }
-
-		// project notes
-		public IEnumerable<ProjectNote> ProjectNotes { get; set; }
 	}
 }

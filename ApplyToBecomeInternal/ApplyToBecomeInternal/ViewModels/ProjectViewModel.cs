@@ -83,8 +83,6 @@ namespace ApplyToBecomeInternal.ViewModels
 			SchoolBudgetInformationAdditionalInformation = project.SchoolBudgetInformationAdditionalInformation;
 			SchoolBudgetInformationSectionComplete = project.SchoolBudgetInformationSectionComplete ?? false;
 			SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.GetSchoolBudgetInformationTaskListStatus(this);
-
-			ProjectNotes = project.ProjectNotes?.Select(p => new ProjectNoteViewModel(p.Subject, p.Note, p.Author, p.Date)) ?? new List<ProjectNoteViewModel>();
 		}
 
 		private static string FormatDate(DateTime? dateTime) => dateTime.HasValue ? dateTime.Value.ToString("dd MMMM yyyy") : "";
@@ -168,8 +166,5 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string SchoolBudgetInformationAdditionalInformation { get; set; }
 		public bool SchoolBudgetInformationSectionComplete { get; set; }
 		public TaskListItemViewModel SchoolBudgetInformationTaskListStatus { get; set; }
-
-		// project notes
-		public IEnumerable<ProjectNoteViewModel> ProjectNotes { get; set; }
 	}
 }
