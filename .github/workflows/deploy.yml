@@ -15,7 +15,7 @@ jobs:
         with: 
             node-version: '14.x'
       - name: Build Frontend
-        run: cd ApplyToBecomeInternal/ApplyToBecomeInternal; npm install; npm run build
+        run: cd ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot; npm install; npm run build
       - name: Install CloudFoundry CLI
         shell: bash
         id: install-cf-cli
