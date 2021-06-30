@@ -32,7 +32,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 		{
 			var project = AddGetProject();
 
-			var projectNote = new UpdateProjectNote {Subject = _fixture.Create<string>(), Note = _fixture.Create<string>(), Author = "" };
+			var projectNote = new AddProjectNote {Subject = _fixture.Create<string>(), Note = _fixture.Create<string>(), Author = "" };
 			AddPatchProject(project, r => r.ProjectNote, projectNote);
 
 			await OpenUrlAsync($"/project-notes/{project.Id}");

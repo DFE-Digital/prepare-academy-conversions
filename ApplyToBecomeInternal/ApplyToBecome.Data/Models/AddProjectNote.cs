@@ -1,6 +1,6 @@
 namespace ApplyToBecome.Data.Models
 {
-	public class UpdateProjectNote
+	public class AddProjectNote
 	{
 		public string Subject { get; set; }
 		public string Note { get; set; }

@@ -103,7 +103,7 @@ namespace ApplyToBecomeInternal.Pages
 				SchoolPupilForecastsAdditionalInformation = AcademyConversionProject.SchoolPupilForecastsAdditionalInformation,
 				KeyStagePerformanceTablesAdditionalInformation = AcademyConversionProject.KeyStagePerformanceTablesAdditionalInformation,
 				ProjectNote = (!string.IsNullOrEmpty(AcademyConversionProject.ProjectNoteSubject) || !string.IsNullOrEmpty(AcademyConversionProject.ProjectNoteBody)) ?
-					new UpdateProjectNote
+					new AddProjectNote
 					{
 						Subject = AcademyConversionProject.ProjectNoteSubject, Note = AcademyConversionProject.ProjectNoteBody, Author = ""
 					} : null

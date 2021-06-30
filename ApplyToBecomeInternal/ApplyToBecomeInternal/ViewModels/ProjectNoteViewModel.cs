@@ -1,15 +1,16 @@
-﻿using System;
+﻿using ApplyToBecome.Data.Models;
+using System;
 
 namespace ApplyToBecomeInternal.ViewModels
 {
 	public class ProjectNoteViewModel
 	{
-		public ProjectNoteViewModel(string title, string body, string author, DateTime date)
+		public ProjectNoteViewModel(ProjectNote projectNote)
 		{
-			Subject = title;
-			Note = body;
-			Author = author;
-			Date = FormatDateAndTime(date);
+			Subject = projectNote.Subject;
+			Note = projectNote.Note;
+			Author = projectNote.Author;
+			Date = FormatDateAndTime(projectNote.Date);
 		}
 
 		private string FormatDateAndTime(DateTime date)

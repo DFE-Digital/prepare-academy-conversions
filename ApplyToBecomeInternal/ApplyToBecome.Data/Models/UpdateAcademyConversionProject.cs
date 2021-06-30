@@ -62,6 +62,6 @@ namespace ApplyToBecome.Data.Models
 		public bool? KeyStagePerformanceTablesAdditionalInformation { get; set; }
 
 		// project note
-		public UpdateProjectNote ProjectNote { get; set; }
+		public AddProjectNote ProjectNote { get; set; }
 	}
 }
