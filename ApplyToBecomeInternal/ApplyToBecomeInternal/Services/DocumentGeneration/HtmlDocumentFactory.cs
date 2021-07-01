@@ -28,7 +28,7 @@ namespace ApplyToBecomeInternal.Services.WordDocument
 
 		private static string SanitiseHtml(string html)
 		{
-			return Regex.Replace(html, @"<\/?(br|div|span)>", "");
+			return Regex.Replace(html, @"<\/?(a|div|span)>", "");
 		}
 
 		private static List<List<INode>> GroupElements(IHtmlDocument document)
