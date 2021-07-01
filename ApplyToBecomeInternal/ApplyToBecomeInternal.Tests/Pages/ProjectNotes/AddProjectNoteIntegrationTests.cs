@@ -46,6 +46,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
 			Document.Url.Should().BeUrl($"/project-notes/{project.Id}");
+
+			Document.QuerySelector("#project-note-added").TextContent.Should().NotBeNull();;
 		}
 
 		[Fact]

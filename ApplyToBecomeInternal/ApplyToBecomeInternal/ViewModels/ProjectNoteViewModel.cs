@@ -15,7 +15,7 @@ namespace ApplyToBecomeInternal.ViewModels
 
 		private string FormatDateAndTime(DateTime date)
 		{
-			return $"{date.Day} {date:Y} at {date:t}{date.ToString("tt").ToLower()}";
+			return $"{date.Day} {date:MMMM} {date.Year} at {date:t}{date.ToString("tt").ToLower()}";
 		}
 
 		public string Subject { get; set; }
