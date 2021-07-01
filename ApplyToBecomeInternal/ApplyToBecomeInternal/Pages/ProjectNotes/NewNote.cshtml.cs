@@ -39,13 +39,11 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			TempData["newNote"] = true;
-
 			var projectNote = new AddProjectNote {Subject = ProjectNoteSubject, Note = ProjectNoteBody, Author = ""};
 
 			if (string.IsNullOrEmpty(ProjectNoteSubject) && string.IsNullOrEmpty(ProjectNoteBody))
 			{
-				_errorService.AddError("project-note-body", "Enter a project note");
+				_errorService.AddError("project-note-body", "Enter a subject and project note");
 				await SetProject(id);
 				return Page();
 			}
@@ -57,6 +55,8 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 				await SetProject(id);
 				return Page();
 			}
+
+			TempData["newNote"] = true;
 
 			return RedirectToPage(SuccessPage, new { id });
 		}
