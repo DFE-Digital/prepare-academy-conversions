@@ -18,7 +18,7 @@
 			</h2>
 		</div>
 		<div class="govuk-notification-banner__content">
-			<h3 class="govuk-notification-banner__heading">
+			<h3 class="govuk-notification-banner__heading" id="project-note-added">
 				Note added
 			</h3>
 		</div>
@@ -33,16 +33,25 @@
 </div>
 
 <div class="app-notes">
-	@foreach (var note in Model.Notes)
+	@{ var index = 0;}
+	@foreach (var note in Model.ProjectNotes)
 	{
 		<div class="app-notes__note">
 			<h2 class="govuk-heading-s govuk-!-margin-bottom-1">
-				<a class="govuk-link govuk-link--no-visited-state">
-					@note.Title
-				</a>
+				<a class="govuk-link govuk-link--no-visited-state" id="@("project-note-subject-" + index)">@note.Subject</a>
 			</h2>
-			<p class="govuk-!-margin-bottom-1 govuk-body-m">@note.Body</p>
-			<p class="govuk-body-s">@note.Author, @note.DateAndTime</p>
+			<p class="govuk-!-margin-bottom-1 govuk-body-m" id="@("project-note-body-" + index)">@note.Note</p>
+			<p class="govuk-body-s" id="@("project-note-date-" + index)">
+				@if (!string.IsNullOrEmpty(note.Author))
+				{
+					@(note.Author + ", " + note.Date)
+				}
+				else
+				{
+					@note.Date
+				}
+			</p>
 		</div>
+		index++;
 	}
 </div>
