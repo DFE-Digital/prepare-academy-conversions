@@ -16,6 +16,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 		public async Task Should_navigate_to_add_note_from_project_notes_and_back_to_project_notes()
 		{
 			var project = AddGetProject();
+			AddGetProjectNotes(project.AcademyConversionProjectId);
 
 			await OpenUrlAsync($"/project-notes/{project.Id}");
 			await NavigateAsync("Add note");
@@ -31,9 +32,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 		public async Task Should_add_new_note_and_redirect_to_project_notes()
 		{
 			var project = AddGetProject();
+			AddGetProjectNotes(project.AcademyConversionProjectId);
 
 			var projectNote = new AddProjectNote {Subject = _fixture.Create<string>(), Note = _fixture.Create<string>(), Author = "" };
-			AddPatchProject(project, r => r.ProjectNote, projectNote);
+			AddPostProjectNote(project.Id, projectNote);
 
 			await OpenUrlAsync($"/project-notes/{project.Id}");
 			await NavigateAsync("Add note");
@@ -47,11 +49,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 		}
 
 		[Fact]
-		public async Task Should_send_note_to_api_as_null_when_both_subject_and_note_fields_are_null()
+		public async Task Should_not_add_note_when_both_subject_and_note_fields_are_null()
 		{
 			var project = AddGetProject();
-
-			AddPatchProject(project, r => r.ProjectNote, null);
+			AddGetProjectNotes(project.AcademyConversionProjectId);
 
 			await OpenUrlAsync($"/project-notes/{project.Id}");
 			await NavigateAsync("Add note");
@@ -61,16 +62,17 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			Document.Url.Should().BeUrl($"/project-notes/{project.Id}");
+			Document.Url.Should().BeUrl($"/project-notes/{project.Id}/new-note");
+			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
 		}
 
 		[Fact]
 		public async Task Should_show_error_summary_when_there_is_an_API_error()
 		{
 			var project = AddGetProject();
-			AddPatchError(project.Id);
+			AddProjectNotePostError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale");
+			await OpenUrlAsync($"/project-notes/{project.Id}/new-note");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 

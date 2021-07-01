@@ -29,6 +29,17 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			return project;
 		}
 
+		public IEnumerable<ProjectNote> AddGetProjectNotes(int academyConversionProjectId, Action<IEnumerable<ProjectNote>> postSetup = null)
+		{
+			var projectNotes = _fixture.CreateMany<ProjectNote>();
+			if (postSetup != null)
+			{
+				postSetup(projectNotes);
+			}
+			_factory.AddGetWithJsonResponse($"/project-notes/{academyConversionProjectId}", projectNotes);
+			return projectNotes;
+		}
+
 		public UpdateAcademyConversionProject AddPatchProject<TProperty>(AcademyConversionProject project, Expression<Func<UpdateAcademyConversionProject, TProperty>> expectedValue)
 		{
 			return AddPatchProject(project, expectedValue, _fixture.Create<TProperty>());
@@ -44,6 +55,13 @@ namespace ApplyToBecomeInternal.Tests.Pages
 
 			_factory.AddPatchWithJsonRequest($"/conversion-projects/{project.Id}", request, project);
 			return request;
+		}
+
+		public ProjectNote AddPostProjectNote(int id, AddProjectNote request)
+		{
+			var response = new ProjectNote {Subject = request.Subject, Note = request.Note, Author = request.Author};
+			_factory.AddPostWithJsonRequest($"/project-notes/{id}", request, response);
+			return response;
 		}
 
 		public UpdateAcademyConversionProject AddPatchProjectMany(AcademyConversionProject project, Func<IPostprocessComposer<UpdateAcademyConversionProject>, IPostprocessComposer<UpdateAcademyConversionProject>> postProcess)
@@ -64,6 +82,11 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			_factory.AddErrorResponse($"/conversion-projects/{id}", "patch");
 		}
 
+		public void AddProjectNotePostError(int id)
+		{
+			_factory.AddErrorResponse($"/project-notes/{id}", "post");
+		}
+
 		public EstablishmentResponse AddGetEstablishmentResponse(string urn, bool empty = false)
 		{
 			EstablishmentResponse establishmentResponse;
@@ -79,7 +102,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 				establishmentResponse.Census.NumberOfPupils = _fixture.Create<int>().ToString();
 				establishmentResponse.SchoolCapacity = _fixture.Create<int>().ToString();
 			}
-			
+
 			_factory.AddGetWithJsonResponse($"/establishment/urn/{urn}", establishmentResponse);
 			return establishmentResponse;
 		}
