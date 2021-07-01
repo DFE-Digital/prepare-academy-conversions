@@ -45,7 +45,9 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 
 			if (string.IsNullOrEmpty(ProjectNoteSubject) && string.IsNullOrEmpty(ProjectNoteBody))
 			{
-				_errorService.AddError("project-note", "Enter a project note");
+				_errorService.AddError("project-note-body", "Enter a project note");
+				await SetProject(id);
+				return Page();
 			}
 
 			var response = await _service.AddProjectNote(id, projectNote);
