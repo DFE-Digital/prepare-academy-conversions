@@ -1,6 +1,8 @@
 {
 	"scripts": {
-		"build": "\"webpack --config webpack.assets.config.js && webpack --config webpack.config.js\"",
+		"build": "\"npm run build:assets && npm run build:frontend\"",
+		"build:frontend": "webpack",
+		"build:assets": "webpack --config webpack.assets.config.js",
 		"build:watch": "webpack --watch"
 	},
 	"devDependencies": {
