@@ -1,7 +1,6 @@
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,7 +24,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
         {
 	        NewNote = (bool)(TempData["newNote"] ?? false);
 	        await base.OnGetAsync(id);
-	        var response = await _service.GetProjectNotesById(id);
+	        var response = await _service.GetProjectNotesById(Project.AcademyConversionProjectId);
 	        ProjectNotes = response.Body.Select(pn => new ProjectNoteViewModel(pn));
 	        return Page();
         }
