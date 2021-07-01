@@ -1,3 +1,4 @@
+using AngleSharp.Css.Dom;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models;
@@ -54,6 +55,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 			var project = AddGetProject();
 			AddGetProjectNotes(project.AcademyConversionProjectId);
 
+			var projectNote = new AddProjectNote {Subject = null, Note = null, Author = "" };
+			AddPostProjectNote(project.Id, projectNote);
+
 			await OpenUrlAsync($"/project-notes/{project.Id}");
 			await NavigateAsync("Add note");
 
@@ -64,6 +68,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 
 			Document.Url.Should().BeUrl($"/project-notes/{project.Id}/new-note");
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Enter");
 		}
 
 		[Fact]
