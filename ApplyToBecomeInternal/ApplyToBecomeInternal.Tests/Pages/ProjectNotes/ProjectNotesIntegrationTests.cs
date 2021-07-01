@@ -13,7 +13,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 		public async Task Should_navigate_to_project_notes_from_submenu_and_back_to_project_list()
 		{
 			var project = AddGetProject();
-			AddGetProjectNotes(project.AcademyConversionProjectId);
+			AddGetProjectNotes(project.Id);
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 			await NavigateAsync("Project notes");
@@ -29,7 +29,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 		public async Task Should_display_project_notes()
 		{
 			var project = AddGetProject();
-			var projectNotes = AddGetProjectNotes(project.AcademyConversionProjectId);
+			var projectNotes = AddGetProjectNotes(project.Id);
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 			await NavigateAsync("Project notes");

@@ -9,7 +9,6 @@ namespace ApplyToBecomeInternal.ViewModels
 		public ProjectViewModel(AcademyConversionProject project)
 		{
 			Id = project.Id.ToString();
-			AcademyConversionProjectId = project.AcademyConversionProjectId;
 			//TrustName = project.Trust.Name;
 			SchoolName = project.SchoolName;
 			SchoolURN = project.Urn.ToString();
@@ -87,7 +86,6 @@ namespace ApplyToBecomeInternal.ViewModels
 		private static string FormatDate(DateTime? dateTime) => dateTime.HasValue ? dateTime.Value.ToString("dd MMMM yyyy") : "";
 
 		public string Id { get; }
-		public int AcademyConversionProjectId { get; set; }
 		public string TrustName { get; }
 		public string SchoolName { get; }
 		public string SchoolURN { get; }

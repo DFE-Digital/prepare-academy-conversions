@@ -16,7 +16,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 		public async Task Should_navigate_to_add_note_from_project_notes_and_back_to_project_notes()
 		{
 			var project = AddGetProject();
-			AddGetProjectNotes(project.AcademyConversionProjectId);
+			AddGetProjectNotes(project.Id);
 
 			await OpenUrlAsync($"/project-notes/{project.Id}");
 			await NavigateAsync("Add note");
@@ -32,7 +32,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 		public async Task Should_add_new_note_and_redirect_to_project_notes()
 		{
 			var project = AddGetProject();
-			AddGetProjectNotes(project.AcademyConversionProjectId);
+			AddGetProjectNotes(project.Id);
 
 			var projectNote = new AddProjectNote {Subject = _fixture.Create<string>(), Note = _fixture.Create<string>(), Author = "" };
 			AddPostProjectNote(project.Id, projectNote);
@@ -52,7 +52,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 		public async Task Should_not_add_note_when_both_subject_and_note_fields_are_null()
 		{
 			var project = AddGetProject();
-			AddGetProjectNotes(project.AcademyConversionProjectId);
+			AddGetProjectNotes(project.Id);
 
 			var projectNote = new AddProjectNote {Subject = null, Note = null, Author = "" };
 			AddPostProjectNote(project.Id, projectNote);

@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
         {
 	        NewNote = (bool)(TempData["newNote"] ?? false);
 	        await base.OnGetAsync(id);
-	        var response = await _projectNotesRepository.GetProjectNotesById(Project.AcademyConversionProjectId);
+	        var response = await _projectNotesRepository.GetProjectNotesById(id);
 	        ProjectNotes = response.Body.Select(pn => new ProjectNoteViewModel(pn));
 	        return Page();
         }
