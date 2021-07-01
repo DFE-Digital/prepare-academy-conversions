@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ApplyToBecome.Data.Services
 {
-	public class ProjectNotesService : IProjectNotesService
+	public class ProjectNotesRepository : IProjectNotesRepository
 	{
 		private readonly HttpClient _httpClient;
 
-		public ProjectNotesService(IHttpClientFactory httpClientFactory)
+		public ProjectNotesRepository(IHttpClientFactory httpClientFactory)
 		{
 			_httpClient = httpClientFactory.CreateClient("TramsClient");
 		}

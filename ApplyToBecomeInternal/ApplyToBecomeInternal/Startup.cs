@@ -56,7 +56,7 @@ namespace ApplyToBecomeInternal
 			services.AddScoped<GeneralInformationService>();
 			services.AddScoped<IAcademyConversionProjectRepository, AcademyConversionProjectRepository>();
 			services.Decorate<IAcademyConversionProjectRepository, AcademyConversionProjectItemsCacheDecorator>();
-			services.AddScoped<IProjectNotesService, ProjectNotesService>();
+			services.AddScoped<IProjectNotesRepository, ProjectNotesRepository>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

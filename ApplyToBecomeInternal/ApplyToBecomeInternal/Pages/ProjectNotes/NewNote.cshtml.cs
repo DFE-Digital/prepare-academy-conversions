@@ -9,7 +9,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 	public class NewNoteModel : BaseAcademyConversionProjectPageModel
 	{
 		private readonly ErrorService _errorService;
-		private readonly IProjectNotesService _service;
+		private readonly IProjectNotesRepository _projectNotesRepository;
 
 		public bool ShowError => _errorService.HasErrors();
 
@@ -25,9 +25,9 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 			}
 		}
 
-		public NewNoteModel(IProjectNotesService service, ErrorService errorService, IAcademyConversionProjectRepository repository) : base(repository)
+		public NewNoteModel(IProjectNotesRepository projectNotesRepository, ErrorService errorService, IAcademyConversionProjectRepository repository) : base(repository)
 		{
-			_service = service;
+			_projectNotesRepository = projectNotesRepository;
 			_errorService = errorService;
 		}
 
@@ -50,7 +50,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 				return Page();
 			}
 
-			var response = await _service.AddProjectNote(id, projectNote);
+			var response = await _projectNotesRepository.AddProjectNote(id, projectNote);
 			if (!response.Success)
 			{
 				_errorService.AddTramsError();

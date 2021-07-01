@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ApplyToBecome.Data.Services
 {
-	public interface IProjectNotesService
+	public interface IProjectNotesRepository
 	{
 		Task<ApiResponse<IEnumerable<ProjectNote>>> GetProjectNotesById(int id);
 		Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote projectNote);

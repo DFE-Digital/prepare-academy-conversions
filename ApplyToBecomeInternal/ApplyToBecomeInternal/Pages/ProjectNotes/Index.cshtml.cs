@@ -9,13 +9,13 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 {
 	public class IndexModel : BaseAcademyConversionProjectPageModel
 	{
-		private readonly IProjectNotesService _service;
+		private readonly IProjectNotesRepository _projectNotesRepository;
 
 		public IEnumerable<ProjectNoteViewModel> ProjectNotes;
 
-		public IndexModel(IProjectNotesService service, IAcademyConversionProjectRepository repository) : base(repository)
+		public IndexModel(IProjectNotesRepository projectNotesRepository, IAcademyConversionProjectRepository repository) : base(repository)
 		{
-			_service = service;
+			_projectNotesRepository = projectNotesRepository;
 		}
 
 		public bool NewNote { get; set; }
@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
         {
 	        NewNote = (bool)(TempData["newNote"] ?? false);
 	        await base.OnGetAsync(id);
-	        var response = await _service.GetProjectNotesById(Project.AcademyConversionProjectId);
+	        var response = await _projectNotesRepository.GetProjectNotesById(Project.AcademyConversionProjectId);
 	        ProjectNotes = response.Body.Select(pn => new ProjectNoteViewModel(pn));
 	        return Page();
         }
