@@ -1,18 +1,10 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-	mode: 'production',
-	entry: ['./src/js/site.js', './src/css/site.scss'],
+	entry: ["./src/index.js", "./src/index.scss"],
 	plugins: [
 		new MiniCssExtractPlugin({ filename: 'site.css' }),
-		new CopyPlugin({
-			patterns: [
-				{ from: path.resolve(__dirname, 'node_modules/govuk-frontend/govuk/assets'), to: path.resolve(__dirname, 'assets') },
-				{ from: path.resolve(__dirname, 'node_modules/@ministryofjustice/frontend/moj/assets'), to: path.resolve(__dirname, 'assets') },
-			],
-		})
 	],
 	module: {
 		rules: [
@@ -28,8 +20,30 @@ module.exports = {
 				],
 			},
 			{ test: /\.css$/, use: ['style-loader', 'css-loader'] },
-			{ test: /\.(jpe?g|png|gif|svg)$/i, use: 'file-loader' },
-			{ test: /\.(woff2?)$/i, use: 'file-loader' }
+			{
+				test: /\.(woff2?)$/i,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							emitFile: false,
+							name: '/assets/fonts/[name].[ext]'
+						}
+					}
+				]
+			},
+			{
+				test: /\.(jpe?g|png|gif|svg)$/i,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							emitFile: false,
+							name: '/assets/images/[name].[ext]'
+						}
+					}
+				]
+			},
 		]
 	},
 	output: {
