@@ -56,7 +56,7 @@ namespace ApplyToBecomeInternal.Services
 
 		private void AddDateError(string key, ModelStateDictionary modelState)
 		{
-			if (modelState.TryGetValue(key, out var entry) && modelState.TryGetValue(DateInputId(key), out var dateEntry) && dateEntry.Errors.Count > 0)
+			if (modelState.TryGetValue(DateInputId(key), out var dateEntry) && dateEntry.Errors.Count > 0)
 			{
 				var dateError = GetError(DateInputId(key));
 				if (dateError == null)
@@ -68,7 +68,10 @@ namespace ApplyToBecomeInternal.Services
 					};
 					_errors.Add(dateError);
 				}
-				dateError.AttemptedValues.Add(key, new AttemptedValue { Value = entry.AttemptedValue, IsInvalid = entry.Errors.Any() });
+				if (modelState.TryGetValue(key, out var entry))
+				{
+					dateError.InvalidInputs.Add(key);
+				}
 			}
 		}
 
