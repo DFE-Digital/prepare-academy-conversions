@@ -1,9 +1,8 @@
-﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages
@@ -34,7 +33,7 @@ namespace ApplyToBecomeInternal.Pages
 			}
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id)
+		public virtual async Task<IActionResult> OnPostAsync(int id)
 		{
 			_errorService.AddErrors(Request.Form.Keys, ModelState);
 			if (_errorService.HasErrors())

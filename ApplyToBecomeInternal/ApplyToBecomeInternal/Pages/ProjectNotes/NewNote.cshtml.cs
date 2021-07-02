@@ -1,32 +1,64 @@
-using ApplyToBecome.Data;
-using ApplyToBecome.Data.Models.ProjectNotes;
+using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Services;
-using ApplyToBecomeInternal.Models;
+using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.ProjectNotes
 {
 	public class NewNoteModel : BaseAcademyConversionProjectPageModel
 	{
-		private readonly IProjectNotes _projectNotes;
+		private readonly ErrorService _errorService;
+		private readonly IProjectNotesRepository _projectNotesRepository;
 
-		public NewNoteModel(IAcademyConversionProjectRepository repository, IProjectNotes projectNotes) : base(repository)
+		public bool ShowError => _errorService.HasErrors();
+
+		public string SuccessPage
 		{
-			_projectNotes = projectNotes;
+			get
+			{
+				return TempData[nameof(SuccessPage)].ToString();
+			}
+			set
+			{
+				TempData[nameof(SuccessPage)] = value;
+			}
 		}
 
-		[BindProperty]
-		public string subject { get; set; }
-
-		[BindProperty]
-		public string body { get; set; }
-
-		public IActionResult OnPost(int id)
+		public NewNoteModel(IProjectNotesRepository projectNotesRepository, ErrorService errorService, IAcademyConversionProjectRepository repository) : base(repository)
 		{
-			var note = new ProjectNote(subject, body);
-			_projectNotes.SaveNote(id, note);
+			_projectNotesRepository = projectNotesRepository;
+			_errorService = errorService;
+		}
+
+		[BindProperty(Name = "project-note-subject")]
+		public string ProjectNoteSubject { get; set; }
+
+		[BindProperty(Name = "project-note-body")]
+		public string ProjectNoteBody { get; set; }
+
+		public async Task<IActionResult> OnPostAsync(int id)
+		{
+			var projectNote = new AddProjectNote {Subject = ProjectNoteSubject, Note = ProjectNoteBody, Author = ""};
+
+			if (string.IsNullOrEmpty(ProjectNoteSubject) && string.IsNullOrEmpty(ProjectNoteBody))
+			{
+				_errorService.AddError("project-note-body", "Enter a subject and project note");
+				await SetProject(id);
+				return Page();
+			}
+
+			var response = await _projectNotesRepository.AddProjectNote(id, projectNote);
+			if (!response.Success)
+			{
+				_errorService.AddTramsError();
+				await SetProject(id);
+				return Page();
+			}
+
 			TempData["newNote"] = true;
-			return RedirectToPage(Links.ProjectNotes.Index.Page, new { id = id });
+
+			return RedirectToPage(SuccessPage, new { id });
 		}
 	}
 }

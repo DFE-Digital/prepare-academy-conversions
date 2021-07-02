@@ -41,7 +41,6 @@ namespace ApplyToBecomeInternal
 
 			services.AddSingleton<ITrusts, MockTrusts>();
 			services.AddSingleton<IApplications, MockApplications>();
-			services.AddSingleton<IProjectNotes, MockProjectNotes>();
 
 			services.AddHttpClient("TramsClient", (sp, client) =>
 			{
@@ -59,6 +58,7 @@ namespace ApplyToBecomeInternal
 			services.AddScoped<GeneralInformationService>();
 			services.AddScoped<IAcademyConversionProjectRepository, AcademyConversionProjectRepository>();
 			services.Decorate<IAcademyConversionProjectRepository, AcademyConversionProjectItemsCacheDecorator>();
+			services.AddScoped<IProjectNotesRepository, ProjectNotesRepository>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
