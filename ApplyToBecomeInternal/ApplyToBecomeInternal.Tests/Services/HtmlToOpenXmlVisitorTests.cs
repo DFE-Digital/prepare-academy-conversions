@@ -1,5 +1,4 @@
-﻿using AngleSharp.Html.Parser;
-using ApplyToBecomeInternal.Extensions;
+﻿using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Services.WordDocument;
 using AutoFixture.Xunit2;
 using DocumentFormat.OpenXml.Packaging;
@@ -17,7 +16,6 @@ namespace ApplyToBecomeInternal.Tests.Services
 		private readonly MemoryStream _ms;
 		private readonly WordprocessingDocument _wordDoc;
 		private readonly HtmlToOpenXmlVisitor _visitor;
-		private readonly HtmlParser _htmlParser = new HtmlParser();
 
 		public HtmlToOpenXmlVisitorTests()
 		{
@@ -44,6 +42,20 @@ namespace ApplyToBecomeInternal.Tests.Services
 			var run = paragraph.LastChild as Run;
 			element.LastChild.FirstChild.Should().BeEquivalentTo(run.RunProperties);
 			element.LastChild.LastChild.InnerText.Should().Be(text);
+		}
+
+		[Theory, AutoData]
+		public void Should_be_a_paragraph_with_two_text_and_a_break_when_line_break_tag_present(string text)
+		{
+			var document = HtmlDocumentFactory.Create($"<p>{text}<br>{text}</p>");
+
+			document.Accept(_visitor);
+
+			var element = _visitor.OpenXmlElements.Last();
+			var childElements = element.ChildElements.ToArray();
+			childElements[1].LastChild.Should().BeOfType<Text>();
+			childElements[2].LastChild.Should().BeOfType<Break>();
+			childElements[3].LastChild.Should().BeOfType<Text>();
 		}
 
 		[Theory, AutoData]
@@ -150,6 +162,20 @@ namespace ApplyToBecomeInternal.Tests.Services
 
 			numberingLevelReference.Should().NotBeNull();
 			numberingId.Should().NotBeNull();
+		}
+
+		[Theory, AutoData]
+		public void Should_be_a_numbering_paragraph_with_a_break_when_line_break_tag_present(string text)
+		{
+			var document = HtmlDocumentFactory.Create($"<ul><li>{text}<br>{text}</li></ul>");
+
+			document.Accept(_visitor);
+
+			var element = _visitor.OpenXmlElements.Last();
+			var childElements = element.ChildElements.ToArray();
+			childElements[1].LastChild.Should().BeOfType<Text>();
+			childElements[2].LastChild.Should().BeOfType<Break>();
+			childElements[3].LastChild.Should().BeOfType<Text>();
 		}
 
 		[Theory, AutoData]

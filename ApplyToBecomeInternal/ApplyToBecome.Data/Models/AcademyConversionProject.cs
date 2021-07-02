@@ -82,7 +82,7 @@ namespace ApplyToBecome.Data.Models
 		public int? YearFourProjectedPupilNumbers { get; set; }
 		public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
-		//key stage performance tables
+		// key stage performance tables
 		public bool? KeyStagePerformanceTablesAdditionalInformation { get; set; }
 	}
 }

@@ -151,7 +151,7 @@ namespace ApplyToBecomeInternal.Models
 		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
-		//key stage performance tables
+		// key stage performance tables
 		public bool? KeyStagePerformanceTablesAdditionalInformation { get; set; }
 	}
 }

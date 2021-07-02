@@ -1,32 +1,32 @@
-using ApplyToBecome.Data;
-using ApplyToBecome.Data.Models.ProjectNotes;
 using ApplyToBecome.Data.Services;
+using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.ProjectNotes
 {
 	public class IndexModel : BaseAcademyConversionProjectPageModel
 	{
-		private readonly IProjectNotes _projectNotes;
+		private readonly IProjectNotesRepository _projectNotesRepository;
 
-		public IndexModel(IAcademyConversionProjectRepository repository, IProjectNotes projectNotes) : base(repository)
+		public IEnumerable<ProjectNoteViewModel> ProjectNotes;
+
+		public IndexModel(IProjectNotesRepository projectNotesRepository, IAcademyConversionProjectRepository repository) : base(repository)
 		{
-			_projectNotes = projectNotes;
+			_projectNotesRepository = projectNotesRepository;
 		}
 
 		public bool NewNote { get; set; }
-		public IEnumerable<ProjectNote> Notes { get; set; }
 
 		public override async Task<IActionResult> OnGetAsync(int id)
         {
-			var result = await base.OnGetAsync(id);
-
-			NewNote = (bool)(TempData["newNote"] ?? false);
-			Notes = _projectNotes.GetNotesForProject(id);
-
-			return result;
-		}
-    }
+	        NewNote = (bool)(TempData["newNote"] ?? false);
+	        await base.OnGetAsync(id);
+	        var response = await _projectNotesRepository.GetProjectNotesById(id);
+	        ProjectNotes = response.Body.Select(pn => new ProjectNoteViewModel(pn));
+	        return Page();
+        }
+	}
 }

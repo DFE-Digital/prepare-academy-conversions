@@ -93,6 +93,14 @@ namespace ApplyToBecomeInternal.Services.WordDocument
 			}, hasRun);
 		}
 
+		public void Visit(IHtmlBreakRowElement _, bool hasRun)
+		{
+			UseRun((run) =>
+			{
+				run.Append(new Break());
+			}, hasRun);
+		}
+
 		public void Visit(IText text, bool hasRun)
 		{
 			UseRun((run) =>
@@ -113,7 +121,9 @@ namespace ApplyToBecomeInternal.Services.WordDocument
 						new StartNumberingValue { Val = 1 },
 						new NumberingFormat() { Val = numberFormatValues },
 						new LevelJustification { Val = LevelJustificationValues.Left },
-						new LevelText() { Val = levelText })
+						new LevelText() { Val = levelText },
+						new ParagraphProperties(
+							new Indentation { Left = "720", Hanging = "360" }))
 					{ LevelIndex = 0 })
 				{ AbstractNumberId = _abstractNums.Count + 1 });
 			_numberingInstances.Add(
