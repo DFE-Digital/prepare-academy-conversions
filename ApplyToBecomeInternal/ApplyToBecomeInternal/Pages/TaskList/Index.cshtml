@@ -1,5 +1,5 @@
 ﻿@page "/task-list/{id:int}"
-@model ApplyToBecomeInternal.Pages.BaseAcademyConversionProjectPageModel
+@model ApplyToBecomeInternal.Pages.TaskList.IndexModel
 @{
 	ViewData["Title"] = "Task List";
 }
@@ -21,20 +21,20 @@
 			<ul class="app-task-list__items govuk-!-padding-left-0">
 				<li class="app-task-list__item">
 					<span class="app-task-list__task-name">
-						@if (Model.Project.LocalAuthorityInformationTemplateTaskListStatus.Equals(TaskListItemViewModel.NotStarted))
+						@if (Model.TaskList.LocalAuthorityInformationTemplateSectionNotStarted)
 						{
-							<a class="govuk-link" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" aria-describedby="LA-infromation-template">
-								Record dates for the LA information template
-							</a>
+						<a class="govuk-link" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" aria-describedby="LA-infromation-template">
+							Record dates for the LA information template
+						</a>
 						}
 						else
 						{
-							<a class="govuk-link" asp-page="@Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" aria-describedby="LA-infromation-template">
-								Record dates for the LA information template
-							</a>
+						<a class="govuk-link" asp-page="@Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" aria-describedby="LA-infromation-template">
+							Record dates for the LA information template
+						</a>
 						}
 					</span>
-					<strong class="govuk-tag @Model.Project.LocalAuthorityInformationTemplateTaskListStatus.CssClass app-task-list__tag" id="la-info-template-status">@Model.Project.LocalAuthorityInformationTemplateTaskListStatus.Status</strong>
+					<strong class="govuk-tag @Model.TaskList.LocalAuthorityInformationTemplateTaskListStatus.CssClass app-task-list__tag" id="la-info-template-status">@Model.TaskList.LocalAuthorityInformationTemplateTaskListStatus.Status</strong>
 				</li>
 			</ul>
 		</div>
@@ -48,8 +48,8 @@
 							School and trust information and project dates
 						</a>
 					</span>
-					<strong class="govuk-tag @Model.Project.SchoolAndTrustInformationTaskListStatus.CssClass app-task-list__tag" id="school-and-trust-information-status">
-						@Model.Project.SchoolAndTrustInformationTaskListStatus.Status
+					<strong class="govuk-tag @Model.TaskList.SchoolAndTrustInformationTaskListStatus.CssClass app-task-list__tag" id="school-and-trust-information-status">
+						@Model.TaskList.SchoolAndTrustInformationTaskListStatus.Status
 					</strong>
 				</li>
 				<li class="app-task-list__item">
@@ -58,8 +58,8 @@
 							General information
 						</a>
 					</span>
-					<strong class="govuk-tag @Model.Project.GeneralInformationTaskListStatus.CssClass app-task-list__tag" id="general-information-status">
-						@Model.Project.GeneralInformationTaskListStatus.Status
+					<strong class="govuk-tag @Model.TaskList.GeneralInformationTaskListStatus.CssClass app-task-list__tag" id="general-information-status">
+						@Model.TaskList.GeneralInformationTaskListStatus.Status
 					</strong>
 				</li>
 				<li class="app-task-list__item">
@@ -76,8 +76,8 @@
 							Rationale
 						</a>
 					</span>
-					<strong class="govuk-tag @Model.Project.RationaleTaskListStatus.CssClass app-task-list__tag" id="rationale-status">
-						@Model.Project.RationaleTaskListStatus.Status
+					<strong class="govuk-tag @Model.TaskList.RationaleTaskListStatus.CssClass app-task-list__tag" id="rationale-status">
+						@Model.TaskList.RationaleTaskListStatus.Status
 					</strong>
 				</li>
 				<li class="app-task-list__item">
@@ -86,8 +86,8 @@
 							Risks and issues
 						</a>
 					</span>
-					<strong class="govuk-tag @Model.Project.RisksAndIssuesTaskListStatus.CssClass app-task-list__tag" id="risks-and-issues-status">
-						@Model.Project.RisksAndIssuesTaskListStatus.Status
+					<strong class="govuk-tag @Model.TaskList.RisksAndIssuesTaskListStatus.CssClass app-task-list__tag" id="risks-and-issues-status">
+						@Model.TaskList.RisksAndIssuesTaskListStatus.Status
 					</strong>
 				</li>
 				<li class="app-task-list__item">
@@ -96,8 +96,8 @@
 							School budget information
 						</a>
 					</span>
-					<strong class="govuk-tag @Model.Project.SchoolBudgetInformationTaskListStatus.CssClass app-task-list__tag" id="school-budget-information-status">
-						@Model.Project.SchoolBudgetInformationTaskListStatus.Status
+					<strong class="govuk-tag @Model.TaskList.SchoolBudgetInformationTaskListStatus.CssClass app-task-list__tag" id="school-budget-information-status">
+						@Model.TaskList.SchoolBudgetInformationTaskListStatus.Status
 					</strong>
 				</li>
 				<li class="app-task-list__item">
