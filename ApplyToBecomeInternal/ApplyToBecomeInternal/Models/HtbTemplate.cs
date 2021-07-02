@@ -1,7 +1,7 @@
 ﻿using ApplyToBecome.Data.Models;
 using ApplyToBecomeInternal.Extensions;
+using ApplyToBecomeInternal.Services.WordDocument;
 using System;
-using static ApplyToBecomeInternal.Services.WordDocumentService;
 
 namespace ApplyToBecomeInternal.Models
 {
