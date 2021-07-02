@@ -44,7 +44,7 @@
 			<ul class="app-task-list__items govuk-!-padding-left-0">
 				<li class="app-task-list__item">
 					<span class="app-task-list__task-name">
-						<a class="govuk-link" asp-page="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="project-overview">
+						<a class="govuk-link" asp-page="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-and-trust-information-status">
 							School and trust information and project dates
 						</a>
 					</span>
@@ -54,7 +54,7 @@
 				</li>
 				<li class="app-task-list__item">
 					<span class="app-task-list__task-name">
-						<a class="govuk-link" asp-page="@Links.GeneralInformationSection.ConfirmGeneralInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="general-information">
+						<a class="govuk-link" asp-page="@Links.GeneralInformationSection.ConfirmGeneralInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="general-information-status">
 							General information
 						</a>
 					</span>
@@ -64,7 +64,7 @@
 				</li>
 				<li class="app-task-list__item">
 					<span class="app-task-list__task-name">
-						<a class="govuk-link" asp-page="@Links.SchoolPerformance.ConfirmSchoolPerformance.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-performance">
+						<a class="govuk-link" asp-page="@Links.SchoolPerformance.ConfirmSchoolPerformance.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-performance-status">
 							School performance (Ofsted information)
 						</a>
 					</span>
@@ -82,7 +82,7 @@
 				</li>
 				<li class="app-task-list__item">
 					<span class="app-task-list__task-name">
-						<a class="govuk-link" asp-page="@Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page" asp-route-id="@Model.Project.Id" aria-describedby="risks-and-issues">
+						<a class="govuk-link" asp-page="@Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page" asp-route-id="@Model.Project.Id" aria-describedby="risks-and-issues-status">
 							Risks and issues
 						</a>
 					</span>
@@ -92,7 +92,7 @@
 				</li>
 				<li class="app-task-list__item">
 					<span class="app-task-list__task-name">
-						<a class="govuk-link" asp-page="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-budget-information">
+						<a class="govuk-link" asp-page="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-budget-information-status">
 							School budget information
 						</a>
 					</span>
@@ -102,20 +102,46 @@
 				</li>
 				<li class="app-task-list__item">
 					<span class="app-task-list__task-name">
-						<a class="govuk-link" asp-page="@Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-pupil-forecast">
+						<a class="govuk-link" asp-page="@Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-pupil-forecasts-status">
 							School pupil forecasts
 						</a>
 					</span>
 					<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="school-pupil-forecasts-status">Reference only</strong>
 				</li>
-				<li class="app-task-list__item">
-					<span class="app-task-list__task-name">
-						<a class="govuk-link" href="#" aria-describedby="performance-tables">
-							Key stage (KS) performance tables
-						</a>
-					</span>
-					<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="performance-tables">Reference only</strong>
-				</li>
+				@if (Model.TaskList.HasKeyStage2PerformanceTables)
+				{
+					<li class="app-task-list__item">
+						<span class="app-task-list__task-name">
+							<a class="govuk-link" asp-page="@Links.KeyStagePerformanceSection.KeyStage2PerformanceTables.Page" asp-route-id="@Model.Project.Id" aria-describedby="key-stage-2-performance-tables">
+								Key stage 2 performance tables
+							</a>
+						</span>
+						<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="key-stage-2-performance-tables">Reference only</strong>
+					</li>
+				}
+				@if (Model.TaskList.HasKeyStage4PerformanceTables)
+				{
+					<li class="app-task-list__item">
+						<span class="app-task-list__task-name">
+							<a class="govuk-link" asp-page="@Links.KeyStagePerformanceSection.KeyStage4PerformanceTables.Page" asp-route-id="@Model.Project.Id" aria-describedby="key-stage-4-performance-tables">
+								Key stage 4 performance tables
+							</a>
+						</span>
+						<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="key-stage-4-performance-tables">Reference only</strong>
+					</li>
+				}
+				@if (Model.TaskList.HasKeyStage5PerformanceTables)
+				{
+					<li class="app-task-list__item">
+						<span class="app-task-list__task-name">
+							<a class="govuk-link" asp-page="@Links.KeyStagePerformanceSection.KeyStage5PerformanceTables.Page" asp-route-id="@Model.Project.Id" aria-describedby="key-stage-5-performance-tables">
+								Key stage 5 performance tables
+							</a>
+						</span>
+						<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="key-stage-5-performance-tables">Reference only</strong>
+					</li>
+				}
+
 			</ul>
 		</div>
 		<h3 class="app-task-list__section govuk-!-margin-top-8">

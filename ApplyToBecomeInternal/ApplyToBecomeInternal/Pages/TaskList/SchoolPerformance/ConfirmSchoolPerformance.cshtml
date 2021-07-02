@@ -1,9 +1,7 @@
 ﻿@page "/task-list/{id:int}/school-performance-ofsted-information"
-@inject ApplyToBecome.Data.Services.SchoolPerformanceService schoolPerformanceService
 @model ApplyToBecomeInternal.Pages.BaseAcademyConversionProjectPageModel
 @{
 	ViewData["Title"] = "School performance ofsted information";
-	var schoolPerformance = await schoolPerformanceService.GetSchoolPerformanceByUrn(Model.Project.SchoolURN);
 }
 
 @section BeforeMain

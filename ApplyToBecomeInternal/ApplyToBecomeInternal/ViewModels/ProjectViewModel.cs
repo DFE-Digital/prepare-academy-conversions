@@ -146,5 +146,7 @@ namespace ApplyToBecomeInternal.ViewModels
 		public decimal CapitalCarryForwardAtEndMarchNextYear { get; set; }
 		public string SchoolBudgetInformationAdditionalInformation { get; set; }
 		public bool SchoolBudgetInformationSectionComplete { get; set; }
+
+		public string KeyStage2PerformanceAdditionalInformation { get; set; }
 	}
 }

@@ -22,7 +22,7 @@ namespace ApplyToBecome.Data.Services
 			var response = await _httpClient.GetAsync($"/establishment/urn/{urn}");
 			if (!response.IsSuccessStatusCode)
 			{
-				_logger.LogWarning("Unable to get school performance information for establishment with URN: {urn}", urn);
+				_logger.LogWarning("Unable to get establishment data for establishment with URN: {urn}", urn);
 				return new EstablishmentResponse();
 			}
 
