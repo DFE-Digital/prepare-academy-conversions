@@ -15,7 +15,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 
 		private static IEnumerable<FormField> GenerateBaseFields(Application application) =>
 			new[] {
-				new FormField("Application to join", $"{application.Trust.Name} with {application.School.Name}"),
+				new FormField("Application to join", $"{application.TrustName} with {application.SchoolName}"),
 				new FormField("Lead applicant", application.LeadApplicant),
 			};
 

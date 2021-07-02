@@ -16,7 +16,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 		{
 			var application = new Application
 			{
-				School = new School { Name = "St Wilfrid's Primary School" },
+				SchoolName = "St Wilfrid's Primary School" ,
 				ConversionInformation = new ConversionInformation
 				{
 					HeadTeacher = new ContactDetails

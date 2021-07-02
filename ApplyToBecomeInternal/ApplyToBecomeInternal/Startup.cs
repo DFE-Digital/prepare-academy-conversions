@@ -1,5 +1,3 @@
-using ApplyToBecome.Data;
-using ApplyToBecome.Data.Mock;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Configuration;
 using ApplyToBecomeInternal.Services;
@@ -39,9 +37,6 @@ namespace ApplyToBecomeInternal
 
 			services.AddHttpContextAccessor();
 
-			services.AddSingleton<ITrusts, MockTrusts>();
-			services.AddSingleton<IApplications, MockApplications>();
-
 			services.AddHttpClient("TramsClient", (sp, client) =>
 			{
 				var configuration = sp.GetRequiredService<IConfiguration>();
@@ -56,6 +51,7 @@ namespace ApplyToBecomeInternal
 			services.Decorate<IGetEstablishment, GetEstablishmentItemCacheDecorator>();
 			services.AddScoped<SchoolPerformanceService>();
 			services.AddScoped<GeneralInformationService>();
+			services.AddScoped<KeyStagePerformanceService>();
 			services.AddScoped<IAcademyConversionProjectRepository, AcademyConversionProjectRepository>();
 			services.Decorate<IAcademyConversionProjectRepository, AcademyConversionProjectItemsCacheDecorator>();
 			services.AddScoped<IProjectNotesRepository, ProjectNotesRepository>();
