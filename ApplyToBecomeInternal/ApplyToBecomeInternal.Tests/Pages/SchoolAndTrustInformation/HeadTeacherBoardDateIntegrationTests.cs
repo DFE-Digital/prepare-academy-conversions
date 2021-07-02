@@ -1,9 +1,8 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
-using ApplyToBecomeInternal.Extensions;
+using ApplyToBecomeInternal.Tests.Customisations;
 using FluentAssertions;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -11,29 +10,25 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 {
 	public class HeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
 	{
-		public HeadTeacherBoardDateIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public HeadTeacherBoardDateIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) 
+		{
+			_fixture.Customizations.Add(new RandomDateBuilder(DateTime.Now.AddDays(1), DateTime.Now.AddMonths(12)));
+		}
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_head_teacher_board_date()
 		{
-			var dates = Enumerable.Range(1, 12).Select(i => DateTime.Today.FirstOfMonth(i).ToDateString(true)).ToArray();
-			var (selected, toSelect) = RandomRadioButtons("head-teacher-board-date", dates);
-			var project = AddGetProject(p => p.HeadTeacherBoardDate = DateTime.Parse(selected.Value));
-			var request = AddPatchProject(project, r => r.HeadTeacherBoardDate, DateTime.Parse(toSelect.Value));
+			var project = AddGetProject();
+			var request = AddPatchProject(project, r => r.HeadTeacherBoardDate);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 			await NavigateAsync("Change", 4);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/head-teacher-board-date");
-			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked.Should().BeFalse();
-			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked.Should().BeTrue();
 
-			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked = false;
-			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked = true;
-
-			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked.Should().BeTrue();
-			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked.Should().BeFalse();
-
+			Document.QuerySelector<IHtmlInputElement>("#head-teacher-board-date-day").Value = request.HeadTeacherBoardDate.Value.Day.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#head-teacher-board-date-month").Value = request.HeadTeacherBoardDate.Value.Month.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#head-teacher-board-date-year").Value = request.HeadTeacherBoardDate.Value.Year.ToString();
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");

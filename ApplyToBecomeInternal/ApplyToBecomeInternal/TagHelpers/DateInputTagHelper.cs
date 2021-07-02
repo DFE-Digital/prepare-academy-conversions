@@ -46,12 +46,25 @@ namespace ApplyToBecomeInternal.TagHelpers
 			if (error != null)
 			{
 				model.ErrorMessage = error.Message;
-				model.DayInvalid = error.AttemptedValues.TryGetValue($"{Name}-day", out var day) && day.IsInvalid;
-				model.Day = day.Value;
-				model.MonthInvalid = error.AttemptedValues.TryGetValue($"{Name}-month", out var month) && month.IsInvalid;
-				model.Month = month.Value;
-				model.YearInvalid = error.AttemptedValues.TryGetValue($"{Name}-year", out var year) && year.IsInvalid;
-				model.Year = year.Value;
+				model.DayInvalid = error.InvalidInputs.Contains($"{Name}-day");
+				if (ViewContext.HttpContext.Request.Form.TryGetValue($"{Name}-day", out var dayValue))
+				{
+					model.Day = dayValue;
+				}
+				model.MonthInvalid = error.InvalidInputs.Contains($"{Name}-month");
+				if (ViewContext.HttpContext.Request.Form.TryGetValue($"{Name}-month", out var monthValue))
+				{
+					model.Month = monthValue;
+				}
+				model.YearInvalid = error.InvalidInputs.Contains($"{Name}-year");
+				if (ViewContext.HttpContext.Request.Form.TryGetValue($"{Name}-year", out var yearValue))
+				{
+					model.Year = yearValue;
+				}
+				if (model.DayInvalid == false && model.MonthInvalid == false && model.YearInvalid == false)
+				{
+					model.DayInvalid = model.MonthInvalid = model.YearInvalid = true;
+				}
 			}
 
 			return await _htmlHelper.PartialAsync("_DateInput", model);

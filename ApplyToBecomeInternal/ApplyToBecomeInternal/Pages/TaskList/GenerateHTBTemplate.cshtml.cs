@@ -1,6 +1,6 @@
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
-using ApplyToBecomeInternal.Services;
+using ApplyToBecomeInternal.Services.WordDocument;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
