@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Models
@@ -66,7 +68,19 @@ namespace ApplyToBecomeInternal.Models
 			if (dayValid && monthValid && yearValid)
 			{
 				var date = new DateTime(year, month, day);
-				bindingContext.Result = ModelBindingResult.Success(date);
+				var validDateRange = IsInValidDateRange(date);
+				if (validDateRange.Item1)
+				{
+					bindingContext.Result = ModelBindingResult.Success(date);
+				}
+				else
+				{
+					bindingContext.ModelState.TryAddModelError(
+							bindingContext.ModelName,
+							validDateRange.Item2);
+
+					bindingContext.Result = ModelBindingResult.Failed();
+				}
 			}
 			else
 			{
@@ -211,6 +225,30 @@ namespace ApplyToBecomeInternal.Models
 					&& yearValueProviderResult == ValueProviderResult.None;
 			}
 
+			(bool, string) IsInValidDateRange(DateTime date)
+			{
+				if (bindingContext.ModelMetadata is DefaultModelMetadata defaultModelMetadata)
+				{
+					var dateValidation = defaultModelMetadata.Attributes.Attributes.FirstOrDefault(a => a.GetType() == typeof(DateValidationAttribute)) as DateValidationAttribute;
+					if (dateValidation != null)
+					{
+						var today = DateTime.Today;
+						switch (dateValidation.DateValidationEnum)
+						{
+							case DateValidationEnum.Past:
+								return (date < today, $"{displayName} must be in the past");
+							case DateValidationEnum.PastOrToday:
+								return (date < today.AddDays(1), $"{displayName} must be today or in the past");
+							case DateValidationEnum.Future:
+								return (date >= today.AddDays(1), $"{displayName} must be in the future");
+							case DateValidationEnum.FutureOrToday:
+								return (date >= today, $"{displayName} must be today or in the future");
+						}
+					}
+				}
+				return (true, string.Empty);
+			}
+
 			bool IsEmptyDate()
 			{
 				return dayValueProviderResult.FirstValue == string.Empty
@@ -218,5 +256,23 @@ namespace ApplyToBecomeInternal.Models
 				       && yearValueProviderResult.FirstValue == string.Empty;
 			}
 		}
+	}
+
+	public class DateValidationAttribute : Attribute
+	{
+		public DateValidationAttribute(DateValidationEnum dateValidationEnum)
+		{
+			DateValidationEnum = dateValidationEnum;
+		}
+
+		public DateValidationEnum DateValidationEnum { get; }
+	}
+
+	public enum DateValidationEnum
+	{
+		Past,
+		PastOrToday,
+		Future,
+		FutureOrToday
 	}
 }

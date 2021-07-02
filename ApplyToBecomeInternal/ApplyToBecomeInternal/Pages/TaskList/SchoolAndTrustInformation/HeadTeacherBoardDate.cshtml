@@ -11,21 +11,5 @@
 	<govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation" />
 }
 
-@{
-	var firstDate = DateTime.Today.FirstOfMonth(1);
-	var values = Enumerable.Range(0, 12).Select(i => firstDate.FirstOfMonth(i).ToString()).ToArray();
-	var labels = Enumerable.Range(0, 12).Select(i => firstDate.FirstOfMonth(i).ToDateString(true)).ToArray();
-}
-
-<h1 class="govuk-heading-l">Choose the HTB date for this project</h1>
-<p class="govuk-body">Read through the school's application form to help you choose the best HTB date to aim for.</p>
-<div class="govuk-form-group">
-	<fieldset class="govuk-fieldset">
-		<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-			<h2 class="govuk-fieldset__heading">
-				Region: North
-			</h2>
-		</legend>
-		<govuk-radios-input name="head-teacher-board-date" asp-for="Project.HeadTeacherBoardDate" values="@values" labels="@labels" />
-	</fieldset>
-</div>
+<h1 class="govuk-heading-l">Set the headteacher board (HTB) date</h1>
+<govuk-date-input name="head-teacher-board-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />

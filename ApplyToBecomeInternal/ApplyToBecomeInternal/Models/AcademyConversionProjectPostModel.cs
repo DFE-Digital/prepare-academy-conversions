@@ -11,6 +11,9 @@ namespace ApplyToBecomeInternal.Models
 		public DateTime? AssignedDate { get; set; }
 
 		[BindProperty(Name = "head-teacher-board-date")]
+		[ModelBinder(BinderType = typeof(DateInputModelBinder))]
+		[DateValidation(DateValidationEnum.Future)]
+		[Display(Name = "Headteacher board (HTB) date")]
 		public DateTime? HeadTeacherBoardDate { get; set; }
 		public DateTime? OpeningDate { get; set; }
 		public DateTime? BaselineDate { get; set; }
