@@ -1,9 +1,9 @@
 using ApplyToBecome.Data.Models;
 using System;
-using System.Collections.Generic;
 
 namespace ApplyToBecomeInternal.ViewModels
 {
+
 	public class ProjectViewModel
 	{
 		public ProjectViewModel(AcademyConversionProject project)
