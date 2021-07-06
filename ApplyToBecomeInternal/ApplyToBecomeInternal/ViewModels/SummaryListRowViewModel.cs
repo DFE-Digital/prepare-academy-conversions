@@ -7,6 +7,7 @@
 		public string Value { get; set; }
 		public bool IsEmpty => string.IsNullOrWhiteSpace(Value);
 		public string Page { get; set; }
+		public string Fragment { get; set; }
 		public string RouteId { get; set; }
 		public string Return { get; set; }
 		public string HiddenText { get; set; }
