@@ -18,7 +18,7 @@
 		{
 			if (ViewData["IncludeFragment"] is bool includeFragment && includeFragment)
 			{
-				<a class="govuk-link" asp-page="@Model.Page" asp-fragment="@Model.Fragment" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return" asp-route-fragment="@Model.Id">
+				<a class="govuk-link" asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return" asp-route-fragment="@Model.Id">
 					Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
 				</a>
 			}
