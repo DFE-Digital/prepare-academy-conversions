@@ -1,13 +1,13 @@
 ﻿@page "/task-list/{id:int}/key-stage-2-performance-tables/additional-information"
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
-	Model.SuccessPage = Links.KeyStagePerformanceSection.KeyStage2PerformanceTablesAdditionalInformation.Page;
+	Model.SuccessPage = Links.KeyStagePerformanceSection.KeyStage2PerformanceTables.Page;
 	ViewData["Title"] = "Key stage 2 performance tables additional information";
 }
 
 @section BeforeMain
 {
-	<govuk-back-link link-item="@Links.TaskList.Index" />
+	<govuk-back-link link-item="@Links.KeyStagePerformanceSection.KeyStage2PerformanceTables" />
 }
 <span class="govuk-caption-l">@Model.Project.SchoolName</span>
 <h1 class="govuk-heading-l">Key stage 2 performance tables</h1>
