@@ -14,7 +14,7 @@ namespace ApplyToBecomeInternal.ViewComponents
 		private readonly IAcademyConversionProjectRepository _repository;
 
 		public KeyStage2PerformanceTablesViewComponent(
-			KeyStagePerformanceService keyStagePerformanceService, 
+			KeyStagePerformanceService keyStagePerformanceService,
 			IAcademyConversionProjectRepository repository)
 		{
 			_keyStagePerformanceService = keyStagePerformanceService;
@@ -55,6 +55,11 @@ namespace ApplyToBecomeInternal.ViewComponents
 				NationalAveragePercentageMeetingExpectedStdInRWMDisadvantaged = keyStage2Performance.NationalAveragePercentageMeetingExpectedStdInRWM.Disadvantaged,
 				NationalAveragePercentageAchievingHigherStdInRWM = keyStage2Performance.NationalAveragePercentageAchievingHigherStdInRWM.NotDisadvantaged,
 				NationalAveragePercentageAchievingHigherStdInRWMDisadvantaged = keyStage2Performance.NationalAveragePercentageAchievingHigherStdInRWM.Disadvantaged,
+				LAAveragePercentageMeetingExpectedStdInRWM = keyStage2Performance.LAAveragePercentageMeetingExpectedStdInRWM.NotDisadvantaged,
+				LAAveragePercentageAchievingHigherStdInRWM = keyStage2Performance.LAAveragePercentageAchievingHigherStdInRWM.NotDisadvantaged,
+				LAAverageMathsProgressScore = keyStage2Performance.LAAverageMathsProgressScore.NotDisadvantaged,
+				LAAverageReadingProgressScore = keyStage2Performance.LAAverageReadingProgressScore.NotDisadvantaged,
+				LAAverageWritingProgressScore = keyStage2Performance.LAAverageWritingProgressScore.NotDisadvantaged
 			};
 		}
 	}
