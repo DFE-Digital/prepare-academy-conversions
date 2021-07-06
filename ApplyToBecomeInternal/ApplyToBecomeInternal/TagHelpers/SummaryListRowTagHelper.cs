@@ -15,6 +15,9 @@ namespace ApplyToBecomeInternal.TagHelpers
 		[HtmlAttributeName("asp-page")]
 		public string Page { get; set; }
 
+		[HtmlAttributeName("asp-fragment")]
+		public string Fragment { get; set; }
+
 		[HtmlAttributeName("asp-route-id")]
 		public string RouteId { get; set; }
 
@@ -39,6 +42,7 @@ namespace ApplyToBecomeInternal.TagHelpers
 				Key = Label,
 				Value = value,
 				Page = Page,
+				Fragment = Fragment,
 				RouteId = RouteId,
 				Return = ViewContext.ViewData["Return"]?.ToString(),
 				HiddenText = HiddenText,

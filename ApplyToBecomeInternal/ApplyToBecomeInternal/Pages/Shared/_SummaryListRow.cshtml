@@ -22,6 +22,12 @@
 					Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
 				</a>
 			}
+			else if(!string.IsNullOrEmpty(Model.Fragment))
+			{
+				<a class="govuk-link" asp-page="@Model.Page" asp-fragment="@Model.Fragment" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return">
+					Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
+				</a>
+			}
 			else
 			{
 				<a class="govuk-link" asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return">
