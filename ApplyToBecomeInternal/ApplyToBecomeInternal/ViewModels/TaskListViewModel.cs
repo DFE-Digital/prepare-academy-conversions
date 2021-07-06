@@ -9,6 +9,9 @@
 		public TaskListItemViewModel RationaleTaskListStatus { get; set; }
 		public TaskListItemViewModel RisksAndIssuesTaskListStatus { get; set; }
 		public TaskListItemViewModel SchoolBudgetInformationTaskListStatus { get; set; }
+		public bool HasKeyStage2PerformanceTables { get; set; }
+		public bool HasKeyStage4PerformanceTables { get; set; }
+		public bool HasKeyStage5PerformanceTables { get; set; }
 
 		public static TaskListViewModel Build(ProjectViewModel project)
 		{

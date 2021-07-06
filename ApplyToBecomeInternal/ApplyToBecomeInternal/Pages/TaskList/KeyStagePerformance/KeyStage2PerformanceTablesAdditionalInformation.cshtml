@@ -1,0 +1,35 @@
+﻿@page "/task-list/{id:int}/key-stage-2-performance-tables/additional-information"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Model.SuccessPage = Links.KeyStagePerformanceSection.KeyStage2PerformanceTables.Page;
+	ViewData["Title"] = "Key stage 2 performance tables additional information";
+}
+
+@section BeforeMain
+{
+	<govuk-back-link link-item="@Links.KeyStagePerformanceSection.KeyStage2PerformanceTables" />
+}
+<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+<h1 class="govuk-heading-l">Key stage 2 performance tables</h1>
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<p class="govuk-body">This information comes from TRAMS and you can include <a href="#additional-information">additional information</a> if you need to. These performance tables and additional information will go into your headteacher board template.</p>
+		<p class="govuk-body-s">
+			TRAMS last updated on: 23 March 2021<br>
+			<a href="https://www.compare-school-performance.service.gov.uk/school/@Model.Project.SchoolURN" class="govuk-link" rel="noreferrer noopener" target="_blank">Source of data: Find and compare school performance (opens in new tab)</a>
+		</p>
+	</div>
+	<div class="govuk-grid-column-full">
+		<vc:key-stage2-performance-tables />
+	</div>
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post">
+			<h3 class="govuk-heading-m">Additional information</h3>
+			<p class="govuk-body">This information will populate into your HTB template under the school performance (Ofsted information) section.</p>
+			<govuk-textarea-input id="additional-information" name="key-stage-2-additional-information" asp-for="Project.KeyStage2PerformanceAdditionalInformation" rows="5" />
+			<button class="govuk-button" data-module="govuk-button">
+				Save and continue
+			</button>
+		</form>
+	</div>
+</div>

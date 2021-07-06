@@ -73,6 +73,8 @@ namespace ApplyToBecomeInternal.ViewModels
 			CapitalCarryForwardAtEndMarchNextYear = project.CapitalCarryForwardAtEndMarchNextYear ?? 0;
 			SchoolBudgetInformationAdditionalInformation = project.SchoolBudgetInformationAdditionalInformation;
 			SchoolBudgetInformationSectionComplete = project.SchoolBudgetInformationSectionComplete ?? false;
+
+			KeyStage2PerformanceAdditionalInformation = project.KeyStagePerformanceTablesAdditionalInformation;
 		}
 
 		public string Id { get; }
@@ -146,5 +148,7 @@ namespace ApplyToBecomeInternal.ViewModels
 		public decimal CapitalCarryForwardAtEndMarchNextYear { get; set; }
 		public string SchoolBudgetInformationAdditionalInformation { get; set; }
 		public bool SchoolBudgetInformationSectionComplete { get; set; }
+
+		public string KeyStage2PerformanceAdditionalInformation { get; set; }
 	}
 }

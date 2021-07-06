@@ -1,5 +1,6 @@
 ﻿using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Models.Establishment;
+using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecomeInternal.Tests.Customisations;
 using AutoFixture;
 using AutoFixture.Dsl;
@@ -21,11 +22,13 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		public AcademyConversionProject AddGetProject(Action<AcademyConversionProject> postSetup = null)
 		{
 			var project = _fixture.Create<AcademyConversionProject>();
+			var keyStagePerformance = _fixture.Create<KeyStagePerformanceResponse>();
 			if (postSetup != null)
 			{
 				postSetup(project);
 			}
 			_factory.AddGetWithJsonResponse($"/conversion-projects/{project.Id}", project);
+			_factory.AddGetWithJsonResponse($"/educationPerformance/{project.Urn}", keyStagePerformance);
 			return project;
 		}
 

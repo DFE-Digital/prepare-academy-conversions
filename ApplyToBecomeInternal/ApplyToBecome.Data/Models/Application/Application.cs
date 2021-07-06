@@ -1,9 +1,12 @@
 namespace ApplyToBecome.Data.Models.Application
 {
+	/// <remarks>
+	/// Whole model and related models can probably be done away with once this is built e2e
+	/// </remarks>
 	public class Application
 	{
-		public School School { get; set; }
-		public Trust Trust { get; set; }
+		public string SchoolName { get; set; }
+		public string TrustName { get; set; }
 		public string LeadApplicant { get; set; }
 		public ApplicationDetails Details { get; set; }
 		public ConversionInformation ConversionInformation { get; set; }

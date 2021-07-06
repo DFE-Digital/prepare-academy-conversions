@@ -26,7 +26,7 @@ namespace ApplyToBecome.Data.Tests.Services
 			_testLogger = TestLoggerFactory.Create();
 			_schoolPerformanceService = new SchoolPerformanceService(
 				new EstablishmentService(
-					new MockHttpClientFactory(_mockHandler), 
+					new MockHttpClientFactory(_mockHandler),
 					_testLogger.CreateLogger<SchoolPerformanceService>()
 				)
 			);
@@ -60,7 +60,7 @@ namespace ApplyToBecome.Data.Tests.Services
 
 			_testLogger.Sink.LogEntries
 				.Should()
-				.ContainSingle(log => log.Message.Equals($"Unable to get school performance information for establishment with URN: {project.Urn}"));
+				.ContainSingle(log => log.Message.Equals($"Unable to get establishment data for establishment with URN: {project.Urn}"));
 		}
 
 		public class EstablishmentMockData

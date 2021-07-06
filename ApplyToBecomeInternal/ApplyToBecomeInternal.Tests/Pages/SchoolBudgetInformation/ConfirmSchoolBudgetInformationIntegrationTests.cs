@@ -99,7 +99,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 		}
 
 		[Fact]
-		public async Task Should_navigate_between_task_list_and_confirm_risks_and_issues()
+		public async Task Should_navigate_between_task_list_and_confirm_school_budget_information()
 		{
 			var project = AddGetProject();
 

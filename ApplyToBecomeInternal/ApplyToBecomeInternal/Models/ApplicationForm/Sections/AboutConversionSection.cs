@@ -20,7 +20,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 		private IEnumerable<FormField> GenerateSchoolFields(Application application) =>
 			new[]
 			{
-				new FormField("The name of the school", application.School.Name)
+				new FormField("The name of the school", application.SchoolName)
 			};
 		private IEnumerable<FormField> GenerateContactFields(Application application) =>
 			new[]
