@@ -73,6 +73,8 @@ namespace ApplyToBecomeInternal.ViewModels
 			CapitalCarryForwardAtEndMarchNextYear = project.CapitalCarryForwardAtEndMarchNextYear ?? 0;
 			SchoolBudgetInformationAdditionalInformation = project.SchoolBudgetInformationAdditionalInformation;
 			SchoolBudgetInformationSectionComplete = project.SchoolBudgetInformationSectionComplete ?? false;
+
+			KeyStage2PerformanceAdditionalInformation = project.KeyStagePerformanceTablesAdditionalInformation;
 		}
 
 		public string Id { get; }
