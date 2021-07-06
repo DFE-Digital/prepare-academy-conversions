@@ -19,7 +19,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPupilForecasts
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-pupil-forecasts");
 			await NavigateAsync("Change", 0);
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information#additional-information");
 			var textArea = Document.QuerySelector<IHtmlTextAreaElement>("#additional-information");
 			textArea.TextContent.Should().Be(project.SchoolPupilForecastsAdditionalInformation);
 
