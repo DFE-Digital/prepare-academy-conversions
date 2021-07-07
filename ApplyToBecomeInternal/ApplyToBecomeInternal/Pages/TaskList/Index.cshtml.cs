@@ -25,7 +25,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 
 			// 16 plus = 6, All-through = 7, Middle deemed primary = 3, Middle deemed secondary = 5, Not applicable = 0, Nursery = 1, Primary = 2, Secondary = 4
 			TaskList = TaskListViewModel.Build(Project);
-			TaskList.HasKeyStage2PerformanceTables = keyStagePerformance.KeyStage2.Any(HasKeyStage2PerformanceTables);
+			TaskList.HasKeyStage2PerformanceTables = keyStagePerformance.KeyStage2?.Any(HasKeyStage2PerformanceTables) ?? false;
 			TaskList.HasKeyStage4PerformanceTables = false;
 			TaskList.HasKeyStage5PerformanceTables = false;
 
