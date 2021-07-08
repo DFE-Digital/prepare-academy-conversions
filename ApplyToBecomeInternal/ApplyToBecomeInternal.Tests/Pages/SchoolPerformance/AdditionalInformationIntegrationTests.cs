@@ -43,7 +43,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 		}
 
 		[Fact]
-		public async Task Should_navigate_back_to_confirm_school_pupil_forecasts()
+		public async Task Should_navigate_back_to_confirm_school_performance()
 		{
 			var project = AddGetProject();
 
