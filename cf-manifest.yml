@@ -9,3 +9,4 @@ applications:
     password: ((password))
     ASPNETCORE_ENVIRONMENT: Development
     TramsApi__Endpoint: ((tramsApiEndpoint))
+    TramsApi__ApiKey: ((tramsApiKey))
