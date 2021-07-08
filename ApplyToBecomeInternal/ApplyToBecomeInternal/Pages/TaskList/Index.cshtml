@@ -111,7 +111,7 @@
 				@if (Model.TaskList.HasKeyStage2PerformanceTables)
 				{
 					<li class="app-task-list__item">
-						<span class="app-task-list__task-name">
+						<span class="app-task-list__task-name" id="key-stage-2-performance-tables">
 							<a class="govuk-link" asp-page="@Links.KeyStagePerformanceSection.KeyStage2PerformanceTables.Page" asp-route-id="@Model.Project.Id" aria-describedby="key-stage-2-performance-tables">
 								Key stage 2 performance tables
 							</a>

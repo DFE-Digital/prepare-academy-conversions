@@ -32,9 +32,13 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			return project;
 		}
 
-		public KeyStagePerformanceResponse AddGetKeyStagePerformance(int urn)
+		public KeyStagePerformanceResponse AddGetKeyStagePerformance(int urn, Action<KeyStagePerformanceResponse> postSetup = null)
 		{
 			var keyStagePerformance = _fixture.Create<KeyStagePerformanceResponse>();
+			if (postSetup != null)
+			{
+				postSetup(keyStagePerformance);
+			}
 			_factory.AddGetWithJsonResponse($"/educationPerformance/{urn}", keyStagePerformance);
 			return keyStagePerformance;
 		}
