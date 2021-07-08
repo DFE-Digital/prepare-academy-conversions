@@ -53,6 +53,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 				Document.QuerySelector($"#{response.Year}-na-writing-progress-score").TextContent.Should().Be(response.NationalAverageWritingProgressScore.NotDisadvantaged);
 				Document.QuerySelector($"#{response.Year}-na-maths-progress-score").TextContent.Should().Be(response.NationalAverageMathsProgressScore.NotDisadvantaged);
 			}
+
+			await NavigateAsync("Confirm and continue");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
 
 		[Fact]
