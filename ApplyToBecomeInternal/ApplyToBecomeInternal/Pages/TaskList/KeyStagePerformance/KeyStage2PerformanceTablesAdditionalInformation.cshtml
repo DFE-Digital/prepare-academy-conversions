@@ -9,6 +9,11 @@
 {
 	<govuk-back-link link-item="@Links.KeyStagePerformanceSection.KeyStage2PerformanceTables" />
 }
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
 <span class="govuk-caption-l">@Model.Project.SchoolName</span>
 <h1 class="govuk-heading-l">Key stage 2 performance tables</h1>
 <div class="govuk-grid-row">

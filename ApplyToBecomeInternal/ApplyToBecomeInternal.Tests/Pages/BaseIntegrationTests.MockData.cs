@@ -22,14 +22,23 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		public AcademyConversionProject AddGetProject(Action<AcademyConversionProject> postSetup = null)
 		{
 			var project = _fixture.Create<AcademyConversionProject>();
-			var keyStagePerformance = _fixture.Create<KeyStagePerformanceResponse>();
 			if (postSetup != null)
 			{
 				postSetup(project);
 			}
 			_factory.AddGetWithJsonResponse($"/conversion-projects/{project.Id}", project);
-			_factory.AddGetWithJsonResponse($"/educationPerformance/{project.Urn}", keyStagePerformance);
 			return project;
+		}
+
+		public KeyStagePerformanceResponse AddGetKeyStagePerformance(int urn, Action<KeyStagePerformanceResponse> postSetup = null)
+		{
+			var keyStagePerformance = _fixture.Create<KeyStagePerformanceResponse>();
+			if (postSetup != null)
+			{
+				postSetup(keyStagePerformance);
+			}
+			_factory.AddGetWithJsonResponse($"/educationPerformance/{urn}", keyStagePerformance);
+			return keyStagePerformance;
 		}
 
 		public IEnumerable<ProjectNote> AddGetProjectNotes(int academyConversionProjectId, Action<IEnumerable<ProjectNote>> postSetup = null)

@@ -17,27 +17,27 @@
 			<tbody class="govuk-table__body">
 				<tr class="govuk-table__row">
 					<th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
-					<td class="govuk-table__cell">@vm.PercentageMeetingExpectedStdInRWM</td>
-					<td class="govuk-table__cell">@vm.PercentageAchievingHigherStdInRWM </td>
-					<td class="govuk-table__cell">@vm.ReadingProgressScore </td>
-					<td class="govuk-table__cell">@vm.WritingProgressScore</td>
-					<td class="govuk-table__cell">@vm.MathsProgressScore</td>
+					<td class="govuk-table__cell" id="@(vm.Year + "-percentage-meeting-expected-in-rwm")">@vm.PercentageMeetingExpectedStdInRWM</td>
+					<td class="govuk-table__cell" id="@(vm.Year + "-percentage-achieving-higher-in-rwm")">@vm.PercentageAchievingHigherStdInRWM</td>
+					<td class="govuk-table__cell" id="@(vm.Year + "-reading-progress-score")">@vm.ReadingProgressScore</td>
+					<td class="govuk-table__cell" id="@(vm.Year + "-writing-progress-score")">@vm.WritingProgressScore</td>
+					<td class="govuk-table__cell" id="@(vm.Year + "-maths-progress-score")">@vm.MathsProgressScore</td>
 				</tr>
 				<tr class="govuk-table__row">
 					<th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA average</th>
-					<td class="govuk-table__cell">@vm.LAAveragePercentageMeetingExpectedStdInRWM</td>
-					<td class="govuk-table__cell">@vm.LAAveragePercentageAchievingHigherStdInRWM</td>
-					<td class="govuk-table__cell">@vm.LAAverageReadingProgressScore</td>
-					<td class="govuk-table__cell">@vm.LAAverageWritingProgressScore</td>
-					<td class="govuk-table__cell">@vm.LAAverageMathsProgressScore</td>
+					<td class="govuk-table__cell" id="@(vm.Year + "-la-percentage-meeting-expected-in-rwm")">@vm.LAAveragePercentageMeetingExpectedStdInRWM</td>
+					<td class="govuk-table__cell" id="@(vm.Year + "-la-percentage-achieving-higher-in-rwm")">@vm.LAAveragePercentageAchievingHigherStdInRWM</td>
+					<td class="govuk-table__cell" id="@(vm.Year + "-la-reading-progress-score")">@vm.LAAverageReadingProgressScore</td>
+					<td class="govuk-table__cell" id="@(vm.Year + "-la-writing-progress-score")">@vm.LAAverageWritingProgressScore</td>
+					<td class="govuk-table__cell" id="@(vm.Year + "-la-maths-progress-score")">@vm.LAAverageMathsProgressScore</td>
 				</tr>
 				<tr class="govuk-table__row">
 					<th scope="row" class="govuk-table__header">National average</th>
-					<td class="govuk-table__cell">@vm.NationalAveragePercentageMeetingExpectedStdInRWM <br> (disadvantaged @vm.NationalAveragePercentageMeetingExpectedStdInRWMDisadvantaged)</td>
-					<td class="govuk-table__cell">@vm.NationalAveragePercentageAchievingHigherStdInRWM <br> (disadvantaged @vm.NationalAveragePercentageAchievingHigherStdInRWMDisadvantaged)</td>
-					<td class="govuk-table__cell"></td>
-					<td class="govuk-table__cell"></td>
-					<td class="govuk-table__cell"></td>
+					<td class="govuk-table__cell" id="@(vm.Year + "-na-percentage-meeting-expected-in-rwm")">@vm.NationalAveragePercentageMeetingExpectedStdInRWM <br id="na-percentage-meeting-expected-in-rwm-disadvantaged"> (disadvantaged @vm.NationalAveragePercentageMeetingExpectedStdInRWMDisadvantaged)</td>
+					<td class="govuk-table__cell" id="@(vm.Year + "-na-percentage-achieving-higher-in-rwm")">@vm.NationalAveragePercentageAchievingHigherStdInRWM <br id="la-percentage-achieving-higher-in-rwm-disadvantaged"> (disadvantaged @vm.NationalAveragePercentageAchievingHigherStdInRWMDisadvantaged)</td>
+					<td class="govuk-table__cell" id="@(vm.Year + "-na-reading-progress-score")">@vm.NationalAverageReadingProgressScore</td>
+					<td class="govuk-table__cell" id="@(vm.Year + "-na-writing-progress-score")">@vm.NationalAverageWritingProgressScore</td>
+					<td class="govuk-table__cell" id="@(vm.Year + "-na-maths-progress-score")">@vm.NationalAverageMathsProgressScore</td>
 				</tr>
 			</tbody>
 		</table>

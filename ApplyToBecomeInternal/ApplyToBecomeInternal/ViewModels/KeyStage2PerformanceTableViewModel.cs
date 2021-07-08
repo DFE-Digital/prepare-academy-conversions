@@ -12,6 +12,9 @@
 		public string NationalAveragePercentageMeetingExpectedStdInRWMDisadvantaged { get; set; }
 		public string NationalAveragePercentageAchievingHigherStdInRWM { get; set; }
 		public string NationalAveragePercentageAchievingHigherStdInRWMDisadvantaged { get; set; }
+		public string NationalAverageReadingProgressScore { get; set; }
+		public string NationalAverageWritingProgressScore { get; set; }
+		public string NationalAverageMathsProgressScore { get; set; }
 		public string LAAveragePercentageMeetingExpectedStdInRWM { get; set; }
 		public string LAAveragePercentageAchievingHigherStdInRWM { get; set; }
 		public string LAAverageReadingProgressScore { get; set; }
