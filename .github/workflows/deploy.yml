@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master ]
 
-jobs:   
+jobs:
   deploy_to_dev:
     runs-on: ubuntu-latest
     environment: Dev
@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup node.js
         uses: actions/setup-node@v1
-        with: 
+        with:
             node-version: '14.x'
       - name: Build Frontend
         run: cd ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot; npm install; npm run build:assets; npm run build:frontend
@@ -31,4 +31,5 @@ jobs:
           cf target -o dfe -s apply-to-become-an-academy-internal-dev
           cf push -f cf-manifest.yml \
           --var username=${{ secrets.USERNAME }} \
-          --var password=${{ secrets.PASSWORD }} 
+          --var password=${{ secrets.PASSWORD }} \
+          --var tramsApiEndpoint=${{ secrets.TRAMS_API_ENDPOINT }}
