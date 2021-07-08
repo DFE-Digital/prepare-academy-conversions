@@ -28,8 +28,15 @@ namespace ApplyToBecomeInternal.Tests.Pages
 				postSetup(project);
 			}
 			_factory.AddGetWithJsonResponse($"/conversion-projects/{project.Id}", project);
-			_factory.AddGetWithJsonResponse($"/educationPerformance/{project.Urn}", keyStagePerformance);
+			//_factory.AddGetWithJsonResponse($"/educationPerformance/{project.Urn}", keyStagePerformance);
 			return project;
+		}
+
+		public KeyStagePerformanceResponse AddGetKeyStagePerformance(int urn)
+		{
+			var keyStagePerformance = _fixture.Create<KeyStagePerformanceResponse>();
+			_factory.AddGetWithJsonResponse($"/educationPerformance/{urn}", keyStagePerformance);
+			return keyStagePerformance;
 		}
 
 		public IEnumerable<ProjectNote> AddGetProjectNotes(int academyConversionProjectId, Action<IEnumerable<ProjectNote>> postSetup = null)
