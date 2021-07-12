@@ -14,6 +14,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPupilForecasts
 		public async Task Should_navigate_to_and_update_additional_information()
 		{
 			var project = AddGetProject();
+			AddGetEstablishmentResponse(project.Urn.ToString());
+
 			var request = AddPatchProject(project, r => r.SchoolPupilForecastsAdditionalInformation);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-pupil-forecasts");
@@ -33,6 +35,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPupilForecasts
 		public async Task Should_show_error_summary_when_there_is_an_API_error()
 		{
 			var project = AddGetProject();
+			AddGetEstablishmentResponse(project.Urn.ToString());
+
 			AddPatchError(project.Id);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information");
@@ -46,6 +50,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPupilForecasts
 		public async Task Should_navigate_back_to_confirm_school_pupil_forecasts()
 		{
 			var project = AddGetProject();
+			AddGetEstablishmentResponse(project.Urn.ToString());
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information");
 			await NavigateAsync("Back");
