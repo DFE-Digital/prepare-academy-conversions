@@ -55,8 +55,6 @@ namespace ApplyToBecomeInternal.ViewModels
 			EqualitiesImpactAssessmentConsidered = project.EqualitiesImpactAssessmentConsidered;
 			RisksAndIssuesSectionComplete = project.RisksAndIssuesSectionComplete ?? false;
 
-			CurrentYearCapacity = project.CurrentYearCapacity;
-			CurrentYearPupilNumbers = project.CurrentYearPupilNumbers;
 			YearOneProjectedCapacity = project.YearOneProjectedCapacity;
 			YearOneProjectedPupilNumbers = project.YearOneProjectedPupilNumbers;
 			YearTwoProjectedCapacity = project.YearTwoProjectedCapacity;
@@ -129,8 +127,6 @@ namespace ApplyToBecomeInternal.ViewModels
 		public bool RisksAndIssuesSectionComplete { get; set; }
 
 		// pupil schools forecast
-		public int? CurrentYearCapacity { get; set; }
-		public int? CurrentYearPupilNumbers { get; set; }
 		public int? YearOneProjectedCapacity { get; set; }
 		public int? YearOneProjectedPupilNumbers { get; set; }
 		public int? YearTwoProjectedCapacity { get; set; }

@@ -36,7 +36,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			Document.QuerySelector("#viability-issues").TextContent.Should().Be(project.ViabilityIssues);
 			Document.QuerySelector("#financial-deficit").TextContent.Should().Be(project.FinancialDeficit);
 			Document.QuerySelector("#diocesan-multi-academy-trust").TextContent.Should().Be($"Yes, {establishment.Diocese.Name}");
-			
+
 			// Waiting for calculation to be done in TRAMS API so no data pulled through currently
 			//Document.QuerySelector("#percentage-in-diocesan-trust").TextContent.Should().Be(establishment.PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust.ToPercentage());
 			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquarters.ToSafeString());
@@ -68,9 +68,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		{
 			var project = AddGetProject(project =>
 			{
-				project.CurrentYearPupilNumbers = null;
-				project.CurrentYearCapacity = null;
-				project.CurrentYearCapacity = null;
 				project.PublishedAdmissionNumber = null;
 				project.PartOfPfiScheme = null;
 				project.ViabilityIssues = null;
