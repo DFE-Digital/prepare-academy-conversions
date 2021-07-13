@@ -8,16 +8,20 @@
 		<ul class="govuk-list govuk-error-summary__list">
 			@foreach (var error in errorService.GetErrors())
 			{
-			<li>
-				@if (!string.IsNullOrWhiteSpace(error.Key))
-				{
-					<a href="#@error.Key">@error.Message</a>
-				}
-				else
-				{
-					@Html.Raw(error.Message)
-				}
-			</li>
+				<li>
+					@if (error.Key.Contains("head-teacher-board-date"))
+                    {
+                    	<a href=@error.Key>@error.Message</a>
+                    }
+					else if (!string.IsNullOrWhiteSpace(error.Key))
+					{
+						<a href="#@error.Key">@error.Message</a>
+					}
+					else
+					{
+						@Html.Raw(error.Message)
+					}
+				</li>
 			}
 		</ul>
 	</div>

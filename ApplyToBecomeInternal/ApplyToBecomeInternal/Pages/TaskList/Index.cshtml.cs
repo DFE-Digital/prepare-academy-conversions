@@ -1,5 +1,6 @@
 using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecome.Data.Services;
+using ApplyToBecomeInternal.Services;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -10,13 +11,16 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 	public class IndexModel : BaseAcademyConversionProjectPageModel
     {
 		private readonly KeyStagePerformanceService _keyStagePerformanceService;
+		private readonly ErrorService _errorService;
 
-		public IndexModel(KeyStagePerformanceService keyStagePerformanceService, IAcademyConversionProjectRepository repository) : base(repository)
+		public IndexModel(KeyStagePerformanceService keyStagePerformanceService, IAcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
 		{
 			_keyStagePerformanceService = keyStagePerformanceService;
+			_errorService = errorService;
 		}
 
 		public TaskListViewModel TaskList { get; set; }
+		public bool ShowGenerateHtbTemplateError;
 
 		public override async Task<IActionResult> OnGetAsync(int id)
 		{
@@ -30,6 +34,32 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			TaskList.HasKeyStage5PerformanceTables = false;
 
 			return Page();
+		}
+
+		public string SuccessPage
+		{
+			get
+			{
+				return TempData[nameof(SuccessPage)].ToString();
+			}
+			set
+			{
+				TempData[nameof(SuccessPage)] = value;
+			}
+		}
+
+		public async Task<IActionResult> OnPostAsync(int id)
+		{
+			await SetProject(id);
+			if (Project.HeadTeacherBoardDate == null)
+            {
+	            ShowGenerateHtbTemplateError = true;
+            	_errorService.AddError($"/task-list/{Project.Id}/confirm-school-trust-information-project-dates#head-teacher-board-date",
+            		"Set an HTB date before you generate your document");
+                await OnGetAsync(int.Parse(Project.Id));
+                return Page();
+            }
+			return RedirectToPage(SuccessPage, new { id });
 		}
 
 		private bool HasKeyStage2PerformanceTables(KeyStage2PerformanceResponse keyStage2Performance)
