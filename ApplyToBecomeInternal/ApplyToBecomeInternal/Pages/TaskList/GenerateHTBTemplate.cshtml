@@ -8,7 +8,14 @@
 	<div class="govuk-grid-column-full">
 		@section BeforeMain
 		{
-			<a asp-page="@Links.TaskList.PreviewHTBTemplate.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.TaskList.PreviewHTBTemplate.BackText</a>
+				@if (ViewData["Referer"]?.ToString()?.Contains("preview-headteacher-board-template") == true)
+                {
+            		<govuk-back-link link-item="@Links.TaskList.PreviewHTBTemplate" />
+                }
+            	else
+                {
+            	    <govuk-back-link link-item="@Links.TaskList.Index" />
+                }
 		}
 		<span class="govuk-caption-xl">@Model.Project.SchoolName</span>
 		<h1 class="govuk-heading-xl">Generate headteacher board (HTB) documents</h1>
