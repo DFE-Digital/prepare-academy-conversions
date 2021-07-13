@@ -39,8 +39,9 @@ namespace ApplyToBecome.Data.Services
 			{
 				return null;
 			}
-			if (nameAndCode.Code == "0" 
-				|| nameAndCode.Code == "0000" 
+			if (nameAndCode.Code == "0"
+				|| nameAndCode.Code == "0000"
+				|| nameAndCode.Name == null
 				|| nameAndCode.Name.Equals("Not applicable", StringComparison.OrdinalIgnoreCase))
 			{
 				return "No";
