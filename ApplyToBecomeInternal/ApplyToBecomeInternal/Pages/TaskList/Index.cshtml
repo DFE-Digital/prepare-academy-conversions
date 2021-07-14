@@ -9,6 +9,11 @@
 	<a asp-page="@Links.ProjectList.Index.Page" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
 }
 
+@if (Model.ShowGenerateHtbTemplateError)
+{
+	<partial name="_ErrorSummary" />
+}
+
 <partial name="_ProjectHeader" model="Model.Project" />
 
 <div class="govuk-grid-row">
