@@ -44,32 +44,6 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			return Page();
 		}
 
-		public string SuccessPage
-		{
-			get
-			{
-				return TempData[nameof(SuccessPage)].ToString();
-			}
-			set
-			{
-				TempData[nameof(SuccessPage)] = value;
-			}
-		}
-
-		public async Task<IActionResult> OnPostAsync(int id)
-		{
-			await SetProject(id);
-			// if (Project.HeadTeacherBoardDate == null)
-   //          {
-	  //           ShowGenerateHtbTemplateError = true;
-   //          	_errorService.AddError($"/task-list/{Project.Id}/confirm-school-trust-information-project-dates#head-teacher-board-date",
-   //          		"Set an HTB date before you generate your document");
-   //              await OnGetAsync(int.Parse(Project.Id));
-   //              return Page();
-   //          }
-			return RedirectToPage(SuccessPage, new { id });
-		}
-
 		private bool HasKeyStage2PerformanceTables(KeyStage2PerformanceResponse keyStage2Performance)
 		{
 			return HasValue(keyStage2Performance.PercentageMeetingExpectedStdInRWM)

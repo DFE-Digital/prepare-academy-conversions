@@ -11,7 +11,7 @@
 				<li>
 					@if (error.Key.Contains("head-teacher-board-date"))
                     {
-                    	<a href=@error.Key>@error.Message</a>
+	                    <a href=@error.Key>@error.Message</a>
                     }
 					else if (!string.IsNullOrWhiteSpace(error.Key))
 					{
