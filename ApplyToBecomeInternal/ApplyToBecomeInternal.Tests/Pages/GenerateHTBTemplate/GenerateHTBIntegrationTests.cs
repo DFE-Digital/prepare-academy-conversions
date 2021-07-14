@@ -51,6 +51,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
 			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an HTB date");
+
+			await NavigateAsync("Set an HTB date before you generate your document");
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates#head-teacher-board-date");
+
 		}
 	}
 }
