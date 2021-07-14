@@ -1,5 +1,6 @@
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
+using ApplyToBecomeInternal.Services;
 using ApplyToBecomeInternal.Services.WordDocument;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,14 +15,23 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 		private readonly GeneralInformationService _generalInformationService;
 
 		public GenerateHTBTemplateModel(
-			WordDocumentService wordDocumentService, 
-			SchoolPerformanceService schoolPerformanceService, 
-			GeneralInformationService generalInformationService, 
+			WordDocumentService wordDocumentService,
+			SchoolPerformanceService schoolPerformanceService,
+			GeneralInformationService generalInformationService,
 			IAcademyConversionProjectRepository repository) : base(repository)
 		{
 			_wordDocumentService = wordDocumentService;
 			_schoolPerformanceService = schoolPerformanceService;
 			_generalInformationService = generalInformationService;
+		}
+
+		public override async Task<IActionResult> OnGetAsync(int id)
+		{
+			await base.OnGetAsync(id);
+			if (Project.HeadTeacherBoardDate != null) return Page();
+
+			TempData["ShowGenerateHtbTemplateError"] = true;
+			return RedirectToPage(Links.TaskList.Index.Page, new { id });
 		}
 
 		public async Task<IActionResult> OnGetHtbTemplateAsync(int id)

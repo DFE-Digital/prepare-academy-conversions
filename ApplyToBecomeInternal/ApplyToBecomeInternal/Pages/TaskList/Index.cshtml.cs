@@ -25,6 +25,14 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 		public override async Task<IActionResult> OnGetAsync(int id)
 		{
 			await SetProject(id);
+
+			ShowGenerateHtbTemplateError = (bool)(TempData["ShowGenerateHtbTemplateError"] ?? false);
+			if (ShowGenerateHtbTemplateError)
+			{
+				_errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates#head-teacher-board-date",
+					"Set an HTB date before you generate your document");
+			}
+
 			var keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(Project.SchoolURN);
 
 			// 16 plus = 6, All-through = 7, Middle deemed primary = 3, Middle deemed secondary = 5, Not applicable = 0, Nursery = 1, Primary = 2, Secondary = 4
@@ -51,14 +59,14 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
 			await SetProject(id);
-			if (Project.HeadTeacherBoardDate == null)
-            {
-	            ShowGenerateHtbTemplateError = true;
-            	_errorService.AddError($"/task-list/{Project.Id}/confirm-school-trust-information-project-dates#head-teacher-board-date",
-            		"Set an HTB date before you generate your document");
-                await OnGetAsync(int.Parse(Project.Id));
-                return Page();
-            }
+			// if (Project.HeadTeacherBoardDate == null)
+   //          {
+	  //           ShowGenerateHtbTemplateError = true;
+   //          	_errorService.AddError($"/task-list/{Project.Id}/confirm-school-trust-information-project-dates#head-teacher-board-date",
+   //          		"Set an HTB date before you generate your document");
+   //              await OnGetAsync(int.Parse(Project.Id));
+   //              return Page();
+   //          }
 			return RedirectToPage(SuccessPage, new { id });
 		}
 
