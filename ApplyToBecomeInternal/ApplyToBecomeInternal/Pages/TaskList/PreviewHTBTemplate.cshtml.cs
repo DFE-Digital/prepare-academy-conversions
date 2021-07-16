@@ -15,6 +15,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 		}
 
 		public bool ShowGenerateHtbTemplateError;
+		public string ErrorPage
+		{
+			set => TempData[nameof(ErrorPage)] = value;
+		}
 
 		public override async Task<IActionResult> OnGetAsync(int id)
 		{

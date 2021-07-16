@@ -2,6 +2,7 @@ using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Services;
 using ApplyToBecomeInternal.ViewModels;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +22,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 
 		public TaskListViewModel TaskList { get; set; }
 		public bool ShowGenerateHtbTemplateError;
+		public string ErrorPage
+		{
+			set => TempData[nameof(ErrorPage)] = value;
+		}
 
 		public override async Task<IActionResult> OnGetAsync(int id)
 		{
