@@ -31,7 +31,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			await NavigateAsync("Generate HTB document");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-headteacher-board-template");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
 			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an HTB date");

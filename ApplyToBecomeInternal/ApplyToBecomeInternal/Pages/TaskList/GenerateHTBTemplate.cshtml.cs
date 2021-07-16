@@ -25,13 +25,18 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			_generalInformationService = generalInformationService;
 		}
 
+		public string ErrorPage
+		{
+			get => TempData[nameof(ErrorPage)].ToString();
+		}
+
 		public override async Task<IActionResult> OnGetAsync(int id)
 		{
 			await base.OnGetAsync(id);
 			if (Project.HeadTeacherBoardDate != null) return Page();
 
 			TempData["ShowGenerateHtbTemplateError"] = true;
-			return RedirectToPage(Links.TaskList.Index.Page, new { id });
+			return RedirectToPage(ErrorPage, new { id });
 		}
 
 		public async Task<IActionResult> OnGetHtbTemplateAsync(int id)
