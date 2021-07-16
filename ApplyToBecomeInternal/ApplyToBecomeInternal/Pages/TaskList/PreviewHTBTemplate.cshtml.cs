@@ -1,9 +1,33 @@
 using ApplyToBecome.Data.Services;
+using ApplyToBecomeInternal.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList
 {
 	public class PreviewHTBTemplateModel : BaseAcademyConversionProjectPageModel
 	{
-		public PreviewHTBTemplateModel(IAcademyConversionProjectRepository repository) : base(repository) { }
-    }
+		private readonly ErrorService _errorService;
+
+		public PreviewHTBTemplateModel(IAcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
+		{
+			_errorService = errorService;
+		}
+
+		public bool ShowGenerateHtbTemplateError;
+
+		public override async Task<IActionResult> OnGetAsync(int id)
+		{
+			await SetProject(id);
+
+			ShowGenerateHtbTemplateError = (bool)(TempData["ShowGenerateHtbTemplateError"] ?? false);
+			if (ShowGenerateHtbTemplateError)
+			{
+				_errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates#head-teacher-board-date",
+					"Set an HTB date before you generate your document");
+			}
+
+			return await base.OnGetAsync(id);
+		}
+	}
 }
