@@ -62,7 +62,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 		public async Task Should_navigate_between_task_list_and_KS2_performance()
 		{
 			var project = AddGetProject();
-			var keyStage2Response = AddGetKeyStagePerformance((int)project.Urn).KeyStage2.ToList();
+			AddGetKeyStagePerformance((int)project.Urn).KeyStage2.ToList();
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 

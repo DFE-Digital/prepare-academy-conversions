@@ -13,28 +13,31 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 		[Fact]
 		public async Task Should_display_list_of_projects_and_navigate_to_and_from_task_list()
 		{
-			var projects = AddGetProjects();
+			var projects = AddGetProjects().ToList();
 
 			await OpenUrlAsync($"/project-list");
-			var project = AddGetProject(p => p.Id = projects.First().Id);
+			var firstProject = AddGetProject(p => p.Id = projects.First().Id);
 
 			await NavigateAsync(projects.First().SchoolName);
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+			Document.Url.Should().BeUrl($"/task-list/{firstProject.Id}");
 
 			await NavigateAsync("Back to all conversion projects");
 			Document.Url.Should().BeUrl($"/project-list");
 
 			for (int i = 0; i < 2; i++)
 			{
-				Document.QuerySelector($"#school-name-{i}").TextContent.Should().Contain(projects.ElementAt(i).SchoolName);
-				Document.QuerySelector($"#urn-{i}").TextContent.Should().Contain(projects.ElementAt(i).Urn.ToString());
-				Document.QuerySelector($"#application-to-join-trust-{i}").TextContent.Should().Contain(projects.ElementAt(i).NameOfTrust);
-				Document.QuerySelector($"#local-authority-{i}").TextContent.Should().Contain(projects.ElementAt(i).LocalAuthority);
-				Document.QuerySelector($"#htb-date-{i}").TextContent.Should().Contain(projects.ElementAt(i).HeadTeacherBoardDate.ToDateString());
-				Document.QuerySelector($"#opening-date-{i}").TextContent.Should().Contain(projects.ElementAt(i).ProposedAcademyOpeningDate.ToDateString());
+				var project = projects.ElementAt(i);
+				Document.QuerySelector($"#school-name-{i}").TextContent.Should().Contain(project.SchoolName);
+				Document.QuerySelector($"#urn-{i}").TextContent.Should().Contain(project.Urn.ToString());
+				Document.QuerySelector($"#application-to-join-trust-{i}").TextContent.Should().Contain(project.NameOfTrust);
+				Document.QuerySelector($"#local-authority-{i}").TextContent.Should().Contain(project.LocalAuthority);
+				Document.QuerySelector($"#htb-date-{i}").TextContent.Should().Contain(project.HeadTeacherBoardDate.ToDateString());
+				Document.QuerySelector($"#opening-date-{i}").TextContent.Should().Contain(project.ProposedAcademyOpeningDate.ToDateString());
 				Document.QuerySelector($"#application-received-date-{i}").Should().BeNull();
 				Document.QuerySelector($"#assigned-to-me-{i}").Should().BeNull();
 			}
+
+			ResetServer();
 		}
 
 		[Fact]
@@ -43,12 +46,14 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 			var projects = AddGetProjects(p => p.HeadTeacherBoardDate = null);
 
 			await OpenUrlAsync($"/project-list");
-			AddGetProject(p => p.Id = projects.First().Id);
 
-			Document.QuerySelector("#application-to-join-trust-0").TextContent.Should().Contain(projects.First().NameOfTrust);
-			Document.QuerySelector("#local-authority-0").TextContent.Should().Contain(projects.First().LocalAuthority);
-			Document.QuerySelector("#application-received-date-0").TextContent.Should().Contain(projects.First().ApplicationReceivedDate.ToDateString());
-			Document.QuerySelector("#opening-date-0").TextContent.Should().Contain(projects.First().ProposedAcademyOpeningDate.ToDateString());
+			var project = projects.First();
+			Document.QuerySelector("#application-to-join-trust-0").TextContent.Should().Contain(project.NameOfTrust);
+			Document.QuerySelector("#local-authority-0").TextContent.Should().Contain(project.LocalAuthority);
+			Document.QuerySelector("#application-received-date-0").TextContent.Should().Contain(project.ApplicationReceivedDate.ToDateString());
+			Document.QuerySelector("#opening-date-0").TextContent.Should().Contain(project.ProposedAcademyOpeningDate.ToDateString());
+
+			ResetServer();
 		}
 
 		[Fact]
@@ -57,12 +62,14 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 			var projects = AddGetProjects(p => p.ProposedAcademyOpeningDate = null);
 
 			await OpenUrlAsync($"/project-list");
-			AddGetProject(p => p.Id = projects.First().Id);
 
-			Document.QuerySelector("#application-to-join-trust-0").TextContent.Should().Contain(projects.First().NameOfTrust);
-			Document.QuerySelector("#local-authority-0").TextContent.Should().Contain(projects.First().LocalAuthority);
-			Document.QuerySelector("#htb-date-0").TextContent.Should().Contain(projects.First().HeadTeacherBoardDate.ToDateString());
-			Document.QuerySelector("#assigned-to-me-0").TextContent.Should().Contain(projects.First().AssignedDate.ToDateString());
+			var project = projects.First();
+			Document.QuerySelector("#application-to-join-trust-0").TextContent.Should().Contain(project.NameOfTrust);
+			Document.QuerySelector("#local-authority-0").TextContent.Should().Contain(project.LocalAuthority);
+			Document.QuerySelector("#htb-date-0").TextContent.Should().Contain(project.HeadTeacherBoardDate.ToDateString());
+			Document.QuerySelector("#assigned-to-me-0").TextContent.Should().Contain(project.AssignedDate.ToDateString());
+
+			ResetServer();
 		}
 	}
 }

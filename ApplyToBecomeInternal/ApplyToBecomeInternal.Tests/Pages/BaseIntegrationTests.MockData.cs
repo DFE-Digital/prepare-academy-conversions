@@ -6,6 +6,7 @@ using AutoFixture;
 using AutoFixture.Dsl;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -15,7 +16,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 	{
 		protected IEnumerable<AcademyConversionProject> AddGetProjects(Action<AcademyConversionProject> postSetup = null)
 		{
-			var projects = _fixture.CreateMany<AcademyConversionProject>();
+			var projects = _fixture.CreateMany<AcademyConversionProject>().ToList();
 			if (postSetup != null)
 			{
 				postSetup(projects.First());
@@ -122,6 +123,11 @@ namespace ApplyToBecomeInternal.Tests.Pages
 
 			_factory.AddGetWithJsonResponse($"/establishment/urn/{urn}", establishmentResponse);
 			return establishmentResponse;
+		}
+
+		public void ResetServer()
+		{
+			_factory.Reset();
 		}
 	}
 }
