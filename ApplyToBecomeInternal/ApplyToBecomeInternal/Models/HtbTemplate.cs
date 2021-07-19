@@ -19,7 +19,6 @@ namespace ApplyToBecomeInternal.Models
 		public string AssignedDate { get; set; }
 		[DocumentText("HeadTeacherBoardDate")]
 		public string HeadTeacherBoardDate { get; set; }
-		public string OpeningDate { get; set; }
 		public string BaselineDate { get; set; }
 
 		//school/trust info

@@ -96,6 +96,11 @@ namespace ApplyToBecomeInternal.Tests
 					.WithStatusCode(500));
 		}
 
+		public void Reset()
+		{
+			_server.Reset();
+		}
+
 		private static int AllocateNext()
 		{
 			lock (_sync)

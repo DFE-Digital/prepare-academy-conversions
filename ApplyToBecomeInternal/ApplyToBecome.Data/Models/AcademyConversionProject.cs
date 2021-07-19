@@ -13,7 +13,6 @@ namespace ApplyToBecome.Data.Models
 		public DateTime? ApplicationReceivedDate { get; set; }
 		public DateTime? AssignedDate { get; set; }
 		public DateTime? HeadTeacherBoardDate { get; set; }
-		public DateTime? OpeningDate { get; set; }
 		public DateTime? BaselineDate { get; set; }
 
 		//la summary page
