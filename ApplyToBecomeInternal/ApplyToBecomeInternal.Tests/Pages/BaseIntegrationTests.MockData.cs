@@ -6,15 +6,20 @@ using AutoFixture;
 using AutoFixture.Dsl;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace ApplyToBecomeInternal.Tests.Pages
 {
 	public abstract partial class BaseIntegrationTests
 	{
-		protected IEnumerable<AcademyConversionProject> AddGetProjects()
+		protected IEnumerable<AcademyConversionProject> AddGetProjects(Action<AcademyConversionProject> postSetup = null)
 		{
 			var projects = _fixture.CreateMany<AcademyConversionProject>();
+			if (postSetup != null)
+			{
+				postSetup(projects.First());
+			}
 			_factory.AddGetWithJsonResponse("/conversion-projects", projects);
 			return projects;
 		}

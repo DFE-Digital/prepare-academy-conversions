@@ -18,15 +18,16 @@
 				</tr>
 			</thead>
 			<tbody class="govuk-table__body">
-				@{
+			@{
+					var index = 0;
 					foreach (var project in Model.Projects)
 					{
 						<tr class="govuk-table__row">
 							<td class="govuk-table__cell">
-								<h2 class="govuk-caption-l govuk-!-margin-bottom-0 govuk-!-margin-top-1"><strong><a class="govuk-link" asp-page="@Links.TaskList.Index.Page" asp-route-id="@project.Id">@project.SchoolName</a></strong> URN @project.SchoolURN</h2>
+								<h2 class="govuk-caption-l govuk-!-margin-bottom-0 govuk-!-margin-top-1"><strong><a id="@("school-name-" + index)" class="govuk-link" asp-page="@Links.TaskList.Index.Page" asp-route-id="@project.Id">@project.SchoolName</a></strong> <span id="@("urn-" + index)">URN @project.SchoolURN</span></h2>
 								<p class="govuk-!-margin-top-2 govuk--!-margin-bottom-0">
-									Application to join a trust: @project.NameOfTrust<br>
-									Local authority: @project.LocalAuthority
+									<span id="@("application-to-join-trust-" + index)">Application to join a trust: @project.NameOfTrust<br></span>
+									<span id="@("local-authority-" + index)">Local authority: @project.LocalAuthority</span>
 								</p>
 							</td>
 							<td class="govuk-table__cell govuk-table__cell--numeric">
@@ -34,23 +35,24 @@
 								<p class="govuk-hint govuk-!-margin-top-0">
 									@if (ShowHtbDate(project))
 									{
-										@:HTB Date: @project.HeadTeacherBoardDate<br>
+										<span id="@("htb-date-" + index)">@("HTB Date: " + project.HeadTeacherBoardDate)<br></span>
 									}
 									else
 									{
-										@:Application received: @project.ApplicationReceivedDate<br>
+										<span id="@("application-received-date-" + index)">@("Application received: " + project.ApplicationReceivedDate)<br></span>
 									}
 									@if (ShowOpeningDate(project))
 									{
-										@:Opening date: @project.ProposedAcademyOpeningDate
+										<span id="@("opening-date-" + index)">@("Opening date: " + project.ProposedAcademyOpeningDate)</span>
 									}
 									else
 									{
-										@:Assigned to me: @project.AssignedDate
+										<span id="@("assigned-to-me-" + index)">@("Assigned to me: " + project.AssignedDate)</span>
 									}
 								</p>
 							</td>
 						</tr>
+						index++;
 					}
 				}
 			</tbody>
