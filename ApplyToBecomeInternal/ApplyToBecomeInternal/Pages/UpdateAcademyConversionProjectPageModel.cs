@@ -68,7 +68,6 @@ namespace ApplyToBecomeInternal.Pages
 				ApplicationReceivedDate = AcademyConversionProject.ApplicationReceivedDate,
 				AssignedDate = AcademyConversionProject.AssignedDate,
 				HeadTeacherBoardDate = AcademyConversionProject.HeadTeacherBoardDate,
-				OpeningDate = AcademyConversionProject.OpeningDate,
 				BaselineDate = AcademyConversionProject.BaselineDate,
 				LocalAuthorityInformationTemplateSentDate = AcademyConversionProject.LocalAuthorityInformationTemplateSentDate,
 				LocalAuthorityInformationTemplateReturnedDate = AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate,
