@@ -1,0 +1,12 @@
+@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
+	ViewData["Title"] = "Has this project been to a previous headtecherboard (HTB)?";
+}
+
+@section BeforeMain
+{
+	<govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation" />
+}

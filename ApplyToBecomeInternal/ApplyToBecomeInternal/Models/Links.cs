@@ -50,6 +50,7 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem ClearedBy = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/ClearedBy" };
 			public static LinkItem AcademyOrderRequired = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/AcademyOrderRequired" };
 			public static LinkItem HeadTeacherBoardDate = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/HeadTeacherBoardDate" };
+			public static LinkItem PreviousHeadTeacherBoardDateQuestion = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/PreviousHeadTeacherBoardDateQuestion" };
 			public static LinkItem ProposedAcademyOpeningDate = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/ProposedAcademyOpeningDate" };
 		}
 

@@ -41,6 +41,17 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 		}
 
 		[Fact]
+		public async Task Previous_head_teacher_board_date_should_be_no_when_question_field_set_to_no()
+		{
+			var project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = "No");
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+			await NavigateAsync("School and trust information and project dates");
+
+			Document.QuerySelector("#previous-head-teacher-board").TextContent.Should().Be("No");
+		}
+
+		[Fact]
 		public async Task Should_be_completed_and_checked_when_school_and_trust_information_complete()
 		{
 			var project = AddGetProject(project => project.SchoolAndTrustInformationSectionComplete = true);

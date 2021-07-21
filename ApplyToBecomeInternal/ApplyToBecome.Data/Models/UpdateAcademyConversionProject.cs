@@ -26,6 +26,8 @@ namespace ApplyToBecome.Data.Models
 		public DateTime? ProposedAcademyOpeningDate { get; set; }
 		public bool? SchoolAndTrustInformationSectionComplete { get; set; }
 
+		public string PreviousHeadTeacherBoardDateQuestion { get; set; }
+
 		//general info
 		public string PublishedAdmissionNumber { get; set; }
 		public string ViabilityIssues { get; set; }
