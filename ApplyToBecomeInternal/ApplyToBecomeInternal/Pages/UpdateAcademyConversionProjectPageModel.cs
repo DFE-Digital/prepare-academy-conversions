@@ -25,6 +25,14 @@ namespace ApplyToBecomeInternal.Pages
 		{
 			get
 			{
+				// extract to separate index model
+				if (TempData[nameof(SuccessPage)].ToString() != null ? TempData[nameof(SuccessPage)].ToString().Contains("PreviousHeadTeacherBoardDate") : false)
+				{
+					if (AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion == "No")
+					{
+						SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
+					}
+				}
 				return TempData[nameof(SuccessPage)].ToString();
 			}
 			set
@@ -79,6 +87,7 @@ namespace ApplyToBecomeInternal.Pages
 				ClearedBy = AcademyConversionProject.ClearedBy,
 				AcademyOrderRequired = AcademyConversionProject.AcademyOrderRequired,
 				ProposedAcademyOpeningDate = AcademyConversionProject.ProposedAcademyOpeningDate,
+				PreviousHeadTeacherBoardDateQuestion = AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion,
 				SchoolAndTrustInformationSectionComplete = AcademyConversionProject.SchoolAndTrustInformationSectionComplete,
 				PublishedAdmissionNumber = AcademyConversionProject.PublishedAdmissionNumber,
 				ViabilityIssues = AcademyConversionProject.ViabilityIssues,

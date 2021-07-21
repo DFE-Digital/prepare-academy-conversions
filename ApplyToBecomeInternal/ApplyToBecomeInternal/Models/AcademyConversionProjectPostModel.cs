@@ -64,6 +64,7 @@ namespace ApplyToBecomeInternal.Models
 		public bool? SchoolAndTrustInformationSectionComplete { get; set; }
 
 		[BindProperty(Name = "previous-head-teacher-board-date-question")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string PreviousHeadTeacherBoardDateQuestion { get; set; }
 
 		//general info
