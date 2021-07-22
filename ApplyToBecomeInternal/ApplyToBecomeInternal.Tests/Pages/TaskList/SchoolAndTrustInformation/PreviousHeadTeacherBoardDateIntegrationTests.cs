@@ -57,8 +57,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 		[Fact]
 		public async Task Should_navigate_to_and_update_previous_head_teacher_board_date_question_when_user_selects_no()
 		{
-			var project = AddGetProject(p => p.PreviousHeadTeacherBoardDate = null);
-			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDateQuestion, "No");
+			var project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = null);
+			AddPatchProjectMany(project, composer => composer
+				.With(r => r.PreviousHeadTeacherBoardDateQuestion, "No")
+				.With(r => r.PreviousHeadTeacherBoardDate, default(DateTime)));
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 			await NavigateAsync("Change", 5);
