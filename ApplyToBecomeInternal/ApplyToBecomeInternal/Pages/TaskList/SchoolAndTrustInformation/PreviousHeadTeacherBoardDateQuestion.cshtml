@@ -1,0 +1,16 @@
+@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	Model.SuccessPage = Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDate.Page;
+	ViewData["Title"] = "Has this project been to a previous headteacherboard (HTB)?";
+	var values = new[] { "Yes", "No" };
+}
+
+@section BeforeMain
+{
+	<govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation" />
+}
+
+<h1 class="govuk-heading-l">Has this project been to a previous headteacherboard (HTB)?</h1>
+<govuk-radios-input id="previous-head-teacher-board-date-question" name="previous-head-teacher-board-date-question" asp-for="Project.PreviousHeadTeacherBoardDateQuestion" values="@values" labels="@values" />

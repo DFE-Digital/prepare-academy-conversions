@@ -36,7 +36,7 @@ namespace ApplyToBecomeInternal.ViewComponents
 				ClearedBy = project.ClearedBy,
 				AcademyOrderRequired = project.AcademyOrderRequired,
 				HeadTeacherBoardDate = project.HeadTeacherBoardDate.ToDateString(),
-				PreviousHeadTeacherBoardDate = project.PreviousHeadTeacherBoardDate.ToDateString(),
+				PreviousHeadTeacherBoardDate = project.PreviousHeadTeacherBoardDateQuestion == "No" ? "No" : project.PreviousHeadTeacherBoardDate.ToDateString(),
 				PreviousHeadTeacherBoardLink = project.PreviousHeadTeacherBoardLink,
 				SchoolName = project.SchoolName,
 				SchoolUrn = project.Urn.ToString(),

@@ -63,6 +63,15 @@ namespace ApplyToBecomeInternal.Models
 		[ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
 		public bool? SchoolAndTrustInformationSectionComplete { get; set; }
 
+		[BindProperty(Name = "previous-head-teacher-board-date-question")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
+		public string PreviousHeadTeacherBoardDateQuestion { get; set; }
+
+		[ModelBinder(BinderType = typeof(DateInputModelBinder))]
+		[BindProperty(Name = "previous-head-teacher-board-date")]
+		[Display(Name = "Previous headteacher board date")]
+		public DateTime? PreviousHeadTeacherBoardDate { get; set; }
+
 		//general info
 
 		[BindProperty(Name = "published-admission-number")]

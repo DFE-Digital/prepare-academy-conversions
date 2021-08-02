@@ -3,6 +3,7 @@ using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages
@@ -25,6 +26,13 @@ namespace ApplyToBecomeInternal.Pages
 		{
 			get
 			{
+				if (TempData[nameof(SuccessPage)].ToString() != null ? TempData[nameof(SuccessPage)].ToString().Contains("PreviousHeadTeacherBoardDate") : false)
+				{
+					if (AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion == "No")
+					{
+						SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
+					}
+				}
 				return TempData[nameof(SuccessPage)].ToString();
 			}
 			set
@@ -33,7 +41,7 @@ namespace ApplyToBecomeInternal.Pages
 			}
 		}
 
-		public virtual async Task<IActionResult> OnPostAsync(int id)
+		public async Task<IActionResult> OnPostAsync(int id)
 		{
 			_errorService.AddErrors(Request.Form.Keys, ModelState);
 			if (_errorService.HasErrors())
@@ -79,6 +87,8 @@ namespace ApplyToBecomeInternal.Pages
 				ClearedBy = AcademyConversionProject.ClearedBy,
 				AcademyOrderRequired = AcademyConversionProject.AcademyOrderRequired,
 				ProposedAcademyOpeningDate = AcademyConversionProject.ProposedAcademyOpeningDate,
+				PreviousHeadTeacherBoardDateQuestion = AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion,
+				PreviousHeadTeacherBoardDate = AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion == "No" ? default(DateTime) : AcademyConversionProject.PreviousHeadTeacherBoardDate,
 				SchoolAndTrustInformationSectionComplete = AcademyConversionProject.SchoolAndTrustInformationSectionComplete,
 				PublishedAdmissionNumber = AcademyConversionProject.PublishedAdmissionNumber,
 				ViabilityIssues = AcademyConversionProject.ViabilityIssues,

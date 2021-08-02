@@ -19,10 +19,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			var dates = Enumerable.Range(1, 12).Select(i => DateTime.Today.FirstOfMonth(i).ToDateString(true)).ToArray();
 			var (selected, toSelect) = RandomRadioButtons("proposed-academy-opening-date", dates);
 			var project = AddGetProject(p => p.ProposedAcademyOpeningDate = DateTime.Parse(selected.Value));
-			var request = AddPatchProject(project, r => r.ProposedAcademyOpeningDate, DateTime.Parse(toSelect.Value));
+			AddPatchProject(project, r => r.ProposedAcademyOpeningDate, DateTime.Parse(toSelect.Value));
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
-			await NavigateAsync("Change", 5);
+			await NavigateAsync("Change", 6);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-academy-opening-date");
 			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked.Should().BeFalse();
