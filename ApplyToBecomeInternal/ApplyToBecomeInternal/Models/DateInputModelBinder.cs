@@ -92,7 +92,7 @@ namespace ApplyToBecomeInternal.Models
 				{
 					bindingContext.ModelState.TryAddModelError(
 							bindingContext.ModelName,
-							$"Enter {displayName.ToLower()}");
+							$"Enter a date for the {displayName.ToLower()} date");
 				}
 				else if (_missingParts.Count > 0)
 				{
@@ -104,7 +104,7 @@ namespace ApplyToBecomeInternal.Models
 				{
 					bindingContext.ModelState.TryAddModelError(
 							bindingContext.ModelName,
-							$"{displayName} must be a real date");
+							$"{displayName} date must be a real date");
 				}
 				else
 				{
@@ -236,13 +236,13 @@ namespace ApplyToBecomeInternal.Models
 						switch (dateValidation.DateValidationEnum)
 						{
 							case DateValidationEnum.Past:
-								return (date < today, $"{displayName} must be in the past");
+								return (date < today, $"{displayName} date must be in the past");
 							case DateValidationEnum.PastOrToday:
-								return (date < today.AddDays(1), $"{displayName} must be today or in the past");
+								return (date < today.AddDays(1), $"{displayName} date must be today or in the past");
 							case DateValidationEnum.Future:
-								return (date >= today.AddDays(1), $"{displayName} must be in the future");
+								return (date >= today.AddDays(1), $"{displayName} date must be in the future");
 							case DateValidationEnum.FutureOrToday:
-								return (date >= today, $"{displayName} must be today or in the future");
+								return (date >= today, $"{displayName} date must be today or in the future");
 						}
 					}
 				}

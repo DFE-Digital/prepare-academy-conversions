@@ -110,6 +110,69 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 		}
 
 		[Fact]
+		public async Task Should_display_error_when_date_entered_is_not_in_the_past()
+		{
+			var today = DateTime.Today;
+			var project = AddGetProject();
+			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate, today);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date");
+
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value = today.Day.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value = today.Month.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year").Value = today.Year.ToString();
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date");
+
+			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+			// just validation content against ticket
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Previous headteacher board date must be in the past");
+		}
+
+		[Fact]
+		public async Task Should_display_error_when_user_attempts_to_save_without_entering_a_date()
+		{
+			var project = AddGetProject();
+			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate, default(DateTime));
+
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date");
+
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value = "";
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value = "";
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year").Value = "";
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date");
+
+			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+			// just validation content against ticket
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Enter a date for the previous headteacher board date");
+		}
+
+		[Fact]
+		public async Task Should_display_error_when_user_attempts_to_an_invalid_date()
+		{
+			var project = AddGetProject();
+			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate, default(DateTime));
+
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date");
+
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value = "230";
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value = "2";
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year").Value = "2021";
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date");
+
+			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Previous headteacher board date must be a real date");
+		}
+
+		[Fact]
 		public async Task Should_show_error_summary_when_there_is_an_API_error()
 		{
 			var project = AddGetProject();
