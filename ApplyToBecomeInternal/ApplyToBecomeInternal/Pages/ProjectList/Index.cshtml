@@ -5,7 +5,6 @@
 }
 @functions{
 	bool ShowHtbDate(ProjectListViewModel vm) => !string.IsNullOrWhiteSpace(vm.HeadTeacherBoardDate);
-	bool ShowOpeningDate(ProjectListViewModel vm) => !string.IsNullOrWhiteSpace(vm.ProposedAcademyOpeningDate);
 }
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
@@ -41,7 +40,7 @@
 									{
 										<span id="@("application-received-date-" + index)">@("Application received: " + project.ApplicationReceivedDate)<br></span>
 									}
-									@if (ShowOpeningDate(project))
+									@if (ShowHtbDate(project))
 									{
 										<span id="@("opening-date-" + index)">@("Opening date: " + project.ProposedAcademyOpeningDate)</span>
 									}
