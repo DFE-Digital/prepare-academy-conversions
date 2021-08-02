@@ -92,7 +92,7 @@ namespace ApplyToBecomeInternal.Models
 				{
 					bindingContext.ModelState.TryAddModelError(
 							bindingContext.ModelName,
-							$"Enter a date for the {displayName.ToLower()} date");
+							$"Enter a date for the {displayName.ToLower()}");
 				}
 				else if (_missingParts.Count > 0)
 				{
