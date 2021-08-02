@@ -127,7 +127,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-			// just validation content against ticket
 			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Previous headteacher board date must be in the past");
 		}
 
@@ -148,7 +147,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-			// just validation content against ticket
 			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Enter a date for the previous headteacher board date");
 		}
 
