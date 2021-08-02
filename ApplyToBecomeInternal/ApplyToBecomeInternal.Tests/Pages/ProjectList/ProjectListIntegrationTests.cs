@@ -57,7 +57,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 		}
 
 		[Fact]
-		public async Task Should_display_assigned_to_me_date_when_no_opening_date_set()
+		public async Task Should_display_assigned_to_me_date_when_no_htb_date_set()
 		{
 			var projects = AddGetProjects(p => p.HeadTeacherBoardDate = null);
 
