@@ -28,7 +28,7 @@ namespace ApplyToBecomeInternal.Pages
 			{
 				if (TempData[nameof(SuccessPage)].ToString() != null ? TempData[nameof(SuccessPage)].ToString().Contains("PreviousHeadTeacherBoardDate") : false)
 				{
-					if (AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion == "No")
+					if (AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion != "Yes")
 					{
 						SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
 					}
