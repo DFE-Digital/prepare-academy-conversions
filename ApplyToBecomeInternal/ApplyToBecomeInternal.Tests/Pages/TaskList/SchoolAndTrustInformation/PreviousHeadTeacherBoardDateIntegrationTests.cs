@@ -55,7 +55,26 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 		}
 
 		[Fact]
-		public async Task Should_navigate_to_and_update_previous_head_teacher_board_date_question_when_user_selects_no()
+		public async Task Should_navigate_to_confirm_page_when_user_does_not_select_value_for_question()
+		{
+			var project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = null);
+			AddPatchProject(project, p => p.PreviousHeadTeacherBoardDateQuestion, null);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+			await NavigateAsync("Change", 5);
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeFalse();
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2").IsChecked.Should().BeFalse();
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+		}
+
+		[Fact]
+		public async Task Should_update_previous_head_teacher_board_date_question_and_navigate_to_confirm_page_when_user_selects_no()
 		{
 			var project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = null);
 			AddPatchProjectMany(project, composer => composer
