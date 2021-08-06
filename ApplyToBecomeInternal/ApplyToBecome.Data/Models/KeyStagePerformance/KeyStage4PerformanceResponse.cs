@@ -25,6 +25,5 @@
 		public DisadvantagedPupilsResponse NationalAverageP8English { get; set; }
 		public DisadvantagedPupilsResponse NationalAverageP8Maths { get; set; }
 		public DisadvantagedPupilsResponse NationalAverageP8Ebacc { get; set; }
-		public DisadvantagedPupilsResponse NationalAverage { get; set; }
 	}
 }
