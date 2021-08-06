@@ -164,6 +164,10 @@ namespace ApplyToBecomeInternal.Models
 		// key stage performance tables
 		[BindProperty(Name = "key-stage-2-additional-information")]
 		[DisplayFormat(ConvertEmptyStringToNull = false)]
-		public string KeyStagePerformanceTablesAdditionalInformation { get; set; }
+		public string KeyStage2PerformanceAdditionalInformation { get; set; }
+
+		[BindProperty(Name = "key-stage-4-additional-information")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
+		public string KeyStage4PerformanceAdditionalInformation { get; set; }
 	}
 }

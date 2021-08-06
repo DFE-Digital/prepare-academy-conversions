@@ -73,7 +73,8 @@ namespace ApplyToBecomeInternal.ViewModels
 			SchoolBudgetInformationAdditionalInformation = project.SchoolBudgetInformationAdditionalInformation;
 			SchoolBudgetInformationSectionComplete = project.SchoolBudgetInformationSectionComplete ?? false;
 
-			KeyStage2PerformanceAdditionalInformation = project.KeyStagePerformanceTablesAdditionalInformation;
+			KeyStage2PerformanceAdditionalInformation = project.KeyStage2PerformanceAdditionalInformation;
+			KeyStage4PerformanceAdditionalInformation = project.KeyStage4PerformanceAdditionalInformation;
 		}
 
 		public string Id { get; }
@@ -148,5 +149,6 @@ namespace ApplyToBecomeInternal.ViewModels
 		public bool SchoolBudgetInformationSectionComplete { get; set; }
 
 		public string KeyStage2PerformanceAdditionalInformation { get; set; }
+		public string KeyStage4PerformanceAdditionalInformation { get; set; }
 	}
 }
