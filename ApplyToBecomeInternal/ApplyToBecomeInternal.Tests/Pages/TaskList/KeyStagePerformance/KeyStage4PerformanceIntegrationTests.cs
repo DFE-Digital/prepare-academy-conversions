@@ -188,6 +188,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 			var ks4ResponseOrderedByYear = ks4Response.OrderByDescending(ks4 => ks4.Year).ToList();
 			ks4ResponseOrderedByYear.First().SipAttainment8score.Disadvantaged = null;
 			ks4ResponseOrderedByYear.First().SipAttainment8scoremaths = null;
+			ks4ResponseOrderedByYear.First().SipProgress8lowerconfidence = null;
+			ks4ResponseOrderedByYear.First().NationalAverageP8LowerConfidence = null;
+			ks4ResponseOrderedByYear.First().NationalAverageP8UpperConfidence = null;
 
 			AddGetKeyStagePerformance((int)project.Urn, ks => ks.KeyStage4 = ks4ResponseOrderedByYear);
 
@@ -198,6 +201,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 			Document.QuerySelector("#attainment8").TextContent.Should()
 				.Be($"{ks4ResponseOrderedByYear.ElementAt(0).SipAttainment8score.NotDisadvantaged}\n(disadvantaged no data)");
 			Document.QuerySelector("#attainment8-maths").TextContent.Should().Be("no data");
+			Document.QuerySelector("#p8-ci").TextContent.Should().Be($"no data to {ks4ResponseOrderedByYear.ElementAt(0).SipProgress8upperconfidence}");
+			Document.QuerySelector("#na-p8-ci").TextContent.Should().Be("no data");
 
 			await NavigateAsync("Confirm and continue");
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");

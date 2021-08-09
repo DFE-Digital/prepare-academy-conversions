@@ -43,21 +43,15 @@
 		public string SipProgress8Score { get; set; }
 		public string SipProgress8ScorePreviousYear { get; set; }
 		public string SipProgress8ScoreTwoYearsAgo { get; set; }
-		public string SipProgress8LowerConfidence { get; set; }
-		public string SipProgress8LowerConfidencePreviousYear { get; set; }
-		public string SipProgress8LowerConfidenceTwoYearsAgo { get; set; }
-		public string SipProgress8UpperConfidence { get; set; }
-		public string SipProgress8UpperConfidencePreviousYear { get; set; }
-		public string SipProgress8UpperConfidenceTwoYearsAgo { get; set; }
+		public string SipProgress8ConfidenceInterval { get; set; }
+		public string SipProgress8ConfidenceIntervalPreviousYear { get; set; }
+		public string SipProgress8ConfidenceIntervalTwoYearsAgo { get; set; }
 		public string NationalAverageProgress8Score { get; set; }
 		public string NationalAverageProgress8ScorePreviousYear { get; set; }
 		public string NationalAverageProgress8ScoreTwoYearsAgo { get; set; }
-		public string NationalAverageProgress8LowerConfidence { get; set; }
-		public string NationalAverageProgress8LowerConfidencePreviousYear { get; set; }
-		public string NationalAverageProgress8LowerConfidenceTwoYearsAgo { get; set; }
-		public string NationalAverageProgress8UpperConfidence { get; set; }
-		public string NationalAverageProgress8UpperConfidencePreviousYear { get; set; }
-		public string NationalAverageProgress8UpperConfidenceTwoYearsAgo { get; set; }
+		public string NationalAverageProgress8ConfidenceInterval { get; set; }
+		public string NationalAverageProgress8ConfidenceIntervalPreviousYear { get; set; }
+		public string NationalAverageProgress8ConfidenceIntervalTwoYearsAgo { get; set; }
 
 		public string SipProgress8English { get; set; }
 		public string SipProgress8EnglishPreviousYear { get; set; }

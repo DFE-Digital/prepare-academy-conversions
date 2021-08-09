@@ -23,10 +23,16 @@ namespace ApplyToBecomeInternal.Extensions
 			    string.IsNullOrEmpty(disadvantagedPupilResponse?.Disadvantaged))
 				return NoData;
 
-			return $"{GetFormattedResult(disadvantagedPupilResponse.NotDisadvantaged)}\n(disadvantaged {GetFormattedResult(disadvantagedPupilResponse.Disadvantaged)})";
+			return $"{disadvantagedPupilResponse.NotDisadvantaged.FormatValue()}\n(disadvantaged {disadvantagedPupilResponse.Disadvantaged.FormatValue()})";
 		}
 
-		public static string GetFormattedResult(string result)
+		public static string DisplayConfidenceInterval(decimal? lowerBound, decimal? upperBound)
+		{
+			if (lowerBound == null && upperBound == null) return NoData;
+			return $"{lowerBound.ToString().FormatValue()} to {upperBound.ToString().FormatValue()}";
+		}
+
+		private static string FormatValue(this string result)
 		{
 			return string.IsNullOrEmpty(result) ? NoData : result.ToDouble();
 		}

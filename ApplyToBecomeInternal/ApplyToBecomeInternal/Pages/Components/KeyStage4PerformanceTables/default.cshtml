@@ -186,9 +186,9 @@
     </tr>
     <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">School confidence interval</th>
-        <td class="govuk-table__cell" id="p8-ci-two-years-ago">@Model.SipProgress8LowerConfidenceTwoYearsAgo to @Model.SipProgress8UpperConfidenceTwoYearsAgo</td>
-        <td class="govuk-table__cell" id="p8-ci-previous-year">@Model.SipProgress8LowerConfidencePreviousYear to @Model.SipProgress8UpperConfidencePreviousYear</td>
-        <td class="govuk-table__cell" id="p8-ci">@Model.SipProgress8LowerConfidence to @Model.SipProgress8UpperConfidence</td>
+        <td class="govuk-table__cell" id="p8-ci-two-years-ago">@Model.SipProgress8ConfidenceIntervalTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="p8-ci-previous-year">@Model.SipProgress8ConfidenceIntervalPreviousYear</td>
+        <td class="govuk-table__cell" id="p8-ci">@Model.SipProgress8ConfidenceInterval</td>
     </tr>
     <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA average</th>
@@ -211,9 +211,9 @@
     @* need formatter to handle no data - should be done in view component *@
     <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">National LA confidence interval</th>
-        <td class="govuk-table__cell" id="na-p8-ci-two-years-ago">@Model.NationalAverageProgress8LowerConfidenceTwoYearsAgo to @Model.NationalAverageProgress8UpperConfidenceTwoYearsAgo</td>
-        <td class="govuk-table__cell" id="na-p8-ci-previous-year">@Model.NationalAverageProgress8LowerConfidencePreviousYear to @Model.NationalAverageProgress8UpperConfidencePreviousYear</td>
-        <td class="govuk-table__cell" id="na-p8-ci">@Model.NationalAverageProgress8LowerConfidence to @Model.NationalAverageProgress8UpperConfidence</td>
+        <td class="govuk-table__cell" id="na-p8-ci-two-years-ago">@Model.NationalAverageProgress8ConfidenceIntervalTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="na-p8-ci-previous-year">@Model.NationalAverageProgress8ConfidenceIntervalPreviousYear</td>
+        <td class="govuk-table__cell" id="na-p8-ci">@Model.NationalAverageProgress8ConfidenceInterval</td>
     </tr>
     </tbody>
 </table>
