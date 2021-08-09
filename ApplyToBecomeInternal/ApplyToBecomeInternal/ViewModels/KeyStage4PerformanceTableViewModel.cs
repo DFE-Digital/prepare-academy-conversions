@@ -125,13 +125,13 @@
 		public string SipProgress8Ebacc { get; set; }
 		public string SipProgress8EbaccPreviousYear { get; set; }
 		public string SipProgress8EbaccTwoYearsAgo { get; set; }
-		public string SipProgress8EbaccDisadvantaged { get; set; }
+		//public string SipProgress8EbaccDisadvantaged { get; set; }
 		public string SipProgress8EbaccDisadvantagedPreviousYear { get; set; }
 		public string SipProgress8EbaccDisadvantagedTwoYearsAgo { get; set; }
 		public string NationalAverageProgress8Ebacc { get; set; }
 		public string NationalAverageProgress8EbaccPreviousYear { get; set; }
 		public string NationalAverageProgress8EbaccTwoYearsAgo { get; set; }
-		public string NationalAverageProgress8EbaccDisadvantaged { get; set; }
+		//public string NationalAverageProgress8EbaccDisadvantaged { get; set; }
 		public string NationalAverageProgress8EbaccDisadvantagedPreviousYear { get; set; }
 		public string NationalAverageProgress8EbaccDisadvantagedTwoYearsAgo { get; set; }
 

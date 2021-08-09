@@ -26,5 +26,11 @@ namespace ApplyToBecomeInternal.Extensions
 			}
 			return value.Value.ToString("G0");
 		}
+
+		public static string ToDouble(this string value)
+		{
+			var isDouble = double.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out var resultAsDouble);
+			return isDouble ? $"{resultAsDouble}" : value;
+		}
 	}
 }
