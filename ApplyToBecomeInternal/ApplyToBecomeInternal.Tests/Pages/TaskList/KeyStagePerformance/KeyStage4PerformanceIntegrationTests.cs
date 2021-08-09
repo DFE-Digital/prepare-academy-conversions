@@ -34,6 +34,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).SipAttainment8score.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).SipAttainment8score.Disadvantaged})");
 			Document.QuerySelector("#attainment8").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).SipAttainment8score.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).SipAttainment8score.Disadvantaged})");
+			Document.QuerySelector("#la-attainment8-two-years-ago").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageA8Score.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageA8Score.Disadvantaged})");
+			Document.QuerySelector("#la-attainment8-previous-year").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageA8Score.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageA8Score.Disadvantaged})");
+			Document.QuerySelector("#la-attainment8").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageA8Score.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageA8Score.Disadvantaged})");
 			Document.QuerySelector("#na-attainment8-two-years-ago").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageA8Score.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageA8Score.Disadvantaged})");
 			Document.QuerySelector("#na-attainment8-previous-year").TextContent.Should()
@@ -41,14 +47,18 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 			Document.QuerySelector("#na-attainment8").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).NationalAverageA8Score.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).NationalAverageA8Score.Disadvantaged})");
 
-			// tests for LA fields
-
 			Document.QuerySelector("#attainment8-english-two-years-ago").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).SipAttainment8scoreenglish.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).SipAttainment8scoreenglish.Disadvantaged})");
 			Document.QuerySelector("#attainment8-english-previous-year").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).SipAttainment8scoreenglish.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).SipAttainment8scoreenglish.Disadvantaged})");
 			Document.QuerySelector("#attainment8-english").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).SipAttainment8scoreenglish.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).SipAttainment8scoreenglish.Disadvantaged})");
+			Document.QuerySelector("#la-attainment8-english-two-years-ago").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageA8English.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageA8English.Disadvantaged})");
+			Document.QuerySelector("#la-attainment8-english-previous-year").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageA8English.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageA8English.Disadvantaged})");
+			Document.QuerySelector("#la-attainment8-english").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageA8English.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageA8English.Disadvantaged})");
 			Document.QuerySelector("#na-attainment8-english-two-years-ago").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageA8English.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageA8English.Disadvantaged})");
 			Document.QuerySelector("#na-attainment8-english-previous-year").TextContent.Should()
@@ -62,6 +72,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).SipAttainment8scoremaths.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).SipAttainment8scoremaths.Disadvantaged})");
 			Document.QuerySelector("#attainment8-maths").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).SipAttainment8scoremaths.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).SipAttainment8scoremaths.Disadvantaged})");
+			Document.QuerySelector("#la-attainment8-maths-two-years-ago").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageA8Maths.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageA8Maths.Disadvantaged})");
+			Document.QuerySelector("#la-attainment8-maths-previous-year").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageA8Maths.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageA8Maths.Disadvantaged})");
+			Document.QuerySelector("#la-attainment8-maths").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageA8Maths.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageA8Maths.Disadvantaged})");
 			Document.QuerySelector("#na-attainment8-maths-two-years-ago").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageA8Maths.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageA8Maths.Disadvantaged})");
 			Document.QuerySelector("#na-attainment8-maths-previous-year").TextContent.Should()
@@ -75,6 +91,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).SipAttainment8scoreebacc.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).SipAttainment8scoreebacc.Disadvantaged})");
 			Document.QuerySelector("#attainment8-ebacc").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).SipAttainment8scoreebacc.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).SipAttainment8scoreebacc.Disadvantaged})");
+			Document.QuerySelector("#la-attainment8-ebacc-two-years-ago").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageA8EBacc.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageA8EBacc.Disadvantaged})");
+			Document.QuerySelector("#la-attainment8-ebacc-previous-year").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageA8EBacc.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageA8EBacc.Disadvantaged})");
+			Document.QuerySelector("#la-attainment8-ebacc").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageA8EBacc.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageA8EBacc.Disadvantaged})");
 			Document.QuerySelector("#na-attainment8-ebacc-two-years-ago").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageA8EBacc.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageA8EBacc.Disadvantaged})");
 			Document.QuerySelector("#na-attainment8-ebacc-previous-year").TextContent.Should()
@@ -88,6 +110,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).SipNumberofpupilsprogress8.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).SipNumberofpupilsprogress8.Disadvantaged})");
 			Document.QuerySelector("#number-of-pupils-p8").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).SipNumberofpupilsprogress8.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).SipNumberofpupilsprogress8.Disadvantaged})");
+			Document.QuerySelector("#la-p8-pupils-included-two-years-ago").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageP8PupilsIncluded.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageP8PupilsIncluded.Disadvantaged})");
+			Document.QuerySelector("#la-p8-pupils-included-previous-year").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageP8PupilsIncluded.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageP8PupilsIncluded.Disadvantaged})");
+			Document.QuerySelector("#la-p8-pupils-included").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageP8PupilsIncluded.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageP8PupilsIncluded.Disadvantaged})");
 			Document.QuerySelector("#na-p8-pupils-included-two-years-ago").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageP8PupilsIncluded.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageP8PupilsIncluded.Disadvantaged})");
 			Document.QuerySelector("#na-p8-pupils-included-previous-year").TextContent.Should()
@@ -101,18 +129,30 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).SipProgress8Score.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).SipProgress8Score.Disadvantaged})");
 			Document.QuerySelector("#p8-score").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).SipProgress8Score.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).SipProgress8Score.Disadvantaged})");
-			Document.QuerySelector("#p8-ci-two-years-ago").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(2).SipProgress8lowerconfidence.ToString());
-			Document.QuerySelector("#p8-ci-two-years-ago").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(2).SipProgress8upperconfidence.ToString());
-			Document.QuerySelector("#p8-ci-previous-year").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(1).SipProgress8lowerconfidence.ToString());
-			Document.QuerySelector("#p8-ci-previous-year").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(1).SipProgress8upperconfidence.ToString());
-			Document.QuerySelector("#p8-ci").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(0).SipProgress8lowerconfidence.ToString());
-			Document.QuerySelector("#p8-ci").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(0).SipProgress8upperconfidence.ToString());
+			Document.QuerySelector("#la-p8-score-two-years-ago").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageP8Score.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageP8Score.Disadvantaged})");
+			Document.QuerySelector("#la-p8-score-previous-year").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageP8Score.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageP8Score.Disadvantaged})");
+			Document.QuerySelector("#la-p8-score").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageP8Score.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageP8Score.Disadvantaged})");
 			Document.QuerySelector("#na-p8-score-two-years-ago").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageP8Score.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageP8Score.Disadvantaged})");
 			Document.QuerySelector("#na-p8-score-previous-year").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).NationalAverageP8Score.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).NationalAverageP8Score.Disadvantaged})");
 			Document.QuerySelector("#na-p8-score").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).NationalAverageP8Score.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).NationalAverageP8Score.Disadvantaged})");
+			Document.QuerySelector("#p8-ci-two-years-ago").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(2).SipProgress8lowerconfidence.ToString());
+			Document.QuerySelector("#p8-ci-two-years-ago").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(2).SipProgress8upperconfidence.ToString());
+			Document.QuerySelector("#p8-ci-previous-year").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(1).SipProgress8lowerconfidence.ToString());
+			Document.QuerySelector("#p8-ci-previous-year").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(1).SipProgress8upperconfidence.ToString());
+			Document.QuerySelector("#p8-ci").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(0).SipProgress8lowerconfidence.ToString());
+			Document.QuerySelector("#p8-ci").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(0).SipProgress8upperconfidence.ToString());
+			Document.QuerySelector("#la-p8-ci-two-years-ago").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageP8LowerConfidence.ToString());
+			Document.QuerySelector("#la-p8-ci-two-years-ago").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageP8UpperConfidence.ToString());
+			Document.QuerySelector("#la-p8-ci-previous-year").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageP8LowerConfidence.ToString());
+			Document.QuerySelector("#la-p8-ci-previous-year").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageP8UpperConfidence.ToString());
+			Document.QuerySelector("#la-p8-ci").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageP8LowerConfidence.ToString());
+			Document.QuerySelector("#la-p8-ci").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageP8UpperConfidence.ToString());
 			Document.QuerySelector("#na-p8-ci-two-years-ago").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageP8LowerConfidence.ToString());
 			Document.QuerySelector("#na-p8-ci-two-years-ago").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageP8UpperConfidence.ToString());
 			Document.QuerySelector("#na-p8-ci-previous-year").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(1).NationalAverageP8LowerConfidence.ToString());
@@ -126,6 +166,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).SipProgress8english.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).SipProgress8english.Disadvantaged})");
 			Document.QuerySelector("#p8-score-english").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).SipProgress8english.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).SipProgress8english.Disadvantaged})");
+			Document.QuerySelector("#la-p8-score-english-two-years-ago").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageP8English.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageP8English.Disadvantaged})");
+			Document.QuerySelector("#la-p8-score-english-previous-year").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageP8English.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageP8English.Disadvantaged})");
+			Document.QuerySelector("#la-p8-score-english").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageP8English.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageP8English.Disadvantaged})");
 			Document.QuerySelector("#na-p8-score-english-two-years-ago").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageP8English.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageP8English.Disadvantaged})");
 			Document.QuerySelector("#na-p8-score-english-previous-year").TextContent.Should()
@@ -139,6 +185,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).SipProgress8maths.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).SipProgress8maths.Disadvantaged})");
 			Document.QuerySelector("#p8-score-maths").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).SipProgress8maths.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).SipProgress8maths.Disadvantaged})");
+			Document.QuerySelector("#la-p8-score-maths-two-years-ago").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageP8Maths.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageP8Maths.Disadvantaged})");
+			Document.QuerySelector("#la-p8-score-maths-previous-year").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageP8Maths.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageP8Maths.Disadvantaged})");
+			Document.QuerySelector("#la-p8-score-maths").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageP8Maths.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageP8Maths.Disadvantaged})");
 			Document.QuerySelector("#na-p8-score-maths-two-years-ago").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageP8Maths.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageP8Maths.Disadvantaged})");
 			Document.QuerySelector("#na-p8-score-maths-previous-year").TextContent.Should()
@@ -152,6 +204,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).SipProgress8ebacc.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).SipProgress8ebacc.Disadvantaged})");
 			Document.QuerySelector("#p8-score-ebacc").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).SipProgress8ebacc.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).SipProgress8ebacc.Disadvantaged})");
+			Document.QuerySelector("#la-p8-score-ebacc-two-years-ago").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageP8Ebacc.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).LAAverageP8Ebacc.Disadvantaged})");
+			Document.QuerySelector("#la-p8-score-ebacc-previous-year").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageP8Ebacc.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(1).LAAverageP8Ebacc.Disadvantaged})");
+			Document.QuerySelector("#la-p8-score-ebacc").TextContent.Should()
+				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageP8Ebacc.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(0).LAAverageP8Ebacc.Disadvantaged})");
 			Document.QuerySelector("#na-p8-score-ebacc-two-years-ago").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageP8Ebacc.NotDisadvantaged}\n(disadvantaged {keyStage4ResponseOrderedByYear.ElementAt(2).NationalAverageP8Ebacc.Disadvantaged})");
 			Document.QuerySelector("#na-p8-score-ebacc-previous-year").TextContent.Should()

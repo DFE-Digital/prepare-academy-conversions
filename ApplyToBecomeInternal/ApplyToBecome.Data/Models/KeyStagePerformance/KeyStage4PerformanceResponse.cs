@@ -25,5 +25,16 @@
 		public DisadvantagedPupilsResponse NationalAverageP8English { get; set; }
 		public DisadvantagedPupilsResponse NationalAverageP8Maths { get; set; }
 		public DisadvantagedPupilsResponse NationalAverageP8Ebacc { get; set; }
+		public DisadvantagedPupilsResponse LAAverageA8Score { get; set; }
+		public DisadvantagedPupilsResponse LAAverageA8English { get; set; }
+		public DisadvantagedPupilsResponse LAAverageA8Maths { get; set; }
+		public DisadvantagedPupilsResponse LAAverageA8EBacc { get; set; }
+		public DisadvantagedPupilsResponse LAAverageP8PupilsIncluded { get; set; }
+		public DisadvantagedPupilsResponse LAAverageP8Score { get; set; }
+		public decimal? LAAverageP8LowerConfidence { get; set; }
+		public decimal? LAAverageP8UpperConfidence { get; set; }
+		public DisadvantagedPupilsResponse LAAverageP8English { get; set; }
+		public DisadvantagedPupilsResponse LAAverageP8Maths { get; set; }
+		public DisadvantagedPupilsResponse LAAverageP8Ebacc { get; set; }
 	}
 }

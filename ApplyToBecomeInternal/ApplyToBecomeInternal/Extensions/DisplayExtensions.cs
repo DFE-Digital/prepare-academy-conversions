@@ -29,7 +29,7 @@ namespace ApplyToBecomeInternal.Extensions
 		public static string DisplayConfidenceInterval(decimal? lowerBound, decimal? upperBound)
 		{
 			if (lowerBound == null && upperBound == null) return NoData;
-			return $"{lowerBound.ToString().FormatValue()} to {upperBound.ToString().FormatValue()}";
+			return $"{lowerBound.ToString()} to {upperBound.ToString()}";
 		}
 
 		private static string FormatValue(this string result)
