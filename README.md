@@ -1,5 +1,5 @@
 # Apply to Become an academy, internal service
-Internal service for managing applications for schools applying to become academies.
+Internal service for managing applications for schools to become academies.
 
 ## Requirements
 - .NET Core 3.1
@@ -20,5 +20,4 @@ The following user secrets are required to be able to connect to the TRAMS API (
 For local development, user secrets can be set using the command:
 - `dotnet user-secrets set "key" "value"` from the `ApplyToBecomeInternal` project.
 
-Alternatively, there is a Rider plugin called `.NET Core User Secrets` that allows the secrets to be
-managed via a json file, accessed by right clicking on the project -> `Tools` -> `Open Project User Secrets`.
+Alternatively, there is a Rider plugin called `.NET Core User Secrets` that allows the secrets to be managed via a json file, accessed by right clicking on the project -> `Tools` -> `Open Project User Secrets`.
