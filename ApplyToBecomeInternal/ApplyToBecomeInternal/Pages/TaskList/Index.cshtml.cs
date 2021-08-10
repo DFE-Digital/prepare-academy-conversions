@@ -43,7 +43,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			TaskList = TaskListViewModel.Build(Project);
 			TaskList.HasKeyStage2PerformanceTables = keyStagePerformance.KeyStage2?.Any(HasKeyStage2PerformanceTables) ?? false;
 			TaskList.HasKeyStage4PerformanceTables = keyStagePerformance.KeyStage4?.Any(HasKeyStage4PerformanceTables) ?? false;
-			TaskList.HasKeyStage5PerformanceTables = false;
+			TaskList.HasKeyStage5PerformanceTables = keyStagePerformance.KeyStage5?.Any(HasKeyStage5PerformanceTables) ?? false;
 
 			return Page();
 		}
@@ -70,10 +70,20 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			       || HasValue(keyStage4Performance.SipProgress8ebacc);
 		}
 
+		private bool HasKeyStage5PerformanceTables(KeyStage5PerformanceResponse keyStage5Performance)
+		{
+			return keyStage5Performance.AcademicQualificationAverage != null
+			       || keyStage5Performance.AppliedGeneralQualificationAverage != null
+			       || keyStage5Performance.NationalAcademicQualificationAverage != null
+			       || keyStage5Performance.NationalAppliedGeneralQualificationAverage != null
+			       || keyStage5Performance.LAAcademicQualificationAverage != null
+			       || keyStage5Performance.LAAppliedGeneralQualificationAverage != null;
+		}
+
 		private bool HasValue(DisadvantagedPupilsResponse disadvantagedPupilsResponse)
 		{
 			return !string.IsNullOrEmpty(disadvantagedPupilsResponse.NotDisadvantaged)
 				|| !string.IsNullOrEmpty(disadvantagedPupilsResponse.Disadvantaged);
 		}
-	}
+    }
 }
