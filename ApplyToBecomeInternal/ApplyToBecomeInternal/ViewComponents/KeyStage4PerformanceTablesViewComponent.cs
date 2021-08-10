@@ -152,8 +152,6 @@ namespace ApplyToBecomeInternal.ViewComponents
 				NationalAverageProgress8ScoreEbacc = DisplayExtensions.DisplayKeyStageDisadvantagedResult(keyStage4PerformanceResults.ElementAt(0)?.NationalAverageP8Ebacc),
 				NationalAverageProgress8ScoreEbaccPreviousYear = DisplayExtensions.DisplayKeyStageDisadvantagedResult(keyStage4PerformanceResults.ElementAt(1)?.NationalAverageP8Ebacc),
 				NationalAverageProgress8ScoreEbaccTwoYearsAgo = DisplayExtensions.DisplayKeyStageDisadvantagedResult(keyStage4PerformanceResults.ElementAt(2)?.NationalAverageP8Ebacc),
-
-				// LA fields
 			};
 		}
 	}
