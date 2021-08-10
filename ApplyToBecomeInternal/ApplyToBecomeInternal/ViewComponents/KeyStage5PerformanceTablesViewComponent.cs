@@ -1,5 +1,6 @@
 ﻿using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecome.Data.Services;
+using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -44,14 +45,12 @@ namespace ApplyToBecomeInternal.ViewComponents
 		private KeyStage5PerformanceTableViewModel Build(KeyStage5PerformanceResponse keyStage5Performance)
 		{
 			// year descending or ascending
-
-			// use no data formatter
 			return new KeyStage5PerformanceTableViewModel
 			{
 				Year = keyStage5Performance.Year,
-				AcademicAverage = keyStage5Performance.AcademicQualificationAverage.ToString(),
-				NationalAverageAcademicAverage = keyStage5Performance.NationalAcademicQualificationAverage.ToString(),
-				NationalAverageAppliedGeneralAverage = keyStage5Performance.NationalAppliedGeneralQualificationAverage.ToString()
+				AcademicAverage = keyStage5Performance.AcademicQualificationAverage.FormatValue(),
+				NationalAverageAcademicAverage = keyStage5Performance.NationalAcademicQualificationAverage.FormatValue(),
+				NationalAverageAppliedGeneralAverage = keyStage5Performance.NationalAppliedGeneralQualificationAverage.FormatValue()
 			};
 		}
 	}

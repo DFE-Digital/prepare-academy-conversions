@@ -37,7 +37,7 @@ namespace ApplyToBecomeInternal.Extensions
 			return string.IsNullOrEmpty(value) ? NoData : value.ToDouble();
 		}
 
-		private static string FormatValue(this decimal? value)
+		public static string FormatValue(this decimal? value)
 		{
 			return value == null ? NoData : value.ToString();
 		}
