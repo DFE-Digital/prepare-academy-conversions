@@ -1,0 +1,58 @@
+﻿using ApplyToBecome.Data.Models.KeyStagePerformance;
+using ApplyToBecome.Data.Services;
+using ApplyToBecomeInternal.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ApplyToBecomeInternal.ViewComponents
+{
+	public class KeyStage5PerformanceTablesViewComponent : ViewComponent
+	{
+		private readonly KeyStagePerformanceService _keyStagePerformanceService;
+		private readonly IAcademyConversionProjectRepository _repository;
+
+		public KeyStage5PerformanceTablesViewComponent(
+			KeyStagePerformanceService keyStagePerformanceService,
+			IAcademyConversionProjectRepository repository)
+		{
+			_keyStagePerformanceService = keyStagePerformanceService;
+			_repository = repository;
+		}
+
+		public async Task<IViewComponentResult> InvokeAsync()
+		{
+			var id = int.Parse(ViewContext.RouteData.Values["id"].ToString());
+
+			var response = await _repository.GetProjectById(id);
+			if (!response.Success)
+			{
+				throw new InvalidOperationException();
+			}
+
+			var project = response.Body;
+			ViewData["SchoolName"] = project.SchoolName;
+			ViewData["LocalAuthority"] = project.LocalAuthority;
+			var keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(project.Urn.ToString());
+
+			var viewModel = keyStagePerformance.KeyStage5.Select(Build).OrderByDescending(ks => ks.Year);
+
+			return View(viewModel);
+		}
+
+		private KeyStage5PerformanceTableViewModel Build(KeyStage5PerformanceResponse keyStage5Performance)
+		{
+			// year descending or ascending
+
+			// use no data formatter
+			return new KeyStage5PerformanceTableViewModel
+			{
+				Year = keyStage5Performance.Year,
+				AcademicAverage = keyStage5Performance.AcademicQualificationAverage.ToString(),
+				NationalAverageAcademicAverage = keyStage5Performance.NationalAcademicQualificationAverage.ToString(),
+				NationalAverageAppliedGeneralAverage = keyStage5Performance.NationalAppliedGeneralQualificationAverage.ToString()
+			};
+		}
+	}
+}
