@@ -259,7 +259,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 			Document.QuerySelector("#attainment8").TextContent.Should()
 				.Be($"{ks4ResponseOrderedByYear.ElementAt(0).SipAttainment8score.NotDisadvantaged}\n(disadvantaged no data)");
 			Document.QuerySelector("#attainment8-maths").TextContent.Should().Be("no data");
-			Document.QuerySelector("#p8-ci").TextContent.Should().Be($"no data to {ks4ResponseOrderedByYear.ElementAt(0).SipProgress8upperconfidence}");
+			Document.QuerySelector("#p8-ci").TextContent.Should().MatchRegex($"no data to {ks4ResponseOrderedByYear.ElementAt(0).SipProgress8upperconfidence}");
 			Document.QuerySelector("#na-p8-ci").TextContent.Should().Be("no data");
 
 			await NavigateAsync("Confirm and continue");
