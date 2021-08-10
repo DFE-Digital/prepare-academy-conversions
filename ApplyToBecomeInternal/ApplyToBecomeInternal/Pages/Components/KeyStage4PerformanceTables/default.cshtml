@@ -1,0 +1,348 @@
+﻿@model KeyStage4PerformanceTableViewModel
+
+<h2 class="govuk-heading-l">
+    Attainment 8
+</h2>
+
+<table class="govuk-table govuk-!-margin-bottom-9">
+    <caption class="govuk-table__caption govuk-table__caption--m">Attainment 8 scores</caption>
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+	    <th scope="col" class="govuk-table__header"></th>
+	    <th scope="col" class="govuk-table__header">@Model.TwoYearsAgo</th>
+        <th scope="col" class="govuk-table__header">@Model.PreviousYear</th>
+	    <th scope="col" class="govuk-table__header">@Model.Year</th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+	    @* disadvantaged *@
+	    <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
+	    <td class="govuk-table__cell" id="attainment8-two-years-ago">@Model.Attainment8ScoreTwoYearsAgo</td>
+	    <td class="govuk-table__cell" id="attainment8-previous-year">@Model.Attainment8ScorePreviousYear</td>
+	    <td class="govuk-table__cell" id="attainment8">@Model.Attainment8Score</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA average</th>
+        <td class="govuk-table__cell" id="la-attainment8-two-years-ago">@Model.LaAverageAttainment8ScoreTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="la-attainment8-previous-year">@Model.LaAverageAttainment8ScorePreviousYear</td>
+        <td class="govuk-table__cell" id="la-attainment8">@Model.LaAverageAttainment8Score</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">National average</th>
+        <td class="govuk-table__cell" id="na-attainment8-two-years-ago">@Model.NationalAverageAttainment8ScoreTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="na-attainment8-previous-year">@Model.NationalAverageAttainment8ScorePreviousYear</td>
+        <td class="govuk-table__cell" id="na-attainment8">@Model.NationalAverageAttainment8Score</td>
+    </tr>
+    </tbody>
+</table>
+<table class="govuk-table govuk-!-margin-bottom-9">
+    <caption class="govuk-table__caption govuk-table__caption--m">Attainment 8 English</caption>
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"></th>
+        <th scope="col" class="govuk-table__header">@Model.TwoYearsAgo</th>
+        <th scope="col" class="govuk-table__header">@Model.PreviousYear</th>
+        <th scope="col" class="govuk-table__header">@Model.Year</th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
+        <td class="govuk-table__cell" id="attainment8-english-two-years-ago">@Model.Attainment8ScoreEnglishTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="attainment8-english-previous-year">@Model.Attainment8ScoreEnglishPreviousYear</td>
+        <td class="govuk-table__cell" id="attainment8-english">@Model.Attainment8ScoreEnglish</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA average</th>
+        <td class="govuk-table__cell" id="la-attainment8-english-two-years-ago">@Model.LaAverageAttainment8ScoreEnglishTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="la-attainment8-english-previous-year">@Model.LaAverageAttainment8ScoreEnglishPreviousYear</td>
+        <td class="govuk-table__cell" id="la-attainment8-english">@Model.LaAverageAttainment8ScoreEnglish</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">National average</th>
+		<td class="govuk-table__cell" id="na-attainment8-english-two-years-ago">@Model.NationalAverageAttainment8ScoreEnglishTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="na-attainment8-english-previous-year">@Model.NationalAverageAttainment8ScoreEnglishPreviousYear</td>
+        <td class="govuk-table__cell" id="na-attainment8-english">@Model.NationalAverageAttainment8ScoreEnglish</td>
+    </tr>
+    </tbody>
+</table>
+
+<table class="govuk-table govuk-!-margin-bottom-9">
+    <caption class="govuk-table__caption govuk-table__caption--m">Attainment 8 Maths</caption>
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"></th>
+        <th scope="col" class="govuk-table__header">@Model.TwoYearsAgo</th>
+        <th scope="col" class="govuk-table__header">@Model.PreviousYear</th>
+        <th scope="col" class="govuk-table__header">@Model.Year</th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
+        <td class="govuk-table__cell" id="attainment8-maths-two-years-ago">@Model.Attainment8ScoreMathsTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="attainment8-maths-previous-year">@Model.Attainment8ScoreMathsPreviousYear</td>
+        <td class="govuk-table__cell" id="attainment8-maths">@Model.Attainment8ScoreMaths</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA average</th>
+        <td class="govuk-table__cell" id="la-attainment8-maths-two-years-ago">@Model.LaAverageAttainment8ScoreMathsTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="la-attainment8-maths-previous-year">@Model.LaAverageAttainment8ScoreMathsPreviousYear</td>
+        <td class="govuk-table__cell" id="la-attainment8-maths">@Model.LaAverageAttainment8ScoreMaths</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">National average</th>
+		<td class="govuk-table__cell" id="na-attainment8-maths-two-years-ago">@Model.NationalAverageAttainment8ScoreMathsTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="na-attainment8-maths-previous-year">@Model.NationalAverageAttainment8ScoreMathsPreviousYear</td>
+        <td class="govuk-table__cell" id="na-attainment8-maths">@Model.NationalAverageAttainment8ScoreMaths</td>
+    </tr>
+    </tbody>
+</table>
+
+<table class="govuk-table govuk-!-margin-bottom-9">
+    <caption class="govuk-table__caption govuk-table__caption--m">Attainment 8 Ebacc</caption>
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"></th>
+        <th scope="col" class="govuk-table__header">@Model.TwoYearsAgo</th>
+        <th scope="col" class="govuk-table__header">@Model.PreviousYear</th>
+        <th scope="col" class="govuk-table__header">@Model.Year</th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
+ <td class="govuk-table__cell" id="attainment8-ebacc-two-years-ago">@Model.Attainment8ScoreEbaccTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="attainment8-ebacc-previous-year">@Model.Attainment8ScoreEbaccPreviousYear</td>
+        <td class="govuk-table__cell" id="attainment8-ebacc">@Model.Attainment8ScoreEbacc</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA average</th>
+        <td class="govuk-table__cell" id="la-attainment8-ebacc-two-years-ago">@Model.LaAverageAttainment8ScoreEbaccTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="la-attainment8-ebacc-previous-year">@Model.LaAverageAttainment8ScoreEbaccPreviousYear</td>
+        <td class="govuk-table__cell" id="la-attainment8-ebacc">@Model.LaAverageAttainment8ScoreEbacc</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">National average</th>
+		<td class="govuk-table__cell" id="na-attainment8-ebacc-two-years-ago">@Model.NationalAverageAttainment8ScoreEbaccTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="na-attainment8-ebacc-previous-year">@Model.NationalAverageAttainment8ScoreEbaccPreviousYear</td>
+        <td class="govuk-table__cell" id="na-attainment8-ebacc">@Model.NationalAverageAttainment8ScoreEbacc</td>
+    </tr>
+    </tbody>
+</table>
+
+
+<h2 class="govuk-heading-l">
+    Progress 8
+</h2>
+<table class="govuk-table govuk-!-margin-bottom-9">
+    <caption class="govuk-table__caption govuk-table__caption--m">Pupils included in P8</caption>
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"></th>
+        <th scope="col" class="govuk-table__header">@Model.TwoYearsAgo</th>
+        <th scope="col" class="govuk-table__header">@Model.PreviousYear</th>
+        <th scope="col" class="govuk-table__header">@Model.Year</th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
+        <td class="govuk-table__cell" id="number-of-pupils-p8-two-years-ago">@Model.NumberOfPupilsProgress8TwoYearsAgo</td>
+        <td class="govuk-table__cell" id="number-of-pupils-p8-previous-year">@Model.NumberOfPupilsProgress8PreviousYear</td>
+        <td class="govuk-table__cell" id="number-of-pupils-p8">@Model.NumberOfPupilsProgress8</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA average</th>
+        <td class="govuk-table__cell" id="la-p8-pupils-included-two-years-ago">@Model.LaAveragePupilsIncludedProgress8TwoYearsAgo</td>
+        <td class="govuk-table__cell" id="la-p8-pupils-included-previous-year">@Model.LaAveragePupilsIncludedProgress8PreviousYear</td>
+        <td class="govuk-table__cell" id="la-p8-pupils-included">@Model.LaAveragePupilsIncludedProgress8</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">National average</th>
+		<td class="govuk-table__cell" id="na-p8-pupils-included-two-years-ago">@Model.NationalAveragePupilsIncludedProgress8TwoYearsAgo</td>
+        <td class="govuk-table__cell" id="na-p8-pupils-included-previous-year">@Model.NationalAveragePupilsIncludedProgress8PreviousYear</td>
+        <td class="govuk-table__cell" id="na-p8-pupils-included">@Model.NationalAveragePupilsIncludedProgress8</td>
+    </tr>
+    </tbody>
+</table>
+<table class="govuk-table govuk-!-margin-bottom-9">
+    <caption class="govuk-table__caption govuk-table__caption--m">School progress scores</caption>
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"></th>
+        <th scope="col" class="govuk-table__header">@Model.TwoYearsAgo</th>
+        <th scope="col" class="govuk-table__header">@Model.PreviousYear</th>
+        <th scope="col" class="govuk-table__header">@Model.Year</th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
+		<td class="govuk-table__cell" id="p8-score-two-years-ago">@Model.Progress8ScoreTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="p8-score-previous-year">@Model.Progress8ScorePreviousYear</td>
+        <td class="govuk-table__cell" id="p8-score">@Model.Progress8Score</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">School confidence interval</th>
+        <td class="govuk-table__cell" id="p8-ci-two-years-ago">@Model.Progress8ConfidenceIntervalTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="p8-ci-previous-year">@Model.Progress8ConfidenceIntervalPreviousYear</td>
+        <td class="govuk-table__cell" id="p8-ci">@Model.Progress8ConfidenceInterval</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA average</th>
+        <td class="govuk-table__cell" id="la-p8-score-two-years-ago">@Model.LaAverageProgress8ScoreTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="la-p8-score-previous-year">@Model.LaAverageProgress8ScorePreviousYear</td>
+        <td class="govuk-table__cell" id="la-p8-score">@Model.LaAverageProgress8Score</td>
+    </tr>
+    <tr class="govuk-table__row">
+	    <th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA confidence interval</th>
+        <td class="govuk-table__cell" id="la-p8-ci-two-years-ago">@Model.LaAverageProgress8ConfidenceIntervalTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="la-p8-ci-previous-year">@Model.LaAverageProgress8ConfidenceIntervalPreviousYear</td>
+        <td class="govuk-table__cell" id="la-p8-ci">@Model.LaAverageProgress8ConfidenceInterval</td>
+    </tr>
+    <tr class="govuk-table__row">
+	    <th scope="row" class="govuk-table__header">National average</th>
+	    <td class="govuk-table__cell" id="na-p8-score-two-years-ago">@Model.NationalAverageProgress8ScoreTwoYearsAgo</td>
+	    <td class="govuk-table__cell" id="na-p8-score-previous-year">@Model.NationalAverageProgress8ScorePreviousYear</td>
+	    <td class="govuk-table__cell" id="na-p8-score">@Model.NationalAverageProgress8Score</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">National LA confidence interval</th>
+        <td class="govuk-table__cell" id="na-p8-ci-two-years-ago">@Model.NationalAverageProgress8ConfidenceIntervalTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="na-p8-ci-previous-year">@Model.NationalAverageProgress8ConfidenceIntervalPreviousYear</td>
+        <td class="govuk-table__cell" id="na-p8-ci">@Model.NationalAverageProgress8ConfidenceInterval</td>
+    </tr>
+    </tbody>
+</table>
+
+<table class="govuk-table govuk-!-margin-bottom-9">
+    <caption class="govuk-table__caption govuk-table__caption--m">Progress 8 English</caption>
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"></th>
+        <th scope="col" class="govuk-table__header">@Model.TwoYearsAgo</th>
+        <th scope="col" class="govuk-table__header">@Model.PreviousYear</th>
+        <th scope="col" class="govuk-table__header">@Model.Year</th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
+		<td class="govuk-table__cell" id="p8-score-english-two-years-ago">@Model.Progress8ScoreEnglishTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="p8-score-english-previous-year">@Model.Progress8ScoreEnglishPreviousYear</td>
+        <td class="govuk-table__cell" id="p8-score-english">@Model.Progress8ScoreEnglish</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA average</th>
+        <td class="govuk-table__cell" id="la-p8-score-english-two-years-ago">@Model.LaAverageProgress8ScoreEnglishTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="la-p8-score-english-previous-year">@Model.LaAverageProgress8ScoreEnglishPreviousYear</td>
+        <td class="govuk-table__cell" id="la-p8-score-english">@Model.LaAverageProgress8ScoreEnglish</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">National average</th>
+	    <td class="govuk-table__cell" id="na-p8-score-english-two-years-ago">@Model.NationalAverageProgress8ScoreEnglishTwoYearsAgo</td>
+	    <td class="govuk-table__cell" id="na-p8-score-english-previous-year">@Model.NationalAverageProgress8ScoreEnglishPreviousYear</td>
+	    <td class="govuk-table__cell" id="na-p8-score-english">@Model.NationalAverageProgress8ScoreEnglish</td>
+    </tr>
+    </tbody>
+</table>
+
+<table class="govuk-table govuk-!-margin-bottom-9">
+    <caption class="govuk-table__caption govuk-table__caption--m">Progress 8 Maths</caption>
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"></th>
+        <th scope="col" class="govuk-table__header">@Model.TwoYearsAgo</th>
+        <th scope="col" class="govuk-table__header">@Model.PreviousYear</th>
+        <th scope="col" class="govuk-table__header">@Model.Year</th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
+		<td class="govuk-table__cell" id="p8-score-maths-two-years-ago">@Model.Progress8ScoreMathsTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="p8-score-maths-previous-year">@Model.Progress8ScoreMathsPreviousYear</td>
+        <td class="govuk-table__cell" id="p8-score-maths">@Model.Progress8ScoreMaths</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA average</th>
+        <td class="govuk-table__cell" id="la-p8-score-maths-two-years-ago">@Model.LaAverageProgress8ScoreMathsTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="la-p8-score-maths-previous-year">@Model.LaAverageProgress8ScoreMathsPreviousYear</td>
+        <td class="govuk-table__cell" id="la-p8-score-maths">@Model.LaAverageProgress8ScoreMaths</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">National average</th>
+	    <td class="govuk-table__cell" id="na-p8-score-maths-two-years-ago">@Model.NationalAverageProgress8ScoreMathsTwoYearsAgo</td>
+	    <td class="govuk-table__cell" id="na-p8-score-maths-previous-year">@Model.NationalAverageProgress8ScoreMathsPreviousYear</td>
+	    <td class="govuk-table__cell" id="na-p8-score-maths">@Model.NationalAverageProgress8ScoreMaths</td>
+    </tr>
+    </tbody>
+</table>
+
+<table class="govuk-table govuk-!-margin-bottom-9">
+    <caption class="govuk-table__caption govuk-table__caption--m">Progress 8 Ebacc</caption>
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"></th>
+        <th scope="col" class="govuk-table__header">@Model.TwoYearsAgo</th>
+        <th scope="col" class="govuk-table__header">@Model.PreviousYear</th>
+        <th scope="col" class="govuk-table__header">@Model.Year</th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
+		<td class="govuk-table__cell" id="p8-score-ebacc-two-years-ago">@Model.Progress8ScoreEbaccTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="p8-score-ebacc-previous-year">@Model.Progress8ScoreEbaccPreviousYear</td>
+        <td class="govuk-table__cell" id="p8-score-ebacc">@Model.Progress8ScoreEbacc</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA average</th>
+        <td class="govuk-table__cell" id="la-p8-score-ebacc-two-years-ago">@Model.LaAverageProgress8ScoreEbaccTwoYearsAgo</td>
+        <td class="govuk-table__cell" id="la-p8-score-ebacc-previous-year">@Model.LaAverageProgress8ScoreEbaccPreviousYear</td>
+        <td class="govuk-table__cell" id="la-p8-score-ebacc">@Model.LaAverageProgress8ScoreEbacc</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">National average</th>
+		<td class="govuk-table__cell" id="na-p8-score-ebacc-two-years-ago">@Model.NationalAverageProgress8ScoreEbaccTwoYearsAgo</td>
+	    <td class="govuk-table__cell" id="na-p8-score-ebacc-previous-year">@Model.NationalAverageProgress8ScoreEbaccPreviousYear</td>
+	    <td class="govuk-table__cell" id="na-p8-score-ebacc">@Model.NationalAverageProgress8ScoreEbacc</td>
+    </tr>
+    </tbody>
+</table>
+
+<h2 class="govuk-heading-m">
+    Percentage of students entering EBacc
+</h2>
+<table class="govuk-table govuk-!-margin-bottom-9">
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"></th>
+        <th scope="col" class="govuk-table__header">@Model.TwoYearsAgo</th>
+        <th scope="col" class="govuk-table__header">@Model.PreviousYear</th>
+        <th scope="col" class="govuk-table__header">@Model.Year</th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
+        <td class="govuk-table__cell">no data</td>
+        <td class="govuk-table__cell">no data</td>
+        <td class="govuk-table__cell">no data</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA average</th>
+        <td class="govuk-table__cell">no data</td>
+        <td class="govuk-table__cell">no data</td>
+        <td class="govuk-table__cell">no data</td>
+    </tr>
+    <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">National average</th>
+        <td class="govuk-table__cell">no data</td>
+        <td class="govuk-table__cell">no data</td>
+        <td class="govuk-table__cell">no data</td>
+    </tr>
+    </tbody>
+</table>

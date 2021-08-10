@@ -1,7 +1,7 @@
-﻿@page "/task-list/{id:int}/key-stage-2-performance-tables"
+@page "/task-list/{id:int}/key-stage-4-performance-tables"
 @model ApplyToBecomeInternal.Pages.BaseAcademyConversionProjectPageModel
 @{
-	ViewData["Title"] = "Key stage 2 performance tables";
+	ViewData["Title"] = "Key stage 4 performance tables";
 }
 
 @section BeforeMain
@@ -9,7 +9,7 @@
 	<govuk-back-link link-item="@Links.TaskList.Index" />
 }
 <span class="govuk-caption-l">@Model.Project.SchoolName</span>
-<h1 class="govuk-heading-l">Key stage 2 performance tables</h1>
+<h1 class="govuk-heading-l">Key stage 4 performance tables</h1>
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<p class="govuk-body">This information comes from TRAMS and you can include <a href="#additional-information">additional information</a> if you need to. These performance tables and additional information will go into your headteacher board template.</p>
@@ -19,7 +19,7 @@
 		</p>
 	</div>
 	<div class="govuk-grid-column-full">
-		<vc:key-stage2-performance-tables />
+		<vc:key-stage4-performance-tables />
 	</div>
 	<div class="govuk-grid-column-two-thirds">
 		<h3 class="govuk-heading-m">Additional information</h3>
@@ -27,7 +27,7 @@
 	</div>
 	<div class="govuk-grid-column-full">
 		<dl class="govuk-summary-list">
-			<govuk-summary-list-row id="additional-information" name="key-stage-2-additional-information" label="Additional information" value="@Model.Project.KeyStage2PerformanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.KeyStage2PerformanceTablesAdditionalInformation.Page" asp-fragment="additional-information" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
+			<govuk-summary-list-row id="additional-information" name="key-stage-4-additional-information" label="Additional information" value="@Model.Project.KeyStage4PerformanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.KeyStage4PerformanceTablesAdditionalInformation.Page" asp-fragment="additional-information" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
 		</dl>
 		<a class="govuk-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</a>
 	</div>

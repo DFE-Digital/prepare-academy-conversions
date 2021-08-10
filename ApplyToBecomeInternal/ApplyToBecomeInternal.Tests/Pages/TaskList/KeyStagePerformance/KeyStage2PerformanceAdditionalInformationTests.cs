@@ -17,16 +17,16 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 			{
 				var project = AddGetProject();
 				AddGetKeyStagePerformance((int)project.Urn);
-				var request = AddPatchProject(project, r => r.KeyStagePerformanceTablesAdditionalInformation);
+				var request = AddPatchProject(project, r => r.KeyStage2PerformanceAdditionalInformation);
 
 				await OpenUrlAsync($"/task-list/{project.Id}/key-stage-2-performance-tables");
 				await NavigateAsync("Change", 0);
 
 				Document.Url.Should().BeUrl($"/task-list/{project.Id}/key-stage-2-performance-tables/additional-information#additional-information");
 				var textArea = Document.QuerySelector<IHtmlTextAreaElement>("#additional-information");
-				textArea.TextContent.Should().Be(project.KeyStagePerformanceTablesAdditionalInformation);
+				textArea.TextContent.Should().Be(project.KeyStage2PerformanceAdditionalInformation);
 
-				textArea.Value = request.KeyStagePerformanceTablesAdditionalInformation;
+				textArea.Value = request.KeyStage2PerformanceAdditionalInformation;
 				await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
 				Document.Url.Should().BeUrl($"/task-list/{project.Id}/key-stage-2-performance-tables");

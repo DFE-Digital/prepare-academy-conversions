@@ -57,7 +57,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 		}
 
 		[Fact]
-		public async Task Should_navigate_back_to_confirm_school_pupil_forecasts()
+		public async Task Should_navigate_back_to_confirm_school_budget_information()
 		{
 			var project = AddGetProject();
 

@@ -95,6 +95,7 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem KeyStage2PerformanceTables = new LinkItem { Page = "/TaskList/KeyStagePerformance/KeyStage2PerformanceTables" };
 			public static LinkItem KeyStage2PerformanceTablesAdditionalInformation = new LinkItem { Page = "/TaskList/KeyStagePerformance/KeyStage2PerformanceTablesAdditionalInformation" };
 			public static LinkItem KeyStage4PerformanceTables = new LinkItem { Page = "/TaskList/KeyStagePerformance/KeyStage4PerformanceTables" };
+			public static LinkItem KeyStage4PerformanceTablesAdditionalInformation = new LinkItem { Page = "/TaskList/KeyStagePerformance/KeyStage4PerformanceTablesAdditionalInformation" };
 			public static LinkItem KeyStage5PerformanceTables = new LinkItem { Page = "/TaskList/KeyStagePerformance/KeyStage5PerformanceTables" };
 		}
 	}

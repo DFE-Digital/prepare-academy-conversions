@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 
 			await NavigateAsync("Key stage 2 performance tables");
 
-			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.KeyStagePerformanceTablesAdditionalInformation);
+			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.KeyStage2PerformanceAdditionalInformation);
 
 			var keyStage2ResponseOrderedByYear = keyStage2Response.OrderByDescending(ks2 => ks2.Year);
 			foreach (var response in keyStage2ResponseOrderedByYear)
@@ -62,7 +62,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 		public async Task Should_navigate_between_task_list_and_KS2_performance()
 		{
 			var project = AddGetProject();
-			AddGetKeyStagePerformance((int)project.Urn).KeyStage2.ToList();
+			AddGetKeyStagePerformance((int)project.Urn);
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
