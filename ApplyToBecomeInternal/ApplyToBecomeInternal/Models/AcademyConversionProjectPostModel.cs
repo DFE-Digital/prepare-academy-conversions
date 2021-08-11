@@ -169,5 +169,9 @@ namespace ApplyToBecomeInternal.Models
 		[BindProperty(Name = "key-stage-4-additional-information")]
 		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string KeyStage4PerformanceAdditionalInformation { get; set; }
+
+		[BindProperty(Name = "key-stage-5-additional-information")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
+		public string KeyStage5PerformanceAdditionalInformation { get; set; }
 	}
 }

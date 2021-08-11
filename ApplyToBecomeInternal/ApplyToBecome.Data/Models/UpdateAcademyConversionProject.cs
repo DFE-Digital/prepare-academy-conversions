@@ -63,5 +63,6 @@ namespace ApplyToBecome.Data.Models
 		//key stage performance tables
 		public string KeyStage2PerformanceAdditionalInformation { get; set; }
 		public string KeyStage4PerformanceAdditionalInformation { get; set; }
+		public string KeyStage5PerformanceAdditionalInformation { get; set; }
 	}
 }
