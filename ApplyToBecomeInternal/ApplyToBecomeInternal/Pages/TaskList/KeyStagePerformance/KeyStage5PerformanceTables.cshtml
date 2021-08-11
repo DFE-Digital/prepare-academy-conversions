@@ -1,0 +1,34 @@
+@page "/task-list/{id:int}/key-stage-5-performance-tables"
+@model ApplyToBecomeInternal.Pages.BaseAcademyConversionProjectPageModel
+@{
+	ViewData["Title"] = "Key stage 5 performance tables";
+}
+
+@section BeforeMain
+{
+	<govuk-back-link link-item="@Links.TaskList.Index" />
+}
+<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+<h1 class="govuk-heading-l">Key stage 5 performance tables</h1>
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<p class="govuk-body">This information comes from TRAMS and you can include <a href="#additional-information">additional information</a> if you need to. These performance tables and additional information will go into your headteacher board template.</p>
+		<p class="govuk-body-s">
+			TRAMS last updated on: 23 March 2021<br>
+			<a href="https://www.compare-school-performance.service.gov.uk/school/@Model.Project.SchoolURN" class="govuk-link" rel="noreferrer noopener" target="_blank">Source of data: Find and compare school performance (opens in new tab)</a>
+		</p>
+	</div>
+	<div class="govuk-grid-column-full">
+		<vc:key-stage5-performance-tables />
+	</div>
+	<div class="govuk-grid-column-two-thirds">
+		<h3 class="govuk-heading-m">Additional information</h3>
+		<p class="govuk-body">This information will populate into your HTB template under the key stage performance section.</p>
+	</div>
+	<div class="govuk-grid-column-full">
+		<dl class="govuk-summary-list">
+			<govuk-summary-list-row id="additional-information" name="key-stage-5-additional-information" label="Additional information" value="@Model.Project.KeyStage5PerformanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.KeyStage5PerformanceTablesAdditionalInformation.Page" asp-fragment="additional-information" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
+		</dl>
+		<a class="govuk-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</a>
+	</div>
+</div>

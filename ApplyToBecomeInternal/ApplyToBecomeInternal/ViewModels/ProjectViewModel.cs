@@ -75,6 +75,7 @@ namespace ApplyToBecomeInternal.ViewModels
 
 			KeyStage2PerformanceAdditionalInformation = project.KeyStage2PerformanceAdditionalInformation;
 			KeyStage4PerformanceAdditionalInformation = project.KeyStage4PerformanceAdditionalInformation;
+			KeyStage5PerformanceAdditionalInformation = project.KeyStage5PerformanceAdditionalInformation;
 		}
 
 		public string Id { get; }
@@ -150,5 +151,6 @@ namespace ApplyToBecomeInternal.ViewModels
 
 		public string KeyStage2PerformanceAdditionalInformation { get; set; }
 		public string KeyStage4PerformanceAdditionalInformation { get; set; }
+		public string KeyStage5PerformanceAdditionalInformation { get; set; }
 	}
 }
