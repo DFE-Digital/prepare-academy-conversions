@@ -1,4 +1,5 @@
 ﻿using ApplyToBecome.Data.Models.KeyStagePerformance;
+using System.Linq;
 
 namespace ApplyToBecomeInternal.Extensions
 {
@@ -40,6 +41,13 @@ namespace ApplyToBecomeInternal.Extensions
 		public static string FormatValue(this decimal? value)
 		{
 			return value == null ? NoData : value.ToString();
+		}
+
+		public static string FormatKeyStageYear(this string year)
+		{
+			if (string.IsNullOrEmpty(year)) return year;
+			var trimmedYear = string.Concat(year.Where(c => !char.IsWhiteSpace(c)));
+			return trimmedYear.Contains("-") ? trimmedYear.Replace("-", " to ") : year;
 		}
 	}
 }

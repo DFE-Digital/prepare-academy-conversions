@@ -26,32 +26,33 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 
 			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.KeyStage2PerformanceAdditionalInformation);
 
-			var keyStage2ResponseOrderedByYear = keyStage2Response.OrderByDescending(ks2 => ks2.Year);
-			foreach (var response in keyStage2ResponseOrderedByYear)
+			var keyStage2ResponseOrderedByYear = keyStage2Response.OrderByDescending(ks2 => ks2.Year).ToList();
+			for (int i = 0; i < 2; i++)
 			{
-				Document.QuerySelector($"#{response.Year}-percentage-meeting-expected-in-rwm").TextContent.Should().Be(response.PercentageMeetingExpectedStdInRWM.NotDisadvantaged);
-				Document.QuerySelector($"#{response.Year}-percentage-achieving-higher-in-rwm").TextContent.Should().Be(response.PercentageAchievingHigherStdInRWM.NotDisadvantaged);
-				Document.QuerySelector($"#{response.Year}-reading-progress-score").TextContent.Should().Be(response.ReadingProgressScore.NotDisadvantaged);
-				Document.QuerySelector($"#{response.Year}-writing-progress-score").TextContent.Should().Be(response.WritingProgressScore.NotDisadvantaged);
-				Document.QuerySelector($"#{response.Year}-maths-progress-score").TextContent.Should().Be(response.MathsProgressScore.NotDisadvantaged);
+				var response = keyStage2ResponseOrderedByYear.ElementAt(i);
+				Document.QuerySelector($"#percentage-meeting-expected-in-rwm-{i}").TextContent.Should().Be(response.PercentageMeetingExpectedStdInRWM.NotDisadvantaged);
+				Document.QuerySelector($"#percentage-achieving-higher-in-rwm-{i}").TextContent.Should().Be(response.PercentageAchievingHigherStdInRWM.NotDisadvantaged);
+				Document.QuerySelector($"#reading-progress-score-{i}").TextContent.Should().Be(response.ReadingProgressScore.NotDisadvantaged);
+				Document.QuerySelector($"#writing-progress-score-{i}").TextContent.Should().Be(response.WritingProgressScore.NotDisadvantaged);
+				Document.QuerySelector($"#maths-progress-score-{i}").TextContent.Should().Be(response.MathsProgressScore.NotDisadvantaged);
 
-				Document.QuerySelector($"#{response.Year}-la-percentage-meeting-expected-in-rwm").TextContent.Should()
+				Document.QuerySelector($"#la-percentage-meeting-expected-in-rwm-{i}").TextContent.Should()
 					.Be(response.LAAveragePercentageMeetingExpectedStdInRWM.NotDisadvantaged);
-				Document.QuerySelector($"#{response.Year}-la-percentage-achieving-higher-in-rwm").TextContent.Should()
+				Document.QuerySelector($"#la-percentage-achieving-higher-in-rwm-{i}").TextContent.Should()
 					.Be(response.LAAveragePercentageAchievingHigherStdInRWM.NotDisadvantaged);
-				Document.QuerySelector($"#{response.Year}-la-reading-progress-score").TextContent.Should().Be(response.LAAverageReadingProgressScore.NotDisadvantaged);
-				Document.QuerySelector($"#{response.Year}-la-writing-progress-score").TextContent.Should().Be(response.LAAverageWritingProgressScore.NotDisadvantaged);
-				Document.QuerySelector($"#{response.Year}-la-maths-progress-score").TextContent.Should().Be(response.LAAverageMathsProgressScore.NotDisadvantaged);
+				Document.QuerySelector($"#la-reading-progress-score-{i}").TextContent.Should().Be(response.LAAverageReadingProgressScore.NotDisadvantaged);
+				Document.QuerySelector($"#la-writing-progress-score-{i}").TextContent.Should().Be(response.LAAverageWritingProgressScore.NotDisadvantaged);
+				Document.QuerySelector($"#la-maths-progress-score-{i}").TextContent.Should().Be(response.LAAverageMathsProgressScore.NotDisadvantaged);
 
-				Document.QuerySelector($"#{response.Year}-na-percentage-meeting-expected-in-rwm").TextContent.Trim().Should()
+				Document.QuerySelector($"#na-percentage-meeting-expected-in-rwm-{i}").TextContent.Trim().Should()
 					.Be(
 						$"{response.NationalAveragePercentageMeetingExpectedStdInRWM.NotDisadvantaged}  (disadvantaged {response.NationalAveragePercentageMeetingExpectedStdInRWM.Disadvantaged})");
-				Document.QuerySelector($"#{response.Year}-na-percentage-achieving-higher-in-rwm").TextContent.Should()
+				Document.QuerySelector($"#na-percentage-achieving-higher-in-rwm-{i}").TextContent.Should()
 					.Be(
 						$"{response.NationalAveragePercentageAchievingHigherStdInRWM.NotDisadvantaged}  (disadvantaged {response.NationalAveragePercentageAchievingHigherStdInRWM.Disadvantaged})");
-				Document.QuerySelector($"#{response.Year}-na-reading-progress-score").TextContent.Should().Be(response.NationalAverageReadingProgressScore.NotDisadvantaged);
-				Document.QuerySelector($"#{response.Year}-na-writing-progress-score").TextContent.Should().Be(response.NationalAverageWritingProgressScore.NotDisadvantaged);
-				Document.QuerySelector($"#{response.Year}-na-maths-progress-score").TextContent.Should().Be(response.NationalAverageMathsProgressScore.NotDisadvantaged);
+				Document.QuerySelector($"#na-reading-progress-score-{i}").TextContent.Should().Be(response.NationalAverageReadingProgressScore.NotDisadvantaged);
+				Document.QuerySelector($"#na-writing-progress-score-{i}").TextContent.Should().Be(response.NationalAverageWritingProgressScore.NotDisadvantaged);
+				Document.QuerySelector($"#na-maths-progress-score-{i}").TextContent.Should().Be(response.NationalAverageMathsProgressScore.NotDisadvantaged);
 			}
 
 			await NavigateAsync("Confirm and continue");

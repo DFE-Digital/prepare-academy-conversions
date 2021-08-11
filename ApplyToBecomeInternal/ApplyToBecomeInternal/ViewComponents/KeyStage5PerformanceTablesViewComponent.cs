@@ -46,7 +46,7 @@ namespace ApplyToBecomeInternal.ViewComponents
 		{
 			return new KeyStage5PerformanceTableViewModel
 			{
-				Year = keyStage5Performance.Year,
+				Year = keyStage5Performance.Year.FormatKeyStageYear(),
 				AcademicProgress = DisplayExtensions.FormatValue(null),
 				AcademicAverage = keyStage5Performance.AcademicQualificationAverage.FormatValue(),
 				AppliedGeneralProgress = DisplayExtensions.FormatValue(null),

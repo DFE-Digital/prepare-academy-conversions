@@ -27,18 +27,19 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 
 			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.KeyStage5PerformanceAdditionalInformation);
 
-			var keyStage5ResponseOrderedByYear = keyStage5Response.OrderByDescending(ks5 => ks5.Year);
-			foreach (var response in keyStage5ResponseOrderedByYear)
+			var keyStage5ResponseOrderedByYear = keyStage5Response.OrderByDescending(ks5 => ks5.Year).ToList();
+			for (int i = 0; i < 2; i++)
 			{
-				Document.QuerySelector($"#{response.Year}-academic-progress").TextContent.Should().Be("no data");
-				Document.QuerySelector($"#{response.Year}-academic-average").TextContent.Should().Contain(response.AcademicQualificationAverage.ToString());
-				Document.QuerySelector($"#{response.Year}-applied-general-progress").TextContent.Should().Contain("no data");
-				Document.QuerySelector($"#{response.Year}-applied-general-average").TextContent.Should().Contain(response.AppliedGeneralQualificationAverage.ToString());
-
-				Document.QuerySelector($"#{response.Year}-na-academic-progress").TextContent.Should().Contain("no data");
-				Document.QuerySelector($"#{response.Year}-na-academic-average").TextContent.Should().Contain(response.NationalAcademicQualificationAverage.ToString());
-				Document.QuerySelector($"#{response.Year}-na-applied-general-progress").TextContent.Should().Contain("no data");
-				Document.QuerySelector($"#{response.Year}-na-applied-general-average").TextContent.Should().Contain(response.NationalAppliedGeneralQualificationAverage.ToString());
+				var response = keyStage5ResponseOrderedByYear.ElementAt(i);
+				Document.QuerySelector($"#academic-progress-{i}").TextContent.Should().Be("no data");
+				Document.QuerySelector($"#academic-average-{i}").TextContent.Should().Contain(response.AcademicQualificationAverage.ToString());
+				Document.QuerySelector($"#applied-general-progress-{i}").TextContent.Should().Contain("no data");
+				Document.QuerySelector($"#applied-general-average-{i}").TextContent.Should().Contain(response.AppliedGeneralQualificationAverage.ToString());
+				Document.QuerySelector($"#na-academic-progress-{i}").TextContent.Should().Contain("no data");
+				Document.QuerySelector($"#na-academic-average-{i}").TextContent.Should().Contain(response.NationalAcademicQualificationAverage.ToString());
+				Document.QuerySelector($"#na-applied-general-progress-{i}").TextContent.Should().Contain("no data");
+				Document.QuerySelector($"#na-applied-general-average-{i}").TextContent.Should().Contain(response.NationalAppliedGeneralQualificationAverage.ToString());
+				i++;
 			}
 
 			await NavigateAsync("Confirm and continue");
@@ -62,10 +63,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 
 			await NavigateAsync("Key stage 5 performance tables");
 
-			Document.QuerySelector($"#{ks5ResponseOrderedByYear.First().Year}-academic-average").TextContent.Should().Be("no data");
-			Document.QuerySelector($"#{ks5ResponseOrderedByYear.First().Year}-applied-general-average").TextContent.Should().Be("no data");
-			Document.QuerySelector($"#{ks5ResponseOrderedByYear.First().Year}-na-academic-average").TextContent.Should().Contain("no data");
-			Document.QuerySelector($"#{ks5ResponseOrderedByYear.First().Year}-na-applied-general-average").TextContent.Should().Contain("no data");
+			Document.QuerySelector("#academic-average-0").TextContent.Should().Be("no data");
+			Document.QuerySelector("#applied-general-average-0").TextContent.Should().Be("no data");
+			Document.QuerySelector("#na-academic-average-0").TextContent.Should().Contain("no data");
+			Document.QuerySelector("#na-applied-general-average-0").TextContent.Should().Contain("no data");
 
 
 			await NavigateAsync("Confirm and continue");
