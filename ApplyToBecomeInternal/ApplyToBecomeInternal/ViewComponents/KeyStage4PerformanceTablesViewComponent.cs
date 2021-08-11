@@ -50,9 +50,9 @@ namespace ApplyToBecomeInternal.ViewComponents
 
 			return new KeyStage4PerformanceTableViewModel
 			{
-				Year = keyStage4PerformanceResults.ElementAt(0)?.Year,
-				PreviousYear = keyStage4PerformanceResults.ElementAt(1)?.Year,
-				TwoYearsAgo = keyStage4PerformanceResults.ElementAt(2)?.Year,
+				Year = keyStage4PerformanceResults.ElementAt(0)?.Year.FormatKeyStageYear(),
+				PreviousYear = keyStage4PerformanceResults.ElementAt(1)?.Year.FormatKeyStageYear(),
+				TwoYearsAgo = keyStage4PerformanceResults.ElementAt(2)?.Year.FormatKeyStageYear(),
 
 				Attainment8Score = DisplayExtensions.DisplayKeyStageDisadvantagedResult(keyStage4PerformanceResults.ElementAt(0)?.SipAttainment8score),
 				Attainment8ScorePreviousYear = DisplayExtensions.DisplayKeyStageDisadvantagedResult(keyStage4PerformanceResults.ElementAt(1)?.SipAttainment8score),

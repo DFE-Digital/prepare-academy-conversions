@@ -1,5 +1,6 @@
 ﻿using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecome.Data.Services;
+using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -45,7 +46,7 @@ namespace ApplyToBecomeInternal.ViewComponents
 		{
 			return new KeyStage2PerformanceTableViewModel
 			{
-				Year = keyStage2Performance.Year,
+				Year = keyStage2Performance.Year.FormatKeyStageYear(),
 				PercentageMeetingExpectedStdInRWM = keyStage2Performance.PercentageMeetingExpectedStdInRWM.NotDisadvantaged,
 				PercentageAchievingHigherStdInRWM = keyStage2Performance.PercentageAchievingHigherStdInRWM.NotDisadvantaged,
 				ReadingProgressScore = keyStage2Performance.ReadingProgressScore.NotDisadvantaged,
