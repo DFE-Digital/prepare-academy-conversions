@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<KeyStage5PerformanceTableViewModel>
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full govuk-!-margin-bottom-6">
-        @foreach (var ks5Result in Model)
+        @foreach (var vm in Model)
         {
             <h2 class="govuk-heading-m">
-                @ks5Result.Year scores for academic and applied general qualifications
+                @vm.Year scores for academic and applied general qualifications
             </h2>
             <table class="govuk-table govuk-!-margin-bottom-9">
                 <caption class="govuk-table__caption govuk-table__caption--s">Local authority: @ViewData["LocalAuthority"]</caption>
@@ -20,17 +20,17 @@
                 <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
                     <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
-                    <td class="govuk-table__cell">@ks5Result.AcademicProgress</td>
-                    <td class="govuk-table__cell">@ks5Result.AcademicAverage</td>
-                    <td class="govuk-table__cell">@ks5Result.AppliedGeneralProgress</td>
-                    <td class="govuk-table__cell">@ks5Result.AppliedGeneralAverage</td>
+                    <td class="govuk-table__cell" id="@(vm.Year + "-academic-progress")">@vm.AcademicProgress</td>
+                    <td class="govuk-table__cell" id="@(vm.Year + "-academic-average")">@vm.AcademicAverage</td>
+                    <td class="govuk-table__cell" id="@(vm.Year + "-applied-general-progress")">@vm.AppliedGeneralProgress</td>
+                    <td class="govuk-table__cell" id="@(vm.Year + "-applied-general-average")">@vm.AppliedGeneralAverage</td>
                 </tr>
                 <tr class="govuk-table__row">
                     <th scope="row" class="govuk-table__header">National average</th>
-                    <td class="govuk-table__cell">@ks5Result.NationalAverageAcademicProgress</td>
-                    <td class="govuk-table__cell">@ks5Result.NationalAverageAcademicAverage</td>
-                    <td class="govuk-table__cell">@ks5Result.NationalAverageAppliedGeneralProgress</td>
-                    <td class="govuk-table__cell">@ks5Result.NationalAverageAppliedGeneralAverage</td>
+                    <td class="govuk-table__cell" id="@(vm.Year + "-na-academic-progress")">@vm.NationalAverageAcademicProgress</td>
+                    <td class="govuk-table__cell" id="@(vm.Year + "-na-academic-average")">@vm.NationalAverageAcademicAverage</td>
+                    <td class="govuk-table__cell" id="@(vm.Year + "-na-applied-general-progress")">@vm.NationalAverageAppliedGeneralProgress</td>
+                    <td class="govuk-table__cell" id="@(vm.Year + "-na-applied-general-average")">@vm.NationalAverageAppliedGeneralAverage</td>
                 </tr>
                 </tbody>
             </table>

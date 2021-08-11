@@ -44,12 +44,16 @@ namespace ApplyToBecomeInternal.ViewComponents
 
 		private KeyStage5PerformanceTableViewModel Build(KeyStage5PerformanceResponse keyStage5Performance)
 		{
-			// year descending or ascending
 			return new KeyStage5PerformanceTableViewModel
 			{
 				Year = keyStage5Performance.Year,
+				AcademicProgress = DisplayExtensions.FormatValue(null),
 				AcademicAverage = keyStage5Performance.AcademicQualificationAverage.FormatValue(),
+				AppliedGeneralProgress = DisplayExtensions.FormatValue(null),
+				AppliedGeneralAverage = keyStage5Performance.AppliedGeneralQualificationAverage.FormatValue(),
+				NationalAverageAcademicProgress = DisplayExtensions.FormatValue(null),
 				NationalAverageAcademicAverage = keyStage5Performance.NationalAcademicQualificationAverage.FormatValue(),
+				NationalAverageAppliedGeneralProgress = DisplayExtensions.FormatValue(null),
 				NationalAverageAppliedGeneralAverage = keyStage5Performance.NationalAppliedGeneralQualificationAverage.FormatValue()
 			};
 		}
