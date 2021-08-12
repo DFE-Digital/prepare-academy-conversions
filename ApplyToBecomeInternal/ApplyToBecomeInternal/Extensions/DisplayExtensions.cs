@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.Extensions
 			    string.IsNullOrEmpty(disadvantagedPupilResponse?.Disadvantaged))
 				return NoData;
 
-			return $"{disadvantagedPupilResponse.NotDisadvantaged.FormatValue()}\n(disadvantaged {disadvantagedPupilResponse.Disadvantaged.FormatValue()})";
+			return $"{disadvantagedPupilResponse.NotDisadvantaged.FormatValue()}\n(disadvantaged pupils {disadvantagedPupilResponse.Disadvantaged.FormatValue()})";
 		}
 
 		public static string DisplayConfidenceInterval(decimal? lowerBound, decimal? upperBound)

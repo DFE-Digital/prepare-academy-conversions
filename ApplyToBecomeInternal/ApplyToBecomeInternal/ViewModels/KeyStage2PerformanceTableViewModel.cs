@@ -9,9 +9,7 @@
 		public string WritingProgressScore { get; set; }
 		public string MathsProgressScore { get; set; }
 		public string NationalAveragePercentageMeetingExpectedStdInRWM { get; set; }
-		public string NationalAveragePercentageMeetingExpectedStdInRWMDisadvantaged { get; set; }
 		public string NationalAveragePercentageAchievingHigherStdInRWM { get; set; }
-		public string NationalAveragePercentageAchievingHigherStdInRWMDisadvantaged { get; set; }
 		public string NationalAverageReadingProgressScore { get; set; }
 		public string NationalAverageWritingProgressScore { get; set; }
 		public string NationalAverageMathsProgressScore { get; set; }
