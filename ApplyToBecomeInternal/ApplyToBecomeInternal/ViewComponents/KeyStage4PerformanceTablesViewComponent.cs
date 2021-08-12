@@ -152,6 +152,16 @@ namespace ApplyToBecomeInternal.ViewComponents
 				NationalAverageProgress8ScoreEbacc = DisplayExtensions.DisplayKeyStageDisadvantagedResult(keyStage4PerformanceResults.ElementAt(0)?.NationalAverageP8Ebacc),
 				NationalAverageProgress8ScoreEbaccPreviousYear = DisplayExtensions.DisplayKeyStageDisadvantagedResult(keyStage4PerformanceResults.ElementAt(1)?.NationalAverageP8Ebacc),
 				NationalAverageProgress8ScoreEbaccTwoYearsAgo = DisplayExtensions.DisplayKeyStageDisadvantagedResult(keyStage4PerformanceResults.ElementAt(2)?.NationalAverageP8Ebacc),
+
+				PercentageEnteringEbacc = keyStage4Performance.ElementAt(0)?.Enteringebacc.ToString(),
+				PercentageEnteringEbaccPreviousYear = keyStage4Performance.ElementAt(1)?.Enteringebacc.ToString(),
+				PercentageEnteringEbaccTwoYearsAgo = keyStage4Performance.ElementAt(2)?.Enteringebacc.ToString(),
+				LaPercentageEnteringEbacc = keyStage4Performance.ElementAt(0)?.LAEnteringEbacc.ToString(),
+				LaPercentageEnteringEbaccPreviousYear = keyStage4Performance.ElementAt(1)?.LAEnteringEbacc.ToString(),
+				LaPercentageEnteringEbaccTwoYearsAgo = keyStage4Performance.ElementAt(2)?.LAEnteringEbacc.ToString(),
+				NaPercentageEnteringEbacc = keyStage4Performance.ElementAt(0)?.NationalEnteringEbacc.ToString(),
+				NaPercentageEnteringEbaccPreviousYear = keyStage4Performance.ElementAt(1)?.NationalEnteringEbacc.ToString(),
+				NaPercentageEnteringEbaccTwoYearsAgo = keyStage4Performance.ElementAt(2)?.NationalEnteringEbacc.ToString()
 			};
 		}
 	}
