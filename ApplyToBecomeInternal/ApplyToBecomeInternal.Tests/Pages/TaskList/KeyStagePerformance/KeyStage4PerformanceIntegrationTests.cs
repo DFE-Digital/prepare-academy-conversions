@@ -1,4 +1,5 @@
 using ApplyToBecome.Data.Models.KeyStagePerformance;
+using ApplyToBecomeInternal.Extensions;
 using AutoFixture;
 using FluentAssertions;
 using System.Collections.Generic;
@@ -217,15 +218,15 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 			Document.QuerySelector("#na-p8-score-ebacc").TextContent.Should()
 				.Be($"{keyStage4ResponseOrderedByYear.ElementAt(0).NationalAverageP8Ebacc.NotDisadvantaged}\n(disadvantaged pupils {keyStage4ResponseOrderedByYear.ElementAt(0).NationalAverageP8Ebacc.Disadvantaged})");
 
-			Document.QuerySelector("#percentage-entering-ebacc").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(0).Enteringebacc.ToString());
-			Document.QuerySelector("#percentage-entering-ebacc-previous-year").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(1).Enteringebacc.ToString());
-			Document.QuerySelector("#percentage-entering-ebacc-two-years-ago").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(2).Enteringebacc.ToString());
-			Document.QuerySelector("#la-percentage-entering-ebacc").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(0).LAEnteringEbacc.ToString());
-			Document.QuerySelector("#la-percentage-entering-ebacc-previous-year").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(1).LAEnteringEbacc.ToString());
-			Document.QuerySelector("#la-percentage-entering-ebacc-two-years-ago").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(2).LAEnteringEbacc.ToString());
-			Document.QuerySelector("#na-percentage-entering-ebacc").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(0).NationalEnteringEbacc.ToString());
-			Document.QuerySelector("#na-percentage-entering-ebacc-previous-year").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(1).NationalEnteringEbacc.ToString());
-			Document.QuerySelector("#na-percentage-entering-ebacc-two-years-ago").TextContent.Should().Contain(keyStage4ResponseOrderedByYear.ElementAt(2).NationalEnteringEbacc.ToString());
+			Document.QuerySelector("#percentage-entering-ebacc").TextContent.Should().Be(keyStage4ResponseOrderedByYear.ElementAt(0).Enteringebacc.ToSafeString());
+			Document.QuerySelector("#percentage-entering-ebacc-previous-year").TextContent.Should().Be(keyStage4ResponseOrderedByYear.ElementAt(1).Enteringebacc.ToSafeString());
+			Document.QuerySelector("#percentage-entering-ebacc-two-years-ago").TextContent.Should().Be(keyStage4ResponseOrderedByYear.ElementAt(2).Enteringebacc.ToSafeString());
+			Document.QuerySelector("#la-percentage-entering-ebacc").TextContent.Should().Be(keyStage4ResponseOrderedByYear.ElementAt(0).LAEnteringEbacc.ToSafeString());
+			Document.QuerySelector("#la-percentage-entering-ebacc-previous-year").TextContent.Should().Be(keyStage4ResponseOrderedByYear.ElementAt(1).LAEnteringEbacc.ToSafeString());
+			Document.QuerySelector("#la-percentage-entering-ebacc-two-years-ago").TextContent.Should().Be(keyStage4ResponseOrderedByYear.ElementAt(2).LAEnteringEbacc.ToSafeString());
+			Document.QuerySelector("#na-percentage-entering-ebacc").TextContent.Should().Be(keyStage4ResponseOrderedByYear.ElementAt(0).NationalEnteringEbacc.ToSafeString());
+			Document.QuerySelector("#na-percentage-entering-ebacc-previous-year").TextContent.Should().Be(keyStage4ResponseOrderedByYear.ElementAt(1).NationalEnteringEbacc.ToSafeString());
+			Document.QuerySelector("#na-percentage-entering-ebacc-two-years-ago").TextContent.Should().Be(keyStage4ResponseOrderedByYear.ElementAt(2).NationalEnteringEbacc.ToSafeString());
 
 
 			await NavigateAsync("Confirm and continue");

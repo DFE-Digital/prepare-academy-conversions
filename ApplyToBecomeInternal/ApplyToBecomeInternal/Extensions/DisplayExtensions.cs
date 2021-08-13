@@ -1,4 +1,5 @@
 ﻿using ApplyToBecome.Data.Models.KeyStagePerformance;
+using System.Globalization;
 using System.Linq;
 
 namespace ApplyToBecomeInternal.Extensions
@@ -18,7 +19,7 @@ namespace ApplyToBecomeInternal.Extensions
 			};
 		}
 
-		public static string DisplayKeyStageDisadvantagedResult(DisadvantagedPupilsResponse disadvantagedPupilResponse)
+		public static string FormatKeyStageDisadvantagedResult(DisadvantagedPupilsResponse disadvantagedPupilResponse)
 		{
 			if (string.IsNullOrEmpty(disadvantagedPupilResponse?.NotDisadvantaged) &&
 			    string.IsNullOrEmpty(disadvantagedPupilResponse?.Disadvantaged))
@@ -27,20 +28,26 @@ namespace ApplyToBecomeInternal.Extensions
 			return $"{disadvantagedPupilResponse.NotDisadvantaged.FormatValue()}\n(disadvantaged pupils {disadvantagedPupilResponse.Disadvantaged.FormatValue()})";
 		}
 
-		public static string DisplayConfidenceInterval(decimal? lowerBound, decimal? upperBound)
+		public static string FormatConfidenceInterval(decimal? lowerBound, decimal? upperBound)
 		{
 			if (lowerBound == null && upperBound == null) return NoData;
 			return $"{lowerBound.FormatValue()} to {upperBound.FormatValue()}";
 		}
 
-		private static string FormatValue(this string value)
+		public static string FormatValue(this string value)
 		{
-			return string.IsNullOrEmpty(value) ? NoData : value.ToDouble();
+			return string.IsNullOrEmpty(value) ? NoData : value.FormatAsDouble();
 		}
 
 		public static string FormatValue(this decimal? value)
 		{
-			return value == null ? NoData : value.ToString();
+			return value == null ? NoData : value.ToSafeString();
+		}
+
+		public static string FormatAsDouble(this string value)
+		{
+			var isDouble = double.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out var resultAsDouble);
+			return isDouble ? $"{resultAsDouble}" : value;
 		}
 
 		public static string FormatKeyStageYear(this string year)

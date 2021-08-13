@@ -54,6 +54,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
 
+			Document.QuerySelector("#school-phase").TextContent.Should().Be(establishment.PhaseOfEducation.Name);
 			Document.QuerySelector("#age-range").TextContent.Should().Be($"{establishment.StatutoryLowAge} to {establishment.StatutoryHighAge}");
 			Document.QuerySelector("#school-type").TextContent.Should().Be(establishment.EstablishmentType.Name);
 			Document.QuerySelector("#number-on-roll").TextContent.Should().Be(establishment.Census.NumberOfPupils);
@@ -65,6 +66,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector("#viability-issues").TextContent.Should().Be(project.ViabilityIssues);
 			Document.QuerySelector("#financial-deficit").TextContent.Should().Be(project.FinancialDeficit);
 			Document.QuerySelector("#diocesan-multi-academy-trust").TextContent.Should().Be($"Yes, {establishment.Diocese.Name}");
+			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be($"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()}\n{project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}");
+			Document.QuerySelector("#parliamentary-constituency").TextContent.Should().Be(establishment.ParliamentaryConstituency.Name);
 		}
 
 		[Fact]

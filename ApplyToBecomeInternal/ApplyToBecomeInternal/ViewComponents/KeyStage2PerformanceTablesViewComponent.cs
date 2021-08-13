@@ -1,11 +1,11 @@
 ﻿using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecome.Data.Services;
-using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using static ApplyToBecomeInternal.Extensions.DisplayExtensions;
 
 namespace ApplyToBecomeInternal.ViewComponents
 {
@@ -47,21 +47,21 @@ namespace ApplyToBecomeInternal.ViewComponents
 			return new KeyStage2PerformanceTableViewModel
 			{
 				Year = keyStage2Performance.Year.FormatKeyStageYear(),
-				PercentageMeetingExpectedStdInRWM = keyStage2Performance.PercentageMeetingExpectedStdInRWM.NotDisadvantaged,
-				PercentageAchievingHigherStdInRWM = keyStage2Performance.PercentageAchievingHigherStdInRWM.NotDisadvantaged,
-				ReadingProgressScore = keyStage2Performance.ReadingProgressScore.NotDisadvantaged,
-				WritingProgressScore = keyStage2Performance.WritingProgressScore.NotDisadvantaged,
-				MathsProgressScore = keyStage2Performance.MathsProgressScore.NotDisadvantaged,
-				NationalAveragePercentageMeetingExpectedStdInRWM = DisplayExtensions.DisplayKeyStageDisadvantagedResult(keyStage2Performance.NationalAveragePercentageMeetingExpectedStdInRWM),
-				NationalAveragePercentageAchievingHigherStdInRWM = DisplayExtensions.DisplayKeyStageDisadvantagedResult(keyStage2Performance.NationalAveragePercentageAchievingHigherStdInRWM),
-				NationalAverageReadingProgressScore = keyStage2Performance.NationalAverageReadingProgressScore.NotDisadvantaged,
-				NationalAverageWritingProgressScore = keyStage2Performance.NationalAverageWritingProgressScore.NotDisadvantaged,
-				NationalAverageMathsProgressScore = keyStage2Performance.NationalAverageMathsProgressScore.NotDisadvantaged,
-				LAAveragePercentageMeetingExpectedStdInRWM = keyStage2Performance.LAAveragePercentageMeetingExpectedStdInRWM.NotDisadvantaged,
-				LAAveragePercentageAchievingHigherStdInRWM = keyStage2Performance.LAAveragePercentageAchievingHigherStdInRWM.NotDisadvantaged,
-				LAAverageMathsProgressScore = keyStage2Performance.LAAverageMathsProgressScore.NotDisadvantaged,
-				LAAverageReadingProgressScore = keyStage2Performance.LAAverageReadingProgressScore.NotDisadvantaged,
-				LAAverageWritingProgressScore = keyStage2Performance.LAAverageWritingProgressScore.NotDisadvantaged
+				PercentageMeetingExpectedStdInRWM = keyStage2Performance.PercentageMeetingExpectedStdInRWM.NotDisadvantaged.FormatValue(),
+				PercentageAchievingHigherStdInRWM = keyStage2Performance.PercentageAchievingHigherStdInRWM.NotDisadvantaged.FormatValue(),
+				ReadingProgressScore = keyStage2Performance.ReadingProgressScore.NotDisadvantaged.FormatValue(),
+				WritingProgressScore = keyStage2Performance.WritingProgressScore.NotDisadvantaged.FormatValue(),
+				MathsProgressScore = keyStage2Performance.MathsProgressScore.NotDisadvantaged.FormatValue(),
+				NationalAveragePercentageMeetingExpectedStdInRWM = FormatKeyStageDisadvantagedResult(keyStage2Performance.NationalAveragePercentageMeetingExpectedStdInRWM),
+				NationalAveragePercentageAchievingHigherStdInRWM = FormatKeyStageDisadvantagedResult(keyStage2Performance.NationalAveragePercentageAchievingHigherStdInRWM),
+				NationalAverageReadingProgressScore = keyStage2Performance.NationalAverageReadingProgressScore.NotDisadvantaged.FormatValue(),
+				NationalAverageWritingProgressScore = keyStage2Performance.NationalAverageWritingProgressScore.NotDisadvantaged.FormatValue(),
+				NationalAverageMathsProgressScore = keyStage2Performance.NationalAverageMathsProgressScore.NotDisadvantaged.FormatValue(),
+				LAAveragePercentageMeetingExpectedStdInRWM = keyStage2Performance.LAAveragePercentageMeetingExpectedStdInRWM.NotDisadvantaged.FormatValue(),
+				LAAveragePercentageAchievingHigherStdInRWM = keyStage2Performance.LAAveragePercentageAchievingHigherStdInRWM.NotDisadvantaged.FormatValue(),
+				LAAverageMathsProgressScore = keyStage2Performance.LAAverageMathsProgressScore.NotDisadvantaged.FormatValue(),
+				LAAverageReadingProgressScore = keyStage2Performance.LAAverageReadingProgressScore.NotDisadvantaged.FormatValue(),
+				LAAverageWritingProgressScore = keyStage2Performance.LAAverageWritingProgressScore.NotDisadvantaged.FormatValue()
 			};
 		}
 	}
