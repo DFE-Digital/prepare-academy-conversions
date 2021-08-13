@@ -1,4 +1,5 @@
 using ApplyToBecome.Data.Models.KeyStagePerformance;
+using AutoFixture;
 using FluentAssertions;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,6 +72,32 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/key-stage-2-performance-tables");
 
 			await NavigateAsync("Back to task list");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+		}
+
+		[Fact]
+		public async Task Should_handle_null_values()
+		{
+			var project = AddGetProject();
+			var ks2Response = _fixture.CreateMany<KeyStage2PerformanceResponse>(3).ToList();
+			var ks2ResponseOrderedByYear = ks2Response.OrderByDescending(ks2 => ks2.Year).ToList();
+			ks2ResponseOrderedByYear.First().PercentageAchievingHigherStdInRWM.NotDisadvantaged = null;
+			ks2ResponseOrderedByYear.First().PercentageMeetingExpectedStdInRWM.NotDisadvantaged = null;
+			ks2ResponseOrderedByYear.First().NationalAveragePercentageMeetingExpectedStdInRWM.Disadvantaged = null;
+
+			AddGetKeyStagePerformance((int)project.Urn, ks => ks.KeyStage2 = ks2ResponseOrderedByYear);
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			await NavigateAsync("Key stage 2 performance tables");
+
+			Document.QuerySelector("#percentage-achieving-higher-in-rwm-0").TextContent.Should().Be("no data");
+			Document.QuerySelector("#percentage-meeting-expected-in-rwm-0").TextContent.Should().Be("no data");
+
+			Document.QuerySelector($"#na-percentage-meeting-expected-in-rwm-0").TextContent.Trim().Should()
+				.Be($"{ks2ResponseOrderedByYear.First().NationalAveragePercentageMeetingExpectedStdInRWM.NotDisadvantaged}\n(disadvantaged pupils no data)");
+
+			await NavigateAsync("Confirm and continue");
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
 
