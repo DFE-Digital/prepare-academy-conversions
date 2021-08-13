@@ -120,7 +120,7 @@
 	</header>
 	<div class="app-summary-card__body">
 		<partial name="~/Pages/TaskList/SchoolPupilForecasts/_SchoolPupilForecastsTable.cshtml" model="Model.Project" />
-		<h3 class="govuk-heading-s  govuk-!-margin-top-8">Additional information (optional)</h3>
+		<h3 class="govuk-heading-s  govuk-!-margin-top-8">Additional information</h3>
 		<dl class="govuk-summary-list">
 			<govuk-summary-list-row name="school-pupil-forecasts-additional-information" label="Additional information" value="@Model.Project.SchoolPupilForecastsAdditionalInformation" asp-page="@Links.SchoolPupilForecastsSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
 		</dl>
