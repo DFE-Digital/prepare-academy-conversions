@@ -1,11 +1,11 @@
 ﻿using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecome.Data.Services;
-using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using static ApplyToBecomeInternal.Extensions.DisplayExtensions;
 
 namespace ApplyToBecomeInternal.ViewComponents
 {
@@ -52,8 +52,8 @@ namespace ApplyToBecomeInternal.ViewComponents
 				ReadingProgressScore = keyStage2Performance.ReadingProgressScore.NotDisadvantaged,
 				WritingProgressScore = keyStage2Performance.WritingProgressScore.NotDisadvantaged,
 				MathsProgressScore = keyStage2Performance.MathsProgressScore.NotDisadvantaged,
-				NationalAveragePercentageMeetingExpectedStdInRWM = DisplayExtensions.DisplayKeyStageDisadvantagedResult(keyStage2Performance.NationalAveragePercentageMeetingExpectedStdInRWM),
-				NationalAveragePercentageAchievingHigherStdInRWM = DisplayExtensions.DisplayKeyStageDisadvantagedResult(keyStage2Performance.NationalAveragePercentageAchievingHigherStdInRWM),
+				NationalAveragePercentageMeetingExpectedStdInRWM = FormatKeyStageDisadvantagedResult(keyStage2Performance.NationalAveragePercentageMeetingExpectedStdInRWM),
+				NationalAveragePercentageAchievingHigherStdInRWM = FormatKeyStageDisadvantagedResult(keyStage2Performance.NationalAveragePercentageAchievingHigherStdInRWM),
 				NationalAverageReadingProgressScore = keyStage2Performance.NationalAverageReadingProgressScore.NotDisadvantaged,
 				NationalAverageWritingProgressScore = keyStage2Performance.NationalAverageWritingProgressScore.NotDisadvantaged,
 				NationalAverageMathsProgressScore = keyStage2Performance.NationalAverageMathsProgressScore.NotDisadvantaged,

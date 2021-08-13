@@ -33,11 +33,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 				var response = keyStage5ResponseOrderedByYear.ElementAt(i);
 				Document.QuerySelector($"#academic-progress-{i}").TextContent.Should().Be("no data");
 				Document.QuerySelector($"#academic-average-{i}").TextContent.Should().Contain(response.AcademicQualificationAverage.ToString());
-				Document.QuerySelector($"#applied-general-progress-{i}").TextContent.Should().Contain("no data");
+				Document.QuerySelector($"#applied-general-progress-{i}").TextContent.Should().Be("no data");
 				Document.QuerySelector($"#applied-general-average-{i}").TextContent.Should().Contain(response.AppliedGeneralQualificationAverage.ToString());
-				Document.QuerySelector($"#na-academic-progress-{i}").TextContent.Should().Contain("no data");
+				Document.QuerySelector($"#na-academic-progress-{i}").TextContent.Should().Be("no data");
 				Document.QuerySelector($"#na-academic-average-{i}").TextContent.Should().Contain(response.NationalAcademicQualificationAverage.ToString());
-				Document.QuerySelector($"#na-applied-general-progress-{i}").TextContent.Should().Contain("no data");
+				Document.QuerySelector($"#na-applied-general-progress-{i}").TextContent.Should().Be("no data");
 				Document.QuerySelector($"#na-applied-general-average-{i}").TextContent.Should().Contain(response.NationalAppliedGeneralQualificationAverage.ToString());
 				i++;
 			}
@@ -65,8 +65,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 
 			Document.QuerySelector("#academic-average-0").TextContent.Should().Be("no data");
 			Document.QuerySelector("#applied-general-average-0").TextContent.Should().Be("no data");
-			Document.QuerySelector("#na-academic-average-0").TextContent.Should().Contain("no data");
-			Document.QuerySelector("#na-applied-general-average-0").TextContent.Should().Contain("no data");
+			Document.QuerySelector("#na-academic-average-0").TextContent.Should().Be("no data");
+			Document.QuerySelector("#na-applied-general-average-0").TextContent.Should().Be("no data");
 
 
 			await NavigateAsync("Confirm and continue");

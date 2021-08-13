@@ -16,5 +16,41 @@ namespace ApplyToBecomeInternal.Tests.Extensions
 			var formattedYear = year.FormatKeyStageYear();
 			formattedYear.Should().Be(expectedFormattedYear);
 		}
+
+		[Theory]
+		[InlineData("202.212","202.212")]
+		[InlineData("105","105")]
+		[InlineData("105.0","105")]
+		[InlineData("0.0","0")]
+		[InlineData("2.99999999999","2.99999999999")]
+		public void Should_format_as_double_correctly(string value, string expectedValue)
+		{
+			var valueFormattedAsDouble = value.FormatAsDouble();
+			valueFormattedAsDouble.Should().Be(expectedValue);
+		}
+
+		[Fact]
+		public void Should_convert_decimal_to_string_correctly()
+		{
+			decimal? value = 202.212m;
+			var decimalAsString = value.ToSafeString();
+			decimalAsString.Should().Be("202.212");
+
+			value = 105m;
+			decimalAsString = value.ToSafeString();
+			decimalAsString.Should().Be("105");
+
+			value = 105.0m;
+			decimalAsString = value.ToSafeString();
+			decimalAsString.Should().Be("105");
+
+			value = 0.0m;
+			decimalAsString = value.ToSafeString();
+			decimalAsString.Should().Be("0");
+
+			value = 2.99999999999m;
+			decimalAsString = value.ToSafeString();
+			decimalAsString.Should().Be("2.99999999999");
+		}
 	}
 }
