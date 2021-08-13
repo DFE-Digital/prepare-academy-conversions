@@ -32,25 +32,18 @@ namespace ApplyToBecomeInternal.Tests.Extensions
 		[Fact]
 		public void Should_convert_decimal_to_string_correctly()
 		{
-			decimal? value = 202.212m;
+			AssertValueConvertedCorrectly(202.212m, "202.212");
+			AssertValueConvertedCorrectly(105m, "105");
+			AssertValueConvertedCorrectly(105.0m, "105");
+			AssertValueConvertedCorrectly(0.0m, "0");
+			AssertValueConvertedCorrectly(0.9839m, "0.9839");
+			AssertValueConvertedCorrectly(2.99999999999m, "2.99999999999");
+		}
+
+		private static void AssertValueConvertedCorrectly(decimal? value, string expectedValue)
+		{
 			var decimalAsString = value.ToSafeString();
-			decimalAsString.Should().Be("202.212");
-
-			value = 105m;
-			decimalAsString = value.ToSafeString();
-			decimalAsString.Should().Be("105");
-
-			value = 105.0m;
-			decimalAsString = value.ToSafeString();
-			decimalAsString.Should().Be("105");
-
-			value = 0.0m;
-			decimalAsString = value.ToSafeString();
-			decimalAsString.Should().Be("0");
-
-			value = 2.99999999999m;
-			decimalAsString = value.ToSafeString();
-			decimalAsString.Should().Be("2.99999999999");
+			decimalAsString.Should().Be(expectedValue);
 		}
 	}
 }
