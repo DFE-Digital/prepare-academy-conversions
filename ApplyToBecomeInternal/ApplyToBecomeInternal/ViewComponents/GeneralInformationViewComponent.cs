@@ -35,8 +35,8 @@ namespace ApplyToBecomeInternal.ViewComponents
 			{
 				Id = project.Id.ToString(),
 				SchoolPhase = generalInformation.SchoolPhase,
-				AgeRange = !string.IsNullOrEmpty(generalInformation.AgeRangeLower) && !string.IsNullOrEmpty(generalInformation.AgeRangeUpper) 
-					? $"{generalInformation.AgeRangeLower} to {generalInformation.AgeRangeUpper}" 
+				AgeRange = !string.IsNullOrEmpty(generalInformation.AgeRangeLower) && !string.IsNullOrEmpty(generalInformation.AgeRangeUpper)
+					? $"{generalInformation.AgeRangeLower} to {generalInformation.AgeRangeUpper}"
 					: "",
 				SchoolType = generalInformation.SchoolType,
 				NumberOnRoll = generalInformation.NumberOnRoll?.ToString(),
@@ -48,7 +48,8 @@ namespace ApplyToBecomeInternal.ViewComponents
 				ViabilityIssues = project.ViabilityIssues,
 				FinancialDeficit = project.FinancialDeficit,
 				IsSchoolLinkedToADiocese = generalInformation.IsSchoolLinkedToADiocese,
-				DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters,
+				DistanceFromSchoolToTrustHeadquarters = ViewData["Return"] == null ?
+					project.DistanceFromSchoolToTrustHeadquarters.ToSafeString() : $"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()}\n{project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}",
 				DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
 				ParliamentaryConstituency = generalInformation.ParliamentaryConstituency
 			};

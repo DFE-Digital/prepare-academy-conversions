@@ -16,7 +16,7 @@
 		public string FinancialDeficit { get; set; }
 		public string IsSchoolLinkedToADiocese { get; set; }
 		public decimal? PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust { get; set; }
-		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
+		public string DistanceFromSchoolToTrustHeadquarters { get; set; }
 		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
 		public string ParliamentaryConstituency { get; set; }
 		public bool? GeneralInformationSectionComplete { get; set; }
