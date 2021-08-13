@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using ApplyToBecomeInternal.Extensions;
+using static ApplyToBecomeInternal.Extensions.IntegerExtensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -93,6 +94,64 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			Document.QuerySelector<IHtmlInputElement>("#published-admission-number").Value.Should().Be(project.PublishedAdmissionNumber);
 			Document.QuerySelector<IHtmlInputElement>("#published-admission-number").Value = request.PublishedAdmissionNumber;
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
+		[Fact]
+		public async Task Should_display_school_pupil_forecasts_section()
+		{
+			var project = AddGetProject();
+			var establishment = AddGetEstablishmentResponse(project.Urn.ToString());
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			Document.QuerySelector("#school-pupil-forecasts-additional-information").TextContent.Should().Be(project.SchoolPupilForecastsAdditionalInformation);
+
+			var rows = Document.QuerySelectorAll("tbody tr");
+			rows[0].Children[1].TextContent.Should().Be(establishment.SchoolCapacity);
+			rows[0].Children[2].TextContent.Should().Be(establishment.Census.NumberOfPupils);
+			rows[0].Children[3].TextContent.Should().Be(ToInt(establishment.Census?.NumberOfPupils).AsPercentageOf(ToInt(establishment.SchoolCapacity)));
+			rows[1].Children[1].TextContent.Should().Be(project.YearOneProjectedCapacity.ToString());
+			rows[1].Children[2].TextContent.Should().Be(project.YearOneProjectedPupilNumbers.ToString());
+			rows[1].Children[3].TextContent.Should().Be(project.YearOneProjectedPupilNumbers.AsPercentageOf(project.YearOneProjectedCapacity));
+			rows[2].Children[1].TextContent.Should().Be(project.YearTwoProjectedCapacity.ToString());
+			rows[2].Children[2].TextContent.Should().Be(project.YearTwoProjectedPupilNumbers.ToString());
+			rows[2].Children[3].TextContent.Should().Be(project.YearTwoProjectedPupilNumbers.AsPercentageOf(project.YearTwoProjectedCapacity));
+			rows[3].Children[1].TextContent.Should().Be(project.YearThreeProjectedCapacity.ToString());
+			rows[3].Children[2].TextContent.Should().Be(project.YearThreeProjectedPupilNumbers.ToString());
+			rows[3].Children[3].TextContent.Should().Be(project.YearThreeProjectedPupilNumbers.AsPercentageOf(project.YearThreeProjectedCapacity));
+		}
+
+		[Fact]
+		public async Task Should_navigate_school_pupil_forecasts_additional_information_and_back()
+		{
+			var project = AddGetProject();
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Change", 20);
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information");
+
+			await NavigateAsync("Back");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
+		[Fact]
+		public async Task Should_update_school_pupil_forecasts_additional_information_and_navigate_back_to_preview()
+		{
+			var project = AddGetProject();
+			var request = AddPatchProject(project, p => p.SchoolPupilForecastsAdditionalInformation);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Change", 20);
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information");
+
+			Document.QuerySelector<IHtmlTextAreaElement>("#additional-information").Value.Should().Be(project.SchoolPupilForecastsAdditionalInformation);
+			Document.QuerySelector<IHtmlTextAreaElement>("#additional-information").Value = request.SchoolPupilForecastsAdditionalInformation;
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
