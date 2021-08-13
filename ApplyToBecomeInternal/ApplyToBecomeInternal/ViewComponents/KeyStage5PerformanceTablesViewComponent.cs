@@ -47,13 +47,13 @@ namespace ApplyToBecomeInternal.ViewComponents
 			return new KeyStage5PerformanceTableViewModel
 			{
 				Year = keyStage5Performance.Year.FormatKeyStageYear(),
-				AcademicProgress = DisplayExtensions.FormatValue(null),
+				AcademicProgress = ((decimal?)null).FormatValue(),
 				AcademicAverage = keyStage5Performance.AcademicQualificationAverage.FormatValue(),
-				AppliedGeneralProgress = DisplayExtensions.FormatValue(null),
+				AppliedGeneralProgress = ((decimal?)null).FormatValue(),
 				AppliedGeneralAverage = keyStage5Performance.AppliedGeneralQualificationAverage.FormatValue(),
-				NationalAverageAcademicProgress = DisplayExtensions.FormatValue(null),
+				NationalAverageAcademicProgress = ((decimal?)null).FormatValue(),
 				NationalAverageAcademicAverage = keyStage5Performance.NationalAcademicQualificationAverage.FormatValue(),
-				NationalAverageAppliedGeneralProgress = DisplayExtensions.FormatValue(null),
+				NationalAverageAppliedGeneralProgress = ((decimal?)null).FormatValue(),
 				NationalAverageAppliedGeneralAverage = keyStage5Performance.NationalAppliedGeneralQualificationAverage.FormatValue()
 			};
 		}

@@ -34,7 +34,7 @@ namespace ApplyToBecomeInternal.Extensions
 			return $"{lowerBound.FormatValue()} to {upperBound.FormatValue()}";
 		}
 
-		private static string FormatValue(this string value)
+		public static string FormatValue(this string value)
 		{
 			return string.IsNullOrEmpty(value) ? NoData : value.FormatAsDouble();
 		}
