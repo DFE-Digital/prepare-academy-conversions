@@ -104,5 +104,15 @@
 		public string NationalAverageProgress8ScoreEbacc { get; set; }
 		public string NationalAverageProgress8ScoreEbaccPreviousYear { get; set; }
 		public string NationalAverageProgress8ScoreEbaccTwoYearsAgo { get; set; }
+
+		public string PercentageEnteringEbacc { get; set; }
+		public string PercentageEnteringEbaccPreviousYear { get; set; }
+		public string PercentageEnteringEbaccTwoYearsAgo { get; set; }
+		public string LaPercentageEnteringEbacc { get; set; }
+		public string LaPercentageEnteringEbaccPreviousYear { get; set; }
+		public string LaPercentageEnteringEbaccTwoYearsAgo { get; set; }
+		public string NaPercentageEnteringEbacc { get; set; }
+		public string NaPercentageEnteringEbaccPreviousYear { get; set; }
+		public string NaPercentageEnteringEbaccTwoYearsAgo { get; set; }
 	}
 }

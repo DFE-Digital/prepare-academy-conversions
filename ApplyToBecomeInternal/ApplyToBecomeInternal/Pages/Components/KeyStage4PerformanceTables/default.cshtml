@@ -328,21 +328,21 @@
     <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
-        <td class="govuk-table__cell">no data</td>
-        <td class="govuk-table__cell">no data</td>
-        <td class="govuk-table__cell">no data</td>
+        <td class="govuk-table__cell" id="percentage-entering-ebacc">@Model.PercentageEnteringEbacc</td>
+        <td class="govuk-table__cell" id="percentage-entering-ebacc-previous-year">@Model.PercentageEnteringEbaccPreviousYear</td>
+        <td class="govuk-table__cell" id="percentage-entering-ebacc-two-years-ago">@Model.PercentageEnteringEbaccTwoYearsAgo</td>
     </tr>
     <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA average</th>
-        <td class="govuk-table__cell">no data</td>
-        <td class="govuk-table__cell">no data</td>
-        <td class="govuk-table__cell">no data</td>
+        <td class="govuk-table__cell" id="la-percentage-entering-ebacc">@Model.LaPercentageEnteringEbacc</td>
+        <td class="govuk-table__cell" id="la-percentage-entering-ebacc-previous-year">@Model.LaPercentageEnteringEbaccPreviousYear</td>
+        <td class="govuk-table__cell" id="la-percentage-entering-ebacc-two-years-ago">@Model.LaPercentageEnteringEbaccTwoYearsAgo</td>
     </tr>
     <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">National average</th>
-        <td class="govuk-table__cell">no data</td>
-        <td class="govuk-table__cell">no data</td>
-        <td class="govuk-table__cell">no data</td>
+        <td class="govuk-table__cell" id="na-percentage-entering-ebacc">@Model.NaPercentageEnteringEbacc</td>
+        <td class="govuk-table__cell" id="na-percentage-entering-ebacc-previous-year">@Model.NaPercentageEnteringEbaccPreviousYear</td>
+        <td class="govuk-table__cell" id="na-percentage-entering-ebacc-two-years-ago">@Model.NaPercentageEnteringEbaccTwoYearsAgo</td>
     </tr>
     </tbody>
 </table>
