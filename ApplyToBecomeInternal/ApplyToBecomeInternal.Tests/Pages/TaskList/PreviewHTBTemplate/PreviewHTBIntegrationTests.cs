@@ -3,6 +3,7 @@ using AngleSharp.Html.Dom;
 using ApplyToBecomeInternal.Extensions;
 using static ApplyToBecomeInternal.Extensions.IntegerExtensions;
 using FluentAssertions;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -129,7 +130,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		}
 
 		[Fact]
-		public async Task Should_navigate_school_pupil_forecasts_additional_information_and_back()
+		public async Task Should_navigate_to_school_pupil_forecasts_additional_information_and_back()
 		{
 			var project = AddGetProject();
 
@@ -157,6 +158,61 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector<IHtmlTextAreaElement>("#additional-information").Value = request.SchoolPupilForecastsAdditionalInformation;
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
+		[Fact]
+		public async Task Should_display_KS2_section()
+		{
+			var project = AddGetProject();
+			var keyStage2Response = AddGetKeyStagePerformance((int)project.Urn).KeyStage2.ToList();
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			Document.QuerySelector("#key-stage-2-additional-information").TextContent.Should().Be(project.KeyStage2PerformanceAdditionalInformation);
+
+			var keyStage2ResponseOrderedByYear = keyStage2Response.OrderByDescending(ks2 => ks2.Year).ToList();
+			for (int i = 0; i < 2; i++)
+			{
+				var response = keyStage2ResponseOrderedByYear.ElementAt(i);
+				Document.QuerySelector($"#percentage-meeting-expected-in-rwm-{i}").TextContent.Should().Be(response.PercentageMeetingExpectedStdInRWM.NotDisadvantaged);
+				Document.QuerySelector($"#percentage-achieving-higher-in-rwm-{i}").TextContent.Should().Be(response.PercentageAchievingHigherStdInRWM.NotDisadvantaged);
+				Document.QuerySelector($"#reading-progress-score-{i}").TextContent.Should().Be(response.ReadingProgressScore.NotDisadvantaged);
+				Document.QuerySelector($"#writing-progress-score-{i}").TextContent.Should().Be(response.WritingProgressScore.NotDisadvantaged);
+				Document.QuerySelector($"#maths-progress-score-{i}").TextContent.Should().Be(response.MathsProgressScore.NotDisadvantaged);
+
+				Document.QuerySelector($"#la-percentage-meeting-expected-in-rwm-{i}").TextContent.Should()
+					.Be(response.LAAveragePercentageMeetingExpectedStdInRWM.NotDisadvantaged);
+				Document.QuerySelector($"#la-percentage-achieving-higher-in-rwm-{i}").TextContent.Should()
+					.Be(response.LAAveragePercentageAchievingHigherStdInRWM.NotDisadvantaged);
+				Document.QuerySelector($"#la-reading-progress-score-{i}").TextContent.Should().Be(response.LAAverageReadingProgressScore.NotDisadvantaged);
+				Document.QuerySelector($"#la-writing-progress-score-{i}").TextContent.Should().Be(response.LAAverageWritingProgressScore.NotDisadvantaged);
+				Document.QuerySelector($"#la-maths-progress-score-{i}").TextContent.Should().Be(response.LAAverageMathsProgressScore.NotDisadvantaged);
+
+				Document.QuerySelector($"#na-percentage-meeting-expected-in-rwm-{i}").TextContent.Trim().Should()
+					.Be(
+						$"{response.NationalAveragePercentageMeetingExpectedStdInRWM.NotDisadvantaged}\n(disadvantaged pupils {response.NationalAveragePercentageMeetingExpectedStdInRWM.Disadvantaged})");
+				Document.QuerySelector($"#na-percentage-achieving-higher-in-rwm-{i}").TextContent.Should()
+					.Be(
+						$"{response.NationalAveragePercentageAchievingHigherStdInRWM.NotDisadvantaged}\n(disadvantaged pupils {response.NationalAveragePercentageAchievingHigherStdInRWM.Disadvantaged})");
+				Document.QuerySelector($"#na-reading-progress-score-{i}").TextContent.Should().Be(response.NationalAverageReadingProgressScore.NotDisadvantaged);
+				Document.QuerySelector($"#na-writing-progress-score-{i}").TextContent.Should().Be(response.NationalAverageWritingProgressScore.NotDisadvantaged);
+				Document.QuerySelector($"#na-maths-progress-score-{i}").TextContent.Should().Be(response.NationalAverageMathsProgressScore.NotDisadvantaged);
+			}
+		}
+
+		[Fact]
+		public async Task Should_navigate_to_KS2_additional_information_and_back()
+		{
+			var project = AddGetProject();
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Change", 21);
+			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-2-performance-tables/additional-information");
+
+			await NavigateAsync("Back");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
 		}
 
