@@ -1,5 +1,5 @@
 ﻿@page "/task-list/{id:int}/preview-headteacher-board-template"
-@model ApplyToBecomeInternal.Pages.TaskList.PreviewHTBTemplateModel
+@model ApplyToBecomeInternal.Pages.TaskList.IndexModel
 
 @{
 	Model.ErrorPage = Links.TaskList.PreviewHTBTemplate.Page;
@@ -127,7 +127,7 @@
 	</div>
 </section>
 
-@if (Model.ShowKeyStage2PerformanceTables)
+@if (Model.TaskList.HasKeyStage2PerformanceTables)
 {
 	<h2 class="govuk-heading-s" id="key-stage-2-performance-tables">Key stage 2 performance tables</h2>
 	<section class="app-summary-card govuk-!-margin-bottom-6">
