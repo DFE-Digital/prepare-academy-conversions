@@ -26,12 +26,12 @@ namespace ApplyToBecomeInternal.Pages
 		{
 			get
 			{
-				if (TempData[nameof(SuccessPage)].ToString() != null ? TempData[nameof(SuccessPage)].ToString().Contains("PreviousHeadTeacherBoardDate") : false)
+				if (!TempData[nameof(SuccessPage)].Equals(Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDate.Page))
+					return TempData[nameof(SuccessPage)].ToString();
+
+				if (AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion != "Yes")
 				{
-					if (AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion != "Yes")
-					{
-						SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
-					}
+					SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
 				}
 				return TempData[nameof(SuccessPage)].ToString();
 			}
