@@ -146,5 +146,24 @@
 	</section>
 }
 
+@if (Model.TaskList.HasKeyStage4PerformanceTables)
+{
+	<h2 class="govuk-heading-s" id="key-stage-4-performance-tables">Key stage 4 performance tables</h2>
+	<section class="app-summary-card govuk-!-margin-bottom-6">
+		<header class="app-summary-card__header">
+			<h2 class="app-summary-card__title">
+				Key stage 4 performance tables details
+			</h2>
+		</header>
+		<div class="app-summary-card__body">
+			<vc:key-stage4-performance-tables />
+			<h3 class="govuk-heading-s  govuk-!-margin-top-8">Additional information</h3>
+			<dl class="govuk-summary-list">
+				<govuk-summary-list-row name="key-stage-4-additional-information" label="Additional information" value="@Model.Project.KeyStage4PerformanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.KeyStage4PerformanceTablesAdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
+			</dl>
+		</div>
+	</section>
+}
+
 
 <a asp-page="@Links.TaskList.GenerateHTBTemplate.Page" asp-route-id="@Model.Project.Id" class="govuk-button govuk-!-margin-bottom-2">Generate HTB document</a>
