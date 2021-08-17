@@ -91,10 +91,10 @@ namespace ApplyToBecomeInternal.Models
 		public bool? IsThisADiocesanTrust { get; set; }
 
 		[BindProperty(Name = "distance-to-trust-headquarters")]
+		[Display(Name = "Distance from the school to the trust headquarters")]
 		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
 
 		[BindProperty(Name = "distance-to-trust-headquarters-additional-information")]
-		[Display(Name = "Distance from the school to the trust headquarters")]
 		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
 
 		[BindProperty(Name = "general-information-complete")]
