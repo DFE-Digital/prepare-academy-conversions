@@ -37,7 +37,7 @@ namespace ApplyToBecomeInternal.Models
 				return Task.CompletedTask;
 			}
 
-			return (new DecimalModelBinder(NumberStyles.Any, _loggerFactory)).BindModelAsync(bindingContext);;
+			return (new DecimalModelBinder(NumberStyles.Any, _loggerFactory)).BindModelAsync(bindingContext);
 		}
 	}
 }
