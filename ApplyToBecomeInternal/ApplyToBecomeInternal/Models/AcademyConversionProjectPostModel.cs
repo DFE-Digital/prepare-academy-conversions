@@ -91,10 +91,10 @@ namespace ApplyToBecomeInternal.Models
 		public bool? IsThisADiocesanTrust { get; set; }
 
 		[BindProperty(Name = "distance-to-trust-headquarters")]
+		[Display(Name = "Distance from the school to the trust headquarters")]
 		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
 
 		[BindProperty(Name = "distance-to-trust-headquarters-additional-information")]
-		[Display(Name = "Distance from the school to the trust headquarters")]
 		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
 
 		[BindProperty(Name = "general-information-complete")]
@@ -130,22 +130,22 @@ namespace ApplyToBecomeInternal.Models
 
 		// school budget info
 		[BindProperty(Name = "finance-current-year-2021")]
-		[ModelBinder(BinderType = typeof(DecimalInputModelBinder))]
+		[ModelBinder(BinderType = typeof(MonetaryInputModelBinder))]
 		[Display(Name = "Revenue carry forward at end-March (current year)")]
 		public decimal? RevenueCarryForwardAtEndMarchCurrentYear { get; set; }
 
 		[BindProperty(Name = "finance-following-year-2022")]
-		[ModelBinder(BinderType = typeof(DecimalInputModelBinder))]
+		[ModelBinder(BinderType = typeof(MonetaryInputModelBinder))]
 		[Display(Name = "Projected revenue balance at end-March (following year)")]
 		public decimal? ProjectedRevenueBalanceAtEndMarchNextYear { get; set; }
 
 		[BindProperty(Name = "finance-forward-2021")]
-		[ModelBinder(BinderType = typeof(DecimalInputModelBinder))]
+		[ModelBinder(BinderType = typeof(MonetaryInputModelBinder))]
 		[Display(Name = "Capital carry forward at end-March (current year)")]
 		public decimal? CapitalCarryForwardAtEndMarchCurrentYear { get; set; }
 
 		[BindProperty(Name = "finance-forward-2022")]
-		[ModelBinder(BinderType = typeof(DecimalInputModelBinder))]
+		[ModelBinder(BinderType = typeof(MonetaryInputModelBinder))]
 		[Display(Name = "Projected capital balance at end-March (following year)")]
 		public decimal? CapitalCarryForwardAtEndMarchNextYear { get; set; }
 

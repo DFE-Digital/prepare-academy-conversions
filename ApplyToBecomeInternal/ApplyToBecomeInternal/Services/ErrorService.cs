@@ -29,7 +29,7 @@ namespace ApplyToBecomeInternal.Services
 				}
 				else if (modelState.TryGetValue(key, out var entry) && entry.Errors.Count > 0)
 				{
-					AddError(key, entry.Errors.First().ErrorMessage);
+					AddError(key, entry.Errors.Last().ErrorMessage);
 				}
 			}
 		}

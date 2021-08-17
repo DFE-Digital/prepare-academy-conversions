@@ -2,6 +2,7 @@
 using AngleSharp.Html.Dom;
 using ApplyToBecomeInternal.Extensions;
 using FluentAssertions;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -88,6 +89,35 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
+		}
+
+		[Fact]
+		public async Task Should_display_validation_error_when_non_numeric_values_entered()
+		{
+			var project = AddGetProject();
+
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
+
+			Document.QuerySelector<IHtmlInputElement>("#finance-current-year-2021").Value = "abc";
+			Document.QuerySelector<IHtmlInputElement>("#finance-following-year-2022").Value = "456*&";
+			Document.QuerySelector<IHtmlInputElement>("#finance-forward-2021").Value = "299:00";
+			Document.QuerySelector<IHtmlInputElement>("#finance-forward-2022").Value = "12.xyz";
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
+
+			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Revenue carry forward at end-March (current year) must be written in the correct format, like 5,000.00");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Projected revenue balance at end-March (following year) must be written in the correct format, like 5,000.00");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Capital carry forward at end-March (current year) must be written in the correct format, like 5,000.00");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Projected capital balance at end-March (following year) must be written in the correct format, like 5,000.00");
+
+			Document.QuerySelector(".govuk-error-message").Should().NotBeNull();
+			Document.QuerySelector("#finance-current-year-2021-error").TextContent.Should().Contain("Revenue carry forward at end-March (current year) must be written in the correct format, like 5,000.00");
+			Document.QuerySelector("#finance-following-year-2022-error").TextContent.Should().Contain("Projected revenue balance at end-March (following year) must be written in the correct format, like 5,000.00");
+			Document.QuerySelector("#finance-forward-2021-error").TextContent.Should().Contain("Capital carry forward at end-March (current year) must be written in the correct format, like 5,000.00");
+			Document.QuerySelector("#finance-forward-2022-error").TextContent.Should().Contain("Projected capital balance at end-March (following year) must be written in the correct format, like 5,000.00");
 		}
 	}
 }
