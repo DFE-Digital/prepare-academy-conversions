@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Models
 {
-	public class DecimalInputModelBinder : IModelBinder
+	public class MonetaryInputModelBinder : IModelBinder
 	{
 		private readonly ILoggerFactory _loggerFactory;
 
-		public DecimalInputModelBinder(ILoggerFactory loggerFactory)
+		public MonetaryInputModelBinder(ILoggerFactory loggerFactory)
 		{
 			_loggerFactory = loggerFactory;
 		}
@@ -37,7 +37,15 @@ namespace ApplyToBecomeInternal.Models
 				return Task.CompletedTask;
 			}
 
-			return (new DecimalModelBinder(NumberStyles.Any, _loggerFactory)).BindModelAsync(bindingContext);;
+			(new DecimalModelBinder(NumberStyles.Any, _loggerFactory)).BindModelAsync(bindingContext);
+
+			if (bindingContext.ModelState.TryGetValue(bindingContext.ModelName, out var entry) && entry.Errors.Count > 0)
+			{
+				var displayName = bindingContext.ModelMetadata.DisplayName ?? bindingContext.ModelName;
+				entry.Errors.Add($"{displayName} must be written in the correct format, like 5,000.00");
+			}
+
+			return Task.CompletedTask;
 		}
 	}
 }
