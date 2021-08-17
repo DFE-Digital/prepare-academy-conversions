@@ -2,6 +2,7 @@ using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecomeInternal.Extensions;
+using ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance;
 using static ApplyToBecomeInternal.Extensions.IntegerExtensions;
 using FluentAssertions;
 using System.Collections.Generic;
@@ -218,7 +219,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		public async Task Should_navigate_to_KS2_additional_information_and_back()
 		{
 			var project = AddGetProject();
-			AddGetKeyStagePerformance((int)project.Urn).KeyStage2.ToList();
+			AddGetKeyStagePerformance((int)project.Urn);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
 
@@ -233,7 +234,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		public async Task Should_update_KS2_additional_information_and_navigate_back_to_preview()
 		{
 			var project = AddGetProject();
-			AddGetKeyStagePerformance((int)project.Urn).KeyStage2.ToList();
+			AddGetKeyStagePerformance((int)project.Urn);
 
 			var request = AddPatchProject(project, p => p.KeyStage2PerformanceAdditionalInformation);
 
@@ -244,6 +245,65 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			Document.QuerySelector<IHtmlTextAreaElement>("#additional-information").Value.Should().Be(project.KeyStage2PerformanceAdditionalInformation);
 			Document.QuerySelector<IHtmlTextAreaElement>("#additional-information").Value = request.KeyStage2PerformanceAdditionalInformation;
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
+		[Fact]
+		public async Task Should_display_KS4_section()
+		{
+			var project = AddGetProject();
+			var keyStage4Response = AddGetKeyStagePerformance((int)project.Urn).KeyStage4.ToList();
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			Document.QuerySelector("#key-stage-4-additional-information").TextContent.Should().Be(project.KeyStage4PerformanceAdditionalInformation);
+
+			KeyStage4PerformanceIntegrationTests.AssertKS4DataIsDisplayed(keyStage4Response, Document);
+		}
+
+		[Fact]
+		public async Task Should_not_display_KS4_performance_tables_on_preview_page_if_response_has_no_KS4_data()
+		{
+			var project = AddGetProject();
+			AddGetKeyStagePerformance((int)project.Urn, ks => ks.KeyStage4 = new List<KeyStage4PerformanceResponse>());
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.QuerySelector("#key-stage-4-performance-tables").Should().BeNull();
+		}
+
+		[Fact]
+		public async Task Should_navigate_to_KS4_additional_information_and_back()
+		{
+			var project = AddGetProject();
+			AddGetKeyStagePerformance((int)project.Urn);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Change", 22);
+			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-4-performance-tables/additional-information");
+
+			await NavigateAsync("Back");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
+		[Fact]
+		public async Task Should_update_KS4_additional_information_and_navigate_back_to_preview()
+		{
+			var project = AddGetProject();
+			AddGetKeyStagePerformance((int)project.Urn);
+
+			var request = AddPatchProject(project, p => p.KeyStage4PerformanceAdditionalInformation);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Change", 22);
+			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-4-performance-tables/additional-information");
+
+			Document.QuerySelector<IHtmlTextAreaElement>("#additional-information").Value.Should().Be(project.KeyStage4PerformanceAdditionalInformation);
+			Document.QuerySelector<IHtmlTextAreaElement>("#additional-information").Value = request.KeyStage4PerformanceAdditionalInformation;
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
