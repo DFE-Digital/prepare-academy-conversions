@@ -25,7 +25,7 @@ namespace ApplyToBecomeInternal.Services.WordDocument
 				{
 					var attribute = property.GetCustomAttribute<DocumentTextAttribute>();
 					var value = property.GetValue(document).ToStringOrDefault(attribute.Default);
-					if (attribute.IsRichText)
+					if (attribute.IsRichText && !string.IsNullOrEmpty(value))
 					{
 						ReplaceWithRichText(wordDoc, text, value);
 					}
