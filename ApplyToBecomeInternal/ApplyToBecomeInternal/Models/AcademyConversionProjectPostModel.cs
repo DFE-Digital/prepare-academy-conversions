@@ -95,6 +95,7 @@ namespace ApplyToBecomeInternal.Models
 		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
 
 		[BindProperty(Name = "distance-to-trust-headquarters-additional-information")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
 
 		[BindProperty(Name = "general-information-complete")]
