@@ -35,7 +35,7 @@
 						}
 						else
 						{
-						<a class="govuk-link" asp-page="@Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" aria-describedby="LA-infromation-template">
+						<a class="govuk-link" asp-page="@Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates.Page" asp-route-return="@Links.TaskList.Index.Page" asp-route-back="@Links.TaskList.Index.BackText" asp-route-id="@Model.Project.Id" aria-describedby="LA-infromation-template">
 							Record dates for the LA information template
 						</a>
 						}

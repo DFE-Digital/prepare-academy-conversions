@@ -6,14 +6,7 @@
 }
 @section BeforeMain
 {
-	@if (ViewData["Referer"]?.ToString()?.Contains("local-authority-information") == true)
-    {
-		<govuk-back-link link-item="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates" />
-    }
-	else
-    {
-	    <govuk-back-link link-item="@Links.TaskList.Index" />
-    }
+	<govuk-back-link link-item="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates" />
 }
 
 @if (Model.ShowError)
