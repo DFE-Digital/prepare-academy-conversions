@@ -309,6 +309,68 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
 		}
 
+		[Fact]
+		public async Task Should_display_KS5_section()
+		{
+			var project = AddGetProject();
+			var keyStage5Response = AddGetKeyStagePerformance((int)project.Urn).KeyStage5.ToList();
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			Document.QuerySelector("#key-stage-5-additional-information").TextContent.Should().Be(project.KeyStage5PerformanceAdditionalInformation);
+
+			var keyStage5ResponseOrderedByYear = keyStage5Response.OrderByDescending(ks5 => ks5.Year).ToList();
+			for (int i = 0; i < 2; i++)
+			{
+				var response = keyStage5ResponseOrderedByYear.ElementAt(i);
+				Document.QuerySelector($"#academic-progress-{i}").TextContent.Should().Be("no data");
+				Document.QuerySelector($"#academic-average-{i}").TextContent.Should().Contain(response.AcademicQualificationAverage.ToString());
+				Document.QuerySelector($"#applied-general-progress-{i}").TextContent.Should().Be("no data");
+				Document.QuerySelector($"#applied-general-average-{i}").TextContent.Should().Contain(response.AppliedGeneralQualificationAverage.ToString());
+				Document.QuerySelector($"#na-academic-progress-{i}").TextContent.Should().Be("no data");
+				Document.QuerySelector($"#na-academic-average-{i}").TextContent.Should().Contain(response.NationalAcademicQualificationAverage.ToString());
+				Document.QuerySelector($"#na-applied-general-progress-{i}").TextContent.Should().Be("no data");
+				Document.QuerySelector($"#na-applied-general-average-{i}").TextContent.Should().Contain(response.NationalAppliedGeneralQualificationAverage.ToString());
+				i++;
+			}
+		}
+
+		[Fact]
+		public async Task Should_navigate_to_KS5_additional_information_and_back()
+		{
+			var project = AddGetProject();
+			AddGetKeyStagePerformance((int)project.Urn);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Change", 23);
+			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-5-performance-tables/additional-information");
+
+			await NavigateAsync("Back");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
+		[Fact]
+		public async Task Should_update_KS5_additional_information_and_navigate_back_to_preview()
+		{
+			var project = AddGetProject();
+			AddGetKeyStagePerformance((int)project.Urn);
+
+			var request = AddPatchProject(project, p => p.KeyStage5PerformanceAdditionalInformation);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Change", 23);
+			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-5-performance-tables/additional-information");
+
+			Document.QuerySelector<IHtmlTextAreaElement>("#additional-information").Value.Should().Be(project.KeyStage5PerformanceAdditionalInformation);
+			Document.QuerySelector<IHtmlTextAreaElement>("#additional-information").Value = request.KeyStage5PerformanceAdditionalInformation;
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
 		private string AsPercentageOf(string numberOfPupils, string schoolCapacity)
 		{
 			int? a = int.Parse(numberOfPupils);
