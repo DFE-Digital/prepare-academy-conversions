@@ -4,12 +4,13 @@
 	ViewData["Title"] = "Generate headteacher board documents";
 }
 
+@section BeforeMain
+{
+	<govuk-back-link link-item="@Links.TaskList.PreviewHTBTemplate" />
+}
+
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
-		@section BeforeMain
-		{
-			<govuk-back-link link-item="@Links.TaskList.PreviewHTBTemplate" />
-		}
 		<span class="govuk-caption-xl">@Model.Project.SchoolName</span>
 		<h1 class="govuk-heading-xl">Generate headteacher board (HTB) documents</h1>
 		<div class="govuk-inset-text">
