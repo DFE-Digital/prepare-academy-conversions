@@ -7,7 +7,7 @@
 
 @section BeforeMain
 {
-	<a asp-page="@Links.ProjectList.Index.Page" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
+	<govuk-back-link link-item="@Links.ProjectList.Index" />
 }
 
 @if (Model.ShowGenerateHtbTemplateError)
