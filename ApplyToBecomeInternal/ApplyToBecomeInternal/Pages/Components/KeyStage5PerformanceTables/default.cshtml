@@ -1,41 +1,43 @@
 ﻿@model IEnumerable<KeyStage5PerformanceTableViewModel>
 <div class="govuk-grid-row">
-	@{
-		var index = 0;
-		@foreach (var vm in Model)
-		{
-			<h2 class="govuk-heading-m">
-				@vm.Year scores for academic and applied general qualifications
-			</h2>
-			<table class="govuk-table govuk-!-margin-bottom-9">
-				<caption class="govuk-table__caption govuk-table__caption--s">Local authority: @ViewData["LocalAuthority"]</caption>
-				<thead class="govuk-table__head">
-				<tr class="govuk-table__row">
-					<th scope="col" class="govuk-table__header"></th>
-					<th scope="col" class="govuk-table__header">Academic progress</th>
-					<th scope="col" class="govuk-table__header">Academic average</th>
-					<th scope="col" class="govuk-table__header">Applied general progress</th>
-					<th scope="col" class="govuk-table__header">Applied general average</th>
-				</tr>
-				</thead>
-				<tbody class="govuk-table__body">
-				<tr class="govuk-table__row">
-					<th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
-					<td class="govuk-table__cell" id="@("academic-progress-" + index)">@vm.AcademicProgress</td>
-					<td class="govuk-table__cell" id="@("academic-average-" + index)">@vm.AcademicAverage</td>
-					<td class="govuk-table__cell" id="@("applied-general-progress-" + index)">@vm.AppliedGeneralProgress</td>
-					<td class="govuk-table__cell" id="@("applied-general-average-" + index)">@vm.AppliedGeneralAverage</td>
-				</tr>
-				<tr class="govuk-table__row">
-					<th scope="row" class="govuk-table__header">National average</th>
-					<td class="govuk-table__cell" id="@("na-academic-progress-" + index)">@vm.NationalAverageAcademicProgress</td>
-					<td class="govuk-table__cell" id="@("na-academic-average-" + index)">@vm.NationalAverageAcademicAverage</td>
-					<td class="govuk-table__cell" id="@("na-applied-general-progress-" + index)">@vm.NationalAverageAppliedGeneralProgress</td>
-					<td class="govuk-table__cell" id="@("na-applied-general-average-" + index)">@vm.NationalAverageAppliedGeneralAverage</td>
-				</tr>
-				</tbody>
-			</table>
-			index++;
+	<div class="govuk-grid-column-full">
+		@{
+			var index = 0;
+			@foreach (var vm in Model)
+			{
+				<h2 class="govuk-heading-m">
+					@vm.Year scores for academic and applied general qualifications
+				</h2>
+				<table class="govuk-table govuk-!-margin-bottom-9">
+					<caption class="govuk-table__caption govuk-table__caption--s">Local authority: @ViewData["LocalAuthority"]</caption>
+					<thead class="govuk-table__head">
+					<tr class="govuk-table__row">
+						<th scope="col" class="govuk-table__header"></th>
+						<th scope="col" class="govuk-table__header">Academic progress</th>
+						<th scope="col" class="govuk-table__header">Academic average</th>
+						<th scope="col" class="govuk-table__header">Applied general progress</th>
+						<th scope="col" class="govuk-table__header">Applied general average</th>
+					</tr>
+					</thead>
+					<tbody class="govuk-table__body">
+					<tr class="govuk-table__row">
+						<th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
+						<td class="govuk-table__cell" id="@("academic-progress-" + index)">@vm.AcademicProgress</td>
+						<td class="govuk-table__cell" id="@("academic-average-" + index)">@vm.AcademicAverage</td>
+						<td class="govuk-table__cell" id="@("applied-general-progress-" + index)">@vm.AppliedGeneralProgress</td>
+						<td class="govuk-table__cell" id="@("applied-general-average-" + index)">@vm.AppliedGeneralAverage</td>
+					</tr>
+					<tr class="govuk-table__row">
+						<th scope="row" class="govuk-table__header">National average</th>
+						<td class="govuk-table__cell" id="@("na-academic-progress-" + index)">@vm.NationalAverageAcademicProgress</td>
+						<td class="govuk-table__cell" id="@("na-academic-average-" + index)">@vm.NationalAverageAcademicAverage</td>
+						<td class="govuk-table__cell" id="@("na-applied-general-progress-" + index)">@vm.NationalAverageAppliedGeneralProgress</td>
+						<td class="govuk-table__cell" id="@("na-applied-general-average-" + index)">@vm.NationalAverageAppliedGeneralAverage</td>
+					</tr>
+					</tbody>
+				</table>
+				index++;
+			}
 		}
-	}
+	</div>
 </div>
