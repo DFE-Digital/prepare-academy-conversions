@@ -8,14 +8,7 @@
 	<div class="govuk-grid-column-full">
 		@section BeforeMain
 		{
-				@if (ViewData["Referer"]?.ToString()?.Contains("preview-headteacher-board-template") == true)
-                {
-            		<govuk-back-link link-item="@Links.TaskList.PreviewHTBTemplate" />
-                }
-            	else
-                {
-            	    <govuk-back-link link-item="@Links.TaskList.Index" />
-                }
+			<govuk-back-link link-item="@Links.TaskList.PreviewHTBTemplate" />
 		}
 		<span class="govuk-caption-xl">@Model.Project.SchoolName</span>
 		<h1 class="govuk-heading-xl">Generate headteacher board (HTB) documents</h1>

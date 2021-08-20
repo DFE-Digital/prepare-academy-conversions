@@ -28,7 +28,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 
 			await NavigateAsync("Record dates for the LA information template");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
 			Document.QuerySelector("#la-info-template-sent-date").TextContent.Should().Be(project.LocalAuthorityInformationTemplateSentDate.ToDateString());
 			Document.QuerySelector("#la-info-template-returned-date").TextContent.Should().Be(project.LocalAuthorityInformationTemplateReturnedDate.ToDateString());
 			Document.QuerySelector("#la-info-template-comments").TextContent.Should().Be(project.LocalAuthorityInformationTemplateComments);
@@ -48,7 +48,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 
 			await NavigateAsync("Record dates for the LA information template");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
 			Document.QuerySelector<IHtmlInputElement>("#la-info-template-complete").IsChecked.Should().BeTrue();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
@@ -77,7 +77,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 			await OpenUrlAsync($"/task-list/{project.Id}");
 			await NavigateAsync("Record dates for the LA information template");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
 
 			await NavigateAsync("Back to task list");
 
@@ -88,7 +88,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 		public async Task Should_navigate_between_la_info_template_and_confirm_la_info_template_when_navigated_from_la_info_template()
 		{
 			var project = AddGetProject();
-
 			AddPatchProjectMany(project, composer =>
 				composer
 					.With(r => r.LocalAuthorityInformationTemplateSentDate, project.LocalAuthorityInformationTemplateSentDate)

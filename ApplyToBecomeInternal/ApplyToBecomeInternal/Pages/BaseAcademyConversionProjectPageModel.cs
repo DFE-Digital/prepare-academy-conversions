@@ -19,7 +19,6 @@ namespace ApplyToBecomeInternal.Pages
 
 		public virtual async Task<IActionResult> OnGetAsync(int id)
 		{
-			ViewData["Referer"] = HttpContext.Request.Headers["Referer"];
 			return await SetProject(id);
 		}
 

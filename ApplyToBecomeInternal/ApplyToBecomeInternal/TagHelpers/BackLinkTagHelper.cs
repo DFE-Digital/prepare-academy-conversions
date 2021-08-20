@@ -21,12 +21,17 @@ namespace ApplyToBecomeInternal.TagHelpers
 			output.TagName = "a";
 			output.TagMode = TagMode.StartTagAndEndTag;
 			output.Attributes.Add("class", "govuk-back-link");
+			var backLinkText = LinkItem.BackText;
 			if (ViewContext.HttpContext.Request.Query.ContainsKey("return") && ViewContext.HttpContext.Request.Query["return"].Count == 1)
 			{
 				var returnPage = ViewContext.HttpContext.Request.Query["return"][0];
 				Page = WebUtility.UrlDecode(returnPage);
+				if (ViewContext.HttpContext.Request.Query.ContainsKey("back") && ViewContext.HttpContext.Request.Query["back"].Count == 1)
+				{
+					backLinkText = ViewContext.HttpContext.Request.Query["back"][0];
+				}
 			}
-			output.Content.SetHtmlContent(LinkItem.BackText);
+			output.Content.SetHtmlContent(backLinkText);
 			base.Process(context, output);
 		}
 	}
