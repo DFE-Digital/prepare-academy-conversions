@@ -52,7 +52,7 @@ namespace ApplyToBecomeInternal.Pages
 				return Page();
 			}
 
-			var (returnPage, fragment, back) = GetReturnPageAndFragment();
+			var (returnPage, fragment) = GetReturnPageAndFragment();
 			if (!string.IsNullOrWhiteSpace(returnPage))
 			{
 				return RedirectToPage(returnPage, null, new { id }, fragment);
@@ -109,12 +109,11 @@ namespace ApplyToBecomeInternal.Pages
 			};
 		}
 
-		private (string, string, string) GetReturnPageAndFragment()
+		private (string, string) GetReturnPageAndFragment()
 		{
 			Request.Query.TryGetValue("return", out var returnQuery);
 			Request.Query.TryGetValue("fragment", out var fragmentQuery);
-			Request.Query.TryGetValue("back", out var backQuery);
-			return (returnQuery, fragmentQuery, backQuery);
+			return (returnQuery, fragmentQuery);
 		}
 	}
 }
