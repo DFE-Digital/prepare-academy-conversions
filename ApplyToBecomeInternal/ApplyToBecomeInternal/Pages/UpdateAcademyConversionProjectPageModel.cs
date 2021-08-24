@@ -26,13 +26,6 @@ namespace ApplyToBecomeInternal.Pages
 		{
 			get
 			{
-				// if (!TempData[nameof(SuccessPage)].Equals(Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDate.Page))
-				// 	return TempData[nameof(SuccessPage)].ToString();
-				//
-				// if (AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion != "Yes")
-				// {
-				// 	SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
-				// }
 				return TempData[nameof(SuccessPage)].ToString();
 			}
 			set
@@ -60,10 +53,6 @@ namespace ApplyToBecomeInternal.Pages
 			}
 
 			var (returnPage, fragment, back) = GetReturnPageAndFragment();
-			// if (!string.IsNullOrWhiteSpace(returnPage) && !string.IsNullOrEmpty(back))
-			// {
-			// 	return RedirectToPage(returnPage, null, new { id, @return = back, back = Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDateQuestion.Page }, fragment);
-			// }
 			if (!string.IsNullOrWhiteSpace(returnPage))
 			{
 				return RedirectToPage(returnPage, null, new { id }, fragment);

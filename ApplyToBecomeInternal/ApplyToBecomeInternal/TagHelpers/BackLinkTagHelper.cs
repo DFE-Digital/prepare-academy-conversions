@@ -26,6 +26,8 @@ namespace ApplyToBecomeInternal.TagHelpers
 			{
 				var returnPage = ViewContext.HttpContext.Request.Query["back"][0];
 				Page = WebUtility.UrlDecode(returnPage);
+				RouteValues.Add("back", ViewContext.ViewData["prevHtbQuestionBack"]?.ToString());
+				RouteValues.Add("return", ViewContext.ViewData["prevHtbQuestionReturn"]?.ToString());
 			}
 			else if (ViewContext.HttpContext.Request.Query.ContainsKey("return") && ViewContext.HttpContext.Request.Query["return"].Count == 1)
 			{

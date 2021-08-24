@@ -15,14 +15,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.SchoolAndTrustInformation
 			_errorService = errorService;
 		}
 
-		private bool IsPrevHtbAndNo()
+		private bool IsNo()
 		{
-			return IsPreviousHtbPage() && AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion != "Yes";
-		}
-
-		private bool IsPreviousHtbPage()
-		{
-			return TempData[nameof(SuccessPage)].Equals(Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDate.Page);
+			return AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion != "Yes";
 		}
 
 		public override async Task<IActionResult> OnPostAsync(int id)
@@ -44,17 +39,17 @@ namespace ApplyToBecomeInternal.Pages.TaskList.SchoolAndTrustInformation
 			}
 
 			var (returnPage, fragment, back) = GetReturnPageAndFragment();
-			if (!string.IsNullOrWhiteSpace(returnPage) && IsPrevHtbAndNo())
+			if (!string.IsNullOrWhiteSpace(returnPage) && IsNo())
 			{
 				return RedirectToPage(Links.TaskList.PreviewHTBTemplate.Page, new {id});
 			}
-			if (IsPrevHtbAndNo())
+			if (IsNo())
 			{
 				return RedirectToPage(Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page, new {id});
 			}
 			if (!string.IsNullOrWhiteSpace(returnPage) && !string.IsNullOrEmpty(back))
 			{
-				return RedirectToPage(returnPage, null, new { id, @return = back, back = Page() }, fragment);
+				return RedirectToPage(returnPage, null, new { id, @return = back, back = Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDateQuestion.Page }, fragment);
 			}
 			if (!string.IsNullOrWhiteSpace(returnPage))
 			{
