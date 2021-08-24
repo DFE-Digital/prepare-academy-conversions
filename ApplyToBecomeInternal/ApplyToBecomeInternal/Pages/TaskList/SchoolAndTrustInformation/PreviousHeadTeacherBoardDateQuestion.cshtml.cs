@@ -42,7 +42,11 @@ namespace ApplyToBecomeInternal.Pages.TaskList.SchoolAndTrustInformation
 
 			if (IsNo())
 			{
-				return RedirectToPage(ReturnPage(returnPage) ? Links.TaskList.PreviewHTBTemplate.Page : Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page, new {id});
+				if (ReturnPage(returnPage))
+				{
+					RedirectToPage(Links.TaskList.PreviewHTBTemplate.Page, new {id, fragment = "previous-head-teacher-board"});
+				}
+				return RedirectToPage(Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page, new {id});
 			}
 
 			if (ReturnPage(returnPage))
