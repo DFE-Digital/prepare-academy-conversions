@@ -39,24 +39,23 @@ namespace ApplyToBecomeInternal.Pages.TaskList.SchoolAndTrustInformation
 			}
 
 			var (returnPage, fragment, back) = GetReturnPageAndFragment();
-			if (!string.IsNullOrWhiteSpace(returnPage) && IsNo())
-			{
-				return RedirectToPage(Links.TaskList.PreviewHTBTemplate.Page, new {id});
-			}
+
 			if (IsNo())
 			{
-				return RedirectToPage(Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page, new {id});
+				return RedirectToPage(ReturnPage(returnPage) ? Links.TaskList.PreviewHTBTemplate.Page : Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page, new {id});
 			}
-			if (!string.IsNullOrWhiteSpace(returnPage) && !string.IsNullOrEmpty(back))
+
+			if (ReturnPage(returnPage))
 			{
-				return RedirectToPage(returnPage, null, new { id, @return = back, back = Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDateQuestion.Page }, fragment);
-			}
-			if (!string.IsNullOrWhiteSpace(returnPage))
-			{
-				return RedirectToPage(returnPage, null, new { id }, fragment);
+				return !string.IsNullOrEmpty(back) ? RedirectToPage(returnPage, null, new { id, @return = back, back = Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDateQuestion.Page }, fragment) : RedirectToPage(returnPage, null, new { id }, fragment);
 			}
 
 			return RedirectToPage(SuccessPage, new { id });
+		}
+
+		private static bool ReturnPage(string returnPage)
+		{
+			return !string.IsNullOrWhiteSpace(returnPage);
 		}
 
 		private (string, string, string) GetReturnPageAndFragment()

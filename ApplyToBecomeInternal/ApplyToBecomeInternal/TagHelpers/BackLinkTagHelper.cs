@@ -12,6 +12,12 @@ namespace ApplyToBecomeInternal.TagHelpers
 		[HtmlAttributeName("link-item")]
 		public LinkItem LinkItem { get; set; }
 
+		[HtmlAttributeName("back")]
+		public LinkItem Back { get; set; }
+
+		[HtmlAttributeName("return")]
+		public LinkItem Return { get; set; }
+
 		public BackLinkTagHelper(IHtmlGenerator generator) : base(generator) { }
 
 		public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -26,8 +32,8 @@ namespace ApplyToBecomeInternal.TagHelpers
 			{
 				var returnPage = ViewContext.HttpContext.Request.Query["back"][0];
 				Page = WebUtility.UrlDecode(returnPage);
-				RouteValues.Add("back", ViewContext.ViewData["prevHtbQuestionBack"]?.ToString());
-				RouteValues.Add("return", ViewContext.ViewData["prevHtbQuestionReturn"]?.ToString());
+				if(Back != null) RouteValues.Add("back", Back.Page);
+				if(Return != null) RouteValues.Add("return", Return.Page);
 			}
 			else if (ViewContext.HttpContext.Request.Query.ContainsKey("return") && ViewContext.HttpContext.Request.Query["return"].Count == 1)
 			{

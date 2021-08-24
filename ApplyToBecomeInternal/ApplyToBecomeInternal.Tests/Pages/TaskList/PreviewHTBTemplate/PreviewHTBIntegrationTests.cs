@@ -377,7 +377,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		}
 
 		[Fact]
-		public async Task Should_display_School_and_trust_information_section()
+		public async Task Should_display_school_and_trust_information_section()
 		{
 			var project = AddGetProject();
 
@@ -553,7 +553,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		}
 
 		[Fact]
-		public async Task Should_navigate_to_school_and_trust_prev_htb_input_page_and_back_to_question_and_submit_to_input_and_submit_to_preview()
+		public async Task Should_navigate_to_school_and_trust_prev_htb_input_page_and_back_to_question_and_submit_again()
 		{
 			var project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = "Yes");
 			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDateQuestion, "Yes");
@@ -586,7 +586,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		}
 
 		[Fact]
-		public async Task Should_navigate_to_school_and_trust_prev_htb_input_page_and_back_to_question_and_submit_to_input_and_back_to_question_and_back_to_preview()
+		public async Task Should_navigate_to_school_and_trust_prev_htb_input_page_and_back_to_question_and_submit_to_input_and_back()
 		{
 			var project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = "Yes");
 			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDateQuestion, "Yes");
