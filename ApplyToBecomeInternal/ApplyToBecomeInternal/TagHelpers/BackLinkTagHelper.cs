@@ -22,13 +22,18 @@ namespace ApplyToBecomeInternal.TagHelpers
 			output.TagMode = TagMode.StartTagAndEndTag;
 			output.Attributes.Add("class", "govuk-back-link");
 			var backLinkText = LinkItem.BackText;
-			if (ViewContext.HttpContext.Request.Query.ContainsKey("return") && ViewContext.HttpContext.Request.Query["return"].Count == 1)
+			if (ViewContext.HttpContext.Request.Query.ContainsKey("back") && ViewContext.HttpContext.Request.Query["back"].Count == 1)
+			{
+				var returnPage = ViewContext.HttpContext.Request.Query["back"][0];
+				Page = WebUtility.UrlDecode(returnPage);
+			}
+			else if (ViewContext.HttpContext.Request.Query.ContainsKey("return") && ViewContext.HttpContext.Request.Query["return"].Count == 1)
 			{
 				var returnPage = ViewContext.HttpContext.Request.Query["return"][0];
 				Page = WebUtility.UrlDecode(returnPage);
-				if (ViewContext.HttpContext.Request.Query.ContainsKey("back") && ViewContext.HttpContext.Request.Query["back"].Count == 1)
+				if (ViewContext.HttpContext.Request.Query.ContainsKey("backText") && ViewContext.HttpContext.Request.Query["backText"].Count == 1)
 				{
-					backLinkText = ViewContext.HttpContext.Request.Query["back"][0];
+					backLinkText = ViewContext.HttpContext.Request.Query["backText"][0];
 				}
 			}
 			output.Content.SetHtmlContent(backLinkText);

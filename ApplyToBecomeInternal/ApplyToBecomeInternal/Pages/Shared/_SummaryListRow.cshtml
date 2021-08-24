@@ -18,9 +18,18 @@
 		{
 			if (ViewData["IncludeFragment"] is bool includeFragment && includeFragment)
 			{
-				<a class="govuk-link" asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return" asp-route-fragment="@Model.Id">
-					Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
-				</a>
+				if (Model.Page == Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDateQuestion.Page)
+				{
+					<a class="govuk-link" asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDate.Page" asp-route-fragment="@Model.Id" asp-route-back="@Model.Return">
+						Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
+					</a>
+				}
+				else
+				{
+					<a class="govuk-link" asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return" asp-route-fragment="@Model.Id">
+						Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
+					</a>
+				}
 			}
 			else if(!string.IsNullOrEmpty(Model.Fragment))
 			{

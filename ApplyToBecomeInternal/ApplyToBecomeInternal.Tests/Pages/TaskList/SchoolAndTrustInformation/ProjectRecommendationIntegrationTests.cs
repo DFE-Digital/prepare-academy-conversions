@@ -14,9 +14,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 		public async Task Should_navigate_to_and_update_project_recommendation()
 		{
 			var (selected, toSelect) = RandomRadioButtons("project-recommendation", "Approve", "Defer", "Decline");
-			
+
 			var project = AddGetProject(p => p.RecommendationForProject = selected.Value);
-			var request = AddPatchProject(project, r => r.RecommendationForProject, toSelect.Value);
+			AddPatchProject(project, r => r.RecommendationForProject, toSelect.Value);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 			await NavigateAsync("Change", 0);

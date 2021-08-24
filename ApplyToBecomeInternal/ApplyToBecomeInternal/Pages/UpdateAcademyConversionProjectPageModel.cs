@@ -26,13 +26,13 @@ namespace ApplyToBecomeInternal.Pages
 		{
 			get
 			{
-				if (!TempData[nameof(SuccessPage)].Equals(Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDate.Page))
-					return TempData[nameof(SuccessPage)].ToString();
-
-				if (AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion != "Yes")
-				{
-					SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
-				}
+				// if (!TempData[nameof(SuccessPage)].Equals(Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDate.Page))
+				// 	return TempData[nameof(SuccessPage)].ToString();
+				//
+				// if (AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion != "Yes")
+				// {
+				// 	SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
+				// }
 				return TempData[nameof(SuccessPage)].ToString();
 			}
 			set
@@ -41,7 +41,7 @@ namespace ApplyToBecomeInternal.Pages
 			}
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id)
+		public virtual async Task<IActionResult> OnPostAsync(int id)
 		{
 			_errorService.AddErrors(Request.Form.Keys, ModelState);
 			if (_errorService.HasErrors())
@@ -59,7 +59,11 @@ namespace ApplyToBecomeInternal.Pages
 				return Page();
 			}
 
-			var (returnPage, fragment) = GetReturnPageAndFragment();
+			var (returnPage, fragment, back) = GetReturnPageAndFragment();
+			// if (!string.IsNullOrWhiteSpace(returnPage) && !string.IsNullOrEmpty(back))
+			// {
+			// 	return RedirectToPage(returnPage, null, new { id, @return = back, back = Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDateQuestion.Page }, fragment);
+			// }
 			if (!string.IsNullOrWhiteSpace(returnPage))
 			{
 				return RedirectToPage(returnPage, null, new { id }, fragment);
@@ -68,7 +72,7 @@ namespace ApplyToBecomeInternal.Pages
 			return RedirectToPage(SuccessPage, new { id });
 		}
 
-		private UpdateAcademyConversionProject Build()
+		protected UpdateAcademyConversionProject Build()
 		{
 			return new UpdateAcademyConversionProject
 			{
@@ -116,11 +120,12 @@ namespace ApplyToBecomeInternal.Pages
 			};
 		}
 
-		private (string, string) GetReturnPageAndFragment()
+		private (string, string, string) GetReturnPageAndFragment()
 		{
 			Request.Query.TryGetValue("return", out var returnQuery);
 			Request.Query.TryGetValue("fragment", out var fragmentQuery);
-			return (returnQuery, fragmentQuery);
+			Request.Query.TryGetValue("back", out var backQuery);
+			return (returnQuery, fragmentQuery, backQuery);
 		}
 	}
 }

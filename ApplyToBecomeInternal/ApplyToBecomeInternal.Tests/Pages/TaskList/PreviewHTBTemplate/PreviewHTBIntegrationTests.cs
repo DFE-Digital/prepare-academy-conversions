@@ -2,9 +2,11 @@ using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecomeInternal.Extensions;
+using ApplyToBecomeInternal.Tests.Customisations;
 using ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance;
 using static ApplyToBecomeInternal.Extensions.IntegerExtensions;
 using FluentAssertions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +16,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 {
 	public class PreviewHTBIntegrationTests : BaseIntegrationTests
 	{
-		public PreviewHTBIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public PreviewHTBIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		{
+			_fixture.Customizations.Add(new RandomDateBuilder(DateTime.Now.AddMonths(-2), DateTime.Now.AddDays(-1)));
+		}
 
 		[Fact]
 		public async Task Should_navigate_between_task_list_and_preview_htb_template()
@@ -370,6 +375,167 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
 		}
+
+		[Fact]
+		public async Task Should_display_School_and_trust_information_section()
+		{
+			var project = AddGetProject();
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			Document.QuerySelector("#project-recommendation").TextContent.Should().Be(project.RecommendationForProject);
+			Document.QuerySelector("#author").TextContent.Should().Be(project.Author);
+			Document.QuerySelector("#cleared-by").TextContent.Should().Be(project.ClearedBy);
+			Document.QuerySelector("#academy-order-required").TextContent.Should().Be(project.AcademyOrderRequired);
+			Document.QuerySelector("#head-teacher-board-date").TextContent.Should().Be(project.HeadTeacherBoardDate.ToDateString());
+			Document.QuerySelector("#previous-head-teacher-board").TextContent.Should().Be(project.PreviousHeadTeacherBoardDate.ToDateString());
+			Document.QuerySelector("#school-name").TextContent.Should().Be(project.SchoolName);
+			Document.QuerySelector("#unique-reference-number").TextContent.Should().Be(project.Urn.ToString());
+			Document.QuerySelector("#local-authority").TextContent.Should().Be(project.LocalAuthority);
+			Document.QuerySelector("#trust-reference-number").TextContent.Should().Be(project.TrustReferenceNumber);
+			Document.QuerySelector("#name-of-trust").TextContent.Should().Be(project.NameOfTrust);
+			Document.QuerySelector("#sponsor-reference-number").TextContent.Should().Be(project.SponsorReferenceNumber);
+			Document.QuerySelector("#sponsor-name").TextContent.Should().Be(project.SponsorName);
+			Document.QuerySelector("#academy-type-and-route").TextContent.Should().Be(project.AcademyTypeAndRoute);
+			Document.QuerySelector("#proposed-academy-opening-date").TextContent.Should().Be(project.ProposedAcademyOpeningDate.ToDateString(true));
+		}
+
+		[Fact]
+		public async Task Should_navigate_to_school_and_trust_recommendation_page_and_back()
+		{
+			var project = AddGetProject();
+			AddGetKeyStagePerformance((int)project.Urn);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Change", 0);
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/project-recommendation");
+
+			await NavigateAsync("Back");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
+		[Fact]
+		public async Task Should_update_school_and_trust_recommendation_and_navigate_back_to_preview()
+		{
+			var (selected, toSelect) = RandomRadioButtons("project-recommendation", "Approve", "Defer", "Decline");
+
+			var project = AddGetProject(p => p.RecommendationForProject = selected.Value);
+			AddPatchProject(project, r => r.RecommendationForProject, toSelect.Value);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Change", 0);
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/project-recommendation");
+
+			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked.Should().BeFalse();
+			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked.Should().BeTrue();
+
+			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked = false;
+			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked = true;
+
+			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked.Should().BeTrue();
+			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked.Should().BeFalse();
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
+		[Fact]
+		public async Task Should_navigate_to_school_and_trust_prev_htb_page_and_back()
+		{
+			var project = AddGetProject();
+			AddGetKeyStagePerformance((int)project.Urn);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Change", 5);
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+
+			await NavigateAsync("Back");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
+		[Fact]
+		public async Task Should_navigate_to_school_and_trust_prev_htb_question_page_and_submit_to_prev_htb_page_when_user_selects_yes()
+		{
+			var project = AddGetProject(p =>
+			{
+				p.PreviousHeadTeacherBoardDateQuestion = null;
+				p.PreviousHeadTeacherBoardDate = null;
+			});
+			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDateQuestion, "Yes");
+			var secondPatchRequest = AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Change", 5);
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeFalse();
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2").IsChecked.Should().BeFalse();
+
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked = true;
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date?");
+
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value.Should().Be("");
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value.Should().Be("");
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year").Value.Should().Be("");
+
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value = secondPatchRequest.PreviousHeadTeacherBoardDate.Value.Day.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value = secondPatchRequest.PreviousHeadTeacherBoardDate.Value.Month.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year").Value = secondPatchRequest.PreviousHeadTeacherBoardDate.Value.Year.ToString();
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
+		[Fact]
+		public async Task Should_navigate_to_school_and_trust_prev_htb_question_page_and_submit_preview_page_when_user_selects_no()
+		{
+			var project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = null);
+			AddPatchProjectMany(project, composer => composer
+				.With(r => r.PreviousHeadTeacherBoardDateQuestion, "No")
+				.With(r => r.PreviousHeadTeacherBoardDate, default(DateTime)));
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Change", 5);
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeFalse();
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2").IsChecked.Should().BeFalse();
+
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2").IsChecked = true;
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
+		[Fact]
+		public async Task Should_navigate_to_school_and_trust_prev_htb_question_page_and_back()
+		{
+			var project = AddGetProject();
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Change", 5);
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+
+			await NavigateAsync("Back");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
+		// navigate to prev htb question and back - done
+		// navigate to prev htb question (yes) -> prev htb input -> preview page - done
+		// navigate to prev htb question (no) -> preview page - done
+		// navigate to prev htb question (yes) -> back to preview - done
+		// navigate to prev htb question -> prev htb input -> back to question -> back to preview
+		// navigate to prev htb question -> prev htb input -> back to question -> input
 
 		private string AsPercentageOf(string numberOfPupils, string schoolCapacity)
 		{
