@@ -14,7 +14,6 @@ using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 {
-	[Collection("Sequential")]
 	public class PreviewHTBIntegrationTests : BaseIntegrationTests
 	{
 		public PreviewHTBIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
