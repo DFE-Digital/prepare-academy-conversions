@@ -31,6 +31,27 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 		}
 
 		[Fact]
+		public async Task Should_display_school_budget_information_fields_as_empty_when_null()
+		{
+			var project = AddGetProject(p =>
+			{
+				p.RevenueCarryForwardAtEndMarchCurrentYear = null;
+				p.ProjectedRevenueBalanceAtEndMarchNextYear = null;
+				p.CapitalCarryForwardAtEndMarchCurrentYear = null;
+				p.CapitalCarryForwardAtEndMarchNextYear = null;
+			});
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			await NavigateAsync("School budget information");
+
+			Document.QuerySelector("#finance-current-year-2021").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#finance-following-year-2022").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#finance-forward-2021").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#finance-forward-2022").TextContent.Should().Be("Empty");
+		}
+
+		[Fact]
 		public async Task Should_be_completed_and_checked_when_school_budget_information_section_complete()
 		{
 			var project = AddGetProject(project =>

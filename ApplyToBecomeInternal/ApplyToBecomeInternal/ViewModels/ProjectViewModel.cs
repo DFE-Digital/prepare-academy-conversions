@@ -66,10 +66,10 @@ namespace ApplyToBecomeInternal.ViewModels
 			YearFourProjectedPupilNumbers = project.YearFourProjectedPupilNumbers;
 			SchoolPupilForecastsAdditionalInformation = project.SchoolPupilForecastsAdditionalInformation;
 
-			RevenueCarryForwardAtEndMarchCurrentYear = project.RevenueCarryForwardAtEndMarchCurrentYear ?? 0;
-			ProjectedRevenueBalanceAtEndMarchNextYear = project.ProjectedRevenueBalanceAtEndMarchNextYear ?? 0;
-			CapitalCarryForwardAtEndMarchCurrentYear = project.CapitalCarryForwardAtEndMarchCurrentYear ?? 0;
-			CapitalCarryForwardAtEndMarchNextYear = project.CapitalCarryForwardAtEndMarchNextYear ?? 0;
+			RevenueCarryForwardAtEndMarchCurrentYear = project.RevenueCarryForwardAtEndMarchCurrentYear;
+			ProjectedRevenueBalanceAtEndMarchNextYear = project.ProjectedRevenueBalanceAtEndMarchNextYear;
+			CapitalCarryForwardAtEndMarchCurrentYear = project.CapitalCarryForwardAtEndMarchCurrentYear;
+			CapitalCarryForwardAtEndMarchNextYear = project.CapitalCarryForwardAtEndMarchNextYear;
 			SchoolBudgetInformationAdditionalInformation = project.SchoolBudgetInformationAdditionalInformation;
 			SchoolBudgetInformationSectionComplete = project.SchoolBudgetInformationSectionComplete ?? false;
 
@@ -142,10 +142,10 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
 		//school budget info
-		public decimal RevenueCarryForwardAtEndMarchCurrentYear { get; set; }
-		public decimal ProjectedRevenueBalanceAtEndMarchNextYear { get; set; }
-		public decimal CapitalCarryForwardAtEndMarchCurrentYear { get; set; }
-		public decimal CapitalCarryForwardAtEndMarchNextYear { get; set; }
+		public decimal? RevenueCarryForwardAtEndMarchCurrentYear { get; set; }
+		public decimal? ProjectedRevenueBalanceAtEndMarchNextYear { get; set; }
+		public decimal? CapitalCarryForwardAtEndMarchCurrentYear { get; set; }
+		public decimal? CapitalCarryForwardAtEndMarchNextYear { get; set; }
 		public string SchoolBudgetInformationAdditionalInformation { get; set; }
 		public bool SchoolBudgetInformationSectionComplete { get; set; }
 

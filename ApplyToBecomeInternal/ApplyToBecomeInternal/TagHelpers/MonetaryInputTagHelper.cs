@@ -22,18 +22,18 @@ namespace ApplyToBecomeInternal.TagHelpers
 
 		protected override async Task<IHtmlContent> RenderContentAsync()
 		{
-			if (For.ModelExplorer.ModelType != typeof(Decimal))
+			if (For.ModelExplorer.ModelType != typeof(Decimal?))
 			{
 				throw new ArgumentException();
 			}
 
-			var value = (decimal)For.Model;
+			var value = (decimal?)For.Model;
 			var model = new DecimalInputViewModel
 			{
 				Id = Id,
 				Name = Name,
 				Label = Label,
-				Value = value.ToMoneyString()
+				Value = value?.ToMoneyString()
 			};
 
 			var error = _errorService.GetError(Name);
