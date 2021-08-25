@@ -95,7 +95,7 @@ namespace ApplyToBecomeInternal.ViewModels
 			{
 				return Completed;
 			}
-			else if (string.IsNullOrWhiteSpace(project.RationaleForProject) 
+			else if (string.IsNullOrWhiteSpace(project.RationaleForProject)
 				&& string.IsNullOrWhiteSpace(project.RationaleForTrust))
 			{
 				return NotStarted;
@@ -128,18 +128,15 @@ namespace ApplyToBecomeInternal.ViewModels
 			{
 				return Completed;
 			}
-			else if (project.RevenueCarryForwardAtEndMarchCurrentYear == 0
-				&& project.ProjectedRevenueBalanceAtEndMarchNextYear == 0
-				&& project.CapitalCarryForwardAtEndMarchCurrentYear == 0
-				&& project.CapitalCarryForwardAtEndMarchNextYear == 0
+			if (project.RevenueCarryForwardAtEndMarchCurrentYear == null
+				&& project.ProjectedRevenueBalanceAtEndMarchNextYear == null
+				&& project.CapitalCarryForwardAtEndMarchCurrentYear == null
+				&& project.CapitalCarryForwardAtEndMarchNextYear == null
 				&& string.IsNullOrWhiteSpace(project.SchoolBudgetInformationAdditionalInformation))
 			{
 				return NotStarted;
 			}
-			else
-			{
-				return InProgress;
-			}
+			return InProgress;
 		}
 	}
 }

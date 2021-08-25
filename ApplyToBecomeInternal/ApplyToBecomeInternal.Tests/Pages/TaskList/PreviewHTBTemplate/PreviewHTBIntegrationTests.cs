@@ -112,6 +112,74 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		}
 
 		[Fact]
+		public async Task Should_display_school_budget_information()
+		{
+			var project = AddGetProject(p => p.SchoolBudgetInformationSectionComplete = false);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			Document.QuerySelector("#finance-current-year-2021").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-following-year-2022").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-forward-2021").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-forward-2022").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#school-budget-information-additional-information").TextContent.Should().Be(project.SchoolBudgetInformationAdditionalInformation);
+		}
+
+		[Fact]
+		public async Task Should_navigate_to_school_budget_update_page_and_back()
+		{
+			var project = AddGetProject();
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Change", 15);
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
+
+			await NavigateAsync("Back");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
+		[Fact]
+		public async Task Should_update_school_budget_fields_and_navigate_back_to_preview()
+		{
+			var project = AddGetProject();
+			var request = AddPatchProjectMany(project, composer =>
+				composer
+					.With(r => r.RevenueCarryForwardAtEndMarchCurrentYear)
+					.With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear)
+					.With(r => r.CapitalCarryForwardAtEndMarchCurrentYear)
+					.With(r => r.CapitalCarryForwardAtEndMarchNextYear));
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Change", 15);
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
+
+			Document.QuerySelector<IHtmlInputElement>("#finance-current-year-2021").Value = request.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString();
+			Document.QuerySelector<IHtmlInputElement>("#finance-following-year-2022").Value = request.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString();
+			Document.QuerySelector<IHtmlInputElement>("#finance-forward-2021").Value = request.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString();
+			Document.QuerySelector<IHtmlInputElement>("#finance-forward-2022").Value = request.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString();
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
+		[Fact]
+		public async Task Should_navigate_school_budget_additional_information_and_back()
+		{
+			var project = AddGetProject();
+			AddGetKeyStagePerformance((int)project.Urn);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Change", 19);
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-budget-information/additional-information");
+
+			await NavigateAsync("Back");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
+		[Fact]
 		public async Task Should_display_school_pupil_forecasts_section()
 		{
 			var project = AddGetProject();
