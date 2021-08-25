@@ -43,12 +43,13 @@ namespace ApplyToBecomeInternal.Pages.TaskList.SchoolAndTrustInformation
 			if (IsNo())
 			{
 				return ReturnPage(returnPage) ?
-					RedirectToPage(Links.TaskList.PreviewHTBTemplate.Page, new {id, fragment = "previous-head-teacher-board"})
+					RedirectToPage(Links.TaskList.PreviewHTBTemplate.Page, null, new {id}, "previous-head-teacher-board")
 					: RedirectToPage(Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page, new {id});
 			}
 
 			if (ReturnPage(returnPage))
 			{
+				fragment ??= "previous-head-teacher-board";
 				return !string.IsNullOrEmpty(back) ? RedirectToPage(returnPage, null, new { id, @return = back, back = Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDateQuestion.Page }, fragment) : RedirectToPage(returnPage, null, new { id }, fragment);
 			}
 
