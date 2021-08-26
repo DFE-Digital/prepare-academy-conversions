@@ -119,6 +119,12 @@
   margin: 0;
 }
 
+@media (min-width: 40.0625em) {
+.contents-list__list-item {
+  padding-top: 7.5px;
+  margin: 0;
+}}
+
 .contents-list__list-item {
   padding-top: 10px;
   line-height: 1.3;
