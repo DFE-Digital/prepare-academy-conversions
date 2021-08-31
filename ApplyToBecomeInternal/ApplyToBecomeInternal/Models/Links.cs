@@ -99,6 +99,11 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem KeyStage5PerformanceTables = new LinkItem { Page = "/TaskList/KeyStagePerformance/KeyStage5PerformanceTables" };
 			public static LinkItem KeyStage5PerformanceTablesAdditionalInformation = new LinkItem { Page = "/TaskList/KeyStagePerformance/KeyStage5PerformanceTablesAdditionalInformation" };
 		}
+
+		public static class TrustTemplate
+		{
+			public static LinkItem TrustTemplateGuidance = new LinkItem { Page = "/TaskList/TrustTemplate/TrustTemplateGuidance" };
+		}
 	}
 
 	public class LinkItem

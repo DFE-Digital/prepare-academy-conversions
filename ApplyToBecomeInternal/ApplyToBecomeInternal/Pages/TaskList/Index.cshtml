@@ -29,21 +29,35 @@
 					<span class="app-task-list__task-name">
 						@if (Model.TaskList.LocalAuthorityInformationTemplateSectionNotStarted)
 						{
-						<a class="govuk-link" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" aria-describedby="LA-infromation-template">
-							Record dates for the LA information template
-						</a>
+							<a class="govuk-link" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" aria-describedby="LA-infromation-template">
+								Record dates for the LA information template
+							</a>
 						}
 						else
 						{
-						<a class="govuk-link" asp-page="@Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates.Page" asp-route-return="@Links.TaskList.Index.Page" asp-route-backText="@Links.TaskList.Index.BackText" asp-route-id="@Model.Project.Id" aria-describedby="LA-infromation-template">
-							Record dates for the LA information template
-						</a>
+							<a class="govuk-link" asp-page="@Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates.Page" asp-route-return="@Links.TaskList.Index.Page" asp-route-backText="@Links.TaskList.Index.BackText" asp-route-id="@Model.Project.Id" aria-describedby="LA-infromation-template">
+								Record dates for the LA information template
+							</a>
 						}
 					</span>
 					<strong class="govuk-tag @Model.TaskList.LocalAuthorityInformationTemplateTaskListStatus.CssClass app-task-list__tag" id="la-info-template-status">@Model.TaskList.LocalAuthorityInformationTemplateTaskListStatus.Status</strong>
 				</li>
 			</ul>
 		</div>
+
+		<h3 class="app-task-list__section govuk-!-margin-top-8">Trust template guidance</h3>
+		<div class="app-task-list">
+        	<ul class="app-task-list__items govuk-!-padding-left-0">
+        		<li class="app-task-list__item">
+        			<span class="app-task-list__task-name">
+        				<a class="govuk-link" asp-page="@Links.TrustTemplate.TrustTemplateGuidance.Page" asp-route-id="@Model.Project.Id" aria-describedby="trust-template">
+        					Prepare your trust template
+        				</a>
+                    </span>
+        			<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="trust-tempalte-status">Reference only</strong>
+        		</li>
+        	</ul>
+        </div>
 
 		<h3 class="app-task-list__section govuk-!-margin-top-8">Create headteacher board (HTB) template</h3>
 		<div class="app-task-list" aria-label="list of tasks">
@@ -150,21 +164,7 @@
 
 			</ul>
 		</div>
-		<h3 class="app-task-list__section govuk-!-margin-top-8">
-			Trust template
-		</h3>
-		<div class="app-task-list">
-			<ul class="app-task-list__items govuk-!-padding-left-0">
-				<li class="app-task-list__item">
-					<span class="app-task-list__task-name">
-						<a class="govuk-link" href="#" aria-describedby="sponsor-template">
-							Check and edit the trust template
-						</a>
-					</span>
-					<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="sponsor-template">Not Started</strong>
-				</li>
-			</ul>
-		</div>
+
 		<h2 class="govuk-heading-l">
 			Preview or generate HTB template
 		</h2>
