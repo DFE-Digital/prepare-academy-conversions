@@ -25,6 +25,10 @@
 	  <EmbeddedResource Include="Resources\htb-template.docx" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="wwwroot\src\images" />
+	</ItemGroup>
+
 <!--	<Target Name="BuildFrontEnd" BeforeTargets="Build">-->
 <!--		<Exec WorkingDirectory="$(ProjectDir)" Command="npx gulp build-fe"/>-->
 <!--	</Target>-->
