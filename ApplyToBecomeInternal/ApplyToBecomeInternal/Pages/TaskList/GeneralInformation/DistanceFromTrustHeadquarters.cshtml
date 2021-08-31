@@ -11,23 +11,23 @@
 	<govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation" />
 }
 
-<h1 class="govuk-heading-l">What is the distance from the school to the trust headquaters?</h1>
+<h1 class="govuk-heading-l">What is the distance from the school to the trust headquarters?</h1>
 <div class="govuk-form-group">
 	<div id="distance-to-trust-headquarters-hint" class="govuk-hint">
 		For example, 20
 	</div>
 	<div class="govuk-input__wrapper">
-		<input class="govuk-input govuk-input--width-5" 
-			   id="distance-to-trust-headquarters" 
-			   name="distance-to-trust-headquarters" 
-			   type="text" 
+		<input class="govuk-input govuk-input--width-5"
+			   id="distance-to-trust-headquarters"
+			   name="distance-to-trust-headquarters"
+			   type="text"
 			   value="@Model.Project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()"
 			   aria-describedby="distance-to-trust-headquarters-hint">
 		<div class="govuk-input__suffix" aria-hidden="true">miles</div>
 	</div>
 </div>
-<govuk-textarea-input name="distance-to-trust-headquarters-additional-information" 
-					  asp-for="Project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation" 
-					  rows="5" 
-					  label="Additional information (optional)" 
+<govuk-textarea-input name="distance-to-trust-headquarters-additional-information"
+					  asp-for="Project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation"
+					  rows="5"
+					  label="Add any additional information if you need to"
 					  hint="This information will populate into your HTB template under the distance to the trust headquarters section." />
