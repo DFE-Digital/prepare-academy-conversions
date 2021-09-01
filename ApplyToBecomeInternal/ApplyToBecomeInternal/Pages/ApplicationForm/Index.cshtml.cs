@@ -107,7 +107,7 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 				Year1 = 189,
 				Year2 = 189,
 				Year3 = 189,
-				ProjectionReasoning = "spreadsheets 'n' shit",
+				ProjectionReasoning = "",
 				PublishedAdmissionsNumber = 210
 			},
 			LandAndBuildings = new LandAndBuildings

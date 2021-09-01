@@ -19,7 +19,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 					Year1 = 189,
 					Year2 = 189,
 					Year3 = 189,
-					ProjectionReasoning = "spreadsheets 'n' shit",
+					ProjectionReasoning = "",
 					PublishedAdmissionsNumber = 210
 				}
 			};
@@ -29,7 +29,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 				new FormField("Projected pupil numbers on roll in the year the academy opens (year 1)", "189"),
 				new FormField("Projected pupil numbers on roll in the following year after the academy has opened (year 2)", "189"),
 				new FormField("Projected pupil numbers on roll in the following year (year 3) ", "189"),
-				new FormField("What do you base these projected numbers on? ", "spreadsheets 'n' shit"),
+				new FormField("What do you base these projected numbers on? ", ""),
 				new FormField("What is the school's published admissions number (PAN)?", "210")
 			};
 			formSection.Heading.Should().Be("Future pupil numbers");
