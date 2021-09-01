@@ -132,21 +132,21 @@ namespace ApplyToBecomeInternal.Models
 		[DocumentText("YearOneProjectedPupilNumbers")]
 		public string YearOneProjectedPupilNumbers { get; set; }
 		[DocumentText("YearOnePercentageSchoolFull")]
-		public string YearOnePercentageSchoolFull;
+		public string YearOnePercentageSchoolFull { get; set; }
 		[DocumentText("YearTwoProjectedCapacity")]
 		public string YearTwoProjectedCapacity { get; set; }
 		[DocumentText("YearTwoProjectedPupilNumbers")]
 		public string YearTwoProjectedPupilNumbers { get; set; }
 		[DocumentText("YearTwoPercentageSchoolFull")]
-		public string YearTwoPercentageSchoolFull;
+		public string YearTwoPercentageSchoolFull { get; set; }
 		[DocumentText("YearThreeProjectedCapacity")]
 		public string YearThreeProjectedCapacity { get; set; }
 		[DocumentText("YearThreeProjectedPupilNumbers")]
 		public string YearThreeProjectedPupilNumbers { get; set; }
 		[DocumentText("YearThreePercentageSchoolFull")]
-		public string YearThreePercentageSchoolFull;
+		public string YearThreePercentageSchoolFull { get; set; }
 		[DocumentText("SchoolPupilForecastsAdditionalInformation")]
-		public string SchoolPupilForecastsAdditionalInformation;
+		public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
 		public static HtbTemplate Build(AcademyConversionProject project, SchoolPerformance schoolPerformance, GeneralInformation generalInformation)
 		{
