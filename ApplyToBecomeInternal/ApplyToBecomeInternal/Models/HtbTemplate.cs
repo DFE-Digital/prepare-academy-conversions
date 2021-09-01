@@ -207,10 +207,10 @@ namespace ApplyToBecomeInternal.Models
 				RisksAndIssues = project.RisksAndIssues,
 				EqualitiesImpactAssessmentConsidered = project.EqualitiesImpactAssessmentConsidered,
 
-				RevenueCarryForwardAtEndMarchCurrentYear = (project.RevenueCarryForwardAtEndMarchCurrentYear ?? 0).ToMoneyString(),
-				ProjectedRevenueBalanceAtEndMarchNextYear = (project.ProjectedRevenueBalanceAtEndMarchNextYear ?? 0).ToMoneyString(),
-				CapitalCarryForwardAtEndMarchCurrentYear = (project.CapitalCarryForwardAtEndMarchCurrentYear ?? 0).ToMoneyString(),
-				CapitalCarryForwardAtEndMarchNextYear = (project.CapitalCarryForwardAtEndMarchNextYear ?? 0).ToMoneyString(),
+				RevenueCarryForwardAtEndMarchCurrentYear = project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString(),
+				ProjectedRevenueBalanceAtEndMarchNextYear = project.ProjectedRevenueBalanceAtEndMarchNextYear?.ToMoneyString(),
+				CapitalCarryForwardAtEndMarchCurrentYear = project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString(),
+				CapitalCarryForwardAtEndMarchNextYear = project.CapitalCarryForwardAtEndMarchNextYear?.ToMoneyString(),
 				SchoolBudgetInformationAdditionalInformation = project.SchoolBudgetInformationAdditionalInformation,
 
 				YearOneProjectedCapacity = project.YearOneProjectedCapacity.ToString(),
