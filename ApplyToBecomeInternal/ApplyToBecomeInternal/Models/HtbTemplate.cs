@@ -126,6 +126,28 @@ namespace ApplyToBecomeInternal.Models
 		[DocumentText("SchoolBudgetInformationAdditionalInformation")]
 		public string SchoolBudgetInformationAdditionalInformation { get; set; }
 
+		// school pupil forecasts
+		[DocumentText("YearOneProjectedCapacity")]
+		public string YearOneProjectedCapacity { get; set; }
+		[DocumentText("YearOneProjectedPupilNumbers")]
+		public string YearOneProjectedPupilNumbers { get; set; }
+		[DocumentText("YearOnePercentageSchoolFull")]
+		public string YearOnePercentageSchoolFull { get; set; }
+		[DocumentText("YearTwoProjectedCapacity")]
+		public string YearTwoProjectedCapacity { get; set; }
+		[DocumentText("YearTwoProjectedPupilNumbers")]
+		public string YearTwoProjectedPupilNumbers { get; set; }
+		[DocumentText("YearTwoPercentageSchoolFull")]
+		public string YearTwoPercentageSchoolFull { get; set; }
+		[DocumentText("YearThreeProjectedCapacity")]
+		public string YearThreeProjectedCapacity { get; set; }
+		[DocumentText("YearThreeProjectedPupilNumbers")]
+		public string YearThreeProjectedPupilNumbers { get; set; }
+		[DocumentText("YearThreePercentageSchoolFull")]
+		public string YearThreePercentageSchoolFull { get; set; }
+		[DocumentText("SchoolPupilForecastsAdditionalInformation")]
+		public string SchoolPupilForecastsAdditionalInformation { get; set; }
+
 		public static HtbTemplate Build(AcademyConversionProject project, SchoolPerformance schoolPerformance, GeneralInformation generalInformation)
 		{
 			return new HtbTemplate
@@ -185,11 +207,22 @@ namespace ApplyToBecomeInternal.Models
 				RisksAndIssues = project.RisksAndIssues,
 				EqualitiesImpactAssessmentConsidered = project.EqualitiesImpactAssessmentConsidered,
 
-				RevenueCarryForwardAtEndMarchCurrentYear = (project.RevenueCarryForwardAtEndMarchCurrentYear ?? 0).ToMoneyString(),
-				ProjectedRevenueBalanceAtEndMarchNextYear = (project.ProjectedRevenueBalanceAtEndMarchNextYear ?? 0).ToMoneyString(),
-				CapitalCarryForwardAtEndMarchCurrentYear = (project.CapitalCarryForwardAtEndMarchCurrentYear ?? 0).ToMoneyString(),
-				CapitalCarryForwardAtEndMarchNextYear = (project.CapitalCarryForwardAtEndMarchNextYear ?? 0).ToMoneyString(),
-				SchoolBudgetInformationAdditionalInformation = project.SchoolBudgetInformationAdditionalInformation
+				RevenueCarryForwardAtEndMarchCurrentYear = project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString(),
+				ProjectedRevenueBalanceAtEndMarchNextYear = project.ProjectedRevenueBalanceAtEndMarchNextYear?.ToMoneyString(),
+				CapitalCarryForwardAtEndMarchCurrentYear = project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString(),
+				CapitalCarryForwardAtEndMarchNextYear = project.CapitalCarryForwardAtEndMarchNextYear?.ToMoneyString(),
+				SchoolBudgetInformationAdditionalInformation = project.SchoolBudgetInformationAdditionalInformation,
+
+				YearOneProjectedCapacity = project.YearOneProjectedCapacity.ToString(),
+				YearOneProjectedPupilNumbers = project.YearOneProjectedPupilNumbers.ToStringOrDefault(),
+				YearOnePercentageSchoolFull = project.YearOneProjectedPupilNumbers.AsPercentageOf(project.YearOneProjectedCapacity),
+				YearTwoProjectedCapacity = project.YearTwoProjectedCapacity.ToString(),
+				YearTwoProjectedPupilNumbers = project.YearTwoProjectedPupilNumbers.ToString(),
+				YearTwoPercentageSchoolFull = project.YearTwoProjectedPupilNumbers.AsPercentageOf(project.YearTwoProjectedCapacity),
+				YearThreeProjectedCapacity = project.YearThreeProjectedCapacity.ToString(),
+				YearThreeProjectedPupilNumbers = project.YearThreeProjectedPupilNumbers.ToString(),
+				YearThreePercentageSchoolFull = project.YearThreeProjectedPupilNumbers.AsPercentageOf(project.YearThreeProjectedCapacity),
+				SchoolPupilForecastsAdditionalInformation = project.SchoolPupilForecastsAdditionalInformation
 			};
 		}
 	}
