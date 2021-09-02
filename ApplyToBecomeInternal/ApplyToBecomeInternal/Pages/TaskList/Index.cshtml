@@ -47,17 +47,17 @@
 
 		<h3 class="app-task-list__section govuk-!-margin-top-8">Trust template guidance</h3>
 		<div class="app-task-list">
-        	<ul class="app-task-list__items govuk-!-padding-left-0">
-        		<li class="app-task-list__item">
-        			<span class="app-task-list__task-name">
-        				<a class="govuk-link" asp-page="@Links.TrustTemplate.TrustTemplateGuidance.Page" asp-route-id="@Model.Project.Id" aria-describedby="trust-template">
-        					Prepare your trust template
-        				</a>
-                    </span>
-        			<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="trust-tempalte-status">Reference only</strong>
-        		</li>
-        	</ul>
-        </div>
+			<ul class="app-task-list__items govuk-!-padding-left-0">
+				<li class="app-task-list__item">
+					<span class="app-task-list__task-name">
+						<a class="govuk-link" asp-page="@Links.TrustTemplate.TrustTemplateGuidance.Page" asp-route-id="@Model.Project.Id" aria-describedby="trust-template">
+							Prepare your trust template
+						</a>
+					</span>
+					<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="trust-tempalte-status">Reference only</strong>
+				</li>
+			</ul>
+		</div>
 
 		<h3 class="app-task-list__section govuk-!-margin-top-8">Create headteacher board (HTB) template</h3>
 		<div class="app-task-list" aria-label="list of tasks">
@@ -169,7 +169,9 @@
 			Preview or generate HTB template
 		</h2>
 		<p class="govuk-body">Preview your HTB template before you generate it into a Word document, or you can generate the document without previewing it.</p>
-		<a asp-page="@Links.TaskList.PreviewHTBTemplate.Page" asp-route-id="@Model.Project.Id" class="govuk-button govuk-!-margin-bottom-2">Preview HTB template</a>
-		<a asp-page="@Links.TaskList.GenerateHTBTemplate.Page" asp-route-id="@Model.Project.Id" asp-route-return="@Links.TaskList.Index.Page" asp-route-backText="@Links.TaskList.Index.BackText" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-2">Generate HTB document</a>
+		<div class="govuk-button-group">
+			<a asp-page="@Links.TaskList.PreviewHTBTemplate.Page" asp-route-id="@Model.Project.Id" class="govuk-button govuk-!-margin-bottom-2">Preview HTB template</a>
+			<a asp-page="@Links.TaskList.GenerateHTBTemplate.Page" asp-route-id="@Model.Project.Id" asp-route-return="@Links.TaskList.Index.Page" asp-route-backText="@Links.TaskList.Index.BackText" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-2">Generate HTB document</a>
+		</div>
 	</div>
 </div>
