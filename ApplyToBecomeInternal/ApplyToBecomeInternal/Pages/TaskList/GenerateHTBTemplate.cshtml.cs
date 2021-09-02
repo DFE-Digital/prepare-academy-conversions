@@ -4,6 +4,9 @@ using ApplyToBecomeInternal.Services;
 using ApplyToBecomeInternal.Services.WordDocument;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList
@@ -53,9 +56,24 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 
 			var document = HtbTemplate.Build(response.Body, schoolPerformance, generalInformation);
 
-			var documentByteArray = _wordDocumentService.Create("htb-template", document);
+
+			var ms = CreateMemoryStream("htb-template");
+			
+			var documentBuilder = DocumentGeneration.DocumentBuilder.CreateFromTemplate(ms, document);
+			var documentByteArray = documentBuilder.Build();
 
 			return File(documentByteArray, "application/vnd.ms-word.document", $"{document.SchoolName}-htb-template-{DateTime.Today.ToString("dd-MM-yyyy")}.docx");
+		}
+		
+		private MemoryStream CreateMemoryStream(string template)
+		{
+			var assembly = Assembly.GetExecutingAssembly();
+			var resourceName = assembly.GetManifestResourceNames()
+				.FirstOrDefault(n => n.Contains(template, StringComparison.OrdinalIgnoreCase));
+			using var templateStream = assembly.GetManifestResourceStream(resourceName);
+			var ms = new MemoryStream();
+			templateStream.CopyTo(ms);
+			return ms;
 		}
 	}
 }
