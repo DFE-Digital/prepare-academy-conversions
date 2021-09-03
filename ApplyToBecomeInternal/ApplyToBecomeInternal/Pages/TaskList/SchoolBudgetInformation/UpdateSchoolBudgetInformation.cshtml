@@ -26,25 +26,25 @@
 				<label class="govuk-label govuk-label--s" for="finance-current-year-2021">
 					Revenue carry forward at end-March (current year) 2021
 				</label>
-				<govuk-decimal-input name="finance-current-year-2021" asp-for="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear"/>
+				<govuk-decimal-input name="finance-current-year-2021" asp-for="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear" isMonetary="true"/>
 			</div>
 			<div class="govuk-form-group">
 				<label class="govuk-label govuk-label--s" for="finance-following-year-2022">
 					Projected revenue balance at end-March (following year) 2022
 				</label>
-				<govuk-decimal-input name="finance-following-year-2022" asp-for="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear"/>
+				<govuk-decimal-input name="finance-following-year-2022" asp-for="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear" isMonetary="true"/>
 			</div>
 			<div class="govuk-form-group">
 				<label class="govuk-label govuk-label--s" for="finance-forward-2021">
 					Capital carry forward at end-March (current year)
 				</label>
-				<govuk-decimal-input name="finance-forward-2021" asp-for="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear"/>
+				<govuk-decimal-input name="finance-forward-2021" asp-for="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear" isMonetary="true"/>
 			</div>
 			<div class="govuk-form-group">
 				<label class="govuk-label govuk-label--s" for="finance-forward-2022">
 					Projected capital balance at end-March (following year)
 				</label>
-				<govuk-decimal-input name="finance-forward-2022" asp-for="@Model.Project.CapitalCarryForwardAtEndMarchNextYear"/>
+				<govuk-decimal-input name="finance-forward-2022" asp-for="@Model.Project.CapitalCarryForwardAtEndMarchNextYear" isMonetary="true"/>
 			</div>
 
 			<button class="govuk-button" data-module="govuk-button">

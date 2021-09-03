@@ -16,15 +16,7 @@
 	<div id="distance-to-trust-headquarters-hint" class="govuk-hint">
 		For example, 20
 	</div>
-	<div class="govuk-input__wrapper">
-		<input class="govuk-input govuk-input--width-5"
-			   id="distance-to-trust-headquarters"
-			   name="distance-to-trust-headquarters"
-			   type="text"
-			   value="@Model.Project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()"
-			   aria-describedby="distance-to-trust-headquarters-hint">
-		<div class="govuk-input__suffix" aria-hidden="true">miles</div>
-	</div>
+	<govuk-decimal-input id="distance-to-trust-headquarters" name="distance-to-trust-headquarters" asp-for="@Model.Project.DistanceFromSchoolToTrustHeadquarters"/>
 </div>
 <govuk-textarea-input name="distance-to-trust-headquarters-additional-information"
 					  asp-for="Project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation"

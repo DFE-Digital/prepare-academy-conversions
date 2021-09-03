@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.TagHelpers
@@ -20,6 +19,9 @@ namespace ApplyToBecomeInternal.TagHelpers
 			_errorService = errorService;
 		}
 
+		[HtmlAttributeName("isMonetary")]
+		public bool IsMonetary { get; set; }
+
 		protected override async Task<IHtmlContent> RenderContentAsync()
 		{
 			if (For.ModelExplorer.ModelType != typeof(Decimal?))
@@ -33,7 +35,8 @@ namespace ApplyToBecomeInternal.TagHelpers
 				Id = Id,
 				Name = Name,
 				Label = Label,
-				Value = value?.ToMoneyString()
+				Value = IsMonetary ? value?.ToMoneyString() : value.ToSafeString(),
+				IsMonetary = IsMonetary
 			};
 
 			var error = _errorService.GetError(Name);
@@ -46,7 +49,7 @@ namespace ApplyToBecomeInternal.TagHelpers
 				}
 			}
 
-			return await _htmlHelper.PartialAsync("_MonetaryInput", model);
+			return await _htmlHelper.PartialAsync("_DecimalInput", model);
 		}
 	}
 }
