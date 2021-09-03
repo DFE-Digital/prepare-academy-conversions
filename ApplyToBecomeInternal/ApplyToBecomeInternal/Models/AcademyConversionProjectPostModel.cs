@@ -91,6 +91,7 @@ namespace ApplyToBecomeInternal.Models
 		public bool? IsThisADiocesanTrust { get; set; }
 
 		[BindProperty(Name = "distance-to-trust-headquarters")]
+		[ModelBinder(BinderType = typeof(DecimalInputModelBinder))]
 		[Display(Name = "Distance from the school to the trust headquarters")]
 		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
 
