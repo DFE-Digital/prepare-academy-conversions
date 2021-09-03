@@ -59,5 +59,25 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
 		}
+
+		[Fact]
+		public async Task Should_display_validation_error_when_non_numeric_values_entered()
+		{
+			var project = AddGetProject();
+
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/distance-to-trust-headquarters");
+
+			Document.QuerySelector<IHtmlInputElement>("#distance-to-trust-headquarters").Value = "abc";
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/distance-to-trust-headquarters");
+
+			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("The value 'abc' is not valid for Distance from the school to the trust headquarters.");
+
+			Document.QuerySelector(".govuk-error-message").Should().NotBeNull();
+			Document.QuerySelector("#distance-to-trust-headquarters-error").TextContent.Should().Contain("The value 'abc' is not valid for Distance from the school to the trust headquarters.");
+		}
 	}
 }
