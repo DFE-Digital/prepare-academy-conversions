@@ -75,7 +75,7 @@ namespace ApplyToBecomeInternal.Models
 		public string IsSchoolLinkedToADiocese { get; set; }
 		[DocumentText("PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust")]
 		public string PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust { get; set; }
-		[DocumentText("DistanceFromSchoolToTrustHeadquarters")]
+		[DocumentText("DistanceFromSchoolToTrustHeadquarters", IsRichText = true)]
 		public string DistanceFromSchoolToTrustHeadquarters { get; set; }
 		[DocumentText("DistanceFromSchoolToTrustHeadquartersAdditionalInformation")]
 		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
@@ -187,8 +187,7 @@ namespace ApplyToBecomeInternal.Models
 				ViabilityIssues = project.ViabilityIssues,
 				FinancialDeficit = project.FinancialDeficit,
 				IsSchoolLinkedToADiocese = generalInformation.IsSchoolLinkedToADiocese,
-				DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters.ToSafeString(),
-				DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
+				DistanceFromSchoolToTrustHeadquarters = $"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()}<br>{project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}",
 				ParliamentaryConstituency = generalInformation.ParliamentaryConstituency,
 
 				OfstedLastInspection = schoolPerformance.OfstedLastInspection.ToDateString(),
