@@ -14,22 +14,24 @@
 {
 	<partial name="_ErrorSummary" />
 }
-<span class="govuk-caption-l">@Model.Project.SchoolName</span>
-<h1 class="govuk-heading-l">
-	Confirm general information
-</h1>
 
 <div class="govuk-grid-row">
-	<div class="govuk-grid-column-full">
+	<div class="govuk-grid-column-two-thirds">
+		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+		<h1 class="govuk-heading-l">
+			Confirm general information
+		</h1>
 		<div class="govuk-body">
-			<p>
-				This information is pre-populated from TRAMS and the
-				<a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
-			</p>
-		</div>
-		<vc:general-information />
+        	<p>
+        		This information is pre-populated from TRAMS and the
+        		<a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+        	</p>
+        </div>
+	</div>
+	<div class="govuk-grid-column-full">
+		<vc:general-information/>
 		<form method="post">
-			<govuk-checkbox-input name="general-information-complete" asp-for="Project.GeneralInformationSectionComplete" label="Mark this section as complete, you can still make changes later" />
+			<govuk-checkbox-input name="general-information-complete" asp-for="Project.GeneralInformationSectionComplete" label="Mark this section as complete, you can still make changes later"/>
 
 			<button class="govuk-button" data-module="govuk-button">
 				Confirm and continue
