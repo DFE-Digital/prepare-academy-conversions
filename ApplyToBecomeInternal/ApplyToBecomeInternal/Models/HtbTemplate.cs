@@ -187,7 +187,8 @@ namespace ApplyToBecomeInternal.Models
 				ViabilityIssues = project.ViabilityIssues,
 				FinancialDeficit = project.FinancialDeficit,
 				IsSchoolLinkedToADiocese = generalInformation.IsSchoolLinkedToADiocese,
-				DistanceFromSchoolToTrustHeadquarters = $"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()}<br>{project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}",
+				DistanceFromSchoolToTrustHeadquarters = string.IsNullOrEmpty(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation) ? project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()
+					: $"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()}<br>{project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}",
 				ParliamentaryConstituency = generalInformation.ParliamentaryConstituency,
 
 				OfstedLastInspection = schoolPerformance.OfstedLastInspection.ToDateString(),
