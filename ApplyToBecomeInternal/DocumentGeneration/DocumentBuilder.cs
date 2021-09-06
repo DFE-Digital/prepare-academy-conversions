@@ -219,6 +219,16 @@ namespace DocumentGeneration
 
 				if (attribute.IsRichText)
 				{
+					var elements = HtmlToElements.Convert(this, val);
+					
+					OpenXmlElement previousElement = paragraph;
+					foreach(var element in elements)
+					{
+						previousElement.InsertAfterSelf(element);
+						previousElement = element;
+					}
+					
+					paragraph.Remove();
 				}
 				else
 				{
