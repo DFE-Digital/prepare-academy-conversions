@@ -1,6 +1,7 @@
 ﻿using ApplyToBecomeInternal.Extensions;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentGeneration;
 using System;
 using System.Collections.Generic;
 using System.IO;

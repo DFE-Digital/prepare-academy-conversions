@@ -11,6 +11,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\ApplyToBecome.Data\ApplyToBecome.Data.csproj" />
+		<ProjectReference Include="..\DocumentGeneration\DocumentGeneration.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
