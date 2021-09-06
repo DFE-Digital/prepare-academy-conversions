@@ -1,3 +1,5 @@
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using DocumentGeneration.Builders;
 
@@ -8,6 +10,7 @@ namespace DocumentGeneration.Interfaces
         public void ReplacePlaceholderWithContent(string placeholderText, Action<DocumentBodyBuilder> action);
         public void AddHeader(Action<IHeaderBuilder> action);
         public void AddFooter(Action<IFooterBuilder> action);
+        public WordprocessingDocument GetCurrentDocument();
         public byte[] Build();
     }
 }
