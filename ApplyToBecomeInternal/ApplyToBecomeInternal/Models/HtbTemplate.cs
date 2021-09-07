@@ -1,4 +1,5 @@
 ﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Services.WordDocument;
 using DocumentGeneration;
@@ -148,6 +149,8 @@ namespace ApplyToBecomeInternal.Models
 		public string YearThreePercentageSchoolFull { get; set; }
 		[DocumentText("SchoolPupilForecastsAdditionalInformation")]
 		public string SchoolPupilForecastsAdditionalInformation { get; set; }
+		
+		public KeyStagePerformanceResponse KeyStagePerformanceResponse { get; set; }
 
 		public static HtbTemplate Build(AcademyConversionProject project, SchoolPerformance schoolPerformance, GeneralInformation generalInformation)
 		{

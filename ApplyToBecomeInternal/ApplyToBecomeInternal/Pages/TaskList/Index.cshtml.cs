@@ -41,49 +41,11 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 
 			// 16 plus = 6, All-through = 7, Middle deemed primary = 3, Middle deemed secondary = 5, Not applicable = 0, Nursery = 1, Primary = 2, Secondary = 4
 			TaskList = TaskListViewModel.Build(Project);
-			TaskList.HasKeyStage2PerformanceTables = keyStagePerformance.KeyStage2?.Any(HasKeyStage2PerformanceTables) ?? false;
-			TaskList.HasKeyStage4PerformanceTables = keyStagePerformance.KeyStage4?.Any(HasKeyStage4PerformanceTables) ?? false;
-			TaskList.HasKeyStage5PerformanceTables = keyStagePerformance.KeyStage5?.Any(HasKeyStage5PerformanceTables) ?? false;
+			TaskList.HasKeyStage2PerformanceTables = keyStagePerformance.HasKeyStage2PerformanceTables;
+			TaskList.HasKeyStage4PerformanceTables = keyStagePerformance.HasKeyStage4PerformanceTables;
+			TaskList.HasKeyStage5PerformanceTables = keyStagePerformance.HasKeyStage5PerformanceTables;
 
 			return Page();
-		}
-
-		private bool HasKeyStage2PerformanceTables(KeyStage2PerformanceResponse keyStage2Performance)
-		{
-			return HasValue(keyStage2Performance.PercentageMeetingExpectedStdInRWM)
-				|| HasValue(keyStage2Performance.PercentageAchievingHigherStdInRWM)
-				|| HasValue(keyStage2Performance.ReadingProgressScore)
-				|| HasValue(keyStage2Performance.WritingProgressScore)
-				|| HasValue(keyStage2Performance.MathsProgressScore);
-		}
-
-		private bool HasKeyStage4PerformanceTables(KeyStage4PerformanceResponse keyStage4Performance)
-		{
-			return HasValue(keyStage4Performance.SipAttainment8score)
-			       || HasValue(keyStage4Performance.SipAttainment8scoreenglish)
-			       || HasValue(keyStage4Performance.SipAttainment8scoremaths)
-			       || HasValue(keyStage4Performance.SipAttainment8scoreebacc)
-			       || HasValue(keyStage4Performance.SipNumberofpupilsprogress8)
-			       || HasValue(keyStage4Performance.SipProgress8Score)
-			       || HasValue(keyStage4Performance.SipProgress8english)
-			       || HasValue(keyStage4Performance.SipProgress8maths)
-			       || HasValue(keyStage4Performance.SipProgress8ebacc);
-		}
-
-		private bool HasKeyStage5PerformanceTables(KeyStage5PerformanceResponse keyStage5Performance)
-		{
-			return keyStage5Performance.AcademicQualificationAverage != null
-			       || keyStage5Performance.AppliedGeneralQualificationAverage != null
-			       || keyStage5Performance.NationalAcademicQualificationAverage != null
-			       || keyStage5Performance.NationalAppliedGeneralQualificationAverage != null
-			       || keyStage5Performance.LAAcademicQualificationAverage != null
-			       || keyStage5Performance.LAAppliedGeneralQualificationAverage != null;
-		}
-
-		private bool HasValue(DisadvantagedPupilsResponse disadvantagedPupilsResponse)
-		{
-			return !string.IsNullOrEmpty(disadvantagedPupilsResponse.NotDisadvantaged)
-				|| !string.IsNullOrEmpty(disadvantagedPupilsResponse.Disadvantaged);
 		}
     }
 }
