@@ -1,8 +1,11 @@
 using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
 using AutoFixture;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Models
@@ -13,6 +16,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 		private readonly SchoolPerformance _schoolPerformance;
 		private readonly GeneralInformation _generalInformation;
 		private readonly HtbTemplate _template;
+		private readonly KeyStagePerformance _keyStagePerformance;
 
 		public HtbTemplateTests()
 		{
@@ -20,8 +24,14 @@ namespace ApplyToBecomeInternal.Tests.Models
 			_project = fixture.Create<AcademyConversionProject>();
 			_schoolPerformance = fixture.Create<SchoolPerformance>();
 			_generalInformation = fixture.Create<GeneralInformation>();
+			_keyStagePerformance = new KeyStagePerformance
+			{
+				KeyStage2 = fixture.CreateMany<KeyStage2PerformanceResponse>(3),
+				KeyStage4 = fixture.CreateMany<KeyStage4PerformanceResponse>(3),
+				KeyStage5 = fixture.CreateMany<KeyStage5PerformanceResponse>(3)
+			};
 
-			_template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation);
+			_template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
 		}
 
 		[Fact]
@@ -96,6 +106,45 @@ namespace ApplyToBecomeInternal.Tests.Models
 			Assert.Equal(_template.YearThreeProjectedPupilNumbers, _project.YearThreeProjectedPupilNumbers.ToString());
 			Assert.Equal(_template.YearThreePercentageSchoolFull, _project.YearThreeProjectedPupilNumbers.AsPercentageOf(_project.YearThreeProjectedCapacity));
 			Assert.Equal(_template.SchoolPupilForecastsAdditionalInformation, _project.SchoolPupilForecastsAdditionalInformation);
+		}
+
+		public class KeyStagePerformanceTests : HtbTemplateTests
+		{
+			[Fact]
+			public void GivenNoKeyStage2DataToDisplay_DoesNotPopulateKeyStage2Data()
+			{
+				var keyStagePerformance = new KeyStagePerformance();
+				var template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, keyStagePerformance);
+				
+				Assert.Null(template.KeyStage2);
+			}
+			
+			[Fact]
+			public void GivenNoKeyStage4DataToDisplay_DoesNotPopulateKeyStage4Data()
+			{
+				var keyStagePerformance = new KeyStagePerformance();
+				var template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, keyStagePerformance);
+				
+				Assert.Null(template.KeyStage4);
+			}
+			
+			[Fact]
+			public void GivenNoKeyStage5DataToDisplay_DoesNotPopulateKeyStage5Data()
+			{
+				var keyStagePerformance = new KeyStagePerformance();
+				var template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, keyStagePerformance);
+				
+				Assert.Null(template.KeyStage5);
+			}
+
+			[Fact]
+			public void GivenKeyStageData_PopulatesKeyStageData()
+			{
+				Assert.NotNull(_template.KeyStage2);
+				Assert.Equal(3, _template.KeyStage2.Count());
+				Assert.NotNull(_template.KeyStage4);
+				Assert.Equal(3, _template.KeyStage5.Count());
+			}
 		}
 	}
 }

@@ -54,7 +54,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			var schoolPerformance = await _schoolPerformanceService.GetSchoolPerformanceByUrn(project.Urn.ToString());
 			var generalInformation = await _generalInformationService.GetGeneralInformationByUrn(project.Urn.ToString());
 
-			var document = HtbTemplate.Build(response.Body, schoolPerformance, generalInformation);
+			// TODO
+			var document = HtbTemplate.Build(response.Body, schoolPerformance, generalInformation, null);
 
 
 			var ms = CreateMemoryStream("htb-template");
