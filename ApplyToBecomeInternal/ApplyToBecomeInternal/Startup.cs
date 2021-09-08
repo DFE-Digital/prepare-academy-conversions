@@ -40,7 +40,7 @@ namespace ApplyToBecomeInternal
 				{
 					options.HtmlHelperOptions.ClientValidationEnabled = false;
 				});
-			
+
 			services.AddAuthorization(options =>
 			{
 				options.FallbackPolicy = new AuthorizationPolicyBuilder()
@@ -56,7 +56,7 @@ namespace ApplyToBecomeInternal
 			services.AddHttpContextAccessor();
 
 			ConfigureRedisConnection(services);
-			
+
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 			{
 				options.LoginPath = "/login";
@@ -115,12 +115,21 @@ namespace ApplyToBecomeInternal
 
 		private void ConfigureRedisConnection(IServiceCollection services)
 		{
-			var redisPass = "";
-			var redisHost = "";
-			var redisPort = "";
+			bool vcapServicesDefined = !string.IsNullOrEmpty(Configuration["VCAP_SERVICES"]);
+			bool redisUrlDefined = !string.IsNullOrEmpty(Configuration["REDIS_URL"]);
+
+			if (!vcapServicesDefined && !redisUrlDefined)
+			{
+				return;
+			}
+
+			string redisPass;
+			string redisHost;
+			string redisPort;
 			var redisTls = false;
 
-			if (!string.IsNullOrEmpty(Configuration["VCAP_SERVICES"]))
+
+			if (vcapServicesDefined)
 			{
 				var vcapConfiguration = JObject.Parse(Configuration["VCAP_SERVICES"]);
 				var redisCredentials = vcapConfiguration["redis"]?[0]?["credentials"];
@@ -129,7 +138,7 @@ namespace ApplyToBecomeInternal
 				redisPort = (string)redisCredentials?["port"];
 				redisTls = (bool)redisCredentials?["tls_enabled"];
 			}
-			else if (!string.IsNullOrEmpty(Configuration["REDIS_URL"]))
+			else
 			{
 				var redisUri = new Uri(Configuration["REDIS_URL"]);
 				redisPass = redisUri.UserInfo.Split(":")[1];
