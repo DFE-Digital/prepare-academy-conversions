@@ -104,6 +104,11 @@ namespace ApplyToBecomeInternal.Models
 		{
 			public static LinkItem TrustTemplateGuidance = new LinkItem { Page = "/TaskList/TrustTemplate/TrustTemplateGuidance" };
 		}
+
+		public static class Login
+		{
+			public static LinkItem LoginForm = new LinkItem { Page = "/Login/Index" };
+		}
 	}
 
 	public class LinkItem
