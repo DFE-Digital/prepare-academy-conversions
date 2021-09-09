@@ -13,7 +13,7 @@ using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Pages
 {
-	public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTestingWebApplicationFactory>
+	public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTestingWebApplicationFactory>, IDisposable
 	{
 		private readonly IntegrationTestingWebApplicationFactory _factory;
 		private readonly IBrowsingContext _browsingContext;
@@ -36,10 +36,10 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		{
 			var anchors = Document.QuerySelectorAll("a");
 			var link = (index == null
-				? anchors.Single(a => a.TextContent.Contains(linkText))
-				: anchors.Where(a => a.TextContent.Contains(linkText)).ElementAt(index.Value))
+					? anchors.Single(a => a.TextContent.Contains(linkText))
+					: anchors.Where(a => a.TextContent.Contains(linkText)).ElementAt(index.Value))
 				as IHtmlAnchorElement;
-			
+
 			return await link.NavigateAsync();
 		}
 
@@ -60,6 +60,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 				{
 					return $"#{name}";
 				}
+
 				return $"#{name}-{position}";
 			}
 		}
@@ -80,5 +81,10 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		}
 
 		public IDocument Document => _browsingContext.Active;
+
+		public void Dispose()
+		{
+			_factory.Reset();
+		}
 	}
 }
