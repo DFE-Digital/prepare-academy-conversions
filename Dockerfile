@@ -4,7 +4,6 @@ WORKDIR /build
 
 # Copy csproj and restore as distinct layers
 COPY ApplyToBecomeInternal/ApplyToBecome.Data/ ./ApplyToBecome.Data/
-COPY ApplyToBecomeInternal/ApplyToBecome.Data.Mock/ ./ApplyToBecome.Data.Mock/
 COPY ApplyToBecomeInternal/DocumentGeneration/ ./DocumentGeneration/
 COPY ApplyToBecomeInternal/ApplyToBecomeInternal/ ./ApplyToBecomeInternal/
 
