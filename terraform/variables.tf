@@ -39,7 +39,7 @@ variable app_environment {
   description 	= "Application environment development, staging, production"
 }
 
-variable app_trams_api_base {
+variable app_trams_api_endpoint {
 	type = string
 	description = "Application variable for the TRAMS API URL"
 }

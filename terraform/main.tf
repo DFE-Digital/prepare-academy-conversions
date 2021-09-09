@@ -13,12 +13,12 @@ resource cloudfoundry_app worker_app {
 	} 
 
 	environment = {
-		"ASPNETCORE_ENVIRONMENT" = "Development"
-    "ASPNETCORE_URLS"        = "http://+:8080"
-		"TRAMS_API_BASE"         = var.app_trams_api_base
-		"TRAMS_API_KEY"          = var.app_trams_api_key
-		"USERNAME"               = var.app_username
-		"PASSWORD"               = var.app_password
+		"ASPNETCORE_ENVIRONMENT"   = "Development"
+    "ASPNETCORE_URLS"          = "http://+:8080"
+		"TramsApi__Endpoint"       = var.app_trams_api_endpoint
+		"TramsApi__ApiKey"         = var.app_trams_api_key
+		"Authentication__Username" = var.app_username
+		"Authentication__Password" = var.app_password
 	}
 }
 
