@@ -3,10 +3,10 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /build
 
 # Copy csproj and restore as distinct layers
-COPY ApplyToBecome.Data/ ./ApplyToBecome.Data/
-COPY ApplyToBecome.Data.Mock/ ./ApplyToBecome.Data.Mock/
-COPY DocumentGeneration/ ./DocumentGeneration/
-COPY ApplyToBecomeInternal/ ./ApplyToBecomeInternal/
+COPY ApplyToBecomeInternal/ApplyToBecome.Data/ ./ApplyToBecome.Data/
+COPY ApplyToBecomeInternal/ApplyToBecome.Data.Mock/ ./ApplyToBecome.Data.Mock/
+COPY ApplyToBecomeInternal/DocumentGeneration/ ./DocumentGeneration/
+COPY ApplyToBecomeInternal/ApplyToBecomeInternal/ ./ApplyToBecomeInternal/
 
 WORKDIR ApplyToBecomeInternal
 RUN dotnet restore
