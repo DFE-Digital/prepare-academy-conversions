@@ -10,3 +10,5 @@ applications:
     ASPNETCORE_ENVIRONMENT: Development
     TramsApi__Endpoint: ((tramsApiEndpoint))
     TramsApi__ApiKey: ((tramsApiKey))
+    Authentication__Username: ((username))
+    Authentication__Password: ((password))

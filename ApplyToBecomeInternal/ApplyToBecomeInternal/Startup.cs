@@ -2,11 +2,17 @@ using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Configuration;
 using ApplyToBecomeInternal.Services;
 using ApplyToBecomeInternal.Services.WordDocument;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Linq;
+using StackExchange.Redis;
 using System;
 
 namespace ApplyToBecomeInternal
@@ -24,11 +30,23 @@ namespace ApplyToBecomeInternal
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			var razorPages = services.AddRazorPages()
+			var razorPages = services
+				.AddRazorPages(options =>
+				{
+					options.Conventions.AuthorizeFolder("/");
+					options.Conventions.AllowAnonymousToFolder("/Login");
+				})
 				.AddViewOptions(options =>
 				{
 					options.HtmlHelperOptions.ClientValidationEnabled = false;
 				});
+
+			services.AddAuthorization(options =>
+			{
+				options.FallbackPolicy = new AuthorizationPolicyBuilder()
+					.RequireAuthenticatedUser()
+					.Build();
+			});
 
 			if (_env.IsDevelopment())
 			{
@@ -36,6 +54,17 @@ namespace ApplyToBecomeInternal
 			}
 
 			services.AddHttpContextAccessor();
+
+			ConfigureRedisConnection(services);
+
+			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+			{
+				options.LoginPath = "/login";
+				options.Cookie.Name = ".ApplyToBecome.Login";
+				options.Cookie.HttpOnly = true;
+				options.Cookie.IsEssential = true;
+				options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+			});
 
 			services.AddHttpClient("TramsClient", (sp, client) =>
 			{
@@ -75,12 +104,55 @@ namespace ApplyToBecomeInternal
 
 			app.UseRouting();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapRazorPages();
 			});
+		}
+
+		private void ConfigureRedisConnection(IServiceCollection services)
+		{
+			bool vcapServicesDefined = !string.IsNullOrEmpty(Configuration["VCAP_SERVICES"]);
+			bool redisUrlDefined = !string.IsNullOrEmpty(Configuration["REDIS_URL"]);
+
+			if (!vcapServicesDefined && !redisUrlDefined)
+			{
+				return;
+			}
+
+			string redisPass;
+			string redisHost;
+			string redisPort;
+			var redisTls = false;
+
+
+			if (vcapServicesDefined)
+			{
+				var vcapConfiguration = JObject.Parse(Configuration["VCAP_SERVICES"]);
+				var redisCredentials = vcapConfiguration["redis"]?[0]?["credentials"];
+				redisPass = (string)redisCredentials?["password"];
+				redisHost = (string)redisCredentials?["host"];
+				redisPort = (string)redisCredentials?["port"];
+				redisTls = (bool)redisCredentials?["tls_enabled"];
+			}
+			else
+			{
+				var redisUri = new Uri(Configuration["REDIS_URL"]);
+				redisPass = redisUri.UserInfo.Split(":")[1];
+				redisHost = redisUri.Host;
+				redisPort = redisUri.Port.ToString();
+			}
+
+			var redisConfigurationOptions = new ConfigurationOptions { Password = redisPass, EndPoints = { $"{redisHost}:{redisPort}" }, Ssl = redisTls };
+
+			var redisConnection = ConnectionMultiplexer.Connect(redisConfigurationOptions);
+
+			services.AddStackExchangeRedisCache(
+				options => { options.ConfigurationOptions = redisConfigurationOptions; });
+			services.AddDataProtection().PersistKeysToStackExchangeRedis(redisConnection, "DataProtectionKeys");
 		}
 	}
 }

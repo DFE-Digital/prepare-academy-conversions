@@ -33,4 +33,6 @@ jobs:
           --var username=${{ secrets.USERNAME }} \
           --var password=${{ secrets.PASSWORD }} \
           --var tramsApiEndpoint=${{ secrets.TRAMS_API_ENDPOINT }} \
-          --var tramsApiKey=${{ secrets.TRAMS_API_KEY }}
+          --var tramsApiKey=${{ secrets.TRAMS_API_KEY }} \
+          --var username=${{ secrets.USERNAME }} \
+          --var password=${{ secrets.PASSWORD }}
