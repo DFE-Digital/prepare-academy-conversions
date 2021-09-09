@@ -17,9 +17,6 @@ using WireMock.Matchers;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 using WireMock.Server;
-using Xunit;
-
-[assembly: CollectionBehavior(DisableTestParallelization = true)]
 
 namespace ApplyToBecomeInternal.Tests
 {
