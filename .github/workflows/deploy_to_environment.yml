@@ -111,12 +111,13 @@ jobs:
 
       - name: Set environment variables for environments
         run: |
-          BACKEND_CONFIG='-backend-config="key=dev/app.tfstate" -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}"'
-          PARAMETER_STORE_ENVIRONMENT=dev
-          VAR_FILE=dev.tfvars
+          BACKEND_CONFIG='-backend-config="key=${{ github.event.inputs.environment }}/app.tfstate" -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}"'
+          PARAMETER_STORE_ENVIRONMENT=${{ github.event.inputs.environment }}
+          VAR_FILE=${{ github.event.inputs.environment }}.tfvars
           echo "BACKEND_CONFIG=${BACKEND_CONFIG}" >> $GITHUB_ENV
           echo "PARAMETER_STORE_ENVIRONMENT=${PARAMETER_STORE_ENVIRONMENT}" >> $GITHUB_ENV
           echo "VAR_FILE=${VAR_FILE}" >> $GITHUB_ENV
+
       # Init pulls credentials from the .aws/credentials file by default
       - name: "Run - Terraform Init"
         run: terraform init -input=false ${{ env.BACKEND_CONFIG }}
