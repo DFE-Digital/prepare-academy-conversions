@@ -1,4 +1,5 @@
 ﻿using ApplyToBecome.Data.Models.KeyStagePerformance;
+using Microsoft.AspNetCore.Html;
 using System.Globalization;
 using System.Linq;
 
@@ -7,6 +8,7 @@ namespace ApplyToBecomeInternal.Extensions
 	public static class DisplayExtensions
 	{
 		private const string NoData = "no data";
+
 		public static string DisplayOfstedRating(this string ofstedRating)
 		{
 			return ofstedRating switch
@@ -25,7 +27,17 @@ namespace ApplyToBecomeInternal.Extensions
 			    string.IsNullOrEmpty(disadvantagedPupilResponse?.Disadvantaged))
 				return NoData;
 
-			return $"{disadvantagedPupilResponse.NotDisadvantaged.FormatValue()}\n(disadvantaged pupils {disadvantagedPupilResponse.Disadvantaged.FormatValue()})";
+			return $"{disadvantagedPupilResponse.NotDisadvantaged.FormatValue()}<br>(disadvantaged pupils {disadvantagedPupilResponse.Disadvantaged.FormatValue()})";
+		}
+
+		public static HtmlString HtmlFormatKeyStageDisadvantagedResult(DisadvantagedPupilsResponse disadvantagedPupilResponse)
+		{
+			if (string.IsNullOrEmpty(disadvantagedPupilResponse?.NotDisadvantaged) &&
+			    string.IsNullOrEmpty(disadvantagedPupilResponse?.Disadvantaged))
+				return new HtmlString(NoData);
+
+			return new HtmlString(
+				$"{disadvantagedPupilResponse.NotDisadvantaged.FormatValue()}<br>(disadvantaged pupils {disadvantagedPupilResponse.Disadvantaged.FormatValue()})");
 		}
 
 		public static string FormatConfidenceInterval(decimal? lowerBound, decimal? upperBound)

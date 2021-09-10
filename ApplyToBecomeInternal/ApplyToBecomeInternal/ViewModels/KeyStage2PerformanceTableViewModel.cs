@@ -1,4 +1,6 @@
-﻿namespace ApplyToBecomeInternal.ViewModels
+﻿using Microsoft.AspNetCore.Html;
+
+namespace ApplyToBecomeInternal.ViewModels
 {
 	public class KeyStage2PerformanceTableViewModel
 	{
@@ -8,8 +10,8 @@
 		public string ReadingProgressScore { get; set; }
 		public string WritingProgressScore { get; set; }
 		public string MathsProgressScore { get; set; }
-		public string NationalAveragePercentageMeetingExpectedStdInRWM { get; set; }
-		public string NationalAveragePercentageAchievingHigherStdInRWM { get; set; }
+		public HtmlString NationalAveragePercentageMeetingExpectedStdInRWM { get; set; }
+		public HtmlString NationalAveragePercentageAchievingHigherStdInRWM { get; set; }
 		public string NationalAverageReadingProgressScore { get; set; }
 		public string NationalAverageWritingProgressScore { get; set; }
 		public string NationalAverageMathsProgressScore { get; set; }
