@@ -69,9 +69,57 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 
 			var documentBuilder = DocumentBuilder.CreateFromTemplate(ms, document);
 			AddKeyStage2Information(documentBuilder, document, project);
+			AddKeyStage5Information(documentBuilder, document, project);
 			var documentByteArray = documentBuilder.Build();
 
 			return File(documentByteArray, "application/vnd.ms-word.document", $"{document.SchoolName}-htb-template-{DateTime.Today.ToString("dd-MM-yyyy")}.docx");
+		}
+
+		private void AddKeyStage5Information(DocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
+		{
+			if (document.KeyStage5 == null)
+			{
+				documentBuilder.ReplacePlaceholderWithContent("KS5PerformanceData", builder => builder.AddParagraph(""));
+				return;
+			}
+
+			documentBuilder.ReplacePlaceholderWithContent("KS5PerformanceData", builder =>
+			{
+				foreach (var ks5Data in document.KeyStage5)
+				{
+					builder.AddHeading(hBuilder =>
+					{
+						hBuilder.AddText($"{ks5Data.Year} scores for academic and applied general qualifications");
+						hBuilder.SetHeadingLevel(HeadingLevel.Two);
+					});
+					
+					builder.AddHeading(hBuilder =>
+					{
+						hBuilder.AddText($"Local authority: {project.LocalAuthority}");
+						hBuilder.SetHeadingLevel(HeadingLevel.Three);
+					});
+					
+					builder.AddTable(new List<TextElement[]>
+					{
+						new[]
+						{
+							new TextElement(), new TextElement("Academic progress") { Bold = true }, new TextElement("Academic average") { Bold = true },
+							new TextElement("Applied general progress") { Bold = true }, new TextElement("Applied general average") { Bold = true },
+						},
+						new[]
+						{
+							new TextElement(project.SchoolName) { Bold = true }, new TextElement(ks5Data.AcademicProgress), new TextElement(ks5Data.AcademicAverage),
+							new TextElement(ks5Data.AppliedGeneralProgress), new TextElement(ks5Data.AppliedGeneralAverage),
+						},
+						new[]
+						{
+							new TextElement("National average") { Bold = true }, new TextElement(ks5Data.NationalAverageAcademicProgress),
+							new TextElement(ks5Data.NationalAverageAcademicAverage), new TextElement(ks5Data.NationalAverageAppliedGeneralProgress),
+							new TextElement(ks5Data.NationalAverageAppliedGeneralAverage),
+						}
+					});
+				}
+			});
 		}
 
 		private void AddKeyStage2Information(DocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
@@ -89,7 +137,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 					builder.AddHeading(hBuilder =>
 					{
 						hBuilder.AddText($"{ks2Data.Year} Key stage 2");
+						hBuilder.SetHeadingLevel(HeadingLevel.Two);
 					});
+					
 					builder.AddTable(new List<TextElement[]>
 					{
 						new[]
