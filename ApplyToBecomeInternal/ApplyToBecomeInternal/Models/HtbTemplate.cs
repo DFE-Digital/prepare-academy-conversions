@@ -238,7 +238,7 @@ namespace ApplyToBecomeInternal.Models
 
 			if (keyStagePerformance.HasKeyStage2PerformanceTables)
 			{
-				htbTemplate.KeyStage2 = keyStagePerformance.KeyStage2.Select(KeyStage2PerformanceTableViewModel.Build).OrderByDescending(ks => ks.Year);
+				htbTemplate.KeyStage2 = keyStagePerformance.KeyStage2.Select(KeyStage2PerformanceTableViewModel.Build).OrderByDescending(ks => ks.Year).ToList();
 			}
 
 			if (keyStagePerformance.HasKeyStage4PerformanceTables)

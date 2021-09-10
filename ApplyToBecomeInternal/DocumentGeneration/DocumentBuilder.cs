@@ -43,6 +43,10 @@ namespace DocumentGeneration
 			_ms = ms;
 			Document = WordprocessingDocument.Open(ms, true);
 			_body = Document.MainDocumentPart.Document.Body;
+			if (Document.MainDocumentPart.NumberingDefinitionsPart == null)
+			{
+				AddNumberingDefinitions();
+			}
 		}
 
 		private void AddNumberingDefinitions()
@@ -53,9 +57,8 @@ namespace DocumentGeneration
 
 		public void ReplacePlaceholderWithContent(string placeholderText, Action<DocumentBodyBuilder> action)
 		{
-			var placeholderElement = _body
-				.Descendants<Paragraph>()
-				.First(element => element.InnerText == $"[{placeholderText}]");
+			var paragraphs = _body.Descendants<Paragraph>().ToList();
+			var placeholderElement =  paragraphs.First(element => element.InnerText == $"[{placeholderText}]");
 
 			var builder = new DocumentBodyBuilder(Document, placeholderElement);
 			action(builder);
