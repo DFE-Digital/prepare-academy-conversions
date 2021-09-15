@@ -84,6 +84,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 
 			documentBuilder.ReplacePlaceholderWithContent("KS4PerformanceData", builder =>
 			{
+				builder.AddHeading("Key stage 4 performance tables", HeadingLevel.One);
 				builder.AddHeading("Attainment 8", HeadingLevel.Two);
 				builder.AddHeading("Attainment 8 scores", HeadingLevel.Three);
 				builder.AddTable(new List<TextElement[]>
@@ -95,8 +96,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 					},
 					new[]
 					{
-						new TextElement(project.SchoolName) { Bold = true }, HtmlStringToTextElement(ks4Data.Attainment8Score), HtmlStringToTextElement(ks4Data.Attainment8ScorePreviousYear),
-						HtmlStringToTextElement(ks4Data.Attainment8ScoreTwoYearsAgo),
+						new TextElement(project.SchoolName) { Bold = true }, HtmlStringToTextElement(ks4Data.Attainment8Score),
+						HtmlStringToTextElement(ks4Data.Attainment8ScorePreviousYear), HtmlStringToTextElement(ks4Data.Attainment8ScoreTwoYearsAgo),
 					},
 					new[]
 					{
@@ -106,41 +107,47 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 					new[]
 					{
 						new TextElement("National average") { Bold = true }, HtmlStringToTextElement(ks4Data.NationalAverageAttainment8Score),
-						HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScorePreviousYear), HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreTwoYearsAgo),
+						HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScorePreviousYear),
+						HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreTwoYearsAgo)
 					},
 				});
+				builder.AddParagraph("");
+				
 				builder.AddHeading("Attainment 8 English", HeadingLevel.Three);
 				builder.AddTable(new List<TextElement[]>
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement("ks4Data.Year") { Bold = true }, new TextElement("ks4Data.PreviousYear") { Bold = true },
-						new TextElement("ks4Data.TwoYearsAgo") { Bold = true },
+						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
 					},
 					new[]
 					{
 						new TextElement(project.SchoolName) { Bold = true }, HtmlStringToTextElement(ks4Data.Attainment8ScoreEnglish),
-						HtmlStringToTextElement(ks4Data.Attainment8ScoreEnglishPreviousYear), HtmlStringToTextElement(ks4Data.Attainment8ScoreEnglishTwoYearsAgo),
+						HtmlStringToTextElement(ks4Data.Attainment8ScoreEnglishPreviousYear), HtmlStringToTextElement(ks4Data.Attainment8ScoreEnglishTwoYearsAgo)
 					},
 					new[]
 					{
 						new TextElement($"{project.LocalAuthority} LA average") { Bold = true }, HtmlStringToTextElement(ks4Data.LaAverageAttainment8ScoreEnglish),
-						HtmlStringToTextElement(ks4Data.LaAverageAttainment8ScoreEnglishPreviousYear), HtmlStringToTextElement(ks4Data.LaAverageAttainment8ScoreEnglishTwoYearsAgo),
+						HtmlStringToTextElement(ks4Data.LaAverageAttainment8ScoreEnglishPreviousYear),
+						HtmlStringToTextElement(ks4Data.LaAverageAttainment8ScoreEnglishTwoYearsAgo),
 					},
 					new[]
 					{
 						new TextElement("National average") { Bold = true }, HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreEnglish),
-						HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreEnglishPreviousYear), HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreEnglishTwoYearsAgo),
+						HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreEnglishPreviousYear),
+						HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreEnglishTwoYearsAgo),
 					},
 				});
+				builder.AddParagraph("");
 
 				builder.AddHeading("Attainment 8 English", HeadingLevel.Three);
 				builder.AddTable(new List<TextElement[]>
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement("ks4Data.Year") { Bold = true }, new TextElement("ks4Data.PreviousYear") { Bold = true },
-						new TextElement("ks4Data.TwoYearsAgo") { Bold = true },
+						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
 					},
 					new[]
 					{
@@ -155,17 +162,19 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 					new[]
 					{
 						new TextElement("National average") { Bold = true }, HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreMaths),
-						HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreMathsPreviousYear), HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreMathsTwoYearsAgo),
+						HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreMathsPreviousYear),
+						HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreMathsTwoYearsAgo),
 					},
 				});
+				builder.AddParagraph("");
 
 				builder.AddHeading("Attainment 8 Ebacc", HeadingLevel.Three);
 				builder.AddTable(new List<TextElement[]>
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement("ks4Data.Year") { Bold = true }, new TextElement("ks4Data.PreviousYear") { Bold = true },
-						new TextElement("ks4Data.TwoYearsAgo") { Bold = true },
+						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
 					new[]
 					{
@@ -175,14 +184,17 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 					new[]
 					{
 						new TextElement($"{project.LocalAuthority} LA average") { Bold = true }, HtmlStringToTextElement(ks4Data.LaAverageAttainment8ScoreEbacc),
-						HtmlStringToTextElement(ks4Data.LaAverageAttainment8ScoreEbaccPreviousYear), HtmlStringToTextElement(ks4Data.LaAverageAttainment8ScoreEbaccTwoYearsAgo),
+						HtmlStringToTextElement(ks4Data.LaAverageAttainment8ScoreEbaccPreviousYear),
+						HtmlStringToTextElement(ks4Data.LaAverageAttainment8ScoreEbaccTwoYearsAgo),
 					},
 					new[]
 					{
 						new TextElement("National average") { Bold = true }, HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreEbacc),
-						HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreEbaccPreviousYear), HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreEbaccTwoYearsAgo),
+						HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreEbaccPreviousYear),
+						HtmlStringToTextElement(ks4Data.NationalAverageAttainment8ScoreEbaccTwoYearsAgo),
 					}
 				});
+				builder.AddParagraph("");
 
 				builder.AddHeading("Progress 8", HeadingLevel.Two);
 				builder.AddHeading("Pupils included in P8", HeadingLevel.Three);
@@ -190,8 +202,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement("ks4Data.Year") { Bold = true }, new TextElement("ks4Data.PreviousYear") { Bold = true },
-						new TextElement("ks4Data.TwoYearsAgo") { Bold = true },
+						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
 					new[]
 					{
@@ -201,27 +213,30 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 					new[]
 					{
 						new TextElement($"{project.LocalAuthority} LA average") { Bold = true }, HtmlStringToTextElement(ks4Data.LaAveragePupilsIncludedProgress8),
-						HtmlStringToTextElement(ks4Data.LaAveragePupilsIncludedProgress8PreviousYear), HtmlStringToTextElement(ks4Data.LaAveragePupilsIncludedProgress8TwoYearsAgo),
+						HtmlStringToTextElement(ks4Data.LaAveragePupilsIncludedProgress8PreviousYear),
+						HtmlStringToTextElement(ks4Data.LaAveragePupilsIncludedProgress8TwoYearsAgo),
 					},
 					new[]
 					{
 						new TextElement("National average") { Bold = true }, HtmlStringToTextElement(ks4Data.NationalAveragePupilsIncludedProgress8),
-						HtmlStringToTextElement(ks4Data.NationalAveragePupilsIncludedProgress8PreviousYear), HtmlStringToTextElement(ks4Data.NationalAveragePupilsIncludedProgress8TwoYearsAgo),
+						HtmlStringToTextElement(ks4Data.NationalAveragePupilsIncludedProgress8PreviousYear),
+						HtmlStringToTextElement(ks4Data.NationalAveragePupilsIncludedProgress8TwoYearsAgo),
 					},
 				});
+				builder.AddParagraph("");
 
 				builder.AddHeading("School progress scores", HeadingLevel.Three);
 				builder.AddTable(new List<TextElement[]>
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement("ks4Data.Year") { Bold = true }, new TextElement("ks4Data.PreviousYear") { Bold = true },
-						new TextElement("ks4Data.TwoYearsAgo") { Bold = true },
+						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
 					new[]
 					{
-						new TextElement(project.SchoolName) { Bold = true }, HtmlStringToTextElement(ks4Data.Progress8Score), HtmlStringToTextElement(ks4Data.Progress8ScorePreviousYear),
-						HtmlStringToTextElement(ks4Data.Progress8ScoreTwoYearsAgo),
+						new TextElement(project.SchoolName) { Bold = true }, HtmlStringToTextElement(ks4Data.Progress8Score),
+						HtmlStringToTextElement(ks4Data.Progress8ScorePreviousYear), HtmlStringToTextElement(ks4Data.Progress8ScoreTwoYearsAgo),
 					},
 					new[]
 					{
@@ -250,14 +265,15 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 						new TextElement(ks4Data.NationalAverageProgress8ConfidenceIntervalTwoYearsAgo),
 					},
 				});
+				builder.AddParagraph("");
 
 				builder.AddHeading("Progress 8 English", HeadingLevel.Three);
 				builder.AddTable(new List<TextElement[]>
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement("ks4Data.Year") { Bold = true }, new TextElement("ks4Data.PreviousYear") { Bold = true },
-						new TextElement("ks4Data.TwoYearsAgo") { Bold = true },
+						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
 					new[]
 					{
@@ -267,22 +283,25 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 					new[]
 					{
 						new TextElement($"{project.LocalAuthority} LA average") { Bold = true }, HtmlStringToTextElement(ks4Data.LaAverageProgress8ScoreEnglish),
-						HtmlStringToTextElement(ks4Data.LaAverageProgress8ScoreEnglishPreviousYear), HtmlStringToTextElement(ks4Data.LaAverageProgress8ScoreEnglishTwoYearsAgo),
+						HtmlStringToTextElement(ks4Data.LaAverageProgress8ScoreEnglishPreviousYear),
+						HtmlStringToTextElement(ks4Data.LaAverageProgress8ScoreEnglishTwoYearsAgo),
 					},
 					new[]
 					{
 						new TextElement("National average") { Bold = true }, HtmlStringToTextElement(ks4Data.NationalAverageProgress8ScoreEnglish),
-						HtmlStringToTextElement(ks4Data.NationalAverageProgress8ScoreEnglishPreviousYear), HtmlStringToTextElement(ks4Data.NationalAverageProgress8ScoreEnglishTwoYearsAgo),
+						HtmlStringToTextElement(ks4Data.NationalAverageProgress8ScoreEnglishPreviousYear),
+						HtmlStringToTextElement(ks4Data.NationalAverageProgress8ScoreEnglishTwoYearsAgo),
 					}
 				});
+				builder.AddParagraph("");
 
 				builder.AddHeading("Progress 8 Maths", HeadingLevel.Three);
 				builder.AddTable(new List<TextElement[]>
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement("ks4Data.Year") { Bold = true }, new TextElement("ks4Data.PreviousYear") { Bold = true },
-						new TextElement("ks4Data.TwoYearsAgo") { Bold = true },
+						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
 					new[]
 					{
@@ -297,17 +316,19 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 					new[]
 					{
 						new TextElement("National average") { Bold = true }, HtmlStringToTextElement(ks4Data.NationalAverageProgress8ScoreMaths),
-						HtmlStringToTextElement(ks4Data.NationalAverageProgress8ScoreMathsPreviousYear), HtmlStringToTextElement(ks4Data.NationalAverageProgress8ScoreMathsTwoYearsAgo),
+						HtmlStringToTextElement(ks4Data.NationalAverageProgress8ScoreMathsPreviousYear),
+						HtmlStringToTextElement(ks4Data.NationalAverageProgress8ScoreMathsTwoYearsAgo),
 					}
 				});
+				builder.AddParagraph("");
 
 				builder.AddHeading("Progress 8 Ebacc", HeadingLevel.Three);
 				builder.AddTable(new List<TextElement[]>
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement("ks4Data.Year") { Bold = true }, new TextElement("ks4Data.PreviousYear") { Bold = true },
-						new TextElement("ks4Data.TwoYearsAgo") { Bold = true },
+						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
 					new[]
 					{
@@ -322,17 +343,19 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 					new[]
 					{
 						new TextElement("National average") { Bold = true }, HtmlStringToTextElement(ks4Data.NationalAverageProgress8ScoreEbacc),
-						HtmlStringToTextElement(ks4Data.NationalAverageProgress8ScoreEbaccPreviousYear), HtmlStringToTextElement(ks4Data.NationalAverageProgress8ScoreEbaccTwoYearsAgo),
+						HtmlStringToTextElement(ks4Data.NationalAverageProgress8ScoreEbaccPreviousYear),
+						HtmlStringToTextElement(ks4Data.NationalAverageProgress8ScoreEbaccTwoYearsAgo),
 					}
 				});
+				builder.AddParagraph("");
 
 				builder.AddHeading("Percentage of students entering EBacc", HeadingLevel.Three);
 				builder.AddTable(new List<TextElement[]>
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement("ks4Data.Year") { Bold = true }, new TextElement("ks4Data.PreviousYear") { Bold = true },
-						new TextElement("ks4Data.TwoYearsAgo") { Bold = true },
+						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
 					new[]
 					{
@@ -357,6 +380,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[] { new TextElement("Additional information") { Bold = true }, new TextElement(project.KeyStage4PerformanceAdditionalInformation) }
 				});
+				builder.AddParagraph("");
 			});
 		}
 
@@ -370,19 +394,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 
 			documentBuilder.ReplacePlaceholderWithContent("KS5PerformanceData", builder =>
 			{
+				builder.AddHeading("Key stage 5 performance tables", HeadingLevel.One);
+				
 				foreach (var ks5Data in document.KeyStage5)
 				{
-					builder.AddHeading(hBuilder =>
-					{
-						hBuilder.AddText($"{ks5Data.Year} scores for academic and applied general qualifications");
-						hBuilder.SetHeadingLevel(HeadingLevel.Two);
-					});
-
-					builder.AddHeading(hBuilder =>
-					{
-						hBuilder.AddText($"Local authority: {project.LocalAuthority}");
-						hBuilder.SetHeadingLevel(HeadingLevel.Three);
-					});
+					builder.AddHeading($"{ks5Data.Year} scores for academic and applied general qualifications", HeadingLevel.Two);
+					builder.AddHeading($"Local authority: {project.LocalAuthority}", HeadingLevel.Three);
 
 					builder.AddTable(new List<TextElement[]>
 					{
@@ -403,14 +420,15 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 							new TextElement(ks5Data.NationalAverageAppliedGeneralAverage),
 						}
 					});
+					
+					builder.AddParagraph("");
 				}
-
-				builder.AddParagraph("");
 
 				builder.AddTable(new List<TextElement[]>
 				{
 					new[] { new TextElement("Additional information") { Bold = true }, new TextElement(project.KeyStage5PerformanceAdditionalInformation) }
 				});
+				builder.AddParagraph("");
 			});
 		}
 
@@ -424,14 +442,11 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 
 			documentBuilder.ReplacePlaceholderWithContent("KS2PerformanceData", builder =>
 			{
+				builder.AddHeading("Key stage 2 performance tables", HeadingLevel.One);
+				
 				foreach (var ks2Data in document.KeyStage2)
 				{
-					builder.AddHeading(hBuilder =>
-					{
-						hBuilder.AddText($"{ks2Data.Year} Key stage 2");
-						hBuilder.SetHeadingLevel(HeadingLevel.Two);
-					});
-
+					builder.AddHeading($"{ks2Data.Year} Key stage 2", HeadingLevel.Two);
 					builder.AddTable(new List<TextElement[]>
 					{
 						new[]
@@ -460,14 +475,14 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 							new TextElement(ks2Data.NationalAverageWritingProgressScore), new TextElement(ks2Data.NationalAverageMathsProgressScore),
 						}
 					});
+					builder.AddParagraph("");
 				}
-				
-				builder.AddParagraph("");
 
 				builder.AddTable(new List<TextElement[]>
 				{
 					new[] { new TextElement("Additional information") { Bold = true }, new TextElement(project.KeyStage2PerformanceAdditionalInformation) }
 				});
+				builder.AddParagraph("");
 			});
 		}
 
