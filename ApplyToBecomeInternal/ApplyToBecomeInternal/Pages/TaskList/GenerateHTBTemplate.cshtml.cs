@@ -141,7 +141,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				});
 				builder.AddParagraph("");
 
-				builder.AddHeading("Attainment 8 English", HeadingLevel.Three);
+				builder.AddHeading("Attainment 8 Maths", HeadingLevel.Three);
 				builder.AddTable(new List<TextElement[]>
 				{
 					new[]
