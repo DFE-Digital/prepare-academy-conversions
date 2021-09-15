@@ -38,11 +38,7 @@ namespace ApplyToBecome.Data.Models.KeyStagePerformance
 		private bool HasKeyStage5Performance(KeyStage5PerformanceResponse keyStage5Performance)
 		{
 			return keyStage5Performance.AcademicQualificationAverage != null
-			       || keyStage5Performance.AppliedGeneralQualificationAverage != null
-			       || keyStage5Performance.NationalAcademicQualificationAverage != null
-			       || keyStage5Performance.NationalAppliedGeneralQualificationAverage != null
-			       || keyStage5Performance.LAAcademicQualificationAverage != null
-			       || keyStage5Performance.LAAppliedGeneralQualificationAverage != null;
+			       || keyStage5Performance.AppliedGeneralQualificationAverage != null;
 		}
 		
 		private bool HasValue(DisadvantagedPupilsResponse disadvantagedPupilsResponse)
