@@ -3,6 +3,10 @@
 @{
 	Model.SuccessPage = Links.ProjectNotes.Index.Page;
 	ViewData["Title"] = "Project notes";
+	if (Model.ShowError)
+	{
+		ViewData["Title"] = $"Error: {ViewData["Title"]}";
+	}
 }
 
 @section BeforeMain
@@ -12,7 +16,7 @@
 
 @if (Model.ShowError)
 {
-	<partial name="_ErrorSummary" />
+	<partial name="_ErrorSummary"/>
 }
 
 <div class="govuk-grid-row">
@@ -24,8 +28,8 @@
 		<form method="post">
 			<div class="govuk-form-group">
 				<label class="govuk-label govuk-label--m" for="project-note-subject">
-                	Subject
-                </label>
+					Subject
+				</label>
 				<textarea class="govuk-textarea" id="project-note-subject" name="project-note-subject" rows="1"></textarea>
 			</div>
 			<div class="govuk-form-group">

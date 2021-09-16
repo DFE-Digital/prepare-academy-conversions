@@ -8,8 +8,12 @@
 
 @section BeforeMain
 {
-	<govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation" />
+	<govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation"/>
 }
 
-<h1 class="govuk-heading-l">Enter the full name of the author of this headteacher board (HTB) template</h1>
-<govuk-text-input name="author" asp-for="Project.Author" width="20" hint="Entering the person's name will not send the template to them. You will still need to add the template to Sharepoint when you download it." />
+<h1 class="govuk-label-wrapper">
+	<label class="govuk-label govuk-label--l" for="author">
+		Enter the full name of the author of this headteacher board (HTB) template
+	</label>
+</h1>
+<govuk-text-input name="author" id="author" asp-for="Project.Author" width="20" hint="Entering the person's name will not send the template to them. You will still need to add the template to Sharepoint when you download it."/>

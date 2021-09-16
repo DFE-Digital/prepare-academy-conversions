@@ -24,9 +24,9 @@
 		</span>
 	}
 	<input class="govuk-input @width @(showError ? "govuk-input--error" : "")"
-		   id="@Model.Id"
-		   name="@Model.Name"
-		   value="@Model.Value"
-		   type="text"
-		   aria-describedby="@(showHint ? $"{Model.Id}-hint": "")">
+	       id="@Model.Id"
+	       name="@Model.Name"
+	       value="@Model.Value"
+	       type="text"
+	       @(showHint ? $"aria-describedby=\"{Model.Id}-hint\"" : "")>
 </div>
