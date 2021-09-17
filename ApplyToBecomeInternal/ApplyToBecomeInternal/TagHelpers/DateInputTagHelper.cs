@@ -12,6 +12,8 @@ namespace ApplyToBecomeInternal.TagHelpers
 	[HtmlTargetElement("govuk-date-input", TagStructure = TagStructure.WithoutEndTag)]
 	public class DateInputTagHelper : InputTagHelperBase
 	{
+		public bool HeadingLabel { get; set; }
+		
 		private readonly ErrorService _errorService;
 
 		public DateInputTagHelper(IHtmlHelper htmlHelper, ErrorService errorService) : base(htmlHelper)
@@ -32,6 +34,7 @@ namespace ApplyToBecomeInternal.TagHelpers
 				Id = Id,
 				Name = Name,
 				Label = Label,
+				HeadingLabel = HeadingLabel,
 				Hint = Hint
 			};
 
@@ -69,5 +72,6 @@ namespace ApplyToBecomeInternal.TagHelpers
 
 			return await _htmlHelper.PartialAsync("_DateInput", model);
 		}
+
 	}
 }
