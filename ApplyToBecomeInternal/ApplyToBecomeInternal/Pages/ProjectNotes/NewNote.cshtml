@@ -2,6 +2,11 @@
 @model ApplyToBecomeInternal.Pages.ProjectNotes.NewNoteModel
 @{
 	Model.SuccessPage = Links.ProjectNotes.Index.Page;
+	ViewData["Title"] = "Project notes";
+	if (Model.ShowError)
+	{
+		ViewData["Title"] = $"Error: {ViewData["Title"]}";
+	}
 }
 
 @section BeforeMain
@@ -11,7 +16,7 @@
 
 @if (Model.ShowError)
 {
-	<partial name="_ErrorSummary" />
+	<partial name="_ErrorSummary"/>
 }
 
 <div class="govuk-grid-row">
@@ -22,16 +27,16 @@
 		</h1>
 		<form method="post">
 			<div class="govuk-form-group">
-				<label class="govuk-label govuk-label--m">
-                	Subject
-                </label>
-				<textarea class="govuk-textarea" id="project-note-subject" name="project-note-subject" rows="1" aria-describedby="project-note-subject-info subject-hint"></textarea>
+				<label class="govuk-label govuk-label--m" for="project-note-subject">
+					Subject
+				</label>
+				<textarea class="govuk-textarea" id="project-note-subject" name="project-note-subject" rows="1"></textarea>
 			</div>
 			<div class="govuk-form-group">
-				<label class="govuk-label govuk-label--m">
+				<label class="govuk-label govuk-label--m" for="project-note-body">
 					Note
 				</label>
-				<textarea class="govuk-textarea" id="project-note-body" name="project-note-body" rows="5" aria-describedby="project-note-body-info"></textarea>
+				<textarea class="govuk-textarea" id="project-note-body" name="project-note-body" rows="5"></textarea>
 			</div>
 			<button type="submit" role="button" draggable="false" class="govuk-button govuk-button" data-module="govuk-button">
 				Save note

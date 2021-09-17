@@ -12,5 +12,10 @@
 	<govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation" />
 }
 
-<h1 class="govuk-heading-l">Is an academy order required for this conversion?</h1>
-<govuk-radios-input name="academy-order-required" asp-for="Project.AcademyOrderRequired" values="@values" labels="@values" />
+<h1 class="govuk-heading-l"></h1>
+<h1 class="govuk-label-wrapper">
+	<label class="govuk-label govuk-label--l" for="academy-order-required">
+		Is an academy order required for this conversion?
+	</label>
+</h1>
+<govuk-radios-input name="academy-order-required" id="academy-order-required" asp-for="Project.AcademyOrderRequired" values="@values" labels="@values" />

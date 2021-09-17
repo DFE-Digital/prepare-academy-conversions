@@ -30,7 +30,7 @@
 			rows="@Model.Rows"
 			data-module="moj-rich-text-editor"
 			data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers"
-			aria-describedby="@(showHint ? $"{Model.Id}-hint": "")">@Model.Value</textarea>
+			@(showHint ? $"aria-describedby=\"{Model.Id}-hint\"" : "")>@Model.Value</textarea>
 	}
 	else
 	{
@@ -38,7 +38,7 @@
 			id="@Model.Id"
 			name="@Model.Name"
 			rows="@Model.Rows"
-			aria-describedby="@(showHint ? $"{Model.Id}-hint": "")">@Model.Value</textarea>
+			@(showHint ? $"aria-describedby=\"{Model.Id}-hint\"" : "")>@Model.Value</textarea>
 	}
 
 </div>
