@@ -11,6 +11,8 @@ namespace ApplyToBecomeInternal.TagHelpers
 	{
 		[HtmlAttributeName("width")]
 		public int Width { get; set; }
+		
+		public bool HeadingLabel { get; set; }
 
 		public TextInputTagHelper(IHtmlHelper htmlHelper) : base(htmlHelper) { }
 
@@ -23,7 +25,8 @@ namespace ApplyToBecomeInternal.TagHelpers
 				Label = Label,
 				Value = For.Model?.ToString(),
 				Width = Width,
-				Hint = Hint
+				Hint = Hint,
+				HeadingLabel = HeadingLabel
 			};
 
 			if (ViewContext.ModelState.TryGetValue(Name, out var entry) && entry.Errors.Count > 0)

@@ -12,5 +12,4 @@
 	<govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation" />
 }
 
-<h1 class="govuk-heading-l">Are there viability issues at the school?</h1>
-<govuk-radios-input name="viability-issues" asp-for="Project.ViabilityIssues" values="@values" labels="@values" />
+<govuk-radios-input heading-label="true" label="Are there viability issues at the school?" name="viability-issues" asp-for="Project.ViabilityIssues" values="@values" labels="@values" />
