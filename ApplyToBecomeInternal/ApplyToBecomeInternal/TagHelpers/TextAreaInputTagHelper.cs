@@ -9,6 +9,9 @@ namespace ApplyToBecomeInternal.TagHelpers
 	[HtmlTargetElement("govuk-textarea-input", TagStructure = TagStructure.WithoutEndTag)]
 	public class TextAreaInputTagHelper : InputTagHelperBase
 	{
+		[HtmlAttributeName("heading-label")]
+		public bool HeadingLabel { get; set; }
+		
 		[HtmlAttributeName("rows")]
 		public int Rows { get; set; }
 
@@ -27,7 +30,8 @@ namespace ApplyToBecomeInternal.TagHelpers
 				Value = For.Model?.ToString(),
 				Rows = Rows,
 				Hint = Hint,
-				RichText = RichText
+				RichText = RichText,
+				HeadingLabel = HeadingLabel
 			};
 
 			if (ViewContext.ModelState.TryGetValue(Name, out var entry) && entry.Errors.Count > 0)

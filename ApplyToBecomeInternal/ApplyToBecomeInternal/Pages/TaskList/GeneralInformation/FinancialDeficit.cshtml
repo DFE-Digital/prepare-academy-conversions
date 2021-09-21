@@ -12,5 +12,4 @@
 	<govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation" />
 }
 
-<h1 class="govuk-heading-l">Is there a financial deficit at the school in its current financial year?</h1>
-<govuk-radios-input name="financial-deficit" asp-for="Project.FinancialDeficit" values="@values" labels="@values" />
+<govuk-radios-input heading-label="true" label="Is there a financial deficit at the school in its current financial year?" name="financial-deficit" asp-for="Project.FinancialDeficit" values="@values" labels="@values" />

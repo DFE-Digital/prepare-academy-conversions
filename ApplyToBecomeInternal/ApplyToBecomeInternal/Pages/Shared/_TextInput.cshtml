@@ -7,9 +7,20 @@
 <div class="govuk-form-group @(showError ? "govuk-form-group--error" : "")">
 	@if (!string.IsNullOrWhiteSpace(Model.Label))
 	{
-		<label class="govuk-label" for="@Model.Id">
-			@Model.Label
-		</label>
+		if (Model.HeadingLabel)
+		{
+			<h1 class="govuk-label-wrapper">
+				<label class="govuk-label govuk-label--l" for="@Model.Id">
+					@Model.Label
+				</label>
+			</h1>
+		}
+		else
+		{
+			<label class="govuk-label" for="@Model.Id">
+				@Model.Label
+			</label>
+		}
 	}
 	@if (showHint)
 	{
