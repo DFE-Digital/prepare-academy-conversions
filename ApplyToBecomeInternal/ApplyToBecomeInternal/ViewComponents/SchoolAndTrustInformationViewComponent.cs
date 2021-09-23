@@ -46,6 +46,8 @@ namespace ApplyToBecomeInternal.ViewComponents
 				SponsorReferenceNumber = project.SponsorReferenceNumber ?? "Not applicable",
 				SponsorName = project.SponsorName ?? "Not applicable",
 				AcademyTypeAndRoute = project.AcademyTypeAndRoute,
+				ConversionSupportGrantAmount = project.ConversionSupportGrantAmount.ToMoneyString(true),
+				ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
 				ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(true)
 			};
 

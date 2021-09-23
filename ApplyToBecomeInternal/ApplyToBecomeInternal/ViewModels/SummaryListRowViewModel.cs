@@ -13,5 +13,6 @@
 		public string HiddenText { get; set; }
 		public string KeyWidth { get; set; }
 		public string ValueWidth { get; set; }
+		public string Name { get; set; }
 	}
 }

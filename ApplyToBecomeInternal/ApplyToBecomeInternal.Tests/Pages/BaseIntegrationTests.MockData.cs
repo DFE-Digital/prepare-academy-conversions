@@ -21,6 +21,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			{
 				postSetup(projects.First());
 			}
+
 			_factory.AddGetWithJsonResponse("/conversion-projects", projects);
 			return projects;
 		}
@@ -32,6 +33,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			{
 				postSetup(project);
 			}
+
 			_factory.AddGetWithJsonResponse($"/conversion-projects/{project.Id}", project);
 			return project;
 		}
@@ -43,6 +45,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			{
 				postSetup(keyStagePerformance);
 			}
+
 			_factory.AddGetWithJsonResponse($"/educationPerformance/{urn}", keyStagePerformance);
 			return keyStagePerformance;
 		}
@@ -54,6 +57,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			{
 				postSetup(projectNotes);
 			}
+
 			_factory.AddGetWithJsonResponse($"/project-notes/{academyConversionProjectId}", projectNotes);
 			return projectNotes;
 		}
@@ -77,12 +81,13 @@ namespace ApplyToBecomeInternal.Tests.Pages
 
 		public ProjectNote AddPostProjectNote(int id, AddProjectNote request)
 		{
-			var response = new ProjectNote {Subject = request.Subject, Note = request.Note, Author = request.Author};
+			var response = new ProjectNote { Subject = request.Subject, Note = request.Note, Author = request.Author };
 			_factory.AddPostWithJsonRequest($"/project-notes/{id}", request, response);
 			return response;
 		}
 
-		public UpdateAcademyConversionProject AddPatchProjectMany(AcademyConversionProject project, Func<IPostprocessComposer<UpdateAcademyConversionProject>, IPostprocessComposer<UpdateAcademyConversionProject>> postProcess)
+		public UpdateAcademyConversionProject AddPatchProjectMany(AcademyConversionProject project,
+			Func<IPostprocessComposer<UpdateAcademyConversionProject>, IPostprocessComposer<UpdateAcademyConversionProject>> postProcess)
 		{
 			var composer = _fixture
 				.Build<UpdateAcademyConversionProject>()

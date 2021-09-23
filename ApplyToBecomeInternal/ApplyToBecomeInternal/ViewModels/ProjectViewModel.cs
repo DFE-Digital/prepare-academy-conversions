@@ -38,6 +38,8 @@ namespace ApplyToBecomeInternal.ViewModels
 			AcademyTypeAndRoute = project.AcademyTypeAndRoute;
 			ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate;
 			SchoolAndTrustInformationSectionComplete = project.SchoolAndTrustInformationSectionComplete ?? false;
+			ConversionSupportGrantAmount = project.ConversionSupportGrantAmount;
+			ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason;
 
 			PublishedAdmissionNumber = project.PublishedAdmissionNumber;
 			ViabilityIssues = project.ViabilityIssues;
@@ -78,6 +80,7 @@ namespace ApplyToBecomeInternal.ViewModels
 			KeyStage5PerformanceAdditionalInformation = project.KeyStage5PerformanceAdditionalInformation;
 		}
 
+
 		public string Id { get; }
 		public string SchoolName { get; }
 		public string SchoolURN { get; }
@@ -109,6 +112,8 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string AcademyTypeAndRoute { get; set; }
 		public DateTime? ProposedAcademyOpeningDate { get; set; }
 		public bool SchoolAndTrustInformationSectionComplete { get; set; }
+		public int ConversionSupportGrantAmount { get; set; }
+		public string ConversionSupportGrantChangeReason { get; set; }
 
 		//general info
 		public string PublishedAdmissionNumber { get; set; }

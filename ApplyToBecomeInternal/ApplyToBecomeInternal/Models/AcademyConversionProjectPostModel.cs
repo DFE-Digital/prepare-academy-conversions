@@ -73,6 +73,10 @@ namespace ApplyToBecomeInternal.Models
 		[Required]
 		[Display(Name = "Previous headteacher board")]
 		public DateTime? PreviousHeadTeacherBoardDate { get; set; }
+		[BindProperty(Name="conversion-support-grant-amount")]
+		public int ConversionSupportGrantAmount { get; set; }
+		[BindProperty(Name="conversion-support-grant-change-reason")]
+		public string ConversionSupportGrantChangeReason { get; set; }
 
 		//general info
 
