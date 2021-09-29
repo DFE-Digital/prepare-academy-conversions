@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			await NavigateAsync("Generate HTB document");
+			await NavigateAsync("Generate project document");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/generate-headteacher-board-template");
 
 			await NavigateAsync("Back to task list");
@@ -47,7 +47,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
 			Console.WriteLine(Document.Url);
-			await NavigateAsync("Generate HTB document");
+			await NavigateAsync("Generate project document");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 
