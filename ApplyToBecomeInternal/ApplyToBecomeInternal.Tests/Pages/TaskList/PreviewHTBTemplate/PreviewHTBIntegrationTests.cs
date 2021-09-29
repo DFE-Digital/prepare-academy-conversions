@@ -28,7 +28,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			await NavigateAsync("Preview HTB template");
+			await NavigateAsync("Preview project template");
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-headteacher-board-template");
 
 			await NavigateAsync("Back to task list");
