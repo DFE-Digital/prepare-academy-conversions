@@ -9,6 +9,12 @@ namespace ApplyToBecomeInternal.TagHelpers
 	[HtmlTargetElement("govuk-radios-input", TagStructure = TagStructure.WithoutEndTag)]
 	public class RadiosInputTagHelper : InputTagHelperBase
 	{
+		[HtmlAttributeName("leading-paragraph")]
+		public string LeadingParagraph { get; set; }
+		
+		[HtmlAttributeName("heading-label")]
+		public bool HeadingLabel { get; set; }
+		
 		[HtmlAttributeName("values")]
 		public string[] Values { get; set; }
 
@@ -26,7 +32,9 @@ namespace ApplyToBecomeInternal.TagHelpers
 				Label = Label,
 				Value = For.Model?.ToString(),
 				Values = Values,
-				Labels = Labels
+				Labels = Labels,
+				HeadingLabel = HeadingLabel,
+				LeadingParagraph = LeadingParagraph
 			};
 
 			return await _htmlHelper.PartialAsync("_RadiosInput", model);

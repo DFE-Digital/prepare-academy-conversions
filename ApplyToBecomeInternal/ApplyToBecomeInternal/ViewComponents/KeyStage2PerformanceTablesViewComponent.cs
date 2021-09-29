@@ -37,32 +37,9 @@ namespace ApplyToBecomeInternal.ViewComponents
 			ViewData["LocalAuthority"] = project.LocalAuthority;
 			var keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(project.Urn.ToString());
 
-			var viewModel = keyStagePerformance.KeyStage2.Select(Build).OrderByDescending(ks => ks.Year);
+			var viewModel = keyStagePerformance.KeyStage2.Select(KeyStage2PerformanceTableViewModel.Build).OrderByDescending(ks => ks.Year);
 
 			return View(viewModel);
-		}
-
-		private KeyStage2PerformanceTableViewModel Build(KeyStage2PerformanceResponse keyStage2Performance)
-		{
-			return new KeyStage2PerformanceTableViewModel
-			{
-				Year = keyStage2Performance.Year.FormatKeyStageYear(),
-				PercentageMeetingExpectedStdInRWM = keyStage2Performance.PercentageMeetingExpectedStdInRWM.NotDisadvantaged.FormatValue(),
-				PercentageAchievingHigherStdInRWM = keyStage2Performance.PercentageAchievingHigherStdInRWM.NotDisadvantaged.FormatValue(),
-				ReadingProgressScore = keyStage2Performance.ReadingProgressScore.NotDisadvantaged.FormatValue(),
-				WritingProgressScore = keyStage2Performance.WritingProgressScore.NotDisadvantaged.FormatValue(),
-				MathsProgressScore = keyStage2Performance.MathsProgressScore.NotDisadvantaged.FormatValue(),
-				NationalAveragePercentageMeetingExpectedStdInRWM = HtmlFormatKeyStageDisadvantagedResult(keyStage2Performance.NationalAveragePercentageMeetingExpectedStdInRWM),
-				NationalAveragePercentageAchievingHigherStdInRWM = HtmlFormatKeyStageDisadvantagedResult(keyStage2Performance.NationalAveragePercentageAchievingHigherStdInRWM),
-				NationalAverageReadingProgressScore = keyStage2Performance.NationalAverageReadingProgressScore.NotDisadvantaged.FormatValue(),
-				NationalAverageWritingProgressScore = keyStage2Performance.NationalAverageWritingProgressScore.NotDisadvantaged.FormatValue(),
-				NationalAverageMathsProgressScore = keyStage2Performance.NationalAverageMathsProgressScore.NotDisadvantaged.FormatValue(),
-				LAAveragePercentageMeetingExpectedStdInRWM = keyStage2Performance.LAAveragePercentageMeetingExpectedStdInRWM.NotDisadvantaged.FormatValue(),
-				LAAveragePercentageAchievingHigherStdInRWM = keyStage2Performance.LAAveragePercentageAchievingHigherStdInRWM.NotDisadvantaged.FormatValue(),
-				LAAverageMathsProgressScore = keyStage2Performance.LAAverageMathsProgressScore.NotDisadvantaged.FormatValue(),
-				LAAverageReadingProgressScore = keyStage2Performance.LAAverageReadingProgressScore.NotDisadvantaged.FormatValue(),
-				LAAverageWritingProgressScore = keyStage2Performance.LAAverageWritingProgressScore.NotDisadvantaged.FormatValue()
-			};
 		}
 	}
 }

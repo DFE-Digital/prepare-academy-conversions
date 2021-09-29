@@ -7,17 +7,18 @@
 
 @section BeforeMain
 {
-	<govuk-back-link link-item="@Links.KeyStagePerformanceSection.KeyStage2PerformanceTables" />
+	<govuk-back-link link-item="@Links.KeyStagePerformanceSection.KeyStage2PerformanceTables"/>
 }
+
 @if (Model.ShowError)
 {
-	<partial name="_ErrorSummary" />
+	<partial name="_ErrorSummary"/>
 }
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
-        <h1 class="govuk-heading-l">Key stage 2 performance tables</h1>
+		<h1 class="govuk-heading-l">Key stage 2 performance tables</h1>
 		<p class="govuk-body">This information comes from TRAMS and you can add any <a href="#additional-information">additional information</a> if you need to. These performance tables and additional information will go into your headteacher board template.</p>
 		<p class="govuk-body-s">
 			TRAMS last updated on: 23 March 2021<br>
@@ -25,13 +26,17 @@
 		</p>
 	</div>
 	<div class="govuk-grid-column-full">
-		<vc:key-stage2-performance-tables />
+		<vc:key-stage2-performance-tables/>
 	</div>
 	<div class="govuk-grid-column-two-thirds">
 		<form method="post">
-			<h3 class="govuk-heading-m">Add any additional information if you need to</h3>
+			<h2 class="govuk-heading-m">
+				<label for="additional-information">
+					Add any additional information if you need to
+				</label>
+			</h2>
 			<p class="govuk-body">This information will populate into your HTB template under the key stage performance section.</p>
-			<govuk-textarea-input id="additional-information" name="key-stage-2-additional-information" asp-for="Project.KeyStage2PerformanceAdditionalInformation" rows="5" />
+			<govuk-textarea-input id="additional-information" name="key-stage-2-additional-information" asp-for="Project.KeyStage2PerformanceAdditionalInformation" rows="5"/>
 			<button class="govuk-button" data-module="govuk-button">
 				Save and continue
 			</button>

@@ -12,5 +12,4 @@
 	<govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation" />
 }
 
-<h1 class="govuk-heading-l">Has this project been to a previous headteacher board (HTB)?</h1>
-<govuk-radios-input id="previous-head-teacher-board-date-question" name="previous-head-teacher-board-date-question" asp-for="Project.PreviousHeadTeacherBoardDateQuestion" values="@values" labels="@values" />
+<govuk-radios-input heading-label="true" label="Has this project been to a previous headteacher board (HTB)?" id="previous-head-teacher-board-date-question" name="previous-head-teacher-board-date-question" asp-for="Project.PreviousHeadTeacherBoardDateQuestion" values="@values" labels="@values" />

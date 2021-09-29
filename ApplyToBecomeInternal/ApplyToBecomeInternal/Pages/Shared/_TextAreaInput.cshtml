@@ -6,9 +6,20 @@
 <div class="govuk-form-group @(showError ? "govuk-form-group--error" : "")">
 	@if (!string.IsNullOrWhiteSpace(Model.Label))
 	{
-		<label class="govuk-label" for="@Model.Id">
-			@Model.Label
-		</label>
+		if (Model.HeadingLabel)
+		{
+			<h1 class="govuk-label-wrapper">
+				<label class="govuk-label govuk-label--l" for="@Model.Id">
+					@Model.Label
+				</label>
+			</h1>
+		}
+		else
+		{
+			<label class="govuk-label" for="@Model.Id">
+				@Model.Label
+			</label>
+		}
 	}
 	@if (showHint)
 	{
@@ -30,7 +41,7 @@
 			rows="@Model.Rows"
 			data-module="moj-rich-text-editor"
 			data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers"
-			aria-describedby="@(showHint ? $"{Model.Id}-hint": "")">@Model.Value</textarea>
+			@(showHint ? $"aria-describedby=\"{Model.Id}-hint\"" : "")>@Model.Value</textarea>
 	}
 	else
 	{
@@ -38,7 +49,7 @@
 			id="@Model.Id"
 			name="@Model.Name"
 			rows="@Model.Rows"
-			aria-describedby="@(showHint ? $"{Model.Id}-hint": "")">@Model.Value</textarea>
+			@(showHint ? $"aria-describedby=\"{Model.Id}-hint\"" : "")>@Model.Value</textarea>
 	}
 
 </div>

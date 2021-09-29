@@ -22,7 +22,7 @@ namespace DocumentGeneration.Builders
 
         public void AddText(string text)
         {
-            AddText(new TextElement {Value = text});
+            AddText(new TextElement {Value = text, Bold = true});
         }
 
         public void AddText(TextElement text)

@@ -37,25 +37,9 @@ namespace ApplyToBecomeInternal.ViewComponents
 			ViewData["LocalAuthority"] = project.LocalAuthority;
 			var keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(project.Urn.ToString());
 
-			var viewModel = keyStagePerformance.KeyStage5.Select(Build).OrderByDescending(ks => ks.Year);
+			var viewModel = keyStagePerformance.KeyStage5.Select(KeyStage5PerformanceTableViewModel.Build).OrderByDescending(ks => ks.Year);
 
 			return View(viewModel);
-		}
-
-		private KeyStage5PerformanceTableViewModel Build(KeyStage5PerformanceResponse keyStage5Performance)
-		{
-			return new KeyStage5PerformanceTableViewModel
-			{
-				Year = keyStage5Performance.Year.FormatKeyStageYear(),
-				AcademicProgress = ((decimal?)null).FormatValue(),
-				AcademicAverage = keyStage5Performance.AcademicQualificationAverage.FormatValue(),
-				AppliedGeneralProgress = ((decimal?)null).FormatValue(),
-				AppliedGeneralAverage = keyStage5Performance.AppliedGeneralQualificationAverage.FormatValue(),
-				NationalAverageAcademicProgress = ((decimal?)null).FormatValue(),
-				NationalAverageAcademicAverage = keyStage5Performance.NationalAcademicQualificationAverage.FormatValue(),
-				NationalAverageAppliedGeneralProgress = ((decimal?)null).FormatValue(),
-				NationalAverageAppliedGeneralAverage = keyStage5Performance.NationalAppliedGeneralQualificationAverage.FormatValue()
-			};
 		}
 	}
 }

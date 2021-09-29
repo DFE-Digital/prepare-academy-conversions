@@ -8,6 +8,7 @@
 		public string Month { get; set; }
 		public string Year { get; set; }
 		public string Label { get; set; }
+		public bool HeadingLabel { get; set; }
 		public string Hint { get; set; }
 		public string ErrorMessage { get; set; }
 		public bool DayInvalid { get; set; }
