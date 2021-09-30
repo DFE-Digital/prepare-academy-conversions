@@ -47,9 +47,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-headteacher-board-template");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an HTB date");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory Board date");
 
-			await NavigateAsync("Set an HTB date before you generate your document");
+			await NavigateAsync("Set an Advisory Board date before you generate your document");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates#head-teacher-board-date");
 		}
