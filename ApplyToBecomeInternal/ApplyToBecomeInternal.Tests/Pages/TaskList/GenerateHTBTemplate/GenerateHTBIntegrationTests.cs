@@ -54,7 +54,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
 			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory Board date");
 
-			await NavigateAsync("Set an Advisory Board date before you generate your document");
+			await NavigateAsync("Set an Advisory Board date before you generate your project template");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates#head-teacher-board-date");
 		}
