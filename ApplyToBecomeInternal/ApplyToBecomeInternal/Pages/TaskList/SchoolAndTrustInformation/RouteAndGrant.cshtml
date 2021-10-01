@@ -21,7 +21,7 @@
 		Change the conversion support grant if it needs to be less than £25,000
 	</label>
 
-	<govuk-integer-input
+	<govuk-decimal-input
 		name="conversion-support-grant-amount" id="conversion-support-grant-amount"
 		asp-for="Project.ConversionSupportGrantAmount" width="20" isMonetary="true"
 		hint="@grantAmountHint"/>

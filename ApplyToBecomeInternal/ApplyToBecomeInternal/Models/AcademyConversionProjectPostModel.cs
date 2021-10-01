@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -73,8 +74,12 @@ namespace ApplyToBecomeInternal.Models
 		[Required]
 		[Display(Name = "Previous headteacher board")]
 		public DateTime? PreviousHeadTeacherBoardDate { get; set; }
+		
+		[ModelBinder(BinderType = typeof(MonetaryInputModelBinder))]
+		[Display(Name="Conversion support grant")]
+		[Range(typeof(decimal), "0", "25000", ErrorMessage = "Enter an amount that is £25,000 or less, for example £20,000")]
 		[BindProperty(Name="conversion-support-grant-amount")]
-		public int ConversionSupportGrantAmount { get; set; }
+		public decimal ConversionSupportGrantAmount { get; set; }
 		[BindProperty(Name="conversion-support-grant-change-reason")]
 		public string ConversionSupportGrantChangeReason { get; set; }
 

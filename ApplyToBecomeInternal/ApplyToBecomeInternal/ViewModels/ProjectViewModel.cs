@@ -112,7 +112,7 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string AcademyTypeAndRoute { get; set; }
 		public DateTime? ProposedAcademyOpeningDate { get; set; }
 		public bool SchoolAndTrustInformationSectionComplete { get; set; }
-		public int ConversionSupportGrantAmount { get; set; }
+		public decimal ConversionSupportGrantAmount { get; set; }
 		public string ConversionSupportGrantChangeReason { get; set; }
 
 		//general info
