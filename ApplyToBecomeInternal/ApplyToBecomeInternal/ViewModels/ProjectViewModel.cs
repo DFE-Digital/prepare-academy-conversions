@@ -38,7 +38,7 @@ namespace ApplyToBecomeInternal.ViewModels
 			AcademyTypeAndRoute = project.AcademyTypeAndRoute;
 			ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate;
 			SchoolAndTrustInformationSectionComplete = project.SchoolAndTrustInformationSectionComplete ?? false;
-			ConversionSupportGrantAmount = project.ConversionSupportGrantAmount;
+			ConversionSupportGrantAmount = project.ConversionSupportGrantAmount ?? 0;
 			ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason;
 
 			PublishedAdmissionNumber = project.PublishedAdmissionNumber;

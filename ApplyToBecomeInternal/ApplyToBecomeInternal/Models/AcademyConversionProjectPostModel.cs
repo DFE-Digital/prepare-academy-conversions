@@ -79,7 +79,7 @@ namespace ApplyToBecomeInternal.Models
 		[Display(Name="Conversion support grant")]
 		[Range(typeof(decimal), "0", "25000", ErrorMessage = "Enter an amount that is £25,000 or less, for example £20,000")]
 		[BindProperty(Name="conversion-support-grant-amount")]
-		public decimal ConversionSupportGrantAmount { get; set; }
+		public decimal? ConversionSupportGrantAmount { get; set; }
 		[BindProperty(Name="conversion-support-grant-change-reason")]
 		public string ConversionSupportGrantChangeReason { get; set; }
 

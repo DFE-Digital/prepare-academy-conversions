@@ -1,5 +1,6 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using ApplyToBecomeInternal.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -24,10 +25,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 			await NavigateDataTestAsync("change-academy-type-and-route");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/route-and-grant");
-			Document.QuerySelector<IHtmlInputElement>("#conversion-support-grant-amount").Value.Should().Be(project.ConversionSupportGrantAmount.ToString());
+			Document.QuerySelector<IHtmlInputElement>("#conversion-support-grant-amount").Value.Should().Be(project.ConversionSupportGrantAmount.Value.ToMoneyString());
 			Document.QuerySelector<IHtmlTextAreaElement>("#conversion-support-grant-change-reason").TextContent.Should().Be(project.ConversionSupportGrantChangeReason);
 
-			Document.QuerySelector<IHtmlInputElement>("#conversion-support-grant-amount").Value = request.ConversionSupportGrantAmount.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#conversion-support-grant-amount").Value = request.ConversionSupportGrantAmount.Value.ToMoneyString();
 			Document.QuerySelector<IHtmlTextAreaElement>("#conversion-support-grant-change-reason").Value = request.ConversionSupportGrantChangeReason;
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
