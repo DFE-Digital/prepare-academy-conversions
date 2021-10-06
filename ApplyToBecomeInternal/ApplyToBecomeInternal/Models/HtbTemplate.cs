@@ -42,7 +42,12 @@ namespace ApplyToBecomeInternal.Models
 		public string SponsorReferenceNumber { get; set; }
 
 		[DocumentText("SponsorName")] public string SponsorName { get; set; }
-		[DocumentText("AcademyTypeAndRoute")] public string AcademyTypeAndRoute { get; set; }
+
+		[DocumentText("AcademyTypeRouteAndConversionGrant")]
+		public string AcademyTypeRouteAndConversionGrant { get; set; }
+
+		[DocumentText("ConversionSupportGrantChangeReason")]
+		public string ConversionSupportGrantChangeReason { get; set; }
 
 		[DocumentText("ProposedAcademyOpeningDate")]
 		public string ProposedAcademyOpeningDate { get; set; }
@@ -186,7 +191,8 @@ namespace ApplyToBecomeInternal.Models
 				NameOfTrust = project.NameOfTrust,
 				SponsorReferenceNumber = project.SponsorReferenceNumber,
 				SponsorName = project.SponsorName,
-				AcademyTypeAndRoute = project.AcademyTypeAndRoute,
+				AcademyTypeRouteAndConversionGrant = $"{project.AcademyTypeAndRoute} - {project.ConversionSupportGrantAmount?.ToMoneyString(true)}",
+				ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
 				ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(),
 				SchoolPhase = generalInformation.SchoolPhase,
 				AgeRange = !string.IsNullOrEmpty(generalInformation.AgeRangeLower) && !string.IsNullOrEmpty(generalInformation.AgeRangeUpper)

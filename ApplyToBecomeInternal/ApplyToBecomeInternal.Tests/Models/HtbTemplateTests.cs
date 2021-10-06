@@ -55,7 +55,8 @@ namespace ApplyToBecomeInternal.Tests.Models
 			Assert.Equal(_template.NameOfTrust, _project.NameOfTrust);
 			Assert.Equal(_template.SponsorReferenceNumber, _project.SponsorReferenceNumber);
 			Assert.Equal(_template.SponsorName, _project.SponsorName);
-			Assert.Equal(_template.AcademyTypeAndRoute, _project.AcademyTypeAndRoute);
+			Assert.Equal(_template.AcademyTypeRouteAndConversionGrant, $"{_project.AcademyTypeAndRoute} - {_project.ConversionSupportGrantAmount?.ToMoneyString(true)}");
+			Assert.Equal(_template.ConversionSupportGrantChangeReason, _project.ConversionSupportGrantChangeReason);
 			Assert.Equal(_template.ProposedAcademyOpeningDate, _project.ProposedAcademyOpeningDate.ToDateString());
 
 			Assert.Equal(_template.SchoolPhase, _generalInformation.SchoolPhase);

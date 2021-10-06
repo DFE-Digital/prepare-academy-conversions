@@ -47,7 +47,8 @@ namespace ApplyToBecomeInternal.TagHelpers
 				Return = ViewContext.ViewData["Return"]?.ToString(),
 				HiddenText = HiddenText,
 				KeyWidth = KeyWidth,
-				ValueWidth = ValueWidth
+				ValueWidth = ValueWidth,
+				Name = Name
 			};
 
 			return await _htmlHelper.PartialAsync("_SummaryListRow", model);

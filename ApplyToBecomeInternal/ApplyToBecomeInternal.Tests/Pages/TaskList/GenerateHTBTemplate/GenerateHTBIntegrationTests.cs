@@ -46,7 +46,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Console.WriteLine(Document.Url);
 			await NavigateAsync("Generate project document");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
