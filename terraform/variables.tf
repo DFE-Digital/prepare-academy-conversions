@@ -59,6 +59,11 @@ variable app_password {
 	description = "Application variable for the password for the service"
 }
 
+variable aspnetcore_environment {
+  type = string
+  description = ".NET Core Environment to run the service in"
+}
+
 ## ========================================================================== ##
 #  Locals					                                                   #
 ## ========================================================================== ##
