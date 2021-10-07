@@ -72,7 +72,7 @@ namespace ApplyToBecomeInternal.Models
 		[DateValidation(DateValidationEnum.Past)]
 		[BindProperty(Name = "previous-head-teacher-board-date")]
 		[Required]
-		[Display(Name = "Previous headteacher board")]
+		[Display(Name = "Previous Advisory Board")]
 		public DateTime? PreviousHeadTeacherBoardDate { get; set; }
 		
 		[ModelBinder(BinderType = typeof(MonetaryInputModelBinder))]

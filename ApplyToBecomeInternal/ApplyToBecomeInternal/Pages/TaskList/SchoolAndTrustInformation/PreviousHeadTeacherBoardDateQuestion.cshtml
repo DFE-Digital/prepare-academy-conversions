@@ -3,7 +3,7 @@
 @{
 	Layout = "_QuestionLayout";
 	Model.SuccessPage = Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDate.Page;
-	ViewData["Title"] = "Has this project been to a previous headteacher board (HTB)?";
+	ViewData["Title"] = "Has this project been to a previous Advisory Board?";
 	var values = new[] { "Yes", "No" };
 }
 
@@ -12,4 +12,4 @@
 	<govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation" />
 }
 
-<govuk-radios-input heading-label="true" label="Has this project been to a previous headteacher board (HTB)?" id="previous-head-teacher-board-date-question" name="previous-head-teacher-board-date-question" asp-for="Project.PreviousHeadTeacherBoardDateQuestion" values="@values" labels="@values" />
+<govuk-radios-input heading-label="true" label="Has this project been to a previous Advisory Board?" id="previous-head-teacher-board-date-question" name="previous-head-teacher-board-date-question" asp-for="Project.PreviousHeadTeacherBoardDateQuestion" values="@values" labels="@values" />
