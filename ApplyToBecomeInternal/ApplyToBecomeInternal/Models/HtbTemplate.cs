@@ -105,10 +105,10 @@ namespace ApplyToBecomeInternal.Models
 		public string SchoolPerformanceAdditionalInformation { get; set; }
 
 		// rationale
-		[DocumentText("RationaleForProject", IsRichText = true)]
+		[DocumentText("RationaleForProject")]
 		public string RationaleForProject { get; set; }
 
-		[DocumentText("RationaleForTrust", IsRichText = true)]
+		[DocumentText("RationaleForTrust")]
 		public string RationaleForTrust { get; set; }
 
 		// risk and issues
