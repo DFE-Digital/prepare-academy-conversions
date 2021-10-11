@@ -14,7 +14,7 @@ namespace ApplyToBecomeInternal.Models
 		[BindProperty(Name = "head-teacher-board-date")]
 		[ModelBinder(BinderType = typeof(DateInputModelBinder))]
 		[DateValidation(DateValidationEnum.Future)]
-		[Display(Name = "Headteacher board (HTB)")]
+		[Display(Name = "Advisory Board")]
 		public DateTime? HeadTeacherBoardDate { get; set; }
 		public DateTime? BaselineDate { get; set; }
 
