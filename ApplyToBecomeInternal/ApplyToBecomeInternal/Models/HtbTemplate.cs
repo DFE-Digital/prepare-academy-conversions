@@ -76,7 +76,7 @@ namespace ApplyToBecomeInternal.Models
 		[DocumentText("PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust")]
 		public string PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust { get; set; }
 
-		[DocumentText("DistanceFromSchoolToTrustHeadquarters", IsRichText = true)]
+		[DocumentText("DistanceFromSchoolToTrustHeadquarters")]
 		public string DistanceFromSchoolToTrustHeadquarters { get; set; }
 
 		[DocumentText("DistanceFromSchoolToTrustHeadquartersAdditionalInformation")]
@@ -105,14 +105,14 @@ namespace ApplyToBecomeInternal.Models
 		public string SchoolPerformanceAdditionalInformation { get; set; }
 
 		// rationale
-		[DocumentText("RationaleForProject", IsRichText = true)]
+		[DocumentText("RationaleForProject")]
 		public string RationaleForProject { get; set; }
 
-		[DocumentText("RationaleForTrust", IsRichText = true)]
+		[DocumentText("RationaleForTrust")]
 		public string RationaleForTrust { get; set; }
 
 		// risk and issues
-		[DocumentText("RisksAndIssues", IsRichText = true)]
+		[DocumentText("RisksAndIssues")]
 		public string RisksAndIssues { get; set; }
 
 		[DocumentText("EqualitiesImpactAssessmentConsidered")]
