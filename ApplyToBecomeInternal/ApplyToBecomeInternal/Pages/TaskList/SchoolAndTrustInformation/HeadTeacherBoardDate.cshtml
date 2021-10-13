@@ -3,7 +3,7 @@
 @{
 	Layout = "_QuestionLayout";
 	Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
-	ViewData["Title"] = "Head teacher board date";
+	ViewData["Title"] = "Set the Advisory board date";
 }
 
 @section BeforeMain
@@ -11,5 +11,4 @@
 	<govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation" />
 }
 
-<h1 class="govuk-heading-l">Set the headteacher board (HTB) date</h1>
-<govuk-date-input name="head-teacher-board-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
+<govuk-date-input heading-label="true" label="Set the Advisory Board date" name="head-teacher-board-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />

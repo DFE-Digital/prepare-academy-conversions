@@ -78,7 +78,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.TrustTemplate
 
 			await OpenUrlAsync($"/task-list/{project.Id}/trust-template-guidance");
 
-			await NavigateAsync("Send your headteacher board template and trust template for review");
+			await NavigateAsync("Send your project template and trust template for review");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/trust-template-guidance#send");
 		}

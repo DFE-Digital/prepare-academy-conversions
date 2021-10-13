@@ -21,15 +21,6 @@ namespace ApplyToBecomeInternal.Extensions
 			};
 		}
 
-		public static string FormatKeyStageDisadvantagedResult(DisadvantagedPupilsResponse disadvantagedPupilResponse)
-		{
-			if (string.IsNullOrEmpty(disadvantagedPupilResponse?.NotDisadvantaged) &&
-			    string.IsNullOrEmpty(disadvantagedPupilResponse?.Disadvantaged))
-				return NoData;
-
-			return $"{disadvantagedPupilResponse.NotDisadvantaged.FormatValue()}<br>(disadvantaged pupils {disadvantagedPupilResponse.Disadvantaged.FormatValue()})";
-		}
-
 		public static HtmlString HtmlFormatKeyStageDisadvantagedResult(DisadvantagedPupilsResponse disadvantagedPupilResponse)
 		{
 			if (string.IsNullOrEmpty(disadvantagedPupilResponse?.NotDisadvantaged) &&

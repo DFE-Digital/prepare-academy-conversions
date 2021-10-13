@@ -53,6 +53,7 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem PreviousHeadTeacherBoardDateQuestion = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/PreviousHeadTeacherBoardDateQuestion" };
 			public static LinkItem PreviousHeadTeacherBoardDate = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/PreviousHeadTeacherBoardDate" };
 			public static LinkItem ProposedAcademyOpeningDate = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/ProposedAcademyOpeningDate" };
+			public static LinkItem RouteAndGrant = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/RouteAndGrant" };
 		}
 
 		public static class GeneralInformationSection

@@ -17,16 +17,21 @@ namespace ApplyToBecome.Data.Services
 			_logger = logger;
 		}
 
-		public async Task<KeyStagePerformanceResponse> GetKeyStagePerformance(string urn)
+		public async Task<KeyStagePerformance> GetKeyStagePerformance(string urn)
 		{
 			var response = await _httpClient.GetAsync($"/educationPerformance/{urn}");
 			if (!response.IsSuccessStatusCode)
 			{
 				_logger.LogWarning("Unable to get key stage performance data for establishment with URN: {urn}", urn);
-				return new KeyStagePerformanceResponse();
+				return new KeyStagePerformance();
 			}
 
-			return await response.Content.ReadFromJsonAsync<KeyStagePerformanceResponse>();
+			var keyStagePerformanceResponse = await response.Content.ReadFromJsonAsync<KeyStagePerformanceResponse>();
+			
+			return new KeyStagePerformance
+			{
+				KeyStage2 = keyStagePerformanceResponse.KeyStage2, KeyStage4 = keyStagePerformanceResponse.KeyStage4, KeyStage5 = keyStagePerformanceResponse.KeyStage5
+			};
 		}
 	}
 }

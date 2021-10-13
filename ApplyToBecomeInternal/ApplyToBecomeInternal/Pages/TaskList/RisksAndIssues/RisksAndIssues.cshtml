@@ -8,9 +8,8 @@
 
 @section BeforeMain
 {
-	<govuk-back-link link-item="@Links.RisksAndIssuesSection.ConfirmRisksAndIssues" />
+	<govuk-back-link link-item="@Links.RisksAndIssuesSection.ConfirmRisksAndIssues"/>
 }
 
-<h1 class="govuk-heading-l">Write about any risks or issues for this conversion</h1>
-<govuk-textarea-input name="risks-and-issues" asp-for="Project.RisksAndIssues" rows="15" rich-text="true" />
-
+<govuk-textarea-input heading-label="true" label="Write about any risks or issues for this conversion"
+                      name="risks-and-issues" asp-for="Project.RisksAndIssues" rows="15" />

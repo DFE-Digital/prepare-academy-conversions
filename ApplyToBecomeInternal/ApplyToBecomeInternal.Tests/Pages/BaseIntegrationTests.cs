@@ -43,6 +43,12 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			return await link.NavigateAsync();
 		}
 
+		public async Task NavigateDataTestAsync(string dataTest)
+		{
+			var anchors = Document.QuerySelectorAll($"[data-test='{dataTest}']").First() as IHtmlAnchorElement;
+			await anchors.NavigateAsync();
+		}
+
 		protected (RadioButton, RadioButton) RandomRadioButtons(string id, params string[] values)
 		{
 			var keyPairs = values.Select((v, i) => new KeyValuePair<int, string>(i, v)).ToDictionary(kv => kv.Key + 1, kv => kv.Value);

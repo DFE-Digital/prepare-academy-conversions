@@ -1,4 +1,7 @@
-﻿namespace ApplyToBecomeInternal.ViewModels
+﻿using ApplyToBecome.Data.Models.KeyStagePerformance;
+using ApplyToBecomeInternal.Extensions;
+
+namespace ApplyToBecomeInternal.ViewModels
 {
 	public class KeyStage5PerformanceTableViewModel
 	{
@@ -11,5 +14,21 @@
 		public string NationalAverageAcademicAverage { get; set; }
 		public string NationalAverageAppliedGeneralProgress { get; set; }
 		public string NationalAverageAppliedGeneralAverage { get; set; }
+		
+		public static KeyStage5PerformanceTableViewModel Build(KeyStage5PerformanceResponse keyStage5Performance)
+		{
+			return new KeyStage5PerformanceTableViewModel
+			{
+				Year = keyStage5Performance.Year.FormatKeyStageYear(),
+				AcademicProgress = ((decimal?)null).FormatValue(),
+				AcademicAverage = keyStage5Performance.AcademicQualificationAverage.FormatValue(),
+				AppliedGeneralProgress = ((decimal?)null).FormatValue(),
+				AppliedGeneralAverage = keyStage5Performance.AppliedGeneralQualificationAverage.FormatValue(),
+				NationalAverageAcademicProgress = ((decimal?)null).FormatValue(),
+				NationalAverageAcademicAverage = keyStage5Performance.NationalAcademicQualificationAverage.FormatValue(),
+				NationalAverageAppliedGeneralProgress = ((decimal?)null).FormatValue(),
+				NationalAverageAppliedGeneralAverage = keyStage5Performance.NationalAppliedGeneralQualificationAverage.FormatValue()
+			};
+		}
 	}
 }

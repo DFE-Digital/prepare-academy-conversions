@@ -20,26 +20,38 @@
 			{
 				if (Model.Page == Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDateQuestion.Page)
 				{
-					<a class="govuk-link" asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDate.Page" asp-route-fragment="@Model.Id" asp-route-back="@Model.Return">
+					<a class="govuk-link"
+					   data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
+					   asp-page="@Model.Page" asp-route-id="@Model.RouteId"
+					   asp-route-return="@Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDate.Page"
+					   asp-route-fragment="@Model.Id" asp-route-back="@Model.Return">
 						Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
 					</a>
 				}
 				else
 				{
-					<a class="govuk-link" asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return" asp-route-fragment="@Model.Id">
+					<a class="govuk-link"
+					   data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
+					   asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return"
+					   asp-route-fragment="@Model.Id">
 						Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
 					</a>
 				}
 			}
-			else if(!string.IsNullOrEmpty(Model.Fragment))
+			else if (!string.IsNullOrEmpty(Model.Fragment))
 			{
-				<a class="govuk-link" asp-page="@Model.Page" asp-fragment="@Model.Fragment" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return">
+				<a class="govuk-link"
+				   data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
+				   asp-page="@Model.Page" asp-fragment="@Model.Fragment"
+				   asp-route-id="@Model.RouteId" asp-route-return="@Model.Return">
 					Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
 				</a>
 			}
 			else
 			{
-				<a class="govuk-link" asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return">
+				<a class="govuk-link"
+				   data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
+				   asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return">
 					Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
 				</a>
 			}

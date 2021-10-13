@@ -9,5 +9,6 @@
 		public string ErrorMessage { get; set; }
 		public int Width { get; set; }
 		public string Hint { get; set; }
+		public bool HeadingLabel { get; set; }
 	}
 }

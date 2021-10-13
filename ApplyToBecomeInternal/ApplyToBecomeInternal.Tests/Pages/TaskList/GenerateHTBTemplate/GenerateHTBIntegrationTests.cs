@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			await NavigateAsync("Generate HTB document");
+			await NavigateAsync("Generate project template");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/generate-headteacher-board-template");
 
 			await NavigateAsync("Back to task list");
@@ -46,15 +46,14 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Console.WriteLine(Document.Url);
-			await NavigateAsync("Generate HTB document");
+			await NavigateAsync("Generate project template");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an HTB date");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory Board date");
 
-			await NavigateAsync("Set an HTB date before you generate your document");
+			await NavigateAsync("Set an Advisory Board date before you generate your project template");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates#head-teacher-board-date");
 		}

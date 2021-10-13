@@ -31,7 +31,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 				Document.QuerySelector($"#urn-{i}").TextContent.Should().Contain(project.Urn.ToString());
 				Document.QuerySelector($"#application-to-join-trust-{i}").TextContent.Should().Contain(project.NameOfTrust);
 				Document.QuerySelector($"#local-authority-{i}").TextContent.Should().Contain(project.LocalAuthority);
-				Document.QuerySelector($"#htb-date-{i}").TextContent.Should().Contain(project.HeadTeacherBoardDate.ToDateString());
+				Document.QuerySelector($"#Advisory-Board-date-{i}").TextContent.Should().Contain(project.HeadTeacherBoardDate.ToDateString());
 				Document.QuerySelector($"#opening-date-{i}").TextContent.Should().Contain(project.ProposedAcademyOpeningDate.ToDateString());
 				Document.QuerySelector($"#application-received-date-{i}").Should().BeNull();
 				Document.QuerySelector($"#assigned-to-me-{i}").Should().BeNull();

@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.TagHelpers
 
 		protected override async Task<IHtmlContent> RenderContentAsync()
 		{
-			if (For.ModelExplorer.ModelType != typeof(Decimal?))
+			if (For.ModelExplorer.ModelType != typeof(Decimal?) && For.ModelExplorer.ModelType != typeof(Decimal))
 			{
 				throw new ArgumentException();
 			}
