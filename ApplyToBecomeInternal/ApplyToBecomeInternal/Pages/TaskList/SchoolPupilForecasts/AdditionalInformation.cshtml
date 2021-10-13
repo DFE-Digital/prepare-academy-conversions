@@ -25,10 +25,10 @@
 			<p>
 				This information comes from TRAMS and the
 				<a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
-				The table will populate into your headteacher board (HTB) template.
+				The table will populate your project template.
 			</p>
 			<p>
-				You can add <a href="#additional-information">additional information</a> if you need to, this will also go into your HTB template.
+				You can add <a href="#additional-information">additional information</a> if you need to, this will also populate your project template.
 			</p>
 		</div>
 	</div>
@@ -42,7 +42,7 @@
 					Add any additional information if you need to
 				</label>
 			</h2>
-			<p class="govuk-body">This information will populate into your HTB template under the school pupil forecasts section.</p>
+			<p class="govuk-body">This information will populate your project template under the school pupil forecasts section.</p>
 
 			<govuk-textarea-input id="additional-information" name="school-pupil-forecasts-additional-information" asp-for="Project.SchoolPupilForecastsAdditionalInformation" rows="5"/>
 
