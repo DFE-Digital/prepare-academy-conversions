@@ -64,6 +64,11 @@ variable aspnetcore_environment {
   description = ".NET Core Environment to run the service in"
 }
 
+variable enable_google_analytics {
+  type = string
+  description = "Whether or not to enable google analytics"
+}
+
 ## ========================================================================== ##
 #  Locals					                                                   #
 ## ========================================================================== ##
