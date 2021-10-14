@@ -19,6 +19,7 @@ resource cloudfoundry_app worker_app {
 		"TramsApi__ApiKey"         = var.app_trams_api_key
 		"Authentication__Username" = var.app_username
 		"Authentication__Password" = var.app_password
+    "GoogleAnalytics__Enable"  = var.enable_google_analytics
 	}
 }
 
