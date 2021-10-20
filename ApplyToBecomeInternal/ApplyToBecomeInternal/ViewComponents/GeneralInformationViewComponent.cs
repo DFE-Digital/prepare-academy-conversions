@@ -49,7 +49,7 @@ namespace ApplyToBecomeInternal.ViewComponents
 				FinancialDeficit = project.FinancialDeficit,
 				IsSchoolLinkedToADiocese = generalInformation.IsSchoolLinkedToADiocese,
 				DistanceFromSchoolToTrustHeadquarters = ViewData["Return"] == null ?
-					project.DistanceFromSchoolToTrustHeadquarters.ToSafeString() : $"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()}<br>{project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}",
+					project.DistanceFromSchoolToTrustHeadquarters.ToSafeString() : $"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()}",
 				DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
 				ParliamentaryConstituency = generalInformation.ParliamentaryConstituency
 			};

@@ -39,7 +39,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 
 			// Waiting for calculation to be done in TRAMS API so no data pulled through currently
 			//Document.QuerySelector("#percentage-in-diocesan-trust").TextContent.Should().Be(establishment.PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust.ToPercentage());
-			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquarters.ToSafeString());
+			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be($"{ project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles{project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}");
 			Document.QuerySelector("#parliamentary-constituency").TextContent.Should().Be(establishment.ParliamentaryConstituency.Name);
 		}
 

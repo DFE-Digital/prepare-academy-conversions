@@ -166,7 +166,7 @@ namespace ApplyToBecomeInternal.Models
 		public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
 		public IEnumerable<KeyStage2PerformanceTableViewModel> KeyStage2 { get; set; }
-		public KeyStage4PerformanceTableViewModel KeyStage4 { get; set; }
+		public KeyStage4PerformanceTableViewModel KeyStage4 { get; set; }  
 		public IEnumerable<KeyStage5PerformanceTableViewModel> KeyStage5 { get; set; }
 
 		public static HtbTemplate Build(AcademyConversionProject project, SchoolPerformance schoolPerformance, GeneralInformation generalInformation,
@@ -208,9 +208,10 @@ namespace ApplyToBecomeInternal.Models
 				ViabilityIssues = project.ViabilityIssues,
 				FinancialDeficit = project.FinancialDeficit,
 				IsSchoolLinkedToADiocese = generalInformation.IsSchoolLinkedToADiocese,
-				DistanceFromSchoolToTrustHeadquarters = string.IsNullOrEmpty(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation)
-					? project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()
-					: $"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()}<br>{project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}",
+				DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters != null ?
+					$"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles"
+					: null,
+				DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
 				ParliamentaryConstituency = generalInformation.ParliamentaryConstituency,
 				OfstedLastInspection = schoolPerformance.OfstedLastInspection.ToDateString(),
 				PersonalDevelopment = schoolPerformance.PersonalDevelopment.DisplayOfstedRating(),
