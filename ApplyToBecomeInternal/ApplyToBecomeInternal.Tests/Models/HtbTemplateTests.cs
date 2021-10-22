@@ -37,7 +37,6 @@ namespace ApplyToBecomeInternal.Tests.Models
 			[Fact]
 			public void ItBuildsTheTemplateSuccessfully()
 			{
-				// CML are these asserts the wrong way round? - i.e. actual, expected
 				Assert.Equal(_template.SchoolName, _project.SchoolName);
 				Assert.Equal(_template.SchoolUrn, _project.Urn.ToString());
 				Assert.Equal(_template.LocalAuthority, _project.LocalAuthority);

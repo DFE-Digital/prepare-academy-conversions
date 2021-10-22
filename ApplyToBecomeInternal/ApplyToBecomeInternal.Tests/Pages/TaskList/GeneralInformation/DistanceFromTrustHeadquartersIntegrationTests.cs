@@ -87,9 +87,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/distance-to-trust-headquarters");
 
-			Document.QuerySelector<IHtmlInputElement>("#distance-to-trust-headquarters-suffix").InnerHtml.Should().Be("miles");
-//			element.InnerHtml.Should().Be("miles");
-
+			Document.QuerySelector<IHtmlDivElement>("#distance-to-trust-headquarters-suffix").InnerHtml.Should().Be("miles");
 		}
 	}
 }

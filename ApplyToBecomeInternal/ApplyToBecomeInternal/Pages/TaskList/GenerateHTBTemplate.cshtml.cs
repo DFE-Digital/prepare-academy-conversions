@@ -57,7 +57,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 
 			var project = response.Body;
 			var schoolPerformance = await _schoolPerformanceService.GetSchoolPerformanceByUrn(project.Urn.ToString());
-			var generalInformation = await _generalInformationService.GetGeneralInformationByUrn(project.Urn.ToString()); // CML - this doesn't get all the General Information - subclass?
+			var generalInformation = await _generalInformationService.GetGeneralInformationByUrn(project.Urn.ToString());
 			var keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(project.Urn.ToString());
 
 			var document = HtbTemplate.Build(response.Body, schoolPerformance, generalInformation, keyStagePerformance);
