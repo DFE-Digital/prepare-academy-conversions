@@ -42,7 +42,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
 
-			await NavigateAsync("Generate HTB document");
+			await NavigateAsync("Generate project template");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-headteacher-board-template");
 
