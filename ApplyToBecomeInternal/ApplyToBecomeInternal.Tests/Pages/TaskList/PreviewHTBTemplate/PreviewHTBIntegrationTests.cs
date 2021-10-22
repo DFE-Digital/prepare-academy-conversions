@@ -80,6 +80,17 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		}
 
 		[Fact]
+		public async Task Should_display_distance_additional_information_given_no_distance()
+		{
+			var project = AddGetProject(p => p.DistanceFromSchoolToTrustHeadquarters = null) ;
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			var element = Document.QuerySelector("#distance-to-trust-headquarters");
+			element.TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
+		}
+
+		[Fact]
 		public async Task Should_navigate_to_general_information_pan_page_and_back()
 		{
 			var project = AddGetProject();

@@ -44,6 +44,18 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		}
 
 		[Fact]
+		public async Task Should_display_distance_additional_information_given_no_distance()
+		{
+			var project = AddGetProject(p => p.DistanceFromSchoolToTrustHeadquarters = null);
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			await NavigateAsync("General information");
+
+			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
+		}
+
+		[Fact]
 		public async Task Should_be_completed_and_checked_when_general_information_complete()
 		{
 			var project = AddGetProject(project => project.GeneralInformationSectionComplete = true);
@@ -73,6 +85,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 				project.ViabilityIssues = null;
 				project.FinancialDeficit = null;
 				project.DistanceFromSchoolToTrustHeadquarters = null;
+				project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation = null;
 				project.GeneralInformationSectionComplete = false;
 			});
 			AddGetEstablishmentResponse(project.Urn.ToString(), true);

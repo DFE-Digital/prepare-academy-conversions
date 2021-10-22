@@ -10,7 +10,12 @@
 		{
 			distance += $"<br />{Model.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}";
 		}
-	}}
+	}
+	else if (!string.IsNullOrEmpty(Model.DistanceFromSchoolToTrustHeadquartersAdditionalInformation))
+	{
+		distance = Model.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
+	}
+	}
 
 <dl class="govuk-summary-list">
 	<govuk-summary-list-row name="school-phase" label="School phase" key-width="@kw" asp-for="SchoolPhase" />
