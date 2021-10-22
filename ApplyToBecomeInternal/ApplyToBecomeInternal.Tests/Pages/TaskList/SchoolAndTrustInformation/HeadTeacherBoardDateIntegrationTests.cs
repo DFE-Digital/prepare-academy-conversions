@@ -57,5 +57,15 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 		}
+		
+		[Fact]
+		public async Task Should_show_the_advisory_board_schedule_link()
+		{
+			var project = AddGetProject();
+
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/head-teacher-board-date");
+
+			Document.QuerySelector("#advisory-board-meeting-schedules").Should().NotBeNull();
+		}
 	}
 }
