@@ -75,8 +75,19 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector("#viability-issues").TextContent.Should().Be(project.ViabilityIssues);
 			Document.QuerySelector("#financial-deficit").TextContent.Should().Be(project.FinancialDeficit);
 			Document.QuerySelector("#diocesan-multi-academy-trust").TextContent.Should().Be($"Yes, {establishment.Diocese.Name}");
-			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be($"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()}{project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}");
+			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be($"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles{project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}");
 			Document.QuerySelector("#parliamentary-constituency").TextContent.Should().Be(establishment.ParliamentaryConstituency.Name);
+		}
+
+		[Fact]
+		public async Task Should_display_distance_additional_information_given_no_distance()
+		{
+			var project = AddGetProject(p => p.DistanceFromSchoolToTrustHeadquarters = null) ;
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			var element = Document.QuerySelector("#distance-to-trust-headquarters");
+			element.TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
 		}
 
 		[Fact]

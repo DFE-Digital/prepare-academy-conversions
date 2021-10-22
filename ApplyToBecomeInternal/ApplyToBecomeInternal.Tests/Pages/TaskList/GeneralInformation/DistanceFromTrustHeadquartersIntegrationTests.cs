@@ -79,5 +79,15 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			Document.QuerySelector(".govuk-error-message").Should().NotBeNull();
 			Document.QuerySelector("#distance-to-trust-headquarters-error").TextContent.Should().Contain("The value 'abc' is not valid for Distance from the school to the trust headquarters.");
 		}
+
+		[Fact]
+		public async Task Should_display_miles_as_unit_of_distance()
+		{
+			var project = AddGetProject();
+
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/distance-to-trust-headquarters");
+
+			Document.QuerySelector<IHtmlDivElement>("#distance-to-trust-headquarters-suffix").InnerHtml.Should().Be("miles");
+		}
 	}
 }
