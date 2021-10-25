@@ -1,7 +1,7 @@
 ﻿@page "/task-list/{id:int}/generate-headteacher-board-template/{handler?}"
 @model ApplyToBecomeInternal.Pages.TaskList.GenerateHTBTemplateModel
 @{
-	ViewData["Title"] = "Generate headteacher board documents";
+	ViewData["Title"] = "Download project template";
 }
 
 @section BeforeMain
@@ -12,7 +12,7 @@
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
 		<span class="govuk-caption-xl">@Model.Project.SchoolName</span>
-		<h1 class="govuk-heading-xl">Generate headteacher board (HTB) documents</h1>
+		<h1 class="govuk-heading-xl">Download project template</h1>
 		<div class="govuk-inset-text">
 			<p>Save this document in the school's Sharepoint file.</p>
 		</div>
@@ -27,7 +27,7 @@
 			<div class="app-c-attachment__details">
 				<h2 class="app-c-attachment__title">
 					<a class="govuk-link app-c-attachment__link" target="_self" asp-route-id="@Model.Project.Id" asp-page-handler="htbtemplate">
-						@Model.Project.SchoolName's HTB Template
+						@Model.Project.SchoolName's project template
 					</a>
 				</h2>
 				<p class="app-c-attachment__metadata">
