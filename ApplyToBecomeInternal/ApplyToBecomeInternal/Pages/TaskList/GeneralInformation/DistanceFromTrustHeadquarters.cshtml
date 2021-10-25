@@ -20,7 +20,7 @@
 	<div id="distance-to-trust-headquarters-hint" class="govuk-hint">
 		For example, 20
 	</div>
-	<govuk-decimal-input id="distance-to-trust-headquarters" name="distance-to-trust-headquarters" asp-for="@Model.Project.DistanceFromSchoolToTrustHeadquarters"/>
+	<govuk-decimal-input id="distance-to-trust-headquarters" suffix ="miles" name="distance-to-trust-headquarters" asp-for="@Model.Project.DistanceFromSchoolToTrustHeadquarters"/>
 </div>
 <govuk-textarea-input name="distance-to-trust-headquarters-additional-information"
 					  asp-for="Project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation"

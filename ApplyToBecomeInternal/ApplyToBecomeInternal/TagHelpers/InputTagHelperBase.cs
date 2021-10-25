@@ -19,6 +19,9 @@ namespace ApplyToBecomeInternal.TagHelpers
 		[HtmlAttributeName("label")]
 		public string Label { get; set; }
 
+		[HtmlAttributeName("suffix")]
+		public string Suffix { get; set; }
+
 		[HtmlAttributeName("asp-for")]
 		public ModelExpression For { get; set; }
 

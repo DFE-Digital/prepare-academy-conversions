@@ -39,8 +39,20 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 
 			// Waiting for calculation to be done in TRAMS API so no data pulled through currently
 			//Document.QuerySelector("#percentage-in-diocesan-trust").TextContent.Should().Be(establishment.PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust.ToPercentage());
-			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquarters.ToSafeString());
+			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be($"{ project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles{project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}");
 			Document.QuerySelector("#parliamentary-constituency").TextContent.Should().Be(establishment.ParliamentaryConstituency.Name);
+		}
+
+		[Fact]
+		public async Task Should_display_distance_additional_information_given_no_distance()
+		{
+			var project = AddGetProject(p => p.DistanceFromSchoolToTrustHeadquarters = null);
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			await NavigateAsync("General information");
+
+			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
 		}
 
 		[Fact]
@@ -73,6 +85,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 				project.ViabilityIssues = null;
 				project.FinancialDeficit = null;
 				project.DistanceFromSchoolToTrustHeadquarters = null;
+				project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation = null;
 				project.GeneralInformationSectionComplete = false;
 			});
 			AddGetEstablishmentResponse(project.Urn.ToString(), true);

@@ -3,7 +3,7 @@
 
 @{
 	Model.ErrorPage = Links.TaskList.PreviewHTBTemplate.Page;
-	ViewBag.Title = "Preview headteacher board template";
+	ViewBag.Title = "Preview project template";
 	ViewData["Return"] = Links.TaskList.PreviewHTBTemplate.Page;
 	ViewData["IncludeFragment"] = true;
 }
@@ -22,7 +22,7 @@
 	<div class="govuk-grid-column-two-thirds">
 		<span class="govuk-caption-xl">@Model.Project.SchoolName</span>
 		<h1 class="govuk-heading-xl">
-			Preview headteacher board (HTB) template
+			Preview project template
 		</h1>
 	</div>
 </div>
@@ -183,5 +183,8 @@
 		</div>
 	</section>
 }
-
-<a asp-page="@Links.TaskList.GenerateHTBTemplate.Page" asp-route-id="@Model.Project.Id" class="govuk-button govuk-!-margin-bottom-2">Generate HTB document</a>
+<h2 class="govuk-heading-l">
+	Generate project template
+</h2>
+<p class="govuk-body">Generate the project template into a Word document and download it.</p>
+<a asp-page="@Links.TaskList.GenerateHTBTemplate.Page" asp-route-id="@Model.Project.Id" class="govuk-button govuk-!-margin-bottom-2">Generate project template</a>

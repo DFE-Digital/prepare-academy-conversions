@@ -35,6 +35,7 @@ namespace ApplyToBecomeInternal.TagHelpers
 				Id = Id,
 				Name = Name,
 				Label = Label,
+				Suffix = Suffix,
 				Value = IsMonetary ? value?.ToMoneyString() : value.ToSafeString(),
 				IsMonetary = IsMonetary
 			};
