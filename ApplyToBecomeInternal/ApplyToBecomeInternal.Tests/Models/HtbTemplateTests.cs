@@ -100,10 +100,10 @@ namespace ApplyToBecomeInternal.Tests.Models
 			[Fact]
 			public void ItBuildsTheBudgetInformationSuccessfully()
 			{
-				Assert.Equal(_template.RevenueCarryForwardAtEndMarchCurrentYear, $"£{_project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString()}");
-				Assert.Equal(_template.ProjectedRevenueBalanceAtEndMarchNextYear,$"£{ _project.ProjectedRevenueBalanceAtEndMarchNextYear?.ToMoneyString()}");
-				Assert.Equal(_template.CapitalCarryForwardAtEndMarchCurrentYear,$"£{_project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString()}");
-				Assert.Equal(_template.CapitalCarryForwardAtEndMarchNextYear, $"£{_project.CapitalCarryForwardAtEndMarchNextYear?.ToMoneyString()}");
+				Assert.Equal(_template.RevenueCarryForwardAtEndMarchCurrentYear, $"Â£{_project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString()}");
+				Assert.Equal(_template.ProjectedRevenueBalanceAtEndMarchNextYear,$"Â£{ _project.ProjectedRevenueBalanceAtEndMarchNextYear?.ToMoneyString()}");
+				Assert.Equal(_template.CapitalCarryForwardAtEndMarchCurrentYear,$"Â£{_project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString()}");
+				Assert.Equal(_template.CapitalCarryForwardAtEndMarchNextYear, $"Â£{_project.CapitalCarryForwardAtEndMarchNextYear?.ToMoneyString()}");
 				Assert.Equal(_template.SchoolBudgetInformationAdditionalInformation, _project.SchoolBudgetInformationAdditionalInformation);
 			}
 
