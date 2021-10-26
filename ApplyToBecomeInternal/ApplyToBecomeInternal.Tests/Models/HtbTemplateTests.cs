@@ -35,30 +35,51 @@ namespace ApplyToBecomeInternal.Tests.Models
 			}
 
 			[Fact]
-			public void ItBuildsTheTemplateSuccessfully()
+			public void ItBuildsTheSchoolAndTrustInformationAndProjectDatesSuccessfully()
 			{
 				Assert.Equal(_template.SchoolName, _project.SchoolName);
 				Assert.Equal(_template.SchoolUrn, _project.Urn.ToString());
 				Assert.Equal(_template.LocalAuthority, _project.LocalAuthority);
-				Assert.Equal(_template.ApplicationReceivedDate, _project.ApplicationReceivedDate.ToDateString());
-				Assert.Equal(_template.AssignedDate, _project.AssignedDate.ToDateString());
-				Assert.Equal(_template.HeadTeacherBoardDate, _project.HeadTeacherBoardDate.ToDateString());
 
 				Assert.Equal(_template.RecommendationForProject, _project.RecommendationForProject);
-				Assert.Equal(_template.Author, _project.Author);
-				Assert.Equal(_template.Version, DateTime.Today.ToDateString());
-				Assert.Equal(_template.ClearedBy, _project.ClearedBy);
 				Assert.Equal(_template.AcademyOrderRequired, _project.AcademyOrderRequired);
+				Assert.Equal(_template.AcademyTypeRouteAndConversionGrant, $"{_project.AcademyTypeAndRoute} - {_project.ConversionSupportGrantAmount?.ToMoneyString(true)}");
+				Assert.Equal(_template.HeadTeacherBoardDate, _project.HeadTeacherBoardDate.ToDateString());
+				Assert.Equal(_template.ProposedAcademyOpeningDate, _project.ProposedAcademyOpeningDate.ToDateString());
 				Assert.Equal(_template.PreviousHeadTeacherBoardDate, _project.PreviousHeadTeacherBoardDate.ToDateString());
-				Assert.Equal(_template.PreviousHeadTeacherBoardLink, _project.PreviousHeadTeacherBoardLink);
+
 				Assert.Equal(_template.TrustReferenceNumber, _project.TrustReferenceNumber);
 				Assert.Equal(_template.NameOfTrust, _project.NameOfTrust);
 				Assert.Equal(_template.SponsorReferenceNumber, _project.SponsorReferenceNumber);
 				Assert.Equal(_template.SponsorName, _project.SponsorName);
-				Assert.Equal(_template.AcademyTypeRouteAndConversionGrant, $"{_project.AcademyTypeAndRoute} - {_project.ConversionSupportGrantAmount?.ToMoneyString(true)}");
 				Assert.Equal(_template.ConversionSupportGrantChangeReason, _project.ConversionSupportGrantChangeReason);
-				Assert.Equal(_template.ProposedAcademyOpeningDate, _project.ProposedAcademyOpeningDate.ToDateString());
 
+				Assert.Equal(_template.RationaleForProject, _project.RationaleForProject);
+				Assert.Equal(_template.RationaleForTrust, _project.RationaleForTrust);
+
+				Assert.Equal(_template.RisksAndIssues, _project.RisksAndIssues);
+				Assert.Equal(_template.EqualitiesImpactAssessmentConsidered, _project.EqualitiesImpactAssessmentConsidered);
+			}
+
+			[Fact]
+			public void ItPopulatesTheFieldsForTheFooter()
+			{
+				Assert.Equal(_template.Author, _project.Author);
+				Assert.Equal(_template.ClearedBy, _project.ClearedBy);
+				Assert.Equal(_template.Version, DateTime.Today.ToDateString());
+			}
+
+			[Fact]
+			public void AreTheseFieldsThatDontGoIntoTheTemplate()
+			{
+				Assert.Equal(_template.ApplicationReceivedDate, _project.ApplicationReceivedDate.ToDateString());
+				Assert.Equal(_template.AssignedDate, _project.AssignedDate.ToDateString());
+				Assert.Equal(_template.PreviousHeadTeacherBoardLink, _project.PreviousHeadTeacherBoardLink);
+			}
+
+			[Fact]
+			public void ItBuildstheGeneralInformationSuccessfully()
+			{
 				Assert.Equal(_template.SchoolPhase, _generalInformation.SchoolPhase);
 				Assert.Equal(_template.AgeRange, $"{_generalInformation.AgeRangeLower} to {_generalInformation.AgeRangeUpper}");
 				Assert.Equal(_template.SchoolType, _generalInformation.SchoolType);
@@ -74,7 +95,21 @@ namespace ApplyToBecomeInternal.Tests.Models
 				Assert.Equal(_template.DistanceFromSchoolToTrustHeadquarters, $"{_project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles");
 				Assert.Equal(_template.DistanceFromSchoolToTrustHeadquartersAdditionalInformation, _project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
 				Assert.Equal(_template.ParliamentaryConstituency, _generalInformation.ParliamentaryConstituency);
+			}
 
+			[Fact]
+			public void ItBuildsTheBudgetInformationSuccessfully()
+			{
+				Assert.Equal(_template.RevenueCarryForwardAtEndMarchCurrentYear, $"£{_project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString()}");
+				Assert.Equal(_template.ProjectedRevenueBalanceAtEndMarchNextYear,$"£{ _project.ProjectedRevenueBalanceAtEndMarchNextYear?.ToMoneyString()}");
+				Assert.Equal(_template.CapitalCarryForwardAtEndMarchCurrentYear,$"£{_project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString()}");
+				Assert.Equal(_template.CapitalCarryForwardAtEndMarchNextYear, $"£{_project.CapitalCarryForwardAtEndMarchNextYear?.ToMoneyString()}");
+				Assert.Equal(_template.SchoolBudgetInformationAdditionalInformation, _project.SchoolBudgetInformationAdditionalInformation);
+			}
+
+			[Fact]
+			public void ItBuildsTheSchoolPerformanceSuccessfully()
+			{
 				Assert.Equal(_template.OfstedLastInspection, _schoolPerformance.OfstedLastInspection.ToDateString());
 				Assert.Equal(_template.PersonalDevelopment, _schoolPerformance.PersonalDevelopment.DisplayOfstedRating());
 				Assert.Equal(_template.BehaviourAndAttitudes, _schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating());
@@ -84,19 +119,11 @@ namespace ApplyToBecomeInternal.Tests.Models
 				Assert.Equal(_template.QualityOfEducation, _schoolPerformance.QualityOfEducation.DisplayOfstedRating());
 				Assert.Equal(_template.SixthFormProvision, _schoolPerformance.SixthFormProvision.DisplayOfstedRating());
 				Assert.Equal(_template.SchoolPerformanceAdditionalInformation, _project.SchoolPerformanceAdditionalInformation);
+			}
 
-				Assert.Equal(_template.RationaleForProject, _project.RationaleForProject);
-				Assert.Equal(_template.RationaleForTrust, _project.RationaleForTrust);
-
-				Assert.Equal(_template.RisksAndIssues, _project.RisksAndIssues);
-				Assert.Equal(_template.EqualitiesImpactAssessmentConsidered, _project.EqualitiesImpactAssessmentConsidered);
-
-				Assert.Equal(_template.RevenueCarryForwardAtEndMarchCurrentYear, _project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString());
-				Assert.Equal(_template.ProjectedRevenueBalanceAtEndMarchNextYear, _project.ProjectedRevenueBalanceAtEndMarchNextYear?.ToMoneyString());
-				Assert.Equal(_template.CapitalCarryForwardAtEndMarchCurrentYear, _project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString());
-				Assert.Equal(_template.CapitalCarryForwardAtEndMarchNextYear, _project.CapitalCarryForwardAtEndMarchNextYear?.ToMoneyString());
-				Assert.Equal(_template.SchoolBudgetInformationAdditionalInformation, _project.SchoolBudgetInformationAdditionalInformation);
-
+			[Fact]
+			public void ItBuildsSchoolPupileForecastsSuccessfully()
+			{
 				Assert.Equal(_template.YearOneProjectedCapacity, _project.YearOneProjectedCapacity.ToString());
 				Assert.Equal(_template.YearOneProjectedPupilNumbers, _project.YearOneProjectedPupilNumbers.ToStringOrDefault());
 				Assert.Equal(_template.YearOnePercentageSchoolFull, _project.YearOneProjectedPupilNumbers.AsPercentageOf(_project.YearOneProjectedCapacity));
@@ -109,7 +136,6 @@ namespace ApplyToBecomeInternal.Tests.Models
 				Assert.Equal(_template.SchoolPupilForecastsAdditionalInformation, _project.SchoolPupilForecastsAdditionalInformation);
 			}
 		}
-
 
 		public class KeyStagePerformanceTests
 		{
