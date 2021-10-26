@@ -185,7 +185,7 @@ namespace ApplyToBecomeInternal.Models
 				Version = DateTime.Today.ToDateString(),
 				ClearedBy = project.ClearedBy,
 				AcademyOrderRequired = project.AcademyOrderRequired,
-				PreviousHeadTeacherBoardDate = project.PreviousHeadTeacherBoardDate.ToDateString(),
+				PreviousHeadTeacherBoardDate = project.PreviousHeadTeacherBoardDate.HasValue ? project.PreviousHeadTeacherBoardDate.ToDateString() : "No",
 				PreviousHeadTeacherBoardLink = project.PreviousHeadTeacherBoardLink,
 				TrustReferenceNumber = project.TrustReferenceNumber,
 				NameOfTrust = project.NameOfTrust,
