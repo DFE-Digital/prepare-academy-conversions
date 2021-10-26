@@ -69,7 +69,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			AddKeyStage5Information(documentBuilder, document, project);
 			var documentByteArray = documentBuilder.Build();
 
-			return File(documentByteArray, "application/vnd.ms-word.document", $"{document.SchoolName}-htb-template-{DateTime.Today.ToString("dd-MM-yyyy")}.docx");
+			return File(documentByteArray, "application/vnd.ms-word.document", $"{document.SchoolName}-project-template-{DateTime.Today.ToString("dd-MM-yyyy")}.docx");
 		}
 
 		private void AddKeyStage4Information(DocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
