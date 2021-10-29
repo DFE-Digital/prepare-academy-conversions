@@ -4,7 +4,6 @@ using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
 using AutoFixture;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -66,14 +65,15 @@ namespace ApplyToBecomeInternal.Tests.Models
 			[Fact]
 			public void ItPopulatesTheFieldsForTheFooter()
 			{
-				Assert.Equal(_template.Author, _project.Author);
-				Assert.Equal(_template.ClearedBy, _project.ClearedBy);
-				Assert.Equal(_template.Version, DateTime.Today.ToDateString());
+				Assert.Equal($"Author: {_project.Author}", _template.Author);
+				Assert.Equal($"Cleared by: {_project.ClearedBy}", _template.ClearedBy);
+				Assert.Equal($"Version: {DateTime.Today.ToDateString()}", _template.Version);
 			}
 
 			[Fact]
-			public void AreTheseFieldsThatDontGoIntoTheTemplate()
+			public void FieldsThatDontGoIntoTheWordDoc()
 			{
+				// fields that could be removed?
 				Assert.Equal(_template.ApplicationReceivedDate, _project.ApplicationReceivedDate.ToDateString());
 				Assert.Equal(_template.AssignedDate, _project.AssignedDate.ToDateString());
 				Assert.Equal(_template.PreviousHeadTeacherBoardLink, _project.PreviousHeadTeacherBoardLink);
@@ -124,7 +124,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 			}
 
 			[Fact]
-			public void ItBuildsSchoolPupileForecastsSuccessfully()
+			public void ItBuildsSchoolPupilForecastsSuccessfully()
 			{
 				Assert.Equal(_template.YearOneProjectedCapacity, _project.YearOneProjectedCapacity.ToString());
 				Assert.Equal(_template.YearOneProjectedPupilNumbers, _project.YearOneProjectedPupilNumbers.ToStringOrDefault());
@@ -136,6 +136,53 @@ namespace ApplyToBecomeInternal.Tests.Models
 				Assert.Equal(_template.YearThreeProjectedPupilNumbers, _project.YearThreeProjectedPupilNumbers.ToString());
 				Assert.Equal(_template.YearThreePercentageSchoolFull, _project.YearThreeProjectedPupilNumbers.AsPercentageOf(_project.YearThreeProjectedCapacity));
 				Assert.Equal(_template.SchoolPupilForecastsAdditionalInformation, _project.SchoolPupilForecastsAdditionalInformation);
+			}
+		}
+
+		public class NullValuesTests
+		{
+			private readonly AcademyConversionProject _project;
+			private readonly SchoolPerformance _schoolPerformance;
+			private readonly GeneralInformation _generalInformation;
+			private readonly KeyStagePerformance _keyStagePerformance;
+
+			public NullValuesTests()
+			{
+				_project = new AcademyConversionProject();
+				_schoolPerformance = new SchoolPerformance();
+				_generalInformation = new GeneralInformation();
+				_keyStagePerformance = new KeyStagePerformance();
+			}
+
+			[Fact]
+			public void ItDealsWithNullValuesWhenPopulatingTheFieldsForTheFooter()
+			{
+				var template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
+
+				Assert.Equal($"Author: ", template.Author);
+				Assert.Equal($"Cleared by: ", template.ClearedBy);
+			}
+
+			[Fact]
+			public void ItDealsWithNullValuesWhenPopulatingTheFieldsForTheGeneralInformation()
+			{
+				var template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
+
+				Assert.Null(template.SchoolPhase);
+				Assert.Equal("", template.AgeRange);
+				Assert.Null(template.SchoolType);
+				Assert.Null(template.NumberOnRoll);
+				Assert.Equal("", template.PercentageSchoolFull);
+				Assert.Null(template.SchoolCapacity);
+				Assert.Null(template.PublishedAdmissionNumber);
+				Assert.Equal("", template.PercentageFreeSchoolMeals);
+				Assert.Null(template.PartOfPfiScheme);
+				Assert.Null(template.ViabilityIssues);
+				Assert.Null(template.FinancialDeficit);
+				Assert.Null(template.IsSchoolLinkedToADiocese);
+				Assert.Null(template.DistanceFromSchoolToTrustHeadquarters);
+				Assert.Null(template.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
+				Assert.Null(template.ParliamentaryConstituency);
 			}
 		}
 
