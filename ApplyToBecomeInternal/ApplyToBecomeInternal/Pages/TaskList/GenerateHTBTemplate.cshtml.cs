@@ -446,7 +446,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				
 				foreach (var ks2Data in document.KeyStage2)
 				{
-					builder.AddHeading($"{ks2Data.Year} Key stage 2", HeadingLevel.Two);
+					builder.AddHeading($"{ks2Data.Year} key stage 2", HeadingLevel.Two);
 					builder.AddTable(new List<TextElement[]>
 					{
 						new[]

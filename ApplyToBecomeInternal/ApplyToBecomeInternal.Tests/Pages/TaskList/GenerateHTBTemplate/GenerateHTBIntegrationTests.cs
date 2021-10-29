@@ -55,7 +55,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 
 			await NavigateAsync("Set an Advisory Board date before you generate your project template");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates#head-teacher-board-date");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/head-teacher-board-date?return=%2FTaskList%2FPreviewHTBTemplate&fragment=head-teacher-board-date");
 		}
 	}
 }

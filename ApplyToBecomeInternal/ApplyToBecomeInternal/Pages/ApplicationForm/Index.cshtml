@@ -16,12 +16,13 @@
 		@foreach (var formSection in Model.Sections)
 		{
 			<h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-36">@formSection.Heading</h2>
+			<p class="govuk-body-s"><a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="application"  id="@("application-form-link")">Open school application form in a new tab</a></p> 
 			@if (formSection.Fields.Any())
 			{
 				<dl class="govuk-summary-list">
 					@foreach (var sectionField in formSection.Fields)
 					{
-						<partial name="_ApplicationFormField" model="sectionField"/>
+						<partial name="_ApplicationFormField" model="sectionField" />
 					}
 				</dl>
 			}
@@ -32,7 +33,7 @@
 				<dl class="govuk-summary-list">
 					@foreach (var sectionField in subSection.Fields)
 					{
-						<partial name="_ApplicationFormField" model="sectionField"/>
+						<partial name="_ApplicationFormField" model="sectionField" />
 					}
 				</dl>
 			}
