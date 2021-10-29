@@ -14,6 +14,7 @@ namespace ApplyToBecomeInternal.Models
 	{
 		[DocumentText("SchoolUrn")] public string SchoolUrn { get; set; }
 		[DocumentText("SchoolName")] public string SchoolName { get; set; }
+		[DocumentText("SchoolNameAndUrn")] public string SchoolNameAndUrn { get; set; }
 		[DocumentText("LocalAuthority")] public string LocalAuthority { get; set; }
 		public string ApplicationReferenceNumber { get; set; }
 		public string ProjectStatus { get; set; }
@@ -37,6 +38,7 @@ namespace ApplyToBecomeInternal.Models
 		public string PreviousHeadTeacherBoardLink { get; set; }
 		[DocumentText("TrustReferenceNumber")] public string TrustReferenceNumber { get; set; }
 		[DocumentText("TrustName")] public string NameOfTrust { get; set; }
+		[DocumentText("TrustNameAndReferenceNumber")] public string TrustNameAndReferenceNumber { get; set; }
 
 		[DocumentText("SponsorReferenceNumber")]
 		public string SponsorReferenceNumber { get; set; }
@@ -176,19 +178,21 @@ namespace ApplyToBecomeInternal.Models
 			{
 				SchoolName = project.SchoolName,
 				SchoolUrn = project.Urn.ToString(),
+				SchoolNameAndUrn = $"{project.SchoolName} - URN {project.Urn.ToString()}",
 				LocalAuthority = project.LocalAuthority,
 				ApplicationReceivedDate = project.ApplicationReceivedDate.ToDateString(),
 				AssignedDate = project.AssignedDate.ToDateString(),
 				HeadTeacherBoardDate = project.HeadTeacherBoardDate.ToDateString(),
 				RecommendationForProject = project.RecommendationForProject,
-				Author = project.Author,
-				Version = DateTime.Today.ToDateString(),
-				ClearedBy = project.ClearedBy,
+				Author = $"Author: {project.Author}",
+				Version = $"Version: {DateTime.Today.ToDateString()}",
+				ClearedBy = $"Cleared by: {project.ClearedBy}",
 				AcademyOrderRequired = project.AcademyOrderRequired,
-				PreviousHeadTeacherBoardDate = project.PreviousHeadTeacherBoardDate.ToDateString(),
+				PreviousHeadTeacherBoardDate = project.PreviousHeadTeacherBoardDate.HasValue ? project.PreviousHeadTeacherBoardDate.ToDateString() : "No",
 				PreviousHeadTeacherBoardLink = project.PreviousHeadTeacherBoardLink,
 				TrustReferenceNumber = project.TrustReferenceNumber,
 				NameOfTrust = project.NameOfTrust,
+				TrustNameAndReferenceNumber = $"{project.NameOfTrust} - {project.TrustReferenceNumber}",
 				SponsorReferenceNumber = project.SponsorReferenceNumber,
 				SponsorName = project.SponsorName,
 				AcademyTypeRouteAndConversionGrant = $"{project.AcademyTypeAndRoute} - {project.ConversionSupportGrantAmount?.ToMoneyString(true)}",
