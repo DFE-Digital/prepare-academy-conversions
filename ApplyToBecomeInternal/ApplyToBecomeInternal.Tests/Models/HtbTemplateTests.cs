@@ -155,6 +155,15 @@ namespace ApplyToBecomeInternal.Tests.Models
 			}
 
 			[Fact]
+			public void ItSubstitutesNullSponsorInfoWithMeaningfulWording()
+			{
+				var template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
+
+				Assert.Equal("Not applicable", template.SponsorName);
+				Assert.Equal("Not applicable", template.SponsorReferenceNumber);
+			}
+
+			[Fact]
 			public void ItDealsWithNullValuesWhenPopulatingTheFieldsForTheFooter()
 			{
 				var template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
