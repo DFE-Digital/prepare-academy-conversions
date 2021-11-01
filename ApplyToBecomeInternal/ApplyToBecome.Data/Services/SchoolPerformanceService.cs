@@ -1,5 +1,6 @@
 ﻿using ApplyToBecome.Data.Models;
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace ApplyToBecome.Data.Services
@@ -29,7 +30,7 @@ namespace ApplyToBecome.Data.Services
 				schoolPerformance.SixthFormProvision = establishment.MISEstablishment.SixthFormProvision;
 			}
 
-			if (DateTime.TryParse(establishment.OfstedLastInspection, out var ofstedLastInspection))
+		if (DateTime.TryParse(establishment.OfstedLastInspection, new CultureInfo("en-GB"), DateTimeStyles.None, out var ofstedLastInspection))
 				schoolPerformance.OfstedLastInspection = ofstedLastInspection;
 
 			return schoolPerformance;

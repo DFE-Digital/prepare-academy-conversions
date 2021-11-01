@@ -217,7 +217,7 @@ namespace ApplyToBecomeInternal.Models
 					: null,
 				DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
 				ParliamentaryConstituency = generalInformation.ParliamentaryConstituency,
-				OfstedLastInspection = schoolPerformance.OfstedLastInspection.ToDateString(),
+				OfstedLastInspection = schoolPerformance.OfstedLastInspection != null ? schoolPerformance.OfstedLastInspection.ToDateString() : "No data",
 				PersonalDevelopment = schoolPerformance.PersonalDevelopment.DisplayOfstedRating(),
 				BehaviourAndAttitudes = schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating(),
 				EarlyYearsProvision = schoolPerformance.EarlyYearsProvision.DisplayOfstedRating(),

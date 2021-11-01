@@ -27,7 +27,7 @@ namespace ApplyToBecome.Data.Tests.Services
 			_schoolPerformanceService = new SchoolPerformanceService(
 				new EstablishmentService(
 					new MockHttpClientFactory(_mockHandler),
-					_testLogger.CreateLogger<SchoolPerformanceService>()
+					_testLogger.CreateLogger<EstablishmentService>()
 				)
 			);
 		}
