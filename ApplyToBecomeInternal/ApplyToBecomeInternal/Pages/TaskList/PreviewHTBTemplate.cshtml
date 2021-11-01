@@ -120,7 +120,6 @@
 	</header>
 	<div class="app-summary-card__body">
 		<partial name="~/Pages/TaskList/SchoolPupilForecasts/_SchoolPupilForecastsTable.cshtml" model="Model.Project" />
-		<h3 class="govuk-heading-s  govuk-!-margin-top-8">Additional information</h3>
 		<dl class="govuk-summary-list">
 			<govuk-summary-list-row name="school-pupil-forecasts-additional-information" label="Additional information" value="@Model.Project.SchoolPupilForecastsAdditionalInformation" asp-page="@Links.SchoolPupilForecastsSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
 		</dl>
@@ -138,7 +137,6 @@
 		</header>
 		<div class="app-summary-card__body">
 			<vc:key-stage2-performance-tables />
-			<h3 class="govuk-heading-s  govuk-!-margin-top-8">Additional information</h3>
 			<dl class="govuk-summary-list">
 				<govuk-summary-list-row name="key-stage-2-additional-information" label="Additional information" value="@Model.Project.KeyStage2PerformanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.KeyStage2PerformanceTablesAdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
 			</dl>
@@ -157,7 +155,6 @@
 		</header>
 		<div class="app-summary-card__body">
 			<vc:key-stage4-performance-tables />
-			<h3 class="govuk-heading-s  govuk-!-margin-top-8">Additional information</h3>
 			<dl class="govuk-summary-list">
 				<govuk-summary-list-row name="key-stage-4-additional-information" label="Additional information" value="@Model.Project.KeyStage4PerformanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.KeyStage4PerformanceTablesAdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
 			</dl>
@@ -176,7 +173,6 @@
 		</header>
 		<div class="app-summary-card__body">
 			<vc:key-stage5-performance-tables />
-			<h3 class="govuk-heading-s  govuk-!-margin-top-8">Additional information</h3>
 			<dl class="govuk-summary-list">
 				<govuk-summary-list-row name="key-stage-5-additional-information" label="Additional information" value="@Model.Project.KeyStage5PerformanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.KeyStage5PerformanceTablesAdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
 			</dl>
