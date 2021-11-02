@@ -35,6 +35,7 @@ namespace ApplyToBecomeInternal
 				{
 					options.Conventions.AuthorizeFolder("/");
 					options.Conventions.AllowAnonymousToFolder("/Login");
+					options.Conventions.AllowAnonymousToFolder("/Public");
 				})
 				.AddViewOptions(options =>
 				{
