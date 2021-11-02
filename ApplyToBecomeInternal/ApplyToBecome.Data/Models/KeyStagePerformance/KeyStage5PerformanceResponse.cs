@@ -9,5 +9,7 @@
 		public decimal? NationalAppliedGeneralQualificationAverage { get; set; }
 		public decimal? LAAcademicQualificationAverage { get; set; }
 		public decimal? LAAppliedGeneralQualificationAverage { get; set; }
+		public DisadvantagedPupilsResponse AppliedGeneralProgress { get; set; }
+		public DisadvantagedPupilsResponse AcademicProgress { get; set; }
 	}
 }

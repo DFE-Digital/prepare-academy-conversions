@@ -31,9 +31,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 			for (int i = 0; i < 2; i++)
 			{
 				var response = keyStage5ResponseOrderedByYear.ElementAt(i);
-				Document.QuerySelector($"#academic-progress-{i}").TextContent.Should().Be("no data");
+				Document.QuerySelector($"#academic-progress-{i}").TextContent.Should().Be(response.AcademicProgress.NotDisadvantaged.ToString());
 				Document.QuerySelector($"#academic-average-{i}").TextContent.Should().Contain(response.AcademicQualificationAverage.ToString());
-				Document.QuerySelector($"#applied-general-progress-{i}").TextContent.Should().Be("no data");
+				Document.QuerySelector($"#applied-general-progress-{i}").TextContent.Should().Be(response.AppliedGeneralProgress.NotDisadvantaged.ToString());
 				Document.QuerySelector($"#applied-general-average-{i}").TextContent.Should().Contain(response.AppliedGeneralQualificationAverage.ToString());
 				Document.QuerySelector($"#na-academic-progress-{i}").TextContent.Should().Be("no data");
 				Document.QuerySelector($"#na-academic-average-{i}").TextContent.Should().Contain(response.NationalAcademicQualificationAverage.ToString());
