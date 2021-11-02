@@ -17,18 +17,19 @@ namespace ApplyToBecomeInternal.ViewModels
 		
 		public static KeyStage5PerformanceTableViewModel Build(KeyStage5PerformanceResponse keyStage5Performance)
 		{
-			return new KeyStage5PerformanceTableViewModel
+			var temp = new KeyStage5PerformanceTableViewModel
 			{
 				Year = keyStage5Performance.Year.FormatKeyStageYear(),
-				AcademicProgress = ((decimal?)null).FormatValue(),
+				AcademicProgress = keyStage5Performance.AcademicProgress.NotDisadvantaged.FormatValue(),
 				AcademicAverage = keyStage5Performance.AcademicQualificationAverage.FormatValue(),
-				AppliedGeneralProgress = ((decimal?)null).FormatValue(),
+				AppliedGeneralProgress = keyStage5Performance.AppliedGeneralProgress.NotDisadvantaged.FormatValue(),
 				AppliedGeneralAverage = keyStage5Performance.AppliedGeneralQualificationAverage.FormatValue(),
 				NationalAverageAcademicProgress = ((decimal?)null).FormatValue(),
 				NationalAverageAcademicAverage = keyStage5Performance.NationalAcademicQualificationAverage.FormatValue(),
 				NationalAverageAppliedGeneralProgress = ((decimal?)null).FormatValue(),
 				NationalAverageAppliedGeneralAverage = keyStage5Performance.NationalAppliedGeneralQualificationAverage.FormatValue()
 			};
+			return temp;
 		}
 	}
 }
