@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using System.Globalization;
 using Xunit;
+using ApplyToBecome.Data.Models.Establishment;
 
 namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 {
@@ -50,6 +51,25 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 			await NavigateAsync("Back to task list");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+		}
+
+		[Fact]
+		public async Task Should_display_null_values_appropriately()
+		{
+			var project = AddGetProject();
+			var schoolPerformance = new EstablishmentResponse();
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			await NavigateAsync("School performance (Ofsted information)");
+
+			Document.QuerySelector("#ofsted-inspection-date").TextContent.Should().Be("No data");
+			Document.QuerySelector("#overall-effectiveness").TextContent.Should().Be("No data");
+			Document.QuerySelector("#quality-of-teaching-learning-and-assessment").TextContent.Should().Be("No data");
+			Document.QuerySelector("#effectiveness-of-leadership-and-management").TextContent.Should().Be("No data");
+			Document.QuerySelector("#personal-development-behaviour-and-welfare").TextContent.Should().Be("No data");
+			Document.QuerySelector("#outcome-for-pupils").TextContent.Should().Be("No data");
+			Document.QuerySelector("#early-years-provision").TextContent.Should().Be("No data");
 		}
 	}
 }
