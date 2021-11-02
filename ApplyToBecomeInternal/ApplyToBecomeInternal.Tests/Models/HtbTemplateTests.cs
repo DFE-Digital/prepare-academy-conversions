@@ -164,6 +164,14 @@ namespace ApplyToBecomeInternal.Tests.Models
 			}
 
 			[Fact]
+			public void ItSubstitutesNullOfstedDateWithMeaningfulWording()
+			{
+				var template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
+
+				Assert.Equal("No data", template.OfstedLastInspection);
+			}
+
+			[Fact]
 			public void ItDealsWithNullValuesWhenPopulatingTheFieldsForTheFooter()
 			{
 				var template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);

@@ -9,9 +9,9 @@ namespace ApplyToBecome.Data.Services
 	public class EstablishmentService : IGetEstablishment
 	{
 		private readonly HttpClient _httpClient;
-		private readonly ILogger<SchoolPerformanceService> _logger;
+		private readonly ILogger<EstablishmentService> _logger;
 
-		public EstablishmentService(IHttpClientFactory httpClientFactory, ILogger<SchoolPerformanceService> logger)
+		public EstablishmentService(IHttpClientFactory httpClientFactory, ILogger<EstablishmentService> logger)
 		{
 			_httpClient = httpClientFactory.CreateClient("TramsClient");
 			_logger = logger;
