@@ -110,6 +110,11 @@ namespace ApplyToBecomeInternal.Models
 		{
 			public static LinkItem LoginForm = new LinkItem { Page = "/Login/Index" };
 		}
+
+		public static class Public
+		{
+			public static LinkItem Accessibility = new LinkItem { Page = "/Public/AccessibilityStatement" };
+		}
 	}
 
 	public class LinkItem
