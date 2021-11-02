@@ -17,7 +17,7 @@ namespace ApplyToBecomeInternal.ViewModels
 		
 		public static KeyStage5PerformanceTableViewModel Build(KeyStage5PerformanceResponse keyStage5Performance)
 		{
-			var temp = new KeyStage5PerformanceTableViewModel
+			return new KeyStage5PerformanceTableViewModel
 			{
 				Year = keyStage5Performance.Year.FormatKeyStageYear(),
 				AcademicProgress = keyStage5Performance.AcademicProgress.NotDisadvantaged.FormatValue(),
@@ -29,7 +29,6 @@ namespace ApplyToBecomeInternal.ViewModels
 				NationalAverageAppliedGeneralProgress = ((decimal?)null).FormatValue(),
 				NationalAverageAppliedGeneralAverage = keyStage5Performance.NationalAppliedGeneralQualificationAverage.FormatValue()
 			};
-			return temp;
 		}
 	}
 }
