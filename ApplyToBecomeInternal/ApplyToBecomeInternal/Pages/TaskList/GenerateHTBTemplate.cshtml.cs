@@ -212,13 +212,13 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 					},
 					new[]
 					{
-						new TextElement($"{project.LocalAuthority} LA average") { Bold = true }, HtmlStringToTextElement(ks4Data.LaAveragePupilsIncludedProgress8),
+						new TextElement($"{project.LocalAuthority} LA") { Bold = true }, HtmlStringToTextElement(ks4Data.LaAveragePupilsIncludedProgress8),
 						HtmlStringToTextElement(ks4Data.LaAveragePupilsIncludedProgress8PreviousYear),
 						HtmlStringToTextElement(ks4Data.LaAveragePupilsIncludedProgress8TwoYearsAgo),
 					},
 					new[]
 					{
-						new TextElement("National average") { Bold = true }, HtmlStringToTextElement(ks4Data.NationalAveragePupilsIncludedProgress8),
+						new TextElement("National") { Bold = true }, HtmlStringToTextElement(ks4Data.NationalAveragePupilsIncludedProgress8),
 						HtmlStringToTextElement(ks4Data.NationalAveragePupilsIncludedProgress8PreviousYear),
 						HtmlStringToTextElement(ks4Data.NationalAveragePupilsIncludedProgress8TwoYearsAgo),
 					},
