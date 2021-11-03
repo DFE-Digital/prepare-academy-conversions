@@ -14,12 +14,13 @@ resource cloudfoundry_app worker_app {
 
 	environment = {
 		"ASPNETCORE_ENVIRONMENT"   = var.aspnetcore_environment
-    "ASPNETCORE_URLS"          = "http://+:8080"
+		"ASPNETCORE_URLS"          = "http://+:8080"
 		"TramsApi__Endpoint"       = var.app_trams_api_endpoint
 		"TramsApi__ApiKey"         = var.app_trams_api_key
 		"Authentication__Username" = var.app_username
 		"Authentication__Password" = var.app_password
-    "GoogleAnalytics__Enable"  = var.enable_google_analytics
+		"GoogleAnalytics__Enable"  = var.enable_google_analytics
+		"FeedbackLink" = var.app_feedback_link
 	}
 }
 

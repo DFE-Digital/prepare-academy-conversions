@@ -69,6 +69,11 @@ variable enable_google_analytics {
   description = "Whether or not to enable google analytics"
 }
 
+variable app_feedback_link {
+	type = string
+	description = "Link in phase banner"
+}
+
 ## ========================================================================== ##
 #  Locals					                                                   #
 ## ========================================================================== ##
