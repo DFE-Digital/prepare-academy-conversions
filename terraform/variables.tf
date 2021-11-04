@@ -74,6 +74,11 @@ variable app_feedback_link {
 	description = "Link in phase banner"
 }
 
+variable logit_sink_url {
+	type = string
+	description = "Target URL (HTTPS) for logs to be streamed to"
+}
+
 ## ========================================================================== ##
 #  Locals					                                                   #
 ## ========================================================================== ##
