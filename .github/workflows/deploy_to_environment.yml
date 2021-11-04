@@ -141,3 +141,4 @@ jobs:
           TF_VAR_cf_app_image_tag: ${{ env.DOCKER_IMAGE_TAG }}
           TF_VAR_app_feedback_link: ${{ secrets.FEEDBACK_LINK }}
           TF_VAR_enable_google_analytics: Yes
+          TF_VAR_logit_sink_url: ${{ secrets.LOGIT_SINK_URL }}
