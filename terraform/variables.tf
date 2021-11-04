@@ -87,5 +87,6 @@ locals {
   web_app_name         = var.app_environment != "production" ? "apply-to-become-an-academy-internal-${local.app_name_suffix}" : "apply-to-become-an-academy-internal"
   web_app_routes       = cloudfoundry_route.web_app_cloudapp_digital_route
   redis_service_name   = "apply-to-become-an-academy-internal-redis-${local.app_name_suffix}"
+  logit_service_name   = "academy-transfers-logit-sink-${local.app_name_suffix}"
 	docker_image         = "ghcr.io/dfe-digital/a2b-internal:${var.cf_app_image_tag}"
 }
