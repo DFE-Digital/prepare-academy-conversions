@@ -91,7 +91,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement { Bold = true }, 
+						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
 					},
 					new[]
@@ -118,7 +120,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement { Bold = true }, 
+						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
 					},
 					new[]
@@ -146,7 +150,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement { Bold = true }, 
+						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
 					},
 					new[]
@@ -173,7 +179,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement { Bold = true }, 
+						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
 					new[]
@@ -202,7 +210,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement { Bold = true }, 
+						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
 					new[]
@@ -230,7 +240,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement { Bold = true }, 
+						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
 					new[]
@@ -272,7 +284,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement { Bold = true }, 
+						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
 					new[]
@@ -300,7 +314,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement { Bold = true }, 
+						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
 					new[]
@@ -327,7 +343,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement { Bold = true }, 
+						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
 					new[]
@@ -354,23 +372,31 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, new TextElement(ks4Data.Year) { Bold = true }, new TextElement(ks4Data.PreviousYear) { Bold = true },
+						new TextElement { Bold = true }, 
+						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
 					new[]
 					{
-						new TextElement(project.SchoolName) { Bold = true }, new TextElement(ks4Data.PercentageEnteringEbacc),
-						new TextElement(ks4Data.PercentageEnteringEbaccPreviousYear), new TextElement(ks4Data.PercentageEnteringEbaccTwoYearsAgo),
+						new TextElement(project.SchoolName) { Bold = true }, 
+						new TextElement(ks4Data.PercentageEnteringEbacc),
+						new TextElement(ks4Data.PercentageEnteringEbaccPreviousYear), 
+						new TextElement(ks4Data.PercentageEnteringEbaccTwoYearsAgo),
 					},
 					new[]
 					{
-						new TextElement($"{project.LocalAuthority} LA average") { Bold = true }, new TextElement(ks4Data.LaPercentageEnteringEbacc),
-						new TextElement(ks4Data.LaPercentageEnteringEbaccPreviousYear), new TextElement(ks4Data.LaPercentageEnteringEbaccTwoYearsAgo),
+						new TextElement($"{project.LocalAuthority} LA average") { Bold = true }, 
+						new TextElement(ks4Data.LaPercentageEnteringEbacc),
+						new TextElement(ks4Data.LaPercentageEnteringEbaccPreviousYear), 
+						new TextElement(ks4Data.LaPercentageEnteringEbaccTwoYearsAgo),
 					},
 					new[]
 					{
-						new TextElement("National average") { Bold = true }, new TextElement(ks4Data.NaPercentageEnteringEbacc),
-						new TextElement(ks4Data.NaPercentageEnteringEbaccPreviousYear), new TextElement(ks4Data.NaPercentageEnteringEbaccTwoYearsAgo),
+						new TextElement("National average") { Bold = true }, 
+						new TextElement(ks4Data.NaPercentageEnteringEbacc),
+						new TextElement(ks4Data.NaPercentageEnteringEbaccPreviousYear), 
+						new TextElement(ks4Data.NaPercentageEnteringEbaccTwoYearsAgo),
 					}
 				});
 
@@ -378,7 +404,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 
 				builder.AddTable(new List<TextElement[]>
 				{
-					new[] { new TextElement("Additional information") { Bold = true }, new TextElement(project.KeyStage4PerformanceAdditionalInformation) }
+					new[] { new TextElement("Additional information") { Bold = true }, 
+							new TextElement(project.KeyStage4PerformanceAdditionalInformation) }
 				});
 				builder.AddParagraph("");
 			});
