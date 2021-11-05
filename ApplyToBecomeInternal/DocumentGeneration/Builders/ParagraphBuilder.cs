@@ -20,10 +20,12 @@ namespace DocumentGeneration.Builders
                 {
                     SpacingBetweenLines = new SpacingBetweenLines
                     {
-                        AfterAutoSpacing = OnOffValue.FromBoolean(true),
-                        BeforeAutoSpacing = OnOffValue.FromBoolean(true)
-                    }
-                }
+                        AfterAutoSpacing = OnOffValue.FromBoolean(false),
+                        BeforeAutoSpacing = OnOffValue.FromBoolean(false),
+						Before = "0",
+						After = "0"
+					}
+				}
             };
             _runs = new List<Run>();
 
@@ -36,8 +38,8 @@ namespace DocumentGeneration.Builders
             parent.ParagraphProperties.SpacingBetweenLines = new SpacingBetweenLines
             {
                 AfterAutoSpacing = OnOffValue.FromBoolean(true),
-                BeforeAutoSpacing = OnOffValue.FromBoolean(true)
-            };
+                BeforeAutoSpacing = OnOffValue.FromBoolean(true),				
+			};
             _runs = new List<Run>();
         }
 
@@ -78,8 +80,8 @@ namespace DocumentGeneration.Builders
             {
                 run.RunProperties.Color = new Color {Val = text.Colour};
             }
-
-            _runs.Add(run);
+		
+			_runs.Add(run);
         }
 
         public void AddText(string text)
