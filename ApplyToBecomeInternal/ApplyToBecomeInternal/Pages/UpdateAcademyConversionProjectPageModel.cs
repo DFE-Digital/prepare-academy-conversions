@@ -36,7 +36,14 @@ namespace ApplyToBecomeInternal.Pages
 
 		public virtual async Task<IActionResult> OnPostAsync(int id)
 		{
-			if (AcademyConversionProject.HeadTeacherBoardDate.HasValue == false)
+			//if (AcademyConversionProject.HeadTeacherBoardDate.HasValue == false)
+			//{
+			//	_errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/head-teacher-board-date?return=%2FTaskList%2FSchoolAndTrustInformation/ConfirmSchoolAndTrustInformation&fragment=head-teacher-board-date",
+			//		"Set an Advisory Board date before you generate your project template");
+			//}
+
+			bool schoolAndTrustInformationSectionComplete = AcademyConversionProject.SchoolAndTrustInformationSectionComplete != null && AcademyConversionProject.SchoolAndTrustInformationSectionComplete.Value;
+			if (schoolAndTrustInformationSectionComplete && !AcademyConversionProject.HeadTeacherBoardDate.HasValue)
 			{
 				_errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/head-teacher-board-date?return=%2FTaskList%2FSchoolAndTrustInformation/ConfirmSchoolAndTrustInformation&fragment=head-teacher-board-date",
 					"Set an Advisory Board date before you generate your project template");
