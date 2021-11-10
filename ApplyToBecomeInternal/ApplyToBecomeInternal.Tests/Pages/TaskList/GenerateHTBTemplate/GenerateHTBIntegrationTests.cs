@@ -83,6 +83,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 		public async Task Should_navigate_from_task_list_error_summary_to_headteacher_board_date_and_confirm_back_to_task_list()
 		{
 			var project = AddGetProject(p => p.HeadTeacherBoardDate = null);
+			var request = AddPatchProject(project, r => r.HeadTeacherBoardDate);
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
@@ -94,6 +95,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory Board date");
 
 			await NavigateAsync("Set an Advisory Board date before you generate your project template");
+			Document.QuerySelector<IHtmlInputElement>("#head-teacher-board-date-day").Value = request.HeadTeacherBoardDate.Value.Day.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#head-teacher-board-date-month").Value = request.HeadTeacherBoardDate.Value.Month.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#head-teacher-board-date-year").Value = request.HeadTeacherBoardDate.Value.Year.ToString();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
