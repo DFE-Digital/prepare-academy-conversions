@@ -33,6 +33,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			ShowGenerateHtbTemplateError = (bool)(TempData["ShowGenerateHtbTemplateError"] ?? false);
 			if (ShowGenerateHtbTemplateError)
 			{
+				// CML this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
 				_errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/head-teacher-board-date?return=%2FTaskList%2FPreviewHTBTemplate&fragment=head-teacher-board-date",
 					"Set an Advisory Board date before you generate your project template");
 			}

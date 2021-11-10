@@ -36,6 +36,29 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		}
 
 		[Fact]
+		public async Task Should_navigate_from_error_summary_on_preview_to_headteacher_board_date_back_to_preview()
+		{
+			var project = AddGetProject(p => p.HeadTeacherBoardDate = null);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			await NavigateAsync("Generate project template");
+
+			// stays on same page with error
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-headteacher-board-template");
+
+			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory Board date");
+
+			await NavigateAsync("Set an Advisory Board date before you generate your project template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/head-teacher-board-date");
+
+			await NavigateDataTestAsync("headteacher-board-date-back-link");
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-headteacher-board-template");
+		}
+
+		[Fact]
 		public async Task Should_display_error_summary_on_preview_htb_template_when_generate_button_clicked_if_no_htb_date_set()
 		{
 			var project = AddGetProject(p => p.HeadTeacherBoardDate = null);
