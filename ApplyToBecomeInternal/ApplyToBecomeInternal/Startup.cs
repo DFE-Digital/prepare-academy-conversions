@@ -105,6 +105,8 @@ namespace ApplyToBecomeInternal
 
 			app.UseRouting();
 
+			app.UseSentryTracing();
+
 			app.UseAuthentication();
 			app.UseAuthorization();
 
