@@ -14,6 +14,7 @@ namespace ApplyToBecomeInternal
 				.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
 				.Enrich.FromLogContext()
 				.WriteTo.Console(new RenderedCompactJsonFormatter())
+				.WriteTo.Sentry()
 				.CreateLogger();
 
 			Log.Information("Starting web host");
@@ -23,6 +24,10 @@ namespace ApplyToBecomeInternal
 		public static IHostBuilder CreateHostBuilder(string[] args) =>
 			Host.CreateDefaultBuilder(args)
 				.UseSerilog()
-				.ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+				.ConfigureWebHostDefaults(webBuilder =>
+				{
+					webBuilder.UseSentry();
+					webBuilder.UseStartup<Startup>();
+				});
 	}
 }

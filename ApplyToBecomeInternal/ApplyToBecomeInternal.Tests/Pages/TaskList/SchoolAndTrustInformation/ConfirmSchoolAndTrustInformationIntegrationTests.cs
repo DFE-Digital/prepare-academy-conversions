@@ -2,6 +2,7 @@
 using AngleSharp.Html.Dom;
 using ApplyToBecomeInternal.Extensions;
 using FluentAssertions;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -51,6 +52,29 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			await NavigateAsync("School and trust information and project dates");
 
 			Document.QuerySelector("#previous-head-teacher-board").TextContent.Should().Be("No");
+		}
+
+		[Fact]
+		public async Task Should_display_an_error_when_school_and_trust_information_is_marked_as_complete_without_advisory_board_date_set()
+		{
+			var project = AddGetProject(project =>
+			{
+				project.SchoolAndTrustInformationSectionComplete = false;
+				project.HeadTeacherBoardDate = null;
+			});
+			
+			AddPatchProject(project, r => r.SchoolAndTrustInformationSectionComplete, true);
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			await NavigateAsync("School and trust information and project dates");
+
+			Document.QuerySelector<IHtmlInputElement>("#school-and-trust-information-complete").DoClick();
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+			Document.QuerySelector(".govuk-error-summary").Should().NotBe(null);
 		}
 
 		[Fact]
