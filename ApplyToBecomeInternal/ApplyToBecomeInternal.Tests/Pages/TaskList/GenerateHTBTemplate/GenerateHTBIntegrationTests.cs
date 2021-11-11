@@ -1,5 +1,6 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using ApplyToBecomeInternal.Tests.Customisations;
 using FluentAssertions;
 using System;
 using System.Threading.Tasks;
@@ -9,7 +10,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 {
 	public class GenerateHTBIntegrationTests : BaseIntegrationTests
 	{
-		public GenerateHTBIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public GenerateHTBIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) 
+		{
+			_fixture.Customizations.Add(new RandomDateBuilder(DateTime.Now.AddDays(1), DateTime.Now.AddMonths(12)));
+		}
 
 		[Fact]
 		public async Task Should_navigate_between_task_list_and_generate_htb_template()
@@ -55,7 +59,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 
 			await NavigateAsync("Set an Advisory Board date before you generate your project template");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/head-teacher-board-date?return=%2FTaskList%2FPreviewHTBTemplate&fragment=head-teacher-board-date");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/head-teacher-board-date?return=%2FTaskList%2FIndex");
 		}
 
 		[Fact]
