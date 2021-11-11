@@ -1,9 +1,11 @@
 using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecome.Data.Services;
+using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Services;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList
@@ -33,7 +35,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			ShowGenerateHtbTemplateError = (bool)(TempData["ShowGenerateHtbTemplateError"] ?? false);
 			if (ShowGenerateHtbTemplateError)
 			{
-				_errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/head-teacher-board-date?return=%2FTaskList%2FPreviewHTBTemplate&fragment=head-teacher-board-date",
+				var returnPage = WebUtility.UrlEncode(Links.TaskList.Index.Page);
+				// this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
+				_errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/head-teacher-board-date?return={returnPage}",
 					"Set an Advisory Board date before you generate your project template");
 			}
 
