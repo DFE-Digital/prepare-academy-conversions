@@ -1,0 +1,27 @@
+{
+  "name": "a2b-internal-cypress-tests",
+  "version": "1.0.0",
+  "description": "Automated regression tests targeting pre-prod environment",
+  "main": "index.js",
+  "scripts": {
+    "cy:open": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DFE-Digital/a2b-internal.git"
+  },
+  "keywords": [
+    "regression",
+    "cypress",
+    "testing"
+  ],
+  "author": "Mike Dally",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DFE-Digital/a2b-internal/issues"
+  },
+  "homepage": "https://github.com/DFE-Digital/a2b-internal#readme",
+  "dependencies": {
+    "cypress": "^9.0.0"
+  }
+}
