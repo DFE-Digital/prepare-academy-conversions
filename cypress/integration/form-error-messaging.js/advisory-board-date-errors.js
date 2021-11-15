@@ -2,6 +2,10 @@ before(function () {
 	cy.login();
 });
 
+after(function () {
+	cy.clearLocalStorage();
+});
+
 describe("Error messaging should be correct", () => {
 	afterEach(() => {
 		cy.storeSessionData();

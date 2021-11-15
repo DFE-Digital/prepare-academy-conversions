@@ -29,8 +29,8 @@ Cypress.Commands.add("login",()=> {
 	cy.visit(
 		"/login"
 	);
-	cy.get("#username").type("academy");
-	cy.get("#password").type("conversions{enter}");
+	cy.get("#username").type(Cypress.env('username'));
+	cy.get("#password").type(Cypress.env('password')+"{enter}");
 	cy.saveLocalStorage();
 })
 
@@ -58,6 +58,3 @@ Cypress.Commands.add('storeSessionData',()=>{
         }
     });
 })
-
-
-

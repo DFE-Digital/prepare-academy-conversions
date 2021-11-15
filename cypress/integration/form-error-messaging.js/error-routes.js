@@ -1,13 +1,15 @@
-before(function () {
-	cy.login();
-});
-
 describe("Error message link should redirect correctly", () => {
 	afterEach(() => {
 		cy.storeSessionData();
 	});
 
+	before(function () {
+		cy.login();
+	});
+
 	it("Should open first school in the list", () => {
+		// cy.pause()
+		// cy.login()
 		cy.get("#school-name-0").click();
 		cy.get('*[href*="/confirm-school-trust-information-project-dates"]').should(
 			"be.visible"
@@ -34,4 +36,8 @@ describe("Error message link should redirect correctly", () => {
 	it("Should display report link for school when Generate Report link clicked", () => {
 		cy.get(".app-c-attachment__link").should("be.visible");
 	});
+});
+
+after(function () {
+	cy.clearLocalStorage();
 });
