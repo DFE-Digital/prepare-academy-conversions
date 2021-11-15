@@ -1,4 +1,4 @@
 {
-    "chromeWebSecurity": false ,
-    "clientRoute": "/"
+    "baseUrl":"https://apply-to-become-an-academy-internal-dev.london.cloudapps.digital",
+    "video":false  
 }
