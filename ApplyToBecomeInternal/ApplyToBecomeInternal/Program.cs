@@ -28,6 +28,10 @@ namespace ApplyToBecomeInternal
 				{
 					webBuilder.UseSentry();
 					webBuilder.UseStartup<Startup>();
+					webBuilder.UseKestrel(options =>
+					{
+						options.AddServerHeader = false;
+					});
 				});
 	}
 }
