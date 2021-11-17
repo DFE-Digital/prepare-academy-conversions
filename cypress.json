@@ -1,3 +1,10 @@
 {
-    "video":false  
+	"fixturesFolder": "ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/fixtures",
+	"integrationFolder": "ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/integration",
+	"pluginsFile": "ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/plugins/index.js",
+	"screenshotsFolder": "ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots",
+	"videosFolder": "ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/videos",
+	"downloadsFolder": "ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/downloads",
+	"supportFile": "ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/support/index.js",
+	"video": false
 }
