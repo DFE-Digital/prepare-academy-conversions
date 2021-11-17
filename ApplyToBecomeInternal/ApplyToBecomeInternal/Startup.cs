@@ -66,7 +66,7 @@ namespace ApplyToBecomeInternal
 				options.Cookie.HttpOnly = true;
 				options.Cookie.IsEssential = true;
 				options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-				options.Cookie.Expiration = TimeSpan.FromMinutes(60);
+				options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
 			});
 
 			services.AddHttpClient("TramsClient", (sp, client) =>
