@@ -61,10 +61,11 @@ namespace ApplyToBecomeInternal
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 			{
 				options.LoginPath = "/login";
-				options.Cookie.Name = ".ApplyToBecome.Login";
+				options.Cookie.Name = ".ManageAnAcademyConversion.Login";
 				options.Cookie.HttpOnly = true;
 				options.Cookie.IsEssential = true;
 				options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+				options.Cookie.Expiration = TimeSpan.FromMinutes(60);
 			});
 
 			services.AddHttpClient("TramsClient", (sp, client) =>
