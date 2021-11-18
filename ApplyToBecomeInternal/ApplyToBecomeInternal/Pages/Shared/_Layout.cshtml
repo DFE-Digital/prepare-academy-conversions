@@ -24,7 +24,7 @@
 	@if (_configuration["GoogleAnalytics:Enable"] == "Yes")
 	{
 		<!-- Google Tag Manager -->
-		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+		<script asp-add-nonce>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
@@ -32,15 +32,18 @@
 		<!-- End Google Tag Manager -->
 	}
 </head>
-<body class="govuk-template__body js-enabled">
+<body class="govuk-template__body ">
 @if (_configuration["GoogleAnalytics:Enable"] == "Yes")
 {
 	<!-- Google Tag Manager (noscript) -->
-	<noscript>
+	<noscript asp-add-nonce>
 		<iframe src=https://www.googletagmanager.com/ns.html?id=GTM-5H6G773 height="0" width="0" style="display:none;visibility:hidden"></iframe>
 	</noscript>
 	<!-- End Google Tag Manager (noscript) -->
 }
+<script asp-add-nonce>
+    document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+</script>
 
 <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
 <header class="govuk-header " role="banner" data-module="govuk-header">
@@ -105,7 +108,6 @@
 		</div>
 	</div>
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js" integrity="sha512-ju6u+4bPX50JQmgU97YOGAXmRMrD9as4LE05PdC3qycsGQmjGlfm041azyB1VfCXpkpt1i9gqXCT6XuxhBJtKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="~/dist/site.js"></script>
+<script src="~/dist/site.js" asp-add-nonce></script>
 </body>
 </html>

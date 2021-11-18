@@ -1,5 +1,6 @@
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Configuration;
+using ApplyToBecomeInternal.Security;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -60,10 +61,11 @@ namespace ApplyToBecomeInternal
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 			{
 				options.LoginPath = "/login";
-				options.Cookie.Name = ".ApplyToBecome.Login";
+				options.Cookie.Name = ".ManageAnAcademyConversion.Login";
 				options.Cookie.HttpOnly = true;
 				options.Cookie.IsEssential = true;
 				options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+				options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
 			});
 
 			services.AddHttpClient("TramsClient", (sp, client) =>
@@ -97,6 +99,9 @@ namespace ApplyToBecomeInternal
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
+
+			app.UseSecurityHeaders(
+				SecureHeadersDefinitions.SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment()));
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
