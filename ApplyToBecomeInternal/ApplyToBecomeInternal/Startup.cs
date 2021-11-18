@@ -1,7 +1,6 @@
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Configuration;
 using ApplyToBecomeInternal.Services;
-using ApplyToBecomeInternal.Services.WordDocument;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -76,7 +75,6 @@ namespace ApplyToBecomeInternal
 			});
 
 			services.AddScoped<ErrorService>();
-			services.AddScoped<WordDocumentService>();
 			services.AddScoped<IGetEstablishment, EstablishmentService>();
 			services.Decorate<IGetEstablishment, GetEstablishmentItemCacheDecorator>();
 			services.AddScoped<SchoolPerformanceService>();
