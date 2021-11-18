@@ -30,7 +30,7 @@ jobs:
       - name: Build
         run: dotnet build -c Release ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-restore
       - name: Test
-        run: dotnet test ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --verbosity normal
+        run: dotnet test -c Release ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --verbosity normal
   build-and-push-image:
     needs: test
     runs-on: ubuntu-latest
