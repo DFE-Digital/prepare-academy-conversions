@@ -1,7 +1,6 @@
 using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
-using ApplyToBecomeInternal.Services.WordDocument;
 using DocumentGeneration;
 using DocumentGeneration.Elements;
 using Microsoft.AspNetCore.Html;
@@ -21,9 +20,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 		private readonly GeneralInformationService _generalInformationService;
 		private readonly KeyStagePerformanceService _keyStagePerformanceService;
 
-		public GenerateHTBTemplateModel(
-			WordDocumentService wordDocumentService,
-			SchoolPerformanceService schoolPerformanceService,
+		public GenerateHTBTemplateModel(SchoolPerformanceService schoolPerformanceService,
 			GeneralInformationService generalInformationService,
 			IAcademyConversionProjectRepository repository,
 			KeyStagePerformanceService keyStagePerformanceService) : base(repository)
