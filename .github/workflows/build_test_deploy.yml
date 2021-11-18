@@ -34,7 +34,6 @@ jobs:
       - name: Test
         run: dotnet test -c Release ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --verbosity normal
   build-and-push-image:
-    if: false
     needs: test
     runs-on: ubuntu-latest
     permissions:
@@ -80,7 +79,6 @@ jobs:
   deploy-image:
     needs: build-and-push-image
     runs-on: ubuntu-latest
-    if: false
     environment: dev
     defaults:
       run:
@@ -144,9 +142,7 @@ jobs:
           TF_VAR_logit_sink_url: ${{ secrets.LOGIT_SINK_URL }}
                     
   cypress-tests:
-    needs: test
     runs-on: ubuntu-latest
-    environment: dev
     defaults:
       run:
         working-directory: ApplyToBecomeInternal/ApplyToBecomeCypressTests
@@ -159,4 +155,4 @@ jobs:
       - name: Npm install
         run: npm install
       - name: Run cypress
-        run: npm run cy:run -- --env username=${{ secrets.USERNAME }},password=${{ secrets.PASSWORD }},url=${{secrets.STG_ENDPOINT}}
+        run: npm run cy:run -- --env username=${{ secrets.USERNAME }},password=${{ secrets.PASSWORD }},url=${{ secrets.ENDPOINT }}
