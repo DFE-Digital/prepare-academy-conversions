@@ -31,7 +31,7 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore ApplyToBecomeInternal/ApplyToBecomeInternal.sln
       - name: Build
-        run: dotnet build ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-restore
+        run: dotnet build -c Release ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-restore
       - name: Test
         run: dotnet test ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --verbosity normal
   build-and-push-image:
