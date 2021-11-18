@@ -24,7 +24,7 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: "12.x"
       # This could be cached in the future to allow for quicker build times
       - name: Build Frontend
         run: cd ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot; npm install; npm run build:assets; npm run build:frontend
@@ -54,7 +54,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '14.x'
+          node-version: "14.x"
 
       - name: Build Frontend
         run: cd ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot; npm install; npm run build:assets; npm run build:frontend
@@ -142,6 +142,19 @@ jobs:
           TF_VAR_app_feedback_link: ${{ secrets.FEEDBACK_LINK }}
           TF_VAR_enable_google_analytics: Yes
           TF_VAR_logit_sink_url: ${{ secrets.LOGIT_SINK_URL }}
-
-      - name: "Run E2E tests against pre-prod"
+          
+  cypress-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ApplyToBecomeInternal/ApplyToBecomeCypressTests
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "16.x"
+      - name: Npm install
+        run: npm install
+      - name: Run cypress
         run: npm run cy:run -- --env username=${{ secrets.USERNAME }},password=${{ secrets.PASSWORD }},url=${{secrets.STG_ENDPOINT}}
