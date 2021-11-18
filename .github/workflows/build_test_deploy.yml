@@ -142,6 +142,7 @@ jobs:
           TF_VAR_logit_sink_url: ${{ secrets.LOGIT_SINK_URL }}
                     
   cypress-tests:
+    environment: dev
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -155,4 +156,4 @@ jobs:
       - name: Npm install
         run: npm install
       - name: Run cypress
-        run: npm run cy:run -- --env username='${{ secrets.USERNAME }},password='${{ secrets.PASSWORD }}',url='${{ secrets.ENDPOINT }}'
+        run: npm run cy:run -- --env username='${{ secrets.USERNAME }}',password='${{ secrets.PASSWORD }}',url='${{ secrets.ENDPOINT }}'
