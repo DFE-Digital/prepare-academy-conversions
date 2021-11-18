@@ -1,7 +1,6 @@
 ﻿using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecomeInternal.Extensions;
-using ApplyToBecomeInternal.Services.WordDocument;
 using ApplyToBecomeInternal.ViewModels;
 using DocumentGeneration;
 using System;
