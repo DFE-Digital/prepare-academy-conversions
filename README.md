@@ -33,7 +33,7 @@ To execute the tests locally and view the output, run the following:
 npm run cy:open -- --env username='USERNAME',password='PASSWORD',url="BASE_URL_OF_APP"
 ```
 
-To execute the tests in headless modet, run the following (the output will log to the console):
+To execute the tests in headless mode, run the following (the output will log to the console):
 
 ```
 npm run cy:run -- --env username='USERNAME',password='PASSWORD',url="BASE_URL_OF_APP"
