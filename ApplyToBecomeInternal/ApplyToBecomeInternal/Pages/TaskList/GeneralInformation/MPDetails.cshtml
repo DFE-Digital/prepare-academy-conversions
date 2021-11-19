@@ -1,0 +1,22 @@
+﻿@page  "/task-list/{id:int}/confirm-general-information/mp-details"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
+	ViewData["Title"] = "MP details";
+}
+
+@section BeforeMain
+{
+	<govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation" />
+}
+
+<div class="govuk-form-group">
+	<h1 class="govuk-label-wrapper">
+		<label class="govuk-label govuk-label--l" for="cleared-by">
+			Enter the name of the MP and their political party
+		</label>
+	</h1>
+	<govuk-text-input name="mp-name" id="mp-name" asp-for="Project.MPName" width="20" label="Enter the MP's name"/>
+	<govuk-text-input name="mp-party" id="mp-party" asp-for="Project.MPParty" width="20" label="Enter the MP's political party"/>
+</div>
