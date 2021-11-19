@@ -144,6 +144,7 @@ jobs:
           TF_VAR_logit_sink_url: ${{ secrets.LOGIT_SINK_URL }}
 
   cypress-tests:
+    needs: deploy-image
     environment: staging
     if: ${{ github.event.inputs.environment}} == staging
     runs-on: ubuntu-latest
