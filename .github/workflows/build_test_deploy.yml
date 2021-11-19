@@ -161,4 +161,4 @@ jobs:
         if: failure()
         with:
            name: screenshots
-           path: cypress/screenshots
+           path: ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots
