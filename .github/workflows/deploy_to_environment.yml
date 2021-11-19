@@ -142,8 +142,10 @@ jobs:
           TF_VAR_app_feedback_link: ${{ secrets.FEEDBACK_LINK }}
           TF_VAR_enable_google_analytics: Yes
           TF_VAR_logit_sink_url: ${{ secrets.LOGIT_SINK_URL }}
-          
+
   cypress-tests:
+    environment: staging
+    if: ${{ github.event.inputs.environment}} == staging
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -157,4 +159,9 @@ jobs:
       - name: Npm install
         run: npm install
       - name: Run cypress
-        run: npm run cy:run -- --env username=${{ secrets.USERNAME }},password=${{ secrets.PASSWORD }},url=${{secrets.STG_ENDPOINT}}
+        run: npm run cy:run -- --env username='${{ secrets.USERNAME }}',password='${{ secrets.PASSWORD }}',url='${{ secrets.ENDPOINT }}'
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+           name: screenshots
+           path: ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots
