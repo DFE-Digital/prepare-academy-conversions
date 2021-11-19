@@ -157,8 +157,9 @@ jobs:
         run: npm install
       - name: Run cypress
         run: npm run cy:run -- --env username='${{ secrets.USERNAME }}',password='${{ secrets.PASSWORD }}',url='${{ secrets.ENDPOINT }}'
-     - uses: actions/upload-artifact@v1
-        if: failure()
+      - name: Archive test screenshots
+      - uses: actions/upload-artifact@v1
         with:
-          name: cypress-screenshots
-          path: cypress/screenshots
+           name: screenshots
+           path: cypress/screenshots
+           if: ${{ failure() }}
