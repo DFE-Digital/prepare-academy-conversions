@@ -51,7 +51,9 @@ namespace ApplyToBecomeInternal.ViewComponents
 				DistanceFromSchoolToTrustHeadquarters = ViewData["Return"] == null ?
 					project.DistanceFromSchoolToTrustHeadquarters.ToSafeString() : $"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()}",
 				DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
-				ParliamentaryConstituency = generalInformation.ParliamentaryConstituency
+				ParliamentaryConstituency = generalInformation.ParliamentaryConstituency,
+				MPName = project.MPName,
+				MPParty = project.MPParty
 			};
 
 			return View(viewModel);

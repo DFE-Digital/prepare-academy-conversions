@@ -41,6 +41,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			//Document.QuerySelector("#percentage-in-diocesan-trust").TextContent.Should().Be(establishment.PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust.ToPercentage());
 			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be($"{ project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles{project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}");
 			Document.QuerySelector("#parliamentary-constituency").TextContent.Should().Be(establishment.ParliamentaryConstituency.Name);
+			Document.QuerySelector("#mp-name").TextContent.Should().Be(project.MPName);
+			Document.QuerySelector("#mp-party").TextContent.Should().Be(project.MPParty);
 		}
 
 		[Fact]
