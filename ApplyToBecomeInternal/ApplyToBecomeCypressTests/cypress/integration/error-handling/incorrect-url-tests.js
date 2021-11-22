@@ -24,7 +24,7 @@ describe("Error handling should present correctly to the user", () => {
         cy.get('[aria-describedby*=la-info-template-status]').click()
         cy.url().then(url =>{
             //Changes the current URL to:
-            //https://apply-to-become-an-academy-internal-dev.london.cloudapps.digital/task-list/<SOME_VALID_ID>/confirm-local-authority-information-template-dates?return=someInvalideParam/SomeInvalidPath
+            ///task-list/<SOME_VALID_ID>/confirm-local-authority-information-template-dates?return=someInvalideParam/SomeInvalidPath
             modifiedUrl = url.replace('%2FTaskList%2FIndex&backText=Back%20to%20task%20list','someInvalideParam')
             cy.visit(modifiedUrl+'/SomeInvalidPath')
         })
