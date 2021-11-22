@@ -1,14 +1,14 @@
-before(function () {
-	cy.login();
-});
-
-after(function () {
-	cy.clearLocalStorage();
-});
-
 describe("Error handling should present correctly to the user", () => {
+    after(function () {
+        cy.clearLocalStorage();
+    });
+
 	afterEach(() => {
 		cy.storeSessionData();
+	});
+
+	before(function () {
+		cy.login();
 	});
 
     it("Should open first school in the list", () => {
@@ -18,7 +18,8 @@ describe("Error handling should present correctly to the user", () => {
 		);
 	});
 
-    it('Should display user-friendly error',()=>{
+    // Raised under
+    it.skip('Should display user-friendly error when accessing an invalid URL',()=>{
         let modifiedUrl
         cy.get('[aria-describedby*=la-info-template-status]').click()
         cy.url().then(url =>{
