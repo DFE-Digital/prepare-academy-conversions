@@ -18,17 +18,23 @@ describe("Error handling should present correctly to the user", () => {
 		);
 	});
 
-    // Raised under
-    it.skip('Should display user-friendly error when accessing an invalid URL',()=>{
+    // Raised under 80466
+    it.skip('Should display user-friendly error when incorrect return parameter passed [80466]',()=>{
         let modifiedUrl
         cy.get('[aria-describedby*=la-info-template-status]').click()
         cy.url().then(url =>{
             //Changes the current URL to:
-            //https://apply-to-become-an-academy-internal-dev.london.cloudapps.digital/task-list/<SOME_ID>/confirm-local-authority-information-template-dates?return=someInvalideParam/SomeInvalidPath
+            //https://apply-to-become-an-academy-internal-dev.london.cloudapps.digital/task-list/<SOME_VALID_ID>/confirm-local-authority-information-template-dates?return=someInvalideParam/SomeInvalidPath
             modifiedUrl = url.replace('%2FTaskList%2FIndex&backText=Back%20to%20task%20list','someInvalideParam')
             cy.visit(modifiedUrl+'/SomeInvalidPath')
         })
        cy.get('.govuk-button').click()
        cy.get('h1').should('not.contain.text','An unhandled exception occurred while processing the request.')
+    })
+
+     // Raised under 80470
+     it('Should display user-friendly error when incorrect project ID passed [80470]',()=>{
+        cy.visit(Cypress.env('url')+'/task-list/9999')
+        cy.get('h1').should('not.contain.text','An unhandled exception occurred while processing the request.')
     })
 });
