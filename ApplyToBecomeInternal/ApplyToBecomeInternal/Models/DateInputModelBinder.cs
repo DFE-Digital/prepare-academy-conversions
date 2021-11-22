@@ -1,3 +1,4 @@
+using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using System;
@@ -61,12 +62,16 @@ namespace ApplyToBecomeInternal.Models
 			int month = -1;
 			int year = -1;
 
-			var yearValid = TryParseYear();
-			var monthValid = TryParseMonth();
-			var dayValid = TryParseDay();
+			var validator = new DateValidationService();
+			(bool dateValid, string validationMessage) =
+				validator.Validate(dayValueProviderResult.FirstValue, monthValueProviderResult.FirstValue, yearValueProviderResult.FirstValue, displayName);
 
-			if (dayValid && monthValid && yearValid)
+			if (dateValid)
 			{
+				TryParseDay();
+				TryParseMonth();
+				TryParseYear();
+
 				var date = new DateTime(year, month, day);
 				var validDateRange = IsInValidDateRange(date);
 				if (validDateRange.Item1)
@@ -76,8 +81,8 @@ namespace ApplyToBecomeInternal.Models
 				else
 				{
 					bindingContext.ModelState.TryAddModelError(
-							bindingContext.ModelName,
-							validDateRange.Item2);
+						bindingContext.ModelName,
+						validDateRange.Item2);
 
 					bindingContext.Result = ModelBindingResult.Failed();
 				}
@@ -87,32 +92,7 @@ namespace ApplyToBecomeInternal.Models
 				bindingContext.ModelState.SetModelValue(dayModelName, dayValueProviderResult);
 				bindingContext.ModelState.SetModelValue(monthModelName, monthValueProviderResult);
 				bindingContext.ModelState.SetModelValue(yearModelName, yearValueProviderResult);
-
-				if (_missingParts.Count == 3)
-				{
-					bindingContext.ModelState.TryAddModelError(
-							bindingContext.ModelName,
-							$"Enter a date for the {displayName.ToLower()}");
-				}
-				else if (_missingParts.Count > 0)
-				{
-					bindingContext.ModelState.TryAddModelError(
-							bindingContext.ModelName,
-							$"{displayName} must include a {string.Join(" and ", _missingParts)}");
-				}
-				else if (_invalidParts.Count > 0)
-				{
-					bindingContext.ModelState.TryAddModelError(
-							bindingContext.ModelName,
-							$"{displayName} date must be a real date");
-				}
-				else
-				{
-					bindingContext.ModelState.TryAddModelError(
-							bindingContext.ModelName,
-							$"{displayName} is not a valid date");
-				}
-
+				bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, validationMessage);
 				bindingContext.Result = ModelBindingResult.Failed();
 			}
 
@@ -121,11 +101,11 @@ namespace ApplyToBecomeInternal.Models
 			bool TryParseDay()
 			{
 				if (dayValueProviderResult != ValueProviderResult.None &&
-					dayValueProviderResult.FirstValue != string.Empty)
+				    dayValueProviderResult.FirstValue != string.Empty)
 				{
 					if (!int.TryParse(dayValueProviderResult.FirstValue, out day) ||
-						day < 1 ||
-						(month != -1 && month < 13 && year != -1 && day > DateTime.DaysInMonth(year, month)))
+					    day < 1 ||
+					    (month != -1 && month < 13 && year != -1 && day > DateTime.DaysInMonth(year, month)))
 					{
 						bindingContext.ModelState.TryAddModelError(
 							dayModelName,
@@ -153,11 +133,11 @@ namespace ApplyToBecomeInternal.Models
 			bool TryParseMonth()
 			{
 				if (monthValueProviderResult != ValueProviderResult.None &&
-					monthValueProviderResult.FirstValue != string.Empty)
+				    monthValueProviderResult.FirstValue != string.Empty)
 				{
 					if (!int.TryParse(monthValueProviderResult.FirstValue, out month) ||
-						month < 1 ||
-						month > 12)
+					    month < 1 ||
+					    month > 12)
 					{
 						bindingContext.ModelState.TryAddModelError(
 							monthModelName,
@@ -185,11 +165,11 @@ namespace ApplyToBecomeInternal.Models
 			bool TryParseYear()
 			{
 				if (yearValueProviderResult != ValueProviderResult.None &&
-					yearValueProviderResult.FirstValue != string.Empty)
+				    yearValueProviderResult.FirstValue != string.Empty)
 				{
 					if (!int.TryParse(yearValueProviderResult.FirstValue, out year) ||
-						year < 1 ||
-						year > 9999)
+					    year < 1 ||
+					    year > 9999)
 					{
 						bindingContext.ModelState.TryAddModelError(
 							yearModelName,
@@ -217,12 +197,12 @@ namespace ApplyToBecomeInternal.Models
 			bool IsOptionalOrFieldTypeMismatch()
 			{
 				return string.IsNullOrWhiteSpace(dayValueProviderResult.FirstValue)
-					&& string.IsNullOrWhiteSpace(monthValueProviderResult.FirstValue)
-					&& string.IsNullOrWhiteSpace(yearValueProviderResult.FirstValue)
-					&& !bindingContext.ModelMetadata.IsRequired
-					|| dayValueProviderResult == ValueProviderResult.None
-					&& monthValueProviderResult == ValueProviderResult.None
-					&& yearValueProviderResult == ValueProviderResult.None;
+				       && string.IsNullOrWhiteSpace(monthValueProviderResult.FirstValue)
+				       && string.IsNullOrWhiteSpace(yearValueProviderResult.FirstValue)
+				       && !bindingContext.ModelMetadata.IsRequired
+				       || dayValueProviderResult == ValueProviderResult.None
+				       && monthValueProviderResult == ValueProviderResult.None
+				       && yearValueProviderResult == ValueProviderResult.None;
 			}
 
 			(bool, string) IsInValidDateRange(DateTime date)
@@ -246,6 +226,7 @@ namespace ApplyToBecomeInternal.Models
 						}
 					}
 				}
+
 				return (true, string.Empty);
 			}
 
