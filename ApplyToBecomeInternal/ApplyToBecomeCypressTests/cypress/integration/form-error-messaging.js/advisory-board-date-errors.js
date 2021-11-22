@@ -1,15 +1,16 @@
-before(function () {
-	cy.login();
-});
-
-after(function () {
-	cy.clearLocalStorage();
-});
-
 describe("Error messaging should be correct", () => {
 	afterEach(() => {
 		cy.storeSessionData();
 	});
+
+	before(function () {
+		cy.login();
+	});
+	
+	after(function () {
+		cy.clearLocalStorage();
+	});
+	
 
 	it("Should open first school in the list", () => {
 		cy.get("#school-name-0").click();

@@ -8,8 +8,6 @@ describe("Error message link should redirect correctly", () => {
 	});
 
 	it("Should open first school in the list", () => {
-		// cy.pause()
-		// cy.login()
 		cy.get("#school-name-0").click();
 		cy.get('*[href*="/confirm-school-trust-information-project-dates"]').should(
 			"be.visible"
