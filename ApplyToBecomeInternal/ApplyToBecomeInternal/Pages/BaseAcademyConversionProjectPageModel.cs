@@ -1,4 +1,5 @@
 ﻿using ApplyToBecome.Data.Services;
+using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -20,6 +21,13 @@ namespace ApplyToBecomeInternal.Pages
 		public virtual async Task<IActionResult> OnGetAsync(int id)
 		{
 			return await SetProject(id);
+		}
+
+		public virtual async Task<IActionResult> OnPostAsync(int id)
+		{
+			await SetProject(id);
+
+			return RedirectToPage(Links.TaskList.Index.Page, new { id });
 		}
 
 		protected async Task<IActionResult> SetProject(int id)
