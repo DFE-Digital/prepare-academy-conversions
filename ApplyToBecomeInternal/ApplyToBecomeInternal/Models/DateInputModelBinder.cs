@@ -2,7 +2,6 @@ using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,9 +9,6 @@ namespace ApplyToBecomeInternal.Models
 {
 	public class DateInputModelBinder : IModelBinder
 	{
-		private readonly List<string> _missingParts = new List<string>();
-		private readonly List<string> _invalidParts = new List<string>();
-
 		public Task BindModelAsync(ModelBindingContext bindingContext)
 		{
 			if (bindingContext == null)
@@ -58,19 +54,15 @@ namespace ApplyToBecomeInternal.Models
 
 			var displayName = bindingContext.ModelMetadata.DisplayName;
 
-			int day = -1;
-			int month = -1;
-			int year = -1;
-
 			var validator = new DateValidationService();
 			(bool dateValid, string validationMessage) =
 				validator.Validate(dayValueProviderResult.FirstValue, monthValueProviderResult.FirstValue, yearValueProviderResult.FirstValue, displayName);
 
 			if (dateValid)
 			{
-				TryParseDay();
-				TryParseMonth();
-				TryParseYear();
+				int day = int.Parse(dayValueProviderResult.FirstValue);
+				int month = int.Parse(monthValueProviderResult.FirstValue);
+				int year = int.Parse(yearValueProviderResult.FirstValue);
 
 				var date = new DateTime(year, month, day);
 				var validDateRange = IsInValidDateRange(date);
@@ -97,102 +89,6 @@ namespace ApplyToBecomeInternal.Models
 			}
 
 			return Task.CompletedTask;
-
-			bool TryParseDay()
-			{
-				if (dayValueProviderResult != ValueProviderResult.None &&
-				    dayValueProviderResult.FirstValue != string.Empty)
-				{
-					if (!int.TryParse(dayValueProviderResult.FirstValue, out day) ||
-					    day < 1 ||
-					    (month != -1 && month < 13 && year != -1 && day > DateTime.DaysInMonth(year, month)))
-					{
-						bindingContext.ModelState.TryAddModelError(
-							dayModelName,
-							$"error");
-						_invalidParts.Add("day");
-
-						return false;
-					}
-					else
-					{
-						return true;
-					}
-				}
-				else
-				{
-					bindingContext.ModelState.TryAddModelError(
-						dayModelName,
-						$"error");
-					_missingParts.Add("day");
-
-					return false;
-				}
-			}
-
-			bool TryParseMonth()
-			{
-				if (monthValueProviderResult != ValueProviderResult.None &&
-				    monthValueProviderResult.FirstValue != string.Empty)
-				{
-					if (!int.TryParse(monthValueProviderResult.FirstValue, out month) ||
-					    month < 1 ||
-					    month > 12)
-					{
-						bindingContext.ModelState.TryAddModelError(
-							monthModelName,
-							$"error");
-						_invalidParts.Add("month");
-
-						return false;
-					}
-					else
-					{
-						return true;
-					}
-				}
-				else
-				{
-					bindingContext.ModelState.TryAddModelError(
-						monthModelName,
-						$"error");
-					_missingParts.Add("month");
-
-					return false;
-				}
-			}
-
-			bool TryParseYear()
-			{
-				if (yearValueProviderResult != ValueProviderResult.None &&
-				    yearValueProviderResult.FirstValue != string.Empty)
-				{
-					if (!int.TryParse(yearValueProviderResult.FirstValue, out year) ||
-					    year < 1 ||
-					    year > 9999)
-					{
-						bindingContext.ModelState.TryAddModelError(
-							yearModelName,
-							$"error");
-						_invalidParts.Add("year");
-
-						return false;
-					}
-					else
-					{
-						return true;
-					}
-				}
-				else
-				{
-					bindingContext.ModelState.TryAddModelError(
-						yearModelName,
-						$"error");
-					_missingParts.Add("year");
-
-					return false;
-				}
-			}
 
 			bool IsOptionalOrFieldTypeMismatch()
 			{
