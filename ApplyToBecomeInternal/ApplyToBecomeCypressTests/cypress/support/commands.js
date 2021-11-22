@@ -56,3 +56,11 @@ Cypress.Commands.add('storeSessionData',()=>{
         }
     });
 })
+
+Cypress.Commands.add('selectSchoolListing',(listing)=>{
+    cy.get("#school-name-"+listing).click();
+    cy.get('*[href*="/confirm-school-trust-information-project-dates"]').should(
+        "be.visible"
+    );
+    cy.saveLocalStorage();
+})
