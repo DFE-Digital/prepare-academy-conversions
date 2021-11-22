@@ -33,7 +33,7 @@ describe("Error handling should present correctly to the user", () => {
     })
 
      // Raised under 80470
-     it('Should display user-friendly error when incorrect project ID passed [80470]',()=>{
+     it.skip('Should display user-friendly error when incorrect project ID passed [80470]',()=>{
         cy.visit(Cypress.env('url')+'/task-list/9999')
         cy.get('h1').should('not.contain.text','An unhandled exception occurred while processing the request.')
     })
