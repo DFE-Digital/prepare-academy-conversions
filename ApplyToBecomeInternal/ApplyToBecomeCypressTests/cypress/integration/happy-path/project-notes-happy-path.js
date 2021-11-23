@@ -25,8 +25,8 @@ describe('Submit and view project notes', () => {
         cy.get('[type=submit]').click()
         cy.pause()
         cy.get('#project-note-added').should('contain.text', 'Note added')
-        cy.get('#project-note-subject-0').should('have.text', 'New body added at: '+dateText)
-
+        cy.get('#project-note-subject-0').should('have.text', 'New subject added at: '+dateText)
+        cy.get('#project-note-body-0').should('have.text', 'New body added at: '+dateText)
     });
 
     it('Should correctly render the school application form', () => {
