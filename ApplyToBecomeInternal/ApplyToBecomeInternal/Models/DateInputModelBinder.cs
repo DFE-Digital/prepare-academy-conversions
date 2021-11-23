@@ -65,17 +65,15 @@ namespace ApplyToBecomeInternal.Models
 				int year = int.Parse(yearValueProviderResult.FirstValue);
 
 				var date = new DateTime(year, month, day);
-				var validDateRange = IsInValidDateRange(date);
-				if (validDateRange.Item1)
+				(bool validDateRange, string message) = IsInValidDateRange(date);
+
+				if (validDateRange)
 				{
 					bindingContext.Result = ModelBindingResult.Success(date);
 				}
 				else
 				{
-					bindingContext.ModelState.TryAddModelError(
-						bindingContext.ModelName,
-						validDateRange.Item2);
-
+					bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, message);
 					bindingContext.Result = ModelBindingResult.Failed();
 				}
 			}
@@ -108,18 +106,8 @@ namespace ApplyToBecomeInternal.Models
 					var dateValidation = defaultModelMetadata.Attributes.Attributes.FirstOrDefault(a => a.GetType() == typeof(DateValidationAttribute)) as DateValidationAttribute;
 					if (dateValidation != null)
 					{
-						var today = DateTime.Today;
-						switch (dateValidation.DateValidationEnum)
-						{
-							case DateValidationEnum.Past:
-								return (date < today, $"{displayName} date must be in the past");
-							case DateValidationEnum.PastOrToday:
-								return (date < today.AddDays(1), $"{displayName} date must be today or in the past");
-							case DateValidationEnum.Future:
-								return (date >= today.AddDays(1), $"{displayName} date must be in the future");
-							case DateValidationEnum.FutureOrToday:
-								return (date >= today, $"{displayName} date must be today or in the future");
-						}
+						var rangeValidator = new DateRangeValidationService();
+						return rangeValidator.Validate(date, dateValidation.DateValidationEnum, displayName);
 					}
 				}
 
@@ -137,19 +125,11 @@ namespace ApplyToBecomeInternal.Models
 
 	public class DateValidationAttribute : Attribute
 	{
-		public DateValidationAttribute(DateValidationEnum dateValidationEnum)
+		public DateValidationAttribute(DateRangeValidationService.DateRange dateValidationEnum)
 		{
 			DateValidationEnum = dateValidationEnum;
 		}
 
-		public DateValidationEnum DateValidationEnum { get; }
-	}
-
-	public enum DateValidationEnum
-	{
-		Past,
-		PastOrToday,
-		Future,
-		FutureOrToday
+		public DateRangeValidationService.DateRange DateValidationEnum { get; }
 	}
 }
