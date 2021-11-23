@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ApplyToBecomeInternal.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -13,7 +14,7 @@ namespace ApplyToBecomeInternal.Models
 
 		[BindProperty(Name = "head-teacher-board-date")]
 		[ModelBinder(BinderType = typeof(DateInputModelBinder))]
-		[DateValidation(DateValidationEnum.Future)]
+		[DateValidation(DateRangeValidationService.DateRange.Future)]
 		[Display(Name = "Advisory Board")]
 		public DateTime? HeadTeacherBoardDate { get; set; }
 		public DateTime? BaselineDate { get; set; }
@@ -69,7 +70,7 @@ namespace ApplyToBecomeInternal.Models
 		public string PreviousHeadTeacherBoardDateQuestion { get; set; }
 
 		[ModelBinder(BinderType = typeof(DateInputModelBinder))]
-		[DateValidation(DateValidationEnum.Past)]
+		[DateValidation(DateRangeValidationService.DateRange.Past)]
 		[BindProperty(Name = "previous-head-teacher-board-date")]
 		[Required]
 		[Display(Name = "Previous Advisory Board")]
