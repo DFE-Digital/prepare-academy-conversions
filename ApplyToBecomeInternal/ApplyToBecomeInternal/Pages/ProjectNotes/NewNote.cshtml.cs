@@ -37,7 +37,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 		[BindProperty(Name = "project-note-body")]
 		public string ProjectNoteBody { get; set; }
 
-		public async Task<IActionResult> OnPostAsync(int id)
+		public override async Task<IActionResult> OnPostAsync(int id)
 		{
 			var projectNote = new AddProjectNote {Subject = ProjectNoteSubject, Note = ProjectNoteBody, Author = ""};
 

@@ -42,6 +42,7 @@ Cypress.Commands.add("submitDate", (day, month, year) => {
 });
 
 Cypress.Commands.add('storeSessionData',()=>{
+    Cypress.Cookies.preserveOnce('.ManageAnAcademyConversion.Login')
     let str = [];
     cy.getCookies().then((cookie) => {
         cy.log(cookie);

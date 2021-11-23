@@ -1,10 +1,13 @@
 using ApplyToBecome.Data.Models.KeyStagePerformance;
+using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
 using AutoFixture;
 using FluentAssertions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+
 
 namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 {
@@ -55,13 +58,26 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 				Document.QuerySelector($"#na-writing-progress-score-{i}").TextContent.Should().Be(response.NationalAverageWritingProgressScore.NotDisadvantaged);
 				Document.QuerySelector($"#na-maths-progress-score-{i}").TextContent.Should().Be(response.NationalAverageMathsProgressScore.NotDisadvantaged);
 			}
-
-			await NavigateAsync("Confirm and continue");
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
 
 		[Fact]
 		public async Task Should_navigate_between_task_list_and_KS2_performance()
+		{
+			var project = AddGetProject();
+			AddGetKeyStagePerformance((int)project.Urn);
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			await NavigateAsync("Key stage 2 performance tables");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/key-stage-2-performance-tables");
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+		}
+
+		[Fact]
+		public async Task Back_link_should_navigate_from_KS2_performance_to_task_list()
 		{
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
@@ -96,9 +112,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 
 			Document.QuerySelector($"#na-percentage-meeting-expected-in-rwm-0").TextContent.Trim().Should()
 				.Be($"{ks2ResponseOrderedByYear.First().NationalAveragePercentageMeetingExpectedStdInRWM.NotDisadvantaged}(disadvantaged pupils no data)");
-
-			await NavigateAsync("Confirm and continue");
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
 
 		[Fact]
