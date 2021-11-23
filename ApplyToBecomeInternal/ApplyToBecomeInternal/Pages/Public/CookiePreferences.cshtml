@@ -1,0 +1,108 @@
+@page "/public/cookie-preferences"
+@model ApplyToBecomeInternal.Pages.Public.CookiePreferences
+
+@{
+	Layout = "Shared/_Layout";
+}
+
+
+<h1 class="govuk-heading-xl">Cookie preferences</h1>
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<p class="govuk-body">
+			We use Google Analytics software to collect information about how you use the 'Manage an Academy Conversion' service. We do this to help make
+			sure the site is meeting the needs of its users and to help us make improvements. Whilst these cookies don't collect your name or address,
+			they do collect a unique user identifier code, which is linked to your device.
+		</p>
+		<p class="govuk-body">Google Analytics stores information about:</p>
+		<ul class="govuk-list govuk-list--bullet">
+			<li>the pages you visit on the 'Manage an Academy Conversion' service</li>
+			<li>how long you spend on each page</li>
+			<li>what you click on while you’re visiting the site</li>
+		</ul>
+		<p class="govuk-body">We don't allow Google to use or share our analytics data</p>
+		<form method="post">
+			<div class="govuk-form-group">
+				<fieldset class="govuk-fieldset">
+					<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+						<h3 class="govuk-fieldset__heading">
+							Do you accept Google Analytics cookies?
+						</h3>
+					</legend>
+					<div class="govuk-radios">
+						<div class="govuk-radios__item">
+							<input class="govuk-radios__input" id="cookie-consent-accept" name="consent" type="radio" value="true">
+							<label class="govuk-label govuk-radios__label" for="cookie-consent-accept">
+								Yes, opt in to Google Analytics cookies
+							</label>
+						</div>
+						<div class="govuk-radios__item">
+							<input class="govuk-radios__input" id="cookie-consent-deny" name="consent" type="radio" value="false">
+							<label class="govuk-label govuk-radios__label" for="cookie-consent-deny">
+								No, do not track my website usage
+							</label>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+			<input type="submit" name="commit" value="Save changes" class="govuk-button" data-qa="submit" data-module="govuk-button" data-disable-with="Save changes">
+		</form>
+		<h2 class="govuk-heading-l">How we use cookies</h2>
+		<h3 class="govuk-heading-m">Essential cookies</h3>
+		<p class="govuk-body">Essential 'Manage an Academy Conversion' service cookies include:</p>
+		<table class="govuk-table">
+			<thead class="govuk-table__header">
+			<tr>
+				<th class="govuk-table__header">Name</th>
+				<th class="govuk-table__header">Purpose</th>
+				<th class="govuk-table__header">Expires</th>
+			</tr>
+			</thead>
+			<tbody class="govuk-table__body">
+			<tr>
+				<td class="govuk-table__cell">.ManageAnAcademyConversion.Consent</td>
+				<td class="govuk-table__cell">Saves your cookie consent settings</td>
+				<td class="govuk-table__cell">6 months</td>
+			</tr>
+			<tr>
+				<td class="govuk-table__cell">.ManageAnAcademyConversion.Login</td>
+				<td class="govuk-table__cell">Stores login data</td>
+				<td class="govuk-table__cell">1 hour</td>
+			</tr>
+			</tbody>
+		</table>
+		<h3 class="govuk-heading-m">Measuring website usage (Google Analytics)</h3>
+		<p class="govuk-body">Google Analytics sets the following cookies:</p>
+		<table class="govuk-table">
+			<thead class="govuk-table__header">
+			<tr>
+				<th class="govuk-table__header">Name</th>
+				<th class="govuk-table__header">Purpose</th>
+				<th class="govuk-table__header">Expires</th>
+			</tr>
+			</thead>
+			<tbody class="govuk-table__body">
+			<tr>
+				<td class="govuk-table__cell">_ga</td>
+				<td class="govuk-table__cell">Used to distinguish anonymous users</td>
+				<td class="govuk-table__cell">2 years</td>
+			</tr>
+			<tr>
+				<td class="govuk-table__cell">_gid</td>
+				<td class="govuk-table__cell">Used to distinguish anonymous users</td>
+				<td class="govuk-table__cell">1 day</td>
+			</tr>
+			<tr>
+				<td class="govuk-table__cell">_ga_P017TBPWBJ</td>
+				<td class="govuk-table__cell">Used to distinguish anonymous users</td>
+				<td class="govuk-table__cell">2 years</td>
+			</tr>
+			<tr>
+				<td class="govuk-table__cell">_gat_UA-191561882-3</td>
+				<td class="govuk-table__cell">Used to distinguish anonymous users</td>
+				<td class="govuk-table__cell">1 minute</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

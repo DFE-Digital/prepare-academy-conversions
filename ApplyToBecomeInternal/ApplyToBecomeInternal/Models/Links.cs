@@ -114,6 +114,7 @@ namespace ApplyToBecomeInternal.Models
 		public static class Public
 		{
 			public static LinkItem Accessibility = new LinkItem { Page = "/Public/AccessibilityStatement" };
+			public static LinkItem CookiePreferences = new LinkItem { Page = "/Public/CookiePreferences" };
 		}
 	}
 
