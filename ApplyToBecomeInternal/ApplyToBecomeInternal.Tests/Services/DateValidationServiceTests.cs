@@ -62,6 +62,8 @@ namespace ApplyToBecomeInternal.Tests.Services
 		[InlineData("2", "30", "2020")]
 		[InlineData("-1", "02", "2020")]
 		[InlineData("1", "02", "-1")]
+		[InlineData("0", "2", "2025")]
+		[InlineData("10", "0", "2025")]
 		public void GivenNonRealDates_ReturnInvalidWithCorrectErrorMessage(string day, string month, string year)
 		{
 			(bool valid, string message) = _validator.Validate(day, month, year, "Input");
