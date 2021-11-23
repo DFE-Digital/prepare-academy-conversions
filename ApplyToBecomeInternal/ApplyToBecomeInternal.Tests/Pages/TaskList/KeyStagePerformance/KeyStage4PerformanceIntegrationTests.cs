@@ -1,4 +1,5 @@
 using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecomeInternal.Extensions;
 using AutoFixture;
@@ -31,7 +32,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 
 			AssertKS4DataIsDisplayed(keyStage4Response, Document);
 
-			await NavigateAsync("Confirm and continue");
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
 
@@ -47,7 +48,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 
 			await NavigateAsync("Key stage 4 performance tables");
 
-			await NavigateAsync("Confirm and continue");
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
 
@@ -74,9 +75,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 			Document.QuerySelector("#attainment8-maths").TextContent.Should().Be("no data");
 			Document.QuerySelector("#p8-ci").TextContent.Should().MatchRegex($"no data to {ks4ResponseOrderedByYear.ElementAt(0).SipProgress8upperconfidence}");
 			Document.QuerySelector("#na-p8-ci").TextContent.Should().Be("no data");
-
-			await NavigateAsync("Confirm and continue");
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
 
 		[Fact]
@@ -90,9 +88,25 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 			await NavigateAsync("Key stage 4 performance tables");
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/key-stage-4-performance-tables");
 
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+		}
+
+		[Fact]
+		public async Task Back_link_should_navigate_from_KS4_performance_to_task_list()
+		{
+			var project = AddGetProject();
+			AddGetKeyStagePerformance((int)project.Urn);
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			await NavigateAsync("Key stage 4 performance tables");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/key-stage-4-performance-tables");
+
 			await NavigateAsync("Back to task list");
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
+
 
 		[Fact]
 		public async Task Should_not_display_KS4_performance_link_on_task_list_if_response_has_no_KS4_data()

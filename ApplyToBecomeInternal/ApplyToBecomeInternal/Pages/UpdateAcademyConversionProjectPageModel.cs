@@ -34,7 +34,7 @@ namespace ApplyToBecomeInternal.Pages
 			}
 		}
 
-		public virtual async Task<IActionResult> OnPostAsync(int id)
+		public override async Task<IActionResult> OnPostAsync(int id)
 		{
 			await SetProject(id);
 			

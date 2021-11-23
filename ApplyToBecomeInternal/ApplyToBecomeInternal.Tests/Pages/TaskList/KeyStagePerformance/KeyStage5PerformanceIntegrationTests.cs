@@ -1,4 +1,6 @@
 using ApplyToBecome.Data.Models.KeyStagePerformance;
+using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
 using AutoFixture;
 using FluentAssertions;
 using System.Collections.Generic;
@@ -41,9 +43,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 				Document.QuerySelector($"#na-applied-general-average-{i}").TextContent.Should().Contain(response.NationalAppliedGeneralQualificationAverage.ToString());
 				i++;
 			}
-
-			await NavigateAsync("Confirm and continue");
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
 
 		[Fact]
@@ -67,9 +66,20 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 			Document.QuerySelector("#applied-general-average-0").TextContent.Should().Be("no data");
 			Document.QuerySelector("#na-academic-average-0").TextContent.Should().Be("no data");
 			Document.QuerySelector("#na-applied-general-average-0").TextContent.Should().Be("no data");
+		}
 
+		[Fact]
+		public async Task Back_link_should_navigate_from_KS5_performance_to_task_list()
+		{
+			var project = AddGetProject();
+			AddGetKeyStagePerformance((int)project.Urn);
 
-			await NavigateAsync("Confirm and continue");
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			await NavigateAsync("Key stage 5 performance tables");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/key-stage-5-performance-tables");
+
+			await NavigateAsync("Back to task list");
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
 
@@ -84,9 +94,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 			await NavigateAsync("Key stage 5 performance tables");
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/key-stage-5-performance-tables");
 
-			await NavigateAsync("Back to task list");
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
+
 
 		[Fact]
 		public async Task Should_not_display_KS5_performance_link_on_task_list_if_response_has_no_KS5_data()
