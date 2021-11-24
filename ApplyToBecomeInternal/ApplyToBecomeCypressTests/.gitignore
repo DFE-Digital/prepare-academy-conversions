@@ -1,3 +1,5 @@
 videos/
-screenshots/
+screenshots/*.jpeg
+screenshots/*.png
+screenshots/*.jpg
 downloads/

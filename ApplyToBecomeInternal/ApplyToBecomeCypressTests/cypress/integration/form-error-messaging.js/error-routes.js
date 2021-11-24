@@ -5,13 +5,7 @@ describe("Error message link should redirect correctly", () => {
 
 	before(function () {
 		cy.login();
-	});
-
-	it("Should open first school in the list", () => {
-		cy.get("#school-name-0").click();
-		cy.get('*[href*="/confirm-school-trust-information-project-dates"]').should(
-			"be.visible"
-		);
+		cy.selectSchoolListing(1)
 	});
 
 	it("Should click on error link and allow user to re-enter date", () => {
