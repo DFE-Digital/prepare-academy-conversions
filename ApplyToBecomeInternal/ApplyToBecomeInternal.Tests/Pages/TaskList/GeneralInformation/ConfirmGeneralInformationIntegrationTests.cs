@@ -137,7 +137,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		}
 
 		[Fact]
-		public async Task Should_navigate_between_task_list_and_general_information()
+		public async Task Back_link_should_navigate_from_general_information_to_task_list()
 		{
 			var project = AddGetProject();
 			AddGetEstablishmentResponse(project.Urn.ToString());

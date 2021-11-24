@@ -4,6 +4,8 @@ using static ApplyToBecomeInternal.Extensions.IntegerExtensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
+using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
 
 namespace ApplyToBecomeInternal.Tests.Pages.SchoolPupilForecasts
 {
@@ -47,9 +49,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPupilForecasts
 			rows[3].Children[1].TextContent.Should().Be(project.YearThreeProjectedCapacity.ToString());
 			rows[3].Children[2].TextContent.Should().Be(project.YearThreeProjectedPupilNumbers.ToString());
 			rows[3].Children[3].TextContent.Should().Be(project.YearThreeProjectedPupilNumbers.AsPercentageOf(project.YearThreeProjectedCapacity));
-
-			await NavigateAsync("Confirm and continue");
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
 
 		[Fact]
@@ -88,13 +87,25 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPupilForecasts
 			rows[3].Children[1].TextContent.Should().Be(project.YearThreeProjectedCapacity.ToString());
 			rows[3].Children[2].TextContent.Should().Be(project.YearThreeProjectedPupilNumbers.ToString());
 			rows[3].Children[3].TextContent.Should().Be("");
-
-			await NavigateAsync("Confirm and continue");
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
 
 		[Fact]
 		public async Task Should_navigate_between_task_list_and_confirm_school_pupil_forecasts()
+		{
+			var project = AddGetProject();
+			AddGetEstablishmentResponse(project.Urn.ToString());
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+			await NavigateAsync("School pupil forecasts");
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-pupil-forecasts");
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+		}
+
+		[Fact]
+		public async Task Back_link_should_navigate_from_confirm_school_pupil_forecasts_totask_list()
 		{
 			var project = AddGetProject();
 			AddGetEstablishmentResponse(project.Urn.ToString());

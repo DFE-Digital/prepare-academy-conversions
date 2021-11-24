@@ -42,6 +42,7 @@ Cypress.Commands.add("submitDate", (day, month, year) => {
 });
 
 Cypress.Commands.add('storeSessionData',()=>{
+    Cypress.Cookies.preserveOnce('.ManageAnAcademyConversion.Login')
     let str = [];
     cy.getCookies().then((cookie) => {
         cy.log(cookie);
@@ -55,4 +56,12 @@ Cypress.Commands.add('storeSessionData',()=>{
             }
         }
     });
+})
+
+Cypress.Commands.add('selectSchoolListing',(listing)=>{
+    cy.get("#school-name-"+listing).click();
+    cy.get('*[href*="/confirm-school-trust-information-project-dates"]').should(
+        "be.visible"
+    );
+    cy.saveLocalStorage();
 })
