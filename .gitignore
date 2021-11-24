@@ -455,7 +455,3 @@ $RECYCLE.BIN/
 # minified js
 *.min.js
 
-# Cypress screenshots
-/ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots/*.jpg
-/ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots/*.png
-/ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots/*.jpeg
