@@ -12,17 +12,23 @@ describe('Submit and view project notes', () => {
         cy.clearLocalStorage();
     });
 
+    let date
+    let dateText
+
     it('Should display the project notes input', () => {
         cy.get('[href*="/project-notes/"').click()
         cy.get('[href*="/new-note"').click()
     });
 
     it('Should allow the user to add a note', () => {
-        let date = new Date();
-        let dateText = date.toTimeString()
+        date = new Date();
+        dateText = date.toTimeString()
         cy.get('#project-note-subject').type('New subject added at: ' + dateText)
         cy.get('#project-note-body').type('New body added at: ' + dateText)
         cy.get('[type=submit]').click()
+    });
+
+    it('Should display the note after it is submitted', () => {
         cy.get('#project-note-added').should('contain.text', 'Note added')
         cy.get('#project-note-subject-0').should('have.text', 'New subject added at: '+dateText)
         cy.get('#project-note-body-0').should('have.text', 'New body added at: '+dateText)
