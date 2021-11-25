@@ -46,8 +46,8 @@ namespace ApplyToBecomeInternal.ViewModels
 			FinancialDeficit = project.FinancialDeficit;
 			DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters;
 			DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
-			MPName = project.MPName;
-			MPParty = project.MPParty;
+			MPName = project.MemberOfParliamentName;
+			MPParty = project.MemberOfParliamentParty;
 			GeneralInformationSectionComplete = project.GeneralInformationSectionComplete ?? false;
 
 			SchoolPerformanceAdditionalInformation = project.SchoolPerformanceAdditionalInformation;

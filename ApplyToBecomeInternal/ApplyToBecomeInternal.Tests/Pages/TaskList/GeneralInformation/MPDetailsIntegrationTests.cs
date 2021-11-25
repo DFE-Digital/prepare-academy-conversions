@@ -20,8 +20,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/mp-details");
 
-			Document.QuerySelector<IHtmlInputElement>("#mp-name").Value.Should().Be(project.MPName);
-			Document.QuerySelector<IHtmlInputElement>("#mp-party").Value.Should().Be(project.MPParty);
+			Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-name").Value.Should().Be(project.MemberOfParliamentName);
+			Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-party").Value.Should().Be(project.MemberOfParliamentParty);
 		}
 
 		[Fact]
@@ -45,6 +45,36 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 
 			var testElement = Document.QuerySelector("#school-postcode");
 			testElement.TextContent.Should().Be("");
+		}
+
+		[Fact]
+		public async Task Should_navigate_to_and_update_mp_name_and_party()
+		{
+			var project = AddGetProject();
+			AddGetEstablishmentResponse(project.Urn.ToString());
+			var request = AddPatchProjectMany(project, composer =>
+				composer
+				.With(r => r.MemberOfParliamentName)
+				.With(r => r.MemberOfParliamentParty));
+
+			// open General Information page
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");
+
+			// move to MP details page
+			await NavigateAsync("Change", 4);
+
+			// check existing details are there
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/mp-details");
+			Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-name").Value.Should().Be(project.MemberOfParliamentName);
+			Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-party").Value.Should().Be(project.MemberOfParliamentParty);
+
+			// change details
+			Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-name").Value = request.MemberOfParliamentName;
+			Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-party").Value = request.MemberOfParliamentParty;
+
+			// move back to General Information page
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
 		}
 	}
 }

@@ -18,6 +18,6 @@
 		</label>
 	</h1>
 	<p>Use the school's postcode to find the name of the MP and their political party on <a href="https://www.theyworkforyou.com" target="blank" id="link-to-they-work-for-you-page">They Work For You (opens in a new tab)</a></p>
-	<govuk-text-input name="mp-name" id="mp-name" asp-for="Project.MPName" width="20" label="Enter the MP's name"/>
-	<govuk-text-input name="mp-party" id="mp-party" asp-for="Project.MPParty" width="20" label="Enter the MP's political party"/>
+	<govuk-text-input name="member-of-parliament-name" id="member-of-parliament-name" asp-for="@Model.Project.MPName" width="20" label="Enter the MP's name"/>
+	<govuk-text-input name="member-of-parliament-party" id="member-of-parliament-party" asp-for="@Model.Project.MPParty" width="20" label="Enter the MP's political party"/>
 </div>

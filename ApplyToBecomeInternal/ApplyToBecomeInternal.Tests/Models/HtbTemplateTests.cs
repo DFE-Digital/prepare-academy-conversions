@@ -97,8 +97,8 @@ namespace ApplyToBecomeInternal.Tests.Models
 				Assert.Equal(_template.DistanceFromSchoolToTrustHeadquarters, $"{_project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles");
 				Assert.Equal(_template.DistanceFromSchoolToTrustHeadquartersAdditionalInformation, _project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
 				Assert.Equal(_template.ParliamentaryConstituency, _generalInformation.ParliamentaryConstituency);
-				Assert.Equal(_template.MPName, _project.MPName);
-				Assert.Equal(_template.MPParty, _project.MPParty);
+				Assert.Equal(_template.MPName, _project.MemberOfParliamentName);
+				Assert.Equal(_template.MPParty, _project.MemberOfParliamentParty);
 			}
 
 			[Fact]
