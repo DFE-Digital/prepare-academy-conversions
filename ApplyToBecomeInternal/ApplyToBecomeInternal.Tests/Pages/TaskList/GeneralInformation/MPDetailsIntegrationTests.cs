@@ -36,16 +36,16 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			requiredLink.Href.Should().Be("https://www.theyworkforyou.com/"); // CML put this value somewhere else
 		}
 
-		[Fact]
-		public async Task Should_display_school_postcode()
-		{
-			var project = AddGetProject();
+		//[Fact]
+		//public async Task Should_display_school_postcode()
+		//{
+		//	var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/mp-details");
+		//	await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/mp-details");
 
-			var testElement = Document.QuerySelector("#school-postcode");
-			testElement.TextContent.Should().Be("");
-		}
+		//	var testElement = Document.QuerySelector("#school-postcode");
+		//	testElement.TextContent.Should().Be("");
+		//}
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_mp_name_and_party()
