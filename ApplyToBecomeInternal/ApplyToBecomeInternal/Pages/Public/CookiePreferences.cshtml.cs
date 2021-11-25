@@ -1,33 +1,48 @@
 using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
-using System.Net;
 
 namespace ApplyToBecomeInternal.Pages.Public
 {
 	public class CookiePreferences : PageModel
 	{
-		[BindProperty(Name = "consent")] public bool Consent { get; set; }
-		[BindProperty(Name = "return")] public string Return { get; set; }
+		private const string ConsentCookieName = ".ManageAnAcademyConversion.Consent";
+		public bool? Consent { get; set; }
 
-		public void OnGet()
+		public ActionResult OnGet(bool? consent, string returnUrl)
 		{
-		}
-
-		public ActionResult OnPost()
-		{
-			var cookieOptions = new CookieOptions { Expires = DateTime.Today.AddMonths(6), Secure = true };
-			Response.Cookies.Append(".ManageAnAcademyConversion.Consent", Consent.ToString(), cookieOptions);
-
-			if (!string.IsNullOrEmpty(Return))
+			if (Request.Cookies.ContainsKey(ConsentCookieName))
 			{
-				return RedirectToPage(Return);
+				Consent = bool.Parse(Request.Cookies[ConsentCookieName]);
 			}
 
-			return RedirectToPage(Links.Public.CookiePreferences);
+			if (consent.HasValue)
+			{
+				var cookieOptions = new CookieOptions { Expires = DateTime.Today.AddMonths(6), Secure = true };
+				Response.Cookies.Append(ConsentCookieName, consent.Value.ToString(), cookieOptions);
+
+				if (!consent.Value)
+				{
+					foreach (var cookie in Request.Cookies.Keys)
+					{
+						if (cookie.StartsWith("_ga") || cookie.Equals("_gid"))
+						{
+							Response.Cookies.Delete(cookie);
+						}
+					}
+				}
+
+				if (!string.IsNullOrEmpty(returnUrl))
+				{
+					return Redirect(returnUrl);
+				}
+
+				return RedirectToPage(Links.Public.CookiePreferences);
+			}
+
+			return Page();
 		}
 	}
 }
