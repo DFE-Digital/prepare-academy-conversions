@@ -17,7 +17,13 @@
 			Enter the name of the MP and their political party
 		</label>
 	</h1>
-	<p>Use the school's postcode to find the name of the MP and their political party on <a href="https://www.theyworkforyou.com" target="blank" id="link-to-they-work-for-you-page">They Work For You (opens in a new tab)</a></p>
-	<govuk-text-input name="member-of-parliament-name" id="member-of-parliament-name" asp-for="@Model.Project.MPName" width="20" label="Enter the MP's name"/>
-	<govuk-text-input name="member-of-parliament-party" id="member-of-parliament-party" asp-for="@Model.Project.MPParty" width="20" label="Enter the MP's political party"/>
+	<p class="govuk-body-s">Use the school's postcode to find the name of the MP and their political party on <a href="https://www.theyworkforyou.com" target="blank" id="link-to-they-work-for-you-page">They Work For You (opens in a new tab)</a></p>
+	<label class="govuk-label govuk-label--m" for="member-of-parliament-name">
+		Enter the MP's name
+	</label>
+	<govuk-text-input name="member-of-parliament-name" id="member-of-parliament-name" asp-for="@Model.Project.MPName" width="20" />
+	<label class="govuk-label govuk-label--m" for="member-of-parliament-party">
+		Enter the MP's political party
+	</label>
+	<govuk-text-input name="member-of-parliament-party" id="member-of-parliament-party" asp-for="@Model.Project.MPParty" width="20" />
 </div>
