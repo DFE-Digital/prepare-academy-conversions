@@ -19,7 +19,9 @@ describe('Submit and view MP details', () => {
 
     it('Should navigate to MP details page', () => {
         cy.get("[data-test='change-member-of-parliament-party']").click();
-        cy.url().should('include', '/mp-details');
+        cy.url().then(href => {
+            expect(href.endsWith('/confirm-general-information/mp-details')).to.be.true;
+        });
     });
 
     it('Should change the MP details', () => {
@@ -31,7 +33,9 @@ describe('Submit and view MP details', () => {
 
     it('Should go back to general information page on confirm', () => {
         cy.get(".govuk-button").click();
-        cy.url().should('include', 'confirm-general-information');
+        cy.url().then(href => {
+            expect(href.endsWith('/confirm-general-information')).to.be.true;
+          });
     });
 
     it('Should display the MP details after it is submitted', () => {        
