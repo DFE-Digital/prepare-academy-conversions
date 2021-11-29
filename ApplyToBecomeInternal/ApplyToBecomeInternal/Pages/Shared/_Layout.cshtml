@@ -2,6 +2,13 @@
 @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment hostingEnv
 @inject Microsoft.Extensions.Configuration.IConfiguration _configuration
 
+@{
+	var analyticsConsent = Context.Request.Cookies.ContainsKey(".ManageAnAcademyConversion.Consent")
+	                       && bool.Parse(Context.Request.Cookies[".ManageAnAcademyConversion.Consent"]);
+
+	var showAnalytics = _configuration["GoogleAnalytics:Enable"] == "Yes" && analyticsConsent;
+}
+
 <!DOCTYPE html>
 <html class="govuk-template" lang="en">
 <head>
@@ -21,7 +28,7 @@
 
 	<title>@ViewData["Title"] - Manage an academy conversion</title>
 	<link rel="stylesheet" href="~/dist/site.css"/>
-	@if (_configuration["GoogleAnalytics:Enable"] == "Yes")
+	@if (showAnalytics)
 	{
 		<!-- Google Tag Manager -->
 		<script asp-add-nonce>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -33,7 +40,7 @@
 	}
 </head>
 <body class="govuk-template__body ">
-@if (_configuration["GoogleAnalytics:Enable"] == "Yes")
+@if (analyticsConsent)
 {
 	<!-- Google Tag Manager (noscript) -->
 	<noscript asp-add-nonce>
@@ -46,6 +53,7 @@
 </script>
 
 <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+<partial name="_CookieBanner"/>
 <header class="govuk-header " role="banner" data-module="govuk-header">
 	<div class="govuk-header__container govuk-width-container">
 		<div class="govuk-header__logo govuk-!-width-two-thirds">
@@ -87,9 +95,15 @@
 				<h2 class="govuk-visually-hidden">Support links</h2>
 				<ul class="govuk-footer__inline-list">
 					<li class="govuk-footer__inline-list-item">
-						<a class="govuk-footer__link" asp-page="@Links.Public.Accessibility.Page" 
+						<a class="govuk-footer__link" asp-page="@Links.Public.Accessibility.Page"
 						   data-test="accessibility-statement">
 							Accessibility statement
+						</a>
+					</li>
+					<li class="govuk-footer__inline-list-item">
+						<a class="govuk-footer__link" asp-page="@Links.Public.CookiePreferences.Page"
+						   data-test="cookie-preferences">
+							Cookies
 						</a>
 					</li>
 				</ul>
