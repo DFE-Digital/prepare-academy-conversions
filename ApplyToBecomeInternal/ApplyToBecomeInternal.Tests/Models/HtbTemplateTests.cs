@@ -99,6 +99,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 				Assert.Equal(_template.ParliamentaryConstituency, _generalInformation.ParliamentaryConstituency);
 				Assert.Equal(_template.MPName, _project.MemberOfParliamentName);
 				Assert.Equal(_template.MPParty, _project.MemberOfParliamentParty);
+				Assert.Equal(_template.MPNameAndParty, $"{_template.MPName}, {_template.MPParty}");
 			}
 
 			[Fact]
@@ -202,6 +203,8 @@ namespace ApplyToBecomeInternal.Tests.Models
 				Assert.Null(template.DistanceFromSchoolToTrustHeadquarters);
 				Assert.Null(template.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
 				Assert.Null(template.ParliamentaryConstituency);
+				Assert.Null(template.MPName);
+				Assert.Null(template.MPParty);
 			}
 		}
 

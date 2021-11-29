@@ -89,6 +89,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 				project.DistanceFromSchoolToTrustHeadquarters = null;
 				project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation = null;
 				project.GeneralInformationSectionComplete = false;
+				project.MemberOfParliamentName = string.Empty;
+				project.MemberOfParliamentParty = string.Empty;
 			});
 			AddGetEstablishmentResponse(project.Urn.ToString(), true);
 			AddPatchProject(project, r => r.GeneralInformationSectionComplete, false);
@@ -115,6 +117,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			Document.QuerySelector("#percentage-in-diocesan-trust").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#parliamentary-constituency").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#member-of-parliament-name").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#member-of-parliament-party").TextContent.Should().Be("Empty");
 			Document.QuerySelector<IHtmlInputElement>("#general-information-complete").IsChecked.Should().BeFalse();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
