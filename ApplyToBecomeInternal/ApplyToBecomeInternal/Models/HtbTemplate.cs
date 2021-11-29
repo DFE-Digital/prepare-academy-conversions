@@ -87,6 +87,14 @@ namespace ApplyToBecomeInternal.Models
 		public string ParliamentaryConstituency { get; set; }
 		public string MPName { get; set; }
 		public string MPParty { get; set; }
+		[DocumentText("MPNameAndParty")]
+		public string MPNameAndParty 
+		{ 
+			get
+			{
+				return $"{MPName}, {MPParty}";
+			}			
+		}
 
 		//school performance ofsted information
 		[DocumentText("PersonalDevelopment")] public string PersonalDevelopment { get; set; }
