@@ -1,5 +1,6 @@
 ﻿@{ 
 	var showScheduleOfAdvisoryBoardMeetingsLink = (bool)(ViewData["ShowScheduleOfAdvisoryBoardMeetingsLink"] ?? false);
+	var showTheyWorkForYouLink = (bool)(ViewData["ShowTheyWorkForYouLink"] ?? false);
 }
 <div class="govuk-grid-column-one-third">
 	<aside class="app-related-items" role="complementary">
@@ -17,6 +18,12 @@
 				<li>
 					<p class="govuk-body-s"><a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="application">School application form (opens in a new tab)</a></p>
 				</li>
+				@if (showTheyWorkForYouLink)
+				{
+					<li>
+						<p class="govuk-body-s"><a href="https://www.theyworkforyou.com" target="blank" id="link-to-they-work-for-you-page">They Work For You (opens in a new tab)</a></p>
+					</li>
+				}
 			</ul>
 		</nav>
 	</aside>
