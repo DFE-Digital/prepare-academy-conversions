@@ -216,6 +216,15 @@ namespace ApplyToBecomeInternal.Tests.Models
 
 				Assert.Equal("a party", template.MPNameAndParty);
 			}
+
+			[Fact]
+			public void ItDealsWithAbsentPartyCorrectly()
+			{
+				_project.MemberOfParliamentName = "a MP";
+				var template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
+
+				Assert.Equal("a MP", template.MPNameAndParty);
+			}
 		}
 
 		public class KeyStagePerformanceTests
