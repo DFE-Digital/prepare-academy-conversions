@@ -92,7 +92,12 @@ namespace ApplyToBecomeInternal.Models
 		{ 
 			get
 			{
-				return $"{MPName}, {MPParty}";
+				var delimiter = string.Empty;
+				if (string.IsNullOrEmpty(MPName) == false && string.IsNullOrEmpty(MPParty) == false)
+				{
+					delimiter = ", ";				
+				}
+				return $"{MPName}{delimiter}{MPParty}";
 			}			
 		}
 
