@@ -32,7 +32,7 @@ describe('Submit and view MP details', () => {
     });
 
     it('Should go back to general information page on confirm', () => {
-        cy.get(".govuk-button").click();
+        cy.get('#confirm-and-continue-button').click();
         cy.url().then(href => {
             expect(href.endsWith('/confirm-general-information')).to.be.true;
           });
@@ -47,7 +47,7 @@ describe('Submit and view MP details', () => {
         cy.get("[data-test='change-member-of-parliament-party']").click();
         cy.get('#member-of-parliament-name').clear();
         cy.get('#member-of-parliament-party').clear();
-        cy.get(".govuk-button").click();
+        cy.get('#confirm-and-continue-button').click();
         cy.get('#member-of-parliament-name').should('have.text', 'Empty');
         cy.get('#member-of-parliament-party').should('have.text', 'Empty'); 
     });
