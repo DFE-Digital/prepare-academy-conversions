@@ -109,6 +109,14 @@ namespace ApplyToBecomeInternal.Models
 		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
 
+		[BindProperty(Name = "member-of-parliament-name")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
+		public string MemberOfParliamentName { get; set; }
+
+		[BindProperty(Name = "member-of-parliament-party")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
+		public string MemberOfParliamentParty { get; set; }
+
 		[BindProperty(Name = "general-information-complete")]
 		[ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
 		public bool? GeneralInformationSectionComplete { get; set; }

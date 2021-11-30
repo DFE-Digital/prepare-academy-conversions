@@ -96,6 +96,8 @@ namespace ApplyToBecomeInternal.Pages
 				IsThisADiocesanTrust = AcademyConversionProject.IsThisADiocesanTrust,
 				DistanceFromSchoolToTrustHeadquarters = AcademyConversionProject.DistanceFromSchoolToTrustHeadquarters,
 				DistanceFromSchoolToTrustHeadquartersAdditionalInformation = AcademyConversionProject.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
+				MemberOfParliamentName = AcademyConversionProject.MemberOfParliamentName,
+				MemberOfParliamentParty = AcademyConversionProject.MemberOfParliamentParty,
 				GeneralInformationSectionComplete = AcademyConversionProject.GeneralInformationSectionComplete,
 				SchoolPerformanceAdditionalInformation = AcademyConversionProject.SchoolPerformanceAdditionalInformation,
 				RationaleForProject = AcademyConversionProject.RationaleForProject,

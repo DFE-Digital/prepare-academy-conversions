@@ -45,6 +45,7 @@
   <ItemGroup>
     <Folder Include="Pages\ProjectList\" />
 	<Folder Include="Pages\TaskList" />
+	<Folder Include="Services" />
   </ItemGroup>
 
   <ItemGroup>

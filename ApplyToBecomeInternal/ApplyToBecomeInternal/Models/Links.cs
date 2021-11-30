@@ -63,6 +63,7 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem ViabilityIssues = new LinkItem { Page = "/TaskList/GeneralInformation/ViabilityIssues" };
 			public static LinkItem FinancialDeficit = new LinkItem { Page = "/TaskList/GeneralInformation/FinancialDeficit" };
 			public static LinkItem DistanceFromTrustHeadquarters = new LinkItem { Page = "/TaskList/GeneralInformation/DistanceFromTrustHeadquarters" };
+			public static LinkItem MPDetails = new LinkItem { Page = "/TaskList/GeneralInformation/MPDetails"  };
 		}
 
 		public static class RationaleSection

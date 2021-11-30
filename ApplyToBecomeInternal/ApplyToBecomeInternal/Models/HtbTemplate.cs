@@ -85,6 +85,21 @@ namespace ApplyToBecomeInternal.Models
 
 		[DocumentText("ParliamentaryConstituency")]
 		public string ParliamentaryConstituency { get; set; }
+		public string MPName { get; set; }
+		public string MPParty { get; set; }
+		[DocumentText("MPNameAndParty")]
+		public string MPNameAndParty 
+		{ 
+			get
+			{
+				var delimiter = string.Empty;
+				if (string.IsNullOrEmpty(MPName) == false && string.IsNullOrEmpty(MPParty) == false)
+				{
+					delimiter = ", ";				
+				}
+				return $"{MPName}{delimiter}{MPParty}";
+			}			
+		}
 
 		//school performance ofsted information
 		[DocumentText("PersonalDevelopment")] public string PersonalDevelopment { get; set; }
@@ -216,6 +231,8 @@ namespace ApplyToBecomeInternal.Models
 					: null,
 				DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
 				ParliamentaryConstituency = generalInformation.ParliamentaryConstituency,
+				MPName = project.MemberOfParliamentName,
+				MPParty = project.MemberOfParliamentParty,
 				OfstedLastInspection = schoolPerformance.OfstedLastInspection != null ? schoolPerformance.OfstedLastInspection.ToDateString() : "No data",
 				PersonalDevelopment = schoolPerformance.PersonalDevelopment.DisplayOfstedRating(),
 				BehaviourAndAttitudes = schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating(),

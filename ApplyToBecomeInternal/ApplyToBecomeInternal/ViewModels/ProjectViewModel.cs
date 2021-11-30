@@ -46,6 +46,8 @@ namespace ApplyToBecomeInternal.ViewModels
 			FinancialDeficit = project.FinancialDeficit;
 			DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters;
 			DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
+			MPName = project.MemberOfParliamentName;
+			MPParty = project.MemberOfParliamentParty;
 			GeneralInformationSectionComplete = project.GeneralInformationSectionComplete ?? false;
 
 			SchoolPerformanceAdditionalInformation = project.SchoolPerformanceAdditionalInformation;
@@ -121,6 +123,8 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string FinancialDeficit { get; set; }
 		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
 		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
+		public string MPName { get; set; }
+		public string MPParty { get; set; }
 		public bool GeneralInformationSectionComplete { get; set; }
 
 		//school performance ofsted information
