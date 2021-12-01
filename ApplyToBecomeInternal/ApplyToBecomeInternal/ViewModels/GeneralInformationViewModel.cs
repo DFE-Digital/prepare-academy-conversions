@@ -3,7 +3,6 @@
 	public class GeneralInformationViewModel
 	{
 		public string Id { get; set; }
-//		public string SchoolPostcode { get; set; }
 		public string SchoolPhase { get; set; }
 		public string AgeRange { get; set; }
 		public string SchoolType { get; set; }
