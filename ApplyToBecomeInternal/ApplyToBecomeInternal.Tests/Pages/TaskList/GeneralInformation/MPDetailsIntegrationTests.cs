@@ -34,7 +34,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 
 			var requiredLink = Document.QuerySelector<IHtmlAnchorElement>("#link-to-they-work-for-you-page");
 			requiredLink.InnerHtml.Should().Be("They Work For You (opens in a new tab)");
-			requiredLink.Href.Should().Be("https://www.theyworkforyou.com/"); // CML put this value somewhere else
+			requiredLink.Href.Should().Be("https://www.theyworkforyou.com/");
 		}
 
 		[Fact]
