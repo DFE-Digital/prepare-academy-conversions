@@ -29,7 +29,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 			await NavigateAsync("Change", 5);
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date-question");
 
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeFalse();
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2").IsChecked.Should().BeFalse();
@@ -39,7 +39,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value.Should().Be("");
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value.Should().Be("");
@@ -63,7 +63,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 			await NavigateAsync("Change", 5);
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date-question");
 
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeFalse();
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2").IsChecked.Should().BeFalse();
@@ -84,7 +84,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 			await NavigateAsync("Change", 5);
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date-question");
 
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeFalse();
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2").IsChecked.Should().BeFalse();
@@ -102,7 +102,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 		{
 			var project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = "Yes");
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date-question");
 
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeTrue();
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2").IsChecked.Should().BeFalse();
@@ -117,7 +117,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value.Should().Be(project.PreviousHeadTeacherBoardDate.Value.Day.ToString());
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value.Should().Be(project.PreviousHeadTeacherBoardDate.Value.Month.ToString());
@@ -125,7 +125,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 
 			await NavigateAsync("Back");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date-question");
 		}
 
 		[Fact]
@@ -135,7 +135,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 			var project = AddGetProject();
 			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate, today);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value = today.Day.ToString();
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value = today.Month.ToString();
@@ -143,7 +143,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
 			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Previous Advisory Board date must be in the past");
@@ -155,7 +155,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 			var project = AddGetProject();
 			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate, default(DateTime));
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value = "";
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value = "";
@@ -163,7 +163,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
 			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Enter a date for the previous advisory board");
@@ -175,7 +175,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 			var project = AddGetProject();
 			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate, default(DateTime));
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value = "230";
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value = "2";
@@ -183,7 +183,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
 			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Previous Advisory Board date must be a real date");
@@ -195,7 +195,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date-question");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
