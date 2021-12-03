@@ -20,5 +20,6 @@
 		public string OfstedLastInspection { get; set; }
 		public NameAndCodeResponse ParliamentaryConstituency { get; set; }
 		public MISEstablishmentResponse MISEstablishment { get; set; }
+		public AddressResponse Address { get; set; }
 	}
 }

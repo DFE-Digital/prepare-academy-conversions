@@ -28,24 +28,26 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		public async Task Should_display_link_to_external_page()
 		{
 			var project = AddGetProject();
+			AddGetEstablishmentResponse(project.Urn.ToString());
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/mp-details");
 
 			var requiredLink = Document.QuerySelector<IHtmlAnchorElement>("#link-to-they-work-for-you-page");
 			requiredLink.InnerHtml.Should().Be("They Work For You (opens in a new tab)");
-			requiredLink.Href.Should().Be("https://www.theyworkforyou.com/"); // CML put this value somewhere else
+			requiredLink.Href.Should().Be("https://www.theyworkforyou.com/");
 		}
 
-		//[Fact]
-		//public async Task Should_display_school_postcode()
-		//{
-		//	var project = AddGetProject();
+		[Fact]
+		public async Task Should_display_school_postcode()
+		{
+			var project = AddGetProject();
+			var establishment = AddGetEstablishmentResponse(project.Urn.ToString());
 
-		//	await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/mp-details");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/mp-details");
 
-		//	var testElement = Document.QuerySelector("#school-postcode");
-		//	testElement.TextContent.Should().Be("");
-		//}
+			var testElement = Document.QuerySelector("#school-postcode");
+			testElement.TextContent.Should().Be(establishment.Address.Postcode);
+		}
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_mp_name_and_party()
