@@ -23,7 +23,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("Generate project template");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/generate-advisory-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/download-project-template");
 
 			await NavigateAsync("Back to task list");
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
@@ -34,13 +34,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-advisory-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Generate project template");
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/generate-advisory-board-template");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/download-project-template");
 
 			await NavigateAsync("Back to preview");
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-advisory-board-template");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
