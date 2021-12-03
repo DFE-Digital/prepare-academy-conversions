@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/mp-details");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");
 
 			Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-name").Value.Should().Be(project.MemberOfParliamentName);
 			Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-party").Value.Should().Be(project.MemberOfParliamentParty);
@@ -30,7 +30,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			var project = AddGetProject();
 			AddGetEstablishmentResponse(project.Urn.ToString());
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/mp-details");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");
 
 			var requiredLink = Document.QuerySelector<IHtmlAnchorElement>("#link-to-they-work-for-you-page");
 			requiredLink.InnerHtml.Should().Be("They Work For You (opens in a new tab)");
@@ -43,10 +43,22 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			var project = AddGetProject();
 			var establishment = AddGetEstablishmentResponse(project.Urn.ToString());
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/mp-details");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");
 
 			var testElement = Document.QuerySelector("#school-postcode");
 			testElement.TextContent.Should().Be(establishment.Address.Postcode);
+		}
+
+		[Fact]
+		public async Task Should_display_messsage_when_school_postcode_not_available()
+		{
+			var project = AddGetProject();
+			var establishment = AddGetEstablishmentResponse(project.Urn.ToString(), true);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");
+
+			var testElement = Document.QuerySelector("#school-postcode");
+			testElement.TextContent.Should().Be("no data");
 		}
 
 		[Fact]
@@ -66,7 +78,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			await NavigateAsync("Change", 4);
 
 			// check existing details are there
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/mp-details");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");
 			Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-name").Value.Should().Be(project.MemberOfParliamentName);
 			Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-party").Value.Should().Be(project.MemberOfParliamentParty);
 

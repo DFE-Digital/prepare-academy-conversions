@@ -20,7 +20,7 @@ describe('Submit and view MP details', () => {
     it('Should navigate to MP details page', () => {
         cy.get("[data-test='change-member-of-parliament-party']").click();
         cy.url().then(href => {
-            expect(href.endsWith('/confirm-general-information/mp-details')).to.be.true;
+            expect(href.endsWith('/confirm-general-information/enter-MP-name-and-political-party')).to.be.true;
         });
     });
 
