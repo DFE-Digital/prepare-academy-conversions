@@ -17,7 +17,7 @@
 						Accept all cookies
 					</a>
 					<p class="inline-message govuk-body">
-						or <a class="govuk-link" data-test="cookie-banner-link-2" asp-page="@Links.Public.CookiePreferences.Page">set your cookie preferences</a>
+						or <a class="govuk-link" data-test="cookie-banner-link-2" asp-page="@Links.Public.CookiePreferences.Page" asp-route-returnUrl="@Context.Request.Path">set your cookie preferences</a>
 					</p>
 				</div>
 			</div>

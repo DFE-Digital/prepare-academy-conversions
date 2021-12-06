@@ -2,6 +2,7 @@ using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace ApplyToBecomeInternal.Pages.Public
@@ -10,6 +11,14 @@ namespace ApplyToBecomeInternal.Pages.Public
 	{
 		private const string ConsentCookieName = ".ManageAnAcademyConversion.Consent";
 		public bool? Consent { get; set; }
+		public bool PreferencesSet { get; set; }
+		public string returnPath { get; set; }
+		private readonly ILogger<CookiePreferences> _logger;
+
+		public CookiePreferences(ILogger<CookiePreferences> logger)
+		{
+			_logger = logger;
+		}
 
 		public ActionResult OnGet(bool? consent, string returnUrl)
 		{
@@ -29,6 +38,7 @@ namespace ApplyToBecomeInternal.Pages.Public
 					{
 						if (cookie.StartsWith("_ga") || cookie.Equals("_gid"))
 						{
+							_logger.LogInformation($"deleting Google analytics cookie: {cookie}");
 							Response.Cookies.Delete(cookie);
 						}
 					}
@@ -40,6 +50,45 @@ namespace ApplyToBecomeInternal.Pages.Public
 				}
 
 				return RedirectToPage(Links.Public.CookiePreferences);
+			}
+
+			return Page();
+		}
+
+		public IActionResult OnPost(bool? consent, string returnUrl)
+		{
+			PreferencesSet = true;
+			returnPath = returnUrl;
+
+			if (Request.Cookies.ContainsKey(ConsentCookieName))
+			{
+				Consent = bool.Parse(Request.Cookies[ConsentCookieName]);
+			}
+
+			if (consent.HasValue)
+			{
+				var cookieOptions = new CookieOptions { Expires = DateTime.Today.AddMonths(6), Secure = true };
+				Response.Cookies.Append(ConsentCookieName, consent.Value.ToString(), cookieOptions);
+
+				if (!consent.Value)
+				{
+					foreach (var cookie in Request.Cookies.Keys)
+					{
+						if (cookie.StartsWith("_ga") || cookie.Equals("_gid"))
+						{
+							_logger.LogInformation($"deleting Google analytics cookie: {cookie}");
+							Response.Cookies.Delete(cookie);
+						}
+					}
+				}
+
+				//if (!string.IsNullOrEmpty(returnUrl))
+				//{
+				//	return Redirect(returnUrl);
+				//}
+
+				//				return RedirectToPage(Links.Public.CookiePreferences);
+				return Page();
 			}
 
 			return Page();
