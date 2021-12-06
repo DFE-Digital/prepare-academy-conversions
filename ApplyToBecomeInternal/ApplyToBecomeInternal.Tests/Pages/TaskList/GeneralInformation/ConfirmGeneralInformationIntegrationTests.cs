@@ -89,8 +89,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 				project.DistanceFromSchoolToTrustHeadquarters = null;
 				project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation = null;
 				project.GeneralInformationSectionComplete = false;
-				project.MemberOfParliamentName = string.Empty;
-				project.MemberOfParliamentParty = string.Empty;
+				project.MemberOfParliamentName = null;
+				project.MemberOfParliamentParty = null;
 			});
 			AddGetEstablishmentResponse(project.Urn.ToString(), true);
 			AddPatchProject(project, r => r.GeneralInformationSectionComplete, false);
