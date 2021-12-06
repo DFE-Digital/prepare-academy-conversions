@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 			await NavigateDataTestAsync("change-head-teacher-board-date");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/head-teacher-board-date");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date");
 
 			Document.QuerySelector<IHtmlInputElement>("#head-teacher-board-date-day").Value = request.HeadTeacherBoardDate.Value.Day.ToString();
 			Document.QuerySelector<IHtmlInputElement>("#head-teacher-board-date-month").Value = request.HeadTeacherBoardDate.Value.Month.ToString();
@@ -40,7 +40,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/head-teacher-board-date");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -52,7 +52,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/head-teacher-board-date");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date");
 			await NavigateAsync("Back");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
@@ -63,7 +63,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/head-teacher-board-date");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date");
 
 			Document.QuerySelector("#advisory-board-meeting-schedules").Should().NotBeNull();
 		}

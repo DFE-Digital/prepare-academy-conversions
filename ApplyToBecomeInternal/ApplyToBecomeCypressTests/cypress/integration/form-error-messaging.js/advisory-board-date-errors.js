@@ -24,7 +24,12 @@ describe("Error messaging should be correct", () => {
 		cy.get(
 			'*[href*="/confirm-school-trust-information-project-dates"]'
 		).click();
+		
 		cy.get('*[data-test="change-head-teacher-board-date"]').click();
+		cy.url().then(href => {
+            expect(href.endsWith('/confirm-school-trust-information-project-dates/advisory-board-date')).to.be.true;
+        });
+		cy.get('h1').contains('Set the Advisory Board date')
 		cy.submitDate(11, 11, 1980);
 		cy.get("#confirm-and-continue-button").click();
 		cy.get(".govuk-error-summary__list li a").should(
