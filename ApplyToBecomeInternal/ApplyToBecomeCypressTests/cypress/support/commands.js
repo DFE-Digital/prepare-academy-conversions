@@ -38,7 +38,6 @@ Cypress.Commands.add("submitDate", (day, month, year) => {
 	cy.get("#head-teacher-board-date-month").clear().type(month);
 	cy.get("#head-teacher-board-date-year").clear().type(year);
 	cy.saveLocalStorage();
-
 });
 
 Cypress.Commands.add('storeSessionData',()=>{

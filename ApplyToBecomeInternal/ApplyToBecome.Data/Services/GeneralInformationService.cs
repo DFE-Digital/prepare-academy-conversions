@@ -19,6 +19,7 @@ namespace ApplyToBecome.Data.Services
 			var establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
 			var generalInformation = new GeneralInformation
 			{
+				SchoolPostcode = establishment.Address?.Postcode,
 				SchoolPhase = establishment.PhaseOfEducation?.Name,
 				AgeRangeLower = establishment.StatutoryLowAge,
 				AgeRangeUpper = establishment.StatutoryHighAge,

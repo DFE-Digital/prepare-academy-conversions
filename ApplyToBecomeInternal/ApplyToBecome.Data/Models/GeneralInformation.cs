@@ -2,6 +2,7 @@
 {
 	public class GeneralInformation
 	{
+		public string SchoolPostcode { get; set; }
 		public string SchoolPhase { get; set; }
 		public string AgeRangeLower { get; set; }
 		public string AgeRangeUpper { get; set; }

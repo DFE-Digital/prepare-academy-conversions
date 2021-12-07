@@ -1,4 +1,4 @@
-﻿@page  "/task-list/{id:int}/confirm-general-information/mp-details"
+﻿@page  "/task-list/{id:int}/confirm-general-information/enter-MP-name-and-political-party"
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
 	Layout = "_QuestionLayout";
@@ -19,6 +19,7 @@
 		</label>
 	</h1>
 	<p class="govuk-body-s">Use the school's postcode to find the name of the MP and their political party on <a href="https://www.theyworkforyou.com" target="blank" id="link-to-they-work-for-you-page">They Work For You (opens in a new tab)</a></p>
+	<vc:school-postcode />
 	<label class="govuk-label govuk-label--m" for="member-of-parliament-name">
 		Enter the MP's name
 	</label>

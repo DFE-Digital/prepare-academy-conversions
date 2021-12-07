@@ -29,7 +29,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("Preview project template");
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Back to task list");
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
@@ -40,22 +40,22 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject(p => p.HeadTeacherBoardDate = null);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Generate project template");
 
 			// stays on same page with error
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
 			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory Board date");
 
 			await NavigateAsync("Set an Advisory Board date before you generate your project template");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/head-teacher-board-date");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date");
 
 			await NavigateDataTestAsync("headteacher-board-date-back-link");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -63,18 +63,18 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject(p => p.HeadTeacherBoardDate = null);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Generate project template");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
 			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory Board date");
 
 			await NavigateAsync("Set an Advisory Board date before you generate your project template");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/head-teacher-board-date?return=%2FTaskList%2FPreviewHTBTemplate&fragment=head-teacher-board-date");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FPreviewHTBTemplate&fragment=advisory-board-date");
 		}
 
 		[Fact]
@@ -83,8 +83,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			var establishment = AddGetEstablishmentResponse(project.Urn.ToString());
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector("#school-phase").TextContent.Should().Be(establishment.PhaseOfEducation.Name);
 			Document.QuerySelector("#age-range").TextContent.Should().Be($"{establishment.StatutoryLowAge} to {establishment.StatutoryHighAge}");
@@ -109,7 +109,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject(p => p.DistanceFromSchoolToTrustHeadquarters = null) ;
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			var element = Document.QuerySelector("#distance-to-trust-headquarters");
 			element.TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
@@ -120,13 +120,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-published-admission-number");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
 
 			await NavigateAsync("Back");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -135,7 +135,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			var request = AddPatchProject(project, p => p.PublishedAdmissionNumber);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-published-admission-number");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
@@ -144,7 +144,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector<IHtmlInputElement>("#published-admission-number").Value = request.PublishedAdmissionNumber;
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -152,7 +152,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject(p => p.SchoolBudgetInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector("#finance-current-year-2021").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#finance-following-year-2022").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
@@ -166,13 +166,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-finance-current-year-2021");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
 
 			await NavigateAsync("Back");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -186,7 +186,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 					.With(r => r.CapitalCarryForwardAtEndMarchCurrentYear)
 					.With(r => r.CapitalCarryForwardAtEndMarchNextYear));
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-finance-current-year-2021");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
@@ -197,7 +197,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector<IHtmlInputElement>("#finance-forward-2022").Value = request.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -206,13 +206,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-school-budget-information-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-budget-information/additional-information");
 
 			await NavigateAsync("Back");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -221,8 +221,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			var establishment = AddGetEstablishmentResponse(project.Urn.ToString());
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector("#school-pupil-forecasts-additional-information").TextContent.Should().Be(project.SchoolPupilForecastsAdditionalInformation);
 
@@ -246,13 +246,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-school-pupil-forecasts-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information");
 
 			await NavigateAsync("Back");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -261,7 +261,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			var request = AddPatchProject(project, p => p.SchoolPupilForecastsAdditionalInformation);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-school-pupil-forecasts-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information");
@@ -270,7 +270,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector<IHtmlTextAreaElement>("#additional-information").Value = request.SchoolPupilForecastsAdditionalInformation;
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -279,8 +279,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			var keyStage2Response = AddGetKeyStagePerformance((int)project.Urn).KeyStage2.ToList();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector("#key-stage-2-additional-information").TextContent.Should().Be(project.KeyStage2PerformanceAdditionalInformation);
 
@@ -320,7 +320,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn, ks => ks.KeyStage2 = new List<KeyStage2PerformanceResponse>());
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 			Document.QuerySelector("#key-stage-2-performance-tables").Should().BeNull();
 		}
 
@@ -330,13 +330,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-key-stage-2-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-2-performance-tables/additional-information");
 
 			await NavigateAsync("Back");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -347,7 +347,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			var request = AddPatchProject(project, p => p.KeyStage2PerformanceAdditionalInformation);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-key-stage-2-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-2-performance-tables/additional-information");
@@ -356,7 +356,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector<IHtmlTextAreaElement>("#additional-information").Value = request.KeyStage2PerformanceAdditionalInformation;
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -365,8 +365,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			var keyStage4Response = AddGetKeyStagePerformance((int)project.Urn).KeyStage4.ToList();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector("#key-stage-4-additional-information").TextContent.Should().Be(project.KeyStage4PerformanceAdditionalInformation);
 
@@ -379,7 +379,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn, ks => ks.KeyStage4 = new List<KeyStage4PerformanceResponse>());
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 			Document.QuerySelector("#key-stage-4-performance-tables").Should().BeNull();
 		}
 
@@ -389,13 +389,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-key-stage-4-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-4-performance-tables/additional-information");
 
 			await NavigateAsync("Back");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -406,7 +406,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			var request = AddPatchProject(project, p => p.KeyStage4PerformanceAdditionalInformation);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-key-stage-4-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-4-performance-tables/additional-information");
@@ -415,7 +415,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector<IHtmlTextAreaElement>("#additional-information").Value = request.KeyStage4PerformanceAdditionalInformation;
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -424,8 +424,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			var keyStage5Response = AddGetKeyStagePerformance((int)project.Urn).KeyStage5.ToList();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector("#key-stage-5-additional-information").TextContent.Should().Be(project.KeyStage5PerformanceAdditionalInformation);
 
@@ -451,13 +451,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-key-stage-5-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-5-performance-tables/additional-information");
 
 			await NavigateAsync("Back");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -468,7 +468,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			var request = AddPatchProject(project, p => p.KeyStage5PerformanceAdditionalInformation);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-key-stage-5-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-5-performance-tables/additional-information");
@@ -477,7 +477,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector<IHtmlTextAreaElement>("#additional-information").Value = request.KeyStage5PerformanceAdditionalInformation;
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -485,8 +485,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector("#project-recommendation").TextContent.Should().Be(project.RecommendationForProject);
 			Document.QuerySelector("#author").TextContent.Should().Be(project.Author);
@@ -513,13 +513,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 0);
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/project-recommendation");
 
 			await NavigateAsync("Back");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -530,7 +530,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject(p => p.RecommendationForProject = selected.Value);
 			AddPatchProject(project, r => r.RecommendationForProject, toSelect.Value);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 0);
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/project-recommendation");
@@ -545,7 +545,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked.Should().BeFalse();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -554,13 +554,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 5);
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
 			await NavigateAsync("Back");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -574,10 +574,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDateQuestion, "Yes");
 			var secondPatchRequest = AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 5);
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeFalse();
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2").IsChecked.Should().BeFalse();
@@ -585,7 +585,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked = true;
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date?");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date?");
 
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value.Should().Be("");
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value.Should().Be("");
@@ -596,7 +596,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year").Value = secondPatchRequest.PreviousHeadTeacherBoardDate.Value.Year.ToString();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -607,10 +607,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 				.With(r => r.PreviousHeadTeacherBoardDateQuestion, "No")
 				.With(r => r.PreviousHeadTeacherBoardDate, default(DateTime)));
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 5);
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeFalse();
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2").IsChecked.Should().BeFalse();
@@ -619,7 +619,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -627,13 +627,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 5);
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
 			await NavigateAsync("Back");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -642,20 +642,20 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDateQuestion, "Yes");
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 5);
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked = true;
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date?");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date?");
 
 			await NavigateAsync("Back");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
 			await NavigateAsync("Back");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -665,22 +665,22 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDateQuestion, "Yes");
 			var secondPatchRequest = AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 5);
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeTrue();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date?");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date?");
 
 			await NavigateAsync("Back");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeTrue();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date?");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date?");
 
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value = secondPatchRequest.PreviousHeadTeacherBoardDate.Value.Day.ToString();
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value = secondPatchRequest.PreviousHeadTeacherBoardDate.Value.Month.ToString();
@@ -688,7 +688,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		[Fact]
@@ -698,28 +698,28 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDateQuestion, "Yes");
 			var secondPatchRequest = AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-headteacher-board-template");
+			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 5);
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeTrue();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date?");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date?");
 
 			await NavigateAsync("Back");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeTrue();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date?");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date?");
 
 			await NavigateAsync("Back");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-head-teacher-board-date-question");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
 			await NavigateAsync("Back");
-			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-headteacher-board-template");
+			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
 		private string AsPercentageOf(string numberOfPupils, string schoolCapacity)
