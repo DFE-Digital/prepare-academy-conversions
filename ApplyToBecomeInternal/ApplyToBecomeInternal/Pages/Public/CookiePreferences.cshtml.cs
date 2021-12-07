@@ -33,20 +33,7 @@ namespace ApplyToBecomeInternal.Pages.Public
 			{
 				PreferencesSet = true;
 
-				var cookieOptions = new CookieOptions { Expires = DateTime.Today.AddMonths(6), Secure = true };
-				Response.Cookies.Append(ConsentCookieName, consent.Value.ToString(), cookieOptions);
-
-				if (!consent.Value)
-				{
-					foreach (var cookie in Request.Cookies.Keys)
-					{
-						if (cookie.StartsWith("_ga") || cookie.Equals("_gid"))
-						{
-							_logger.LogInformation($"deleting Google analytics cookie: {cookie}");
-							Response.Cookies.Delete(cookie);
-						}
-					}
-				}
+				ApplyCookieConsent(consent);
 
 				if (!string.IsNullOrEmpty(returnUrl))
 				{
@@ -58,6 +45,8 @@ namespace ApplyToBecomeInternal.Pages.Public
 
 			return Page();
 		}
+
+
 
 		public IActionResult OnPost(bool? consent, string returnUrl)
 		{
@@ -78,19 +67,30 @@ namespace ApplyToBecomeInternal.Pages.Public
 
 				if (!consent.Value)
 				{
-					foreach (var cookie in Request.Cookies.Keys)
-					{
-						if (cookie.StartsWith("_ga") || cookie.Equals("_gid"))
-						{
-							_logger.LogInformation($"deleting Google analytics cookie: {cookie}");
-							Response.Cookies.Delete(cookie);
-						}
-					}
+					ApplyCookieConsent(consent);
 				}
 				return Page();
 			}
 
 			return Page();
+		}
+
+		private void ApplyCookieConsent(bool? consent)
+		{
+			var cookieOptions = new CookieOptions { Expires = DateTime.Today.AddMonths(6), Secure = true };
+			Response.Cookies.Append(ConsentCookieName, consent.Value.ToString(), cookieOptions);
+
+			if (!consent.Value)
+			{
+				foreach (var cookie in Request.Cookies.Keys)
+				{
+					if (cookie.StartsWith("_ga") || cookie.Equals("_gid"))
+					{
+						_logger.LogInformation($"deleting Google analytics cookie: {cookie}");
+						Response.Cookies.Delete(cookie);
+					}
+				}
+			}
 		}
 	}
 }
