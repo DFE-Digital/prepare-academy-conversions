@@ -11,7 +11,7 @@ namespace ApplyToBecomeInternal.Pages.Public
 	{
 		private const string ConsentCookieName = ".ManageAnAcademyConversion.Consent";
 		public bool? Consent { get; set; }
-		public bool PreferencesSet { get; set; }
+		public bool PreferencesSet { get; set; } = false;
 		public string returnPath { get; set; }
 		private readonly ILogger<CookiePreferences> _logger;
 
@@ -22,6 +22,8 @@ namespace ApplyToBecomeInternal.Pages.Public
 
 		public ActionResult OnGet(bool? consent, string returnUrl)
 		{
+			returnPath = returnUrl;
+
 			if (Request.Cookies.ContainsKey(ConsentCookieName))
 			{
 				Consent = bool.Parse(Request.Cookies[ConsentCookieName]);
@@ -29,6 +31,8 @@ namespace ApplyToBecomeInternal.Pages.Public
 
 			if (consent.HasValue)
 			{
+				PreferencesSet = true;
+
 				var cookieOptions = new CookieOptions { Expires = DateTime.Today.AddMonths(6), Secure = true };
 				Response.Cookies.Append(ConsentCookieName, consent.Value.ToString(), cookieOptions);
 
@@ -57,9 +61,8 @@ namespace ApplyToBecomeInternal.Pages.Public
 
 		public IActionResult OnPost(bool? consent, string returnUrl)
 		{
-			PreferencesSet = true;
 			returnPath = returnUrl;
-
+			
 			if (Request.Cookies.ContainsKey(ConsentCookieName))
 			{
 				Consent = bool.Parse(Request.Cookies[ConsentCookieName]);
@@ -67,6 +70,9 @@ namespace ApplyToBecomeInternal.Pages.Public
 
 			if (consent.HasValue)
 			{
+				Consent = consent;
+				PreferencesSet = true;
+
 				var cookieOptions = new CookieOptions { Expires = DateTime.Today.AddMonths(6), Secure = true };
 				Response.Cookies.Append(ConsentCookieName, consent.Value.ToString(), cookieOptions);
 
@@ -81,13 +87,6 @@ namespace ApplyToBecomeInternal.Pages.Public
 						}
 					}
 				}
-
-				//if (!string.IsNullOrEmpty(returnUrl))
-				//{
-				//	return Redirect(returnUrl);
-				//}
-
-				//				return RedirectToPage(Links.Public.CookiePreferences);
 				return Page();
 			}
 
