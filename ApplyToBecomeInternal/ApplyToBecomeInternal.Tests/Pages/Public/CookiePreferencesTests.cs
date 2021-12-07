@@ -79,5 +79,40 @@ namespace ApplyToBecomeInternal.Tests.Pages.Public
 
 			Document.Url.Should().Contain("/public/cookie-preferences");
 		}
+
+		[Fact]
+		public async Task Should_show_success_message_when_preferences_set()
+		{
+			var project = AddGetProject();
+			string url = $"/task-list/{project.Id}";
+			await OpenUrlAsync(url);
+
+			await NavigateDataTestAsync("cookie-banner-link-2");
+
+			Document.QuerySelector<IHtmlInputElement>("#cookie-consent-deny").IsChecked = true;
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			var item = Document.QuerySelector("#govuk-notification-banner-title");
+			item.InnerHtml.Should().Contain("Success");
+			
+			var backLink = Document.QuerySelector<IHtmlAnchorElement> ("[data-test='success-banner-return-link']");
+			backLink.Href.Should().Contain($"/task-list/{project.Id}");
+		}
+
+		[Fact]
+		public async Task Should_navigate_back_to_correct_page_using_success_link()
+		{
+			var project = AddGetProject();
+			string url = $"/task-list/{project.Id}";
+			await OpenUrlAsync(url);
+
+			await NavigateDataTestAsync("cookie-banner-link-2");
+
+			Document.QuerySelector<IHtmlInputElement>("#cookie-consent-deny").IsChecked = true;
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			await NavigateDataTestAsync("success-banner-return-link");
+			Document.Url.Should().Contain($"/task-list/{project.Id}");
+		}
 	}
 }
