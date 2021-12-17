@@ -12,7 +12,7 @@ describe("Error message link should redirect correctly", () => {
 		cy.get(
 			'*[href*="/confirm-school-trust-information-project-dates"]'
 		).click();
-		cy.get('*[data-test="change-head-teacher-board-date"]').click();
+		cy.get('*[data-test="change-advisory-board-date"]').click();
 		cy.submitDate(11, 11, 1980);
 
 		cy.get("#confirm-and-continue-button").click();
@@ -23,7 +23,7 @@ describe("Error message link should redirect correctly", () => {
 		cy.get("#confirm-and-continue-button").click();
 		// Should be on confirm-school-trust-information-project-dates page
 		cy.get("#confirm-and-continue-button").click();
-		// should be on head-teacher-board-date
+		// should be on advisory-board-date
 		cy.get(".govuk-button.govuk-button--secondary").click();
 	});
 
