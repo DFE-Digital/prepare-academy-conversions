@@ -21,8 +21,8 @@ namespace ApplyToBecomeInternal.Models
 		public static class TaskList
 		{
 			public static LinkItem Index = new LinkItem { BackText = "Back to task list", Page = "/TaskList/Index" };
-			public static LinkItem PreviewHTBTemplate = new LinkItem { BackText = "Back to preview", Page = "/TaskList/PreviewHTBTemplate" };
-			public static LinkItem GenerateHTBTemplate = new LinkItem { Page = "/TaskList/GenerateHTBTemplate" };
+			public static LinkItem PreviewHTBTemplate = new LinkItem { BackText = "Back to preview", Page = "/TaskList/PreviewProjectTemplate" };
+			public static LinkItem GenerateHTBTemplate = new LinkItem { Page = "/TaskList/DownloadProjectTemplate" };
 		}
 
 		public static class SchoolPerformance
@@ -49,9 +49,9 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem Author = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/Author" };
 			public static LinkItem ClearedBy = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/ClearedBy" };
 			public static LinkItem AcademyOrderRequired = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/AcademyOrderRequired" };
-			public static LinkItem HeadTeacherBoardDate = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/HeadTeacherBoardDate" };
-			public static LinkItem PreviousHeadTeacherBoardDateQuestion = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/PreviousHeadTeacherBoardDateQuestion" };
-			public static LinkItem PreviousHeadTeacherBoardDate = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/PreviousHeadTeacherBoardDate" };
+			public static LinkItem HeadTeacherBoardDate = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/AdvisoryBoardDate" };
+			public static LinkItem PreviousHeadTeacherBoardDateQuestion = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/PreviousAdvisoryBoard" };
+			public static LinkItem PreviousHeadTeacherBoardDate = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/PreviousAdvisoryBoardDate" };
 			public static LinkItem ProposedAcademyOpeningDate = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/ProposedAcademyOpeningDate" };
 			public static LinkItem RouteAndGrant = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/RouteAndGrant" };
 		}

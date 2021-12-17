@@ -74,7 +74,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			await NavigateAsync("Set an Advisory Board date before you generate your project template");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FPreviewHTBTemplate&fragment=advisory-board-date");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FPreviewProjectTemplate&fragment=advisory-board-date");
 		}
 
 		[Fact]
@@ -492,8 +492,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector("#author").TextContent.Should().Be(project.Author);
 			Document.QuerySelector("#cleared-by").TextContent.Should().Be(project.ClearedBy);
 			Document.QuerySelector("#academy-order-required").TextContent.Should().Be(project.AcademyOrderRequired);
-			Document.QuerySelector("#head-teacher-board-date").TextContent.Should().Be(project.HeadTeacherBoardDate.ToDateString());
-			Document.QuerySelector("#previous-head-teacher-board").TextContent.Should().Be(project.PreviousHeadTeacherBoardDate.ToDateString());
+			Document.QuerySelector("#advisory-board-date").TextContent.Should().Be(project.HeadTeacherBoardDate.ToDateString());
+			Document.QuerySelector("#previous-advisory-board").TextContent.Should().Be(project.PreviousHeadTeacherBoardDate.ToDateString());
 			Document.QuerySelector("#school-name").TextContent.Should().Be(project.SchoolName);
 			Document.QuerySelector("#unique-reference-number").TextContent.Should().Be(project.Urn.ToString());
 			Document.QuerySelector("#local-authority").TextContent.Should().Be(project.LocalAuthority);

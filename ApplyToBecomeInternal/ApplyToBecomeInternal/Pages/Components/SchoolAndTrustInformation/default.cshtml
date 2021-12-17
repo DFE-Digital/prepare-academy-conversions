@@ -19,8 +19,8 @@
 
 	<govuk-summary-list-row name="cleared-by" label="Cleared by" key-width="@kw" value="@Model.ClearedBy" asp-page="@Links.SchoolAndTrustInformationSection.ClearedBy.Page" asp-route-id="@Model.Id" hidden-text="cleared by"/>
 	<govuk-summary-list-row name="academy-order-required" label="Is an academy order (AO) required?" key-width="@kw" value="@Model.AcademyOrderRequired" asp-page="@Links.SchoolAndTrustInformationSection.AcademyOrderRequired.Page" asp-route-id="@Model.Id" hidden-text="academy order required"/>
-	<govuk-summary-list-row name="head-teacher-board-date" label="Date of Advisory Board" key-width="@kw" value="@Model.HeadTeacherBoardDate" asp-page="@Links.SchoolAndTrustInformationSection.HeadTeacherBoardDate.Page" asp-route-id="@Model.Id" hidden-text="head teacher board date"/>
-	<govuk-summary-list-row name="previous-head-teacher-board" label="Previous Advisory Board" key-width="@kw" value="@Model.PreviousHeadTeacherBoardDate" asp-page="@Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDateQuestion.Page" asp-route-id="@Model.Id" hidden-text="previous head teacher board date"/>
+	<govuk-summary-list-row name="advisory-board-date" label="Date of Advisory Board" key-width="@kw" value="@Model.HeadTeacherBoardDate" asp-page="@Links.SchoolAndTrustInformationSection.HeadTeacherBoardDate.Page" asp-route-id="@Model.Id" hidden-text="head teacher board date"/>
+	<govuk-summary-list-row name="previous-advisory-board" label="Previous Advisory Board" key-width="@kw" value="@Model.PreviousHeadTeacherBoardDate" asp-page="@Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDateQuestion.Page" asp-route-id="@Model.Id" hidden-text="previous head teacher board date"/>
 	<govuk-summary-list-row name="school-name" label="School name" key-width="@kw" asp-for="SchoolName"/>
 	<govuk-summary-list-row name="unique-reference-number" label="Unique reference number (URN)" key-width="@kw" asp-for="SchoolUrn"/>
 	<govuk-summary-list-row name="local-authority" label="Local authority" key-width="@kw" asp-for="LocalAuthority"/>
