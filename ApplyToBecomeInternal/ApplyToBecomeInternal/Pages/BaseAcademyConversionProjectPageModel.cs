@@ -37,6 +37,7 @@ namespace ApplyToBecomeInternal.Pages
 			if (!project.Success)
 			{
 				// 404 logic
+				return NotFound();
 			}
 
 			Project = new ProjectViewModel(project.Body);

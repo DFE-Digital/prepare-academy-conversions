@@ -113,6 +113,7 @@ namespace ApplyToBecomeInternal
 			app.UseAuthentication();
 			app.UseAuthorization();
 
+			app.UseStatusCodePagesWithRedirects("/Errors/{0}");
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapRazorPages();
