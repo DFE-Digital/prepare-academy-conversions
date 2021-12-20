@@ -25,7 +25,7 @@ describe("Error messaging should be correct", () => {
 			'*[href*="/confirm-school-trust-information-project-dates"]'
 		).click();
 		
-		cy.get('*[data-test="change-head-teacher-board-date"]').click();
+		cy.get('*[data-test="change-advisory-board-date"]').click();
 		cy.url().then(href => {
             expect(href.endsWith('/confirm-school-trust-information-project-dates/advisory-board-date')).to.be.true;
         });

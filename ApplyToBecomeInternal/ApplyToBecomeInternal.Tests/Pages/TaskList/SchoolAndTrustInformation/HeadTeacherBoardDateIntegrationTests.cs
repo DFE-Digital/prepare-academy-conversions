@@ -22,7 +22,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			var request = AddPatchProject(project, r => r.HeadTeacherBoardDate);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
-			await NavigateDataTestAsync("change-head-teacher-board-date");
+			await NavigateDataTestAsync("change-advisory-board-date");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date");
 

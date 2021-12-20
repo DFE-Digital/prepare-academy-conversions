@@ -28,8 +28,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			Document.QuerySelector("#author").TextContent.Should().Be(project.Author);
 			Document.QuerySelector("#cleared-by").TextContent.Should().Be(project.ClearedBy);
 			Document.QuerySelector("#academy-order-required").TextContent.Should().Be(project.AcademyOrderRequired);
-			Document.QuerySelector("#head-teacher-board-date").TextContent.Should().Be(project.HeadTeacherBoardDate.ToDateString());
-			Document.QuerySelector("#previous-head-teacher-board").TextContent.Should().Be(project.PreviousHeadTeacherBoardDate.ToDateString());
+			Document.QuerySelector("#advisory-board-date").TextContent.Should().Be(project.HeadTeacherBoardDate.ToDateString());
+			Document.QuerySelector("#previous-advisory-board").TextContent.Should().Be(project.PreviousHeadTeacherBoardDate.ToDateString());
 			Document.QuerySelector("#school-name").TextContent.Should().Be(project.SchoolName);
 			Document.QuerySelector("#unique-reference-number").TextContent.Should().Be(project.Urn.ToString());
 			Document.QuerySelector("#local-authority").TextContent.Should().Be(project.LocalAuthority);
@@ -51,7 +51,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			await OpenUrlAsync($"/task-list/{project.Id}");
 			await NavigateAsync("School and trust information and project dates");
 
-			Document.QuerySelector("#previous-head-teacher-board").TextContent.Should().Be("No");
+			Document.QuerySelector("#previous-advisory-board").TextContent.Should().Be("No");
 		}
 
 		[Fact]
@@ -131,8 +131,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			Document.QuerySelector("#author").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#cleared-by").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#academy-order-required").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#head-teacher-board-date").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#previous-head-teacher-board").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#advisory-board-date").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#previous-advisory-board").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#school-name").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#unique-reference-number").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#local-authority").TextContent.Should().Be("Empty");
