@@ -25,6 +25,7 @@ resource cloudfoundry_app worker_app {
 		"Authentication__Password" = var.app_password
 		"GoogleAnalytics__Enable"  = var.enable_google_analytics
 		"FeedbackLink"             = var.app_feedback_link
+		"SupportEmail"             = var.app_support_email
 		"SENTRY_RELEASE"           = "a2b-internal:${var.cf_app_image_tag}"
 	}
 }

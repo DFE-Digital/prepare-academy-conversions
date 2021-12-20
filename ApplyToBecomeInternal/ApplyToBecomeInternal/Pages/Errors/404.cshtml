@@ -1,0 +1,23 @@
+﻿@page
+@model ApplyToBecomeInternal.Pages.Errors._404Model
+@inject Microsoft.Extensions.Configuration.IConfiguration _configuration
+@{
+}
+<div class="govuk-width-container">
+	<main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-two-thirds">
+				<h1 class="govuk-heading-l" id="not-found-error-heading">Page not found</h1>
+				<p class="govuk-body">
+					If you typed the web address, check it is correct.
+				</p>
+				<p class="govuk-body">
+					If you pasted the web address, check you copied the entire address.
+				</p>
+				<p class="govuk-body">
+					If you continue to get this message, email the SDD support team at <a href="@_configuration["SupportEmail"]?subject=Manage an academy conversion support" " class="govuk-link">sddservicessuppport@education.gov.uk</a>
+				</p>
+			</div>
+		</div>
+	</main>
+</div>

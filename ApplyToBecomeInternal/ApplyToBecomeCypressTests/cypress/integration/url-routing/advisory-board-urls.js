@@ -41,7 +41,7 @@ describe('validate advisory board urls', () => {
         cy.get('h1').contains('Preview project template')
     });
 
-    it('should correctly render a page when user visits /download-project-template', () => {
+    it.skip('should correctly render a page when user visits /download-project-template', () => {
         //Changes the current URL
         cy.visit(selectedSchool+"/download-project-template")
         cy.get('h1').contains('Download project template')
