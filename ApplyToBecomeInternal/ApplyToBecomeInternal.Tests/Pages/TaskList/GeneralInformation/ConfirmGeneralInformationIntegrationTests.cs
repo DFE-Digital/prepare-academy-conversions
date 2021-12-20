@@ -114,7 +114,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			Document.QuerySelector("#viability-issues").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#financial-deficit").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#diocesan-multi-academy-trust").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#percentage-in-diocesan-trust").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#parliamentary-constituency").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#member-of-parliament-name").TextContent.Should().Be("Empty");
