@@ -79,6 +79,11 @@ variable logit_sink_url {
 	description = "Target URL (HTTPS) for logs to be streamed to"
 }
 
+variable app_support_email {
+	type = string
+	description = "email address for support"
+}
+
 ## ========================================================================== ##
 #  Locals					                                                   #
 ## ========================================================================== ##
