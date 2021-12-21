@@ -103,6 +103,8 @@ namespace ApplyToBecomeInternal
 			app.UseSecurityHeaders(
 				SecureHeadersDefinitions.SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment()));
 
+			app.UseStatusCodePagesWithReExecute("/Errors/{0}");
+
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 
@@ -113,7 +115,6 @@ namespace ApplyToBecomeInternal
 			app.UseAuthentication();
 			app.UseAuthorization();
 
-			app.UseStatusCodePagesWithRedirects("/Errors/{0}");
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapRazorPages();
