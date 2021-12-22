@@ -34,13 +34,13 @@ describe("Error handling should present correctly to the user", () => {
 
     // Raised under 81652
     it('Should display user-friendly error when incorrect project ID requested',()=>{
-        cy.visit(Cypress.env('url')+'/task-list/9999')
+        cy.visit(Cypress.env('url')+'/task-list/9999', {failOnStatusCode: false})
         cy.get("#not-found-error-heading").should('have.text','Page not found')
     })
 
     // Raised under 81655
     it('Should display user-friendly error when incorrect url requested',()=>{
-        cy.visit(Cypress.env('url')+'/task-list-nonsense')
+        cy.visit(Cypress.env('url')+'/task-list-nonsense', {failOnStatusCode: false})
         cy.get("#not-found-error-heading").should('have.text','Page not found')
     })
 
