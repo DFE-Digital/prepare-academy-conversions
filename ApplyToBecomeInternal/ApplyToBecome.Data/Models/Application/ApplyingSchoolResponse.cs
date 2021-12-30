@@ -1,41 +1,22 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace ApplyToBecome.Data.Models.Application
 {
 	/// <remarks>
-	/// Whole model and related models can probably be done away with once this is built e2e
+	/// Copy of TramsDataApi.ResponseModels.ApplyToBecome.A2BApplyingSchoolResponse
 	/// </remarks>
-	/// The entirety of the School Application Form data needed in this app
-	/// from multiple endpoints on the AcademyAPI
-	/// 
-	public class Application
-	{
-		public string ApplicationReferenceNumber { get; set; }
-		public string FormTrustProposedNameOfTrust { get; set; } // CML - application to join (trust name)?
-//		public string SchoolName { get; set; }
-//		public string TrustName { get; set; } 
-		public string ApplicationLeadAuthorName { get; set; }
-		//		public ApplicationDetails Details { get; set; }
-		public Link EvidenceDocument { get; set; }
-		public int? ChangesToTrust { get; set; }
-		public int? ChangesToLaGovernance { get; set; }
 
-		//		public ApplyingSchoolResponse ApplicationInformation{ get; set; }
-		//public ConversionInformation ConversionInformation { get; set; }
-		//public FurtherInformation FurtherInformation { get; set; }
-		//public bool HasGovernmentConsultedStakeholders { get; set; }
-		//public Finances Finances { get; set; }
-		//public LandAndBuildings LandAndBuildings { get; set; }
-		//public string FundsPaidToSchoolOrTrust { get; set; }
-		//public FuturePupilNumbers FuturePupilNumbers { get; set; }
-		//public Declaration Declaration { get; set; }
-		public string ApplyingSchoolId { get; set; } //URN?
+	public class ApplyingSchoolResponse
+	{
+		public string ApplyingSchoolId { get; set; }
 		public string UpdatedTrustFields { get; set; }
 		public string SchoolDeclarationSignedById { get; set; }
 		public A2BSelectOption SchoolDeclarationBodyAgree { get; set; }
 		public A2BSelectOption SchoolDeclarationTeacherChair { get; set; }
 		public string SchoolDeclarationSignedByEmail { get; set; }
-		public string Name { get; set; } // CML school name?
+		public string Name { get; set; }
 		public string UpdatedSchoolFields { get; set; }
 		public string SchoolConversionReasonsForJoining { get; set; }
 		public int? SchoolConversionTargetDateDifferent { get; set; }
@@ -76,7 +57,6 @@ namespace ApplyToBecome.Data.Models.Application
 		public string SchoolSupportedFoundationBodyName { get; set; }
 		public string SchoolAdFeederSchools { get; set; }
 		public int? SchoolAdEqualitiesImpactAssessment { get; set; }
-		// Finances
 		public double? SchoolPFYRevenue { get; set; }
 		public int? SchoolPFYRevenueStatus { get; set; }
 		public string SchoolPFYRevenueStatusExplained { get; set; }
@@ -108,7 +88,6 @@ namespace ApplyToBecome.Data.Models.Application
 		public int? SchoolCapacityYear3 { get; set; }
 		public string SchoolCapacityAssumptions { get; set; }
 		public string SchoolCapacityPublishedAdmissionsNumber { get; set; }
-		// land and buildings
 		public string SchoolBuildLandOwnerExplained { get; set; }
 		public int? SchoolBuildLandSharedFacilities { get; set; }
 		public string SchoolBuildLandSharedFacilitiesExplained { get; set; }
@@ -127,3 +106,4 @@ namespace ApplyToBecome.Data.Models.Application
 		public string SchoolDeclarationSignedByName { get; set; }
 	}
 }
+

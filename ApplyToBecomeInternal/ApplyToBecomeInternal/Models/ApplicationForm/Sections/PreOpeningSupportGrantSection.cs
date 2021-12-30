@@ -1,4 +1,5 @@
 using ApplyToBecome.Data.Models.Application;
+using ApplyToBecomeInternal.Extensions;
 using System.Collections.Generic;
 
 namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
@@ -14,7 +15,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 		}
 		private static IEnumerable<FormField> GenerateDetailsFields(Application application) =>
 			new[] {
-				new FormField("Do you want these funds paid to the school or the trust?", application.FundsPaidToSchoolOrTrust)
+				new FormField("Do you want these funds paid to the school or the trust?", application.SchoolSupportGrantFundsPaidTo.ToSchoolOrTrust())
 			};
 	}
 }

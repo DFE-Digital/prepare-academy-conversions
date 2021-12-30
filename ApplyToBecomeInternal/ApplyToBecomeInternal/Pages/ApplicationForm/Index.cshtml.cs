@@ -7,20 +7,27 @@ using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models.ApplicationForm;
 using ApplyToBecomeInternal.Models.ApplicationForm.Sections;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ApplyToBecomeInternal.Pages.ApplicationForm
 {
 	public class IndexModel : BaseAcademyConversionProjectPageModel
 	{
-		public IndexModel(IAcademyConversionProjectRepository repository) : base(repository) { }
-
+		protected readonly ApplicationRepository _applicationRepository;
 		public IEnumerable<BaseFormSection> Sections { get; set; }
 
+		public IndexModel(IAcademyConversionProjectRepository repository, ApplicationRepository applicationRepository) : base(repository)
+		{
+			_applicationRepository = applicationRepository;
+		}
+		
 		public override async Task<IActionResult> OnGetAsync(int id)
         {
 			var result = await base.OnGetAsync(id);
+			var urn = base.Project.SchoolURN;
 
-			var application = DummyApplication;
+			var application = await _applicationRepository.GetApplicationById(urn);
+			//var application = DummyApplication;
 			Sections = new BaseFormSection[]
 			{
 				new ApplicationFormSection(application),
@@ -39,90 +46,68 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 
 		private Application DummyApplication => new Application
 		{
-			SchoolName = Project.SchoolName,
-			TrustName = Project.NameOfTrust,
-			LeadApplicant = "Garth Brown",
-			Details = new ApplicationDetails
-			{
-				EvidenceDocument = new Link("consent_dynamics.docx", "#"),
-				ChangesToGovernance = false,
-				ChangesAtLocalLevel = true
-			},
-			ConversionInformation = new ConversionInformation
-			{
-				HeadTeacher = new ContactDetails
-				{
-					Name = "Garth Brown",
-					EmailAddress = "garth.brown@stwilfridsprimary.edu.uk",
-					TelephoneNumber = "09876 64547563"
-				},
-				GoverningBodyChair = new ContactDetails
-				{
-					Name = "Arna Siggurdottier",
-					EmailAddress = "arna.siggurdottier@dynamicstrust.co.uk",
-					TelephoneNumber = "0972 345 119"
-				},
-				Approver = new ContactDetails
-				{
-					Name = "Garth Brown",
-					EmailAddress = "garth.brown@stwilfridsprimary.edu.uk",
-				},
-				DateForConversion = new DateForConversion
-				{
-					HasPreferredDate = true,
-					PreferredDate = new DateTime(2021,04,20)
-				},
-				SchoolToTrustRationale = "This is a rationale",
-				WillSchoolChangeName = true
-			},
-			FurtherInformation = new FurtherInformation
-			{
-				WhatWillSchoolBringToTrust = "the school will bring these things to the trust",
-				HasUnpublishedOfstedInspection = false,
-				HasSafeguardingInvestigations = false,
-				IsPartOfLocalAuthorityReorganisation = false,
-				IsPartOfLocalAuthorityClosurePlans = false,
-				IsLinkedToDiocese = true,
-				NameOfDiocese = "Diocese of Warrington",
-				DioceseLetterOfConsent = new Link("consent-from-diocese.docx", "#"),
-				IsPartOfFederation = false,
-				IsSupportedByFoundationTrustOrOtherBody = true,
-				HasSACREChristianWorshipExcemption = false,
-				MainFeederSchools = "n/a as we are a primary school",
-				SchoolConsent = new Link("consent.docx", "#"),
-				EqualitiesImpactAssessmentResult = "Considered unlikely",
-				AdditionalInformation = null
-			},
-			Finances = new Finances
-			{
-				PreviousFinancialYear = new FinancialYear(new DateTime(2020, 03, 31), 169093, FinancialYearState.Surplus),
-				CurrentFinancialYear = new ForecastFinancialYear(new DateTime(2021, 03, 31), 143931, FinancialYearState.Surplus, 0, FinancialYearState.Surplus),
-				NextFinancialYear = new ForecastFinancialYear(new DateTime(2022, 03, 31), 169093, FinancialYearState.Surplus, 0, FinancialYearState.Surplus),
-				ExistingLoans = false,
-				ExistingLeases = true,
-				OngoingInvestigations = false
-			},
-			FuturePupilNumbers = new FuturePupilNumbers
-			{
-				Year1 = 189,
-				Year2 = 189,
-				Year3 = 189,
-				ProjectionReasoning = "spreadsheets",
-				PublishedAdmissionsNumber = 210
-			},
-			LandAndBuildings = new LandAndBuildings
-			{
-				BuildingAndLandOwner = "The Diocese of Warrington owns the building and the land. The LA owns the playing fields.",
-				HasCurrentPlannedBuildingWorks = true,
-				HasSharedFacilitiesOnSite = false,
-				HasSchoolGrants = false,
-				HasPrivateFinanceInitiativeScheme = false,
-				IsInPrioritySchoolBuildingProgramme = false,
-				IsInBuildingSchoolsForFutureProgramme = false
-			},
-			FundsPaidToSchoolOrTrust = "To the trust the school is joining",
-			HasGovernmentConsultedStakeholders = true,
-			Declaration = new Declaration(true, "Garth Brown")
+			Name = Project.SchoolName,
+			FormTrustProposedNameOfTrust = Project.NameOfTrust,
+			ApplicationLeadAuthorName = "Garth Brown",
+//			EvidenceDocument = new Link("consent_dynamics.docx", "#"),
+			ChangesToTrust = 0,
+			ChangesToLaGovernance = 1,
+			SchoolConversionContactHeadName = "Garth Brown",
+			SchoolConversionContactHeadEmail = "garth.brown@stwilfridsprimary.edu.uk",
+			SchoolConversionContactHeadTel = "09876 64547563",
+			SchoolConversionContactChairName = "Arna Siggurdottier",
+			SchoolConversionContactChairEmail = "arna.siggurdottier@dynamicstrust.co.uk",
+			SchoolConversionContactChairTel = "0972 345 119",
+			SchoolConversionApproverContactName = "Garth Brown",
+			SchoolConversionApproverContactEmail = "garth.brown@stwilfridsprimary.edu.uk",
+			SchoolConversionTargetDateDate = new DateTime(2021, 04, 20),
+			SchoolConversionTargetDateDifferent = 1,
+			SchoolConversionReasonsForJoining = "This is a rationale",
+			SchoolConversionChangeName = 1,
+			SchoolAdSchoolContributionToTrust = "the school will bring these things to the trust",
+			SchoolAdInspectedButReportNotPublished = 0,
+			SchoolAdSafeguarding = 0,
+			SchoolLaReorganization = 0,
+			SchoolLaClosurePlans = 0,
+//				IsLinkedToDiocese = true,
+			SchoolFaithSchoolDioceseName = "Diocese of Warrington",
+//				DioceseLetterOfConsent = new Link("consent-from-diocese.docx", "#"),
+			SchoolPartOfFederation = 0,
+			SchoolSupportedFoundation = 1,
+			SchoolSACREExemption = 0,
+			SchoolAdFeederSchools = "n/a as we are a primary school",
+			//				SchoolConsent = new Link("consent.docx", "#"),
+			SchoolAdEqualitiesImpactAssessment = 0,
+			SchoolAddFurtherInformation = null,
+			SchoolPFYEndDate = new DateTime(2020, 03, 31),
+			SchoolPFYRevenue = 169093,
+			SchoolPFYRevenueStatus = 0,
+			SchoolCFYEndDate = new DateTime(2021, 03, 31),
+			SchoolCFYRevenue = 143931,
+			SchoolCFYRevenueStatus = 1,
+			SchoolNFYEndDate = new DateTime(2022, 03, 31),
+			SchoolNFYRevenue = 169093,
+			SchoolNFYRevenueStatus = 1, // enum FinancialYearState? CML
+			SchoolLoanExists = new A2BSelectOption { Id = 0, Name = "Loan" },
+			SchoolLeaseExists = new A2BSelectOption { Id = 0, Name = "Lease" },
+			SchoolFinancialInvestigations = 0,
+			// pupil numbers
+			SchoolCapacityYear1 = 189,
+			SchoolCapacityYear2 = 189,
+			SchoolCapacityYear3 = 189,
+			SchoolCapacityAssumptions = "spreadsheets",
+			SchoolCapacityPublishedAdmissionsNumber = "210",
+			// land and buildings
+			SchoolBuildLandOwnerExplained = "The Diocese of Warrington owns the building and the land. The LA owns the playing fields.",
+			SchoolBuildLandWorksPlanned = 0,
+			SchoolBuildLandSharedFacilities = 0,
+			//	HasSchoolGrants = false,
+			SchoolBuildLandPFIScheme = 0,
+			SchoolBuildLandPriorityBuildingProgramme = 0,
+			SchoolBuildLandFutureProgramme = 0,
+			SchoolSupportGrantFundsPaidTo = 1,
+			SchoolConsultationStakeholdersConsult = "yes",
+			SchoolDeclarationSignedByName = "Garth Brown"
 		};
-    }
+	}
 }

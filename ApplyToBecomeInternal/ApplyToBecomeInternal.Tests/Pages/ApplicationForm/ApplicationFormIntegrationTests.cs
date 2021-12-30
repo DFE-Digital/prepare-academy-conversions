@@ -1,4 +1,6 @@
-﻿using FluentAssertions;
+﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.Application;
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,21 +11,40 @@ namespace ApplyToBecomeInternal.Tests.Pages
 {
 	public class ApplicationFormIntegrationTests : BaseIntegrationTests
 	{
+		private AcademyConversionProject _project;
+		private ApplicationResponse _application;
+		private ApplyingSchoolResponse _applyingSchool;
+
 		public ApplicationFormIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{
+			_project = AddGetProject();
+			_application = AddGetApplication();
+			_applyingSchool = AddGetApplyingSchool(a => a.ApplyingSchoolId = _project.Urn?.ToString());
 		}
 
 		[Fact]
 		public async void The_project_template_link_is_present()
 		{
-			var projects = AddGetProjects().ToList();
-			var firstProject = AddGetProject(p => p.Id = projects.First().Id);
-
-			await OpenUrlAsync($"/school-application-form/{firstProject.Id}");			
+			await OpenUrlAsync($"/school-application-form/{_project.Id}");			
 
 			var pageItem = Document.QuerySelector($"#application-form-link");
 			pageItem.TextContent.Should().Be("Open school application form in a new tab");
-			pageItem.BaseUri.Should().Be($"http://localhost/school-application-form/{firstProject.Id}");
+			pageItem.BaseUri.Should().Be($"http://localhost/school-application-form/{_project.Id}");
 		}
+
+		[Fact]
+		public async void Should_display_contact_details_section()
+		{
+			await OpenUrlAsync($"/school-application-form/{_project.Id}");
+
+			var rowItems = Document.QuerySelectorAll(".govuk-summary-list__row");
+			rowItems[3].Children[1].TextContent.Should().Be(_applyingSchool.SchoolConversionContactChairTel);// CML
+		}
+
+		//[Fact]
+		//public async void Should_deal_with_null_values()
+		//{
+
+		//}
 	}
 }

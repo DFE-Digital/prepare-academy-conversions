@@ -14,8 +14,8 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 		private IEnumerable<FormField> GenerateDetailsFields(Application application) =>
 			new[]
 			{
-				new FormField("I agree with all of these statements, and believe that the facts stated in this application are true", application.Declaration.Signed.ToYesNoString()),
-				new FormField("Signed by", application.Declaration.Signee)
+				new FormField("I agree with all of these statements, and believe that the facts stated in this application are true","to be mapped"),
+				new FormField("Signed by", application.SchoolDeclarationSignedByName)
 			};
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.Application;
 using ApplyToBecome.Data.Models.Establishment;
 using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecomeInternal.Tests.Customisations;
@@ -129,6 +130,30 @@ namespace ApplyToBecomeInternal.Tests.Pages
 
 			_factory.AddGetWithJsonResponse($"/establishment/urn/{urn}", establishmentResponse);
 			return establishmentResponse;
+		}
+
+		public ApplicationResponse AddGetApplication(Action<ApplicationResponse> postSetup = null)
+		{
+			var application = _fixture.Create<ApplicationResponse>();
+			if (postSetup != null)
+			{
+				postSetup(application);
+			}
+
+			_factory.AddGetWithJsonResponse($"/v2/apply-to-become/application/1", application);
+			return application;
+		}
+
+		public ApplyingSchoolResponse AddGetApplyingSchool(Action<ApplyingSchoolResponse> postSetup = null)
+		{
+			var applyingSchoolResponse = _fixture.Create<ApplyingSchoolResponse>();
+			if (postSetup != null)
+			{
+				postSetup(applyingSchoolResponse);
+			}
+
+			_factory.AddGetWithJsonResponse($"/v2/apply-to-become/applyingSchool/{applyingSchoolResponse.ApplyingSchoolId}", applyingSchoolResponse);
+			return applyingSchoolResponse;
 		}
 
 		public void ResetServer()

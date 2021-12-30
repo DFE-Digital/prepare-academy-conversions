@@ -15,15 +15,15 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 
 		private static IEnumerable<FormField> GenerateBaseFields(Application application) =>
 			new[] {
-				new FormField("Application to join", $"{application.TrustName} with {application.SchoolName}"),
-				new FormField("Lead applicant", application.LeadApplicant),
+				new FormField("Application to join", $"{application.FormTrustProposedNameOfTrust} with {application.Name}"),
+				new FormField("Lead applicant", application.ApplicationLeadAuthorName),
 			};
 
 		private static IEnumerable<FormField> GenerateDetailsFields(Application application) =>
 			new[] {
-				new LinkFormField("Upload evidence that the trust consents to the school joining", application.Details.EvidenceDocument),
-				new FormField("Will there be any changes to the governance of the trust due to the school joining?", application.Details.ChangesToGovernance.ToYesNoString()),
-				new FormField("Will there be any changes at a local level due to this school joining?", application.Details.ChangesAtLocalLevel.ToYesNoString()),
+				new LinkFormField("Upload evidence that the trust consents to the school joining", application.EvidenceDocument),
+				new FormField("Will there be any changes to the governance of the trust due to the school joining?", application.ChangesToTrust.ToYesNoString()),
+				new FormField("Will there be any changes at a local level due to this school joining?", application.ChangesToLaGovernance.ToYesNoString()),
 			};
 
 	}

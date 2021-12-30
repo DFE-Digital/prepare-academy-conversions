@@ -15,9 +15,9 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 		{
 			var application = new Application
 			{
-				SchoolName = "St Wilfrid's Primary School",
-				TrustName = "Dynamics Trust",
-				LeadApplicant = "Garth Brown",
+				Name = "St Wilfrid's Primary School",
+				FormTrustProposedNameOfTrust = "Dynamics Trust",
+				ApplicationLeadAuthorName = "Garth Brown",
 				Details = new ApplicationDetails
 				{
 					EvidenceDocument = new Link("consent_dynamics.docx", "#"), ChangesToGovernance = false, ChangesAtLocalLevel = true

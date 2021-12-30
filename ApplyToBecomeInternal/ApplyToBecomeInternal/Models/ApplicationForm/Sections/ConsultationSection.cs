@@ -16,7 +16,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 
 		private static IEnumerable<FormField> GenerateDetailsFields(Application application) =>
 			new[] {
-				new FormField("Has the governing body consulted the relevant stakeholders?", application.HasGovernmentConsultedStakeholders.ToYesNoString())
+				new FormField("Has the governing body consulted the relevant stakeholders?", application.SchoolConsultationStakeholdersConsult)
 			};
 
 	}
