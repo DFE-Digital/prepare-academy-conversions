@@ -17,7 +17,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			var request = AddPatchProject(project, r => r.ClearedBy);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
-			await NavigateAsync("Change", 2);
+			await NavigateAsync("Change", 7);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/clear-head-teacher-board-template");
 			Document.QuerySelector<IHtmlInputElement>("#cleared-by").Value.Should().Be(project.ClearedBy);

@@ -17,7 +17,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			var request = AddPatchProject(project, r => r.Author);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
-			await NavigateAsync("Change", 1);
+			await NavigateAsync("Change", 6);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/author");
 			Document.QuerySelector<IHtmlInputElement>("#author").Value.Should().Be(project.Author);
