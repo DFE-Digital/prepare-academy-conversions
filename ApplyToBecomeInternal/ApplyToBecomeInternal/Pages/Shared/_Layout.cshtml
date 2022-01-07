@@ -121,7 +121,7 @@
 					<ul class="govuk-footer__inline-list">
 						<li class="govuk-footer__inline-list-item">
 							<a class="govuk-footer__link" asp-page="@Links.Public.Accessibility.Page"
-							   data-test="accessibility-statement">
+							   data-test="accessibility-statement" asp-route-returnUrl="@Context.Request.Path">
 								Accessibility statement
 							</a>
 						</li>

@@ -22,7 +22,7 @@ namespace ApplyToBecomeInternal.TagHelpers
 
 		public override void Process(TagHelperContext context, TagHelperOutput output)
 		{
-			RouteValues.Add("id", ViewContext.RouteData.Values["id"].ToString());
+			RouteValues.Add("id", ViewContext.RouteData.Values["id"]?.ToString());
 			Page = LinkItem.Page;
 			output.TagName = "a";
 			output.TagMode = TagMode.StartTagAndEndTag;

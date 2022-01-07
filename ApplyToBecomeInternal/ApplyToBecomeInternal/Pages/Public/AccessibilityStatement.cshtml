@@ -6,6 +6,12 @@
 	Layout = "_Layout";
 }
 
+@section BeforeMain
+{
+	<a href="@Model.ReturnLink.Page" class="govuk-back-link">Back</a>
+	<govuk-back-link link-item="@Model.ReturnLink" />
+}
+
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<h1 class="govuk-heading-xl">
