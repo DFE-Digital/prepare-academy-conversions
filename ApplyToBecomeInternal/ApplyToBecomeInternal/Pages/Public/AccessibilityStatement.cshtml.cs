@@ -1,15 +1,14 @@
-using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ApplyToBecomeInternal.Pages.Public
 {
 	public class AccessibilityStatement : PageModel
-	{
+	{		
 		public void OnGet(string returnUrl)
 		{
-			ReturnLink = new LinkItem { BackText = "Back", Page = returnUrl };
+			ReturnLink = returnUrl;
 		}
 
-		public LinkItem ReturnLink { get; set; }
+		public string ReturnLink { get; set; }
 	}
 }
