@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 
 namespace ApplyToBecome.Data.Models.Application
 {
+
+
 	/// <remarks>
 	/// Whole model and related models can probably be done away with once this is built e2e
 	/// </remarks>
