@@ -114,5 +114,19 @@ namespace ApplyToBecomeInternal.Tests.Pages.Public
 			await NavigateDataTestAsync("success-banner-return-link");
 			Document.Url.Should().Contain($"/task-list/{project.Id}");
 		}
+
+
+		[Fact]
+		public async Task Should_navigate_back_to_correct_page_using_back_link()
+		{
+			var project = AddGetProject();
+			string url = $"/task-list/{project.Id}";
+			await OpenUrlAsync(url);
+
+			await NavigateDataTestAsync("cookie-preferences");
+
+			await NavigateDataTestAsync("back-link");
+			Document.Url.Should().Contain($"/task-list/{project.Id}");
+		}
 	}
 }
