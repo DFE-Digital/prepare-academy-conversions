@@ -66,7 +66,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+			var element = Document.QuerySelector(".govuk-error-summary").InnerHtml.Should().Contain("There is a problem with TRAMS");
 		}
 
 		[Fact]

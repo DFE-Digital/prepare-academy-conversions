@@ -66,8 +66,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			var project = AddGetProject();
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/distance-to-trust-headquarters");
-
-			Document.QuerySelector<IHtmlInputElement>("#distance-to-trust-headquarters").Value = "abc";
+			var InvalidEntry = "abc";
+			Document.QuerySelector<IHtmlInputElement>("#distance-to-trust-headquarters").Value = InvalidEntry;
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -77,7 +77,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("The value 'abc' is not valid for Distance from the school to the trust headquarters.");
 
 			Document.QuerySelector(".govuk-error-message").Should().NotBeNull();
-			Document.QuerySelector("#distance-to-trust-headquarters-error").TextContent.Should().Contain("The value 'abc' is not valid for Distance from the school to the trust headquarters.");
+			Document.QuerySelector("#distance-to-trust-headquarters-error").TextContent.Should().Contain($"The value '{InvalidEntry}' is not valid for Distance from the school to the trust headquarters.");
 		}
 
 		[Fact]

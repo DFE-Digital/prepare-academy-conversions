@@ -115,7 +115,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+			Document.QuerySelector(".govuk-error-summary").InnerHtml.Should().Contain("There is a problem with TRAMS");
 		}
 
 		[Fact]
@@ -154,5 +154,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
 		}
+
 	}
 }
