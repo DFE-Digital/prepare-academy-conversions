@@ -40,7 +40,7 @@ namespace ApplyToBecomeInternal.TagHelpers
 			{
 				Id = Id,
 				Key = Label,
-				Value = value,
+				Value = _htmlHelper.Encode(value).Replace("&lt;br/&gt;", "<br/>"),
 				Page = Page,
 				Fragment = Fragment,
 				RouteId = RouteId,
