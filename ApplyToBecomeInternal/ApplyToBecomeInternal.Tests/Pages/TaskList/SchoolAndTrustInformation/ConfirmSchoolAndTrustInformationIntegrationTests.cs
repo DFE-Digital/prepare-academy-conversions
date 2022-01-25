@@ -39,7 +39,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			Document.QuerySelector("#sponsor-name").TextContent.Should().Be(project.SponsorName);
 			Document.QuerySelector("#academy-type-and-route").TextContent.Should().Contain(project.AcademyTypeAndRoute);
 			Document.QuerySelector("#academy-type-and-route").TextContent.Should().Contain(project.ConversionSupportGrantAmount.Value.ToMoneyString(true));
-			Document.QuerySelector("#academy-type-and-route").TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
+			Document.QuerySelector("#academy-type-and-route-additional-text").TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
 			Document.QuerySelector("#proposed-academy-opening-date").TextContent.Should().Be(project.ProposedAcademyOpeningDate.ToDateString(true));
 		}
 

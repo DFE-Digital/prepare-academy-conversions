@@ -1,20 +1,12 @@
 ﻿@model GeneralInformationViewModel
 @{
-	var kw = WidthOverride.TwoThirds;
-	var distance = "";
+		var kw = WidthOverride.TwoThirds;
+		var distance = "";
 
-	if (!string.IsNullOrEmpty(Model.DistanceFromSchoolToTrustHeadquarters))
-	{
-		distance = $"{Model.DistanceFromSchoolToTrustHeadquarters} miles";
-		if (!string.IsNullOrEmpty(Model.DistanceFromSchoolToTrustHeadquartersAdditionalInformation))
+		if (!string.IsNullOrEmpty(Model.DistanceFromSchoolToTrustHeadquarters))
 		{
-			distance += $"<br/>{Model.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}";
+			distance = $"{Model.DistanceFromSchoolToTrustHeadquarters} miles";
 		}
-	}
-	else if (!string.IsNullOrEmpty(Model.DistanceFromSchoolToTrustHeadquartersAdditionalInformation))
-	{
-		distance = Model.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
-	}
 	}
 
 <dl class="govuk-summary-list">
@@ -30,7 +22,7 @@
 	<govuk-summary-list-row name="financial-deficit" label="Financial deficit" key-width="@kw" asp-for="FinancialDeficit" asp-page="@Links.GeneralInformationSection.FinancialDeficit.Page" asp-route-id="@Model.Id" hidden-text="financial deficit" />
 	<govuk-summary-list-row name="part-of-pfi" label="Part of a private finance initiative (PFI) scheme" key-width="@kw" asp-for="PartOfPfiScheme" />
 	<govuk-summary-list-row name="diocesan-multi-academy-trust" label="Is the school linked to a diocese?" key-width="@kw" asp-for="IsSchoolLinkedToADiocese" />
-	<govuk-summary-list-row name="distance-to-trust-headquarters" label="Distance from the converting school to the trust, or other schools in the trust" key-width="@kw" value="@distance" asp-page="@Links.GeneralInformationSection.DistanceFromTrustHeadquarters.Page" asp-route-id="@Model.Id" hidden-text="distance to trust headquarters" />
+	<govuk-summary-list-row name="distance-to-trust-headquarters" label="Distance from the converting school to the trust, or other schools in the trust" key-width="@kw" value="@distance" additional-text="@Model.DistanceFromSchoolToTrustHeadquartersAdditionalInformation" asp-page="@Links.GeneralInformationSection.DistanceFromTrustHeadquarters.Page" asp-route-id="@Model.Id" hidden-text="distance to trust headquarters" />
 	<govuk-summary-list-row name="parliamentary-constituency" label="Parliamentary constituency" key-width="@kw" asp-for="ParliamentaryConstituency" />
 	<govuk-summary-list-row name="member-of-parliament-name" label="MP name" asp-for="MemberOfParliamentName" key-width="@kw" asp-page="@Links.GeneralInformationSection.MPDetails.Page" asp-route-id="@Model.Id" hidden-text="MP name" />
 	<govuk-summary-list-row name="member-of-parliament-party" label="MP political party" asp-for="MemberOfParliamentParty" key-width="@kw" asp-page="@Links.GeneralInformationSection.MPDetails.Page" asp-route-id="@Model.Id" hidden-text="MP political party" />

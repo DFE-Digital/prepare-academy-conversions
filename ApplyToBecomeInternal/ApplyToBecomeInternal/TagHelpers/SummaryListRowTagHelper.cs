@@ -12,6 +12,8 @@ namespace ApplyToBecomeInternal.TagHelpers
 		[HtmlAttributeName("value")]
 		public string Value { get; set; }
 
+		[HtmlAttributeName("additional-text")]
+		public string AdditionalText { get; set; } // allows 2 items to be displayed in the same table row
 		[HtmlAttributeName("asp-page")]
 		public string Page { get; set; }
 
@@ -34,13 +36,14 @@ namespace ApplyToBecomeInternal.TagHelpers
 
 		protected override async Task<IHtmlContent> RenderContentAsync()
 		{
-			var value = For == null ? Value : For.Model?.ToString();
+			var value1 = For == null ? Value : For.Model?.ToString();
 
 			var model = new SummaryListRowViewModel
 			{
 				Id = Id,
 				Key = Label,
-				Value = _htmlHelper.Encode(value).Replace("&lt;br/&gt;", "<br/>"),
+				Value = value1,
+				AdditionalText = AdditionalText,
 				Page = Page,
 				Fragment = Fragment,
 				RouteId = RouteId,
