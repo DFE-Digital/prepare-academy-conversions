@@ -22,16 +22,11 @@ namespace ApplyToBecomeInternal.Pages
 
 		public bool ShowError => _errorService.HasErrors();
 
+		[TempData]
 		public string SuccessPage
 		{
-			get
-			{
-				return TempData[nameof(SuccessPage)].ToString();
-			}
-			set
-			{
-				TempData[nameof(SuccessPage)] = value;
-			}
+			get;
+			set;
 		}
 
 		public override async Task<IActionResult> OnPostAsync(int id)
