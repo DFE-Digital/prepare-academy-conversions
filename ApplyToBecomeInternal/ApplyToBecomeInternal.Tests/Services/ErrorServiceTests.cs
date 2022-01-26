@@ -36,12 +36,13 @@ namespace ApplyToBecomeInternal.Tests.Services
 			var model = new ModelStateDictionary();
 
 			model.AddModelError("deadline", "deadline date should be present");
+			model.AddModelError("deadline-day", "deadline date should be present");
 			// a date error is defined as any error with key ending in "-day" or "-month" or "-year"
 			_errorService.AddErrors(new List<string>{ "deadline-day"}, model);
 
 			var errors =_errorService.GetErrors();
 			errors.Count().Should().Be(1);
-			errors.First().Key.Should().Be("deadline-day");
+			errors.First().Key.Should().Be("deadline");
 			errors.First().Message.Should().Be("deadline date should be present");
 		}
 
