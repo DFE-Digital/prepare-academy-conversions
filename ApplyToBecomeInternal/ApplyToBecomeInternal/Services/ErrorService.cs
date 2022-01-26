@@ -56,6 +56,8 @@ namespace ApplyToBecomeInternal.Services
 
 		private void AddDateError(string key, ModelStateDictionary modelState)
 		{
+			var temp = DateInputId(key);
+			var temp2 = modelState.TryGetValue(temp, out var temp3);
 			if (modelState.TryGetValue(DateInputId(key), out var dateEntry) && dateEntry.Errors.Count > 0)
 			{
 				var dateError = GetError(DateInputId(key));
