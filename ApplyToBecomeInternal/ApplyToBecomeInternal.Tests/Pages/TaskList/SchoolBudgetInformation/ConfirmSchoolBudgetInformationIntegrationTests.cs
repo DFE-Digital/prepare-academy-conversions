@@ -31,6 +31,32 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 		}
 
 		[Fact]
+		public async Task Should_be_in_progress_and_display_school_budget_information_with_negative_values()
+		{
+			var project = AddGetProject(project => 
+			{
+				project.RevenueCarryForwardAtEndMarchCurrentYear = -100.25M;
+				project.ProjectedRevenueBalanceAtEndMarchNextYear = -10.75M;
+				project.CapitalCarryForwardAtEndMarchCurrentYear = -65.90M;
+				project.CapitalCarryForwardAtEndMarchNextYear = -1024.95M;
+				project.SchoolBudgetInformationSectionComplete = false; 
+			});
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			Document.QuerySelector("#school-budget-information-status").TextContent.Trim().Should().Be("In Progress");
+			Document.QuerySelector("#school-budget-information-status").ClassName.Should().Contain("blue");
+
+			await NavigateAsync("School budget information");
+
+			Document.QuerySelector("#finance-current-year-2021").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-following-year-2022").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-forward-2021").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-forward-2022").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.SchoolBudgetInformationAdditionalInformation);
+		}
+
+		[Fact]
 		public async Task Should_be_completed_and_checked_when_school_budget_information_section_complete()
 		{
 			var project = AddGetProject(project =>
