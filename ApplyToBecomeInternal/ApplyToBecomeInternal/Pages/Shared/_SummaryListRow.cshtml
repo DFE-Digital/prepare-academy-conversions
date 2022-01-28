@@ -4,11 +4,19 @@
 		@Model.Key
 	</dt>
 	<dd class="govuk-summary-list__value @Model.ValueWidth">
-		@if (!Model.IsEmpty)
+		@if (Model.HasValue)
 		{
-			<span id="@Model.Id">@Html.Raw(Model.Value)</span>
+			<span id="@Model.Id">@Model.Value</span>
+			if (Model.HasAdditionalText)
+				{
+					<br/>
+				}
 		}
-		else
+		@if (Model.HasAdditionalText)
+			{
+				<span id="@(Model.Id + "-additional-text")">@Model.AdditionalText</span>
+			}
+		@if ((!Model.HasValue) && (!Model.HasAdditionalText))
 		{
 			<span id="@Model.Id" class="empty">Empty</span>
 		}

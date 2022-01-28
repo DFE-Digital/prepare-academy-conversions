@@ -39,7 +39,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 
 			// Waiting for calculation to be done in TRAMS API so no data pulled through currently
 			//Document.QuerySelector("#percentage-in-diocesan-trust").TextContent.Should().Be(establishment.PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust.ToPercentage());
-			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be($"{ project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles{project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}");
+			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be($"{ project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles");
+			Document.QuerySelector("#distance-to-trust-headquarters-additional-text").TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
 			Document.QuerySelector("#parliamentary-constituency").TextContent.Should().Be(establishment.ParliamentaryConstituency.Name);
 			Document.QuerySelector("#member-of-parliament-name").TextContent.Should().Be(project.MemberOfParliamentName);
 			Document.QuerySelector("#member-of-parliament-party").TextContent.Should().Be(project.MemberOfParliamentParty);
@@ -54,7 +55,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 
 			await NavigateAsync("General information");
 
-			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
+			Document.QuerySelector("#distance-to-trust-headquarters-additional-text").TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
 		}
 
 		[Fact]
