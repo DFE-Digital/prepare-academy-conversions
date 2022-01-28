@@ -6,16 +6,16 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 {
 	public class PreOpeningSupportGrantSection : BaseFormSection
 	{
-		public PreOpeningSupportGrantSection(Application application) : base("Pre-opening support grant")
+		public PreOpeningSupportGrantSection(SchoolApplication application) : base("Pre-opening support grant")
 		{
 			SubSections = new[]
 {
 				new FormSubSection("Details", GenerateDetailsFields(application))
 			};
 		}
-		private static IEnumerable<FormField> GenerateDetailsFields(Application application) =>
+		private static IEnumerable<FormField> GenerateDetailsFields(SchoolApplication application) =>
 			new[] {
-				new FormField("Do you want these funds paid to the school or the trust?", application.SchoolSupportGrantFundsPaidTo.ToSchoolOrTrust())
+				new FormField("Do you want these funds paid to the school or the trust?", application.SchoolSupportGrantFundsPaidTo) // might be int with conversion ToSchoolOrTrust()
 			};
 	}
 }

@@ -6,7 +6,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 {
 	public class ConsultationSection : BaseFormSection
 	{
-		public ConsultationSection(Application application) : base("Consultation")
+		public ConsultationSection(SchoolApplication application) : base("Consultation")
 		{
 			SubSections = new[]
 			{
@@ -14,9 +14,9 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			};
 		}
 
-		private static IEnumerable<FormField> GenerateDetailsFields(Application application) =>
+		private static IEnumerable<FormField> GenerateDetailsFields(SchoolApplication application) =>
 			new[] {
-				new FormField("Has the governing body consulted the relevant stakeholders?", application.SchoolConsultationStakeholdersConsult)
+				new FormField("Has the governing body consulted the relevant stakeholders?", application.SchoolHasConsultedStakeholders.ToYesNoString())
 			};
 
 	}

@@ -17,30 +17,16 @@ namespace ApplyToBecome.Data.Services
 			_logger = logger;
 		}
 
-		public async Task<Application> GetApplicationById(string id) // assume id is the URN for now
+		public async Task<FullApplication> GetApplicationById(string id) // assume id is the URN for now
 		{
-			var response = await _httpClient.GetAsync($"/v2/apply-to-become/applyingSchool/{id}");
+			var response = await _httpClient.GetAsync($"/v2/apply-to-become/application/{id}");
 			if(!response.IsSuccessStatusCode)
 			{
-				_logger.LogWarning($"Unable to get applying school form data for establishment with id: {id}");
-				return new Application();
-			}
-			var fullApplication = await response.Content.ReadFromJsonAsync<Application>();
-
-			// currently we don't have the application id
-			int HARDCODED_id = 1;
-			var response2 = await _httpClient.GetAsync($"/v2/apply-to-become/application/{HARDCODED_id}");
-			if (!response2.IsSuccessStatusCode)
-			{
 				_logger.LogWarning($"Unable to get school application form data for establishment with id: {id}");
-				return fullApplication;
+				return new FullApplication();
 			}
-			
-			var partApplication = await response2.Content.ReadFromJsonAsync<ApplicationResponse>();
-			fullApplication.FormTrustProposedNameOfTrust = partApplication.FormTrustProposedNameOfTrust;
-			fullApplication.ApplicationLeadAuthorName = partApplication.ApplicationLeadAuthorName;
-			fullApplication.ChangesToTrust = partApplication?.ChangesToTrust;
-			fullApplication.ChangesToLaGovernance = partApplication?.ChangesToLaGovernance;
+			var fullApplication = await response.Content.ReadFromJsonAsync<FullApplication>();
+
 			return fullApplication;
 		}
 	}

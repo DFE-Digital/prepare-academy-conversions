@@ -31,14 +31,14 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 			Sections = new BaseFormSection[]
 			{
 				new ApplicationFormSection(application),
-				new AboutConversionSection(application),
-				new FurtherInformationSection(application),
-				new FinanceSection(application),
-				new FuturePupilNumberSection(application),
-				new LandAndBuildingsSection(application),
-				new PreOpeningSupportGrantSection(application),
-				new ConsultationSection(application),
-				new DeclarationSection(application)
+				new AboutConversionSection(application.SchoolApplication),
+				new FurtherInformationSection(application.SchoolApplication),
+				new FinanceSection(application.SchoolApplication),
+				new FuturePupilNumberSection(application.SchoolApplication),
+				new LandAndBuildingsSection(application.SchoolApplication),
+				new PreOpeningSupportGrantSection(application.SchoolApplication),
+				new ConsultationSection(application.SchoolApplication),
+				new DeclarationSection(application.SchoolApplication)
 			};
 
 			return result;

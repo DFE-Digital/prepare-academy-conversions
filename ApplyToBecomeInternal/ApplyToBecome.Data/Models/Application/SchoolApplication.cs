@@ -39,14 +39,7 @@ namespace ApplyToBecome.Data.Models.Application
 
 	public class SchoolApplication
 	{
-		public string ApplicationId { get; set; }
-		public string FormTrustProposedNameOfTrust { get; set; }
-		public string ApplicationLeadAuthorName { get; set; }
-		public Link EvidenceDocument { get; set; }
-		public bool? ChangesToTrust { get; set; }
-		public string ChangesToTrustExplained { get; set; }
-		public bool? ChangesToLAGovernance { get; set; }
-		public string ChangesToLAGovernanceExplained { get; set; }
+		public string SchoolName { get; set; }
 		// contact details
 		public string SchoolConversionContactHeadName { get; set; }
 		public string SchoolConversionContactHeadEmail { get; set; }
@@ -62,8 +55,8 @@ namespace ApplyToBecome.Data.Models.Application
 		public string SchoolConversionApproverContactName { get; set; }
 		public string SchoolConversionApproverContactEmail { get; set; }
 		// conversion dates
-		public bool? SchoolConversionTargetDateSpecified { get; set; }
-		public DateTime? SchoolConversionTargetDateDate { get; set; }
+		public bool? SchoolConversionTargetDateSpecified { get; set; } // SchoolConversionTargetDateDifferent 
+		public DateTime? SchoolConversionTargetDate { get; set; } // SchoolConversionTargetDateDate
 		public string SchoolConversionTargetDateExplained { get; set; }
 		// reasons for joining
 		public string SchoolConversionReasonsForJoining { get; set; }
@@ -81,16 +74,17 @@ namespace ApplyToBecome.Data.Models.Application
 		public bool? SchoolFaithSchool { get; set; } // int? SchoolFaithSchool
 		public string SchoolFaithSchoolDioceseName { get; set; }
 		public Link DiocesePermissionEvidenceDocument { get; set; }
-		public bool? SchoolIsPartOfFederation { get; set; }
-		public bool? SchoolIsSupportedByFoundation { get; set; }
+		public bool? SchoolIsPartOfFederation { get; set; } // SchoolPartOfFederation
+		public bool? SchoolIsSupportedByFoundation { get; set; } // SchoolSupportedFoundation
 		public string SchoolSupportedFoundationBodyName { get; set; }
 		public Link FoundationEvidenceDocument { get; set; }
-		public bool? SchoolHasSACREException { get; set; }
+		public bool? SchoolHasSACREException { get; set; } // SchoolSACREExemption
 		public DateTime SchoolSACREExcepionEndDate { get; set; }
 		public string SchoolAdFeederSchools { get; set; }
 		public Link GoverningBodyConsentEvidenceDocument { get; set; }
-		public bool? SchoolAdEqualitiesImpactAssessmentCompleted { get; set; }
+		public bool? SchoolAdEqualitiesImpactAssessmentCompleted { get; set; } //SchoolAdEqualitiesImpactAssessment
 		public string SchoolAdEqualitiesImpactAssessmentDetails { get; set; } // two possible very long string answers here
+		public bool? SchoolAdInspectedButReportNotPublished { get; set; }
 		public bool? SchoolAdditionalInformationAdded { get; set; } // not clear what this info is for better name
 		public string SchoolAdditionalInformation { get; set; }
 		// Finances
@@ -99,7 +93,7 @@ namespace ApplyToBecome.Data.Models.Application
 		public FinancialYear NextFinancialYear { get; set; }
 		public List<Loan> ExistingLoans { get; set; }
 		public List<Lease> ExistingLeases { get; set; }
-		public bool? FinanceOngoingInvestigations { get; set; }
+		public bool? FinanceOngoingInvestigations { get; set; } // SchoolFinancialInvestigations
 		public string SchoolFinancialInvestigationsExplain { get; set; }
 		public bool? SchoolFinancialInvestigationsTrustAware { get; set; }
 		// future pupil numbers
@@ -122,9 +116,9 @@ namespace ApplyToBecome.Data.Models.Application
 		public bool? SchoolBuildLandPriorityBuildingProgramme { get; set; }
 		public bool? SchoolBuildLandFutureProgramme { get; set; }
 		// pre-opening support grant
-		public string SchoolSupportGrantPaidTo { get; set; } // enum "To the school" / "To the trust the school is joining"
+		public string SchoolSupportGrantFundsPaidTo { get; set; } // enum "To the school" / "To the trust the school is joining"
 		// consultation details
-		public bool? SchoolHasConsultedStakeholders { get; set; }
+		public bool? SchoolHasConsultedStakeholders { get; set; } // SchoolConsultationStakeholdersConsult
 		public string SchoolPlanToConsultStakeholders { get; set; }
 		// declaration
 		// ! make sure we get this data mapping correct and don't mix it up with the other declarations !
@@ -132,6 +126,20 @@ namespace ApplyToBecome.Data.Models.Application
 		// there are two more fields about the declarations here that aren't needed?
 		// public bool? IAmTheChairOrHeadteacher
 		// public bool? InfoIsTrueToBestOfMyKnowledge
-		public string SignedByName { get; set; } // this signed by has to be headteacher or chair of governors
+		public string SchoolDeclarationSignedByName { get; set; } // this signed by has to be headteacher or chair of governors
+	}
+
+	public class FullApplication
+	{
+		public string ApplicationId { get; set; }
+		public string TrustName { get; set; } // CML - application to join (trust name) - hopefully API will use application.account.accountId to get the name
+		//		public string FormTrustProposedNameOfTrust { get; set; } // CML - looks like this is for FAMs
+		public string ApplicationLeadAuthorName { get; set; }
+		public Link EvidenceDocument { get; set; }
+		public bool? ChangesToTrust { get; set; }
+		public string ChangesToTrustExplained { get; set; }
+		public bool? ChangesToLaGovernance { get; set; }
+		public string ChangesToLAGovernanceExplained { get; set; }
+		public SchoolApplication SchoolApplication { get; set; } // CML use a List now to allow for FAMs which will have >1 school?
 	}
 }
