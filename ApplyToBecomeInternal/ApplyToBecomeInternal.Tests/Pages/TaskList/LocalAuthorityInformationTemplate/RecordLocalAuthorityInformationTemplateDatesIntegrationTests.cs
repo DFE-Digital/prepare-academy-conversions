@@ -115,7 +115,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+			Document.QuerySelector(".govuk-error-summary").InnerHtml.Should().Contain("There is a problem with TRAMS");
 		}
 
 		[Fact]
@@ -153,6 +153,30 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
+		}
+
+		[Fact]
+		public async Task Should_show_error_when_part_of_date_fields_is_not_completed()
+		{
+			var project = AddGetProject();
+
+			var response = AddPatchProjectMany(project, composer =>
+				composer
+				.With(r => r.LocalAuthorityInformationTemplateSentDate, DateTime.Today)
+				.With(r => r.LocalAuthorityInformationTemplateReturnedDate, project.LocalAuthorityInformationTemplateReturnedDate)
+				.With(r => r.LocalAuthorityInformationTemplateComments, project.LocalAuthorityInformationTemplateComments)
+				.With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink));
+
+			await OpenUrlAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+
+			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-day").Value = response.LocalAuthorityInformationTemplateSentDate?.Day.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-month").Value = response.LocalAuthorityInformationTemplateSentDate?.Month.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-year").Value = string.Empty;
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+			Document.QuerySelector(".govuk-error-summary").InnerHtml.Should().Contain("Date you sent the template must include a year");
 		}
 	}
 }
