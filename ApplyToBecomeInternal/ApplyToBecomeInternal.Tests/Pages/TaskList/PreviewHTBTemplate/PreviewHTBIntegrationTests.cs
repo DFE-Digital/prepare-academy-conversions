@@ -98,7 +98,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector("#viability-issues").TextContent.Should().Be(project.ViabilityIssues);
 			Document.QuerySelector("#financial-deficit").TextContent.Should().Be(project.FinancialDeficit);
 			Document.QuerySelector("#diocesan-multi-academy-trust").TextContent.Should().Be($"Yes, {establishment.Diocese.Name}");
-			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be($"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles{project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}");
+			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be($"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles");
+			Document.QuerySelector("#distance-to-trust-headquarters-additional-text").TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
 			Document.QuerySelector("#parliamentary-constituency").TextContent.Should().Be(establishment.ParliamentaryConstituency.Name);			
 			Document.QuerySelector("#member-of-parliament-name").TextContent.Should().Be(project.MemberOfParliamentName);
 			Document.QuerySelector("#member-of-parliament-party").TextContent.Should().Be(project.MemberOfParliamentParty);
@@ -111,7 +112,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
-			var element = Document.QuerySelector("#distance-to-trust-headquarters");
+			var element = Document.QuerySelector("#distance-to-trust-headquarters-additional-text");
 			element.TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
 		}
 
@@ -503,7 +504,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector("#sponsor-name").TextContent.Should().Be(project.SponsorName);
 			Document.QuerySelector("#academy-type-and-route").TextContent.Should().Contain(project.AcademyTypeAndRoute);
 			Document.QuerySelector("#academy-type-and-route").TextContent.Should().Contain(project.ConversionSupportGrantAmount.Value.ToMoneyString());
-			Document.QuerySelector("#academy-type-and-route").TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
+			Document.QuerySelector("#academy-type-and-route-additional-text").TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
 			Document.QuerySelector("#proposed-academy-opening-date").TextContent.Should().Be(project.ProposedAcademyOpeningDate.ToDateString(true));
 		}
 
