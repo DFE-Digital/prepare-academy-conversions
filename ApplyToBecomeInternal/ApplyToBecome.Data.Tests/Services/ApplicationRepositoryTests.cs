@@ -34,31 +34,27 @@ namespace ApplyToBecome.Data.Tests.Services
 
 		[Theory]
 		[AutoData]
-		public async Task Should_get_application_data_by_id(ApplyingSchoolResponse applyingSchoolMockData, ApplicationResponse applicationMockData)
+		public async Task Should_get_application_data_by_id(FullApplication applicationMockData)
 		{
 			const int APPLICATION_ID = 1; // CML temporary whilst GetApplication by reference number isn't possible
-			var id = applyingSchoolMockData.ApplyingSchoolId;
-
-			_mockHandler.Expect($"/v2/apply-to-become/applyingSchool/{id}")
-				.Respond("application/json", JsonConvert.SerializeObject(applyingSchoolMockData));
 			_mockHandler.Expect($"/v2/apply-to-become/application/{APPLICATION_ID}")
 				.Respond("application/json", JsonConvert.SerializeObject(applicationMockData));
 
-			var application = await _applicationRepository.GetApplicationById(id);
+			var application = await _applicationRepository.GetApplicationById(APPLICATION_ID.ToString());
 
-			application.Should().BeEquivalentTo(applyingSchoolMockData); // every field present in applyingSchoolMockData should copied to application (but not vice versa)
-			application.Should().BeEquivalentTo(applicationMockData);
+			application.Should().BeEquivalentTo(applicationMockData); // every field present in applicationMockData should copied to application (but not vice versa)
 		}
 
 		[Fact]
 		public async Task Should_return_empty_application_when_not_found()
 		{
-			_mockHandler.Expect("/v2/apply-to-become/applyingSchool/1")
+			const int APPLICATION_ID = 1; // CML temporary whilst GetApplication by reference number isn't possible
+			_mockHandler.Expect($"/v2/apply-to-become/application/{APPLICATION_ID}")
 				.Respond(HttpStatusCode.NotFound);
 
-			var application = await _applicationRepository.GetApplicationById("1");
+			var application = await _applicationRepository.GetApplicationById(APPLICATION_ID.ToString());
 
-			application.Should().BeEquivalentTo(new Application());
+			application.Should().BeEquivalentTo(new FullApplication());
 		}
 	}
 }

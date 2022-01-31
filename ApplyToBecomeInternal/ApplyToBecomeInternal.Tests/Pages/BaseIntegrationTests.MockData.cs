@@ -132,9 +132,9 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			return establishmentResponse;
 		}
 
-		public ApplicationResponse AddGetApplication(Action<ApplicationResponse> postSetup = null)
+		public FullApplication AddGetApplication(Action<FullApplication> postSetup = null)
 		{
-			var application = _fixture.Create<ApplicationResponse>();
+			var application = _fixture.Create<FullApplication>();
 			if (postSetup != null)
 			{
 				postSetup(application);
@@ -142,18 +142,6 @@ namespace ApplyToBecomeInternal.Tests.Pages
 
 			_factory.AddGetWithJsonResponse($"/v2/apply-to-become/application/1", application);
 			return application;
-		}
-
-		public ApplyingSchoolResponse AddGetApplyingSchool(Action<ApplyingSchoolResponse> postSetup = null)
-		{
-			var applyingSchoolResponse = _fixture.Create<ApplyingSchoolResponse>();
-			if (postSetup != null)
-			{
-				postSetup(applyingSchoolResponse);
-			}
-
-			_factory.AddGetWithJsonResponse($"/v2/apply-to-become/applyingSchool/{applyingSchoolResponse.ApplyingSchoolId}", applyingSchoolResponse);
-			return applyingSchoolResponse;
 		}
 
 		public void ResetServer()

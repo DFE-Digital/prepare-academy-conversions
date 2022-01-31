@@ -55,7 +55,7 @@ namespace ApplyToBecome.Data.Models.Application
 		public string SchoolConversionApproverContactName { get; set; }
 		public string SchoolConversionApproverContactEmail { get; set; }
 		// conversion dates
-		public bool? SchoolConversionTargetDateSpecified { get; set; } // SchoolConversionTargetDateDifferent 
+		public bool? SchoolConversionTargetDateSpecified { get; set; } // int? SchoolConversionTargetDateDifferent 
 		public DateTime? SchoolConversionTargetDate { get; set; } // SchoolConversionTargetDateDate
 		public string SchoolConversionTargetDateExplained { get; set; }
 		// reasons for joining
@@ -83,9 +83,9 @@ namespace ApplyToBecome.Data.Models.Application
 		public string SchoolAdFeederSchools { get; set; }
 		public Link GoverningBodyConsentEvidenceDocument { get; set; }
 		public bool? SchoolAdEqualitiesImpactAssessmentCompleted { get; set; } //SchoolAdEqualitiesImpactAssessment
-		public string SchoolAdEqualitiesImpactAssessmentDetails { get; set; } // two possible very long string answers here
+		public string SchoolAdEqualitiesImpactAssessmentDetails { get; set; } // two possible very long proforma string answers here
 		public bool? SchoolAdInspectedButReportNotPublished { get; set; }
-		public bool? SchoolAdditionalInformationAdded { get; set; } // not clear what this info is for better name
+		public bool? SchoolAdditionalInformationAdded { get; set; }
 		public string SchoolAdditionalInformation { get; set; }
 		// Finances
 		public FinancialYear PreviousFinancialYear { get; set; }
@@ -116,7 +116,7 @@ namespace ApplyToBecome.Data.Models.Application
 		public bool? SchoolBuildLandPriorityBuildingProgramme { get; set; }
 		public bool? SchoolBuildLandFutureProgramme { get; set; }
 		// pre-opening support grant
-		public string SchoolSupportGrantFundsPaidTo { get; set; } // enum "To the school" / "To the trust the school is joining"
+		public string SchoolSupportGrantFundsPaidTo { get; set; } // int? - actually an enum "To the school" / "To the trust the school is joining"
 		// consultation details
 		public bool? SchoolHasConsultedStakeholders { get; set; } // SchoolConsultationStakeholdersConsult
 		public string SchoolPlanToConsultStakeholders { get; set; }
@@ -140,6 +140,6 @@ namespace ApplyToBecome.Data.Models.Application
 		public string ChangesToTrustExplained { get; set; }
 		public bool? ChangesToLaGovernance { get; set; }
 		public string ChangesToLAGovernanceExplained { get; set; }
-		public SchoolApplication SchoolApplication { get; set; } // CML use a List now to allow for FAMs which will have >1 school?
+		public SchoolApplication SchoolApplication { get; set; } // CML change to use a List now to allow for FAMs which will have >1 school?
 	}
 }

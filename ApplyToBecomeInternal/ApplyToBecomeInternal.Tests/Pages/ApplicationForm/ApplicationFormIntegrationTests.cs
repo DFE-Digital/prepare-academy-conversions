@@ -12,20 +12,21 @@ namespace ApplyToBecomeInternal.Tests.Pages
 	public class ApplicationFormIntegrationTests : BaseIntegrationTests
 	{
 		private AcademyConversionProject _project;
-		private ApplicationResponse _application;
-		private ApplyingSchoolResponse _applyingSchool;
+		private FullApplication _application;
 
 		public ApplicationFormIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{
 			_project = AddGetProject();
-			_application = AddGetApplication();
-			_applyingSchool = AddGetApplyingSchool(a => a.ApplyingSchoolId = _project.Urn?.ToString());
+			_application = AddGetApplication(app => 
+				{
+					app.ApplicationId = _project.ApplicationReferenceNumber;
+				});
 		}
 
 		[Fact]
 		public async void The_project_template_link_is_present()
 		{
-			await OpenUrlAsync($"/school-application-form/{_project.Id}");			
+			await OpenUrlAsync($"/school-application-form/{_project.ApplicationReferenceNumber}");			
 
 			var pageItem = Document.QuerySelector($"#application-form-link");
 			pageItem.TextContent.Should().Be("Open school application form in a new tab");
@@ -38,7 +39,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			await OpenUrlAsync($"/school-application-form/{_project.Id}");
 
 			var rowItems = Document.QuerySelectorAll(".govuk-summary-list__row");
-			rowItems[3].Children[1].TextContent.Should().Be(_applyingSchool.SchoolConversionContactChairTel);// CML
+			rowItems[3].Children[1].TextContent.Should().Be(_application.SchoolApplication.SchoolConversionContactChairTel);// CML - do a better way!
 		}
 
 		//[Fact]

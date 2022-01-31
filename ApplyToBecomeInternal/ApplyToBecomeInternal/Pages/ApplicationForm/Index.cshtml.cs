@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 		public override async Task<IActionResult> OnGetAsync(int id)
         {
 			var result = await base.OnGetAsync(id);
-			var urn = base.Project.SchoolURN;
+			var urn = base.Project. .SchoolURN;
 
 			var application = await _applicationRepository.GetApplicationById(urn);
 			//var application = DummyApplication;
