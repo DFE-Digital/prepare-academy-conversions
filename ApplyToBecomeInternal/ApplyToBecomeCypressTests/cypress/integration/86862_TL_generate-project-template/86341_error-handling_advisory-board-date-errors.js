@@ -1,6 +1,6 @@
 /// <reference types ="Cypress"/>
 
-describe("Error messaging should be correct", () => {
+describe("86341 Error messaging should be correct", () => {
 	afterEach(() => {
 		cy.storeSessionData();
 	});
@@ -14,7 +14,7 @@ describe("Error messaging should be correct", () => {
 	});
 	
 
-	it("Should open first school in the list", () => {
+	it("TC01: Should open first school in the list", () => {
 		cy.get("#school-name-0").click();
 		cy.get('*[href*="/confirm-school-trust-information-project-dates"]').should(
 			"be.visible"
@@ -22,7 +22,7 @@ describe("Error messaging should be correct", () => {
 		cy.saveLocalStorage();
 	});
 
-	it("Should display 'Advisory Board date must be in the future' when an elapsed date has been submitted", () => {
+	it("TC02: Should display 'Advisory Board date must be in the future' when an elapsed date has been submitted", () => {
 		cy.get(
 			'*[href*="/confirm-school-trust-information-project-dates"]'
 		).click();
@@ -40,7 +40,7 @@ describe("Error messaging should be correct", () => {
 		);
 	});
 
-	it("Should display 'Advisory Board date must be a real date' when submitting invalid month ", () => {
+	it("TC03: Should display 'Advisory Board date must be a real date' when submitting invalid month ", () => {
 		cy.submitDate(11, 222, 1980);
 		cy.get("#confirm-and-continue-button").click();
 		cy.get(".govuk-error-summary__list li a").should(
@@ -49,7 +49,7 @@ describe("Error messaging should be correct", () => {
 		);
 	});
 
-	it("Should display 'Advisory Board date must be a real date' when submitting out-of-index month ", () => {
+	it("TC04: Should display 'Advisory Board date must be a real date' when submitting out-of-index month ", () => {
 		cy.submitDate(11, 0, 1980);
 		cy.get("#confirm-and-continue-button").click();
 		cy.get(".govuk-error-summary__list li a").should(

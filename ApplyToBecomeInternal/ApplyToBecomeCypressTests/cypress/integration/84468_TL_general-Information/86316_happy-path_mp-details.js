@@ -1,6 +1,6 @@
 /// <reference types ="Cypress"/>
 
-describe('Submit and view MP details', () => {
+describe('86316 Submit and view MP details', () => {
     afterEach(() => {
 		cy.storeSessionData();
 	});
@@ -19,33 +19,33 @@ describe('Submit and view MP details', () => {
         cy.clearLocalStorage();
     });
 
-    it('Should navigate to MP details page', () => {
+    it('TC01: Should navigate to MP details page', () => {
         cy.get("[data-test='change-member-of-parliament-party']").click();
         cy.url().then(href => {
             expect(href.endsWith('/confirm-general-information/enter-MP-name-and-political-party')).to.be.true;
         });
     });
 
-    it('Should change the MP details', () => {
+    it('TC02: Should change the MP details', () => {
         cy.get('#member-of-parliament-name').clear().type('An MP');
         cy.get('#member-of-parliament-party').clear().type('A Party');
         cy.get('#member-of-parliament-name').should('have.value', 'An MP');
         cy.get('#member-of-parliament-party').should('have.value', 'A Party');
     });
 
-    it('Should go back to general information page on confirm', () => {
+    it('TC03: Should go back to general information page on confirm', () => {
         cy.get('#confirm-and-continue-button').click();
         cy.url().then(href => {
             expect(href.endsWith('/confirm-general-information')).to.be.true;
           });
     });
 
-    it('Should display the MP details after it is submitted', () => {        
+    it('TC04: Should display the MP details after it is submitted', () => {        
         cy.get('#member-of-parliament-name').should('have.text', 'An MP');
         cy.get('#member-of-parliament-party').should('have.text','A Party');    
     })
 
-    it('Should navigate to MP details page and remove details', () => {
+    it('TC05: Should navigate to MP details page and remove details', () => {
         cy.get("[data-test='change-member-of-parliament-party']").click();
         cy.get('#member-of-parliament-name').clear();
         cy.get('#member-of-parliament-party').clear();
