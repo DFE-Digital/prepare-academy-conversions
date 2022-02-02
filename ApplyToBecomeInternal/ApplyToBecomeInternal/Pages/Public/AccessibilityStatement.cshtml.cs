@@ -4,11 +4,10 @@ namespace ApplyToBecomeInternal.Pages.Public
 {
 	public class AccessibilityStatement : PageModel
 	{		
-		public void OnGet(string returnUrl)
+		public void OnGet()
 		{
-			ReturnLink = returnUrl;
+
 		}
 
-		public string ReturnLink { get; set; }
 	}
 }

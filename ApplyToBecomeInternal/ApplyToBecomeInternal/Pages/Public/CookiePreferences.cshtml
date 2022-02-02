@@ -6,11 +6,6 @@
 	Layout = "Shared/_Layout";
 }
 
-@section BeforeMain
-{
-	<a href="@Model.returnPath" class="govuk-back-link" data-test="back-link">Back</a>
-}
-
 @if (Model.PreferencesSet)
 {
 	<div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
