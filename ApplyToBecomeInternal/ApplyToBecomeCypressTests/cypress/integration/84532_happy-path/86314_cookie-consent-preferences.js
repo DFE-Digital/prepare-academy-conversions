@@ -1,3 +1,5 @@
+/// <reference types ="Cypress"/>
+
 describe('Cookie consent details', () => {
     afterEach(() => {
 		cy.storeSessionData();

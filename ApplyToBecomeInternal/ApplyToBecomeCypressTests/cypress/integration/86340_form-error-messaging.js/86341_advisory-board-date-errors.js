@@ -1,3 +1,5 @@
+/// <reference types ="Cypress"/>
+
 describe("Error messaging should be correct", () => {
 	afterEach(() => {
 		cy.storeSessionData();

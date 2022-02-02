@@ -1,3 +1,5 @@
+/// <reference types ="Cypress"/>
+
 describe("Error message link should redirect correctly", () => {
 	afterEach(() => {
 		cy.storeSessionData();

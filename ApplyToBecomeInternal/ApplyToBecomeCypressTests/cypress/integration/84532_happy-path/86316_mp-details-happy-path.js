@@ -1,3 +1,5 @@
+/// <reference types ="Cypress"/>
+
 describe('Submit and view MP details', () => {
     afterEach(() => {
 		cy.storeSessionData();

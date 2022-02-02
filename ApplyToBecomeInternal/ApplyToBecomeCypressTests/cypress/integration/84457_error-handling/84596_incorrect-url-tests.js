@@ -1,3 +1,5 @@
+/// <reference types ="Cypress"/>
+
 describe("Error handling should present correctly to the user", () => {
     after(function () {
         cy.clearLocalStorage();

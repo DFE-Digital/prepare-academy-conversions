@@ -1,3 +1,5 @@
+/// <reference types ="Cypress"/>
+
 describe('Submit and view project notes', () => {
     afterEach(() => {
 		cy.storeSessionData();

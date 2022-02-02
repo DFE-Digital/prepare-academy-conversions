@@ -1,3 +1,5 @@
+/// <reference types ="Cypress"/>
+
 describe('validate advisory board urls', () => {
     let selectedSchool = '';
 
