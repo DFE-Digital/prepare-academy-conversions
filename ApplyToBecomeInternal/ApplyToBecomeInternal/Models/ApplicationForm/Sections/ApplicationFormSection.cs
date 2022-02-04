@@ -6,20 +6,20 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 {
 	public class ApplicationFormSection : BaseFormSection
 	{
-		public ApplicationFormSection(FullApplication application) : base("School application form", GenerateBaseFields(application))
+		public ApplicationFormSection(Application application) : base("School application form", GenerateBaseFields(application))
 		{
 			SubSections = new[] { 
 				new FormSubSection("Details", GenerateDetailsFields(application))
 			};
 		}
 
-		private static IEnumerable<FormField> GenerateBaseFields(FullApplication application) =>
+		private static IEnumerable<FormField> GenerateBaseFields(Application application) =>
 			new[] {
 				new FormField("Application to join", $"{application.TrustName} with {application.SchoolApplication.SchoolName}"),
 				new FormField("Lead applicant", application.ApplicationLeadAuthorName),
 			};
 
-		private static IEnumerable<FormField> GenerateDetailsFields(FullApplication application) =>
+		private static IEnumerable<FormField> GenerateDetailsFields(Application application) =>
 			new[] {
 				new LinkFormField("Upload evidence that the trust consents to the school joining", application.EvidenceDocument),
 				new FormField("Will there be any changes to the governance of the trust due to the school joining?", application.ChangesToTrust.ToYesNoString()),

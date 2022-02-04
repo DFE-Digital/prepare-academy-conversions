@@ -132,9 +132,9 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			return establishmentResponse;
 		}
 
-		public FullApplication AddGetApplication(Action<FullApplication> postSetup = null)
+		public Application AddGetApplication(Action<Application> postSetup = null)
 		{
-			var application = _fixture.Create<FullApplication>();
+			var application = _fixture.Create<Application>();
 			if (postSetup != null)
 			{
 				postSetup(application);

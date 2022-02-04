@@ -34,7 +34,7 @@ namespace ApplyToBecome.Data.Tests.Services
 
 		[Theory]
 		[AutoData]
-		public async Task Should_get_application_data_by_application_reference(FullApplication applicationMockData)
+		public async Task Should_get_application_data_by_application_reference(Application applicationMockData)
 		{
 			_mockHandler.Expect($"/v2/apply-to-become/application/{applicationMockData.ApplicationId}")
 				.Respond("application/json", JsonConvert.SerializeObject(applicationMockData));

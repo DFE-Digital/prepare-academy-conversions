@@ -17,17 +17,17 @@ namespace ApplyToBecome.Data.Services
 			_logger = logger;
 		}
 
-		public async Task<ApiResponse<FullApplication>> GetApplicationByReference(string id) // id is the application reference number
+		public async Task<ApiResponse<Application>> GetApplicationByReference(string id) // id is the application reference number
 		{
 			var response = await _httpClient.GetAsync($"/v2/apply-to-become/application/{id}");
 			if(!response.IsSuccessStatusCode)
 			{
 				_logger.LogWarning($"Unable to get school application form data for establishment with id: {id}");
-				return new ApiResponse<FullApplication>(response.StatusCode, null);
+				return new ApiResponse<Application>(response.StatusCode, null);
 			}
-			var fullApplication = await response.Content.ReadFromJsonAsync<FullApplication>();
+			var fullApplication = await response.Content.ReadFromJsonAsync<Application>();
 
-			return new ApiResponse<FullApplication>(response.StatusCode, fullApplication); 
+			return new ApiResponse<Application>(response.StatusCode, fullApplication); 
 		}
 	}
 }

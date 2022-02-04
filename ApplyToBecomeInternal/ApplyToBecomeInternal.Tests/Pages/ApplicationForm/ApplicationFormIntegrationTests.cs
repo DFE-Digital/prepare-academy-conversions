@@ -12,7 +12,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 	public class ApplicationFormIntegrationTests : BaseIntegrationTests
 	{
 		private AcademyConversionProject _project;
-		private FullApplication _application;
+		private Application _application;
 
 		public ApplicationFormIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{

@@ -6,10 +6,10 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 {
 	public class FurtherInformationSection : BaseFormSection
 	{
-		public FurtherInformationSection(SchoolApplication application) : base("Further information") => 
+		public FurtherInformationSection(ApplyingSchool application) : base("Further information") => 
 			SubSections = new[] {new FormSubSection("Additional details", GenerateFields(application))};
 
-		private IEnumerable<FormField> GenerateFields(SchoolApplication application) =>
+		private IEnumerable<FormField> GenerateFields(ApplyingSchool application) =>
 			new[]
 			{
 				new FormField("What will the school bring to the trust they are joining?", application.SchoolAdSchoolContributionToTrust),

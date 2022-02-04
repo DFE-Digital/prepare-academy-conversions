@@ -6,7 +6,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 {
 	public class LandAndBuildingsSection : BaseFormSection
 	{
-		public LandAndBuildingsSection(SchoolApplication application) : base("Land and buildings")
+		public LandAndBuildingsSection(ApplyingSchool application) : base("Land and buildings")
 		{
 			SubSections = new[]
 			{
@@ -14,7 +14,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			};
 		}
 
-		private static IEnumerable<FormField> GenerateDetailsFields(SchoolApplication application) =>
+		private static IEnumerable<FormField> GenerateDetailsFields(ApplyingSchool application) =>
 			new[] {
 				new FormField("As far as you're aware, who owns or holds the school's buildings and land?", application.SchoolBuildLandOwnerExplained),
 				new FormField("Are there any current planned building works?", application.SchoolBuildLandWorksPlanned.ToYesNoString()),

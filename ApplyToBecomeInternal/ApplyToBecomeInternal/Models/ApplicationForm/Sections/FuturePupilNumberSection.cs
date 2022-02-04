@@ -5,12 +5,12 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 {
 	public class FuturePupilNumberSection : BaseFormSection
 	{
-		public FuturePupilNumberSection(SchoolApplication application) : base("Future pupil numbers")
+		public FuturePupilNumberSection(ApplyingSchool application) : base("Future pupil numbers")
 		{
 			SubSections = new[] {new FormSubSection("Details", GenerateDetailsFields(application))};
 		}
 
-		private IEnumerable<FormField> GenerateDetailsFields(SchoolApplication application) =>
+		private IEnumerable<FormField> GenerateDetailsFields(ApplyingSchool application) =>
 			new[]
 			{
 				new FormField("Projected pupil numbers on roll in the year the academy opens (year 1)", application.SchoolCapacityYear1.ToString()),

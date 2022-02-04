@@ -6,7 +6,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 {
 	public class AboutConversionSection : BaseFormSection
 	{
-		public AboutConversionSection(SchoolApplication application) : base("About the conversion")
+		public AboutConversionSection(ApplyingSchool application) : base("About the conversion")
 		{
 			SubSections = new[]
 			{
@@ -17,12 +17,12 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 				new FormSubSection("Name changes", GenerateNameChangesFields(application)),
 			};
 		}
-		private IEnumerable<FormField> GenerateSchoolFields(SchoolApplication application) =>
+		private IEnumerable<FormField> GenerateSchoolFields(ApplyingSchool application) =>
 			new[]
 			{
 				new FormField("The name of the school", application.SchoolName)
 			};
-		private IEnumerable<FormField> GenerateContactFields(SchoolApplication application) =>
+		private IEnumerable<FormField> GenerateContactFields(ApplyingSchool application) =>
 			new[]
 			{
 				new FormField("Name of headteacher", application.SchoolConversionContactHeadName),
@@ -35,20 +35,20 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 				new FormField("Approver's email address", application.SchoolConversionApproverContactEmail)          
 			};
 
-		private IEnumerable<FormField> GenerateConversionDateFields(SchoolApplication application) =>
+		private IEnumerable<FormField> GenerateConversionDateFields(ApplyingSchool application) =>
 			new[]
 			{
 				new FormField("Do you want the conversion to happen on a particular date", application.SchoolConversionTargetDateSpecified.ToYesNoString()),
 				new FormField("Preferred date", application.SchoolConversionTargetDate.Value.ToUkDateString())
 			};
 
-		private IEnumerable<FormField> GenerateReasonsForJoiningFields(SchoolApplication application) =>
+		private IEnumerable<FormField> GenerateReasonsForJoiningFields(ApplyingSchool application) =>
 			new[]
 			{
 				new FormField("Why does the school want to join this trust in particular?", application.SchoolConversionReasonsForJoining)
 			};
 
-		private IEnumerable<FormField> GenerateNameChangesFields(SchoolApplication application) =>
+		private IEnumerable<FormField> GenerateNameChangesFields(ApplyingSchool application) =>
 			new[]
 			{
 				 new FormField("Is the school planning to change its name when it becomes an academy?", application.SchoolConversionChangeNamePlanned.ToYesNoString())

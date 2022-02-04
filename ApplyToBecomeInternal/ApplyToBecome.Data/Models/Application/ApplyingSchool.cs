@@ -4,40 +4,11 @@ using System.Text;
 
 namespace ApplyToBecome.Data.Models.Application
 {
-	public class Lease
-	{
-		public string SchoolLeaseTerms { get; set; }
-		public float SchoolLeaseRepaymentValue { get; set; }
-		public float SchoolLeaseInterestRate { get; set; }
-		public float SchoolLeasePaymentToDate { get; set; }
-		public string SchoolLeasePurpose { get; set; }
-		public float SchoolLeaseValueOfAssets { get; set; }
-		public string SchoolLeaseResponsibilityForAssets { get; set; }
-	}
+	/// <remarks>
+	/// should correspond to TramsDataApi.ResponseModels.ApplyToBecome.A2BApplyingSchoolResponse
+	/// </remarks>
 
-	public class Loan
-	{
-		public float SchoolLoanAmount { get; set; }
-		public string SchoolLoanPurpose { get; set; }
-		public string SchoolLoanProvider { get; set; }
-		public float SchoolLoanInterestRate { get; set; }
-		public string SchoolLoanSchedule { get; set; }
-	}
-
-	public class FinancialYear
-	{
-		public DateTime FYEndDate { get; set; }
-		public float RevenueCarryForward { get; set; }
-		public string RevenueStatus { get; set; } // enum - "Surplus" / "Deficit"
-		public string RevenueStatusExplained { get; set; }
-		public Link RevenueRecoveryPlanEvidenceDocument { get; set; }
-		public float CapitalCarryForward { get; set; }
-		public string CapitalStatus { get; set; } // enum - "Surplus" / "Deficit"
-		public string CapitalStatusExplained { get; set; }
-		public Link CapitalRecoveryPlanEvidenceDocument { get; set; } // might be the same as the revenue document link?
-	}
-
-	public class SchoolApplication
+	public class ApplyingSchool
 	{
 		public string SchoolName { get; set; }
 		// contact details
@@ -63,7 +34,7 @@ namespace ApplyToBecome.Data.Models.Application
 		// name changes
 		public bool? SchoolConversionChangeNamePlanned { get; set; } // int? schoolConversionChangeName
 		public string SchoolConversionProposedNewSchoolName { get; set; } // schoolConversionChangeNameValue
-		// additional information
+																		  // additional information
 		public string SchoolAdSchoolContributionToTrust { get; set; }
 		public bool? SchoolOngoingSafeguardingInvestigations { get; set; } // int? SchoolAdSafeguarding
 		public string SchoolOngoingSafeguardingDetails { get; set; } // SchoolAdSafeguardingExplained
@@ -117,7 +88,7 @@ namespace ApplyToBecome.Data.Models.Application
 		public bool? SchoolBuildLandFutureProgramme { get; set; }
 		// pre-opening support grant
 		public string SchoolSupportGrantFundsPaidTo { get; set; } // int? - actually an enum "To the school" / "To the trust the school is joining"
-		// consultation details
+																  // consultation details
 		public bool? SchoolHasConsultedStakeholders { get; set; } // SchoolConsultationStakeholdersConsult
 		public string SchoolPlanToConsultStakeholders { get; set; }
 		// declaration
@@ -128,18 +99,5 @@ namespace ApplyToBecome.Data.Models.Application
 		// public bool? InfoIsTrueToBestOfMyKnowledge
 		public string SchoolDeclarationSignedByName { get; set; } // this signed by has to be headteacher or chair of governors
 	}
-
-	public class FullApplication
-	{
-		public string ApplicationId { get; set; }
-		public string TrustName { get; set; } // CML - application to join (trust name) - hopefully API will use application.account.accountId to get the name
-		//		public string FormTrustProposedNameOfTrust { get; set; } // CML - looks like this is for FAMs
-		public string ApplicationLeadAuthorName { get; set; }
-		public Link EvidenceDocument { get; set; }
-		public bool? ChangesToTrust { get; set; }
-		public string ChangesToTrustExplained { get; set; }
-		public bool? ChangesToLaGovernance { get; set; }
-		public string ChangesToLAGovernanceExplained { get; set; }
-		public SchoolApplication SchoolApplication { get; set; } // CML change to use a List now to allow for FAMs which will have >1 school?
-	}
 }
+
