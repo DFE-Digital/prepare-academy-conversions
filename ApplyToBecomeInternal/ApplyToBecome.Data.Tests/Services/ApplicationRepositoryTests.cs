@@ -34,27 +34,26 @@ namespace ApplyToBecome.Data.Tests.Services
 
 		[Theory]
 		[AutoData]
-		public async Task Should_get_application_data_by_id(FullApplication applicationMockData)
+		public async Task Should_get_application_data_by_application_reference(FullApplication applicationMockData)
 		{
-			const int APPLICATION_ID = 1; // CML temporary whilst GetApplication by reference number isn't possible
-			_mockHandler.Expect($"/v2/apply-to-become/application/{APPLICATION_ID}")
+			_mockHandler.Expect($"/v2/apply-to-become/application/{applicationMockData.ApplicationId}")
 				.Respond("application/json", JsonConvert.SerializeObject(applicationMockData));
 
-			var application = await _applicationRepository.GetApplicationById(APPLICATION_ID.ToString());
+			var application = await _applicationRepository.GetApplicationByReference(applicationMockData.ApplicationId);
 
-			application.Should().BeEquivalentTo(applicationMockData); // every field present in applicationMockData should copied to application (but not vice versa)
+			application.Body.Should().BeEquivalentTo(applicationMockData); // every field present in applicationMockData should copied to application (but not vice versa)
 		}
 
 		[Fact]
-		public async Task Should_return_empty_application_when_not_found()
+		public async Task Should_return_not_found_when_application_not_found()
 		{
-			const int APPLICATION_ID = 1; // CML temporary whilst GetApplication by reference number isn't possible
-			_mockHandler.Expect($"/v2/apply-to-become/application/{APPLICATION_ID}")
+			var applicationReference = "123a"; 
+			_mockHandler.Expect($"/v2/apply-to-become/application/{applicationReference}")
 				.Respond(HttpStatusCode.NotFound);
 
-			var application = await _applicationRepository.GetApplicationById(APPLICATION_ID.ToString());
+			var applicationResponse = await _applicationRepository.GetApplicationByReference(applicationReference);
 
-			application.Should().BeEquivalentTo(new FullApplication());
+			applicationResponse.Success.Should().BeFalse();
 		}
 	}
 }

@@ -140,7 +140,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 				postSetup(application);
 			}
 
-			_factory.AddGetWithJsonResponse($"/v2/apply-to-become/application/1", application);
+			_factory.AddGetWithJsonResponse($"/v2/apply-to-become/application/{application.ApplicationId}", application);
 			return application;
 		}
 

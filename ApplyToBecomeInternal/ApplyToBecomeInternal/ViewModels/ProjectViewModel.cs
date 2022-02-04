@@ -9,6 +9,7 @@ namespace ApplyToBecomeInternal.ViewModels
 		public ProjectViewModel(AcademyConversionProject project)
 		{
 			Id = project.Id.ToString();
+			ApplicationReferenceNumber = project.ApplicationReferenceNumber;
 			SchoolName = project.SchoolName;
 			SchoolURN = project.Urn.ToString();
 			LocalAuthority = project.LocalAuthority;
@@ -84,6 +85,7 @@ namespace ApplyToBecomeInternal.ViewModels
 
 
 		public string Id { get; }
+		public string ApplicationReferenceNumber { get; set; }
 		public string SchoolName { get; }
 		public string SchoolURN { get; }
 		public string LocalAuthority { get; }

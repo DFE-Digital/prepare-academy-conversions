@@ -24,9 +24,16 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 		public override async Task<IActionResult> OnGetAsync(int id)
         {
 			var result = await base.OnGetAsync(id);
-			var urn = base.Project. .SchoolURN;
+			var applicationReference = base.Project.ApplicationReferenceNumber;
 
-			var application = await _applicationRepository.GetApplicationById(urn);
+			var applicationResponse = await _applicationRepository.GetApplicationByReference(applicationReference);
+			if (!applicationResponse.Success)
+			{
+				// CML handling needed for different errors
+				// 404 logic
+				return NotFound();
+			}
+			var application = applicationResponse.Body;
 			//var application = DummyApplication;
 			Sections = new BaseFormSection[]
 			{
