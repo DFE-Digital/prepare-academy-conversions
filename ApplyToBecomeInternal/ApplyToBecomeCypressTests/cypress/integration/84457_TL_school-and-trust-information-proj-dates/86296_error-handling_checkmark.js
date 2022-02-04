@@ -26,4 +26,4 @@ describe("86296 Check mark should reflect status correctly", () => {
 
 after(function () {
     cy.clearLocalStorage();
-})
+});
