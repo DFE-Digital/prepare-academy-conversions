@@ -113,7 +113,7 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 				{
 					new Lease()
 					{
-						SchoolLeaseInterestRate = 3.0F,
+						SchoolLeaseInterestRate = 3.0M,
 						SchoolLeasePaymentToDate = 2000,
 						SchoolLeasePurpose = "specialist equipment",
 						SchoolLeaseRepaymentValue = 4000,

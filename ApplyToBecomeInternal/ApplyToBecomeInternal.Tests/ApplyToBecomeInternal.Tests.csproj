@@ -7,12 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\ApplicationForm\**" />
-    <EmbeddedResource Remove="Models\ApplicationForm\**" />
-    <None Remove="Models\ApplicationForm\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="appsettings.json" />
   </ItemGroup>
 

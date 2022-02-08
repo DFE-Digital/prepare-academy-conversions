@@ -1,6 +1,7 @@
 using ApplyToBecome.Data.Models.Application;
 using ApplyToBecomeInternal.Models.ApplicationForm;
 using ApplyToBecomeInternal.Models.ApplicationForm.Sections;
+using AutoFixture;
 using FluentAssertions;
 using System;
 using System.Linq;
@@ -13,25 +14,15 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 		[Fact]
 		public void Constructor_WithApplication_SetsFields()
 		{
-			var application = new Application
-			{
-				Finances = new Finances
-				{
-					PreviousFinancialYear = new FinancialYear(new DateTime(2020, 03, 31), 169093, FinancialYearState.Surplus),
-					CurrentFinancialYear = new ForecastFinancialYear(new DateTime(2021, 03, 31), 143931, FinancialYearState.Surplus, 0, FinancialYearState.Surplus),
-					NextFinancialYear = new ForecastFinancialYear(new DateTime(2022, 03, 31), 169093, FinancialYearState.Surplus, 0, FinancialYearState.Surplus),
-					ExistingLoans = false,
-					ExistingLeases = true,
-					OngoingInvestigations = false
-				}
-			};
-			
+			var fixture = new Fixture();
+			var application = fixture.Create<ApplyingSchool>();
+
 			var formSection = new FinanceSection(application);
 
 			var expectedPreviousFinancialYearFields = new[]
 			{
-				new FormField("End of previous financial year", "31/03/2020"),
-				new FormField("Revenue carry forward at the end of the previous financial year (31 March)", "£169,093.00"),
+				new FormField("End of previous financial year", application.PreviousFinancialYear.FYEndDate.ToShortDateString()),
+				new FormField("Revenue carry forward at the end of the previous financial year (31 March)", application.PreviousFinancialYear.RevenueCarryForward.ToString()), // CML to money string
 				new FormField("Surplus or deficit?", "Surplus")
 			};
 			var expectedCurrentFinancialYearFields = new[]

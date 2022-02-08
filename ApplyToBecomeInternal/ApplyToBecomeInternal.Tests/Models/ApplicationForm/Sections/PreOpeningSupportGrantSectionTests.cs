@@ -12,16 +12,16 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 		[Fact]
 		public static void Constructor_WithApplication_SetFields()
 		{
-			var application = new Application
+			var application = new ApplyingSchool
 			{
-				FundsPaidToSchoolOrTrust = "To the trust the school is joining"
+				SchoolSupportGrantFundsPaidTo = "To the trust the school is joining"
 			};
 
 			var formSection = new PreOpeningSupportGrantSection(application);
 
 			var expectedFields = new[]
 			{
-				new FormField("Do you want these funds paid to the school or the trust?", "To the trust the school is joining")
+				new FormField("Do you want these funds paid to the school or the trust?", application.SchoolSupportGrantFundsPaidTo)
 			};
 
 			formSection.Heading.Should().Be("Pre-opening support grant");

@@ -22,10 +22,10 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 		private IEnumerable<FormField> GenerateFinancialYearFields(string name, FinancialYear applicationFinancialYear) =>
 			new[]
 			{
-						new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate.ToUkDateString()),
-						new FormField($"Forecasted revenue carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.RevenueCarryForward.ToString()),
+						new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate.ToDateString()),
+						new FormField($"Forecasted revenue carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.RevenueCarryForward.ToMoneyString()),
 						new FormField("Surplus or deficit?", applicationFinancialYear.RevenueStatus), //.ToSurplusDeficitString()),
-						new FormField($"Forecasted capital carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.CapitalCarryForward.ToString()),
+						new FormField($"Forecasted capital carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.CapitalCarryForward.ToMoneyString()),
 						new FormField("Surplus or deficit?", applicationFinancialYear.CapitalStatus) // .ToSurplusDeficitString())
 			};
 
@@ -33,14 +33,14 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 		{
 			bool loansExist = applicationLoans?.Count > 0;
 			var loansFields = new List<FormField> {
-				new FormField("Are there any existing loans?", loansExist.ToYesNoString()) // CML
+				new FormField("Are there any existing loans?", loansExist.ToYesNoString()) // CML better way to deal with condirional rows following yes/no questions?
 				};
 
 			if (loansExist)
 			{
 				foreach (var loan in applicationLoans)
 				{
-					loansFields.Add(new FormField("Total amount", loan.SchoolLoanAmount.ToString())); // CML needs a ToMoneyString() extension method?
+					loansFields.Add(new FormField("Total amount", loan.SchoolLoanAmount.ToMoneyString()));
 					loansFields.Add(new FormField("Purpose of the loan(s)", loan.SchoolLoanPurpose));
 					loansFields.Add(new FormField("Loan provider", loan.SchoolLoanProvider));
 					loansFields.Add(new FormField("Interest rate(s)", $"{loan.SchoolLoanInterestRate}%"));
@@ -63,11 +63,11 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 				foreach (var lease in applicationLeases)
 				{
 					leaseFields.Add(new FormField("Details of the term of the finance lease agreement", lease.SchoolLeaseTerms));
-					leaseFields.Add(new FormField("Repayment value", lease.SchoolLeaseRepaymentValue.ToString())); // CML needs a ToMoneyString() extension method?
+					leaseFields.Add(new FormField("Repayment value", lease.SchoolLeaseRepaymentValue.ToMoneyString()));
 					leaseFields.Add(new FormField("Interest rate chargeable", $"{lease.SchoolLeaseInterestRate}%"));
-					leaseFields.Add(new FormField("Value of payments made to date", lease.SchoolLeasePaymentToDate.ToString())); // CML needs a ToMoneyString() extension method?
+					leaseFields.Add(new FormField("Value of payments made to date", lease.SchoolLeasePaymentToDate.ToMoneyString()));
 					leaseFields.Add(new FormField("What was the finance lease for?", lease.SchoolLeasePurpose));
-					leaseFields.Add(new FormField("Value of the assests at the start of the finance lease agreement", lease.SchoolLeaseValueOfAssets.ToString())); // CML needs a ToMoneyString() extension method?
+					leaseFields.Add(new FormField("Value of the assests at the start of the finance lease agreement", lease.SchoolLeaseValueOfAssets.ToMoneyString()));
 					leaseFields.Add(new FormField("Who is responsible for the insurance, repair and maintenance of the assets covered?", lease.SchoolLeaseResponsibilityForAssets));
 				}
 			}

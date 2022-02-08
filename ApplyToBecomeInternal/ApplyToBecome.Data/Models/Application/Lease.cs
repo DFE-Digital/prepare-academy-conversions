@@ -7,11 +7,11 @@ namespace ApplyToBecome.Data.Models.Application
 	public class Lease
 	{
 		public string SchoolLeaseTerms { get; set; }
-		public float SchoolLeaseRepaymentValue { get; set; }
-		public float SchoolLeaseInterestRate { get; set; }
-		public float SchoolLeasePaymentToDate { get; set; }
+		public decimal SchoolLeaseRepaymentValue { get; set; }
+		public decimal SchoolLeaseInterestRate { get; set; }
+		public decimal SchoolLeasePaymentToDate { get; set; }
 		public string SchoolLeasePurpose { get; set; }
-		public float SchoolLeaseValueOfAssets { get; set; }
+		public decimal SchoolLeaseValueOfAssets { get; set; }
 		public string SchoolLeaseResponsibilityForAssets { get; set; }
 	}
 }
