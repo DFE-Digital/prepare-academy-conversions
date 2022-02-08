@@ -10,7 +10,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 		{
 			SubSections = new[]
 			{
-				new FormSubSection("Previous financial year", GenerateFinancialYearFields("previous", application.PreviousFinancialYear)),
+				new FormSubSection("Previous financial year", GeneratePreviousFinancialYearFields("previous", application.PreviousFinancialYear)),
 				new FormSubSection("Current financial year", GenerateFinancialYearFields("current", application.CurrentFinancialYear)),
 				new FormSubSection("Next financial year", GenerateFinancialYearFields("next", application.NextFinancialYear)),
 				new FormSubSection("Loans", GenerateLoansFields(application.ExistingLoans)),
@@ -19,15 +19,35 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			};
 		}
 
-		private IEnumerable<FormField> GenerateFinancialYearFields(string name, FinancialYear applicationFinancialYear) =>
-			new[]
+		private IEnumerable<FormField> GeneratePreviousFinancialYearFields(string name, FinancialYear applicationFinancialYear)
+		{
+			decimal capitalCarryForward = applicationFinancialYear.CapitalStatus == "Deficit" ? -1 * applicationFinancialYear.CapitalCarryForward : applicationFinancialYear.CapitalCarryForward;
+			decimal revenueCarryForward = applicationFinancialYear.RevenueStatus == "Deficit" ? -1 * applicationFinancialYear.RevenueCarryForward : applicationFinancialYear.RevenueCarryForward;
+
+			return new[]
 			{
-						new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate.ToDateString()),
-						new FormField($"Forecasted revenue carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.RevenueCarryForward.ToMoneyString()),
+						new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate.ToUkDateString()),
+						new FormField($"Revenue carry forward at the end of the {name} financial year (31 March)", revenueCarryForward.ToMoneyString()),
 						new FormField("Surplus or deficit?", applicationFinancialYear.RevenueStatus), //.ToSurplusDeficitString()),
-						new FormField($"Forecasted capital carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.CapitalCarryForward.ToMoneyString()),
+						new FormField($"Capital carry forward at the end of the {name} financial year (31 March)", capitalCarryForward.ToMoneyString()),
 						new FormField("Surplus or deficit?", applicationFinancialYear.CapitalStatus) // .ToSurplusDeficitString())
 			};
+		}
+
+		private IEnumerable<FormField> GenerateFinancialYearFields(string name, FinancialYear applicationFinancialYear)
+		{
+			decimal capitalCarryForward = applicationFinancialYear.CapitalStatus == "Deficit" ? -1 * applicationFinancialYear.CapitalCarryForward : applicationFinancialYear.CapitalCarryForward;
+			decimal revenueCarryForward = applicationFinancialYear.RevenueStatus == "Deficit" ? -1 * applicationFinancialYear.RevenueCarryForward : applicationFinancialYear.RevenueCarryForward;
+
+			return new[]
+			{
+						new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate.ToUkDateString()),
+						new FormField($"Forecasted revenue carry forward at the end of the {name} financial year (31 March)", revenueCarryForward.ToMoneyString()),
+						new FormField("Surplus or deficit?", applicationFinancialYear.RevenueStatus), //.ToSurplusDeficitString()),
+						new FormField($"Forecasted capital carry forward at the end of the {name} financial year (31 March)", capitalCarryForward.ToMoneyString()),
+						new FormField("Surplus or deficit?", applicationFinancialYear.CapitalStatus) // .ToSurplusDeficitString())
+			};
+		}
 
 		private IEnumerable<FormField> GenerateLoansFields(List<Loan> applicationLoans)
 		{
@@ -74,12 +94,19 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			return leaseFields;
 		}
 
-		private IEnumerable<FormField> GenerateFinancialInvestigationsFields(ApplyingSchool application) =>
-			new[]
+		private IEnumerable<FormField> GenerateFinancialInvestigationsFields(ApplyingSchool application)
+		{
+			var financialInvestigationsFields = new List<FormField>
 			{
 				new FormField("Are there any financial investigations ongoing at the school?", application.FinanceOngoingInvestigations.ToYesNoString()),
-				new FormField("Provide a brief summary of the investigation", application.SchoolFinancialInvestigationsExplain),
-				new FormField("Is the trust you are joining aware of the investigation", application.SchoolFinancialInvestigationsTrustAware.ToYesNoString())
 			};
+			if (application.FinanceOngoingInvestigations)
+			{
+				financialInvestigationsFields.Add(new FormField("Provide a brief summary of the investigation", application.SchoolFinancialInvestigationsExplain));
+				financialInvestigationsFields.Add(new FormField("Is the trust you are joining aware of the investigation", application.SchoolFinancialInvestigationsTrustAware.ToYesNoString()));
+			}
+			return financialInvestigationsFields;
+		}
+
 	}
 }

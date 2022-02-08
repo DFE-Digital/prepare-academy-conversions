@@ -73,42 +73,41 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 				SchoolPartOfLaReorganizationPlan = false,
 				SchoolPartOfLaClosurePlan = false,
 				SchoolFaithSchoolDioceseName = "Diocese of Warrington",
-				//				DioceseLetterOfConsent = new Link("consent-from-diocese.docx", "#"),
 				SchoolIsPartOfFederation = false,
 				SchoolIsSupportedByFoundation = false,
 				SchoolHasSACREException = false,
 				SchoolAdFeederSchools = "n/a as we are a primary school",
-				//				SchoolConsent = new Link("consent.docx", "#"),
+				GoverningBodyConsentEvidenceDocument = new Link("consent.docx", "#"),
 				SchoolAdEqualitiesImpactAssessmentCompleted = false,
 				PreviousFinancialYear = new FinancialYear
 				{
 					FYEndDate = new DateTime(2020, 03, 31),
 					RevenueCarryForward = 169093,
-					RevenueStatus = "should this be an enum mapped to a string" // enum FinancialYearState? CML
+					RevenueStatus = "surplus" // enum FinancialYearState? CML
 				},
 				CurrentFinancialYear = new FinancialYear
 				{
 					FYEndDate = new DateTime(2021, 03, 31),
 					RevenueCarryForward = 143931,
-					RevenueStatus = "should this be an enum mapped to a string" // enum FinancialYearState? CML
+					RevenueStatus = "surplus" // enum FinancialYearState? CML
 				},
 				NextFinancialYear = new FinancialYear
 				{
 					FYEndDate = new DateTime(2022, 03, 31),
 					RevenueCarryForward = 169093,
-					RevenueStatus = "should this be an enum mapped to a string" // enum FinancialYearState? CML
+					RevenueStatus = "surplus" // enum FinancialYearState? CML
 				},
-				//ExistingLoans = new List<Loan>
-				//{
-				//	new Loan()
-				//	{
-				//		SchoolLoanAmount = 34000,
-				//		SchoolLoanInterestRate = 3.0F,
-				//		SchoolLoanProvider = "Loans R us",
-				//		SchoolLoanPurpose = "repairs",
-				//		SchoolLoanSchedule = "is this really a free text field?"
-				//	}
-				//},
+				ExistingLoans = new List<Loan>
+				{
+					new Loan()
+					{
+						SchoolLoanAmount = 34000,
+						SchoolLoanInterestRate = 3.0M,
+						SchoolLoanProvider = "Loans R us",
+						SchoolLoanPurpose = "repairs",
+						SchoolLoanSchedule = "is this really a free text field?"
+					}
+				},
 				ExistingLeases = new List<Lease>()
 				{
 					new Lease()
@@ -138,15 +137,15 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 				SchoolBuildLandPriorityBuildingProgramme = false,
 				SchoolBuildLandFutureProgramme = false,
 				SchoolSupportGrantFundsPaidTo = "to the school",
+				SchoolHasConsultedStakeholders = true,
+				SchoolDeclarationSignedByName = "Garth Brown"
 				
 			},			
 			TrustName = Project.NameOfTrust,
-			ApplicationLeadAuthorName = "Garth Brown",
-//			EvidenceDocument = new Link("consent_dynamics.docx", "#"),
+			ApplicationLeadAuthorName = "Garth Brown",			
+			TrustConsentEvidenceDocument = new Link("consent_dynamics.docx", "#"),
 			ChangesToTrust = false,
-			ChangesToLaGovernance = false
-			//SchoolConsultationStakeholdersConsult = "yes",
-			//SchoolDeclarationSignedByName = "Garth Brown"
+			ChangesToLaGovernance = false,
 		};
 	}
 }

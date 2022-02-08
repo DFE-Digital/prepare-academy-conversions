@@ -42,16 +42,16 @@ namespace ApplyToBecomeInternal.Tests.Pages
 //			rowItems[1].Children[1].TextContent.Should().Be(_application.ApplicationLeadAuthorName);// CML - do a better way!
 		}
 
-		//[Fact]
-		//public async void Should_show_404error_when_application_not_found()
-		//{
+		[Fact(Skip = "not implemented")]
+		public async void Should_show_404error_when_application_not_found()
+		{
 
-		//}
+		}
 
-		//[Fact]
-		//public async void Should_deal_with_null_values()
-		//{
+		[Fact(Skip = "complete when missng fields are implemented")]
+		public async void Should_deal_with_null_values()
+		{
 
-		//}
+		}
 	}
 }

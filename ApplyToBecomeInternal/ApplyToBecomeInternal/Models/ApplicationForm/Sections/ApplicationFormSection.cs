@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 		{
 			var formFields = new List<FormField> {
 				new FormField("Trust name", application.TrustName),
-				new LinkFormField("Upload evidence that the trust consents to the school joining", application.EvidenceDocument)				
+				new LinkFormField("Upload evidence that the trust consents to the school joining", application.TrustConsentEvidenceDocument)				
 			};
 			formFields.Add(new FormField("Will there be any changes to the governance of the trust due to the school joining?", application.ChangesToTrust.ToYesNoString()));
 			if ( application.ChangesToTrust) formFields.Add(new FormField("What are the changes?", application.ChangesToTrustExplained) );
