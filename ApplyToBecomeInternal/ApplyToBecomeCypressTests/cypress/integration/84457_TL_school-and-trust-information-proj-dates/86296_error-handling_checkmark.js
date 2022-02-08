@@ -13,9 +13,7 @@ describe("86296 Check mark should reflect status correctly", () => {
         cy.get('[id=school-and-trust-information-status]').should("be.visible")
         .invoke("text")
         .then((text) => {
-            // text == "Completed" || "In Progress"
             if (text.includes("Completed")) {
-                cy.log("Completed")
                 return
             }
             else {
