@@ -25,7 +25,6 @@ describe('86858 Modify viability fields', () => {
         cy.get('[id="viability-issues"]').should('contain', 'Yes')
         .should('not.contain', 'No')
         .should('not.contain', 'Empty')
-
     })
 
     it("TC02: Navigates to Viability fields and modifies fields 'No'", () => {
