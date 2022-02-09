@@ -45,8 +45,10 @@ namespace ApplyToBecome.Data.Tests.Services
 		}
 
 		[Fact]
-		public async Task Should_return_not_found_when_application_not_found()
+		public async Task Should_return_not_success_when_application_not_found()
 		{
+			// CML - API responses need to be analysed
+			// might need more than just Success and !Success 
 			var applicationReference = "123a"; 
 			_mockHandler.Expect($"/v2/apply-to-become/application/{applicationReference}")
 				.Respond(HttpStatusCode.NotFound);

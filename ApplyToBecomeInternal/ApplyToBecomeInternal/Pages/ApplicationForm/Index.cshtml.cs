@@ -82,20 +82,20 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 				PreviousFinancialYear = new FinancialYear
 				{
 					FYEndDate = new DateTime(2020, 03, 31),
-					RevenueCarryForward = 169093,
-					RevenueStatus = "surplus" // enum FinancialYearState? CML
+					RevenueCarryForward = 16909,
+					RevenueStatus = "Surplus" // enum FinancialYearState? CML
 				},
 				CurrentFinancialYear = new FinancialYear
 				{
 					FYEndDate = new DateTime(2021, 03, 31),
-					RevenueCarryForward = 143931,
-					RevenueStatus = "surplus" // enum FinancialYearState? CML
+					RevenueCarryForward = 14393,
+					RevenueStatus = "Surplus" // enum FinancialYearState? CML
 				},
 				NextFinancialYear = new FinancialYear
 				{
 					FYEndDate = new DateTime(2022, 03, 31),
-					RevenueCarryForward = 169093,
-					RevenueStatus = "surplus" // enum FinancialYearState? CML
+					RevenueCarryForward = 1690,
+					RevenueStatus = "Deficit" // enum FinancialYearState? CML
 				},
 				ExistingLoans = new List<Loan>
 				{

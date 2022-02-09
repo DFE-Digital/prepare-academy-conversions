@@ -42,7 +42,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			
 			var expectedFieldsDateForConversion = new[] {
 				new FormField("Do you want the conversion to happen on a particular date", application.SchoolConversionTargetDateSpecified.ToYesNoString()),
-				new FormField("Preferred date", application.SchoolConversionTargetDate.Value.ToDateString()) // CML check the required format
+				new FormField("Preferred date", application.SchoolConversionTargetDate.Value.ToDateString())
 			};
 
 			var expectedFieldsReasonForJoining = new FormField("Why does the school want to join this trust in particular?", application.SchoolConversionReasonsForJoining);

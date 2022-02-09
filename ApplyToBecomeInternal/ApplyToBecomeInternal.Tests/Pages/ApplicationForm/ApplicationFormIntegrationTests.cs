@@ -101,7 +101,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			var test = Document.GetElementsByTagName("h2");
 
 			Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Future pupil numbers").Should().NotBeEmpty();
-			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
+			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty(); // CML - how to tell it's the right Details heading?
 		}
 
 		[Fact]

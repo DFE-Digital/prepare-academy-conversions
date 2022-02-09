@@ -6,7 +6,7 @@ namespace ApplyToBecomeInternal.Extensions
 		public static string ToYesNoString(this bool? value) => value.HasValue ? value.Value ? "Yes" : "No" : "";
 	}
 
-	public static class IntExtensions // CML TODO
+	public static class IntExtensions // CML put class into its own file if we need these, but expecting to delete
 	{
 		public static string ToYesNoString(this int value) => $"{value} needs conversion to Y/N";
 		public static string ToYesNoString(this int? value) => $"{value} needs conversion to Y/N";
