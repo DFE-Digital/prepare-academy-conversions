@@ -35,10 +35,11 @@ describe("86856 Comments should accept alphanumeric inputs", () => {
     });
 
     it("TC01: Navigates to comment section & type alphanumerical characters", () => {
+        let alphanumeric = 'abcdefghijklmnopqrstuvwxyz 1234567890 !"£$%^&*(){}[]:@,./<>?~|'
         cy.get('[data-test="change-la-info-template-comments"]').click()
-        cy.get('[id="la-info-template-comments"]').type('abcdefghijklmnopqrstuvwxyz 1234567890 !"£$%^&*(){}[]:@,./<>?~|')
+        cy.get('[id="la-info-template-comments"]').type(alphanumeric)
         cy.get('[data-module="govuk-button"]').click()
-        cy.get('[id="la-info-template-comments"]').should('contain', 'abcdefghijklmnopqrstuvwxyz 1234567890 !"£$%^&*(){}[]:@,./<>?~|')
+        cy.get('[id="la-info-template-comments"]').should('contain', alphanumeric)
     });
 
     it('TC02: Clears text input', () => {
