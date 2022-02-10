@@ -100,8 +100,12 @@ namespace ApplyToBecomeInternal.Tests.Pages
 
 			var test = Document.GetElementsByTagName("h2");
 
-			Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Future pupil numbers").Should().NotBeEmpty();
-			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty(); // CML - how to tell it's the right Details heading?
+			var sectionHeader = Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Future pupil numbers");
+			sectionHeader.Should().NotBeEmpty();
+			var nextItem = sectionHeader.First().NextElementSibling;
+			nextItem.TextContent.Should().Be("Open school application form in a new tab");
+			nextItem = nextItem.NextElementSibling;
+			nextItem.TextContent.Should().Be("Details");
 		}
 
 		[Fact]
@@ -111,8 +115,12 @@ namespace ApplyToBecomeInternal.Tests.Pages
 
 			var test = Document.GetElementsByTagName("h2");
 
-			Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Land and buildings").Should().NotBeEmpty();
-			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
+			var sectionHeader = Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Land and buildings");
+			sectionHeader.Should().NotBeEmpty();
+			var nextItem = sectionHeader.First().NextElementSibling;
+			nextItem.TextContent.Should().Be("Open school application form in a new tab");
+			nextItem = nextItem.NextElementSibling;
+			nextItem.TextContent.Should().Be("Details");
 		}
 
 		[Fact]
@@ -122,8 +130,12 @@ namespace ApplyToBecomeInternal.Tests.Pages
 
 			var test = Document.GetElementsByTagName("h2");
 
-			Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Pre-opening support grant").Should().NotBeEmpty();
-			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
+			var sectionHeader = Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Pre-opening support grant");
+			sectionHeader.Should().NotBeEmpty();
+			var nextItem = sectionHeader.First().NextElementSibling;
+			nextItem.TextContent.Should().Be("Open school application form in a new tab");
+			nextItem = nextItem.NextElementSibling;
+			nextItem.TextContent.Should().Be("Details");
 		}
 
 		[Fact]
@@ -133,8 +145,12 @@ namespace ApplyToBecomeInternal.Tests.Pages
 
 			var test = Document.GetElementsByTagName("h2");
 
-			Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Consultation").Should().NotBeEmpty();
-			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
+			var sectionHeader = Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Consultation");
+			sectionHeader.Should().NotBeEmpty();
+			var nextItem = sectionHeader.First().NextElementSibling;
+			nextItem.TextContent.Should().Be("Open school application form in a new tab");
+			nextItem = nextItem.NextElementSibling;
+			nextItem.TextContent.Should().Be("Details");
 		}
 
 		[Fact]
