@@ -26,50 +26,6 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 
 	public class FinanceSectionTests
 	{
-		private IEnumerable<FormField> ExpectedPreviousFinancialYearFields(FinancialYear financialYear)
-		{
-			decimal expectedCapital = financialYear.CapitalStatus == "Deficit" ? -1 * financialYear.CapitalCarryForward : financialYear.CapitalCarryForward;
-			decimal expectedRevenue = financialYear.RevenueStatus == "Deficit" ? -1 * financialYear.RevenueCarryForward : financialYear.RevenueCarryForward;
-
-			return new[]
-			{
-				new FormField("End of previous financial year", financialYear.FYEndDate.ToUkDateString()),
-				new FormField("Revenue carry forward at the end of the previous financial year (31 March)", expectedRevenue.ToMoneyString(true)),
-				new FormField("Surplus or deficit?", financialYear.RevenueStatus),
-				new FormField("Capital carry forward at the end of the previous financial year (31 March)", expectedCapital.ToMoneyString(true)),
-				new FormField("Surplus or deficit?", financialYear.CapitalStatus)
-			};
-		}
-
-		private IEnumerable<FormField> ExpectedCurrentFinancialYearFields(FinancialYear financialYear)
-		{
-			decimal expectedCapital = financialYear.CapitalStatus == "Deficit" ? -1 * financialYear.CapitalCarryForward : financialYear.CapitalCarryForward;
-			decimal expectedRevenue = financialYear.RevenueStatus == "Deficit" ? -1 * financialYear.RevenueCarryForward : financialYear.RevenueCarryForward;
-
-			return new[]
-			{
-				new FormField("End of current financial year", financialYear.FYEndDate.ToUkDateString()),
-				new FormField("Forecasted revenue carry forward at the end of the current financial year (31 March)", expectedRevenue.ToMoneyString(true)),
-				new FormField("Surplus or deficit?", financialYear.RevenueStatus),
-				new FormField("Forecasted capital carry forward at the end of the current financial year (31 March)", expectedCapital.ToMoneyString(true)),
-				new FormField("Surplus or deficit?", financialYear.CapitalStatus)
-			};
-		}
-
-		private IEnumerable<FormField> ExpectedNextFinancialYearFields(FinancialYear financialYear)
-		{
-			decimal expectedCapital = financialYear.CapitalStatus == "Deficit" ? -1 * financialYear.CapitalCarryForward : financialYear.CapitalCarryForward;
-			decimal expectedRevenue = financialYear.RevenueStatus == "Deficit" ? -1 * financialYear.RevenueCarryForward : financialYear.RevenueCarryForward;
-			return new[]
-			{
-				new FormField("End of next financial year", financialYear.FYEndDate.ToUkDateString()),
-				new FormField("Forecasted revenue carry forward at the end of the next financial year (31 March)", expectedRevenue.ToMoneyString(true)),
-				new FormField("Surplus or deficit?", financialYear.RevenueStatus),
-				new FormField("Forecasted capital carry forward at the end of the next financial year (31 March)", expectedCapital.ToMoneyString(true)),
-				new FormField("Surplus or deficit?", financialYear.CapitalStatus)
-			};
-		}
-
 		[Fact(Skip = "complete when missng fields are implemented")]
 		public void Constructor_Sets_Conditional_Rows_Following_Yes_Answers()
 		{
@@ -100,9 +56,30 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 
 			var formSection = new FinanceSection(application);
 
-			var expectedPreviousFinancialYearFields = ExpectedPreviousFinancialYearFields(application.PreviousFinancialYear);
-			var expectedCurrentFinancialYearFields = ExpectedCurrentFinancialYearFields(application.CurrentFinancialYear);
-			var expectedNextFinancialYearFields = ExpectedNextFinancialYearFields(application.NextFinancialYear);
+			var expectedPreviousFinancialYearFields = new[] 
+			{
+				new FormField("End of previous financial year", application.PreviousFinancialYear.FYEndDate.ToUkDateString()),
+				new FormField("Revenue carry forward at the end of the previous financial year (31 March)", "-£10,000.00"),
+				new FormField("Surplus or deficit?",  application.PreviousFinancialYear.RevenueStatus),
+				new FormField("Capital carry forward at the end of the previous financial year (31 March)", "-£1,000.00"),
+				new FormField("Surplus or deficit?",  application.PreviousFinancialYear.CapitalStatus)
+			};
+			var expectedCurrentFinancialYearFields = new[]
+			{
+				new FormField("End of current financial year", application.CurrentFinancialYear.FYEndDate.ToUkDateString()),
+				new FormField("Forecasted revenue carry forward at the end of the current financial year (31 March)", "-£20,000.00"),
+				new FormField("Surplus or deficit?", application.CurrentFinancialYear.RevenueStatus),
+				new FormField("Forecasted capital carry forward at the end of the current financial year (31 March)", "-£2,000.00"),
+				new FormField("Surplus or deficit?", application.CurrentFinancialYear.CapitalStatus)
+			};
+			var expectedNextFinancialYearFields = new[]
+			{
+				new FormField("End of next financial year", application.NextFinancialYear.FYEndDate.ToUkDateString()),
+				new FormField("Forecasted revenue carry forward at the end of the next financial year (31 March)", "-£30,000.00"),
+				new FormField("Surplus or deficit?", application.NextFinancialYear.RevenueStatus),
+				new FormField("Forecasted capital carry forward at the end of the next financial year (31 March)", "-£3,000.00"),
+				new FormField("Surplus or deficit?", application.NextFinancialYear.CapitalStatus)
+			};
 
 			formSection.Heading.Should().Be("Finances");
 			formSection.SubSections.Should().HaveCount(6);
@@ -128,9 +105,30 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 
 			var formSection = new FinanceSection(application);
 
-			var expectedPreviousFinancialYearFields = ExpectedPreviousFinancialYearFields(application.PreviousFinancialYear);
-			var expectedCurrentFinancialYearFields = ExpectedCurrentFinancialYearFields(application.CurrentFinancialYear);
-			var expectedNextFinancialYearFields = ExpectedNextFinancialYearFields(application.NextFinancialYear);
+			var expectedPreviousFinancialYearFields = new[]
+			{
+				new FormField("End of previous financial year", application.PreviousFinancialYear.FYEndDate.ToUkDateString()),
+				new FormField("Revenue carry forward at the end of the previous financial year (31 March)", application.PreviousFinancialYear.RevenueCarryForward.ToMoneyString(true)),
+				new FormField("Surplus or deficit?",  application.PreviousFinancialYear.RevenueStatus),
+				new FormField("Capital carry forward at the end of the previous financial year (31 March)", application.PreviousFinancialYear.CapitalCarryForward.ToMoneyString(true)),
+				new FormField("Surplus or deficit?",  application.PreviousFinancialYear.CapitalStatus)
+			};
+			var expectedCurrentFinancialYearFields = new[]
+			{
+				new FormField("End of current financial year", application.CurrentFinancialYear.FYEndDate.ToUkDateString()),
+				new FormField("Forecasted revenue carry forward at the end of the current financial year (31 March)", application.CurrentFinancialYear.RevenueCarryForward.ToMoneyString(true)),
+				new FormField("Surplus or deficit?", application.CurrentFinancialYear.RevenueStatus),
+				new FormField("Forecasted capital carry forward at the end of the current financial year (31 March)", application.CurrentFinancialYear.CapitalCarryForward.ToMoneyString(true)),
+				new FormField("Surplus or deficit?", application.CurrentFinancialYear.CapitalStatus)
+			};
+			var expectedNextFinancialYearFields = new[]
+			{
+				new FormField("End of next financial year", application.NextFinancialYear.FYEndDate.ToUkDateString()),
+				new FormField("Forecasted revenue carry forward at the end of the next financial year (31 March)", application.NextFinancialYear.RevenueCarryForward.ToMoneyString(true)),
+				new FormField("Surplus or deficit?", application.NextFinancialYear.RevenueStatus),
+				new FormField("Forecasted capital carry forward at the end of the next financial year (31 March)", application.NextFinancialYear.CapitalCarryForward.ToMoneyString(true)),
+				new FormField("Surplus or deficit?", application.NextFinancialYear.CapitalStatus)
+			};
 			var expectedLoansFields = new[]
 			{
 				new FormField("Are there any existing loans?", "No")
