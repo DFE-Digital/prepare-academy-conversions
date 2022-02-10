@@ -59,25 +59,25 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			var expectedPreviousFinancialYearFields = new[] 
 			{
 				new FormField("End of previous financial year", application.PreviousFinancialYear.FYEndDate.ToUkDateString()),
-				new FormField("Revenue carry forward at the end of the previous financial year (31 March)", "-£10,000.00"),
+				new FormField("Revenue carry forward at the end of the previous financial year (31 March)", $"-{application.PreviousFinancialYear.RevenueCarryForward.ToMoneyString(true)}"),
 				new FormField("Surplus or deficit?",  application.PreviousFinancialYear.RevenueStatus),
-				new FormField("Capital carry forward at the end of the previous financial year (31 March)", "-£1,000.00"),
+				new FormField("Capital carry forward at the end of the previous financial year (31 March)", $"-{application.PreviousFinancialYear.CapitalCarryForward.ToMoneyString(true)}"),
 				new FormField("Surplus or deficit?",  application.PreviousFinancialYear.CapitalStatus)
 			};
 			var expectedCurrentFinancialYearFields = new[]
 			{
 				new FormField("End of current financial year", application.CurrentFinancialYear.FYEndDate.ToUkDateString()),
-				new FormField("Forecasted revenue carry forward at the end of the current financial year (31 March)", "-£20,000.00"),
+				new FormField("Forecasted revenue carry forward at the end of the current financial year (31 March)", $"-{application.CurrentFinancialYear.RevenueCarryForward.ToMoneyString(true)}"),
 				new FormField("Surplus or deficit?", application.CurrentFinancialYear.RevenueStatus),
-				new FormField("Forecasted capital carry forward at the end of the current financial year (31 March)", "-£2,000.00"),
+				new FormField("Forecasted capital carry forward at the end of the current financial year (31 March)", $"-{application.CurrentFinancialYear.CapitalCarryForward.ToMoneyString(true)}"),
 				new FormField("Surplus or deficit?", application.CurrentFinancialYear.CapitalStatus)
 			};
 			var expectedNextFinancialYearFields = new[]
 			{
 				new FormField("End of next financial year", application.NextFinancialYear.FYEndDate.ToUkDateString()),
-				new FormField("Forecasted revenue carry forward at the end of the next financial year (31 March)", "-£30,000.00"),
+				new FormField("Forecasted revenue carry forward at the end of the next financial year (31 March)", $"-{application.NextFinancialYear.RevenueCarryForward.ToMoneyString(true)}"),
 				new FormField("Surplus or deficit?", application.NextFinancialYear.RevenueStatus),
-				new FormField("Forecasted capital carry forward at the end of the next financial year (31 March)", "-£3,000.00"),
+				new FormField("Forecasted capital carry forward at the end of the next financial year (31 March)", $"-{application.NextFinancialYear.CapitalCarryForward.ToMoneyString(true)}"),
 				new FormField("Surplus or deficit?", application.NextFinancialYear.CapitalStatus)
 			};
 
