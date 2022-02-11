@@ -114,5 +114,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.Public
 			await NavigateDataTestAsync("success-banner-return-link");
 			Document.Url.Should().Contain($"/task-list/{project.Id}");
 		}
+
 	}
 }

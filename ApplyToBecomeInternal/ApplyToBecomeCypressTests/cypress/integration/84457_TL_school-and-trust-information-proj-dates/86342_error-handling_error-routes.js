@@ -1,4 +1,6 @@
-describe("Error message link should redirect correctly", () => {
+/// <reference types ="Cypress"/>
+
+describe("86342 Error message link should redirect correctly", () => {
 	afterEach(() => {
 		cy.storeSessionData();
 	});
@@ -8,7 +10,7 @@ describe("Error message link should redirect correctly", () => {
 		cy.selectSchoolListing(1)
 	});
 
-	it("Should click on error link and allow user to re-enter date", () => {
+	it("TC01: Should click on error link and allow user to re-enter date", () => {
 		cy.get(
 			'*[href*="/confirm-school-trust-information-project-dates"]'
 		).click();
@@ -27,7 +29,7 @@ describe("Error message link should redirect correctly", () => {
 		cy.get(".govuk-button.govuk-button--secondary").click();
 	});
 
-	it("Should display report link for school when Generate Report link clicked", () => {
+	it("TC02: Should display report link for school when Generate Report link clicked", () => {
 		cy.get(".app-c-attachment__link").should("be.visible");
 	});
 });

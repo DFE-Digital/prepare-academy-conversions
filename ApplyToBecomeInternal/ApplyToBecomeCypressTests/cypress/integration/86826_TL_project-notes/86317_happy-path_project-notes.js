@@ -1,4 +1,6 @@
-describe('Submit and view project notes', () => {
+/// <reference types ="Cypress"/>
+
+describe('86317 Submit and view project notes', () => {
     afterEach(() => {
 		cy.storeSessionData();
 	});
@@ -15,12 +17,12 @@ describe('Submit and view project notes', () => {
     let date
     let dateText
 
-    it('Should display the project notes input', () => {
+    it('TC01: Should display the project notes input', () => {
         cy.get('[href*="/project-notes/"').click()
         cy.get('[href*="/new-note"').click()
     });
 
-    it('Should allow the user to add a note', () => {
+    it('TC02: Should allow the user to add a note', () => {
         date = new Date();
         dateText = date.toTimeString()
         cy.get('#project-note-subject').type('New subject added at: ' + dateText)
@@ -28,7 +30,7 @@ describe('Submit and view project notes', () => {
         cy.get('[type=submit]').click()
     });
 
-    it('Should display the note after it is submitted', () => {
+    it('TC03: Should display the note after it is submitted', () => {
         cy.get('#project-note-added').should('contain.text', 'Note added')
         cy.get('#project-note-subject-0').should('have.text', 'New subject added at: '+dateText)
         cy.get('#project-note-body-0').should('have.text', 'New body added at: '+dateText)

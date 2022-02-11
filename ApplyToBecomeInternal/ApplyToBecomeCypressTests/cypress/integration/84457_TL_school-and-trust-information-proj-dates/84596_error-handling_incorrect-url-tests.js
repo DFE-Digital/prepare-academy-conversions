@@ -1,4 +1,6 @@
-describe("Error handling should present correctly to the user", () => {
+/// <reference types ="Cypress"/>
+
+describe("84596 Error handling should present correctly to the user", () => {
     after(function () {
         cy.clearLocalStorage();
     });
@@ -11,7 +13,7 @@ describe("Error handling should present correctly to the user", () => {
 		cy.login();
 	});
 
-    it("Should open first school in the list", () => {
+    it("TC01: Should open first school in the list", () => {
 		cy.get("#school-name-0").click();
 		cy.get('*[href*="/confirm-school-trust-information-project-dates"]').should(
 			"be.visible"
@@ -19,7 +21,7 @@ describe("Error handling should present correctly to the user", () => {
 	});
 
     // Raised under 80466
-    it.skip('Should display user-friendly error when incorrect return parameter passed [80466]',()=>{
+    it.skip('TC02: Should display user-friendly error when incorrect return parameter passed [80466]',()=>{
         let modifiedUrl
         cy.get('[aria-describedby*=la-info-template-status]').click()
         cy.url().then(url =>{
@@ -33,13 +35,13 @@ describe("Error handling should present correctly to the user", () => {
     })
 
     // Raised under 81652
-    it('Should display user-friendly error when incorrect project ID requested',()=>{
+    it('TC03: Should display user-friendly error when incorrect project ID requested',()=>{
         cy.visit(Cypress.env('url')+'/task-list/9999', {failOnStatusCode: false})
         cy.get("#not-found-error-heading").should('have.text','Page not found')
     })
 
     // Raised under 81655
-    it('Should display user-friendly error when incorrect url requested',()=>{
+    it('TC04: Should display user-friendly error when incorrect url requested',()=>{
         cy.visit(Cypress.env('url')+'/task-list-nonsense', {failOnStatusCode: false})
         cy.get("#not-found-error-heading").should('have.text','Page not found')
     })
