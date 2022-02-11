@@ -50,13 +50,13 @@ namespace ApplyToBecome.Data.Models.Application
 		public string SchoolSupportedFoundationBodyName { get; set; }
 		public Link FoundationEvidenceDocument { get; set; }
 		public bool SchoolHasSACREException { get; set; } // SchoolSACREExemption
-		public DateTime SchoolSACREExcepionEndDate { get; set; }
+		public DateTime? SchoolSACREExemptionEndDate { get; set; }
 		public string SchoolAdFeederSchools { get; set; }
 		public Link GoverningBodyConsentEvidenceDocument { get; set; }
 		public bool SchoolAdEqualitiesImpactAssessmentCompleted { get; set; } //SchoolAdEqualitiesImpactAssessment
 		public string SchoolAdEqualitiesImpactAssessmentDetails { get; set; } // two possible very long proforma string answers here
 		public bool SchoolAdInspectedButReportNotPublished { get; set; }
-		public bool SchoolAdditionalInformationAdded { get; set; }
+		public bool SchoolAdditionalInformationAdded { get; set; } // do we need this? it looks more like something used to drive the view in external
 		public string SchoolAdditionalInformation { get; set; }
 		// Finances
 		public FinancialYear PreviousFinancialYear { get; set; }

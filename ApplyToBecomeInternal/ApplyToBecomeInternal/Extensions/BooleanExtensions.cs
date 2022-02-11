@@ -12,7 +12,5 @@ namespace ApplyToBecomeInternal.Extensions
 		public static string ToYesNoString(this int? value) => $"{value} needs conversion to Y/N";
 		public static string ToSurplusDeficitString(this int value) => $"{value} needs conversion to surplus/deficit";
 		public static string ToSurplusDeficitString(this int? value) => $"{value} needs conversion to surplus/deficit";
-		//public static string ToSchoolOrTrust(this int value) => $"{value} needs conversion to school/trust";
-		//public static string ToSchoolOrTrust(this int? value) => $"{value} needs conversion to school/trust";
 	}
 }

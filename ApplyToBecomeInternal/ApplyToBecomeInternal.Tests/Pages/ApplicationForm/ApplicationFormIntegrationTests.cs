@@ -26,22 +26,22 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		}
 
 		[Fact]
-		public async void The_application_form_link_is_present()
+		public async void The_Application_Form_Link_Is_Present()
 		{
 			await OpenUrlAsync($"/school-application-form/{_project.Id}");			
 
 			var pageItem = Document.QuerySelector($"#application-form-link");
 			pageItem.TextContent.Should().Be("Open school application form in a new tab");
-			pageItem.BaseUri.Should().Be($"http://localhost/school-application-form/{_project.Id}");
+			pageItem.BaseUri.Should().Contain($"school-application-form/{_project.Id}");
 		}
 
 		[Fact(Skip ="implement along with section links")]
-		public async void The_section_links_are_present()
+		public async void The_Section_Links_Are_Present()
 		{
 		}
 
 		[Fact]
-		public async void Should_display_School_application_form_section()
+		public async void Should_Display_School_Application_Form_Section()
 		{
 			await OpenUrlAsync($"/school-application-form/{_project.Id}");
 
@@ -52,7 +52,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		}
 
 		[Fact]
-		public async void Should_display_About_the_conversion_section()
+		public async void Should_Display_About_The_Conversion_Section()
 		{
 			await OpenUrlAsync($"/school-application-form/{_project.Id}");
 
@@ -67,7 +67,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		}
 
 		[Fact]
-		public async void Should_display_Further_information_section()
+		public async void Should_Display_Further_Information_Section()
 		{
 			await OpenUrlAsync($"/school-application-form/{_project.Id}");
 
@@ -78,7 +78,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		}
 
 		[Fact]
-		public async void Should_display_Finances_section()
+		public async void Should_Display_Finances_Section()
 		{
 			await OpenUrlAsync($"/school-application-form/{_project.Id}");
 
@@ -94,7 +94,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		}
 
 		[Fact]
-		public async void Should_display_Future_pupil_numbers_section()
+		public async void Should_Display_Future_Pupil_Numbers_Section()
 		{
 			await OpenUrlAsync($"/school-application-form/{_project.Id}");
 
@@ -109,7 +109,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		}
 
 		[Fact]
-		public async void Should_display_Land_and_buildings_section()
+		public async void Should_Display_Land_And_Buildings_Section()
 		{
 			await OpenUrlAsync($"/school-application-form/{_project.Id}");
 
@@ -124,7 +124,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		}
 
 		[Fact]
-		public async void Should_display_Pre_opening_suport_grant_section()
+		public async void Should_Display_Pre_Opening_Support_Grant_Section()
 		{
 			await OpenUrlAsync($"/school-application-form/{_project.Id}");
 
@@ -139,7 +139,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		}
 
 		[Fact]
-		public async void Should_display_Consultation_section()
+		public async void Should_Display_Consultation_Section()
 		{
 			await OpenUrlAsync($"/school-application-form/{_project.Id}");
 
@@ -154,7 +154,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		}
 
 		[Fact]
-		public async void Should_display_Declaration_section()
+		public async void Should_Display_Declaration_Section()
 		{
 			await OpenUrlAsync($"/school-application-form/{_project.Id}");
 
@@ -165,13 +165,13 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		}
 
 		[Fact(Skip = "not implemented")]
-		public async void Should_show_404error_when_application_not_found()
+		public async void Should_Show_404Error_When_Application_Not_Found()
 		{
 
 		}
 
 		[Fact(Skip = "complete when missng fields are implemented")]
-		public async void Should_deal_with_null_values()
+		public async void Should_Deal_With_Null_Values()
 		{
 
 		}

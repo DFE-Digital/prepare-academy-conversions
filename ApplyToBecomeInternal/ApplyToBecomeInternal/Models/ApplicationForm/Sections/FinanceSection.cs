@@ -26,7 +26,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 
 			return new[]
 			{
-						new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate.ToUkDateString()),
+						new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate?.ToUkDateString()),
 						new FormField($"Revenue carry forward at the end of the {name} financial year (31 March)", revenueCarryForward.ToMoneyString(true)),
 						new FormField("Surplus or deficit?", applicationFinancialYear.RevenueStatus), //.ToSurplusDeficitString()),
 						new FormField($"Capital carry forward at the end of the {name} financial year (31 March)", capitalCarryForward.ToMoneyString(true)),
@@ -41,7 +41,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 
 			return new[]
 			{
-						new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate.ToUkDateString()),
+						new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate?.ToUkDateString()),
 						new FormField($"Forecasted revenue carry forward at the end of the {name} financial year (31 March)", revenueCarryForward.ToMoneyString(true)),
 						new FormField("Surplus or deficit?", applicationFinancialYear.RevenueStatus), //.ToSurplusDeficitString()),
 						new FormField($"Forecasted capital carry forward at the end of the {name} financial year (31 March)", capitalCarryForward.ToMoneyString(true)),

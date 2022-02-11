@@ -18,11 +18,6 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 				new FormField("Is the school part of a local authority reorganisation?", application.SchoolPartOfLaReorganizationPlan.ToYesNoString()),
 				new FormField("Is the school part of any local authority closure plans?", application.SchoolPartOfLaClosurePlan.ToYesNoString()),
 				new FormField("Is your school linked to a diocese?", application.SchoolFaithSchool.ToYesNoString()),
-				// conditional rows depending on answer above
-				//new FormField("Name of diocese?", application.SchoolFaithSchoolDioceseName),
-				//new LinkFormField(
-				//	"Upload a letter of consent from the diocese", 
-				//	new Link(application.DiocesePermissionEvidenceDocument.Name, application.DiocesePermissionEvidenceDocument.Url)),
 				new FormField("Is your school part of a federation?", application.SchoolIsPartOfFederation.ToYesNoString()),
 				new FormField("Is the school supported by a foundation, trust or other body (e.g. parish council) that appoints foundation governors?", application.SchoolIsSupportedByFoundation.ToYesNoString()),
 				new FormField(

@@ -4,7 +4,7 @@ namespace ApplyToBecome.Data.Models.Application
 {
 	public class FinancialYear
 	{
-		public DateTime FYEndDate { get; set; }
+		public DateTime? FYEndDate { get; set; }
 		public decimal RevenueCarryForward { get; set; }
 		public string RevenueStatus { get; set; } // CML enum - "Surplus" / "Deficit"
 		public string RevenueStatusExplained { get; set; }
