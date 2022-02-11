@@ -1,21 +1,18 @@
+using System;
+using System.Collections.Generic;
+
 namespace ApplyToBecome.Data.Models.Application
 {
-	/// <remarks>
-	/// Whole model and related models can probably be done away with once this is built e2e
-	/// </remarks>
 	public class Application
 	{
-		public string SchoolName { get; set; }
-		public string TrustName { get; set; }
-		public string LeadApplicant { get; set; }
-		public ApplicationDetails Details { get; set; }
-		public ConversionInformation ConversionInformation { get; set; }
-		public FurtherInformation FurtherInformation { get; set; }
-		public bool HasGovernmentConsultedStakeholders { get; set; }
-		public Finances Finances { get; set; }
-		public LandAndBuildings LandAndBuildings { get; set; }
-		public string FundsPaidToSchoolOrTrust { get; set; }
-		public FuturePupilNumbers FuturePupilNumbers { get; set; }
-		public Declaration Declaration { get; set; }
+		public string ApplicationId { get; set; }
+		public string TrustName { get; set; } // CML - application to join (trust name) - hopefully API will use application.account.accountId to get the name
+		public string ApplicationLeadAuthorName { get; set; }
+		public Link TrustConsentEvidenceDocument { get; set; }
+		public bool ChangesToTrust { get; set; }
+		public string ChangesToTrustExplained { get; set; }
+		public bool ChangesToLaGovernance { get; set; }
+		public string ChangesToLAGovernanceExplained { get; set; }
+		public ApplyingSchool SchoolApplication { get; set; } // CML change to use a List now to allow for FAMs which will have >1 school?
 	}
 }

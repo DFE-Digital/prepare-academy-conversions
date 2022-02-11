@@ -9,7 +9,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm
 			Url = url;
 		}
 
-		public LinkFormField(string title, Link link) : this(title, link.Name, link.Url)
+		public LinkFormField(string title, Link link) : this(title, link?.Name, link?.Url)
 		{
 		}
 

@@ -77,8 +77,11 @@ namespace ApplyToBecomeInternal.Pages.Public
 
 		private void ApplyCookieConsent(bool? consent)
 		{
-			var cookieOptions = new CookieOptions { Expires = DateTime.Today.AddMonths(6), Secure = true };
-			Response.Cookies.Append(ConsentCookieName, consent.Value.ToString(), cookieOptions);
+			if (consent.HasValue)
+			{
+				var cookieOptions = new CookieOptions { Expires = DateTime.Today.AddMonths(6), Secure = true };
+				Response.Cookies.Append(ConsentCookieName, consent.Value.ToString(), cookieOptions);
+			}
 
 			if (!consent.Value)
 			{

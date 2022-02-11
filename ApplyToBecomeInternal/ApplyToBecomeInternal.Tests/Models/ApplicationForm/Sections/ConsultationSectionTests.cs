@@ -13,9 +13,9 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 		[Fact]
 		public void Constructor_WithApplication_SetsFields()
 		{
-			var application = new Application
+			var application = new ApplyingSchool
 			{
-				HasGovernmentConsultedStakeholders = true
+				SchoolHasConsultedStakeholders = true
 			};
 
 			var formSection = new ConsultationSection(application);

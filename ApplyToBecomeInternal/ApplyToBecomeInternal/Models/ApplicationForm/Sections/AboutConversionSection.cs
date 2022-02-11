@@ -6,7 +6,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 {
 	public class AboutConversionSection : BaseFormSection
 	{
-		public AboutConversionSection(Application application) : base("About the conversion")
+		public AboutConversionSection(ApplyingSchool application) : base("About the conversion")
 		{
 			SubSections = new[]
 			{
@@ -17,41 +17,41 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 				new FormSubSection("Name changes", GenerateNameChangesFields(application)),
 			};
 		}
-		private IEnumerable<FormField> GenerateSchoolFields(Application application) =>
+		private IEnumerable<FormField> GenerateSchoolFields(ApplyingSchool application) =>
 			new[]
 			{
 				new FormField("The name of the school", application.SchoolName)
 			};
-		private IEnumerable<FormField> GenerateContactFields(Application application) =>
+		private IEnumerable<FormField> GenerateContactFields(ApplyingSchool application) =>
 			new[]
 			{
-				new FormField("Name of headteacher", application.ConversionInformation.HeadTeacher.Name),
-				new FormField("Headteacher's email address", application.ConversionInformation.HeadTeacher.EmailAddress),
-				new FormField("Headteacher's telephone number", application.ConversionInformation.HeadTeacher.TelephoneNumber),
-				new FormField("Name of the chair of the Governing Body", application.ConversionInformation.GoverningBodyChair.Name),
-				new FormField("Chair's email address", application.ConversionInformation.GoverningBodyChair.EmailAddress),
-				new FormField("Chair's phone number", application.ConversionInformation.GoverningBodyChair.TelephoneNumber),
-				new FormField("Approver's name", application.ConversionInformation.Approver.Name),
-				new FormField("Approver's email address", application.ConversionInformation.Approver.EmailAddress)          
+				new FormField("Name of headteacher", application.SchoolConversionContactHeadName),
+				new FormField("Headteacher's email address", application.SchoolConversionContactHeadEmail),
+				new FormField("Headteacher's telephone number", application.SchoolConversionContactHeadTel),
+				new FormField("Name of the chair of the Governing Body", application.SchoolConversionContactChairName),
+				new FormField("Chair's email address", application.SchoolConversionContactChairEmail),
+				new FormField("Chair's phone number", application.SchoolConversionContactChairTel),
+				new FormField("Approver's name", application.SchoolConversionApproverContactName),
+				new FormField("Approver's email address", application.SchoolConversionApproverContactEmail)          
 			};
 
-		private IEnumerable<FormField> GenerateConversionDateFields(Application application) =>
+		private IEnumerable<FormField> GenerateConversionDateFields(ApplyingSchool application) =>
 			new[]
 			{
-				new FormField("Do you want the conversion to happen on a particular date", "Yes"),
-				new FormField("Preferred date", application.ConversionInformation.DateForConversion.PreferredDate.ToUkDateString())
+				new FormField("Do you want the conversion to happen on a particular date", application.SchoolConversionTargetDateSpecified.ToYesNoString()),
+				new FormField("Preferred date", application.SchoolConversionTargetDate.ToDateString())
 			};
 
-		private IEnumerable<FormField> GenerateReasonsForJoiningFields(Application application) =>
+		private IEnumerable<FormField> GenerateReasonsForJoiningFields(ApplyingSchool application) =>
 			new[]
 			{
-				new FormField("Why does the school want to join this trust in particular?", application.ConversionInformation.SchoolToTrustRationale)
+				new FormField("Why does the school want to join this trust in particular?", application.SchoolConversionReasonsForJoining)
 			};
 
-		private IEnumerable<FormField> GenerateNameChangesFields(Application application) =>
+		private IEnumerable<FormField> GenerateNameChangesFields(ApplyingSchool application) =>
 			new[]
 			{
-				 new FormField("Is the school planning to change its name when it becomes an academy?", application.ConversionInformation.WillSchoolChangeName.ToYesNoString())
+				 new FormField("Is the school planning to change its name when it becomes an academy?", application.SchoolConversionChangeNamePlanned.ToYesNoString())
 			};
 	}
 }

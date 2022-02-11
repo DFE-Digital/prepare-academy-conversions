@@ -6,7 +6,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 {
 	public class LandAndBuildingsSection : BaseFormSection
 	{
-		public LandAndBuildingsSection(Application application) : base("Land and buildings")
+		public LandAndBuildingsSection(ApplyingSchool application) : base("Land and buildings")
 		{
 			SubSections = new[]
 			{
@@ -14,15 +14,15 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			};
 		}
 
-		private static IEnumerable<FormField> GenerateDetailsFields(Application application) =>
+		private static IEnumerable<FormField> GenerateDetailsFields(ApplyingSchool application) =>
 			new[] {
-				new FormField("As far as you're aware, who owns or holds the school's buildings and land?", application.LandAndBuildings.BuildingAndLandOwner),
-				new FormField("Are there any current planned building works?", application.LandAndBuildings.HasCurrentPlannedBuildingWorks.ToYesNoString()),
-				new FormField("Are there any shared facilities on site?", application.LandAndBuildings.HasSharedFacilitiesOnSite.ToYesNoString()),
-				new FormField("Has the school had any grants from Sport England, the Big Lottery Fund, or the Football Federation?",application.LandAndBuildings.HasSchoolGrants.ToYesNoString()),
-				new FormField("Is the school part of a Private Finance Intiative (PFI) scheme?", application.LandAndBuildings.HasPrivateFinanceInitiativeScheme.ToYesNoString()),
-				new FormField("Is the school part of a Priority School Building Programme?", application.LandAndBuildings.IsInPrioritySchoolBuildingProgramme.ToYesNoString()),
-				new FormField("Is the school part of a Building Schools for the Future Programme?", application.LandAndBuildings.IsInBuildingSchoolsForFutureProgramme.ToYesNoString())
+				new FormField("As far as you're aware, who owns or holds the school's buildings and land?", application.SchoolBuildLandOwnerExplained),
+				new FormField("Are there any current planned building works?", application.SchoolBuildLandWorksPlanned.ToYesNoString()),
+				new FormField("Are there any shared facilities on site?", application.SchoolBuildLandSharedFacilities.ToYesNoString()),
+				new FormField("Has the school had any grants from Sport England, the Big Lottery Fund, or the Football Federation?", application.SchoolBuildLandGrants.ToYesNoString()),
+				new FormField("Is the school part of a Private Finance Intiative (PFI) scheme?", application.SchoolBuildLandPFIScheme.ToYesNoString()),
+				new FormField("Is the school part of a Priority School Building Programme?", application.SchoolBuildLandPriorityBuildingProgramme.ToYesNoString()),
+				new FormField("Is the school part of a Building Schools for the Future Programme?", application.SchoolBuildLandFutureProgramme.ToYesNoString())
 			};
 	}
 }
