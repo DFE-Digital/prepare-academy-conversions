@@ -53,7 +53,7 @@ Cypress.Commands.add("submitDateLaInfoReturn", (day, month, year) => {
     cy.get('[id="la-info-template-returned-date-day"]').clear().type(day)
     cy.get('[id="la-info-template-returned-date-month"]').clear().type(month)
     cy.get('[id="la-info-template-returned-date-year"]').clear().type(year)
-})
+});
 
 Cypress.Commands.add('storeSessionData',()=>{
     Cypress.Cookies.preserveOnce('.ManageAnAcademyConversion.Login')
