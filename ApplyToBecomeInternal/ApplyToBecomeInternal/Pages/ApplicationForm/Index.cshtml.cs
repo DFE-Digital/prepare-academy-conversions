@@ -8,6 +8,7 @@ using ApplyToBecomeInternal.Models.ApplicationForm;
 using ApplyToBecomeInternal.Models.ApplicationForm.Sections;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 
 namespace ApplyToBecomeInternal.Pages.ApplicationForm
 {
@@ -35,6 +36,7 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 			//}
 			//var application = applicationResponse.Body;
 			var application = DummyApplication;
+
 			Sections = new BaseFormSection[]
 			{
 				new ApplicationFormSection(application),
@@ -77,25 +79,25 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 				SchoolIsSupportedByFoundation = false,
 				SchoolHasSACREException = false,
 				SchoolAdFeederSchools = "n/a as we are a primary school",
-				GoverningBodyConsentEvidenceDocument = new Link("consent.docx", "#"),
+				GoverningBodyConsentEvidenceDocumentLink = "#",
 				SchoolAdEqualitiesImpactAssessmentCompleted = false,
 				PreviousFinancialYear = new FinancialYear
 				{
 					FYEndDate = new DateTime(2020, 03, 31),
 					RevenueCarryForward = 16909,
-					RevenueStatus = "Surplus" // enum FinancialYearState? CML
+					RevenueIsDeficit = false
 				},
 				CurrentFinancialYear = new FinancialYear
 				{
 					FYEndDate = new DateTime(2021, 03, 31),
 					RevenueCarryForward = 14393,
-					RevenueStatus = "Surplus" // enum FinancialYearState? CML
+					RevenueIsDeficit = false
 				},
 				NextFinancialYear = new FinancialYear
 				{
 					FYEndDate = new DateTime(2022, 03, 31),
-					RevenueCarryForward = 1690,
-					RevenueStatus = "Deficit" // enum FinancialYearState? CML
+					RevenueCarryForward = -1690,
+					RevenueIsDeficit = true
 				},
 				ExistingLoans = new List<Loan>
 				{
@@ -132,18 +134,17 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 				SchoolBuildLandOwnerExplained = "The Diocese of Warrington owns the building and the land. The LA owns the playing fields.",
 				SchoolBuildLandWorksPlanned = false,
 				SchoolBuildLandSharedFacilities = false,
-				//	HasSchoolGrants = false,
 				SchoolBuildLandPFIScheme = false,
 				SchoolBuildLandPriorityBuildingProgramme = false,
 				SchoolBuildLandFutureProgramme = false,
 				SchoolSupportGrantFundsPaidTo = "to the school",
 				SchoolHasConsultedStakeholders = true,
-				SchoolDeclarationSignedByName = "Garth Brown"
+				DeclarationSignedByName = "Garth Brown"
 				
 			},			
 			TrustName = Project.NameOfTrust,
 			ApplicationLeadAuthorName = "Garth Brown",			
-			TrustConsentEvidenceDocument = new Link("consent_dynamics.docx", "#"),
+			TrustConsentEvidenceDocumentLink ="#",
 			ChangesToTrust = false,
 			ChangesToLaGovernance = false,
 		};

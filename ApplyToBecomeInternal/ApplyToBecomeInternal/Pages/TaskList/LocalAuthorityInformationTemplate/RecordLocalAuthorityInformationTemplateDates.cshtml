@@ -23,7 +23,7 @@
 		<p class="govuk-body">
 			Send the local authority information template like you normally would on your email. Then record the date you sent it and when you want it returned to you.
 		</p>
-		<form method="post">
+		<form method="post" novalidate>
 			<govuk-date-input name="la-info-template-sent-date" asp-for="Project.LocalAuthorityInformationTemplateSentDate" label="Date you sent the template" hint="For example, 27 3 2021" />
 			<govuk-date-input name="la-info-template-returned-date" asp-for="Project.LocalAuthorityInformationTemplateReturnedDate" label="Date you want the template returned to you" hint="For example, 27 3 2021" />
 			<govuk-textarea-input name="la-info-template-comments" asp-for="Project.LocalAuthorityInformationTemplateComments" rows="5" label="Comments (optional)" />

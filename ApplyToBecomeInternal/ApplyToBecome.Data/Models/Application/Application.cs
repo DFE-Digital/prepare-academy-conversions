@@ -8,7 +8,7 @@ namespace ApplyToBecome.Data.Models.Application
 		public string ApplicationId { get; set; }
 		public string TrustName { get; set; } // CML - application to join (trust name) - hopefully API will use application.account.accountId to get the name
 		public string ApplicationLeadAuthorName { get; set; }
-		public Link TrustConsentEvidenceDocument { get; set; }
+		public string TrustConsentEvidenceDocumentLink { get; set; }
 		public bool ChangesToTrust { get; set; }
 		public string ChangesToTrustExplained { get; set; }
 		public bool ChangesToLaGovernance { get; set; }

@@ -8,6 +8,14 @@ namespace ApplyToBecomeInternal.Extensions
 		{
 			return string.Format(CultureInfo.CreateSpecificCulture("en-GB"), includePoundSign ? "{0:C2}" : "{0:F2}", value);
 		}
+		public static string ToMoneyString(this decimal? value, bool includePoundSign = false)
+		{
+			if(!value.HasValue)
+			{
+				return "";
+			}
+			return string.Format(CultureInfo.CreateSpecificCulture("en-GB"), includePoundSign ? "{0:C2}" : "{0:F2}", value);
+		}
 
 		public static string ToPercentage(this decimal? value)
 		{
