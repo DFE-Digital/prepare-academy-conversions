@@ -1,6 +1,6 @@
-/// <reference types ="Cypress"/>
+/// <reference types ='Cypress'/>
 
-describe("86856 Comments should accept alphanumeric inputs", () => {
+describe('86856 Comments should accept alphanumeric inputs', () => {
     afterEach(() => {
         cy.storeSessionData()
     });
@@ -10,42 +10,38 @@ describe("86856 Comments should accept alphanumeric inputs", () => {
         cy.selectSchoolListing(2)
         cy.url().then(url => {
             //changes the current URL
-            let modifiedUrl = url + "/confirm-local-authority-information-template-dates"
+            let modifiedUrl = url + '/confirm-local-authority-information-template-dates'
             cy.visit(modifiedUrl)
         });
     });
 
     after(() => {
-        cy.clearLocalStorage();
+        cy.clearLocalStorage()
     });
 
-    it("TC: Precondition comment box", () => {
-        cy.get('[id="la-info-template-comments"]').should("be.visible")
-        .invoke("text")
+    it('TC: Precondition comment box', () => {
+        cy.get('[id="la-info-template-comments"]').should('be.visible')
+        .invoke('text')
         .then((text) => {
-            if (text.includes("Empty")) {
+            if (text.includes('Empty')) {
                 return
             }
             else {
-                cy.get('[data-test="change-la-info-template-comments"]').click()
-                cy.get('[id="la-info-template-comments"]').clear()
-                cy.get('[data-module="govuk-button"]').click()
+                cy.commentBoxClearLaInfo()
             };
         });
     });
 
-    it("TC01: Navigates to comment section & type alphanumerical characters", () => {
+    it('TC01: Navigates to comment section & type alphanumerical characters', () => {
         let alphanumeric = 'abcdefghijklmnopqrstuvwxyz 1234567890 !"£$%^&*(){}[]:@,./<>?~|'
         cy.get('[data-test="change-la-info-template-comments"]').click()
-        cy.get('[id="la-info-template-comments"]').type(alphanumeric)
-        cy.get('[data-module="govuk-button"]').click()
-        cy.get('[id="la-info-template-comments"]').should('contain', alphanumeric)
+        cy.commentBoxLaInfo().type(alphanumeric)
+        cy.saveContinueBtn().click()
+        cy.commentBoxLaInfo().should('contain', alphanumeric)
     });
 
     it('TC02: Clears text input', () => {
-        cy.get('[data-test="change-la-info-template-comments"]').click()
-        cy.get('[id="la-info-template-comments"]').clear()
-        cy.get('[data-module="govuk-button"]').click()
-        cy.get('[id="la-info-template-comments"]').should('contain', 'Empty')
+        cy.commentBoxClearLaInfo()
+        cy.commentBoxLaInfo().should('contain', 'Empty')
     });
 });

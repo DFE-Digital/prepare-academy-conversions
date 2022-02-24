@@ -1,44 +1,42 @@
-/// <reference types ="Cypress"/>
+/// <reference types ='Cypress'/>
 
-describe("86296 Check mark should reflect status correctly", () => {
+describe('86296 Check mark should reflect status correctly', () => {
     afterEach(() => {
-        cy.storeSessionData(); 
-    })
+        cy.storeSessionData()
+    });
     before(function () {
-        cy.login();
+        cy.login()
         cy.selectSchoolListing(1)
     });
 
-    it("TC: Precondition checkbox status", () => {
-        cy.get('[id=school-and-trust-information-status]').should("be.visible")
-        .invoke("text")
+    it('TC: Precondition checkbox status', () => {
+        cy.statusSchoolTrust().should('be.visible')
+        .invoke('text')
         .then((text) => {
-            if (text.includes("Completed")) {
+            if (text.includes('Completed')) {
                 return
             }
             else {
-                cy.get('*[href*="/confirm-school-trust-information-project-dates"]').click();
-                cy.get('[id="school-and-trust-information-complete"]').click();
-                cy.get("#confirm-and-continue-button").click();
-            }
-        })
-    })
+                cy.uncheckSchoolTrust()
+            };
+        });
+    });
 
-    it("TC01: Unchecked and returns as 'In Progress", () => {
-        cy.get('*[href*="/confirm-school-trust-information-project-dates"]').click();
-        cy.get('[id="school-and-trust-information-complete"]').click()
-        cy.get("#confirm-and-continue-button").click();
-        cy.get('[id=school-and-trust-information-status]').contains('In Progress').should('not.contain', 'Completed')
-    })
+    it('TC01: Unchecked and returns as "In Progress"', () => {
+        cy.get('*[href*="/confirm-school-trust-information-project-dates"]').click()
+        cy.completeStatusSchoolTrust().click()
+        cy.confirmContinueBtn().click()
+        cy.statusSchoolTrust().contains('In Progress').should('not.contain', 'Completed')
+    });
 
-    it("TC02: Checks and returns as 'Completed'", () => {
+    it('TC02: Checks and returns as "Completed"', () => {
         cy.get('*[href*="/confirm-school-trust-information-project-dates"]').click();
-        cy.get('[id="school-and-trust-information-complete"]').click()
-        cy.get("#confirm-and-continue-button").click();
-        cy.get('[id=school-and-trust-information-status]').contains('Completed').should('not.contain', 'In Progress')
+        cy.completeStatusSchoolTrust().click()
+        cy.confirmContinueBtn().click()
+        cy.statusSchoolTrust().contains('Completed').should('not.contain', 'In Progress')
     });
 
     after(function () {
-        cy.clearLocalStorage();
+        cy.clearLocalStorage()
     });
 });
