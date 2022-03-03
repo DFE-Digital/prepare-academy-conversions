@@ -1,5 +1,6 @@
 ﻿using ApplyToBecome.Data.Models.Application;
 using Microsoft.Extensions.Logging;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -25,9 +26,9 @@ namespace ApplyToBecome.Data.Services
 				_logger.LogWarning($"Unable to get school application form data for establishment with id: {id}");
 				return new ApiResponse<Application>(response.StatusCode, null);
 			}
-			var fullApplication = await response.Content.ReadFromJsonAsync<Application>();
+			var outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<Application>>();
 
-			return new ApiResponse<Application>(response.StatusCode, fullApplication); 
+			return new ApiResponse<Application>(response.StatusCode, outerResponse.Data); 
 		}
 	}
 }

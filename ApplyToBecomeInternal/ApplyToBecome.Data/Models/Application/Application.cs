@@ -12,7 +12,7 @@ namespace ApplyToBecome.Data.Models.Application
 		public bool ChangesToTrust { get; set; }
 		public string ChangesToTrustExplained { get; set; }
 		public bool ChangesToLaGovernance { get; set; }
-		public string ChangesToLAGovernanceExplained { get; set; }
-		public ApplyingSchool SchoolApplication { get; set; } // CML change to use a List now to allow for FAMs which will have >1 school?
+		public string ChangesToLaGovernanceExplained { get; set; }
+		public ICollection<ApplyingSchool> ApplyingSchools { get; set; }
 	}
 }

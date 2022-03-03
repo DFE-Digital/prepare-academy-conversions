@@ -54,7 +54,7 @@ namespace ApplyToBecome.Data.Models.Application
 		public string SchoolAdFeederSchools { get; set; }
 		public string GoverningBodyConsentEvidenceDocumentLink { get; set; }
 		public bool? SchoolAdEqualitiesImpactAssessmentCompleted { get; set; }
-		public string SchoolAdEqualitiesImpactAssessmentDetails { get; set; } // two possible very long proforma string answers here - maybe this should be a bool
+		public string SchoolAdEqualitiesImpactAssessmentDetails { get; set; }
 		public bool? SchoolAdInspectedButReportNotPublished { get; set; }
 		public string SchoolAdInspectedButReportNotPublishedExplain { get; set; }
 		public bool? SchoolAdditionalInformationAdded { get; set; }
@@ -89,7 +89,7 @@ namespace ApplyToBecome.Data.Models.Application
 		public bool? SchoolBuildLandFutureProgramme { get; set; }
 		// pre-opening support grant
 		public string SchoolSupportGrantFundsPaidTo { get; set; } // either "To the school" or "To the trust the school is joining"
-																  // consultation details
+		// consultation details
 		public bool? SchoolHasConsultedStakeholders { get; set; }
 		public string SchoolPlanToConsultStakeholders { get; set; }
 		// declaration

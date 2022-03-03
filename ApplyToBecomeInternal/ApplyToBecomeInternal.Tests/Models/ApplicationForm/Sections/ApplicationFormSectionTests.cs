@@ -34,7 +34,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 
 			var expectedFields = new[]
 			{
-				new FormField("Application to join", $"{application.TrustName} with {application.SchoolApplication.SchoolName}"),
+				new FormField("Application to join", $"{application.TrustName} with {application.ApplyingSchools.First().SchoolName}"),
 				new FormField("Application reference", application.ApplicationId),
 				new FormField("Lead applicant", application.ApplicationLeadAuthorName),
 			};

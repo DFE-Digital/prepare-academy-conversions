@@ -30,7 +30,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		{
 			await OpenUrlAsync($"/school-application-form/{_project.Id}");			
 
-			var pageItem = Document.QuerySelector($"#application-form-link");
+			var pageItem = Document.QuerySelector("#application-form-link");
 			pageItem.TextContent.Should().Be("Open school application form in a new tab");
 			pageItem.BaseUri.Should().Contain($"school-application-form/{_project.Id}");
 		}
@@ -164,16 +164,21 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
 		}
 
-		[Fact(Skip = "not implemented")]
-		public async void Should_Show_404Error_When_Application_Not_Found()
+		[Fact]
+		public async void Should_Show_404Error_When_Project_Not_Found()
 		{
+			await OpenUrlAsync($"/school-application-form/{_project.Id + 1}");
 
+			Document.QuerySelector("#not-found-error-heading").Should().NotBeNull();
 		}
 
-		[Fact(Skip = "complete when missng fields are implemented")]
-		public async void Should_Deal_With_Null_Values()
+		[Fact]
+		public async void Should_Show_404Error_When_Application_Not_Found()
 		{
+			var project = AddGetProject();
+			await OpenUrlAsync($"/school-application-form/{project.Id}");
 
+			Document.QuerySelector("#not-found-error-heading").Should().NotBeNull();
 		}
 	}
 }
