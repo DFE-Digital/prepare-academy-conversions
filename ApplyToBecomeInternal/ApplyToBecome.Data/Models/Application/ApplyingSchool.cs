@@ -63,8 +63,8 @@ namespace ApplyToBecome.Data.Models.Application
 		public FinancialYear PreviousFinancialYear { get; set; }
 		public FinancialYear CurrentFinancialYear { get; set; }
 		public FinancialYear NextFinancialYear { get; set; }
-		public List<Loan> ExistingLoans { get; set; }
-		public List<Lease> ExistingLeases { get; set; }
+		public ICollection<Loan> SchoolLoans { get; set; }
+		public ICollection<Lease> SchoolLeases { get; set; }
 		public bool? FinanceOngoingInvestigations { get; set; }
 		public string SchoolFinancialInvestigationsExplain { get; set; }
 		public bool? SchoolFinancialInvestigationsTrustAware { get; set; }

@@ -37,7 +37,7 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 			// we only deal with Applications with a single applying school so far
 			if ( (!applicationResponse.Success) || (applicationResponse.Body.ApplyingSchools.Count != 1) )
 			{
-				// ohandling needed for different errors
+				// handling needed for different errors
 				// 404 logic
 				return NotFound();
 			}

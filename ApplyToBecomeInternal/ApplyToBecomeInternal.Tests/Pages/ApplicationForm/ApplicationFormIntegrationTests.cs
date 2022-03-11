@@ -9,7 +9,7 @@ using System.Linq.Dynamic.Core;
 using System.Text;
 using Xunit;
 
-namespace ApplyToBecomeInternal.Tests.Pages
+namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 {
 	public class ApplicationFormIntegrationTests : BaseIntegrationTests
 	{
@@ -82,8 +82,6 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		{
 			await OpenUrlAsync($"/school-application-form/{_project.Id}");
 
-			var test = Document.GetElementsByTagName("h2");
-
 			Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Finances").Should().NotBeEmpty();
 			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Previous financial year").Should().NotBeEmpty();
 			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Current financial year").Should().NotBeEmpty();
@@ -91,6 +89,11 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Loans").Should().NotBeEmpty();
 			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Financial leases").Should().NotBeEmpty();
 			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Financial investigations").Should().NotBeEmpty();
+
+			var anyLeases = Document.QuerySelectorAll(".govuk-summary-list__row").Where(contents => contents.InnerHtml.Contains("Are there any existing leases?"));
+			anyLeases.First().InnerHtml.Should().Contain("Yes");
+			var anyLoans = Document.QuerySelectorAll(".govuk-summary-list__row").Where(contents => contents.InnerHtml.Contains("Are there any existing loans?"));
+			anyLoans.First().InnerHtml.Should().Contain("Yes");
 		}
 
 		[Fact]

@@ -17,12 +17,8 @@ namespace ApplyToBecomeInternal.Extensions
 			return string.Format(CultureInfo.CreateSpecificCulture("en-GB"), includePoundSign ? "{0:C2}" : "{0:F2}", value);
 		}
 
-		public static string ToPercentage(this decimal? value)
+		public static string ToPercentage(this decimal value)
 		{
-			if (!value.HasValue)
-			{
-				return "";
-			}
 			return string.Format("{0:G0}%", value);
 		}
 

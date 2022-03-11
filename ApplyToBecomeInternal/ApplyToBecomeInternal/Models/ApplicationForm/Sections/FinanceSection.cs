@@ -13,8 +13,8 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 				new FormSubSection("Previous financial year", GeneratePreviousFinancialYearFields("previous", application.PreviousFinancialYear)),
 				new FormSubSection("Current financial year", GenerateFinancialYearFields("current", application.CurrentFinancialYear)),
 				new FormSubSection("Next financial year", GenerateFinancialYearFields("next", application.NextFinancialYear)),
-				new FormSubSection("Loans", GenerateLoansFields(application.ExistingLoans)),
-				new FormSubSection("Financial leases", GenerateFinancialLeasesFields(application.ExistingLeases)),
+				new FormSubSection("Loans", GenerateLoansFields(application.SchoolLoans)),
+				new FormSubSection("Financial leases", GenerateFinancialLeasesFields(application.SchoolLeases)),
 				new FormSubSection("Financial investigations", GenerateFinancialInvestigationsFields(application))
 			};
 		}
@@ -43,11 +43,11 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			};
 		}
 
-		private IEnumerable<FormField> GenerateLoansFields(List<Loan> applicationLoans)
+		private IEnumerable<FormField> GenerateLoansFields(ICollection<Loan> applicationLoans)
 		{
 			bool loansExist = applicationLoans?.Count > 0;
 			var loansFields = new List<FormField> {
-				new FormField("Are there any existing loans?", loansExist.ToYesNoString()) // CML better way to deal with conditional rows following yes/no questions?
+				new FormField("Are there any existing loans?", loansExist.ToYesNoString()) 
 				};
 
 			if (loansExist)
@@ -55,16 +55,16 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 				foreach (var loan in applicationLoans)
 				{
 					loansFields.Add(new FormField("Total amount", loan.SchoolLoanAmount.ToMoneyString(true)));
-					loansFields.Add(new FormField("Purpose of the loan(s)", loan.SchoolLoanPurpose));
+					loansFields.Add(new FormField("Purpose of the loan", loan.SchoolLoanPurpose));
 					loansFields.Add(new FormField("Loan provider", loan.SchoolLoanProvider));
-					loansFields.Add(new FormField("Interest rate(s)", $"{loan.SchoolLoanInterestRate}%"));
+					loansFields.Add(new FormField("Interest rate", loan.SchoolLoanInterestRate));
 					loansFields.Add(new FormField("Schedule of repayment", loan.SchoolLoanSchedule));
 				}
 			}
 			return loansFields;
 		}
 
-		private IEnumerable<FormField> GenerateFinancialLeasesFields(List<Lease> applicationLeases)
+		private IEnumerable<FormField> GenerateFinancialLeasesFields(ICollection<Lease> applicationLeases)
 		{
 			bool leasesExist = applicationLeases?.Count > 0;
 			var leaseFields = new List<FormField>
@@ -76,12 +76,12 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			{
 				foreach (var lease in applicationLeases)
 				{
-					leaseFields.Add(new FormField("Details of the term of the finance lease agreement", lease.SchoolLeaseTerms));
+					leaseFields.Add(new FormField("Details of the term of the finance lease agreement", lease.SchoolLeaseTerm));
 					leaseFields.Add(new FormField("Repayment value", lease.SchoolLeaseRepaymentValue.ToMoneyString(true)));
 					leaseFields.Add(new FormField("Interest rate chargeable", $"{lease.SchoolLeaseInterestRate}%"));
 					leaseFields.Add(new FormField("Value of payments made to date", lease.SchoolLeasePaymentToDate.ToMoneyString(true)));
 					leaseFields.Add(new FormField("What was the finance lease for?", lease.SchoolLeasePurpose));
-					leaseFields.Add(new FormField("Value of the assests at the start of the finance lease agreement", lease.SchoolLeaseValueOfAssets.ToMoneyString(true)));
+					leaseFields.Add(new FormField("Value of the assests at the start of the finance lease agreement", lease.SchoolLeaseValueOfAssets));
 					leaseFields.Add(new FormField("Who is responsible for the insurance, repair and maintenance of the assets covered?", lease.SchoolLeaseResponsibilityForAssets));
 				}
 			}
