@@ -170,8 +170,8 @@
 		</h2>
 		<p class="govuk-body">Preview your template before you generate it into a Word document, or you can generate the document without previewing it.</p>
 		<div class="govuk-button-group">
-			<a asp-page="@Links.TaskList.PreviewHTBTemplate.Page" asp-route-id="@Model.Project.Id" class="govuk-button govuk-!-margin-bottom-2">Preview project template</a>
-			<a asp-page="@Links.TaskList.GenerateHTBTemplate.Page" asp-route-id="@Model.Project.Id" asp-route-return="@Links.TaskList.Index.Page" asp-route-backText="@Links.TaskList.Index.BackText" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-2">Generate project template</a>
+			<a asp-page="@Links.TaskList.PreviewHTBTemplate.Page" id="preview-project-template-button"asp-route-id="@Model.Project.Id" class="govuk-button govuk-!-margin-bottom-2">Preview project template</a>
+			<a asp-page="@Links.TaskList.GenerateHTBTemplate.Page" id="generate-project-template-button" asp-route-id="@Model.Project.Id" asp-route-return="@Links.TaskList.Index.Page" asp-route-backText="@Links.TaskList.Index.BackText" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-2">Generate project template</a>
 		</div>
 	</div>
 </div>

@@ -1,4 +1,4 @@
-/// <reference types ="Cypress"/>
+/// <reference types ='Cypress'/>
 
 describe('86317 Submit and view project notes', () => {
     afterEach(() => {
@@ -11,7 +11,7 @@ describe('86317 Submit and view project notes', () => {
     });
     
     after(function () {
-        cy.clearLocalStorage();
+        cy.clearLocalStorage()
     });
 
     let date
@@ -35,4 +35,4 @@ describe('86317 Submit and view project notes', () => {
         cy.get('#project-note-subject-0').should('have.text', 'New subject added at: '+dateText)
         cy.get('#project-note-body-0').should('have.text', 'New body added at: '+dateText)
     });
-})
+});
