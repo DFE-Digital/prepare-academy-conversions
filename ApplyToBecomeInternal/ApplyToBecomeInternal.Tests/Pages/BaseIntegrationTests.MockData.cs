@@ -140,6 +140,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 
 		public Application AddGetApplication(Action<Application> postSetup = null)
 		{
+			// create just 1 applying school as that's all we accept so far
 			_fixture.Customize<Application>(a => a.With(s => s.ApplyingSchools, () => {
 				return new List<ApplyingSchool> { _fixture.Create<ApplyingSchool>() };
 				}
