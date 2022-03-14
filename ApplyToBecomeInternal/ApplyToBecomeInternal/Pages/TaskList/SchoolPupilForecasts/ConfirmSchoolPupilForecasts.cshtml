@@ -38,7 +38,7 @@
 			<govuk-summary-list-row id="additional-information" name="school-pupil-forecasts-additional-information" label="Additional information" value="@Model.Project.SchoolPupilForecastsAdditionalInformation" asp-page="@Links.SchoolPupilForecastsSection.AdditionalInformation.Page" asp-fragment="additional-information" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
 		</dl>
 		<form method="post">
-			<button class="govuk-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</button>
+			<button class="govuk-button" id="confirm-and-continue-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</button>
 		</form>
 	</div>
 </div>

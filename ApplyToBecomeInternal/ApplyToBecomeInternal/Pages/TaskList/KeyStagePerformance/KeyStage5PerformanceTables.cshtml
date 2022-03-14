@@ -31,7 +31,7 @@
 			<govuk-summary-list-row id="additional-information" name="key-stage-5-additional-information" label="Additional information" value="@Model.Project.KeyStage5PerformanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.KeyStage5PerformanceTablesAdditionalInformation.Page" asp-fragment="additional-information" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
 		</dl>
 		<form method="post">
-			<button class="govuk-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</button>
+			<button class="govuk-button" id="confirm-and-continue-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</button>
 		</form>
 	</div>
 </div>
