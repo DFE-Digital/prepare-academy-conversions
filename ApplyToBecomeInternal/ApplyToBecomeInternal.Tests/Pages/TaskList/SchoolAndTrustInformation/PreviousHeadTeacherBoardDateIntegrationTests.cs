@@ -180,6 +180,27 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value = "230";
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value = "2";
 			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year").Value = "2021";
+			
+            await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
+
+			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Previous Advisory Board date must be a real date");
+		}
+
+		[Fact]
+		public async Task Should_display_error_when_user_attempts_to_an_invalid_characters()
+		{
+			var project = AddGetProject();
+			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate, default(DateTime));
+
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
+
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value = "testday";
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value = "testmonth";
+			Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year").Value = "testyear";
+
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
