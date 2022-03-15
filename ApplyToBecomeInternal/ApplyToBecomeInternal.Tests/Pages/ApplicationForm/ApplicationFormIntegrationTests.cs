@@ -25,6 +25,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 			_application = AddGetApplication(app =>
 			{
 				app.ApplicationId = _project.ApplicationReferenceNumber;
+				app.ApplicationType = "JoinMat";
 			});
 		}
 
@@ -111,6 +112,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 			_application = AddGetApplication(app =>
 			{
 				app.ApplicationId = _project.ApplicationReferenceNumber;
+				app.ApplicationType = "JoinMat";
 				app.ApplyingSchools.First().SchoolLeases = new List<Lease>();
 				app.ApplyingSchools.First().SchoolLoans = new List<Loan>();
 			});
@@ -213,24 +215,47 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		}
 
 		[Fact]
-		public async void Should_Show_404Error_When_Project_Not_Found()
+		public async void Should_Show_404Error_When_Application_Not_Found()
 		{
-			AddProjectWithFullApplicationForm();
+			_project = AddGetProject();
 
-			await OpenUrlAsync($"/school-application-form/{_project.Id + 1}");
+			await OpenUrlAsync($"/school-application-form/{_project.Id}");
 
-			Document.QuerySelector("#not-found-error-heading").Should().NotBeNull();
+			Document.QuerySelector("#error-heading").Should().NotBeNull();
+			Document.QuerySelector("#error-heading").TextContent.Should().Contain("not found");
 		}
 
 		[Fact]
-		public async void Should_Show_404Error_When_Application_Not_Found()
+		public async void Should_Show_501Error_When_Application_Is_Not_Join_Mat()
 		{
-			AddProjectWithFullApplicationForm();
+			_project = AddGetProject();
+			_application = AddGetApplication(app =>
+				{
+				app.ApplicationId = _project.ApplicationReferenceNumber;
+				app.ApplicationType = "FormMat";
+			});
 
-			var project = AddGetProject();
-			await OpenUrlAsync($"/school-application-form/{project.Id}");
+			await OpenUrlAsync($"/school-application-form/{_project.Id}");
 
-			Document.QuerySelector("#not-found-error-heading").Should().NotBeNull();
+			Document.QuerySelector("#error-heading").Should().NotBeNull();
+			Document.QuerySelector("#error-heading").TextContent.Should().Contain("Not implemented");
+		}
+
+		[Fact]
+		public async void Should_Show_500Error_When_Application_Is_Not_Valid()
+		{
+			_project = AddGetProject();
+			_application = AddGetApplication(app =>
+			{
+				app.ApplicationId = _project.ApplicationReferenceNumber;
+				app.ApplicationType = "JoinMat";
+				app.ApplyingSchools = new List<ApplyingSchool>();
+			});
+
+			await OpenUrlAsync($"/school-application-form/{_project.Id}");
+
+			Document.QuerySelector("#error-heading").Should().NotBeNull();
+			Document.QuerySelector("#error-heading").TextContent.Should().Contain("Internal server error");
 		}
 	}
 }

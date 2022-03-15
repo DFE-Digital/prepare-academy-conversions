@@ -34,12 +34,18 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 			var applicationReference = base.Project.ApplicationReferenceNumber;
 
 			var applicationResponse = await _applicationRepository.GetApplicationByReference(applicationReference);
-			// we only deal with Applications with a single applying school so far
-			if ( (!applicationResponse.Success) || (applicationResponse.Body.ApplyingSchools.Count != 1) )
+
+			if (!applicationResponse.Success)
 			{
-				// handling needed for different errors
-				// 404 logic
 				return NotFound();
+			}
+			if (applicationResponse.Body.ApplicationType != "JoinMat")
+			{
+				return StatusCode(501);
+			}
+			if (applicationResponse.Body.ApplyingSchools.Count != 1)
+			{
+				return StatusCode(500);
 			}
 			var application = applicationResponse.Body;
 
