@@ -2,6 +2,7 @@
 using ApplyToBecome.Data.Models.Application;
 using ApplyToBecome.Data.Models.Establishment;
 using ApplyToBecome.Data.Models.KeyStagePerformance;
+using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Tests.Customisations;
 using AutoFixture;
 using AutoFixture.Dsl;
@@ -132,15 +133,29 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			return establishmentResponse;
 		}
 
+		private ICollection<ApplyingSchool> GenerateSingleItemApplyingSchoolsList()
+		{
+			return new List<ApplyingSchool> { _fixture.Create<ApplyingSchool>() };
+		}
+
 		public Application AddGetApplication(Action<Application> postSetup = null)
 		{
+			// create just 1 applying school as that's all we accept so far
+			_fixture.Customize<Application>(a => a.With(s => s.ApplyingSchools, () => {
+				return new List<ApplyingSchool> { _fixture.Create<ApplyingSchool>() };
+				}
+			));
 			var application = _fixture.Create<Application>();
 			if (postSetup != null)
 			{
 				postSetup(application);
 			}
 
-			_factory.AddGetWithJsonResponse($"/v2/apply-to-become/application/{application.ApplicationId}", application);
+			var response = new ApiV2Wrapper<Application>()
+			{
+				Data = application
+			};
+			_factory.AddGetWithJsonResponse($"/v2/apply-to-become/application/{application.ApplicationId}", response);
 			return application;
 		}
 

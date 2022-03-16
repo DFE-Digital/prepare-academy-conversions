@@ -36,19 +36,24 @@ namespace ApplyToBecome.Data.Tests.Services
 		[AutoData]
 		public async Task Should_get_application_data_by_application_reference(Application applicationMockData)
 		{
+			var responseObject = new ApiV2Wrapper<Application>
+			{
+				Data = applicationMockData
+			};
+
 			_mockHandler.Expect($"/v2/apply-to-become/application/{applicationMockData.ApplicationId}")
-				.Respond("application/json", JsonConvert.SerializeObject(applicationMockData));
+				.Respond("application/json", JsonConvert.SerializeObject(responseObject));
 
-			var application = await _applicationRepository.GetApplicationByReference(applicationMockData.ApplicationId);
+			var applicationResponse = await _applicationRepository.GetApplicationByReference(applicationMockData.ApplicationId);
 
-			application.Body.Should().BeEquivalentTo(applicationMockData); // every field present in applicationMockData should copied to application (but not vice versa)
+			applicationResponse.Success.Should().BeTrue();
+			applicationResponse.Body.Should().BeEquivalentTo(applicationMockData);
 		}
 
 		[Fact]
 		public async Task Should_return_not_success_when_application_not_found()
 		{
-			// CML - API responses need to be analysed
-			// might need more than just Success and !Success 
+			// API responses might need more than just Success and !Success 
 			var applicationReference = "123a"; 
 			_mockHandler.Expect($"/v2/apply-to-become/application/{applicationReference}")
 				.Respond(HttpStatusCode.NotFound);

@@ -13,14 +13,14 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 {
 	public static class ExtensionMethods
 	{		
-		public static void SetDeficitSurplusStatuses(this ApplyingSchool application, string status)
+		public static void SetDeficitStatus(this ApplyingSchool application, bool deficit)
 		{
-			application.PreviousFinancialYear.CapitalStatus = status;
-			application.PreviousFinancialYear.RevenueStatus = status;
-			application.CurrentFinancialYear.CapitalStatus = status;
-			application.CurrentFinancialYear.RevenueStatus = status;
-			application.NextFinancialYear.CapitalStatus = status;
-			application.NextFinancialYear.RevenueStatus = status;
+			application.PreviousFinancialYear.CapitalIsDeficit = deficit;
+			application.PreviousFinancialYear.RevenueIsDeficit = deficit;
+			application.CurrentFinancialYear.CapitalIsDeficit = deficit;
+			application.CurrentFinancialYear.RevenueIsDeficit = deficit;
+			application.NextFinancialYear.CapitalIsDeficit = deficit;
+			application.NextFinancialYear.RevenueIsDeficit = deficit;
 		}
 	}
 
@@ -39,46 +39,67 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 		}
 
 		[Fact]
-		public void Constructor_Sets_Negative_Values_For_Deficit_Values()
+		public void Constructor_Sets_All_Fields_When_Present()
 		{
 			var fixture = new Fixture();
+			var lease = fixture.Create<Lease>();
+			var loan = fixture.Create<Loan>();
 			var application = fixture.Create<ApplyingSchool>();
-			application.SetDeficitSurplusStatuses("Deficit");
-			application.ExistingLoans = null;
-			application.ExistingLeases = null;
+			application.SetDeficitStatus(false);
+			application.SchoolLoans = new List<Loan>() { loan };
+			application.SchoolLeases = new List<Lease>() { lease };
 			application.FinanceOngoingInvestigations = false;
-			application.PreviousFinancialYear.CapitalCarryForward = 1000;
-			application.PreviousFinancialYear.RevenueCarryForward = 10000;
-			application.CurrentFinancialYear.CapitalCarryForward = 2000;
-			application.CurrentFinancialYear.RevenueCarryForward = 20000;
-			application.NextFinancialYear.CapitalCarryForward = 3000;
-			application.NextFinancialYear.RevenueCarryForward = 30000;
 
 			var formSection = new FinanceSection(application);
 
-			var expectedPreviousFinancialYearFields = new[] 
+			var expectedPreviousFinancialYearFields = new[]
 			{
 				new FormField("End of previous financial year", application.PreviousFinancialYear.FYEndDate?.ToUkDateString()),
-				new FormField("Revenue carry forward at the end of the previous financial year (31 March)", $"-{application.PreviousFinancialYear.RevenueCarryForward.ToMoneyString(true)}"),
-				new FormField("Surplus or deficit?",  application.PreviousFinancialYear.RevenueStatus),
-				new FormField("Capital carry forward at the end of the previous financial year (31 March)", $"-{application.PreviousFinancialYear.CapitalCarryForward.ToMoneyString(true)}"),
-				new FormField("Surplus or deficit?",  application.PreviousFinancialYear.CapitalStatus)
+				new FormField("Revenue carry forward at the end of the previous financial year (31 March)", application.PreviousFinancialYear.RevenueCarryForward.ToMoneyString(true)),
+				new FormField("Surplus or deficit?",  application.PreviousFinancialYear.RevenueIsDeficit.ToSurplusDeficitString()),
+				new FormField("Capital carry forward at the end of the previous financial year (31 March)", application.PreviousFinancialYear.CapitalCarryForward.ToMoneyString(true)),
+				new FormField("Surplus or deficit?",  application.PreviousFinancialYear.CapitalIsDeficit.ToSurplusDeficitString())
 			};
 			var expectedCurrentFinancialYearFields = new[]
 			{
 				new FormField("End of current financial year", application.CurrentFinancialYear.FYEndDate?.ToUkDateString()),
-				new FormField("Forecasted revenue carry forward at the end of the current financial year (31 March)", $"-{application.CurrentFinancialYear.RevenueCarryForward.ToMoneyString(true)}"),
-				new FormField("Surplus or deficit?", application.CurrentFinancialYear.RevenueStatus),
-				new FormField("Forecasted capital carry forward at the end of the current financial year (31 March)", $"-{application.CurrentFinancialYear.CapitalCarryForward.ToMoneyString(true)}"),
-				new FormField("Surplus or deficit?", application.CurrentFinancialYear.CapitalStatus)
+				new FormField("Forecasted revenue carry forward at the end of the current financial year (31 March)", application.CurrentFinancialYear.RevenueCarryForward.ToMoneyString(true)),
+				new FormField("Surplus or deficit?", application.CurrentFinancialYear.RevenueIsDeficit.ToSurplusDeficitString()),
+				new FormField("Forecasted capital carry forward at the end of the current financial year (31 March)", application.CurrentFinancialYear.CapitalCarryForward.ToMoneyString(true)),
+				new FormField("Surplus or deficit?", application.CurrentFinancialYear.CapitalIsDeficit.ToSurplusDeficitString())
 			};
 			var expectedNextFinancialYearFields = new[]
 			{
 				new FormField("End of next financial year", application.NextFinancialYear.FYEndDate?.ToUkDateString()),
-				new FormField("Forecasted revenue carry forward at the end of the next financial year (31 March)", $"-{application.NextFinancialYear.RevenueCarryForward.ToMoneyString(true)}"),
-				new FormField("Surplus or deficit?", application.NextFinancialYear.RevenueStatus),
-				new FormField("Forecasted capital carry forward at the end of the next financial year (31 March)", $"-{application.NextFinancialYear.CapitalCarryForward.ToMoneyString(true)}"),
-				new FormField("Surplus or deficit?", application.NextFinancialYear.CapitalStatus)
+				new FormField("Forecasted revenue carry forward at the end of the next financial year (31 March)", application.NextFinancialYear.RevenueCarryForward.ToMoneyString(true)),
+				new FormField("Surplus or deficit?", application.NextFinancialYear.RevenueIsDeficit.ToSurplusDeficitString()),
+				new FormField("Forecasted capital carry forward at the end of the next financial year (31 March)", application.NextFinancialYear.CapitalCarryForward.ToMoneyString(true)),
+				new FormField("Surplus or deficit?", application.NextFinancialYear.CapitalIsDeficit.ToSurplusDeficitString())
+			};
+			var expectedLoansFields = new[]
+			{
+				new FormField("Are there any existing loans?", "Yes"),
+				new FormField("Total amount", loan.SchoolLoanAmount.ToMoneyString(true)),
+				new FormField("Purpose of the loan", loan.SchoolLoanPurpose),
+				new FormField("Loan provider", loan.SchoolLoanProvider),
+				new FormField("Interest rate", loan.SchoolLoanInterestRate),
+				new FormField("Schedule of repayment", loan.SchoolLoanSchedule)
+			};
+
+			var expectedFinancialLeasesFields = new[]
+			{
+				new FormField("Are there any existing leases?", "Yes"),
+				new FormField("Details of the term of the finance lease agreement", lease.SchoolLeaseTerm),
+				new FormField("Repayment value", lease.SchoolLeaseRepaymentValue.ToMoneyString(true)),
+				new FormField("Interest rate chargeable", lease.SchoolLeaseInterestRate.ToPercentage()),
+				new FormField("Value of payments made to date", lease.SchoolLeasePaymentToDate.ToMoneyString(true)),
+				new FormField("What was the finance lease for?", lease.SchoolLeasePurpose),
+				new FormField("Value of the assests at the start of the finance lease agreement", lease.SchoolLeaseValueOfAssets),
+				new FormField("Who is responsible for the insurance, repair and maintenance of the assets covered?", lease.SchoolLeaseResponsibilityForAssets)
+			};
+			var expectedFinancialInvestigationsFields = new[]
+			{
+				new FormField("Are there any financial investigations ongoing at the school?", "No")
 			};
 
 			formSection.Heading.Should().Be("Finances");
@@ -90,6 +111,12 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			subSections[1].Fields.Should().BeEquivalentTo(expectedCurrentFinancialYearFields);
 			subSections[2].Heading.Should().Be("Next financial year");
 			subSections[2].Fields.Should().BeEquivalentTo(expectedNextFinancialYearFields);
+			subSections[3].Heading.Should().Be("Loans");
+			subSections[3].Fields.Should().BeEquivalentTo(expectedLoansFields);
+			subSections[4].Heading.Should().Be("Financial leases");
+			subSections[4].Fields.Should().BeEquivalentTo(expectedFinancialLeasesFields);
+			subSections[5].Heading.Should().Be("Financial investigations");
+			subSections[5].Fields.Should().BeEquivalentTo(expectedFinancialInvestigationsFields);
 
 		}
 
@@ -97,10 +124,12 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 		public void Constructor_Doesnt_Set_Conditional_Rows_Following_No_Answers_And_Surplus_Answers()
 		{
 			var fixture = new Fixture();
+			var lease = fixture.Create<Lease>();
+			var loan = fixture.Create<Loan>();
 			var application = fixture.Create<ApplyingSchool>();
-			application.SetDeficitSurplusStatuses("Surplus");
-			application.ExistingLoans = null;
-			application.ExistingLeases = null;
+			application.SetDeficitStatus(false);
+			application.SchoolLoans = null;
+			application.SchoolLeases = null;
 			application.FinanceOngoingInvestigations = false;
 
 			var formSection = new FinanceSection(application);
@@ -109,25 +138,25 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			{
 				new FormField("End of previous financial year", application.PreviousFinancialYear.FYEndDate?.ToUkDateString()),
 				new FormField("Revenue carry forward at the end of the previous financial year (31 March)", application.PreviousFinancialYear.RevenueCarryForward.ToMoneyString(true)),
-				new FormField("Surplus or deficit?",  application.PreviousFinancialYear.RevenueStatus),
+				new FormField("Surplus or deficit?",  application.PreviousFinancialYear.RevenueIsDeficit.ToSurplusDeficitString()),
 				new FormField("Capital carry forward at the end of the previous financial year (31 March)", application.PreviousFinancialYear.CapitalCarryForward.ToMoneyString(true)),
-				new FormField("Surplus or deficit?",  application.PreviousFinancialYear.CapitalStatus)
+				new FormField("Surplus or deficit?",  application.PreviousFinancialYear.CapitalIsDeficit.ToSurplusDeficitString())
 			};
 			var expectedCurrentFinancialYearFields = new[]
 			{
 				new FormField("End of current financial year", application.CurrentFinancialYear.FYEndDate?.ToUkDateString()),
 				new FormField("Forecasted revenue carry forward at the end of the current financial year (31 March)", application.CurrentFinancialYear.RevenueCarryForward.ToMoneyString(true)),
-				new FormField("Surplus or deficit?", application.CurrentFinancialYear.RevenueStatus),
+				new FormField("Surplus or deficit?", application.CurrentFinancialYear.RevenueIsDeficit.ToSurplusDeficitString()),
 				new FormField("Forecasted capital carry forward at the end of the current financial year (31 March)", application.CurrentFinancialYear.CapitalCarryForward.ToMoneyString(true)),
-				new FormField("Surplus or deficit?", application.CurrentFinancialYear.CapitalStatus)
+				new FormField("Surplus or deficit?", application.CurrentFinancialYear.CapitalIsDeficit.ToSurplusDeficitString())
 			};
 			var expectedNextFinancialYearFields = new[]
 			{
 				new FormField("End of next financial year", application.NextFinancialYear.FYEndDate?.ToUkDateString()),
 				new FormField("Forecasted revenue carry forward at the end of the next financial year (31 March)", application.NextFinancialYear.RevenueCarryForward.ToMoneyString(true)),
-				new FormField("Surplus or deficit?", application.NextFinancialYear.RevenueStatus),
+				new FormField("Surplus or deficit?", application.NextFinancialYear.RevenueIsDeficit.ToSurplusDeficitString()),
 				new FormField("Forecasted capital carry forward at the end of the next financial year (31 March)", application.NextFinancialYear.CapitalCarryForward.ToMoneyString(true)),
-				new FormField("Surplus or deficit?", application.NextFinancialYear.CapitalStatus)
+				new FormField("Surplus or deficit?", application.NextFinancialYear.CapitalIsDeficit.ToSurplusDeficitString())
 			};
 			var expectedLoansFields = new[]
 			{

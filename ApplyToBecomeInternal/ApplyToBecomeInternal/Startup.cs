@@ -104,7 +104,7 @@ namespace ApplyToBecomeInternal
 			app.UseSecurityHeaders(
 				SecureHeadersDefinitions.SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment()));
 
-			app.UseStatusCodePagesWithReExecute("/Errors/{0}");
+			app.UseStatusCodePagesWithReExecute("/Errors", "?statusCode={0}");
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();

@@ -4,13 +4,7 @@ namespace ApplyToBecomeInternal.Extensions
 	{
 		public static string ToYesNoString(this bool value) => value ? "Yes" : "No";
 		public static string ToYesNoString(this bool? value) => value.HasValue ? value.Value ? "Yes" : "No" : "";
-	}
-
-	public static class IntExtensions // CML put class into its own file if we need these, but expecting to delete
-	{
-		public static string ToYesNoString(this int value) => $"{value} needs conversion to Y/N";
-		public static string ToYesNoString(this int? value) => $"{value} needs conversion to Y/N";
-		public static string ToSurplusDeficitString(this int value) => $"{value} needs conversion to surplus/deficit";
-		public static string ToSurplusDeficitString(this int? value) => $"{value} needs conversion to surplus/deficit";
+		public static string ToSurplusDeficitString(this bool value) => value ? "Deficit" : "Surplus";
+		public static string ToSurplusDeficitString(this bool? value) => value.HasValue ? value.Value ? "Deficit" : "Surplus" : "";
 	}
 }

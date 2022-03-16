@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using ApplyToBecomeInternal.Tests.TestHelpers;
 
 namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 {
@@ -371,7 +372,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			Document.QuerySelector("#key-stage-4-additional-information").TextContent.Should().Be(project.KeyStage4PerformanceAdditionalInformation);
 
-			KeyStage4PerformanceIntegrationTests.AssertKS4DataIsDisplayed(keyStage4Response, Document);
+			KeyStageHelper.AssertKS4DataIsDisplayed(keyStage4Response, Document);
 		}
 
 		[Fact]

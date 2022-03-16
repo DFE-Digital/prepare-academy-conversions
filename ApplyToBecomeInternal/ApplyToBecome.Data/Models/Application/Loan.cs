@@ -9,7 +9,7 @@ namespace ApplyToBecome.Data.Models.Application
 		public decimal SchoolLoanAmount { get; set; }
 		public string SchoolLoanPurpose { get; set; }
 		public string SchoolLoanProvider { get; set; }
-		public decimal SchoolLoanInterestRate { get; set; }
+		public string SchoolLoanInterestRate { get; set; }
 		public string SchoolLoanSchedule { get; set; }
 	}
 }
