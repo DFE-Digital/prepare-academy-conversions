@@ -6,13 +6,14 @@ namespace ApplyToBecome.Data.Models.Application
 	public class Application
 	{
 		public string ApplicationId { get; set; }
-		public string TrustName { get; set; } // CML - application to join (trust name) - hopefully API will use application.account.accountId to get the name
+		public string ApplicationType { get; set; }
+		public string TrustName { get; set; } // application to join (trust name) - hopefully API will use application.account.accountId to get the name
 		public string ApplicationLeadAuthorName { get; set; }
-		public Link TrustConsentEvidenceDocument { get; set; }
+		public string TrustConsentEvidenceDocumentLink { get; set; }
 		public bool ChangesToTrust { get; set; }
 		public string ChangesToTrustExplained { get; set; }
 		public bool ChangesToLaGovernance { get; set; }
-		public string ChangesToLAGovernanceExplained { get; set; }
-		public ApplyingSchool SchoolApplication { get; set; } // CML change to use a List now to allow for FAMs which will have >1 school?
+		public string ChangesToLaGovernanceExplained { get; set; }
+		public ICollection<ApplyingSchool> ApplyingSchools { get; set; }
 	}
 }

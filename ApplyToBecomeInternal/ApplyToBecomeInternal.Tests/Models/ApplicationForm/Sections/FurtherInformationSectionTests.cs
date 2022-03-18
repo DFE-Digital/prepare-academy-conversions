@@ -30,8 +30,8 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 				new FormField("Is your school linked to a diocese?", "No"),
 				new FormField("Name of diocese?", application.SchoolFaithSchoolDioceseName),
 				new LinkFormField("Upload a letter of consent from the diocese",
-					application.DiocesePermissionEvidenceDocument.Name,
-					application.DiocesePermissionEvidenceDocument.Url)
+					"DiocesePermissionEvidenceDocument",
+					application.DiocesePermissionEvidenceDocumentLink)
 			};
 
 			throw new NotImplementedException();
@@ -64,9 +64,9 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 				new FormField("Is the school supported by a foundation, trust or other body (e.g. parish council) that appoints foundation governors?", "No"),
 				new FormField("Does the school currently have an exemption from providing broadly Christian collective worship issued by the local Standing Committee on Religious Education (SACRE)?", "No"),
 				new FormField("Please provide a list of your main feeder schools", application.SchoolAdFeederSchools),
-				new LinkFormField("The school's Governing Body must have passed a resolution to apply to convert to academy status. Upload a copy of the school’s consent to converting and joining the trust.", 
-					application.GoverningBodyConsentEvidenceDocument.Name, 
-					application.GoverningBodyConsentEvidenceDocument.Url),
+				new LinkFormField("The school's Governing Body must have passed a resolution to apply to convert to academy status. Upload a copy of the school’s consent to converting and joining the trust.",
+					"Governing body resolution document", 
+					application.GoverningBodyConsentEvidenceDocumentLink),
 				new FormField("Has an equalities impact assessment been carried out and considered by the governing body?", "No"),
 				new FormField("Do you want to add any further information?", "No")
 			};

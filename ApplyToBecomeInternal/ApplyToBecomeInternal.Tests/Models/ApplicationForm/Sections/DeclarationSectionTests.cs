@@ -14,8 +14,8 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 		{
 			var application = new ApplyingSchool
 			{
-				SchoolApplicantDeclarationIsApplicationCorrect = true,
-				SchoolDeclarationSignedByName = "Garth Brown"
+				DeclarationBodyAgree = true,
+				DeclarationSignedByName = "Garth Brown"
 			};
 
 			var formSection = new DeclarationSection(application);

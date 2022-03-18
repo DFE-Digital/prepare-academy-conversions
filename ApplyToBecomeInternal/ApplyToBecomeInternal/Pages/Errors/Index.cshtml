@@ -1,5 +1,5 @@
 ﻿@page
-@model ApplyToBecomeInternal.Pages.Errors._404Model
+@model ApplyToBecomeInternal.Pages.Errors.IndexModel
 @inject Microsoft.Extensions.Configuration.IConfiguration _configuration
 @{
 }
@@ -7,7 +7,7 @@
 	<main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
 		<div class="govuk-grid-row">
 			<div class="govuk-grid-column-two-thirds">
-				<h1 class="govuk-heading-l" id="not-found-error-heading">Page not found</h1>
+				<h1 class="govuk-heading-l" id="error-heading">@Model.ErrorMessage</h1>
 				<p class="govuk-body">
 					If you typed the web address, check it is correct.
 				</p>
