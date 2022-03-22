@@ -27,7 +27,7 @@
 	<ol class="gem-c-contents-list__list">
 		@foreach (var formSection in Model.Sections)
 		{
-			<li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed"> <a class="gem-c-contents-list__link govuk-link" href="#@GenerateSectionId(formSection.Heading)">@formSection.Heading</a></li>
+			<li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed"> <a id="@GenerateSectionId(formSection.Heading)_link" class="gem-c-contents-list__link govuk-link" href="#@GenerateSectionId(formSection.Heading)">@formSection.Heading</a></li>
 		}
 	</ol>
 </nav>
