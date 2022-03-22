@@ -4,14 +4,6 @@
 	ViewData["Title"] = "School application form";
 }
 
-@functions 
-{
-	string GenerateSectionId(string heading)
-	{
-		return heading.Replace(" ", "_");
-	}
-}
-
 @section BeforeMain
 {
 	<a asp-page="@Links.ProjectList.Index.Page" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
@@ -27,7 +19,7 @@
 	<ol class="gem-c-contents-list__list">
 		@foreach (var formSection in Model.Sections)
 		{
-			<li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed"> <a id="@GenerateSectionId(formSection.Heading)_link" class="gem-c-contents-list__link govuk-link" href="#@GenerateSectionId(formSection.Heading)">@formSection.Heading</a></li>
+			<li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed"> <a id="@Model.GenerateId(formSection.Heading)_link" class="gem-c-contents-list__link govuk-link" href="#@Model.GenerateId(formSection.Heading)">@formSection.Heading</a></li>
 		}
 	</ol>
 </nav>
@@ -36,7 +28,7 @@
 	<div class="govuk-grid-column-full">
 		@foreach (var formSection in Model.Sections)
 		{
-			<h2 id="@GenerateSectionId(formSection.Heading)" class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-36">@formSection.Heading</h2>
+			<h2 id="@Model.GenerateId(formSection.Heading)" class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-36">@formSection.Heading</h2>
 
 			@if (formSection.Fields.Any())
 			{
