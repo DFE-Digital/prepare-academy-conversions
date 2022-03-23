@@ -258,93 +258,42 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 			Document.QuerySelector("#error-heading").TextContent.Should().Contain("Internal server error");
 		}
 
-		[Fact]
-		public async void Validate_Quicklinks_On_SchoolApplicationForm()
+		[Theory]
+		[InlineData("Overview", "#Overview")]
+		[InlineData("About the conversion", "#About_the_conversion")]
+		[InlineData("Further information", "#Further_information")]
+		[InlineData("Finances", "#Finances")]
+		[InlineData("Future pupil numbers", "#Future_pupil_numbers")]
+		[InlineData("Land and buildings", "#Land_and_buildings")]
+		[InlineData("Pre-opening support grant", "#Pre-opening_support_grant")]
+		[InlineData("Consultation", "#Consultation")]
+		[InlineData("Declaration", "#Declaration")]
+		public async void Should_Contain_Contents_With_Links_To_Correct_Sections(string sectionHeading, string id)
 		{
+			// Arrange
 			AddProjectWithFullApplicationForm();
 
+			// Act
 			await OpenUrlAsync($"/school-application-form/{_project.Id}");
+			
+			// Assert
+			// check the link text and href
+			var sectionLink = Document.QuerySelector($"{id}_link");
+			sectionLink.TextContent.Should().Be(sectionHeading);
+			
+			var linkAttributeValue = sectionLink.Attributes
+				.Where(a => a.Name == "href")
+				.First().Value;
 
-			Document.QuerySelectorAll("#Overview_link")
-				.Where(contents => contents.InnerHtml == "Overview")
-				.Should()
-				.NotBeEmpty();
-			Document.QuerySelectorAll("#Overview_link")
-				.First().Attributes.Where(a => a.Value == "#Overview")
-				.Should()
-				.NotBeEmpty();
+			linkAttributeValue.Should().Be(id);
 
-			Document.QuerySelectorAll("#About_the_conversion_link")
-				.Where(contents => contents.InnerHtml == "About the conversion")
-				.Should()
-				.NotBeEmpty();
-			Document.QuerySelectorAll("#About_the_conversion_link")
-				.First().Attributes.Where(a => a.Value == "#About_the_conversion")
-				.Should()
-				.NotBeEmpty();
+			// check the link is associated with the correct section header
+			Document.QuerySelectorAll("h2")
+				.Where(contents => contents.InnerHtml == sectionHeading)
+				.First().Attributes.Where(a => a.Name == "id")
+				.First().Value
+				.Should().Be(linkAttributeValue.Replace("#", ""));
 
-			Document.QuerySelectorAll("#Further_information_link")
-				.Where(contents => contents.InnerHtml == "Further information")
-				.Should()
-				.NotBeEmpty();
-			Document.QuerySelectorAll("#Further_information_link")
-				.First().Attributes.Where(a => a.Value == "#Further_information")
-				.Should()
-				.NotBeEmpty();
-
-			Document.QuerySelectorAll("#Finances_link")
-				.Where(contents => contents.InnerHtml == "Finances")
-				.Should()				
-				.NotBeEmpty();
-			Document.QuerySelectorAll("#Finances_link")
-				.First().Attributes.Where(a => a.Value == "#Finances")
-				.Should()
-				.NotBeEmpty();
-
-			Document.QuerySelectorAll("#Future_pupil_numbers_link")
-				.Where(contents => contents.InnerHtml == "Future_pupil_numbers")
-				.Should()
-				.NotBeEmpty();
-			Document.QuerySelectorAll("#Future_pupil_numbers_link")
-				.First().Attributes.Where(a => a.Value == "#Future_pupil_numbers")
-				.Should()
-				.NotBeEmpty();
-
-			Document.QuerySelectorAll("#Land_and_buildings_link")
-				.Where(contents => contents.InnerHtml == "Land and buildings")
-				.Should()
-				.NotBeEmpty();
-			Document.QuerySelectorAll("#Land_and_buildings_link")
-				.First().Attributes.Where(a => a.Value == "#Land_and_buildings")
-				.Should()
-				.NotBeEmpty();
-
-			Document.QuerySelectorAll("#Pre-opening_support_grant_link")
-				.Where(contents => contents.InnerHtml == "Pre-opening support grant")
-				.Should()
-				.NotBeEmpty();
-			Document.QuerySelectorAll("#Pre-opening_support_grant_link")
-				.First().Attributes.Where(a => a.Value == "#Pre-opening_support_grant")
-				.Should()
-				.NotBeEmpty();
-
-			Document.QuerySelectorAll("#Consultation_link")
-				.Where(contents => contents.InnerHtml == "Consultation")
-				.Should()
-				.NotBeEmpty();
-			Document.QuerySelectorAll("#Consultation_link")
-				.First().Attributes.Where(a => a.Value == "#Consultation")
-				.Should()
-				.NotBeEmpty();
-
-			Document.QuerySelectorAll("#Declaration_link")
-				.Where(contents => contents.InnerHtml == "Declaration")
-				.Should()
-				.NotBeEmpty();
-			Document.QuerySelectorAll("#Declaration_link")
-				.First().Attributes.Where(a => a.Value == "#Declaration")
-				.Should()
-				.NotBeEmpty();
 		}
 	}
 }
