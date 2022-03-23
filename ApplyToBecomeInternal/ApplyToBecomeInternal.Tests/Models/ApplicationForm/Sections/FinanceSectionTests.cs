@@ -95,7 +95,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 				new FormField("Value of payments made to date", lease.SchoolLeasePaymentToDate.ToMoneyString(true)),
 				new FormField("What was the finance lease for?", lease.SchoolLeasePurpose),
 				new FormField("Value of the assests at the start of the finance lease agreement", lease.SchoolLeaseValueOfAssets),
-				new FormField("Who is responsible for the insurance, repair and maintenance of the assets covered?", lease.SchoolLeaseResponsibilityForAssets)
+				new FormField("Who is responsible for the insurance, repair and maintenance of the assets covered?", lease.SchoolLeaseResponsibleForAssets)
 			};
 			var expectedFinancialInvestigationsFields = new[]
 			{
