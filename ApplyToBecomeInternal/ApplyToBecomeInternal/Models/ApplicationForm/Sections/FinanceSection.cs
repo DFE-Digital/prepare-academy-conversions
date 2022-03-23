@@ -82,7 +82,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 					leaseFields.Add(new FormField("Value of payments made to date", lease.SchoolLeasePaymentToDate.ToMoneyString(true)));
 					leaseFields.Add(new FormField("What was the finance lease for?", lease.SchoolLeasePurpose));
 					leaseFields.Add(new FormField("Value of the assests at the start of the finance lease agreement", lease.SchoolLeaseValueOfAssets));
-					leaseFields.Add(new FormField("Who is responsible for the insurance, repair and maintenance of the assets covered?", lease.SchoolLeaseResponsibilityForAssets));
+					leaseFields.Add(new FormField("Who is responsible for the insurance, repair and maintenance of the assets covered?", lease.SchoolLeaseResponsibleForAssets));
 				}
 			}
 			return leaseFields;
