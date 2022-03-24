@@ -1,0 +1,57 @@
+﻿@page "/school-application-form/school-application-tab/{id:int}"
+@model ApplyToBecomeInternal.Pages.ApplicationForm.SchoolApplicationTab
+@{
+	ViewData["Title"] = "School application form";
+}
+
+@section BeforeMain
+{
+	<a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.TaskList.Index.BackText</a>
+}
+
+<partial name="_SchoolApplicationHeader" model="Model.Project"/>
+
+
+
+<nav class="gem-c-contents-list" aria-label="Pages in this guide" role="navigation" data-module="gem-track-click"> <h2 class="gem-c-contents-list__title"> Contents</h2>
+    <ol class="gem-c-contents-list__list">
+      <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed"> <a class="gem-c-contents-list__link govuk-link" href="#Overview"> Overview</a></li> 
+        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed"> <a class="gem-c-contents-list__link govuk-link" href="#About">About the conversion</a></li>
+        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed"> <a class="gem-c-contents-list__link govuk-link" href="#Further">Further information</a></li>
+        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed"> <a class="gem-c-contents-list__link govuk-link" href="#Finances">Finances</a></li>
+        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed"> <a class="gem-c-contents-list__link govuk-link" href="#Future">Future pupil numbers</a></li>
+        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed"> <a class="gem-c-contents-list__link govuk-link" href="#Land">Land and buildings</a></li>
+        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed"> <a class="gem-c-contents-list__link govuk-link" href="#Pre-opening">Pre-opening support grant</a></li>
+        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed"> <a class="gem-c-contents-list__link govuk-link" href="#Consultation">Consultation</a></li>
+        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed"> <a class="gem-c-contents-list__link govuk-link" href="#Declaration">Declaration</a></li>
+    </ol></nav>
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-full">
+		@foreach (var formSection in Model.Sections)
+		{
+            <a name=@formSection.Heading></a>
+            <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">@formSection.Heading</h2>
+			@if (formSection.Fields.Any())
+			{
+				<dl class="govuk-summary-list">
+					@foreach (var sectionField in formSection.Fields)
+					{
+						<partial name="_ApplicationFormField" model="sectionField" />
+					}
+				</dl>
+			}
+
+			@foreach (var subSection in formSection.SubSections)
+			{
+				<h3 class="govuk-heading-m govuk-!-margin-bottom govuk-!-font-size-24">@subSection.Heading</h3>
+				<dl class="govuk-summary-list">
+					@foreach (var sectionField in subSection.Fields)
+					{
+						<partial name="_ApplicationFormField" model="sectionField" />
+					}
+				</dl>
+			}
+		}
+	</div>
+</div>

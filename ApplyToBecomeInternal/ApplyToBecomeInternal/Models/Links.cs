@@ -34,6 +34,7 @@ namespace ApplyToBecomeInternal.Models
 		public static class SchoolApplicationForm
 		{
 			public static LinkItem Index = new LinkItem { Page = "/ApplicationForm/Index" };
+			public static LinkItem SchoolApplicationTab = new LinkItem { Page = "/ApplicationForm/SchoolApplicationTab" };
 		}
 
 		public static class LocalAuthorityInformationTemplateSection
