@@ -49,8 +49,7 @@ describe('86339 validate advisory board urls', () => {
         cy.get('h1').contains('Download project template')
     });
 
-    // Pendning fix on tooltip
-    it.skip('TC06: Should generate correct error message if and when text  is typed in date field', () => {
+    it('TC06: Should generate correct error message if and when text  is typed in date field', () => {
         cy.visit(selectedSchool + '/confirm-local-authority-information-template-dates')
         cy.get('[data-test="change-la-info-template-sent-date"]').click()
         cy.get('[id="la-info-template-sent-date-day"]').clear().type('a')

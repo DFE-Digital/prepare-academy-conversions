@@ -64,5 +64,10 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 
 			return result;
 		}
+
+		public string GenerateId(string heading)
+		{
+			return heading.Replace(" ", "_");
+		}
 	}
 }
