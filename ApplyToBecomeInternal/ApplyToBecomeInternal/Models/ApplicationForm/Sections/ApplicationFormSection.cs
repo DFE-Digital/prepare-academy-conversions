@@ -7,7 +7,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 {
 	public class ApplicationFormSection : BaseFormSection
 	{
-		public ApplicationFormSection(Application application) : base("School application form", GenerateBaseFields(application))
+		public ApplicationFormSection(Application application) : base("Overview", GenerateBaseFields(application))
 		{
 			SubSections = new[] { 
 				new FormSubSection("Details", GenerateDetailsFields(application))
@@ -16,7 +16,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 
 		private static IEnumerable<FormField> GenerateBaseFields(Application application) =>
 			new[] {
-				new FormField("Application to join", $"{application.TrustName} with {application.ApplyingSchools.First().SchoolName}"),
+				new FormField("Application to join", $"{application.Name} with {application.ApplyingSchools.First().SchoolName}"),
 				new FormField("Application reference", application.ApplicationId),
 				new FormField("Lead applicant", application.ApplicationLeadAuthorName),
 			};
@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 		private static IEnumerable<FormField> GenerateDetailsFields(Application application)
 		{
 			var formFields = new List<FormField> {
-				new FormField("Trust name", application.TrustName),
+				new FormField("Trust name", application.Name),
 				new LinkFormField("Upload evidence that the trust consents to the school joining", "MadeUpDocName", application.TrustConsentEvidenceDocumentLink)
 			};
 			formFields.Add(new FormField("Will there be any changes to the governance of the trust due to the school joining?", application.ChangesToTrust.ToYesNoString()));

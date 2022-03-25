@@ -34,19 +34,19 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 
 			var expectedFields = new[]
 			{
-				new FormField("Application to join", $"{application.TrustName} with {application.ApplyingSchools.First().SchoolName}"),
+				new FormField("Application to join", $"{application.Name} with {application.ApplyingSchools.First().SchoolName}"),
 				new FormField("Application reference", application.ApplicationId),
 				new FormField("Lead applicant", application.ApplicationLeadAuthorName),
 			};
 
 			var expectedSubSectionFields = new[] {
-				new FormField("Trust name", application.TrustName),
+				new FormField("Trust name", application.Name),
 				new LinkFormField("Upload evidence that the trust consents to the school joining", "MadeUpDocName", application.TrustConsentEvidenceDocumentLink),
 				new FormField("Will there be any changes to the governance of the trust due to the school joining?", "No"),
 				new FormField("Will there be any changes at a local level due to this school joining?", "No"),
 			};
 
-			formSection.Heading.Should().Be("School application form");
+			formSection.Heading.Should().Be("Overview");
 			formSection.Fields.Should().BeEquivalentTo(expectedFields);
 			formSection.SubSections.Should().HaveCount(1);
 			formSection.SubSections.First().Heading.Should().Be("Details");

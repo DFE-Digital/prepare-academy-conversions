@@ -12,6 +12,6 @@ namespace ApplyToBecome.Data.Models.Application
 		public decimal SchoolLeasePaymentToDate { get; set; }
 		public string SchoolLeasePurpose { get; set; }
 		public string SchoolLeaseValueOfAssets { get; set; }
-		public string SchoolLeaseResponsibilityForAssets { get; set; }
+		public string SchoolLeaseResponsibleForAssets { get; set; }
 	}
 }
