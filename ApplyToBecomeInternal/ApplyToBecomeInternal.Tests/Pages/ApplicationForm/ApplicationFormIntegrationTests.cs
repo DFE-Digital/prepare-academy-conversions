@@ -257,5 +257,43 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 			Document.QuerySelector("#error-heading").Should().NotBeNull();
 			Document.QuerySelector("#error-heading").TextContent.Should().Contain("Internal server error");
 		}
+
+		[Theory]
+		[InlineData("Overview", "#Overview")]
+		[InlineData("About the conversion", "#About_the_conversion")]
+		[InlineData("Further information", "#Further_information")]
+		[InlineData("Finances", "#Finances")]
+		[InlineData("Future pupil numbers", "#Future_pupil_numbers")]
+		[InlineData("Land and buildings", "#Land_and_buildings")]
+		[InlineData("Pre-opening support grant", "#Pre-opening_support_grant")]
+		[InlineData("Consultation", "#Consultation")]
+		[InlineData("Declaration", "#Declaration")]
+		public async void Should_Contain_Contents_With_Links_To_Correct_Sections(string sectionHeading, string id)
+		{
+			// Arrange
+			AddProjectWithFullApplicationForm();
+
+			// Act
+			await OpenUrlAsync($"/school-application-form/{_project.Id}");
+			
+			// Assert
+			// check the link text and href
+			var sectionLink = Document.QuerySelector($"{id}_link");
+			sectionLink.TextContent.Should().Be(sectionHeading);
+			
+			var linkAttributeValue = sectionLink.Attributes
+				.Where(a => a.Name == "href")
+				.First().Value;
+
+			linkAttributeValue.Should().Be(id);
+
+			// check the link is associated with the correct section header
+			Document.QuerySelectorAll("h2")
+				.Where(contents => contents.InnerHtml == sectionHeading)
+				.First().Attributes.Where(a => a.Name == "id")
+				.First().Value
+				.Should().Be(linkAttributeValue.Replace("#", ""));
+
+		}
 	}
 }

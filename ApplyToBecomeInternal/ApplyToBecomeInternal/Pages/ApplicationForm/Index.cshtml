@@ -9,14 +9,27 @@
 	<a asp-page="@Links.ProjectList.Index.Page" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
 }
 
-<partial name="_ProjectHeader" model="Model.Project"/>
+<partial name="_ProjectHeader" model="Model.Project" />
+
+<p class="govuk-body-s"><a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="application" id="@("application-form-link")">Open school application form in a new tab</a></p>
+<h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">School application form</h2>
+
+<nav class="gem-c-contents-list" aria-label="Pages in this guide" role="navigation" data-module="gem-track-click">
+	<h2 class="gem-c-contents-list__title">Contents</h2>
+	<ol class="gem-c-contents-list__list">
+		@foreach (var formSection in Model.Sections)
+		{
+			<li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed"> <a id="@Model.GenerateId(formSection.Heading)_link" class="gem-c-contents-list__link govuk-link" href="#@Model.GenerateId(formSection.Heading)">@formSection.Heading</a></li>
+		}
+	</ol>
+</nav>
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
 		@foreach (var formSection in Model.Sections)
 		{
-			<h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-36">@formSection.Heading</h2>
-			<p class="govuk-body-s"><a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="application"  id="@("application-form-link")">Open school application form in a new tab</a></p> 
+			<h2 id="@Model.GenerateId(formSection.Heading)" class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-36">@formSection.Heading</h2>
+			<p class="govuk-body-s"><a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="application" id="@("application-form-link")">Open school application form in a new tab</a></p>
 			@if (formSection.Fields.Any())
 			{
 				<dl class="govuk-summary-list">
