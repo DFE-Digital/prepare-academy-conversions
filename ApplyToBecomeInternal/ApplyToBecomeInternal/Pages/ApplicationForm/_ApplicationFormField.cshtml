@@ -1,14 +1,7 @@
 @using ApplyToBecomeInternal.Models.ApplicationForm
 @model FormField
 
-@functions {
-			public string GenerateId(string heading)
-			{
-				return heading.Replace(" ", "_");
-			}
-		}
-
-<div class="govuk-summary-list__row" id="@Model.Id">
+<div class="govuk-summary-list__row" test-id="@Model.Id">
 	<dt class="govuk-summary-list__key">
 		@Model.Title
 	</dt>
