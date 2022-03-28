@@ -37,8 +37,8 @@
 						int index = 1;
 						foreach (var sectionField in formSection.Fields)
 						{
-							string id = formSection.Heading + index.ToString();
-							sectionField.Id = Model.GenerateId(id);
+							// generate test-id
+							sectionField.Id = Model.GenerateId(formSection.Heading + index.ToString());
 							<partial name="_ApplicationFormField" model="sectionField" />
 							index++;
 						}
@@ -51,15 +51,15 @@
 				<h3 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-font-size-24">@subSection.Heading</h3>
 				<dl class="govuk-summary-list">
 					@{
-							int index = 1;
-							foreach (var sectionField in subSection.Fields)
-							{
-								string id = formSection.Heading + "_" + subSection.Heading + index.ToString();
-								sectionField.Id =Model.GenerateId(id);
-								<partial name="_ApplicationFormField" model="sectionField" />
-								index++;
-							}
+						int index = 1;
+						foreach (var sectionField in subSection.Fields)
+						{
+							// generate test-id
+							sectionField.Id = Model.GenerateId(formSection.Heading + "_" + subSection.Heading + index.ToString());
+							<partial name="_ApplicationFormField" model="sectionField" />
+							index++;
 						}
+					}
 				</dl>
 			}
 		}

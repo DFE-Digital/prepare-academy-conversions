@@ -2,10 +2,10 @@
 @model FormField
 
 <div class="govuk-summary-list__row" test-id="@Model.Id">
-	<dt class="govuk-summary-list__key">
+	<dt class="govuk-summary-list__key" test-id="@(Model.Id + "_key")">
 		@Model.Title
 	</dt>
-	<dd class="govuk-summary-list__value">
+	<dd class="govuk-summary-list__value"  test-id="@(Model.Id + "_value")">
 		@switch (Model)
 		{
 			case LinkFormField link:
