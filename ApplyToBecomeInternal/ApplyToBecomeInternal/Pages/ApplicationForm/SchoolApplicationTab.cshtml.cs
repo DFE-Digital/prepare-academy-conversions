@@ -8,7 +8,6 @@ using ApplyToBecome.Data.Models.Application;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models.ApplicationForm;
 using ApplyToBecomeInternal.Models.ApplicationForm.Sections;
-using ApplyToBecomeInternal.Models.ApplicationForm.OverviewSections;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
@@ -52,10 +51,10 @@ namespace ApplyToBecomeInternal.Pages.ApplicationForm
 
 			Sections = new BaseFormSection[]
 			{
-				new ApplicationFormSectionTab(application),
+				new ApplicationFormSection(application),
 				new AboutConversionSection(application.ApplyingSchools.First()),
-				new FurtherInformationSectionTab(application.ApplyingSchools.First()),
-				new FinanceSectionTab(application.ApplyingSchools.First()),
+				new FurtherInformationSection(application.ApplyingSchools.First()),
+				new FinanceSection(application.ApplyingSchools.First()),
 				new FuturePupilNumberSection(application.ApplyingSchools.First()),
 				new LandAndBuildingsSection(application.ApplyingSchools.First()),
 				new PreOpeningSupportGrantSection(application.ApplyingSchools.First()),
