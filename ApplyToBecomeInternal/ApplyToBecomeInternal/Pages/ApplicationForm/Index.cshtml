@@ -33,9 +33,15 @@
 			@if (formSection.Fields.Any())
 			{
 				<dl class="govuk-summary-list">
-					@foreach (var sectionField in formSection.Fields)
-					{
-						<partial name="_ApplicationFormField" model="sectionField" />
+					@{
+						int index = 1;
+						foreach (var sectionField in formSection.Fields)
+						{
+							string id = formSection.Heading + index.ToString();
+							sectionField.Id = Model.GenerateId(id);
+							<partial name="_ApplicationFormField" model="sectionField" />
+							index++;
+						}
 					}
 				</dl>
 			}
@@ -44,10 +50,16 @@
 			{
 				<h3 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-font-size-24">@subSection.Heading</h3>
 				<dl class="govuk-summary-list">
-					@foreach (var sectionField in subSection.Fields)
-					{
-						<partial name="_ApplicationFormField" model="sectionField" />
-					}
+					@{
+							int index = 1;
+							foreach (var sectionField in subSection.Fields)
+							{
+								string id = formSection.Heading + "_" + subSection.Heading + index.ToString();
+								sectionField.Id =Model.GenerateId(id);
+								<partial name="_ApplicationFormField" model="sectionField" />
+								index++;
+							}
+						}
 				</dl>
 			}
 		}

@@ -10,5 +10,6 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm
 
 		public string Title { get; }
 		public string Content { get; }
+		public string Id { get; set; }
 	}
 }
