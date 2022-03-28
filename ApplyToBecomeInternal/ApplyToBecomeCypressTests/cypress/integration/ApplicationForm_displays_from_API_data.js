@@ -30,16 +30,15 @@ describe('91489: Apply-to-become GET application types', () => {
             }).then(
                 (response) => {
                 // response.body is automatically serialized into JSON
-                const target = response.body.data;
+                var target = response.body.data;
                 expect(response.body.data).to.have.property('applicationId', 'Cath102')
                 expect(response.body.data).to.have.property('applicationType', 'JoinMat')
+                cy.visit(url+'/school-application-form/555')
+        
+                cy.get('#Overview2').within(() => {
+                    cy.get('dt').should('contain', 'Application reference')            
+                    cy.get('dd').should('contain', target['applicationId'])
+                })
             })
-    
-        cy.visit(url+'/school-application-form/555')
- 
-        cy.get('#Overview1').within(() => {
-            cy.get('dt').should('contain', 'Application to join')            
-            cy.get('dd').should('contain', 'name with Ab qui natus')
-        })
-    });
+        });
 })
