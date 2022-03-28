@@ -27,8 +27,8 @@ describe('91489: Apply-to-become GET application types', () => {
             method: 'GET',
             url: fullUrl+'Cath102', 
             headers: {'ApiKey' : key}
-        }).then(
-            (response) => {
+            }).then(
+                (response) => {
                 // response.body is automatically serialized into JSON
                 const target = response.body.data;
                 expect(response.body.data).to.have.property('applicationId', 'Cath102')
@@ -36,7 +36,10 @@ describe('91489: Apply-to-become GET application types', () => {
             })
     
         cy.visit(url+'/school-application-form/555')
-        var element = cy.get('[id="Overview1"]')
-        element.should('contain', 'Application to join')
+ 
+        cy.get('#Overview1').within(() => {
+            cy.get('dt').should('contain', 'Application to join')            
+            cy.get('dd').should('contain', 'name with Ab qui natus')
+        })
     });
 })
