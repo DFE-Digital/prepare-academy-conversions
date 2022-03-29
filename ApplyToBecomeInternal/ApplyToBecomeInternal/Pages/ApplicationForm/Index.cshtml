@@ -1,4 +1,4 @@
-﻿@page "/school-application-form/{id:int}"
+@page "/school-application-form/{id:int}"
 @model ApplyToBecomeInternal.Pages.ApplicationForm.IndexModel
 @{
 	ViewData["Title"] = "School application form";
@@ -33,9 +33,17 @@
 			@if (formSection.Fields.Any())
 			{
 				<dl class="govuk-summary-list">
-					@foreach (var sectionField in formSection.Fields)
-					{
-						<partial name="_ApplicationFormField" model="sectionField" />
+					@{
+						int index = 1;
+						foreach (var sectionField in formSection.Fields)
+						{
+
+							// generate test-id
+							sectionField.Id = Model.GenerateId(formSection.Heading + index.ToString());
+
+							<partial name="_ApplicationFormField" model="sectionField" />
+							index++;
+						}
 					}
 				</dl>
 			}
@@ -44,10 +52,17 @@
 			{
 				<h3 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-font-size-24">@subSection.Heading</h3>
 				<dl class="govuk-summary-list">
-					@foreach (var sectionField in subSection.Fields)
-					{
-						<partial name="_ApplicationFormField" model="sectionField" />
+					@{
+						int index = 1;
+						foreach (var sectionField in subSection.Fields)
+						{
+							// generate test-id
+							sectionField.Id = Model.GenerateId(formSection.Heading + "_" + subSection.Heading + index.ToString());
+							<partial name="_ApplicationFormField" model="sectionField" />
+							index++;
+						}
 					}
+
 				</dl>
 			}
 		}
