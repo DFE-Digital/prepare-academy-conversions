@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");
 			await NavigateAsync("Change", 3);
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/distance-to-trust-headquarters");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/how-far-converting-school-from-trust");
 			Document.QuerySelector<IHtmlInputElement>("#distance-to-trust-headquarters").Value.Should().Be(project.DistanceFromSchoolToTrustHeadquarters.ToSafeString());
 			Document.QuerySelector<IHtmlTextAreaElement>("#distance-to-trust-headquarters-additional-information").TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
 
@@ -42,7 +42,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/distance-to-trust-headquarters");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/how-far-converting-school-from-trust");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -54,7 +54,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/distance-to-trust-headquarters");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/how-far-converting-school-from-trust");
 			await NavigateAsync("Back");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
@@ -65,13 +65,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/distance-to-trust-headquarters");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/how-far-converting-school-from-trust");
 			var InvalidEntry = "abc";
 			Document.QuerySelector<IHtmlInputElement>("#distance-to-trust-headquarters").Value = InvalidEntry;
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/distance-to-trust-headquarters");
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/how-far-converting-school-from-trust");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
 			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("The value 'abc' is not valid for Distance from the school to the trust headquarters.");
@@ -85,7 +85,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/distance-to-trust-headquarters");
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/how-far-converting-school-from-trust");
 
 			Document.QuerySelector<IHtmlDivElement>("#distance-to-trust-headquarters-suffix").InnerHtml.Should().Be("miles");
 		}
