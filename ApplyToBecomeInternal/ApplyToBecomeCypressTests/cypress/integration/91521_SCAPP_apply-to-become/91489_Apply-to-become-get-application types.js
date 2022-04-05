@@ -24,7 +24,7 @@ describe('91489: Apply-to-become GET application types', () => {
 
 
     it('TC02: FormMAT type should not be valid and should display "Not Implemented"', () => {
-        cy.visit( url+'/school-application-form/521', {failOnStatusCode: false})
+        cy.visit(url+'/school-application-form/521', {failOnStatusCode: false})
         cy.get('[id="error-heading"]').should('contain.text', 'Not implemented')
     })
 })
