@@ -34,6 +34,7 @@ describe('91489: Apply-to-becom GET data application types', () => {
         cy.get('[test-id="Overview_Details1_key"]').should('contain.text', 'Trust name')
         cy.get('[test-id="Overview_Details1_value"]').should('contain.text', data.name)
         // 'Upload evidence' IS NOT BE COVERED IN THIS TEST AS THESE ARE UPLOAD LINKS - [test-id="Overview_Details2_key"]
+        // NOTE from Catherine "There is no expectation for this field to appear on the application form view at present."
         cy.get('[test-id="Overview_Details3_key"]').should('contain.text', 'Will there be any changes to the governance of the trust due to the school joining?') 
         cy.get('[test-id="Overview_Details3_value"]').should('contain.text', 'No')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
@@ -109,6 +110,7 @@ describe('91489: Apply-to-becom GET data application types', () => {
             expect(userData.data.applyingSchools[0].schoolAdInspectedButReportNotPublished).to.eq(true)
         })
         // "schoolAdInspectedButReportNotPublishedExplain": "Et occaecati dolore." - NOT DISPLAYED ON FRONTEND
+        // NOTE from Catherine "will be added as part of ticket 83618 - 'Add follow up answers to questions on application form'"
         cy.get('[test-id="Further_information_Additional_details3_key"]').should('contain.text', 'Are there any safeguarding investigations ongoing at the school?')
         cy.get('[test-id="Further_information_Additional_details3_value"]').should('contain.text', 'Yes')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
@@ -140,6 +142,7 @@ describe('91489: Apply-to-becom GET data application types', () => {
             expect(userData.data.applyingSchools[0].schoolIsSupportedByFoundation).to.eq(true)
         })
         //"schoolSupportedFoundationBodyName": "Sed eius et." - THIS IS NOT INCLUDED ON THE FRONTEND
+        // NOTE from Catherine "will be added as part of ticket 83618 - 'Add follow up answers to questions on application form'"
         cy.get('[test-id="Further_information_Additional_details9_key"]').should('contain.text', 'Does the school currently have an exemption from providing broadly Christian collective worship issued by the local Standing Committee on Religious Education (SACRE)?')
         cy.get('[test-id="Further_information_Additional_details9_value"]').should('contain.text', 'Yes')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
@@ -148,18 +151,21 @@ describe('91489: Apply-to-becom GET data application types', () => {
         cy.get('[test-id="Further_information_Additional_details10_key"]').should('contain.text', 'Please provide a list of your main feeder schools')
         cy.get('[test-id="Further_information_Additional_details10_value"]').should('contain.text', dataAppSch.schoolAdFeederSchools)
         // 'Upload evidence' IS NOT BE COVERED IN THIS TEST AS THESE ARE UPLOAD LINKS- [test-id="Further_information_Additional_details11_key"]
+        // NOTES from Catherine "will be added as part of ticket 83618 - 'Add follow up answers to questions on application form'"
         cy.get('[test-id="Further_information_Additional_details12_key"]').should('contain.text', 'Has an equalities impact assessment been carried out and considered by the governing body?')
         cy.get('[test-id="Further_information_Additional_details12_value"]').should('contain.text', 'Yes')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].schoolAdEqualitiesImpactAssessmentCompleted).to.eq(true)
         })
         // "schoolAdEqualitiesImpactAssessmentDetails": "Odio ipsam facilis.", THIS IS NOT INCLUDED ON THE FRONTEND
+        // NOTE from Catherine "schoolAdEqualitiesImpactAssessmentDetails will be added as part of ticket 83618 - 'Add follow up answers to questions on application form'"
         cy.get('[test-id="Further_information_Additional_details13_key"]').should('contain.text', 'Do you want to add any further information?')
         cy.get('[test-id="Further_information_Additional_details13_value"]').should('contain.text', 'Yes')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].schoolAdditionalInformationAdded).to.eq(true)
         })
         // "schoolAdditionalInformation": "Animi illo ut." - NOT DISPLAYED ON FRONTEND
+        // NOTE from Catherine "will be added as part of ticket 83618 - 'Add follow up answers to questions on application form'"
     })
 
     // Finance Details 
@@ -189,6 +195,7 @@ describe('91489: Apply-to-becom GET data application types', () => {
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].previousFinancialYear.capitalIsDeficit).to.eq(false)
         // "capitalStatusExplained": "Soluta repellendus assumenda." NOT INCLUDED ON FRONTEND
+        // NOTE from Catherine "will be added as part of ticket 83618 - 'Add follow up answers to questions on application form' and will appear on the view only if capitalIsDeficit == true"
         })
     })
     
@@ -253,7 +260,7 @@ describe('91489: Apply-to-becom GET data application types', () => {
     // Loans Details
     it('TC12: Loans Details', () => {
         cy.get('[test-id="Finances_Loans1_key"]').should('contain.text', 'Are there any existing loans?')
-        cy.get('[test-id="Finances_Loans1_value"]').should('contain.text', 'Yes') // THIS IS NOT REPRESENTED IN THE JSON BODY
+        cy.get('[test-id="Finances_Loans1_value"]').should('contain.text', 'Yes') // THIS IS NOT REPRESENTED IN THE JSON BODY | NOTE from Catherine "This is set as 'yes' if there are loans to display and 'No' if there aren't. You're right - it doesn't have its own json field"
         cy.get('[test-id="Finances_Loans2_key"]').should('contain.text', 'Total amount')
         cy.get('[test-id="Finances_Loans2_value"]').should('contain.text', '£1,000.00')
         cy.get('[test-id="Finances_Loans3_key"]').should('contain.text', 'Purpose of the loan')
@@ -269,7 +276,7 @@ describe('91489: Apply-to-becom GET data application types', () => {
     // Financial leases
     it('TC13: Financial Leases', () => {
         cy.get('[test-id="Finances_Financial_leases1_key"]').should('contain.text', 'Are there any existing leases?')
-        cy.get('[test-id="Finances_Financial_leases1_value"]').should('contain.text', 'Yes') // THIS IS NOT REPRESENTED IN THE JSON BODY
+        cy.get('[test-id="Finances_Financial_leases1_value"]').should('contain.text', 'Yes') // THIS IS NOT REPRESENTED IN THE JSON BODY | NOTE from Catherine "This is set as 'yes' if there are leases to display and 'No' if there aren't, as with loans"
         cy.get('[test-id="Finances_Financial_leases2_key"]').should('contain.text', 'Details of the term of the finance lease agreement')
         cy.get('[test-id="Finances_Financial_leases2_value"]').should('contain.text', dataAppSch.schoolLeases[0].schoolLeaseTerm)
         cy.get('[test-id="Finances_Financial_leases3_key"]').should('contain.text', 'Repayment value')
