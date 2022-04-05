@@ -1,47 +1,53 @@
 /// <reference types ='Cypress'/>
 
-describe('86856 Comments should accept alphanumeric inputs', () => {
-    afterEach(() => {
-        cy.storeSessionData()
-    });
-
-    before(() => {
-        cy.login()
-        cy.selectSchoolListing(2)
-        cy.url().then(url => {
-            //changes the current URL
-            let modifiedUrl = url + '/confirm-local-authority-information-template-dates'
-            cy.visit(modifiedUrl)
+Cypress._.each(['iphone-x'], (viewport) => {
+    describe(`86856 Comments should accept alphanumeric inputs on ${viewport}`, () => {
+        afterEach(() => {
+            cy.storeSessionData()
         });
-    });
-
-    after(() => {
-        cy.clearLocalStorage()
-    });
-
-    it('TC: Precondition comment box', () => {
-        cy.get('[id="la-info-template-comments"]').should('be.visible')
-        .invoke('text')
-        .then((text) => {
-            if (text.includes('Empty')) {
-                return
-            }
-            else {
-                cy.commentBoxClearLaInfo()
-            };
+    
+        before(() => {
+            cy.viewport(viewport)
+            cy.login()
+            cy.selectSchoolListing(2)
+            cy.url().then(url => {
+                //changes the current URL
+                let modifiedUrl = url + '/confirm-local-authority-information-template-dates'
+                cy.visit(modifiedUrl)
+            });
         });
-    });
-
-    it('TC01: Navigates to comment section & type alphanumerical characters', () => {
-        let alphanumeric = 'abcdefghijklmnopqrstuvwxyz 1234567890 !"£$%^&*(){}[]:@,./<>?~|'
-        cy.get('[data-test="change-la-info-template-comments"]').click()
-        cy.commentBoxLaInfo().type(alphanumeric)
-        cy.saveContinueBtn().click()
-        cy.commentBoxLaInfo().should('contain', alphanumeric)
-    });
-
-    it('TC02: Clears text input', () => {
-        cy.commentBoxClearLaInfo()
-        cy.commentBoxLaInfo().should('contain', 'Empty')
+    
+        after(() => {
+            cy.clearLocalStorage()
+        });
+    
+        it('TC: Precondition comment box', () => {
+            cy.viewport(viewport)
+            cy.get('[id="la-info-template-comments"]').should('be.visible')
+            .invoke('text')
+            .then((text) => {
+                if (text.includes('Empty')) {
+                    return
+                }
+                else {
+                    cy.commentBoxClearLaInfo()
+                };
+            });
+        });
+    
+        it('TC01: Navigates to comment section & type alphanumerical characters', () => {
+            let alphanumeric = 'abcdefghijklmnopqrstuvwxyz 1234567890 !"£$%^&*(){}[]:@,./<>?~|'
+            cy.viewport(viewport)
+            cy.get('[data-test="change-la-info-template-comments"]').click()
+            cy.commentBoxLaInfo().type(alphanumeric)
+            cy.saveContinueBtn().click()
+            cy.commentBoxLaInfo().should('contain', alphanumeric)
+        });
+    
+        it('TC02: Clears text input', () => {
+            cy.viewport(viewport)
+            cy.commentBoxClearLaInfo()
+            cy.commentBoxLaInfo().should('contain', 'Empty')
+        });
     });
 });
