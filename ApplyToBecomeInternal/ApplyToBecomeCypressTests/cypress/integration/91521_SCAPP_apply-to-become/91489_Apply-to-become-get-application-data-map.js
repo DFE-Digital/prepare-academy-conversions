@@ -405,5 +405,4 @@ describe('91489: Apply-to-becom GET data application types', () => {
         cy.get('[test-id="Declaration_Details2_key"]').should('contain.text', 'Signed by')
         cy.get('[test-id="Declaration_Details2_value"]').should('contain.text', dataAppSch.declarationSignedByName)
     })
-
 });
