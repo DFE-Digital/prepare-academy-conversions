@@ -57,7 +57,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			formSection.SubSections.First().Fields.Should().BeEquivalentTo(expectedFields);
 		}
 		[Fact]
-		public void Constructor_Doesnt_Set_Conditional_Rows_Following_Yes_Answers()
+		public void Constructor_Set_Conditional_Rows_Following_Yes_Answers()
 		{
 			var fixture = new Fixture();
 			var application = fixture.Create<ApplyingSchool>();
@@ -67,6 +67,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			application.SchoolBuildLandPFIScheme = true;
 			application.SchoolBuildLandPriorityBuildingProgramme = true;
 			application.SchoolBuildLandFutureProgramme = true;
+			application.SchoolBuildLandSharedFacilities = true;
 			application.SchoolBuildLandWorksPlannedCompletionDate = DateTime.Now.AddDays(30);
 			var expectedFields = new[]
 			{
@@ -82,8 +83,9 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			    new FormField("List the facilities and the school's plan for them after converting", application.SchoolBuildLandSharedFacilitiesExplained),
 			    new FormField("Is the school part of a Priority School Building Programme?", "Yes"),
 				new FormField("Is the school part of a Building Schools for the Future Programme?", "Yes"),
-				
-			};
+				new FormField("List the facilities and the school's plan for them after converting", application.SchoolBuildLandSharedFacilitiesExplained)
+
+		};
 			var formSection = new LandAndBuildingsSection(application);
 
 			formSection.Heading.Should().Be("Land and buildings");

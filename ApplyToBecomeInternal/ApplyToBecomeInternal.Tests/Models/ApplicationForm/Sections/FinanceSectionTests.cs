@@ -188,7 +188,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			subSections[5].Fields.Should().BeEquivalentTo(expectedFinancialInvestigationsFields);
 		}
 		[Fact]
-		public void Constructor_Doesnt_Set_Conditional_Rows_Following_Yes_Answers_And_Surplus_Answers()
+		public void Constructor_Set_Conditional_Rows_Following_Yes_Answers_And_Surplus_Answers()
 		{
 			var fixture = new Fixture();
 			var lease = fixture.Create<Lease>();

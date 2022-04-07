@@ -78,7 +78,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			formSection.SubSections.First().Fields.Should().BeEquivalentTo(expectedFields);
 		}
 		[Fact]
-		public void Constructor_Doesnt_Set_Conditional_Rows_Following_Yes_Answers()
+		public void Constructor_Set_Conditional_Rows_Following_Yes_Answers()
 		{
 			var fixture = new Fixture();
 			var application = fixture.Create<ApplyingSchool>();

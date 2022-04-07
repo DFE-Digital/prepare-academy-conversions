@@ -25,6 +25,11 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 				formFields.Add(new FormField("When is the scheduled completion date?", application.SchoolBuildLandWorksPlannedCompletionDate.ToDateString()));
 			}
 			formFields.Add(new FormField("Are there any shared facilities on site?", application.SchoolBuildLandSharedFacilities.ToYesNoString()));
+			if(application.SchoolBuildLandSharedFacilities == true)
+			{
+				formFields.Add(new FormField("List the facilities and the school's plan for them after converting", application.SchoolBuildLandSharedFacilitiesExplained));
+			}
+
 			formFields.Add(new FormField("Has the school had any grants from Sport England, the Big Lottery Fund, or the Football Federation?", application.SchoolBuildLandGrants.ToYesNoString()));
 			if(application.SchoolBuildLandGrants == true)
 			{
