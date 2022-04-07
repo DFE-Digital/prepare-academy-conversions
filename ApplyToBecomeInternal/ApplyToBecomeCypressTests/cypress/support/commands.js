@@ -178,3 +178,54 @@ Cypress.Commands.add('mpName', () => {
 Cypress.Commands.add('mpParty', () => {
     cy.get('[id="member-of-parliament-party"]')
 });
+
+// Distance Inf (General Info Page) - Conditional: Miles box
+Cypress.Commands.add('milesIsEmpty', () => {
+    cy.get('[data-test="change-distance-to-trust-headquarters"]').click()
+    cy.get('[id="distance-to-trust-headquarters"]')
+    .invoke('text')
+    .then((text) => {
+        if (text.includes('Empty')) {
+            return
+        }
+        else {
+            cy.get('[id="distance-to-trust-headquarters"]').click()
+            .type('{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}')
+            .should('contain.text', '')
+        }
+    })
+})
+
+// Distance Info (General Info Page) - Conditional: Additional Info box
+Cypress.Commands.add('addInfoIsEmpty', () => {
+    cy.get('[id="distance-to-trust-headquarters-additional-information"]')
+    .click()
+    .invoke('text')
+    .then((text) => {
+        if (text.length, 1) {
+            cy.get('[id="distance-to-trust-headquarters-additional-information"]')
+            .click()
+            .type('{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}')
+            .should('contain.text', '')
+            cy.get('[id="save-and-continue-button"]').click()
+        }
+        else {
+            return
+        }
+    })
+})
+
+// Distance Info (General Info Page) - Change LinkI D
+Cypress.Commands.add('changeLink', () => {
+    cy.get('[data-test="change-distance-to-trust-headquarters"]')
+})
+
+// Distance Info (General Info Page) - Miles field ID
+Cypress.Commands.add('disMiles', () => {
+    cy.get('[id="distance-to-trust-headquarters"]')
+})
+
+// Distance Info (General Info Page) - Save & Continue Button ID
+Cypress.Commands.add('saveContinue', () => {
+    cy.get('[id="save-and-continue-button"]')
+})
