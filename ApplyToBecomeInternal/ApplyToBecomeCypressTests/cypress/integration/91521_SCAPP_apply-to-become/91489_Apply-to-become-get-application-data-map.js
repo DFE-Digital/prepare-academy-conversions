@@ -35,13 +35,13 @@ describe('91489: Apply-to-becom GET data application types', () => {
         cy.get('[test-id="Overview_Details1_value"]').should('contain.text', data.name)
         // 'Upload evidence' IS NOT BE COVERED IN THIS TEST AS THESE ARE UPLOAD LINKS - [test-id="Overview_Details2_key"]
         // NOTE from Catherine "There is no expectation for this field to appear on the application form view at present."
-        cy.get('[test-id="Overview_Details3_key"]').should('contain.text', 'Will there be any changes to the governance of the trust due to the school joining?') 
-        cy.get('[test-id="Overview_Details3_value"]').should('contain.text', 'No')
+        cy.get('[test-id="Overview_Details2_key"]').should('contain.text', 'Will there be any changes to the governance of the trust due to the school joining?') 
+        cy.get('[test-id="Overview_Details2_value"]').should('contain.text', 'No')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.changesToLaGovernance).to.eq(false)
         })
-        cy.get('[test-id="Overview_Details4_key"]').should('contain.text', 'Will there be any changes at a local level due to this school joining?') 
-        cy.get('[test-id="Overview_Details4_value"]').should('contain.text', 'No')
+        cy.get('[test-id="Overview_Details3_key"]').should('contain.text', 'Will there be any changes at a local level due to this school joining?') 
+        cy.get('[test-id="Overview_Details3_value"]').should('contain.text', 'No')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.changesToTrust).to.eq(false)
         })
@@ -59,7 +59,7 @@ describe('91489: Apply-to-becom GET data application types', () => {
         cy.get('[test-id="About_the_conversion_Contact_details1_value"]').should('contain.text', dataAppSch.schoolConversionContactHeadName)
         cy.get('[test-id="About_the_conversion_Contact_details2_key"]').should('contain.text', "Headteacher's email address") 
         cy.get('[test-id="About_the_conversion_Contact_details2_value"]').should('contain.text', dataAppSch.schoolConversionContactHeadEmail)
-        cy.get('[test-id="About_the_conversion_Contact_details3_key"]').should('contain.text', "Headteacher's telephone number") 
+        cy.get('[test-id="About_the_conversion_Contact_details3_key"]').should('contain.text', "Headteacher's phone number") 
         cy.get('[test-id="About_the_conversion_Contact_details3_value"]').should('contain.text', dataAppSch.schoolConversionContactHeadTel)
         cy.get('[test-id="About_the_conversion_Contact_details4_key"]').should('contain.text', 'Name of the chair of the Governing Body') 
         cy.get('[test-id="About_the_conversion_Contact_details4_value"]').should('contain.text', dataAppSch.schoolConversionContactChairName)
@@ -67,14 +67,17 @@ describe('91489: Apply-to-becom GET data application types', () => {
         cy.get('[test-id="About_the_conversion_Contact_details5_value"]').should('contain.text', dataAppSch.schoolConversionContactChairEmail)
         cy.get('[test-id="About_the_conversion_Contact_details6_key"]').should('contain.text', "Chair's phone number") 
         cy.get('[test-id="About_the_conversion_Contact_details6_value"]').should('contain.text', dataAppSch.schoolConversionContactChairTel)
-        cy.get('[test-id="About_the_conversion_Contact_details7_key"]').should('contain.text', "Approver's name") 
-        cy.get('[test-id="About_the_conversion_Contact_details7_value"]').should('contain.text', dataAppSch.schoolConversionApproverContactName)
+        cy.get('[test-id="About_the_conversion_Contact_details7_key"]').should('contain.text', "Who is the main contact for the conversion?") 
+        cy.get('[test-id="About_the_conversion_Contact_details7_value"]').should('contain.text', dataAppSch.schoolConversionContactRole)
+        cy.get('[test-id="About_the_conversion_Contact_details8_key"]').should('contain.text', "Approver's name")
+        cy.get('[test-id="About_the_conversion_Contact_details8_value"]').should('contain.text', dataAppSch.schoolConversionApproverContactName)
     })
 
     // Date for Conversion
     it('TC05: Date for Conversion', () => {
         cy.get('[test-id="About_the_conversion_Date_for_conversion1_key"]').should('contain.text', 'Do you want the conversion to happen on a particular date')
-        cy.get('[test-id="About_the_conversion_Date_for_conversion1_value"]').should('contain.text', 'Yes')
+        cy.get('[test-id="About_the_conversion_Date_for_conversion1_value"]')
+            .should('contain.text', 'Yes')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].schoolConversionTargetDateSpecified).to.eq(true)
         })
@@ -109,63 +112,73 @@ describe('91489: Apply-to-becom GET data application types', () => {
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].schoolAdInspectedButReportNotPublished).to.eq(true)
         })
-        // "schoolAdInspectedButReportNotPublishedExplain": "Et occaecati dolore." - NOT DISPLAYED ON FRONTEND
-        // NOTE from Catherine "will be added as part of ticket 83618 - 'Add follow up answers to questions on application form'"
-        cy.get('[test-id="Further_information_Additional_details3_key"]').should('contain.text', 'Are there any safeguarding investigations ongoing at the school?')
-        cy.get('[test-id="Further_information_Additional_details3_value"]').should('contain.text', 'Yes')
+        cy.get('[test-id="Further_information_Additional_details3_key"]').should('contain.text', 'Provide the inspection date and a short summary of the outcome')
+        cy.get('[test-id="Further_information_Additional_details3_value"]').should('contain.text', dataAppSch.schoolAdInspectedButReportNotPublishedExplain)
+        cy.get('[test-id="Further_information_Additional_details4_key"]').should('contain.text', 'Are there any safeguarding investigations ongoing at the school?')
+        cy.get('[test-id="Further_information_Additional_details4_value"]').should('contain.text', 'Yes')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].schoolOngoingSafeguardingInvestigations).to.eq(true)
         })
-        cy.get('[test-id="Further_information_Additional_details4_key"]').should('contain.text', 'Is the school part of a local authority reorganisation?')
-        cy.get('[test-id="Further_information_Additional_details4_value"]').should('contain.text', 'Yes')
+        cy.get('[test-id="Further_information_Additional_details5_key"]').should('contain.text', 'Details of the investigation')
+        cy.get('[test-id="Further_information_Additional_details5_value"]').should('contain.text', dataAppSch.schoolOngoingSafeguardingDetails)
+        cy.get('[test-id="Further_information_Additional_details6_key"]').should('contain.text', 'Is the school part of a local authority reorganisation?')
+        cy.get('[test-id="Further_information_Additional_details6_value"]').should('contain.text', 'Yes')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].schoolPartOfLaReorganizationPlan).to.eq(true)
         })
-        cy.get('[test-id="Further_information_Additional_details5_key"]').should('contain.text', 'Is the school part of any local authority closure plans?')
-        cy.get('[test-id="Further_information_Additional_details5_value"]').should('contain.text', 'Yes')
+        cy.get('[test-id="Further_information_Additional_details7_key"]').should('contain.text', 'Details of the reorganisation')
+        cy.get('[test-id="Further_information_Additional_details7_value"]').should('contain.text', dataAppSch.schoolLaReorganizationDetails)
+        cy.get('[test-id="Further_information_Additional_details8_key"]').should('contain.text', 'Is the school part of any local authority closure plans?')
+        cy.get('[test-id="Further_information_Additional_details8_value"]').should('contain.text', 'Yes')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].schoolPartOfLaClosurePlan).to.eq(true)
         })
-        cy.get('[test-id="Further_information_Additional_details6_key"]').should('contain.text', 'Is your school linked to a diocese?')
-        cy.get('[test-id="Further_information_Additional_details6_value"]').should('contain.text', 'Yes')
+        cy.get('[test-id="Further_information_Additional_details9_key"]').should('contain.text', 'Details of the closure plan')
+        cy.get('[test-id="Further_information_Additional_details9_value"]').should('contain.text', dataAppSch.schoolLaClosurePlanDetails)
+        cy.get('[test-id="Further_information_Additional_details10_key"]').should('contain.text', 'Is your school linked to a diocese?')
+        cy.get('[test-id="Further_information_Additional_details10_value"]').should('contain.text', 'Yes')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].schoolFaithSchool).to.eq(true)
         })
-        cy.get('[test-id="Further_information_Additional_details7_key"]').should('contain.text', 'Is your school part of a federation?')
-        cy.get('[test-id="Further_information_Additional_details7_value"]').should('contain.text', 'Yes')
+        cy.get('[test-id="Further_information_Additional_details11_key"]').should('contain.text', 'Name of diocese')
+        cy.get('[test-id="Further_information_Additional_details11_value"]').should('contain.text', dataAppSch.schoolFaithSchoolDioceseName)
+        cy.get('[test-id="Further_information_Additional_details12_key"]').should('contain.text', 'Is your school part of a federation?')
+        cy.get('[test-id="Further_information_Additional_details12_value"]').should('contain.text', 'Yes')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].schoolIsPartOfFederation).to.eq(true)
         })
-        cy.get('[test-id="Further_information_Additional_details8_key"]').should('contain.text', 'Is the school supported by a foundation, trust or other body (e.g. parish council) that appoints foundation governors?')
-        cy.get('[test-id="Further_information_Additional_details8_value"]').should('contain.text', 'Yes')
+        cy.get('[test-id="Further_information_Additional_details13_key"]').should('contain.text', 'Is the school supported by a foundation, trust or other body (e.g. parish council) that appoints foundation governors?')
+        cy.get('[test-id="Further_information_Additional_details13_value"]').should('contain.text', 'Yes')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].schoolIsSupportedByFoundation).to.eq(true)
         })
-        //"schoolSupportedFoundationBodyName": "Sed eius et." - THIS IS NOT INCLUDED ON THE FRONTEND
-        // NOTE from Catherine "will be added as part of ticket 83618 - 'Add follow up answers to questions on application form'"
-        cy.get('[test-id="Further_information_Additional_details9_key"]').should('contain.text', 'Does the school currently have an exemption from providing broadly Christian collective worship issued by the local Standing Committee on Religious Education (SACRE)?')
-        cy.get('[test-id="Further_information_Additional_details9_value"]').should('contain.text', 'Yes')
+        cy.get('[test-id="Further_information_Additional_details14_key"]').should('contain.text', 'Name of this body')
+        cy.get('[test-id="Further_information_Additional_details14_value"]').should('contain.text', dataAppSch.schoolSupportedFoundationBodyName)
+        cy.get('[test-id="Further_information_Additional_details15_key"]').should('contain.text', 'Does the school currently have an exemption from providing broadly Christian collective worship issued by the local Standing Committee on Religious Education (SACRE)?')
+        cy.get('[test-id="Further_information_Additional_details15_value"]').should('contain.text', 'Yes')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].schoolHasSACREException).to.eq(true)
         })
-        cy.get('[test-id="Further_information_Additional_details10_key"]').should('contain.text', 'Please provide a list of your main feeder schools')
-        cy.get('[test-id="Further_information_Additional_details10_value"]').should('contain.text', dataAppSch.schoolAdFeederSchools)
+        cy.get('[test-id="Further_information_Additional_details16_key"]').should('contain.text', 'When does the exemption end?')
+        var expectedDateString = new Date(dataAppSch.schoolSACREExemptionEndDate).toLocaleDateString('en-GB', {year : 'numeric', month : 'long', day : 'numeric'})
+        cy.get('[test-id="Further_information_Additional_details16_value"]').should('contain.text', expectedDateString)
+        cy.get('[test-id="Further_information_Additional_details17_key"]').should('contain.text', 'Please provide a list of your main feeder schools')
+        cy.get('[test-id="Further_information_Additional_details17_value"]').should('contain.text', dataAppSch.schoolAdFeederSchools)
         // 'Upload evidence' IS NOT BE COVERED IN THIS TEST AS THESE ARE UPLOAD LINKS- [test-id="Further_information_Additional_details11_key"]
-        // NOTES from Catherine "will be added as part of ticket 83618 - 'Add follow up answers to questions on application form'"
-        cy.get('[test-id="Further_information_Additional_details12_key"]').should('contain.text', 'Has an equalities impact assessment been carried out and considered by the governing body?')
-        cy.get('[test-id="Further_information_Additional_details12_value"]').should('contain.text', 'Yes')
+        cy.get('[test-id="Further_information_Additional_details18_key"]').should('contain.text', 'Has an equalities impact assessment been carried out and considered by the governing body?')
+        cy.get('[test-id="Further_information_Additional_details18_value"]').should('contain.text', 'Yes')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].schoolAdEqualitiesImpactAssessmentCompleted).to.eq(true)
         })
-        // "schoolAdEqualitiesImpactAssessmentDetails": "Odio ipsam facilis.", THIS IS NOT INCLUDED ON THE FRONTEND
-        // NOTE from Catherine "schoolAdEqualitiesImpactAssessmentDetails will be added as part of ticket 83618 - 'Add follow up answers to questions on application form'"
-        cy.get('[test-id="Further_information_Additional_details13_key"]').should('contain.text', 'Do you want to add any further information?')
-        cy.get('[test-id="Further_information_Additional_details13_value"]').should('contain.text', 'Yes')
+        cy.get('[test-id="Further_information_Additional_details19_key"]').should('contain.text', 'When the governing body considered the equality duty what did they decide?')
+        cy.get('[test-id="Further_information_Additional_details19_value"]').should('contain.text', dataAppSch.schoolAdEqualitiesImpactAssessmentDetails)
+        cy.get('[test-id="Further_information_Additional_details20_key"]').should('contain.text', 'Do you want to add any further information?')
+        cy.get('[test-id="Further_information_Additional_details20_value"]').should('contain.text', 'Yes')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].schoolAdditionalInformationAdded).to.eq(true)
         })
-        // "schoolAdditionalInformation": "Animi illo ut." - NOT DISPLAYED ON FRONTEND
-        // NOTE from Catherine "will be added as part of ticket 83618 - 'Add follow up answers to questions on application form'"
+        cy.get('[test-id="Further_information_Additional_details21_key"]').should('contain.text', 'Add any further information')
+        cy.get('[test-id="Further_information_Additional_details21_value"]').should('contain.text', dataAppSch.schoolAdditionalInformation)
     })
 
     // Finance Details 
@@ -185,13 +198,15 @@ describe('91489: Apply-to-becom GET data application types', () => {
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].previousFinancialYear.revenueIsDeficit).to.eq(true)
         })
-        cy.get('[test-id="Finances_Previous_financial_year4_key"]').should('contain.text', 'Capital carry forward at the end of the previous financial year (31 March)')
-        cy.get('[test-id="Finances_Previous_financial_year4_value"]').should('contain.text', '£1,577.00')
+        cy.get('[test-id="Finances_Previous_financial_year4_key"]').should('contain.text', 'Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan')
+        cy.get('[test-id="Finances_Previous_financial_year4_value"]').should('contain.text', dataAppSch.previousFinancialYear.revenueStatusExplained)
+        cy.get('[test-id="Finances_Previous_financial_year5_key"]').should('contain.text', 'Capital carry forward at the end of the previous financial year (31 March)')
+        cy.get('[test-id="Finances_Previous_financial_year5_value"]').should('contain.text', '£1,577.00')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].previousFinancialYear.capitalCarryForward).to.eq(1577.00)
         })
-        cy.get('[test-id="Finances_Previous_financial_year5_key"]').should('contain.text', 'Surplus or deficit?')
-        cy.get('[test-id="Finances_Previous_financial_year5_value"]').should('contain.text', 'Surplus')
+        cy.get('[test-id="Finances_Previous_financial_year6_key"]').should('contain.text', 'Surplus or deficit?')
+        cy.get('[test-id="Finances_Previous_financial_year6_value"]').should('contain.text', 'Surplus')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].previousFinancialYear.capitalIsDeficit).to.eq(false)
         // "capitalStatusExplained": "Soluta repellendus assumenda." NOT INCLUDED ON FRONTEND
@@ -226,6 +241,8 @@ describe('91489: Apply-to-becom GET data application types', () => {
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].currentFinancialYear.capitalIsDeficit).to.eq(true)
         })
+        cy.get('[test-id="Finances_Current_financial_year6_key"]').should('contain.text', 'Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan')
+        cy.get('[test-id="Finances_Current_financial_year6_value"]').should('contain.text', dataAppSch.currentFinancialYear.capitalStatusExplained)
     })
 
     // Next Financial Year
@@ -245,22 +262,26 @@ describe('91489: Apply-to-becom GET data application types', () => {
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].nextFinancialYear.revenueIsDeficit).to.eq(true)
         })
-        cy.get('[test-id="Finances_Next_financial_year4_key"]').should('contain.text', 'Forecasted capital carry forward at the end of the next financial year (31 March)')
-        cy.get('[test-id="Finances_Next_financial_year4_value"]').should('contain.text', '£1,953.00')
+        cy.get('[test-id="Finances_Next_financial_year4_key"]').should('contain.text', 'Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan')
+        cy.get('[test-id="Finances_Next_financial_year4_value"]').should('contain.text', dataAppSch.nextFinancialYear.revenueStatusExplained)
+        cy.get('[test-id="Finances_Next_financial_year5_key"]').should('contain.text', 'Forecasted capital carry forward at the end of the next financial year (31 March)')
+        cy.get('[test-id="Finances_Next_financial_year5_value"]').should('contain.text', '£1,953.00')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].nextFinancialYear.capitalCarryForward).to.eq(1953.00)
         })
-        cy.get('[test-id="Finances_Next_financial_year5_key"]').should('contain.text', 'Surplus or deficit?')
-        cy.get('[test-id="Finances_Next_financial_year5_value"]').should('contain.text', 'Deficit')
+        cy.get('[test-id="Finances_Next_financial_year6_key"]').should('contain.text', 'Surplus or deficit?')
+        cy.get('[test-id="Finances_Next_financial_year6_value"]').should('contain.text', 'Deficit')
         cy.fixture('cath121-body.json').as('userData').then((userData) => {
             expect(userData.data.applyingSchools[0].nextFinancialYear.capitalIsDeficit).to.eq(true)
         })
+        cy.get('[test-id="Finances_Next_financial_year7_key"]').should('contain.text', 'Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan')
+        cy.get('[test-id="Finances_Next_financial_year7_value"]').should('contain.text', dataAppSch.nextFinancialYear.capitalStatusExplained)
     })
 
     // Loans Details
     it('TC12: Loans Details', () => {
         cy.get('[test-id="Finances_Loans1_key"]').should('contain.text', 'Are there any existing loans?')
-        cy.get('[test-id="Finances_Loans1_value"]').should('contain.text', 'Yes') // THIS IS NOT REPRESENTED IN THE JSON BODY | NOTE from Catherine "This is set as 'yes' if there are loans to display and 'No' if there aren't. You're right - it doesn't have its own json field"
+        cy.get('[test-id="Finances_Loans1_value"]').should('contain.text', 'Yes') // THIS IS NOT REPRESENTED IN THE JSON BODY | NOTE from Catherine "This is set as 'yes' if there are loans to display and 'No' if there aren't"
         cy.get('[test-id="Finances_Loans2_key"]').should('contain.text', 'Total amount')
         cy.get('[test-id="Finances_Loans2_value"]').should('contain.text', '£1,000.00')
         cy.get('[test-id="Finances_Loans3_key"]').should('contain.text', 'Purpose of the loan')
@@ -350,34 +371,33 @@ describe('91489: Apply-to-becom GET data application types', () => {
         cy.get('[test-id="Land_and_buildings_Details1_value"]').should('contain.text', dataAppSch.schoolBuildLandOwnerExplained)
         cy.get('[test-id="Land_and_buildings_Details2_key"]').should('contain.text', 'Are there any current planned building works?')
         cy.get('[test-id="Land_and_buildings_Details2_value"]').should('contain.text', 'Yes')
-        cy.fixture('cath121-body.json').as('userData').then((userData) => {
-            expect(userData.data.applyingSchools[0].declarationBodyAgree).to.eq(true)
-        })
-        cy.get('[test-id="Land_and_buildings_Details3_key"]').should('contain.text', 'Are there any shared facilities on site?')
-        cy.get('[test-id="Land_and_buildings_Details3_value"]').should('contain.text', 'Yes')
-        cy.fixture('cath121-body.json').as('userData').then((userData) => {
-            expect(userData.data.applyingSchools[0].declarationBodyAgree).to.eq(true)
-        })
-        cy.get('[test-id="Land_and_buildings_Details4_key"]').should('contain.text', 'Has the school had any grants from Sport England, the Big Lottery Fund, or the Football Federation?')
-        cy.get('[test-id="Land_and_buildings_Details4_value"]').should('contain.text', 'Yes')
-        cy.fixture('cath121-body.json').as('userData').then((userData) => {
-            expect(userData.data.applyingSchools[0].declarationBodyAgree).to.eq(true)
-        })
-        cy.get('[test-id="Land_and_buildings_Details5_key"]').should('contain.text', 'Is the school part of a Private Finance Intiative (PFI) scheme?')
+        cy.get('[test-id="Land_and_buildings_Details3_key"]').should('contain.text', 'Provide details of the works, how they\'ll be funded and whether the funding will be affected by the conversion')
+        cy.get('[test-id="Land_and_buildings_Details3_value"]').should('contain.text', dataAppSch.schoolBuildLandWorksPlannedExplained)
+        cy.get('[test-id="Land_and_buildings_Details4_key"]').should('contain.text', 'When is the scheduled completion date?')
+        var expectedDateString = new Date(dataAppSch.schoolBuildLandWorksPlannedCompletionDate).toLocaleDateString('en-GB', {year: 'numeric', month: 'long', day: 'numeric'})
+        cy.get('[test-id="Land_and_buildings_Details4_value"]').should('contain.text', expectedDateString)
+
+        cy.get('[test-id="Land_and_buildings_Details5_key"]').should('contain.text', 'Are there any shared facilities on site?')
         cy.get('[test-id="Land_and_buildings_Details5_value"]').should('contain.text', 'Yes')
-        cy.fixture('cath121-body.json').as('userData').then((userData) => {
-            expect(userData.data.applyingSchools[0].declarationBodyAgree).to.eq(true)
-        })
-        cy.get('[test-id="Land_and_buildings_Details6_key"]').should('contain.text', 'Is the school part of a Priority School Building Programme?')
-        cy.get('[test-id="Land_and_buildings_Details6_value"]').should('contain.text', 'Yes')
-        cy.fixture('cath121-body.json').as('userData').then((userData) => {
-            expect(userData.data.applyingSchools[0].declarationBodyAgree).to.eq(true)
-        })
-        cy.get('[test-id="Land_and_buildings_Details7_key"]').should('contain.text', 'Is the school part of a Building Schools for the Future Programme?')
+        expect(dataAppSch.schoolBuildLandSharedFacilities).to.eq(true)
+
+        cy.get('[test-id="Land_and_buildings_Details6_key"]').should('contain.text', 'List the facilities and the school\'s plan for them after converting')
+        cy.get('[test-id="Land_and_buildings_Details6_value"]').should('contain.text', dataAppSch.schoolBuildLandSharedFacilitiesExplained)
+
+        cy.get('[test-id="Land_and_buildings_Details7_key"]').should('contain.text', 'Has the school had any grants from Sport England, the Big Lottery Fund, or the Football Federation?')
         cy.get('[test-id="Land_and_buildings_Details7_value"]').should('contain.text', 'Yes')
-        cy.fixture('cath121-body.json').as('userData').then((userData) => {
-            expect(userData.data.applyingSchools[0].declarationBodyAgree).to.eq(true)
-        })
+        cy.get('[test-id="Land_and_buildings_Details8_key"]').should('contain.text', 'Which bodies awarded the grants and what facilities did they fund?')
+        cy.get('[test-id="Land_and_buildings_Details8_value"]').should('contain.text', dataAppSch.schoolBuildLandGrantsExplained)
+
+        cy.get('[test-id="Land_and_buildings_Details9_key"]').should('contain.text', 'Is the school part of a Private Finance Intiative (PFI) scheme?')
+        cy.get('[test-id="Land_and_buildings_Details9_value"]').should('contain.text', 'Yes')
+        cy.get('[test-id="Land_and_buildings_Details10_key"]').should('contain.text', 'What kind of PFI Scheme is your school part of?')
+        cy.get('[test-id="Land_and_buildings_Details10_value"]').should('contain.text', dataAppSch.schoolBuildLandPFISchemeType)
+
+        cy.get('[test-id="Land_and_buildings_Details11_key"]').should('contain.text', 'Is the school part of a Priority School Building Programme?')
+        cy.get('[test-id="Land_and_buildings_Details11_value"]').should('contain.text', 'Yes')
+        cy.get('[test-id="Land_and_buildings_Details12_key"]').should('contain.text', 'Is the school part of a Building Schools for the Future Programme?')
+        cy.get('[test-id="Land_and_buildings_Details12_value"]').should('contain.text', 'Yes')
     })
 
     // Pre-opening support grant
