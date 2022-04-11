@@ -11,7 +11,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 	public class ConsultationSectionTests
 	{
 		[Fact]
-		public void Constructor_WithApplication_SetsYesFields()
+		public void Constructor_Doesnt_Include_Conditional_Rows_Following_Yes_Answers()
 		{
 			var application = new ApplyingSchool
 			{
@@ -30,7 +30,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 		}
 
 		[Fact]
-		public void Constructor_WithApplication_SetsNoFields()
+		public void Constructor_Includes_Conditional_Rows_Following_No_Answers()
 		{
 			var application = new ApplyingSchool
 			{

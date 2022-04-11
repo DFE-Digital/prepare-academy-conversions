@@ -14,7 +14,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 	public class AboutConversionSectionTests
 	{
 		[Fact]
-		public void Constructor_WithApplication_SetsOtherMainContactFields_WhenMainContactIsOther()
+		public void Constructor_SetsOtherMainContactFields_WhenMainContactIsOther()
 		{
 			var fixture = new Fixture();
 			var application = fixture.Create<ApplyingSchool>();
@@ -72,11 +72,10 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 		}
 
 		[Fact]
-		public void Constructor_WithApplication_SetsNoValueFields()
+		public void Constructor_Doesnt_Include_Conditional_Rows_Following_No_Answers()
 		{
 			var fixture = new Fixture();
 			var application = fixture.Create<ApplyingSchool>();
-			application.SchoolConversionTargetDate = DateTime.Now.AddDays(30);
 			application.SchoolConversionTargetDateSpecified = false;
 			application.SchoolConversionChangeNamePlanned = false;
 
@@ -122,7 +121,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 		}
 
 		[Fact]
-		public void Constructor_WithApplication_SetsYesValueFields()
+		public void Constructor_Includes_Conditional_Rows_Following_Yes_Answers()
 		{
 			var fixture = new Fixture();
 			var application = fixture.Create<ApplyingSchool>();

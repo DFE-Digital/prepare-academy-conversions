@@ -29,7 +29,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			formFields.Add(new FormField("Will there be any changes to the governance of the trust due to the school joining?", application.ChangesToTrust.ToYesNoString()));
 			if ( application.ChangesToTrust == true ) formFields.Add(new FormField("What are the changes?", application.ChangesToTrustExplained) );
 			formFields.Add(new FormField("Will there be any changes at a local level due to this school joining?", application.ChangesToLaGovernance.ToYesNoString()));
-			if (application.ChangesToLaGovernance == true) formFields.Add(new FormField("What are the changes and how do they fit into the current lines of accountability in the trust", application.ChangesToLaGovernanceExplained));
+			if (application.ChangesToLaGovernance == true) formFields.Add(new FormField("What are the changes and how do they fit into the current lines of accountability in the trust?", application.ChangesToLaGovernanceExplained));
 
 			return formFields;
 		}

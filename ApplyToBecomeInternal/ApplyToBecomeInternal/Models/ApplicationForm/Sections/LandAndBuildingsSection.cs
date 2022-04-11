@@ -39,7 +39,6 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			if(application.SchoolBuildLandPFIScheme == true)
 			{
 				formFields.Add(new FormField("What kind of PFI Scheme is your school part of?", application.SchoolBuildLandPFISchemeType));
-				formFields.Add(new FormField("List the facilities and the school's plan for them after converting", application.SchoolBuildLandSharedFacilitiesExplained));
 			}
 			
 			formFields.Add(new FormField("Is the school part of a Priority School Building Programme?", application.SchoolBuildLandPriorityBuildingProgramme.ToYesNoString()));

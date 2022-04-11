@@ -13,11 +13,10 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 	public class FurtherInformationSectionTests
 	{
 		[Fact]
-		public void Constructor_Doesnt_Set_Conditional_Rows_Following_No_Answers()
+		public void Constructor_Doesnt_Include_Conditional_Rows_Following_No_Answers()
 		{
 			var fixture = new Fixture();
 			var application = fixture.Create<ApplyingSchool>();			
-			application.SetDeficitStatus(false);
 			application.SchoolAdInspectedButReportNotPublished = false;
 			application.SchoolOngoingSafeguardingInvestigations = false;
 			application.SchoolPartOfLaReorganizationPlan = false;
@@ -52,11 +51,10 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			formSection.SubSections.First().Fields.Should().BeEquivalentTo(expectedFields);
 		}
 		[Fact]
-		public void Constructor_Set_Conditional_Rows_Following_Yes_Answers()
+		public void Constructor_Includes_Conditional_Rows_Following_Yes_Answers()
 		{
 			var fixture = new Fixture();
 			var application = fixture.Create<ApplyingSchool>();
-			application.SetDeficitStatus(false);
 			application.SchoolAdInspectedButReportNotPublished = true;
 			application.SchoolOngoingSafeguardingInvestigations = true;
 			application.SchoolPartOfLaReorganizationPlan = true;
