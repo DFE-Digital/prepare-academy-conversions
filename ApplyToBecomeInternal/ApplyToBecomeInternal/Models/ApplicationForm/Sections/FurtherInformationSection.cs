@@ -58,10 +58,6 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			}
 			
 			formFields.Add(new FormField("Please provide a list of your main feeder schools", application.SchoolAdFeederSchools));
-			new LinkFormField(
-					"The school's Governing Body must have passed a resolution to apply to convert to academy status. Upload a copy of the school’s consent to converting and joining the trust.",
-					new Link("Governing body resolution document", application.GoverningBodyConsentEvidenceDocumentLink));
-
 			formFields.Add(new FormField("Has an equalities impact assessment been carried out and considered by the governing body?", application.SchoolAdEqualitiesImpactAssessmentCompleted.ToYesNoString()));
 
 			if(application.SchoolAdEqualitiesImpactAssessmentCompleted == true)

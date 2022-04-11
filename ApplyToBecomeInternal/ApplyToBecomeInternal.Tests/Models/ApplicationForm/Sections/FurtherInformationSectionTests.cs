@@ -12,32 +12,6 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 {
 	public class FurtherInformationSectionTests
 	{
-		[Fact(Skip = "complete when missng fields are implemented")]
-		public void Constructor_SetsFields()
-		{
-			var fixture = new Fixture();
-			var application = fixture.Create<ApplyingSchool>();
-			application.SchoolAdInspectedButReportNotPublished = true;
-			application.SchoolOngoingSafeguardingInvestigations = true;
-			application.SchoolPartOfLaReorganizationPlan = true;
-			application.SchoolPartOfLaClosurePlan = true;
-			application.SchoolFaithSchool = true;
-			application.SchoolIsPartOfFederation = true;
-			application.SchoolIsSupportedByFoundation = true;
-			application.SchoolHasSACREException = true;
-
-			var expectedFields = new[]
-			{
-				new FormField("Is your school linked to a diocese?", "No"),
-				new FormField("Name of diocese?", application.SchoolFaithSchoolDioceseName),
-				new LinkFormField("Upload a letter of consent from the diocese",
-					"DiocesePermissionEvidenceDocument",
-					application.DiocesePermissionEvidenceDocumentLink)
-			};
-
-			throw new NotImplementedException();
-		}
-
 		[Fact]
 		public void Constructor_Doesnt_Set_Conditional_Rows_Following_No_Answers()
 		{

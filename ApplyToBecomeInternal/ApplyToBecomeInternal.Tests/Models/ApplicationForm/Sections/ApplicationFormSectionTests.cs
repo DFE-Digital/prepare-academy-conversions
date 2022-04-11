@@ -41,7 +41,6 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 
 			var expectedSubSectionFields = new[] {
 				new FormField("Trust name", application.Name),
-				new LinkFormField("Upload evidence that the trust consents to the school joining", "MadeUpDocName", application.TrustConsentEvidenceDocumentLink),
 				new FormField("Will there be any changes to the governance of the trust due to the school joining?", "No"),
 				new FormField("Will there be any changes at a local level due to this school joining?", "No"),
 			};
