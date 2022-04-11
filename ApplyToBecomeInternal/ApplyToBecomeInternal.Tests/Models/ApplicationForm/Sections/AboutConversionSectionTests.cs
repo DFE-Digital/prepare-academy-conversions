@@ -14,13 +14,14 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 	public class AboutConversionSectionTests
 	{
 		[Fact]
-		public void Constructor_WithApplication_SetsFields()
+		public void Constructor_WithApplication_SetsOtherMainContactFields_WhenMainContactIsOther()
 		{
 			var fixture = new Fixture();
 			var application = fixture.Create<ApplyingSchool>();
 			application.SchoolConversionTargetDate = DateTime.Now.AddDays(30);
 			application.SchoolConversionTargetDateSpecified = true;
 			application.SchoolConversionChangeNamePlanned = true;
+			application.SchoolConversionContactRole = "Other";
 
 			var formSection = new AboutConversionSection(application);
 
@@ -37,10 +38,14 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 				new FormField("Name of the chair of the Governing Body", application.SchoolConversionContactChairName),
 				new FormField("Chair's email address", application.SchoolConversionContactChairEmail),
 				new FormField("Chair's phone number", application.SchoolConversionContactChairTel),
+				new FormField("Who is the main contact for the conversion?", application.SchoolConversionContactRole),
+				new FormField("Main contact's name", application.SchoolConversionMainContactOtherName),
+				new FormField("Main contact's email address", application.SchoolConversionMainContactOtherEmail),
+				new FormField("Main contact's telephone number", application.SchoolConversionMainContactOtherTelephone),
+				new FormField("Main contact's role", application.SchoolConversionMainContactOtherRole),
 				new FormField("Approver's name", application.SchoolConversionApproverContactName),
 				new FormField("Approver's email address", application.SchoolConversionApproverContactEmail)							
 			};
-
 			
 			var expectedFieldsDateForConversion = new[] {
 				new FormField("Do you want the conversion to happen on a particular date", application.SchoolConversionTargetDateSpecified.ToYesNoString()),
@@ -65,6 +70,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			sectionArray[3].Fields.Should().BeEquivalentTo(expectedFieldsReasonForJoining);
 			sectionArray[4].Fields.Should().BeEquivalentTo(expectedFieldsNameChanges);
 		}
+
 		[Fact]
 		public void Constructor_WithApplication_SetsNoValueFields()
 		{
@@ -73,11 +79,8 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			application.SchoolConversionTargetDate = DateTime.Now.AddDays(30);
 			application.SchoolConversionTargetDateSpecified = false;
 			application.SchoolConversionChangeNamePlanned = false;
-			
-
 
 			var formSection = new AboutConversionSection(application);
-
 			var expectedFields = new[]
 			{
 				new FormField("The name of the school", application.SchoolName),
@@ -91,10 +94,10 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 				new FormField("Name of the chair of the Governing Body", application.SchoolConversionContactChairName),
 				new FormField("Chair's email address", application.SchoolConversionContactChairEmail),
 				new FormField("Chair's phone number", application.SchoolConversionContactChairTel),
+				new FormField("Who is the main contact for the conversion?", application.SchoolConversionContactRole),
 				new FormField("Approver's name", application.SchoolConversionApproverContactName),
 				new FormField("Approver's email address", application.SchoolConversionApproverContactEmail)
 			};
-
 
 			var expectedFieldsDateForConversion = new[] {
 				new FormField("Do you want the conversion to happen on a particular date", application.SchoolConversionTargetDateSpecified.ToYesNoString())				
@@ -106,7 +109,6 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			{
 				new FormField("Is the school planning to change its name when it becomes an academy?", application.SchoolConversionChangeNamePlanned.ToYesNoString())				
 			};
-
 
 			formSection.Heading.Should().Be("About the conversion");
 
@@ -128,8 +130,6 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			application.SchoolConversionTargetDateSpecified = true;
 			application.SchoolConversionChangeNamePlanned = true;
 
-
-
 			var formSection = new AboutConversionSection(application);
 
 			var expectedFields = new[]
@@ -145,10 +145,10 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 				new FormField("Name of the chair of the Governing Body", application.SchoolConversionContactChairName),
 				new FormField("Chair's email address", application.SchoolConversionContactChairEmail),
 				new FormField("Chair's phone number", application.SchoolConversionContactChairTel),
+				new FormField("Who is the main contact for the conversion?", application.SchoolConversionContactRole),
 				new FormField("Approver's name", application.SchoolConversionApproverContactName),
 				new FormField("Approver's email address", application.SchoolConversionApproverContactEmail)
 			};
-
 
 			var expectedFieldsDateForConversion = new[] {
 				new FormField("Do you want the conversion to happen on a particular date", application.SchoolConversionTargetDateSpecified.ToYesNoString()),
@@ -163,7 +163,6 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 				new FormField("Is the school planning to change its name when it becomes an academy?", application.SchoolConversionChangeNamePlanned.ToYesNoString()),
 				new FormField("What's the proposed new name?", application.SchoolConversionProposedNewSchoolName)
 			};
-
 
 			formSection.Heading.Should().Be("About the conversion");
 
