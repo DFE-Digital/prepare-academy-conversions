@@ -27,7 +27,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			var formFields = new List<FormField>();
 			formFields.Add(new FormField("Name of headteacher", application.SchoolConversionContactHeadName));
 			formFields.Add(new FormField("Headteacher's email address", application.SchoolConversionContactHeadEmail));
-			formFields.Add(new FormField("Headteacher's telephone number", application.SchoolConversionContactHeadTel));
+			formFields.Add(new FormField("Headteacher's phone number", application.SchoolConversionContactHeadTel));
 			formFields.Add(new FormField("Name of the chair of the Governing Body", application.SchoolConversionContactChairName));
 			formFields.Add(new FormField("Chair's email address", application.SchoolConversionContactChairEmail));
 			formFields.Add(new FormField("Chair's phone number", application.SchoolConversionContactChairTel));
@@ -36,7 +36,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			{
 				formFields.Add(new FormField("Main contact's name", application.SchoolConversionMainContactOtherName));
 				formFields.Add(new FormField("Main contact's email address", application.SchoolConversionMainContactOtherEmail));
-				formFields.Add(new FormField("Main contact's telephone number", application.SchoolConversionMainContactOtherTelephone));
+				formFields.Add(new FormField("Main contact's phone number", application.SchoolConversionMainContactOtherTelephone));
 				formFields.Add(new FormField("Main contact's role", application.SchoolConversionMainContactOtherRole));
 			}
 			formFields.Add(new FormField("Approver's name", application.SchoolConversionApproverContactName));

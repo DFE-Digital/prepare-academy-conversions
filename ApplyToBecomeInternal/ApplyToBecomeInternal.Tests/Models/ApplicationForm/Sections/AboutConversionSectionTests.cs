@@ -34,14 +34,14 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			{
 				new FormField("Name of headteacher", application.SchoolConversionContactHeadName),
 				new FormField("Headteacher's email address", application.SchoolConversionContactHeadEmail),
-				new FormField("Headteacher's telephone number", application.SchoolConversionContactHeadTel),
+				new FormField("Headteacher's phone number", application.SchoolConversionContactHeadTel),
 				new FormField("Name of the chair of the Governing Body", application.SchoolConversionContactChairName),
 				new FormField("Chair's email address", application.SchoolConversionContactChairEmail),
 				new FormField("Chair's phone number", application.SchoolConversionContactChairTel),
 				new FormField("Who is the main contact for the conversion?", application.SchoolConversionContactRole),
 				new FormField("Main contact's name", application.SchoolConversionMainContactOtherName),
 				new FormField("Main contact's email address", application.SchoolConversionMainContactOtherEmail),
-				new FormField("Main contact's telephone number", application.SchoolConversionMainContactOtherTelephone),
+				new FormField("Main contact's phone number", application.SchoolConversionMainContactOtherTelephone),
 				new FormField("Main contact's role", application.SchoolConversionMainContactOtherRole),
 				new FormField("Approver's name", application.SchoolConversionApproverContactName),
 				new FormField("Approver's email address", application.SchoolConversionApproverContactEmail)							
@@ -89,7 +89,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			{
 				new FormField("Name of headteacher", application.SchoolConversionContactHeadName),
 				new FormField("Headteacher's email address", application.SchoolConversionContactHeadEmail),
-				new FormField("Headteacher's telephone number", application.SchoolConversionContactHeadTel),
+				new FormField("Headteacher's phone number", application.SchoolConversionContactHeadTel),
 				new FormField("Name of the chair of the Governing Body", application.SchoolConversionContactChairName),
 				new FormField("Chair's email address", application.SchoolConversionContactChairEmail),
 				new FormField("Chair's phone number", application.SchoolConversionContactChairTel),
@@ -140,7 +140,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			{
 				new FormField("Name of headteacher", application.SchoolConversionContactHeadName),
 				new FormField("Headteacher's email address", application.SchoolConversionContactHeadEmail),
-				new FormField("Headteacher's telephone number", application.SchoolConversionContactHeadTel),
+				new FormField("Headteacher's phone number", application.SchoolConversionContactHeadTel),
 				new FormField("Name of the chair of the Governing Body", application.SchoolConversionContactChairName),
 				new FormField("Chair's email address", application.SchoolConversionContactChairEmail),
 				new FormField("Chair's phone number", application.SchoolConversionContactChairTel),
