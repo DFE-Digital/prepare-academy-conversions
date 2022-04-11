@@ -23,6 +23,8 @@ For local development, user secrets can be set using the command:
 Alternatively, there is a Rider plugin called `.NET Core User Secrets` that allows the secrets to be managed via a json file, accessed by right clicking on the project -> `Tools` -> `Open Project User Secrets`.
 
 ## Cypress testing
+Install cypress and dependencies:
+- Run 'npm install' from the ApplyToBecomeCypressTests directory
 
 ### Test execution
 The Cypress tests will run against the front-end of the application, so the credentials you provide below should be of the user that is set up to run against the UI.
