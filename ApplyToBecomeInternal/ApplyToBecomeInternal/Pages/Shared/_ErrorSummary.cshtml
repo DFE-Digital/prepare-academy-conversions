@@ -15,7 +15,7 @@
 					}
 					else if (!string.IsNullOrWhiteSpace(error.Key))
 					{
-						<a href="#@error.Key">@error.Message</a>
+						<a  id="@($"{error.Key}-error-link") "href="#@error.Key">@error.Message</a>
 					}
 					else
 					{
