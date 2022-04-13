@@ -33,17 +33,17 @@ describe('86341 Error messaging should be correct', () => {
 		.should('have.text', 'Advisory Board date must be in the future')
 	});
 
-	it('TC03: Should display "Advisory Board date must be a real date" when submitting invalid month ', () => {
+	it('TC03: Should display "Advisory Board must be a valid date" when submitting invalid month ', () => {
 		cy.submitDateSchoolTrust(11, 222, 1980)
 		cy.saveContinueBtn().click()
 		cy.get('.govuk-error-summary__list li a')
-		.should('have.text', 'Advisory Board date must be a real date')
+		.should('have.text', '\'Advisory Board\' must be a valid date')
 	});
 
-	it('TC04: Should display "Advisory Board date must be a real date" when submitting out-of-index month', () => {
+	it('TC04: Should display "Advisory Board must be a valid date" when submitting out-of-index month', () => {
 		cy.submitDateSchoolTrust(11, 0, 1980)
 		cy.saveContinueBtn().click()
 		cy.get('.govuk-error-summary__list li a')
-		.should('have.text', 'Advisory Board date must be a real date')
+		.should('have.text', '\'Advisory Board\' must be a valid date')
 	});
 });
