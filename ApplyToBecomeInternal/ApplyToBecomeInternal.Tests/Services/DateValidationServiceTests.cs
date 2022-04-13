@@ -51,7 +51,7 @@ namespace ApplyToBecomeInternal.Tests.Services
 			(bool valid, string message) = _validator.Validate(day, month, year, "Input");
 
 			Assert.False(valid);
-			Assert.Equal("Input date must be a real date", message);
+			Assert.Equal("'Input' must be a valid date", message);
 		}
 
 		[Theory]
@@ -69,7 +69,7 @@ namespace ApplyToBecomeInternal.Tests.Services
 			(bool valid, string message) = _validator.Validate(day, month, year, "Input");
 
 			Assert.False(valid);
-			Assert.Equal("Input date must be a real date", message);
+			Assert.Equal("'Input' must be a valid date", message);
 		}
 	}
 }
