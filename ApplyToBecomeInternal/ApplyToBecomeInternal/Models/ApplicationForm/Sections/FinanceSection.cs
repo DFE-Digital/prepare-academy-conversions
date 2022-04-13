@@ -21,26 +21,44 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 
 		private IEnumerable<FormField> GeneratePreviousFinancialYearFields(string name, FinancialYear applicationFinancialYear)
 		{
-			return new[]
+
+			var previousFinancialYearFields = new List<FormField>();
+			previousFinancialYearFields.Add(new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate?.ToUkDateString()));
+			previousFinancialYearFields.Add(new FormField($"Revenue carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.RevenueCarryForward.ToMoneyString(true)));
+			previousFinancialYearFields.Add(new FormField("Surplus or deficit?", applicationFinancialYear.RevenueIsDeficit.ToSurplusDeficitString()));
+			if(applicationFinancialYear.RevenueIsDeficit == true)
 			{
-						new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate?.ToUkDateString()),
-						new FormField($"Revenue carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.RevenueCarryForward.ToMoneyString(true)),
-						new FormField("Surplus or deficit?", applicationFinancialYear.RevenueIsDeficit.ToSurplusDeficitString()), 
-						new FormField($"Capital carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.CapitalCarryForward.ToMoneyString(true)),
-						new FormField("Surplus or deficit?", applicationFinancialYear.CapitalIsDeficit.ToSurplusDeficitString())
-			};
+				previousFinancialYearFields.Add(new FormField("Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan", applicationFinancialYear.RevenueStatusExplained));
+			}
+			previousFinancialYearFields.Add(new FormField($"Capital carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.CapitalCarryForward.ToMoneyString(true)));
+			previousFinancialYearFields.Add(new FormField("Surplus or deficit?", applicationFinancialYear.CapitalIsDeficit.ToSurplusDeficitString()));
+			if(applicationFinancialYear.CapitalIsDeficit == true)
+			{
+				previousFinancialYearFields.Add(new FormField("Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan", applicationFinancialYear.CapitalStatusExplained));
+			}
+
+			return previousFinancialYearFields;
 		}
 
 		private IEnumerable<FormField> GenerateFinancialYearFields(string name, FinancialYear applicationFinancialYear)
 		{
-			return new[]
+			var financialYearFields = new List<FormField>();
+			
+			financialYearFields.Add(new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate?.ToUkDateString()));
+			financialYearFields.Add(new FormField($"Forecasted revenue carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.RevenueCarryForward.ToMoneyString(true)));
+			financialYearFields.Add(new FormField("Surplus or deficit?", applicationFinancialYear.RevenueIsDeficit.ToSurplusDeficitString()));
+			if(applicationFinancialYear.RevenueIsDeficit == true)
 			{
-						new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate?.ToUkDateString()),
-						new FormField($"Forecasted revenue carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.RevenueCarryForward.ToMoneyString(true)),
-						new FormField("Surplus or deficit?", applicationFinancialYear.RevenueIsDeficit.ToSurplusDeficitString()),
-						new FormField($"Forecasted capital carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.CapitalCarryForward.ToMoneyString(true)),
-						new FormField("Surplus or deficit?", applicationFinancialYear.CapitalIsDeficit.ToSurplusDeficitString())
-			};
+				financialYearFields.Add(new FormField("Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan", applicationFinancialYear.RevenueStatusExplained));
+			}
+			financialYearFields.Add(new FormField($"Forecasted capital carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.CapitalCarryForward.ToMoneyString(true)));
+			financialYearFields.Add(new FormField("Surplus or deficit?", applicationFinancialYear.CapitalIsDeficit.ToSurplusDeficitString()));
+			if(applicationFinancialYear.CapitalIsDeficit == true)
+			{
+				financialYearFields.Add(new FormField("Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan", applicationFinancialYear.CapitalStatusExplained));
+			}
+
+			return financialYearFields;
 		}
 
 		private IEnumerable<FormField> GenerateLoansFields(ICollection<Loan> applicationLoans)
