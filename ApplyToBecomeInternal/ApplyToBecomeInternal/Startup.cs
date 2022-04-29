@@ -2,7 +2,6 @@ using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Configuration;
 using ApplyToBecomeInternal.Security;
 using ApplyToBecomeInternal.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -11,6 +10,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
 using Newtonsoft.Json.Linq;
 using StackExchange.Redis;
 using System;
@@ -34,13 +35,14 @@ namespace ApplyToBecomeInternal
 				.AddRazorPages(options =>
 				{
 					options.Conventions.AuthorizeFolder("/");
-					options.Conventions.AllowAnonymousToFolder("/Login");
-					options.Conventions.AllowAnonymousToFolder("/Public");
 				})
 				.AddViewOptions(options =>
 				{
 					options.HtmlHelperOptions.ClientValidationEnabled = false;
 				});
+			
+			services.AddControllersWithViews()
+				.AddMicrosoftIdentityUI();
 
 			services.AddAuthorization(options =>
 			{
@@ -58,14 +60,15 @@ namespace ApplyToBecomeInternal
 
 			ConfigureRedisConnection(services);
 
-			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+			services.AddMicrosoftIdentityWebAppAuthentication(Configuration);
+			services.ConfigureApplicationCookie(options =>
 			{
-				options.LoginPath = "/login";
 				options.Cookie.Name = ".ManageAnAcademyConversion.Login";
 				options.Cookie.HttpOnly = true;
 				options.Cookie.IsEssential = true;
 				options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 				options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+				options.SlidingExpiration = true;
 			});
 
 			services.AddHttpClient("TramsClient", (sp, client) =>
@@ -119,6 +122,7 @@ namespace ApplyToBecomeInternal
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapRazorPages();
+				endpoints.MapControllerRoute("default", "{controller}/{action}/");
 			});
 		}
 
