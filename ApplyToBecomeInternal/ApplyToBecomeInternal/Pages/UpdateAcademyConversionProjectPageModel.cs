@@ -45,12 +45,6 @@ namespace ApplyToBecomeInternal.Pages
 					"Set an Advisory Board date before you generate your project template");
 			}
 
-			if ((AcademyConversionProject.ConversionSupportGrantAmount.HasValue) && (AcademyConversionProject.ConversionSupportGrantAmount != 25000) && (AcademyConversionProject.ConversionSupportGrantChangeReason == String.Empty))
-			{
-				_errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FSchoolAndTrustInformation/ConfirmSchoolAndTrustInformation&fragment=advisory-board-date",
-					"Set a reason for the support grant to be less than the full amount");
-			}
-
 			_errorService.AddErrors(Request.Form.Keys, ModelState);
 			if (_errorService.HasErrors())
 			{

@@ -83,6 +83,7 @@ namespace ApplyToBecomeInternal.Models
 		public decimal? ConversionSupportGrantAmount { get; set; }
 		[BindProperty(Name="conversion-support-grant-change-reason")]
 		[DisplayFormat(ConvertEmptyStringToNull = false)]
+		[SupportGrantValidator]
 		public string ConversionSupportGrantChangeReason { get; set; }
 
 		//general info
