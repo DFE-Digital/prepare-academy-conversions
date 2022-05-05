@@ -4,6 +4,8 @@
 	Layout = "_QuestionLayout";
 	Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
 	ViewData["Title"] = "Viability issues";
+	ViewData["SchoolName"] = Model.Project.SchoolName;
+	ViewData["ProjectId"] = Model.Project.Id;
 	var values = new[] { "Yes", "No" };
 }
 

@@ -4,6 +4,8 @@
 	Layout = "_QuestionLayout";
 	Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
 	ViewData["Title"] = "Recommendation";
+	ViewData["SchoolName"] = Model.Project.SchoolName;
+	ViewData["ProjectId"] = Model.Project.Id;
 	var values = new[] { "Approve", "Defer", "Decline" };
 }
 

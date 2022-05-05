@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using ApplyToBecomeInternal.Pages.TaskList.SchoolAndTrustInformation;
 
 namespace ApplyToBecomeInternal.Models
 {
@@ -12,9 +10,9 @@ namespace ApplyToBecomeInternal.Models
 		{ 
 			var reason = value as string;
 
-			if (reason == String.Empty)
+			if (string.IsNullOrWhiteSpace(reason))
 			{
-				var context = validationContext.ObjectInstance as AcademyConversionProjectPostModel;
+				var context = validationContext.ObjectInstance as RouteAndGrant.InputModel;
 				if (context.ConversionSupportGrantAmount < 25000)
 				{
 					return new ValidationResult("Give a reason why you have changed the support grant amount");

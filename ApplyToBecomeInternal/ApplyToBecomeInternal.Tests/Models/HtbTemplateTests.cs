@@ -129,9 +129,9 @@ namespace ApplyToBecomeInternal.Tests.Models
 			[Fact]
 			public void ItBuildsSchoolPupilForecastsSuccessfully()
 			{
-				Assert.Equal(_template.YearOneProjectedCapacity, _project.YearOneProjectedCapacity.ToString());
-				Assert.Equal(_template.YearOneProjectedPupilNumbers, _project.YearOneProjectedPupilNumbers.ToStringOrDefault());
-				Assert.Equal(_template.YearOnePercentageSchoolFull, _project.YearOneProjectedPupilNumbers.AsPercentageOf(_project.YearOneProjectedCapacity));
+				Assert.Equal(_template.YearOneProjectedCapacity, _project.YearOneProjectedPupilNumbers.ToString());
+				Assert.Equal(_template.YearOneProjectedPupilNumbers, _project.ProjectedPupilNumbersYear1.ToStringOrDefault());
+				Assert.Equal(_template.YearOnePercentageSchoolFull, _project.ProjectedPupilNumbersYear1.AsPercentageOf(_project.YearOneProjectedPupilNumbers));
 				Assert.Equal(_template.YearTwoProjectedCapacity, _project.YearTwoProjectedCapacity.ToString());
 				Assert.Equal(_template.YearTwoProjectedPupilNumbers, _project.YearTwoProjectedPupilNumbers.ToString());
 				Assert.Equal(_template.YearTwoPercentageSchoolFull, _project.YearTwoProjectedPupilNumbers.AsPercentageOf(_project.YearTwoProjectedCapacity));

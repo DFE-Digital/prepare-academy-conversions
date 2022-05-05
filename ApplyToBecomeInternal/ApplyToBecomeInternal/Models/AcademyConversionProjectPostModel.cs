@@ -81,10 +81,10 @@ namespace ApplyToBecomeInternal.Models
 		[Range(typeof(decimal), "0", "25000", ErrorMessage = "Enter an amount that is £25,000 or less, for example £20,000")]
 		[BindProperty(Name="conversion-support-grant-amount")]
 		public decimal? ConversionSupportGrantAmount { get; set; }
-		[BindProperty(Name="conversion-support-grant-change-reason")]
-		[DisplayFormat(ConvertEmptyStringToNull = false)]
-		[SupportGrantValidator]
-		public string ConversionSupportGrantChangeReason { get; set; }
+		//[BindProperty(Name="conversion-support-grant-change-reason")]
+		//[DisplayFormat(ConvertEmptyStringToNull = false)]
+		//[SupportGrantValidator]
+		//public string ConversionSupportGrantChangeReason { get; set; }
 
 		//general info
 

@@ -14,9 +14,9 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 		{
 			var application = new ApplyingSchool
 			{
-				SchoolCapacityYear1 = 150,
-				SchoolCapacityYear2 = 151,
-				SchoolCapacityYear3 = 152,
+				ProjectedPupilNumbersYear1 = 150,
+				ProjectedPupilNumbersYear2 = 151,
+				ProjectedPupilNumbersYear3 = 152,
 				SchoolCapacityAssumptions = "spreadsheets",
 				SchoolCapacityPublishedAdmissionsNumber = 210
 			};

@@ -61,8 +61,8 @@ namespace ApplyToBecomeInternal.ViewModels
 			EqualitiesImpactAssessmentConsidered = project.EqualitiesImpactAssessmentConsidered;
 			RisksAndIssuesSectionComplete = project.RisksAndIssuesSectionComplete ?? false;
 
-			YearOneProjectedCapacity = project.YearOneProjectedCapacity;
-			YearOneProjectedPupilNumbers = project.YearOneProjectedPupilNumbers;
+			YearOneProjectedCapacity = project.YearOneProjectedPupilNumbers;
+			YearOneProjectedPupilNumbers = project.ProjectedPupilNumbersYear1;
 			YearTwoProjectedCapacity = project.YearTwoProjectedCapacity;
 			YearTwoProjectedPupilNumbers = project.YearTwoProjectedPupilNumbers;
 			YearThreeProjectedCapacity = project.YearThreeProjectedCapacity;
