@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace ApplyToBecomeInternal.Models
 {
@@ -37,7 +39,15 @@ namespace ApplyToBecomeInternal.Models
 				return Task.CompletedTask;
 			}
 
-			return (new DecimalModelBinder(NumberStyles.Any, _loggerFactory)).BindModelAsync(bindingContext);
+			(new DecimalModelBinder(NumberStyles.Any, _loggerFactory)).BindModelAsync(bindingContext);
+
+			if (bindingContext.ModelState.TryGetValue(bindingContext.ModelName, out var entry) && entry.Errors.Count > 0)
+			{
+				var displayName = bindingContext.ModelMetadata.DisplayName ?? bindingContext.ModelName;
+				entry.Errors.Add($"'{displayName}' must be a valid format");
+			}
+
+			return Task.CompletedTask;
 		}
 	}
 }

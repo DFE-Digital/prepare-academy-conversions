@@ -74,10 +74,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/how-far-converting-school-from-trust");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("The value 'abc' is not valid for Distance from the school to the trust headquarters.");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("'Distance from the converting school to the trust or other schools in the trust' must be a valid format");
 
 			Document.QuerySelector(".govuk-error-message").Should().NotBeNull();
-			Document.QuerySelector("#distance-to-trust-headquarters-error").TextContent.Should().Contain($"The value '{InvalidEntry}' is not valid for Distance from the school to the trust headquarters.");
+			Document.QuerySelector("#distance-to-trust-headquarters-error").TextContent.Should().Contain($"'Distance from the converting school to the trust or other schools in the trust' must be a valid format");
 		}
 
 		[Fact]
