@@ -94,7 +94,7 @@ namespace ApplyToBecomeInternal.Models
 
 		[BindProperty(Name = "distance-to-trust-headquarters")]
 		[ModelBinder(BinderType = typeof(DecimalInputModelBinder))]
-		[Display(Name = "Distance from the school to the trust headquarters")]
+		[Display(Name = "Distance from the converting school to the trust or other schools in the trust")]
 		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
 
 		[BindProperty(Name = "distance-to-trust-headquarters-additional-information")]
