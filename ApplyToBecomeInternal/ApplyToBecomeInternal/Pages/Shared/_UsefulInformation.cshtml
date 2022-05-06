@@ -16,7 +16,7 @@
 					</li>
 				}
 				<li>
-					<p class="govuk-body-s"><a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="application">School application form (opens in a new tab)</a></p>
+					<p class="govuk-body-s"><a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@ViewData["ProjectId"]" target="application">School application form (opens in a new tab)</a></p>
 				</li>
 				@if (showTheyWorkForYouLink)
 				{

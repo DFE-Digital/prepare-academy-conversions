@@ -18,8 +18,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPupilForecasts
 		{
 			var project = AddGetProject(p =>
 			{
-				p.YearOneProjectedCapacity = _fixture.Create<int>();
 				p.YearOneProjectedPupilNumbers = _fixture.Create<int>();
+				p.ProjectedPupilNumbersYear1 = _fixture.Create<int>();
 				p.YearTwoProjectedCapacity = _fixture.Create<int>();
 				p.YearTwoProjectedPupilNumbers = _fixture.Create<int>();
 				p.YearThreeProjectedCapacity = _fixture.Create<int>();
@@ -40,9 +40,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPupilForecasts
 			rows[0].Children[1].TextContent.Should().Be(establishment.SchoolCapacity);
 			rows[0].Children[2].TextContent.Should().Be(establishment.Census.NumberOfPupils);
 			rows[0].Children[3].TextContent.Should().Be(ToInt(establishment.Census?.NumberOfPupils).AsPercentageOf(ToInt(establishment.SchoolCapacity)));
-			rows[1].Children[1].TextContent.Should().Be(project.YearOneProjectedCapacity.ToString());
-			rows[1].Children[2].TextContent.Should().Be(project.YearOneProjectedPupilNumbers.ToString());
-			rows[1].Children[3].TextContent.Should().Be(project.YearOneProjectedPupilNumbers.AsPercentageOf(project.YearOneProjectedCapacity));
+			rows[1].Children[1].TextContent.Should().Be(project.YearOneProjectedPupilNumbers.ToString());
+			rows[1].Children[2].TextContent.Should().Be(project.ProjectedPupilNumbersYear1.ToString());
+			rows[1].Children[3].TextContent.Should().Be(project.ProjectedPupilNumbersYear1.AsPercentageOf(project.YearOneProjectedPupilNumbers));
 			rows[2].Children[1].TextContent.Should().Be(project.YearTwoProjectedCapacity.ToString());
 			rows[2].Children[2].TextContent.Should().Be(project.YearTwoProjectedPupilNumbers.ToString());
 			rows[2].Children[3].TextContent.Should().Be(project.YearTwoProjectedPupilNumbers.AsPercentageOf(project.YearTwoProjectedCapacity));
@@ -56,8 +56,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPupilForecasts
 		{
 			var project = AddGetProject(p =>
 			{
-				p.YearOneProjectedCapacity = null;
 				p.YearOneProjectedPupilNumbers = null;
+				p.ProjectedPupilNumbersYear1 = null;
 				p.YearTwoProjectedCapacity = null;
 				p.YearTwoProjectedPupilNumbers = null;
 				p.YearThreeProjectedCapacity = null;
@@ -79,7 +79,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPupilForecasts
 			rows[0].Children[2].TextContent.Should().Be("");
 			rows[0].Children[3].TextContent.Should().Be("");
 			rows[1].Children[1].TextContent.Should().Be("");
-			rows[1].Children[2].TextContent.Should().Be(project.YearOneProjectedPupilNumbers.ToString());
+			rows[1].Children[2].TextContent.Should().Be(project.ProjectedPupilNumbersYear1.ToString());
 			rows[1].Children[3].TextContent.Should().Be("");
 			rows[2].Children[1].TextContent.Should().Be(project.YearTwoProjectedCapacity.ToString());
 			rows[2].Children[2].TextContent.Should().Be(project.YearTwoProjectedPupilNumbers.ToString());

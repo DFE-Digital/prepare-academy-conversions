@@ -4,6 +4,8 @@
 	Layout = "_QuestionLayout";
 	Model.SuccessPage = Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page;
 	ViewData["Title"] = "Risks and issues";
+	ViewData["SchoolName"] = Model.Project.SchoolName;
+	ViewData["ProjectId"] = Model.Project.Id;
 }
 
 @section BeforeMain
