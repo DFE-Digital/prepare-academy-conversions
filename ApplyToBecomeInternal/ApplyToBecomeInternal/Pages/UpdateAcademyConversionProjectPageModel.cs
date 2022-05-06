@@ -37,7 +37,7 @@ namespace ApplyToBecomeInternal.Pages
 		public override async Task<IActionResult> OnPostAsync(int id)
 		{
 			await SetProject(id);
-			
+		
 			bool schoolAndTrustInformationSectionComplete = AcademyConversionProject.SchoolAndTrustInformationSectionComplete != null && AcademyConversionProject.SchoolAndTrustInformationSectionComplete.Value;
 			if (schoolAndTrustInformationSectionComplete && !Project.HeadTeacherBoardDate.HasValue)
 			{
@@ -114,10 +114,7 @@ namespace ApplyToBecomeInternal.Pages
 				SchoolPupilForecastsAdditionalInformation = AcademyConversionProject.SchoolPupilForecastsAdditionalInformation,
 				KeyStage2PerformanceAdditionalInformation = AcademyConversionProject.KeyStage2PerformanceAdditionalInformation,
 				KeyStage4PerformanceAdditionalInformation = AcademyConversionProject.KeyStage4PerformanceAdditionalInformation,
-				KeyStage5PerformanceAdditionalInformation = AcademyConversionProject.KeyStage5PerformanceAdditionalInformation,
-				ConversionSupportGrantAmount = AcademyConversionProject.ConversionSupportGrantAmount,
-				ConversionSupportGrantChangeReason = AcademyConversionProject.ConversionSupportGrantChangeReason
-				
+				KeyStage5PerformanceAdditionalInformation = AcademyConversionProject.KeyStage5PerformanceAdditionalInformation
 			};
 		}
 

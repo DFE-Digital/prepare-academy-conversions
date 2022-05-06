@@ -74,8 +74,8 @@ namespace ApplyToBecome.Data.Models
 		public bool? SchoolBudgetInformationSectionComplete { get; set; }
 
 		// pupil schools forecast
-		public int? YearOneProjectedCapacity { get; set; }
 		public int? YearOneProjectedPupilNumbers { get; set; }
+		public int? ProjectedPupilNumbersYear1 { get; set; }
 		public int? YearTwoProjectedCapacity { get; set; }
 		public int? YearTwoProjectedPupilNumbers { get; set; }
 		public int? YearThreeProjectedCapacity { get; set; }

@@ -4,6 +4,8 @@
 	Layout = "_QuestionLayout";
 	Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
 	ViewData["Title"] = "Financial deficit";
+	ViewData["SchoolName"] = Model.Project.SchoolName;
+	ViewData["ProjectId"] = Model.Project.Id;
 	var values = new[] { "Yes", "No" };
 }
 

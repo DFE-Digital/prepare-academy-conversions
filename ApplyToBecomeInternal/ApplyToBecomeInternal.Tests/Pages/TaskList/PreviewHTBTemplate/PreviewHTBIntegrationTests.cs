@@ -232,9 +232,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			rows[0].Children[1].TextContent.Should().Be(establishment.SchoolCapacity);
 			rows[0].Children[2].TextContent.Should().Be(establishment.Census.NumberOfPupils);
 			rows[0].Children[3].TextContent.Should().Be(ToInt(establishment.Census?.NumberOfPupils).AsPercentageOf(ToInt(establishment.SchoolCapacity)));
-			rows[1].Children[1].TextContent.Should().Be(project.YearOneProjectedCapacity.ToString());
-			rows[1].Children[2].TextContent.Should().Be(project.YearOneProjectedPupilNumbers.ToString());
-			rows[1].Children[3].TextContent.Should().Be(project.YearOneProjectedPupilNumbers.AsPercentageOf(project.YearOneProjectedCapacity));
+			rows[1].Children[1].TextContent.Should().Be(project.YearOneProjectedPupilNumbers.ToString());
+			rows[1].Children[2].TextContent.Should().Be(project.ProjectedPupilNumbersYear1.ToString());
+			rows[1].Children[3].TextContent.Should().Be(project.ProjectedPupilNumbersYear1.AsPercentageOf(project.YearOneProjectedPupilNumbers));
 			rows[2].Children[1].TextContent.Should().Be(project.YearTwoProjectedCapacity.ToString());
 			rows[2].Children[2].TextContent.Should().Be(project.YearTwoProjectedPupilNumbers.ToString());
 			rows[2].Children[3].TextContent.Should().Be(project.YearTwoProjectedPupilNumbers.AsPercentageOf(project.YearTwoProjectedCapacity));

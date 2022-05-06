@@ -4,6 +4,8 @@
 	Layout = "_QuestionLayout";
 	Model.SuccessPage = Links.RationaleSection.ConfirmProjectAndTrustRationale.Page;
 	ViewData["Title"] = "Trust or sponsor rationale";
+	ViewData["SchoolName"] = Model.Project.SchoolName;
+	ViewData["ProjectId"] = Model.Project.Id;
 }
 
 @section BeforeMain

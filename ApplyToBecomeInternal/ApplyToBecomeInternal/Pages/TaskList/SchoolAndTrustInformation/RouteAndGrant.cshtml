@@ -1,9 +1,11 @@
 ﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/route-and-grant"
-@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@model ApplyToBecomeInternal.Pages.TaskList.SchoolAndTrustInformation.RouteAndGrant
 @{
 	Layout = "_QuestionLayout";
 	Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
 	ViewData["Title"] = "Academy type, route and conversion support grant";
+	ViewData["SchoolName"] = Model.SchoolName;
+	ViewData["ProjectId"] = Model.Id;
 	const string grantAmountHint = "If the school has tried to convert before and was unsuccessful, it may have already spent some of its support grant, so you can decrease the amount for this project if you need to. For example, £20,000";
 }
 
@@ -23,7 +25,7 @@
 
 	<govuk-decimal-input
 		name="conversion-support-grant-amount" id="conversion-support-grant-amount"
-		asp-for="Project.ConversionSupportGrantAmount" width="20" isMonetary="true"
+		asp-for="@Model.RouteAndGrantViewModel.ConversionSupportGrantAmount" width="20" isMonetary="true"
 		hint="@grantAmountHint"/>
 	
 	<label class="govuk-label govuk-label--m" for="conversion-support-grant-change-reason">
@@ -32,6 +34,6 @@
 	
 	<govuk-textarea-input
 		name="conversion-support-grant-change-reason" id="conversion-support-grant-change-reason"
-		rows="5" asp-for="Project.ConversionSupportGrantChangeReason"/>
+		rows="5" asp-for="@Model.RouteAndGrantViewModel.ConversionSupportGrantChangeReason"/>
 
 </div>

@@ -163,6 +163,31 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 		}
 
 		[Fact]
+		public async Task Should_show_error_summary_when_grant_amount_less_than_full_amount_and_no_reason_entered()
+		{
+			var project = AddGetProject(project =>
+			{
+				project.ConversionSupportGrantAmount = 2000m;
+				project.ConversionSupportGrantChangeReason = null;
+			});
+			AddPatchProjectMany(project, composer =>
+				composer
+				.With(r => r.ConversionSupportGrantAmount, project.ConversionSupportGrantAmount)
+				.With(r => r.ConversionSupportGrantChangeReason, String.Empty));
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			await NavigateAsync("School and trust information and project dates");
+			await NavigateAsync("Change", 2);
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/route-and-grant");
+			var test = Document.QuerySelector(".govuk-error-summary");
+			test.Should().NotBe(null);
+		}
+
+		[Fact]
 		public async Task Should_navigate_between_task_list_and_school_and_trust_information()
 		{
 			var project = AddGetProject();
