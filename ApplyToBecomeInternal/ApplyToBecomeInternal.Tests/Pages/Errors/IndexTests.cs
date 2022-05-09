@@ -66,6 +66,18 @@ namespace ApplyToBecomeInternal.Tests.Pages.Errors
 			_model.ErrorMessage.Should().Be("Page not found");
 			_httpContextMock.Verify();
 		}
+		
+		[Theory]
+		[InlineData(404, "Page not found")]
+		[InlineData(500, "Internal server error")]
+		[InlineData(501, "Not implemented")]
+		[InlineData(99999, "Error 99999")]
+		public void OnPost_WhenResponseHasAStatusCode_SetsMessageCorrectly(int statusCode, string expectedMessage)
+		{
+			_model.OnPost(statusCode);
+
+			_model.ErrorMessage.Should().Be(expectedMessage);
+		}
 
 		[Fact]
 		public void OnPost_WhenUnhandledError_HasDefaultMessage()

@@ -11,6 +11,16 @@ namespace ApplyToBecomeInternal.Pages.Errors
 
 		public void OnGet(int? statusCode = null)
 		{
+			ManageErrors(statusCode);
+		}
+
+		public void OnPost(int? statusCode = null)
+		{
+			ManageErrors(statusCode);
+		}
+
+		private void ManageErrors(int? statusCode)
+		{
 			if (!statusCode.HasValue)
 			{
 				ManageUnhandledErrors();
@@ -26,18 +36,11 @@ namespace ApplyToBecomeInternal.Pages.Errors
 			};
 		}
 
-		public void OnPost(int? statusCode = null)
-		{
-			if (!statusCode.HasValue)
-			{
-				ManageUnhandledErrors();
-			}
-		}
-
 		private void ManageUnhandledErrors()
 		{
-			var unhandledError = HttpContext.Features.Get<IExceptionHandlerPathFeature>().Error;
+			var unhandledError = HttpContext.Features.Get<IExceptionHandlerPathFeature>()?.Error;
 
+			// Thrown by RedirectToPage when the name of the page is incorrect.
 			if (unhandledError is InvalidOperationException && unhandledError.Message.ToLower().Contains("no page named"))
 			{
 				ErrorMessage = "Page not found";
