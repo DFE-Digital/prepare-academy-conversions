@@ -1,32 +1,51 @@
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ApplyToBecomeInternal.Pages.Errors
 {
-    public class IndexModel : PageModel
-    {
-		public string ErrorMessage { get; set; } 
+	public class IndexModel : PageModel
+	{
+		public string ErrorMessage { get; private set; } = "An error occurred while processing your request";
 
 		public void OnGet(int? statusCode = null)
-        {
-			if (statusCode.HasValue)
+		{
+			ManageErrors(statusCode);
+		}
+
+		public void OnPost(int? statusCode = null)
+		{
+			ManageErrors(statusCode);
+		}
+
+		private void ManageErrors(int? statusCode)
+		{
+			if (!statusCode.HasValue)
 			{
-				switch (statusCode.Value)
-				{
-					case 404: ErrorMessage = "Page not found";
-						break;
-					case 500: ErrorMessage = "Internal server error";
-						break;
-					case 501: ErrorMessage = "Not implemented";
-						break;
-					default: ErrorMessage = $"Error {statusCode}";
-						break;
-				}
+				ManageUnhandledErrors();
+				return;
 			}
-        }
-    }
+
+			ErrorMessage = statusCode.Value switch
+			{
+				404 => "Page not found",
+				500 => "Internal server error",
+				501 => "Not implemented",
+				_ => $"Error {statusCode}"
+			};
+		}
+
+		private void ManageUnhandledErrors()
+		{
+			var unhandledError = HttpContext.Features.Get<IExceptionHandlerPathFeature>()?.Error;
+
+			// Thrown by RedirectToPage when the name of the page is incorrect.
+			if (unhandledError is InvalidOperationException && unhandledError.Message.ToLower().Contains("no page named"))
+			{
+				ErrorMessage = "Page not found";
+				HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+			}
+		}
+	}
 }
