@@ -10,7 +10,7 @@ namespace ApplyToBecome.Data.Models.Application
 		public string Name { get; set; }
 		public string ApplicationLeadAuthorName { get; set; }
 		public string TrustConsentEvidenceDocumentLink { get; set; }
-		public bool ChangesToTrust { get; set; }
+		public bool? ChangesToTrust { get; set; }
 		public string ChangesToTrustExplained { get; set; }
 		public bool ChangesToLaGovernance { get; set; }
 		public string ChangesToLaGovernanceExplained { get; set; }
