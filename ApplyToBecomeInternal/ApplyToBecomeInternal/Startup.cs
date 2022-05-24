@@ -2,6 +2,7 @@ using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Configuration;
 using ApplyToBecomeInternal.Security;
 using ApplyToBecomeInternal.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -15,6 +16,7 @@ using Microsoft.Identity.Web.UI;
 using Newtonsoft.Json.Linq;
 using StackExchange.Redis;
 using System;
+using System.Security.Claims;
 
 namespace ApplyToBecomeInternal
 {
@@ -43,14 +45,7 @@ namespace ApplyToBecomeInternal
 			
 			services.AddControllersWithViews()
 				.AddMicrosoftIdentityUI();
-
-			services.AddAuthorization(options =>
-			{
-				options.FallbackPolicy = new AuthorizationPolicyBuilder()
-					.RequireAuthenticatedUser()
-					.Build();
-			});
-
+			
 			if (_env.IsDevelopment())
 			{
 				razorPages.AddRazorRuntimeCompilation();
@@ -59,17 +54,26 @@ namespace ApplyToBecomeInternal
 			services.AddHttpContextAccessor();
 
 			ConfigureRedisConnection(services);
-
+			
+			services.AddAuthorization(options => { options.DefaultPolicy = SetupAuthorizationPolicyBuilder().Build(); });
+			
 			services.AddMicrosoftIdentityWebAppAuthentication(Configuration);
-			services.ConfigureApplicationCookie(options =>
-			{
-				options.Cookie.Name = ".ManageAnAcademyConversion.Login";
-				options.Cookie.HttpOnly = true;
-				options.Cookie.IsEssential = true;
-				options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-				options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-				options.SlidingExpiration = true;
-			});
+			services.Configure<CookieAuthenticationOptions>(CookieAuthenticationDefaults.AuthenticationScheme,
+				options =>
+				{
+					options.AccessDeniedPath = "/access-denied";
+					options.LogoutPath = "/signed-out";
+					options.Cookie.Name = "ManageAnAcademyTransfer.Login";
+					options.Cookie.HttpOnly = true;
+					options.Cookie.IsEssential = true;
+					options.ExpireTimeSpan =
+						TimeSpan.FromMinutes(Int32.Parse(Configuration["AuthenticationExpirationInMinutes"]));
+					options.SlidingExpiration = true;
+					if (string.IsNullOrEmpty(Configuration["CI"]))
+					{
+						options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+					}
+				});
 
 			services.AddHttpClient("TramsClient", (sp, client) =>
 			{
@@ -124,6 +128,23 @@ namespace ApplyToBecomeInternal
 				endpoints.MapRazorPages();
 				endpoints.MapControllerRoute("default", "{controller}/{action}/");
 			});
+		}
+		
+		/// <summary>
+		/// Builds Authorization policy
+		/// Ensure authenticated user and restrict roles if they are provided in configuration
+		/// </summary>
+		/// <returns>AuthorizationPolicyBuilder</returns>
+		private AuthorizationPolicyBuilder SetupAuthorizationPolicyBuilder()
+		{
+			var policyBuilder = new AuthorizationPolicyBuilder();
+			var allowedRoles = Configuration.GetSection("AzureAd")["AllowedRoles"];
+			policyBuilder.RequireAuthenticatedUser();
+			if (!string.IsNullOrWhiteSpace(allowedRoles))
+			{
+				policyBuilder.RequireClaim(ClaimTypes.Role, allowedRoles.Split(','));
+			}
+			return policyBuilder;
 		}
 
 		private void ConfigureRedisConnection(IServiceCollection services)
