@@ -73,16 +73,24 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 		}
 
 		[Fact]
-		public void Constructor_Shows_Changes_To_Trust_As_Unknown_When_Value_Is_Null()
+		public void Constructor_Shows_Fields_As_Unknown_When_Value_Is_Null()
 		{
 			var fixture = new Fixture();
 			var application = fixture.Create<Application>();
 			application.ChangesToTrust = null;
 			application.ChangesToTrustExplained = null;
+			application.ChangesToLaGovernance = null;
+			application.ChangesToLaGovernanceExplained = null;
 			var formSection = new ApplicationFormSection(application);
 
 			formSection.SubSections.First().Fields
 				.Where(s => s.Title == "Will there be any changes to the governance of the trust due to the school joining?")
+				.FirstOrDefault()
+				.Content
+				.Should().Be("Unknown");
+
+			formSection.SubSections.First().Fields
+				.Where(s => s.Title == "Will there be any changes at a local level due to this school joining?")
 				.FirstOrDefault()
 				.Content
 				.Should().Be("Unknown");
