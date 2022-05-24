@@ -2,14 +2,13 @@
 
 Cypress._.each(['iphone-x'], (viewport) => {
     describe(`86296 Check mark should reflect status correctly on ${viewport}`, () => {
-        afterEach(() => {
-            cy.storeSessionData()
-        });
+		beforeEach(() => {
+			cy.login()
+			cy.selectSchoolListing(1)
+		})
 
         before(function () {
             cy.viewport(viewport)
-            cy.login()
-            cy.selectSchoolListing(1)
         });
     
         it('TC: Precondition checkbox status', () => {

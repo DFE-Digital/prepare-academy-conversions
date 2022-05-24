@@ -27,6 +27,7 @@ resource cloudfoundry_app worker_app {
 		"FeedbackLink"             = var.app_feedback_link
 		"SupportEmail"             = var.app_support_email
 		"SENTRY_RELEASE"           = "a2b-internal:${var.cf_app_image_tag}"
+		"AZUREAD__CLIENTSECRET"    = var.app_azuread_clientsecret
 	}
 }
 

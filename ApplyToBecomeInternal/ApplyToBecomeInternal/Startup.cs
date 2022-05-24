@@ -1,4 +1,5 @@
 using ApplyToBecome.Data.Services;
+using ApplyToBecomeInternal.Authorization;
 using ApplyToBecomeInternal.Configuration;
 using ApplyToBecomeInternal.Security;
 using ApplyToBecomeInternal.Services;
@@ -93,6 +94,8 @@ namespace ApplyToBecomeInternal
 			services.Decorate<IAcademyConversionProjectRepository, AcademyConversionProjectItemsCacheDecorator>();
 			services.AddScoped<IProjectNotesRepository, ProjectNotesRepository>();
 			services.AddScoped<ApplicationRepository>();
+			services.AddSingleton<IAuthorizationHandler, HeaderRequirementHandler>();
+			services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
