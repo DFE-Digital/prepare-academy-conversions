@@ -12,7 +12,7 @@ namespace ApplyToBecome.Data.Models.Application
 		public string TrustConsentEvidenceDocumentLink { get; set; }
 		public bool? ChangesToTrust { get; set; }
 		public string ChangesToTrustExplained { get; set; }
-		public bool ChangesToLaGovernance { get; set; }
+		public bool? ChangesToLaGovernance { get; set; }
 		public string ChangesToLaGovernanceExplained { get; set; }
 		public ICollection<ApplyingSchool> ApplyingSchools { get; set; }
 	}
