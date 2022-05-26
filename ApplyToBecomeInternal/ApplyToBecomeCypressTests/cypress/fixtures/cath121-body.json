@@ -1,6 +1,7 @@
 {
     "data": {
         "name": "Bristol gateway",
+        "trustName": "Bristol gateway",
         "applicationId": "Cath121",
         "applicationType": "JoinMat",
         "trustId": "0x5ec28a7dA9",
