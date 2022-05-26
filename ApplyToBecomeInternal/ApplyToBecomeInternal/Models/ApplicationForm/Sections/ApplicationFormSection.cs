@@ -16,7 +16,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 
 		private static IEnumerable<FormField> GenerateBaseFields(Application application) =>
 			new[] {
-				new FormField("Application to join", $"{application.Name} with {application.ApplyingSchools.First().SchoolName}"),
+				new FormField("Application to join", $"{application.TrustName} with {application.ApplyingSchools.First().SchoolName}"),
 				new FormField("Application reference", application.ApplicationId),
 				new FormField("Lead applicant", application.ApplicationLeadAuthorName),
 			};
@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 		private static IEnumerable<FormField> GenerateDetailsFields(Application application)
 		{
 			var formFields = new List<FormField> {
-				new FormField("Trust name", application.Name),
+				new FormField("Trust name", application.TrustName),
 			};
 			formFields.Add(new FormField("Will there be any changes to the governance of the trust due to the school joining?", application.ChangesToTrust == null ? "Unknown" : application.ChangesToTrust.ToYesNoString()));
 			if ( application.ChangesToTrust == true ) formFields.Add(new FormField("What are the changes?", application.ChangesToTrustExplained) );
