@@ -40,6 +40,14 @@ namespace ApplyToBecomeInternal.Tests.Extensions
 			AssertValueConvertedCorrectly(2.99999999999m, "2.99999999999");
 		}
 
+		[Theory]
+		[InlineData("no data", false)]
+		[InlineData("something else", true)]
+		public void Should_return_correctly_if_data(string value, bool expectedValue)
+		{
+			value.HasData().Should().Be(expectedValue);
+		}
+
 		private static void AssertValueConvertedCorrectly(decimal? value, string expectedValue)
 		{
 			var decimalAsString = value.ToSafeString();

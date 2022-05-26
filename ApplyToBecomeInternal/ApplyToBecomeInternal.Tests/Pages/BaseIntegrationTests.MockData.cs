@@ -124,7 +124,6 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			{
 				_fixture.Customizations.Add(new OfstedRatingSpecimenBuilder());
 				establishmentResponse = _fixture.Build<EstablishmentResponse>().Create();
-				establishmentResponse.OfstedLastInspection = _fixture.Create<DateTime>().ToString("d", CultureInfo.CreateSpecificCulture("en-GB"));
 				establishmentResponse.Census.NumberOfPupils = _fixture.Create<int>().ToString();
 				establishmentResponse.SchoolCapacity = _fixture.Create<int>().ToString();
 			}

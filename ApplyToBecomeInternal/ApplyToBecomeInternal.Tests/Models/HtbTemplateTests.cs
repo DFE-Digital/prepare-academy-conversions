@@ -115,7 +115,6 @@ namespace ApplyToBecomeInternal.Tests.Models
 			[Fact]
 			public void ItBuildsTheSchoolPerformanceSuccessfully()
 			{
-				Assert.Equal(_template.OfstedLastInspection, _schoolPerformance.OfstedLastInspection.ToDateString());
 				Assert.Equal(_template.PersonalDevelopment, _schoolPerformance.PersonalDevelopment.DisplayOfstedRating());
 				Assert.Equal(_template.BehaviourAndAttitudes, _schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating());
 				Assert.Equal(_template.EarlyYearsProvision, _schoolPerformance.EarlyYearsProvision.DisplayOfstedRating());
@@ -164,14 +163,6 @@ namespace ApplyToBecomeInternal.Tests.Models
 
 				Assert.Equal("Not applicable", template.SponsorName);
 				Assert.Equal("Not applicable", template.SponsorReferenceNumber);
-			}
-
-			[Fact]
-			public void ItSubstitutesNullOfstedDateWithMeaningfulWording()
-			{
-				var template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
-
-				Assert.Equal("No data", template.OfstedLastInspection);
 			}
 
 			[Fact]

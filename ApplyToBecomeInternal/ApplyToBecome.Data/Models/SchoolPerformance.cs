@@ -16,5 +16,22 @@ namespace ApplyToBecome.Data.Models
 
 		public string EarlyYearsProvision { get; set; }
 		public string SixthFormProvision { get; set; }
+		public bool LatestInspectionIsSection8
+		{
+			get
+			{
+				if (InspectionEndDate == null)
+				{
+					return DateOfLatestSection8Inspection != null;
+				}
+
+				if (DateOfLatestSection8Inspection == null)
+				{
+					return false;
+				}
+
+				return DateOfLatestSection8Inspection > InspectionEndDate;
+			}
+		}
 	}
 }

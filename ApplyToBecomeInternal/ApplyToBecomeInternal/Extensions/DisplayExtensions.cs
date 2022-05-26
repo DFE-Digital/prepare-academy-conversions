@@ -17,7 +17,7 @@ namespace ApplyToBecomeInternal.Extensions
 				"2" => "Good",
 				"3" => "Requires improvement",
 				"4" => "Inadequate",
-				_ => "No data"
+				_ => NoData
 			};
 		}
 
@@ -58,6 +58,11 @@ namespace ApplyToBecomeInternal.Extensions
 			if (string.IsNullOrEmpty(year)) return year;
 			var trimmedYear = string.Concat(year.Where(c => !char.IsWhiteSpace(c)));
 			return trimmedYear.Contains("-") ? trimmedYear.Replace("-", " to ") : year;
+		}
+
+		public static bool HasData(this string str)
+		{
+			return str != NoData;
 		}
 	}
 }

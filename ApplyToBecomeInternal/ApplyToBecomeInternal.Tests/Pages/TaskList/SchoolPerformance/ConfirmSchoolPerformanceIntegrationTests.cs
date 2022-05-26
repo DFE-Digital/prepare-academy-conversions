@@ -29,7 +29,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 
 			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.SchoolPerformanceAdditionalInformation);
 
-			Document.QuerySelector("#ofsted-inspection-date").TextContent.Should().Be(DateTime.Parse(schoolPerformance.OfstedLastInspection, CultureInfo.CreateSpecificCulture("en-GB")).ToDateString());
 			Document.QuerySelector("#overall-effectiveness").TextContent.Should().Be(schoolPerformance.MISEstablishment.OverallEffectiveness.DisplayOfstedRating());
 			Document.QuerySelector("#quality-of-teaching-learning-and-assessment").TextContent.Should().Be(schoolPerformance.MISEstablishment.QualityOfEducation.DisplayOfstedRating());
 			Document.QuerySelector("#effectiveness-of-leadership-and-management").TextContent.Should().Be(schoolPerformance.MISEstablishment.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating());

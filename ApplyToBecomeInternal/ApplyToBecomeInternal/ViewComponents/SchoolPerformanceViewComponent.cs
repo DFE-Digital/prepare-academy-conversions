@@ -30,18 +30,26 @@ namespace ApplyToBecomeInternal.ViewComponents
 
 			var project = response.Body;
 			var schoolPerformance = await _schoolPerformanceService.GetSchoolPerformanceByUrn(project.Urn.ToString());
+			var sixthFormProvisionRating = schoolPerformance.SixthFormProvision.DisplayOfstedRating();
+			var earlyYearsProvisionRating = schoolPerformance.EarlyYearsProvision.DisplayOfstedRating();
 
 			var viewModel = new SchoolPerformanceViewModel
 			{
 				Id = project.Id.ToString(),
+				InspectionEndDate = schoolPerformance.InspectionEndDate?.ToString("d MMMM yyyy") ?? "No data",
+				DateOfLatestSection8Inspection = schoolPerformance.DateOfLatestSection8Inspection?.ToString("d MMMM yyyy") ?? "No data",
 				PersonalDevelopment = schoolPerformance.PersonalDevelopment.DisplayOfstedRating(),
 				BehaviourAndAttitudes = schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating(),
-				EarlyYearsProvision = schoolPerformance.EarlyYearsProvision.DisplayOfstedRating(),
+				EarlyYearsProvision = earlyYearsProvisionRating,
+				EarlyYearsProvisionApplicable = earlyYearsProvisionRating.HasData(),
+				SixthFormProvision = sixthFormProvisionRating,
+				SixthFormProvisionApplicable = sixthFormProvisionRating.HasData(),
 				EffectivenessOfLeadershipAndManagement = schoolPerformance.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating(),
 				OverallEffectiveness = schoolPerformance.OverallEffectiveness.DisplayOfstedRating(),
 				QualityOfEducation = schoolPerformance.QualityOfEducation.DisplayOfstedRating(),
 				ShowAdditionalInformation = showAdditionalInformation,
-				AdditionalInformation = project.SchoolPerformanceAdditionalInformation
+				AdditionalInformation = project.SchoolPerformanceAdditionalInformation,
+				LatestInspectionIsSection8 = schoolPerformance.LatestInspectionIsSection8
 			};
 
 			return View(viewModel);
