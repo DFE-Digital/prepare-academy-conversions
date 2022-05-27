@@ -233,7 +233,6 @@ namespace ApplyToBecomeInternal.Models
 				ParliamentaryConstituency = generalInformation.ParliamentaryConstituency,
 				MPName = project.MemberOfParliamentName,
 				MPParty = project.MemberOfParliamentParty,
-				OfstedLastInspection = schoolPerformance.OfstedLastInspection != null ? schoolPerformance.OfstedLastInspection.ToDateString() : "No data",
 				PersonalDevelopment = schoolPerformance.PersonalDevelopment.DisplayOfstedRating(),
 				BehaviourAndAttitudes = schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating(),
 				EarlyYearsProvision = schoolPerformance.EarlyYearsProvision.DisplayOfstedRating(),
