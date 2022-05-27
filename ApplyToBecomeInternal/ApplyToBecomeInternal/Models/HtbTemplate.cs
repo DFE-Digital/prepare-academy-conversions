@@ -101,25 +101,6 @@ namespace ApplyToBecomeInternal.Models
 			}			
 		}
 
-		//school performance ofsted information
-		[DocumentText("PersonalDevelopment")] public string PersonalDevelopment { get; set; }
-
-		[DocumentText("BehaviourAndAttitudes")]
-		public string BehaviourAndAttitudes { get; set; }
-
-		[DocumentText("EarlyYearsProvision")] public string EarlyYearsProvision { get; set; }
-		[DocumentText("OfstedLastInspection")] public string OfstedLastInspection { get; set; }
-
-		[DocumentText("EffectivenessOfLeadershipAndManagement")]
-		public string EffectivenessOfLeadershipAndManagement { get; set; }
-
-		[DocumentText("OverallEffectiveness")] public string OverallEffectiveness { get; set; }
-		[DocumentText("QualityOfEducation")] public string QualityOfEducation { get; set; }
-		[DocumentText("SixthFormProvision")] public string SixthFormProvision { get; set; }
-
-		[DocumentText("SchoolPerformanceAdditionalInformation")]
-		public string SchoolPerformanceAdditionalInformation { get; set; }
-
 		// rationale
 		[DocumentText("RationaleForProject")]
 		public string RationaleForProject { get; set; }
@@ -233,14 +214,6 @@ namespace ApplyToBecomeInternal.Models
 				ParliamentaryConstituency = generalInformation.ParliamentaryConstituency,
 				MPName = project.MemberOfParliamentName,
 				MPParty = project.MemberOfParliamentParty,
-				PersonalDevelopment = schoolPerformance.PersonalDevelopment.DisplayOfstedRating(),
-				BehaviourAndAttitudes = schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating(),
-				EarlyYearsProvision = schoolPerformance.EarlyYearsProvision.DisplayOfstedRating(),
-				EffectivenessOfLeadershipAndManagement = schoolPerformance.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating(),
-				OverallEffectiveness = schoolPerformance.OverallEffectiveness.DisplayOfstedRating(),
-				QualityOfEducation = schoolPerformance.QualityOfEducation.DisplayOfstedRating(),
-				SixthFormProvision = schoolPerformance.SixthFormProvision.DisplayOfstedRating(),
-				SchoolPerformanceAdditionalInformation = project.SchoolPerformanceAdditionalInformation,
 				RationaleForProject = project.RationaleForProject,
 				RationaleForTrust = project.RationaleForTrust,
 				RisksAndIssues = project.RisksAndIssues,

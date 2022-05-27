@@ -113,19 +113,6 @@ namespace ApplyToBecomeInternal.Tests.Models
 			}
 
 			[Fact]
-			public void ItBuildsTheSchoolPerformanceSuccessfully()
-			{
-				Assert.Equal(_template.PersonalDevelopment, _schoolPerformance.PersonalDevelopment.DisplayOfstedRating());
-				Assert.Equal(_template.BehaviourAndAttitudes, _schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating());
-				Assert.Equal(_template.EarlyYearsProvision, _schoolPerformance.EarlyYearsProvision.DisplayOfstedRating());
-				Assert.Equal(_template.EffectivenessOfLeadershipAndManagement, _schoolPerformance.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating());
-				Assert.Equal(_template.OverallEffectiveness, _schoolPerformance.OverallEffectiveness.DisplayOfstedRating());
-				Assert.Equal(_template.QualityOfEducation, _schoolPerformance.QualityOfEducation.DisplayOfstedRating());
-				Assert.Equal(_template.SixthFormProvision, _schoolPerformance.SixthFormProvision.DisplayOfstedRating());
-				Assert.Equal(_template.SchoolPerformanceAdditionalInformation, _project.SchoolPerformanceAdditionalInformation);
-			}
-
-			[Fact]
 			public void ItBuildsSchoolPupilForecastsSuccessfully()
 			{
 				Assert.Equal(_template.YearOneProjectedCapacity, _project.YearOneProjectedCapacity.ToString());

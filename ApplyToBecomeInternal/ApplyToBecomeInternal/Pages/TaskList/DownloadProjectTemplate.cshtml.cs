@@ -1,5 +1,6 @@
 using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Services;
+using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
 using DocumentGeneration;
 using DocumentGeneration.Elements;
@@ -61,12 +62,90 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			var ms = CreateMemoryStream("htb-template");
 
 			var documentBuilder = DocumentBuilder.CreateFromTemplate(ms, document);
+			AddOftstedInforation(documentBuilder, project, schoolPerformance);
 			AddKeyStage2Information(documentBuilder, document, project);
 			AddKeyStage4Information(documentBuilder, document, project);
 			AddKeyStage5Information(documentBuilder, document, project);
 			var documentByteArray = documentBuilder.Build();
 
 			return File(documentByteArray, "application/vnd.ms-word.document", $"{document.SchoolName}-project-template-{DateTime.Today.ToString("dd-MM-yyyy")}.docx");
+		}
+
+		private void AddOftstedInforation(DocumentBuilder builder, AcademyConversionProject project, SchoolPerformance schoolPerformance)
+		{
+			var ofstedInformation = new List<TextElement[]>
+			{
+				new[]
+				{
+					new TextElement {Value = "School name", Bold = true},
+					new TextElement {Value = project.SchoolName},
+				},
+				new[]
+				{
+					new TextElement {Value = "Latest full inspection date", Bold = true},
+					new TextElement {Value = schoolPerformance.InspectionEndDate?.ToString("d MMMM yyyy") ?? "No data"},
+				},
+				new[]
+				{
+					new TextElement {Value = "Overall effectiveness", Bold = true},
+					new TextElement {Value = schoolPerformance.OverallEffectiveness.DisplayOfstedRating()},
+				},
+				new[]
+				{
+					new TextElement {Value = "Quality of education", Bold = true},
+					new TextElement {Value = schoolPerformance.QualityOfEducation.DisplayOfstedRating()},
+				},
+				new[]
+				{
+					new TextElement {Value = "Behaviour and attitudes", Bold = true},
+					new TextElement {Value = schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating()},
+				},
+				new[]
+				{
+					new TextElement {Value = "Personal development", Bold = true},
+					new TextElement {Value = schoolPerformance.PersonalDevelopment.DisplayOfstedRating()},
+				},
+				new[]
+				{
+					new TextElement {Value = "Effectiveness of leadership and management", Bold = true},
+					new TextElement {Value = schoolPerformance.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating()},
+				}
+			};
+
+			if (schoolPerformance.LatestInspectionIsSection8)
+			{
+				ofstedInformation.Insert(1, new[]
+				{
+					new TextElement {Value = "Latest short inspection date", Bold = true},
+					new TextElement {Value = schoolPerformance.DateOfLatestSection8Inspection?.ToString("d MMMM yyyy")},
+				});
+			}
+
+			if (schoolPerformance.EarlyYearsProvision.DisplayOfstedRating().HasData())
+			{
+				ofstedInformation.Add(new[]
+				{
+					new TextElement {Value = "Early years provision", Bold = true},
+					new TextElement {Value = schoolPerformance.EarlyYearsProvision.DisplayOfstedRating()},
+				});
+			}
+
+			if (schoolPerformance.SixthFormProvision.DisplayOfstedRating().HasData())
+			{
+				ofstedInformation.Add(new[]
+				{
+					new TextElement {Value = "Sixth form provision", Bold = true},
+					new TextElement {Value = schoolPerformance.SixthFormProvision.DisplayOfstedRating()},
+				});
+			}
+
+			ofstedInformation.Add(new[]
+				{
+					new TextElement {Value = "Additional information", Bold = true},
+					new TextElement {Value = project.SchoolPerformanceAdditionalInformation},
+				});
+
+			builder.ReplacePlaceholderWithContent("SchoolPerformanceData", builder => builder.AddTable(ofstedInformation));
 		}
 
 		private void AddKeyStage4Information(DocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
@@ -88,8 +167,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, 
-						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement { Bold = true },
+						new TextElement(ks4Data.Year) { Bold = true },
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
 					},
@@ -111,14 +190,14 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 					},
 				});
 				builder.AddParagraph("");
-				
+
 				builder.AddHeading("Attainment 8 English", HeadingLevel.Three);
 				builder.AddTable(new List<TextElement[]>
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, 
-						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement { Bold = true },
+						new TextElement(ks4Data.Year) { Bold = true },
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
 					},
@@ -147,8 +226,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, 
-						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement { Bold = true },
+						new TextElement(ks4Data.Year) { Bold = true },
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
 					},
@@ -176,8 +255,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, 
-						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement { Bold = true },
+						new TextElement(ks4Data.Year) { Bold = true },
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
@@ -207,8 +286,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, 
-						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement { Bold = true },
+						new TextElement(ks4Data.Year) { Bold = true },
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
@@ -237,8 +316,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, 
-						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement { Bold = true },
+						new TextElement(ks4Data.Year) { Bold = true },
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
@@ -281,8 +360,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, 
-						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement { Bold = true },
+						new TextElement(ks4Data.Year) { Bold = true },
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
@@ -311,8 +390,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, 
-						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement { Bold = true },
+						new TextElement(ks4Data.Year) { Bold = true },
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
@@ -340,8 +419,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, 
-						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement { Bold = true },
+						new TextElement(ks4Data.Year) { Bold = true },
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
@@ -369,30 +448,30 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				{
 					new[]
 					{
-						new TextElement { Bold = true }, 
-						new TextElement(ks4Data.Year) { Bold = true }, 
+						new TextElement { Bold = true },
+						new TextElement(ks4Data.Year) { Bold = true },
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
 					new[]
 					{
-						new TextElement(project.SchoolName) { Bold = true }, 
+						new TextElement(project.SchoolName) { Bold = true },
 						new TextElement(ks4Data.PercentageEnteringEbacc),
-						new TextElement(ks4Data.PercentageEnteringEbaccPreviousYear), 
+						new TextElement(ks4Data.PercentageEnteringEbaccPreviousYear),
 						new TextElement(ks4Data.PercentageEnteringEbaccTwoYearsAgo),
 					},
 					new[]
 					{
-						new TextElement($"{project.LocalAuthority} LA average") { Bold = true }, 
+						new TextElement($"{project.LocalAuthority} LA average") { Bold = true },
 						new TextElement(ks4Data.LaPercentageEnteringEbacc),
-						new TextElement(ks4Data.LaPercentageEnteringEbaccPreviousYear), 
+						new TextElement(ks4Data.LaPercentageEnteringEbaccPreviousYear),
 						new TextElement(ks4Data.LaPercentageEnteringEbaccTwoYearsAgo),
 					},
 					new[]
 					{
-						new TextElement("National average") { Bold = true }, 
+						new TextElement("National average") { Bold = true },
 						new TextElement(ks4Data.NaPercentageEnteringEbacc),
-						new TextElement(ks4Data.NaPercentageEnteringEbaccPreviousYear), 
+						new TextElement(ks4Data.NaPercentageEnteringEbaccPreviousYear),
 						new TextElement(ks4Data.NaPercentageEnteringEbaccTwoYearsAgo),
 					}
 				});
@@ -401,7 +480,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 
 				builder.AddTable(new List<TextElement[]>
 				{
-					new[] { new TextElement("Additional information") { Bold = true }, 
+					new[] { new TextElement("Additional information") { Bold = true },
 							new TextElement(project.KeyStage4PerformanceAdditionalInformation) }
 				});
 				builder.AddParagraph("");
@@ -419,7 +498,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			documentBuilder.ReplacePlaceholderWithContent("KS5PerformanceData", builder =>
 			{
 				builder.AddHeading("Key stage 5 performance tables", HeadingLevel.One);
-				
+
 				foreach (var ks5Data in document.KeyStage5)
 				{
 					builder.AddHeading($"{ks5Data.Year} scores for academic and applied general qualifications", HeadingLevel.Two);
@@ -444,7 +523,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 							new TextElement(ks5Data.NationalAverageAppliedGeneralAverage),
 						}
 					});
-					
+
 					builder.AddParagraph("");
 				}
 
@@ -467,7 +546,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			documentBuilder.ReplacePlaceholderWithContent("KS2PerformanceData", builder =>
 			{
 				builder.AddHeading("Key stage 2 performance tables", HeadingLevel.One);
-				
+
 				foreach (var ks2Data in document.KeyStage2)
 				{
 					builder.AddHeading($"{ks2Data.Year} key stage 2", HeadingLevel.Two);
