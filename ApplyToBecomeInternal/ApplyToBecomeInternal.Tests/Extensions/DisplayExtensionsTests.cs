@@ -41,7 +41,7 @@ namespace ApplyToBecomeInternal.Tests.Extensions
 		}
 
 		[Theory]
-		[InlineData("no data", false)]
+		[InlineData("No data", false)]
 		[InlineData("something else", true)]
 		public void Should_return_correctly_if_data(string value, bool expectedValue)
 		{

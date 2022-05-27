@@ -59,12 +59,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 
 			await NavigateAsync("School performance (Ofsted information)");
 
-			Document.QuerySelector("#ofsted-full-inspection-date").TextContent.Should().Be("no data");
-			Document.QuerySelector("#overall-effectiveness").TextContent.Should().Be("Last full inspection: no data");
-			Document.QuerySelector("#quality-of-education").TextContent.Should().Be("no data");
-			Document.QuerySelector("#leadership-and-management").TextContent.Should().Be("no data");
-			Document.QuerySelector("#behaviour-and-attitudes").TextContent.Should().Be("no data");
-			Document.QuerySelector("#personal-development").TextContent.Should().Be("no data");
+			Document.QuerySelector("#ofsted-full-inspection-date").TextContent.Should().Be("No data");
+			Document.QuerySelector("#overall-effectiveness").TextContent.Should().Be("Last full inspection: No data");
+			Document.QuerySelector("#quality-of-education").TextContent.Should().Be("No data");
+			Document.QuerySelector("#leadership-and-management").TextContent.Should().Be("No data");
+			Document.QuerySelector("#behaviour-and-attitudes").TextContent.Should().Be("No data");
+			Document.QuerySelector("#personal-development").TextContent.Should().Be("No data");
 		}
 	}
 }

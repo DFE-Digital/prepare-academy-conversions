@@ -7,7 +7,7 @@ namespace ApplyToBecomeInternal.Extensions
 {
 	public static class DisplayExtensions
 	{
-		private const string NoData = "no data";
+		private const string NoData = "No data";
 
 		public static string DisplayOfstedRating(this string ofstedRating)
 		{
@@ -28,7 +28,7 @@ namespace ApplyToBecomeInternal.Extensions
 				return new HtmlString(NoData);
 
 			return new HtmlString(
-				$"{disadvantagedPupilResponse.NotDisadvantaged.FormatValue()}<br>(disadvantaged pupils {disadvantagedPupilResponse.Disadvantaged.FormatValue()})");
+				$"{disadvantagedPupilResponse.NotDisadvantaged.FormatValue()}<br>(disadvantaged pupils: {disadvantagedPupilResponse.Disadvantaged.FormatValue()})");
 		}
 
 		public static string FormatConfidenceInterval(decimal? lowerBound, decimal? upperBound)

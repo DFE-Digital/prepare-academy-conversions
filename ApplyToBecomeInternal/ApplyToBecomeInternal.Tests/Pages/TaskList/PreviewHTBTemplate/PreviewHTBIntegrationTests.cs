@@ -306,10 +306,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 				Document.QuerySelector($"#na-percentage-meeting-expected-in-rwm-{i}").TextContent.Trim().Should()
 					.Be(
-						$"{response.NationalAveragePercentageMeetingExpectedStdInRWM.NotDisadvantaged}(disadvantaged pupils {response.NationalAveragePercentageMeetingExpectedStdInRWM.Disadvantaged})");
+						$"{response.NationalAveragePercentageMeetingExpectedStdInRWM.NotDisadvantaged}(disadvantaged pupils: {response.NationalAveragePercentageMeetingExpectedStdInRWM.Disadvantaged})");
 				Document.QuerySelector($"#na-percentage-achieving-higher-in-rwm-{i}").TextContent.Should()
 					.Be(
-						$"{response.NationalAveragePercentageAchievingHigherStdInRWM.NotDisadvantaged}(disadvantaged pupils {response.NationalAveragePercentageAchievingHigherStdInRWM.Disadvantaged})");
+						$"{response.NationalAveragePercentageAchievingHigherStdInRWM.NotDisadvantaged}(disadvantaged pupils: {response.NationalAveragePercentageAchievingHigherStdInRWM.Disadvantaged})");
 				Document.QuerySelector($"#na-reading-progress-score-{i}").TextContent.Should().Be(response.NationalAverageReadingProgressScore.NotDisadvantaged);
 				Document.QuerySelector($"#na-writing-progress-score-{i}").TextContent.Should().Be(response.NationalAverageWritingProgressScore.NotDisadvantaged);
 				Document.QuerySelector($"#na-maths-progress-score-{i}").TextContent.Should().Be(response.NationalAverageMathsProgressScore.NotDisadvantaged);
@@ -439,9 +439,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 				Document.QuerySelector($"#academic-average-{i}").TextContent.Should().Contain(response.AcademicQualificationAverage.ToString());
 				Document.QuerySelector($"#applied-general-progress-{i}").TextContent.Should().Be(response.AppliedGeneralProgress.NotDisadvantaged.ToString());
 				Document.QuerySelector($"#applied-general-average-{i}").TextContent.Should().Contain(response.AppliedGeneralQualificationAverage.ToString());
-				Document.QuerySelector($"#na-academic-progress-{i}").TextContent.Should().Be("no data");
+				Document.QuerySelector($"#na-academic-progress-{i}").TextContent.Should().Be("No data");
 				Document.QuerySelector($"#na-academic-average-{i}").TextContent.Should().Contain(response.NationalAcademicQualificationAverage.ToString());
-				Document.QuerySelector($"#na-applied-general-progress-{i}").TextContent.Should().Be("no data");
+				Document.QuerySelector($"#na-applied-general-progress-{i}").TextContent.Should().Be("No data");
 				Document.QuerySelector($"#na-applied-general-average-{i}").TextContent.Should().Contain(response.NationalAppliedGeneralQualificationAverage.ToString());
 				i++;
 			}

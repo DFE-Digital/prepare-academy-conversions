@@ -36,8 +36,8 @@ namespace ApplyToBecomeInternal.ViewComponents
 			var viewModel = new SchoolPerformanceViewModel
 			{
 				Id = project.Id.ToString(),
-				InspectionEndDate = schoolPerformance.InspectionEndDate?.ToString("d MMMM yyyy") ?? "no data",
-				DateOfLatestSection8Inspection = schoolPerformance.DateOfLatestSection8Inspection?.ToString("d MMMM yyyy") ?? "no data",
+				InspectionEndDate = schoolPerformance.InspectionEndDate?.ToString("d MMMM yyyy") ?? "No data",
+				DateOfLatestSection8Inspection = schoolPerformance.DateOfLatestSection8Inspection?.ToString("d MMMM yyyy") ?? "No data",
 				PersonalDevelopment = schoolPerformance.PersonalDevelopment.DisplayOfstedRating(),
 				BehaviourAndAttitudes = schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating(),
 				EarlyYearsProvision = earlyYearsProvisionRating,
