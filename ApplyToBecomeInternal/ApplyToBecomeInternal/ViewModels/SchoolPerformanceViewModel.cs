@@ -15,7 +15,8 @@
 		public bool ShowAdditionalInformation { get; set; }
 		public string AdditionalInformation { get; set; }
 		public bool LatestInspectionIsSection8 { get; set; }
-		public bool EarlyYearsProvisionApplicable { get; internal set; }
-		public bool SixthFormProvisionApplicable { get; internal set; }
+		public bool EarlyYearsProvisionApplicable { get; set; }
+		public bool SixthFormProvisionApplicable { get; set; }
+		public bool IsPreview { get; set; }
 	}
 }

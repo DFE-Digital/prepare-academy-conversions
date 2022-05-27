@@ -1,15 +1,27 @@
 ﻿@model SchoolPerformanceViewModel
 
-@if (Model.LatestInspectionIsSection8)
+@if (!Model.IsPreview)
 {
+    @if (Model.LatestInspectionIsSection8)
+    {
     <h2 class="govuk-heading-m">Short inspection</h2>
     <dl class="govuk-summary-list govuk-!-margin-bottom-9">
         <govuk-summary-list-row id="ofsted-short-inspection-date" label="Ofsted inspection date" value="@Model.DateOfLatestSection8Inspection" />
     </dl>
+    }
+    <h2 class="govuk-heading-m" id="overall-effectiveness">Last full inspection: @Model.OverallEffectiveness</h2>
 }
- <h2 class="govuk-heading-m">Last full inspection: @Model.OverallEffectiveness</h2>
+
 <dl class="govuk-summary-list">
-	<govuk-summary-list-row id="ofsted-full-inspection-date" label="Ofsted inspection date" value="@Model.InspectionEndDate" />
+    @if (Model.IsPreview && Model.LatestInspectionIsSection8)
+    {
+        <govuk-summary-list-row id="ofsted-short-inspection-date" label="Ofsted short inspection date" value="@Model.DateOfLatestSection8Inspection" />
+    }
+    @if (Model.IsPreview)
+    {
+        <govuk-summary-list-row id="overall-effectiveness" label="Overall effectiveness" value="@Model.OverallEffectiveness" />
+    }
+    <govuk-summary-list-row id="ofsted-full-inspection-date" label="@($"Ofsted {(Model.IsPreview ? "full " : "")}inspection date")" value="@Model.InspectionEndDate" />
 	<govuk-summary-list-row id="leadership-and-management" label="Leadership and management" value="@Model.EffectivenessOfLeadershipAndManagement" />
 	<govuk-summary-list-row id="quality-of-education" label="Quality of education" value="@Model.QualityOfEducation" />
 	<govuk-summary-list-row id="behaviour-and-attitudes" label="Behaviour and attitudes" value="@Model.BehaviourAndAttitudes" />
@@ -20,7 +32,7 @@
     }
     @if (Model.SixthFormProvisionApplicable)
     {
-         <govuk-summary-list-row id="sizth-form-provision" label="Sixth form provision" value="@Model.SixthFormProvision" />
+         <govuk-summary-list-row id="sixth-form-provision" label="Sixth form provision" value="@Model.SixthFormProvision" />
     }
 	@if (Model.ShowAdditionalInformation)
 	{

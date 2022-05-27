@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.ViewComponents
 			_repository = repository;
 		}
 
-		public async Task<IViewComponentResult> InvokeAsync(bool showAdditionalInformation)
+		public async Task<IViewComponentResult> InvokeAsync(bool showAdditionalInformation, bool isPreview)
 		{
 			var id = int.Parse(ViewContext.RouteData.Values["id"].ToString());
 
@@ -36,8 +36,8 @@ namespace ApplyToBecomeInternal.ViewComponents
 			var viewModel = new SchoolPerformanceViewModel
 			{
 				Id = project.Id.ToString(),
-				InspectionEndDate = schoolPerformance.InspectionEndDate?.ToString("d MMMM yyyy") ?? "No data",
-				DateOfLatestSection8Inspection = schoolPerformance.DateOfLatestSection8Inspection?.ToString("d MMMM yyyy") ?? "No data",
+				InspectionEndDate = schoolPerformance.InspectionEndDate?.ToString("d MMMM yyyy") ?? "no data",
+				DateOfLatestSection8Inspection = schoolPerformance.DateOfLatestSection8Inspection?.ToString("d MMMM yyyy") ?? "no data",
 				PersonalDevelopment = schoolPerformance.PersonalDevelopment.DisplayOfstedRating(),
 				BehaviourAndAttitudes = schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating(),
 				EarlyYearsProvision = earlyYearsProvisionRating,
@@ -49,7 +49,8 @@ namespace ApplyToBecomeInternal.ViewComponents
 				QualityOfEducation = schoolPerformance.QualityOfEducation.DisplayOfstedRating(),
 				ShowAdditionalInformation = showAdditionalInformation,
 				AdditionalInformation = project.SchoolPerformanceAdditionalInformation,
-				LatestInspectionIsSection8 = schoolPerformance.LatestInspectionIsSection8
+				LatestInspectionIsSection8 = schoolPerformance.LatestInspectionIsSection8,
+				IsPreview = isPreview
 			};
 
 			return View(viewModel);
