@@ -62,7 +62,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			var ms = CreateMemoryStream("htb-template");
 
 			var documentBuilder = DocumentBuilder.CreateFromTemplate(ms, document);
-			AddOftstedInforation(documentBuilder, project, schoolPerformance);
+			AddOfstedInformation(documentBuilder, document, project);
 			AddKeyStage2Information(documentBuilder, document, project);
 			AddKeyStage4Information(documentBuilder, document, project);
 			AddKeyStage5Information(documentBuilder, document, project);
@@ -71,8 +71,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			return File(documentByteArray, "application/vnd.ms-word.document", $"{document.SchoolName}-project-template-{DateTime.Today.ToString("dd-MM-yyyy")}.docx");
 		}
 
-		private void AddOftstedInforation(DocumentBuilder builder, AcademyConversionProject project, SchoolPerformance schoolPerformance)
+		private void AddOfstedInformation(DocumentBuilder builder, HtbTemplate document, AcademyConversionProject project)
 		{
+			var schoolPerformance = document.SchoolPerformance;
+			
 			var ofstedInformation = new List<TextElement[]>
 			{
 				new[]

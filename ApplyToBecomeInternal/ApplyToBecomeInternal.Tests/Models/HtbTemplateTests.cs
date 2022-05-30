@@ -34,7 +34,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 			}
 
 			[Fact]
-			public void ItBuildsTheSchoolAndTrustInformationAndProjectDatesSuccessfully()
+			public void ItBuildsTheSchoolAndTrustInformationAndProjectDatesAndSchoolPerformanceSuccessfully()
 			{
 				Assert.Equal(_project.SchoolName, _template.SchoolName);
 				Assert.Equal(_project.Urn.ToString(), _template.SchoolUrn);
@@ -60,6 +60,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 
 				Assert.Equal(_project.RisksAndIssues, _template.RisksAndIssues);
 				Assert.Equal(_project.EqualitiesImpactAssessmentConsidered, _template.EqualitiesImpactAssessmentConsidered);
+				Assert.Equal(_schoolPerformance, _template.SchoolPerformance);
 			}
 
 			[Fact]

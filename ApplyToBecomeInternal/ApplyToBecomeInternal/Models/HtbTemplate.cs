@@ -161,7 +161,7 @@ namespace ApplyToBecomeInternal.Models
 
 		[DocumentText("SchoolPupilForecastsAdditionalInformation")]
 		public string SchoolPupilForecastsAdditionalInformation { get; set; }
-
+		public SchoolPerformance SchoolPerformance { get; set; }
 		public IEnumerable<KeyStage2PerformanceTableViewModel> KeyStage2 { get; set; }
 		public KeyStage4PerformanceTableViewModel KeyStage4 { get; set; }  
 		public IEnumerable<KeyStage5PerformanceTableViewModel> KeyStage5 { get; set; }
@@ -232,7 +232,8 @@ namespace ApplyToBecomeInternal.Models
 				YearThreeProjectedCapacity = project.YearThreeProjectedCapacity.ToString(),
 				YearThreeProjectedPupilNumbers = project.YearThreeProjectedPupilNumbers.ToString(),
 				YearThreePercentageSchoolFull = project.YearThreeProjectedPupilNumbers.AsPercentageOf(project.YearThreeProjectedCapacity),
-				SchoolPupilForecastsAdditionalInformation = project.SchoolPupilForecastsAdditionalInformation
+				SchoolPupilForecastsAdditionalInformation = project.SchoolPupilForecastsAdditionalInformation,
+				SchoolPerformance = schoolPerformance
 			};
 
 			if (keyStagePerformance.HasKeyStage2PerformanceTables)
