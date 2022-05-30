@@ -63,12 +63,11 @@ namespace ApplyToBecomeInternal
 				options =>
 				{
 					options.AccessDeniedPath = "/access-denied";
-					options.LogoutPath = "/signed-out";
 					options.Cookie.Name = "ManageAnAcademyTransfer.Login";
 					options.Cookie.HttpOnly = true;
 					options.Cookie.IsEssential = true;
 					options.ExpireTimeSpan =
-						TimeSpan.FromMinutes(Int32.Parse(Configuration["AuthenticationExpirationInMinutes"]));
+						TimeSpan.FromMinutes(int.Parse(Configuration["AuthenticationExpirationInMinutes"]));
 					options.SlidingExpiration = true;
 					if (string.IsNullOrEmpty(Configuration["CI"]))
 					{
