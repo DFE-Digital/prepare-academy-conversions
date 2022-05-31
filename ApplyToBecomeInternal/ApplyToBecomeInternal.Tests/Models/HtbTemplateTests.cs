@@ -34,7 +34,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 			}
 
 			[Fact]
-			public void ItBuildsTheSchoolAndTrustInformationAndProjectDatesSuccessfully()
+			public void ItBuildsTheSchoolAndTrustInformationAndProjectDatesAndSchoolPerformanceSuccessfully()
 			{
 				Assert.Equal(_project.SchoolName, _template.SchoolName);
 				Assert.Equal(_project.Urn.ToString(), _template.SchoolUrn);
@@ -60,6 +60,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 
 				Assert.Equal(_project.RisksAndIssues, _template.RisksAndIssues);
 				Assert.Equal(_project.EqualitiesImpactAssessmentConsidered, _template.EqualitiesImpactAssessmentConsidered);
+				Assert.Equal(_schoolPerformance, _template.SchoolPerformance);
 			}
 
 			[Fact]
@@ -113,20 +114,6 @@ namespace ApplyToBecomeInternal.Tests.Models
 			}
 
 			[Fact]
-			public void ItBuildsTheSchoolPerformanceSuccessfully()
-			{
-				Assert.Equal(_template.OfstedLastInspection, _schoolPerformance.OfstedLastInspection.ToDateString());
-				Assert.Equal(_template.PersonalDevelopment, _schoolPerformance.PersonalDevelopment.DisplayOfstedRating());
-				Assert.Equal(_template.BehaviourAndAttitudes, _schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating());
-				Assert.Equal(_template.EarlyYearsProvision, _schoolPerformance.EarlyYearsProvision.DisplayOfstedRating());
-				Assert.Equal(_template.EffectivenessOfLeadershipAndManagement, _schoolPerformance.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating());
-				Assert.Equal(_template.OverallEffectiveness, _schoolPerformance.OverallEffectiveness.DisplayOfstedRating());
-				Assert.Equal(_template.QualityOfEducation, _schoolPerformance.QualityOfEducation.DisplayOfstedRating());
-				Assert.Equal(_template.SixthFormProvision, _schoolPerformance.SixthFormProvision.DisplayOfstedRating());
-				Assert.Equal(_template.SchoolPerformanceAdditionalInformation, _project.SchoolPerformanceAdditionalInformation);
-			}
-
-			[Fact]
 			public void ItBuildsSchoolPupilForecastsSuccessfully()
 			{
 				Assert.Equal(_template.YearOneProjectedCapacity, _project.YearOneProjectedCapacity.ToString());
@@ -164,14 +151,6 @@ namespace ApplyToBecomeInternal.Tests.Models
 
 				Assert.Equal("Not applicable", template.SponsorName);
 				Assert.Equal("Not applicable", template.SponsorReferenceNumber);
-			}
-
-			[Fact]
-			public void ItSubstitutesNullOfstedDateWithMeaningfulWording()
-			{
-				var template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
-
-				Assert.Equal("No data", template.OfstedLastInspection);
 			}
 
 			[Fact]

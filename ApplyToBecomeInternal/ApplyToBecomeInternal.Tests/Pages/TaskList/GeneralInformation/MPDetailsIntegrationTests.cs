@@ -58,7 +58,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");
 
 			var testElement = Document.QuerySelector("#school-postcode");
-			testElement.TextContent.Should().Be("no data");
+			testElement.TextContent.Should().Be("No data");
 		}
 
 		[Fact]
