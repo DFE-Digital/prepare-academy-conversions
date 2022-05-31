@@ -1,4 +1,4 @@
-﻿using ApplyToBecome.Data.Services;
+using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.ViewComponents
 			_repository = repository;
 		}
 
-		public async Task<IViewComponentResult> InvokeAsync(bool showAdditionalInformation)
+		public async Task<IViewComponentResult> InvokeAsync(bool showAdditionalInformation, bool isPreview)
 		{
 			var id = int.Parse(ViewContext.RouteData.Values["id"].ToString());
 
@@ -30,19 +30,28 @@ namespace ApplyToBecomeInternal.ViewComponents
 
 			var project = response.Body;
 			var schoolPerformance = await _schoolPerformanceService.GetSchoolPerformanceByUrn(project.Urn.ToString());
+			var sixthFormProvisionRating = schoolPerformance.SixthFormProvision.DisplayOfstedRating();
+			var earlyYearsProvisionRating = schoolPerformance.EarlyYearsProvision.DisplayOfstedRating();
 
 			var viewModel = new SchoolPerformanceViewModel
 			{
 				Id = project.Id.ToString(),
-				OfstedLastInspection = schoolPerformance.OfstedLastInspection?.ToString("d MMMM yyyy") ?? "No data",
+				InspectionEndDate = schoolPerformance.InspectionEndDate?.ToString("d MMMM yyyy") ?? "No data",
+				DateOfLatestSection8Inspection = schoolPerformance.DateOfLatestSection8Inspection?.ToString("d MMMM yyyy") ?? "No data",
 				PersonalDevelopment = schoolPerformance.PersonalDevelopment.DisplayOfstedRating(),
 				BehaviourAndAttitudes = schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating(),
-				EarlyYearsProvision = schoolPerformance.EarlyYearsProvision.DisplayOfstedRating(),
+				EarlyYearsProvision = earlyYearsProvisionRating,
+				EarlyYearsProvisionApplicable = earlyYearsProvisionRating.HasData(),
+				SixthFormProvision = sixthFormProvisionRating,
+				SixthFormProvisionApplicable = sixthFormProvisionRating.HasData(),
 				EffectivenessOfLeadershipAndManagement = schoolPerformance.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating(),
 				OverallEffectiveness = schoolPerformance.OverallEffectiveness.DisplayOfstedRating(),
 				QualityOfEducation = schoolPerformance.QualityOfEducation.DisplayOfstedRating(),
 				ShowAdditionalInformation = showAdditionalInformation,
-				AdditionalInformation = project.SchoolPerformanceAdditionalInformation
+				AdditionalInformation = project.SchoolPerformanceAdditionalInformation,
+				LatestInspectionIsSection8 = schoolPerformance.LatestInspectionIsSection8,
+				IsPreview = isPreview,
+				OfstedReport = schoolPerformance.OfstedReport
 			};
 
 			return View(viewModel);
