@@ -50,10 +50,12 @@ namespace ApplyToBecome.Data.Tests.Services
 			{
 				options.Excluding(response => response.InspectionEndDate);
 				options.Excluding(response => response.DateOfLatestSection8Inspection);
+				options.Excluding(response => response.Weblink);
 				return options;
 			});
 			schoolPerformance.InspectionEndDate.Should().Be(DateTime.Parse("15/01/2020", CultureInfo.CreateSpecificCulture("en-GB")));
 			schoolPerformance.DateOfLatestSection8Inspection.Should().Be(DateTime.Parse("15/01/2020", CultureInfo.CreateSpecificCulture("en-GB")));
+			schoolPerformance.OfstedReport.Should().Be(establishmentMockData.MisEstablishment.Weblink);
 		}
 
 		[Theory]

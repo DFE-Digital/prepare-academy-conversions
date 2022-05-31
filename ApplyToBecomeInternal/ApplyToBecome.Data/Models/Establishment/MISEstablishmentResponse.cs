@@ -13,5 +13,6 @@
 
 		public string EarlyYearsProvision { get; set; }
 		public string SixthFormProvision { get; set; }
+		public string Weblink { get; set; }
 	}
 }

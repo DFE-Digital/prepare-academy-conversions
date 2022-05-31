@@ -30,6 +30,7 @@ namespace ApplyToBecome.Data.Services
 				schoolPerformance.EarlyYearsProvision = establishment.MISEstablishment.EarlyYearsProvision;
 				schoolPerformance.InspectionEndDate = TryParseDate(establishment.MISEstablishment.InspectionEndDate);
 				schoolPerformance.DateOfLatestSection8Inspection = TryParseDate(establishment.MISEstablishment.DateOfLatestSection8Inspection);
+				schoolPerformance.OfstedReport = establishment.MISEstablishment.Weblink;
 			}
 
 			return schoolPerformance;

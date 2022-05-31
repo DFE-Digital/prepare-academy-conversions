@@ -18,5 +18,6 @@
 		public bool EarlyYearsProvisionApplicable { get; set; }
 		public bool SixthFormProvisionApplicable { get; set; }
 		public bool IsPreview { get; set; }
+		public string OfstedReport { get; set; }
 	}
 }

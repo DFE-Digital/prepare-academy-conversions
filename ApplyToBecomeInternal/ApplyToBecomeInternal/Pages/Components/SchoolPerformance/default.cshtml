@@ -34,6 +34,10 @@
     {
          <govuk-summary-list-row id="sixth-form-provision" label="Sixth form provision" value="@Model.SixthFormProvision" />
     }
+	@if (!string.IsNullOrWhiteSpace(Model.OfstedReport))
+	{
+		<govuk-summary-list-row id="ofsted-report" label="Ofsted report" value-link="@Model.OfstedReport" value="View the school's latest inspection report on Ofsted's website" />
+	}
 	@if (Model.ShowAdditionalInformation)
 	{
 		<govuk-summary-list-row name="school-performance-additional-information" label="Additional information" value="@Model.AdditionalInformation" asp-page="@Links.SchoolPerformance.AdditionalInformation.Page" asp-route-id="@Model.Id" hidden-text="additional information" />

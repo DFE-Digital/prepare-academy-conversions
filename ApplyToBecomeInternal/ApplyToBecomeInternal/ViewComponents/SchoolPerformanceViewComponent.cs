@@ -1,4 +1,4 @@
-﻿using ApplyToBecome.Data.Services;
+using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +50,8 @@ namespace ApplyToBecomeInternal.ViewComponents
 				ShowAdditionalInformation = showAdditionalInformation,
 				AdditionalInformation = project.SchoolPerformanceAdditionalInformation,
 				LatestInspectionIsSection8 = schoolPerformance.LatestInspectionIsSection8,
-				IsPreview = isPreview
+				IsPreview = isPreview,
+				OfstedReport = schoolPerformance.OfstedReport
 			};
 
 			return View(viewModel);

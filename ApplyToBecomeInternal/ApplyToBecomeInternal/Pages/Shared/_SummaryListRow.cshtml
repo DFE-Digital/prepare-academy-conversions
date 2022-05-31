@@ -6,16 +6,20 @@
 	<dd class="govuk-summary-list__value @Model.ValueWidth">
 		@if (Model.HasValue)
 		{
-			<span id="@Model.Id">@Model.Value</span>
-			if (Model.HasAdditionalText)
-				{
-					<br/>
-				}
-		}
-		@if (Model.HasAdditionalText)
+			@if (Model.HasValueLink)
 			{
-				<span id="@(Model.Id + "-additional-text")">@Model.AdditionalText</span>
+				<a class="govuk-link" href="@Model.ValueLink" target="_blank">@($"{Model.Value} (opens in new tab)")</a>
 			}
+			else
+			{
+				<span id="@Model.Id">@Model.Value</span>
+			}
+		}
+
+		@if (Model.HasAdditionalText)
+		{
+			<br/><span id="@(Model.Id + "-additional-text")">@Model.AdditionalText</span>
+		}
 		@if ((!Model.HasValue) && (!Model.HasAdditionalText))
 		{
 			<span id="@Model.Id" class="empty">Empty</span>

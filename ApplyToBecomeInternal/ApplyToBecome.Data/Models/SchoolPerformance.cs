@@ -33,5 +33,6 @@ namespace ApplyToBecome.Data.Models
 				return DateOfLatestSection8Inspection > InspectionEndDate;
 			}
 		}
+		public string OfstedReport { get; set; }
 	}
 }
