@@ -28,30 +28,26 @@ import 'cypress-localstorage-commands'
 
 //--Universal 
 
-// Login (Generic UN + PW)
-Cypress.Commands.add('login',()=> {
-	cy.visit(Cypress.env('url')+'/login')
-	cy.get('#username').type(Cypress.env('username'))
-	cy.get('#password').type(Cypress.env('password')+'{enter}')
-	cy.saveLocalStorage()
+Cypress.Commands.add('login',() => {
+	cy.visit(`${Cypress.env('url')}${'/project-list'}`)
 });
 
 // Preserving Session Data (Universal)
 Cypress.Commands.add('storeSessionData', () => {
-    Cypress.Cookies.preserveOnce('.ManageAnAcademyConversion.Login')
-    let str = []
-    cy.getCookies().then((cookie) => {
-        cy.log(cookie)
-        for (let l = 0; l < cookie.length; l++) {
-            if (cookie.length > 0 && l == 0) {
-                str[l] = cookie[l].name
-                Cypress.Cookies.preserveOnce(str[l])
-            } else if (cookie.length > 1 && l > 1) {
-                str[l] = cookie[l].name
-                Cypress.Cookies.preserveOnce(str[l])
-            };
-        };
-    })
+	Cypress.Cookies.preserveOnce('.ManageAnAcademyConversion.Login')
+	let str = []
+	cy.getCookies().then((cookie) => {
+		cy.log(cookie)
+		for (let l = 0; l < cookie.length; l++) {
+			if (cookie.length > 0 && l == 0) {
+				str[l] = cookie[l].name
+				Cypress.Cookies.preserveOnce(str[l])
+			} else if (cookie.length > 1 && l > 1) {
+				str[l] = cookie[l].name
+				Cypress.Cookies.preserveOnce(str[l])
+			};
+		};
+	})
 });
 
 // School Listing Summary Page (Universal)

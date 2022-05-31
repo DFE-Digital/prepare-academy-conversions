@@ -1,5 +1,4 @@
-﻿@using Microsoft.Extensions.Hosting
-@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment hostingEnv
+﻿@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment hostingEnv
 @inject Microsoft.Extensions.Configuration.IConfiguration _configuration
 
 @{
@@ -63,12 +62,6 @@
 				</span>
 			</a>
 		</div>
-		@if (Context.User.Identity.IsAuthenticated)
-		{
-			<div class="govuk-grid-column-one-third">
-				<a asp-page="@Links.Login.LoginForm.Page" asp-page-handler="SignOut" class="govuk-header__link dfe-sign-out">Sign out</a>
-			</div>
-		}
 	</div>
 </header>
 

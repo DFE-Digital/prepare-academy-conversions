@@ -139,6 +139,7 @@ jobs:
           TF_VAR_app_support_email: ${{ secrets.SUPPORT_EMAIL }}
           TF_VAR_enable_google_analytics: Yes
           TF_VAR_logit_sink_url: ${{ secrets.LOGIT_SINK_URL }}
+          TF_VAR_app_azuread_clientsecret: ${{ secrets.AZUREAD_CLIENTSECRET }}
                     
   cypress-tests:
     needs: deploy-image

@@ -13,8 +13,13 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-// Import commands.js using ES2015 syntax:
 import './commands'
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+beforeEach(() => {
+	cy.intercept(
+		{url: Cypress.env('url') + '/**', middleware: true},
+		//Add authorization to all Cypress requests
+		(req) => req.headers['Authorization'] = 'Bearer ' + Cypress.env('authorizationHeader'),
+		(req) => req.headers['AuthorizationRole'] = 'conversions.create'
+	)
+})

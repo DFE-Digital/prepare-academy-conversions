@@ -1,4 +1,5 @@
 using ApplyToBecome.Data.Services;
+using ApplyToBecomeInternal.Authorization;
 using ApplyToBecomeInternal.Configuration;
 using ApplyToBecomeInternal.Security;
 using ApplyToBecomeInternal.Services;
@@ -11,9 +12,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
 using Newtonsoft.Json.Linq;
 using StackExchange.Redis;
 using System;
+using System.Security.Claims;
 
 namespace ApplyToBecomeInternal
 {
@@ -34,21 +38,15 @@ namespace ApplyToBecomeInternal
 				.AddRazorPages(options =>
 				{
 					options.Conventions.AuthorizeFolder("/");
-					options.Conventions.AllowAnonymousToFolder("/Login");
-					options.Conventions.AllowAnonymousToFolder("/Public");
 				})
 				.AddViewOptions(options =>
 				{
 					options.HtmlHelperOptions.ClientValidationEnabled = false;
 				});
-
-			services.AddAuthorization(options =>
-			{
-				options.FallbackPolicy = new AuthorizationPolicyBuilder()
-					.RequireAuthenticatedUser()
-					.Build();
-			});
-
+			
+			services.AddControllersWithViews()
+				.AddMicrosoftIdentityUI();
+			
 			if (_env.IsDevelopment())
 			{
 				razorPages.AddRazorRuntimeCompilation();
@@ -57,16 +55,25 @@ namespace ApplyToBecomeInternal
 			services.AddHttpContextAccessor();
 
 			ConfigureRedisConnection(services);
-
-			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
-			{
-				options.LoginPath = "/login";
-				options.Cookie.Name = ".ManageAnAcademyConversion.Login";
-				options.Cookie.HttpOnly = true;
-				options.Cookie.IsEssential = true;
-				options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-				options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-			});
+			
+			services.AddAuthorization(options => { options.DefaultPolicy = SetupAuthorizationPolicyBuilder().Build(); });
+			
+			services.AddMicrosoftIdentityWebAppAuthentication(Configuration);
+			services.Configure<CookieAuthenticationOptions>(CookieAuthenticationDefaults.AuthenticationScheme,
+				options =>
+				{
+					options.AccessDeniedPath = "/access-denied";
+					options.Cookie.Name = "ManageAnAcademyTransfer.Login";
+					options.Cookie.HttpOnly = true;
+					options.Cookie.IsEssential = true;
+					options.ExpireTimeSpan =
+						TimeSpan.FromMinutes(int.Parse(Configuration["AuthenticationExpirationInMinutes"]));
+					options.SlidingExpiration = true;
+					if (string.IsNullOrEmpty(Configuration["CI"]))
+					{
+						options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+					}
+				});
 
 			services.AddHttpClient("TramsClient", (sp, client) =>
 			{
@@ -86,6 +93,8 @@ namespace ApplyToBecomeInternal
 			services.Decorate<IAcademyConversionProjectRepository, AcademyConversionProjectItemsCacheDecorator>();
 			services.AddScoped<IProjectNotesRepository, ProjectNotesRepository>();
 			services.AddScoped<ApplicationRepository>();
+			services.AddSingleton<IAuthorizationHandler, HeaderRequirementHandler>();
+			services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -119,7 +128,25 @@ namespace ApplyToBecomeInternal
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapRazorPages();
+				endpoints.MapControllerRoute("default", "{controller}/{action}/");
 			});
+		}
+		
+		/// <summary>
+		/// Builds Authorization policy
+		/// Ensure authenticated user and restrict roles if they are provided in configuration
+		/// </summary>
+		/// <returns>AuthorizationPolicyBuilder</returns>
+		private AuthorizationPolicyBuilder SetupAuthorizationPolicyBuilder()
+		{
+			var policyBuilder = new AuthorizationPolicyBuilder();
+			var allowedRoles = Configuration.GetSection("AzureAd")["AllowedRoles"];
+			policyBuilder.RequireAuthenticatedUser();
+			if (!string.IsNullOrWhiteSpace(allowedRoles))
+			{
+				policyBuilder.RequireClaim(ClaimTypes.Role, allowedRoles.Split(','));
+			}
+			return policyBuilder;
 		}
 
 		private void ConfigureRedisConnection(IServiceCollection services)
