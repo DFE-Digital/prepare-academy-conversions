@@ -19,6 +19,7 @@ using Newtonsoft.Json.Linq;
 using StackExchange.Redis;
 using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal
 {
@@ -139,6 +140,11 @@ namespace ApplyToBecomeInternal
 
 			app.UseEndpoints(endpoints =>
 			{
+				endpoints.MapGet("/", context =>
+				{
+					context.Response.Redirect("project-list", false);
+					return Task.CompletedTask;
+				});
 				endpoints.MapRazorPages();
 				endpoints.MapControllerRoute("default", "{controller}/{action}/");
 			});
