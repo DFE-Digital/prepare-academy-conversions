@@ -6,7 +6,7 @@
 	<dd class="govuk-summary-list__value @Model.ValueWidth">
 		@if (Model.HasValue)
 		{
-			<span id="@Model.Id">@Model.Value</span>
+			<span id="@Model.Id" class="@Model.ValueClass">@Model.Value</span>
 			if (Model.HasAdditionalText)
 				{
 					<br/>

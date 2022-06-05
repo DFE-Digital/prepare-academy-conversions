@@ -57,6 +57,50 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 		}
 
 		[Fact]
+		public async Task Should_highlight_negative_values_in_school_budget_information()
+		{
+			var project = AddGetProject(project =>
+			{
+				project.RevenueCarryForwardAtEndMarchCurrentYear = -100.25M;
+				project.ProjectedRevenueBalanceAtEndMarchNextYear = -10.75M;
+				project.CapitalCarryForwardAtEndMarchCurrentYear = -65.90M;
+				project.CapitalCarryForwardAtEndMarchNextYear = -1024.95M;
+				project.SchoolBudgetInformationSectionComplete = false;
+			});
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			await NavigateAsync("School budget information");
+
+			Document.QuerySelector("#finance-current-year-2021").ClassName.Should().Contain("negative-value");
+			//Document.QuerySelector("#finance-following-year-2022").ClassName.Should().Contain("negative-value");
+			//Document.QuerySelector("#finance-forward-2021").TextContent.Should().ClassName.Should().Contain("negative-value");
+			//Document.QuerySelector("#finance-forward-2022").TextContent.Should().ClassName.Should().Contain("negative-value");
+		}
+
+		[Fact]
+		public async Task Should_not_highlight_non_negative_values_in_school_budget_information()
+		{
+			var project = AddGetProject(project =>
+			{
+				project.RevenueCarryForwardAtEndMarchCurrentYear = 100.25M;
+				project.ProjectedRevenueBalanceAtEndMarchNextYear = 10.75M;
+				project.CapitalCarryForwardAtEndMarchCurrentYear = 65.90M;
+				project.CapitalCarryForwardAtEndMarchNextYear = 1024.95M;
+				project.SchoolBudgetInformationSectionComplete = false;
+			});
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			await NavigateAsync("School budget information");
+
+			Document.QuerySelector("#finance-current-year-2021").ClassName.Should().NotContain("negative-value");
+			Document.QuerySelector("#finance-following-year-2022").ClassName.Should().NotContain("negative-value");
+			Document.QuerySelector("#finance-forward-2021").ClassName.Should().NotContain("negative-value");
+			Document.QuerySelector("#finance-forward-2022").ClassName.Should().NotContain("negative-value");
+		}
+
+		[Fact]
 		public async Task Should_be_completed_and_checked_when_school_budget_information_section_complete()
 		{
 			var project = AddGetProject(project =>

@@ -1,4 +1,6 @@
-﻿namespace ApplyToBecomeInternal.ViewModels
+﻿using System;
+
+namespace ApplyToBecomeInternal.ViewModels
 {
 	public class SummaryListRowViewModel
 	{
@@ -16,5 +18,23 @@
 		public string KeyWidth { get; set; }
 		public string ValueWidth { get; set; }
 		public string Name { get; set; }
+		public bool HighlightNegativeValue { get; set; }
+		public string ValueClass
+		{
+			get 
+			{				
+				var valueClass = string.Empty;
+				if (HasValue)
+				{
+					decimal decimalValue;
+					if (Decimal.TryParse(Value.Replace("£", ""), out decimalValue))
+					{
+						valueClass = HighlightNegativeValue && decimalValue < 0 ? "negative-value" : string.Empty;
+					}
+				}
+
+				return valueClass;
+			}
+		}
 	}
 }
