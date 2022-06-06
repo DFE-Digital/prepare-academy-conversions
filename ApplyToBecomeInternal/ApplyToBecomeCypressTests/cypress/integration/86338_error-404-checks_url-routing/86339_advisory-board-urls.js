@@ -51,7 +51,8 @@ Cypress._.each(['iphone-x'], (viewport) => {
             cy.visit(selectedSchool+'/preview-project-template')
             cy.get('h1').contains('Preview project template')
         });
-    
+        
+        // download-project-template feature is currently removed
         it.skip('TC05: should correctly render a page when user visits /download-project-template', () => {
             cy.viewport(viewport)
             //Changes the current URL
