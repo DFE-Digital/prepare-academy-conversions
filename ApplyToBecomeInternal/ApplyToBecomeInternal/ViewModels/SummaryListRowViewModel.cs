@@ -19,21 +19,21 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string ValueWidth { get; set; }
 		public string Name { get; set; }
 		public bool HighlightNegativeValue { get; set; }
-		public string ValueClass
+		public string NegativeStyleClass
 		{
 			get 
 			{				
-				var valueClass = string.Empty;
+				var NegativeStyleClass = string.Empty;
 				if (HasValue)
 				{
 					decimal decimalValue;
 					if (Decimal.TryParse(Value.Replace("£", ""), out decimalValue))
 					{
-						valueClass = HighlightNegativeValue && decimalValue < 0 ? "negative-value" : string.Empty;
+						NegativeStyleClass = HighlightNegativeValue && decimalValue < 0 ? "negative-value" : string.Empty;
 					}
 				}
 
-				return valueClass;
+				return NegativeStyleClass;
 			}
 		}
 	}

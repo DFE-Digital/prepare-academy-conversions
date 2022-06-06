@@ -73,9 +73,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 			await NavigateAsync("School budget information");
 
 			Document.QuerySelector("#finance-current-year-2021").ClassName.Should().Contain("negative-value");
-			//Document.QuerySelector("#finance-following-year-2022").ClassName.Should().Contain("negative-value");
-			//Document.QuerySelector("#finance-forward-2021").TextContent.Should().ClassName.Should().Contain("negative-value");
-			//Document.QuerySelector("#finance-forward-2022").TextContent.Should().ClassName.Should().Contain("negative-value");
+			Document.QuerySelector("#finance-following-year-2022").ClassName.Should().Contain("negative-value");
+			Document.QuerySelector("#finance-forward-2021").ClassName.Should().Contain("negative-value");
+			Document.QuerySelector("#finance-forward-2022").ClassName.Should().Contain("negative-value");
 		}
 
 		[Fact]
