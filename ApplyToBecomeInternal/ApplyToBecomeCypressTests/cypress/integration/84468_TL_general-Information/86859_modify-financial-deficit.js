@@ -4,15 +4,19 @@ Cypress._.each(['iphone-x'], (viewport) => {
         afterEach(() => {
             cy.storeSessionData()
         });
+		
+		beforeEach(() => {
+			cy.login()
+			cy.selectSchoolListing(2)
+			cy.url().then(url => {
+				let modifiedUrl = url + '/confirm-general-information'
+				cy.visit(modifiedUrl)
+			});
+		})
     
         before(() => {
             cy.viewport(viewport)
-            cy.login()
-            cy.selectSchoolListing(2)
-            cy.url().then(url => {
-                let modifiedUrl = url + '/confirm-general-information'
-                cy.visit(modifiedUrl)
-            });
+            
         });
     
         after(() => {

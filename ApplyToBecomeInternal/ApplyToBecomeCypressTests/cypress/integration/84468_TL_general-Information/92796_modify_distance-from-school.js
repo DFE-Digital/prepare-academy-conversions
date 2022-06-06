@@ -2,26 +2,17 @@
 
 Cypress._.each(['iphone-x'], (viewport) => {
     describe(`92796 Modify Distance from School Info ${viewport}`, () => {
-        afterEach(() => {
-            cy.storeSessionData()
-        });
-    
-        before(() => {
-            cy.viewport(viewport)
-            cy.login()
-            cy.selectSchoolListing(2)
-            cy.url().then(url => {
-                let modifiedUrl = url + '/confirm-general-information'
-                cy.visit(modifiedUrl)
-            });
-        });
-    
-        after(() => {
-            cy.clearLocalStorage()
-        });
+		beforeEach(() => {
+			cy.login()
+			cy.viewport(viewport)
+			cy.selectSchoolListing(2)
+			cy.url().then(url => {
+				let modifiedUrl = url + '/confirm-general-information'
+				cy.visit(modifiedUrl)
+			});
+		})
 
         it('Precondition: Distance Info Summary is empty', () => {
-            cy.viewport(viewport)
             // Distrance Info 
             cy.milesIsEmpty()
             // Additional Info box
@@ -29,7 +20,6 @@ Cypress._.each(['iphone-x'], (viewport) => {
         })
 
         it('TC01: Filling in the distance of school info for the first time', () => {
-            cy.viewport(viewport)
             cy.changeLink().click()
             .then(() => {
                 cy.disMiles().click().type('10')
@@ -45,7 +35,6 @@ Cypress._.each(['iphone-x'], (viewport) => {
 
         // raised under 92838
         it.skip('TC02: Error Message', () => {
-            cy.viewport(viewport)
             cy.changeLink().click()
             .then(() => {
                 cy.disMiles().click().type('a')

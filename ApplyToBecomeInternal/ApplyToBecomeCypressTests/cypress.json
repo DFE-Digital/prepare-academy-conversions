@@ -1,3 +1,4 @@
 {
-	"video": true
+	"video": true,
+	"retries": 2
 }

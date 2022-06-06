@@ -7,9 +7,11 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string Id { get; set; }
 		public string Key { get; set; }
 		public string Value { get; set; }
+		public string ValueLink { get; set; }
 		public string AdditionalText { get; set; }
 		public bool HasValue => !string.IsNullOrWhiteSpace(Value);
 		public bool HasAdditionalText => !string.IsNullOrWhiteSpace(AdditionalText);
+		public bool HasValueLink => !string.IsNullOrWhiteSpace(ValueLink);
 		public string Page { get; set; }
 		public string Fragment { get; set; }
 		public string RouteId { get; set; }

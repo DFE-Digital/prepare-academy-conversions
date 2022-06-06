@@ -32,7 +32,7 @@ namespace ApplyToBecomeInternal.ViewComponents
 
 			var viewModel = new SchoolPostcodeViewModel
 			{
-				SchoolPostcode = generalInformation.SchoolPostcode ?? "no data"
+				SchoolPostcode = generalInformation.SchoolPostcode ?? "No data"
 			};
 
 			return View(viewModel);

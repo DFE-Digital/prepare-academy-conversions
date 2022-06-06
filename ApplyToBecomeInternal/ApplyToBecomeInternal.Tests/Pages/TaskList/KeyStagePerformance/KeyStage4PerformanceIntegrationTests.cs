@@ -72,10 +72,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 			await NavigateAsync("Key stage 4 performance tables");
 
 			Document.QuerySelector("#attainment8").TextContent.Should()
-				.Be($"{ks4ResponseOrderedByYear.ElementAt(0).SipAttainment8score.NotDisadvantaged}(disadvantaged pupils no data)");
-			Document.QuerySelector("#attainment8-maths").TextContent.Should().Be("no data");
-			Document.QuerySelector("#p8-ci").TextContent.Should().MatchRegex($"no data to {ks4ResponseOrderedByYear.ElementAt(0).SipProgress8upperconfidence}");
-			Document.QuerySelector("#na-p8-ci").TextContent.Should().Be("no data");
+				.Be($"{ks4ResponseOrderedByYear.ElementAt(0).SipAttainment8score.NotDisadvantaged}(disadvantaged pupils: No data)");
+			Document.QuerySelector("#attainment8-maths").TextContent.Should().Be("No data");
+			Document.QuerySelector("#p8-ci").TextContent.Should().MatchRegex($"No data to {ks4ResponseOrderedByYear.ElementAt(0).SipProgress8upperconfidence}");
+			Document.QuerySelector("#na-p8-ci").TextContent.Should().Be("No data");
 		}
 
 		[Fact]

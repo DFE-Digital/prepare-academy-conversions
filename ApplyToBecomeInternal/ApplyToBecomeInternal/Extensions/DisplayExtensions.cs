@@ -7,7 +7,7 @@ namespace ApplyToBecomeInternal.Extensions
 {
 	public static class DisplayExtensions
 	{
-		private const string NoData = "no data";
+		private const string NoData = "No data";
 
 		public static string DisplayOfstedRating(this string ofstedRating)
 		{
@@ -17,7 +17,7 @@ namespace ApplyToBecomeInternal.Extensions
 				"2" => "Good",
 				"3" => "Requires improvement",
 				"4" => "Inadequate",
-				_ => "No data"
+				_ => NoData
 			};
 		}
 
@@ -28,7 +28,7 @@ namespace ApplyToBecomeInternal.Extensions
 				return new HtmlString(NoData);
 
 			return new HtmlString(
-				$"{disadvantagedPupilResponse.NotDisadvantaged.FormatValue()}<br>(disadvantaged pupils {disadvantagedPupilResponse.Disadvantaged.FormatValue()})");
+				$"{disadvantagedPupilResponse.NotDisadvantaged.FormatValue()}<br>(disadvantaged pupils: {disadvantagedPupilResponse.Disadvantaged.FormatValue()})");
 		}
 
 		public static string FormatConfidenceInterval(decimal? lowerBound, decimal? upperBound)
@@ -58,6 +58,11 @@ namespace ApplyToBecomeInternal.Extensions
 			if (string.IsNullOrEmpty(year)) return year;
 			var trimmedYear = string.Concat(year.Where(c => !char.IsWhiteSpace(c)));
 			return trimmedYear.Contains("-") ? trimmedYear.Replace("-", " to ") : year;
+		}
+
+		public static bool HasData(this string str)
+		{
+			return str != NoData;
 		}
 	}
 }

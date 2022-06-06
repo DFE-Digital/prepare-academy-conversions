@@ -20,6 +20,8 @@
 	  <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="5.0.9" />
 	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.16" />
 	  <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="5.0.1" />
+	  <PackageReference Include="Microsoft.Identity.Web" Version="1.24.0" />
+	  <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.24.0" />
 	  <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.16.0" />
 	  <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders.TagHelpers" Version="0.16.0" />
 	  <PackageReference Include="Scrutor" Version="3.3.0" />

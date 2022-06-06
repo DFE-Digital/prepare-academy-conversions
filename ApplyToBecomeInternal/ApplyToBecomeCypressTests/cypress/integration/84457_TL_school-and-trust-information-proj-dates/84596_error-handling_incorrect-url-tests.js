@@ -10,10 +10,13 @@ Cypress._.each(['iphone-x'], (viewport) => {
             cy.storeSessionData()
         });
     
-        before(function () {
-            cy.viewport(viewport)
+        beforeEach(() => {
             cy.login()
         });
+		
+		before(() => {
+			cy.viewport(viewport)
+		})
     
          it('TC01: Should open first school in the list', () => {
             cy.viewport(viewport)

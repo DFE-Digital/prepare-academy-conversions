@@ -11,7 +11,8 @@ namespace ApplyToBecomeInternal.TagHelpers
 	{
 		[HtmlAttributeName("value")]
 		public string Value { get; set; }
-
+		[HtmlAttributeName("value-link")]
+		public string ValueLink { get; set; }
 		[HtmlAttributeName("additional-text")]
 		public string AdditionalText { get; set; } // allows 2 items to be displayed in the same table row
 		[HtmlAttributeName("asp-page")]
@@ -46,6 +47,7 @@ namespace ApplyToBecomeInternal.TagHelpers
 				Id = Id,
 				Key = Label,
 				Value = value1,
+				ValueLink = ValueLink,
 				AdditionalText = AdditionalText,
 				Page = Page,
 				Fragment = Fragment,
