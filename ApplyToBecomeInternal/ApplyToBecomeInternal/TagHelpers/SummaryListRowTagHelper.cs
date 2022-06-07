@@ -34,7 +34,7 @@ namespace ApplyToBecomeInternal.TagHelpers
 		public string ValueWidth { get; set; }
 
 		[HtmlAttributeName("highlight-negative-value")]
-		public string HighlightNegativeValue { get; set; }
+		public bool HighlightNegativeValue { get; set; }
 
 		public SummaryListRowTagHelper(IHtmlHelper htmlHelper) : base(htmlHelper) { }
 
@@ -57,7 +57,7 @@ namespace ApplyToBecomeInternal.TagHelpers
 				KeyWidth = KeyWidth,
 				ValueWidth = ValueWidth,
 				Name = Name,
-				HighlightNegativeValue = !string.IsNullOrEmpty(HighlightNegativeValue) && bool.Parse(HighlightNegativeValue)
+				HighlightNegativeValue = HighlightNegativeValue
 			};
 
 			return await _htmlHelper.PartialAsync("_SummaryListRow", model);
