@@ -23,10 +23,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			await NavigateAsync("School budget information");
 
-			Document.QuerySelector("#finance-current-year-2021").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-following-year-2022").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-forward-2021").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-forward-2022").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-current-year").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-following-year").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-forward-current-year").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-forward-following-year").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.SchoolBudgetInformationAdditionalInformation);
 		}
 
@@ -49,10 +49,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			await NavigateAsync("School budget information");
 
-			Document.QuerySelector("#finance-current-year-2021").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-following-year-2022").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-forward-2021").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-forward-2022").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-current-year").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-following-year").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-forward-current-year").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-forward-following-year").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.SchoolBudgetInformationAdditionalInformation);
 		}
 
@@ -72,10 +72,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			await NavigateAsync("School budget information");
 
-			Document.QuerySelector("#finance-current-year-2021").ClassName.Should().Contain("negative-value");
-			Document.QuerySelector("#finance-following-year-2022").ClassName.Should().Contain("negative-value");
-			Document.QuerySelector("#finance-forward-2021").ClassName.Should().Contain("negative-value");
-			Document.QuerySelector("#finance-forward-2022").ClassName.Should().Contain("negative-value");
+			Document.QuerySelector("#finance-current-year").ClassName.Should().Contain("negative-value");
+			Document.QuerySelector("#finance-following-year").ClassName.Should().Contain("negative-value");
+			Document.QuerySelector("#finance-forward-current-year").ClassName.Should().Contain("negative-value");
+			Document.QuerySelector("#finance-forward-following-year").ClassName.Should().Contain("negative-value");
 		}
 
 		[Fact]
@@ -94,10 +94,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			await NavigateAsync("School budget information");
 
-			Document.QuerySelector("#finance-current-year-2021").ClassName.Should().NotContain("negative-value");
-			Document.QuerySelector("#finance-following-year-2022").ClassName.Should().NotContain("negative-value");
-			Document.QuerySelector("#finance-forward-2021").ClassName.Should().NotContain("negative-value");
-			Document.QuerySelector("#finance-forward-2022").ClassName.Should().NotContain("negative-value");
+			Document.QuerySelector("#finance-current-year").ClassName.Should().NotContain("negative-value");
+			Document.QuerySelector("#finance-following-year").ClassName.Should().NotContain("negative-value");
+			Document.QuerySelector("#finance-forward-current-year").ClassName.Should().NotContain("negative-value");
+			Document.QuerySelector("#finance-forward-following-year").ClassName.Should().NotContain("negative-value");
 		}
 
 		[Fact]
@@ -143,10 +143,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			await NavigateAsync("School budget information");
 
-			Document.QuerySelector("#finance-current-year-2021").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#finance-following-year-2022").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#finance-forward-2021").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#finance-forward-2022").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#finance-current-year").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#finance-following-year").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#finance-forward-current-year").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#finance-forward-following-year").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#additional-information").TextContent.Should().Be("Empty");
 			Document.QuerySelector<IHtmlInputElement>("#school-budget-information-complete").IsChecked.Should().BeFalse();
 
