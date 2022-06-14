@@ -76,14 +76,6 @@ namespace ApplyToBecomeInternal.Models
 		[Display(Name = "Previous Advisory Board")]
 		public DateTime? PreviousHeadTeacherBoardDate { get; set; }
 		
-		[ModelBinder(BinderType = typeof(MonetaryInputModelBinder))]
-		[Display(Name="Conversion support grant")]
-		[Range(typeof(decimal), "0", "25000", ErrorMessage = "Enter an amount that is £25,000 or less, for example £20,000")]
-		[BindProperty(Name="conversion-support-grant-amount")]
-		public decimal? ConversionSupportGrantAmount { get; set; }
-		[BindProperty(Name="conversion-support-grant-change-reason")]
-		public string ConversionSupportGrantChangeReason { get; set; }
-
 		//general info
 
 		[BindProperty(Name = "published-admission-number")]
@@ -102,12 +94,20 @@ namespace ApplyToBecomeInternal.Models
 
 		[BindProperty(Name = "distance-to-trust-headquarters")]
 		[ModelBinder(BinderType = typeof(DecimalInputModelBinder))]
-		[Display(Name = "Distance from the school to the trust headquarters")]
+		[Display(Name = "Distance from the converting school to the trust or other schools in the trust")]
 		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
 
 		[BindProperty(Name = "distance-to-trust-headquarters-additional-information")]
 		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
+
+		[BindProperty(Name = "member-of-parliament-name")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
+		public string MemberOfParliamentName { get; set; }
+
+		[BindProperty(Name = "member-of-parliament-party")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
+		public string MemberOfParliamentParty { get; set; }
 
 		[BindProperty(Name = "general-information-complete")]
 		[ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]

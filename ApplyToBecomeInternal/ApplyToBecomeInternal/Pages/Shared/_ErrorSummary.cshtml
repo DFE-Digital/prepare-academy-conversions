@@ -1,5 +1,6 @@
 ﻿@inject ApplyToBecomeInternal.Services.ErrorService errorService
-
+@if (errorService.HasErrors() )
+{ 
 <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
 	<h2 class="govuk-error-summary__title" id="error-summary-title">
 		There is a problem
@@ -9,13 +10,13 @@
 			@foreach (var error in errorService.GetErrors())
 			{
 				<li>
-					@if (error.Key?.Contains("/head-teacher-board-date") ?? false)
+					@if (error.Key?.Contains("/advisory-board-date") ?? false)
 					{
 						<a href=@error.Key>@error.Message</a>
 					}
 					else if (!string.IsNullOrWhiteSpace(error.Key))
 					{
-						<a href="#@error.Key">@error.Message</a>
+						<a  id="@($"{error.Key}-error-link") "href="#@error.Key">@error.Message</a>
 					}
 					else
 					{
@@ -26,3 +27,4 @@
 		</ul>
 	</div>
 </div>
+}

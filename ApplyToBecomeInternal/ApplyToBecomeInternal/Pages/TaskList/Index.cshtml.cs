@@ -30,24 +30,32 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 
 		public override async Task<IActionResult> OnGetAsync(int id)
 		{
-			await SetProject(id);
+			var result =  await SetProject(id);
+
+			if ((result as StatusCodeResult)?.StatusCode == (int) HttpStatusCode.NotFound)
+			{
+				return NotFound();
+			}
 
 			ShowGenerateHtbTemplateError = (bool)(TempData["ShowGenerateHtbTemplateError"] ?? false);
 			if (ShowGenerateHtbTemplateError)
 			{
 				var returnPage = WebUtility.UrlEncode(Links.TaskList.Index.Page);
 				// this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
-				_errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/head-teacher-board-date?return={returnPage}",
+				_errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}",
 					"Set an Advisory Board date before you generate your project template");
 			}
 
-			var keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(Project.SchoolURN);
+			var keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(Project?.SchoolURN);
 
 			// 16 plus = 6, All-through = 7, Middle deemed primary = 3, Middle deemed secondary = 5, Not applicable = 0, Nursery = 1, Primary = 2, Secondary = 4
-			TaskList = TaskListViewModel.Build(Project);
-			TaskList.HasKeyStage2PerformanceTables = keyStagePerformance.HasKeyStage2PerformanceTables;
-			TaskList.HasKeyStage4PerformanceTables = keyStagePerformance.HasKeyStage4PerformanceTables;
-			TaskList.HasKeyStage5PerformanceTables = keyStagePerformance.HasKeyStage5PerformanceTables;
+			if (Project != null) TaskList = TaskListViewModel.Build(Project);
+			if (TaskList != null)
+			{
+				TaskList.HasKeyStage2PerformanceTables = keyStagePerformance.HasKeyStage2PerformanceTables;
+				TaskList.HasKeyStage4PerformanceTables = keyStagePerformance.HasKeyStage4PerformanceTables;
+				TaskList.HasKeyStage5PerformanceTables = keyStagePerformance.HasKeyStage5PerformanceTables;
+			}
 
 			return Page();
 		}

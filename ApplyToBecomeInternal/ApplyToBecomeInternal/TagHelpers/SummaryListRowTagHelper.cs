@@ -11,7 +11,10 @@ namespace ApplyToBecomeInternal.TagHelpers
 	{
 		[HtmlAttributeName("value")]
 		public string Value { get; set; }
-
+		[HtmlAttributeName("value-link")]
+		public string ValueLink { get; set; }
+		[HtmlAttributeName("additional-text")]
+		public string AdditionalText { get; set; } // allows 2 items to be displayed in the same table row
 		[HtmlAttributeName("asp-page")]
 		public string Page { get; set; }
 
@@ -30,17 +33,22 @@ namespace ApplyToBecomeInternal.TagHelpers
 		[HtmlAttributeName("value-width")]
 		public string ValueWidth { get; set; }
 
+		[HtmlAttributeName("highlight-negative-value")]
+		public bool HighlightNegativeValue { get; set; }
+
 		public SummaryListRowTagHelper(IHtmlHelper htmlHelper) : base(htmlHelper) { }
 
 		protected override async Task<IHtmlContent> RenderContentAsync()
 		{
-			var value = For == null ? Value : For.Model?.ToString();
+			var value1 = For == null ? Value : For.Model?.ToString();
 
 			var model = new SummaryListRowViewModel
 			{
 				Id = Id,
 				Key = Label,
-				Value = value,
+				Value = value1,
+				ValueLink = ValueLink,
+				AdditionalText = AdditionalText,
 				Page = Page,
 				Fragment = Fragment,
 				RouteId = RouteId,
@@ -48,7 +56,8 @@ namespace ApplyToBecomeInternal.TagHelpers
 				HiddenText = HiddenText,
 				KeyWidth = KeyWidth,
 				ValueWidth = ValueWidth,
-				Name = Name
+				Name = Name,
+				HighlightNegativeValue = HighlightNegativeValue
 			};
 
 			return await _htmlHelper.PartialAsync("_SummaryListRow", model);

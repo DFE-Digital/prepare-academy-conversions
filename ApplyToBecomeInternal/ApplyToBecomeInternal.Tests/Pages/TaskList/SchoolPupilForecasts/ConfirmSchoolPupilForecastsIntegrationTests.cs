@@ -78,7 +78,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPupilForecasts
 			rows[0].Children[1].TextContent.Should().Be("");
 			rows[0].Children[2].TextContent.Should().Be("");
 			rows[0].Children[3].TextContent.Should().Be("");
-			rows[1].Children[1].TextContent.Should().Be("");
+			rows[1].Children[1].TextContent.Should().Be(project.YearOneProjectedCapacity.ToString());
 			rows[1].Children[2].TextContent.Should().Be(project.YearOneProjectedPupilNumbers.ToString());
 			rows[1].Children[3].TextContent.Should().Be("");
 			rows[2].Children[1].TextContent.Should().Be(project.YearTwoProjectedCapacity.ToString());

@@ -1,0 +1,17 @@
+﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/advisory-board-date"
+@model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
+	ViewData["Title"] = "Set the Advisory board date";
+	ViewData["ShowScheduleOfAdvisoryBoardMeetingsLink"] = true;
+	ViewData["SchoolName"] = Model.Project.SchoolName;
+	ViewData["ProjectId"] = Model.Project.Id;
+}
+
+@section BeforeMain
+{
+	<govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation" data-test="headteacher-board-date-back-link"/>
+}
+
+<govuk-date-input heading-label="true" label="Set the Advisory Board date" name="head-teacher-board-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />

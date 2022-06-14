@@ -45,6 +45,38 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 		}
 
 		[Fact]
+		public async Task Should_navigate_to_and_update_school_budget_information_with_negative_values()
+		{
+			var project = AddGetProject(project =>
+			{
+				project.RevenueCarryForwardAtEndMarchCurrentYear = null;
+				project.ProjectedRevenueBalanceAtEndMarchNextYear = null;
+				project.CapitalCarryForwardAtEndMarchCurrentYear = null;
+				project.CapitalCarryForwardAtEndMarchNextYear = null;
+				project.SchoolBudgetInformationSectionComplete = false;
+			});
+			var request = AddPatchProjectMany(project, composer =>
+				composer
+				.With(r => r.RevenueCarryForwardAtEndMarchCurrentYear, -100.25M)
+				.With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear, -10.75M)
+				.With(r => r.CapitalCarryForwardAtEndMarchCurrentYear, -65.90M)
+				.With(r => r.CapitalCarryForwardAtEndMarchNextYear, -1024.95M));
+
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information");
+			await NavigateAsync("Change", 0);
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
+			Document.QuerySelector<IHtmlInputElement>("#finance-current-year-2021").Value = request.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString();
+			Document.QuerySelector<IHtmlInputElement>("#finance-following-year-2022").Value = request.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString();
+			Document.QuerySelector<IHtmlInputElement>("#finance-forward-2021").Value = request.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString();
+			Document.QuerySelector<IHtmlInputElement>("#finance-forward-2022").Value = request.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString();
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
+		}
+
+		[Fact]
 		public async Task Should_show_error_summary_when_there_is_an_API_error()
 		{
 			var project = AddGetProject();

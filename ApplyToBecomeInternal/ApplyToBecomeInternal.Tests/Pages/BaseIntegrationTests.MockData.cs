@@ -1,6 +1,8 @@
 ﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.Application;
 using ApplyToBecome.Data.Models.Establishment;
 using ApplyToBecome.Data.Models.KeyStagePerformance;
+using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Tests.Customisations;
 using AutoFixture;
 using AutoFixture.Dsl;
@@ -122,13 +124,38 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			{
 				_fixture.Customizations.Add(new OfstedRatingSpecimenBuilder());
 				establishmentResponse = _fixture.Build<EstablishmentResponse>().Create();
-				establishmentResponse.OfstedLastInspection = _fixture.Create<DateTime>().ToString("d", CultureInfo.CreateSpecificCulture("en-GB"));
 				establishmentResponse.Census.NumberOfPupils = _fixture.Create<int>().ToString();
 				establishmentResponse.SchoolCapacity = _fixture.Create<int>().ToString();
 			}
 
 			_factory.AddGetWithJsonResponse($"/establishment/urn/{urn}", establishmentResponse);
 			return establishmentResponse;
+		}
+
+		private ICollection<ApplyingSchool> GenerateSingleItemApplyingSchoolsList()
+		{
+			return new List<ApplyingSchool> { _fixture.Create<ApplyingSchool>() };
+		}
+
+		public Application AddGetApplication(Action<Application> postSetup = null)
+		{
+			// create just 1 applying school as that's all we accept so far
+			_fixture.Customize<Application>(a => a.With(s => s.ApplyingSchools, () => {
+				return new List<ApplyingSchool> { _fixture.Create<ApplyingSchool>() };
+				}
+			));
+			var application = _fixture.Create<Application>();
+			if (postSetup != null)
+			{
+				postSetup(application);
+			}
+
+			var response = new ApiV2Wrapper<Application>()
+			{
+				Data = application
+			};
+			_factory.AddGetWithJsonResponse($"/v2/apply-to-become/application/{application.ApplicationId}", response);
+			return application;
 		}
 
 		public void ResetServer()

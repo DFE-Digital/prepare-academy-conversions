@@ -28,8 +28,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			Document.QuerySelector("#author").TextContent.Should().Be(project.Author);
 			Document.QuerySelector("#cleared-by").TextContent.Should().Be(project.ClearedBy);
 			Document.QuerySelector("#academy-order-required").TextContent.Should().Be(project.AcademyOrderRequired);
-			Document.QuerySelector("#head-teacher-board-date").TextContent.Should().Be(project.HeadTeacherBoardDate.ToDateString());
-			Document.QuerySelector("#previous-head-teacher-board").TextContent.Should().Be(project.PreviousHeadTeacherBoardDate.ToDateString());
+			Document.QuerySelector("#advisory-board-date").TextContent.Should().Be(project.HeadTeacherBoardDate.ToDateString());
+			Document.QuerySelector("#previous-advisory-board").TextContent.Should().Be(project.PreviousHeadTeacherBoardDate.ToDateString());
 			Document.QuerySelector("#school-name").TextContent.Should().Be(project.SchoolName);
 			Document.QuerySelector("#unique-reference-number").TextContent.Should().Be(project.Urn.ToString());
 			Document.QuerySelector("#local-authority").TextContent.Should().Be(project.LocalAuthority);
@@ -39,7 +39,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			Document.QuerySelector("#sponsor-name").TextContent.Should().Be(project.SponsorName);
 			Document.QuerySelector("#academy-type-and-route").TextContent.Should().Contain(project.AcademyTypeAndRoute);
 			Document.QuerySelector("#academy-type-and-route").TextContent.Should().Contain(project.ConversionSupportGrantAmount.Value.ToMoneyString(true));
-			Document.QuerySelector("#academy-type-and-route").TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
+			Document.QuerySelector("#academy-type-and-route-additional-text").TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
 			Document.QuerySelector("#proposed-academy-opening-date").TextContent.Should().Be(project.ProposedAcademyOpeningDate.ToDateString(true));
 		}
 
@@ -51,7 +51,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			await OpenUrlAsync($"/task-list/{project.Id}");
 			await NavigateAsync("School and trust information and project dates");
 
-			Document.QuerySelector("#previous-head-teacher-board").TextContent.Should().Be("No");
+			Document.QuerySelector("#previous-advisory-board").TextContent.Should().Be("No");
 		}
 
 		[Fact]
@@ -131,8 +131,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			Document.QuerySelector("#author").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#cleared-by").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#academy-order-required").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#head-teacher-board-date").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#previous-head-teacher-board").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#advisory-board-date").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#previous-advisory-board").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#school-name").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#unique-reference-number").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#local-authority").TextContent.Should().Be("Empty");
@@ -160,6 +160,31 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+		}
+
+		[Fact]
+		public async Task Should_show_error_summary_when_grant_amount_less_than_full_amount_and_no_reason_entered()
+		{
+			var project = AddGetProject(project =>
+			{
+				project.ConversionSupportGrantAmount = 2000m;
+				project.ConversionSupportGrantChangeReason = null;
+			});
+			AddPatchProjectMany(project, composer =>
+				composer
+				.With(r => r.ConversionSupportGrantAmount, project.ConversionSupportGrantAmount)
+				.With(r => r.ConversionSupportGrantChangeReason, String.Empty));
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			await NavigateAsync("School and trust information and project dates");
+			await NavigateAsync("Change", 2);
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/route-and-grant");
+			var test = Document.QuerySelector(".govuk-error-summary");
+			test.Should().NotBe(null);
 		}
 
 		[Fact]

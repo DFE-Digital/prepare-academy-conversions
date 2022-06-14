@@ -6,72 +6,162 @@ using FluentAssertions;
 using System;
 using System.Linq;
 using Xunit;
+using AutoFixture;
+using ApplyToBecomeInternal.Extensions;
 
 namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 {
 	public class AboutConversionSectionTests
 	{
 		[Fact]
-		public void Constructor_WithApplication_SetsFields()
+		public void Constructor_SetsOtherMainContactFields_WhenMainContactIsOther()
 		{
-			var application = new Application
-			{
-				SchoolName = "St Wilfrid's Primary School" ,
-				ConversionInformation = new ConversionInformation
-				{
-					HeadTeacher = new ContactDetails
-					{
-						Name = "Garth Brown",
-						EmailAddress = "garth.brown@stwilfridsprimary.edu.uk",
-						TelephoneNumber = "09876 64547563"
-					},
-					GoverningBodyChair = new ContactDetails
-					{
-						Name = "Arna Siggurdottier",
-						EmailAddress = "arna.siggurdottier@dynamicstrust.co.uk",
-						TelephoneNumber = "0972 345 119"
-					},
-					Approver = new ContactDetails
-					{
-						Name = "Garth Brown",
-						EmailAddress = "garth.brown@stwilfridsprimary.edu.uk",
-					},
-					DateForConversion = new DateForConversion
-					{
-						HasPreferredDate = true,
-						PreferredDate = new DateTime(2021,04,20)
-					},
-					SchoolToTrustRationale = "This is a rationale",
-					WillSchoolChangeName = true
-				}
-			};
+			var fixture = new Fixture();
+			var application = fixture.Create<ApplyingSchool>();
+			application.SchoolConversionTargetDate = DateTime.Now.AddDays(30);
+			application.SchoolConversionTargetDateSpecified = true;
+			application.SchoolConversionChangeNamePlanned = true;
+			application.SchoolConversionContactRole = "Other";
 
 			var formSection = new AboutConversionSection(application);
 
 			var expectedFields = new[]
 			{
-				new FormField("The name of the school", "St Wilfrid's Primary School"),
+				new FormField("The name of the school", application.SchoolName),
 			};
 
 			var expectedFieldsContactDetails = new[]
 			{
-				new FormField("Name of headteacher", "Garth Brown"),
-				new FormField("Headteacher's email address", "garth.brown@stwilfridsprimary.edu.uk"),
-				new FormField("Headteacher's telephone number", "09876 64547563"),
-				new FormField("Name of the chair of the Governing Body", "Arna Siggurdottier"),
-				new FormField("Chair's email address", "arna.siggurdottier@dynamicstrust.co.uk"),
-				new FormField("Chair's phone number", "0972 345 119"),
-				new FormField("Approver's name", "Garth Brown"),
-				new FormField("Approver's email address", "garth.brown@stwilfridsprimary.edu.uk"),
+				new FormField("Name of headteacher", application.SchoolConversionContactHeadName),
+				new FormField("Headteacher's email address", application.SchoolConversionContactHeadEmail),
+				new FormField("Headteacher's phone number", application.SchoolConversionContactHeadTel),
+				new FormField("Name of the chair of the Governing Body", application.SchoolConversionContactChairName),
+				new FormField("Chair's email address", application.SchoolConversionContactChairEmail),
+				new FormField("Chair's phone number", application.SchoolConversionContactChairTel),
+				new FormField("Who is the main contact for the conversion?", application.SchoolConversionContactRole),
+				new FormField("Main contact's name", application.SchoolConversionMainContactOtherName),
+				new FormField("Main contact's email address", application.SchoolConversionMainContactOtherEmail),
+				new FormField("Main contact's phone number", application.SchoolConversionMainContactOtherTelephone),
+				new FormField("Main contact's role", application.SchoolConversionMainContactOtherRole),
+				new FormField("Approver's name", application.SchoolConversionApproverContactName),
+				new FormField("Approver's email address", application.SchoolConversionApproverContactEmail)							
+			};
+			
+			var expectedFieldsDateForConversion = new[] {
+				new FormField("Do you want the conversion to happen on a particular date", application.SchoolConversionTargetDateSpecified.ToYesNoString()),
+				new FormField("Preferred date", application.SchoolConversionTargetDate.Value.ToDateString()),
+				new FormField("Explain why you want to convert on this date", application.SchoolConversionTargetDateExplained)
+			};
+
+			var expectedFieldsReasonForJoining = new FormField("Why does the school want to join this trust in particular?", application.SchoolConversionReasonsForJoining);
+			var expectedFieldsNameChanges = new[]
+			{ 
+				new FormField("Is the school planning to change its name when it becomes an academy?", application.SchoolConversionChangeNamePlanned.ToYesNoString()),
+				new FormField("What's the proposed new name?", application.SchoolConversionProposedNewSchoolName)
+			};
+			
+			formSection.Heading.Should().Be("About the conversion");
+
+			var sectionArray = formSection.SubSections.ToArray();
+
+			sectionArray[0].Fields.Should().BeEquivalentTo(expectedFields);
+			sectionArray[1].Fields.Should().BeEquivalentTo(expectedFieldsContactDetails);
+			sectionArray[2].Fields.Should().BeEquivalentTo(expectedFieldsDateForConversion);
+			sectionArray[3].Fields.Should().BeEquivalentTo(expectedFieldsReasonForJoining);
+			sectionArray[4].Fields.Should().BeEquivalentTo(expectedFieldsNameChanges);
+		}
+
+		[Fact]
+		public void Constructor_Doesnt_Include_Conditional_Rows_Following_No_Answers()
+		{
+			var fixture = new Fixture();
+			var application = fixture.Create<ApplyingSchool>();
+			application.SchoolConversionTargetDateSpecified = false;
+			application.SchoolConversionChangeNamePlanned = false;
+
+			var formSection = new AboutConversionSection(application);
+			var expectedFields = new[]
+			{
+				new FormField("The name of the school", application.SchoolName),
+			};
+
+			var expectedFieldsContactDetails = new[]
+			{
+				new FormField("Name of headteacher", application.SchoolConversionContactHeadName),
+				new FormField("Headteacher's email address", application.SchoolConversionContactHeadEmail),
+				new FormField("Headteacher's phone number", application.SchoolConversionContactHeadTel),
+				new FormField("Name of the chair of the Governing Body", application.SchoolConversionContactChairName),
+				new FormField("Chair's email address", application.SchoolConversionContactChairEmail),
+				new FormField("Chair's phone number", application.SchoolConversionContactChairTel),
+				new FormField("Who is the main contact for the conversion?", application.SchoolConversionContactRole),
+				new FormField("Approver's name", application.SchoolConversionApproverContactName),
+				new FormField("Approver's email address", application.SchoolConversionApproverContactEmail)
 			};
 
 			var expectedFieldsDateForConversion = new[] {
-				new FormField("Do you want the conversion to happen on a particular date", "Yes"),
-				new FormField("Preferred date", "20/04/2021")
+				new FormField("Do you want the conversion to happen on a particular date", application.SchoolConversionTargetDateSpecified.ToYesNoString())				
 			};
 
-			var expectedFieldsReasonForJoining = new FormField("Why does the school want to join this trust in particular?", "This is a rationale");
-			var expectedFieldsNameChanges = new FormField("Is the school planning to change its name when it becomes an academy?", "Yes");
+			var expectedFieldsReasonForJoining = new FormField("Why does the school want to join this trust in particular?", application.SchoolConversionReasonsForJoining);
+
+			var expectedFieldsNameChanges = new[]
+			{
+				new FormField("Is the school planning to change its name when it becomes an academy?", application.SchoolConversionChangeNamePlanned.ToYesNoString())				
+			};
+
+			formSection.Heading.Should().Be("About the conversion");
+
+			var sectionArray = formSection.SubSections.ToArray();
+
+			sectionArray[0].Fields.Should().BeEquivalentTo(expectedFields);
+			sectionArray[1].Fields.Should().BeEquivalentTo(expectedFieldsContactDetails);
+			sectionArray[2].Fields.Should().BeEquivalentTo(expectedFieldsDateForConversion);
+			sectionArray[3].Fields.Should().BeEquivalentTo(expectedFieldsReasonForJoining);
+			sectionArray[4].Fields.Should().BeEquivalentTo(expectedFieldsNameChanges);
+		}
+
+		[Fact]
+		public void Constructor_Includes_Conditional_Rows_Following_Yes_Answers()
+		{
+			var fixture = new Fixture();
+			var application = fixture.Create<ApplyingSchool>();
+			application.SchoolConversionTargetDate = DateTime.Now.AddDays(30);
+			application.SchoolConversionTargetDateSpecified = true;
+			application.SchoolConversionChangeNamePlanned = true;
+
+			var formSection = new AboutConversionSection(application);
+
+			var expectedFields = new[]
+			{
+				new FormField("The name of the school", application.SchoolName),
+			};
+
+			var expectedFieldsContactDetails = new[]
+			{
+				new FormField("Name of headteacher", application.SchoolConversionContactHeadName),
+				new FormField("Headteacher's email address", application.SchoolConversionContactHeadEmail),
+				new FormField("Headteacher's phone number", application.SchoolConversionContactHeadTel),
+				new FormField("Name of the chair of the Governing Body", application.SchoolConversionContactChairName),
+				new FormField("Chair's email address", application.SchoolConversionContactChairEmail),
+				new FormField("Chair's phone number", application.SchoolConversionContactChairTel),
+				new FormField("Who is the main contact for the conversion?", application.SchoolConversionContactRole),
+				new FormField("Approver's name", application.SchoolConversionApproverContactName),
+				new FormField("Approver's email address", application.SchoolConversionApproverContactEmail)
+			};
+
+			var expectedFieldsDateForConversion = new[] {
+				new FormField("Do you want the conversion to happen on a particular date", application.SchoolConversionTargetDateSpecified.ToYesNoString()),
+				new FormField("Preferred date", application.SchoolConversionTargetDate.Value.ToDateString()),
+				new FormField("Explain why you want to convert on this date", application.SchoolConversionTargetDateExplained)
+			};
+
+			var expectedFieldsReasonForJoining = new FormField("Why does the school want to join this trust in particular?", application.SchoolConversionReasonsForJoining);
+
+			var expectedFieldsNameChanges = new[]
+			{
+				new FormField("Is the school planning to change its name when it becomes an academy?", application.SchoolConversionChangeNamePlanned.ToYesNoString()),
+				new FormField("What's the proposed new name?", application.SchoolConversionProposedNewSchoolName)
+			};
 
 			formSection.Heading.Should().Be("About the conversion");
 

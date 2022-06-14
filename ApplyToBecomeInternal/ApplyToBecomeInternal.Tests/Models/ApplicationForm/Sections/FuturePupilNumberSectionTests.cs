@@ -12,24 +12,21 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 		[Fact]
 		public void Constructor_WithApplication_SetsFields()
 		{
-			var application = new Application
+			var application = new ApplyingSchool
 			{
-				FuturePupilNumbers = new FuturePupilNumbers
-				{
-					Year1 = 189,
-					Year2 = 189,
-					Year3 = 189,
-					ProjectionReasoning = "spreadsheets",
-					PublishedAdmissionsNumber = 210
-				}
+				ProjectedPupilNumbersYear1 = 150,
+				ProjectedPupilNumbersYear2 = 151,
+				ProjectedPupilNumbersYear3 = 152,
+				SchoolCapacityAssumptions = "spreadsheets",
+				SchoolCapacityPublishedAdmissionsNumber = 210
 			};
 			var formSection = new FuturePupilNumberSection(application);
 
 			var expectedFormFields = new[] {
-				new FormField("Projected pupil numbers on roll in the year the academy opens (year 1)", "189"),
-				new FormField("Projected pupil numbers on roll in the following year after the academy has opened (year 2)", "189"),
-				new FormField("Projected pupil numbers on roll in the following year (year 3) ", "189"),
-				new FormField("What do you base these projected numbers on? ", "spreadsheets"),
+				new FormField("Projected pupil numbers on roll in the year the academy opens (year 1)", "150"),
+				new FormField("Projected pupil numbers on roll in the following year after the academy has opened (year 2)", "151"),
+				new FormField("Projected pupil numbers on roll in the following year (year 3) ", "152"),
+				new FormField("What do you base these projected numbers on? ", application.SchoolCapacityAssumptions),
 				new FormField("What is the school's published admissions number (PAN)?", "210")
 			};
 			formSection.Heading.Should().Be("Future pupil numbers");

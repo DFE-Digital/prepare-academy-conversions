@@ -19,6 +19,8 @@
 		public string DistanceFromSchoolToTrustHeadquarters { get; set; }
 		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
 		public string ParliamentaryConstituency { get; set; }
+		public string MemberOfParliamentName { get; set; }
+		public string MemberOfParliamentParty { get; set; }
 		public bool? GeneralInformationSectionComplete { get; set; }
 	}
 }

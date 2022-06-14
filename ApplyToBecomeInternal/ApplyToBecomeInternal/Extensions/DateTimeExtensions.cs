@@ -26,7 +26,8 @@ namespace ApplyToBecomeInternal.Extensions
 
 		public static DateTime FirstOfMonth(this DateTime thisMonth, int monthsToAdd)
 		{
-			var month = thisMonth.Month + monthsToAdd == 12 ? 12 : (thisMonth.Month + monthsToAdd) % 12;
+			var month = (thisMonth.Month + monthsToAdd) % 12;
+			if (month == 0) month = 12;
 			var yearsToAdd = (thisMonth.Month + monthsToAdd - 1) / 12;
 			return new DateTime(thisMonth.Year + yearsToAdd, month, 1);
 		}

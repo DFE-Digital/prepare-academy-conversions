@@ -21,8 +21,8 @@ namespace ApplyToBecomeInternal.Models
 		public static class TaskList
 		{
 			public static LinkItem Index = new LinkItem { BackText = "Back to task list", Page = "/TaskList/Index" };
-			public static LinkItem PreviewHTBTemplate = new LinkItem { BackText = "Back to preview", Page = "/TaskList/PreviewHTBTemplate" };
-			public static LinkItem GenerateHTBTemplate = new LinkItem { Page = "/TaskList/GenerateHTBTemplate" };
+			public static LinkItem PreviewHTBTemplate = new LinkItem { BackText = "Back to preview", Page = "/TaskList/PreviewProjectTemplate" };
+			public static LinkItem GenerateHTBTemplate = new LinkItem { Page = "/TaskList/DownloadProjectTemplate" };
 		}
 
 		public static class SchoolPerformance
@@ -34,6 +34,7 @@ namespace ApplyToBecomeInternal.Models
 		public static class SchoolApplicationForm
 		{
 			public static LinkItem Index = new LinkItem { Page = "/ApplicationForm/Index" };
+			public static LinkItem SchoolApplicationTab = new LinkItem { Page = "/ApplicationForm/SchoolApplicationTab" };
 		}
 
 		public static class LocalAuthorityInformationTemplateSection
@@ -49,9 +50,9 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem Author = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/Author" };
 			public static LinkItem ClearedBy = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/ClearedBy" };
 			public static LinkItem AcademyOrderRequired = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/AcademyOrderRequired" };
-			public static LinkItem HeadTeacherBoardDate = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/HeadTeacherBoardDate" };
-			public static LinkItem PreviousHeadTeacherBoardDateQuestion = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/PreviousHeadTeacherBoardDateQuestion" };
-			public static LinkItem PreviousHeadTeacherBoardDate = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/PreviousHeadTeacherBoardDate" };
+			public static LinkItem HeadTeacherBoardDate = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/AdvisoryBoardDate" };
+			public static LinkItem PreviousHeadTeacherBoardDateQuestion = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/PreviousAdvisoryBoard" };
+			public static LinkItem PreviousHeadTeacherBoardDate = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/PreviousAdvisoryBoardDate" };
 			public static LinkItem ProposedAcademyOpeningDate = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/ProposedAcademyOpeningDate" };
 			public static LinkItem RouteAndGrant = new LinkItem { Page = "/TaskList/SchoolAndTrustInformation/RouteAndGrant" };
 		}
@@ -63,6 +64,7 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem ViabilityIssues = new LinkItem { Page = "/TaskList/GeneralInformation/ViabilityIssues" };
 			public static LinkItem FinancialDeficit = new LinkItem { Page = "/TaskList/GeneralInformation/FinancialDeficit" };
 			public static LinkItem DistanceFromTrustHeadquarters = new LinkItem { Page = "/TaskList/GeneralInformation/DistanceFromTrustHeadquarters" };
+			public static LinkItem MPDetails = new LinkItem { Page = "/TaskList/GeneralInformation/MPDetails"  };
 		}
 
 		public static class RationaleSection
@@ -106,14 +108,10 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem TrustTemplateGuidance = new LinkItem { Page = "/TaskList/TrustTemplate/TrustTemplateGuidance" };
 		}
 
-		public static class Login
-		{
-			public static LinkItem LoginForm = new LinkItem { Page = "/Login/Index" };
-		}
-
 		public static class Public
 		{
 			public static LinkItem Accessibility = new LinkItem { Page = "/Public/AccessibilityStatement" };
+			public static LinkItem CookiePreferences = new LinkItem { Page = "/Public/CookiePreferences" };
 		}
 	}
 

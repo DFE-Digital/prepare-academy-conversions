@@ -33,11 +33,11 @@ namespace ApplyToBecomeInternal.Pages
 		public override async Task<IActionResult> OnPostAsync(int id)
 		{
 			await SetProject(id);
-			
+		
 			bool schoolAndTrustInformationSectionComplete = AcademyConversionProject.SchoolAndTrustInformationSectionComplete != null && AcademyConversionProject.SchoolAndTrustInformationSectionComplete.Value;
 			if (schoolAndTrustInformationSectionComplete && !Project.HeadTeacherBoardDate.HasValue)
 			{
-				_errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/head-teacher-board-date?return=%2FTaskList%2FSchoolAndTrustInformation/ConfirmSchoolAndTrustInformation&fragment=head-teacher-board-date",
+				_errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FSchoolAndTrustInformation/ConfirmSchoolAndTrustInformation&fragment=advisory-board-date",
 					"Set an Advisory Board date before you generate your project template");
 			}
 
@@ -92,6 +92,8 @@ namespace ApplyToBecomeInternal.Pages
 				IsThisADiocesanTrust = AcademyConversionProject.IsThisADiocesanTrust,
 				DistanceFromSchoolToTrustHeadquarters = AcademyConversionProject.DistanceFromSchoolToTrustHeadquarters,
 				DistanceFromSchoolToTrustHeadquartersAdditionalInformation = AcademyConversionProject.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
+				MemberOfParliamentName = AcademyConversionProject.MemberOfParliamentName,
+				MemberOfParliamentParty = AcademyConversionProject.MemberOfParliamentParty,
 				GeneralInformationSectionComplete = AcademyConversionProject.GeneralInformationSectionComplete,
 				SchoolPerformanceAdditionalInformation = AcademyConversionProject.SchoolPerformanceAdditionalInformation,
 				RationaleForProject = AcademyConversionProject.RationaleForProject,
@@ -108,10 +110,7 @@ namespace ApplyToBecomeInternal.Pages
 				SchoolPupilForecastsAdditionalInformation = AcademyConversionProject.SchoolPupilForecastsAdditionalInformation,
 				KeyStage2PerformanceAdditionalInformation = AcademyConversionProject.KeyStage2PerformanceAdditionalInformation,
 				KeyStage4PerformanceAdditionalInformation = AcademyConversionProject.KeyStage4PerformanceAdditionalInformation,
-				KeyStage5PerformanceAdditionalInformation = AcademyConversionProject.KeyStage5PerformanceAdditionalInformation,
-				ConversionSupportGrantAmount = AcademyConversionProject.ConversionSupportGrantAmount,
-				ConversionSupportGrantChangeReason = AcademyConversionProject.ConversionSupportGrantChangeReason
-				
+				KeyStage5PerformanceAdditionalInformation = AcademyConversionProject.KeyStage5PerformanceAdditionalInformation
 			};
 		}
 

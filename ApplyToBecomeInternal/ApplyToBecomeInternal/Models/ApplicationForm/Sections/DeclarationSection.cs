@@ -6,16 +6,16 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 {
 	public class DeclarationSection : BaseFormSection
 	{
-		public DeclarationSection(Application application) : base("Declaration")
+		public DeclarationSection(ApplyingSchool application) : base("Declaration")
 		{
 			SubSections = new[] {new FormSubSection("Details", GenerateDetailsFields(application))};
 		}
 
-		private IEnumerable<FormField> GenerateDetailsFields(Application application) =>
+		private IEnumerable<FormField> GenerateDetailsFields(ApplyingSchool application) =>
 			new[]
 			{
-				new FormField("I agree with all of these statements, and believe that the facts stated in this application are true", application.Declaration.Signed.ToYesNoString()),
-				new FormField("Signed by", application.Declaration.Signee)
+				new FormField("I agree with all of these statements, and believe that the facts stated in this application are true", application.DeclarationBodyAgree.ToYesNoString()),
+				new FormField("Signed by", application.DeclarationSignedByName)
 			};
 	}
 }

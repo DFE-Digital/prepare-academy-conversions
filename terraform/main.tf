@@ -21,11 +21,11 @@ resource cloudfoundry_app worker_app {
 		"ASPNETCORE_URLS"          = "http://+:8080"
 		"TramsApi__Endpoint"       = var.app_trams_api_endpoint
 		"TramsApi__ApiKey"         = var.app_trams_api_key
-		"Authentication__Username" = var.app_username
-		"Authentication__Password" = var.app_password
 		"GoogleAnalytics__Enable"  = var.enable_google_analytics
 		"FeedbackLink"             = var.app_feedback_link
+		"SupportEmail"             = var.app_support_email
 		"SENTRY_RELEASE"           = "a2b-internal:${var.cf_app_image_tag}"
+		"AZUREAD__CLIENTSECRET"    = var.app_azuread_clientsecret
 	}
 }
 

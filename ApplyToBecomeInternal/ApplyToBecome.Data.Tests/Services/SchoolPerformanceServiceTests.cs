@@ -11,6 +11,8 @@ using System.Net;
 using ApplyToBecome.Data.Services;
 using ApplyToBecome.Data.Tests.TestDoubles;
 using Newtonsoft.Json;
+using ApplyToBecome.Data.Models.Establishment;
+using System.Globalization;
 
 namespace ApplyToBecome.Data.Tests.Services
 {
@@ -36,16 +38,24 @@ namespace ApplyToBecome.Data.Tests.Services
 		[AutoData]
 		public async Task Should_get_school_performance_by_urn(AcademyConversionProject project, EstablishmentMockData establishmentMockData)
 		{
-			establishmentMockData.misEstablishment.OfstedLastInspection = establishmentMockData.misEstablishment.OfstedLastInspection.Value.Date;
-			establishmentMockData.ofstedLastInspection = establishmentMockData.misEstablishment.OfstedLastInspection.Value;
-
+			establishmentMockData.MisEstablishment.InspectionEndDate = "15/01/2020";
+			establishmentMockData.MisEstablishment.DateOfLatestSection8Inspection = "15/01/2020";
 			_mockHandler
 				.Expect($"/establishment/urn/{project.Urn}")
 				.Respond("application/json", JsonConvert.SerializeObject(establishmentMockData));
 
 			var schoolPerformance = await _schoolPerformanceService.GetSchoolPerformanceByUrn(project.Urn.ToString());
 
-			schoolPerformance.Should().BeEquivalentTo(establishmentMockData.misEstablishment);
+			schoolPerformance.Should().BeEquivalentTo(establishmentMockData.MisEstablishment, options =>
+			{
+				options.Excluding(response => response.InspectionEndDate);
+				options.Excluding(response => response.DateOfLatestSection8Inspection);
+				options.Excluding(response => response.Weblink);
+				return options;
+			});
+			schoolPerformance.InspectionEndDate.Should().Be(DateTime.Parse("15/01/2020", CultureInfo.CreateSpecificCulture("en-GB")));
+			schoolPerformance.DateOfLatestSection8Inspection.Should().Be(DateTime.Parse("15/01/2020", CultureInfo.CreateSpecificCulture("en-GB")));
+			schoolPerformance.OfstedReport.Should().Be(establishmentMockData.MisEstablishment.Weblink);
 		}
 
 		[Theory]
@@ -65,9 +75,7 @@ namespace ApplyToBecome.Data.Tests.Services
 
 		public class EstablishmentMockData
 		{
-			public SchoolPerformance misEstablishment { get; set; }
-
-			public DateTime ofstedLastInspection { get; set; }
+			public MISEstablishmentResponse MisEstablishment { get; set; }
 		}
 	}
 }

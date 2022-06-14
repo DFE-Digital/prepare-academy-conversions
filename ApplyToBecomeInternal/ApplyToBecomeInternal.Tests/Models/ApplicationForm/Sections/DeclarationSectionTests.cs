@@ -12,9 +12,10 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 		[Fact]
 		public void Constructor_WithApplication_SetsFields()
 		{
-			var application = new Application
+			var application = new ApplyingSchool
 			{
-				Declaration = new Declaration(true, "Garth Brown")
+				DeclarationBodyAgree = true,
+				DeclarationSignedByName = "Garth Brown"
 			};
 
 			var formSection = new DeclarationSection(application);

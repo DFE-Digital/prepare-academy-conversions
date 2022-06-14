@@ -49,15 +49,10 @@ variable app_trams_api_key {
 	description = "Application variable for the TRAMS API Key"
 }
 
-variable app_username {
-	type = string
-	description = "Application variable for the username for the service"
-}
-
-variable app_password {
-	type = string
-	description = "Application variable for the password for the service"
-}
+variable app_azuread_clientsecret {
+  type = string
+  description = "Application variable for the Azure AD Authorization header"
+} 
 
 variable aspnetcore_environment {
   type = string
@@ -77,6 +72,11 @@ variable app_feedback_link {
 variable logit_sink_url {
 	type = string
 	description = "Target URL (HTTPS) for logs to be streamed to"
+}
+
+variable app_support_email {
+	type = string
+	description = "email address for support"
 }
 
 ## ========================================================================== ##

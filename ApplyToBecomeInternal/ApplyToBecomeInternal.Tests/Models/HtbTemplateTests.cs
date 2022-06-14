@@ -34,7 +34,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 			}
 
 			[Fact]
-			public void ItBuildsTheSchoolAndTrustInformationAndProjectDatesSuccessfully()
+			public void ItBuildsTheSchoolAndTrustInformationAndProjectDatesAndSchoolPerformanceSuccessfully()
 			{
 				Assert.Equal(_project.SchoolName, _template.SchoolName);
 				Assert.Equal(_project.Urn.ToString(), _template.SchoolUrn);
@@ -60,6 +60,7 @@ namespace ApplyToBecomeInternal.Tests.Models
 
 				Assert.Equal(_project.RisksAndIssues, _template.RisksAndIssues);
 				Assert.Equal(_project.EqualitiesImpactAssessmentConsidered, _template.EqualitiesImpactAssessmentConsidered);
+				Assert.Equal(_schoolPerformance, _template.SchoolPerformance);
 			}
 
 			[Fact]
@@ -97,6 +98,9 @@ namespace ApplyToBecomeInternal.Tests.Models
 				Assert.Equal(_template.DistanceFromSchoolToTrustHeadquarters, $"{_project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles");
 				Assert.Equal(_template.DistanceFromSchoolToTrustHeadquartersAdditionalInformation, _project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
 				Assert.Equal(_template.ParliamentaryConstituency, _generalInformation.ParliamentaryConstituency);
+				Assert.Equal(_template.MPName, _project.MemberOfParliamentName);
+				Assert.Equal(_template.MPParty, _project.MemberOfParliamentParty);
+				Assert.Equal(_template.MPNameAndParty, $"{_template.MPName}, {_template.MPParty}");
 			}
 
 			[Fact]
@@ -107,20 +111,6 @@ namespace ApplyToBecomeInternal.Tests.Models
 				Assert.Equal(_template.CapitalCarryForwardAtEndMarchCurrentYear,$"£{_project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString()}");
 				Assert.Equal(_template.CapitalCarryForwardAtEndMarchNextYear, $"£{_project.CapitalCarryForwardAtEndMarchNextYear?.ToMoneyString()}");
 				Assert.Equal(_template.SchoolBudgetInformationAdditionalInformation, _project.SchoolBudgetInformationAdditionalInformation);
-			}
-
-			[Fact]
-			public void ItBuildsTheSchoolPerformanceSuccessfully()
-			{
-				Assert.Equal(_template.OfstedLastInspection, _schoolPerformance.OfstedLastInspection.ToDateString());
-				Assert.Equal(_template.PersonalDevelopment, _schoolPerformance.PersonalDevelopment.DisplayOfstedRating());
-				Assert.Equal(_template.BehaviourAndAttitudes, _schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating());
-				Assert.Equal(_template.EarlyYearsProvision, _schoolPerformance.EarlyYearsProvision.DisplayOfstedRating());
-				Assert.Equal(_template.EffectivenessOfLeadershipAndManagement, _schoolPerformance.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating());
-				Assert.Equal(_template.OverallEffectiveness, _schoolPerformance.OverallEffectiveness.DisplayOfstedRating());
-				Assert.Equal(_template.QualityOfEducation, _schoolPerformance.QualityOfEducation.DisplayOfstedRating());
-				Assert.Equal(_template.SixthFormProvision, _schoolPerformance.SixthFormProvision.DisplayOfstedRating());
-				Assert.Equal(_template.SchoolPerformanceAdditionalInformation, _project.SchoolPerformanceAdditionalInformation);
 			}
 
 			[Fact]
@@ -164,14 +154,6 @@ namespace ApplyToBecomeInternal.Tests.Models
 			}
 
 			[Fact]
-			public void ItSubstitutesNullOfstedDateWithMeaningfulWording()
-			{
-				var template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
-
-				Assert.Equal("No data", template.OfstedLastInspection);
-			}
-
-			[Fact]
 			public void ItDealsWithNullValuesWhenPopulatingTheFieldsForTheFooter()
 			{
 				var template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
@@ -200,6 +182,27 @@ namespace ApplyToBecomeInternal.Tests.Models
 				Assert.Null(template.DistanceFromSchoolToTrustHeadquarters);
 				Assert.Null(template.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
 				Assert.Null(template.ParliamentaryConstituency);
+				Assert.Null(template.MPName);
+				Assert.Null(template.MPParty);
+				Assert.Equal("", template.MPNameAndParty);
+			}
+
+			[Fact]
+			public void ItDealsWithAbsentMPNameCorrectly()
+			{
+				_project.MemberOfParliamentParty = "a party";
+				var template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
+
+				Assert.Equal("a party", template.MPNameAndParty);
+			}
+
+			[Fact]
+			public void ItDealsWithAbsentPartyCorrectly()
+			{
+				_project.MemberOfParliamentName = "a MP";
+				var template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
+
+				Assert.Equal("a MP", template.MPNameAndParty);
 			}
 		}
 

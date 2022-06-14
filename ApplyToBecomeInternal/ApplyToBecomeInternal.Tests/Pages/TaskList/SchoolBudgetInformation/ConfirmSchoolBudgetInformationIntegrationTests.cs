@@ -23,11 +23,81 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			await NavigateAsync("School budget information");
 
-			Document.QuerySelector("#finance-current-year-2021").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-following-year-2022").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-forward-2021").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-forward-2022").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-current-year").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-following-year").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-forward-current-year").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-forward-following-year").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.SchoolBudgetInformationAdditionalInformation);
+		}
+
+		[Fact]
+		public async Task Should_be_in_progress_and_display_school_budget_information_with_negative_values()
+		{
+			var project = AddGetProject(project => 
+			{
+				project.RevenueCarryForwardAtEndMarchCurrentYear = -100.25M;
+				project.ProjectedRevenueBalanceAtEndMarchNextYear = -10.75M;
+				project.CapitalCarryForwardAtEndMarchCurrentYear = -65.90M;
+				project.CapitalCarryForwardAtEndMarchNextYear = -1024.95M;
+				project.SchoolBudgetInformationSectionComplete = false; 
+			});
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			Document.QuerySelector("#school-budget-information-status").TextContent.Trim().Should().Be("In Progress");
+			Document.QuerySelector("#school-budget-information-status").ClassName.Should().Contain("blue");
+
+			await NavigateAsync("School budget information");
+
+			Document.QuerySelector("#finance-current-year").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-following-year").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-forward-current-year").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-forward-following-year").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.SchoolBudgetInformationAdditionalInformation);
+		}
+
+		[Fact]
+		public async Task Should_highlight_negative_values_in_school_budget_information()
+		{
+			var project = AddGetProject(project =>
+			{
+				project.RevenueCarryForwardAtEndMarchCurrentYear = -100.25M;
+				project.ProjectedRevenueBalanceAtEndMarchNextYear = -10.75M;
+				project.CapitalCarryForwardAtEndMarchCurrentYear = -65.90M;
+				project.CapitalCarryForwardAtEndMarchNextYear = -1024.95M;
+				project.SchoolBudgetInformationSectionComplete = false;
+			});
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			await NavigateAsync("School budget information");
+
+			Document.QuerySelector("#finance-current-year").ClassName.Should().Contain("negative-value");
+			Document.QuerySelector("#finance-following-year").ClassName.Should().Contain("negative-value");
+			Document.QuerySelector("#finance-forward-current-year").ClassName.Should().Contain("negative-value");
+			Document.QuerySelector("#finance-forward-following-year").ClassName.Should().Contain("negative-value");
+		}
+
+		[Fact]
+		public async Task Should_not_highlight_non_negative_values_in_school_budget_information()
+		{
+			var project = AddGetProject(project =>
+			{
+				project.RevenueCarryForwardAtEndMarchCurrentYear = 100.25M;
+				project.ProjectedRevenueBalanceAtEndMarchNextYear = 10.75M;
+				project.CapitalCarryForwardAtEndMarchCurrentYear = 65.90M;
+				project.CapitalCarryForwardAtEndMarchNextYear = 1024.95M;
+				project.SchoolBudgetInformationSectionComplete = false;
+			});
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			await NavigateAsync("School budget information");
+
+			Document.QuerySelector("#finance-current-year").ClassName.Should().NotContain("negative-value");
+			Document.QuerySelector("#finance-following-year").ClassName.Should().NotContain("negative-value");
+			Document.QuerySelector("#finance-forward-current-year").ClassName.Should().NotContain("negative-value");
+			Document.QuerySelector("#finance-forward-following-year").ClassName.Should().NotContain("negative-value");
 		}
 
 		[Fact]
@@ -73,10 +143,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			await NavigateAsync("School budget information");
 
-			Document.QuerySelector("#finance-current-year-2021").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#finance-following-year-2022").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#finance-forward-2021").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#finance-forward-2022").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#finance-current-year").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#finance-following-year").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#finance-forward-current-year").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#finance-forward-following-year").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#additional-information").TextContent.Should().Be("Empty");
 			Document.QuerySelector<IHtmlInputElement>("#school-budget-information-complete").IsChecked.Should().BeFalse();
 

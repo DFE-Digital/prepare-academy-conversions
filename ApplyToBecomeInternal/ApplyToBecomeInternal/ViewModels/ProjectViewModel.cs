@@ -9,6 +9,7 @@ namespace ApplyToBecomeInternal.ViewModels
 		public ProjectViewModel(AcademyConversionProject project)
 		{
 			Id = project.Id.ToString();
+			ApplicationReferenceNumber = project.ApplicationReferenceNumber;
 			SchoolName = project.SchoolName;
 			SchoolURN = project.Urn.ToString();
 			LocalAuthority = project.LocalAuthority;
@@ -46,6 +47,8 @@ namespace ApplyToBecomeInternal.ViewModels
 			FinancialDeficit = project.FinancialDeficit;
 			DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters;
 			DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
+			MPName = project.MemberOfParliamentName;
+			MPParty = project.MemberOfParliamentParty;
 			GeneralInformationSectionComplete = project.GeneralInformationSectionComplete ?? false;
 
 			SchoolPerformanceAdditionalInformation = project.SchoolPerformanceAdditionalInformation;
@@ -82,6 +85,7 @@ namespace ApplyToBecomeInternal.ViewModels
 
 
 		public string Id { get; }
+		public string ApplicationReferenceNumber { get; set; }
 		public string SchoolName { get; }
 		public string SchoolURN { get; }
 		public string LocalAuthority { get; }
@@ -121,6 +125,8 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string FinancialDeficit { get; set; }
 		public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
 		public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
+		public string MPName { get; set; }
+		public string MPParty { get; set; }
 		public bool GeneralInformationSectionComplete { get; set; }
 
 		//school performance ofsted information

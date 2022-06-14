@@ -11,14 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.16.0" />
     <PackageReference Include="AngleSharp.Io" Version="0.16.0" />
     <PackageReference Include="AutoFixture.Xunit2" Version="4.17.0" />
@@ -46,6 +38,7 @@
   <ItemGroup>
     <Folder Include="Pages\ProjectList\" />
 	<Folder Include="Pages\TaskList" />
+	<Folder Include="Services" />
   </ItemGroup>
 
   <ItemGroup>

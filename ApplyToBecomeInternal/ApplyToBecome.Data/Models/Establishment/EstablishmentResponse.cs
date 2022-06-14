@@ -17,8 +17,8 @@
 		public NameAndCodeResponse Diocese { get; set; }
 		public string SchoolCapacity { get; set; }
 		public CensusResponse Census { get; set; }
-		public string OfstedLastInspection { get; set; }
 		public NameAndCodeResponse ParliamentaryConstituency { get; set; }
 		public MISEstablishmentResponse MISEstablishment { get; set; }
+		public AddressResponse Address { get; set; }
 	}
 }

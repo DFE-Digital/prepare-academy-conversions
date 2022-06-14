@@ -28,7 +28,7 @@ namespace ApplyToBecomeInternal.Services
 
 			if (!validDate)
 			{
-				return (false, $"{displayName} date must be a real date");
+				return (false, $"'{displayName}' must be a valid date");
 			}
 
 			return (true, "");

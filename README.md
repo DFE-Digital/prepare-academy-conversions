@@ -23,20 +23,30 @@ For local development, user secrets can be set using the command:
 Alternatively, there is a Rider plugin called `.NET Core User Secrets` that allows the secrets to be managed via a json file, accessed by right clicking on the project -> `Tools` -> `Open Project User Secrets`.
 
 ## Cypress testing
+Install cypress and dependencies:
+- Run 'npm install' from the ApplyToBecomeCypressTests directory
 
 ### Test execution
-The Cypress tests will run against the front-end of the application, so the credentials you provide below should be of the user that is set up to run against the UI.
+You will need to set a secret in `secrets.json` in the following format to run the Cypress command against (you can use any value):
+
+```json
+{
+  "AzureAd": {
+    "ClientSecret": "<SECRET HERE>"
+  }
+}
+```
 
 To execute the tests locally and view the output, run the following:
 
 ```
-npm run cy:open -- --env username='USERNAME',password='PASSWORD',url="BASE_URL_OF_APP"
+npm run cy:open -- --env url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
 ```
 
 To execute the tests in headless mode, run the following (the output will log to the console):
 
 ```
-npm run cy:run -- --env username='USERNAME',password='PASSWORD',url="BASE_URL_OF_APP"
+npm run cy:run -- --env url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
 ```
 
 ### Useful tips
