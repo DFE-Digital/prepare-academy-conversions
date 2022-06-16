@@ -12,7 +12,11 @@ Cypress._.each(['iphone-x'], (viewport) => {
 				cy.visit(modifiedUrl)
 			});
 
-			cy.get('[data-test="change-la-info-template-returned-date"]').click()
+			cy.get('[data-test="change-la-info-template-sent-date"]').click()
+			cy.submitDateLaInfoReturn(21, 3, 2019)
+			cy.saveContinueBtn().click()
+
+            cy.get('[data-test="change-la-info-template-returned-date"]').click()
 			cy.submitDateLaInfoReturn(20, 2, 2020)
 			cy.saveContinueBtn().click()
 		})
@@ -20,7 +24,7 @@ Cypress._.each(['iphone-x'], (viewport) => {
         it('TC01: Verifies "Date you sent the template" on LA information preview', () => {
             cy.sentDateSummLaInfo()
             .invoke('text')
-            .should('contain', '20 February 2022' )
+            .should('contain', '21 March 2019' )
             .then((text) => {
                 expect(text).to.match(/^([0-9]){2}\s[a-zA-Z]{1,}\s[0-9]{4}$/)
             });
