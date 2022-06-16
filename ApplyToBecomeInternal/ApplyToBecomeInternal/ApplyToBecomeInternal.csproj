@@ -39,10 +39,6 @@
 	  <Folder Include="wwwroot\src\images" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <_ContentIncludedByDefault Remove="Pages\Errors\404.cshtml" />
-	</ItemGroup>
-
 <!--	<Target Name="BuildFrontEnd" BeforeTargets="Build">-->
 <!--		<Exec WorkingDirectory="$(ProjectDir)" Command="npx gulp build-fe"/>-->
 <!--	</Target>-->
