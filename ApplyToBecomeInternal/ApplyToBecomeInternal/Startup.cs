@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,6 +19,7 @@ using Newtonsoft.Json.Linq;
 using StackExchange.Redis;
 using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal
 {
@@ -116,6 +118,17 @@ namespace ApplyToBecomeInternal
 			app.UseStatusCodePagesWithReExecute("/Errors", "?statusCode={0}");
 
 			app.UseHttpsRedirection();
+			
+			//For Azure AD redirect uri to remain https
+			var forwardOptions = new ForwardedHeadersOptions
+			{
+				ForwardedHeaders = ForwardedHeaders.All,
+				RequireHeaderSymmetry = false
+			};
+			forwardOptions.KnownNetworks.Clear();
+			forwardOptions.KnownProxies.Clear();
+			app.UseForwardedHeaders(forwardOptions);
+			
 			app.UseStaticFiles();
 
 			app.UseRouting();
@@ -127,6 +140,11 @@ namespace ApplyToBecomeInternal
 
 			app.UseEndpoints(endpoints =>
 			{
+				endpoints.MapGet("/", context =>
+				{
+					context.Response.Redirect("project-list", false);
+					return Task.CompletedTask;
+				});
 				endpoints.MapRazorPages();
 				endpoints.MapControllerRoute("default", "{controller}/{action}/");
 			});

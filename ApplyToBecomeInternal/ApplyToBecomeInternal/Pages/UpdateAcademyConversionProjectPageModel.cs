@@ -4,6 +4,7 @@ using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages
@@ -22,16 +23,11 @@ namespace ApplyToBecomeInternal.Pages
 
 		public bool ShowError => _errorService.HasErrors();
 
+		[TempData]
 		public string SuccessPage
 		{
-			get
-			{
-				return TempData[nameof(SuccessPage)].ToString();
-			}
-			set
-			{
-				TempData[nameof(SuccessPage)] = value;
-			}
+			get;
+			set;
 		}
 
 		public override async Task<IActionResult> OnPostAsync(int id)

@@ -33,6 +33,9 @@ namespace ApplyToBecomeInternal.TagHelpers
 		[HtmlAttributeName("value-width")]
 		public string ValueWidth { get; set; }
 
+		[HtmlAttributeName("highlight-negative-value")]
+		public bool HighlightNegativeValue { get; set; }
+
 		public SummaryListRowTagHelper(IHtmlHelper htmlHelper) : base(htmlHelper) { }
 
 		protected override async Task<IHtmlContent> RenderContentAsync()
@@ -53,7 +56,8 @@ namespace ApplyToBecomeInternal.TagHelpers
 				HiddenText = HiddenText,
 				KeyWidth = KeyWidth,
 				ValueWidth = ValueWidth,
-				Name = Name
+				Name = Name,
+				HighlightNegativeValue = HighlightNegativeValue
 			};
 
 			return await _htmlHelper.PartialAsync("_SummaryListRow", model);

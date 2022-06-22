@@ -34,7 +34,7 @@ Cypress._.each(['iphone-x'], (viewport) => {
         })
 
         // raised under 92838
-        it.skip('TC02: Error Message', () => {
+        it('TC02: Error Message for distance info', () => {
             cy.changeLink().click()
             .then(() => {
                 cy.disMiles().click().type('a')
@@ -42,6 +42,7 @@ Cypress._.each(['iphone-x'], (viewport) => {
                     cy.saveContinue().click()
                 })
             cy.get('[id="error-summary-title"]').should('contain.text', 'There is a problem')
+            cy.get('[id="distance-to-trust-headquarters-error-link "]').should('contain.text', "'Distance from the converting school to the trust or other schools in the trust' must be a valid format")
             })
         })
     })
