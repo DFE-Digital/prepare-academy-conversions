@@ -13,12 +13,11 @@ Cypress._.each(['iphone-x'], (viewport) => {
 			});
 
 			cy.get('[data-test="change-la-info-template-sent-date"]').click()
-			cy.submitDateLaInfoReturn(21, 3, 2019)
+			cy.submitDateLaInfoSent(21, 3, 2019)
 			cy.saveContinueBtn().click()
 
             cy.get('[data-test="change-la-info-template-returned-date"]').click()
 			cy.submitDateLaInfoReturn(20, 2, 2020)
-			cy.submitDateLaInfoSent(20, 2, 2020)
 			cy.saveContinueBtn().click()
 		})
     
