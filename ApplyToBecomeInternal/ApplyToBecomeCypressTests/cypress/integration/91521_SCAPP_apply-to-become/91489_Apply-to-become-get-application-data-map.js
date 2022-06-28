@@ -26,6 +26,8 @@ describe('91489: Apply-to-becom GET data application types', () => {
 		cy.get('[test-id="Overview_Details1_value"]').should('contain.text', data.name)
 		// 'Upload evidence' IS NOT BE COVERED IN THIS TEST AS THESE ARE UPLOAD LINKS - [test-id="Overview_Details2_key"]
 		// NOTE from Catherine "There is no expectation for this field to appear on the application form view at present."
+
+		
 		cy.get('[test-id="Overview_Details2_key"]').should('contain.text', 'Will there be any changes to the governance of the trust due to the school joining?')
 		cy.get('[test-id="Overview_Details2_value"]').should('contain.text', 'No')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
