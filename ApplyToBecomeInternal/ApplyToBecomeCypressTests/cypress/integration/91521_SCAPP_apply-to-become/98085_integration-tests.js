@@ -6,11 +6,7 @@ describe('Fetch data from Internal', () => {
 
     beforeEach(() => {
 		cy.login()
-<<<<<<< HEAD
         cy.get('[id="school-name-0"]').click()
-=======
-        cy.get('[id="school-name-44"]').click()
->>>>>>> f60d17bea05ac1af53d5b06873c2a02c7d1bc26d
         cy.visit(url+ '/school-application-form/' + fetchProjects)
 	})
 
@@ -768,11 +764,7 @@ describe('Fetch data from Internal', () => {
         })
 	})
 
-<<<<<<< HEAD
     // Finance Details **NEEDS ADDITIONAL LOGIC: To fix once Apply-to-become External becomes available**
-=======
-    // Finance Details **NEEDS ADDITIONAL LOGIC**
->>>>>>> f60d17bea05ac1af53d5b06873c2a02c7d1bc26d
     it.skip('TC09: Previous Financial Year', () => {
 		cy.get('[test-id="Finances_Previous_financial_year1_key"]')
         .should('be.visible')
@@ -825,18 +817,13 @@ describe('Fetch data from Internal', () => {
 		cy.get('[test-id="Finances_Previous_financial_year3_value"]')
         .invoke('text').then(cy.log)
         .then((text) => {
-<<<<<<< HEAD
             if (text === 'Deficit' || 'Surplus') {
-=======
-            if (text === 'No' || 'Yes') {
->>>>>>> f60d17bea05ac1af53d5b06873c2a02c7d1bc26d
                 cy.beData()
                 .should((response) => {
                     expect(response.body.data.applyingSchools[0].previousFinancialYear.revenueIsDeficit)
                     .to.be.a('boolean')
                 }) 
             }
-<<<<<<< HEAD
             else return null
         })
 
@@ -880,33 +867,6 @@ describe('Fetch data from Internal', () => {
 
         })
 	
-=======
-            else {
-                return null
-            }
-        })
-
-		cy.get('[test-id="Finances_Previous_financial_year4_key"]')
-        .should('be.visible')
-        //.should('contain.text', 'Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan')
-        .should('contain.text', "Capital carry forward at the end of the previous financial year (31 March)")
-		cy.get('[test-id="Finances_Previous_financial_year4_value"]')
-        .invoke('text').then(cy.log)
-        .then((text) => {
-            if (text.length > 0) {
-                cy.beData()
-                .should((response) => {
-                    expect(response.body.data.applyingSchools[0].previousFinancialYear.capitalCarryForward)
-                    .to.equal(text.trim())
-                }) 
-            }
-            else {
-                return null
-            }
-            
-        })
-		
->>>>>>> f60d17bea05ac1af53d5b06873c2a02c7d1bc26d
         cy.get('[test-id="Finances_Previous_financial_year5_key"]')
         .should('be.visible')
         .should('contain.text', 'Capital carry forward at the end of the previous financial year (31 March)')
@@ -929,7 +889,6 @@ describe('Fetch data from Internal', () => {
             }
 		})
 
-<<<<<<< HEAD
 		// cy.get('[test-id="Finances_Previous_financial_year6_key"]')
         // .should('be.visible')
         // .should('contain.text', 'Surplus or deficit?')
@@ -959,48 +918,13 @@ describe('Fetch data from Internal', () => {
 
         //     }
         // })
-=======
-		cy.get('[test-id="Finances_Previous_financial_year6_key"]')
-        .should('be.visible')
-        .should('contain.text', 'Surplus or deficit?')
-		cy.get('[test-id="Finances_Previous_financial_year6_value"]')
-        .invoke('text').then(cy.log)
-        .then((text) => {
-            if (text === 'Deficit' || 'Surplus') {
-                cy.beData()
-                .should((response) => {
-                    expect(response.body.data.applyingSchools[0].previousFinancialYear.capitalIsDeficit)
-                    .to.be.a('boolean')
-                }) 
-            }
-            else if (text === 'Surplus') {
-                cy.get('[Finances_Previous_financial_year4_key]')
-                .should('be.visible')
-                .should('contain.text', "Capital carry forward at the end of the previous financial year (31 March)")
-                cy.beData()
-                .should((response) => {
-                    var expectedNumberString = new Number(response.body.data.applyingSchools[0].previousFinancialYear.capitalCarryForward).toLocaleString('en-GB', {
-                        style: 'currency',
-                        currency: 'GBP'
-                    })
-                    expect(expectedNumberString)
-                    .to.equal(text.trim())
-                }) 
-
-            }
-        })
->>>>>>> f60d17bea05ac1af53d5b06873c2a02c7d1bc26d
 
 		// 	// "capitalStatusExplained": "Soluta repellendus assumenda." NOT INCLUDED ON FRONTEND
 		// 	// NOTE from Catherine "will be added as part of ticket 83618 - 'Add follow up answers to questions on application form' and will appear on the view only if capitalIsDeficit == true"
 
 	})
 
-<<<<<<< HEAD
     // Current Financial Year  **NEEDS ADDITIONAL LOGIC: To fix once Apply-to-become External becomes available**
-=======
-    // Current Financial Year  **NEEDS ADDITIONAL LOGIC**
->>>>>>> f60d17bea05ac1af53d5b06873c2a02c7d1bc26d
 	it.skip('TC10: Current Financial Year', () => {
 		cy.get('[test-id="Finances_Current_financial_year1_key"]')
         .should('be.visible')
