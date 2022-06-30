@@ -46,7 +46,7 @@ npm run cy:open -- --env url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE
 To execute the tests in headless mode, run the following (the output will log to the console):
 
 ```
-npm run cy:run -- --env url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
+npm run cy:run -- --env url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>",apiKey="EXTERNAL_DEV_API_KEY"
 ```
 
 ### Useful tips

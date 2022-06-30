@@ -225,3 +225,17 @@ Cypress.Commands.add('disMiles', () => {
 Cypress.Commands.add('saveContinue', () => {
     cy.get('[id="save-and-continue-button"]')
 })
+
+// Request external dev
+Cypress.Commands.add('beData', () => {
+    const apiKey = Cypress.env('apiKey')
+
+    cy.request({
+        method:'GET',
+        url:'https://trams-external-api.azurewebsites.net/v2/apply-to-become/application/A2B_1373',
+        headers: {
+            ApiKey: apiKey,
+            "Content-type" : "application/json"
+         }
+    })
+})
