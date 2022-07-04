@@ -229,10 +229,11 @@ Cypress.Commands.add('saveContinue', () => {
 // Request external dev
 Cypress.Commands.add('beData', () => {
     const apiKey = Cypress.env('apiKey')
+    const beUrl = Cypress.env('beUrl')
 
     cy.request({
         method:'GET',
-        url:'https://trams-external-api.azurewebsites.net/v2/apply-to-become/application/A2B_1373',
+        url: beUrl + '/v2/apply-to-become/application/A2B_1373',
         headers: {
             ApiKey: apiKey,
             "Content-type" : "application/json"
