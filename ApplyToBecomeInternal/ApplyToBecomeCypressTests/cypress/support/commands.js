@@ -226,25 +226,6 @@ Cypress.Commands.add('saveContinue', () => {
     cy.get('[id="save-and-continue-button"]')
 })
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-// Request external dev
-Cypress.Commands.add('beData', () => {
-    const apiKey = Cypress.env('apiKey')
-    const beUrl = Cypress.env('beUrl')
-
-    cy.request({
-        method:'GET',
-        url: beUrl + '/v2/apply-to-become/application/A2B_1373',
-        headers: {
-            ApiKey: apiKey,
-            "Content-type" : "application/json"
-         }
-    })
-})
-=======
->>>>>>> Stashed changes
 // Request external dev - requres environment setup on yml file
 // Cypress.Commands.add('beData', () => {
 //     const apiKey = Cypress.env('apiKey')
@@ -258,9 +239,3 @@ Cypress.Commands.add('beData', () => {
 //             "Content-type" : "application/json"
 //          }
 //     })
-<<<<<<< Updated upstream
-// })
-=======
-// })
->>>>>>> c9b64ff (Task 98085 Refactor tests)
->>>>>>> Stashed changes
