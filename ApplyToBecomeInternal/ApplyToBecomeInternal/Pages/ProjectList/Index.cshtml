@@ -45,25 +45,15 @@
 					<div class="govuk-grid-column-one-third app-align-right">
 						<p class="govuk-tag govuk-tag--yellow govuk-!-margin-top-0  govuk-!-margin-bottom-3">PRE ADVISORY BOARD</p>
 						<p class="govuk-hint govuk-!-margin-top-0">
+							<span id="@("application-received-date-" + index)">
+								@("Application received: " + project.ApplicationReceivedDate)<br>
+							</span>
 							@if (ShowHtbDate(project))
 							{
 								<span id="@("Advisory-Board-date-" + index)">
 									@("Advisory Board date: " + project.HeadTeacherBoardDate)<br>
 								</span>
-							}
-							else
-							{
-								<span id="@("application-received-date-" + index)">
-									@("Application received: " + project.ApplicationReceivedDate)<br>
-								</span>
-							}
-							@if (ShowHtbDate(project))
-							{
 								<span id="@("opening-date-" + index)">@("Opening date: " + project.ProposedAcademyOpeningDate)</span>
-							}
-							else
-							{
-								<span id="@("assigned-to-me-" + index)">@("Assigned to me: " + project.AssignedDate)</span>
 							}
 						</p>
 					</div>

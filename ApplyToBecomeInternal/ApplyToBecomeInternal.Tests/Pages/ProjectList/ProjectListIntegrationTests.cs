@@ -33,15 +33,14 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 				Document.QuerySelector($"#local-authority-{i}").TextContent.Should().Contain(project.LocalAuthority);
 				Document.QuerySelector($"#Advisory-Board-date-{i}").TextContent.Should().Contain(project.HeadTeacherBoardDate.ToDateString());
 				Document.QuerySelector($"#opening-date-{i}").TextContent.Should().Contain(project.ProposedAcademyOpeningDate.ToDateString());
-				Document.QuerySelector($"#application-received-date-{i}").Should().BeNull();
-				Document.QuerySelector($"#assigned-to-me-{i}").Should().BeNull();
+				Document.QuerySelector($"#application-received-date-{i}").TextContent.Should().Contain(project.ApplicationReceivedDate.ToDateString());
 			}
 
 			ResetServer();
 		}
 
 		[Fact]
-		public async Task Should_display_application_received_date_and_assigned_to_me_date_when_no_htb_date_set()
+		public async Task Should_display_application_received_date_when_no_htb_date_set()
 		{
 			var projects = AddGetProjects(p => p.HeadTeacherBoardDate = null);
 
@@ -51,7 +50,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 			Document.QuerySelector("#application-to-join-trust-0").TextContent.Should().Contain(project.NameOfTrust);
 			Document.QuerySelector("#local-authority-0").TextContent.Should().Contain(project.LocalAuthority);
 			Document.QuerySelector("#application-received-date-0").TextContent.Should().Contain(project.ApplicationReceivedDate.ToDateString());
-			Document.QuerySelector("#assigned-to-me-0").TextContent.Should().Contain(project.AssignedDate.ToDateString());
 
 			ResetServer();
 		}
