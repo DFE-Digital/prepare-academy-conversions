@@ -3,7 +3,7 @@
 @{
 	Layout = "_QuestionLayout";
 	Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
-	ViewData["Title"] = "Date of previous Advisory Board";
+	ViewData["Title"] = "Date of previous advisory board";
 }
 
 @section BeforeMain
@@ -11,4 +11,4 @@
 	<govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDateQuestion" back="@Links.TaskList.PreviewHTBTemplate" return="@Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDate"/>
 }
 
-<govuk-date-input heading-label="true" label="Date of previous Advisory Board" id="previous-head-teacher-board-date" name="previous-head-teacher-board-date" asp-for="Project.PreviousHeadTeacherBoardDate" hint="For example, 27 3 2021" />
+<govuk-date-input heading-label="true" label="Date of previous advisory board" id="previous-head-teacher-board-date" name="previous-head-teacher-board-date" asp-for="Project.PreviousHeadTeacherBoardDate" hint="For example, 27 3 2021" />
