@@ -49,9 +49,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory Board date");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory board date");
 
-			await NavigateAsync("Set an Advisory Board date before you generate your project template");
+			await NavigateAsync("Set an Advisory board date before you generate your project template");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date");
 
 			await NavigateDataTestAsync("headteacher-board-date-back-link");
@@ -71,9 +71,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory Board date");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory board date");
 
-			await NavigateAsync("Set an Advisory Board date before you generate your project template");
+			await NavigateAsync("Set an Advisory board date before you generate your project template");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FPreviewProjectTemplate&fragment=advisory-board-date");
 		}

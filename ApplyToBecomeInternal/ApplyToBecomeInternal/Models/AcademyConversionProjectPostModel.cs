@@ -15,7 +15,7 @@ namespace ApplyToBecomeInternal.Models
 		[BindProperty(Name = "head-teacher-board-date")]
 		[ModelBinder(BinderType = typeof(DateInputModelBinder))]
 		[DateValidation(DateRangeValidationService.DateRange.Future)]
-		[Display(Name = "Advisory Board")]
+		[Display(Name = "Advisory board")]
 		public DateTime? HeadTeacherBoardDate { get; set; }
 		public DateTime? BaselineDate { get; set; }
 
@@ -73,7 +73,7 @@ namespace ApplyToBecomeInternal.Models
 		[DateValidation(DateRangeValidationService.DateRange.Past)]
 		[BindProperty(Name = "previous-head-teacher-board-date")]
 		[Required]
-		[Display(Name = "Previous Advisory Board")]
+		[Display(Name = "Previous advisory board")]
 		public DateTime? PreviousHeadTeacherBoardDate { get; set; }
 		
 		//general info
