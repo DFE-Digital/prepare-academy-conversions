@@ -23,7 +23,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 
 		public async Task OnGetAsync()
         {
-			var response = await _repository.GetAllProjects();
+			var response = await _repository.GetAllProjects(1, 50);
 			if (!response.Success)
 			{
 				// 500 maybe?
