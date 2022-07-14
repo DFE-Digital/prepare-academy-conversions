@@ -38,7 +38,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				var returnPage = WebUtility.UrlEncode(Links.TaskList.PreviewHTBTemplate.Page);
 				// this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
 				_errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}&fragment=advisory-board-date",
-					"Set an Advisory Board date before you generate your project template");
+					"Set an Advisory board date before you generate your project template");
 			}
 
 			var keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(Project.SchoolURN);

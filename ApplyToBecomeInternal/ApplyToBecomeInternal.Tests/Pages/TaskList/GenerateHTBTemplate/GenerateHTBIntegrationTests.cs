@@ -55,9 +55,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory Board date");
 
-			await NavigateAsync("Set an Advisory Board date before you generate your project template");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory board date");
+
+			await NavigateAsync("Set an Advisory board date before you generate your project template");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FIndex");
 		}
@@ -74,9 +75,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory Board date");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory board date");
 
-			await NavigateAsync("Set an Advisory Board date before you generate your project template");
+			await NavigateAsync("Set an Advisory board date before you generate your project template");
 
 			await NavigateDataTestAsync("headteacher-board-date-back-link");
 
@@ -96,9 +97,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory Board date");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Set an Advisory board date");
 
-			await NavigateAsync("Set an Advisory Board date before you generate your project template");
+			await NavigateAsync("Set an Advisory board date before you generate your project template");
 			Document.QuerySelector<IHtmlInputElement>("#head-teacher-board-date-day").Value = request.HeadTeacherBoardDate.Value.Day.ToString();
 			Document.QuerySelector<IHtmlInputElement>("#head-teacher-board-date-month").Value = request.HeadTeacherBoardDate.Value.Month.ToString();
 			Document.QuerySelector<IHtmlInputElement>("#head-teacher-board-date-year").Value = request.HeadTeacherBoardDate.Value.Year.ToString();
