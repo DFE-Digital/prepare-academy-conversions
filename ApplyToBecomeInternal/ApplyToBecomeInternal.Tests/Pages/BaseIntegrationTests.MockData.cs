@@ -25,7 +25,12 @@ namespace ApplyToBecomeInternal.Tests.Pages
 				postSetup(projects.First());
 			}
 
-			_factory.AddGetWithJsonResponse("/conversion-projects", projects);
+			var response = new ApiV2Wrapper<IEnumerable<AcademyConversionProject>>()
+			{
+				Data = projects
+			};
+
+			_factory.AddGetWithJsonResponse("/v2/conversion-projects", response);
 			return projects;
 		}
 
