@@ -20,7 +20,7 @@ Cypress._.each(['iphone-x'], (viewport) => {
 			cy.submitDateSchoolTrust(11, 11, 1980)
 			cy.saveContinueBtn().click()
 			cy.get('.govuk-error-summary__list li a')
-				.should('have.text', 'Advisory Board date must be in the future')
+				.should('have.text', 'Advisory board date must be in the future')
 				.click()
 			cy.submitDateSchoolTrust(1, 2, 2025)
 			cy.saveContinueBtn().click()
