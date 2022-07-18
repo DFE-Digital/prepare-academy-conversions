@@ -23,7 +23,7 @@ Cypress._.each(['iphone-x'], (viewport) => {
 				cy.url().then(href => {
 					expect(href.endsWith('/confirm-school-trust-information-project-dates/advisory-board-date')).to.be.true;
 				})
-				cy.get('h1').contains('Set the Advisory board date')
+				cy.get('h1').contains('Set the advisory board date')
 				cy.submitDateSchoolTrust(11, 11, 1980)
 				cy.saveContinueBtn().click()
 				cy.get('.govuk-error-summary__list li a')
