@@ -39,7 +39,9 @@ namespace ApplyToBecomeInternal
 			var razorPages = services
 				.AddRazorPages(options =>
 				{
-					options.Conventions.AuthorizeFolder("/");
+					//TODO: 
+					options.Conventions.AllowAnonymousToFolder("/");
+					//options.Conventions.AuthorizeFolder("/");
 				})
 				.AddViewOptions(options =>
 				{
