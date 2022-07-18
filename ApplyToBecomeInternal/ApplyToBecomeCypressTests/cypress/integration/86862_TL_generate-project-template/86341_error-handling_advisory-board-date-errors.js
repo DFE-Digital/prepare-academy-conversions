@@ -19,29 +19,29 @@ Cypress._.each(['iphone-x'], (viewport) => {
 				cy.get('*[data-test="change-advisory-board-date"]').click()
 			})
 
-			it('TC02: Should display "Advisory Board date must be in the future" when an elapsed date has been submitted', () => {
+			it('TC02: Should display "Advisory board date must be in the future" when an elapsed date has been submitted', () => {
 				cy.url().then(href => {
 					expect(href.endsWith('/confirm-school-trust-information-project-dates/advisory-board-date')).to.be.true;
 				})
-				cy.get('h1').contains('Set the Advisory Board date')
+				cy.get('h1').contains('Set the Advisory board date')
 				cy.submitDateSchoolTrust(11, 11, 1980)
 				cy.saveContinueBtn().click()
 				cy.get('.govuk-error-summary__list li a')
-					.should('have.text', 'Advisory Board date must be in the future')
+					.should('have.text', 'Advisory board date must be in the future')
 			});
 
 			it('TC03: Should display "Advisory Board must be a valid date" when submitting invalid month', () => {
 				cy.submitDateSchoolTrust(11, 222, 1980)
 				cy.saveContinueBtn().click()
 				cy.get('.govuk-error-summary__list li a')
-					.should('have.text', '\'Advisory Board\' must be a valid date')
+					.should('have.text', '\'Advisory board\' must be a valid date')
 			});
 
 			it('TC04: Should display "Advisory Board date must be a valid date" when submitting out-of-index month', () => {
 				cy.submitDateSchoolTrust(11, 0, 1980)
 				cy.saveContinueBtn().click()
 				cy.get('.govuk-error-summary__list li a')
-					.should('have.text', '\'Advisory Board\' must be a valid date')
+					.should('have.text', '\'Advisory board\' must be a valid date')
 			});
 		})
 	});
