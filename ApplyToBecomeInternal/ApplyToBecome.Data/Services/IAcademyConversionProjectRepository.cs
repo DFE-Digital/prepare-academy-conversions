@@ -6,7 +6,7 @@ namespace ApplyToBecome.Data.Services
 {
 	public interface IAcademyConversionProjectRepository
 	{
-		Task<ApiResponse<IEnumerable<AcademyConversionProject>>> GetAllProjects();
+		Task<ApiResponse<IEnumerable<AcademyConversionProject>>> GetAllProjects(int page, int count);
 
 		Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id);
 
