@@ -54,8 +54,9 @@ namespace ApplyToBecomeInternal
 				razorPages.AddRazorRuntimeCompilation();
 			}
 
+			services.AddScoped(sp => sp.GetService<IHttpContextAccessor>().HttpContext.Session);
+			services.AddSession();
 			services.AddHttpContextAccessor();
-
 			ConfigureRedisConnection(services);
 			
 			services.AddAuthorization(options => { options.DefaultPolicy = SetupAuthorizationPolicyBuilder().Build(); });
@@ -134,7 +135,7 @@ namespace ApplyToBecomeInternal
 			app.UseRouting();
 
 			app.UseSentryTracing();
-
+			app.UseSession();
 			app.UseAuthentication();
 			app.UseAuthorization();
 
