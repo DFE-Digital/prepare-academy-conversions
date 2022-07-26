@@ -2,6 +2,7 @@ using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
@@ -12,8 +13,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		{
 		}
 
-		[BindProperty]
-		public string ApprovedConditionsDetails { get; set; }
+		[BindProperty, Required] public string ApprovedConditionsDetails { get; set; }
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
@@ -23,8 +23,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			return Page();
 		}
 
-		public IActionResult OnPostAsync(int id)
+		public async Task<IActionResult> OnPostAsync(int id)
 		{
+			if (!ModelState.IsValid) return await OnGetAsync(id);
+
 			var decision = GetDecisionFromSession();
 			decision.ApprovedConditionsDetails = ApprovedConditionsDetails;
 
