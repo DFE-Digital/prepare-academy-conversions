@@ -31,7 +31,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 
 		public AdvisoryBoardDecision GetDecisionFromSession()
 		{
-			return _session.Get<AdvisoryBoardDecision>(DECISION_SESSION_KEY);
+			return _session.Get<AdvisoryBoardDecision>(DECISION_SESSION_KEY) ?? new AdvisoryBoardDecision();
 		}
 
 		public void SetDecisionInSession(AdvisoryBoardDecision decision)
