@@ -1,31 +1,21 @@
 using ApplyToBecome.Data.Services;
-using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Pages.TaskList.Decision.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using static ApplyToBecomeInternal.Pages.TaskList.Decision.DecisionConstants;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {
-	public class WhoDecidedModel : PageModel
-	{
-		private readonly IAcademyConversionProjectRepository _repository;
-		private readonly ISession _session;
-
-		public WhoDecidedModel(IAcademyConversionProjectRepository repository, ISession session)
-		{
-			_repository = repository;
-			_session = session;
+	public class WhoDecidedModel : DecisionBaseModel
+	{		
+		public WhoDecidedModel(IAcademyConversionProjectRepository repository, ISession session) : base(repository, session)
+		{			
 		}
 
-		public string SchoolName { get; set; }
-		public int Id { get; set; }
 		[BindProperty]
 		public DecisionMadeBy DecisionMadeBy { get; set; }
 
@@ -34,9 +24,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 																	
 		public async Task<IActionResult> OnGet(int id)
 		{
-			var project = await _repository.GetProjectById(id);
-			SchoolName = project.Body.SchoolName;
-			Id = id;
+			await SetDefaults(id);
 			DecisionMadeBy = GetDecisionFromSession()?.DecisionMadeBy ?? DecisionMadeBy.RegionalDirectorForRegion;
 
 			return Page();
@@ -47,14 +35,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			var decision = GetDecisionFromSession() ?? new AdvisoryBoardDecision();
 			decision.DecisionMadeBy = DecisionMadeBy;
 
-			_session.Set(DECISION_SESSION_KEY, decision);
+			SetDecisionInSession(decision);
 
 			return RedirectToPage(Links.Decision.AnyConditions.Page, new { id });
-		}
-
-		private AdvisoryBoardDecision GetDecisionFromSession()
-		{
-			return _session.Get<AdvisoryBoardDecision>(DECISION_SESSION_KEY);
-		}
+		}		
 	}
 }
