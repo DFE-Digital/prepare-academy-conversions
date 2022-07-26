@@ -25,7 +25,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		}
 
 		public string SchoolName { get; set; }
-
+		public int Id { get; set; }
 		[BindProperty]
 		public DecisionMadeBy DecisionMadeBy { get; set; }
 
@@ -36,7 +36,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		{
 			var project = await _repository.GetProjectById(id);
 			SchoolName = project.Body.SchoolName;
-
+			Id = id;
 			DecisionMadeBy = GetDecisionFromSession()?.DecisionMadeBy ?? DecisionMadeBy.RegionalDirectorForRegion;
 
 			return Page();
@@ -49,7 +49,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			_session.Set(DECISION_SESSION_KEY, decision);
 
-			return RedirectToPage(Links.TaskList.Index.Page, new { id });
+			return RedirectToPage(Links.Decision.AnyConditions.Page, new { id });
 		}
 
 		private AdvisoryBoardDecision GetDecisionFromSession()
