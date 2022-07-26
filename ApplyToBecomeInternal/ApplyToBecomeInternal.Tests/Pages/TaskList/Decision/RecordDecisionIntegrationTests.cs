@@ -40,5 +40,18 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			formElement.IsChecked.Should().BeTrue();
 		}
+
+		[Fact]
+		public async Task Should_redirect_on_succesful_submission()
+		{
+			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+
+			Document.QuerySelector<IHtmlInputElement>("#deferred-radio").IsChecked = true;
+			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
+
+			Document.Url.Should().EndWith($"/task-list/{project.Id}/decision/who-decided");
+		}
 	}
 }

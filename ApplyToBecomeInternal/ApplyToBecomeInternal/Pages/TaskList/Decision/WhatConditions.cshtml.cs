@@ -32,7 +32,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			SetDecisionInSession(decision);
 
-			return RedirectToPage(Links.TaskList.Index.Page, new { id });
+			return RedirectToPage(Links.Decision.ApprovalDate.Page, new { id });
 		}
 	}
 }

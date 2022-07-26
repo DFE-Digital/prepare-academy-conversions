@@ -13,7 +13,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision.Models
 		public string DeclinedOtherReason { get; set; }
 		public List<AdvisoryBoardDeferredReasons> DeferredReasons { get; set; }
 		public string DeferredOtherReason { get; set; }
-		public DateTime AdvisoryBoardDecisionDate { get; set; }
+		public DateTime? AdvisoryBoardDecisionDate { get; set; }
 		public DecisionMadeBy DecisionMadeBy { get; set; }
 	}
 }
