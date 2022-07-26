@@ -4,11 +4,11 @@
 @using System.Linq
 @model ApplyToBecomeInternal.Pages.TaskList.Decision.WhoDecidedModel
 @{
-    ViewData["Title"] = "Who made this decision";
+    ViewData["Title"] = "Who made this decision?";
 }
 @section BeforeMain
-    {
-    <a asp-page="@Links.Decision.RecordDecision.Page" class="govuk-back-link">Back</a>
+{
+    <a asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" class="govuk-back-link">Back</a>
 }
     <span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
     <h1 class="govuk-heading-l">Who made this decision?</h1>

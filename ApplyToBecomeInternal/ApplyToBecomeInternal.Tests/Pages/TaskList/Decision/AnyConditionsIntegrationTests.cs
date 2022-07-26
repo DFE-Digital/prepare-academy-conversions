@@ -4,20 +4,21 @@ using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
 
+
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 {
-	public class RecordDecisionIntegrationTests : BaseIntegrationTests
+	public class AnyConditionsIntegrationTests : BaseIntegrationTests
 	{
-		public RecordDecisionIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public AnyConditionsIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{
 		}
-		
+
 		[Fact]
 		public async Task Should_display_selected_schoolname()
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/any-conditions");
 
 			var selectedSchool = Document.QuerySelector<IHtmlElement>("#selection-span").Text();
 
@@ -29,14 +30,14 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");						
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/any-conditions");
 
-			Document.QuerySelector<IHtmlInputElement>("#deferred-radio").IsChecked = true;
-			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();			
+			Document.QuerySelector<IHtmlInputElement>("#no-radio").IsChecked = true;
+			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/any-conditions");
 
-			var declinedRadioBtn = Document.QuerySelector<IHtmlInputElement>("#deferred-radio");
+			var declinedRadioBtn = Document.QuerySelector<IHtmlInputElement>("#no-radio");
 
 			declinedRadioBtn.IsChecked.Should().BeTrue();
 		}
