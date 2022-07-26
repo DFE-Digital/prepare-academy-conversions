@@ -25,7 +25,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		}
 
 		[Fact]
-		public async Task Should_persist_selected_decision()
+		public async Task Should_persist_who_decided()
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
