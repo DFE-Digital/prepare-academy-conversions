@@ -43,5 +43,20 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			formElement.Value.Should().Be(conditionDetails);
 		}
+
+		[Fact]
+		public async Task Should_reload_form_when_no_decision_conditions_are_given()
+		{
+			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/what-conditions");
+
+			var conditionDetails = "";
+
+			Document.QuerySelector<IHtmlTextAreaElement>("#conditions-textarea").Value = conditionDetails;
+			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();			
+
+			Document.Url.Should().EndWith($"/task-list/{project.Id}/decision/what-conditions");
+		}
 	}
 }
