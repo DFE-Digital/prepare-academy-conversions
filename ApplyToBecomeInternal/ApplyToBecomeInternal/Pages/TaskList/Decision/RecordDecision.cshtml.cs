@@ -40,9 +40,11 @@ namespace ApplyToBecomeInternal.Pages.Decision
 
 		public IActionResult OnPostAsync(int id)
 		{
-			_session.Set(DECISION_SESSION_KEY, new AdvisoryBoardDecision { Decision = AdvisoryBoardDecision });
+			var decision = _session.Get<AdvisoryBoardDecision>(DECISION_SESSION_KEY) ?? new AdvisoryBoardDecision();
+			decision.Decision = AdvisoryBoardDecision;
+			_session.Set(DECISION_SESSION_KEY, decision);
 
-			return RedirectToPage(Links.TaskList.Index.Page, new { id });
+			return RedirectToPage(Links.Decision.WhoDecided.Page, new { id });
 		}
 	}
 }
