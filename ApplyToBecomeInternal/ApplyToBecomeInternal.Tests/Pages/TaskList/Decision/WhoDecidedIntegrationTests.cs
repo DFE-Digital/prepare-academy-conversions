@@ -36,9 +36,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/who-decided");
 
-			var declinedRadioBtn = Document.QuerySelector<IHtmlInputElement>("#directorgeneral-radio");
+			var formElement = Document.QuerySelector<IHtmlInputElement>("#directorgeneral-radio");
 
-			declinedRadioBtn.IsChecked.Should().BeTrue();
+			formElement.IsChecked.Should().BeTrue();
 		}
 	}
 }

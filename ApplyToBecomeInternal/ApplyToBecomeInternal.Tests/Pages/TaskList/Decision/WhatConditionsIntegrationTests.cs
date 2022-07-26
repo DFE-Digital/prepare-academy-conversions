@@ -7,9 +7,9 @@ using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 {
-	public class AnyConditionsIntegrationTests : BaseIntegrationTests
+	public class WhatConditionsIntegrationTests : BaseIntegrationTests
 	{
-		public AnyConditionsIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public WhatConditionsIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{
 		}
 
@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/any-conditions");
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/what-conditions");
 
 			var selectedSchool = Document.QuerySelector<IHtmlElement>("#selection-span").Text();
 
@@ -30,16 +30,18 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/any-conditions");
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/what-conditions");
 
-			Document.QuerySelector<IHtmlInputElement>("#no-radio").IsChecked = true;
+			var conditionDetails = "Your school has no outstanding debts.";
+
+			Document.QuerySelector<IHtmlTextAreaElement>("#conditions-textarea").Value = conditionDetails;
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/any-conditions");
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/what-conditions");
 
-			var formElement = Document.QuerySelector<IHtmlInputElement>("#no-radio");
+			var formElement = Document.QuerySelector<IHtmlTextAreaElement>("#conditions-textarea");
 
-			formElement.IsChecked.Should().BeTrue();
+			formElement.Value.Should().Be(conditionDetails);
 		}
 	}
 }

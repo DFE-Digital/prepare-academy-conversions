@@ -15,6 +15,5 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision.Models
 		public string DeferredOtherReason { get; set; }
 		public DateTime AdvisoryBoardDecisionDate { get; set; }
 		public DecisionMadeBy DecisionMadeBy { get; set; }
-		public bool AnyConditions { get; set; }
 	}
 }

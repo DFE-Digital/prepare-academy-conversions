@@ -3,6 +3,7 @@ using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Pages.TaskList.Decision.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
@@ -10,7 +11,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 	public class AnyConditionsModel : DecisionBaseModel
     {				
 		[BindProperty]
-		public bool? AnyConditions { get; set; }
+		public bool? ApprovedConditionsSet { get; set; }
 
 		public AnyConditionsModel(IAcademyConversionProjectRepository repository, ISession session) : base(repository, session)
 		{				
@@ -19,18 +20,30 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
 			await SetDefaults(id);
-			AnyConditions = GetDecisionFromSession()?.AnyConditions ?? true;			
+			ApprovedConditionsSet = GetDecisionFromSession()?.ApprovedConditionsSet ?? true;			
 
 			return Page();
 		}
 
 		public IActionResult OnPostAsync(int id)
 		{
-			var decision = GetDecisionFromSession() ?? new AdvisoryBoardDecision();
-			decision.AnyConditions = AnyConditions.Value;
+			var decision = GetDecisionFromSession();
+			decision.ApprovedConditionsSet = ApprovedConditionsSet.Value;
 			SetDecisionInSession(decision);
 
-			return RedirectToPage(Links.TaskList.Index.Page, new { id });
+			return RedirectToPage(GetRedirectPageName(), new { id });
+		}
+
+		private string GetRedirectPageName()
+		{
+			if (ApprovedConditionsSet.Value)
+			{
+				return Links.Decision.WhatConditions.Page;
+			}
+			else
+			{
+				throw new NotImplementedException();
+			}
 		}
 	}
 }
