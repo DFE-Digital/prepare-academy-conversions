@@ -1,8 +1,8 @@
 ﻿@model ApplyToBecomeInternal.Pages.TaskList.Decision.BackLinkModel
 @{
-    bool backToSumamry;
-    bool.TryParse(Context.Request.Query["back-to-summary"], out backToSumamry);
-    if (backToSumamry)
+    bool overideBackLink;
+    bool.TryParse(Context.Request.Query["obl"], out overideBackLink);
+    if (overideBackLink)
     {
         Model.LinkPage = Links.Decision.Summary.Page;
     }

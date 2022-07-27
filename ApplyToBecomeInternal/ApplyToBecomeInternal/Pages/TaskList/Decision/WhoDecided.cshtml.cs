@@ -31,12 +31,14 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			return Page();
 		}
 
-		public IActionResult OnPostAsync(int id)
+		public IActionResult OnPostAsync(int id, [FromQuery(Name = "obl")] bool overideBackLink)
 		{
 			var decision = GetDecisionFromSession() ?? new AdvisoryBoardDecision();
 			decision.DecisionMadeBy = DecisionMadeBy;
 
 			SetDecisionInSession(decision);
+
+			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
 
 			return RedirectToPage(Links.Decision.AnyConditions.Page, new { id });
 		}		

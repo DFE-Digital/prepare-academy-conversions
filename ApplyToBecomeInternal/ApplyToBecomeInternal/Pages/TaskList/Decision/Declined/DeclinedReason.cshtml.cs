@@ -28,7 +28,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision.Declined
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id)
+		public async Task<IActionResult> OnPostAsync(int id, [FromQuery(Name = "obl")] bool overideBackLink)
 		{
 			if (!ModelState.IsValid) return await OnGetAsync(id);
 
@@ -37,6 +37,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision.Declined
 			decision.DeclinedOtherReason = decision.DeclinedOtherReason;
 
 			SetDecisionInSession(decision);
+
+			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
 
 			return RedirectToPage(Links.TaskList.Index.Page, new { id });
 		}

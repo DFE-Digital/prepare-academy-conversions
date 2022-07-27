@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id)
+		public async Task<IActionResult> OnPostAsync(int id, [FromQuery(Name = "obl")] bool overideBackLink)
 		{
 			if (!ModelState.IsValid) return await OnGetAsync(id);
 
@@ -32,6 +32,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			decision.ApprovedConditionsDetails = ApprovedConditionsDetails;
 
 			SetDecisionInSession(decision);
+
+			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
 
 			return RedirectToPage(Links.Decision.ApprovalDate.Page, new { id });
 		}

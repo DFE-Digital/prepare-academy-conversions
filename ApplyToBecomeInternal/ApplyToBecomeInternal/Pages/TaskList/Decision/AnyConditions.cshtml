@@ -4,41 +4,47 @@
     ViewData["Title"] = "Were any conditions set?";
 }
 @section BeforeMain
-    {
-    <partial name="_BackLink" model="@Model.BackLinkModel" />
+{   
+    <partial name="_BackLink" model="@Model.BackLinkModel"/>
 }
 
-    <span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
-    <h1 class="govuk-heading-l">Were any conditions set?</h1>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
 
-    <form method="post">
-        <div class="govuk-form-group">
-            <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                </legend>
-                <div class="govuk-radios" data-module="govuk-radios">
+            <span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
+            <h1 class="govuk-heading-l">Were any conditions set?</h1>
 
-                    <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" type="radio" asp-for="@Model.ApprovedConditionsSet"
-                           title="Yes" value="true" id="yes-radio" />
-                        <label class="govuk-label govuk-radios__label" asp-for="@Model.ApprovedConditionsSet">
-                            Yes
-                        </label>
-                    </div>
+            <form method="post">
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        </legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
 
-                    <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" type="radio" asp-for="@Model.ApprovedConditionsSet"
-                           title="No" value="false" id="no-radio" />
-                        <label class="govuk-label govuk-radios__label" asp-for="@Model.ApprovedConditionsSet">
-                            No
-                        </label>
-                    </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" type="radio" asp-for="@Model.ApprovedConditionsSet"
+                                   title="Yes" value="true" id="yes-radio" />
+                                <label class="govuk-label govuk-radios__label" asp-for="@Model.ApprovedConditionsSet">
+                                    Yes
+                                </label>
+                            </div>
+
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" type="radio" asp-for="@Model.ApprovedConditionsSet"
+                                   title="No" value="false" id="no-radio" />
+                                <label class="govuk-label govuk-radios__label" asp-for="@Model.ApprovedConditionsSet">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
-            </fieldset>
+
+                <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+                    Continue
+                </button>
+
+            </form>
+
         </div>
-
-        <button class="govuk-button" data-module="govuk-button" id="submit-btn">
-            Continue
-        </button>
-
-    </form>
+    </div>
