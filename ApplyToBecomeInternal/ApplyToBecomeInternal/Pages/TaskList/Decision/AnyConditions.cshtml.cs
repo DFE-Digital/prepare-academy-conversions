@@ -28,6 +28,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		{
 			var decision = GetDecisionFromSession();
 			decision.ApprovedConditionsSet = ApprovedConditionsSet.Value;
+
+			if (!decision.ApprovedConditionsSet.Value) decision.ApprovedConditionsDetails = string.Empty;
+
 			SetDecisionInSession(decision);
 
 			return RedirectToPage(GetRedirectPageName(), new { id });
@@ -35,11 +38,11 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 		private string GetRedirectPageName()
 		{
-			if (ApprovedConditionsSet.Value)
+			return ApprovedConditionsSet switch
 			{
-				return Links.Decision.WhatConditions.Page;
-			}
-			else return Links.Decision.ApprovalDate.Page;
+				true => Links.Decision.WhatConditions.Page,
+				_ => Links.Decision.ApprovalDate.Page
+			};			
 		}
 	}
 }

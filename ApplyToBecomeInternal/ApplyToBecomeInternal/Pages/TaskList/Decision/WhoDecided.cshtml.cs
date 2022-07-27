@@ -1,12 +1,12 @@
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
-using ApplyToBecomeInternal.Pages.TaskList.Decision.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {

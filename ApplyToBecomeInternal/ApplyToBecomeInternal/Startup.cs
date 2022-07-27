@@ -1,4 +1,5 @@
 using ApplyToBecome.Data.Services;
+using ApplyToBecome.Data.Services.Interfaces;
 using ApplyToBecomeInternal.Authorization;
 using ApplyToBecomeInternal.Configuration;
 using ApplyToBecomeInternal.Security;
@@ -88,6 +89,14 @@ namespace ApplyToBecomeInternal
 				client.DefaultRequestHeaders.Add("ApiKey", tramsApiOptions.ApiKey);
 			});
 
+			services.AddHttpClient("AcademisationClient", (sp, client) =>
+			{
+				var configuration = sp.GetRequiredService<IConfiguration>();
+				var apiOptions = configuration.GetSection(AcademisationApiOptions.Name).Get<AcademisationApiOptions>();
+				client.BaseAddress = new Uri(apiOptions.BaseUrl);
+				client.DefaultRequestHeaders.Add("ApiKey", apiOptions.ApiKey);
+			});
+
 			services.AddScoped<ErrorService>();
 			services.AddScoped<IGetEstablishment, EstablishmentService>();
 			services.Decorate<IGetEstablishment, GetEstablishmentItemCacheDecorator>();
@@ -95,6 +104,7 @@ namespace ApplyToBecomeInternal
 			services.AddScoped<GeneralInformationService>();
 			services.AddScoped<KeyStagePerformanceService>();
 			services.AddScoped<IAcademyConversionProjectRepository, AcademyConversionProjectRepository>();
+			services.AddScoped<IAcademyConversionAdvisoryBoardDecisionRepository, AcademyConversionAdvisoryBoardDecisionRepository>();
 			services.Decorate<IAcademyConversionProjectRepository, AcademyConversionProjectItemsCacheDecorator>();
 			services.AddScoped<IProjectNotesRepository, ProjectNotesRepository>();
 			services.AddScoped<ApplicationRepository>();
