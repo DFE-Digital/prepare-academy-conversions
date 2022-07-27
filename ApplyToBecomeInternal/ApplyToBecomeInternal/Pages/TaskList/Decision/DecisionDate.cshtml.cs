@@ -3,6 +3,7 @@ using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
@@ -14,9 +15,11 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		{
 		}
 
-		[BindProperty]
+		[BindProperty]		
 		[ModelBinder(BinderType = typeof(DateInputModelBinder))]
-		[Required, DateValidation(Services.DateRangeValidationService.DateRange.PastOrToday)] 
+		[DateValidation(Services.DateRangeValidationService.DateRange.PastOrToday)]
+		[Required]
+		[Display(Name = "Decision date")]
 		public DateTime? DateOfDecision { get; set; }
 
 		public LinkItem GetPageForBackLink()
