@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ApplyToBecomeInternal.Pages.TaskList.Decision.Models
+namespace ApplyToBecome.Data.Models.AdvisoryBoardDecision
 {
 	public class AdvisoryBoardDecision
 	{

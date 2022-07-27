@@ -1,4 +1,4 @@
-﻿namespace ApplyToBecomeInternal.Pages.TaskList.Decision.Models
+﻿namespace ApplyToBecome.Data.Models.AdvisoryBoardDecision
 {
 	public enum AdvisoryBoardDecisions
 	{

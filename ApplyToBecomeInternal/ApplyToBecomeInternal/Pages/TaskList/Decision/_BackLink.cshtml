@@ -1,7 +1,8 @@
 ﻿@model ApplyToBecomeInternal.Pages.TaskList.Decision.BackLinkModel
 @{
-    var backToSumamry = (bool?)TempData["backToSummary"];
-    if (backToSumamry.HasValue && true)
+    bool backToSumamry;
+    bool.TryParse(Context.Request.Query["back-to-summary"], out backToSumamry);
+    if (backToSumamry)
     {
         Model.LinkPage = Links.Decision.Summary.Page;
     }

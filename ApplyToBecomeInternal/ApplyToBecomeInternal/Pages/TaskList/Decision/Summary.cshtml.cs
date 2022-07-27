@@ -1,5 +1,7 @@
+using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
-using ApplyToBecomeInternal.Pages.TaskList.Decision.Models;
+using ApplyToBecome.Data.Services.Interfaces;
+using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -8,20 +10,24 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {
 	public class SummaryModel : DecisionBaseModel
 	{
-		public SummaryModel(IAcademyConversionProjectRepository repository, ISession session) : base(repository, session)
+		private readonly IAcademyConversionAdvisoryBoardDecisionRepository _advisoryBoardDecisionRepository;
+
+		public SummaryModel(IAcademyConversionProjectRepository repository, ISession session,
+			IAcademyConversionAdvisoryBoardDecisionRepository advisoryBoardDecisionRepository)
+			: base(repository, session)
 		{
+			_advisoryBoardDecisionRepository = advisoryBoardDecisionRepository;
 		}
 
 		public AdvisoryBoardDecision Decision { get; set; }
 
 		public string GetDecisionAsFriendlyName()
 		{
-			if (Decision.Decision == AdvisoryBoardDecisions.Approved && Decision.ApprovedConditionsSet.Value)
+			return Decision switch
 			{
-				return "APPROVED WITH CONDITIONS";
-			}
-
-			return Decision.Decision.ToString().ToUpper();
+				{ Decision: AdvisoryBoardDecisions.Approved, ApprovedConditionsSet: true } => "APPROVED WITH CONDITIONS",
+				_ => Decision?.Decision.ToString().ToUpper()
+			};						
 		}
 
 		public async Task<IActionResult> OnGetAsync(int id)
@@ -30,6 +36,13 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			Decision = GetDecisionFromSession();
 
 			return Page();
+		}
+
+		public async Task<IActionResult> OnPostAsync(int id)
+		{
+			await _advisoryBoardDecisionRepository.Create(GetDecisionFromSession());
+
+			return RedirectToPage(Links.ProjectList.Index.Page);
 		}
 	}
 }

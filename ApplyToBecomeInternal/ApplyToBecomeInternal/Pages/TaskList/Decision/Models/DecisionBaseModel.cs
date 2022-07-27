@@ -1,8 +1,8 @@
-﻿using ApplyToBecome.Data.Services;
+﻿using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
+using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Pages.TaskList.Decision;
-using ApplyToBecomeInternal.Pages.TaskList.Decision.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
