@@ -14,24 +14,26 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		{
 		}
 
+		[BindProperty]
 		[ModelBinder(BinderType = typeof(DateInputModelBinder))]
 		[Required, DateValidation(Services.DateRangeValidationService.DateRange.PastOrToday)] 
 		public DateTime? DateOfDecision { get; set; }
 
-		public string GetPageNameForBackLink()
+		public LinkItem GetPageForBackLink()
 		{
 			var decision = GetDecisionFromSession();
 			if (decision.ApprovedConditionsSet.HasValue && decision.ApprovedConditionsSet.Value)
 			{
-				return Links.Decision.WhatConditions.Page;
+				return Links.Decision.WhatConditions;
 			}
-			else return Links.Decision.AnyConditions.Page;			
+			else return Links.Decision.AnyConditions;			
 		}						
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
 			await SetDefaults(id);
 			DateOfDecision = GetDecisionFromSession()?.AdvisoryBoardDecisionDate;
+			SetBackLinkModel(GetPageForBackLink(), id);
 
 			return Page();
 		}
@@ -45,7 +47,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			SetDecisionInSession(decision);
 
-			return RedirectToPage(Links.TaskList.Index.Page, new { id });
+			return RedirectToPage(Links.Decision.Summary.Page, new { id });
 		}
 	}
 }

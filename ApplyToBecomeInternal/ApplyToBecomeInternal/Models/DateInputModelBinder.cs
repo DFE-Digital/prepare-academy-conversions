@@ -11,6 +11,8 @@ namespace ApplyToBecomeInternal.Models
 	{
 		public Task BindModelAsync(ModelBindingContext bindingContext)
 		{
+			if (!bindingContext.ModelState.IsValid) return Task.CompletedTask;
+
 			if (bindingContext == null)
 			{
 				throw new ArgumentNullException(nameof(bindingContext));

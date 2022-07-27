@@ -4,8 +4,8 @@
     ViewData["Title"] = "Were any conditions set?";
 }
 @section BeforeMain
-{
-    <a asp-page="@Links.Decision.WhoDecided.Page" asp-route-id="@Model.Id" class="govuk-back-link">Back</a>
+{   
+    <partial name="_BackLink" model="@Model.BackLinkModel"/>
 }
 
     <div class="govuk-grid-row">

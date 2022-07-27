@@ -4,8 +4,8 @@
     ViewData["Title"] = "Record the decision";
 }
 @section BeforeMain
-{
-    <a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Id" asp-id class="govuk-back-link">@Links.TaskList.Index.BackText</a>
+{   
+    <partial name="_BackLink" model="@Model.BackLinkModel"/>
 }
 
     <div class="govuk-grid-row">
