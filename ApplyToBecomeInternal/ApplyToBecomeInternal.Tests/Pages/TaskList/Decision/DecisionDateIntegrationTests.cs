@@ -93,7 +93,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			Document.QuerySelector<IHtmlInputElement>("#-year").Value = expectedYear;
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
-			Document.Url.Should().EndWith($"/task-list/{project.Id}");
+			Document.Url.Should().EndWith($"/task-list/{project.Id}/decision/summary");
 		}
 	}
 }

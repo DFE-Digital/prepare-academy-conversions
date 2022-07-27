@@ -18,6 +18,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
 			await SetDefaults(id);
+			SetBackLinkModel(Links.Decision.WhoDecided, id);
 			ApprovedConditionsSet = GetDecisionFromSession()?.ApprovedConditionsSet ?? true;
 
 			return Page();

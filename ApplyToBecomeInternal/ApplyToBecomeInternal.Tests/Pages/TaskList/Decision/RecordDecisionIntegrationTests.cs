@@ -31,12 +31,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");						
 
-			Document.QuerySelector<IHtmlInputElement>("#deferred-radio").IsChecked = true;
+			Document.QuerySelector<IHtmlInputElement>("#approved-radio").IsChecked = true;
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();			
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
 
-			var formElement = Document.QuerySelector<IHtmlInputElement>("#deferred-radio");
+			var formElement = Document.QuerySelector<IHtmlInputElement>("#approved-radio");
 
 			formElement.IsChecked.Should().BeTrue();
 		}
@@ -48,7 +48,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
 
-			Document.QuerySelector<IHtmlInputElement>("#deferred-radio").IsChecked = true;
+			Document.QuerySelector<IHtmlInputElement>("#approved-radio").IsChecked = true;
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
 			Document.Url.Should().EndWith($"/task-list/{project.Id}/decision/who-decided");

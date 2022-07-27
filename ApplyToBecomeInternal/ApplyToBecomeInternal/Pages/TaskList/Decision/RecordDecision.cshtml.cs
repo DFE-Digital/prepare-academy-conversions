@@ -21,7 +21,8 @@ namespace ApplyToBecomeInternal.Pages.Decision
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
 			await SetDefaults(id);
-			AdvisoryBoardDecision = GetDecisionFromSession()?.Decision ?? AdvisoryBoardDecisions.Approved;						
+			AdvisoryBoardDecision = GetDecisionFromSession()?.Decision ?? AdvisoryBoardDecisions.Approved;
+			SetBackLinkModel(Links.TaskList.Index, id);
 
 			return Page();
 		}

@@ -1,0 +1,10 @@
+﻿@model ApplyToBecomeInternal.Pages.TaskList.Decision.BackLinkModel
+@{
+    var backToSumamry = (bool?)TempData["backToSummary"];
+    if (backToSumamry.HasValue && true)
+    {
+        Model.LinkPage = Links.Decision.Summary.Page;
+    }
+}
+
+<a asp-page="@Model.LinkPage" asp-route-id="@Model.LinkRouteId" class="govuk-back-link">@Model.LinkText</a>

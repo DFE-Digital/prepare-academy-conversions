@@ -25,6 +25,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		public async Task<IActionResult> OnGet(int id)
 		{
 			await SetDefaults(id);
+			SetBackLinkModel(Links.Decision.RecordDecision, id);
 			DecisionMadeBy = GetDecisionFromSession()?.DecisionMadeBy ?? DecisionMadeBy.RegionalDirectorForRegion;
 
 			return Page();
