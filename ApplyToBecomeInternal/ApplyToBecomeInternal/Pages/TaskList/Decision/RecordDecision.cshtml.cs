@@ -27,11 +27,13 @@ namespace ApplyToBecomeInternal.Pages.Decision
 			return Page();
 		}
 
-		public IActionResult OnPostAsync(int id)
+		public IActionResult OnPostAsync(int id, [FromQuery(Name = "obl")] bool overideBackLink)
 		{
 			var decision = GetDecisionFromSession() ?? new AdvisoryBoardDecision();
 			decision.Decision = AdvisoryBoardDecision;
 			SetDecisionInSession(decision);
+
+			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
 
 			return RedirectToPage(Links.Decision.WhoDecided.Page, new { id });
 		}

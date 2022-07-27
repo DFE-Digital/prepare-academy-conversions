@@ -24,14 +24,16 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			return Page();
 		}
 
-		public IActionResult OnPostAsync(int id)
-		{
+		public IActionResult OnPostAsync(int id, [FromQuery(Name = "obl")] bool overideBackLink)
+		{			
 			var decision = GetDecisionFromSession();
 			decision.ApprovedConditionsSet = ApprovedConditionsSet.Value;
 
 			if (!decision.ApprovedConditionsSet.Value) decision.ApprovedConditionsDetails = string.Empty;
 
 			SetDecisionInSession(decision);
+		
+			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
 
 			return RedirectToPage(GetRedirectPageName(), new { id });
 		}
@@ -42,7 +44,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			{
 				true => Links.Decision.WhatConditions.Page,
 				_ => Links.Decision.ApprovalDate.Page
-			};			
+			};
 		}
 	}
 }
