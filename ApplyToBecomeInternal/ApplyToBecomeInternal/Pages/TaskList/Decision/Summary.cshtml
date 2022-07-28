@@ -43,12 +43,17 @@
                 </a>
             </dd>
         </div>
+
+    @{
+        var conditionsSet = Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value;
+    }
+
         <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
                 Were any conditions set
             </dt>
             <dd class="govuk-summary-list__value">
-                @(Model.Decision.ApprovedConditionsSet.Value ? "Yes" : "No")
+                @(conditionsSet ? "Yes" : "No")
             </dd>
             <dd class="govuk-summary-list__actions">
                 <a class="govuk-link" asp-page="@Links.Decision.AnyConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true">
@@ -57,7 +62,7 @@
             </dd>
         </div>
 
-        @if (@Model.Decision.ApprovedConditionsSet.Value)
+        @if (conditionsSet)
     {
         <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
