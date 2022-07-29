@@ -21,6 +21,9 @@ resource cloudfoundry_app worker_app {
 		"ASPNETCORE_URLS"          = "http://+:8080"
 		"TramsApi__Endpoint"       = var.app_trams_api_endpoint
 		"TramsApi__ApiKey"         = var.app_trams_api_key
+		"TramsApi__ApiKey"         = var.app_trams_api_key
+		"AcademisationApi__BaseUrl"= var.app_academisation_api_baseurl
+		"AcademisationApi__Key"    = var.app_academisation_api_key
 		"GoogleAnalytics__Enable"  = var.enable_google_analytics
 		"FeedbackLink"             = var.app_feedback_link
 		"SupportEmail"             = var.app_support_email
