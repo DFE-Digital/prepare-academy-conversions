@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
 			await SetDefaults(id);
-			ApprovedConditionsDetails = GetDecisionFromSession()?.ApprovedConditionsDetails ?? string.Empty;
+			ApprovedConditionsDetails = GetDecisionFromSession(id)?.ApprovedConditionsDetails ?? string.Empty;
 			SetBackLinkModel(Links.Decision.AnyConditions, id);
 
 			return Page();
@@ -28,10 +28,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		{
 			if (!ModelState.IsValid) return await OnGetAsync(id);
 
-			var decision = GetDecisionFromSession();
+			var decision = GetDecisionFromSession(id);
 			decision.ApprovedConditionsDetails = ApprovedConditionsDetails;
 
-			SetDecisionInSession(decision);
+			SetDecisionInSession(id, decision);
 
 			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
 

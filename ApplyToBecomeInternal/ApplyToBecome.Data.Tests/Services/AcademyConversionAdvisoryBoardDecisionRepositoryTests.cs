@@ -17,14 +17,14 @@ using ApplyToBecome.Data.Tests.AutoFixture;
 namespace ApplyToBecome.Data.Tests.Services
 {
 	public class AcademyConversionAdvisoryBoardDecisionRepositoryTests
-	{
+	{		
 		[Theory, AutoMoqData]
 		public async Task Should_send_post_to_academisation_api([Frozen] MockHttpMessageHandler mockHandler,
 			Mock<ILogger<AcademyConversionAdvisoryBoardDecisionRepository>> logger,
 			AdvisoryBoardDecision decision)
 		{
 			var payload = JsonSerializer.Serialize(decision);
-			mockHandler.Expect("/api/conversion-project/advisory-board-decision")
+			mockHandler.Expect("/conversion-project/advisory-board-decision")
 				.Respond(HttpStatusCode.Created, "application/json", payload);
 
 			var sut = new AcademyConversionAdvisoryBoardDecisionRepository(new MockHttpClientFactory(mockHandler), logger.Object);
@@ -40,7 +40,7 @@ namespace ApplyToBecome.Data.Tests.Services
 			AdvisoryBoardDecision decision)
 		{
 			var responseCode = HttpStatusCode.BadRequest;
-			mockHandler.Expect("/api/conversion-project/advisory-board-decision").Respond(responseCode);
+			mockHandler.Expect("/conversion-project/advisory-board-decision").Respond(responseCode);
 			var sut = new AcademyConversionAdvisoryBoardDecisionRepository(new MockHttpClientFactory(mockHandler), logger.Object);
 
 			sut.Invoking(async s => await s.Create(decision))
@@ -55,7 +55,7 @@ namespace ApplyToBecome.Data.Tests.Services
 			var responseCode = HttpStatusCode.BadRequest;
 			var content = "{ \"error\": \"badrequest\" }";
 			var logMock = TestLoggerFactory.Create();
-			mockHandler.Expect("/api/conversion-project/advisory-board-decision").Respond(responseCode, "application/json", content);
+			mockHandler.Expect("/conversion-project/advisory-board-decision").Respond(responseCode, "application/json", content);
 			
 			var sut = new AcademyConversionAdvisoryBoardDecisionRepository(new MockHttpClientFactory(mockHandler), logMock.CreateLogger<AcademyConversionAdvisoryBoardDecisionRepository>());
 

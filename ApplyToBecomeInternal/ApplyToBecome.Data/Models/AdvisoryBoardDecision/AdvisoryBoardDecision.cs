@@ -6,7 +6,7 @@ namespace ApplyToBecome.Data.Models.AdvisoryBoardDecision
 	public class AdvisoryBoardDecision
 	{
 		public int ConversionProjectId { get; set; }		
-		public AdvisoryBoardDecisions Decision { get; set; }
+		public AdvisoryBoardDecisions? Decision { get; set; }
 		public bool? ApprovedConditionsSet { get; set; }
 		public string ApprovedConditionsDetails { get; set; }
 		public List<AdvisoryBoardDeclinedReasons> DeclinedReasons { get; set; }

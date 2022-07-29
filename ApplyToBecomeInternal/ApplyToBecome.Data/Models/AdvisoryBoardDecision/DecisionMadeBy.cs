@@ -12,7 +12,7 @@ namespace ApplyToBecome.Data.Models.AdvisoryBoardDecision
 		Minister = 2,
 		[Description("Director General")]
 		DirectorGeneral = 3,
-		[Description("Other")]
+		[Description("None")]
 		None = 4
 	}
 }

@@ -42,14 +42,14 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			};
 		}
 
-		protected AdvisoryBoardDecision GetDecisionFromSession()
+		protected AdvisoryBoardDecision GetDecisionFromSession(int id)
 		{
-			return _session.Get<AdvisoryBoardDecision>(DECISION_SESSION_KEY) ?? new AdvisoryBoardDecision();
+			return _session.Get<AdvisoryBoardDecision>($"{DECISION_SESSION_KEY}_{id}") ?? new AdvisoryBoardDecision();
 		}
 
-		protected void SetDecisionInSession(AdvisoryBoardDecision decision)
+		protected void SetDecisionInSession(int id, AdvisoryBoardDecision decision)
 		{
-			_session.Set(DECISION_SESSION_KEY, decision);
+			_session.Set($"{DECISION_SESSION_KEY}_{id}", decision);
 		}
 	}
 }
