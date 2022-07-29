@@ -1,0 +1,111 @@
+﻿@page "/task-list/{id:int}/decision/summary"
+@model ApplyToBecomeInternal.Pages.TaskList.Decision.SummaryModel
+@{
+    ViewData["Title"] = "Check your answers";
+}
+@section BeforeMain
+{
+    <a asp-page="@Links.Decision.ApprovalDate.Page" asp-route-id="@Model.Id" class="govuk-back-link">Back</a>
+}
+
+    <span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
+    <h1 class="govuk-heading-l">Check your answers before recording this decision</h1>
+
+    <dl class="govuk-summary-list">
+
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Decision
+            </dt>
+            <dd class="govuk-summary-list__value">
+
+                <strong class="govuk-tag govuk-tag--green">@Model.GetDecisionAsFriendlyName()</strong>
+
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+                    Change<span class="govuk-visually-hidden">decision</span>
+                </a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Who made this decision
+            </dt>
+            <dd class="govuk-summary-list__value">
+
+                <div>@Model.Decision.DecisionMadeBy.ToDescription()</div>
+
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" asp-page="@Links.Decision.WhoDecided.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+                    Change<span class="govuk-visually-hidden">who made this decision</span>
+                </a>
+            </dd>
+        </div>
+
+    @{
+        var conditionsSet = Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value;
+    }
+
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Were any conditions set
+            </dt>
+            <dd class="govuk-summary-list__value">
+                @(conditionsSet ? "Yes" : "No")
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" asp-page="@Links.Decision.AnyConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+                    Change<span class="govuk-visually-hidden">condition answer</span>
+                </a>
+            </dd>
+        </div>
+
+        @if (conditionsSet)
+    {
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Details of the conditions
+            </dt>
+            <dd class="govuk-summary-list__value">
+                @Model.Decision.ApprovedConditionsDetails
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" asp-page="@Links.Decision.WhatConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+                    Change<span class="govuk-visually-hidden">details of the conditions</span>
+                </a>
+            </dd>
+        </div>
+    }
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Date of decision
+        </dt>
+        <dd class="govuk-summary-list__value">
+
+            @if (@Model.Decision.AdvisoryBoardDecisionDate.HasValue)
+            {
+                <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Day.ToString("00") </span>
+                <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Month.ToString("00") </span>
+                <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Year</span>
+            }
+
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" asp-page="@Links.Decision.ApprovalDate.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+                Change<span class="govuk-visually-hidden">date of decision</span>
+            </a>
+        </dd>
+    </div>
+
+</dl>
+
+<form method="post">
+    <button class="govuk-button" data-module="govuk-button">
+        Record this decision
+    </button>
+
+</form>
+

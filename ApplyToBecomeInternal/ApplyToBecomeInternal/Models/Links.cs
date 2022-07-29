@@ -10,7 +10,7 @@ namespace ApplyToBecomeInternal.Models
 		public static class ProjectList
 		{
 			public static LinkItem Index = new LinkItem { BackText = "Back to all conversion projects", Page = "/ProjectList/Index" };
-		}
+		}		
 
 		public static class ProjectNotes
 		{
@@ -102,6 +102,16 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem KeyStage5PerformanceTables = new LinkItem { Page = "/TaskList/KeyStagePerformance/KeyStage5PerformanceTables" };
 			public static LinkItem KeyStage5PerformanceTablesAdditionalInformation = new LinkItem { Page = "/TaskList/KeyStagePerformance/KeyStage5PerformanceTablesAdditionalInformation" };
 		}
+
+		public static class Decision
+		{
+			public static LinkItem RecordDecision = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/RecordDecision" };
+			public static LinkItem WhoDecided = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/WhoDecided" };
+			public static LinkItem AnyConditions = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/AnyConditions" };
+			public static LinkItem WhatConditions = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/WhatConditions" };
+			public static LinkItem ApprovalDate = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/DecisionDate" };
+			public static LinkItem Summary = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/Summary" };
+		}		
 
 		public static class TrustTemplate
 		{

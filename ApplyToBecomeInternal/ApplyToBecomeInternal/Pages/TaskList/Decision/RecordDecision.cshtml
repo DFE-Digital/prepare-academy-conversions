@@ -1,0 +1,40 @@
+﻿@page "/task-list/{id:int}/decision/record-decision"
+@using ApplyToBecome.Data.Models.AdvisoryBoardDecision
+@model ApplyToBecomeInternal.Pages.Decision.RecordDecisionModel
+@{
+    ViewData["Title"] = "Record the decision";
+}
+@section BeforeMain
+    {
+    <partial name="_BackLink" model="@Model.BackLinkModel" />
+}
+
+    <span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
+    <h1 class="govuk-heading-l">Record the decision</h1>
+
+    <form method="post">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                </legend>
+                <div class="govuk-radios" data-module="govuk-radios">
+               
+                @foreach (var decisionOption in Enum.GetValues(typeof(AdvisoryBoardDecisions)))
+                {
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" type="radio" asp-for="@Model.AdvisoryBoardDecision"
+                           title="@decisionOption.ToString().ToLower()" value="@decisionOption" id="@decisionOption.ToString().ToLower()-radio" />
+                        <label class="govuk-label govuk-radios__label" asp-for="@Model.AdvisoryBoardDecision">
+                            @decisionOption
+                        </label>
+                    </div>
+                }
+            </div>
+        </fieldset>
+    </div>
+
+    <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+        Continue
+    </button>
+
+</form>
