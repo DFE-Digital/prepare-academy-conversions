@@ -4,6 +4,7 @@ using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Pages.TaskList;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.Decision
@@ -15,23 +16,25 @@ namespace ApplyToBecomeInternal.Pages.Decision
 		{		
 		}
 					
-		[BindProperty]
-		public AdvisoryBoardDecisions AdvisoryBoardDecision { get; set; }
+		[BindProperty, Required]
+		public AdvisoryBoardDecisions? AdvisoryBoardDecision { get; set; }
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
 			await SetDefaults(id);
-			AdvisoryBoardDecision = GetDecisionFromSession()?.Decision ?? AdvisoryBoardDecisions.Approved;
+			AdvisoryBoardDecision = GetDecisionFromSession(id)?.Decision;
 			SetBackLinkModel(Links.TaskList.Index, id);
 
 			return Page();
 		}
 
-		public IActionResult OnPostAsync(int id, [FromQuery(Name = "obl")] bool overideBackLink)
+		public async Task<IActionResult> OnPostAsync(int id, [FromQuery(Name = "obl")] bool overideBackLink)
 		{
-			var decision = GetDecisionFromSession() ?? new AdvisoryBoardDecision();
-			decision.Decision = AdvisoryBoardDecision;
-			SetDecisionInSession(decision);
+			if (!ModelState.IsValid) return await OnGetAsync(id);
+
+			var decision = GetDecisionFromSession(id) ?? new AdvisoryBoardDecision();
+			decision.Decision = AdvisoryBoardDecision.Value;
+			SetDecisionInSession(id, decision);
 
 			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
 

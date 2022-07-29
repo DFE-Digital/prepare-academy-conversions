@@ -22,7 +22,7 @@ namespace ApplyToBecome.Data.Services
 		public async Task Create(AdvisoryBoardDecision decision)
 		{			
 			var requestPayload = JsonContent.Create(decision);
-			var result = await _client.PostAsync("/api/conversion-project/advisory-board-decision", requestPayload);
+			var result = await _client.PostAsync("/conversion-project/advisory-board-decision", requestPayload);
 
 			if (!result.IsSuccessStatusCode)
 			{

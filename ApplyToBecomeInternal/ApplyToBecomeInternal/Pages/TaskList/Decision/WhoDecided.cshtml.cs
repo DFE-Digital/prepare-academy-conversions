@@ -26,17 +26,17 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		{
 			await SetDefaults(id);
 			SetBackLinkModel(Links.Decision.RecordDecision, id);
-			DecisionMadeBy = GetDecisionFromSession()?.DecisionMadeBy ?? DecisionMadeBy.RegionalDirectorForRegion;
+			DecisionMadeBy = GetDecisionFromSession(id)?.DecisionMadeBy ?? DecisionMadeBy.RegionalDirectorForRegion;
 
 			return Page();
 		}
 
 		public IActionResult OnPostAsync(int id, [FromQuery(Name = "obl")] bool overideBackLink)
 		{
-			var decision = GetDecisionFromSession() ?? new AdvisoryBoardDecision();
+			var decision = GetDecisionFromSession(id) ?? new AdvisoryBoardDecision();
 			decision.DecisionMadeBy = DecisionMadeBy;
 
-			SetDecisionInSession(decision);
+			SetDecisionInSession(id, decision);
 
 			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
 

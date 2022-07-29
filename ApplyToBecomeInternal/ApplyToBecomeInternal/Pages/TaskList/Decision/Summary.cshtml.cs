@@ -35,7 +35,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
 			await SetDefaults(id);
-			Decision = GetDecisionFromSession();
+			Decision = GetDecisionFromSession(id);
 
 			return Page();
 		}
@@ -44,8 +44,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		{
 			if (!ModelState.IsValid) return await OnGetAsync(id);
 
-			await _advisoryBoardDecisionRepository.Create(GetDecisionFromSession());
-			SetDecisionInSession(null);
+			var decision = GetDecisionFromSession(id);
+			decision.ConversionProjectId = id;
+
+			await _advisoryBoardDecisionRepository.Create(decision);
+			
+			SetDecisionInSession(id, null);
 
 			TempData.SetNotification(NotificationType.Success, "Done", "Decision recorded");
 

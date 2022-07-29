@@ -19,19 +19,19 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		{
 			await SetDefaults(id);
 			SetBackLinkModel(Links.Decision.WhoDecided, id);
-			ApprovedConditionsSet = GetDecisionFromSession()?.ApprovedConditionsSet ?? true;
+			ApprovedConditionsSet = GetDecisionFromSession(id)?.ApprovedConditionsSet ?? true;
 
 			return Page();
 		}
 
 		public IActionResult OnPostAsync(int id, [FromQuery(Name = "obl")] bool overideBackLink)
 		{			
-			var decision = GetDecisionFromSession();
+			var decision = GetDecisionFromSession(id);
 			decision.ApprovedConditionsSet = ApprovedConditionsSet.Value;
 
 			if (!decision.ApprovedConditionsSet.Value) decision.ApprovedConditionsDetails = string.Empty;
 
-			SetDecisionInSession(decision);
+			SetDecisionInSession(id, decision);
 		
 			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
 
