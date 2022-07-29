@@ -13,18 +13,19 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.GeneralInformation
 		{
 		}
 
-		[Fact]
-		public async Task Should_redirect_to_record_decision()
-		{
-			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+		// Test do remain commented out until the RecordDecision button is introduced.
+		//[Fact]
+		//public async Task Should_redirect_to_record_decision()
+		//{
+		//	var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+		//	await OpenUrlAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector<IHtmlAnchorElement>("#record-decision-link").DoClick();
+		//	Document.QuerySelector<IHtmlAnchorElement>("#record-decision-link").DoClick();
 
-			WaitUntil(() => Document.Url.Contains("decision"));
+		//	WaitUntil(() => Document.Url.Contains("decision"));
 
-			Document.Url.Should().Contain($"/task-list/{project.Id}/decision/record-decision");
-		}
+		//	Document.Url.Should().Contain($"/task-list/{project.Id}/decision/record-decision");
+		//}
 	}
 }
