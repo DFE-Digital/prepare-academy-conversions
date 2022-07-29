@@ -7,13 +7,13 @@
             @Model.SchoolName
         </h1>
 
-        <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
+       @* <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
             You have not recorded the decision for this project. You can record the decision once it has been made.
         </p>
 
         <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link">
             Record a decision
-        </a>
+        </a>*@
 
         <partial name="_SubMenu" />
     </div>

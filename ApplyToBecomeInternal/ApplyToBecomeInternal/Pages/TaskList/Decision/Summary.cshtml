@@ -85,9 +85,12 @@
         </dt>
         <dd class="govuk-summary-list__value">
 
-            <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Day </span>
-            <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Month </span>
-            <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Year</span>
+            @if (@Model.Decision.AdvisoryBoardDecisionDate.HasValue)
+            {
+                <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Day.ToString("00") </span>
+                <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Month.ToString("00") </span>
+                <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Year</span>
+            }
 
         </dd>
         <dd class="govuk-summary-list__actions">
