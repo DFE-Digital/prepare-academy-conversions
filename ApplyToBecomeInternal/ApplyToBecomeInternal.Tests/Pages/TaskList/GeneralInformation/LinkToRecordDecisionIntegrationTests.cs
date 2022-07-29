@@ -3,7 +3,6 @@ using AngleSharp.Html.Dom;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
-using static ApplyToBecomeInternal.Tests.Helpers.WaitHelper;
 
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList.GeneralInformation
 {
@@ -21,9 +20,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.GeneralInformation
 
 		//	await OpenUrlAsync($"/task-list/{project.Id}");
 
-		//	Document.QuerySelector<IHtmlAnchorElement>("#record-decision-link").DoClick();
-
-		//	WaitUntil(() => Document.Url.Contains("decision"));
+		//	await NavigateAsync("Record a decision");			
 
 		//	Document.Url.Should().Contain($"/task-list/{project.Id}/decision/record-decision");
 		//}
