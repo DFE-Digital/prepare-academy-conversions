@@ -40,5 +40,17 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			formElement.IsChecked.Should().BeTrue();
 		}
+
+		[Fact]
+		public async Task Should_go_back_to_recorddecision()
+		{
+			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/who-decided");
+
+			await NavigateAsync("Back");
+
+			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Record the decision");			
+		}
 	}
 }

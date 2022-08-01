@@ -46,6 +46,7 @@ namespace ApplyToBecomeInternal.Tests
 					.AddJsonFile(configPath)
 					.AddInMemoryCollection(new Dictionary<string, string> { 
 						{ "TramsApi:Endpoint", $"http://localhost:{_port}" },
+						{ "AcademisationApi:BaseUrl", $"http://localhost:{_port}" },
 						{ "AzureAd:AllowedRoles", string.Empty } // Do not restrict access for integration test
 					})
 					.AddEnvironmentVariables();

@@ -19,7 +19,7 @@
             </dt>
             <dd class="govuk-summary-list__value">
 
-                <strong class="govuk-tag govuk-tag--green">@Model.GetDecisionAsFriendlyName()</strong>
+                <strong class="govuk-tag govuk-tag--green" id="decision">@Model.GetDecisionAsFriendlyName()</strong>
 
             </dd>
             <dd class="govuk-summary-list__actions">
@@ -36,7 +36,7 @@
 
             @if (Model.Decision.DecisionMadeBy != null)
             {
-                <div>@Model.Decision.DecisionMadeBy.ToDescription()</div>
+                <div id="decision-made-by">@Model.Decision.DecisionMadeBy.ToDescription()</div>
             }
 
             </dd>
@@ -55,7 +55,7 @@
             <dt class="govuk-summary-list__key">
                 Were any conditions set
             </dt>
-            <dd class="govuk-summary-list__value">
+            <dd class="govuk-summary-list__value" id="condition-set">
                 @(conditionsSet ? "Yes" : "No")
             </dd>
             <dd class="govuk-summary-list__actions">
@@ -71,7 +71,7 @@
             <dt class="govuk-summary-list__key">
                 Details of the conditions
             </dt>
-            <dd class="govuk-summary-list__value">
+            <dd class="govuk-summary-list__value" id="condition-details">
                 @Model.Decision.ApprovedConditionsDetails
             </dd>
             <dd class="govuk-summary-list__actions">
@@ -86,7 +86,7 @@
         <dt class="govuk-summary-list__key">
             Date of decision
         </dt>
-        <dd class="govuk-summary-list__value">
+        <dd class="govuk-summary-list__value" id="decision-date">
 
             @if (@Model.Decision.AdvisoryBoardDecisionDate.HasValue)
             {
@@ -106,7 +106,7 @@
 </dl>
 
 <form method="post">
-    <button class="govuk-button" data-module="govuk-button">
+    <button class="govuk-button" data-module="govuk-button" id="submit-btn">
         Record this decision
     </button>
 
