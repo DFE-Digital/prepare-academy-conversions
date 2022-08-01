@@ -78,5 +78,19 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Who made this decision?");
 		}
+
+		[Fact]
+		public async Task Should_display_error_when_nothing_selected()
+		{
+			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/any-conditions");
+
+			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
+
+			Document.QuerySelector<IHtmlElement>("[href='#ApprovedConditionsSet']").Text().Should()
+				.Be("Please choose an option");
+			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Were any conditions set?");
+		}
 	}
 }

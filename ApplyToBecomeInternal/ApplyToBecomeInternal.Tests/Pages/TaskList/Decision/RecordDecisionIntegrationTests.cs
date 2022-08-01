@@ -55,6 +55,20 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		}
 
 		[Fact]
+		public async Task Should_display_error_when_nothing_selected()
+		{
+			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+
+			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
+
+			Document.QuerySelector<IHtmlElement>("[href='#AdvisoryBoardDecision']").Text().Should()
+				.Be("Please select the result of the decision");
+			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Record the decision");
+		}
+
+		[Fact]
 		public async Task Should_go_back_to_tasklist()
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
