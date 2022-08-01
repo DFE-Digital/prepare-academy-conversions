@@ -4,8 +4,9 @@
     ViewData["Title"] = "What conditions were set?";
 }
 @section BeforeMain
-    {
+{
     <partial name="_BackLink" model="@Model.BackLinkModel" />
+    <partial name="_ErrorSummary" />
 }
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -14,12 +15,12 @@
             <h1 class="govuk-heading-l">What conditions were set?</h1>
 
             <form method="post">
-                <div class="govuk-form-group">
+                <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
                     <textarea class="govuk-textarea" title="condition-details" id="conditions-textarea" asp-for="@Model.ApprovedConditionsDetails" rows="10"></textarea>
-                    <button class="govuk-button" data-module="govuk-button" id="submit-btn">
-                        Continue
-                    </button>
                 </div>
+                <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+                    Continue
+                </button>
             </form>
         </div>
     </div>

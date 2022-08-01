@@ -34,7 +34,10 @@
             </dt>
             <dd class="govuk-summary-list__value">
 
+            @if (Model.Decision.DecisionMadeBy != null)
+            {
                 <div>@Model.Decision.DecisionMadeBy.ToDescription()</div>
+            }
 
             </dd>
             <dd class="govuk-summary-list__actions">

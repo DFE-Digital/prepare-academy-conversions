@@ -17,7 +17,7 @@ namespace ApplyToBecomeInternal.Services
 				Key = key,
 				Message = message
 			});
-		}
+		 }
 
 		public void AddErrors(IEnumerable<string> keys, ModelStateDictionary modelState)
 		{

@@ -2,6 +2,7 @@ using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Pages.TaskList;
+using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -10,13 +11,16 @@ using System.Threading.Tasks;
 namespace ApplyToBecomeInternal.Pages.Decision
 {
 	public class RecordDecisionModel : DecisionBaseModel
-	{		
+	{
+		private readonly ErrorService _errorService;
 
-		public RecordDecisionModel(IAcademyConversionProjectRepository repository, ISession session) : base(repository, session)
-		{		
+		public RecordDecisionModel(IAcademyConversionProjectRepository repository, ISession session, ErrorService errorService) 
+			: base(repository, session)
+		{
+			_errorService = errorService;
 		}
 					
-		[BindProperty, Required]
+		[BindProperty, Required(ErrorMessage = "Please select the result of the decision")]
 		public AdvisoryBoardDecisions? AdvisoryBoardDecision { get; set; }
 
 		public async Task<IActionResult> OnGetAsync(int id)
@@ -30,7 +34,11 @@ namespace ApplyToBecomeInternal.Pages.Decision
 
 		public async Task<IActionResult> OnPostAsync(int id, [FromQuery(Name = "obl")] bool overideBackLink)
 		{
-			if (!ModelState.IsValid) return await OnGetAsync(id);
+			if (!ModelState.IsValid)
+			{
+				_errorService.AddErrors(new[] { "AdvisoryBoardDecision" }, ModelState);
+				return await OnGetAsync(id);
+			}
 
 			var decision = GetDecisionFromSession(id) ?? new AdvisoryBoardDecision();
 			decision.Decision = AdvisoryBoardDecision.Value;

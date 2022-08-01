@@ -6,6 +6,7 @@
 @section BeforeMain
 {   
     <partial name="_BackLink" model="@Model.BackLinkModel"/>
+    <partial name="_ErrorSummary" />
 }
 
     <div class="govuk-grid-row">
@@ -19,20 +20,20 @@
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                         </legend>
-                        <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios">
 
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" type="radio" asp-for="@Model.ApprovedConditionsSet"
+                                <input class="govuk-radios__input" type="radio" asp-for="ApprovedConditionsSet"
                                    title="Yes" value="true" id="yes-radio" />
-                                <label class="govuk-label govuk-radios__label" asp-for="@Model.ApprovedConditionsSet">
+                                <label class="govuk-label govuk-radios__label" asp-for="ApprovedConditionsSet">
                                     Yes
                                 </label>
                             </div>
 
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" type="radio" asp-for="@Model.ApprovedConditionsSet"
+                                <input class="govuk-radios__input" type="radio" asp-for="ApprovedConditionsSet"
                                    title="No" value="false" id="no-radio" />
-                                <label class="govuk-label govuk-radios__label" asp-for="@Model.ApprovedConditionsSet">
+                                <label class="govuk-label govuk-radios__label" asp-for="ApprovedConditionsSet">
                                     No
                                 </label>
                             </div>
