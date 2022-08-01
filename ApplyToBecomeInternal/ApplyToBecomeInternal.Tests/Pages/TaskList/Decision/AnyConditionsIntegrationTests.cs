@@ -66,5 +66,17 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			Document.Url.Should().EndWith("/decision/decision-date");
 		}
+
+		[Fact]
+		public async Task Should_go_back_to_whodecided()
+		{
+			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/any-conditions");
+
+			await NavigateAsync("Back");
+
+			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Who made this decision?");
+		}
 	}
 }
