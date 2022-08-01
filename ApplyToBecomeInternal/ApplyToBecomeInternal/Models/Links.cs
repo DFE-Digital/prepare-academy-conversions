@@ -107,6 +107,7 @@ namespace ApplyToBecomeInternal.Models
 		{
 			public static LinkItem RecordDecision = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/RecordDecision" };
 			public static LinkItem WhoDecided = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/WhoDecided" };
+			public static LinkItem WhoDecidedDeferred = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/WhoDecidedDeferred" };
 			public static LinkItem AnyConditions = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/AnyConditions" };
 			public static LinkItem WhatConditions = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/WhatConditions" };
 			public static LinkItem ApprovalDate = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/DecisionDate" };
