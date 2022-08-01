@@ -96,7 +96,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
 			Document.QuerySelector<IHtmlElement>("[href='#ApprovedConditionsDetails']").Text().Should()
-				.Be("Please enter the conditions for the approval");
+				.Be("Please enter the conditions for approval");
 			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("What conditions were set?");
 		}
 	}

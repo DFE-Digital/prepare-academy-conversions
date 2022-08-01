@@ -19,7 +19,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			_errorService = errorService;
 		}
 
-		[BindProperty, Required(ErrorMessage = "Please enter the conditions for the approval")] 
+		[BindProperty, Required(ErrorMessage = "Please enter the conditions for approval")] 
 		public string ApprovedConditionsDetails { get; set; }
 
 		public async Task<IActionResult> OnGetAsync(int id)
