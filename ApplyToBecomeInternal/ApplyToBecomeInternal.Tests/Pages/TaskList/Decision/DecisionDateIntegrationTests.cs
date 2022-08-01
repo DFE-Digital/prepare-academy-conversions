@@ -95,5 +95,17 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			Document.Url.Should().EndWith($"/task-list/{project.Id}/decision/summary");
 		}
+
+		[Fact]
+		public async Task Should_go_back_to_anyconditions()
+		{
+			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/decision-date");
+
+			await NavigateAsync("Back");
+
+			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Were any conditions set?");
+		}
 	}
 }

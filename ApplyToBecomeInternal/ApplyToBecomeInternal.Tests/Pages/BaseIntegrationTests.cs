@@ -15,7 +15,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 {
 	public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTestingWebApplicationFactory>, IDisposable
 	{
-		private readonly IntegrationTestingWebApplicationFactory _factory;
+		protected readonly IntegrationTestingWebApplicationFactory _factory;
 		private readonly IBrowsingContext _browsingContext;
 		protected readonly Fixture _fixture;
 

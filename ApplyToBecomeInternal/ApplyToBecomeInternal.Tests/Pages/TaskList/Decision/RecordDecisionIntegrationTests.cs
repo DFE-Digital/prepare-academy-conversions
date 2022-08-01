@@ -53,5 +53,18 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			Document.Url.Should().EndWith($"/task-list/{project.Id}/decision/who-decided");
 		}
+
+		[Fact]
+		public async Task Should_go_back_to_tasklist()
+		{
+			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+
+			await NavigateAsync("Back to task list");
+
+			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be(project.SchoolName);
+			Document.Url.Should().EndWith($"/task-list/{project.Id}");
+		}
 	}
 }
