@@ -95,7 +95,7 @@ namespace ApplyToBecomeInternal
 				client.DefaultRequestHeaders.Add("ApiKey", apiOptions.ApiKey);
 			});
 
-			services.AddScoped<ErrorService>();
+			services.AddScoped<ErrorService>();			
 			services.AddScoped<IGetEstablishment, EstablishmentService>();
 			services.Decorate<IGetEstablishment, GetEstablishmentItemCacheDecorator>();
 			services.AddScoped<SchoolPerformanceService>();

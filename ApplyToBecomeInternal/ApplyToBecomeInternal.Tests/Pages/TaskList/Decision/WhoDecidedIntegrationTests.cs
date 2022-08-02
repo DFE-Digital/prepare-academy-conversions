@@ -52,5 +52,19 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Record the decision");			
 		}
+
+		[Fact]
+		public async Task Should_display_error_when_nothing_selected()
+		{
+			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/who-decided");
+
+			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
+
+			Document.QuerySelector<IHtmlElement>("[href='#DecisionMadeBy']").Text().Should()
+				.Be("Please select who made the decision");
+			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Who made this decision?");
+		}
 	}
 }

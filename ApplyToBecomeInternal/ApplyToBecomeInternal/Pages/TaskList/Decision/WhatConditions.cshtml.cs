@@ -1,5 +1,6 @@
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
+using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -9,11 +10,17 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {
 	public class WhatConditionsModel : DecisionBaseModel
 	{
-		public WhatConditionsModel(IAcademyConversionProjectRepository repository, ISession session) : base(repository, session)
+		private readonly ErrorService _errorService;
+
+		public WhatConditionsModel(IAcademyConversionProjectRepository repository, ISession session,
+			ErrorService errorService) 
+			: base(repository, session)
 		{
+			_errorService = errorService;
 		}
 
-		[BindProperty, Required] public string ApprovedConditionsDetails { get; set; }
+		[BindProperty, Required(ErrorMessage = "Please enter the conditions for approval")] 
+		public string ApprovedConditionsDetails { get; set; }
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
@@ -26,7 +33,11 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 		public async Task<IActionResult> OnPostAsync(int id, [FromQuery(Name = "obl")] bool overideBackLink)
 		{
-			if (!ModelState.IsValid) return await OnGetAsync(id);
+			if (!ModelState.IsValid)
+			{
+				_errorService.AddErrors(Request.Form.Keys, ModelState);
+				return await OnGetAsync(id);
+			}
 
 			var decision = GetDecisionFromSession(id);
 			decision.ApprovedConditionsDetails = ApprovedConditionsDetails;

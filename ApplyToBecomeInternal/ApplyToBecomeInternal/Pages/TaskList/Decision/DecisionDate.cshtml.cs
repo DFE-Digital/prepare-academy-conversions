@@ -1,5 +1,6 @@
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
+using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,13 +11,18 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {
 	public class DecisionDate : DecisionBaseModel
 	{
-		public DecisionDate(IAcademyConversionProjectRepository repository, ISession session) : base(repository, session)
+		private readonly ErrorService _errorService;
+
+		public DecisionDate(IAcademyConversionProjectRepository repository, ISession session,
+			ErrorService errorService)
+			: base(repository, session)
 		{
+			_errorService = errorService;
 		}
 
 		[BindProperty, ModelBinder(BinderType = typeof(DateInputModelBinder))]
-		[DateValidation(Services.DateRangeValidationService.DateRange.PastOrToday)]		
-		[Required, Display(Name = "Decision date")]
+		[DateValidation(DateRangeValidationService.DateRange.PastOrToday)]
+		[Required(ErrorMessage = "Please enter a decision date"), Display(Name = "Decision")]
 		public DateTime? DateOfDecision { get; set; }
 
 		public LinkItem GetPageForBackLink(int id)
@@ -25,10 +31,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			return decision.ApprovedConditionsSet switch
 			{
-				true => Links.Decision.WhatConditions, 
+				true => Links.Decision.WhatConditions,
 				_ => Links.Decision.AnyConditions,
-			};			
-		}						
+			};
+		}
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
@@ -41,7 +47,11 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			if (!ModelState.IsValid) return await OnGetAsync(id);
+			if (!ModelState.IsValid)
+			{
+				_errorService.AddErrors(Request.Form.Keys, ModelState);
+				return await OnGetAsync(id);
+			}
 
 			var decision = GetDecisionFromSession(id);
 			decision.AdvisoryBoardDecisionDate = DateOfDecision.Value;

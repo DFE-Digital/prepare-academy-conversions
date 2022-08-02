@@ -7,32 +7,45 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
+using System.ComponentModel.DataAnnotations;
+using ApplyToBecomeInternal.Services;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {
 	public class WhoDecidedModel : DecisionBaseModel
-	{		
-		public WhoDecidedModel(IAcademyConversionProjectRepository repository, ISession session) : base(repository, session)
-		{			
+	{
+		private readonly ErrorService _errorService;
+
+		public WhoDecidedModel(IAcademyConversionProjectRepository repository, ISession session,
+			ErrorService errorService)
+			: base(repository, session)
+		{
+			_errorService = errorService;
 		}
 
-		[BindProperty]
-		public DecisionMadeBy DecisionMadeBy { get; set; }
+		[BindProperty, Required(ErrorMessage = "Please select who made the decision")]
+		public DecisionMadeBy? DecisionMadeBy { get; set; }
 
-		public IEnumerable<DecisionMadeBy> DecisionMadeByOptions => Enum.GetValues(DecisionMadeBy.GetType())
+		public IEnumerable<DecisionMadeBy> DecisionMadeByOptions => Enum.GetValues(typeof(DecisionMadeBy))
 																	.Cast<DecisionMadeBy>();
-																	
-		public async Task<IActionResult> OnGet(int id)
+
+		public async Task<IActionResult> OnGetAsync(int id)
 		{
 			await SetDefaults(id);
 			SetBackLinkModel(Links.Decision.RecordDecision, id);
-			DecisionMadeBy = GetDecisionFromSession(id)?.DecisionMadeBy ?? DecisionMadeBy.RegionalDirectorForRegion;
+			DecisionMadeBy = GetDecisionFromSession(id)?.DecisionMadeBy;
 
 			return Page();
 		}
 
-		public IActionResult OnPostAsync(int id, [FromQuery(Name = "obl")] bool overideBackLink)
+		public async Task<IActionResult> OnPostAsync(int id, [FromQuery(Name = "obl")] bool overideBackLink)
 		{
+			if (!ModelState.IsValid)
+			{
+				_errorService.AddErrors(new[] { "DecisionMadeBy" }, ModelState);
+				return await OnGetAsync(id);
+			}
+
 			var decision = GetDecisionFromSession(id) ?? new AdvisoryBoardDecision();
 			decision.DecisionMadeBy = DecisionMadeBy;
 
@@ -41,6 +54,6 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
 
 			return RedirectToPage(Links.Decision.AnyConditions.Page, new { id });
-		}		
+		}
 	}
 }

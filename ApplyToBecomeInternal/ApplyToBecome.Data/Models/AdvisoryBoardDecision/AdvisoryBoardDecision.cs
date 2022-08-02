@@ -14,6 +14,6 @@ namespace ApplyToBecome.Data.Models.AdvisoryBoardDecision
 		public List<AdvisoryBoardDeferredReasons> DeferredReasons { get; set; }
 		public string DeferredOtherReason { get; set; }
 		public DateTime? AdvisoryBoardDecisionDate { get; set; }
-		public DecisionMadeBy DecisionMadeBy { get; set; }
+		public DecisionMadeBy? DecisionMadeBy { get; set; }
 	}
 }

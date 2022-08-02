@@ -13,12 +13,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 	public abstract class DecisionBaseModel : PageModel
 	{
 		protected readonly IAcademyConversionProjectRepository _repository;
-		protected readonly ISession _session;		
+		protected readonly ISession _session;
 
 		public DecisionBaseModel(IAcademyConversionProjectRepository repository, ISession session)
 		{
 			_repository = repository;
-			_session = session;			
+			_session = session;
 		}
 
 		public BackLinkModel BackLinkModel { get; set; }
@@ -27,9 +27,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 
 		protected async Task SetDefaults(int id)
 		{
-			Id = id;			
+			Id = id;
 			var project = await _repository.GetProjectById(id);
-			SchoolName = project.Body.SchoolName;				
+			SchoolName = project.Body.SchoolName;
 		}
 
 		protected void SetBackLinkModel(LinkItem linkItem, int linkRouteId)
@@ -40,7 +40,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				LinkText = linkItem.BackText,
 				LinkRouteId = linkRouteId
 			};
-		}
+		}		
+
+
 
 		protected AdvisoryBoardDecision GetDecisionFromSession(int id)
 		{
