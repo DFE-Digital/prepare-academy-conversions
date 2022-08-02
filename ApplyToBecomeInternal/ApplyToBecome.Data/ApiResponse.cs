@@ -8,9 +8,11 @@ namespace ApplyToBecome.Data
 		{
 			Success = (int)statusCode >= 200 && (int)statusCode < 300;
 			Body = body;
+			StatusCode = statusCode;
 		}
 
 		public bool Success { get; }
+		public HttpStatusCode StatusCode { get; }
 		public TBody Body { get; }
 	}
 }

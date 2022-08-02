@@ -1,38 +1,42 @@
 ﻿using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services.Interfaces;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Net.Http.Json;
-using System.Net.Http;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ApplyToBecome.Data.Services
 {
 	public class AcademyConversionAdvisoryBoardDecisionRepository : IAcademyConversionAdvisoryBoardDecisionRepository
 	{
-		private readonly HttpClient _client;
-		private readonly ILogger<AcademyConversionAdvisoryBoardDecisionRepository> _logger;
+		private readonly IHttpClientService _httpClientHelper;
 
-		public AcademyConversionAdvisoryBoardDecisionRepository(IHttpClientFactory httpClientFactory, ILogger<AcademyConversionAdvisoryBoardDecisionRepository> logger)
-		{
-			_client = httpClientFactory.CreateClient("AcademisationClient");
-			_logger = logger;
+		public AcademyConversionAdvisoryBoardDecisionRepository(IHttpClientService httpClientHelper)
+		{	
+			_httpClientHelper = httpClientHelper;
 		}
 
 		public async Task Create(AdvisoryBoardDecision decision)
-		{			
-			var requestPayload = JsonContent.Create(decision);
-			var result = await _client.PostAsync("/conversion-project/advisory-board-decision", requestPayload);
+		{
+			var result = await _httpClientHelper
+				.Post<AdvisoryBoardDecision, AdvisoryBoardDecision>("/conversion-project/advisory-board-decision", decision);
 
-			if (!result.IsSuccessStatusCode)
-			{
-				var content = "";
-				if (result.Content != null) content = await result.Content.ReadAsStringAsync();
+			if (!result.Success) throw new Exception($"Request to Api failed | StatusCode - {result.StatusCode}");
+		}
 
-				_logger.LogError($"Request to AcademisationApi failed | StatusCode - {result.StatusCode} | Content - {content}");
+		public async Task<ApiResponse<AdvisoryBoardDecision>> Get(int id)
+		{
+			return new ApiResponse<AdvisoryBoardDecision>(HttpStatusCode.OK, 
+				new AdvisoryBoardDecision 
+				{ 
+					AdvisoryBoardDecisionDate = DateTime.Now,
+					ApprovedConditionsDetails = "All bills have been paid",
+					DecisionMadeBy = DecisionMadeBy.RegionalDirectorForRegion,
+					ApprovedConditionsSet = true,
+					Decision = AdvisoryBoardDecisions.Approved
+				});
 
-				throw new Exception($"Request to AcademisationApi failed | StatusCode - {result.StatusCode}");
-			}
+			//return await _httpClientHelper
+			//	.Get<AdvisoryBoardDecision>($"/conversion-project/advisory-board-decision?id={id}");
 		}
 	}
 }
