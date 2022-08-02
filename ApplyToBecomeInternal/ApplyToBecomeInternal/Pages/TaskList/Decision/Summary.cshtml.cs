@@ -37,6 +37,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			await SetDefaults(id);
 			Decision = GetDecisionFromSession(id);
 
+			if (Decision.Decision == null) return RedirectToPage(Links.Decision.RecordDecision.Page, new { id });
+
 			return Page();
 		}
 
@@ -53,7 +55,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			TempData.SetNotification(NotificationType.Success, "Done", "Decision recorded");
 
-			return RedirectToPage(Links.ProjectList.Index.Page);
+			return RedirectToPage(Links.TaskList.Index.Page, new { id });
 		}
 	}
 }
