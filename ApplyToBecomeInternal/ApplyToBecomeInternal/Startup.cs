@@ -103,6 +103,7 @@ namespace ApplyToBecomeInternal
 			services.AddScoped<KeyStagePerformanceService>();
 			services.AddScoped<IAcademyConversionProjectRepository, AcademyConversionProjectRepository>();
 			services.AddScoped<IAcademyConversionAdvisoryBoardDecisionRepository, AcademyConversionAdvisoryBoardDecisionRepository>();
+			services.AddScoped<IHttpClientService, HttpClientService>();
 			services.Decorate<IAcademyConversionProjectRepository, AcademyConversionProjectItemsCacheDecorator>();
 			services.AddScoped<IProjectNotesRepository, ProjectNotesRepository>();
 			services.AddScoped<ApplicationRepository>();

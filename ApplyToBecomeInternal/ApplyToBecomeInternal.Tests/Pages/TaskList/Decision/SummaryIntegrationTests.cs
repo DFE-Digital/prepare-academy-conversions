@@ -83,7 +83,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 				ConversionProjectId = project.Id
 			};
 
-			_factory.AddPostWithJsonRequest("/conversion-project/advisory-board-decision", request, "");
+			_factory.AddPostWithJsonRequest("/conversion-project/advisory-board-decision", request, new AdvisoryBoardDecision());
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
 
