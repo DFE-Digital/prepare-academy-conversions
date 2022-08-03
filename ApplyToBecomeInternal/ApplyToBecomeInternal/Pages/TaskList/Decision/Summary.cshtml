@@ -19,7 +19,7 @@
             </dt>
             <dd class="govuk-summary-list__value">
 
-                <strong class="govuk-tag govuk-tag--green" id="decision">@Model.GetDecisionAsFriendlyName()</strong>
+                <strong class="govuk-tag govuk-tag--green" id="decision">@(new RecordDecisionPreviewViewModel(0, Model.Decision).GetDecisionAsFriendlyName())</strong>
 
             </dd>
             <dd class="govuk-summary-list__actions">

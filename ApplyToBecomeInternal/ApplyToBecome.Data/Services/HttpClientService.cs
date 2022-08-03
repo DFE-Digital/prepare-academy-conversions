@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ApplyToBecome.Data.Services.Interfaces;
+using Newtonsoft.Json;
 
 namespace ApplyToBecome.Data.Services
 {
@@ -39,7 +40,9 @@ namespace ApplyToBecome.Data.Services
 		{
 			if (!result.IsSuccessStatusCode) return await HandleUnsuccessfulRequest<TResponse>(result);
 
-			return new ApiResponse<TResponse>(result.StatusCode, await result.Content.ReadFromJsonAsync<TResponse>());
+			var json = await result.Content.ReadAsStringAsync();
+
+			return new ApiResponse<TResponse>(result.StatusCode, JsonConvert.DeserializeObject<TResponse>(json));
 		}
 
 		private async Task<ApiResponse<TResponse>> HandleUnsuccessfulRequest<TResponse>(HttpResponseMessage result)
