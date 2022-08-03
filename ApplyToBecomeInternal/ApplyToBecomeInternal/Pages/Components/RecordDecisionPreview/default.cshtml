@@ -13,7 +13,17 @@
                     </dt>
                     <dd class="govuk-summary-list__value">
 
-                        <strong class="govuk-tag govuk-tag--green" id="decision">@Model.GetDecisionAsFriendlyName()</strong>
+                        @{
+                            var decisionName = new RecordDecisionPreviewViewModel(0, Model.Decision).GetDecisionAsFriendlyName();
+                        }
+                        @if (string.IsNullOrEmpty(decisionName))
+                        {
+                            <span class="empty">Empty</span>
+                        }
+                        else
+                        {
+                            <strong class="govuk-tag govuk-tag--green" id="decision">@decisionName</strong>
+                        }
 
                     </dd>
 
@@ -27,6 +37,10 @@
                         @if (Model.Decision.DecisionMadeBy != null)
                         {
                             <div id="decision-made-by">@Model.Decision.DecisionMadeBy.ToDescription()</div>
+                        }
+                        else
+                        {
+                            <span class="empty">Empty</span>
                         }
 
                     </dd>
@@ -68,6 +82,10 @@
                             <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Day.ToString("00") </span>
                             <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Month.ToString("00") </span>
                             <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Year</span>
+                        }
+                        else
+                        {
+                            <span class="empty">Empty</span>
                         }
 
                     </dd>

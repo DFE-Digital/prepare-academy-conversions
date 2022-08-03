@@ -50,12 +50,12 @@ namespace ApplyToBecomeInternal
 				});
 
 			services.AddControllersWithViews()
-				.AddMicrosoftIdentityUI()
-				.AddJsonOptions(j =>
-				{
-					j.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-					j.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-				});
+				.AddMicrosoftIdentityUI();
+				//.AddJsonOptions(j =>
+				//{
+				//	j.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+				//	j.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+				//});
 		
 			if (_env.IsDevelopment())
 			{
