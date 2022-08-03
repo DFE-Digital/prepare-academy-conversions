@@ -54,7 +54,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			TempData.SetNotification(NotificationType.Success, "Done", "Decision recorded");
 
-			return RedirectToPage(Links.TaskList.Index.Page, new { id });
+			return RedirectToPage(Links.TaskList.Index.Page, new { id, rd = "true" });
 		}
 	}
 }
