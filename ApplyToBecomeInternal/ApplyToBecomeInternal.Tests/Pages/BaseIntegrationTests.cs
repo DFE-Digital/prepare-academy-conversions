@@ -88,6 +88,8 @@ namespace ApplyToBecomeInternal.Tests.Pages
 
 		public IDocument Document => _browsingContext.Active;
 
+		public IBrowsingContext Context => _browsingContext;
+
 		public void Dispose()
 		{
 			_factory.Reset();

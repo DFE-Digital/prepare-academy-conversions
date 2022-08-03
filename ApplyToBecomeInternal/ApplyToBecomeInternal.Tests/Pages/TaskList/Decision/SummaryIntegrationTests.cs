@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
+using ApplyToBecomeInternal.Tests.PageObjects;
 using FluentAssertions;
 using System;
 using System.Text.RegularExpressions;
@@ -17,17 +18,56 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		}
 
 		[Fact]
-		public async Task Should_display_selected_schoolname()
+		public async Task Should_redirect_to_recorddecision()
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+			var request = new AdvisoryBoardDecision
+			{
+				Decision = AdvisoryBoardDecisions.Approved,
+				AdvisoryBoardDecisionDate = new DateTime(2021, 01, 01),
+				ApprovedConditionsSet = true,
+				ApprovedConditionsDetails = "bills need to be paid",
+				DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
+				ConversionProjectId = project.Id
+			};
+
+			_factory.AddPostWithJsonRequest("/conversion-project/advisory-board-decision", request, "");
+
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+
+			await new RecordDecisionWizard(Context).SubmitThroughTheWizard(request);
+
+			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/summary");
 
-			var selectedSchool = Document.QuerySelector<IHtmlElement>("#selection-span").Text();
-
-			selectedSchool.Should().Be(project.SchoolName);
+			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should()
+				.Be("Record the decision");
 		}
 
+		[Fact]
+		public async Task Should_display_selected_schoolname()
+		{
+			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+			var request = new AdvisoryBoardDecision
+			{
+				Decision = AdvisoryBoardDecisions.Approved,
+				AdvisoryBoardDecisionDate = new DateTime(2021, 01, 01),
+				ApprovedConditionsSet = true,
+				ApprovedConditionsDetails = "bills need to be paid",
+				DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
+				ConversionProjectId = project.Id
+			};
+
+			_factory.AddPostWithJsonRequest("/conversion-project/advisory-board-decision", request, "");
+
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+
+			await new RecordDecisionWizard(Context).SubmitThroughTheWizard(request);
+
+			Document.QuerySelector<IHtmlElement>("#selection-span").Text().Should()
+				.Be(project.SchoolName);
+		}
 
 		[Fact]
 		public async Task Should_populate_summary_and_save()
@@ -47,11 +87,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
 
-			await SubmitThroughTheWizard(request);
+			await new RecordDecisionWizard(Context).SubmitThroughTheWizard(request);
 
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
-			Document.Url.Should().EndWith("/project-list");
+			Document.Url.Should().EndWith($"/task-list/{project.Id}");
 			Document.QuerySelector<IHtmlElement>("#notification-message").Text().Trim().Should().Be("Decision recorded");
 			Document.QuerySelector<IHtmlElement>("#govuk-notification-banner-title").Text().Trim().Should().Be("Done");
 		}
@@ -72,7 +112,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
 
-			await SubmitThroughTheWizard(request);
+			await new RecordDecisionWizard(Context).SubmitThroughTheWizard(request);
 
 			Document.QuerySelector<IHtmlElement>("#decision").Text().Should()
 				.Be("APPROVED WITH CONDITIONS");
@@ -108,7 +148,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
 
-			await SubmitThroughTheWizard(request);
+			await new RecordDecisionWizard(Context).SubmitThroughTheWizard(request);
 
 			// Back to form
 			await NavigateAsync("Change", changeLinkIndex);
@@ -142,7 +182,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
 
-			await SubmitThroughTheWizard(request);
+			await new RecordDecisionWizard(Context).SubmitThroughTheWizard(request);
 
 			// Back to form
 			await NavigateAsync("Change", changeLinkIndex);
@@ -153,36 +193,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
 			Document.QuerySelector<IHtmlElement>("h1").Text().Should().Be("Check your answers before recording this decision");
-		}
-
-
-		private async Task SubmitThroughTheWizard(AdvisoryBoardDecision request)
-		{
-			await SelectRadioAndSubmit(request.Decision.ToString().ToLower());
-			await SelectRadioAndSubmit(request.DecisionMadeBy.ToString().ToLower());
-			await SelectRadioAndSubmit("yes");
-			await InputTextAreaAndSubmit(request.ApprovedConditionsDetails);
-			await InputDateAndSubmit(request.AdvisoryBoardDecisionDate.Value);
-		}
-
-		private async Task SelectRadioAndSubmit(string enumAsString)
-		{
-			Document.QuerySelector<IHtmlInputElement>($"#{enumAsString}-radio").IsChecked = true;
-			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
-		}
-
-		private async Task InputTextAreaAndSubmit(string conditions)
-		{
-			Document.QuerySelector<IHtmlTextAreaElement>("#conditions-textarea").Value = conditions;
-			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
-		}
-
-		private async Task InputDateAndSubmit(DateTime date)
-		{
-			Document.QuerySelector<IHtmlInputElement>("#-day").Value = date.Day.ToString();
-			Document.QuerySelector<IHtmlInputElement>("#-month").Value = date.Month.ToString();
-			Document.QuerySelector<IHtmlInputElement>("#-year").Value = date.Year.ToString();
-			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
-		}
+		}		
 	}
 }

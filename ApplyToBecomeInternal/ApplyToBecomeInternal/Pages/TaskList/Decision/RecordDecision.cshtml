@@ -21,11 +21,14 @@
                 <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios">
                
                 @foreach (var decisionOption in Enum.GetValues(typeof(AdvisoryBoardDecisions)))
-                {
+                {                   
+                    
+                    var id = $"{decisionOption.ToString().ToLower()}-radio";
+
                     <div class="govuk-radios__item">
                         <input class="govuk-radios__input" type="radio" asp-for="@Model.AdvisoryBoardDecision"
-                           title="@decisionOption.ToString().ToLower()" value="@decisionOption" id="@decisionOption.ToString().ToLower()-radio" />
-                        <label class="govuk-label govuk-radios__label" asp-for="@Model.AdvisoryBoardDecision">
+                           title="@decisionOption.ToString().ToLower()" value="@decisionOption" id="@id" />
+                        <label class="govuk-label govuk-radios__label" for="@id">
                             @decisionOption
                         </label>
                     </div>
