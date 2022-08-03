@@ -21,11 +21,13 @@ namespace ApplyToBecomeInternal.ViewComponents
 
 		public async Task<IViewComponentResult> InvokeAsync(int id, bool showView)
 		{
-			var decision = _session.Get<AdvisoryBoardDecision>($"Decision_{id}");
+			var sessionKey = $"Decision_{id}";
+			var decision = _session.Get<AdvisoryBoardDecision>(sessionKey);
 
 			if (decision == null)
 			{
 				decision = (await _decisionRepository.Get(id)).Body;
+				_session.Set(sessionKey, decision);
 			}
 
 			var viewModel = new RecordDecisionPreviewViewModel(id, decision, showView);			

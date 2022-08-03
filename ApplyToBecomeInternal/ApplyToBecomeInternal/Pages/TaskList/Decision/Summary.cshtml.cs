@@ -20,23 +20,14 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			_advisoryBoardDecisionRepository = advisoryBoardDecisionRepository;
 		}
 
-		public AdvisoryBoardDecision Decision { get; set; }
-
-		public string GetDecisionAsFriendlyName()
-		{
-			return Decision switch
-			{
-				{ Decision: AdvisoryBoardDecisions.Approved, ApprovedConditionsSet: true } => "APPROVED WITH CONDITIONS",
-				_ => Decision?.Decision.ToString().ToUpper()
-			};
-		}
+		public AdvisoryBoardDecision Decision { get; set; }		
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
 			await SetDefaults(id);
 			Decision = GetDecisionFromSession(id);
 
-			if (Decision.Decision == null) return RedirectToPage(Links.Decision.RecordDecision.Page, new { id });
+			if (Decision.Decision == null) return RedirectToPage(Links.TaskList.Index.Page, new { id });
 
 			return Page();
 		}
@@ -49,7 +40,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			decision.ConversionProjectId = id;
 
 			await _advisoryBoardDecisionRepository.Create(decision);
-			
+
 			SetDecisionInSession(id, null);
 
 			TempData.SetNotification(NotificationType.Success, "Done", "Decision recorded");
