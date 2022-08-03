@@ -26,37 +26,22 @@
                     {
                         counter++;
                     }
+                    <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="@DeferredReason.ToString().ToLower()-checkboxes" name="@DeferredReason.ToString().ToLower()-checkboxes" type="checkbox"
+                        value="@DeferredReason.ToDescription()" data-aria-controls="conditional-@counter">
+                        <label class="govuk-label govuk-checkboxes__label" for="@DeferredReason.ToString().ToLower()-checkboxes">
+                            @DeferredReason.ToDescription()
+                        </label>
+                    </div>
+                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-@counter">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="ReasonDeferred-@counter">
+                            Give reasons
+                        </label>
+                        <textarea class="govuk-textarea govuk-!-width-three-quarters" id="ReasonDeferred-@counter" name="ReasonDeferred-@counter" rows="5" aria-describedby="more-detail-hint"></textarea>
+                    </div>
 
-                    if (@DeferredReason.ToDescription() != "Other")
-                    {
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="@DeferredReason.ToString().ToLower()-checkboxes"
-                            name="@DeferredReason.ToString().ToLower()-checkboxes" type="checkbox" value="@DeferredReason.ToDescription()" 
-                            data-aria-controls="conditional-@counter">
-                            <label class="govuk-label govuk-checkboxes__label" for="@DeferredReason.ToString().ToLower()-checkboxes">
-                                @DeferredReason.ToDescription()
-                            </label>
-                        </div>
-                    }
-                    else if (@DeferredReason.ToDescription() == "Other")
-                    {
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="@DeferredReason.ToString().ToLower()-checkboxes" name="@DeferredReason.ToString().ToLower()-checkboxes" type="checkbox"
-                           value="@DeferredReason.ToDescription()" data-aria-controls="conditional-@counter">
-                            <label class="govuk-label govuk-checkboxes__label" for="@DeferredReason.ToString().ToLower()-checkboxes">
-                                @DeferredReason.ToDescription()
-                            </label>
-                        </div>
-                        <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-@counter">
-                            <div class="govuk-form-group">
-                                <label class="govuk-label" for="ReasonDeferred-@counter">
-                                    Give reasons
-                                </label>
-                                <textarea class="govuk-textarea govuk-!-width-three-quarters" id="ReasonDeferred-@counter" name="ReasonDeferred-@counter" rows="5" aria-describedby="more-detail-hint"></textarea>
-                            </div>
-
-                        </div>
-                    }
+                    </div>
                 }
             </div>
         </fieldset>
