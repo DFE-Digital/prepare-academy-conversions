@@ -53,7 +53,19 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
 
-			return RedirectToPage(Links.Decision.AnyConditions.Page, new { id });
-		}
+			if (decision.Decision.ToString() == "Approved")
+			{
+				return RedirectToPage(Links.Decision.AnyConditions.Page, new { id });
+			}
+			else if (decision.Decision.ToString() == "Deferred")
+			{
+				return RedirectToPage(Links.Decision.WhyDeferred.Page, new { id });
+			}
+			else
+			{
+				return RedirectToPage(Links.Decision.RecordDecision.Page, new { id });
+			}
+
+		}		
 	}
 }
