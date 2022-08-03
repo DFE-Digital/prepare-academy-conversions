@@ -1,5 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
+using ApplyToBecomeInternal.Tests.PageObjects;
 using FluentAssertions;
 using System;
 using System.Threading.Tasks;
@@ -81,17 +83,20 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		[Fact]
 		public async Task Should_redirect_onSubmit()
 		{
-			var expectedDay = "1";
-			var expectedMonth = "1";
-			var expectedYear = "2022";
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/decision-date");
-
-			Document.QuerySelector<IHtmlInputElement>("#-day").Value = expectedDay;
-			Document.QuerySelector<IHtmlInputElement>("#-month").Value = expectedMonth;
-			Document.QuerySelector<IHtmlInputElement>("#-year").Value = expectedYear;
-			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
+			var request = new AdvisoryBoardDecision
+			{
+				Decision = AdvisoryBoardDecisions.Approved,
+				AdvisoryBoardDecisionDate = new DateTime(2021, 01, 01),
+				ApprovedConditionsSet = true,
+				ApprovedConditionsDetails = "bills need to be paid",
+				DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
+				ConversionProjectId = project.Id
+			};
+	
+			await new RecordDecisionWizard(Context).SubmitThroughTheWizard(request);
 
 			Document.Url.Should().EndWith($"/task-list/{project.Id}/decision/summary");
 		}

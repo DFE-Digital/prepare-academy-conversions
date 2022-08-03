@@ -20,12 +20,14 @@
                 <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios">
 
                 @foreach (var decisionOption in Model.DecisionMadeByOptions)
-                {
+                {                    
+                    var id = $"{decisionOption.ToString().ToLower()}-radio";
+                    
                     <div class="govuk-radios__item ">
                         <input class="govuk-radios__input" type="radio" asp-for="@Model.DecisionMadeBy"                           
                            title="@decisionOption.ToString().ToLower()" value="@decisionOption.ToString()" 
-                           id="@decisionOption.ToString().ToLower()-radio"/>
-                        <label class="govuk-label govuk-radios__label" asp-for="@Model.DecisionMadeBy">
+                           id="@id"/>
+                        <label class="govuk-label govuk-radios__label" for="@id">
                             @decisionOption.ToDescription()
                         </label>
                     </div>
