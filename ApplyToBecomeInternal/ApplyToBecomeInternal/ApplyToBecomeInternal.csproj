@@ -14,6 +14,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Pages\TaskList\Decision\DateDeferred.cshtml.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="Pages\TaskList\Decision\DateDeferred.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\htb-template.docx" />
 	</ItemGroup>
 

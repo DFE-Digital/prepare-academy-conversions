@@ -110,6 +110,8 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem AnyConditions = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/AnyConditions" };
 			public static LinkItem WhatConditions = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/WhatConditions" };
 			public static LinkItem ApprovalDate = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/DecisionDate" };
+			public static LinkItem WhyDeferred = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/WhyDeferred" };
+			public static LinkItem DeferredDate = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/DateDeferred" };
 			public static LinkItem Summary = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/Summary" };
 		}		
 
