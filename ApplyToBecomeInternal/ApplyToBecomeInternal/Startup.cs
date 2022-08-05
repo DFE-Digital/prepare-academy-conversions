@@ -46,10 +46,10 @@ namespace ApplyToBecomeInternal
 				{
 					options.HtmlHelperOptions.ClientValidationEnabled = false;
 				});
-			
+
 			services.AddControllersWithViews()
-				.AddMicrosoftIdentityUI();
-			
+				.AddMicrosoftIdentityUI();				
+		
 			if (_env.IsDevelopment())
 			{
 				razorPages.AddRazorRuntimeCompilation();
@@ -59,9 +59,9 @@ namespace ApplyToBecomeInternal
 			services.AddSession();
 			services.AddHttpContextAccessor();
 			ConfigureRedisConnection(services);
-			
+
 			services.AddAuthorization(options => { options.DefaultPolicy = SetupAuthorizationPolicyBuilder().Build(); });
-			
+
 			services.AddMicrosoftIdentityWebAppAuthentication(Configuration);
 			services.Configure<CookieAuthenticationOptions>(CookieAuthenticationDefaults.AuthenticationScheme,
 				options =>
@@ -95,7 +95,7 @@ namespace ApplyToBecomeInternal
 				client.DefaultRequestHeaders.Add("ApiKey", apiOptions.ApiKey);
 			});
 
-			services.AddScoped<ErrorService>();			
+			services.AddScoped<ErrorService>();
 			services.AddScoped<IGetEstablishment, EstablishmentService>();
 			services.Decorate<IGetEstablishment, GetEstablishmentItemCacheDecorator>();
 			services.AddScoped<SchoolPerformanceService>();
@@ -103,6 +103,7 @@ namespace ApplyToBecomeInternal
 			services.AddScoped<KeyStagePerformanceService>();
 			services.AddScoped<IAcademyConversionProjectRepository, AcademyConversionProjectRepository>();
 			services.AddScoped<IAcademyConversionAdvisoryBoardDecisionRepository, AcademyConversionAdvisoryBoardDecisionRepository>();
+			services.AddScoped<IHttpClientService, HttpClientService>();
 			services.Decorate<IAcademyConversionProjectRepository, AcademyConversionProjectItemsCacheDecorator>();
 			services.AddScoped<IProjectNotesRepository, ProjectNotesRepository>();
 			services.AddScoped<ApplicationRepository>();
@@ -129,7 +130,7 @@ namespace ApplyToBecomeInternal
 			app.UseStatusCodePagesWithReExecute("/Errors", "?statusCode={0}");
 
 			app.UseHttpsRedirection();
-			
+
 			//For Azure AD redirect uri to remain https
 			var forwardOptions = new ForwardedHeadersOptions
 			{
@@ -139,7 +140,7 @@ namespace ApplyToBecomeInternal
 			forwardOptions.KnownNetworks.Clear();
 			forwardOptions.KnownProxies.Clear();
 			app.UseForwardedHeaders(forwardOptions);
-			
+
 			app.UseStaticFiles();
 
 			app.UseRouting();
@@ -160,7 +161,7 @@ namespace ApplyToBecomeInternal
 				endpoints.MapControllerRoute("default", "{controller}/{action}/");
 			});
 		}
-		
+
 		/// <summary>
 		/// Builds Authorization policy
 		/// Ensure authenticated user and restrict roles if they are provided in configuration

@@ -1,20 +1,24 @@
+@using ApplyToBecomeInternal.Pages.TaskList.Decision
 @model ApplyToBecomeInternal.ViewModels.ProjectViewModel
+@inject ApplyToBecome.Data.Services.Interfaces.IAcademyConversionAdvisoryBoardDecisionRepository decisionRepository
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
         <span class="govuk-caption-xl">URN @Model.SchoolURN</span>
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+        <h1 class="govuk-heading-xl">
             @Model.SchoolName
         </h1>
 
-       @* <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
-            You have not recorded the decision for this project. You can record the decision once it has been made.
-        </p>
+    </div>
+    @(await Component.InvokeAsync("RecordDecisionPreview",
+            new
+            {
+                id = int.Parse(Model.Id),
+                showView = !string.IsNullOrEmpty(Context.Request.Query["rd"])
+            }))
 
-        <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link">
-            Record a decision
-        </a>*@
-
+    <div class="govuk-grid-column-full">
         <partial name="_SubMenu" />
+
     </div>
 </div>

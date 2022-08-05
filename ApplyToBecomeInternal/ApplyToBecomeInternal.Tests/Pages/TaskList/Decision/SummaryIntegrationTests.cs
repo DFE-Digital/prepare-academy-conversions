@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		}
 
 		[Fact]
-		public async Task Should_redirect_to_recorddecision()
+		public async Task Should_redirect_to_tasklist()
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 			var request = new AdvisoryBoardDecision
@@ -41,8 +41,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/summary");
 
-			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should()
-				.Be("Record the decision");
+			Document.QuerySelector<IHtmlElement>("h2").Text().Trim().Should()
+				.Be("Task list");
 		}
 
 		[Fact]
@@ -83,7 +83,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 				ConversionProjectId = project.Id
 			};
 
-			_factory.AddPostWithJsonRequest("/conversion-project/advisory-board-decision", request, "");
+			_factory.AddPostWithJsonRequest("/conversion-project/advisory-board-decision", request, new AdvisoryBoardDecision());
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
 
@@ -91,7 +91,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
-			Document.Url.Should().EndWith($"/task-list/{project.Id}");
+			Document.Url.Should().EndWith($"/task-list/{project.Id}?rd=true");
 			Document.QuerySelector<IHtmlElement>("#notification-message").Text().Trim().Should().Be("Decision recorded");
 			Document.QuerySelector<IHtmlElement>("#govuk-notification-banner-title").Text().Trim().Should().Be("Done");
 		}

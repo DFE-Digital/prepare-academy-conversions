@@ -1,0 +1,116 @@
+﻿@model ApplyToBecomeInternal.ViewModels.RecordDecisionPreviewViewModel
+
+@if (Model.ShowViewComponent)
+{
+    if (Model.Decision != null)
+    {
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Decision
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+
+                        @{
+                            var decisionName = new RecordDecisionPreviewViewModel(0, Model.Decision).GetDecisionAsFriendlyName();
+                        }
+                        @if (string.IsNullOrEmpty(decisionName))
+                        {
+                            <span class="empty">Empty</span>
+                        }
+                        else
+                        {
+                            <strong class="govuk-tag govuk-tag--green" id="decision">@decisionName</strong>
+                        }
+
+                    </dd>
+
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Who made this decision
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+
+                        @if (Model.Decision.DecisionMadeBy != null)
+                        {
+                            <div id="decision-made-by">@Model.Decision.DecisionMadeBy.ToDescription()</div>
+                        }
+                        else
+                        {
+                            <span class="empty">Empty</span>
+                        }
+
+                    </dd>
+                </div>
+
+                @{
+                    var conditionsSet = Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value;
+                }
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Were any conditions set
+                    </dt>
+                    <dd class="govuk-summary-list__value" id="condition-set">
+                        @(conditionsSet ? "Yes" : "No")
+                    </dd>
+                </div>
+
+                @if (conditionsSet)
+                {
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Details of the conditions
+                        </dt>
+                        <dd class="govuk-summary-list__value" id="condition-details">
+                            @Model.Decision.ApprovedConditionsDetails
+                        </dd>
+                    </div>
+                }
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Date of decision
+                    </dt>
+                    <dd class="govuk-summary-list__value" id="decision-date">
+
+                        @if (@Model.Decision.AdvisoryBoardDecisionDate.HasValue)
+                        {
+                            <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Day.ToString("00") </span>
+                            <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Month.ToString("00") </span>
+                            <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Year</span>
+                        }
+                        else
+                        {
+                            <span class="empty">Empty</span>
+                        }
+
+                    </dd>
+                </div>
+            </dl>
+
+           @* <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
+                You can click the button to change the recorded decision.
+            </p>
+            <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link">
+                Change your decision
+            </a>*@
+
+        </div>
+    }
+    else
+    {
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
+                You have not recorded the decision for this project. You can record the decision once it has been made.
+            </p>
+
+            <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link">
+                Record a decision
+            </a>
+        </div>
+    }
+}
