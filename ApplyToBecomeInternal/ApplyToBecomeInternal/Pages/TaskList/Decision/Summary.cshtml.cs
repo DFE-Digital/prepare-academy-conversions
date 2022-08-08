@@ -1,3 +1,4 @@
+using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
 using ApplyToBecome.Data.Services.Interfaces;
@@ -12,12 +13,15 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 	public class SummaryModel : DecisionBaseModel
 	{
 		private readonly IAcademyConversionAdvisoryBoardDecisionRepository _advisoryBoardDecisionRepository;
+		private readonly IAcademyConversionProjectRepository _academyConversionProjectRepository;
 
 		public SummaryModel(IAcademyConversionProjectRepository repository, ISession session,
-			IAcademyConversionAdvisoryBoardDecisionRepository advisoryBoardDecisionRepository)
+			IAcademyConversionAdvisoryBoardDecisionRepository advisoryBoardDecisionRepository,
+			IAcademyConversionProjectRepository academyConversionProjectRepository)
 			: base(repository, session)
 		{
 			_advisoryBoardDecisionRepository = advisoryBoardDecisionRepository;
+			_academyConversionProjectRepository = academyConversionProjectRepository;
 		}
 
 		public AdvisoryBoardDecision Decision { get; set; }		
@@ -40,6 +44,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			decision.ConversionProjectId = id;
 
 			await _advisoryBoardDecisionRepository.Create(decision);
+			await _academyConversionProjectRepository.UpdateProject(id, new UpdateAcademyConversionProject { ProjectStatus = "Approved" });
 
 			SetDecisionInSession(id, null);
 

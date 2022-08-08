@@ -43,7 +43,10 @@
 						</p>
 					</div>
 					<div class="govuk-grid-column-one-third app-align-right">
-						<p class="govuk-tag govuk-tag--yellow govuk-!-margin-top-0  govuk-!-margin-bottom-3">PRE ADVISORY BOARD</p>
+                        @{
+                            var classColour = project.Status == "APPROVED" ? "green" : "yellow";
+                        }
+						<p class="govuk-tag govuk-tag--@classColour govuk-!-margin-top-0  govuk-!-margin-bottom-3">@project.Status</p>
 						<p class="govuk-hint govuk-!-margin-top-0">
 							<span id="@("application-received-date-" + index)">
 								@("Application received: " + project.ApplicationReceivedDate)<br>
