@@ -1,3 +1,4 @@
+using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Services;
@@ -25,11 +26,11 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		[Required(ErrorMessage = "Please enter a decision date"), Display(Name = "Decision")]
 		public DateTime? DateOfDecision { get; set; }
 
-		public LinkItem GetPageForBackLink(int id)
-		{
-			var decision = GetDecisionFromSession(id);
+		public AdvisoryBoardDecision Decision { get; set; }
 
-			return decision.ApprovedConditionsSet switch
+		public LinkItem GetPageForBackLink(int id)
+		{			
+			return Decision.ApprovedConditionsSet switch
 			{
 				true => Links.Decision.WhatConditions,
 				_ => Links.Decision.AnyConditions,
@@ -39,7 +40,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
 			await SetDefaults(id);
-			DateOfDecision = GetDecisionFromSession(id)?.AdvisoryBoardDecisionDate;
+			Decision = GetDecisionFromSession(id);
+			DateOfDecision = Decision.AdvisoryBoardDecisionDate;
+
 			SetBackLinkModel(GetPageForBackLink(id), id);
 
 			return Page();

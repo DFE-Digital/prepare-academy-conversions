@@ -4,7 +4,7 @@
     ViewData["Title"] = "Why was this project deferred?";
 }
 @section BeforeMain
-    {
+{
     <partial name="_BackLink" model="@Model.BackLinkModel" />
 }
     <span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
@@ -17,20 +17,20 @@
                 </legend>               
                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
 
-                    @{
+                @{
                     int counter = 0;
                 }
 
-                @foreach (var DeferredReason in Model.DecisionMadeByOptions)
+                @foreach (var deferredReason in Model.DecisionMadeByOptions)
                 {
                     {
                         counter++;
                     }
                     <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="@DeferredReason.ToString().ToLower()-checkboxes" name="@DeferredReason.ToString().ToLower()-checkboxes" type="checkbox"
-                        value="@DeferredReason.ToDescription()" data-aria-controls="conditional-@counter">
-                        <label class="govuk-label govuk-checkboxes__label" for="@DeferredReason.ToString().ToLower()-checkboxes">
-                            @DeferredReason.ToDescription()
+                        <input class="govuk-checkboxes__input" id="@deferredReason.ToString().ToLower()-checkboxes" name="@deferredReason.ToString().ToLower()-checkboxes" type="checkbox"
+                        value="@deferredReason.ToDescription()" data-aria-controls="conditional-@counter">
+                        <label class="govuk-label govuk-checkboxes__label" for="@deferredReason.ToString().ToLower()-checkboxes">
+                            @deferredReason.ToDescription()
                         </label>
                     </div>
                     <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-@counter">

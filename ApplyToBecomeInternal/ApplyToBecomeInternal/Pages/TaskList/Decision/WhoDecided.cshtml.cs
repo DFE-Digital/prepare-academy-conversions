@@ -50,22 +50,20 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			decision.DecisionMadeBy = DecisionMadeBy;
 
 			SetDecisionInSession(id, decision);
+		
+			return Redirect(id, overideBackLink, decision);
+		}
 
+		private IActionResult Redirect(int id, bool overideBackLink, AdvisoryBoardDecision decision)
+		{
 			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
 
-			if (decision.Decision.ToString() == "Approved")
+			return decision.Decision switch
 			{
-				return RedirectToPage(Links.Decision.AnyConditions.Page, new { id });
-			}
-			else if (decision.Decision.ToString() == "Deferred")
-			{
-				return RedirectToPage(Links.Decision.WhyDeferred.Page, new { id });
-			}
-			else
-			{
-				return RedirectToPage(Links.Decision.RecordDecision.Page, new { id });
-			}
-
-		}		
+				AdvisoryBoardDecisions.Approved => RedirectToPage(Links.Decision.AnyConditions.Page, new { id }),
+				AdvisoryBoardDecisions.Deferred => RedirectToPage(Links.Decision.WhyDeferred.Page, new { id }),
+				_ => RedirectToPage(Links.Decision.RecordDecision.Page, new { id })
+			};			
+		}
 	}
 }
