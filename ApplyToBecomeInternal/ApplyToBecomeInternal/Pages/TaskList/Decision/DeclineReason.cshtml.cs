@@ -58,7 +58,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			DeclineChoiceOfTrustReason = decision.DeclineChoiceOfTrustReason;
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id)
+		public async Task<IActionResult> OnPostAsync(int id, [FromQuery(Name = "obl")] bool overrideBackLink)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -77,7 +77,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			SetDecisionInSession(id, decision);
 
-			return RedirectToPage(Links.Decision.ApprovalDate.Page, new { id });
+			var destination = overrideBackLink ? Links.Decision.Summary.Page : Links.Decision.ApprovalDate.Page;
+
+			return RedirectToPage(destination, new { id });
 		}
 
 		public class UIHelpers
