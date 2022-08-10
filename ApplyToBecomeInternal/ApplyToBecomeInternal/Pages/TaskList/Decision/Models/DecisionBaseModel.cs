@@ -1,4 +1,5 @@
-﻿using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
+﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
@@ -14,6 +15,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 	{
 		protected readonly IAcademyConversionProjectRepository _repository;
 		protected readonly ISession _session;
+		protected AcademyConversionProject _project;
 
 		public DecisionBaseModel(IAcademyConversionProjectRepository repository, ISession session)
 		{

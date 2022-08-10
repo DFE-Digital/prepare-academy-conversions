@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace ApplyToBecomeInternal.Pages.ProjectList
 {
 	public class IndexModel : PageModel
-    {
+	{
 		private readonly int _pageSize = 10;
 
 		public IEnumerable<ProjectListViewModel> Projects { get; set; }
@@ -33,7 +33,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 		}
 
 		public async Task OnGetAsync()
-        {
+		{
 			var response = await _repository.GetAllProjects(CurrentPage, _pageSize);
 			if (!response.Success)
 			{
@@ -46,7 +46,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 			{
 				StartingPage = CurrentPage - 5;
 			}
-		}
+		}	
 
 		private ProjectListViewModel Build(AcademyConversionProject academyConversionProject)
 		{
@@ -60,7 +60,17 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 				ApplicationReceivedDate = academyConversionProject.ApplicationReceivedDate.ToDateString(),
 				AssignedDate = academyConversionProject.AssignedDate.ToDateString(),
 				HeadTeacherBoardDate = academyConversionProject.HeadTeacherBoardDate.ToDateString(),
-				ProposedAcademyOpeningDate = academyConversionProject.ProposedAcademyOpeningDate.ToDateString()
+				ProposedAcademyOpeningDate = academyConversionProject.ProposedAcademyOpeningDate.ToDateString(),
+				Status = MapProjectStatus(academyConversionProject.ProjectStatus)
+			};
+		}
+
+		private string MapProjectStatus(string status)
+		{
+			return status switch
+			{
+				"Approved" => "APPROVED",
+				_ => "PRE ADVISORY BOARD"
 			};
 		}
 	}

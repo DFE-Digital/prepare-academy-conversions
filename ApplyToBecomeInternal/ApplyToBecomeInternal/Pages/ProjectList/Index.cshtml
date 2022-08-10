@@ -39,8 +39,11 @@
 								</p>
 							</td>
 							<td class="govuk-table__cell govuk-table__cell prepare-text-align-right">
+							 @{
+                            	var classColour = project.Status == "APPROVED" ? "green" : "yellow";
+                        	 }
 								<p class="govuk-!-margin-top-0">
-									<strong class="govuk-tag govuk-tag--yellow">PRE ADVISORY BOARD</strong>
+									<strong class="govuk-tag govuk-tag--@classColour" id="project-status-@project.Id">@project.Status</strong>
 								</p>
 								<p class="govuk-hint  govuk-!-margin-top-0">
 									<span id="@("application-received-date-" + index)">

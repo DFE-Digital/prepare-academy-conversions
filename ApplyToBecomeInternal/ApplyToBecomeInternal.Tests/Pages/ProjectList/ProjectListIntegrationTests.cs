@@ -1,5 +1,12 @@
+using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
+using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecomeInternal.Extensions;
+using ApplyToBecomeInternal.Tests.PageObjects;
 using FluentAssertions;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -37,6 +44,28 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 			}
 
 			ResetServer();
+		}
+
+		[Fact]
+		public async Task Should_display_approved_after_recording_decision()
+		{						
+			var projects = AddGetProjects(p => p.ProjectStatus = "Approved");			
+
+			await OpenUrlAsync($"/project-list");
+
+			Document.QuerySelector<IHtmlElement>($"#project-status-{projects.First().Id}").Text().Should()
+				.Be("APPROVED");
+		}
+
+		[Fact]
+		public async Task Should_display_preadvisoryboard_by_default()
+		{
+			var projects = AddGetProjects().ToList();
+
+			await OpenUrlAsync($"/project-list");
+
+			Document.QuerySelector<IHtmlElement>($"#project-status-{projects.First().Id}").Text().Should()
+				.Be("PRE ADVISORY BOARD");
 		}
 
 		[Fact]
