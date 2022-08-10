@@ -6,6 +6,7 @@ using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
@@ -42,15 +43,30 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			var decision = GetDecisionFromSession(id);
 			decision.ConversionProjectId = id;
-
-			await _advisoryBoardDecisionRepository.Create(decision);
-			await _academyConversionProjectRepository.UpdateProject(id, new UpdateAcademyConversionProject { ProjectStatus = "Approved" });
-
+			
+			await CreateOrUpdateDecision(id, decision);
+		
 			SetDecisionInSession(id, null);
 
 			TempData.SetNotification(NotificationType.Success, "Done", "Decision recorded");
 
 			return RedirectToPage(Links.TaskList.Index.Page, new { id, rd = "true" });
+		}
+
+		private async Task CreateOrUpdateDecision(int id, AdvisoryBoardDecision decision)
+		{
+			var savedDecision = await _advisoryBoardDecisionRepository.Get(id);
+
+			if (savedDecision.StatusCode == HttpStatusCode.NotFound)
+			{
+				await _advisoryBoardDecisionRepository.Create(decision);
+			}
+			else
+			{
+				await _advisoryBoardDecisionRepository.Update(decision);
+			}
+
+			await _academyConversionProjectRepository.UpdateProject(id, new UpdateAcademyConversionProject { ProjectStatus = decision.Decision.ToString() });
 		}
 	}
 }
