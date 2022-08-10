@@ -10,7 +10,7 @@ namespace ApplyToBecomeInternal.Models
 		public static class ProjectList
 		{
 			public static LinkItem Index = new LinkItem { BackText = "Back to all conversion projects", Page = "/ProjectList/Index" };
-		}		
+		}
 
 		public static class ProjectNotes
 		{
@@ -64,7 +64,7 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem ViabilityIssues = new LinkItem { Page = "/TaskList/GeneralInformation/ViabilityIssues" };
 			public static LinkItem FinancialDeficit = new LinkItem { Page = "/TaskList/GeneralInformation/FinancialDeficit" };
 			public static LinkItem DistanceFromTrustHeadquarters = new LinkItem { Page = "/TaskList/GeneralInformation/DistanceFromTrustHeadquarters" };
-			public static LinkItem MPDetails = new LinkItem { Page = "/TaskList/GeneralInformation/MPDetails"  };
+			public static LinkItem MPDetails = new LinkItem { Page = "/TaskList/GeneralInformation/MPDetails" };
 		}
 
 		public static class RationaleSection
@@ -110,9 +110,9 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem AnyConditions = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/AnyConditions" };
 			public static LinkItem WhatConditions = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/WhatConditions" };
 			public static LinkItem DecisionDate = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/DecisionDate" };
-			public static LinkItem WhyDeferred = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/WhyDeferred" };			
+			public static LinkItem WhyDeferred = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/WhyDeferred" };
 			public static LinkItem Summary = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/Summary" };
-		}		
+		}
 
 		public static class TrustTemplate
 		{

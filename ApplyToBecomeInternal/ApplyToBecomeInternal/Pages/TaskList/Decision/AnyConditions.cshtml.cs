@@ -63,7 +63,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			return ApprovedConditionsSet switch
 			{
 				true => Links.Decision.WhatConditions.Page,
-				_ => Links.Decision.ApprovalDate.Page
+				_ => Links.Decision.DecisionDate.Page
 			};
 		}
 	}

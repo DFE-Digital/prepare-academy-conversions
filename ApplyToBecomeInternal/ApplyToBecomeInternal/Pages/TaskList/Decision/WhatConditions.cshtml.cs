@@ -46,7 +46,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
 
-			return RedirectToPage(Links.Decision.ApprovalDate.Page, new { id });
+			return RedirectToPage(Links.Decision.DecisionDate.Page, new { id });
 		}
 	}
 }

@@ -50,7 +50,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			decision.DecisionMadeBy = DecisionMadeBy;
 
 			SetDecisionInSession(id, decision);
-		
+
 			return Redirect(id, overideBackLink, decision);
 		}
 
@@ -63,7 +63,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 				AdvisoryBoardDecisions.Approved => RedirectToPage(Links.Decision.AnyConditions.Page, new { id }),
 				AdvisoryBoardDecisions.Deferred => RedirectToPage(Links.Decision.WhyDeferred.Page, new { id }),
 				_ => RedirectToPage(Links.Decision.RecordDecision.Page, new { id })
-			};			
+			};
 		}
 	}
 }

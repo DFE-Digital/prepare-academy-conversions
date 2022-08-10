@@ -5,7 +5,7 @@
 }
 @section BeforeMain
     {
-    <a asp-page="@Links.Decision.ApprovalDate.Page" asp-route-id="@Model.Id" class="govuk-back-link">Back</a>
+    <a asp-page="@Links.Decision.DecisionDate.Page" asp-route-id="@Model.Id" class="govuk-back-link">Back</a>
 }
 
     <span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
@@ -114,7 +114,7 @@
 
         </dd>
         <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.Decision.ApprovalDate.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+            <a class="govuk-link" asp-page="@Links.Decision.DecisionDate.Page" asp-route-id="@Model.Id" asp-route-obl="true">
                 Change<span class="govuk-visually-hidden">date of decision</span>
             </a>
         </dd>

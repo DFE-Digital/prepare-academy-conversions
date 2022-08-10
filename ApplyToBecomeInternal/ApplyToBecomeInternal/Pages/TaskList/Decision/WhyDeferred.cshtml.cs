@@ -16,8 +16,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 	{
 		private readonly ErrorService _errorService;
 
-		public WhyDeferredModel(IAcademyConversionProjectRepository repository, ISession session, 
-			ErrorService errorService) 
+		public WhyDeferredModel(IAcademyConversionProjectRepository repository, ISession session,
+			ErrorService errorService)
 			: base(repository, session)
 		{
 			_errorService = errorService;
@@ -38,7 +38,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id, List<AdvisoryBoardDeferredReasons> deferredReasons, 
+		public async Task<IActionResult> OnPostAsync(int id, List<AdvisoryBoardDeferredReasons> deferredReasons,
 			[FromQuery(Name = "obl")] bool overideBackLink)
 		{
 			if (!ModelState.IsValid)
@@ -50,10 +50,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			var deferredReason = GetDecisionFromSession(id);
 			deferredReason.DeferredReasons = deferredReasons;
 
-			SetDecisionInSession(id, deferredReason);			
+			SetDecisionInSession(id, deferredReason);
 
 			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
-			
+
 			return RedirectToPage(Links.Decision.DecisionDate.Page, new { id });
 		}
 	}
