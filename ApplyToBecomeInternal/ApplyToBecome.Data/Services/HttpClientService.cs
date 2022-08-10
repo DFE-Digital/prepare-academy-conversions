@@ -25,7 +25,16 @@ namespace ApplyToBecome.Data.Services
 			var result = await _client.PostAsync(path, requestPayload);
 
 			return await HandleResponse<TResponse>(result);
-		}	
+		}
+
+		public async Task<ApiResponse<TResponse>> Put<TRequest, TResponse>(string path, TRequest requestBody)
+			where TResponse : class
+		{
+			var requestPayload = JsonContent.Create(requestBody);			
+			var result = await _client.PutAsync(path, requestPayload);
+
+			return await HandleResponse<TResponse>(result);
+		}
 
 		public async Task<ApiResponse<TResponse>> Get<TResponse>(string path)
 			where TResponse : class
@@ -34,7 +43,6 @@ namespace ApplyToBecome.Data.Services
 
 			return await HandleResponse<TResponse>(result);
 		}
-
 
 		private async Task<ApiResponse<TResponse>> HandleResponse<TResponse>(HttpResponseMessage result) where TResponse : class
 		{

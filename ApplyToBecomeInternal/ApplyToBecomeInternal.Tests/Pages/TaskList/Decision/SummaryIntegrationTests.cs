@@ -70,7 +70,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		}
 
 		[Fact]
-		public async Task Should_populate_summary_and_save()
+		public async Task Should_populate_summary_and_create_new_decision()
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 			var request = new AdvisoryBoardDecision
@@ -85,6 +85,35 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			_factory.AddPostWithJsonRequest("/conversion-project/advisory-board-decision", request, new AdvisoryBoardDecision());
 
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+
+			await new RecordDecisionWizard(Context).SubmitThroughTheWizard(request);
+
+			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
+
+			Document.Url.Should().EndWith($"/task-list/{project.Id}?rd=true");
+			Document.QuerySelector<IHtmlElement>("#notification-message").Text().Trim().Should().Be("Decision recorded");
+			Document.QuerySelector<IHtmlElement>("#govuk-notification-banner-title").Text().Trim().Should().Be("Done");
+		}
+
+		[Fact]
+		public async Task Should_populate_summary_and_save_existing_decision()
+		{
+			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+			var request = new AdvisoryBoardDecision
+			{
+				Decision = AdvisoryBoardDecisions.Approved,
+				AdvisoryBoardDecisionDate = new DateTime(2021, 01, 01),
+				ApprovedConditionsSet = true,
+				ApprovedConditionsDetails = "bills need to be paid",
+				DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
+				ConversionProjectId = project.Id
+			};			
+
+			_factory.AddGetWithJsonResponse($"/conversion-project/advisory-board-decision/{project.Id}", request);
+			_factory.AddPutWithJsonRequest("/conversion-project/advisory-board-decision", request, new AdvisoryBoardDecision());
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
 
 			await new RecordDecisionWizard(Context).SubmitThroughTheWizard(request);
