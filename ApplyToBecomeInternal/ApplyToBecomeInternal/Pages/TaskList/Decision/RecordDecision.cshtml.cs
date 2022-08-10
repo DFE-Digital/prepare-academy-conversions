@@ -32,7 +32,7 @@ namespace ApplyToBecomeInternal.Pages.Decision
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id, [FromQuery(Name = "obl")] bool overideBackLink)
+		public async Task<IActionResult> OnPostAsync(int id)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -43,8 +43,6 @@ namespace ApplyToBecomeInternal.Pages.Decision
 			var decision = GetDecisionFromSession(id) ?? new AdvisoryBoardDecision();
 			decision.Decision = AdvisoryBoardDecision.Value;
 			SetDecisionInSession(id, decision);
-
-			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
 
 			return RedirectToPage(Links.Decision.WhoDecided.Page, new { id });
 		}

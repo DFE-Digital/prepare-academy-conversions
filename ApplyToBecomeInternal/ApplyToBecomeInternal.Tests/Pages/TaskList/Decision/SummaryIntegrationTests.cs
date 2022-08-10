@@ -191,12 +191,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		}
 
 		[Theory]
-		[InlineData(0, "Record the decision")]
-		[InlineData(1, "Who made this decision?")]
-		[InlineData(2, "Were any conditions set?")]
-		[InlineData(3, "What conditions were set?")]
-		[InlineData(4, "Date conversion was approved")]
-		public async Task Should_go_back_to_choose_and_submit_back_to_summary(int changeLinkIndex, string expectedTitle)
+		[InlineData(0, "Record the decision", "Who made this decision?")]
+		[InlineData(1, "Who made this decision?", "Were any conditions set?")]
+		[InlineData(2, "Were any conditions set?", "What conditions were set?")]
+		[InlineData(3, "What conditions were set?", "Date conversion was approved")]
+		[InlineData(4, "Date conversion was approved", "Check your answers before recording this decision")]
+		public async Task Should_go_back_to_choose_and_submit_back_to_summary(int changeLinkIndex, string changePageTitle, string nextPageTitle)
 		{
 			var request = new AdvisoryBoardDecision
 			{
@@ -216,12 +216,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			// Back to form
 			await NavigateAsync("Change", changeLinkIndex);
 
-			Document.QuerySelector<IHtmlElement>("h1").Text().Should().Be(expectedTitle);
+			Document.QuerySelector<IHtmlElement>("h1").Text().Should().Be(changePageTitle);
 
 			// submit form
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
-			Document.QuerySelector<IHtmlElement>("h1").Text().Should().Be("Check your answers before recording this decision");
+			Document.QuerySelector<IHtmlElement>("h1").Text().Should().Be(nextPageTitle);
 		}		
 	}
 }
