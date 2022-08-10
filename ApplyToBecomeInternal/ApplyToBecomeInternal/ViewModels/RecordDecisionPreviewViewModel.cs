@@ -4,14 +4,12 @@ namespace ApplyToBecomeInternal.ViewModels
 {
 	public class RecordDecisionPreviewViewModel
 	{
-		public RecordDecisionPreviewViewModel(int id, AdvisoryBoardDecision decision, bool showViewComponent = false)
+		public RecordDecisionPreviewViewModel(int id, AdvisoryBoardDecision decision)
 		{
 			Id = id;
 			Decision = decision;
-			ShowViewComponent = showViewComponent;
 		}
 
-		public bool ShowViewComponent { get; set; }
 		public int Id { get; set; }
 		public AdvisoryBoardDecision Decision { get; set; }
 

@@ -1,8 +1,6 @@
 ﻿@model ApplyToBecomeInternal.ViewModels.RecordDecisionPreviewViewModel
 
-@if (Model.ShowViewComponent)
-{
-    if (Model.Decision != null)
+    @if (Model.Decision != null)
     {
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
@@ -34,7 +32,7 @@
                     </dt>
                     <dd class="govuk-summary-list__value">
 
-                        @if (Model.Decision.DecisionMadeBy != null)
+                        @if (Model.Decision != null && Model.Decision.DecisionMadeBy != null)
                         {
                             <div id="decision-made-by">@Model.Decision.DecisionMadeBy.ToDescription()</div>
                         }
@@ -101,8 +99,7 @@
 
         </div>
     }
-    else
-    {
+    
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
                 You have not recorded the decision for this project. You can record the decision once it has been made.
@@ -112,5 +109,4 @@
                 Record a decision
             </a>
         </div>
-    }
-}
+    
