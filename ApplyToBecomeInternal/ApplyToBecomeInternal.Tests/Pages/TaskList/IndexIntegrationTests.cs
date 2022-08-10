@@ -74,10 +74,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 
 			var dateWithoutWhitespace = Regex.Replace(Document.QuerySelector<IHtmlElement>("#decision-date").Text(), @"\s+", "");
 			dateWithoutWhitespace.Should().Be("01012021");
-
-			// Button is commented out while we wait for put to be available.
-			//Document.QuerySelector<IHtmlAnchorElement>("#record-decision-link").Text().Trim().Should()
-			//	.Be("Change your decision");
+			
+		   Document.QuerySelector<IHtmlAnchorElement>("#record-decision-link").Text().Trim().Should()
+			   .Be("Change your decision");
 		}
 
 
