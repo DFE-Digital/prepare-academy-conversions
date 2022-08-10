@@ -1,3 +1,4 @@
+using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Services;
@@ -25,14 +26,17 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		[Required(ErrorMessage = "Please enter a decision date"), Display(Name = "Decision")]
 		public DateTime? DateOfDecision { get; set; }
 
+		  public string DecisionText { get; set; }
+
 		public LinkItem GetPageForBackLink(int id)
 		{
 			var decision = GetDecisionFromSession(id);
 
-			return decision.ApprovedConditionsSet switch
+			return decision.Decision switch
 			{
-				true => Links.Decision.WhatConditions,
-				_ => Links.Decision.AnyConditions,
+				AdvisoryBoardDecisions.Approved => decision is { ApprovedConditionsSet : true } ? Links.Decision.WhatConditions : Links.Decision.AnyConditions,
+				AdvisoryBoardDecisions.Declined => Links.Decision.DeclineReason,
+				_ => throw new Exception("Unexpected decision state")
 			};
 		}
 
@@ -40,6 +44,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		{
 			await SetDefaults(id);
 			DateOfDecision = GetDecisionFromSession(id)?.AdvisoryBoardDecisionDate;
+			DecisionText = GetDecisionFromSession(id)?.Decision.ToString().ToLowerInvariant();
 			SetBackLinkModel(GetPageForBackLink(id), id);
 
 			return Page();

@@ -11,6 +11,10 @@ namespace ApplyToBecome.Data.Models.AdvisoryBoardDecision
 		public bool? ApprovedConditionsSet { get; set; }
 		public string ApprovedConditionsDetails { get; set; }
 		public List<AdvisoryBoardDeclinedReasons> DeclinedReasons { get; set; }
+		public string DeclineFinanceReason { get; set; }
+		public string DeclinePerformanceReason { get; set; }
+		public string DeclineGovernanceReason { get; set; }
+		public string DeclineChoiceOfTrustReason { get; set; }
 		public string DeclinedOtherReason { get; set; }
 		public List<AdvisoryBoardDeferredReasons> DeferredReasons { get; set; }
 		public string DeferredOtherReason { get; set; }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using System.ComponentModel.DataAnnotations;
 using ApplyToBecomeInternal.Services;
+using System.Diagnostics;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {
@@ -53,7 +54,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
 
-			return RedirectToPage(Links.Decision.AnyConditions.Page, new { id });
+			return decision.Decision switch
+			{
+				AdvisoryBoardDecisions.Approved => RedirectToPage(Links.Decision.AnyConditions.Page, new { id }),
+				AdvisoryBoardDecisions.Declined => RedirectToPage(Links.Decision.DeclineReason.Page, new { id }),
+				_ => RedirectToPage(Links.Decision.AnyConditions.Page, new { id })
+			};
 		}
 	}
 }
