@@ -22,10 +22,18 @@ namespace ApplyToBecome.Data.Services
 			if (!result.Success) throw new Exception($"Request to Api failed | StatusCode - {result.StatusCode}");
 		}
 
-		public async Task<ApiResponse<AdvisoryBoardDecision>> Get(int id)
+		public async Task Update(AdvisoryBoardDecision decision)
+		{
+			var result = await _httpClientHelper
+				.Put<AdvisoryBoardDecision, AdvisoryBoardDecision>("/conversion-project/advisory-board-decision", decision);
+
+			if (!result.Success) throw new Exception($"Request to Api failed | StatusCode - {result.StatusCode}");
+		}
+
+		public async Task<ApiResponse<AdvisoryBoardDecision>> Get(int projectId)
 		{
 			return await _httpClientHelper
-				.Get<AdvisoryBoardDecision>($"/conversion-project/advisory-board-decision/{id}");
+				.Get<AdvisoryBoardDecision>($"/conversion-project/advisory-board-decision/{projectId}");
 		}
 	}
 }

@@ -52,8 +52,6 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			SetDecisionInSession(id, decision);
 
-			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
-
 			return decision.Decision switch
 			{
 				AdvisoryBoardDecisions.Approved => RedirectToPage(Links.Decision.AnyConditions.Page, new { id }),

@@ -21,7 +21,7 @@
             <dd class="govuk-summary-list__value">
 
             @{
-                var decisionName = new RecordDecisionPreviewViewModel(0, Model.Decision).GetDecisionAsFriendlyName();
+                var decisionName = Model.Decision.GetDecisionAsFriendlyName();
 	            var decisionClass = Model.Decision.Decision == AdvisoryBoardDecisions.Approved ? "govuk-tag--green" : "govuk-tag--red";
             }
             @if (string.IsNullOrEmpty(decisionName))

@@ -140,6 +140,19 @@ namespace ApplyToBecomeInternal.Tests
 					.WithBody(JsonConvert.SerializeObject(responseBody)));
 		}
 
+		public void AddPutWithJsonRequest<TRequestBody, TResponseBody>(string path, TRequestBody requestBody, TResponseBody responseBody)
+		{
+			_server
+				.Given(Request.Create()
+					.WithPath(path)
+					.WithBody(new JsonMatcher(JsonConvert.SerializeObject(requestBody), true))
+					.UsingPut())
+				.RespondWith(Response.Create()
+					.WithStatusCode(200)
+					.WithHeader("Content-Type", "application/json")
+					.WithBody(JsonConvert.SerializeObject(responseBody)));
+		}
+
 		public void AddPostWithJsonRequest<TRequestBody, TResponseBody>(string path, TRequestBody requestBody, TResponseBody responseBody)
 		{
 			_server

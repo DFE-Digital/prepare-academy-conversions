@@ -19,8 +19,8 @@ namespace ApplyToBecomeInternal.ViewComponents
 			_session = session;
 		}
 
-		public async Task<IViewComponentResult> InvokeAsync(int id, bool showView)
-		{
+		public async Task<IViewComponentResult> InvokeAsync(int id)
+		{			
 			var sessionKey = $"Decision_{id}";
 			var decision = _session.Get<AdvisoryBoardDecision>(sessionKey);
 
@@ -30,7 +30,7 @@ namespace ApplyToBecomeInternal.ViewComponents
 				_session.Set(sessionKey, decision);
 			}
 
-			var viewModel = new RecordDecisionPreviewViewModel(id, decision, showView);			
+			var viewModel = new RecordDecisionPreviewViewModel(id, decision);
 
 			return View(viewModel);
 		}

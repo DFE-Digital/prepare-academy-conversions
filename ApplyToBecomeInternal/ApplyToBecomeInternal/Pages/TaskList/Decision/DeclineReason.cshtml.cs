@@ -77,9 +77,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			SetDecisionInSession(id, decision);
 
-			var destination = overrideBackLink ? Links.Decision.Summary.Page : Links.Decision.ApprovalDate.Page;
-
-			return RedirectToPage(destination, new { id });
+			return RedirectToPage(Links.Decision.ApprovalDate.Page, new { id });
 		}
 
 		public class UIHelpers
