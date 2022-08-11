@@ -14,14 +14,6 @@ namespace ApplyToBecomeInternal.ViewModels
 		public bool ShowViewComponent { get; set; }
 		public int Id { get; set; }
 		public AdvisoryBoardDecision Decision { get; set; }
-
-		public string GetDecisionAsFriendlyName()
-		{
-			return Decision switch
-			{
-				{ Decision: AdvisoryBoardDecisions.Approved, ApprovedConditionsSet: true } => "APPROVED WITH CONDITIONS",
-				_ => Decision?.Decision.ToString().ToUpper()
-			};
-		}
+		
 	}
 }
