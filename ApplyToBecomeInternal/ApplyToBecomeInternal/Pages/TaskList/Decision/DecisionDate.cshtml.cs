@@ -42,9 +42,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
+			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
+			if (decision.Decision == null) return RedirectToPage(Links.TaskList.Index.Page, new { id });
+
 			await SetDefaults(id);
-			DateOfDecision = GetDecisionFromSession(id)?.AdvisoryBoardDecisionDate;
-			DecisionText = GetDecisionFromSession(id)?.Decision.ToString().ToLowerInvariant();
+			DateOfDecision = decision.AdvisoryBoardDecisionDate;
+			DecisionText = decision.Decision.ToString().ToLowerInvariant();
 			SetBackLinkModel(GetPageForBackLink(id), id);
 
 			return Page();

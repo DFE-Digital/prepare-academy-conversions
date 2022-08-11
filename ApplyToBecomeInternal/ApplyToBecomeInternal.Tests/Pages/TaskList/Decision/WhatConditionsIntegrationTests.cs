@@ -1,5 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
+using ApplyToBecomeInternal.Tests.PageObjects;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -49,12 +51,15 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/what-conditions");
-
 			var conditionDetails = "Your school has no outstanding debts.";
 
-			Document.QuerySelector<IHtmlTextAreaElement>("#conditions-textarea").Value = conditionDetails;
-			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
+			RecordDecisionWizard wizard = new RecordDecisionWizard(Context);
+
+			await wizard.StartFor(project.Id);
+			await wizard.SetDecisionTo(AdvisoryBoardDecisions.Approved);
+			await wizard.SetDecisionBy(DecisionMadeBy.Minister);
+			await wizard.SetIsConditional(true);
+			await wizard.SpecifyConditions(conditionDetails);
 
 			Document.Url.Should().EndWith($"/task-list/{project.Id}/decision/decision-date");
 		}
