@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.ViewModels;
@@ -46,7 +48,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 			{
 				StartingPage = CurrentPage - 5;
 			}
-		}	
+		}
 
 		private ProjectListViewModel Build(AcademyConversionProject academyConversionProject)
 		{
@@ -65,12 +67,24 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 			};
 		}
 
-		private string MapProjectStatus(string status)
+		private ProjectStatus MapProjectStatus(string status)
 		{
+			const string green = "green";
+			const string yellow = "yellow";
+
+			if (Enum.TryParse(status, out AdvisoryBoardDecisions result))
+			{
+				return result switch
+				{
+					AdvisoryBoardDecisions.Approved => new ProjectStatus(result.ToString().ToUpper(), green),
+					_ => new ProjectStatus(result.ToString().ToUpper(), yellow)
+				};				
+			}
+			
 			return status switch
 			{
-				"Approved" => "APPROVED",
-				_ => "PRE ADVISORY BOARD"
+				"APPROVED WITH CONDITIONS" => new ProjectStatus(status, green),
+				_ => new ProjectStatus("PRE ADVISORY BOARD", yellow)
 			};
 		}
 	}

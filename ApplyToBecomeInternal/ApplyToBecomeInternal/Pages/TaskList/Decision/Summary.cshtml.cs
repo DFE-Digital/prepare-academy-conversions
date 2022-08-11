@@ -25,7 +25,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			_academyConversionProjectRepository = academyConversionProjectRepository;
 		}
 
-		public AdvisoryBoardDecision Decision { get; set; }		
+		public AdvisoryBoardDecision Decision { get; set; }
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
@@ -43,9 +43,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			var decision = GetDecisionFromSession(id);
 			decision.ConversionProjectId = id;
-			
+
 			await CreateOrUpdateDecision(id, decision);
-		
+
 			SetDecisionInSession(id, null);
 
 			TempData.SetNotification(NotificationType.Success, "Done", "Decision recorded");
@@ -66,7 +66,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 				await _advisoryBoardDecisionRepository.Update(decision);
 			}
 
-			await _academyConversionProjectRepository.UpdateProject(id, new UpdateAcademyConversionProject { ProjectStatus = decision.Decision.ToString() });
+			await _academyConversionProjectRepository.UpdateProject(id, new UpdateAcademyConversionProject { ProjectStatus = decision.GetDecisionAsFriendlyName() });
 		}
 	}
 }

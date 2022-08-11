@@ -13,6 +13,17 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string AssignedDate { get; set; }
 		public string HeadTeacherBoardDate { get; set; }
 		public string ProposedAcademyOpeningDate { get; set; }
-		public string Status { get; set; }
+		public ProjectStatus Status { get; set; }
+	}
+
+	public class ProjectStatus
+	{				
+		public ProjectStatus(string value, string colour)
+		{
+			Value = value;
+			Colour = colour;	
+		}
+		public string Value { get; set; }
+		public string Colour { get; set; }
 	}
 }

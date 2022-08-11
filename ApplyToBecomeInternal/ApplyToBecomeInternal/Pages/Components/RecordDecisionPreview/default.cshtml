@@ -14,7 +14,7 @@
                     <dd class="govuk-summary-list__value">
 
                         @{
-                            var decisionName = new RecordDecisionPreviewViewModel(0, Model.Decision).GetDecisionAsFriendlyName();
+                            var decisionName = Model.Decision.GetDecisionAsFriendlyName();
                         }
                         @if (string.IsNullOrEmpty(decisionName))
                         {
