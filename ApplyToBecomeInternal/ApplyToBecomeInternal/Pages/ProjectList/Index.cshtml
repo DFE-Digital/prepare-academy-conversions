@@ -38,9 +38,9 @@
 									<div id="@("local-authority-" + index)">Local authority: @project.LocalAuthority</div>
 								</p>
 							</td>
-							<td class="govuk-table__cell govuk-table__cell prepare-text-align-right">
+							<td class="govuk-table__cell govuk-table__cell prepare-text-align-right">							 
 								<p class="govuk-!-margin-top-0">
-									<strong class="govuk-tag govuk-tag--yellow">PRE ADVISORY BOARD</strong>
+									<strong class="govuk-tag govuk-tag--@project.Status.Colour" id="project-status-@project.Id">@project.Status.Value</strong>
 								</p>
 								<p class="govuk-hint  govuk-!-margin-top-0">
 									<span id="@("application-received-date-" + index)">

@@ -31,7 +31,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id, [FromQuery(Name = "obl")] bool overideBackLink)
+		public async Task<IActionResult> OnPostAsync(int id)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -43,8 +43,6 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			decision.ApprovedConditionsDetails = ApprovedConditionsDetails;
 
 			SetDecisionInSession(id, decision);
-
-			if (overideBackLink) return RedirectToPage(Links.Decision.Summary.Page, new { id });
 
 			return RedirectToPage(Links.Decision.DecisionDate.Page, new { id });
 		}

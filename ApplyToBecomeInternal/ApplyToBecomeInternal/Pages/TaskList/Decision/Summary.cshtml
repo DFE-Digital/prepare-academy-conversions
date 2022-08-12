@@ -20,7 +20,7 @@
             <dd class="govuk-summary-list__value">
 
             @{
-                var decisionName = new RecordDecisionPreviewViewModel(0, Model.Decision).GetDecisionAsFriendlyName();
+                var decisionName = Model.Decision.GetDecisionAsFriendlyName();
             }
             @if (string.IsNullOrEmpty(decisionName))
             {
@@ -28,7 +28,7 @@
             }
             else
             {
-                <strong class="govuk-tag govuk-tag--green" id="decision">@decisionName</strong>
+                <strong class="govuk-tag govuk-tag--green" id="decision">@decisionName.ToUpper()</strong>
             }
 
         </dd>

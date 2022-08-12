@@ -70,7 +70,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		}
 
 		[Fact]
-		public async Task Should_populate_summary_and_save()
+		public async Task Should_populate_summary_and_create_new_decision()
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 			var request = new AdvisoryBoardDecision
@@ -85,6 +85,35 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			_factory.AddPostWithJsonRequest("/conversion-project/advisory-board-decision", request, new AdvisoryBoardDecision());
 
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+
+			await new RecordDecisionWizard(Context).SubmitThroughTheWizard(request);
+
+			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
+
+			Document.Url.Should().EndWith($"/task-list/{project.Id}?rd=true");
+			Document.QuerySelector<IHtmlElement>("#notification-message").Text().Trim().Should().Be("Decision recorded");
+			Document.QuerySelector<IHtmlElement>("#govuk-notification-banner-title").Text().Trim().Should().Be("Done");
+		}
+
+		[Fact]
+		public async Task Should_populate_summary_and_save_existing_decision()
+		{
+			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+			var request = new AdvisoryBoardDecision
+			{
+				Decision = AdvisoryBoardDecisions.Approved,
+				AdvisoryBoardDecisionDate = new DateTime(2021, 01, 01),
+				ApprovedConditionsSet = true,
+				ApprovedConditionsDetails = "bills need to be paid",
+				DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
+				ConversionProjectId = project.Id
+			};			
+
+			_factory.AddGetWithJsonResponse($"/conversion-project/advisory-board-decision/{project.Id}", request);
+			_factory.AddPutWithJsonRequest("/conversion-project/advisory-board-decision", request, new AdvisoryBoardDecision());
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
 
 			await new RecordDecisionWizard(Context).SubmitThroughTheWizard(request);
@@ -162,12 +191,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		}
 
 		[Theory]
-		[InlineData(0, "Record the decision")]
-		[InlineData(1, "Who made this decision?")]
-		[InlineData(2, "Were any conditions set?")]
-		[InlineData(3, "What conditions were set?")]
-		[InlineData(4, "Date conversion was approved")]
-		public async Task Should_go_back_to_choose_and_submit_back_to_summary(int changeLinkIndex, string expectedTitle)
+		[InlineData(0, "Record the decision", "Who made this decision?")]
+		[InlineData(1, "Who made this decision?", "Were any conditions set?")]
+		[InlineData(2, "Were any conditions set?", "What conditions were set?")]
+		[InlineData(3, "What conditions were set?", "Date conversion was approved")]
+		[InlineData(4, "Date conversion was approved", "Check your answers before recording this decision")]
+		public async Task Should_go_back_to_choose_and_submit_back_to_summary(int changeLinkIndex, string changePageTitle, string nextPageTitle)
 		{
 			var request = new AdvisoryBoardDecision
 			{
@@ -187,12 +216,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			// Back to form
 			await NavigateAsync("Change", changeLinkIndex);
 
-			Document.QuerySelector<IHtmlElement>("h1").Text().Should().Be(expectedTitle);
+			Document.QuerySelector<IHtmlElement>("h1").Text().Should().Be(changePageTitle);
 
 			// submit form
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
-			Document.QuerySelector<IHtmlElement>("h1").Text().Should().Be("Check your answers before recording this decision");
+			Document.QuerySelector<IHtmlElement>("h1").Text().Should().Be(nextPageTitle);
 		}		
 	}
 }

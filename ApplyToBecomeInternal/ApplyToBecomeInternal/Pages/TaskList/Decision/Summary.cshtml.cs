@@ -1,3 +1,4 @@
+using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
 using ApplyToBecome.Data.Services.Interfaces;
@@ -5,6 +6,7 @@ using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
@@ -12,15 +14,18 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 	public class SummaryModel : DecisionBaseModel
 	{
 		private readonly IAcademyConversionAdvisoryBoardDecisionRepository _advisoryBoardDecisionRepository;
+		private readonly IAcademyConversionProjectRepository _academyConversionProjectRepository;
 
 		public SummaryModel(IAcademyConversionProjectRepository repository, ISession session,
-			IAcademyConversionAdvisoryBoardDecisionRepository advisoryBoardDecisionRepository)
+			IAcademyConversionAdvisoryBoardDecisionRepository advisoryBoardDecisionRepository,
+			IAcademyConversionProjectRepository academyConversionProjectRepository)
 			: base(repository, session)
 		{
 			_advisoryBoardDecisionRepository = advisoryBoardDecisionRepository;
+			_academyConversionProjectRepository = academyConversionProjectRepository;
 		}
 
-		public AdvisoryBoardDecision Decision { get; set; }		
+		public AdvisoryBoardDecision Decision { get; set; }
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
@@ -39,13 +44,29 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			var decision = GetDecisionFromSession(id);
 			decision.ConversionProjectId = id;
 
-			await _advisoryBoardDecisionRepository.Create(decision);
+			await CreateOrUpdateDecision(id, decision);
 
 			SetDecisionInSession(id, null);
 
 			TempData.SetNotification(NotificationType.Success, "Done", "Decision recorded");
 
 			return RedirectToPage(Links.TaskList.Index.Page, new { id, rd = "true" });
+		}
+
+		private async Task CreateOrUpdateDecision(int id, AdvisoryBoardDecision decision)
+		{
+			var savedDecision = await _advisoryBoardDecisionRepository.Get(id);
+
+			if (savedDecision.StatusCode == HttpStatusCode.NotFound)
+			{
+				await _advisoryBoardDecisionRepository.Create(decision);
+			}
+			else
+			{
+				await _advisoryBoardDecisionRepository.Update(decision);
+			}
+
+			await _academyConversionProjectRepository.UpdateProject(id, new UpdateAcademyConversionProject { ProjectStatus = decision.GetDecisionAsFriendlyName() });
 		}
 	}
 }

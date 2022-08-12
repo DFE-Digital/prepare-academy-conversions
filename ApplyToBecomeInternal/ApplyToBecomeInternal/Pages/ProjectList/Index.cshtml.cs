@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.ViewModels;
@@ -11,7 +13,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace ApplyToBecomeInternal.Pages.ProjectList
 {
 	public class IndexModel : PageModel
-    {
+	{
 		private readonly int _pageSize = 10;
 
 		public IEnumerable<ProjectListViewModel> Projects { get; set; }
@@ -33,7 +35,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 		}
 
 		public async Task OnGetAsync()
-        {
+		{
 			var response = await _repository.GetAllProjects(CurrentPage, _pageSize);
 			if (!response.Success)
 			{
@@ -60,7 +62,29 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 				ApplicationReceivedDate = academyConversionProject.ApplicationReceivedDate.ToDateString(),
 				AssignedDate = academyConversionProject.AssignedDate.ToDateString(),
 				HeadTeacherBoardDate = academyConversionProject.HeadTeacherBoardDate.ToDateString(),
-				ProposedAcademyOpeningDate = academyConversionProject.ProposedAcademyOpeningDate.ToDateString()
+				ProposedAcademyOpeningDate = academyConversionProject.ProposedAcademyOpeningDate.ToDateString(),
+				Status = MapProjectStatus(academyConversionProject.ProjectStatus)
+			};
+		}
+
+		private ProjectStatus MapProjectStatus(string status)
+		{
+			const string green = "green";
+			const string yellow = "yellow";
+
+			if (Enum.TryParse(status, out AdvisoryBoardDecisions result))
+			{
+				return result switch
+				{
+					AdvisoryBoardDecisions.Approved => new ProjectStatus(result.ToString().ToUpper(), green),
+					_ => new ProjectStatus(result.ToString().ToUpper(), yellow)
+				};				
+			}
+			
+			return status switch
+			{
+				"APPROVED WITH CONDITIONS" => new ProjectStatus(status, green),
+				_ => new ProjectStatus("PRE ADVISORY BOARD", yellow)
 			};
 		}
 	}

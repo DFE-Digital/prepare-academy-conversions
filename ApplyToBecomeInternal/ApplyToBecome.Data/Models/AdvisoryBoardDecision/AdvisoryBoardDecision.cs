@@ -16,5 +16,15 @@ namespace ApplyToBecome.Data.Models.AdvisoryBoardDecision
 		public string DeferredOtherReason { get; set; }
 		public DateTime? AdvisoryBoardDecisionDate { get; set; }
 		public DecisionMadeBy? DecisionMadeBy { get; set; }
+
+		public string GetDecisionAsFriendlyName()
+		{
+			return this switch
+			{
+				{ Decision: AdvisoryBoardDecisions.Approved, ApprovedConditionsSet: true } => "APPROVED WITH CONDITIONS",
+				_ => Decision?.ToString()
+			};
+		}
+
 	}
 }
