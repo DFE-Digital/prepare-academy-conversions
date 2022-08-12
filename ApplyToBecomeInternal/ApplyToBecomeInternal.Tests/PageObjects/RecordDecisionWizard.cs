@@ -77,6 +77,16 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 			await ClickSubmitButton();
 		}
 
+		public async Task SetDecisionDate(DateTime date)
+		{
+			// await InputDateAndSubmit(date);
+			Document.QuerySelector<IHtmlInputElement>("#-day").Value = date.Day.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#-month").Value = date.Month.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#-year").Value = date.Year.ToString();
+
+			await ClickSubmitButton();
+		}
+
 		private async Task SelectRadioAndSubmit(string enumAsString)
 		{
 			Document.QuerySelector<IHtmlInputElement>($"#{enumAsString}-radio").IsChecked = true;
@@ -96,12 +106,5 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 			Document.QuerySelector<IHtmlInputElement>("#-year").Value = date.Year.ToString();
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 		}
-	}
-
-	public interface IRecordDecisionWizard
-	{
-		Task SetDecisionTo(AdvisoryBoardDecisions declined);
-		Task SetDecisionBy(DecisionMadeBy minister);
-		Task SetDeclinedReasons(Tuple<AdvisoryBoardDeclinedReasons, string> reason, params Tuple<AdvisoryBoardDeclinedReasons, string>[] furtherReasons);
 	}
 }

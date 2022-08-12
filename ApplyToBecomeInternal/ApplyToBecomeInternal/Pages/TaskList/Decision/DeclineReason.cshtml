@@ -31,8 +31,8 @@
 				@foreach (var declineOption in Model.DeclineOptions)
 				{
 					<div class="govuk-checkboxes__item">
-						<input name="DeclinedReasons" 
-						       checked="@Model.UI.IsChecked(declineOption)" 
+						<input name="DeclinedReasons"
+						       checked="@Model.UI.IsChecked(declineOption)"
 						       class="govuk-checkboxes__input" 
 						       id="@Model.UI.IdFor("declined-reasons", declineOption)" 
 						       type="checkbox" 
