@@ -1,4 +1,6 @@
 ﻿@page "/task-list/{id:int}/decision/why-deferred"
+@using ApplyToBecome.Data.Models.AdvisoryBoardDecision
+@using ApplyToBecomeInternal.Pages.TaskList.Decision
 @model ApplyToBecomeInternal.Pages.TaskList.Decision.WhyDeferredModel
 @{
     ViewData["Title"] = "Why was this project deferred?";
@@ -14,35 +16,15 @@
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                </legend>               
+                </legend>
                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
 
-                @{
-                    int counter = 0;
-                }
-
-                @foreach (var deferredReason in Model.DecisionMadeByOptions)
-                {
-                    {
-                        counter++;
-                    }
-                    <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="@deferredReason.ToString().ToLower()-checkboxes" name="@deferredReason.ToString().ToLower()-checkboxes" type="checkbox"
-                        value="@deferredReason.ToDescription()" data-aria-controls="conditional-@counter">
-                        <label class="govuk-label govuk-checkboxes__label" for="@deferredReason.ToString().ToLower()-checkboxes">
-                            @deferredReason.ToDescription()
-                        </label>
-                    </div>
-                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-@counter">
-                    <div class="govuk-form-group">
-                        <label class="govuk-label" for="ReasonDeferred-@counter">
-                            Give reasons
-                        </label>
-                        <textarea class="govuk-textarea govuk-!-width-three-quarters" id="ReasonDeferred-@counter" name="ReasonDeferred-@counter" rows="5" aria-describedby="more-detail-hint"></textarea>
-                    </div>
-
-                    </div>
-                }
+                   @{
+                       CheckBoxAndLabel(AdvisoryBoardDeferredReason.AdditionalInformationNeeded, Model.AdditionalInformationNeededIsChecked, Model.AdditionalInformationNeededDetails);
+                       CheckBoxAndLabel(AdvisoryBoardDeferredReason.AwaitingNextOfstedReport, Model.AwaitingNextOfstedReportIsChecked, Model.AwaitingNextOfstedReportDetails);
+                       CheckBoxAndLabel(AdvisoryBoardDeferredReason.PerformanceConcerns, Model.PerformanceConcernsIsChecked, Model.PerformanceConcernsDetails);
+                       CheckBoxAndLabel(AdvisoryBoardDeferredReason.Other, Model.OtherIsChecked, Model.OtherDetails);
+                   }
             </div>
         </fieldset>
     </div>
@@ -52,3 +34,25 @@
     </button>
 </form>
 
+@{
+    void CheckBoxAndLabel(AdvisoryBoardDeferredReason deferredReason, bool isChecked, string details) 
+    {
+    <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="@deferredReason.ToString().ToLower()-checkbox" name="@(deferredReason)IsChecked" type="checkbox"
+                                data-aria-controls="conditional-@deferredReason" value="true" @(isChecked ? "checked" : "")>
+                            <label class="govuk-label govuk-checkboxes__label" for="@deferredReason.ToString().ToLower()-checkbox">
+                                @deferredReason.ToDescription()
+                            </label>
+    </div>
+    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-@deferredReason">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="@deferredReason.ToString().ToLower()-txtarea">
+                                    Give reasons
+                                </label>
+                                <textarea class="govuk-textarea govuk-!-width-three-quarters" id="@deferredReason.ToString().ToLower()-txtarea" 
+                                name="@(deferredReason)Details" rows="5" aria-describedby="more-detail-hint">@details</textarea>
+                            </div>
+
+    </div>
+    }    
+}

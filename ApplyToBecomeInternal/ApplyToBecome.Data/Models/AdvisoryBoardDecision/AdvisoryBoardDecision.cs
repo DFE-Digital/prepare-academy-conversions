@@ -5,6 +5,11 @@ namespace ApplyToBecome.Data.Models.AdvisoryBoardDecision
 {
 	public class AdvisoryBoardDecision
 	{
+		public AdvisoryBoardDecision()
+		{
+			DeferredReasons = new List<AdvisoryBoardDeferredReasonDetails>();
+		}
+
 		public int AdvisoryBoardDecisionId { get; set; }
 		public int ConversionProjectId { get; set; }
 		public AdvisoryBoardDecisions? Decision { get; set; }
@@ -12,8 +17,7 @@ namespace ApplyToBecome.Data.Models.AdvisoryBoardDecision
 		public string ApprovedConditionsDetails { get; set; }
 		public List<AdvisoryBoardDeclinedReasons> DeclinedReasons { get; set; }
 		public string DeclinedOtherReason { get; set; }
-		public List<AdvisoryBoardDeferredReasons> DeferredReasons { get; set; }
-		public string DeferredOtherReason { get; set; }
+		public List<AdvisoryBoardDeferredReasonDetails> DeferredReasons { get; set; }		
 		public DateTime? AdvisoryBoardDecisionDate { get; set; }
 		public DecisionMadeBy? DecisionMadeBy { get; set; }
 
