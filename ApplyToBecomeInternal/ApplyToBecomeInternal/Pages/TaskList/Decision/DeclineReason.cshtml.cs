@@ -1,5 +1,6 @@
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
+using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Http;
@@ -28,6 +29,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		public IEnumerable<string> DeclinedReasons { get; set; }
 
 		[BindProperty] public string DeclineOtherReason { get; set; }
+
 		[BindProperty] public string DeclineFinanceReason { get; set; }
 		[BindProperty] public string DeclinePerformanceReason { get; set; }
 		[BindProperty] public string DeclineGovernanceReason { get; set; }
@@ -60,6 +62,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 		public async Task<IActionResult> OnPostAsync(int id, [FromQuery(Name = "obl")] bool overrideBackLink)
 		{
+			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Finance, DeclineFinanceReason);
+			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Performance, DeclinePerformanceReason);
+			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Governance, DeclineGovernanceReason);
+			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.ChoiceOfTrust, DeclineChoiceOfTrustReason);
+			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Other, DeclineOtherReason);
+
 			if (!ModelState.IsValid)
 			{
 				_errorService.AddErrors(ModelState.Keys, ModelState);
@@ -78,6 +86,14 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			SetDecisionInSession(id, decision);
 
 			return RedirectToPage(Links.Decision.ApprovalDate.Page, new { id });
+		}
+
+		private void EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons reason, string explanation)
+		{
+			string reasonName = reason.ToString();
+
+			if (DeclinedReasons.Contains(reasonName) && string.IsNullOrWhiteSpace(explanation))
+				ModelState.AddModelError($"Decline{reasonName}Reason", $"Explanation is required for {reason.ToDescription().ToLowerInvariant()}");
 		}
 
 		public class UIHelpers

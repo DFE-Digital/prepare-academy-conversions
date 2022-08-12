@@ -36,7 +36,14 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 			await _browsingContext.OpenAsync($"http://localhost/task-list/{projectId}/decision/record-decision");
 		}
 
-		private async Task ClickSubmitButton()
+		/// <summary>
+		/// Finds the submit button and clicks it
+		/// </summary>
+		/// <remarks>
+		/// Not required when calling methods with <b>Set</b> prefix.
+		/// </remarks>
+		/// <returns></returns>
+		public async Task ClickSubmitButton()
 		{
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 		}
