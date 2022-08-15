@@ -65,11 +65,11 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			var decision = GetDecisionFromSession(id);
 
 			decision.DeclinedReasons = DeclinedReasons.Select(Enum.Parse<AdvisoryBoardDeclinedReasons>).ToList();
-			decision.DeclinedOtherReason = DeclinedReasons.Contains(AdvisoryBoardDeclinedReasons.Other.ToString()) ? DeclineOtherReason : null;
-			decision.DeclineFinanceReason = DeclinedReasons.Contains(AdvisoryBoardDeclinedReasons.Finance.ToString()) ? DeclineFinanceReason : null;
-			decision.DeclinePerformanceReason = DeclinedReasons.Contains(AdvisoryBoardDeclinedReasons.Performance.ToString()) ? DeclinePerformanceReason : null;
-			decision.DeclineGovernanceReason = DeclinedReasons.Contains(AdvisoryBoardDeclinedReasons.Governance.ToString()) ? DeclineGovernanceReason : null;
-			decision.DeclineChoiceOfTrustReason = DeclinedReasons.Contains(AdvisoryBoardDeclinedReasons.ChoiceOfTrust.ToString()) ? DeclineChoiceOfTrustReason : null;
+			decision.DeclinedOtherReason = GetExplanationForReason(AdvisoryBoardDeclinedReasons.Other);
+			decision.DeclineFinanceReason = GetExplanationForReason(AdvisoryBoardDeclinedReasons.Finance);
+			decision.DeclineGovernanceReason = GetExplanationForReason(AdvisoryBoardDeclinedReasons.Governance);
+			decision.DeclinePerformanceReason = GetExplanationForReason(AdvisoryBoardDeclinedReasons.Performance);
+			decision.DeclineChoiceOfTrustReason = GetExplanationForReason(AdvisoryBoardDeclinedReasons.ChoiceOfTrust);
 
 			SetDecisionInSession(id, decision);
 
@@ -79,13 +79,25 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.ChoiceOfTrust, DeclineChoiceOfTrustReason);
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Other, DeclineOtherReason);
 
-			if (!ModelState.IsValid)
-			{
-				_errorService.AddErrors(ModelState.Keys, ModelState);
-				return await OnGetAsync(id);
-			}
+			if (ModelState.IsValid) return RedirectToPage(Links.Decision.ApprovalDate.Page, new { id });
 
-			return RedirectToPage(Links.Decision.ApprovalDate.Page, new { id });
+			_errorService.AddErrors(ModelState.Keys, ModelState);
+			return await OnGetAsync(id);
+		}
+
+		private string GetExplanationForReason(AdvisoryBoardDeclinedReasons reason)
+		{
+			return DeclinedReasons.Contains(reason.ToString())
+				? reason switch
+				{
+					AdvisoryBoardDeclinedReasons.Finance => DeclineFinanceReason,
+					AdvisoryBoardDeclinedReasons.Performance => DeclinePerformanceReason,
+					AdvisoryBoardDeclinedReasons.Governance => DeclineGovernanceReason,
+					AdvisoryBoardDeclinedReasons.ChoiceOfTrust => DeclineChoiceOfTrustReason,
+					AdvisoryBoardDeclinedReasons.Other => DeclineOtherReason,
+					_ => throw new ArgumentOutOfRangeException(nameof(reason), reason, "Unexpected value for AdvisoryBoardDeclinedReasons")
+				}
+				: null;
 		}
 
 		private void EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons reason, string explanation)
