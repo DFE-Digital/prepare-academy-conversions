@@ -152,8 +152,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			Document.QuerySelector<IHtmlElement>("#condition-details").Text().Trim().Should()
 				.Be(request.ApprovedConditionsDetails);
 
-			var dateWithoutWhitespace = Regex.Replace(Document.QuerySelector<IHtmlElement>("#decision-date").Text(), @"\s+", "");
-			dateWithoutWhitespace.Should().Be("01012021");
+			Document.QuerySelector<IHtmlElement>("#decision-date").Text().Trim().Should()
+			.Be("01 January 2021");
 		}
 
 		[Theory]
