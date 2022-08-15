@@ -6,10 +6,12 @@ namespace ApplyToBecome.Data.Models.AdvisoryBoardDecision
 	{
 		[Description("Additional information needed")]
 		AdditionalInformationNeeded = 0,
-		[Description("Awaiting next Ofsted report")]
-		AwaitingNextOfstedReport = 1,
+		[Description("Local sensitivity concerns")]
+		LocalSensitivityConcerns = 1,
 		[Description("Performance concerns")]
-		PerformanceConcerns = 2,		
+		PerformanceConcerns = 2,
+		[Description("Trust to engage more with stakeholders")]
+		TrustToEngageMoreWithStakeholders = 3,
 		[Description("Other")]
 		Other = 4
 	}
