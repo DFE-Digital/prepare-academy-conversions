@@ -39,6 +39,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 				{ Decision: AdvisoryBoardDecisions.Approved, ApprovedConditionsSet: true } => Links.Decision.WhatConditions,
 				{ Decision: AdvisoryBoardDecisions.Approved, ApprovedConditionsSet: false } => Links.Decision.AnyConditions,
 				{ Decision: AdvisoryBoardDecisions.Declined } => Links.Decision.DeclineReason,
+				{ Decision: AdvisoryBoardDecisions.Deferred } => Links.Decision.WhyDeferred,
 				_ => throw new Exception("Unexpected decision state")
 			};
 		}

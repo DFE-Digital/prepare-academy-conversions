@@ -77,6 +77,8 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 				return result switch
 				{
 					AdvisoryBoardDecisions.Approved => new ProjectStatus(result.ToString().ToUpper(), green),
+					AdvisoryBoardDecisions.Deferred => new ProjectStatus(result.ToString().ToUpper(), "orange"),
+					AdvisoryBoardDecisions.Declined => new ProjectStatus(result.ToString().ToUpper(), "red"),
 					_ => new ProjectStatus(result.ToString().ToUpper(), yellow)
 				};				
 			}

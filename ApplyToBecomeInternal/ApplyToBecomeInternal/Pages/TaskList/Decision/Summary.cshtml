@@ -23,7 +23,13 @@
 
                 @{
                 var decisionName = Model.Decision.GetDecisionAsFriendlyName();
-	            var decisionClass = Model.Decision.Decision == AdvisoryBoardDecisions.Approved ? "govuk-tag--green" : "govuk-tag--red";
+                
+                string decisionClass = Model.Decision.Decision switch
+                {
+                  AdvisoryBoardDecisions.Approved => "govuk-tag--green",
+                  AdvisoryBoardDecisions.Deferred => "govuk-tag--orange",
+                  _ => "govuk-tag--red",
+                };	            
             }
             @if (string.IsNullOrEmpty(decisionName))
             {
@@ -133,7 +139,7 @@
         var conditionsSet = Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value;
     }
 
-	    @if (Model.Decision.Decision != AdvisoryBoardDecisions.Declined)
+	    @if (Model.Decision.Decision == AdvisoryBoardDecisions.Approved)
 	    {
 		    <div class="govuk-summary-list__row">
 			    <dt class="govuk-summary-list__key">
