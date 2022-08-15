@@ -10,7 +10,7 @@ namespace ApplyToBecome.Data.Models.AdvisoryBoardDecision
 		LocalSensitivityConcerns = 1,
 		[Description("Performance concerns")]
 		PerformanceConcerns = 2,
-		[Description("Trust to engage more with stakeholders")]
+		[Description("School to engage more with stakeholders")]
 		TrustToEngageMoreWithStakeholders = 3,
 		[Description("Other")]
 		Other = 4

@@ -1,4 +1,5 @@
 ﻿@page "/task-list/{id:int}/decision/summary"
+@using ApplyToBecome.Data.Models.AdvisoryBoardDecision
 @model ApplyToBecomeInternal.Pages.TaskList.Decision.SummaryModel
 @{
     ViewData["Title"] = "Check your answers";
@@ -19,12 +20,12 @@
             </dt>
             <dd class="govuk-summary-list__value">
 
-            @{
+                @{
                 var decisionName = Model.Decision.GetDecisionAsFriendlyName();
             }
             @if (string.IsNullOrEmpty(decisionName))
             {
-                <span class="empty">Empty</span>                
+                <span class="empty">Empty</span>
             }
             else
             {
@@ -59,6 +60,31 @@
             </a>
         </dd>
     </div>
+
+    @if (Model.Decision.Decision == AdvisoryBoardDecisions.Deferred)
+    {
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Why was this project deferred
+            </dt>
+            <dd class="govuk-summary-list__value" id="decline-reasons">
+
+                @foreach (var reason in @Model.Decision.DeferredReasons)
+                {
+
+                    <div>@reason.Reason.ToDescription():</div>
+                    <div class="govuk-!-margin-bottom-2">@reason.Details</div>
+
+                }
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" asp-page="@Links.Decision.WhyDeferred.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+                    Change<span class="govuk-visually-hidden">rejected-reason</span>
+                </a>
+            </dd>
+        </div>
+    }
+
 
     @{
         var conditionsSet = Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value;
