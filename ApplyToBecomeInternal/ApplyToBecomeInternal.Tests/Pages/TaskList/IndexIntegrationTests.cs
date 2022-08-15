@@ -72,10 +72,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 			Document.QuerySelector<IHtmlElement>("#condition-details").Text().Trim().Should()
 				.Be(request.ApprovedConditionsDetails);
 
-			var dateWithoutWhitespace = Regex.Replace(Document.QuerySelector<IHtmlElement>("#decision-date").Text(), @"\s+", "");
-			dateWithoutWhitespace.Should().Be("01012021");
-			
-		   Document.QuerySelector<IHtmlAnchorElement>("#record-decision-link").Text().Trim().Should()
+			Document.QuerySelector<IHtmlElement>("#decision-date").Text().Trim().Should()
+				.Be("01 January 2021");
+
+			Document.QuerySelector<IHtmlAnchorElement>("#record-decision-link").Text().Trim().Should()
 			   .Be("Change your decision");
 		}
 
@@ -108,8 +108,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 			Document.QuerySelector<IHtmlElement>("#condition-details").Text().Trim().Should()
 				.Be(response.ApprovedConditionsDetails);
 
-			var dateWithoutWhitespace = Regex.Replace(Document.QuerySelector<IHtmlElement>("#decision-date").Text(), @"\s+", "");
-			dateWithoutWhitespace.Should().Be("02012021");
+			Document.QuerySelector<IHtmlElement>("#decision-date").Text().Trim().Should()
+				.Be("02 January 2021");
 		}
 	}
 }

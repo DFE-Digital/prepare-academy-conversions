@@ -1,4 +1,5 @@
 ﻿@page "/task-list/{id:int}/decision/summary"
+@using ApplyToBecomeInternal.Configuration
 @using ApplyToBecome.Data.Models.AdvisoryBoardDecision
 @model ApplyToBecomeInternal.Pages.TaskList.Decision.SummaryModel
 @{
@@ -174,9 +175,7 @@
 
             @if (@Model.Decision.AdvisoryBoardDecisionDate.HasValue)
             {
-                <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Day.ToString("00") </span>
-                <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Month.ToString("00") </span>
-                <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.Year</span>
+               <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.ToString(Constants.DateTimeFormat)</span>
             }
             else
             {
