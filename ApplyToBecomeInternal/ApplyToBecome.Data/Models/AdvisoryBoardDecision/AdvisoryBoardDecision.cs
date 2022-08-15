@@ -5,21 +5,56 @@ namespace ApplyToBecome.Data.Models.AdvisoryBoardDecision
 {
 	public class AdvisoryBoardDecision
 	{
+		private AdvisoryBoardDecisions? _decision;
+
 		public AdvisoryBoardDecision()
 		{
 			DeferredReasons = new List<AdvisoryBoardDeferredReasonDetails>();
+			DeclinedReasons = new List<AdvisoryBoardDeclinedReasonDetails>();
 		}
 
 		public int AdvisoryBoardDecisionId { get; set; }
 		public int ConversionProjectId { get; set; }
-		public AdvisoryBoardDecisions? Decision { get; set; }
 		public bool? ApprovedConditionsSet { get; set; }
 		public string ApprovedConditionsDetails { get; set; }
 		public List<AdvisoryBoardDeclinedReasonDetails> DeclinedReasons { get; set; }
-		public string DeclinedOtherReason { get; set; }
-		public List<AdvisoryBoardDeferredReasonDetails> DeferredReasons { get; set; }		
+		public List<AdvisoryBoardDeferredReasonDetails> DeferredReasons { get; set; }
 		public DateTime? AdvisoryBoardDecisionDate { get; set; }
 		public DecisionMadeBy? DecisionMadeBy { get; set; }
+
+
+
+		public AdvisoryBoardDecisions? Decision
+		{
+			get { return _decision; }
+			set
+			{
+				if (value != _decision)
+				{
+					if (value == AdvisoryBoardDecisions.Approved)
+					{
+						DeclinedReasons = new List<AdvisoryBoardDeclinedReasonDetails>();
+						DeferredReasons = new List<AdvisoryBoardDeferredReasonDetails>();
+					}
+
+					if (value == AdvisoryBoardDecisions.Declined)
+					{
+						ApprovedConditionsSet = null;
+						ApprovedConditionsDetails = null;
+						DeferredReasons = new List<AdvisoryBoardDeferredReasonDetails>();
+					}
+
+					if (value == AdvisoryBoardDecisions.Deferred)
+					{
+						ApprovedConditionsSet = null;
+						ApprovedConditionsDetails = null;
+						DeclinedReasons = new List<AdvisoryBoardDeclinedReasonDetails>();
+					}
+				}
+
+				_decision = value;
+			}
+		}
 
 		public string GetDecisionAsFriendlyName()
 		{

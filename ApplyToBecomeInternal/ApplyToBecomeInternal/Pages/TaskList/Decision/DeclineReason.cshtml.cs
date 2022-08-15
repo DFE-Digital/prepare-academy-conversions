@@ -53,7 +53,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
 
 			DeclinedReasons = new StringValues(decision.DeclinedReasons?.Select(x => x.ToString()).ToArray());
-			DeclineOtherReason = decision.DeclinedOtherReason;
+			//DeclineOtherReason = decision.DeclinedOtherReason;
 			//DeclineFinanceReason = decision.DeclineFinanceReason;
 			//DeclinePerformanceReason = decision.DeclinePerformanceReason;
 			//DeclineGovernanceReason = decision.DeclineGovernanceReason;
