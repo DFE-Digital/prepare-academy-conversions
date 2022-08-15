@@ -64,9 +64,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			RecordDecisionWizard wizard = new RecordDecisionWizard(Context);
 
 			await wizard.StartFor(project.Id);
-			await wizard.SetDecisionTo(AdvisoryBoardDecisions.Approved);
-			await wizard.SetDecisionBy(DecisionMadeBy.Minister);
-			await wizard.SetIsConditional(false);
+			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Approved);
+			await wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+			await wizard.SetIsConditionalAndContinue(false);
 
 			Document.Url.Should().EndWith("/decision/decision-date");
 		}

@@ -165,10 +165,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			var wizard = new RecordDecisionWizard(Context);
 
 			await wizard.StartFor(project.Id);
-			await wizard.SetDecisionTo(AdvisoryBoardDecisions.Declined);
-			await wizard.SetDecisionBy(DecisionMadeBy.DirectorGeneral);
-			await wizard.SetDeclinedReasons(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "Finance reason"));
-			await wizard.SetDecisionDate(DateTime.Today);
+			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
+			await wizard.SetDecisionByAndContinue(DecisionMadeBy.DirectorGeneral);
+			await wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "Finance reason"));
+			await wizard.SetDecisionDateAndContinue(DateTime.Today);
 
 			Document.QuerySelector("#decision").TextContent.Trim().Should().Be("Declined");
 		}
@@ -181,11 +181,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			var wizard = new RecordDecisionWizard(Context);
 
 			await wizard.StartFor(project.Id);
-			await wizard.SetDecisionTo(AdvisoryBoardDecisions.Declined);
-			await wizard.SetDecisionBy(DecisionMadeBy.Minister);
-			await wizard.SetDeclinedReasons(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "Finance detail"),
+			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
+			await wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+			await wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "Finance detail"),
 				Tuple.Create(AdvisoryBoardDeclinedReasons.ChoiceOfTrust, "Choice of trust detail"));
-			await wizard.SetDecisionDate(DateTime.Today);
+			await wizard.SetDecisionDateAndContinue(DateTime.Today);
 
 			string declineReasonSummary = Document.QuerySelector("#decline-reasons").TextContent;
 
@@ -207,10 +207,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			var wizard = new RecordDecisionWizard(Context);
 
 			await wizard.StartFor(project.Id);
-			await wizard.SetDecisionTo(AdvisoryBoardDecisions.Declined);
-			await wizard.SetDecisionBy(DecisionMadeBy.OtherRegionalDirector);
-			await wizard.SetDeclinedReasons(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "finance reasons"));
-			await wizard.SetDecisionDate(DateTime.Today);
+			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
+			await wizard.SetDecisionByAndContinue(DecisionMadeBy.OtherRegionalDirector);
+			await wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "finance reasons"));
+			await wizard.SetDecisionDateAndContinue(DateTime.Today);
 
 			string summaryContent = Document.QuerySelector(".govuk-summary-list").TextContent;
 

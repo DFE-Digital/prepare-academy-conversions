@@ -48,19 +48,19 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 		}
 
-		public async Task SetDecisionTo(AdvisoryBoardDecisions decision)
+		public async Task SetDecisionToAndContinue(AdvisoryBoardDecisions decision)
 		{
 			Document.QuerySelector<IHtmlInputElement>($"#{decision.ToString().ToLowerInvariant()}-radio").IsChecked = true;
 			await ClickSubmitButton();
 		}
 
-		public async Task SetDecisionBy(DecisionMadeBy by)
+		public async Task SetDecisionByAndContinue(DecisionMadeBy by)
 		{
 			Document.QuerySelector<IHtmlInputElement>($"#{by.ToString().ToLowerInvariant()}-radio").IsChecked = true;
 			await ClickSubmitButton();
 		}
 
-		public async Task SetDeclinedReasons(Tuple<AdvisoryBoardDeclinedReasons, string> reason, params Tuple<AdvisoryBoardDeclinedReasons, string>[] furtherReasons)
+		public async Task SetDeclinedReasonsAndContinue(Tuple<AdvisoryBoardDeclinedReasons, string> reason, params Tuple<AdvisoryBoardDeclinedReasons, string>[] furtherReasons)
 		{
 			foreach ((AdvisoryBoardDeclinedReasons option, string detail) in new[] { reason }.Concat(furtherReasons))
 			{
@@ -71,20 +71,20 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 			await ClickSubmitButton();
 		}
 
-		public async Task SetIsConditional(bool required)
+		public async Task SetIsConditionalAndContinue(bool required)
 		{
 			var controlId = required ? "#yes-radio" : "#no-radio";
 			Document.QuerySelector<IHtmlInputElement>(controlId).IsChecked = true;
 			await ClickSubmitButton();
 		}
 
-		public async Task SpecifyConditions(string conditions)
+		public async Task SpecifyConditionsAndContinue(string conditions)
 		{
 			Document.QuerySelector<IHtmlTextAreaElement>("#conditions-textarea").Value = conditions;
 			await ClickSubmitButton();
 		}
 
-		public async Task SetDecisionDate(DateTime date)
+		public async Task SetDecisionDateAndContinue(DateTime date)
 		{
 			// await InputDateAndSubmit(date);
 			Document.QuerySelector<IHtmlInputElement>("#-day").Value = date.Day.ToString();

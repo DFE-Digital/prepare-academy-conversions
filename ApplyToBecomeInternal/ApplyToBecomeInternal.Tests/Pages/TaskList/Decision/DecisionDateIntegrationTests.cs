@@ -125,9 +125,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			RecordDecisionWizard wizard = new RecordDecisionWizard(Context);
 
 			await wizard.StartFor(project.Id);
-			await wizard.SetDecisionTo(AdvisoryBoardDecisions.Declined);
-			await wizard.SetDecisionBy(DecisionMadeBy.Minister);
-			await wizard.SetDeclinedReasons(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "Finance reasons"));
+			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
+			await wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+			await wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "Finance reasons"));
 
 			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Date conversion was declined");
 
@@ -141,9 +141,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			RecordDecisionWizard wizard = new RecordDecisionWizard(Context);
 
 			await wizard.StartFor(project.Id);
-			await wizard.SetDecisionTo(AdvisoryBoardDecisions.Approved);
-			await wizard.SetDecisionBy(DecisionMadeBy.OtherRegionalDirector);
-			await wizard.SetIsConditional(false);
+			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Approved);
+			await wizard.SetDecisionByAndContinue(DecisionMadeBy.OtherRegionalDirector);
+			await wizard.SetIsConditionalAndContinue(false);
 		}
 	}
 }

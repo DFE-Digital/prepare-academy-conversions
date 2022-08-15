@@ -5,6 +5,7 @@ using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecomeInternal.Tests.PageObjects;
 using FluentAssertions;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -25,8 +26,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			_wizard = new RecordDecisionWizard(Context);
 
 			await _wizard.StartFor(_project.Id);
-			await _wizard.SetDecisionTo(AdvisoryBoardDecisions.Declined);
-			await _wizard.SetDecisionBy(DecisionMadeBy.RegionalDirectorForRegion);
+			await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
+			await _wizard.SetDecisionByAndContinue(DecisionMadeBy.RegionalDirectorForRegion);
 
 			Document.Url.Should().EndWith("/decision/declined-reason");
 		}
@@ -56,25 +57,26 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			PageHeading.Should().Be("Who made this decision?");
 		}
 
-		[Fact]
-		public async Task Should_persist_the_selected_decline_reasons()
+		[Theory]
+		[InlineData(AdvisoryBoardDeclinedReasons.Finance)]
+		[InlineData(AdvisoryBoardDeclinedReasons.Governance)]
+		[InlineData(AdvisoryBoardDeclinedReasons.Performance)]
+		[InlineData(AdvisoryBoardDeclinedReasons.ChoiceOfTrust)]
+		[InlineData(AdvisoryBoardDeclinedReasons.Other)]
+		public async Task Should_persist_the_selected_decline_reasons(AdvisoryBoardDeclinedReasons reason)
 		{
-			await _wizard.SetDeclinedReasons(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "finance reasons"),
-				Tuple.Create(AdvisoryBoardDeclinedReasons.ChoiceOfTrust, "Choice of trust reasons"));
+			await _wizard.SetDeclinedReasonsAndContinue(Tuple.Create(reason, $"{reason} explanation"));
 
 			await NavigateAsync("Back");
 
-			CheckBoxFor(AdvisoryBoardDeclinedReasons.Finance).IsChecked.Should().BeTrue();
-			ExplanationFor(AdvisoryBoardDeclinedReasons.Finance).Should().Contain("finance reason");
-
-			CheckBoxFor(AdvisoryBoardDeclinedReasons.ChoiceOfTrust).IsChecked.Should().BeTrue();
-			ExplanationFor(AdvisoryBoardDeclinedReasons.ChoiceOfTrust).Should().Contain("Choice of trust reasons");
+			CheckBoxFor(reason).IsChecked.Should().BeTrue();
+			ExplanationFor(reason).Should().Contain($"{reason} explanation");
 		}
 
 		[Fact]
 		public async Task Should_continue_to_the_decline_date_page_on_submit()
 		{
-			await _wizard.SetDeclinedReasons(Tuple.Create(AdvisoryBoardDeclinedReasons.Other, "other reasons"));
+			await _wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Other, "other reasons"));
 
 			PageHeading.Should().Be("Date conversion was declined");
 		}
@@ -96,54 +98,52 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			ErrorSummary.TextContent.Should().Contain("There is a problem");
 		}
 
-		[Fact]
-		public async Task Should_require_a_reason_for_the_finance_option()
+		[Theory]
+		[InlineData(AdvisoryBoardDeclinedReasons.Finance)]
+		[InlineData(AdvisoryBoardDeclinedReasons.Performance)]
+		[InlineData(AdvisoryBoardDeclinedReasons.Governance)]
+		[InlineData(AdvisoryBoardDeclinedReasons.ChoiceOfTrust)]
+		[InlineData(AdvisoryBoardDeclinedReasons.Other)]
+		public async Task Should_require_a_reason_for_the_selected_option(AdvisoryBoardDeclinedReasons reason)
 		{
-			CheckBoxFor(AdvisoryBoardDeclinedReasons.Finance).IsChecked = true;
+			CheckBoxFor(reason).IsChecked = true;
+			ExplanationFor(reason).Should().BeNullOrWhiteSpace();
+
 			await _wizard.ClickSubmitButton();
 
 			PageHeading.Should().Be("Why was this project declined?");
 			ErrorSummary.Should().NotBeNull();
 		}
 
-		[Fact]
-		public async Task Should_require_a_reason_for_the_performance_option()
+		[Theory]
+		[InlineData(AdvisoryBoardDeclinedReasons.Finance)]
+		[InlineData(AdvisoryBoardDeclinedReasons.Performance)]
+		[InlineData(AdvisoryBoardDeclinedReasons.Governance)]
+		[InlineData(AdvisoryBoardDeclinedReasons.ChoiceOfTrust)]
+		[InlineData(AdvisoryBoardDeclinedReasons.Other)]
+		public async Task Should_clear_the_reason_for_an_option_if_it_is_no_longer_selected(AdvisoryBoardDeclinedReasons reason)
 		{
-			CheckBoxFor(AdvisoryBoardDeclinedReasons.Performance).IsChecked = true;
-			await _wizard.ClickSubmitButton();
+			await _wizard.SetDeclinedReasonsAndContinue(Tuple.Create(reason, $"{reason} explanation"));
+			await NavigateAsync("Back");
+
+			CheckBoxFor(reason).IsChecked.Should().BeTrue();
+			ExplanationFor(reason).Should().NotBeEmpty();
+
+			CheckBoxFor(reason).IsChecked = false;
+
+			await _wizard.SetDeclinedReasonsAndContinue(Tuple.Create(ReasonOtherThan(reason), "Something else"));
+			await NavigateAsync("Back");
 
 			PageHeading.Should().Be("Why was this project declined?");
-			ErrorSummary.Should().NotBeNull();
+			ExplanationFor(reason).Should().BeNullOrWhiteSpace();
 		}
 
-		[Fact]
-		public async Task Should_require_a_reason_for_the_governance_option()
+		private AdvisoryBoardDeclinedReasons ReasonOtherThan(AdvisoryBoardDeclinedReasons reason)
 		{
-			CheckBoxFor(AdvisoryBoardDeclinedReasons.Governance).IsChecked = true;
-			await _wizard.ClickSubmitButton();
-
-			PageHeading.Should().Be("Why was this project declined?");
-			ErrorSummary.Should().NotBeNull();
-		}
-
-		[Fact]
-		public async Task Should_require_a_reason_for_the_choice_of_trust_option()
-		{
-			CheckBoxFor(AdvisoryBoardDeclinedReasons.ChoiceOfTrust).IsChecked = true;
-			await _wizard.ClickSubmitButton();
-
-			PageHeading.Should().Be("Why was this project declined?");
-			ErrorSummary.Should().NotBeNull();
-		}
-
-		[Fact]
-		public async Task Should_require_a_reason_for_the_other_option()
-		{
-			CheckBoxFor(AdvisoryBoardDeclinedReasons.Other).IsChecked = true;
-			await _wizard.ClickSubmitButton();
-
-			PageHeading.Should().Be("Why was this project declined?");
-			ErrorSummary.Should().NotBeNull();
+			return Enum.GetValues(typeof(AdvisoryBoardDeclinedReasons))
+				.Cast<AdvisoryBoardDeclinedReasons>()
+				.Except(new[] { reason })
+				.First();
 		}
 
 		private IHtmlInputElement CheckBoxFor(AdvisoryBoardDeclinedReasons reason)
@@ -153,7 +153,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 		private string ExplanationFor(AdvisoryBoardDeclinedReasons reason)
 		{
-			return Document.QuerySelector<IHtmlTextAreaElement>($"#reason-{reason.ToString().ToLowerInvariant()}").TextContent;
+			return Document.QuerySelector<IHtmlTextAreaElement>($"#reason-{reason.ToString().ToLowerInvariant()}")?.TextContent;
 		}
 	}
 }

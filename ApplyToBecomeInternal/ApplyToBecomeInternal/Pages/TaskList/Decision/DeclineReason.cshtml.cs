@@ -62,6 +62,17 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 		public async Task<IActionResult> OnPostAsync(int id, [FromQuery(Name = "obl")] bool overrideBackLink)
 		{
+			var decision = GetDecisionFromSession(id);
+
+			decision.DeclinedReasons = DeclinedReasons.Select(Enum.Parse<AdvisoryBoardDeclinedReasons>).ToList();
+			decision.DeclinedOtherReason = DeclinedReasons.Contains(AdvisoryBoardDeclinedReasons.Other.ToString()) ? DeclineOtherReason : null;
+			decision.DeclineFinanceReason = DeclinedReasons.Contains(AdvisoryBoardDeclinedReasons.Finance.ToString()) ? DeclineFinanceReason : null;
+			decision.DeclinePerformanceReason = DeclinedReasons.Contains(AdvisoryBoardDeclinedReasons.Performance.ToString()) ? DeclinePerformanceReason : null;
+			decision.DeclineGovernanceReason = DeclinedReasons.Contains(AdvisoryBoardDeclinedReasons.Governance.ToString()) ? DeclineGovernanceReason : null;
+			decision.DeclineChoiceOfTrustReason = DeclinedReasons.Contains(AdvisoryBoardDeclinedReasons.ChoiceOfTrust.ToString()) ? DeclineChoiceOfTrustReason : null;
+
+			SetDecisionInSession(id, decision);
+
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Finance, DeclineFinanceReason);
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Performance, DeclinePerformanceReason);
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Governance, DeclineGovernanceReason);
@@ -73,17 +84,6 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 				_errorService.AddErrors(ModelState.Keys, ModelState);
 				return await OnGetAsync(id);
 			}
-
-			var decision = GetDecisionFromSession(id);
-
-			decision.DeclinedReasons = DeclinedReasons.Select(Enum.Parse<AdvisoryBoardDeclinedReasons>).ToList();
-			decision.DeclinedOtherReason = DeclineOtherReason;
-			decision.DeclineFinanceReason = DeclineFinanceReason;
-			decision.DeclinePerformanceReason = DeclinePerformanceReason;
-			decision.DeclineGovernanceReason = DeclineGovernanceReason;
-			decision.DeclineChoiceOfTrustReason = DeclineChoiceOfTrustReason;
-
-			SetDecisionInSession(id, decision);
 
 			return RedirectToPage(Links.Decision.ApprovalDate.Page, new { id });
 		}
