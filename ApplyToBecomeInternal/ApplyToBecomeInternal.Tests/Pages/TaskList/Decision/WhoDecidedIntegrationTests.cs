@@ -74,13 +74,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
-
-			Document.QuerySelector<IHtmlInputElement>("#declined-radio").IsChecked = true;
-			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
-
-			Document.QuerySelector<IHtmlInputElement>("#regionaldirectorforregion-radio").IsChecked = true;
-			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
+			var wizard = new RecordDecisionWizard(Context);
+			await wizard.StartFor(project.Id);
+			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
+			await wizard.SetDecisionByAndContinue(DecisionMadeBy.RegionalDirectorForRegion);
 
 			Document.Url.Should().EndWith("/decision/declined-reason", because: "reason should be the second question in the declined journey");
 			Document.QuerySelector<IHtmlHeadingElement>(".govuk-fieldset__heading").TextContent.Trim()
