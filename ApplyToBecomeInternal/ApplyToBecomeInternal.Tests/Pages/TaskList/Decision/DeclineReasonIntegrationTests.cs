@@ -136,8 +136,15 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			ErrorSummary.Should().NotBeNull();
 		}
 
-		[Fact(Skip = "To be implemented.")]
-		public async Task Should_require_a_reason_for_the_other_option() { }
+		[Fact]
+		public async Task Should_require_a_reason_for_the_other_option()
+		{
+			CheckBoxFor(AdvisoryBoardDeclinedReasons.Other).IsChecked = true;
+			await _wizard.ClickSubmitButton();
+
+			PageHeading.Should().Be("Why was this project declined?");
+			ErrorSummary.Should().NotBeNull();
+		}
 
 		private IHtmlInputElement CheckBoxFor(AdvisoryBoardDeclinedReasons reason)
 		{
@@ -147,15 +154,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		private string ExplanationFor(AdvisoryBoardDeclinedReasons reason)
 		{
 			return Document.QuerySelector<IHtmlTextAreaElement>($"#reason-{reason.ToString().ToLowerInvariant()}").TextContent;
-		}
-
-		private async Task ProceedToDeclineReasonsPageFor(AcademyConversionProject project)
-		{
-			_wizard = new RecordDecisionWizard(Context);
-
-			await _wizard.StartFor(project.Id);
-			await _wizard.SetDecisionTo(AdvisoryBoardDecisions.Declined);
-			await _wizard.SetDecisionBy(DecisionMadeBy.RegionalDirectorForRegion);
 		}
 	}
 }
