@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using System.ComponentModel.DataAnnotations;
 using ApplyToBecomeInternal.Services;
+using System.Diagnostics;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {
@@ -38,7 +39,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id)
+		public async Task<IActionResult> OnPostAsync(int id, [FromQuery(Name = "obl")] bool overideBackLink)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -51,16 +52,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			SetDecisionInSession(id, decision);
 
-			return Redirect(id, decision);
-		}
-
-		private IActionResult Redirect(int id, AdvisoryBoardDecision decision)
-		{
 			return decision.Decision switch
 			{
 				AdvisoryBoardDecisions.Approved => RedirectToPage(Links.Decision.AnyConditions.Page, new { id }),
+				AdvisoryBoardDecisions.Declined => RedirectToPage(Links.Decision.DeclineReason.Page, new { id }),
 				AdvisoryBoardDecisions.Deferred => RedirectToPage(Links.Decision.WhyDeferred.Page, new { id }),
-				_ => RedirectToPage(Links.Decision.RecordDecision.Page, new { id })
+				_ => RedirectToPage(Links.Decision.AnyConditions.Page, new { id })
 			};
 		}
 	}

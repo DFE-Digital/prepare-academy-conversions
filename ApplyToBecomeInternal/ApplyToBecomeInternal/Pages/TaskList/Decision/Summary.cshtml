@@ -22,6 +22,7 @@
 
                 @{
                 var decisionName = Model.Decision.GetDecisionAsFriendlyName();
+	            var decisionClass = Model.Decision.Decision == AdvisoryBoardDecisions.Approved ? "govuk-tag--green" : "govuk-tag--red";
             }
             @if (string.IsNullOrEmpty(decisionName))
             {
@@ -29,7 +30,7 @@
             }
             else
             {
-                <strong class="govuk-tag govuk-tag--green" id="decision">@decisionName.ToUpper()</strong>
+                <strong class="govuk-tag @decisionClass" id="decision">@decisionName</strong>
             }
 
         </dd>
@@ -39,27 +40,68 @@
             </a>
         </dd>
     </div>
-    <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-            Who made this decision
-        </dt>
-        <dd class="govuk-summary-list__value">
+	    <div class="govuk-summary-list__row">
+		    <dt class="govuk-summary-list__key">
+			    Who made this decision
+		    </dt>
+		    <dd class="govuk-summary-list__value">
 
-            @if (Model.Decision.DecisionMadeBy != null)
-            {
-                <div id="decision-made-by">@Model.Decision.DecisionMadeBy.ToDescription()</div>
-            }
-            else
-            {
-                <span class="empty">Empty</span>
-            }
-        </dd>
-        <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.Decision.WhoDecided.Page" asp-route-id="@Model.Id" asp-route-obl="true">
-                Change<span class="govuk-visually-hidden">who made this decision</span>
-            </a>
-        </dd>
-    </div>
+			    @if (Model.Decision.DecisionMadeBy != null)
+			    {
+				    <div id="decision-made-by">@Model.Decision.DecisionMadeBy.ToDescription()</div>
+			    }
+			    else
+			    {
+				    <span class="empty">Empty</span>
+			    }
+		    </dd>
+		    <dd class="govuk-summary-list__actions">
+			    <a class="govuk-link" asp-page="@Links.Decision.WhoDecided.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+				    Change<span class="govuk-visually-hidden">who made this decision</span>
+			    </a>
+		    </dd>
+	    </div>
+
+	    @if (Model.Decision.Decision == AdvisoryBoardDecisions.Declined)
+	    {
+		    <div class="govuk-summary-list__row">
+			    <dt class="govuk-summary-list__key">
+				    Reasons
+			    </dt>
+			   @* <dd class="govuk-summary-list__value" id="decline-reasons">
+				    @if (Model.Decision.DeclinedReasons.Any(r => r.Reason == AdvisoryBoardDeclinedReasons.Finance))
+				    {
+					    <div>Finance:</div>
+					    <div class="govuk-!-margin-bottom-2">@Model.Decision.DeclineFinanceReason</div>
+				    }
+				    @if (Model.Decision.DeclinedReasons.Any(r => r.Reason == AdvisoryBoardDeclinedReasons.Performance))
+				    {
+					    <div>Performance:</div>
+					    <div class="govuk-!-margin-bottom-2">@Model.Decision.DeclinePerformanceReason</div>
+				    }
+				    @if (Model.Decision.DeclinedReasons.Any(r => r.Reason == AdvisoryBoardDeclinedReasons.Governance))
+				    {
+					    <div>Governance:</div>
+					    <div class="govuk-!-margin-bottom-2">@Model.Decision.DeclineGovernanceReason</div>
+				    }
+				    @if (Model.Decision.DeclinedReasons.Any(r => r.Reason == AdvisoryBoardDeclinedReasons.ChoiceOfTrust))
+				    {
+					    <div>Choice of trust:</div>
+					    <div class="govuk-!-margin-bottom-2">@Model.Decision.DeclineChoiceOfTrustReason</div>
+				    }
+				    @if (Model.Decision.DeclinedReasons.Any(r => r.Reason == AdvisoryBoardDeclinedReasons.Other))
+				    {
+					    <div>Other:</div>
+					    <div class="govuk-!-margin-bottom-2">@Model.Decision.DeclinedOtherReason</div>
+				    }
+			    </dd>*@
+			    <dd class="govuk-summary-list__actions">
+				    <a class="govuk-link" asp-page="@Links.Decision.DeclineReason.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+					    Change<span class="govuk-visually-hidden">rejected-reason</span>
+				    </a>
+			    </dd>
+		    </div>
+	    }
 
     @if (Model.Decision.Decision == AdvisoryBoardDecisions.Deferred)
     {
@@ -90,36 +132,39 @@
         var conditionsSet = Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value;
     }
 
-    <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-            Were any conditions set
-        </dt>
-        <dd class="govuk-summary-list__value" id="condition-set">
-            @(conditionsSet ? "Yes" : "No")
-        </dd>
-        <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.Decision.AnyConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true">
-                Change<span class="govuk-visually-hidden">condition answer</span>
-            </a>
-        </dd>
-    </div>
+	    @if (Model.Decision.Decision != AdvisoryBoardDecisions.Declined)
+	    {
+		    <div class="govuk-summary-list__row">
+			    <dt class="govuk-summary-list__key">
+				    Were any conditions set
+			    </dt>
+			    <dd class="govuk-summary-list__value" id="condition-set">
+				    @(conditionsSet ? "Yes" : "No")
+			    </dd>
+			    <dd class="govuk-summary-list__actions">
+				    <a class="govuk-link" asp-page="@Links.Decision.AnyConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+					    Change<span class="govuk-visually-hidden">condition answer</span>
+				    </a>
+			    </dd>
+		    </div>
 
-    @if (conditionsSet)
-    {
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-                Details of the conditions
-            </dt>
-            <dd class="govuk-summary-list__value" id="condition-details">
-                @Model.Decision.ApprovedConditionsDetails
-            </dd>
-            <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" asp-page="@Links.Decision.WhatConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true">
-                    Change<span class="govuk-visually-hidden">details of the conditions</span>
-                </a>
-            </dd>
-        </div>
-    }
+		    @if (conditionsSet)
+		    {
+			    <div class="govuk-summary-list__row">
+				    <dt class="govuk-summary-list__key">
+					    Details of the conditions
+				    </dt>
+				    <dd class="govuk-summary-list__value" id="condition-details">
+					    @Model.Decision.ApprovedConditionsDetails
+				    </dd>
+				    <dd class="govuk-summary-list__actions">
+					    <a class="govuk-link" asp-page="@Links.Decision.WhatConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+						    Change<span class="govuk-visually-hidden">details of the conditions</span>
+					    </a>
+				    </dd>
+			    </div>
+		    }
+	    }
 
     <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
