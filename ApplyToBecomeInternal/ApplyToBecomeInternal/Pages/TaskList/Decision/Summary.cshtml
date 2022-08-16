@@ -42,7 +42,7 @@
 
         </dd>
         <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+            <a class="govuk-link" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-decision-btn">
                 Change<span class="govuk-visually-hidden">decision</span>
             </a>
         </dd>
@@ -63,7 +63,7 @@
             }
         </dd>
         <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.Decision.WhoDecided.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+            <a class="govuk-link" asp-page="@Links.Decision.WhoDecided.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-who-btn">
                 Change<span class="govuk-visually-hidden">who made this decision</span>
             </a>
         </dd>
@@ -85,7 +85,7 @@
             </dd>
 
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" asp-page="@Links.Decision.DeclineReason.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+                <a class="govuk-link" asp-page="@Links.Decision.DeclineReason.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-declined-btn">
                     Change<span class="govuk-visually-hidden">rejected-reason</span>
                 </a>
             </dd>
@@ -108,7 +108,7 @@
 
             </dd>
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" asp-page="@Links.Decision.WhyDeferred.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+                <a class="govuk-link" asp-page="@Links.Decision.WhyDeferred.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-deferred-btn">
                     Change<span class="govuk-visually-hidden">rejected-reason</span>
                 </a>
             </dd>
@@ -127,7 +127,7 @@
                 @(conditionsSet ? "Yes" : "No")
             </dd>
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" asp-page="@Links.Decision.AnyConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+                <a class="govuk-link" asp-page="@Links.Decision.AnyConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-conditions-set-btn">
                     Change<span class="govuk-visually-hidden">condition answer</span>
                 </a>
             </dd>
@@ -143,7 +143,7 @@
                     @Model.Decision.ApprovedConditionsDetails
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                    <a class="govuk-link" asp-page="@Links.Decision.WhatConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+                    <a class="govuk-link" asp-page="@Links.Decision.WhatConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-conditions-btn">
                         Change<span class="govuk-visually-hidden">details of the conditions</span>
                     </a>
                 </dd>
@@ -168,7 +168,7 @@
 
         </dd>
         <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.Decision.DecisionDate.Page" asp-route-id="@Model.Id" asp-route-obl="true">
+            <a class="govuk-link" asp-page="@Links.Decision.DecisionDate.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-date-btn">
                 Change<span class="govuk-visually-hidden">date of decision</span>
             </a>
         </dd>
