@@ -2,14 +2,12 @@ using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using System.ComponentModel.DataAnnotations;
 using ApplyToBecomeInternal.Services;
-using ABD = ApplyToBecome.Data.Models.AdvisoryBoardDecision;
+using static ApplyToBecome.Data.Models.AdvisoryBoardDecision.DecisionMadeBy;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {
@@ -30,11 +28,11 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		public IEnumerable<DecisionMadeBy> DecisionMadeByOptions => new List<DecisionMadeBy>
 		{
 			// Reorder the way the radio buttons are displayed
-			ABD.DecisionMadeBy.RegionalDirectorForRegion,
-			ABD.DecisionMadeBy.OtherRegionalDirector,
-			ABD.DecisionMadeBy.DirectorGeneral,
-			ABD.DecisionMadeBy.Minister,
-			ABD.DecisionMadeBy.None,
+			RegionalDirectorForRegion,
+			OtherRegionalDirector,
+			DirectorGeneral,
+			Minister,
+			None,
 		};
 
 		public async Task<IActionResult> OnGetAsync(int id)
