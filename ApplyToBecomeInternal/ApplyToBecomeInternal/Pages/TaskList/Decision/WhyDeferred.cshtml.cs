@@ -1,20 +1,15 @@
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
-using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
-{	
+{
 	public class WhyDeferredModel : DecisionBaseModel
 	{
 		private readonly ErrorService _errorService;
@@ -109,7 +104,6 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			return reasons;
 		}
 	
-
 		public static AdvisoryBoardDeferredReasonDetails GetReason(this List<AdvisoryBoardDeferredReasonDetails> reasons, AdvisoryBoardDeferredReason reason)
 		{
 			return reasons.FirstOrDefault(r => r.Reason == reason);

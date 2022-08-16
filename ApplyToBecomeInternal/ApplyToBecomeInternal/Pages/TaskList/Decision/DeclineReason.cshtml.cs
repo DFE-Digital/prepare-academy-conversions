@@ -5,7 +5,6 @@ using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,19 +16,16 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 	public class DeclineReasonModel : DecisionBaseModel
 	{
 		private readonly ErrorService _errorService;
-
-		public DeclineReasonModel(ErrorService errorService, IAcademyConversionProjectRepository repository, ISession session) : base(repository, session)
+		public DeclineReasonModel(ErrorService errorService, IAcademyConversionProjectRepository repository, ISession session) 
+			: base(repository, session)
 		{
 			_errorService = errorService;
-
 			DeclineOptions = Enum.GetValues(typeof(AdvisoryBoardDeclinedReasons)).Cast<AdvisoryBoardDeclinedReasons>();
 		}
 
-		[BindProperty, MinLength(length: 1, ErrorMessage = "ERROR MESSAGE TBC")]
+		[BindProperty, MinLength(length: 1, ErrorMessage = "Please select at least one reason")]
 		public IEnumerable<string> DeclinedReasons { get; set; }
-
 		[BindProperty] public string DeclineOtherReason { get; set; }
-
 		[BindProperty] public string DeclineFinanceReason { get; set; }
 		[BindProperty] public string DeclinePerformanceReason { get; set; }
 		[BindProperty] public string DeclineGovernanceReason { get; set; }
@@ -46,32 +42,19 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			SetBackLinkModel(Links.Decision.WhoDecided, id);
 
 			return Page();
-		}
+		}		
 
-		private void PreloadStateFromSession(int id)
-		{
-			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
-
-			DeclinedReasons = new StringValues(decision.DeclinedReasons?.Select(x => x.ToString()).ToArray());
-			//DeclineOtherReason = decision.DeclinedOtherReason;
-			//DeclineFinanceReason = decision.DeclineFinanceReason;
-			//DeclinePerformanceReason = decision.DeclinePerformanceReason;
-			//DeclineGovernanceReason = decision.DeclineGovernanceReason;
-			//DeclineChoiceOfTrustReason = decision.DeclineChoiceOfTrustReason;
-		}
-
-		public async Task<IActionResult> OnPostAsync(int id, [FromQuery(Name = "obl")] bool overrideBackLink)
+		public async Task<IActionResult> OnPostAsync(int id)
 		{
 			var decision = GetDecisionFromSession(id);
 
-			//decision.DeclinedReasons = DeclinedReasons.Select(Enum.Parse<AdvisoryBoardDeclinedReasons>).ToList();
-			//decision.DeclinedOtherReason = GetExplanationForReason(AdvisoryBoardDeclinedReasons.Other);
-			//decision.DeclineFinanceReason = GetExplanationForReason(AdvisoryBoardDeclinedReasons.Finance);
-			//decision.DeclineGovernanceReason = GetExplanationForReason(AdvisoryBoardDeclinedReasons.Governance);
-			//decision.DeclinePerformanceReason = GetExplanationForReason(AdvisoryBoardDeclinedReasons.Performance);
-			//decision.DeclineChoiceOfTrustReason = GetExplanationForReason(AdvisoryBoardDeclinedReasons.ChoiceOfTrust);
-
-			SetDecisionInSession(id, decision);
+			var reasons = DeclinedReasons.Select(r => Enum.Parse<AdvisoryBoardDeclinedReasons>(r));
+			decision.DeclinedReasons.Clear();
+			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Other));
+			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Finance));
+			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Governance));
+			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Performance));
+			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.ChoiceOfTrust));
 
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Finance, DeclineFinanceReason);
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Performance, DeclinePerformanceReason);
@@ -79,25 +62,48 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.ChoiceOfTrust, DeclineChoiceOfTrustReason);
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Other, DeclineOtherReason);
 
+			SetDecisionInSession(id, decision);
+
 			if (ModelState.IsValid) return RedirectToPage(Links.Decision.DecisionDate.Page, new { id });
 
 			_errorService.AddErrors(ModelState.Keys, ModelState);
 			return await OnGetAsync(id);
 		}
 
-		private string GetExplanationForReason(AdvisoryBoardDeclinedReasons reason)
+		private void PreloadStateFromSession(int id)
 		{
-			return DeclinedReasons.Contains(reason.ToString())
-				? reason switch
-				{
-					AdvisoryBoardDeclinedReasons.Finance => DeclineFinanceReason,
-					AdvisoryBoardDeclinedReasons.Performance => DeclinePerformanceReason,
-					AdvisoryBoardDeclinedReasons.Governance => DeclineGovernanceReason,
-					AdvisoryBoardDeclinedReasons.ChoiceOfTrust => DeclineChoiceOfTrustReason,
-					AdvisoryBoardDeclinedReasons.Other => DeclineOtherReason,
-					_ => throw new ArgumentOutOfRangeException(nameof(reason), reason, "Unexpected value for AdvisoryBoardDeclinedReasons")
-				}
-				: null;
+			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
+
+			var reasons = decision.DeclinedReasons?.ToDictionary(key => key.Reason, value => value.Details);
+
+			DeclinedReasons = reasons.Select(r => r.Key.ToString());
+			DeclineOtherReason = reasons.TryGet(AdvisoryBoardDeclinedReasons.Other);
+			DeclineFinanceReason = reasons.TryGet(AdvisoryBoardDeclinedReasons.Finance);
+			DeclinePerformanceReason = reasons.TryGet(AdvisoryBoardDeclinedReasons.Performance);
+			DeclineGovernanceReason = reasons.TryGet(AdvisoryBoardDeclinedReasons.Governance);
+			DeclineChoiceOfTrustReason = reasons.TryGet(AdvisoryBoardDeclinedReasons.ChoiceOfTrust);
+		}
+
+		private void AddReason(List<AdvisoryBoardDeclinedReasonDetails> reasons, AdvisoryBoardDeclinedReasonDetails reason)
+		{
+			if (reason == null) return;
+
+			reasons.Add(reason);
+		}
+
+		private AdvisoryBoardDeclinedReasonDetails MapReason(IEnumerable<AdvisoryBoardDeclinedReasons> reasons, AdvisoryBoardDeclinedReasons reason)
+		{
+			if (!DeclinedReasons.Contains(reason.ToString())) return null;	
+
+			return reason switch
+			{
+				AdvisoryBoardDeclinedReasons.Finance => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineFinanceReason),
+				AdvisoryBoardDeclinedReasons.Performance => new AdvisoryBoardDeclinedReasonDetails(reason, DeclinePerformanceReason),
+				AdvisoryBoardDeclinedReasons.Governance => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineGovernanceReason),
+				AdvisoryBoardDeclinedReasons.ChoiceOfTrust => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineChoiceOfTrustReason),
+				AdvisoryBoardDeclinedReasons.Other => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineOtherReason),
+				_ => throw new ArgumentOutOfRangeException(nameof(reason), reason, "Unexpected value for AdvisoryBoardDeclinedReasons")
+			};				
 		}
 
 		private void EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons reason, string explanation)

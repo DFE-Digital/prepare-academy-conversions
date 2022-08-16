@@ -7,7 +7,6 @@ using ApplyToBecomeInternal.Pages.TaskList.Decision;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
-using static ApplyToBecomeInternal.Pages.TaskList.Decision.DecisionConstants;
 
 namespace ApplyToBecomeInternal.Pages.TaskList
 {
@@ -16,6 +15,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 		protected readonly IAcademyConversionProjectRepository _repository;
 		protected readonly ISession _session;
 		protected AcademyConversionProject _project;
+
+		public const string DECISION_SESSION_KEY = "Decision";
 
 		public DecisionBaseModel(IAcademyConversionProjectRepository repository, ISession session)
 		{
