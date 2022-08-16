@@ -21,7 +21,6 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			_errorService = errorService;
 		}
 
-		// TODO: move these properties out into separate class. Add required if attribute			
 		[BindProperty] public string AdditionalInformationNeededDetails { get; set; }
 		[BindProperty] public bool AdditionalInformationNeededIsChecked { get; set; }
 

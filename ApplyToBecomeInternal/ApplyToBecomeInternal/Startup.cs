@@ -40,7 +40,7 @@ namespace ApplyToBecomeInternal
 			var razorPages = services
 				.AddRazorPages(options =>
 				{
-					//options.Conventions.AuthorizeFolder("/");
+					options.Conventions.AuthorizeFolder("/");
 				})
 				.AddViewOptions(options =>
 				{
