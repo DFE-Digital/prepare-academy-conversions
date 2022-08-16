@@ -8,6 +8,7 @@
 @section BeforeMain
 {
     <partial name="_BackLink" model="@Model.BackLinkModel" />
+    <partial name="_ErrorSummary"/>
 }
     <span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
     <h1 class="govuk-heading-l">Why was this project deferred?</h1>
@@ -19,11 +20,12 @@
                 </legend>
                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
 
+                    <input type="hidden" asp-for="@Model.WasReasonGiven" />
+
                    @{
                        CheckBoxAndLabel(AdvisoryBoardDeferredReason.AdditionalInformationNeeded, Model.AdditionalInformationNeededIsChecked, Model.AdditionalInformationNeededDetails);
                        CheckBoxAndLabel(AdvisoryBoardDeferredReason.LocalSensitivityConcerns, Model.LocalSensitivityConcernsIsChecked, Model.LocalSensitivityConcernsDetails);
                        CheckBoxAndLabel(AdvisoryBoardDeferredReason.PerformanceConcerns, Model.PerformanceConcernsIsChecked, Model.PerformanceConcernsDetails);
-                       CheckBoxAndLabel(AdvisoryBoardDeferredReason.TrustToEngageMoreWithStakeholders, Model.TrustToEngageMoreWithStakeholdersIsChecked, Model.TrustToEngageMoreWithStakeholdersDetails);
                        CheckBoxAndLabel(AdvisoryBoardDeferredReason.Other, Model.OtherIsChecked, Model.OtherDetails);
                    }
             </div>

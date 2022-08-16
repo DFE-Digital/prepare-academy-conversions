@@ -6,7 +6,7 @@
     ViewData["Title"] = "Check your answers";
 }
 @section BeforeMain
-    {
+{
     <a asp-page="@Links.Decision.DecisionDate.Page" asp-route-id="@Model.Id" class="govuk-back-link">Back</a>
 }
 
@@ -115,13 +115,10 @@
         </div>
     }
 
-
-    @{
-        var conditionsSet = Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value;
-    }
-
     @if (Model.Decision.Decision == AdvisoryBoardDecisions.Approved)
     {
+        var conditionsSet = Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value;
+
         <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
                 Were any conditions set

@@ -77,11 +77,11 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			var reasons = decision.DeclinedReasons?.ToDictionary(key => key.Reason, value => value.Details);
 
 			DeclinedReasons = reasons.Select(r => r.Key.ToString());
-			DeclineOtherReason = reasons.TryGet(AdvisoryBoardDeclinedReasons.Other);
-			DeclineFinanceReason = reasons.TryGet(AdvisoryBoardDeclinedReasons.Finance);
-			DeclinePerformanceReason = reasons.TryGet(AdvisoryBoardDeclinedReasons.Performance);
-			DeclineGovernanceReason = reasons.TryGet(AdvisoryBoardDeclinedReasons.Governance);
-			DeclineChoiceOfTrustReason = reasons.TryGet(AdvisoryBoardDeclinedReasons.ChoiceOfTrust);
+			DeclineOtherReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.Other);
+			DeclineFinanceReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.Finance);
+			DeclinePerformanceReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.Performance);
+			DeclineGovernanceReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.Governance);
+			DeclineChoiceOfTrustReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.ChoiceOfTrust);
 		}
 
 		private void AddReason(List<AdvisoryBoardDeclinedReasonDetails> reasons, AdvisoryBoardDeclinedReasonDetails reason)
