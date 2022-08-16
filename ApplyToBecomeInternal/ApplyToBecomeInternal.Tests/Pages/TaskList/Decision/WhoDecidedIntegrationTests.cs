@@ -1,5 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
+using ApplyToBecomeInternal.Tests.PageObjects;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -65,6 +67,21 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			Document.QuerySelector<IHtmlElement>("[href='#DecisionMadeBy']").Text().Should()
 				.Be("Please select who made the decision");
 			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Who made this decision?");
+		}
+
+		[Fact]
+		public async Task Should_redirect_to_decline_reasons_if_project_declined()
+		{
+			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+
+			var wizard = new RecordDecisionWizard(Context);
+			await wizard.StartFor(project.Id);
+			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
+			await wizard.SetDecisionByAndContinue(DecisionMadeBy.RegionalDirectorForRegion);
+
+			Document.Url.Should().EndWith("/decision/declined-reason", because: "reason should be the second question in the declined journey");
+			Document.QuerySelector<IHtmlHeadingElement>(".govuk-fieldset__heading").TextContent.Trim()
+				.Should().Be("Why was this project declined?", because: "the decline reason page is the expected next step");
 		}
 	}
 }

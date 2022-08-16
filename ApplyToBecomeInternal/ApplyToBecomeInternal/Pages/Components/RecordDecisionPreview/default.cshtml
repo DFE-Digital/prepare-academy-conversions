@@ -2,54 +2,98 @@
 @using ApplyToBecome.Data.Models.AdvisoryBoardDecision
 @using ApplyToBecomeInternal.Configuration
 
-    @if (Model.Decision != null)
-    {
-        <div class="govuk-grid-column-two-thirds">
-            <dl class="govuk-summary-list">
+@if (Model.Decision != null)
+{
+    <div class="govuk-grid-column-two-thirds">
+        <dl class="govuk-summary-list">
 
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Decision
+                </dt>
+                <dd class="govuk-summary-list__value">
+
+                    @{
+                        var decisionName = Model.Decision.GetDecisionAsFriendlyName();
+                        string decisionClass = Model.Decision.Decision switch
+                        {
+                            AdvisoryBoardDecisions.Approved => "govuk-tag--green",
+                            AdvisoryBoardDecisions.Deferred => "govuk-tag--orange",
+                            _ => "govuk-tag--red",
+                        };
+                    }
+                    @if (string.IsNullOrEmpty(decisionName))
+                    {
+                        <span class="empty">Empty</span>
+                    }
+                    else
+                    {
+                        <strong class="govuk-tag @decisionClass" id="decision">@decisionName</strong>
+                    }
+
+                </dd>
+
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Who made this decision
+                </dt>
+                <dd class="govuk-summary-list__value">
+
+                    @if (Model.Decision != null && Model.Decision.DecisionMadeBy != null)
+                    {
+                        <div id="decision-made-by">@Model.Decision.DecisionMadeBy.ToDescription()</div>
+                    }
+                    else
+                    {
+                        <span class="empty">Empty</span>
+                    }
+
+                </dd>
+            </div>
+
+            @if (Model.Decision.Decision == AdvisoryBoardDecisions.Declined)
+            {
                 <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
-                        Decision
+                        Why was this project deferred
                     </dt>
-                    <dd class="govuk-summary-list__value">
+                    <dd class="govuk-summary-list__value" id="decline-reasons">
 
-                        @{
-                            var decisionName = Model.Decision.GetDecisionAsFriendlyName();
-                            var decisionClass = Model.Decision.Decision == AdvisoryBoardDecisions.Approved ? "govuk-tag--green" : "govuk-tag--red";
-                        }
-                        @if (string.IsNullOrEmpty(decisionName))
+                        @foreach (var reason in @Model.Decision.DeclinedReasons)
                         {
-                            <span class="empty">Empty</span>
-                        }
-                        else
-                        {
-                            <strong class="govuk-tag @decisionClass" id="decision">@decisionName</strong>
-                        }
 
-                    </dd>
+                            <div>@reason.Reason.ToDescription():</div>
+                            <div class="govuk-!-margin-bottom-2">@reason.Details</div>
 
+                        }
+                    </dd>                    
                 </div>
+            }
+
+
+            @if (Model.Decision.Decision == AdvisoryBoardDecisions.Deferred)
+            {
                 <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
-                        Who made this decision
+                        Why was this project deferred
                     </dt>
-                    <dd class="govuk-summary-list__value">
+                    <dd class="govuk-summary-list__value" id="decline-reasons">
 
-                        @if (Model.Decision != null && Model.Decision.DecisionMadeBy != null)
+                        @foreach (var reason in @Model.Decision.DeferredReasons)
                         {
-                            <div id="decision-made-by">@Model.Decision.DecisionMadeBy.ToDescription()</div>
-                        }
-                        else
-                        {
-                            <span class="empty">Empty</span>
-                        }
 
-                    </dd>
+                            <div>@reason.Reason.ToDescription():</div>
+                            <div class="govuk-!-margin-bottom-2">@reason.Details</div>
+
+                        }
+                    </dd>                    
                 </div>
+            }
 
-                @{
-                    var conditionsSet = Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value;                    
-                }
+            @if (Model.Decision.Decision == AdvisoryBoardDecisions.Approved)
+            {
+                var conditionsSet = Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value;
 
                 <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
@@ -71,45 +115,44 @@
                         </dd>
                     </div>
                 }
+            }
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Date of decision
+                </dt>
+                <dd class="govuk-summary-list__value" id="decision-date">
 
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Date of decision
-                    </dt>
-                    <dd class="govuk-summary-list__value" id="decision-date">
+                    @if (@Model.Decision.AdvisoryBoardDecisionDate.HasValue)
+                    {
+                        <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.ToString(Constants.DateTimeFormat)</span>
+                    }
+                    else
+                    {
+                        <span class="empty">Empty</span>
+                    }
 
-                        @if (@Model.Decision.AdvisoryBoardDecisionDate.HasValue)
-                        {
-                            <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.ToString(Constants.DateTimeFormat)</span>
-                        }
-                        else
-                        {
-                            <span class="empty">Empty</span>
-                        }
+                </dd>
+            </div>
+        </dl>
 
-                    </dd>
-                </div>
-            </dl>
+        <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
+            You can click the button to change the recorded decision.
+        </p>
+        <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link">
+            Change your decision
+        </a>
 
-            <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
-                You can click the button to change the recorded decision.
-            </p>
-            <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link">
-                Change your decision
-            </a>
+    </div>
+}
+else
+{
+    <div class="govuk-grid-column-two-thirds">
+        <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
+            You have not recorded the decision for this project. You can record the decision once it has been made.
+        </p>
 
-        </div>
-    }
-    else
-    {
-        <div class="govuk-grid-column-two-thirds">
-            <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
-                You have not recorded the decision for this project. You can record the decision once it has been made.
-            </p>
-
-            <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link">
-                Record a decision
-            </a>
-        </div>
-    }
-    
+        <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link">
+            Record a decision
+        </a>
+    </div>
+}

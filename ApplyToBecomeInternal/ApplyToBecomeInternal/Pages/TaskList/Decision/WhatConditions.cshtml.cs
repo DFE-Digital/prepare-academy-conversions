@@ -44,7 +44,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			SetDecisionInSession(id, decision);
 
-			return RedirectToPage(Links.Decision.ApprovalDate.Page, new { id });
+			return RedirectToPage(Links.Decision.DecisionDate.Page, new { id });
 		}
 	}
 }

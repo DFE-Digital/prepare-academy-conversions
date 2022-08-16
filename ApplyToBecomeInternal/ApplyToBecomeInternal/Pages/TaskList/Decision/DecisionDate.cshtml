@@ -11,7 +11,7 @@
     <partial name="_ErrorSummary" />
 }
     <span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
-    <h1 class="govuk-heading-l">Date conversion was approved</h1>
+    <h1 class="govuk-heading-l">Date conversion was @Model.DecisionText</h1>
 
     <form method="post">
         <div class="govuk-form-group @ModelState.GetErrorStyleClass()">

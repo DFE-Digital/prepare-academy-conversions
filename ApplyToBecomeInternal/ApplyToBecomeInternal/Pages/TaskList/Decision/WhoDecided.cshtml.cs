@@ -57,7 +57,13 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			SetDecisionInSession(id, decision);
 
-			return RedirectToPage(Links.Decision.AnyConditions.Page, new { id });
+			return decision.Decision switch
+			{
+				AdvisoryBoardDecisions.Approved => RedirectToPage(Links.Decision.AnyConditions.Page, new { id }),
+				AdvisoryBoardDecisions.Declined => RedirectToPage(Links.Decision.DeclineReason.Page, new { id }),
+				AdvisoryBoardDecisions.Deferred => RedirectToPage(Links.Decision.WhyDeferred.Page, new { id }),
+				_ => RedirectToPage(Links.Decision.AnyConditions.Page, new { id })
+			};
 		}
 	}
 }
