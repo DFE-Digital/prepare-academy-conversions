@@ -200,6 +200,32 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		}
 
 		[Fact]
+		public async Task Should_show_the_selected_deferred_reasons_and_details()
+		{
+			AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+
+			var wizard = new RecordDecisionWizard(Context);
+
+			await wizard.StartFor(project.Id);
+			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
+			await wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+			await wizard.SetDeferredReasonsAndContinue(Tuple.Create(AdvisoryBoardDeferredReason.PerformanceConcerns, "Finance detail"),
+				Tuple.Create(AdvisoryBoardDeferredReason.LocalSensitivityConcerns, "Choice of trust detail"));
+			await wizard.SetDecisionDateAndContinue(DateTime.Today);
+
+			string declineReasonSummary = Document.QuerySelector("#decline-reasons").TextContent;
+
+			declineReasonSummary.Should().Contain("Finance:", because: "finance reason was selected");
+			declineReasonSummary.Should().Contain("Finance detail", because: "Finance reason detail was provided");
+			declineReasonSummary.Should().Contain("Choice of trust:", because: "Choice of trust reason was selected");
+			declineReasonSummary.Should().Contain("Choice of trust detail", because: "Choice of trust reason detail was provided");
+
+			declineReasonSummary.Should().NotContain("Performance", because: "Performance was not selected");
+			declineReasonSummary.Should().NotContain("Governance", because: "Governance was not selected");
+			declineReasonSummary.Should().NotContain("Other", because: "Other was not selected");
+		}
+
+		[Fact]
 		public async Task Should_not_display_conditions_details_for_declined_projects()
 		{
 			AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);

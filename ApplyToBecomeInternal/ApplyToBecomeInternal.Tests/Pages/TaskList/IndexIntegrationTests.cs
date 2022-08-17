@@ -28,7 +28,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 			selectedSchool.Should().Be(project.SchoolName);
 		}
 
-
 		[Fact]
 		public async Task Should_redirect_to_record_decision()
 		{
@@ -41,9 +40,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 			Document.Url.Should().Contain($"/task-list/{project.Id}/decision/record-decision");
 		}
 
-
 		[Fact]
-		public async Task Should_show_choices_from_session()
+		public async Task Should_show_approved_choices_from_session()
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
@@ -64,21 +62,66 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 			await OpenUrlAsync($"/task-list/{project.Id}?rd=x");
 
 			Document.QuerySelector<IHtmlElement>("#decision").Text().Should()
-			.Be("APPROVED WITH CONDITIONS");
+				.Be("APPROVED WITH CONDITIONS");
 			Document.QuerySelector<IHtmlElement>("#decision-made-by").Text().Should()
 				.Be("Director General");
 			Document.QuerySelector<IHtmlElement>("#condition-set").Text().Trim().Should()
 				.Be("Yes");
 			Document.QuerySelector<IHtmlElement>("#condition-details").Text().Trim().Should()
 				.Be(request.ApprovedConditionsDetails);
-
 			Document.QuerySelector<IHtmlElement>("#decision-date").Text().Trim().Should()
 				.Be("01 January 2021");
-
 			Document.QuerySelector<IHtmlAnchorElement>("#record-decision-link").Text().Trim().Should()
 			   .Be("Change your decision");
 		}
 
+		[Fact]
+		public async Task Should_show_deferred_choices_from_session()
+		{
+			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+
+			var wizard = new RecordDecisionWizard(Context);
+			await wizard.StartFor(project.Id);
+			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Deferred);
+			await wizard.SetDecisionByAndContinue(DecisionMadeBy.DirectorGeneral);
+			await wizard.SetDeferredReasonsAndContinue(Tuple.Create(AdvisoryBoardDeferredReason.Other, "other explanation"));
+			await wizard.SetDecisionDateAndContinue(new DateTime(2021, 1, 1));			
+
+			await OpenUrlAsync($"/task-list/{project.Id}?rd=x");
+
+			Document.QuerySelector<IHtmlElement>("#decision").Text().Should()
+				.Be("Deferred");
+			Document.QuerySelector<IHtmlElement>("#decision-made-by").Text().Should()
+				.Be("Director General");
+			Regex.Replace(Document.QuerySelector<IHtmlElement>("#deferred-reasons").Text().Trim(), @"\s+", string.Empty).Should()
+				.Be("Other:otherexplanation");
+			Document.QuerySelector<IHtmlElement>("#decision-date").Text().Trim().Should()
+				.Be("01 January 2021");			
+		}
+
+		[Fact]
+		public async Task Should_show_declined_choices_from_session()
+		{
+			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+
+			var wizard = new RecordDecisionWizard(Context);
+			await wizard.StartFor(project.Id);
+			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
+			await wizard.SetDecisionByAndContinue(DecisionMadeBy.DirectorGeneral);
+			await wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Other, "other explanation"));
+			await wizard.SetDecisionDateAndContinue(new DateTime(2021, 1, 1));
+
+			await OpenUrlAsync($"/task-list/{project.Id}?rd=x");
+
+			Document.QuerySelector<IHtmlElement>("#decision").Text().Should()
+				.Be("Declined");
+			Document.QuerySelector<IHtmlElement>("#decision-made-by").Text().Should()
+				.Be("Director General");
+			Regex.Replace(Document.QuerySelector<IHtmlElement>("#decline-reasons").Text().Trim(), @"\s+", string.Empty).Should()
+				.Be("Other:otherexplanation");
+			Document.QuerySelector<IHtmlElement>("#decision-date").Text().Trim().Should()
+				.Be("01 January 2021");
+		}
 
 		[Fact]
 		public async Task Should_show_choices_from_api()
@@ -100,14 +143,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 			await OpenUrlAsync($"/task-list/{project.Id}?rd=x");
 
 			Document.QuerySelector<IHtmlElement>("#decision").Text().Should()
-			.Be("APPROVED WITH CONDITIONS");
+				.Be("APPROVED WITH CONDITIONS");
 			Document.QuerySelector<IHtmlElement>("#decision-made-by").Text().Should()
 				.Be("A different Regional Director");
 			Document.QuerySelector<IHtmlElement>("#condition-set").Text().Trim().Should()
 				.Be("Yes");
 			Document.QuerySelector<IHtmlElement>("#condition-details").Text().Trim().Should()
 				.Be(response.ApprovedConditionsDetails);
-
 			Document.QuerySelector<IHtmlElement>("#decision-date").Text().Trim().Should()
 				.Be("02 January 2021");
 		}
