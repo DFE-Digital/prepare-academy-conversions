@@ -29,15 +29,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 	   public string DecisionText { get; set; }
 
-		public IEnumerable<DecisionMadeBy> DecisionMadeByOptions => new List<DecisionMadeBy>
-		{
-			// Reorder the way the radio buttons are displayed
-			RegionalDirectorForRegion,
-			OtherRegionalDirector,
-			DirectorGeneral,
-			Minister,
-			None,
-		};
+	   public IEnumerable<DecisionMadeBy> DecisionMadeByOptions => Enum.GetValues(typeof(DecisionMadeBy)).Cast<DecisionMadeBy>();
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
