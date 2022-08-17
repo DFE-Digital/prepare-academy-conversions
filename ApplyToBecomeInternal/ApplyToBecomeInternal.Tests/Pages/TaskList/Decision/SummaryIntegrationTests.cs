@@ -5,7 +5,6 @@ using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecomeInternal.Tests.PageObjects;
 using FluentAssertions;
 using System;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -109,7 +108,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 				ApprovedConditionsDetails = "bills need to be paid",
 				DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
 				ConversionProjectId = project.Id
-			};			
+			};
 
 			_factory.AddGetWithJsonResponse($"/conversion-project/advisory-board-decision/{project.Id}", request);
 			_factory.AddPutWithJsonRequest("/conversion-project/advisory-board-decision", request, new AdvisoryBoardDecision());
@@ -207,22 +206,25 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			var wizard = new RecordDecisionWizard(Context);
 
 			await wizard.StartFor(project.Id);
-			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
+			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Deferred);
 			await wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
-			await wizard.SetDeferredReasonsAndContinue(Tuple.Create(AdvisoryBoardDeferredReason.PerformanceConcerns, "Finance detail"),
-				Tuple.Create(AdvisoryBoardDeferredReason.LocalSensitivityConcerns, "Choice of trust detail"));
+			await wizard.SetDeferredReasonsAndContinue(
+				Tuple.Create(AdvisoryBoardDeferredReason.PerformanceConcerns, "Performance detail"),
+				Tuple.Create(AdvisoryBoardDeferredReason.Other, "Other detail"),
+				Tuple.Create(AdvisoryBoardDeferredReason.AdditionalInformationNeeded, "additional info"),
+				Tuple.Create(AdvisoryBoardDeferredReason.AwaitingNextOftedReport, "Ofsted"));
 			await wizard.SetDecisionDateAndContinue(DateTime.Today);
 
-			string declineReasonSummary = Document.QuerySelector("#decline-reasons").TextContent;
+			string declineReasonSummary = Document.QuerySelector("#deferred-reasons").TextContent;
 
-			declineReasonSummary.Should().Contain("Finance:", because: "finance reason was selected");
-			declineReasonSummary.Should().Contain("Finance detail", because: "Finance reason detail was provided");
-			declineReasonSummary.Should().Contain("Choice of trust:", because: "Choice of trust reason was selected");
-			declineReasonSummary.Should().Contain("Choice of trust detail", because: "Choice of trust reason detail was provided");
-
-			declineReasonSummary.Should().NotContain("Performance", because: "Performance was not selected");
-			declineReasonSummary.Should().NotContain("Governance", because: "Governance was not selected");
-			declineReasonSummary.Should().NotContain("Other", because: "Other was not selected");
+			declineReasonSummary.Should().Contain("Additional information needed:");
+			declineReasonSummary.Should().Contain("additional info");
+			declineReasonSummary.Should().Contain("Awaiting next ofsted report:");
+			declineReasonSummary.Should().Contain("Ofsted");
+			declineReasonSummary.Should().Contain("Performance concerns:");
+			declineReasonSummary.Should().Contain("Performance detail");
+			declineReasonSummary.Should().Contain("Other:");
+			declineReasonSummary.Should().Contain("Other detail");
 		}
 
 		[Fact]
@@ -309,6 +311,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
 			Document.QuerySelector<IHtmlElement>("h1").Text().Should().Be(nextPageTitle);
-		}		
+		}
 	}
 }

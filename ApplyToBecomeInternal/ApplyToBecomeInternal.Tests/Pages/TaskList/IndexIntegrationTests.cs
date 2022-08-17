@@ -16,6 +16,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 		{
 		}
 
+		public IHtmlElement DecisionMadeByElement => Document.QuerySelector<IHtmlElement>("#decision-made-by");
+		public IHtmlElement DecisionElement => Document.QuerySelector<IHtmlElement>("#decision");
+		public IHtmlElement ConditionsSetElement => Document.QuerySelector<IHtmlElement>("#condition-set");
+		public IHtmlElement DecisionDateElement => Document.QuerySelector<IHtmlElement>("#decision-date");
+		public IHtmlElement ConditionDetailsElement => Document.QuerySelector<IHtmlElement>("#condition-details");
+
 		[Fact]
 		public async Task Should_display_selected_schoolname()
 		{
@@ -61,15 +67,15 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 
 			await OpenUrlAsync($"/task-list/{project.Id}?rd=x");
 
-			Document.QuerySelector<IHtmlElement>("#decision").Text().Should()
+			DecisionElement.Text().Should()
 				.Be("APPROVED WITH CONDITIONS");
-			Document.QuerySelector<IHtmlElement>("#decision-made-by").Text().Should()
+			DecisionMadeByElement.Text().Should()
 				.Be("Director General");
-			Document.QuerySelector<IHtmlElement>("#condition-set").Text().Trim().Should()
+			ConditionsSetElement.Text().Trim().Should()
 				.Be("Yes");
-			Document.QuerySelector<IHtmlElement>("#condition-details").Text().Trim().Should()
+			ConditionDetailsElement.Text().Trim().Should()
 				.Be(request.ApprovedConditionsDetails);
-			Document.QuerySelector<IHtmlElement>("#decision-date").Text().Trim().Should()
+			DecisionDateElement.Text().Trim().Should()
 				.Be("01 January 2021");
 			Document.QuerySelector<IHtmlAnchorElement>("#record-decision-link").Text().Trim().Should()
 			   .Be("Change your decision");
@@ -89,13 +95,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 
 			await OpenUrlAsync($"/task-list/{project.Id}?rd=x");
 
-			Document.QuerySelector<IHtmlElement>("#decision").Text().Should()
+			DecisionElement.Text().Should()
 				.Be("Deferred");
-			Document.QuerySelector<IHtmlElement>("#decision-made-by").Text().Should()
+			DecisionMadeByElement.Text().Should()
 				.Be("Director General");
 			Regex.Replace(Document.QuerySelector<IHtmlElement>("#deferred-reasons").Text().Trim(), @"\s+", string.Empty).Should()
 				.Be("Other:otherexplanation");
-			Document.QuerySelector<IHtmlElement>("#decision-date").Text().Trim().Should()
+			DecisionDateElement.Text().Trim().Should()
 				.Be("01 January 2021");			
 		}
 
@@ -113,13 +119,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 
 			await OpenUrlAsync($"/task-list/{project.Id}?rd=x");
 
-			Document.QuerySelector<IHtmlElement>("#decision").Text().Should()
+			DecisionElement.Text().Should()
 				.Be("Declined");
-			Document.QuerySelector<IHtmlElement>("#decision-made-by").Text().Should()
+			DecisionMadeByElement.Text().Should()
 				.Be("Director General");
 			Regex.Replace(Document.QuerySelector<IHtmlElement>("#decline-reasons").Text().Trim(), @"\s+", string.Empty).Should()
 				.Be("Other:otherexplanation");
-			Document.QuerySelector<IHtmlElement>("#decision-date").Text().Trim().Should()
+			DecisionDateElement.Text().Trim().Should()
 				.Be("01 January 2021");
 		}
 
@@ -142,15 +148,15 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 
 			await OpenUrlAsync($"/task-list/{project.Id}?rd=x");
 
-			Document.QuerySelector<IHtmlElement>("#decision").Text().Should()
+			DecisionElement.Text().Should()
 				.Be("APPROVED WITH CONDITIONS");
-			Document.QuerySelector<IHtmlElement>("#decision-made-by").Text().Should()
+			DecisionMadeByElement.Text().Should()
 				.Be("A different Regional Director");
-			Document.QuerySelector<IHtmlElement>("#condition-set").Text().Trim().Should()
+			ConditionsSetElement.Text().Trim().Should()
 				.Be("Yes");
-			Document.QuerySelector<IHtmlElement>("#condition-details").Text().Trim().Should()
+			ConditionDetailsElement.Text().Trim().Should()
 				.Be(response.ApprovedConditionsDetails);
-			Document.QuerySelector<IHtmlElement>("#decision-date").Text().Trim().Should()
+			DecisionDateElement.Text().Trim().Should()
 				.Be("02 January 2021");
 		}
 	}
