@@ -1,9 +1,8 @@
 ﻿@page "/task-list/{id:int}/decision/why-deferred"
 @using ApplyToBecome.Data.Models.AdvisoryBoardDecision
-@using ApplyToBecomeInternal.Pages.TaskList.Decision
 @model ApplyToBecomeInternal.Pages.TaskList.Decision.WhyDeferredModel
 @{
-    ViewData["Title"] = "Why was this project deferred?";
+	ViewData["Title"] = $"Why project was {Model.DecisionText}";
 }
 @section BeforeMain
 {

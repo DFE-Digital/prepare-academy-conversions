@@ -26,6 +26,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		}
 
 		public AdvisoryBoardDecision Decision { get; set; }
+		public string DecisionText => Decision.Decision.ToDescription().ToLowerInvariant();
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
