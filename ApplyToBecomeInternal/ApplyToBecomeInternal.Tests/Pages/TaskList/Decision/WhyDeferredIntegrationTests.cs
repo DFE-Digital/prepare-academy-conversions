@@ -57,7 +57,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 		[Theory]
 		[InlineData(AdvisoryBoardDeferredReason.AdditionalInformationNeeded)]		
-		[InlineData(AdvisoryBoardDeferredReason.LocalSensitivityConcerns)]
+		[InlineData(AdvisoryBoardDeferredReason.AwaitingNextOftedReport)]
 		[InlineData(AdvisoryBoardDeferredReason.PerformanceConcerns)]		
 		[InlineData(AdvisoryBoardDeferredReason.Other)]
 		public async Task Should_persist_the_selected_deferred_reasons(AdvisoryBoardDeferredReason reason)
@@ -84,7 +84,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		{
 			CheckBoxFor(AdvisoryBoardDeferredReason.AdditionalInformationNeeded).IsChecked = false;
 			CheckBoxFor(AdvisoryBoardDeferredReason.PerformanceConcerns).IsChecked = false;
-			CheckBoxFor(AdvisoryBoardDeferredReason.LocalSensitivityConcerns).IsChecked = false;
+			CheckBoxFor(AdvisoryBoardDeferredReason.AwaitingNextOftedReport).IsChecked = false;
 			CheckBoxFor(AdvisoryBoardDeferredReason.Other).IsChecked = false;
 
 			await _wizard.ClickSubmitButton();
@@ -97,7 +97,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 		[Theory]
 		[InlineData(AdvisoryBoardDeferredReason.AdditionalInformationNeeded)]
-		[InlineData(AdvisoryBoardDeferredReason.LocalSensitivityConcerns)]
+		[InlineData(AdvisoryBoardDeferredReason.AwaitingNextOftedReport)]
 		[InlineData(AdvisoryBoardDeferredReason.PerformanceConcerns)]
 		[InlineData(AdvisoryBoardDeferredReason.Other)]
 
@@ -114,7 +114,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 		[Theory]
 		[InlineData(AdvisoryBoardDeferredReason.AdditionalInformationNeeded, AdvisoryBoardDeferredReason.Other)]
-		[InlineData(AdvisoryBoardDeferredReason.LocalSensitivityConcerns, AdvisoryBoardDeferredReason.Other)]
+		[InlineData(AdvisoryBoardDeferredReason.AwaitingNextOftedReport, AdvisoryBoardDeferredReason.Other)]
 		[InlineData(AdvisoryBoardDeferredReason.PerformanceConcerns, AdvisoryBoardDeferredReason.Other)]
 		[InlineData(AdvisoryBoardDeferredReason.Other, AdvisoryBoardDeferredReason.AdditionalInformationNeeded)]
 		public async Task Should_clear_the_reason_for_an_option_if_it_is_no_longer_selected(AdvisoryBoardDeferredReason reason, 
