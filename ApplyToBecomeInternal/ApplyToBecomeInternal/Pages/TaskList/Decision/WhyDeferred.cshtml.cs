@@ -37,12 +37,17 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		[BindProperty]
 		public bool WasReasonGiven => AdditionalInformationNeededIsChecked || LocalSensitivityConcernsIsChecked || PerformanceConcernsIsChecked || OtherIsChecked;
 
+		public string DecisionText { get; set; }
+
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
 			await SetDefaults(id);
 			SetBackLinkModel(Links.Decision.WhoDecided, id);
 
-			var reasons = GetDecisionFromSession(id).DeferredReasons;
+			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
+			DecisionText = decision.Decision.ToDescription().ToLowerInvariant();
+
+			var reasons = decision.DeferredReasons;
 			SetReasonsModel(reasons);
 
 			return Page();

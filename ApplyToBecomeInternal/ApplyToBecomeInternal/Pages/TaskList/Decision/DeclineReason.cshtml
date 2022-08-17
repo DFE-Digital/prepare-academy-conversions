@@ -2,7 +2,7 @@
 @using ApplyToBecome.Data.Models.AdvisoryBoardDecision
 @model ApplyToBecomeInternal.Pages.TaskList.Decision.DeclineReasonModel
 @{
-	ViewData["Title"] = "Why was this project declined?";
+	ViewData["Title"] = $"Why project was {Model.DecisionText}";
 }
 
 @section BeforeMain

@@ -3,7 +3,7 @@
 @using ApplyToBecome.Data.Models.AdvisoryBoardDecision
 @model ApplyToBecomeInternal.Pages.TaskList.Decision.SummaryModel
 @{
-    ViewData["Title"] = "Check your answers";
+    ViewData["Title"] = $"Check your {Model.DecisionText} answers";
 }
 @section BeforeMain
 {

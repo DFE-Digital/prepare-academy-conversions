@@ -32,6 +32,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		[BindProperty] public string DeclineChoiceOfTrustReason { get; set; }
 
 		public IEnumerable<AdvisoryBoardDeclinedReasons> DeclineOptions { get; }
+		public string DecisionText { get; set; }
 
 		public UIHelpers UI => new UIHelpers(this);
 
@@ -73,6 +74,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		private void PreloadStateFromSession(int id)
 		{
 			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
+			DecisionText = decision.Decision.ToDescription().ToLowerInvariant();
 
 			var reasons = decision.DeclinedReasons?.ToDictionary(key => key.Reason, value => value.Details);
 
