@@ -1,13 +1,14 @@
 /// <reference types ='Cypress'/>
 
 // uri to be updated once academisation API is integrated
-let url = Cypress.env('url') + '/task-list/2050?rd=true'
+let url = Cypress.env('url') + '/task-list/2054?rd=true'
 
 describe('103195 Approved record decision', ()=> {
     
     beforeEach(() => {
-        cy.visit(url)
         cy.clearCookies()
+        cy.visit(url)
+        //cy.clearCookies()
 
     })
     // Approve Happy Path journey
@@ -44,8 +45,16 @@ describe('103195 Approved record decision', ()=> {
         cy.get('[id="conditions-textarea"]').clear().type('This is a test')
         cy.continueBtn().click()
         cy.continueBtn().click()
+        // preview answers before submit
+        cy.get('[id="decision"]').should('contain.text', 'APPROVED WITH CONDITIONS')
+        cy.get('[id="decision-made-by"]').should('contain.text', 'Regional Director for the region')
+        cy.get('[id="condition-set"]').should('contain.text', 'Yes')
+        cy.get('[id="condition-details"]').should('contain.text', 'This is a test')
+        cy.get('[id="decision-date"').should('contain.text', '10 October 2021')
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
+        // recorded decision confirmation
+        cy.get('[id="notification-message"]').should('contain.text', 'Decision recorded')
     })
 
     // Edit Approval Path - A different Regional Director, No/Yes conditions set 
@@ -75,8 +84,16 @@ describe('103195 Approved record decision', ()=> {
         cy.get('[id="conditions-textarea"]').clear().type('This is a test')
         cy.continueBtn().click()
         cy.continueBtn().click()
-        // clicks on the record a decision button to submit 
+        // preview answers before submit
+        cy.get('[id="decision"]').should('contain.text', 'APPROVED WITH CONDITIONS')
+        cy.get('[id="decision-made-by"]').should('contain.text', 'A different Regional Director')
+        cy.get('[id="condition-set"]').should('contain.text', 'Yes')
+        cy.get('[id="condition-details"]').should('contain.text', 'This is a test')
+        cy.get('[id="decision-date"').should('contain.text', '10 October 2021')
+        // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
+        // recorded decision confirmation
+        cy.get('[id="notification-message"]').should('contain.text', 'Decision recorded')
     })
     
     // Edit Approval Path - Director General, No/Yes conditions set
@@ -106,8 +123,16 @@ describe('103195 Approved record decision', ()=> {
         cy.get('[id="conditions-textarea"]').clear().type('This is a test')
         cy.continueBtn().click()
         cy.continueBtn().click()
-        // clicks on the record a decision button to submit 
+        // preview answers before submit
+        cy.get('[id="decision"]').should('contain.text', 'APPROVED WITH CONDITIONS')
+        cy.get('[id="decision-made-by"]').should('contain.text', 'Director General')
+        cy.get('[id="condition-set"]').should('contain.text', 'Yes')
+        cy.get('[id="condition-details"]').should('contain.text', 'This is a test')
+        cy.get('[id="decision-date"').should('contain.text', '10 October 2021')
+        // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
+        // recorded decision confirmation
+        cy.get('[id="notification-message"]').should('contain.text', 'Decision recorded')
     })
 
     // Edit Approval Path - Minister, No/Yes conditions set 
@@ -137,8 +162,16 @@ describe('103195 Approved record decision', ()=> {
         cy.get('[id="conditions-textarea"]').clear().type('This is a test')
         cy.continueBtn().click()
         cy.continueBtn().click()
-        // clicks on the record a decision button to submit 
+        // preview answers before submit
+        cy.get('[id="decision"]').should('contain.text', 'APPROVED WITH CONDITIONS')
+        cy.get('[id="decision-made-by"]').should('contain.text', 'Minister')
+        cy.get('[id="condition-set"]').should('contain.text', 'Yes')
+        cy.get('[id="condition-details"]').should('contain.text', 'This is a test')
+        cy.get('[id="decision-date"').should('contain.text', '10 October 2021')
+        // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
+        // recorded decision confirmation
+        cy.get('[id="notification-message"]').should('contain.text', 'Decision recorded')
     })
 
     // Edit Approval Path - None, No/Yes conditions set
@@ -168,8 +201,16 @@ describe('103195 Approved record decision', ()=> {
         cy.get('[id="conditions-textarea"]').clear().type('This is a test')
         cy.continueBtn().click()
         cy.continueBtn().click()
-        // clicks on the record a decision button to submit 
+        // preview answers before submit
+        cy.get('[id="decision"]').should('contain.text', 'APPROVED WITH CONDITIONS')
+        cy.get('[id="decision-made-by"]').should('contain.text', 'None')
+        cy.get('[id="condition-set"]').should('contain.text', 'Yes')
+        cy.get('[id="condition-details"]').should('contain.text', 'This is a test')
+        cy.get('[id="decision-date"').should('contain.text', '10 October 2021')
+        // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
+        // recorded decision confirmation
+        cy.get('[id="notification-message"]').should('contain.text', 'Decision recorded')
     })
 
 })
