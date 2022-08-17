@@ -85,11 +85,10 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 		}
 
 		public async Task SetDecisionDateAndContinue(DateTime date)
-		{
-			// await InputDateAndSubmit(date);
-			Document.QuerySelector<IHtmlInputElement>("#-day").Value = date.Day.ToString();
-			Document.QuerySelector<IHtmlInputElement>("#-month").Value = date.Month.ToString();
-			Document.QuerySelector<IHtmlInputElement>("#-year").Value = date.Year.ToString();
+		{			
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-day").Value = date.Day.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-month").Value = date.Month.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-year").Value = date.Year.ToString();
 
 			await ClickSubmitButton();
 		}
@@ -108,9 +107,9 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 
 		private async Task InputDateAndSubmit(DateTime date)
 		{
-			Document.QuerySelector<IHtmlInputElement>("#-day").Value = date.Day.ToString();
-			Document.QuerySelector<IHtmlInputElement>("#-month").Value = date.Month.ToString();
-			Document.QuerySelector<IHtmlInputElement>("#-year").Value = date.Year.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-day").Value = date.Day.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-month").Value = date.Month.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-year").Value = date.Year.ToString();
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 		}
 	}

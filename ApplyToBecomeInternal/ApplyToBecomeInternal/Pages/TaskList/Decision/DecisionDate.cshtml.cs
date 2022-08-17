@@ -21,9 +21,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			_errorService = errorService;
 		}
 
-		[BindProperty, ModelBinder(BinderType = typeof(DateInputModelBinder))]
+		[BindProperty(Name = "decision-date", BinderType = typeof(DateInputModelBinder))]
 		[DateValidation(DateRangeValidationService.DateRange.PastOrToday)]
-		[Required(ErrorMessage = "Please enter a decision date"), Display(Name = "Decision")]
+		[Display(Name = "Conversion decision date")]
+		[Required]
 		public DateTime? DateOfDecision { get; set; }
 
 		public string DecisionText { get; set; }
