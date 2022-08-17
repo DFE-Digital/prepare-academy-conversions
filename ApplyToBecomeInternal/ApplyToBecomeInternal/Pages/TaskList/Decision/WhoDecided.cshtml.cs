@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using System.ComponentModel.DataAnnotations;
 using ApplyToBecomeInternal.Services;
-using static ApplyToBecome.Data.Models.AdvisoryBoardDecision.DecisionMadeBy;
+using System;
+using System.Linq;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {
@@ -25,15 +26,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		[BindProperty, Required(ErrorMessage = "Please select who made the decision")]
 		public DecisionMadeBy? DecisionMadeBy { get; set; }
 
-		public IEnumerable<DecisionMadeBy> DecisionMadeByOptions => new List<DecisionMadeBy>
-		{
-			// Reorder the way the radio buttons are displayed
-			RegionalDirectorForRegion,
-			OtherRegionalDirector,
-			DirectorGeneral,
-			Minister,
-			None,
-		};
+		public IEnumerable<DecisionMadeBy> DecisionMadeByOptions => Enum.GetValues(typeof(DecisionMadeBy)).Cast<DecisionMadeBy>();
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
