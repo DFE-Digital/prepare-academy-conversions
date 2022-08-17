@@ -1,0 +1,26 @@
+﻿@page "/task-list/{id:int}/decision/decision-date"
+@using ApplyToBecomeInternal.Pages.TaskList.Decision
+@model ApplyToBecomeInternal.Pages.TaskList.Decision.DecisionDate
+@{
+    ViewData["Title"] = "Decision date";
+}
+
+@section BeforeMain
+{
+    <partial name="_BackLink" model="@Model.BackLinkModel" />
+    <partial name="_ErrorSummary" />
+}
+    <span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
+    <h1 class="govuk-heading-l">Date conversion was @Model.DecisionText</h1>
+
+    <form method="post">
+        <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+
+            <govuk-date-input heading-label="true" asp-for="@Model.DateOfDecision" hint="For example, 27 3 2021" />
+
+        </div>
+
+        <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+            Continue
+        </button>
+    </form>

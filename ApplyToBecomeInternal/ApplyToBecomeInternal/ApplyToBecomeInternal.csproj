@@ -12,7 +12,7 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <NoWarn>0436</NoWarn>
 	</PropertyGroup>
-
+	
 	<ItemGroup>
 	  <None Remove="Resources\htb-template.docx" />
 	</ItemGroup>

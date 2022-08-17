@@ -1,0 +1,51 @@
+﻿@page "/task-list/{id:int}/decision/any-conditions"
+@model ApplyToBecomeInternal.Pages.TaskList.Decision.AnyConditionsModel
+@{
+    ViewData["Title"] = "Were any conditions set?";
+}
+@section BeforeMain
+{   
+    <partial name="_BackLink" model="@Model.BackLinkModel"/>
+    <partial name="_ErrorSummary" />
+}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+            <span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
+            <h1 class="govuk-heading-l">Were any conditions set?</h1>
+
+            <form method="post">
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        </legend>
+                        <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios">
+
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" type="radio" asp-for="ApprovedConditionsSet"
+                                   title="Yes" value="true" id="yes-radio" />
+                                <label class="govuk-label govuk-radios__label" for="yes-radio">
+                                    Yes
+                                </label>
+                            </div>
+
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" type="radio" asp-for="ApprovedConditionsSet"
+                                   title="No" value="false" id="no-radio" />
+                                <label class="govuk-label govuk-radios__label" for="no-radio">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+                    Continue
+                </button>
+
+            </form>
+
+        </div>
+    </div>

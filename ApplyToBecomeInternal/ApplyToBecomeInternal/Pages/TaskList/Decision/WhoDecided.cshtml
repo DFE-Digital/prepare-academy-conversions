@@ -1,0 +1,42 @@
+﻿@page "/task-list/{id:int}/decision/who-decided"
+@model ApplyToBecomeInternal.Pages.TaskList.Decision.WhoDecidedModel
+@{
+    ViewData["Title"] = "Who made this decision?";
+}
+@section BeforeMain
+{   
+    <partial name="_BackLink" model="@Model.BackLinkModel"/>
+    <partial name="_ErrorSummary" />
+}
+    <span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
+    <h1 class="govuk-heading-l">Who made this decision?</h1>
+
+    <form method="post">
+
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                </legend>
+                <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios">
+
+                @foreach (var decisionOption in Model.DecisionMadeByOptions)
+                {                    
+                    var id = $"{decisionOption.ToString().ToLower()}-radio";
+                    
+                    <div class="govuk-radios__item ">
+                        <input class="govuk-radios__input" type="radio" asp-for="@Model.DecisionMadeBy"                           
+                           title="@decisionOption.ToString().ToLower()" value="@decisionOption.ToString()" 
+                           id="@id"/>
+                        <label class="govuk-label govuk-radios__label" for="@id">
+                            @decisionOption.ToDescription()
+                        </label>
+                    </div>
+                }
+            </div>
+        </fieldset>
+    </div>
+
+    <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+        Continue
+    </button>
+</form>

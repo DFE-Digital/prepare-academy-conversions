@@ -1,5 +1,6 @@
 ﻿using ApplyToBecome.Data.Models.KeyStagePerformance;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Globalization;
 using System.Linq;
 
@@ -29,6 +30,11 @@ namespace ApplyToBecomeInternal.Extensions
 
 			return new HtmlString(
 				$"{disadvantagedPupilResponse.NotDisadvantaged.FormatValue()}<br>(disadvantaged pupils: {disadvantagedPupilResponse.Disadvantaged.FormatValue()})");
+		}
+
+		public static string GetErrorStyleClass(this ModelStateDictionary modelState)
+		{
+			return !modelState.IsValid ? "govuk-form-group--error" : "";
 		}
 
 		public static string FormatConfidenceInterval(decimal? lowerBound, decimal? upperBound)

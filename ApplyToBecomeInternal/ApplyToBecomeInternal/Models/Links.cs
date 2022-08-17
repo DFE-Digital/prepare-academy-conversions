@@ -64,7 +64,7 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem ViabilityIssues = new LinkItem { Page = "/TaskList/GeneralInformation/ViabilityIssues" };
 			public static LinkItem FinancialDeficit = new LinkItem { Page = "/TaskList/GeneralInformation/FinancialDeficit" };
 			public static LinkItem DistanceFromTrustHeadquarters = new LinkItem { Page = "/TaskList/GeneralInformation/DistanceFromTrustHeadquarters" };
-			public static LinkItem MPDetails = new LinkItem { Page = "/TaskList/GeneralInformation/MPDetails"  };
+			public static LinkItem MPDetails = new LinkItem { Page = "/TaskList/GeneralInformation/MPDetails" };
 		}
 
 		public static class RationaleSection
@@ -101,6 +101,18 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem KeyStage4PerformanceTablesAdditionalInformation = new LinkItem { Page = "/TaskList/KeyStagePerformance/KeyStage4PerformanceTablesAdditionalInformation" };
 			public static LinkItem KeyStage5PerformanceTables = new LinkItem { Page = "/TaskList/KeyStagePerformance/KeyStage5PerformanceTables" };
 			public static LinkItem KeyStage5PerformanceTablesAdditionalInformation = new LinkItem { Page = "/TaskList/KeyStagePerformance/KeyStage5PerformanceTablesAdditionalInformation" };
+		}
+
+		public static class Decision
+		{
+			public static LinkItem RecordDecision = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/RecordDecision" };
+			public static LinkItem WhoDecided = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/WhoDecided" };
+			public static LinkItem DeclineReason = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/DeclineReason" };
+			public static LinkItem AnyConditions = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/AnyConditions" };
+			public static LinkItem WhatConditions = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/WhatConditions" };
+			public static LinkItem DecisionDate = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/DecisionDate" };
+			public static LinkItem WhyDeferred = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/WhyDeferred" };
+			public static LinkItem Summary = new LinkItem { BackText = "Back", Page = "/TaskList/Decision/Summary" };
 		}
 
 		public static class TrustTemplate

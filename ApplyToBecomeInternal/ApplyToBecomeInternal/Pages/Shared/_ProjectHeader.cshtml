@@ -1,11 +1,22 @@
+@using ApplyToBecomeInternal.Pages.TaskList.Decision
 @model ApplyToBecomeInternal.ViewModels.ProjectViewModel
+@inject ApplyToBecome.Data.Services.Interfaces.IAcademyConversionAdvisoryBoardDecisionRepository decisionRepository
 
 <div class="govuk-grid-row">
-	<div class="govuk-grid-column-full">
-		<span class="govuk-caption-xl">URN @Model.SchoolURN</span>
-		<h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
-			@Model.SchoolName
-		</h1>
-		<partial name="_SubMenu" />
-	</div>
+    <div class="govuk-grid-column-full">
+        <span class="govuk-caption-xl">URN @Model.SchoolURN</span>
+        <h1 class="govuk-heading-xl">
+            @Model.SchoolName
+        </h1>
+
+    </div>
+    @if (!string.IsNullOrEmpty(Context.Request.Query["rd"]))
+    {
+
+        @(await Component.InvokeAsync("RecordDecisionPreview", new { id = int.Parse(Model.Id) }))
+    }
+    <div class="govuk-grid-column-full">
+        <partial name="_SubMenu" />
+
+    </div>
 </div>

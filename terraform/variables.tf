@@ -49,6 +49,16 @@ variable app_trams_api_key {
 	description = "Application variable for the TRAMS API Key"
 }
 
+variable app_academisation_api_baseurl {
+	type = string
+	description = "Application variable for the Academisation API url"
+}
+
+variable app_academisation_api_key {
+	type = string
+	description = "Application variable for the Academisation API key"
+}
+
 variable app_azuread_clientsecret {
   type = string
   description = "Application variable for the Azure AD Authorization header"

@@ -46,6 +46,7 @@ namespace ApplyToBecomeInternal.Tests
 					.AddJsonFile(configPath)
 					.AddInMemoryCollection(new Dictionary<string, string> { 
 						{ "TramsApi:Endpoint", $"http://localhost:{_port}" },
+						{ "AcademisationApi:BaseUrl", $"http://localhost:{_port}" },
 						{ "AzureAd:AllowedRoles", string.Empty } // Do not restrict access for integration test
 					})
 					.AddEnvironmentVariables();
@@ -133,6 +134,19 @@ namespace ApplyToBecomeInternal.Tests
 					.WithPath(path)
 					.WithBody(new JsonMatcher(JsonConvert.SerializeObject(requestBody), true))
 					.UsingPatch())
+				.RespondWith(Response.Create()
+					.WithStatusCode(200)
+					.WithHeader("Content-Type", "application/json")
+					.WithBody(JsonConvert.SerializeObject(responseBody)));
+		}
+
+		public void AddPutWithJsonRequest<TRequestBody, TResponseBody>(string path, TRequestBody requestBody, TResponseBody responseBody)
+		{
+			_server
+				.Given(Request.Create()
+					.WithPath(path)
+					.WithBody(new JsonMatcher(JsonConvert.SerializeObject(requestBody), true))
+					.UsingPut())
 				.RespondWith(Response.Create()
 					.WithStatusCode(200)
 					.WithHeader("Content-Type", "application/json")
