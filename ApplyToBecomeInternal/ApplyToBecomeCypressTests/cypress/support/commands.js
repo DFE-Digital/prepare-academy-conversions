@@ -86,7 +86,7 @@ Cypress.Commands.add('submitDateLaInfoSent', (day, month, year) => {
 	cy.get('[id="la-info-template-sent-date-month"]').clear().type(month)
 	cy.get('[id="la-info-template-sent-date-year"]').clear().type(year)
 	cy.saveLocalStorage()
-});
+})
 
 // Submit Date 'Return' (LA info Page)
 Cypress.Commands.add('submitDateLaInfoReturn', (day, month, year) => {
@@ -94,7 +94,7 @@ Cypress.Commands.add('submitDateLaInfoReturn', (day, month, year) => {
     cy.get('[id="la-info-template-returned-date-day"]').clear().type(day)
     cy.get('[id="la-info-template-returned-date-month"]').clear().type(month)
     cy.get('[id="la-info-template-returned-date-year"]').clear().type(year)
-});
+})
 
 // Form Status (LA info Page)
 Cypress.Commands.add('statusLaInfo', () => {
@@ -225,6 +225,24 @@ Cypress.Commands.add('disMiles', () => {
 Cypress.Commands.add('saveContinue', () => {
     cy.get('[id="save-and-continue-button"]')
 })
+
+// Record a decision 'Continue' button
+Cypress.Commands.add('continueBtn', () => {
+    cy.get('[id="submit-btn"]')
+})
+
+// Record a decision 'date entry'
+Cypress.Commands.add('recordDecisionDate', (day, month, year) => {
+    cy.get('[id="-day"]').clear().type(day)
+    cy.get('[id="-month"]').clear().type(month)
+    cy.get('[id="-year"]').clear().type(year)
+})
+
+// 'Record this decision' button
+Cypress.Commands.add('recordThisDecision', () => {
+    cy.get('[id="submit-btn"]')
+})
+
 
 // Request external dev - requres environment setup on yml file
 // Cypress.Commands.add('beData', () => {

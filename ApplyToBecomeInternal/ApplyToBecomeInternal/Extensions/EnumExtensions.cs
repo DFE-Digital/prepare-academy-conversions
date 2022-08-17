@@ -7,7 +7,7 @@ namespace ApplyToBecomeInternal.Extensions
 	{
 		public static string ToDescription<T>(this T source)
 		{
-			if (source == null) return "";
+			if (source == null) return string.Empty;
 
 			FieldInfo fi = source.GetType().GetField(source.ToString());
 

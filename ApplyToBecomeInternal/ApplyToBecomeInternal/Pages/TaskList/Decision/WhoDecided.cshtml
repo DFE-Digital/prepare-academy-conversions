@@ -1,7 +1,7 @@
 ﻿@page "/task-list/{id:int}/decision/who-decided"
 @model ApplyToBecomeInternal.Pages.TaskList.Decision.WhoDecidedModel
 @{
-    ViewData["Title"] = "Who made this decision?";
+    ViewData["Title"] = $"Who made the {Model.DecisionText} decision";
 }
 @section BeforeMain
 {   

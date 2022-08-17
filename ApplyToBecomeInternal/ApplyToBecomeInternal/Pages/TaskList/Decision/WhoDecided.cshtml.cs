@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
+using ApplyToBecomeInternal.Extensions;
 using System.ComponentModel.DataAnnotations;
 using ApplyToBecomeInternal.Services;
-using static ApplyToBecome.Data.Models.AdvisoryBoardDecision.DecisionMadeBy;
+using System;
+using System.Linq;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {
@@ -25,22 +27,18 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		[BindProperty, Required(ErrorMessage = "Please select who made the decision")]
 		public DecisionMadeBy? DecisionMadeBy { get; set; }
 
-		public IEnumerable<DecisionMadeBy> DecisionMadeByOptions => new List<DecisionMadeBy>
-		{
-			// Reorder the way the radio buttons are displayed
-			RegionalDirectorForRegion,
-			OtherRegionalDirector,
-			DirectorGeneral,
-			Minister,
-			None,
-		};
+	   public string DecisionText { get; set; }
+
+	   public IEnumerable<DecisionMadeBy> DecisionMadeByOptions => Enum.GetValues(typeof(DecisionMadeBy)).Cast<DecisionMadeBy>();
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
 			await SetDefaults(id);
 			SetBackLinkModel(Links.Decision.RecordDecision, id);
-			DecisionMadeBy = GetDecisionFromSession(id)?.DecisionMadeBy;
+			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
 
+			DecisionMadeBy = decision?.DecisionMadeBy;
+			DecisionText = decision == null ? string.Empty : decision.Decision.ToDescription().ToLowerInvariant();
 			return Page();
 		}
 

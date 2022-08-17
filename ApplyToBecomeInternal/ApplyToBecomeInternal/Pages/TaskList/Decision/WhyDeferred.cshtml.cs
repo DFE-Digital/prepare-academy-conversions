@@ -25,8 +25,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		[BindProperty] public string AdditionalInformationNeededDetails { get; set; }
 		[BindProperty] public bool AdditionalInformationNeededIsChecked { get; set; }
 
-		[BindProperty] public string LocalSensitivityConcernsDetails { get; set; }
-		[BindProperty] public bool LocalSensitivityConcernsIsChecked { get; set; }
+		[BindProperty] public string AwaitingNextOftedReportDetails { get; set; }
+		[BindProperty] public bool AwaitingNextOftedReportIsChecked { get; set; }
 
 		[BindProperty] public string PerformanceConcernsDetails { get; set; }
 		[BindProperty] public bool PerformanceConcernsIsChecked { get; set; }
@@ -35,14 +35,19 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		[BindProperty] public bool OtherIsChecked { get; set; }
 
 		[BindProperty]
-		public bool WasReasonGiven => AdditionalInformationNeededIsChecked || LocalSensitivityConcernsIsChecked || PerformanceConcernsIsChecked || OtherIsChecked;
+		public bool WasReasonGiven => AdditionalInformationNeededIsChecked || AwaitingNextOftedReportIsChecked || PerformanceConcernsIsChecked || OtherIsChecked;
+
+		public string DecisionText { get; set; }
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
 			await SetDefaults(id);
 			SetBackLinkModel(Links.Decision.WhoDecided, id);
 
-			var reasons = GetDecisionFromSession(id).DeferredReasons;
+			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
+			DecisionText = decision.Decision.ToDescription().ToLowerInvariant();
+
+			var reasons = decision.DeferredReasons;
 			SetReasonsModel(reasons);
 
 			return Page();
@@ -55,7 +60,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			decision.DeferredReasons.Clear();
 			decision.DeferredReasons
 				.AddReasonIfValid(AdditionalInformationNeededIsChecked, AdvisoryBoardDeferredReason.AdditionalInformationNeeded, AdditionalInformationNeededDetails, _errorService)
-				.AddReasonIfValid(LocalSensitivityConcernsIsChecked, AdvisoryBoardDeferredReason.LocalSensitivityConcerns, LocalSensitivityConcernsDetails, _errorService)
+				.AddReasonIfValid(AwaitingNextOftedReportIsChecked, AdvisoryBoardDeferredReason.AwaitingNextOftedReport, AwaitingNextOftedReportDetails, _errorService)
 				.AddReasonIfValid(PerformanceConcernsIsChecked, AdvisoryBoardDeferredReason.PerformanceConcerns, PerformanceConcernsDetails, _errorService)
 				.AddReasonIfValid(OtherIsChecked, AdvisoryBoardDeferredReason.Other, OtherDetails, _errorService);
 
@@ -74,9 +79,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			AdditionalInformationNeededIsChecked = additionalInfo != null;
 			AdditionalInformationNeededDetails = additionalInfo?.Details;
 
-			var local = reasons.GetReason(AdvisoryBoardDeferredReason.LocalSensitivityConcerns);
-			LocalSensitivityConcernsIsChecked = local != null;
-			LocalSensitivityConcernsDetails = local?.Details;
+			var ofsted = reasons.GetReason(AdvisoryBoardDeferredReason.AwaitingNextOftedReport);
+			AwaitingNextOftedReportIsChecked = ofsted != null;
+			AwaitingNextOftedReportDetails = ofsted?.Details;
 
 			var perf = reasons.GetReason(AdvisoryBoardDeferredReason.PerformanceConcerns);
 			PerformanceConcernsIsChecked = perf != null;
