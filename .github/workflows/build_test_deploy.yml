@@ -133,7 +133,7 @@ jobs:
           TF_VAR_app_trams_api_endpoint: ${{ secrets.TRAMS_API_ENDPOINT }}
           TF_VAR_app_trams_api_key: ${{ secrets.TRAMS_API_KEY }}
           TF_VAR_app_academisation_api_baseurl: ${{ secrets.ACADEMISATION_API_BASEURL }}
-          TF_VAR_app_academisation_api_key: ${{ secrets.ACADEMISATION_API_KEY }}
+          TF_VAR_app_academisation_api_apikey: ${{ secrets.ACADEMISATION_API_APIKEY }}
           TF_VAR_app_username: ${{ secrets.USERNAME }}
           TF_VAR_app_password: ${{ secrets.PASSWORD }}
           TF_VAR_cf_app_image_tag: ${{ env.DOCKER_IMAGE_TAG }}
