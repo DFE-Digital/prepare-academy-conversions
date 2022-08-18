@@ -23,7 +23,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 		[BindProperty(Name = "decision-date", BinderType = typeof(DateInputModelBinder))]
 		[DateValidation(DateRangeValidationService.DateRange.PastOrToday)]
-		[Display(Name = "Conversion decision date")]
+		[Display(Name = "decision")]
 		[Required]
 		public DateTime? DateOfDecision { get; set; }
 
