@@ -38,20 +38,20 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			await ProgressToDecisionDateStep(project);
 
-			Document.QuerySelector<IHtmlInputElement>("#-day").Value = expectedDay;
-			Document.QuerySelector<IHtmlInputElement>("#-month").Value = expectedMonth;
-			Document.QuerySelector<IHtmlInputElement>("#-year").Value = expectedYear;
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-day").Value = expectedDay;
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-month").Value = expectedMonth;
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-year").Value = expectedYear;
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/decision-date");
 
-			var day = Document.QuerySelector<IHtmlInputElement>("#-day");
-			var month = Document.QuerySelector<IHtmlInputElement>("#-month");
-			var year = Document.QuerySelector<IHtmlInputElement>("#-year");
+			var day = Document.QuerySelector<IHtmlInputElement>("#decision-date-day").Value;
+			var month = Document.QuerySelector<IHtmlInputElement>("#decision-date-month").Value;
+			var year = Document.QuerySelector<IHtmlInputElement>("#decision-date-year").Value;
 
-			expectedDay.Should().Be(expectedDay);
-			expectedMonth.Should().Be(expectedMonth);
-			expectedYear.Should().Be(expectedYear);
+			day.Should().Be(expectedDay);
+			month.Should().Be(expectedMonth);
+			year.Should().Be(expectedYear);
 		}
 
 		[Fact]
@@ -62,9 +62,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			await ProgressToDecisionDateStep(project);
 
-			Document.QuerySelector<IHtmlInputElement>("#-day").Value = $"{tomorrow.Day}";
-			Document.QuerySelector<IHtmlInputElement>("#-month").Value = $"{tomorrow.Month}";
-			Document.QuerySelector<IHtmlInputElement>("#-year").Value = $"{tomorrow.Year}";
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-day").Value = $"{tomorrow.Day}";
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-month").Value = $"{tomorrow.Month}";
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-year").Value = $"{tomorrow.Year}";
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
 			Document.Url.Should().EndWith($"/task-list/{project.Id}/decision/decision-date");

@@ -1,5 +1,4 @@
 ﻿@page "/task-list/{id:int}/decision/decision-date"
-@using ApplyToBecomeInternal.Pages.TaskList.Decision
 @model ApplyToBecomeInternal.Pages.TaskList.Decision.DecisionDate
 @{
     ViewData["Title"] = $"Date {Model.DecisionText}";
@@ -15,9 +14,7 @@
 
     <form method="post">
         <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
-
-            <govuk-date-input heading-label="true" asp-for="@Model.DateOfDecision" hint="For example, 27 3 2021" />
-
+	        <govuk-date-input heading-label="true" name="decision-date" asp-for="@Model.DateOfDecision" hint="For example, 27 3 2021" />
         </div>
 
         <button class="govuk-button" data-module="govuk-button" id="submit-btn">
