@@ -23,7 +23,7 @@ resource cloudfoundry_app worker_app {
 		"TramsApi__ApiKey"         = var.app_trams_api_key
 		"TramsApi__ApiKey"         = var.app_trams_api_key
 		"AcademisationApi__BaseUrl"= var.app_academisation_api_baseurl
-		"AcademisationApi__Key"    = var.app_academisation_api_key
+		"AcademisationApi__ApiKey" = var.app_academisation_api_apikey
 		"GoogleAnalytics__Enable"  = var.enable_google_analytics
 		"FeedbackLink"             = var.app_feedback_link
 		"SupportEmail"             = var.app_support_email

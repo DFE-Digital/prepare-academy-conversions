@@ -54,7 +54,7 @@ variable app_academisation_api_baseurl {
 	description = "Application variable for the Academisation API url"
 }
 
-variable app_academisation_api_key {
+variable app_academisation_api_apikey {
 	type = string
 	description = "Application variable for the Academisation API key"
 }
