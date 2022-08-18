@@ -233,9 +233,9 @@ Cypress.Commands.add('continueBtn', () => {
 
 // Record a decision 'date entry'
 Cypress.Commands.add('recordDecisionDate', (day, month, year) => {
-    cy.get('[id="-day"]').clear().type(day)
-    cy.get('[id="-month"]').clear().type(month)
-    cy.get('[id="-year"]').clear().type(year)
+    cy.get('[id="decision-date-day"]').clear().type(day)
+    cy.get('[id="decision-date-month"]').clear().type(month)
+    cy.get('[id="decision-date-year"]').clear().type(year)
 })
 
 // 'Record this decision' button
