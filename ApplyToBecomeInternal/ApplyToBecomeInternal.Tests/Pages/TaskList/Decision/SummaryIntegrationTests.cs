@@ -5,7 +5,6 @@ using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecomeInternal.Tests.PageObjects;
 using FluentAssertions;
 using System;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -109,7 +108,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 				ApprovedConditionsDetails = "bills need to be paid",
 				DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
 				ConversionProjectId = project.Id
-			};			
+			};
 
 			_factory.AddGetWithJsonResponse($"/conversion-project/advisory-board-decision/{project.Id}", request);
 			_factory.AddPutWithJsonRequest("/conversion-project/advisory-board-decision", request, new AdvisoryBoardDecision());
@@ -200,6 +199,35 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		}
 
 		[Fact]
+		public async Task Should_show_the_selected_deferred_reasons_and_details()
+		{
+			AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+
+			var wizard = new RecordDecisionWizard(Context);
+
+			await wizard.StartFor(project.Id);
+			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Deferred);
+			await wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+			await wizard.SetDeferredReasonsAndContinue(
+				Tuple.Create(AdvisoryBoardDeferredReason.PerformanceConcerns, "Performance detail"),
+				Tuple.Create(AdvisoryBoardDeferredReason.Other, "Other detail"),
+				Tuple.Create(AdvisoryBoardDeferredReason.AdditionalInformationNeeded, "additional info"),
+				Tuple.Create(AdvisoryBoardDeferredReason.AwaitingNextOftedReport, "Ofsted"));
+			await wizard.SetDecisionDateAndContinue(DateTime.Today);
+
+			string declineReasonSummary = Document.QuerySelector("#deferred-reasons").TextContent;
+
+			declineReasonSummary.Should().Contain("Additional information needed:");
+			declineReasonSummary.Should().Contain("additional info");
+			declineReasonSummary.Should().Contain("Awaiting next ofsted report:");
+			declineReasonSummary.Should().Contain("Ofsted");
+			declineReasonSummary.Should().Contain("Performance concerns:");
+			declineReasonSummary.Should().Contain("Performance detail");
+			declineReasonSummary.Should().Contain("Other:");
+			declineReasonSummary.Should().Contain("Other detail");
+		}
+
+		[Fact]
 		public async Task Should_not_display_conditions_details_for_declined_projects()
 		{
 			AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
@@ -283,6 +311,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
 			Document.QuerySelector<IHtmlElement>("h1").Text().Should().Be(nextPageTitle);
-		}		
+		}
 	}
 }
