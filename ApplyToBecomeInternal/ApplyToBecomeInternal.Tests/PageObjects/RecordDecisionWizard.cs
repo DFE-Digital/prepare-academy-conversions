@@ -71,6 +71,19 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 			await ClickSubmitButton();
 		}
 
+		public async Task SetDeferredReasonsAndContinue(Tuple<AdvisoryBoardDeferredReason, string> reason, params Tuple<AdvisoryBoardDeferredReason, string>[] furtherReasons)
+		{
+			foreach ((AdvisoryBoardDeferredReason option, string detail) in new[] { reason }.Concat(furtherReasons))
+			{
+				var id = $"#{option.ToString().ToLowerInvariant()}";
+
+				Document.QuerySelector<IHtmlInputElement>($"{id}-checkbox").IsChecked = true;
+				Document.QuerySelector<IHtmlTextAreaElement>($"{id}-txtarea").TextContent = detail;
+			}
+
+			await ClickSubmitButton();
+		}
+
 		public async Task SetIsConditionalAndContinue(bool required)
 		{
 			var controlId = required ? "#yes-radio" : "#no-radio";
