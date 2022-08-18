@@ -92,7 +92,7 @@ namespace ApplyToBecomeInternal
 				var configuration = sp.GetRequiredService<IConfiguration>();
 				var apiOptions = configuration.GetSection(AcademisationApiOptions.Name).Get<AcademisationApiOptions>();
 				client.BaseAddress = new Uri(apiOptions.BaseUrl);
-				client.DefaultRequestHeaders.Add("ApiKey", apiOptions.ApiKey);
+				client.DefaultRequestHeaders.Add("x-api-key", apiOptions.ApiKey);
 			});
 
 			services.AddScoped<ErrorService>();
