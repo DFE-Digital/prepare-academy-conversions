@@ -50,7 +50,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 			var request = new AdvisoryBoardDecision
 			{
 				Decision = AdvisoryBoardDecisions.Approved,
-				AdvisoryBoardDecisionDate = new DateTime(2021, 01, 01),
+				AdvisoryBoardDecisionDate = new DateTime(DateTime.Today.Year, 01, 01),
 				ApprovedConditionsSet = true,
 				ApprovedConditionsDetails = "bills need to be paid",
 				DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
@@ -73,7 +73,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 				.Be(request.ApprovedConditionsDetails);
 
 			Document.QuerySelector<IHtmlElement>("#decision-date").Text().Trim().Should()
-				.Be("01 January 2021");
+				.Be($"01 January {DateTime.Today.Year}");
 
 			Document.QuerySelector<IHtmlAnchorElement>("#record-decision-link").Text().Trim().Should()
 			   .Be("Change your decision");

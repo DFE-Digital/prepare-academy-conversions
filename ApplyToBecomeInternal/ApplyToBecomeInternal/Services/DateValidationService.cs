@@ -6,32 +6,68 @@ namespace ApplyToBecomeInternal.Services
 {
 	public class DateValidationService
 	{
-		private readonly List<string> _missingParts = new List<string>();
+		private readonly IDateValidationMessageProvider _messages;
+
+		public DateValidationService(IDateValidationMessageProvider messages)
+		{
+			_messages = messages ?? new DefaultDateValidationMessageProvider();
+		}
 
 		public (bool, string) Validate(string dayInput, string monthInput, string yearInput, string displayName)
 		{
-			if (string.IsNullOrWhiteSpace(dayInput)) _missingParts.Add("day");
-			if (string.IsNullOrWhiteSpace(monthInput)) _missingParts.Add("month");
-			if (string.IsNullOrWhiteSpace(yearInput)) _missingParts.Add("year");
+			List<string> missingParts = new List<string>();
 
-			if (_missingParts.Count == 3)
+			if (string.IsNullOrWhiteSpace(dayInput)) missingParts.Add("day");
+			if (string.IsNullOrWhiteSpace(monthInput)) missingParts.Add("month");
+			if (string.IsNullOrWhiteSpace(yearInput)) missingParts.Add("year");
+
+			if (missingParts.Count == 3)
 			{
-				return (false, $"Enter a date for the {displayName.ToLower()}");
+				return (false, _messages.AllMissing(displayName));
 			}
 
-			if (_missingParts.Count > 0)
+			if (missingParts.Count > 0)
 			{
-				return (false, $"{displayName} must include a {string.Join(" and ", _missingParts)}");
+				return (false, _messages.SomeMissing(displayName, missingParts));
 			}
 
-			var validDate = DateTime.TryParseExact($"{yearInput}-{monthInput}-{dayInput}", "yyyy-M-d", CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDate);
+			bool yearParsed = int.TryParse(yearInput, out int year);
+			bool monthParsed = int.TryParse(monthInput, out int month);
+			bool dayParsed = int.TryParse(dayInput, out int day);
 
-			if (!validDate)
+			if (!monthParsed || month < 1 || month > 12)
+				return (false, _messages.MonthOutOfRange);
+
+			if (!dayParsed || day < 1 || day > DateTime.DaysInMonth(yearParsed ? year : DateTime.Today.Year, month))
+				return (false, _messages.DayOutOfRange(DateTime.DaysInMonth(year, month)));
+
+			(bool valid, string message) = _messages.ContextSpecificValidation(day, month, year);
+			if (!valid) return (false, message);
+
+			var validDate = DateTime.TryParseExact($"{yearInput}-{monthInput}-{dayInput}", "yyyy-M-d", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+
+			return validDate ? (true, string.Empty) : (false, _messages.DefaultMessage);
+		}
+
+		private class DefaultDateValidationMessageProvider : IDateValidationMessageProvider
+		{
+			public string AllMissing(string displayName)
 			{
-				return (false, $"'{displayName}' must be a valid date");
+				return $"Enter a date for the {displayName.ToLower()}";
 			}
 
-			return (true, "");
+			public string SomeMissing(string displayName, IEnumerable<string> missingParts)
+			{
+				return $"{displayName} must include a {string.Join(" and ", missingParts)}";
+			}
+
+			public string DefaultMessage => "Enter a date in the correct format";
+			public string MonthOutOfRange => "Month must be between 1 and 12";
+
+			public string DayOutOfRange(int daysInMonth)
+			{
+				return $"Day must be between 1 and {daysInMonth}";
+			}
 		}
 	}
 }

@@ -1,4 +1,6 @@
 using ApplyToBecomeInternal.Services;
+using FluentAssertions;
+using System;
 using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Services
@@ -9,17 +11,17 @@ namespace ApplyToBecomeInternal.Tests.Services
 
 		public DateValidationServiceTests()
 		{
-			_validator = new DateValidationService();
+			_validator = new DateValidationService(null);
 		}
 
 		[Theory]
-		[InlineData("10", "10", "2020")]
-		[InlineData("1", "1", "2020")]
-		[InlineData("01", "01", "2020")]
-		[InlineData("31", "12", "2020")]
-		public void GivenValidDate_ReturnValid(string day, string month, string year)
+		[InlineData("10", "10")]
+		[InlineData("1", "1")]
+		[InlineData("01", "01")]
+		[InlineData("31", "12")]
+		public void GivenValidDate_ReturnValid(string day, string month)
 		{
-			(bool valid, string _) = _validator.Validate(day, month, year, "Date input");
+			(bool valid, string _) = _validator.Validate(day, month, $"{DateTime.Today.Year}", "Date input");
 			Assert.True(valid);
 		}
 
@@ -39,37 +41,39 @@ namespace ApplyToBecomeInternal.Tests.Services
 		}
 
 		[Theory]
-		[InlineData("Abc", "10", "2020")]
-		[InlineData("10", "Abc", "2020")]
-		[InlineData("10", "10", "Abc")]
-		[InlineData("Abc", "Abc", "2020")]
-		[InlineData("Abc", "10", "Abc")]
-		[InlineData("10", "Abc", "Abc")]
-		[InlineData("Abc", "Abc", "Abc")]
-		public void GivenDateWithNonNumericFields_ReturnInvalidWithCorrectErrorMessage(string day, string month, string year)
+		[InlineData("0", "2022")]
+		[InlineData("13", "2022")]
+		[InlineData("-1", "2022")]
+		[InlineData("ABC", "2022")]
+		public void Should_report_the_month_is_out_of_range(string month, string year)
 		{
-			(bool valid, string message) = _validator.Validate(day, month, year, "Input");
+			(bool valid, string message) = _validator.Validate("1", month, year, "Input");
 
-			Assert.False(valid);
-			Assert.Equal("'Input' must be a valid date", message);
+			valid.Should().BeFalse();
+			message.Should().Be("Month must be between 1 and 12");
 		}
 
 		[Theory]
-		[InlineData("30", "2", "2020")]
-		[InlineData("0", "2", "2020")]
-		[InlineData("10", "0", "2020")]
-		[InlineData("10", "2", "0")]
-		[InlineData("2", "30", "2020")]
-		[InlineData("-1", "02", "2020")]
-		[InlineData("1", "02", "-1")]
-		[InlineData("0", "2", "2025")]
-		[InlineData("10", "0", "2025")]
-		public void GivenNonRealDates_ReturnInvalidWithCorrectErrorMessage(string day, string month, string year)
+		[InlineData("-1", "1", "2022", 31)]
+		[InlineData("0", "2", "2022", 28)]
+		[InlineData("32", "1", "2022", 31)]
+		[InlineData("30", "2", "2020", 29)]
+		[InlineData("ABC", "1", "2022", 31)]
+		public void Should_report_the_day_is_out_of_range_when_it_is_not_valid_for_the_month_and_year(string day, string month, string year, int expectedDays)
 		{
 			(bool valid, string message) = _validator.Validate(day, month, year, "Input");
 
-			Assert.False(valid);
-			Assert.Equal("'Input' must be a valid date", message);
+			valid.Should().BeFalse();
+			message.Should().Be($"Day must be between 1 and {expectedDays}");
+		}
+
+		[Fact]
+		public void Should_return_month_range_when_providing_a_month_greater_than_twelve()
+		{
+			(bool valid, string message) = _validator.Validate("1", "99", "2022", "Input");
+
+			valid.Should().BeFalse();
+			message.Should().Be("Month must be between 1 and 12");
 		}
 	}
 }

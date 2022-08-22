@@ -7,17 +7,23 @@ using FluentAssertions;
 using System;
 using System.Threading.Tasks;
 using Xunit;
+
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 {
 	public class DecisionDateIntegrationTests : BaseIntegrationTests
 	{
 		public DecisionDateIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{
-
 		}
 
+		private string PageHeading => Document.QuerySelector<IHtmlElement>("h1").TextContent.Trim();
+		private IElement ErrorSummary => Document.QuerySelector(".govuk-error-summary");
+		private IHtmlInputElement DayPart => Document.QuerySelector<IHtmlInputElement>("#-day");
+		private IHtmlInputElement MonthPart => Document.QuerySelector<IHtmlInputElement>("#-month");
+		private IHtmlInputElement YearPart => Document.QuerySelector<IHtmlInputElement>("#-year");
+
 		[Fact]
-		public async Task Should_display_selected_schoolname()
+		public async Task Should_display_selected_school_name()
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
@@ -38,33 +44,33 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			await ProgressToDecisionDateStep(project);
 
-			Document.QuerySelector<IHtmlInputElement>("#-day").Value = expectedDay;
-			Document.QuerySelector<IHtmlInputElement>("#-month").Value = expectedMonth;
-			Document.QuerySelector<IHtmlInputElement>("#-year").Value = expectedYear;
+			DayPart.Value = expectedDay;
+			MonthPart.Value = expectedMonth;
+			YearPart.Value = expectedYear;
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/decision-date");
 
-			var day = Document.QuerySelector<IHtmlInputElement>("#-day");
-			var month = Document.QuerySelector<IHtmlInputElement>("#-month");
-			var year = Document.QuerySelector<IHtmlInputElement>("#-year");
+			var day = DayPart.Value;
+			var month = MonthPart.Value;
+			var year = YearPart.Value;
 
-			expectedDay.Should().Be(expectedDay);
-			expectedMonth.Should().Be(expectedMonth);
-			expectedYear.Should().Be(expectedYear);
+			day.Should().Be(expectedDay);
+			month.Should().Be(expectedMonth);
+			year.Should().Be(expectedYear);
 		}
 
 		[Fact]
 		public async Task Should_not_redirect_if_future_date()
-		{			
+		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 			var tomorrow = DateTime.UtcNow.AddDays(1);
 
 			await ProgressToDecisionDateStep(project);
 
-			Document.QuerySelector<IHtmlInputElement>("#-day").Value = $"{tomorrow.Day}";
-			Document.QuerySelector<IHtmlInputElement>("#-month").Value = $"{tomorrow.Month}";
-			Document.QuerySelector<IHtmlInputElement>("#-year").Value = $"{tomorrow.Year}";
+			DayPart.Value = $"{tomorrow.Day}";
+			MonthPart.Value = $"{tomorrow.Month}";
+			YearPart.Value = $"{tomorrow.Year}";
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
 			Document.Url.Should().EndWith($"/task-list/{project.Id}/decision/decision-date");
@@ -76,7 +82,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
 			await ProgressToDecisionDateStep(project);
-			
+
+			DayPart.Value = default;
+			MonthPart.Value = default;
+			YearPart.Value = default;
+
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
 			Document.Url.Should().EndWith($"/task-list/{project.Id}/decision/decision-date");
@@ -91,30 +101,30 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			var request = new AdvisoryBoardDecision
 			{
 				Decision = AdvisoryBoardDecisions.Approved,
-				AdvisoryBoardDecisionDate = new DateTime(2021, 01, 01),
+				AdvisoryBoardDecisionDate = new DateTime(DateTime.Today.Year, 01, 01),
 				ApprovedConditionsSet = true,
 				ApprovedConditionsDetails = "bills need to be paid",
 				DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
 				ConversionProjectId = project.Id
 			};
-	
+
 			await new RecordDecisionWizard(Context).SubmitThroughTheWizard(request);
 
 			Document.Url.Should().EndWith($"/task-list/{project.Id}/decision/summary");
 		}
 
 		[Fact]
-		public async Task Should_go_back_to_anyconditions_for_the_accepted_journey()
+		public async Task Should_go_back_to_any_conditions_for_the_accepted_journey()
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
 			await ProgressToDecisionDateStep(project);
 
-			Document.QuerySelector("h1").Text().Trim().Should().Be("Date conversion was approved");
+			PageHeading.Should().Be("Date conversion was approved");
 
 			await NavigateAsync("Back");
 
-			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Were any conditions set?");
+			PageHeading.Should().Be("Were any conditions set?");
 		}
 
 		[Fact]
@@ -129,11 +139,37 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			await wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
 			await wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "Finance reasons"));
 
-			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Date conversion was declined");
+			PageHeading.Should().Be("Date conversion was declined");
 
 			await NavigateAsync("Back");
 
-			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Why was this project declined?");
+			PageHeading.Should().Be("Why was this project declined?");
+		}
+
+		[Fact]
+		public async Task Should_display_the_correct_journey_in_the_required_message_when_date_is_not_specified()
+		{
+			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+
+			var wizard = new RecordDecisionWizard(Context);
+
+			await wizard.StartFor(project.Id);
+			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
+			await wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+			await wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Performance, "performance reasons"));
+
+			PageHeading.Should().Be("Date conversion was declined");
+
+			DayPart.Value = default!;
+			MonthPart.Value = default!;
+			YearPart.Value = default!;
+
+			await wizard.ClickSubmitButton();
+
+			PageHeading.Should().Be("Date conversion was declined");
+
+			ErrorSummary.Should().NotBeNull();
+			ErrorSummary.TextContent.Should().Contain("Enter the date when the conversion was declined");
 		}
 
 		private async Task ProgressToDecisionDateStep(AcademyConversionProject project)
