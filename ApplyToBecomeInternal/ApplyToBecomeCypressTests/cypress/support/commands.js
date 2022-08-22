@@ -242,7 +242,99 @@ Cypress.Commands.add('recordDecisionDate', (day, month, year) => {
 Cypress.Commands.add('recordThisDecision', () => {
     cy.get('[id="submit-btn"]')
 })
+// Change decision button
+Cypress.Commands.add('changeDecision', () => {
+    cy.get('[id="record-decision-link"]')
+})
 
+// Decline reasons finance box
+Cypress.Commands.add('declineFinancebox', () => {
+    cy.get('[id="declined-reasons-finance"]')
+})
+
+// Decline reasons finance reasons text
+Cypress.Commands.add('declineFinancText', () => {
+    cy.get('[id="reason-finance"]')
+})
+
+// Decline reasons performance box
+Cypress.Commands.add('performanceBox', () => {
+    cy.get('[id="declined-reasons-performance"]')
+})
+
+// Decline reasons performance text
+Cypress.Commands.add('performanceText', () => {
+    cy.get('[id="reason-performance"]')
+})
+
+// Decline reasons governance box
+Cypress.Commands.add('governanceBox', () => {
+    cy.get('[id="declined-reasons-governance"]')
+}) 
+
+// Decline reasons governance text
+Cypress.Commands.add('governanceText', () => {
+    cy.get('[id="reason-governance"]')
+}) 
+
+// Decline reasons Trust Box
+Cypress.Commands.add('trustBox', () => {
+    cy.get('[id="declined-reasons-choiceoftrust"]')
+}) 
+
+// Decline reasons Trust text
+Cypress.Commands.add('trustText', () => {
+    cy.get('[id="reason-choiceoftrust"]')
+}) 
+
+// Decline radio button
+Cypress.Commands.add('declineRadioBtn', () => {
+    cy.get('[id="declined-radio"]')
+})
+
+// declined reason 'Other'
+Cypress.Commands.add('declineOtherbox', () => {
+    cy.get('[id="declined-reasons-other"]')
+})
+
+// declined reason 'Other reason'
+Cypress.Commands.add('declineOthertxt', () => {
+    cy.get('[id="reason-other"]')
+})
+
+// initial decision preview
+Cypress.Commands.add('decision', () => {
+    cy.get('[id="decision"]')
+})
+
+// declined record notification Message
+Cypress.Commands.add('recordnoteMsg', () => {
+    cy.get('[id="notification-message"]')
+})
+
+// declined reason change link
+Cypress.Commands.add('reasonchangeLink', () => {
+    cy.get('[id="change-declined-btn"]')
+
+})
+
+// declined decision made by
+Cypress.Commands.add('decisionMadeBy', () => {
+    cy.get('[id="decision-made-by"]')
+
+})
+
+// declined decision date preview
+Cypress.Commands.add('decisionDate', () => {
+    cy.get('[id="decision-date"]')
+
+})
+
+// projectlist number id:2054
+Cypress.Commands.add('projectStateId', () => {
+    cy.get('[id="project-status-2054"]')
+
+})
 
 // Request external dev - requres environment setup on yml file
 // Cypress.Commands.add('beData', () => {
