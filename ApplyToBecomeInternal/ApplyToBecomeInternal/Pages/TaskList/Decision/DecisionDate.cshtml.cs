@@ -22,10 +22,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			_errorService = errorService;
 		}
 
-		[Required]
-		[Display(Name = "Decision")]
+		[BindProperty(Name = "decision-date", BinderType = typeof(DateInputModelBinder))]
 		[DateValidation(DateRangeValidationService.DateRange.PastOrToday)]
-		[BindProperty, ModelBinder(BinderType = typeof(DateInputModelBinder))]
+		[Display(Name = "decision")]
+		[Required]
 		public DateTime? DateOfDecision { get; set; }
 
 		public string DecisionText { get; set; }
@@ -87,7 +87,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		(bool, string) IDateValidationMessageProvider.ContextSpecificValidation(int day, int month, int year)
 		{
 			bool valid = year == DateTime.Today.Year;
-		
+
 			return (valid, valid ? string.Empty : $"Year cannot be in the {(year < DateTime.Today.Year ? "past" : "future")}");
 		}
 	}

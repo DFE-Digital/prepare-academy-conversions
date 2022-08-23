@@ -71,6 +71,19 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 			await ClickSubmitButton();
 		}
 
+		public async Task SetDeferredReasonsAndContinue(Tuple<AdvisoryBoardDeferredReason, string> reason, params Tuple<AdvisoryBoardDeferredReason, string>[] furtherReasons)
+		{
+			foreach ((AdvisoryBoardDeferredReason option, string detail) in new[] { reason }.Concat(furtherReasons))
+			{
+				var id = $"#{option.ToString().ToLowerInvariant()}";
+
+				Document.QuerySelector<IHtmlInputElement>($"{id}-checkbox").IsChecked = true;
+				Document.QuerySelector<IHtmlTextAreaElement>($"{id}-txtarea").TextContent = detail;
+			}
+
+			await ClickSubmitButton();
+		}
+
 		public async Task SetIsConditionalAndContinue(bool required)
 		{
 			var controlId = required ? "#yes-radio" : "#no-radio";
@@ -85,11 +98,10 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 		}
 
 		public async Task SetDecisionDateAndContinue(DateTime date)
-		{
-			// await InputDateAndSubmit(date);
-			Document.QuerySelector<IHtmlInputElement>("#-day").Value = date.Day.ToString();
-			Document.QuerySelector<IHtmlInputElement>("#-month").Value = date.Month.ToString();
-			Document.QuerySelector<IHtmlInputElement>("#-year").Value = date.Year.ToString();
+		{			
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-day").Value = date.Day.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-month").Value = date.Month.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-year").Value = date.Year.ToString();
 
 			await ClickSubmitButton();
 		}
@@ -108,9 +120,9 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 
 		private async Task InputDateAndSubmit(DateTime date)
 		{
-			Document.QuerySelector<IHtmlInputElement>("#-day").Value = date.Day.ToString();
-			Document.QuerySelector<IHtmlInputElement>("#-month").Value = date.Month.ToString();
-			Document.QuerySelector<IHtmlInputElement>("#-year").Value = date.Year.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-day").Value = date.Day.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-month").Value = date.Month.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#decision-date-year").Value = date.Year.ToString();
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 		}
 	}

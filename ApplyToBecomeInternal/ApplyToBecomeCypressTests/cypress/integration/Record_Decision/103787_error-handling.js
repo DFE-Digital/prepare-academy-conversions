@@ -31,4 +31,21 @@ describe('103787 Error handling', () => {
         cy.continueBtn().click()
         cy.get('[data-module=govuk-error-summary]').should('contain.text', 'Enter a date for the decision')
     })
+
+    it('Error handling for the declined journey', () => {
+        // Record the decision:
+        cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
+        cy.continueBtn().click()
+        cy.get('[id="AdvisoryBoardDecision-error-link "]').should('contain.text', 'Please select the result of the decision')
+        cy.get('[id="declined-radio"]').click()
+        cy.continueBtn().click()
+        // Who made this decision:
+        cy.continueBtn().click()
+        cy.get('[id="DecisionMadeBy-error-link "]').should('contain.text', 'Please select who made the decision')
+        cy.get('[id="regionaldirectorforregion-radio"]').click()
+        cy.continueBtn().click()
+        // Why was the project declined?
+        // **Error Message needs updating on Frontend**
+        //cy.continueBtn().click()
+    })
 })

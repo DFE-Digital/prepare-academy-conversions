@@ -18,9 +18,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 		private string PageHeading => Document.QuerySelector<IHtmlElement>("h1").TextContent.Trim();
 		private IElement ErrorSummary => Document.QuerySelector(".govuk-error-summary");
-		private IHtmlInputElement DayPart => Document.QuerySelector<IHtmlInputElement>("#-day");
-		private IHtmlInputElement MonthPart => Document.QuerySelector<IHtmlInputElement>("#-month");
-		private IHtmlInputElement YearPart => Document.QuerySelector<IHtmlInputElement>("#-year");
+		private IHtmlInputElement DayPart => Document.QuerySelector<IHtmlInputElement>("#decision-date-day");
+		private IHtmlInputElement MonthPart => Document.QuerySelector<IHtmlInputElement>("#decision-date-month");
+		private IHtmlInputElement YearPart => Document.QuerySelector<IHtmlInputElement>("#decision-date-year");
 
 		[Fact]
 		public async Task Should_display_selected_school_name()
@@ -47,6 +47,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			DayPart.Value = expectedDay;
 			MonthPart.Value = expectedMonth;
 			YearPart.Value = expectedYear;
+
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/decision-date");
@@ -71,6 +72,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			DayPart.Value = $"{tomorrow.Day}";
 			MonthPart.Value = $"{tomorrow.Month}";
 			YearPart.Value = $"{tomorrow.Year}";
+
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
 			Document.Url.Should().EndWith($"/task-list/{project.Id}/decision/decision-date");
