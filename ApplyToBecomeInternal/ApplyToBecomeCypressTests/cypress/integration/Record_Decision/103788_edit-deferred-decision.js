@@ -25,15 +25,14 @@ it('TC01: J3 Edit a recorded decision Deferred - Reg Director Region, Finance', 
     .invoke('attr', 'aria-expanded')
     .then(ariaExpand => {
         if (ariaExpand.includes(true)) {
-            // clicks on finance box
-                // clicks on the Give Reasons box
+            // Additional Information Needed text box
             cy.addInfoNeededText().clear().type('This is the second test')
-
         }
         else {
+            // clicks on Additional Information Needed box
             cy.addInfoNeededBox().click()
             .then(()=> {
-                // clicks on the Give Reasons box
+             // Additional Information Needed text box
             cy.addInfoNeededText().clear().type('This is the first test')
             })
         }
@@ -50,15 +49,15 @@ it('TC01: J3 Edit a recorded decision Deferred - Reg Director Region, Finance', 
     .invoke('attr', 'aria-expanded')
     .then(ariaExpand => {
         if (ariaExpand.includes(true)) {
-            // clicks on finance box
-                // clicks on the Give Reasons box
+            // Additional Information Needed text box
             cy.addInfoNeededText().clear().type('This is the second test')
 
         }
         else {
+            // clicks on Additional Information Needed box
             cy.addInfoNeededBox().click()
             .then(()=> {
-                // clicks on the Give Reasons box
+            // Additional Information Needed text box
             cy.addInfoNeededText().clear().type('This is the first test')
             })
         }
@@ -94,15 +93,15 @@ it('TC02: J3 Edit a recorded decision Declined - Different Reg Director, ofsted 
     .invoke('attr', 'aria-expanded')
     .then(ariaExpand => {
         if (ariaExpand.includes(true)) {
-            // clicks on finance box
-                // clicks on the Give Reasons box
+            // clicks on Await ofsted reprot text box
             cy.awaitOfstedReportText().clear().type('This is the second test')
 
         }
         else {
+            // clicks on Await ofsted report box
             cy.awaitOfstedReportBox().click()
             .then(() => {
-                // clicks on the Give Reasons box
+            // clicks on Await ofsted report text box
             cy.awaitOfstedReportText().clear().type('This is the first test')
             })
         }
@@ -119,14 +118,14 @@ it('TC02: J3 Edit a recorded decision Declined - Different Reg Director, ofsted 
     .invoke('attr', 'aria-expanded')
     .then(ariaExpand => {
         if (ariaExpand.includes(true)) {
-            // clicks on finance box
-                // clicks on the Give Reasons box
+            // clicks on Await ofsted Report text box
             cy.awaitOfstedReportText().clear().type('This is the second test')
         }
         else {
+            // clicks on Await ofsted report  box
             cy.awaitOfstedReportBox().click()
             .then(() => {
-                // clicks on the Give Reasons box
+             // clicks on Await ofsted report text box
             cy.awaitOfstedReportText().clear().type('This is the first test')
             })
         }
@@ -162,13 +161,14 @@ it('TC03: J3 Edit a recorded decision Declined - Director General, Performance',
     .invoke('attr', 'aria-expanded')
     .then(ariaExpand => {
         if (ariaExpand.includes(true)) {
+            // clicks on performance box text
             cy.performanceCheckText().clear().type('This is the second test')
         }
         else {
              // clicks on performance box
             cy.performanceCheckBox().click()
             .then(()=> {
-            // clicks on the Give Reasons box
+            // clicks on performance box text
             cy.performanceCheckText().clear().type('This is the first test')
             })
         }
@@ -185,13 +185,14 @@ it('TC03: J3 Edit a recorded decision Declined - Director General, Performance',
     .invoke('attr', 'aria-expanded')
     .then(ariaExpand => {
         if (ariaExpand.includes(true)) {
+            // clicks on performance text box
             cy.performanceCheckText().clear().type('This is the second test')
         }
         else {
              // clicks on performance box
             cy.performanceCheckBox().click()
             .then(()=> {
-            // clicks on the Give Reasons box
+            // clicks on the Give Reasons text box
             cy.performanceCheckText().clear().type('This is the first test')
             })
         }
@@ -227,13 +228,14 @@ it('TC04: J3 Edit a recorded decision Declined - Minister, Other', () => {
     .invoke('attr', 'aria-expanded')
     .then(ariaExpand => {
         if (ariaExpand.includes(true)) {
+            // clicks on other text box
             cy.OtherCheckText().clear().type('This is the second test')
         }
         else {
             // clicks on other box
             cy.OtherCheckBox().click()
             .then(()=> {
-            // clicks on the Give Reasons box
+            // clicks on other text box
             cy.OtherCheckText().clear().type('This is the first test')
             })
         }
@@ -250,13 +252,14 @@ it('TC04: J3 Edit a recorded decision Declined - Minister, Other', () => {
     .invoke('attr', 'aria-expanded')
     .then(ariaExpand => {
         if (ariaExpand.includes(true)) {
+            // clicks on finance text box
             cy.OtherCheckText().clear().type('This is the second test')
         }
         else {
-            // clicks on finance box
+            // clicks on box
             cy.OtherCheckBox().click()
             .then(()=> {
-            // clicks on the Give Reasons box
+            // clicks on finance text box
             cy.OtherCheckText().clear().type('This is the first test')
             })
         }
@@ -292,13 +295,14 @@ it('TC05: J3 Edit a recorded decision Declined - None, Other', () => {
     .invoke('attr', 'aria-expanded')
     .then(ariaExpand => {
         if (ariaExpand.includes(true)) {
+            // clicks on other text box
             cy.OtherCheckText().clear().type('This is the second test')
         }
         else {
-            // clicks on finance box
+            // clicks on other box
             cy.OtherCheckBox().click()
             .then(()=> {
-            // clicks on the Give Reasons box
+            // clicks on other text box
             cy.OtherCheckText().clear().type('This is the first test')
             })
         }
@@ -315,13 +319,14 @@ it('TC05: J3 Edit a recorded decision Declined - None, Other', () => {
     .invoke('attr', 'aria-expanded')
     .then(ariaExpand => {
         if (ariaExpand.includes(true)) {
+            // clicks on other text box
             cy.OtherCheckText().clear().type('This is the second test')
         }
         else {
-            // clicks on finance box
+            // clicks on other box
             cy.OtherCheckBox().click()
             .then(()=> {
-            // clicks on the Give Reasons box
+            /// clicks on other text box
             cy.OtherCheckText().clear().type('This is the first test')
             })
         }
