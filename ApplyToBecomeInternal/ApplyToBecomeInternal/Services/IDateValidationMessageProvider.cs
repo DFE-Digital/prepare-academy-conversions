@@ -15,6 +15,16 @@ namespace ApplyToBecomeInternal.Services
 		string DayOutOfRange(int daysInMonth) =>
 			$"Day must be between 1 and {daysInMonth}";
 
+		/// <summary>
+		/// Allows the implementor to specify an additional validation step that
+		/// will be executed after all others have passed. Will not be executed
+		/// if any preceding step fails.
+		/// </summary>
+		/// <param name="day">the day of the month</param>
+		/// <param name="month">the month of the year</param>
+		/// <param name="year">the year</param>
+		/// <returns>an anonymous tuple containing the result (<see cref="bool"/>)
+		/// and, if the step failed, an error message</returns>
 		(bool, string) ContextSpecificValidation(int day, int month, int year) =>
 			(true, string.Empty);
 	}
