@@ -51,11 +51,11 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			var reasons = DeclinedReasons.Select(r => Enum.Parse<AdvisoryBoardDeclinedReasons>(r));
 			decision.DeclinedReasons.Clear();
-			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Other));
 			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Finance));
-			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Governance));
 			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Performance));
+			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Governance));
 			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.ChoiceOfTrust));
+			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Other));
 
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Finance, DeclineFinanceReason);
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Performance, DeclinePerformanceReason);
