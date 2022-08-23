@@ -6,6 +6,7 @@ using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
@@ -75,6 +76,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			return RedirectToPage(Links.Decision.Summary.Page, new { id });
 		}
+
+		string IDateValidationMessageProvider.SomeMissing(string displayName, IEnumerable<string> missingParts) =>
+			$"Date must include a {string.Join(" and ", missingParts)}";
 
 		string IDateValidationMessageProvider.AllMissing(string displayName)
 		{

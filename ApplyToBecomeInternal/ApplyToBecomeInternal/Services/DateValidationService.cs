@@ -35,10 +35,13 @@ namespace ApplyToBecomeInternal.Services
 			bool monthParsed = int.TryParse(monthInput, out int month);
 			bool dayParsed = int.TryParse(dayInput, out int day);
 
-			if (!monthParsed || month < 1 || month > 12)
+			if (!dayParsed || !monthParsed || !yearParsed)
+				return (false, _messages.DefaultMessage);
+
+			if (month < 1 || month > 12)
 				return (false, _messages.MonthOutOfRange);
 
-			if (!dayParsed || day < 1 || day > DateTime.DaysInMonth(yearParsed ? year : DateTime.Today.Year, month))
+			if (day < 1 || day > DateTime.DaysInMonth(yearParsed ? year : DateTime.Today.Year, month))
 				return (false, _messages.DayOutOfRange(DateTime.DaysInMonth(year, month)));
 
 			(bool valid, string message) = _messages.ContextSpecificValidation(day, month, year);
