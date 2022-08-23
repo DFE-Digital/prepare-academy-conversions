@@ -4,15 +4,15 @@ namespace ApplyToBecomeInternal.Services
 {
 	public interface IDateValidationMessageProvider
 	{
-		string DefaultMessage => "Enter a date in the correct format";
-		string MonthOutOfRange => "Month must be between 1 and 12";
+		public string DefaultMessage => "Enter a date in the correct format";
+		public string MonthOutOfRange => "Month must be between 1 and 12";
 
-		string AllMissing(string displayName);
+		public string AllMissing(string displayName);
 
-		string SomeMissing(string displayName, IEnumerable<string> missingParts) =>
+		public string SomeMissing(string displayName, IEnumerable<string> missingParts) =>
 			$"{displayName} must include a {string.Join(" and ", missingParts)}";
 
-		string DayOutOfRange(int daysInMonth) =>
+		public string DayOutOfRange(int daysInMonth) =>
 			$"Day must be between 1 and {daysInMonth}";
 
 		/// <summary>
@@ -25,7 +25,7 @@ namespace ApplyToBecomeInternal.Services
 		/// <param name="year">the year</param>
 		/// <returns>an anonymous tuple containing the result (<see cref="bool"/>)
 		/// and, if the step failed, an error message</returns>
-		(bool, string) ContextSpecificValidation(int day, int month, int year) =>
+		public (bool, string) ContextSpecificValidation(int day, int month, int year) =>
 			(true, string.Empty);
 	}
 }
