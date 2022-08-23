@@ -65,7 +65,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
 			Document.QuerySelector<IHtmlElement>("[href='#DecisionMadeBy']").Text().Should()
-				.Be("Please select who made the decision");
+				.Be("Select who made the decision");
 			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Who made this decision?");
 		}
 

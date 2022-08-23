@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			_errorService = errorService;
 		}
 
-		[BindProperty, Required(ErrorMessage = "Please select who made the decision")]
+		[BindProperty, Required(ErrorMessage = "Select who made the decision")]
 		public DecisionMadeBy? DecisionMadeBy { get; set; }
 
 	   public string DecisionText { get; set; }

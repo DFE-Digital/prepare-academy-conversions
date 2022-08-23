@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			var request = new AdvisoryBoardDecision
 			{
 				Decision = AdvisoryBoardDecisions.Approved,
-				AdvisoryBoardDecisionDate = new DateTime(2021, 01, 01),
+				AdvisoryBoardDecisionDate = new DateTime(DateTime.Today.Year, 01, 01),
 				ApprovedConditionsSet = true,
 				ApprovedConditionsDetails = "bills need to be paid",
 				DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
@@ -46,7 +46,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		}
 
 		[Fact]
-		public async Task Should_display_selected_schoolname()
+		public async Task Should_display_selected_school_name()
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 			var request = new AdvisoryBoardDecision
@@ -76,7 +76,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			var request = new AdvisoryBoardDecision
 			{
 				Decision = AdvisoryBoardDecisions.Approved,
-				AdvisoryBoardDecisionDate = new DateTime(2021, 01, 01),
+				AdvisoryBoardDecisionDate = new DateTime(DateTime.Today.Year, 01, 01),
 				ApprovedConditionsSet = true,
 				ApprovedConditionsDetails = "bills need to be paid",
 				DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
@@ -103,7 +103,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			var request = new AdvisoryBoardDecision
 			{
 				Decision = AdvisoryBoardDecisions.Approved,
-				AdvisoryBoardDecisionDate = new DateTime(2021, 01, 01),
+				AdvisoryBoardDecisionDate = new DateTime(DateTime.Today.Year, 01, 01),
 				ApprovedConditionsSet = true,
 				ApprovedConditionsDetails = "bills need to be paid",
 				DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
@@ -131,7 +131,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			var request = new AdvisoryBoardDecision
 			{
 				Decision = AdvisoryBoardDecisions.Approved,
-				AdvisoryBoardDecisionDate = new DateTime(2021, 01, 01),
+				AdvisoryBoardDecisionDate = new DateTime(DateTime.Today.Year, 01, 01),
 				ApprovedConditionsSet = true,
 				ApprovedConditionsDetails = "bills need to be paid",
 				DecisionMadeBy = DecisionMadeBy.DirectorGeneral
@@ -153,7 +153,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 				.Be(request.ApprovedConditionsDetails);
 
 			Document.QuerySelector<IHtmlElement>("#decision-date").Text().Trim().Should()
-			.Be("01 January 2021");
+			.Be($"01 January {DateTime.Today.Year}");
 		}
 
 		[Fact]
@@ -256,7 +256,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			var request = new AdvisoryBoardDecision
 			{
 				Decision = AdvisoryBoardDecisions.Approved,
-				AdvisoryBoardDecisionDate = new DateTime(2021, 01, 01),
+				AdvisoryBoardDecisionDate = new DateTime(DateTime.Today.Year, 01, 01),
 				ApprovedConditionsSet = true,
 				ApprovedConditionsDetails = "bills need to be paid",
 				DecisionMadeBy = DecisionMadeBy.DirectorGeneral
@@ -290,7 +290,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			var request = new AdvisoryBoardDecision
 			{
 				Decision = AdvisoryBoardDecisions.Approved,
-				AdvisoryBoardDecisionDate = new DateTime(2021, 01, 01),
+				AdvisoryBoardDecisionDate = new DateTime(DateTime.Today.Year, 01, 01),
 				ApprovedConditionsSet = true,
 				ApprovedConditionsDetails = "bills need to be paid",
 				DecisionMadeBy = DecisionMadeBy.DirectorGeneral

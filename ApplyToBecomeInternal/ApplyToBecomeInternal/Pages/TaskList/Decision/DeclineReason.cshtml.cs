@@ -23,7 +23,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			DeclineOptions = Enum.GetValues(typeof(AdvisoryBoardDeclinedReasons)).Cast<AdvisoryBoardDeclinedReasons>();
 		}
 
-		[BindProperty, MinLength(length: 1, ErrorMessage = "Please select at least one reason")]
+		[BindProperty, MinLength(length: 1, ErrorMessage = "Select at least one reason")]
 		public IEnumerable<string> DeclinedReasons { get; set; }
 		[BindProperty] public string DeclineOtherReason { get; set; }
 		[BindProperty] public string DeclineFinanceReason { get; set; }
@@ -113,7 +113,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			string reasonName = reason.ToString();
 
 			if (DeclinedReasons.Contains(reasonName) && string.IsNullOrWhiteSpace(explanation))
-				ModelState.AddModelError($"Decline{reasonName}Reason", $"Explanation is required for {reason.ToDescription().ToLowerInvariant()}");
+				ModelState.AddModelError($"Decline{reasonName}Reason", $"Enter a reason for selecting {reason.ToDescription()}");
 		}
 
 		public class UIHelpers

@@ -54,12 +54,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 			var request = new AdvisoryBoardDecision
 			{
 				Decision = AdvisoryBoardDecisions.Approved,
-				AdvisoryBoardDecisionDate = new DateTime(2021, 01, 01),
+				AdvisoryBoardDecisionDate = new DateTime(DateTime.Today.Year, 01, 01),
 				ApprovedConditionsSet = true,
 				ApprovedConditionsDetails = "bills need to be paid",
 				DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
 				ConversionProjectId = project.Id
-			};			
+			};
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
 
@@ -75,8 +75,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 				.Be("Yes");
 			ConditionDetailsElement.Text().Trim().Should()
 				.Be(request.ApprovedConditionsDetails);
+
 			DecisionDateElement.Text().Trim().Should()
-				.Be("01 January 2021");
+				.Be($"01 January {DateTime.Today.Year}");
 			Document.QuerySelector<IHtmlAnchorElement>("#record-decision-link").Text().Trim().Should()
 			   .Be("Change your decision");
 		}
@@ -91,7 +92,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Deferred);
 			await wizard.SetDecisionByAndContinue(DecisionMadeBy.DirectorGeneral);
 			await wizard.SetDeferredReasonsAndContinue(Tuple.Create(AdvisoryBoardDeferredReason.Other, "other explanation"));
-			await wizard.SetDecisionDateAndContinue(new DateTime(2021, 1, 1));			
+			await wizard.SetDecisionDateAndContinue(new DateTime(DateTime.Today.Year, 1, 1));
 
 			await OpenUrlAsync($"/task-list/{project.Id}?rd=x");
 
@@ -102,7 +103,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 			Regex.Replace(Document.QuerySelector<IHtmlElement>("#deferred-reasons").Text().Trim(), @"\s+", string.Empty).Should()
 				.Be("Other:otherexplanation");
 			DecisionDateElement.Text().Trim().Should()
-				.Be("01 January 2021");			
+				.Be($"01 January {DateTime.Today.Year}");
 		}
 
 		[Fact]
@@ -115,7 +116,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
 			await wizard.SetDecisionByAndContinue(DecisionMadeBy.DirectorGeneral);
 			await wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Other, "other explanation"));
-			await wizard.SetDecisionDateAndContinue(new DateTime(2021, 1, 1));
+			await wizard.SetDecisionDateAndContinue(new DateTime(DateTime.Today.Year, 1, 1));
 
 			await OpenUrlAsync($"/task-list/{project.Id}?rd=x");
 
@@ -126,7 +127,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 			Regex.Replace(Document.QuerySelector<IHtmlElement>("#decline-reasons").Text().Trim(), @"\s+", string.Empty).Should()
 				.Be("Other:otherexplanation");
 			DecisionDateElement.Text().Trim().Should()
-				.Be("01 January 2021");
+				.Be($"01 January {DateTime.Today.Year}");
 		}
 
 		[Fact]
