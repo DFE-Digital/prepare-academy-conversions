@@ -208,7 +208,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Month must be between 1 and 12");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Enter a date in the correct format");
 		}
 
 		[Fact]
