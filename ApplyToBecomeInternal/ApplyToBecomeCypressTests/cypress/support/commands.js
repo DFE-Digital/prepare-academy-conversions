@@ -336,6 +336,76 @@ Cypress.Commands.add('projectStateId', () => {
 
 })
 
+// Deferred declined radio button
+Cypress.Commands.add('deferredRadioBtn', () => {
+    cy.get('[id="deferred-radio"]')
+})
+
+// Deferred Additional Information Needed Checkbox
+Cypress.Commands.add('addInfoNeededBox', () => {
+    cy.get('[id="additionalinformationneeded-checkbox"]')
+})
+
+// Deferred Additional Information Needed Textbox
+Cypress.Commands.add('addInfoNeededText', () => {
+    cy.get('[id="additionalinformationneeded-txtarea"]')
+})
+
+// Deferred reasonChangeLink
+Cypress.Commands.add('deferredReasonChangeLink', () => {
+    cy.get('[id="change-deferred-btn"]')
+})
+
+// Deferred Decision
+Cypress.Commands.add('deferredDecision', () => {
+    cy.get('[id="decision"]')
+})
+
+// Deferred Decision Made By
+Cypress.Commands.add('deferredDecisionMadeBy', () => {
+    cy.get('[id="decision-made-by"]')
+})
+
+// Deferred Decision Date
+Cypress.Commands.add('deferredDecisionDate', () => {
+    cy.get('[id="decision-date"]')
+})
+
+// Deferred project status
+Cypress.Commands.add('deferredProjectStateId', () => {
+    cy.get('[id="notification-message"]')
+})
+
+// Deferred Await Ofsted Report Checkbox
+Cypress.Commands.add('awaitOfstedReportBox', () => {
+    cy.get('[id="awaitingnextoftedreport-checkbox"]')
+})
+
+// Deferred Await Ofsted Report Text
+Cypress.Commands.add('awaitOfstedReportText', () => {
+    cy.get('[id="awaitingnextoftedreport-txtarea"]')
+})
+
+// Deferred Performance Check box
+Cypress.Commands.add('performanceCheckBox', () => {
+    cy.get('[id="performanceconcerns-checkbox"]')
+})
+
+// Deferred Performance Check box text
+Cypress.Commands.add('performanceCheckText', () => {
+    cy.get('[id="performanceconcerns-txtarea"]')
+})
+
+// Deferred Other box
+Cypress.Commands.add('OtherCheckBox', () => {
+    cy.get('[id="other-checkbox"]')
+})
+
+// Deferred Other text
+Cypress.Commands.add('OtherCheckText', () => {
+    cy.get('[id="other-txtarea"]')
+})
+
 // Request external dev - requres environment setup on yml file
 // Cypress.Commands.add('beData', () => {
 //     const apiKey = Cypress.env('apiKey')

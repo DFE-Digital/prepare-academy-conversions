@@ -54,10 +54,13 @@ namespace ApplyToBecomeInternal.Models
 
 			var displayName = bindingContext.ModelMetadata.DisplayName;
 
-			var validator = new DateValidationService();
+			IDateValidationMessageProvider page =
+				(bindingContext.ActionContext as Microsoft.AspNetCore.Mvc.RazorPages.PageContext)?.ViewData.Model as IDateValidationMessageProvider;
+
+			var validator = new DateValidationService(page);
 			(bool dateValid, string validationMessage) =
 				validator.Validate(dayValueProviderResult.FirstValue, monthValueProviderResult.FirstValue, yearValueProviderResult.FirstValue, displayName);
-
+			
 			if (dateValid)
 			{
 				int day = int.Parse(dayValueProviderResult.FirstValue);
@@ -103,8 +106,7 @@ namespace ApplyToBecomeInternal.Models
 			{
 				if (bindingContext.ModelMetadata is DefaultModelMetadata defaultModelMetadata)
 				{
-					var dateValidation = defaultModelMetadata.Attributes.Attributes.FirstOrDefault(a => a.GetType() == typeof(DateValidationAttribute)) as DateValidationAttribute;
-					if (dateValidation != null)
+					if (defaultModelMetadata.Attributes.Attributes.FirstOrDefault(a => a.GetType() == typeof(DateValidationAttribute)) is DateValidationAttribute dateValidation)
 					{
 						var rangeValidator = new DateRangeValidationService();
 						return rangeValidator.Validate(date, dateValidation.DateValidationEnum, displayName);
