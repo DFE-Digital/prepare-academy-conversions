@@ -212,7 +212,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 				Tuple.Create(AdvisoryBoardDeferredReason.PerformanceConcerns, "Performance detail"),
 				Tuple.Create(AdvisoryBoardDeferredReason.Other, "Other detail"),
 				Tuple.Create(AdvisoryBoardDeferredReason.AdditionalInformationNeeded, "additional info"),
-				Tuple.Create(AdvisoryBoardDeferredReason.AwaitingNextOftedReport, "Ofsted"));
+				Tuple.Create(AdvisoryBoardDeferredReason.AwaitingNextOfstedReport, "Ofsted"));
 			await wizard.SetDecisionDateAndContinue(DateTime.Today);
 
 			string declineReasonSummary = Document.QuerySelector("#deferred-reasons").TextContent;
