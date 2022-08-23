@@ -6,7 +6,6 @@ using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
@@ -90,27 +89,6 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			var other = reasons.GetReason(AdvisoryBoardDeferredReason.Other);
 			OtherIsChecked = other != null;
 			OtherDetails = other?.Details;
-		}
-	}
-
-	public static class AdvisoryBoardExtensions
-	{
-		public static List<AdvisoryBoardDeferredReasonDetails> AddReasonIfValid(this List<AdvisoryBoardDeferredReasonDetails> reasons, bool isChecked, AdvisoryBoardDeferredReason reason,
-			string detail, ErrorService errorService)
-		{
-			if (isChecked && string.IsNullOrWhiteSpace(detail))
-			{
-				errorService.AddError($"{reason}Details", $"Enter a reason for selecting {reason.ToDescription()}");
-			}
-
-			if (isChecked) reasons.Add(new AdvisoryBoardDeferredReasonDetails(reason, detail));
-
-			return reasons;
-		}
-
-		public static AdvisoryBoardDeferredReasonDetails GetReason(this List<AdvisoryBoardDeferredReasonDetails> reasons, AdvisoryBoardDeferredReason reason)
-		{
-			return reasons.FirstOrDefault(r => r.Reason == reason);
 		}
 	}
 }
