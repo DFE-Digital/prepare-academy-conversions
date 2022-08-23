@@ -187,7 +187,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("'Previous advisory board' must be a valid date");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Day must be between 1 and 28");
 		}
 
 		[Fact]
@@ -208,8 +208,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-
-			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("'Previous advisory board' must be a valid date");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Enter a date in the correct format");
 		}
 
 		[Fact]
