@@ -66,7 +66,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			SetDecisionInSession(id, decision);
 
-			if (!WasReasonGiven) _errorService.AddError($"WasReasonGiven", "Please select at least one reason");
+			if (!WasReasonGiven) _errorService.AddError($"WasReasonGiven", "Select at least one reason");
 			
 			if (_errorService.HasErrors()) return await OnGetAsync(id);			
 
@@ -100,7 +100,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		{
 			if (isChecked && string.IsNullOrWhiteSpace(detail))
 			{
-				errorService.AddError($"{reason}Details", $"Explanation is required for {reason.ToDescription().ToLowerInvariant()}");
+				errorService.AddError($"{reason}Details", $"Enter a reason for selecting {reason.ToDescription()}");
 			}
 
 			if (isChecked) reasons.Add(new AdvisoryBoardDeferredReasonDetails(reason, detail));
