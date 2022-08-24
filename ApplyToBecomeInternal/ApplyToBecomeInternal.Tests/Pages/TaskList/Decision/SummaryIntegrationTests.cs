@@ -17,6 +17,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		{
 		}
 
+		private string PageHeading => Document.QuerySelector("h1").Text().Trim();
+
 		[Fact]
 		public async Task Should_redirect_to_tasklist()
 		{
@@ -153,7 +155,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 				.Be(request.ApprovedConditionsDetails);
 
 			Document.QuerySelector<IHtmlElement>("#decision-date").Text().Trim().Should()
-			.Be($"01 January {DateTime.Today.Year}");
+				.Be($"01 January {DateTime.Today.Year}");
 		}
 
 		[Fact]
@@ -311,6 +313,41 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
 			Document.QuerySelector<IHtmlElement>("h1").Text().Should().Be(nextPageTitle);
+		}
+
+		[Fact]
+		public async Task Should_store_the_reasons_in_the_expected_order()
+		{
+			AcademyConversionProject project = AddGetProject(x => x.GeneralInformationSectionComplete = false);
+
+			var wizard = new RecordDecisionWizard(Context);
+
+			await wizard.StartFor(project.Id);
+			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
+			await wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+			await wizard.SetDeclinedReasonsAndContinue(
+				Tuple.Create(AdvisoryBoardDeclinedReasons.ChoiceOfTrust, "trust"),
+				Tuple.Create(AdvisoryBoardDeclinedReasons.Other, "other"),
+				Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "finance"),
+				Tuple.Create(AdvisoryBoardDeclinedReasons.Governance, "governance"),
+				Tuple.Create(AdvisoryBoardDeclinedReasons.Performance, "performance")
+			);
+			await wizard.SetDecisionDateAndContinue(DateTime.Today);
+
+			PageHeading.Should().Be("Check your answers before recording this decision");
+
+			string reasonSummary = Document.QuerySelector<IHtmlElement>("#decline-reasons").TextContent;
+
+			int financePosition = reasonSummary.IndexOf("Finance:", StringComparison.InvariantCultureIgnoreCase);
+			int performancePosition = reasonSummary.IndexOf("Performance:", StringComparison.InvariantCultureIgnoreCase);
+			int governancePosition = reasonSummary.IndexOf("Governance:", StringComparison.InvariantCultureIgnoreCase);
+			int trustPosition = reasonSummary.IndexOf("Choice of trust:", StringComparison.InvariantCultureIgnoreCase);
+			int otherPosition = reasonSummary.IndexOf("Other:", StringComparison.InvariantCultureIgnoreCase);
+
+			financePosition.Should().BeLessThan(performancePosition);
+			performancePosition.Should().BeLessThan(governancePosition);
+			governancePosition.Should().BeLessThan(trustPosition);
+			trustPosition.Should().BeLessThan(otherPosition);
 		}
 	}
 }
