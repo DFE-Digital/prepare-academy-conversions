@@ -23,8 +23,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			DeclineOptions = Enum.GetValues(typeof(AdvisoryBoardDeclinedReasons)).Cast<AdvisoryBoardDeclinedReasons>();
 		}
 
-		[BindProperty, MinLength(length: 1, ErrorMessage = "Select at least one reason")]
-		public IEnumerable<string> DeclinedReasons { get; set; }
+		[BindProperty] public IEnumerable<string> DeclinedReasons { get; set; }
 		[BindProperty] public string DeclineOtherReason { get; set; }
 		[BindProperty] public string DeclineFinanceReason { get; set; }
 		[BindProperty] public string DeclinePerformanceReason { get; set; }
@@ -49,13 +48,20 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		{
 			var decision = GetDecisionFromSession(id);
 
-			var reasons = DeclinedReasons.Select(r => Enum.Parse<AdvisoryBoardDeclinedReasons>(r));
-			decision.DeclinedReasons.Clear();
-			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Finance));
-			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Performance));
-			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Governance));
-			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.ChoiceOfTrust));
-			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Other));
+			if (DeclinedReasons.Any())
+			{
+				var reasons = DeclinedReasons.Select(Enum.Parse<AdvisoryBoardDeclinedReasons>);
+				decision.DeclinedReasons.Clear();
+				AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Finance));
+				AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Performance));
+				AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Governance));
+				AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.ChoiceOfTrust));
+				AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Other));
+			}
+			else
+			{
+				_errorService.AddError("DeclinedReasonSet", "Select at least one reason");
+			}
 
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Finance, DeclineFinanceReason);
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Performance, DeclinePerformanceReason);
