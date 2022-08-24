@@ -1,16 +1,4 @@
 {
 	"video": true,
-	"retries": 2,
-	"env": {
-		"db": {
-		  "userName": "sipservice",
-		  "password": "Password13",
-		  "server": "srv-t1dv-sips.database.windows.net",
-		  "options": {
-			  "database": "SIP",
-			  "encrypt": true,
-			  "rowCollectionOnRequestCompletion" : true
-		  }
-		}
-	  }
+	"retries": 2	
 }
