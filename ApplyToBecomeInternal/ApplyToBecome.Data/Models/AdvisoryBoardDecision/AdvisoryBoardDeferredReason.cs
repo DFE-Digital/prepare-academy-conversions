@@ -7,7 +7,7 @@ namespace ApplyToBecome.Data.Models.AdvisoryBoardDecision
 		[Description("Additional information needed")]
 		AdditionalInformationNeeded = 0,
 		[Description("Awaiting next ofsted report")]
-		AwaitingNextOftedReport = 1,
+		AwaitingNextOfstedReport = 1,
 		[Description("Performance concerns")]
 		PerformanceConcerns = 2,		
 		[Description("Other")]

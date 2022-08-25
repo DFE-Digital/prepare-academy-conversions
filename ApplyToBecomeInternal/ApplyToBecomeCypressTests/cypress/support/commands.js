@@ -431,12 +431,12 @@ Cypress.Commands.add('deferredProjectStateId', () => {
 
 // Deferred Await Ofsted Report Checkbox
 Cypress.Commands.add('awaitOfstedReportBox', () => {
-    cy.get('[id="awaitingnextoftedreport-checkbox"]')
+    cy.get('[id="awaitingnextofstedreport-checkbox"]')
 })
 
 // Deferred Await Ofsted Report Text
 Cypress.Commands.add('awaitOfstedReportText', () => {
-    cy.get('[id="awaitingnextoftedreport-txtarea"]')
+    cy.get('[id="awaitingnextofstedreport-txtarea"]')
 })
 
 // Deferred Performance Check box

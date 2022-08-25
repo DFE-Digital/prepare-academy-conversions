@@ -34,14 +34,14 @@ Cypress._.each(['iphone-x'], (viewport) => {
 				cy.submitDateSchoolTrust(11, 222, 1980)
 				cy.saveContinueBtn().click()
 				cy.get('.govuk-error-summary__list li a')
-					.should('have.text', '\'Advisory board\' must be a valid date')
+					.should('have.text', 'Month must be between 1 and 12')
 			});
 
 			it.skip('TC04: Should display "Advisory Board date must be a valid date" when submitting out-of-index month', () => {
 				cy.submitDateSchoolTrust(11, 0, 1980)
 				cy.saveContinueBtn().click()
 				cy.get('.govuk-error-summary__list li a')
-					.should('have.text', '\'Advisory board\' must be a valid date')
+					.should('have.text', 'Month must be between 1 and 12')
 			});
 		})
 	});

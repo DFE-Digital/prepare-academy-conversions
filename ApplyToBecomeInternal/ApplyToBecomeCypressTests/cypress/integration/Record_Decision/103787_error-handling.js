@@ -19,7 +19,7 @@ describe('103787 Error handling', () => {
         cy.continueBtn().click()
         // Who made this decision:
         cy.continueBtn().click()
-        cy.get('[id="DecisionMadeBy-error-link "]').should('contain.text', 'Please select who made the decision')
+        cy.get('[id="DecisionMadeBy-error-link "]').should('contain.text', 'Select who made the decision')
         cy.get('[id="regionaldirectorforregion-radio"]').click()
         cy.continueBtn().click()
         // Were conditions met:
@@ -29,7 +29,7 @@ describe('103787 Error handling', () => {
         cy.continueBtn().click()
         // Date conversions:
         cy.continueBtn().click()
-        cy.get('[data-module=govuk-error-summary]').should('contain.text', 'Enter a date for the decision')
+        cy.get('[data-module=govuk-error-summary]').should('contain.text', 'Enter the date when the conversion was approved')
     })
 
     it('Error handling for the declined journey', () => {
@@ -41,7 +41,7 @@ describe('103787 Error handling', () => {
         cy.continueBtn().click()
         // Who made this decision:
         cy.continueBtn().click()
-        cy.get('[id="DecisionMadeBy-error-link "]').should('contain.text', 'Please select who made the decision')
+        cy.get('[id="DecisionMadeBy-error-link "]').should('contain.text', 'Select who made the decision')
         cy.get('[id="regionaldirectorforregion-radio"]').click()
         cy.continueBtn().click()
         // Why was the project declined?
