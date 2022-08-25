@@ -4,8 +4,7 @@
 let url = Cypress.env('url') + '/task-list/2054?rd=true'
 //let projecList = Cypress.env('url') + '/project-list'
 
-describe('103195 Edit Approved record decision', ()=> {
-    
+describe('103195 Edit Approved record decision', ()=> {    
     beforeEach(() => {
         cy.ApproveDeleteAddNewRecord()
         cy.clearCookies()
@@ -46,7 +45,7 @@ describe('103195 Edit Approved record decision', ()=> {
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
         // recorded decision confirmation
-        cy.AprrovedMessageBanner().should('contain.text', 'Decision recorded')
+        cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
     })
 
     // Edit Approval Path - A different Regional Director, No/Yes conditions set 
@@ -83,7 +82,7 @@ describe('103195 Edit Approved record decision', ()=> {
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
         // recorded decision confirmation
-        cy.AprrovedMessageBanner().should('contain.text', 'Decision recorded')
+        cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
     })
 
     // Edit Approval Path - Minister, No/Yes conditions set 
@@ -121,7 +120,7 @@ describe('103195 Edit Approved record decision', ()=> {
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
         // recorded decision confirmation
-        cy.AprrovedMessageBanner().should('contain.text', 'Decision recorded')
+        cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
     })
     // Edit Approval Path - Director General, No/Yes conditions set
     it('TC04: J1 Edit a recorded decision Approval - Director General, No Conditions', () => {
@@ -157,7 +156,7 @@ describe('103195 Edit Approved record decision', ()=> {
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
         // recorded decision confirmation
-        cy.AprrovedMessageBanner().should('contain.text', 'Decision recorded')
+        cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
     })
 
     // Edit Approval Path - None, No/Yes conditions set
@@ -194,6 +193,6 @@ describe('103195 Edit Approved record decision', ()=> {
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
         // recorded decision confirmation
-        cy.AprrovedMessageBanner().should('contain.text', 'Decision recorded')
+        cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
     })
 })

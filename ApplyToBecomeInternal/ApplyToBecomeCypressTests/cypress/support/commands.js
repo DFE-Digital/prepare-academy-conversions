@@ -296,7 +296,7 @@ Cypress.Commands.add('ApprovedDecisionDate', () => {
 })
 
 // Approved Decision Recorded Banner
-Cypress.Commands.add('AprrovedMessageBanner', () => {
+Cypress.Commands.add('ApprovedMessageBanner', () => {
     cy.get('[id="notification-message"]')
 })
 
