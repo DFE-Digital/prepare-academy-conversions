@@ -14,7 +14,7 @@ describe('103787 Error handling', () => {
         // Record the decision:
         cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
         cy.continueBtn().click()
-        cy.get('[id="AdvisoryBoardDecision-error-link "]').should('contain.text', 'Please select the result of the decision')
+        cy.get('[id="AdvisoryBoardDecision-error-link "]').should('contain.text', 'Select a decision')
         cy.get('[id="approved-radio"]').click()
         cy.continueBtn().click()
         // Who made this decision:
@@ -24,7 +24,7 @@ describe('103787 Error handling', () => {
         cy.continueBtn().click()
         // Were conditions met:
         cy.continueBtn().click()
-        cy.get('[id="ApprovedConditionsSet-error-link "]').should('contain.text', 'Please choose an option')
+        cy.get('[id="ApprovedConditionsSet-error-link "]').should('contain.text', 'Select whether any conditions were set')
         cy.get('[id="no-radio"]').click()
         cy.continueBtn().click()
         // Date conversions:
@@ -36,7 +36,7 @@ describe('103787 Error handling', () => {
         // Record the decision:
         cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
         cy.continueBtn().click()
-        cy.get('[id="AdvisoryBoardDecision-error-link "]').should('contain.text', 'Please select the result of the decision')
+        cy.get('[id="AdvisoryBoardDecision-error-link "]').should('contain.text', 'Select a decision')
         cy.get('[id="declined-radio"]').click()
         cy.continueBtn().click()
         // Who made this decision:
