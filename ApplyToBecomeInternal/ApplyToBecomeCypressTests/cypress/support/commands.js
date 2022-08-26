@@ -25,6 +25,8 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import 'cypress-localstorage-commands'
+import sqlServer from 'cypress-sql-server';
+sqlServer.loadDBCommands();
 
 //--Universal 
 
@@ -247,6 +249,57 @@ Cypress.Commands.add('changeDecision', () => {
     cy.get('[id="record-decision-link"]')
 })
 
+
+// Approved No Btn
+Cypress.Commands.add('NoRadioBtn', () => {
+    cy.get('[id="no-radio"]')
+})
+
+// Approved Yes Btn
+Cypress.Commands.add('YesRadioBtn', () => {
+    cy.get('[id="yes-radio"]')
+})
+
+// Approved Changed Condition
+Cypress.Commands.add('ChangeConditionsLink', () => {
+    cy.get('[id="change-conditions-set-btn"]')
+})
+
+// Approved Yes Condition text box
+Cypress.Commands.add('YesTextBox', () => {
+    cy.get('[id="conditions-textarea"]')
+})
+
+// Approved Decision Preview
+Cypress.Commands.add('ApprovedDecisionPreview', () => {
+    cy.get('[id="decision"]')
+})
+
+// Approved Decision Made By
+Cypress.Commands.add('ApprovedMadeByPreview', () => {
+    cy.get('[id="decision-made-by"]')
+})
+
+// Approved Conditions Set
+Cypress.Commands.add('ApprovedConditionDetails', () => {
+    cy.get('[id="condition-details"]')
+})
+
+// Approved Conditions detail
+Cypress.Commands.add('AprrovedConditionsSet', () => {
+    cy.get('[id="condition-set"]')
+})
+
+// Approved Conditions detail
+Cypress.Commands.add('ApprovedDecisionDate', () => {
+    cy.get('[id="decision-date"]')
+})
+
+// Approved Decision Recorded Banner
+Cypress.Commands.add('ApprovedMessageBanner', () => {
+    cy.get('[id="notification-message"]')
+})
+
 // Decline reasons finance box
 Cypress.Commands.add('declineFinancebox', () => {
     cy.get('[id="declined-reasons-finance"]')
@@ -404,6 +457,192 @@ Cypress.Commands.add('OtherCheckBox', () => {
 // Deferred Other text
 Cypress.Commands.add('OtherCheckText', () => {
     cy.get('[id="other-txtarea"]')
+})
+
+//---------------Approved SQL Delete and Record----------//
+Cypress.Commands.add('ApproveDeleteAddNewRecord', () => {
+    let projecList = Cypress.env('url') + '/project-list'
+    //let projecList = Cypress.env('url') + '/project-list'
+    cy.sqlServer('DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = 2054')
+    cy.visit(Cypress.env('url') + '/task-list/2054?rd=true')
+    cy.get('[id="record-decision-link"]').should('contain.text', 'Record a decision').click()
+    //select iniital decision
+    cy.get('[id="approved-radio"]').click()
+    // clicks on the continue button
+    cy.continueBtn().click()
+    // selects regional director button
+    cy.get('[id="regionaldirectorforregion-radio"]').click()
+    // clicks on the continue button
+    cy.continueBtn().click()
+    // selects 'no' on conditions met
+    cy.get('[id="no-radio"]').click()
+    // clicks on the continue button
+    cy.continueBtn().click()
+    // date entry
+    cy.recordDecisionDate(10, 8, 2022)
+    // clicks on the continue button
+    cy.continueBtn().click()
+    // Change condition
+    cy.get('[id="change-conditions-set-btn"]').click()
+    cy.get('[id="yes-radio"]').click()
+    cy.continueBtn().click()
+    cy.get('[id="conditions-textarea"]').clear().type('This is a test')
+    cy.continueBtn().click()
+    cy.continueBtn().click()
+    // preview answers before submit
+    cy.get('[id="decision"]').should('contain.text', 'APPROVED WITH CONDITIONS')
+    cy.get('[id="decision-made-by"]').should('contain.text', 'Regional Director for the region')
+    cy.get('[id="condition-set"]').should('contain.text', 'Yes')
+    cy.get('[id="condition-details"]').should('contain.text', 'This is a test')
+    cy.get('[id="decision-date"').should('contain.text', '10 August 2022')
+    // clicks on the record a decision button to submit
+    cy.recordThisDecision().click()
+    // recorded decision confirmation
+    cy.get('[id="notification-message"]').should('contain.text', 'Decision recorded')
+    cy.visit(projecList)
+    cy.projectStateId().should('contain.text', 'APPROVED')
+})
+
+//---------------Declined SQL Delete and Record----------//
+Cypress.Commands.add('DeclinedDeleteAddNewRecord', () => {
+    let projecList = Cypress.env('url') + '/project-list'
+    cy.sqlServer('DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = 2054')
+    cy.visit(Cypress.env('url') + '/task-list/2054?rd=true')
+    //select iniital decision
+    cy.get('[id="record-decision-link"]').should('contain.text', 'Record a decision').click()
+    // Click on change your decision button 
+    cy.declineRadioBtn().click()
+    // clicks on the continue button
+    cy.continueBtn().click()
+    cy.get('[id="regionaldirectorforregion-radio"]').click()
+    // clicks on the continue button
+    cy.continueBtn().click()
+    cy.declineFinancebox()
+   .invoke('attr', 'aria-expanded')
+   .then(ariaExpand => {
+       if (ariaExpand.includes(true)) {
+           // clicks on finance box
+            // clicks on the Give Reasons box
+           cy.declineFinancText().clear().type('This is the second test')
+
+       }
+       else {
+           cy.declineFinancebox().click()
+           .then(()=> {
+            // clicks on the Give Reasons box
+           cy.declineFinancText().clear().type('This is the first test')
+           })
+       }
+   })
+   // clicks on the continue button
+   cy.continueBtn().click()
+   // date entry
+   cy.recordDecisionDate(10, 8, 2022)
+   // clicks on the continue button
+   cy.continueBtn().click()
+   // Change condition
+   cy.reasonchangeLink().click()
+   cy.declineFinancebox()
+   .invoke('attr', 'aria-expanded')
+   .then(ariaExpand => {
+       if (ariaExpand.includes(true)) {
+           // clicks on finance box
+               // clicks on the Give Reasons box
+           cy.declineFinancText().clear().type('This is the second test')
+
+       }
+       else {
+           cy.declineFinancebox().click()
+           .then(()=> {
+               // clicks on the Give Reasons box
+           cy.declineFinancText().clear().type('This is the first test')
+           })
+       }
+   })
+   cy.continueBtn().click()
+   cy.continueBtn().click()
+   // preview answers before submit
+   cy.decision().should('contain.text', 'Declined')
+   cy.decisionMadeBy().should('contain.text', 'Regional Director for the region')
+   //**will have to review this once DB has been cleared */
+   //cy.get('[id="decline-reasons"]').should($el => expect($el.text().trim()).to.equal('Other:\n                    This is the second test\n                    Finance:\n                    This is the second test\n                    Governance:\n                    This is the second test\n                    Performance:\n                    This is the second test\n                    Choice of trust:\n                    This is the second test'))
+   cy.decisionDate().should('contain.text', '10 August 2022')
+   // clicks on the record a decision button to submit
+   cy.recordThisDecision().click()
+   // recorded decision confirmation
+   cy.recordnoteMsg().should('contain.text', 'Decision recorded')
+   cy.visit(projecList)
+   cy.projectStateId().should('contain.text', 'DECLINED')
+})
+
+//---------------Deferred SQL Deleted Deferred and Record----------//
+Cypress.Commands.add('DeclinedDeleteAddNewRecord', () => {
+    let projecList = Cypress.env('url') + '/project-list'
+    cy.sqlServer('DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = 2054')
+    cy.visit(Cypress.env('url') + '/task-list/2054?rd=true')
+    //select iniital decision
+    cy.get('[id="record-decision-link"]').should('contain.text', 'Record a decision').click()
+     //select iniital decision
+     cy.deferredRadioBtn().click()
+     // clicks on the continue button
+     cy.continueBtn().click()
+     cy.get('[id="regionaldirectorforregion-radio"]').click()
+     // clicks on the continue button
+     cy.continueBtn().click()
+     cy.addInfoNeededBox()
+     .invoke('attr', 'aria-expanded')
+     .then(ariaExpand => {
+         if (ariaExpand.includes(true)) {
+             // Additional Information Needed text box
+             cy.addInfoNeededText().clear().type('This is the second test')
+         }
+         else {
+             // clicks on Additional Information Needed box
+             cy.addInfoNeededBox().click()
+             .then(()=> {
+              // Additional Information Needed text box
+             cy.addInfoNeededText().clear().type('This is the first test')
+             })
+         }
+     })
+     // clicks on the continue button
+     cy.continueBtn().click()
+     // date entry
+     cy.recordDecisionDate(10, 8, 2022)
+     // clicks on the continue button
+     cy.continueBtn().click()
+     // Change condition
+     cy.deferredReasonChangeLink().click() 
+     cy.addInfoNeededBox()
+     .invoke('attr', 'aria-expanded')
+     .then(ariaExpand => {
+         if (ariaExpand.includes(true)) {
+             // Additional Information Needed text box
+             cy.addInfoNeededText().clear().type('This is the second test')
+ 
+         }
+         else {
+             // clicks on Additional Information Needed box
+             cy.addInfoNeededBox().click()
+             .then(()=> {
+             // Additional Information Needed text box
+             cy.addInfoNeededText().clear().type('This is the first test')
+             })
+         }
+     })
+     cy.continueBtn().click()
+     cy.continueBtn().click()
+     // preview answers before submit
+     cy.deferredDecision().should('contain.text', 'Deferred')
+     cy.deferredDecisionMadeBy().should('contain.text', 'Regional Director for the region')
+     //cy.get('[id="deferred-reasons"]').should($el => expect($el.text().trim()).to.equal('Additional information needed:\n                    This is the second test\n                    Awaiting next ofsted report:\n                    This is the second test\n                    Performance concerns:\n                    This is the second test\n                    Other:\n                    This is the second test'))
+     cy.deferredDecisionDate().should('contain.text', '10 August 2022')
+     // clicks on the record a decision button to submit
+     cy.recordThisDecision().click()
+     // recorded decision confirmation
+     cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
+     cy.visit(projecList)
+     cy.projectStateId().should('contain.text', 'DEFERRED')
 })
 
 // Request external dev - requres environment setup on yml file
