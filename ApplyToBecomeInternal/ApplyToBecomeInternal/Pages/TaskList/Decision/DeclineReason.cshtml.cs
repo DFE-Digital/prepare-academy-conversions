@@ -23,7 +23,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			DeclineOptions = Enum.GetValues(typeof(AdvisoryBoardDeclinedReasons)).Cast<AdvisoryBoardDeclinedReasons>();
 		}
 
-		[BindProperty, MinLength(length: 1, ErrorMessage = "Select at least one reason")]
+		[BindProperty(Name = "DeclinedReasons"), MinLength(length: 1, ErrorMessage = "Select at least one reason")]
 		public IEnumerable<string> DeclinedReasons { get; set; }
 		[BindProperty] public string DeclineOtherReason { get; set; }
 		[BindProperty] public string DeclineFinanceReason { get; set; }
@@ -48,14 +48,13 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
 			var decision = GetDecisionFromSession(id);
-
-			var reasons = DeclinedReasons.Select(r => Enum.Parse<AdvisoryBoardDeclinedReasons>(r));
+			
 			decision.DeclinedReasons.Clear();
-			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Finance));
-			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Performance));
-			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Governance));
-			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.ChoiceOfTrust));
-			AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Other));
+			AddReason(decision.DeclinedReasons, MapReason(AdvisoryBoardDeclinedReasons.Finance));
+			AddReason(decision.DeclinedReasons, MapReason(AdvisoryBoardDeclinedReasons.Performance));
+			AddReason(decision.DeclinedReasons, MapReason(AdvisoryBoardDeclinedReasons.Governance));
+			AddReason(decision.DeclinedReasons, MapReason(AdvisoryBoardDeclinedReasons.ChoiceOfTrust));
+			AddReason(decision.DeclinedReasons, MapReason(AdvisoryBoardDeclinedReasons.Other));
 
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Finance, DeclineFinanceReason);
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Performance, DeclinePerformanceReason);
@@ -93,7 +92,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			reasons.Add(reason);
 		}
 
-		private AdvisoryBoardDeclinedReasonDetails MapReason(IEnumerable<AdvisoryBoardDeclinedReasons> reasons, AdvisoryBoardDeclinedReasons reason)
+		private AdvisoryBoardDeclinedReasonDetails MapReason(AdvisoryBoardDeclinedReasons reason)
 		{
 			if (!DeclinedReasons.Contains(reason.ToString())) return null;	
 
