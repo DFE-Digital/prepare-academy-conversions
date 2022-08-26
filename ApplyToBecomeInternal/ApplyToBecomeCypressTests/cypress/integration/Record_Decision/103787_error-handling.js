@@ -78,4 +78,48 @@ describe('103787 Error handling', () => {
         cy.continueBtn().click()
         cy.get('[data-module=govuk-error-summary]').should('contain.text', 'Enter the date when the conversion was declined')
     })
+
+    it('Error handling for the deferred journey', () => {
+        // Record the decision:
+        cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
+        cy.continueBtn().click()
+        cy.get('[id="AdvisoryBoardDecision-error-link "]').should('contain.text', 'Please select the result of the decision')
+        cy.get('[id="deferred-radio"]').click()
+        cy.continueBtn().click()
+        // Who made this decision:
+        cy.continueBtn().click()
+        cy.get('[id="DecisionMadeBy-error-link "]').should('contain.text', 'Select who made the decision')
+        cy.get('[id="regionaldirectorforregion-radio"]').click()
+
+        // continue to deferred reason page
+        cy.continueBtn().click()
+
+        // trigger validation
+        cy.continueBtn().click()
+        cy.get('[id="WasReasonGiven-error-link "]').should('contain.text', 'Select at least one reason')
+
+        // check all boxes on form
+        cy.addInfoNeededBox().click()
+        cy.awaitOfstedReportBox().click()
+        cy.performanceCheckBox().click()        
+        cy.OtherCheckBox().click()
+
+        // trigger deferred reasons validation
+        cy.continueBtn().click()
+        cy.get('[id="AdditionalInformationNeededDetails-error-link "]').should('contain.text', 'Enter a reason for selecting Additional information needed')
+        cy.get('[id="AwaitingNextOfstedReportDetails-error-link "]').should('contain.text', 'Enter a reason for selecting Awaiting next ofsted report')
+        cy.get('[id="PerformanceConcernsDetails-error-link "]').should('contain.text', 'Enter a reason for selecting Performance concerns')
+        cy.get('[id="OtherDetails-error-link "]').should('contain.text', 'Enter a reason for selecting Other')        
+
+        // continue to decision date form
+        cy.addInfoNeededBox().click()
+        cy.awaitOfstedReportBox().click()
+        cy.performanceCheckBox().click()        
+        cy.OtherCheckText().clear().type('Other reason....')
+        cy.continueBtn().click()
+
+        // trigger decision date validation
+        cy.continueBtn().click()
+        cy.get('[data-module=govuk-error-summary]').should('contain.text', 'Enter the date when the conversion was deferred')
+    })
 })
