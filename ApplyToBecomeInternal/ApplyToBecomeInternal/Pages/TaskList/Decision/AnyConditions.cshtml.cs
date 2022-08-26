@@ -13,7 +13,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 	{
 		private readonly ErrorService _errorService;
 
-		[BindProperty, Required(ErrorMessage = "Please choose an option")]
+		[BindProperty, Required(ErrorMessage = "Select whether any conditions were set")]
 		public bool? ApprovedConditionsSet { get; set; }
 
 		public AnyConditionsModel(IAcademyConversionProjectRepository repository, ISession session, 

@@ -14,13 +14,13 @@ namespace ApplyToBecomeInternal.Pages.Decision
 	{
 		private readonly ErrorService _errorService;
 
-		public RecordDecisionModel(IAcademyConversionProjectRepository repository, ISession session, ErrorService errorService) 
+		public RecordDecisionModel(IAcademyConversionProjectRepository repository, ISession session, ErrorService errorService)
 			: base(repository, session)
 		{
 			_errorService = errorService;
 		}
-					
-		[BindProperty, Required(ErrorMessage = "Please select the result of the decision")]
+
+		[BindProperty, Required(ErrorMessage = "Select a decision")]
 		public AdvisoryBoardDecisions? AdvisoryBoardDecision { get; set; }
 
 		public async Task<IActionResult> OnGetAsync(int id)

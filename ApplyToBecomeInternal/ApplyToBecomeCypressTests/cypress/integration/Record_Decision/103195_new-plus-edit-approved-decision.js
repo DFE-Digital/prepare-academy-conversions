@@ -4,17 +4,20 @@
 let url = Cypress.env('url') + '/task-list/2054?rd=true'
 //let projecList = Cypress.env('url') + '/project-list'
 
-describe('103195 Edit Approved record decision', ()=> {    
+describe('103195 Edit Approved record decision', ()=> {
+
     beforeEach(() => {
         cy.ApproveDeleteAddNewRecord()
         cy.clearCookies()
         cy.visit(url)
     })
-    
-    // Edit Approval Path - Regional Director, No/Yes conditions set 
+
+    // Edit Approval Path - Regional Director, No/Yes conditions set
     it('TC01: J1 Edit a recorded decision Approval - Reg Director Region, No Conditions', () => {
-        // Click on change your decision button 
-        cy.changeDecision().should('contain.text', 'Change your decision').click()
+        // Click on change your decision button
+        cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
+         //select iniital decision
+        cy.get('[id="approved-radio"]').click()
         // clicks on the continue button
         cy.continueBtn().click()
         // selects regional director button
@@ -48,10 +51,12 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
     })
 
-    // Edit Approval Path - A different Regional Director, No/Yes conditions set 
+    // Edit Approval Path - A different Regional Director, No/Yes conditions set
     it('TC02: J1 Edit a recorded decision Approval - Different Reg Director, No Conditions', () => {
-        // Click on change your decision button 
-        cy.changeDecision().should('contain.text', 'Change your decision').click()
+        // Click on change your decision button
+        cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
+         //select iniital decision
+        cy.get('[id="approved-radio"]').click()
         // clicks on the continue button
         cy.continueBtn().click()
         // selects regional director button
@@ -85,10 +90,10 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
     })
 
-    // Edit Approval Path - Minister, No/Yes conditions set 
+    // Edit Approval Path - Minister, No/Yes conditions set
     it('TC03: J1 Edit a recorded decision Approval - Minister, No Conditions', () => {
-        // Click on change your decision button 
-        cy.changeDecision().should('contain.text', 'Change your decision').click()
+        // Click on change your decision button
+        cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
          //select iniital decision
         // clicks on the continue button
         cy.continueBtn().click()
@@ -124,8 +129,10 @@ describe('103195 Edit Approved record decision', ()=> {
     })
     // Edit Approval Path - Director General, No/Yes conditions set
     it('TC04: J1 Edit a recorded decision Approval - Director General, No Conditions', () => {
-        // Click on change your decision button 
-        cy.changeDecision().should('contain.text', 'Change your decision').click()
+        // Click on change your decision button
+        cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
+         //select iniital decision
+        cy.get('[id="approved-radio"]').click()
         // clicks on the continue button
         cy.continueBtn().click()
         // selects regional director button
@@ -161,8 +168,10 @@ describe('103195 Edit Approved record decision', ()=> {
 
     // Edit Approval Path - None, No/Yes conditions set
     it('TC05: J1 Edit a recorded decision Approval - None, No Conditions', () => {
-        // Click on change your decision button 
-        cy.changeDecision().should('contain.text', 'Change your decision').click()
+        // Click on change your decision button
+        cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
+         //select iniital decision
+        cy.get('[id="approved-radio"]').click()
         // clicks on the continue button
         cy.continueBtn().click()
         // selects regional director button
