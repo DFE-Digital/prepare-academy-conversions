@@ -60,7 +60,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			}
 			else
 			{
-				_errorService.AddError("DeclinedReasonSet", "Select at least one reason");
+				ModelState.AddModelError("DeclinedReasonSet", "Select at least one reason");
 			}
 
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Finance, DeclineFinanceReason);
@@ -119,7 +119,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			string reasonName = reason.ToString();
 
 			if (DeclinedReasons.Contains(reasonName) && string.IsNullOrWhiteSpace(explanation))
-				ModelState.AddModelError($"Decline{reasonName}Reason", $"Enter a reason for selecting {reason.ToDescription()}");
+				ModelState.AddModelError(UI.IdFor("declined-reasons", reason), $"Enter a reason for selecting {reason.ToDescription()}");
 		}
 
 		public class UIHelpers

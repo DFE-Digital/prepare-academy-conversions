@@ -20,7 +20,8 @@
 					}
 					else
 					{
-						@Html.Raw(error.Message)
+						@* @Html.Raw(error.Message) *@
+						<a id="@(error.Key)" href="#@(error.Key)">@error.Message</a>
 					}
 				</li>
 			}
