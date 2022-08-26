@@ -40,7 +40,7 @@ it('TC01: J3 Edit a recorded decision Deferred - Reg Director Region, Finance', 
     // clicks on the continue button
     cy.continueBtn().click()
     // date entry
-    cy.recordDecisionDate(10, 10, 2021)
+    cy.recordDecisionDate(10, 8, 2022)
     // clicks on the continue button
     cy.continueBtn().click()
     // Change condition
@@ -68,7 +68,7 @@ it('TC01: J3 Edit a recorded decision Deferred - Reg Director Region, Finance', 
     cy.deferredDecision().should('contain.text', 'Deferred')
     cy.deferredDecisionMadeBy().should('contain.text', 'Regional Director for the region')
     //cy.get('[id="deferred-reasons"]').should($el => expect($el.text().trim()).to.equal('Additional information needed:\n                    This is the second test\n                    Awaiting next ofsted report:\n                    This is the second test\n                    Performance concerns:\n                    This is the second test\n                    Other:\n                    This is the second test'))
-    cy.deferredDecisionDate().should('contain.text', '10 October 2021')
+    cy.deferredDecisionDate().should('contain.text', '10 August 2022')
     // clicks on the record a decision button to submit
     cy.recordThisDecision().click()
     // recorded decision confirmation
@@ -109,7 +109,7 @@ it('TC02: J3 Edit a recorded decision Declined - Different Reg Director, ofsted 
     // clicks on the continue button
     cy.continueBtn().click()
     // date entry
-    cy.recordDecisionDate(10, 10, 2021)
+    cy.recordDecisionDate(10, 8, 2022)
     // clicks on the continue button
     cy.continueBtn().click()
     // Change condition
@@ -136,7 +136,7 @@ it('TC02: J3 Edit a recorded decision Declined - Different Reg Director, ofsted 
     cy.deferredDecision().should('contain.text', 'Deferred')
     cy.deferredDecisionMadeBy().should('contain.text', 'A different Regional Director')
     //cy.get('[id="deferred-reasons"]').should($el => expect($el.text().trim()).to.equal('Additional information needed:\n                    This is the second test\n                    Awaiting next ofsted report:\n                    This is the second test\n                    Performance concerns:\n                    This is the second test\n                    Other:\n                    This is the second test'))
-    cy.deferredDecisionDate().should('contain.text', '10 October 2021')
+    cy.deferredDecisionDate().should('contain.text', '10 August 2022')
     // clicks on the record a decision button to submit
     cy.recordThisDecision().click()
     // recorded decision confirmation
@@ -176,7 +176,7 @@ it('TC03: J3 Edit a recorded decision Declined - Director General, Performance',
     // clicks on the continue button
     cy.continueBtn().click()
     // date entry
-    cy.recordDecisionDate(10, 10, 2021)
+    cy.recordDecisionDate(10, 8, 2022)
     // clicks on the continue button
     cy.continueBtn().click()
     // Change condition
@@ -203,7 +203,7 @@ it('TC03: J3 Edit a recorded decision Declined - Director General, Performance',
     cy.deferredDecision().should('contain.text', 'Deferred')
     cy.deferredDecisionMadeBy().should('contain.text', 'Director General')
     //cy.get('[id="deferred-reasons"]').should($el => expect($el.text().trim()).to.equal('Additional information needed:\n                    This is the second test\n                    Awaiting next ofsted report:\n                    This is the second test\n                    Performance concerns:\n                    This is the second test\n                    Other:\n                    This is the second test'))
-    cy.deferredDecisionDate().should('contain.text', '10 October 2021')
+    cy.deferredDecisionDate().should('contain.text', '10 August 2022')
     // clicks on the record a decision button to submit
     cy.recordThisDecision().click()
     // recorded decision confirmation
@@ -243,7 +243,7 @@ it('TC04: J3 Edit a recorded decision Declined - Minister, Other', () => {
     // clicks on the continue button
     cy.continueBtn().click()
     // date entry
-    cy.recordDecisionDate(10, 10, 2021)
+    cy.recordDecisionDate(10, 8, 2022)
     // clicks on the continue button
     cy.continueBtn().click()
     // Change condition
@@ -270,7 +270,7 @@ it('TC04: J3 Edit a recorded decision Declined - Minister, Other', () => {
     cy.deferredDecision().should('contain.text', 'Deferred')
     cy.deferredDecisionMadeBy().should('contain.text', 'Minister')
     //cy.get('[id="deferred-reasons"]').should($el => expect($el.text().trim()).to.equal('Additional information needed:\n                    This is the second test\n                    Awaiting next ofsted report:\n                    This is the second test\n                    Performance concerns:\n                    This is the second test\n                    Other:\n                    This is the second test'))
-    cy.deferredDecisionDate().should('contain.text', '10 October 2021')
+    cy.deferredDecisionDate().should('contain.text', '10 August 2022')
     // clicks on the record a decision button to submit
     cy.recordThisDecision().click()
     // recorded decision confirmation
@@ -310,7 +310,7 @@ it('TC05: J3 Edit a recorded decision Declined - None, Other', () => {
     // clicks on the continue button
     cy.continueBtn().click()
     // date entry
-    cy.recordDecisionDate(10, 10, 2021)
+    cy.recordDecisionDate(10, 8, 2022)
     // clicks on the continue button
     cy.continueBtn().click()
     // Change condition
@@ -337,7 +337,7 @@ it('TC05: J3 Edit a recorded decision Declined - None, Other', () => {
     cy.deferredDecision().should('contain.text', 'Deferred')
     cy.deferredDecisionMadeBy().should('contain.text', 'None')
     //cy.get('[id="deferred-reasons"]').should($el => expect($el.text().trim()).to.equal('Additional information needed:\n                    This is the second test\n                    Awaiting next ofsted report:\n                    This is the second test\n                    Performance concerns:\n                    This is the second test\n                    Other:\n                    This is the second test'))
-    cy.deferredDecisionDate().should('contain.text', '10 October 2021')
+    cy.deferredDecisionDate().should('contain.text', '10 August 2022')
     // clicks on the record a decision button to submit
     cy.recordThisDecision().click()
     // recorded decision confirmation

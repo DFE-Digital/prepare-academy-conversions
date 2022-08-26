@@ -37,7 +37,11 @@ You will need to set a secret in `secrets.json` in the following format to run t
 }
 ```
 
-To execute the tests locally and view the output, run the following:
+To execute the tests locally and view the output:
+
+First set the database config as an environment variable -
+For bash - `export db='{"server":"localhost", "userName":"sa", "password":"StrongPassword905", "options": { "database": "sip" } }'`
+For windows - `set db='{"server":"localhost", "userName":"sa", "password":"StrongPassword905", "options": { "database": "sip" } }'`
 
 ```
 npm run cy:open -- --env url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
