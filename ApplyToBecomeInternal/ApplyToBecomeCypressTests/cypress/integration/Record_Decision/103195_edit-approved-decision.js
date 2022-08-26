@@ -4,7 +4,7 @@
 let url = Cypress.env('url') + '/task-list/2054?rd=true'
 
 describe('103195 Edit Approved record decision', ()=> {
-    
+
     beforeEach(() => {
         cy.clearCookies()
         cy.visit(url)
@@ -12,9 +12,9 @@ describe('103195 Edit Approved record decision', ()=> {
 
     })
 
-    // Edit Approval Path - Regional Director, No/Yes conditions set 
+    // Edit Approval Path - Regional Director, No/Yes conditions set
     it('TC01: J1 Edit a recorded decision Approval - Reg Director Region, No Conditions', () => {
-        // Click on change your decision button 
+        // Click on change your decision button
         cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
          //select iniital decision
         cy.get('[id="approved-radio"]').click()
@@ -51,9 +51,9 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.get('[id="notification-message"]').should('contain.text', 'Decision recorded')
     })
 
-    // Edit Approval Path - A different Regional Director, No/Yes conditions set 
+    // Edit Approval Path - A different Regional Director, No/Yes conditions set
     it('TC02: J1 Edit a recorded decision Approval - Different Reg Director, No Conditions', () => {
-        // Click on change your decision button 
+        // Click on change your decision button
         cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
          //select iniital decision
         cy.get('[id="approved-radio"]').click()
@@ -90,9 +90,9 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.get('[id="notification-message"]').should('contain.text', 'Decision recorded')
     })
 
-    // Edit Approval Path - Minister, No/Yes conditions set 
+    // Edit Approval Path - Minister, No/Yes conditions set
     it('TC03: J1 Edit a recorded decision Approval - Minister, No Conditions', () => {
-        // Click on change your decision button 
+        // Click on change your decision button
         cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
          //select iniital decision
         cy.get('[id="approved-radio"]').click()
@@ -130,7 +130,7 @@ describe('103195 Edit Approved record decision', ()=> {
     })
     // Edit Approval Path - Director General, No/Yes conditions set
     it('TC04: J1 Edit a recorded decision Approval - Director General, No Conditions', () => {
-        // Click on change your decision button 
+        // Click on change your decision button
         cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
          //select iniital decision
         cy.get('[id="approved-radio"]').click()
@@ -169,7 +169,7 @@ describe('103195 Edit Approved record decision', ()=> {
 
     // Edit Approval Path - None, No/Yes conditions set
     it('TC05: J1 Edit a recorded decision Approval - None, No Conditions', () => {
-        // Click on change your decision button 
+        // Click on change your decision button
         cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
          //select iniital decision
         cy.get('[id="approved-radio"]').click()
