@@ -71,7 +71,6 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 				return await OnGetAsync(id);
 			}
 
-
 			SetDecisionInSession(id, decision);
 
 			return RedirectToPage(Links.Decision.Summary.Page, new { id });
@@ -86,13 +85,6 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			int id = int.Parse(idRaw);
 			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
 			return $"Enter the date when the conversion was {decision.Decision.ToDescription().ToLowerInvariant()}";
-		}
-
-		(bool, string) IDateValidationMessageProvider.ContextSpecificValidation(int day, int month, int year)
-		{
-			bool valid = year == DateTime.Today.Year;
-
-			return (valid, valid ? string.Empty : $"Year cannot be in the {(year < DateTime.Today.Year ? "past" : "future")}");
 		}
 	}
 }
