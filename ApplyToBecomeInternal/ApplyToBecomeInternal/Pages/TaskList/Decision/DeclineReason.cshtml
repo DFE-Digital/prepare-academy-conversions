@@ -29,7 +29,7 @@
 			<div class="govuk-checkboxes @ModelState.GetErrorStyleClass()" data-module="govuk-checkboxes" id="DeclinedReasonSet">
 				@foreach (var declineOption in Model.DeclineOptions)
 				{
-					<div class="govuk-checkboxes__item">
+					<div class="govuk-checkboxes__item" id="Decline@(declineOption)Reason">
 						<input name="DeclinedReasons"
 						       checked="@Model.UI.IsChecked(declineOption)"
 						       class="govuk-checkboxes__input" 

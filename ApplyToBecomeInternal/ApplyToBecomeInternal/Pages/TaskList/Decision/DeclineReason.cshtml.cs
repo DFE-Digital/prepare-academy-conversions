@@ -16,7 +16,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 	public class DeclineReasonModel : DecisionBaseModel
 	{
 		private readonly ErrorService _errorService;
-		public DeclineReasonModel(ErrorService errorService, IAcademyConversionProjectRepository repository, ISession session) 
+		public DeclineReasonModel(ErrorService errorService, IAcademyConversionProjectRepository repository, ISession session)
 			: base(repository, session)
 		{
 			_errorService = errorService;
@@ -42,7 +42,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			SetBackLinkModel(Links.Decision.WhoDecided, id);
 
 			return Page();
-		}		
+		}
 
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
@@ -99,9 +99,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			reasons.Add(reason);
 		}
 
-		private AdvisoryBoardDeclinedReasonDetails MapReason(IEnumerable<AdvisoryBoardDeclinedReasons> reasons, AdvisoryBoardDeclinedReasons reason)
+		private AdvisoryBoardDeclinedReasonDetails MapReason(AdvisoryBoardDeclinedReasons reason)
 		{
-			if (!DeclinedReasons.Contains(reason.ToString())) return null;	
+			if (!DeclinedReasons.Contains(reason.ToString())) return null;
 
 			return reason switch
 			{
@@ -111,7 +111,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 				AdvisoryBoardDeclinedReasons.ChoiceOfTrust => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineChoiceOfTrustReason),
 				AdvisoryBoardDeclinedReasons.Other => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineOtherReason),
 				_ => throw new ArgumentOutOfRangeException(nameof(reason), reason, "Unexpected value for AdvisoryBoardDeclinedReasons")
-			};				
+			};
 		}
 
 		private void EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons reason, string explanation)
