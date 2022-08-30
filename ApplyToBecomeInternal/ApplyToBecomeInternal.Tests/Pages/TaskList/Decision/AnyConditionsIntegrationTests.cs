@@ -1,5 +1,6 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecomeInternal.Tests.PageObjects;
 using FluentAssertions;
@@ -8,93 +9,95 @@ using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 {
-	public class AnyConditionsIntegrationTests : BaseIntegrationTests
+	public class AnyConditionsIntegrationTests : BaseIntegrationTests, IAsyncLifetime
 	{
+		private AcademyConversionProject _project;
+		private RecordDecisionWizard _wizard;
+
+		private string PageHeading => Document.QuerySelector<IHtmlElement>("h1")?.Text().Trim();
+
 		public AnyConditionsIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{
 		}
 
 		[Fact]
-		public async Task Should_display_selected_schoolname()
+		public void Should_display_selected_school_name()
 		{
-			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+			string selectedSchool = Document.QuerySelector<IHtmlElement>("#selection-span")?.Text();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/any-conditions");
-
-			var selectedSchool = Document.QuerySelector<IHtmlElement>("#selection-span").Text();
-
-			selectedSchool.Should().Be(project.SchoolName);
+			selectedSchool.Should().Be(_project.SchoolName);
 		}
 
 		[Fact]
 		public async Task Should_persist_selected_decision()
 		{
-			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+			const string details = "Some things need attention";
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/any-conditions");
+			await _wizard.SetIsConditionalAndContinue(true, details);
 
-			Document.QuerySelector<IHtmlInputElement>("#no-radio").IsChecked = true;
-			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
+			await OpenUrlAsync($"/task-list/{_project.Id}/decision/any-conditions");
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/any-conditions");
+			bool isConditional = Document.QuerySelector<IHtmlInputElement>("#yes-radio").IsChecked;
+			string conditionDetails = Document.QuerySelector<IHtmlTextAreaElement>("#ApprovedConditionsDetails")?.Text().Trim();
 
-			var formElement = Document.QuerySelector<IHtmlInputElement>("#no-radio");
-
-			formElement.IsChecked.Should().BeTrue();
+			isConditional.Should().BeTrue();
+			conditionDetails.Should().Be(details);
 		}
 
 		[Fact]
-		public async Task Submit_yes_should_redirect_to_what_conditions()
+		public async Task Submit_yes_should_redirect_to_decision_date()
 		{
-			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
-
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/any-conditions");
-
-			Document.QuerySelector<IHtmlInputElement>("#yes-radio").IsChecked = true;
-			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
-
-			Document.Url.Should().EndWith("/decision/what-conditions");
-		}
-
-		[Fact]
-		public async Task Submit_no_should_redirect_to_decision_date()
-		{
-			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
-
-			RecordDecisionWizard wizard = new RecordDecisionWizard(Context);
-
-			await wizard.StartFor(project.Id);
-			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Approved);
-			await wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
-			await wizard.SetIsConditionalAndContinue(false);
+			await _wizard.SetIsConditionalAndContinue(true, "Reasons");
 
 			Document.Url.Should().EndWith("/decision/decision-date");
 		}
 
 		[Fact]
-		public async Task Should_go_back_to_whodecided()
+		public async Task Submit_no_should_redirect_to_decision_date()
 		{
-			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+			await _wizard.SetIsConditionalAndContinue(false, default);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/any-conditions");
+			Document.Url.Should().EndWith("/decision/decision-date");
+		}
 
+		[Fact]
+		public async Task Should_go_back_to_who_decided()
+		{
 			await NavigateAsync("Back");
 
-			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Who made this decision?");
+			PageHeading.Should().Be("Who made this decision?");
 		}
 
 		[Fact]
 		public async Task Should_display_error_when_nothing_selected()
 		{
-			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+			await _wizard.ClickSubmitButton();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/any-conditions");
+			Document.QuerySelector<IHtmlElement>("[href='#ApprovedConditionsSet']")?.Text()
+				.Should().Be("Select whether any conditions were set");
 
-			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
-
-			Document.QuerySelector<IHtmlElement>("[href='#ApprovedConditionsSet']").Text().Should()
-				.Be("Select whether any conditions were set");
-			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Were any conditions set?");
+			PageHeading.Should().Be("Were any conditions set?");
 		}
+
+		#region IAsyncLifetime implementation
+
+		public async Task InitializeAsync()
+		{
+			_project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
+			_wizard = new RecordDecisionWizard(Context);
+
+			await _wizard.StartFor(_project.Id);
+			await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Approved);
+			await _wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+
+			Document.Url.Should().EndWith("any-conditions");
+		}
+
+		public Task DisposeAsync()
+		{
+			return Task.CompletedTask;
+		}
+
+		#endregion
 	}
 }

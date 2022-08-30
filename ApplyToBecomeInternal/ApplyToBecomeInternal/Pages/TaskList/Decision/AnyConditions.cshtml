@@ -21,29 +21,11 @@
 				<fieldset class="govuk-fieldset">
 					<legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
 					</legend>
-					@* <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios" id="ApprovedConditionsSet"> *@
-					@* *@
-					@* 	<div class="govuk-radios__item"> *@
-					@* 		<input class="govuk-radios__input" type="radio" asp-for="ApprovedConditionsSet" *@
-					@* 		       title="Yes" value="true" id="yes-radio"/> *@
-					@* 		<label class="govuk-label govuk-radios__label" for="yes-radio"> *@
-					@* 			Yes *@
-					@* 		</label> *@
-					@* 	</div> *@
-					@* *@
-					@* 	<div class="govuk-radios__item"> *@
-					@* 		<input class="govuk-radios__input" type="radio" asp-for="ApprovedConditionsSet" *@
-					@* 		       title="No" value="false" id="no-radio"/> *@
-					@* 		<label class="govuk-label govuk-radios__label" for="no-radio"> *@
-					@* 			No *@
-					@* 		</label> *@
-					@* 	</div> *@
-					@* </div> *@
 
 					<div class="govuk-radios govuk-radios--conditional @ModelState.GetErrorStyleClass()" data-module="govuk-radios" id="ApprovedConditionsSet">
 						<div class="govuk-radios__item">
 							<input class="govuk-radios__input" asp-for="ApprovedConditionsSet"
-							       title="Yes" type="radio" value="true" aria-controls="conditional-approved-conditions" aria-expanded="true">
+							       title="Yes" type="radio" value="true" id="yes-radio" aria-controls="conditional-approved-conditions" aria-expanded="true">
 							<label class="govuk-label govuk-radios__label" for="ApprovedConditionsSet">
 								Yes
 							</label>

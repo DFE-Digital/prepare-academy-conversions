@@ -181,7 +181,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			await wizard.StartFor(project.Id);
 			await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Approved);
 			await wizard.SetDecisionByAndContinue(DecisionMadeBy.OtherRegionalDirector);
-			await wizard.SetIsConditionalAndContinue(false);
+			await wizard.SetIsConditionalAndContinue(false, "Something");
 		}
 	}
 }

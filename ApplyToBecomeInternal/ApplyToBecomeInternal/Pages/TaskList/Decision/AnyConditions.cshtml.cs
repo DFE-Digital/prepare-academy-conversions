@@ -1,3 +1,4 @@
+using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Services;
@@ -30,7 +31,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		{
 			await SetDefaults(id);
 			SetBackLinkModel(Links.Decision.WhoDecided, id);
-			ApprovedConditionsSet = GetDecisionFromSession(id).ApprovedConditionsSet;
+
+			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
+			ApprovedConditionsSet = decision.ApprovedConditionsSet;
+			ApprovedConditionsDetails = decision.ApprovedConditionsDetails;
 
 			return Page();
 		}
