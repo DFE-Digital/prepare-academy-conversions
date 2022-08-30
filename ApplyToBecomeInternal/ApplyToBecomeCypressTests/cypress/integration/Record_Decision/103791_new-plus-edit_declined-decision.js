@@ -6,7 +6,14 @@ let projecList = Cypress.env('url') + '/project-list'
 
 describe('103791 Edit Declined journey', () => {
     beforeEach(() => {
-        cy.DeclinedDeleteAddNewRecord()
+        // delete declined reasons
+        cy.sqlServer(`
+                    delete from 
+                        academisation.ConversionAdvisoryBoardDecisionDeclinedReason 
+                    where 
+                        AdvisoryBoardDecisionId = (select Id from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2054)`)
+        cy.sqlServer('delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2054')
+        cy.sqlServer('insert into academisation.ConversionAdvisoryBoardDecision values (2054, \'Declined\', null, null, getdate(), \'None\', getdate(), getdate())')
         cy.clearCookies()
         cy.visit(url)
     })
@@ -15,30 +22,15 @@ describe('103791 Edit Declined journey', () => {
     it('TC01: J2 Edit a recorded decision Declined - Reg Director Region, Finance', () => {
         // Click on change your decision button 
         cy.changeDecision().should('contain.text', 'Change your decision').click()
-         //select iniital decision
+        //select iniital decision
         cy.declineRadioBtn().click()
         // clicks on the continue button
         cy.continueBtn().click()
         cy.get('[id="regionaldirectorforregion-radio"]').click()
         // clicks on the continue button
         cy.continueBtn().click()
-        cy.declineFinancebox()
-        .invoke('attr', 'aria-expanded')
-        .then(ariaExpand => {
-            if (ariaExpand.includes(true)) {
-                // clicks on the finance text box
-                cy.declineFinancText().clear().type('This is the second test')
-    
-            }
-            else {
-                // clicks on the finance  box
-                cy.declineFinancebox().click()
-                .then(()=> {
-                // clicks on the finance text box
-                cy.declineFinancText().clear().type('This is the first test')
-                })
-            }
-        })
+        cy.declineFinancebox().click()
+            .then(() => cy.declineFinancText().clear().type('Finance details'))
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -47,30 +39,17 @@ describe('103791 Edit Declined journey', () => {
         cy.continueBtn().click()
         // Change condition
         cy.reasonchangeLink().click()
-        cy.declineFinancebox()
-        .invoke('attr', 'aria-expanded')
-        .then(ariaExpand => {
-            if (ariaExpand.includes(true)) {
-                //clicks on the finance text box
-                cy.declineFinancText().clear().type('This is the second test')
-    
-            }
-            else {
-                // clicks on the finance  box
-                cy.declineFinancebox().click()
-                .then(()=> {
-                // clicks on the finance text box
-                cy.declineFinancText().clear().type('This is the first test')
-                })
-            }
-        })
+        cy.declineFinancText().clear().type('Finance details 2nd test')
         cy.continueBtn().click()
         cy.continueBtn().click()
         // preview answers before submit
         cy.decision().should('contain.text', 'Declined')
         cy.decisionMadeBy().should('contain.text', 'Regional Director for the region')
-        //**will have to review this once DB has been cleared */
-        //cy.get('[id="decline-reasons"]').should($el => expect($el.text().trim()).to.equal('Other:\n                    This is the second test\n                    Finance:\n                    This is the second test\n                    Governance:\n                    This is the second test\n                    Performance:\n                    This is the second test\n                    Choice of trust:\n                    This is the second test'))
+        // check reasons
+        var declinedReasons = cy.get('[id="decline-reasons"]')
+        declinedReasons.should('contain.text', 'Finance:')
+        declinedReasons.should('contain.text', 'Finance details 2nd test')
+        // check date
         cy.decisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
@@ -84,7 +63,7 @@ describe('103791 Edit Declined journey', () => {
     it('TC02: J2 Edit a recorded decision Declined - Different Reg Director, Performance', () => {
         // Click on change your decision button 
         cy.changeDecision().should('contain.text', 'Change your decision').click()
-         //select iniital decision
+        //select iniital decision
         cy.declineRadioBtn().click()
         // clicks on the continue button
         cy.continueBtn().click()
@@ -92,22 +71,8 @@ describe('103791 Edit Declined journey', () => {
         cy.get('[id="otherregionaldirector-radio"]').click()
         // clicks on the continue button
         cy.continueBtn().click()
-        cy.performanceBox()
-        .invoke('attr', 'aria-expanded')
-        .then(ariaExpand => {
-            if (ariaExpand.includes(true)) {
-                // performance text box
-                cy.performanceText().clear().type('This is the second test')
-            }
-            else {
-                // performance  box
-                cy.performanceBox().click()
-                .then(() => {
-                    // performance text box
-                cy.performanceText().clear().type('This is the first test')
-                })
-            }
-        })
+        cy.performanceBox().click()
+            .then(() => cy.performanceText().clear().type('Performance details'))
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -116,30 +81,16 @@ describe('103791 Edit Declined journey', () => {
         cy.continueBtn().click()
         // Change condition
         cy.reasonchangeLink().click()
-        cy.performanceBox()
-        .invoke('attr', 'aria-expanded')
-        .then(ariaExpand => {
-            if (ariaExpand.includes(true)) {
-                // performance text box
-                cy.performanceText().clear().type('This is the second test')
-
-            }
-            else {
-                // performance box
-                cy.performanceBox().click()
-                .then(() => {
-                // performance text box
-                cy.performanceText().clear().type('This is the first test')
-                })
-            }
-        })
+        cy.performanceText().clear().type('Performance details 2nd test')
         cy.continueBtn().click()
         cy.continueBtn().click()
         // preview answers before submit
         cy.decision().should('contain.text', 'Declined')
         cy.decisionMadeBy().should('contain.text', 'A different Regional Director')
-        //**will have to review this once DB has been cleared */
-        //cy.get('[id="decline-reasons"]').should($el => expect($el.text().trim()).to.equal('Other:\n                    This is the second test\n                    Finance:\n                    This is the second test\n                    Governance:\n                    This is the second test\n                    Performance:\n                    This is the second test\n                    Choice of trust:\n                    This is the second test'))
+        // check reasons
+        var declinedReasons = cy.get('[id="decline-reasons"]')
+        declinedReasons.should('contain.text', 'Performance:')
+        declinedReasons.should('contain.text', 'Performance details 2nd test')
         cy.decisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
@@ -147,37 +98,23 @@ describe('103791 Edit Declined journey', () => {
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
         cy.visit(projecList)
         cy.projectStateId().should('contain.text', 'DECLINED')
-        
+
     })
-    
+
     // Edit Approval Path - Director General, Governance
     it('TC03: J2 Edit a recorded decision Declined - Director General, Governance', () => {
         // Click on change your decision button 
         cy.changeDecision().should('contain.text', 'Change your decision').click()
-         //select iniital decision
-         cy.declineRadioBtn().click()
+        //select iniital decision
+        cy.declineRadioBtn().click()
         // clicks on the continue button
         cy.continueBtn().click()
         // selects regional director button
         cy.get('[id="directorgeneral-radio"]').click()
         // clicks on the continue button
         cy.continueBtn().click()
-        cy.governanceBox()
-        .invoke('attr', 'aria-expanded')
-        .then(ariaExpand => {
-            if (ariaExpand.includes(true)) {
-                // governance text box
-                cy.governanceText().clear().type('This is the second test')
-            }
-            else {
-                 // governance box
-                cy.governanceBox().click()
-                .then(()=> {
-                // governance text box
-                cy.governanceText().clear().type('This is the first test')
-                })
-            }
-        })
+        cy.governanceBox().click()
+            .then(() => cy.governanceText().clear().type('Governance details'))
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -186,29 +123,16 @@ describe('103791 Edit Declined journey', () => {
         cy.continueBtn().click()
         // Change condition
         cy.reasonchangeLink().click()
-        cy.governanceBox()
-        .invoke('attr', 'aria-expanded')
-        .then(ariaExpand => {
-            if (ariaExpand.includes(true)) {
-                // governance text box
-                cy.governanceText().clear().type('This is the second test')
-            }
-            else {
-                 // governance box
-                cy.governanceBox().click()
-                .then(()=> {
-                // governance text box
-                cy.governanceText().clear().type('This is the first test')
-                })
-            }
-        })
+        cy.governanceText().clear().type('Governance details 2nd test')
         cy.continueBtn().click()
         cy.continueBtn().click()
         // preview answers before submit
         cy.decision().should('contain.text', 'Declined')
         cy.decisionMadeBy().should('contain.text', 'Director General')
-        //**will have to review this once DB has been cleared */
-        //cy.get('[id="decline-reasons"]').should($el => expect($el.text().trim()).to.equal('Other:\n                    This is the second test\n                    Finance:\n                    This is the second test\n                    Governance:\n                    This is the second test\n                    Performance:\n                    This is the second test\n                    Choice of trust:\n                    This is the second test'))
+        // check reasons
+        var declinedReasons = cy.get('[id="decline-reasons"]')
+        declinedReasons.should('contain.text', 'Governance:')
+        declinedReasons.should('contain.text', 'Governance details 2nd test')
         cy.decisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
@@ -222,30 +146,16 @@ describe('103791 Edit Declined journey', () => {
     it('TC04: J2 Edit a recorded decision Declined - Minister, Choice of trust', () => {
         // Click on change your decision button 
         cy.changeDecision().should('contain.text', 'Change your decision').click()
-         //select iniital decision
-         cy.declineRadioBtn().click()
+        //select iniital decision
+        cy.declineRadioBtn().click()
         // clicks on the continue button
         cy.continueBtn().click()
         // selects regional director button
         cy.get('[id="minister-radio"]').click()
         // clicks on the continue button
         cy.continueBtn().click()
-        cy.trustBox()
-        .invoke('attr', 'aria-expanded')
-        .then(ariaExpand => {
-            if (ariaExpand.includes(true)) {
-                // trust text box
-                cy.trustText().clear().type('This is the second test')
-            }
-            else {
-                // trust box
-                cy.trustBox().click()
-                .then(()=> {
-                // trust text box
-                cy.trustText().clear().type('This is the first test')
-                })
-            }
-        })
+        cy.trustBox().click()
+            .then(() => cy.trustText().clear().type('Trust details'))
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -254,30 +164,16 @@ describe('103791 Edit Declined journey', () => {
         cy.continueBtn().click()
         // Change condition
         cy.reasonchangeLink().click()
-        cy.trustBox()
-        .invoke('attr', 'aria-expanded')
-        .then(ariaExpand => {
-            if (ariaExpand.includes(true)) {
-                // trust text box
-                cy.trustText().clear().type('This is the second test')
-            }
-            else {
-                // trust box
-                cy.trustBox().click()
-                .then(()=> {
-                // trust text box
-                cy.trustText().clear().type('This is the first test')
-                })
-            }
-        })
+        cy.trustText().clear().type('Trust details 2nd test')
         cy.continueBtn().click()
         cy.continueBtn().click()
         // preview answers before submit
         cy.decision().should('contain.text', 'Declined')
         cy.decisionMadeBy().should('contain.text', 'Minister')
-        //**will have to review this once DB has been cleared */
-        //cy.get('[id="decline-reasons"]').should($el => expect($el.text().trim()).to.equal('Other:\n                    This is the second test\n                    Finance:\n                    This is the second test\n                    Governance:\n                    This is the second test\n                    Performance:\n                    This is the second test\n                    Choice of trust:\n                    This is the second test'))
-        cy.decisionDate().should('contain.text', '10 August 2022')
+        // check reasons
+        var declinedReasons = cy.get('[id="decline-reasons"]')
+        declinedReasons.should('contain.text', 'Choice of trust:')
+        declinedReasons.should('contain.text', 'Trust details 2nd test')
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
         // recorded decision confirmation
@@ -290,31 +186,16 @@ describe('103791 Edit Declined journey', () => {
     it('TC05: J2 Edit a recorded decision Declined - None, Other', () => {
         // Click on change your decision button 
         cy.changeDecision().should('contain.text', 'Change your decision').click()
-         //select iniital decision
-         cy.declineRadioBtn().click()
+        //select iniital decision
+        cy.declineRadioBtn().click()
         // clicks on the continue button
         cy.continueBtn().click()
         // selects regional director button
         cy.get('[id="none-radio"]').click()
         // clicks on the continue button
         cy.continueBtn().click()
-        cy.declineOtherbox()
-        .invoke('attr', 'aria-expanded')
-        .then(ariaExpand => {
-            if (ariaExpand.includes(true)) {
-                // Other text box
-                cy.declineOthertxt().clear().type('This is the second test')
-
-            }
-            else {
-                // Other box
-                cy.declineOtherbox().click()
-                .then(()=> {
-                // Other text box
-                cy.declineOthertxt().clear().type('This is the first test')
-                })
-            }
-        })
+        cy.declineOtherbox().click()
+            .then(() => cy.declineOthertxt().clear().type('Other details'))
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -323,30 +204,16 @@ describe('103791 Edit Declined journey', () => {
         cy.continueBtn().click()
         // Change condition
         cy.reasonchangeLink().click()
-        cy.declineOtherbox()
-        .invoke('attr', 'aria-expanded')
-        .then(ariaExpand => {
-            if (ariaExpand.includes(true)) {
-                // Other text box
-                cy.declineOthertxt().clear().type('This is the second test')
-
-            }
-            else {
-                // Other box
-                cy.declineOtherbox().click()
-                .then(()=> {
-                // Other text box
-                cy.declineOthertxt().clear().type('This is the first test')
-                })
-            }
-        })
+        cy.declineOthertxt().clear().type('Other details 2nd test')
         cy.continueBtn().click()
         cy.continueBtn().click()
         // preview answers before submit
         cy.decision().should('contain.text', 'Declined')
         cy.decisionMadeBy().should('contain.text', 'None')
-        //**will have to review this once DB has been cleared */
-        //cy.get('[id="decline-reasons"]').should($el => expect($el.text().trim()).to.equal('Other:\n                    This is the second test\n                    Finance:\n                    This is the second test\n                    Governance:\n                    This is the second test\n                    Performance:\n                    This is the second test\n                    Choice of trust:\n                    This is the second test'))
+        // check reasons
+        var declinedReasons = cy.get('[id="decline-reasons"]')
+        declinedReasons.should('contain.text', 'Other:')
+        declinedReasons.should('contain.text', 'Other details 2nd test')
         cy.decisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
