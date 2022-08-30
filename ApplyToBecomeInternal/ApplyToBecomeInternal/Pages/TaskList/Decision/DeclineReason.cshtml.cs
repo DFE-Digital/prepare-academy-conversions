@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -76,15 +75,15 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		private IEnumerable<AdvisoryBoardDeclinedReasonDetails> MapSelectedReasons()
 		{
 			return DeclinedReasons
-				.Select(x => Enum.Parse<AdvisoryBoardDeclinedReasons>(x, true))
-				.Select(x => x switch
+				.Select(reasonText => Enum.Parse<AdvisoryBoardDeclinedReasons>(reasonText, true))
+				.Select(reason => reason switch
 				{
-					AdvisoryBoardDeclinedReasons.Finance => new AdvisoryBoardDeclinedReasonDetails(x, DeclineFinanceReason),
-					AdvisoryBoardDeclinedReasons.Performance => new AdvisoryBoardDeclinedReasonDetails(x, DeclinePerformanceReason),
-					AdvisoryBoardDeclinedReasons.Governance => new AdvisoryBoardDeclinedReasonDetails(x, DeclineGovernanceReason),
-					AdvisoryBoardDeclinedReasons.ChoiceOfTrust => new AdvisoryBoardDeclinedReasonDetails(x, DeclineChoiceOfTrustReason),
-					AdvisoryBoardDeclinedReasons.Other => new AdvisoryBoardDeclinedReasonDetails(x, DeclineOtherReason),
-					_ => throw new ArgumentOutOfRangeException(nameof(x), x, "Unexpected value for AdvisoryBoardDeclinedReason")
+					AdvisoryBoardDeclinedReasons.Finance => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineFinanceReason),
+					AdvisoryBoardDeclinedReasons.Performance => new AdvisoryBoardDeclinedReasonDetails(reason, DeclinePerformanceReason),
+					AdvisoryBoardDeclinedReasons.Governance => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineGovernanceReason),
+					AdvisoryBoardDeclinedReasons.ChoiceOfTrust => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineChoiceOfTrustReason),
+					AdvisoryBoardDeclinedReasons.Other => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineOtherReason),
+					_ => throw new ArgumentOutOfRangeException(nameof(reason), reason, "Unexpected value for AdvisoryBoardDeclinedReason")
 				});
 		}
 
