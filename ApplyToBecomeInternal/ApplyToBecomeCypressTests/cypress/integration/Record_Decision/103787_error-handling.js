@@ -7,7 +7,6 @@ describe('103787 Error handling', () => {
     beforeEach(() => {
         cy.visit(url)
         cy.clearCookies()
-
     })
 
     it('Error handling for the approved journey', () => {
