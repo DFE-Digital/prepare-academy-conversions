@@ -16,6 +16,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 	public class DeclineReasonModel : DecisionBaseModel
 	{
 		private readonly ErrorService _errorService;
+
 		public DeclineReasonModel(ErrorService errorService, IAcademyConversionProjectRepository repository, ISession session)
 			: base(repository, session)
 		{
@@ -50,17 +51,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			if (DeclinedReasons.Any())
 			{
-				var reasons = DeclinedReasons.Select(Enum.Parse<AdvisoryBoardDeclinedReasons>);
 				decision.DeclinedReasons.Clear();
-				AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Finance));
-				AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Performance));
-				AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Governance));
-				AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.ChoiceOfTrust));
-				AddReason(decision.DeclinedReasons, MapReason(reasons, AdvisoryBoardDeclinedReasons.Other));
+				decision.DeclinedReasons.AddRange(MapSelectedReasons());
 			}
 			else
 			{
-				ModelState.AddModelError("DeclinedReasonSet", "Select at least one reason");
+				ModelState.AddModelError("DeclinedReasons", "Select at least one reason");
 			}
 
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Finance, DeclineFinanceReason);
@@ -75,6 +71,21 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			_errorService.AddErrors(ModelState.Keys, ModelState);
 			return await OnGetAsync(id);
+		}
+
+		private IEnumerable<AdvisoryBoardDeclinedReasonDetails> MapSelectedReasons()
+		{
+			return DeclinedReasons
+				.Select(x => Enum.Parse<AdvisoryBoardDeclinedReasons>(x, true))
+				.Select(x => x switch
+				{
+					AdvisoryBoardDeclinedReasons.Finance => new AdvisoryBoardDeclinedReasonDetails(x, DeclineFinanceReason),
+					AdvisoryBoardDeclinedReasons.Performance => new AdvisoryBoardDeclinedReasonDetails(x, DeclinePerformanceReason),
+					AdvisoryBoardDeclinedReasons.Governance => new AdvisoryBoardDeclinedReasonDetails(x, DeclineGovernanceReason),
+					AdvisoryBoardDeclinedReasons.ChoiceOfTrust => new AdvisoryBoardDeclinedReasonDetails(x, DeclineChoiceOfTrustReason),
+					AdvisoryBoardDeclinedReasons.Other => new AdvisoryBoardDeclinedReasonDetails(x, DeclineOtherReason),
+					_ => throw new ArgumentOutOfRangeException(nameof(x), x, "Unexpected value for AdvisoryBoardDeclinedReason")
+				});
 		}
 
 		private void PreloadStateFromSession(int id)
@@ -99,27 +110,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			reasons.Add(reason);
 		}
 
-		private AdvisoryBoardDeclinedReasonDetails MapReason(AdvisoryBoardDeclinedReasons reason)
-		{
-			if (!DeclinedReasons.Contains(reason.ToString())) return null;
-
-			return reason switch
-			{
-				AdvisoryBoardDeclinedReasons.Finance => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineFinanceReason),
-				AdvisoryBoardDeclinedReasons.Performance => new AdvisoryBoardDeclinedReasonDetails(reason, DeclinePerformanceReason),
-				AdvisoryBoardDeclinedReasons.Governance => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineGovernanceReason),
-				AdvisoryBoardDeclinedReasons.ChoiceOfTrust => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineChoiceOfTrustReason),
-				AdvisoryBoardDeclinedReasons.Other => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineOtherReason),
-				_ => throw new ArgumentOutOfRangeException(nameof(reason), reason, "Unexpected value for AdvisoryBoardDeclinedReasons")
-			};
-		}
-
 		private void EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons reason, string explanation)
 		{
 			string reasonName = reason.ToString();
 
 			if (DeclinedReasons.Contains(reasonName) && string.IsNullOrWhiteSpace(explanation))
-				ModelState.AddModelError(UI.IdFor("declined-reasons", reason), $"Enter a reason for selecting {reason.ToDescription()}");
+				ModelState.AddModelError(UI.ReasonFieldFor(reason), $"Enter a reason for selecting {reason.ToDescription()}");
 		}
 
 		public class UIHelpers
