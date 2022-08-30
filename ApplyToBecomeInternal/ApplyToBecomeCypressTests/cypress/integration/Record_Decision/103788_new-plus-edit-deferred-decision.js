@@ -78,7 +78,7 @@ it('TC01: J3 Edit a recorded decision Deferred - Reg Director Region, Finance', 
 })
 
 // Edit Deferred Path - A different Regional Director, ofsted report 
-it('TC02: J3 Edit a recorded decision Declined - Different Reg Director, ofsted report', () => {
+it('TC02: J3 Edit a recorded decision Deferred - Different Reg Director, ofsted report', () => {
     // Click on change your decision button 
     cy.changeDecision().should('contain.text', 'Change your decision').click()
      //select iniital decision
@@ -146,7 +146,7 @@ it('TC02: J3 Edit a recorded decision Declined - Different Reg Director, ofsted 
 })
 
 // Edit Deferred Path - Director General, Performance concerns
-it('TC03: J3 Edit a recorded decision Declined - Director General, Performance', () => {
+it('TC03: J3 Edit a recorded decision Deferred - Director General, Performance', () => {
     // Click on change your decision button 
     cy.changeDecision().should('contain.text', 'Change your decision').click()
      //select iniital decision
@@ -213,7 +213,7 @@ it('TC03: J3 Edit a recorded decision Declined - Director General, Performance',
 })
 
 // Edit Deferred Path - Minister, Other
-it('TC04: J3 Edit a recorded decision Declined - Minister, Other', () => {
+it('TC04: J3 Edit a recorded decision Deferred - Minister, Other', () => {
     // Click on change your decision button 
     cy.changeDecision().should('contain.text', 'Change your decision').click()
      //select iniital decision

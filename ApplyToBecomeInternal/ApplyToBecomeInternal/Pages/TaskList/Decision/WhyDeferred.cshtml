@@ -39,7 +39,7 @@
 @{
     void CheckBoxAndLabel(AdvisoryBoardDeferredReason deferredReason, bool isChecked, string details) 
     {
-    <div class="govuk-checkboxes__item">
+    <div class="govuk-checkboxes__item" id="@(deferredReason)Details">
                             <input class="govuk-checkboxes__input" id="@deferredReason.ToString().ToLower()-checkbox" name="@(deferredReason)IsChecked" type="checkbox"
                                 data-aria-controls="conditional-@deferredReason" value="true" @(isChecked ? "checked" : "")>
                             <label class="govuk-label govuk-checkboxes__label" for="@deferredReason.ToString().ToLower()-checkbox">
