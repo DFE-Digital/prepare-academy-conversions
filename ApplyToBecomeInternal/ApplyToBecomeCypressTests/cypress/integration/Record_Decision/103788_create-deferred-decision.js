@@ -14,7 +14,7 @@ describe('Create Deferred journey', () => {
     // Edit Deferred Path - Regional Director, Additional information needed 
     it('TC01: J3 Create a recorded decision Deferred - Reg Director Region, Finance', () => {
         // Click on change your decision button 
-        cy.changeDecision().should('contain.text', 'Record a    decision').click()
+        cy.changeDecision().should('contain.text', 'Record a decision').click()
         //select iniital decision
         cy.deferredRadioBtn().click()
         // clicks on the continue button

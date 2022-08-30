@@ -2,12 +2,12 @@
 
 // uri to be updated once academisation API is integrated
 let url = Cypress.env('url') + '/task-list/2054?rd=true'
-//let projecList = Cypress.env('url') + '/project-list'
 
 describe('103195 Edit Approved record decision', ()=> {
 
-    beforeEach(() => {
-        cy.ApproveDeleteAddNewRecord()
+    beforeEach(() => {              
+        cy.sqlServer('delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2054')        
+        cy.sqlServer('insert into academisation.ConversionAdvisoryBoardDecision values (2054, \'Approved\', null, null, getdate(), \'None\', getdate(), getdate())')  
         cy.clearCookies()
         cy.visit(url)
     })

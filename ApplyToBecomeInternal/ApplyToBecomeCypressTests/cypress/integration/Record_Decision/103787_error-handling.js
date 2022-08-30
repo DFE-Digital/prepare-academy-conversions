@@ -7,7 +7,6 @@ describe('103787 Error handling', () => {
     beforeEach(() => {
         cy.visit(url)
         cy.clearCookies()
-
     })
 
     it('Error handling for the approved journey', () => {
@@ -83,7 +82,7 @@ describe('103787 Error handling', () => {
         // Record the decision:
         cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
         cy.continueBtn().click()
-        cy.get('[id="AdvisoryBoardDecision-error-link "]').should('contain.text', 'Please select the result of the decision')
+        cy.get('[id="AdvisoryBoardDecision-error-link "]').should('contain.text', 'Select a decision')
         cy.get('[id="deferred-radio"]').click()
         cy.continueBtn().click()
         // Who made this decision:
