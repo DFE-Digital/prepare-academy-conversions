@@ -18,7 +18,7 @@
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                 </legend>
-                <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios">
+                <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios" id="AdvisoryBoardDecision">
                
                 @foreach (var decisionOption in Enum.GetValues(typeof(AdvisoryBoardDecisions)))
                 {                   

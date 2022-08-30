@@ -15,7 +15,7 @@
             <h1 class="govuk-heading-l">What conditions were set?</h1>
 
             <form method="post">
-                <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+                <div class="govuk-form-group @ModelState.GetErrorStyleClass()" id="ApprovedConditionsDetails">
                     <textarea class="govuk-textarea" title="condition-details" id="conditions-textarea" asp-for="@Model.ApprovedConditionsDetails" rows="10"></textarea>
                 </div>
                 <button class="govuk-button" data-module="govuk-button" id="submit-btn">

@@ -58,16 +58,17 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			decision.DeferredReasons.Clear();
 			decision.DeferredReasons
-				.AddReasonIfValid(AdditionalInformationNeededIsChecked, AdvisoryBoardDeferredReason.AdditionalInformationNeeded, AdditionalInformationNeededDetails, _errorService)
-				.AddReasonIfValid(AwaitingNextOfstedReportIsChecked, AdvisoryBoardDeferredReason.AwaitingNextOfstedReport, AwaitingNextOfstedReportDetails, _errorService)
-				.AddReasonIfValid(PerformanceConcernsIsChecked, AdvisoryBoardDeferredReason.PerformanceConcerns, PerformanceConcernsDetails, _errorService)
-				.AddReasonIfValid(OtherIsChecked, AdvisoryBoardDeferredReason.Other, OtherDetails, _errorService);
+				.AddReasonIfValid(AdditionalInformationNeededIsChecked, AdvisoryBoardDeferredReason.AdditionalInformationNeeded, AdditionalInformationNeededDetails, ModelState)
+				.AddReasonIfValid(AwaitingNextOfstedReportIsChecked, AdvisoryBoardDeferredReason.AwaitingNextOfstedReport, AwaitingNextOfstedReportDetails, ModelState)
+				.AddReasonIfValid(PerformanceConcernsIsChecked, AdvisoryBoardDeferredReason.PerformanceConcerns, PerformanceConcernsDetails, ModelState)
+				.AddReasonIfValid(OtherIsChecked, AdvisoryBoardDeferredReason.Other, OtherDetails, ModelState);
 
 			SetDecisionInSession(id, decision);
 
-			if (!WasReasonGiven) _errorService.AddError($"WasReasonGiven", "Select at least one reason");
+			if (!WasReasonGiven) ModelState.AddModelError("WasReasonGiven", "Select at least one reason");
 			
-			if (_errorService.HasErrors()) return await OnGetAsync(id);			
+			_errorService.AddErrors(ModelState.Keys, ModelState);
+			if (_errorService.HasErrors()) return await OnGetAsync(id);
 
 			return RedirectToPage(Links.Decision.DecisionDate.Page, new { id });
 		}

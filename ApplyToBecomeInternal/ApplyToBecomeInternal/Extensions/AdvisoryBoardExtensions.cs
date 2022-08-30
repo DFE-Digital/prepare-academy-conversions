@@ -1,5 +1,5 @@
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
-using ApplyToBecomeInternal.Services;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,11 +8,11 @@ namespace ApplyToBecomeInternal.Extensions
 	public static class AdvisoryBoardExtensions
 	{
 		public static List<AdvisoryBoardDeferredReasonDetails> AddReasonIfValid(this List<AdvisoryBoardDeferredReasonDetails> reasons, bool isChecked, AdvisoryBoardDeferredReason reason,
-			string detail, ErrorService errorService)
+			string detail, ModelStateDictionary modelState)
 		{
 			if (isChecked && string.IsNullOrWhiteSpace(detail))
 			{
-				errorService.AddError($"{reason}Details", $"Enter a reason for selecting {reason.ToDescription()}");
+				modelState.AddModelError($"{reason}Details", $"Enter a reason for selecting {reason.ToDescription()}");
 			}
 
 			if (isChecked) reasons.Add(new AdvisoryBoardDeferredReasonDetails(reason, detail));
