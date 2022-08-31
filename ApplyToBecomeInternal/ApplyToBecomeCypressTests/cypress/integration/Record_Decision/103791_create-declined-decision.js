@@ -38,20 +38,26 @@ describe('103791 Create Declined journey', () => {
         cy.declineFinancText().clear().type('finance details 2nd test')
         cy.continueBtn().click()
         cy.continueBtn().click()
-        // preview answers before submit
-        cy.decision().should('contain.text', 'Declined')
-        cy.decisionMadeBy().should('contain.text', 'Regional Director for the region')        
-        // check reasons
-        var declinedReasons = cy.get('[id="decline-reasons"]')
-        declinedReasons.should('contain.text', 'Finance:')
-        declinedReasons.should('contain.text', 'finance details 2nd test')
-        // check date                
-        cy.decisionDate().should('contain.text', '10 August 2022')
+        checkSummary()
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
+        checkSummary()
+        // check project status has been updated
         cy.visit(projecList)
         cy.projectStateId().should('contain.text', 'DECLINED')
     })
+
+    function checkSummary(){
+          // preview answers before submit
+          cy.decision().should('contain.text', 'Declined')
+          cy.decisionMadeBy().should('contain.text', 'Regional Director for the region')        
+          // check reasons
+          var declinedReasons = cy.get('[id="decline-reasons"]')
+          declinedReasons.should('contain.text', 'Finance:')
+          declinedReasons.should('contain.text', 'finance details 2nd test')
+          // check date                
+          cy.decisionDate().should('contain.text', '10 August 2022')
+    }
 })
