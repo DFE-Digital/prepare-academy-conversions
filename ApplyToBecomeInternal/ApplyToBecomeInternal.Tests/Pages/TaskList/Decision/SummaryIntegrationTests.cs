@@ -136,17 +136,18 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			await _wizard.StartFor(_project.Id);
 			await _wizard.SubmitThroughTheWizard(request);
 
-			Document.QuerySelector<IHtmlElement>("#decision").Text().Should()
-				.Be("APPROVED WITH CONDITIONS");
-			Document.QuerySelector<IHtmlElement>("#decision-made-by").Text().Should()
-				.Be("Director General");
-			Document.QuerySelector<IHtmlElement>("#condition-set").Text().Trim().Should()
-				.Be("Yes");
-			Document.QuerySelector<IHtmlElement>("#condition-details").Text().Trim().Should()
-				.Be(request.ApprovedConditionsDetails);
+			Document.QuerySelector<IHtmlElement>("#decision").Text()
+				.Should().Be("APPROVED WITH CONDITIONS");
 
-			Document.QuerySelector<IHtmlElement>("#decision-date").Text().Trim().Should()
-				.Be($"01 January {DateTime.Today.Year}");
+			Document.QuerySelector<IHtmlElement>("#decision-made-by").Text()
+				.Should().Be("Director General");
+
+			string conditionalDetails = Document.QuerySelector<IHtmlElement>("#condition-set").Text().Trim();
+			conditionalDetails.Should().Contain("Yes");
+			conditionalDetails.Should().Contain(request.ApprovedConditionsDetails);
+
+			Document.QuerySelector<IHtmlElement>("#decision-date").Text().Trim()
+				.Should().Be($"01 January {DateTime.Today.Year}");
 		}
 
 		[Fact]
@@ -226,7 +227,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		[InlineData(0, "Record the decision")]
 		[InlineData(1, "Who made this decision?")]
 		[InlineData(2, "Were any conditions set?")]
-		[InlineData(4, "Date conversion was approved")]
+		[InlineData(3, "Date conversion was approved")]
 		public async Task Should_go_back_to_choose_and_back_link_to_summary(int changeLinkIndex, string expectedTitle)
 		{
 			AdvisoryBoardDecision request = new AdvisoryBoardDecision
@@ -256,7 +257,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		[InlineData(0, "Record the decision", "Who made this decision?")]
 		[InlineData(1, "Who made this decision?", "Were any conditions set?")]
 		[InlineData(2, "Were any conditions set?", "Date conversion was approved")]
-		[InlineData(4, "Date conversion was approved", "Check your answers before recording this decision")]
+		[InlineData(3, "Date conversion was approved", "Check your answers before recording this decision")]
 		public async Task Should_go_back_to_choose_and_submit_back_to_summary(int changeLinkIndex, string changePageTitle, string nextPageTitle)
 		{
 			AdvisoryBoardDecision request = new AdvisoryBoardDecision
