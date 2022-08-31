@@ -35,7 +35,6 @@ describe('103195 Record new Approved decision', ()=> {
         // Change condition
         cy.ChangeConditionsLink().click()
         cy.YesRadioBtn().click()
-        cy.continueBtn().click()
         cy.YesTextBox().clear().type('This is a test')
         cy.continueBtn().click()
         cy.continueBtn().click()

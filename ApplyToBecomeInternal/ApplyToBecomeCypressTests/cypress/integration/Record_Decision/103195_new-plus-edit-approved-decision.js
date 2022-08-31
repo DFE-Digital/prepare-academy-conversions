@@ -5,9 +5,9 @@ let url = Cypress.env('url') + '/task-list/2054?rd=true'
 
 describe('103195 Edit Approved record decision', ()=> {
 
-    beforeEach(() => {              
-        cy.sqlServer('delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2054')        
-        cy.sqlServer('insert into academisation.ConversionAdvisoryBoardDecision values (2054, \'Approved\', null, null, getdate(), \'None\', getdate(), getdate())')  
+    beforeEach(() => {
+        cy.sqlServer('delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2054')
+        cy.sqlServer('insert into academisation.ConversionAdvisoryBoardDecision values (2054, \'Approved\', null, null, getdate(), \'None\', getdate(), getdate())')
         cy.clearCookies()
         cy.visit(url)
     })
@@ -35,7 +35,6 @@ describe('103195 Edit Approved record decision', ()=> {
         // Change condition
         cy.ChangeConditionsLink().click()
         cy.YesRadioBtn().click()
-        cy.continueBtn().click()
         cy.YesTextBox().clear().type('This is a test')
         cy.continueBtn().click()
         cy.continueBtn().click()
@@ -74,7 +73,6 @@ describe('103195 Edit Approved record decision', ()=> {
         // Change condition
         cy.ChangeConditionsLink().click()
         cy.YesRadioBtn().click()
-        cy.continueBtn().click()
         cy.YesTextBox().clear().type('This is a test')
         cy.continueBtn().click()
         cy.continueBtn().click()
@@ -112,7 +110,6 @@ describe('103195 Edit Approved record decision', ()=> {
         // Change condition
         cy.ChangeConditionsLink().click()
         cy.YesRadioBtn().click()
-        cy.continueBtn().click()
         cy.YesTextBox().clear().type('This is a test')
         cy.continueBtn().click()
         cy.continueBtn().click()
@@ -150,7 +147,6 @@ describe('103195 Edit Approved record decision', ()=> {
         // Change condition
         cy.ChangeConditionsLink().click()
         cy.YesRadioBtn().click()
-        cy.continueBtn().click()
         cy.YesTextBox().clear().type('This is a test')
         cy.continueBtn().click()
         cy.continueBtn().click()
@@ -189,7 +185,6 @@ describe('103195 Edit Approved record decision', ()=> {
         // Change condition
         cy.ChangeConditionsLink().click()
         cy.YesRadioBtn().click()
-        cy.continueBtn().click()
         cy.YesTextBox().clear().type('This is a test')
         cy.continueBtn().click()
         cy.continueBtn().click()
