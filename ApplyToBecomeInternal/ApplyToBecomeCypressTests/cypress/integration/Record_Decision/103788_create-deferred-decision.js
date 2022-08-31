@@ -37,7 +37,20 @@ describe('Create Deferred journey', () => {
 
         cy.continueBtn().click()
         cy.continueBtn().click()
-        // preview answers before submit
+
+        checkSummary()
+        // clicks on the record a decision button to submit
+        cy.recordThisDecision().click()
+        // recorded decision confirmation        
+        cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
+        checkSummary()
+        // confirm project status has been updated
+        cy.visit(Cypress.env('url') + '/project-list')
+        cy.projectStateId().should('contain.text', 'DEFERRED')
+    })
+
+    function checkSummary() {
+        // preview answers 
         cy.deferredDecision().should('contain.text', 'Deferred')
         cy.deferredDecisionMadeBy().should('contain.text', 'Regional Director for the region')
         // check reasons
@@ -45,11 +58,5 @@ describe('Create Deferred journey', () => {
         deferredReasons.should('contain.text', 'Additional information needed:')
         deferredReasons.should('contain.text', 'Additional info 2nd time')
         cy.deferredDecisionDate().should('contain.text', '10 August 2022')
-        // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
-        // recorded decision confirmation
-        cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
-        cy.visit(Cypress.env('url') + '/project-list')
-        cy.projectStateId().should('contain.text', 'DEFERRED')
-    })
+    }
 })
