@@ -79,6 +79,17 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			PageHeading.Should().Be("Were any conditions set?");
 		}
 
+		[Fact]
+		public async Task Should_display_error_when_no_details_provided_for_conditional_approvals()
+		{
+			await _wizard.SetIsConditionalAndContinue(true, string.Empty);
+
+			Document.QuerySelector<IHtmlElement>("[href='#ApprovedConditionsSet']")?.Text()
+				.Should().Be("Select whether any conditions were set");
+
+			PageHeading.Should().Be("Were any conditions set?");
+		}
+
 		#region IAsyncLifetime implementation
 
 		public async Task InitializeAsync()
