@@ -24,7 +24,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 		public IHtmlElement DecisionElement => Document.QuerySelector<IHtmlElement>("#decision");
 		public IHtmlElement ConditionsSetElement => Document.QuerySelector<IHtmlElement>("#condition-set");
 		public IHtmlElement DecisionDateElement => Document.QuerySelector<IHtmlElement>("#decision-date");
-		public IHtmlElement ConditionDetailsElement => Document.QuerySelector<IHtmlElement>("#condition-details");
 
 		[Fact]
 		public async Task Should_redirect_to_record_decision()
@@ -59,10 +58,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 				.Be("APPROVED WITH CONDITIONS");
 			DecisionMadeByElement.Text().Should()
 				.Be("Director General");
-			ConditionsSetElement.Text().Trim().Should()
-				.Be("Yes");
-			ConditionDetailsElement.Text().Trim().Should()
-				.Be(request.ApprovedConditionsDetails);
+			ConditionsSetElement.Text().Trim()
+				.Should().Contain("Yes");
+			ConditionsSetElement.Text().Trim()
+				.Should().Contain(request.ApprovedConditionsDetails);
 
 			DecisionDateElement.Text().Trim().Should()
 				.Be($"01 January {DateTime.Today.Year}");
@@ -133,10 +132,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 				.Be("APPROVED WITH CONDITIONS");
 			DecisionMadeByElement.Text().Should()
 				.Be("A different Regional Director");
-			ConditionsSetElement.Text().Trim().Should()
-				.Be("Yes");
-			ConditionDetailsElement.Text().Trim().Should()
-				.Be(response.ApprovedConditionsDetails);
+			ConditionsSetElement.Text().Trim()
+				.Should().Contain("Yes");
+			ConditionsSetElement.Text().Trim()
+				.Should().Contain(response.ApprovedConditionsDetails);
 			DecisionDateElement.Text().Trim().Should()
 				.Be("02 January 2021");
 		}

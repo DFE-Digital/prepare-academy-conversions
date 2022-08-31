@@ -42,7 +42,7 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.ApprovedDecisionPreview().should('contain.text', 'APPROVED WITH CONDITIONS')
         cy.ApprovedMadeByPreview().should('contain.text', 'Regional Director for the region')
         cy.AprrovedConditionsSet().should('contain.text', 'Yes')
-        cy.ApprovedConditionDetails().should('contain.text', 'This is a test')
+        cy.AprrovedConditionsSet().should('contain.text', 'This is a test')
         cy.ApprovedDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
@@ -80,7 +80,7 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.ApprovedDecisionPreview().should('contain.text', 'APPROVED WITH CONDITIONS')
         cy.ApprovedMadeByPreview().should('contain.text', 'A different Regional Director')
         cy.AprrovedConditionsSet().should('contain.text', 'Yes')
-        cy.ApprovedConditionDetails().should('contain.text', 'This is a test')
+        cy.AprrovedConditionsSet().should('contain.text', 'This is a test')
         cy.ApprovedDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
@@ -117,7 +117,7 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.ApprovedDecisionPreview().should('contain.text', 'APPROVED WITH CONDITIONS')
         cy.ApprovedMadeByPreview().should('contain.text', 'Minister')
         cy.AprrovedConditionsSet().should('contain.text', 'Yes')
-        cy.ApprovedConditionDetails().should('contain.text', 'This is a test')
+        cy.AprrovedConditionsSet().should('contain.text', 'This is a test')
         cy.ApprovedDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
@@ -154,7 +154,7 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.ApprovedDecisionPreview().should('contain.text', 'APPROVED WITH CONDITIONS')
         cy.ApprovedMadeByPreview().should('contain.text', 'Director General')
         cy.AprrovedConditionsSet().should('contain.text', 'Yes')
-        cy.ApprovedConditionDetails().should('contain.text', 'This is a test')
+        cy.AprrovedConditionsSet().should('contain.text', 'This is a test')
         cy.ApprovedDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()
@@ -192,7 +192,7 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.ApprovedDecisionPreview().should('contain.text', 'APPROVED WITH CONDITIONS')
         cy.ApprovedMadeByPreview().should('contain.text', 'None')
         cy.AprrovedConditionsSet().should('contain.text', 'Yes')
-        cy.ApprovedConditionDetails().should('contain.text', 'This is a test')
+        cy.AprrovedConditionsSet().should('contain.text', 'This is a test')
         cy.ApprovedDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.recordThisDecision().click()

@@ -49,11 +49,12 @@ describe('103195 Record new Approved decision', () => {
         cy.projectStateId().should('contain.text', 'APPROVED')
     })
 
+    // Displayed at the end of the journey
     function checkSummary() {
         cy.ApprovedDecisionPreview().should('contain.text', 'APPROVED WITH CONDITIONS')
         cy.ApprovedMadeByPreview().should('contain.text', 'Regional Director for the region')
         cy.AprrovedConditionsSet().should('contain.text', 'Yes')
-        cy.ApprovedConditionDetails().should('contain.text', 'This is a test')
+        cy.AprrovedConditionsSet().should('contain.text', 'This is a test')
         cy.ApprovedDecisionDate().should('contain.text', '10 August 2022')
     }
 })
