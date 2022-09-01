@@ -112,6 +112,16 @@
 				</li>
 				<li class="app-task-list__item">
 					<span class="app-task-list__task-name">
+						<a class="govuk-link" asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Project.Id" aria-describedby="legal-requirements">
+							Legal requirements
+						</a>
+					</span>
+					<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="legal-status">
+						Not Started
+					</strong>
+				</li>
+				<li class="app-task-list__item">
+					<span class="app-task-list__task-name">
 						<a class="govuk-link" asp-page="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-budget-information-status">
 							School budget information
 						</a>

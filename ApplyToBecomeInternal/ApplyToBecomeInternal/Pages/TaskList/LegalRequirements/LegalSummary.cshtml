@@ -1,0 +1,88 @@
+﻿@page "/task-list/{id:int}/legal-requirements/legal-summary"
+@model ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.LegalSummaryModel
+
+@section BeforeMain
+{
+	<a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Id" class="govuk-back-link">Back to task list</a>
+	<partial name="_ErrorSummary"/>
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-full">
+		<span class="govuk-caption-l">St. Wilfrid's Primary School</span>
+		<h1 class="govuk-heading-l">Confirm legal requirements</h1>
+
+		<dl class="govuk-summary-list">
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Governing body resolution
+				</dt>
+				<dd class="govuk-summary-list__value">
+					<span class="empty">Empty</span>
+				</dd>
+				<dd class="govuk-summary-list__actions">
+					<a class="govuk-link" asp-page="@Links.LegalRequirements.GoverningBodyResolution.Page" asp-route-id="@Model.Id">
+						Change<span class="govuk-visually-hidden"> governing body resolution</span>
+					</a>
+				</dd>
+			</div>
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Consultation
+				</dt>
+				<dd class="govuk-summary-list__value">
+					<span class="empty">Empty</span>
+				</dd>
+				<dd class="govuk-summary-list__actions">
+					<a class="govuk-link" asp-page="@Links.LegalRequirements.Consultation.Page" asp-route-id="@Model.Id">
+						Change<span class="govuk-visually-hidden"> consultation</span>
+					</a>
+				</dd>
+			</div>
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Diocesan consent
+				</dt>
+				<dd class="govuk-summary-list__value">
+					<span class="empty">Empty</span>
+				</dd>
+				<dd class="govuk-summary-list__actions">
+					<a class="govuk-link" asp-page="@Links.LegalRequirements.DiocesanConsent.Page" asp-route-id="@Model.Id">
+						Change<span class="govuk-visually-hidden"> diocesan consent</span>
+					</a>
+				</dd>
+			</div>
+			<div class="govuk-summary-list__row">
+				<dt class="govuk-summary-list__key">
+					Foundation consent
+				</dt>
+				<dd class="govuk-summary-list__value">
+					<span class="empty">Empty</span>
+				</dd>
+				<dd class="govuk-summary-list__actions">
+					<a class="govuk-link" asp-page="@Links.LegalRequirements.FoundationConsent.Page" asp-route-id="@Model.Id">
+						Change<span class="govuk-visually-hidden"> foundation consent</span>
+					</a>
+				</dd>
+			</div>
+		</dl>
+
+		<form action="../task_list-with-legal" method="post">
+			<div class="govuk-form-group">
+				<div class="govuk-checkboxes" data-module="govuk-checkboxes">
+					<div class="govuk-checkboxes__item">
+						<input class="govuk-checkboxes__input" id="legal-status" name="legal-status" type="checkbox"
+						       value="Complete">
+						<label class="govuk-label govuk-checkboxes__label" for="legal-status">
+							Mark this section as complete, you can still make changes later
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<button class="govuk-button" data-module="govuk-button">
+				Confirm and continue
+			</button>
+		</form>
+	</div>
+</div>
