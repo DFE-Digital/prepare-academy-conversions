@@ -14,10 +14,28 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		private AcademyConversionProject _project;
 		private RecordDecisionWizard _wizard;
 
-		private string PageHeading => Document.QuerySelector<IHtmlElement>("h1")?.Text().Trim();
 
 		public AnyConditionsIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{
+		}
+
+		private string PageHeading => Document.QuerySelector<IHtmlElement>("h1")?.Text().Trim();
+
+		public async Task InitializeAsync()
+		{
+			_project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
+			_wizard = new RecordDecisionWizard(Context);
+
+			await _wizard.StartFor(_project.Id);
+			await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Approved);
+			await _wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+
+			Document.Url.Should().EndWith("any-conditions");
+		}
+
+		public Task DisposeAsync()
+		{
+			return Task.CompletedTask;
 		}
 
 		[Fact]
@@ -89,26 +107,5 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 
 			PageHeading.Should().Be("Were any conditions set?");
 		}
-
-		#region IAsyncLifetime implementation
-
-		public async Task InitializeAsync()
-		{
-			_project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
-			_wizard = new RecordDecisionWizard(Context);
-
-			await _wizard.StartFor(_project.Id);
-			await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Approved);
-			await _wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
-
-			Document.Url.Should().EndWith("any-conditions");
-		}
-
-		public Task DisposeAsync()
-		{
-			return Task.CompletedTask;
-		}
-
-		#endregion
 	}
 }
