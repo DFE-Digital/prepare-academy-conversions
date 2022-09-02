@@ -116,8 +116,8 @@
 							Legal requirements
 						</a>
 					</span>
-					<strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="legal-status">
-						Not Started
+					<strong class="govuk-tag @Model.LegalRequirementsStatus.ToTagCssClass() app-task-list__tag" id="legal-status">
+						@Model.LegalRequirementsStatus.ToDescription()
 					</strong>
 				</li>
 				<li class="app-task-list__item">

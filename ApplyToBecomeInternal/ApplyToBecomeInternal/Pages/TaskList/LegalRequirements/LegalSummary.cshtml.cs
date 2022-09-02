@@ -1,6 +1,8 @@
 using ApplyToBecome.Data.Services;
 using ApplyToBecome.Data.Services.Interfaces;
-using System;
+using ApplyToBecomeInternal.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 {
@@ -12,13 +14,18 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 		{
 		}
 
+		[BindProperty] public bool IsComplete { get; set; }
+
 		public void OnGet(int id)
 		{
+			IsComplete = LegalRequirements.IsComplete;
 		}
 
-		public void OnPost(int id)
+		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			throw new NotImplementedException("LegalSummaryModel.OnPost");
+			LegalRequirements.IsComplete = IsComplete;
+			await LegalRequirementsRepository.UpdateByProjectId(id, LegalRequirements);
+			return RedirectToPage(Links.TaskList.Index.Page, new { id });
 		}
 	}
 }

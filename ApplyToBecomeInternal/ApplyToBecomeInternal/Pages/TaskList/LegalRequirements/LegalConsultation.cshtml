@@ -1,4 +1,6 @@
 ﻿@page "/task-list/{id:int}/legal-requirements/legal-consultation"
+@using ApplyToBecome.Data.Models.AcademyConversion
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.LegalConsultationModel
 
 @section BeforeMain
@@ -9,7 +11,7 @@
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
-		<form action="legal-summary1" method="post">
+		<form method="post">
 			<input hidden="" type="text" name="returnToSummary" value="no">
 			<span class="govuk-caption-l">@Model.SchoolName</span>
 			<h1 class="govuk-heading-l">Has a consultation been done?</h1>
@@ -17,25 +19,22 @@
 			<div class="govuk-form-group">
 				<div class="govuk-radios">
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="legal-consultation-checked" name="legal-consultation-checked"
-						       type="radio" value="Yes">
-						<label class="govuk-label govuk-radios__label" for="legal-consultation-checked">
+						<input asp-for="Done" class="govuk-radios__input" type="radio" value="@nameof(ThreeOptions.Yes)" id="DoneYes">
+						<label class="govuk-label govuk-radios__label" for="DoneYes">
 							Yes
 						</label>
 					</div>
 
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="legal-consultation-checked-2" name="legal-consultation-checked"
-						       type="radio" value="No">
-						<label class="govuk-label govuk-radios__label" for="legal-consultation-checked-2">
+						<input asp-for="Done" class="govuk-radios__input" type="radio" value="@nameof(ThreeOptions.No)" id="DoneNo">
+						<label class="govuk-label govuk-radios__label" for="DoneNo">
 							No
 						</label>
 					</div>
 
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="legal-consultation-checked-3" name="legal-consultation-checked"
-						       type="radio" value="Not applicable">
-						<label class="govuk-label govuk-radios__label" for="legal-consultation-checked-3">
+						<input asp-for="Done" class="govuk-radios__input" type="radio" value="@nameof(ThreeOptions.NotApplicable)" id="DoneNotApplicable">
+						<label class="govuk-label govuk-radios__label" for="DoneNotApplicable">
 							Not applicable
 						</label>
 					</div>
@@ -63,9 +62,8 @@
 					</li>
 					<li>
 						<p class="govuk-body-s">
-							<a href="../related/application_newtab" target="application">
-								School
-								application form (opens in a new tab)
+							<a href="#" target="application">
+								School application form (opens in a new tab)
 							</a>
 						</p>
 					</li>

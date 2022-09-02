@@ -18,7 +18,14 @@
 					Governing body resolution
 				</dt>
 				<dd class="govuk-summary-list__value">
-					<span class="empty">Empty</span>
+					@if (Model.LegalRequirements.GoverningBodyApproved.HasValue)
+					{
+						<span>@Model.LegalRequirements.GoverningBodyApproved.ToDescription()</span>
+					}
+					else
+					{
+						<span class="empty">Empty</span>
+					}
 				</dd>
 				<dd class="govuk-summary-list__actions">
 					<a class="govuk-link" asp-page="@Links.LegalRequirements.GoverningBodyResolution.Page" asp-route-id="@Model.Id">
@@ -31,7 +38,14 @@
 					Consultation
 				</dt>
 				<dd class="govuk-summary-list__value">
-					<span class="empty">Empty</span>
+					@if (Model.LegalRequirements.ConsultationDone.HasValue)
+					{
+						<span>@Model.LegalRequirements.ConsultationDone.ToDescription()</span>
+					}
+					else
+					{
+						<span class="empty">Empty</span>
+					}
 				</dd>
 				<dd class="govuk-summary-list__actions">
 					<a class="govuk-link" asp-page="@Links.LegalRequirements.Consultation.Page" asp-route-id="@Model.Id">
@@ -44,7 +58,14 @@
 					Diocesan consent
 				</dt>
 				<dd class="govuk-summary-list__value">
-					<span class="empty">Empty</span>
+					@if (Model.LegalRequirements.DiocesanConsent.HasValue)
+					{
+						<span>@Model.LegalRequirements.DiocesanConsent.ToDescription()</span>
+					}
+					else
+					{
+						<span class="empty">Empty</span>
+					}
 				</dd>
 				<dd class="govuk-summary-list__actions">
 					<a class="govuk-link" asp-page="@Links.LegalRequirements.DiocesanConsent.Page" asp-route-id="@Model.Id">
@@ -57,7 +78,14 @@
 					Foundation consent
 				</dt>
 				<dd class="govuk-summary-list__value">
-					<span class="empty">Empty</span>
+					@if (Model.LegalRequirements.FoundationConsent.HasValue)
+					{
+						<span>@Model.LegalRequirements.FoundationConsent.ToDescription()</span>
+					}
+					else
+					{
+						<span class="empty">Empty</span>
+					}
 				</dd>
 				<dd class="govuk-summary-list__actions">
 					<a class="govuk-link" asp-page="@Links.LegalRequirements.FoundationConsent.Page" asp-route-id="@Model.Id">
@@ -71,8 +99,8 @@
 			<div class="govuk-form-group">
 				<div class="govuk-checkboxes" data-module="govuk-checkboxes">
 					<div class="govuk-checkboxes__item">
-						<input asp-for="@Model.LegalRequirements.IsComplete" class="govuk-checkboxes__input" type="checkbox">
-						<label asp-for="@Model.LegalRequirements.IsComplete" class="govuk-label govuk-checkboxes__label">
+						<input asp-for="@Model.IsComplete" class="govuk-checkboxes__input" type="checkbox">
+						<label asp-for="@Model.IsComplete" class="govuk-label govuk-checkboxes__label">
 							Mark this section as complete, you can still make changes later
 						</label>
 					</div>
