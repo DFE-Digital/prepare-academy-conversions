@@ -16,8 +16,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		[BindProperty, Required(ErrorMessage = "Select whether any conditions were set")]
 		public bool? ApprovedConditionsSet { get; set; }
 
-		public AnyConditionsModel(IAcademyConversionProjectRepository repository, ISession session, 
-			ErrorService errorService) 
+		[BindProperty] public string ApprovedConditionsDetails { get; set; }
+
+		private bool HasConditions => ApprovedConditionsSet.GetValueOrDefault();
+
+		public AnyConditionsModel(IAcademyConversionProjectRepository repository, ISession session,
+			ErrorService errorService)
 			: base(repository, session)
 		{
 			_errorService = errorService;
@@ -27,41 +31,33 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		{
 			await SetDefaults(id);
 			SetBackLinkModel(Links.Decision.WhoDecided, id);
-			ApprovedConditionsSet = GetDecisionFromSession(id).ApprovedConditionsSet;
+
+			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
+			ApprovedConditionsSet = decision.ApprovedConditionsSet;
+			ApprovedConditionsDetails = decision.ApprovedConditionsDetails;
 
 			return Page();
 		}
 
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			if (!ModelState.IsValid)
+			if (HasConditions && string.IsNullOrWhiteSpace(ApprovedConditionsDetails))
+				ModelState.AddModelError(nameof(ApprovedConditionsDetails), "Add the conditions that were set");
+
+			if (ModelState.IsValid)
 			{
-				_errorService.AddErrors(new[] { "ApprovedConditionsSet" }, ModelState);
-				return await OnGetAsync(id);
+				var decision = GetDecisionFromSession(id);
+
+				decision.ApprovedConditionsSet = HasConditions;
+				decision.ApprovedConditionsDetails = HasConditions ? ApprovedConditionsDetails : string.Empty;
+
+				SetDecisionInSession(id, decision);
+
+				return RedirectToPage(Links.Decision.DecisionDate.Page, new { id });
 			}
 
-			var decision = GetDecisionFromSession(id);
-			decision.ApprovedConditionsSet = ApprovedConditionsSet.Value;
-			
-			ClearConditionDetailsIfAppropriate(decision);
-
-			SetDecisionInSession(id, decision);
-
-			return RedirectToPage(GetRedirectPageName(), new { id });
-		}
-
-		private static void ClearConditionDetailsIfAppropriate(AdvisoryBoardDecision decision)
-		{
-			if (!decision.ApprovedConditionsSet.Value) decision.ApprovedConditionsDetails = string.Empty;
-		}
-
-		private string GetRedirectPageName()
-		{
-			return ApprovedConditionsSet switch
-			{
-				true => Links.Decision.WhatConditions.Page,
-				_ => Links.Decision.DecisionDate.Page
-			};
+			_errorService.AddErrors(ModelState.Keys, ModelState);
+			return await OnGetAsync(id);
 		}
 	}
 }

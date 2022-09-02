@@ -95,26 +95,22 @@
             {
                 var conditionsSet = Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value;
 
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Were any conditions set
-                    </dt>
-                    <dd class="govuk-summary-list__value" id="condition-set">
-                        @(conditionsSet ? "Yes" : "No")
-                    </dd>
-                </div>
-
-                @if (conditionsSet)
-                {
-                    <div class="govuk-summary-list__row">
-                        <dt class="govuk-summary-list__key">
-                            Details of the conditions
-                        </dt>
-                        <dd class="govuk-summary-list__value" id="condition-details">
-                            @Model.Decision.ApprovedConditionsDetails
-                        </dd>
-                    </div>
-                }
+	            <div class="govuk-summary-list__row">
+		            <dt class="govuk-summary-list__key">
+			            Were any conditions set
+		            </dt>
+		            <dd class="govuk-summary-list__value" id="condition-set">
+			            @if (conditionsSet)
+			            {
+				            <div>Yes:</div>
+				            <div>@Model.Decision.ApprovedConditionsDetails</div>
+			            }
+			            else
+			            {
+				            <span>No</span>
+			            }
+		            </dd>
+	            </div>
             }
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">

@@ -1,11 +1,8 @@
 ﻿using AngleSharp;
-using AngleSharp.Common;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
-using FluentAssertions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,13 +19,18 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 
 		public IDocument Document => _browsingContext.Active;
 
+		/// <summary>
+		///     Steps through the journey using the details in the provided <see cref="AdvisoryBoardDecision" /> instance for each step.
+		/// </summary>
+		/// <param name="request">An <see cref="AdvisoryBoardDecision" /> configured appropriately for this test run</param>
+		/// <returns>Async <see cref="Void"/></returns>
+		/// <remarks>NOTE: Nullable fields are provided with the appropriate default values if not set</remarks>
 		public async Task SubmitThroughTheWizard(AdvisoryBoardDecision request)
 		{
-			await SelectRadioAndSubmit(request.Decision.ToString().ToLower());
-			await SelectRadioAndSubmit(request.DecisionMadeBy.ToString().ToLower());
-			await SelectRadioAndSubmit("yes");
-			await InputTextAreaAndSubmit(request.ApprovedConditionsDetails);
-			await InputDateAndSubmit(request.AdvisoryBoardDecisionDate.Value);
+			await SetDecisionToAndContinue(request.Decision.GetValueOrDefault());
+			await SetDecisionByAndContinue(request.DecisionMadeBy.GetValueOrDefault());
+			await SetIsConditionalAndContinue(request.ApprovedConditionsSet.GetValueOrDefault(), request.ApprovedConditionsDetails);
+			await SetDecisionDateAndContinue(request.AdvisoryBoardDecisionDate.GetValueOrDefault(DateTime.MinValue));
 		}
 
 		public async Task StartFor(int projectId)
@@ -37,10 +39,10 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 		}
 
 		/// <summary>
-		/// Finds the submit button and clicks it
+		///     Finds the submit button and clicks it
 		/// </summary>
 		/// <remarks>
-		/// Not required when calling methods with <b>Set</b> prefix.
+		///     Not required when calling methods with <b>Set</b> prefix.
 		/// </remarks>
 		/// <returns></returns>
 		public async Task ClickSubmitButton()
@@ -75,7 +77,7 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 		{
 			foreach ((AdvisoryBoardDeferredReason option, string detail) in new[] { reason }.Concat(furtherReasons))
 			{
-				var id = $"#{option.ToString().ToLowerInvariant()}";
+				string id = $"#{option.ToString().ToLowerInvariant()}";
 
 				Document.QuerySelector<IHtmlInputElement>($"{id}-checkbox").IsChecked = true;
 				Document.QuerySelector<IHtmlTextAreaElement>($"{id}-txtarea").TextContent = detail;
@@ -84,10 +86,11 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 			await ClickSubmitButton();
 		}
 
-		public async Task SetIsConditionalAndContinue(bool required)
+		public async Task SetIsConditionalAndContinue(bool required, string conditionDetails)
 		{
-			var controlId = required ? "#yes-radio" : "#no-radio";
+			string controlId = required ? "#yes-radio" : "#no-radio";
 			Document.QuerySelector<IHtmlInputElement>(controlId).IsChecked = true;
+			Document.QuerySelector<IHtmlTextAreaElement>("#ApprovedConditionsDetails").Value = conditionDetails;
 			await ClickSubmitButton();
 		}
 
@@ -98,7 +101,7 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 		}
 
 		public async Task SetDecisionDateAndContinue(DateTime date)
-		{			
+		{
 			Document.QuerySelector<IHtmlInputElement>("#decision-date-day").Value = date.Day.ToString();
 			Document.QuerySelector<IHtmlInputElement>("#decision-date-month").Value = date.Month.ToString();
 			Document.QuerySelector<IHtmlInputElement>("#decision-date-year").Value = date.Year.ToString();
