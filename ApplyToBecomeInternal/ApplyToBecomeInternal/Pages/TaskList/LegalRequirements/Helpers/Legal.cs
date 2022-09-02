@@ -4,37 +4,49 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers
 {
 	public sealed class Legal
 	{
-		public static string SchoolName => Typespace.Name;
-		public static string PageHeader => Typespace.Name;
-		public static string BackLink => Typespace.Name;
+		private static string _schoolName, _pageHeader, _backLink;
+
+		public static string SchoolName => _schoolName ??= Typespace.Name;
+		public static string PageHeader => _pageHeader ??= Typespace.Name;
+		public static string BackLink => _backLink ??= Typespace.Name;
 
 		public sealed class Summary
 		{
-			public static string IsComplete => Typespace.Name;
-			public static string SubmitButton => Typespace.Name;
+			private static string _isComplete, _submitButton;
+
+			public static string IsComplete => _isComplete ??= Typespace.Name;
+			public static string SubmitButton => _submitButton ??= Typespace.Name;
 
 			public sealed class GoverningBody
 			{
-				public static string Status => Typespace.Name;
-				public static string Change => Typespace.Name;
+				private static string _status, _change;
+
+				public static string Status => _status ??= Typespace.Name;
+				public static string Change => _change ??= Typespace.Name;
 			}
 
 			public sealed class Consultation
 			{
-				public static string Status => Typespace.Name;
-				public static string Change => Typespace.Name;
+				private static string _status, _change;
+
+				public static string Status => _status ??= Typespace.Name;
+				public static string Change => _change ??= Typespace.Name;
 			}
 
 			public sealed class DiocesanConsent
 			{
-				public static string Status => Typespace.Name;
-				public static string Change => Typespace.Name;
+				private static string _status, _change;
+
+				public static string Status => _status ??= Typespace.Name;
+				public static string Change => _change ??= Typespace.Name;
 			}
 
 			public sealed class FoundationConsent
 			{
-				public static string Status => Typespace.Name;
-				public static string Change => Typespace.Name;
+				private static string _status, _change;
+
+				public static string Status => _status ??= Typespace.Name;
+				public static string Change => _change ??= Typespace.Name;
 			}
 		}
 	}

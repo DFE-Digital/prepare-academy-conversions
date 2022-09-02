@@ -2,7 +2,7 @@
 
 namespace ApplyToBecomeInternal.Utils
 {
-	public static class TypeSpaceExtensions
+	public static class TypespaceExtensions
 	{
 		public static HtmlString ToData(this string name, string dataName)
 		{

@@ -1,4 +1,5 @@
 ﻿using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models;
 using ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers;
 using ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support;
@@ -17,6 +18,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		{
 		}
 
+		private string BackLinkHref => Document.QuerySelector<IHtmlAnchorElement>(CypressSelectorFor(Legal.BackLink))?.Href.Trim();
 		private string PageHeading => Document.QuerySelector(CypressSelectorFor(Legal.PageHeader))?.Text().Trim();
 		private string SchoolName => Document.QuerySelector(CypressSelectorFor(Legal.SchoolName))?.Text().Trim();
 		private string GoverningBodyStatus => Document.QuerySelector(CypressSelectorFor(Legal.Summary.GoverningBody.Status))?.Text().Trim();
@@ -42,6 +44,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		private static string CypressSelectorFor(string name)
 		{
 			return $"[data-cy='{name}']";
+		}
+
+		[Fact]
+		public void Back_link_to_point_to_the_task_list_page()
+		{
+			BackLinkHref.Should().EndWith($"/task-list/{_project.Id}");
 		}
 
 		[Fact]

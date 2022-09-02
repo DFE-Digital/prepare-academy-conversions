@@ -11,7 +11,9 @@ namespace ApplyToBecomeInternal.Utils
 		private static readonly Regex NonAlphaNumeric =
 			new Regex("[^a-z0-9-]", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-		private Typespace() { }
+		private Typespace()
+		{
+		}
 
 		public static Typespace Name => new Typespace();
 
