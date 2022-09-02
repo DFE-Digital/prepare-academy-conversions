@@ -2,71 +2,75 @@
 @model ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.LegalConsultationModel
 
 @section BeforeMain
-{   
-	@* <partial name="_BackLink" model="@Model.BackLinkModel"/> *@
-	<partial name="_ErrorSummary" />
+{
+	<a asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Id" class="govuk-back-link">Back</a>
+	<partial name="_ErrorSummary"/>
 }
 
 <div class="govuk-grid-row">
-   <div class="govuk-grid-column-two-thirds">
-      <form action="legal-summary1" method="post">
-         <input hidden="" type="text" name="returnToSummary" value="no">
-         <span class="govuk-caption-l">St. Wilfrid's Primary School</span>
-         <h1 class="govuk-heading-l">Has a consultation been done?</h1>
+	<div class="govuk-grid-column-two-thirds">
+		<form action="legal-summary1" method="post">
+			<input hidden="" type="text" name="returnToSummary" value="no">
+			<span class="govuk-caption-l">@Model.SchoolName</span>
+			<h1 class="govuk-heading-l">Has a consultation been done?</h1>
 
-         <div class="govuk-form-group">
-            <div class="govuk-radios">
-               <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="legal-consultation-checked" name="legal-consultation-checked"
-                     type="radio" value="Yes">
-                  <label class="govuk-label govuk-radios__label" for="legal-consultation-checked">
-                     Yes
-                  </label>
-               </div>
+			<div class="govuk-form-group">
+				<div class="govuk-radios">
+					<div class="govuk-radios__item">
+						<input class="govuk-radios__input" id="legal-consultation-checked" name="legal-consultation-checked"
+						       type="radio" value="Yes">
+						<label class="govuk-label govuk-radios__label" for="legal-consultation-checked">
+							Yes
+						</label>
+					</div>
 
-               <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="legal-consultation-checked-2" name="legal-consultation-checked"
-                     type="radio" value="No">
-                  <label class="govuk-label govuk-radios__label" for="legal-consultation-checked-2">
-                     No
-                  </label>
-               </div>
+					<div class="govuk-radios__item">
+						<input class="govuk-radios__input" id="legal-consultation-checked-2" name="legal-consultation-checked"
+						       type="radio" value="No">
+						<label class="govuk-label govuk-radios__label" for="legal-consultation-checked-2">
+							No
+						</label>
+					</div>
 
-               <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="legal-consultation-checked-3" name="legal-consultation-checked"
-                     type="radio" value="Not applicable">
-                  <label class="govuk-label govuk-radios__label" for="legal-consultation-checked-3">
-                     Not applicable
-                  </label>
-               </div>
-            </div>
-         </div>
+					<div class="govuk-radios__item">
+						<input class="govuk-radios__input" id="legal-consultation-checked-3" name="legal-consultation-checked"
+						       type="radio" value="Not applicable">
+						<label class="govuk-label govuk-radios__label" for="legal-consultation-checked-3">
+							Not applicable
+						</label>
+					</div>
+				</div>
+			</div>
 
-         <button class="govuk-button" data-module="govuk-button">
-            Save and continue
-         </button>
-      </form>
-   </div>
+			<button class="govuk-button" data-module="govuk-button">
+				Save and continue
+			</button>
+		</form>
+	</div>
 
-   <!-- right hand nav -->
-   <div class="govuk-grid-column-one-third">
-      <aside class="app-related-items" role="complementary">
-         <h2 class="govuk-heading-s" id="subsection-title">
-            Useful information
-         </h2>
-         <nav role="navigation" aria-labelledby="subsection-title">
-            <ul class="govuk-list govuk-!-font-size-16">
-               <li>
-                  <a class="govuk-link" href="#">
+	<!-- right hand nav -->
+	<div class="govuk-grid-column-one-third">
+		<aside class="app-related-items" role="complementary">
+			<h2 class="govuk-heading-s" id="subsection-title">
+				Useful information
+			</h2>
+			<nav role="navigation" aria-labelledby="subsection-title">
+				<ul class="govuk-list govuk-!-font-size-16">
+					<li>
+						<a class="govuk-link" href="#">
 
-                  </a>
-               </li>
-               <li>
-                  <p class="govuk-body-s"><a href="../related/application_newtab" target="application">School
-                        application form (opens in a new tab)</a></p>
-               </li>
-            </ul>
-         </nav>
-      </aside>
-   </div>
+						</a>
+					</li>
+					<li>
+						<p class="govuk-body-s">
+							<a href="../related/application_newtab" target="application">
+								School
+								application form (opens in a new tab)
+							</a>
+						</p>
+					</li>
+				</ul>
+			</nav>
+		</aside>
+	</div>
 </div>

@@ -9,7 +9,7 @@
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
-		<span class="govuk-caption-l">St. Wilfrid's Primary School</span>
+		<span class="govuk-caption-l">@Model.SchoolName</span>
 		<h1 class="govuk-heading-l">Confirm legal requirements</h1>
 
 		<dl class="govuk-summary-list">
@@ -67,13 +67,12 @@
 			</div>
 		</dl>
 
-		<form action="../task_list-with-legal" method="post">
+		<form method="post">
 			<div class="govuk-form-group">
 				<div class="govuk-checkboxes" data-module="govuk-checkboxes">
 					<div class="govuk-checkboxes__item">
-						<input class="govuk-checkboxes__input" id="legal-status" name="legal-status" type="checkbox"
-						       value="Complete">
-						<label class="govuk-label govuk-checkboxes__label" for="legal-status">
+						<input asp-for="@Model.LegalRequirements.IsComplete" class="govuk-checkboxes__input" type="checkbox">
+						<label asp-for="@Model.LegalRequirements.IsComplete" class="govuk-label govuk-checkboxes__label">
 							Mark this section as complete, you can still make changes later
 						</label>
 					</div>

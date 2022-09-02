@@ -2,8 +2,8 @@
 @model ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.LegalGoverningBodyModel
 
 @section BeforeMain
-{   
-	@* <partial name="_BackLink" model="@Model.BackLinkModel"/> *@
+{
+	<a asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Id" class="govuk-back-link">Back</a>
 	<partial name="_ErrorSummary" />
 }
 
@@ -11,7 +11,7 @@
    <div class="govuk-grid-column-two-thirds">
       <form action="legal-summary1" method="post">
          <input hidden="" type="text" name="returnToSummary" value="no">
-         <span class="govuk-caption-l">St. Wilfrid's Primary School</span>
+         <span class="govuk-caption-l">@Model.SchoolName</span>
          <h1 class="govuk-heading-l">Has the school provided a governing body resolution?</h1>
 
          <div class="govuk-form-group">
