@@ -29,10 +29,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");						
+			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
 
 			Document.QuerySelector<IHtmlInputElement>("#approved-radio").IsChecked = true;
-			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();			
+			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
 			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
 
