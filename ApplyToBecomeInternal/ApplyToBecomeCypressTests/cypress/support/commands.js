@@ -28,7 +28,7 @@ import 'cypress-localstorage-commands'
 import sqlServer from 'cypress-sql-server';
 sqlServer.loadDBCommands();
 
-//--Universal 
+//--Universal
 
 Cypress.Commands.add('login',() => {
 	cy.visit(`${Cypress.env('url')}${'/project-list'}`)
@@ -267,7 +267,7 @@ Cypress.Commands.add('ChangeConditionsLink', () => {
 
 // Approved Yes Condition text box
 Cypress.Commands.add('YesTextBox', () => {
-    cy.get('[id="conditions-textarea"]')
+    cy.get('[id="ApprovedConditionsDetails"]')
 })
 
 // Approved Decision Preview
@@ -323,22 +323,22 @@ Cypress.Commands.add('performanceText', () => {
 // Decline reasons governance box
 Cypress.Commands.add('governanceBox', () => {
     cy.get('[id="declined-reasons-governance"]')
-}) 
+})
 
 // Decline reasons governance text
 Cypress.Commands.add('governanceText', () => {
     cy.get('[id="reason-governance"]')
-}) 
+})
 
 // Decline reasons Trust Box
 Cypress.Commands.add('trustBox', () => {
     cy.get('[id="declined-reasons-choiceoftrust"]')
-}) 
+})
 
 // Decline reasons Trust text
 Cypress.Commands.add('trustText', () => {
     cy.get('[id="reason-choiceoftrust"]')
-}) 
+})
 
 // Decline radio button
 Cypress.Commands.add('declineRadioBtn', () => {
