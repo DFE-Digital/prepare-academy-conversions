@@ -1,6 +1,7 @@
 ﻿@page "/task-list/{id:int}/decision/summary"
 @using ApplyToBecome.Data.Models.AdvisoryBoardDecision
 @using ApplyToBecomeInternal.Configuration
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ApplyToBecomeInternal.Pages.TaskList.Decision.SummaryModel
 @{
 	ViewData["Title"] = $"Check your {Model.DecisionText} answers";
