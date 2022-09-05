@@ -165,6 +165,8 @@ jobs:
         run: npm install
       - name: Run cypress
         run: npm run cy:run -- --env url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.AZUREAD_CLIENTSECRET }}'
+        env: 
+          db: ${{ secrets.DB_CONNECTION_STRING }}
       - uses: actions/upload-artifact@v1
         if: failure()
         with:
