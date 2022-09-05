@@ -4,58 +4,43 @@ using ApplyToBecome.Data.Models;
 using ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers;
 using ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support;
 using FluentAssertions;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 {
-	public class SummaryTests : BaseIntegrationTests, IAsyncLifetime
+	public class SummaryTests : LegalRequirementsPageTestBase
 	{
-		private AcademyConversionProject _project;
-		private LegalRequirementsTestWizard _wizard;
-
 		public SummaryTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{
 		}
 
 		private string BackLinkHref => Document.QuerySelector<IHtmlAnchorElement>(CypressSelectorFor(Legal.BackLink))?.Href.Trim();
-		private string PageHeading => Document.QuerySelector(CypressSelectorFor(Legal.PageHeader))?.Text().Trim();
-		private string SchoolName => Document.QuerySelector(CypressSelectorFor(Legal.SchoolName))?.Text().Trim();
 		private string GoverningBodyStatus => Document.QuerySelector(CypressSelectorFor(Legal.Summary.GoverningBody.Status))?.Text().Trim();
 		private string ConsultationStatus => Document.QuerySelector(CypressSelectorFor(Legal.Summary.Consultation.Status))?.Text().Trim();
 		private string DiocesanConsent => Document.QuerySelector(CypressSelectorFor(Legal.Summary.DiocesanConsent.Status))?.Text().Trim();
 		private string FoundationConsent => Document.QuerySelector(CypressSelectorFor(Legal.Summary.FoundationConsent.Status))?.Text().Trim();
 
-		public async Task InitializeAsync()
-		{
-			_project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
-			_wizard = new LegalRequirementsTestWizard(Context);
+		protected override Func<LegalRequirementsTestWizard, AcademyConversionProject, Task> BeforeEachTest =>
+			async (wizard, project) =>
+			{
+				await wizard.OpenSummary(project.Id);
 
-			await _wizard.OpenSummary(_project.Id);
+				PageHeading.Should().Be("Confirm legal requirements");
+			};
 
-			PageHeading.Should().Be("Confirm legal requirements");
-		}
-
-		public Task DisposeAsync()
-		{
-			return Task.CompletedTask;
-		}
-
-		private static string CypressSelectorFor(string name)
-		{
-			return $"[data-cy='{name}']";
-		}
 
 		[Fact]
 		public void Back_link_to_point_to_the_task_list_page()
 		{
-			BackLinkHref.Should().EndWith($"/task-list/{_project.Id}");
+			BackLinkHref.Should().EndWith($"/task-list/{Project.Id}");
 		}
 
 		[Fact]
 		public void Should_display_the_correct_school_name()
 		{
-			SchoolName.Should().Be(_project.SchoolName);
+			SchoolName.Should().Be(Project.SchoolName);
 		}
 
 		[Fact]

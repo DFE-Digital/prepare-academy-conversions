@@ -10,6 +10,18 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers
 		public static string PageHeader => _pageHeader ??= Typespace.Name;
 		public static string BackLink => _backLink ??= Typespace.Name;
 
+		public sealed class Input
+		{
+			private static string _yesOption, _noOption, _notApplicableOption;
+			private static string _saveAndContinue;
+
+			public static string Yes => _yesOption ??= Typespace.Name;
+			public static string No => _noOption ??= Typespace.Name;
+			public static string NotApplicable => _notApplicableOption ??= Typespace.Name;
+
+			public static string SaveAndContinue => _saveAndContinue ??= Typespace.Name;
+		}
+
 		public sealed class Summary
 		{
 			private static string _isComplete, _submitButton;

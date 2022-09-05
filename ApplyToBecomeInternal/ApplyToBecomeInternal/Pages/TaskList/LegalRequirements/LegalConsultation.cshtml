@@ -1,38 +1,40 @@
 ﻿@page "/task-list/{id:int}/legal-requirements/legal-consultation"
 @using ApplyToBecome.Data.Models.AcademyConversion
+@using ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers
+@using ApplyToBecomeInternal.Utils
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.LegalConsultationModel
 
 @section BeforeMain
 {
-	<a asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Id" class="govuk-back-link">Back</a>
+	<a asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Id" class="govuk-back-link" data-cy="@Legal.BackLink">Back</a>
 }
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<form method="post">
 			<input hidden="" type="text" name="returnToSummary" value="no">
-			<span class="govuk-caption-l">@Model.SchoolName</span>
-			<h1 class="govuk-heading-l">Has a consultation been done?</h1>
+			<span class="govuk-caption-l" @Legal.SchoolName.ToData("cy")>@Model.SchoolName</span>
+			<h1 class="govuk-heading-l" @Legal.PageHeader.ToData("cy")>Has a consultation been done?</h1>
 
 			<div class="govuk-form-group">
 				<div class="govuk-radios">
 					<div class="govuk-radios__item">
-						<input asp-for="Done" class="govuk-radios__input" type="radio" value="@nameof(ThreeOptions.Yes)" id="DoneYes">
+						<input asp-for="Done" class="govuk-radios__input" type="radio" value="@nameof(ThreeOptions.Yes)" id="DoneYes" data-cy="@Legal.Input.Yes">
 						<label class="govuk-label govuk-radios__label" for="DoneYes">
 							Yes
 						</label>
 					</div>
 
 					<div class="govuk-radios__item">
-						<input asp-for="Done" class="govuk-radios__input" type="radio" value="@nameof(ThreeOptions.No)" id="DoneNo">
+						<input asp-for="Done" class="govuk-radios__input" type="radio" value="@nameof(ThreeOptions.No)" id="DoneNo" data-cy="@Legal.Input.No">
 						<label class="govuk-label govuk-radios__label" for="DoneNo">
 							No
 						</label>
 					</div>
 
 					<div class="govuk-radios__item">
-						<input asp-for="Done" class="govuk-radios__input" type="radio" value="@nameof(ThreeOptions.NotApplicable)" id="DoneNotApplicable">
+						<input asp-for="Done" class="govuk-radios__input" type="radio" value="@nameof(ThreeOptions.NotApplicable)" id="DoneNotApplicable" data-cy="@Legal.Input.NotApplicable">
 						<label class="govuk-label govuk-radios__label" for="DoneNotApplicable">
 							Not applicable
 						</label>
@@ -40,7 +42,7 @@
 				</div>
 			</div>
 
-			<button class="govuk-button" data-module="govuk-button">
+			<button class="govuk-button" data-module="govuk-button" @Legal.Input.SaveAndContinue.ToData("cy")>
 				Save and continue
 			</button>
 		</form>
