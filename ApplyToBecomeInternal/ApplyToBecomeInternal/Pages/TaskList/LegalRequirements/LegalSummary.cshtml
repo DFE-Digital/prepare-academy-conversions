@@ -1,17 +1,18 @@
 ﻿@page "/task-list/{id:int}/legal-requirements/legal-summary"
 @using ApplyToBecomeInternal.Utils
 @using ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.LegalSummaryModel
 
 @section BeforeMain
 {
-	<a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Id" class="govuk-back-link" data-cy="@Legal.BackLink">Back to task list</a>
+	<a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Id" class="govuk-back-link" data-cy="@ProjectPage.BackLink">Back to task list</a>
 }
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
-		<span class="govuk-caption-l" @Legal.SchoolName.ToData("cy")>@Model.SchoolName</span>
-		<h1 class="govuk-heading-l" @Legal.PageHeader.ToData("cy")>Confirm legal requirements</h1>
+		<span class="govuk-caption-l" @ProjectPage.SchoolName.ToData("cy")>@Model.SchoolName</span>
+		<h1 class="govuk-heading-l" @ProjectPage.Heading.ToData("cy")>Confirm legal requirements</h1>
 
 		<dl class="govuk-summary-list">
 			<div class="govuk-summary-list__row">
@@ -21,15 +22,15 @@
 				<dd class="govuk-summary-list__value">
 					@if (Model.LegalRequirements.GoverningBodyApproved.HasValue)
 					{
-						<span @Legal.Summary.GoverningBody.Status.ToData("cy")>@Model.LegalRequirements.GoverningBodyApproved.ToDescription()</span>
+						<span @ProjectPage.Legal.Summary.GoverningBody.Status.ToData("cy")>@Model.LegalRequirements.GoverningBodyApproved.ToDescription()</span>
 					}
 					else
 					{
-						<span class="empty" @Legal.Summary.GoverningBody.Status.ToData("cy")>Empty</span>
+						<span class="empty" @ProjectPage.Legal.Summary.GoverningBody.Status.ToData("cy")>Empty</span>
 					}
 				</dd>
 				<dd class="govuk-summary-list__actions">
-					<a asp-page="@Links.LegalRequirements.GoverningBodyResolution.Page" asp-route-id="@Model.Id" class="govuk-link" data-cy="@Legal.Summary.GoverningBody.Change">
+					<a asp-page="@Links.LegalRequirements.GoverningBodyResolution.Page" asp-route-id="@Model.Id" class="govuk-link" data-cy="@ProjectPage.Legal.Summary.GoverningBody.Change">
 						Change<span class="govuk-visually-hidden"> governing body resolution</span>
 					</a>
 				</dd>
@@ -41,15 +42,15 @@
 				<dd class="govuk-summary-list__value">
 					@if (Model.LegalRequirements.ConsultationDone.HasValue)
 					{
-						<span @Legal.Summary.Consultation.Status.ToData("cy")>@Model.LegalRequirements.ConsultationDone.ToDescription()</span>
+						<span @ProjectPage.Legal.Summary.Consultation.Status.ToData("cy")>@Model.LegalRequirements.ConsultationDone.ToDescription()</span>
 					}
 					else
 					{
-						<span class="empty" @Legal.Summary.Consultation.Status.ToData("cy")>Empty</span>
+						<span class="empty" @ProjectPage.Legal.Summary.Consultation.Status.ToData("cy")>Empty</span>
 					}
 				</dd>
 				<dd class="govuk-summary-list__actions">
-					<a asp-page="@Links.LegalRequirements.Consultation.Page" asp-route-id="@Model.Id" class="govuk-link" data-cy="@Legal.Summary.Consultation.Change">
+					<a asp-page="@Links.LegalRequirements.Consultation.Page" asp-route-id="@Model.Id" class="govuk-link" data-cy="@ProjectPage.Legal.Summary.Consultation.Change">
 						Change<span class="govuk-visually-hidden"> consultation</span>
 					</a>
 				</dd>
@@ -61,15 +62,15 @@
 				<dd class="govuk-summary-list__value">
 					@if (Model.LegalRequirements.DiocesanConsent.HasValue)
 					{
-						<span @Legal.Summary.DiocesanConsent.Status.ToData("cy")>@Model.LegalRequirements.DiocesanConsent.ToDescription()</span>
+						<span @ProjectPage.Legal.Summary.DiocesanConsent.Status.ToData("cy")>@Model.LegalRequirements.DiocesanConsent.ToDescription()</span>
 					}
 					else
 					{
-						<span class="empty" @Legal.Summary.DiocesanConsent.Status.ToData("cy")>Empty</span>
+						<span class="empty" @ProjectPage.Legal.Summary.DiocesanConsent.Status.ToData("cy")>Empty</span>
 					}
 				</dd>
 				<dd class="govuk-summary-list__actions">
-					<a asp-page="@Links.LegalRequirements.DiocesanConsent.Page" asp-route-id="@Model.Id" class="govuk-link" data-cy="@Legal.Summary.DiocesanConsent.Change">
+					<a asp-page="@Links.LegalRequirements.DiocesanConsent.Page" asp-route-id="@Model.Id" class="govuk-link" data-cy="@ProjectPage.Legal.Summary.DiocesanConsent.Change">
 						Change<span class="govuk-visually-hidden"> diocesan consent</span>
 					</a>
 				</dd>
@@ -81,15 +82,15 @@
 				<dd class="govuk-summary-list__value">
 					@if (Model.LegalRequirements.FoundationConsent.HasValue)
 					{
-						<span @Legal.Summary.FoundationConsent.Status.ToData("cy")>@Model.LegalRequirements.FoundationConsent.ToDescription()</span>
+						<span @ProjectPage.Legal.Summary.FoundationConsent.Status.ToData("cy")>@Model.LegalRequirements.FoundationConsent.ToDescription()</span>
 					}
 					else
 					{
-						<span class="empty" @Legal.Summary.FoundationConsent.Status.ToData("cy")>Empty</span>
+						<span class="empty" @ProjectPage.Legal.Summary.FoundationConsent.Status.ToData("cy")>Empty</span>
 					}
 				</dd>
 				<dd class="govuk-summary-list__actions">
-					<a asp-page="@Links.LegalRequirements.FoundationConsent.Page" asp-route-id="@Model.Id" class="govuk-link" data-cy="@Legal.Summary.FoundationConsent.Change">
+					<a asp-page="@Links.LegalRequirements.FoundationConsent.Page" asp-route-id="@Model.Id" class="govuk-link" data-cy="@ProjectPage.Legal.Summary.FoundationConsent.Change">
 						Change<span class="govuk-visually-hidden"> foundation consent</span>
 					</a>
 				</dd>
@@ -100,7 +101,7 @@
 			<div class="govuk-form-group">
 				<div class="govuk-checkboxes" data-module="govuk-checkboxes">
 					<div class="govuk-checkboxes__item">
-						<input asp-for="@Model.IsComplete" class="govuk-checkboxes__input" type="checkbox" data-cy="@Legal.Summary.IsComplete">
+						<input asp-for="@Model.IsComplete" class="govuk-checkboxes__input" type="checkbox" data-cy="@ProjectPage.Legal.Summary.IsComplete">
 						<label asp-for="@Model.IsComplete" class="govuk-label govuk-checkboxes__label">
 							Mark this section as complete, you can still make changes later
 						</label>
@@ -108,7 +109,7 @@
 				</div>
 			</div>
 
-			<button class="govuk-button" data-module="govuk-button" @Legal.Summary.SubmitButton.ToData("cy")>
+			<button class="govuk-button" data-module="govuk-button" @ProjectPage.Legal.Summary.SubmitButton.ToData("cy")>
 				Confirm and continue
 			</button>
 		</form>

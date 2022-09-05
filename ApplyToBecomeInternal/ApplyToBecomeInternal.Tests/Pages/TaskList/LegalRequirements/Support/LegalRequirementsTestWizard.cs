@@ -12,6 +12,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support
 			_context = context;
 		}
 
+		public async Task OpenTaskList(int projectId)
+		{
+			await _context.OpenAsync($"http://localhost/task-list/{projectId}");
+		}
+
 		public async Task OpenSummary(int projectId)
 		{
 			await _context.OpenAsync($"http://localhost/task-list/{projectId}/legal-requirements/legal-summary");

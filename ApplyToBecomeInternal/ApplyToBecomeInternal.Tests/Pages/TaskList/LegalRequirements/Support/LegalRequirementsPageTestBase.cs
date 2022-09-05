@@ -19,15 +19,15 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support
 
 		protected abstract Func<LegalRequirementsTestWizard, AcademyConversionProject, Task> BeforeEachTest { get; }
 
-		protected string PageHeading => Document.QuerySelector(CypressSelectorFor(Legal.PageHeader))?.Text().Trim();
-		protected string SchoolName => Document.QuerySelector(CypressSelectorFor(Legal.SchoolName))?.Text().Trim();
+		protected string PageHeading => Document.QuerySelector(CypressSelectorFor(ProjectPage.Heading))?.Text().Trim();
+		protected string SchoolName => Document.QuerySelector(CypressSelectorFor(ProjectPage.SchoolName))?.Text().Trim();
 
-		protected string BackLinkHref => Document.QuerySelector<IHtmlAnchorElement>(CypressSelectorFor(Legal.BackLink))?.Href.Trim();
+		protected string BackLinkHref => Document.QuerySelector<IHtmlAnchorElement>(CypressSelectorFor(ProjectPage.BackLink))?.Href.Trim();
 
-		protected IHtmlInputElement YesOption => Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor(Legal.Input.Yes));
-		protected IHtmlInputElement NoOption => Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor(Legal.Input.No));
-		protected IHtmlInputElement NotApplicableOption => Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor(Legal.Input.NotApplicable));
-		protected IHtmlButtonElement SaveAndContinueButton => Document.QuerySelector<IHtmlButtonElement>(CypressSelectorFor(Legal.Input.SaveAndContinue));
+		protected IHtmlInputElement YesOption => Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor(ProjectPage.Legal.Input.Yes));
+		protected IHtmlInputElement NoOption => Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor(ProjectPage.Legal.Input.No));
+		protected IHtmlInputElement NotApplicableOption => Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor(ProjectPage.Legal.Input.NotApplicable));
+		protected IHtmlButtonElement SaveAndContinueButton => Document.QuerySelector<IHtmlButtonElement>(CypressSelectorFor(ProjectPage.Legal.Input.SaveAndContinue));
 
 		public virtual async Task InitializeAsync()
 		{

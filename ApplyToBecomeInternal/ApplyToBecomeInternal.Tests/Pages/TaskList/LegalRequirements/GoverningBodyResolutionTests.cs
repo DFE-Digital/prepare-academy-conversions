@@ -25,7 +25,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 				PageHeading.Should().Be("Has the school provided a governing body resolution?");
 			};
 
-		private string SummaryGoverningBodyStatus => Document.QuerySelector(CypressSelectorFor(Legal.Summary.GoverningBody.Status))?.Text().Trim();
+		private string SummaryGoverningBodyStatus => Document.QuerySelector(CypressSelectorFor(ProjectPage.Legal.Summary.GoverningBody.Status))?.Text().Trim();
 
 		[Fact]
 		public void Should_have_a_back_link_that_points_to_the_legal_summary_page()

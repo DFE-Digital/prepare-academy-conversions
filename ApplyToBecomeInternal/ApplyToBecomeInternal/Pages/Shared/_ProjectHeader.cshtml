@@ -1,11 +1,13 @@
-@using ApplyToBecomeInternal.Pages.TaskList.Decision
+@using ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers
+@using ApplyToBecomeInternal.Utils
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ApplyToBecomeInternal.ViewModels.ProjectViewModel
 @inject ApplyToBecome.Data.Services.Interfaces.IAcademyConversionAdvisoryBoardDecisionRepository decisionRepository
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
         <span class="govuk-caption-xl">URN @Model.SchoolURN</span>
-        <h1 class="govuk-heading-xl">
+        <h1 class="govuk-heading-xl" @ProjectPage.Heading.ToData("cy")>
             @Model.SchoolName
         </h1>
 

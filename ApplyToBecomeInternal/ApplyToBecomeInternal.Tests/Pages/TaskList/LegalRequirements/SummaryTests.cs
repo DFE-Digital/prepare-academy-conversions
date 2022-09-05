@@ -1,5 +1,4 @@
 ﻿using AngleSharp.Dom;
-using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models;
 using ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers;
 using ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support;
@@ -16,11 +15,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		{
 		}
 
-		private string BackLinkHref => Document.QuerySelector<IHtmlAnchorElement>(CypressSelectorFor(Legal.BackLink))?.Href.Trim();
-		private string GoverningBodyStatus => Document.QuerySelector(CypressSelectorFor(Legal.Summary.GoverningBody.Status))?.Text().Trim();
-		private string ConsultationStatus => Document.QuerySelector(CypressSelectorFor(Legal.Summary.Consultation.Status))?.Text().Trim();
-		private string DiocesanConsent => Document.QuerySelector(CypressSelectorFor(Legal.Summary.DiocesanConsent.Status))?.Text().Trim();
-		private string FoundationConsent => Document.QuerySelector(CypressSelectorFor(Legal.Summary.FoundationConsent.Status))?.Text().Trim();
+		private string GoverningBodyStatus => Document.QuerySelector(CypressSelectorFor(ProjectPage.Legal.Summary.GoverningBody.Status))?.Text().Trim();
+		private string ConsultationStatus => Document.QuerySelector(CypressSelectorFor(ProjectPage.Legal.Summary.Consultation.Status))?.Text().Trim();
+		private string DiocesanConsent => Document.QuerySelector(CypressSelectorFor(ProjectPage.Legal.Summary.DiocesanConsent.Status))?.Text().Trim();
+		private string FoundationConsent => Document.QuerySelector(CypressSelectorFor(ProjectPage.Legal.Summary.FoundationConsent.Status))?.Text().Trim();
 
 		protected override Func<LegalRequirementsTestWizard, AcademyConversionProject, Task> BeforeEachTest =>
 			async (wizard, project) =>

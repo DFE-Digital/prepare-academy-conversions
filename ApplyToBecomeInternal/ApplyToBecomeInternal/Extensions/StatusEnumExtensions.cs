@@ -10,7 +10,7 @@ namespace ApplyToBecomeInternal.Extensions
 			{
 				Status.NotStarted => "govuk-tag--grey",
 				Status.InProgress => "govuk-tag--blue",
-				Status.Complete => string.Empty,
+				Status.Completed => string.Empty,
 				_ => "govuk-tag--grey"
 			};
 		}

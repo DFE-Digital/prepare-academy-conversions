@@ -7,34 +7,34 @@
 
 @section BeforeMain
 {
-	<a asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Id" class="govuk-back-link" data-cy="@Legal.BackLink">Back</a>
+	<a asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Id" class="govuk-back-link" data-cy="@ProjectPage.BackLink">Back</a>
 }
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-two-thirds">
 		<form method="post">
 			<input hidden="" type="text" name="returnToSummary" value="no">
-			<span class="govuk-caption-l" @Legal.SchoolName.ToData("cy")>@Model.SchoolName</span>
-			<h1 class="govuk-heading-l" @Legal.PageHeader.ToData("cy")>Have the foundation given consent for this conversion?</h1>
+			<span class="govuk-caption-l" @ProjectPage.SchoolName.ToData("cy")>@Model.SchoolName</span>
+			<h1 class="govuk-heading-l" @ProjectPage.Heading.ToData("cy")>Have the foundation given consent for this conversion?</h1>
 
 			<div class="govuk-form-group">
 				<div class="govuk-radios">
 					<div class="govuk-radios__item">
-						<input asp-for="Approved" class="govuk-radios__input" type="radio" value="@nameof(ThreeOptions.Yes)" id="ApprovedYes" data-cy="@Legal.Input.Yes">
+						<input asp-for="Approved" class="govuk-radios__input" type="radio" value="@nameof(ThreeOptions.Yes)" id="ApprovedYes" data-cy="@ProjectPage.Legal.Input.Yes">
 						<label class="govuk-label govuk-radios__label" for="ApprovedYes">
 							Yes
 						</label>
 					</div>
 
 					<div class="govuk-radios__item">
-						<input asp-for="Approved" class="govuk-radios__input" type="radio" value="@nameof(ThreeOptions.No)" id="ApprovedNo" data-cy="@Legal.Input.No">
+						<input asp-for="Approved" class="govuk-radios__input" type="radio" value="@nameof(ThreeOptions.No)" id="ApprovedNo" data-cy="@ProjectPage.Legal.Input.No">
 						<label class="govuk-label govuk-radios__label" for="ApprovedNo">
 							No
 						</label>
 					</div>
 
 					<div class="govuk-radios__item">
-						<input asp-for="Approved" class="govuk-radios__input" type="radio" value="@nameof(ThreeOptions.NotApplicable)" id="ApprovedNotApplicable" data-cy="@Legal.Input.NotApplicable">
+						<input asp-for="Approved" class="govuk-radios__input" type="radio" value="@nameof(ThreeOptions.NotApplicable)" id="ApprovedNotApplicable" data-cy="@ProjectPage.Legal.Input.NotApplicable">
 						<label class="govuk-label govuk-radios__label" for="ApprovedNotApplicable">
 							Not applicable
 						</label>
@@ -42,7 +42,7 @@
 				</div>
 			</div>
 
-			<button class="govuk-button" data-module="govuk-button" @Legal.Input.SaveAndContinue.ToData("cy")>
+			<button class="govuk-button" data-module="govuk-button" @ProjectPage.Legal.Input.SaveAndContinue.ToData("cy")>
 				Save and continue
 			</button>
 		</form>

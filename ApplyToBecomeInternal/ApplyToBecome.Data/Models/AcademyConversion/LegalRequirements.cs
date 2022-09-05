@@ -9,7 +9,7 @@
 		public ThreeOptions? FoundationConsent { get; set; }
 
 		public Status Status =>
-			IsComplete ? Status.Complete :
+			IsComplete ? Status.Completed :
 			GoverningBodyApproved.HasValue ||
 			ConsultationDone.HasValue ||
 			DiocesanConsent.HasValue ||
