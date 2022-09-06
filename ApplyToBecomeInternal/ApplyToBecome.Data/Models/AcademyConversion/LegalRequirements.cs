@@ -8,12 +8,20 @@
 		public ThreeOptions? DiocesanConsent { get; set; }
 		public ThreeOptions? FoundationConsent { get; set; }
 
-		public Status Status =>
-			IsComplete ? Status.Completed :
-			GoverningBodyApproved.HasValue ||
-			ConsultationDone.HasValue ||
-			DiocesanConsent.HasValue ||
-			FoundationConsent.HasValue ? Status.InProgress :
-			Status.NotStarted;
+		public Status Status
+		{
+			get
+			{
+				if (IsComplete) return Status.Completed;
+
+				if (GoverningBodyApproved.HasValue ||
+				    ConsultationDone.HasValue ||
+				    DiocesanConsent.HasValue ||
+				    FoundationConsent.HasValue)
+					return Status.InProgress;
+
+				return Status.NotStarted;
+			}
+		}
 	}
 }
