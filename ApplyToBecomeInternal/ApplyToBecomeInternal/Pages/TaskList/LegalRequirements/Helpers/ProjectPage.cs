@@ -6,23 +6,23 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers
 	{
 		private static string _pageHeader, _backLink, _schoolName;
 
-		public static string BackLink => _backLink ??= Typespace.Name;
-		public static string Heading => _pageHeader ??= Typespace.Name;
+		public static string BackLink => Typespace.Name(ref _backLink);
+		public static string Heading => Typespace.Name(ref _pageHeader);
 
-		public static string SchoolName => _schoolName ??= Typespace.Name;
+		public static string SchoolName => Typespace.Name(ref _schoolName);
 
 		public sealed class TaskList
 		{
 			public sealed class Links
 			{
 				private static string _legalRequirements;
-				public static string LegalRequirements => _legalRequirements ??= Typespace.Name;
+				public static string LegalRequirements => Typespace.Name(ref _legalRequirements);
 			}
 
 			public sealed class LegalRequirements
 			{
 				private static string _status;
-				public static string Status => _status ??= Typespace.Name;
+				public static string Status => Typespace.Name(ref _status);
 			}
 		}
 
@@ -33,50 +33,50 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers
 				private static string _yesOption, _noOption, _notApplicableOption;
 				private static string _saveAndContinue;
 
-				public static string Yes => _yesOption ??= Typespace.Name;
-				public static string No => _noOption ??= Typespace.Name;
-				public static string NotApplicable => _notApplicableOption ??= Typespace.Name;
+				public static string Yes => Typespace.Name(ref _yesOption);
+				public static string No => Typespace.Name(ref _noOption);
+				public static string NotApplicable => Typespace.Name(ref _notApplicableOption);
 
-				public static string SaveAndContinue => _saveAndContinue ??= Typespace.Name;
+				public static string SaveAndContinue => Typespace.Name(ref _saveAndContinue);
 			}
 
 			public sealed class Summary
 			{
 				private static string _isComplete, _submitButton;
 
-				public static string IsComplete => _isComplete ??= Typespace.Name;
-				public static string SubmitButton => _submitButton ??= Typespace.Name;
+				public static string IsComplete => Typespace.Name(ref _isComplete);
+				public static string SubmitButton => Typespace.Name(ref _submitButton);
 
 				public sealed class GoverningBody
 				{
 					private static string _status, _change;
 
-					public static string Status => _status ??= Typespace.Name;
-					public static string Change => _change ??= Typespace.Name;
+					public static string Status => Typespace.Name(ref _status);
+					public static string Change => Typespace.Name(ref _change);
 				}
 
 				public sealed class Consultation
 				{
 					private static string _status, _change;
 
-					public static string Status => _status ??= Typespace.Name;
-					public static string Change => _change ??= Typespace.Name;
+					public static string Status => Typespace.Name(ref _status);
+					public static string Change => Typespace.Name(ref _change);
 				}
 
 				public sealed class DiocesanConsent
 				{
 					private static string _status, _change;
 
-					public static string Status => _status ??= Typespace.Name;
-					public static string Change => _change ??= Typespace.Name;
+					public static string Status => Typespace.Name(ref _status);
+					public static string Change => Typespace.Name(ref _change);
 				}
 
 				public sealed class FoundationConsent
 				{
 					private static string _status, _change;
 
-					public static string Status => _status ??= Typespace.Name;
-					public static string Change => _change ??= Typespace.Name;
+					public static string Status => Typespace.Name(ref _status);
+					public static string Change => Typespace.Name(ref _change);
 				}
 			}
 		}
