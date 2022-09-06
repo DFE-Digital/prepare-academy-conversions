@@ -55,7 +55,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			}
 			else
 			{
-				ModelState.AddModelError("DeclinedReasons", "Select at least one reason");
+				ModelState.AddModelError("DeclinedReasonSet", "Select at least one reason");
 			}
 
 			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Finance, DeclineFinanceReason);
@@ -100,13 +100,6 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			DeclinePerformanceReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.Performance);
 			DeclineGovernanceReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.Governance);
 			DeclineChoiceOfTrustReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.ChoiceOfTrust);
-		}
-
-		private void AddReason(List<AdvisoryBoardDeclinedReasonDetails> reasons, AdvisoryBoardDeclinedReasonDetails reason)
-		{
-			if (reason == null) return;
-
-			reasons.Add(reason);
 		}
 
 		private void EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons reason, string explanation)

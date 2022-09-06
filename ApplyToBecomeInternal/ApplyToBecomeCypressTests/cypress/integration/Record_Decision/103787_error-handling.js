@@ -48,7 +48,7 @@ describe('103787 Error handling', () => {
 
         // trigger validation
         cy.continueBtn().click()
-        cy.get('[id="DeclinedReasons-error-link "]').should('contain.text', 'Select at least one reason')
+        cy.get('[id="DeclinedReasonSet-error-link "]').should('contain.text', 'Select at least one reason')
 
         // check all boxes on form
         cy.declineFinancebox().click()
