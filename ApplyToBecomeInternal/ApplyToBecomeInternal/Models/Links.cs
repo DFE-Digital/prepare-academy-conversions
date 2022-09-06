@@ -80,6 +80,15 @@ namespace ApplyToBecomeInternal.Models
 			public static LinkItem RisksAndIssues = new LinkItem { Page = "/TaskList/RisksAndIssues/RisksAndIssues" };
 		}
 
+		public static class LegalRequirements
+		{
+			public static LinkItem Summary = new LinkItem { Page = "/TaskList/LegalRequirements/LegalSummary" };
+			public static LinkItem GoverningBodyResolution = new LinkItem { Page = "/TaskList/LegalRequirements/LegalGoverningBody" };
+			public static LinkItem Consultation = new LinkItem { Page = "/TaskList/LegalRequirements/LegalConsultation" };
+			public static LinkItem DiocesanConsent = new LinkItem { Page = "/TaskList/LegalRequirements/LegalDiocesanConsent" };
+			public static LinkItem FoundationConsent = new LinkItem { Page = "/TaskList/LegalRequirements/LegalFoundationConsent" };
+		}
+
 		public static class SchoolBudgetInformationSection
 		{
 			public static LinkItem ConfirmSchoolBudgetInformation = new LinkItem { Page = "/TaskList/SchoolBudgetInformation/ConfirmSchoolBudgetInformation" };

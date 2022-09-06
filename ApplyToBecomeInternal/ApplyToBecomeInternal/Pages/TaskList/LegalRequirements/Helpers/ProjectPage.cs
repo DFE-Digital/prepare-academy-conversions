@@ -1,0 +1,84 @@
+﻿using ApplyToBecomeInternal.Utils;
+
+namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers
+{
+	public sealed class ProjectPage
+	{
+		private static string _pageHeader, _backLink, _schoolName;
+
+		public static string BackLink => Typespace.Name(ref _backLink);
+		public static string Heading => Typespace.Name(ref _pageHeader);
+
+		public static string SchoolName => Typespace.Name(ref _schoolName);
+
+		public sealed class TaskList
+		{
+			public sealed class Links
+			{
+				private static string _legalRequirements;
+				public static string LegalRequirements => Typespace.Name(ref _legalRequirements);
+			}
+
+			public sealed class LegalRequirements
+			{
+				private static string _status;
+				public static string Status => Typespace.Name(ref _status);
+			}
+		}
+
+		public sealed class Legal
+		{
+			public sealed class Input
+			{
+				private static string _yesOption, _noOption, _notApplicableOption;
+				private static string _saveAndContinue;
+
+				public static string Yes => Typespace.Name(ref _yesOption);
+				public static string No => Typespace.Name(ref _noOption);
+				public static string NotApplicable => Typespace.Name(ref _notApplicableOption);
+
+				public static string SaveAndContinue => Typespace.Name(ref _saveAndContinue);
+			}
+
+			public sealed class Summary
+			{
+				private static string _isComplete, _submitButton;
+
+				public static string IsComplete => Typespace.Name(ref _isComplete);
+				public static string SubmitButton => Typespace.Name(ref _submitButton);
+
+				public sealed class GoverningBody
+				{
+					private static string _status, _change;
+
+					public static string Status => Typespace.Name(ref _status);
+					public static string Change => Typespace.Name(ref _change);
+				}
+
+				public sealed class Consultation
+				{
+					private static string _status, _change;
+
+					public static string Status => Typespace.Name(ref _status);
+					public static string Change => Typespace.Name(ref _change);
+				}
+
+				public sealed class DiocesanConsent
+				{
+					private static string _status, _change;
+
+					public static string Status => Typespace.Name(ref _status);
+					public static string Change => Typespace.Name(ref _change);
+				}
+
+				public sealed class FoundationConsent
+				{
+					private static string _status, _change;
+
+					public static string Status => Typespace.Name(ref _status);
+					public static string Change => Typespace.Name(ref _change);
+				}
+			}
+		}
+	}
+}

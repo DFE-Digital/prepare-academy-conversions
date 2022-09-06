@@ -1,4 +1,7 @@
 ﻿@page "/task-list/{id:int}"
+@using ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers
+@using ApplyToBecomeInternal.Utils
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ApplyToBecomeInternal.Pages.TaskList.IndexModel
 @{
 	Model.ErrorPage = Links.TaskList.Index.Page;
@@ -108,6 +111,16 @@
 					</span>
 					<strong class="govuk-tag @Model.TaskList.RisksAndIssuesTaskListStatus.CssClass app-task-list__tag" id="risks-and-issues-status">
 						@Model.TaskList.RisksAndIssuesTaskListStatus.Status
+					</strong>
+				</li>
+				<li class="app-task-list__item">
+					<span class="app-task-list__task-name">
+						<a class="govuk-link" asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Project.Id" aria-describedby="legal-requirements" data-cy="@ProjectPage.TaskList.Links.LegalRequirements">
+							Legal requirements
+						</a>
+					</span>
+					<strong class="govuk-tag @Model.LegalRequirementsStatus.ToTagCssClass() app-task-list__tag" id="legal-status" @ProjectPage.TaskList.LegalRequirements.Status.ToData("cy")>
+						@Model.LegalRequirementsStatus.ToDescription()
 					</strong>
 				</li>
 				<li class="app-task-list__item">
