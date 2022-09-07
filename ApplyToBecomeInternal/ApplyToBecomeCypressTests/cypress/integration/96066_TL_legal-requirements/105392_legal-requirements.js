@@ -52,25 +52,25 @@ describe('Legal Requirements', () => {
         cy.consultationStatus().should('contain.text', 'Not Applicable')
     })
 
-    it('TC03: Diocesean consent', () => {
+    it('TC03: Diocesan consent', () => {
         // Clicks on change link
-        cy.dioceseanConsentChangeLink()
+        cy.diocesanConsentChangeLink()
         // Selects Yes
         cy.get('[data-cy="projectpage-legal-input-yes"]').click()
         cy.saveContinueBtn()
-        cy.dioceseanConsentStatus().should('contain.text', 'Yes')
+        cy.diocesanConsentStatus().should('contain.text', 'Yes')
         // Clicks on change link
-        cy.dioceseanConsentChangeLink()
+        cy.diocesanConsentChangeLink()
         // Selects No
         cy.get('[data-cy="projectpage-legal-input-no"]').click()
         cy.saveContinueBtn()
-        cy.dioceseanConsentStatus().should('contain.text', 'No')
+        cy.diocesanConsentStatus().should('contain.text', 'No')
         // Clicks on change link
-        cy.dioceseanConsentChangeLink()
+        cy.diocesanConsentChangeLink()
         // Selects Not applicable
         cy.get('[data-cy="projectpage-legal-input-notapplicable"]').click()
         cy.saveContinueBtn()
-        cy.dioceseanConsentStatus().should('contain.text', 'Not Applicable')
+        cy.diocesanConsentStatus().should('contain.text', 'Not Applicable')
     })
 
     it('TC04: Foundation consent', () => {

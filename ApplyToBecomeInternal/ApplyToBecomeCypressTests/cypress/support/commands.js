@@ -486,13 +486,13 @@ Cypress.Commands.add('consultationStatus', () => {
     cy.get('[data-cy="projectpage-legal-summary-consultation-status"]')
 })
 
-// Diocesean consent: Change Link
-Cypress.Commands.add('dioceseanConsentChangeLink', () => {
+// Diocesan consent: Change Link
+Cypress.Commands.add('diocesanConsentChangeLink', () => {
     cy.get('[data-cy="projectpage-legal-summary-diocesanconsent-change"]').click()
 })
 
-// Diocesean consent: Status
-Cypress.Commands.add('dioceseanConsentStatus' ,() => {
+// Diocesan consent: Status
+Cypress.Commands.add('diocesanConsentStatus' ,() => {
     cy.get('[data-cy="projectpage-legal-summary-diocesanconsent-status"]')
 })
 
