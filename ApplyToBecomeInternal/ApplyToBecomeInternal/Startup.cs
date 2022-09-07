@@ -2,6 +2,7 @@ using ApplyToBecome.Data.Services;
 using ApplyToBecome.Data.Services.Interfaces;
 using ApplyToBecomeInternal.Authorization;
 using ApplyToBecomeInternal.Configuration;
+using ApplyToBecomeInternal.Options;
 using ApplyToBecomeInternal.Security;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -94,7 +95,9 @@ namespace ApplyToBecomeInternal
 				client.BaseAddress = new Uri(apiOptions.BaseUrl);
 				client.DefaultRequestHeaders.Add("x-api-key", apiOptions.ApiKey);
 			});
-
+			
+			services.Configure<ServiceLinkOptions>(Configuration.GetSection(ServiceLinkOptions.Name));
+			
 			services.AddScoped<ErrorService>();
 			services.AddScoped<IGetEstablishment, EstablishmentService>();
 			services.Decorate<IGetEstablishment, GetEstablishmentItemCacheDecorator>();
