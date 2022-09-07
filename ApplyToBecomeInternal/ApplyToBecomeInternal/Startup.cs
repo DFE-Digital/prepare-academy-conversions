@@ -155,7 +155,7 @@ namespace ApplyToBecomeInternal
 			{
 				endpoints.MapGet("/", context =>
 				{
-					context.Response.Redirect("project-list", false);
+					context.Response.Redirect("project-type", false);
 					return Task.CompletedTask;
 				});
 				endpoints.MapRazorPages();

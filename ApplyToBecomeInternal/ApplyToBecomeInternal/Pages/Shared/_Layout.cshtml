@@ -1,5 +1,4 @@
-﻿@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment hostingEnv
-@inject Microsoft.Extensions.Configuration.IConfiguration _configuration
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration _configuration
 
 @{
     var analyticsConsent = Context.Request.Cookies.ContainsKey(".ManageAnAcademyConversion.Consent")
@@ -62,7 +61,7 @@
             <div class="govuk-header__logo govuk-!-width-two-thirds">
                 <a asp-page="@Links.ProjectList.Index.Page" class="govuk-header__link govuk-header__link--homepage">
                     <span class="govuk-header__logotype-text">
-                        Manage an academy conversion
+	                    Prepare conversion and transfers
                     </span>
                 </a>
             </div>
@@ -108,7 +107,7 @@
                     <ul class="govuk-footer__list govuk-footer__list--columns-1">
                         <li class="govuk-footer__list-item">
                             <a class="govuk-footer__link" href="@_configuration["FeedbackLink"]" target="_blank" id="footer-feedback-link">
-                                Give feedback on Manage an academy conversion (opens in a new tab)
+                                Give feedback on Prepare conversion and transfers (opens in a new tab)
                             </a>
                         </li>
                     </ul>
