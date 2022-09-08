@@ -6,6 +6,6 @@ namespace ApplyToBecome.Data.Models.AcademyConversion
 	{
 		Yes = 1,
 		No = 2,
-		[Description("Not Applicable")] NotApplicable = 3
+		[Description("Not applicable")] NotApplicable = 3
 	}
 }

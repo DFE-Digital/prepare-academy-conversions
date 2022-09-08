@@ -31,7 +31,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		[Fact]
 		public void Should_have_a_back_link_that_points_to_the_legal_summary_page()
 		{
-			BackLinkHref.Should().EndWith($"/task-list/{Project.Id}/legal-requirements/legal-summary");
+			BackLinkHref.Should().EndWith($"/task-list/{Project.Id}/legal-requirements");
 		}
 
 		[Fact]
