@@ -19,27 +19,27 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support
 
 		public async Task OpenSummary(int projectId)
 		{
-			await _context.OpenAsync($"http://localhost/task-list/{projectId}/legal-requirements/legal-summary");
+			await _context.OpenAsync($"http://localhost/task-list/{projectId}/legal-requirements");
 		}
 
 		public async Task OpenGoverningBodyResolution(int projectId)
 		{
-			await _context.OpenAsync($"http://localhost/task-list/{projectId}/legal-requirements/legal-governing-body");
+			await _context.OpenAsync($"http://localhost/task-list/{projectId}/governing-body-resolution");
 		}
 
 		public async Task OpenConsultation(int projectId)
 		{
-			await _context.OpenAsync($"http://localhost/task-list/{projectId}/legal-requirements/legal-consultation");
+			await _context.OpenAsync($"http://localhost/task-list/{projectId}/consultation-been-done");
 		}
 
 		public async Task OpenDiocesanConsent(int projectId)
 		{
-			await _context.OpenAsync($"http://localhost/task-list/{projectId}/legal-requirements/legal-diocesan-consent");
+			await _context.OpenAsync($"http://localhost/task-list/{projectId}/diocese-consent");
 		}
 
 		public async Task OpenFoundationConsent(int projectId)
 		{
-			await _context.OpenAsync($"http://localhost/task-list/{projectId}/legal-requirements/legal-foundation-consent");
+			await _context.OpenAsync($"http://localhost/task-list/{projectId}/foundation-consent");
 		}
 	}
 }

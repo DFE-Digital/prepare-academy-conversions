@@ -459,6 +459,54 @@ Cypress.Commands.add('OtherCheckText', () => {
     cy.get('[id="other-txtarea"]')
 })
 
+//--Legal Requirements (Task List)
+
+// Governing Body: Change Link
+Cypress.Commands.add('govBodyChangeLink', () => {
+    cy.get('[data-cy="projectpage-legal-summary-governingbody-change"]').click()
+})
+
+// Save & Continue btn (Universal)
+Cypress.Commands.add('saveContinueBtn', () => {
+    cy.get('[data-cy="projectpage-legal-input-saveandcontinue"]').click()
+})
+
+// Governing Body: status
+Cypress.Commands.add('govBodyStatus', () => {
+    cy.get('[data-cy="projectpage-legal-summary-governingbody-status"]')
+})
+
+// Consulation: Change Link
+Cypress.Commands.add('consultationChangeLink', () => {
+    cy.get('[data-cy="projectpage-legal-summary-consultation-change"]').click()
+})
+
+// Consultation: Status
+Cypress.Commands.add('consultationStatus', () => {
+    cy.get('[data-cy="projectpage-legal-summary-consultation-status"]')
+})
+
+// Diocesan consent: Change Link
+Cypress.Commands.add('diocesanConsentChangeLink', () => {
+    cy.get('[data-cy="projectpage-legal-summary-diocesanconsent-change"]').click()
+})
+
+// Diocesan consent: Status
+Cypress.Commands.add('diocesanConsentStatus' ,() => {
+    cy.get('[data-cy="projectpage-legal-summary-diocesanconsent-status"]')
+})
+
+// Foundation consent: Change Link
+Cypress.Commands.add('foundataionConsentChange', () => {
+    cy.get('[data-cy="projectpage-legal-summary-foundationconsent-change"]').click()
+})
+
+// Foundation consent: Status
+Cypress.Commands.add('foundationConsentStatus', () => {
+    cy.get('[data-cy="projectpage-legal-summary-foundationconsent-status"]')
+})
+
+
 // Request external dev - requres environment setup on yml file
 // Cypress.Commands.add('beData', () => {
 //     const apiKey = Cypress.env('apiKey')
