@@ -104,6 +104,7 @@ describe('Legal Requirements', () => {
             }
             else {
                 cy.visit(url)
+                cy.get('[data-cy="projectpage-tasklist-links-legalrequirements"]').click()
                 cy.get('[data-cy="projectpage-legal-summary-iscomplete"]').click()
                 cy.get('[data-cy="projectpage-legal-summary-submitbutton"]').click()
                 cy.get('[data-cy="projectpage-tasklist-legalrequirements-status"]').should('contain.text', 'Completed')
