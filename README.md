@@ -21,7 +21,7 @@ The following user secrets are required to be able to connect to the TRAMS API (
 
 The following user secret is required for the landing page to be able to navigate to the Transfers service:
 
-- `"ServiceLink:TransfersUrl" - The URL for the Transfers service.
+- `ServiceLink:TransfersUrl` - The URL for the Transfers service.
 
 For local development, user secrets can be set using the command:
 - `dotnet user-secrets set "key" "value"` from the `ApplyToBecomeInternal` project.
