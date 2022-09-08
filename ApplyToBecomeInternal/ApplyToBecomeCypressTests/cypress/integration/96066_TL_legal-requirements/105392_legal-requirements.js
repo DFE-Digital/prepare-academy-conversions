@@ -28,7 +28,7 @@ describe('Legal Requirements', () => {
         // Selects Not applicable
         cy.get('[data-cy="projectpage-legal-input-notapplicable"]').click()
         cy.saveContinueBtn()
-        cy.govBodyStatus().should('contain.text', 'Not Applicable')
+        cy.govBodyStatus().should('contain.text', 'Not applicable')
     })
 
     it('TC02: Answer to Consultaton and changes current answer from Yes, No, Not Applicable', () => {
@@ -49,7 +49,7 @@ describe('Legal Requirements', () => {
         // Selects Not appicable
         cy.get('[data-cy="projectpage-legal-input-notapplicable"]').click()
         cy.saveContinueBtn()
-        cy.consultationStatus().should('contain.text', 'Not Applicable')
+        cy.consultationStatus().should('contain.text', 'Not applicable')
     })
 
     it('TC03: Answer to Diocesan consent and changes current answer from Yes, No, Not Applicable', () => {
@@ -70,7 +70,7 @@ describe('Legal Requirements', () => {
         // Selects Not applicable
         cy.get('[data-cy="projectpage-legal-input-notapplicable"]').click()
         cy.saveContinueBtn()
-        cy.diocesanConsentStatus().should('contain.text', 'Not Applicable')
+        cy.diocesanConsentStatus().should('contain.text', 'Not applicable')
     })
 
     it('TC04: Answer to Foundation consent and changes current answer from Yes, No, Not Applicable', () => {
@@ -91,7 +91,7 @@ describe('Legal Requirements', () => {
         // Selects Not applicable
         cy.get('[data-cy="projectpage-legal-input-notapplicable"]').click()
         cy.saveContinueBtn()
-        cy.foundationConsentStatus().should('contain.text', 'Not Applicable')
+        cy.foundationConsentStatus().should('contain.text', 'Not applicable')
     })
 
     it('TC05: Confirm Legal Requirements page check & marked complete', () => {
