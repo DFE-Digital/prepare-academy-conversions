@@ -14,3 +14,4 @@ applications:
     Authentication__Password: ((password))
     AcademisationApi__BaseUrl: ((academisationApiBaseUrl))
     AcademisationApi__ApiKey: ((academisationApiKey))
+    ServiceLink__TransfersUrl: ((servicelinkTransfersUrl))
