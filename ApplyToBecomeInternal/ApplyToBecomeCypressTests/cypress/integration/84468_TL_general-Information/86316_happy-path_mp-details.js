@@ -32,7 +32,7 @@ Cypress._.each(['iphone-x'], (viewport) => {
 
 		context("when form submitted", () => {
 			beforeEach(() => {
-				cy.clickSaveAndContinueButton()
+				cy.saveAndContinueButton().click()
 			})
 
 			it('TC03: Should go back to general information page on confirm', () => {
@@ -49,7 +49,7 @@ Cypress._.each(['iphone-x'], (viewport) => {
 				cy.get('[data-test="change-member-of-parliament-party"]').click()
 				cy.mpName().clear()
 				cy.mpParty().clear()
-				cy.clickSaveAndContinueButton()
+				cy.saveAndContinueButton().click()
 				cy.mpName().should('have.text', 'Empty')
 				cy.mpParty().should('have.text', 'Empty')
 			});

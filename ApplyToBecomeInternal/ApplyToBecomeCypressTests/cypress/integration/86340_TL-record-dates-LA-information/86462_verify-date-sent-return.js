@@ -14,11 +14,11 @@ Cypress._.each(['iphone-x'], (viewport) => {
 
 			cy.get('[data-test="change-la-info-template-sent-date"]').click()
 			cy.submitDateLaInfoSent(21, 3, 2019)
-			cy.clickSaveAndContinueButton()
+			cy.saveAndContinueButton().click()
 
 			cy.get('[data-test="change-la-info-template-returned-date"]').click()
 			cy.submitDateLaInfoReturn(20, 2, 2020)
-			cy.clickSaveAndContinueButton()
+			cy.saveAndContinueButton().click()
 		})
 
 		it('TC01: Verifies "Date you sent the template" on LA information preview', () => {

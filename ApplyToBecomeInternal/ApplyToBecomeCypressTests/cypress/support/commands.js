@@ -467,8 +467,8 @@ Cypress.Commands.add('govBodyChangeLink', () => {
 })
 
 // Save & Continue btn (Universal)
-Cypress.Commands.add('clickSaveAndContinueButton', () => {
-    cy.get('[data-cy="select-common-submitbutton"]').click()
+Cypress.Commands.add('saveAndContinueButton', () => {
+    cy.get('[data-cy="select-common-submitbutton"]')
 })
 
 // Governing Body: status
