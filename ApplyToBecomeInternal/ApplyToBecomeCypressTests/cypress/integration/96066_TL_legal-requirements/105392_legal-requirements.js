@@ -7,27 +7,27 @@ const url = Cypress.env('url') + '/task-list/2054'
 describe('Legal Requirements', () => {
     beforeEach(() => {
         cy.visit(url)
-        cy.get('[data-cy="projectpage-tasklist-links-legalrequirements"]').click()
+        cy.get('[data-cy="select-tasklist-links-legalrequirements"]').click()
     })
 
     it('TC01: Answer to Governing Body and changes current answer from Yes, No, Not Applicable ', () => {
         // Clicks on link
         cy.govBodyChangeLink()
         // Selects Yes
-        cy.get('[data-cy="projectpage-legal-input-yes"]').click()
-        cy.saveContinueBtn()
+        cy.get('[data-cy="select-legal-input-yes"]').click()
+        cy.clickSaveAndContinueButton()
         cy.govBodyStatus().should('contain.text', 'Yes')
         // Clicks on link
         cy.govBodyChangeLink()
         // Selects No
-        cy.get('[data-cy="projectpage-legal-input-no"]').click()
-        cy.saveContinueBtn()
+        cy.get('[data-cy="select-legal-input-no"]').click()
+        cy.clickSaveAndContinueButton()
         cy.govBodyStatus().should('contain.text', 'No')
         // Clicks on link
         cy.govBodyChangeLink()
         // Selects Not applicable
-        cy.get('[data-cy="projectpage-legal-input-notapplicable"]').click()
-        cy.saveContinueBtn()
+        cy.get('[data-cy="select-legal-input-notapplicable"]').click()
+        cy.clickSaveAndContinueButton()
         cy.govBodyStatus().should('contain.text', 'Not applicable')
     })
 
@@ -35,20 +35,20 @@ describe('Legal Requirements', () => {
         // Clicks on change link
         cy.consultationChangeLink()
         // Selects Yes
-        cy.get('[data-cy="projectpage-legal-input-yes"]').click()
-        cy.saveContinueBtn()
+        cy.get('[data-cy="select-legal-input-yes"]').click()
+        cy.clickSaveAndContinueButton()
         cy.consultationStatus().should('contain.text', 'Yes')
         // Clicks on change link
         cy.consultationChangeLink()
         // Selects No
-        cy.get('[data-cy="projectpage-legal-input-no"]').click()
-        cy.saveContinueBtn()
+        cy.get('[data-cy="select-legal-input-no"]').click()
+        cy.clickSaveAndContinueButton()
         cy.consultationStatus().should('contain.text', 'No')
         // Clicks on change link
         cy.consultationChangeLink()
         // Selects Not appicable
-        cy.get('[data-cy="projectpage-legal-input-notapplicable"]').click()
-        cy.saveContinueBtn()
+        cy.get('[data-cy="select-legal-input-notapplicable"]').click()
+        cy.clickSaveAndContinueButton()
         cy.consultationStatus().should('contain.text', 'Not applicable')
     })
 
@@ -56,20 +56,20 @@ describe('Legal Requirements', () => {
         // Clicks on change link
         cy.diocesanConsentChangeLink()
         // Selects Yes
-        cy.get('[data-cy="projectpage-legal-input-yes"]').click()
-        cy.saveContinueBtn()
+        cy.get('[data-cy="select-legal-input-yes"]').click()
+        cy.clickSaveAndContinueButton()
         cy.diocesanConsentStatus().should('contain.text', 'Yes')
         // Clicks on change link
         cy.diocesanConsentChangeLink()
         // Selects No
-        cy.get('[data-cy="projectpage-legal-input-no"]').click()
-        cy.saveContinueBtn()
+        cy.get('[data-cy="select-legal-input-no"]').click()
+        cy.clickSaveAndContinueButton()
         cy.diocesanConsentStatus().should('contain.text', 'No')
         // Clicks on change link
         cy.diocesanConsentChangeLink()
         // Selects Not applicable
-        cy.get('[data-cy="projectpage-legal-input-notapplicable"]').click()
-        cy.saveContinueBtn()
+        cy.get('[data-cy="select-legal-input-notapplicable"]').click()
+        cy.clickSaveAndContinueButton()
         cy.diocesanConsentStatus().should('contain.text', 'Not applicable')
     })
 
@@ -77,26 +77,26 @@ describe('Legal Requirements', () => {
         // Clicks on change link
         cy.foundataionConsentChange()
         // Selects Yes
-        cy.get('[data-cy="projectpage-legal-input-yes"]').click()
-        cy.saveContinueBtn()
+        cy.get('[data-cy="select-legal-input-yes"]').click()
+        cy.clickSaveAndContinueButton()
         cy.foundationConsentStatus().should('contain.text', 'Yes')
         // Clicks on change link
         cy.foundataionConsentChange()
         // Selects No
-        cy.get('[data-cy="projectpage-legal-input-no"]').click()
-        cy.saveContinueBtn()
+        cy.get('[data-cy="select-legal-input-no"]').click()
+        cy.clickSaveAndContinueButton()
         cy.foundationConsentStatus().should('contain.text', 'No')
         // Clicks on change link
         cy.foundataionConsentChange()
         // Selects Not applicable
-        cy.get('[data-cy="projectpage-legal-input-notapplicable"]').click()
-        cy.saveContinueBtn()
+        cy.get('[data-cy="select-legal-input-notapplicable"]').click()
+        cy.clickSaveAndContinueButton()
         cy.foundationConsentStatus().should('contain.text', 'Not applicable')
     })
 
     it('TC05: Confirm Legal Requirements page check & marked complete', () => {
         cy.visit(url)
-        cy.get('[data-cy="projectpage-tasklist-legalrequirements-status"]')
+        cy.get('[data-cy="select-tasklist-legalrequirements-status"]')
         .invoke('text')
         .then((text) => {
             if (text.includes('Completed')) {
@@ -104,16 +104,16 @@ describe('Legal Requirements', () => {
             }
             else {
                 cy.visit(url)
-                cy.get('[data-cy="projectpage-tasklist-links-legalrequirements"]').click()
-                cy.get('[data-cy="projectpage-legal-summary-iscomplete"]').click()
-                cy.get('[data-cy="projectpage-legal-summary-submitbutton"]').click()
-                cy.get('[data-cy="projectpage-tasklist-legalrequirements-status"]').should('contain.text', 'Completed')
+                cy.get('[data-cy="select-tasklist-links-legalrequirements"]').click()
+                cy.get('[data-cy="select-legal-summary-iscomplete"]').click()
+                cy.get('[data-cy="select-legal-summary-submitbutton"]').click()
+                cy.get('[data-cy="select-tasklist-legalrequirements-status"]').should('contain.text', 'Completed')
             }
         })
     })
 
     it('TC06: Back to task list button link', () => {
-        cy.get('[data-cy="projectpage-backlink"]')
+        cy.get('[data-cy="select-backlink"]')
         .should('be.visible')
         .should('contain.text', 'Back to task list').click()
     })

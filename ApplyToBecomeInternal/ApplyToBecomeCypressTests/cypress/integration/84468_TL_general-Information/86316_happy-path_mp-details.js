@@ -5,7 +5,7 @@ Cypress._.each(['iphone-x'], (viewport) => {
 		before(() => {
 			cy.viewport(viewport)
 		});
-		
+
 		beforeEach(() => {
 			cy.login()
 			cy.selectSchoolListing(2)
@@ -18,23 +18,23 @@ Cypress._.each(['iphone-x'], (viewport) => {
 			cy.mpName().clear().type('An MP')
 			cy.mpParty().clear().type('A Party')
 		})
-        
+
         it('TC01: Should navigate to MP details page', () => {
             cy.url().then(href => {
                 expect(href.endsWith('/confirm-general-information/enter-MP-name-and-political-party')).to.be.true;
             });
         });
-    
+
         it('TC02: Should change the MP details', () => {
             cy.mpName().should('have.value', 'An MP')
             cy.mpParty().should('have.value', 'A Party')
         });
-		
+
 		context("when form submitted", () => {
 			beforeEach(() => {
-				cy.saveContinueBtn().click()
+				cy.clickSaveAndContinueButton()
 			})
-			
+
 			it('TC03: Should go back to general information page on confirm', () => {
 				cy.url().then(href => {
 					expect(href.endsWith('/confirm-general-information')).to.be.true});
@@ -49,7 +49,7 @@ Cypress._.each(['iphone-x'], (viewport) => {
 				cy.get('[data-test="change-member-of-parliament-party"]').click()
 				cy.mpName().clear()
 				cy.mpParty().clear()
-				cy.saveContinueBtn().click()
+				cy.clickSaveAndContinueButton()
 				cy.mpName().should('have.text', 'Empty')
 				cy.mpParty().should('have.text', 'Empty')
 			});
