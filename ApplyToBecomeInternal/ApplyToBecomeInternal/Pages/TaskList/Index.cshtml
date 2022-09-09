@@ -115,11 +115,11 @@
 				</li>
 				<li class="app-task-list__item">
 					<span class="app-task-list__task-name">
-						<a class="govuk-link" asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Project.Id" aria-describedby="legal-requirements" data-cy="@ProjectPage.TaskList.Links.LegalRequirements">
+						<a class="govuk-link" asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Project.Id" aria-describedby="legal-requirements" data-cy="@Select.TaskList.Links.LegalRequirements">
 							Legal requirements
 						</a>
 					</span>
-					<strong class="govuk-tag @Model.LegalRequirementsStatus.ToTagCssClass() app-task-list__tag" id="legal-status" @ProjectPage.TaskList.LegalRequirements.Status.ToData("cy")>
+					<strong class="govuk-tag @Model.LegalRequirementsStatus.ToTagCssClass() app-task-list__tag" id="legal-status" @Select.TaskList.LegalRequirements.Status.ToData("cy")>
 						@Model.LegalRequirementsStatus.ToDescription()
 					</strong>
 				</li>
