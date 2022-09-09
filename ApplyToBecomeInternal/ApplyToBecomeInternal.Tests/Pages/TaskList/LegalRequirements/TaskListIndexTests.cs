@@ -27,16 +27,16 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 			};
 
 		private string LegalRequirementsLinkHref =>
-			Document.QuerySelector<IHtmlAnchorElement>(CypressSelectorFor(ProjectPage.TaskList.Links.LegalRequirements))?.Href.Trim();
+			Document.QuerySelector<IHtmlAnchorElement>(CypressSelectorFor(Select.TaskList.Links.LegalRequirements))?.Href.Trim();
 
 		private string LegalRequirementsStatus =>
-			Document.QuerySelector(CypressSelectorFor(ProjectPage.TaskList.LegalRequirements.Status))?.Text().Trim();
+			Document.QuerySelector(CypressSelectorFor(Select.TaskList.LegalRequirements.Status))?.Text().Trim();
 
 		private IHtmlInputElement SummaryIsComplete =>
-			Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor(ProjectPage.Legal.Summary.IsComplete));
+			Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor(Select.Legal.Summary.IsComplete));
 
 		private IHtmlButtonElement SummaryConfirmAndContinueButton =>
-			Document.QuerySelector<IHtmlButtonElement>(CypressSelectorFor(ProjectPage.Legal.Summary.SubmitButton));
+			Document.QuerySelector<IHtmlButtonElement>(CypressSelectorFor(Select.Legal.Summary.SubmitButton));
 
 		[Fact]
 		public void Should_have_a_link_that_points_to_the_legal_summary_page()

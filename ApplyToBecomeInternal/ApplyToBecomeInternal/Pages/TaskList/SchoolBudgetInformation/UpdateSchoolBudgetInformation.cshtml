@@ -1,4 +1,6 @@
 ﻿@page "/task-list/{id:int}/confirm-school-budget-information/update-school-budget-information"
+@using ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers
+@using ApplyToBecomeInternal.Utils
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
 	Model.SuccessPage = Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page;
@@ -47,7 +49,7 @@
 				<govuk-decimal-input name="finance-forward-2022" asp-for="@Model.Project.CapitalCarryForwardAtEndMarchNextYear" isMonetary="true"/>
 			</div>
 
-			<button class="govuk-button" id="save-and-continue-button" data-module="govuk-button">
+			<button class="govuk-button" id="save-and-continue-button" data-module="govuk-button" @Select.Common.SubmitButton.ToData("cy")>
 				Save and continue
 			</button>
 		</form>

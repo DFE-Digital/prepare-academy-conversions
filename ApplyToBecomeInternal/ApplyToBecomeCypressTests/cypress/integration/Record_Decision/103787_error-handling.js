@@ -11,7 +11,7 @@ describe('103787 Error handling', () => {
 
     it('Error handling for the approved journey', () => {
         // Record the decision:
-        cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
+        cy.get('[id="record-decision-link"]').click()
         cy.continueBtn().click()
         cy.get('[id="AdvisoryBoardDecision-error-link "]').should('contain.text', 'Select a decision')
         cy.get('[id="approved-radio"]').click()
@@ -33,7 +33,7 @@ describe('103787 Error handling', () => {
 
     it('Error handling for the declined journey', () => {
         // Record the decision:
-        cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
+        cy.get('[id="record-decision-link"]').click()
         cy.continueBtn().click()
         cy.get('[id="AdvisoryBoardDecision-error-link "]').should('contain.text', 'Select a decision')
         cy.get('[id="declined-radio"]').click()
@@ -80,7 +80,7 @@ describe('103787 Error handling', () => {
 
     it('Error handling for the deferred journey', () => {
         // Record the decision:
-        cy.get('[id="record-decision-link"]').should('contain.text', 'Change your decision').click()
+        cy.get('[id="record-decision-link"]').click()
         cy.continueBtn().click()
         cy.get('[id="AdvisoryBoardDecision-error-link "]').should('contain.text', 'Select a decision')
         cy.get('[id="deferred-radio"]').click()

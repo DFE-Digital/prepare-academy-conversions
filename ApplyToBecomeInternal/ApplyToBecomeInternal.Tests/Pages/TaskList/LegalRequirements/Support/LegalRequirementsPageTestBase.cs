@@ -19,15 +19,15 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support
 
 		protected abstract Func<LegalRequirementsTestWizard, AcademyConversionProject, Task> BeforeEachTest { get; }
 
-		protected string PageHeading => Document.QuerySelector(CypressSelectorFor(ProjectPage.Heading))?.Text().Trim();
-		protected string SchoolName => Document.QuerySelector(CypressSelectorFor(ProjectPage.SchoolName))?.Text().Trim();
+		protected string PageHeading => Document.QuerySelector(CypressSelectorFor(Select.Heading))?.Text().Trim();
+		protected string SchoolName => Document.QuerySelector(CypressSelectorFor(Select.SchoolName))?.Text().Trim();
 
-		protected string BackLinkHref => Document.QuerySelector<IHtmlAnchorElement>(CypressSelectorFor(ProjectPage.BackLink))?.Href.Trim();
+		protected string BackLinkHref => Document.QuerySelector<IHtmlAnchorElement>(CypressSelectorFor(Select.BackLink))?.Href.Trim();
 
-		protected IHtmlInputElement YesOption => Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor(ProjectPage.Legal.Input.Yes));
-		protected IHtmlInputElement NoOption => Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor(ProjectPage.Legal.Input.No));
-		protected IHtmlInputElement NotApplicableOption => Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor(ProjectPage.Legal.Input.NotApplicable));
-		protected IHtmlButtonElement SaveAndContinueButton => Document.QuerySelector<IHtmlButtonElement>(CypressSelectorFor(ProjectPage.Legal.Input.SaveAndContinue));
+		protected IHtmlInputElement YesOption => Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor(Select.Legal.Input.Yes));
+		protected IHtmlInputElement NoOption => Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor(Select.Legal.Input.No));
+		protected IHtmlInputElement NotApplicableOption => Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor(Select.Legal.Input.NotApplicable));
+		protected IHtmlButtonElement SaveAndContinueButton => Document.QuerySelector<IHtmlButtonElement>(CypressSelectorFor(Select.Common.SubmitButton));
 
 		public virtual async Task InitializeAsync()
 		{

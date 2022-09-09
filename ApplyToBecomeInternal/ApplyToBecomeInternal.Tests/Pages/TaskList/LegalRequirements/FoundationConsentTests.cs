@@ -26,7 +26,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 				PageHeading.Should().Be("Have the foundation given consent for this conversion?");
 			};
 
-		private string SummaryFoundationConsentStatus => Document.QuerySelector(CypressSelectorFor(ProjectPage.Legal.Summary.FoundationConsent.Status))?.Text().Trim();
+		private string SummaryFoundationConsentStatus => Document.QuerySelector(CypressSelectorFor(Select.Legal.Summary.FoundationConsent.Status))?.Text().Trim();
 
 		[Fact]
 		public void Should_have_a_back_link_that_points_to_the_legal_summary_page()

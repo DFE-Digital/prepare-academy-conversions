@@ -15,10 +15,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		{
 		}
 
-		private string GoverningBodyStatus => Document.QuerySelector(CypressSelectorFor(ProjectPage.Legal.Summary.GoverningBody.Status))?.Text().Trim();
-		private string ConsultationStatus => Document.QuerySelector(CypressSelectorFor(ProjectPage.Legal.Summary.Consultation.Status))?.Text().Trim();
-		private string DiocesanConsent => Document.QuerySelector(CypressSelectorFor(ProjectPage.Legal.Summary.DiocesanConsent.Status))?.Text().Trim();
-		private string FoundationConsent => Document.QuerySelector(CypressSelectorFor(ProjectPage.Legal.Summary.FoundationConsent.Status))?.Text().Trim();
+		private string GoverningBodyStatus => Document.QuerySelector(CypressSelectorFor(Select.Legal.Summary.GoverningBody.Status))?.Text().Trim();
+		private string ConsultationStatus => Document.QuerySelector(CypressSelectorFor(Select.Legal.Summary.Consultation.Status))?.Text().Trim();
+		private string DiocesanConsent => Document.QuerySelector(CypressSelectorFor(Select.Legal.Summary.DiocesanConsent.Status))?.Text().Trim();
+		private string FoundationConsent => Document.QuerySelector(CypressSelectorFor(Select.Legal.Summary.FoundationConsent.Status))?.Text().Trim();
 
 		protected override Func<LegalRequirementsTestWizard, AcademyConversionProject, Task> BeforeEachTest =>
 			async (wizard, project) =>
