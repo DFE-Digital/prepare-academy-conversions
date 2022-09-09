@@ -26,7 +26,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 				PageHeading.Should().Be("Have the diocese given consent for this conversion?");
 			};
 
-		private string SummaryDiocesanConsentStatus => Document.QuerySelector(CypressSelectorFor(ProjectPage.Legal.Summary.DiocesanConsent.Status))?.Text().Trim();
+		private string SummaryDiocesanConsentStatus => Document.QuerySelector(CypressSelectorFor(Select.Legal.Summary.DiocesanConsent.Status))?.Text().Trim();
 
 		[Fact]
 		public void Should_have_a_back_link_that_points_to_the_legal_summary_page()

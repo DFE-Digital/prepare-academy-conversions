@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		{
 		}
 
-		private string SummaryConsultationStatus => Document.QuerySelector(CypressSelectorFor(ProjectPage.Legal.Summary.Consultation.Status))?.Text().Trim();
+		private string SummaryConsultationStatus => Document.QuerySelector(CypressSelectorFor(Select.Legal.Summary.Consultation.Status))?.Text().Trim();
 
 		protected override Func<LegalRequirementsTestWizard, AcademyConversionProject, Task> BeforeEachTest =>
 			async (wizard, project) =>
