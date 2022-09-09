@@ -5,6 +5,10 @@
                            && bool.Parse(Context.Request.Cookies[".ManageAnAcademyConversion.Consent"]);
 
     var showAnalytics = _configuration["GoogleAnalytics:Enable"] == "Yes" && analyticsConsent;
+
+	var titleDescription = Context.Request.Path == "/project-type" 
+		? string.Empty 
+		: "- Manage an academy conversion";
 }
 
 <!DOCTYPE html>
@@ -24,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/govuk-apple-touch-icon-152x152.png">
     <link rel="apple-touch-icon" href="/assets/images/govuk-apple-touch-icon.png">
 
-    <title>@ViewData["Title"] - Manage an academy conversion</title>
+    <title>@ViewData["Title"] @titleDescription</title>
     <link rel="stylesheet" href="~/dist/site.css" />
     @if (showAnalytics)
     {
