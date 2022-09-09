@@ -4,38 +4,38 @@ Starting with the Legal Requirements section, we've started to use the [recommen
 
 We've introduced a little utility to help both developers and testers to generate and standardise the names for these attributes.
 
-Developers can find the code that defines the attribute names in the `ProjectPage.cs` file and this document describes how those are made available in the markup for use in the Cypress tests.
+Developers can find the code that defines the attribute names in the `Select.cs` file and this document describes how those are made available in the markup for use in the Cypress tests.
 
 These selectors will look like this:
 
 ```
-data-cy="projectpage-backlink"
+data-cy="select-backlink"
 ```
 
 And can be used in Cypress tests like this:
 
 ```
-cy.get('[data-cy="projectpage-legal-input-no"]').click()
+cy.get('[data-cy="select-legal-input-no"]').click()
 ```
 
 # Selector Hierarchy
 
-All selectors are stemmed from a base of "projectpage". Some are page- or area-specific, some are general and used throughout the codebase for common elements, such as page titles, school names, etc.
+All selectors are stemmed from a base of "select-". Some are page- or area-specific, some are general and used throughout the codebase for common elements, such as page titles, school names, etc.
 
 > **NOTE**: Not all areas have been updated yet. The developers will be doing the 'good scout' thing (leave it a little better than it was found) as we work through the code and will add the new selectors. If an area needs attention sooner than later, please ping one of us and we can sort it out :)
 
 ## Common Selectors
 
-- `projectpage-backlink` - the selector for the "Back" link at the top of pages (may have alternative text in some cases, selector will still apply)
-- `projectpage-heading` - The `H1` for the page
-- `projectpage-schoolname` - The school name for the page, either as a main header on the page, or a light-grey sub-header.
+- `select-backlink` - the selector for the "Back" link at the top of pages (may have alternative text in some cases, selector will still apply)
+- `select-heading` - The `H1` for the page
+- `select-schoolname` - The school name for the page, either as a main header on the page, or a light-grey sub-header.
 
 ## Task List
 
 (Incomplete coverage)
 
-- `projectpage-tasklist-links-legalrequirements` - The link on the task list page that leads to the legal requirements section of the site
-- `projectpage-tasklist-legalrequirements-status` - The text displaying the current legal requirements status on the task list page
+- `select-tasklist-links-legalrequirements` - The link on the task list page that leads to the legal requirements section of the site
+- `select-tasklist-legalrequirements-status` - The text displaying the current legal requirements status on the task list page
 
 ## Legal Requirements
 
@@ -43,21 +43,21 @@ All selectors are stemmed from a base of "projectpage". Some are page- or area-s
 
 All pages in the Legal Requirements section present a three-option choice (Yes, No, Not Applicable) all pages use the same selectors for these:
 
-- `projectpage-legal-input-yes` - The radio button for the `Yes` option
-- `projectpage-legal-input-no` - The raddio button for the `No` option
-- `projectpage-legal-input-notapplicable` - The radio button for the `Not applicable` option
+- `select-legal-input-yes` - The radio button for the `Yes` option
+- `select-legal-input-no` - The raddio button for the `No` option
+- `select-legal-input-notapplicable` - The radio button for the `Not applicable` option
 
 ### Summary Page Selectors
 
-- `projectpage-legal-summary-iscomplete` - The checkbox used to mark the Legal Requirements complete
-- `projectpage-legal-summary-submitbutton` - The `Confirm and Continue` button
-- `projectpage-legal-summary-governingbody-status` - The status text for the governing body question
-- `projectpage-legal-summary-governingbody-change` - The `Change` link for the governing body question
-- `projectpage-legal-summary-consultation-status` - The status text for the consultation question
-- `projectpage-legal-summary-consultation-change` - The `Change` link for the consultation question
-- `projectpage-legal-summary-diocesanconsent-status` - The status text for diocesan consent question
-- `projectpage-legal-summary-diocesanconsent-change` - The `Change` link for the diocesan consent question
-- `projectpage-legal-summary-foundationconsent-status` - The status text for the foundation consent question
-- `projectpage-legal-summary-foundationconsent-change` - The `Change` link for the foundation consent question
+- `select-legal-summary-iscomplete` - The checkbox used to mark the Legal Requirements complete
+- `select-legal-summary-submitbutton` - The `Confirm and Continue` button
+- `select-legal-summary-governingbody-status` - The status text for the governing body question
+- `select-legal-summary-governingbody-change` - The `Change` link for the governing body question
+- `select-legal-summary-consultation-status` - The status text for the consultation question
+- `select-legal-summary-consultation-change` - The `Change` link for the consultation question
+- `select-legal-summary-diocesanconsent-status` - The status text for diocesan consent question
+- `select-legal-summary-diocesanconsent-change` - The `Change` link for the diocesan consent question
+- `select-legal-summary-foundationconsent-status` - The status text for the foundation consent question
+- `select-legal-summary-foundationconsent-change` - The `Change` link for the foundation consent question
 
 
