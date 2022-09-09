@@ -31,7 +31,7 @@ Cypress._.each(['iphone-x'], (viewport) => {
             let alphanumeric = 'abcdefghijklmnopqrstuvwxyz 1234567890 !"£$%^&*(){}[]:@,./<>?~|'
             cy.get('[data-test="change-la-info-template-comments"]').click()
             cy.commentBoxLaInfo().type(alphanumeric)
-            cy.saveAndContinueButton().click()//.click()
+            cy.saveAndContinueButton().click()
             cy.commentBoxLaInfo().should('contain', alphanumeric)
         });
 

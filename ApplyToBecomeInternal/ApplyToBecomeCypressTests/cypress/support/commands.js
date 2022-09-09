@@ -59,11 +59,6 @@ Cypress.Commands.add('selectSchoolListing', (listing) => {
     cy.saveLocalStorage()
 });
 
-// // Save and Continue Button (Universal)
-// Cypress.Commands.add('saveContinueBtn', () => {
-//     cy.get('[id="save-and-continue-button"]')
-// });
-
 // Confirm and Continue Button (Universal)
 Cypress.Commands.add('confirmContinueBtn', () => {
     cy.get('[id="confirm-and-continue-button"]')
