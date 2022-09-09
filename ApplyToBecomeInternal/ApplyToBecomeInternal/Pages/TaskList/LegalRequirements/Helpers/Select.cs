@@ -2,7 +2,7 @@
 
 namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers
 {
-	public sealed class ProjectPage
+	public sealed class Select
 	{
 		private static string _pageHeader, _backLink, _schoolName;
 
@@ -10,6 +10,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers
 		public static string Heading => Typespace.Name(ref _pageHeader);
 
 		public static string SchoolName => Typespace.Name(ref _schoolName);
+
+		public sealed class Common
+		{
+			private static string _submitButton;
+			public static string SubmitButton => Typespace.Name(ref _submitButton);
+		}
 
 		public sealed class TaskList
 		{
@@ -31,13 +37,13 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers
 			public sealed class Input
 			{
 				private static string _yesOption, _noOption, _notApplicableOption;
-				private static string _saveAndContinue;
+				// private static string _saveAndContinue;
 
 				public static string Yes => Typespace.Name(ref _yesOption);
 				public static string No => Typespace.Name(ref _noOption);
 				public static string NotApplicable => Typespace.Name(ref _notApplicableOption);
 
-				public static string SaveAndContinue => Typespace.Name(ref _saveAndContinue);
+				// public static string SaveAndContinue => Typespace.Name(ref _saveAndContinue);
 			}
 
 			public sealed class Summary
