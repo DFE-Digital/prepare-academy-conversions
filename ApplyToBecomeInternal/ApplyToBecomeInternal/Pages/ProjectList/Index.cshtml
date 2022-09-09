@@ -8,6 +8,11 @@
 	bool ShowHtbDate(ProjectListViewModel vm) => !string.IsNullOrWhiteSpace(vm.HeadTeacherBoardDate);
 }
 
+@section BeforeMain
+{
+	<a asp-page="@Links.ProjectType.Index.Page" class="govuk-back-link">@Links.ProjectType.Index.BackText</a>
+}
+
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
 		<h1 class="govuk-heading-xl">Manage an academy conversion</h1>

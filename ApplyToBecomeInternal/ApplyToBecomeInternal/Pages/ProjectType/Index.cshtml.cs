@@ -1,0 +1,42 @@
+﻿using ApplyToBecome.Data.Models;
+using ApplyToBecomeInternal.Models;
+using ApplyToBecomeInternal.Options;
+using ApplyToBecomeInternal.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
+using System.ComponentModel.DataAnnotations;
+
+namespace ApplyToBecomeInternal.Pages.ProjectType
+{
+	public class IndexModel : PageModel
+	{
+		private const string ErrorMessage = "Select a project type";
+		
+		private readonly string _transfersUrl;
+		private readonly ErrorService _errorService;
+
+		public IndexModel(IOptions<ServiceLinkOptions> options, ErrorService errorService)
+		{
+			_transfersUrl = options.Value.TransfersUrl;
+			_errorService = errorService;
+		}
+		
+		[BindProperty, Required(ErrorMessage = ErrorMessage)]
+		public ProjectTypes? ProjectType { get; set; }
+		
+		public IActionResult OnPost()
+		{
+			if (!ModelState.IsValid)
+			{
+				_errorService.AddErrors(new[] { nameof(ProjectType) }, ModelState);
+				return Page();
+			}
+			
+			if (ProjectType is ProjectTypes.Transfer) return Redirect(_transfersUrl);
+			return RedirectToPage(Links.ProjectList.Index.Page);
+		}
+	}
+	
+	
+}

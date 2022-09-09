@@ -33,6 +33,7 @@ namespace ApplyToBecomeInternal.Security
 						builder.AddImgSrc().Self().From("data:").From("https://www.googletagmanager.com")
 							.From("https://www.google-analytics.com/");
 						builder.AddFormAction().Self();
+						builder.AddFormAction().OverHttps();
 						builder.AddFontSrc().Self();
 						builder.AddStyleSrc().Self();
 						builder.AddBaseUri().Self();
