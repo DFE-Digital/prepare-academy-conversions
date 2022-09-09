@@ -59,6 +59,11 @@ variable app_academisation_api_apikey {
 	description = "Application variable for the Academisation API key"
 }
 
+variable app_servicelink_transfersurl {
+	type = string
+	description = "Application variable for the Transfers service URL"
+}
+
 variable app_azuread_clientsecret {
   type = string
   description = "Application variable for the Azure AD Authorization header"
