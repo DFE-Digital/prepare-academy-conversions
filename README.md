@@ -29,6 +29,9 @@ For local development, user secrets can be set using the command:
 Alternatively, there is a Rider plugin called `.NET Core User Secrets` that allows the secrets to be managed via a json file, accessed by right clicking on the project -> `Tools` -> `Open Project User Secrets`.
 
 ## Cypress testing
+
+> Note: We've introduced a new [Cypress Selector process](Cypress_Selectors.md).
+
 Install cypress and dependencies:
 - Run 'npm install' from the ApplyToBecomeCypressTests directory
 
@@ -46,11 +49,11 @@ You will need to set a secret in `secrets.json` in the following format to run t
 To execute the tests locally and view the output:
 
 First set the database config as an environment variable -
-For bash - 
+For bash -
 ```
 export db='{"server":"localhost", "userName":"sa", "password":"StrongPassword905", "options": { "database": "sip" } }'
 ```
-For windows - 
+For windows -
 ```
 set db='{"server":"localhost", "userName":"sa", "password":"StrongPassword905", "options": { "database": "sip" } }'
 ```
