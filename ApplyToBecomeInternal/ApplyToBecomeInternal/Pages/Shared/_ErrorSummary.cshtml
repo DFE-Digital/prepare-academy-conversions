@@ -12,11 +12,11 @@
 				<li>
 					@if (error.Key?.Contains("/advisory-board-date") ?? false)
 					{
-						<a href=@error.Key>@error.Message</a>
+						<a id="@($"{error.Key}-error-link")"  href=@error.Key>@error.Message</a>
 					}
 					else if (!string.IsNullOrWhiteSpace(error.Key))
 					{
-						<a  id="@($"{error.Key}-error-link") "href="#@error.Key">@error.Message</a>
+						<a  id="@($"{error.Key}-error-link")" href="#@error.Key">@error.Message</a>
 					}
 					else
 					{
