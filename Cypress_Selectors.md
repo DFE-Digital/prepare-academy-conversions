@@ -37,6 +37,15 @@ All selectors are stemmed from a base of "select-". Some are page- or area-speci
 - `select-tasklist-links-legalrequirements` - The link on the task list page that leads to the legal requirements section of the site
 - `select-tasklist-legalrequirements-status` - The text displaying the current legal requirements status on the task list page
 
+## Project Type (Landing page)
+
+### Input Selectors
+
+The Project Type (Landing page) presents a two-option choice (Manage an academy conversion and Manage an academy transfer) see below the two selectors for these options:
+
+- `select-projecttype-input-conversion` - The radio button for the `Manage an academy conversion` option
+- `select-projecttype-input-transfer` - The raddio button for the `Manage an academy transfer` option
+
 ## Legal Requirements
 
 ### Input Selectors

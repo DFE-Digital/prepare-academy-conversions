@@ -43,11 +43,6 @@ namespace ApplyToBecomeInternal.Models
 
 			}
 
-			public sealed class ManageConversion
-			{
-				private static string _heading;
-				public static string Heading => Typespace.Name(ref _heading);
-			}
 		}
 
 		public sealed class Legal
