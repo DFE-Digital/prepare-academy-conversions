@@ -20,7 +20,8 @@
                 <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios" id="ProjectType">
                     <div class="govuk-radios__item">
                         <input class="govuk-radios__input" type="radio" asp-for="@Model.ProjectType"
-                           title="conversion" value="@nameof(ProjectTypes.Conversion)" id="conversion-radio" />
+                               title="conversion" value="@ProjectTypes.Conversion" id="conversion-radio"
+                               data-cy="@Select.ProjectType.Input.Conversion" />
                         <label class="govuk-label govuk-radios__label" for="conversion-radio" id="">
                             Manage an academy conversion
                         </label>
@@ -28,7 +29,8 @@
 
                     <div class="govuk-radios__item">
                         <input class="govuk-radios__input" type="radio" asp-for="@Model.ProjectType"
-                           title="@ProjectTypes.Transfer" value="@ProjectTypes.Transfer" id="transfer-radio" />
+                               title="@ProjectTypes.Transfer" value="@ProjectTypes.Transfer" id="transfer-radio" 
+                               data-cy="@Select.ProjectType.Input.Transfer" />
                         <label class="govuk-label govuk-radios__label" for="@ProjectTypes.Transfer-radio" id="">
                             Manage an academy transfer
                         </label>

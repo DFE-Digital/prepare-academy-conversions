@@ -1,16 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using ApplyToBecome.Data.Models;
-using ApplyToBecome.Data.Models.Application;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models.ApplicationForm;
 using ApplyToBecomeInternal.Models.ApplicationForm.Sections;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Newtonsoft.Json;
 
 namespace ApplyToBecomeInternal.Pages.ApplicationForm
 {
