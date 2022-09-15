@@ -42,6 +42,12 @@ namespace ApplyToBecomeInternal.Models
 				public static string Transfer => Typespace.Name(ref _transferOption);
 
 			}
+
+			public sealed class ManageConversion
+			{
+				private static string _heading;
+				public static string Heading => Typespace.Name(ref _heading);
+			}
 		}
 
 		public sealed class Legal

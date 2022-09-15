@@ -1,4 +1,6 @@
 ﻿@page "/project-list"
+@using ApplyToBecomeInternal.Utils
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ApplyToBecomeInternal.Pages.ProjectList.IndexModel
 @{
 	ViewData["Title"] = "Project list";
@@ -10,13 +12,13 @@
 
 @section BeforeMain
 {
-	<a asp-page="@Links.ProjectType.Index.Page" class="govuk-back-link">@Links.ProjectType.Index.BackText</a>
+    <a asp-page="@Links.ProjectType.Index.Page" class="govuk-back-link" data-cy="@Select.BackLink">@Links.ProjectType.Index.BackText</a>
 }
 
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
-		<h1 class="govuk-heading-xl">Manage an academy conversion</h1>
-		<h2 class="govuk-heading-l" test-id="projectCount">Projects</h2>
+		<h1 class="govuk-heading-xl" data-cy="@Select.ProjectType.ManageConversion.Heading">Manage an academy conversion</h1>
+            <h2 class="govuk-heading-l" test-id="projectCount" @Select.Heading.ToData("cy")>Projects</h2>
 		<table class="govuk-table">
 			<caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Projects (@Model.ProjectCount)</caption>
 			<thead class="govuk-table__head">

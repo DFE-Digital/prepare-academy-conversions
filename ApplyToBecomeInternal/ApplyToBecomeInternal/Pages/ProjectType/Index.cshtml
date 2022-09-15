@@ -1,5 +1,6 @@
 ﻿@page "/project-type"
 @using ApplyToBecome.Data.Models
+@using ApplyToBecomeInternal.Utils
 
 @model ApplyToBecomeInternal.Pages.ProjectType.IndexModel
 @{
@@ -10,7 +11,7 @@
     <partial name="_ErrorSummary" />
 }
 
-    <h1 class="govuk-heading-l">What do you want to do?</h1>
+    <h1 class="govuk-heading-l" @Select.Heading.ToData("cy")>What do you want to do?</h1>
 
     <form method="post">
         <div class="govuk-form-group">
@@ -38,7 +39,7 @@
                 </div>
             </fieldset>
         </div>
-        <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+        <button class="govuk-button" data-module="govuk-button" id="submit-btn" @Select.Common.SubmitButton.ToData("cy")>
             Continue
         </button>
     </form>
