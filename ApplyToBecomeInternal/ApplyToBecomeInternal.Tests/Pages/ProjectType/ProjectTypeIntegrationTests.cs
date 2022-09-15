@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -23,7 +24,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectType
 		public async Task Should_display_labels_for_radio_with_correct_value()
 		{
 			await OpenUrlAsync("/project-type");
-
+			var test = Document.QuerySelector("label[for=transfer-radio]")!.Text();
 			Document.QuerySelector("label[for=conversion-radio]")!.Text().Should().Contain("Manage an academy conversion");
 			Document.QuerySelector("label[for=transfer-radio]")!.Text().Should().Contain("Manage an academy transfer");
 		}
