@@ -53,7 +53,7 @@ The Project Type (Landing page) presents a two-option choice (Manage an academy 
 All pages in the Legal Requirements section present a three-option choice (Yes, No, Not Applicable) all pages use the same selectors for these:
 
 - `select-legal-input-yes` - The radio button for the `Yes` option
-- `select-legal-input-no` - The raddio button for the `No` option
+- `select-legal-input-no` - The radio button for the `No` option
 - `select-legal-input-notapplicable` - The radio button for the `Not applicable` option
 
 ### Summary Page Selectors
