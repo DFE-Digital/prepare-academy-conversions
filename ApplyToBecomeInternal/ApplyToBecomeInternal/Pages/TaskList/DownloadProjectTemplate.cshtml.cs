@@ -83,10 +83,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			ApiResponse<ApplyToBecome.Data.Models.AcademyConversion.LegalRequirements> legalRequirements =
 				await _legalRequirementsRepository.GetRequirementsByProjectId(id);
 
-			project.GoverningBodyResolution = legalRequirements.Body.GoverningBodyApproved.ToString();
-			project.Consultation = legalRequirements.Body.ConsultationDone.ToString();
-			project.DiocesanConsent = legalRequirements.Body.DiocesanConsent.ToString();
-			project.FoundationConsent = legalRequirements.Body.FoundationConsent.ToString();
+			project.GoverningBodyResolution = legalRequirements.Body.GoverningBodyApproved.ToDescription();
+			project.Consultation = legalRequirements.Body.ConsultationDone.ToDescription();
+			project.DiocesanConsent = legalRequirements.Body.DiocesanConsent.ToDescription();
+			project.FoundationConsent = legalRequirements.Body.FoundationConsent.ToDescription();
 		}
 
 		private void AddOfstedInformation(DocumentBuilder builder, HtbTemplate document, AcademyConversionProject project)

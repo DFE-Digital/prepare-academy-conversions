@@ -78,10 +78,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				await _legalRequirementsRepository.GetRequirementsByProjectId(id);
 			if (Project != null)
 			{
-				Project.GoverningBodyResolution = legalRequirements.Body.GoverningBodyApproved.ToString();
-				Project.Consultation = legalRequirements.Body.ConsultationDone.ToString();
-				Project.DiocesanConsent = legalRequirements.Body.DiocesanConsent.ToString();
-				Project.FoundationConsent = legalRequirements.Body.FoundationConsent.ToString();
+				Project.GoverningBodyResolution = legalRequirements.Body.GoverningBodyApproved.ToDescription();
+				Project.Consultation = legalRequirements.Body.ConsultationDone.ToDescription();
+				Project.DiocesanConsent = legalRequirements.Body.DiocesanConsent.ToDescription();
+				Project.FoundationConsent = legalRequirements.Body.FoundationConsent.ToDescription();
 				Project.LegalRequirementsSectionComplete = legalRequirements.Body.IsComplete;
 			}
 

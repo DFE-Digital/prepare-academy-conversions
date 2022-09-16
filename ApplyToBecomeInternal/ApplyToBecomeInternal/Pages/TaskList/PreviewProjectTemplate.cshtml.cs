@@ -2,6 +2,7 @@
 using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecome.Data.Services;
 using ApplyToBecome.Data.Services.Interfaces;
+using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Services;
 using ApplyToBecomeInternal.ViewModels;
@@ -52,10 +53,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				await _legalRequirementsRepository.GetRequirementsByProjectId(id);
 			if (Project != null)
 			{
-				Project.GoverningBodyResolution = legalRequirements.Body.GoverningBodyApproved.ToString();
-				Project.Consultation = legalRequirements.Body.ConsultationDone.ToString();
-				Project.DiocesanConsent = legalRequirements.Body.DiocesanConsent.ToString();
-				Project.FoundationConsent = legalRequirements.Body.FoundationConsent.ToString();
+				Project.GoverningBodyResolution = legalRequirements.Body.GoverningBodyApproved.ToDescription();
+				Project.Consultation = legalRequirements.Body.ConsultationDone.ToDescription();
+				Project.DiocesanConsent = legalRequirements.Body.DiocesanConsent.ToDescription();
+				Project.FoundationConsent = legalRequirements.Body.FoundationConsent.ToDescription();
 			}
 			// 16 plus = 6, All-through = 7, Middle deemed primary = 3, Middle deemed secondary = 5, Not applicable = 0, Nursery = 1, Primary = 2, Secondary = 4
 			TaskList = TaskListViewModel.Build(Project);
