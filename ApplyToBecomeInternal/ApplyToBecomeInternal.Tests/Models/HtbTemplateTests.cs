@@ -61,6 +61,11 @@ namespace ApplyToBecomeInternal.Tests.Models
 				Assert.Equal(_project.RisksAndIssues, _template.RisksAndIssues);
 				Assert.Equal(_project.EqualitiesImpactAssessmentConsidered, _template.EqualitiesImpactAssessmentConsidered);
 				Assert.Equal(_schoolPerformance, _template.SchoolPerformance);
+
+				Assert.Equal(_project.GoverningBodyResolution, _template.GoverningBodyResolution);
+				Assert.Equal(_project.Consultation, _template.Consultation);
+				Assert.Equal(_project.DiocesanConsent, _template.DiocesanConsent);
+				Assert.Equal(_project.FoundationConsent, _template.FoundationConsent);
 			}
 
 			[Fact]

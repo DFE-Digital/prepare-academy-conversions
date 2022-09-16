@@ -105,7 +105,7 @@
 				</li>
 				<li class="app-task-list__item">
 					<span class="app-task-list__task-name">
-						<a class="govuk-link" asp-page="@Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page" asp-route-id="@Model.Project.Id" aria-describedby="risks-and-issues-status">
+                        <a class="govuk-link" asp-page="@Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page" asp-route-id="@Model.Project.Id" aria-describedby="risks-and-issues">
 							Risks and issues
 						</a>
 					</span>
@@ -119,8 +119,8 @@
 							Legal requirements
 						</a>
 					</span>
-					<strong class="govuk-tag @Model.LegalRequirementsStatus.ToTagCssClass() app-task-list__tag" id="legal-status" @Select.TaskList.LegalRequirements.Status.ToData("cy")>
-						@Model.LegalRequirementsStatus.ToDescription()
+					<strong class="govuk-tag @Model.TaskList.LegalRequirementsTaskListStatus.CssClass app-task-list__tag" id="legal-status" @Select.TaskList.LegalRequirements.Status.ToData("cy")>
+						@Model.TaskList.LegalRequirementsTaskListStatus.Status
 					</strong>
 				</li>
 				<li class="app-task-list__item">
