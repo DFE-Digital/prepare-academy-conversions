@@ -89,6 +89,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.RisksAndIssues
 
 			await NavigateAsync("Legal requirements");
 
+			Document.QuerySelector<IHtmlInputElement>("#legal-requirements-complete").IsChecked.Should().BeFalse();
+
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");

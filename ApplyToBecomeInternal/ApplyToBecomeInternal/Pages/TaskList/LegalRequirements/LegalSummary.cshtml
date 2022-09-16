@@ -101,7 +101,7 @@
 			<div class="govuk-form-group">
 				<div class="govuk-checkboxes" data-module="govuk-checkboxes">
 					<div class="govuk-checkboxes__item">
-						<input asp-for="@Model.IsComplete" class="govuk-checkboxes__input" type="checkbox" data-cy="@Select.Legal.Summary.IsComplete">
+                        <input asp-for="@Model.IsComplete" class="govuk-checkboxes__input" type="checkbox" data-cy="@Select.Legal.Summary.IsComplete" id="legal-requirements-complete">
 						<label asp-for="@Model.IsComplete" class="govuk-label govuk-checkboxes__label">
 							Mark this section as complete, you can still make changes later
 						</label>
