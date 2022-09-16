@@ -66,6 +66,11 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				Project.Consultation = legalRequirements.Body.ConsultationDone.ToString();
 				Project.DiocesanConsent = legalRequirements.Body.DiocesanConsent.ToString();
 				Project.FoundationConsent = legalRequirements.Body.FoundationConsent.ToString();
+				Project.LegalRequirementsSectionComplete = legalRequirements.Body.IsComplete;
+			}
+			if (legalRequirements.Success)
+			{
+				LegalRequirementsStatus = legalRequirements.Body.Status;
 			}
 			// 16 plus = 6, All-through = 7, Middle deemed primary = 3, Middle deemed secondary = 5, Not applicable = 0, Nursery = 1, Primary = 2, Secondary = 4
 			if (Project != null) TaskList = TaskListViewModel.Build(Project);
@@ -74,14 +79,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				TaskList.HasKeyStage2PerformanceTables = keyStagePerformance.HasKeyStage2PerformanceTables;
 				TaskList.HasKeyStage4PerformanceTables = keyStagePerformance.HasKeyStage4PerformanceTables;
 				TaskList.HasKeyStage5PerformanceTables = keyStagePerformance.HasKeyStage5PerformanceTables;
+				
 			}
 
 			
 
-			if (legalRequirements.Success)
-			{
-				LegalRequirementsStatus = legalRequirements.Body.Status;
-			}
+			
 
 			return Page();
 		}
