@@ -40,7 +40,7 @@ describe('103195 Record new Approved decision', () => {
         cy.continueBtn().click()
         // preview answers before submit
         checkSummary()
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
         checkSummary()
