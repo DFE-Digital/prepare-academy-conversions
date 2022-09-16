@@ -1,5 +1,7 @@
+using ApplyToBecome.Data;
 using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Services;
+using ApplyToBecome.Data.Services.Interfaces;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
 using DocumentGeneration;
@@ -20,15 +22,18 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 		private readonly SchoolPerformanceService _schoolPerformanceService;
 		private readonly GeneralInformationService _generalInformationService;
 		private readonly KeyStagePerformanceService _keyStagePerformanceService;
+		private readonly ILegalRequirementsRepository _legalRequirementsRepository;
 
 		public GenerateHTBTemplateModel(SchoolPerformanceService schoolPerformanceService,
 			GeneralInformationService generalInformationService,
 			IAcademyConversionProjectRepository repository,
-			KeyStagePerformanceService keyStagePerformanceService) : base(repository)
+			KeyStagePerformanceService keyStagePerformanceService,
+			ILegalRequirementsRepository legalRequirementsRepository) : base(repository)
 		{
 			_schoolPerformanceService = schoolPerformanceService;
 			_generalInformationService = generalInformationService;
 			_keyStagePerformanceService = keyStagePerformanceService;
+			_legalRequirementsRepository = legalRequirementsRepository;
 		}
 
 		public string ErrorPage
@@ -54,6 +59,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			}
 
 			var project = response.Body;
+			await AddLegalRequirementsInformation(id, project);
+
 			var schoolPerformance = await _schoolPerformanceService.GetSchoolPerformanceByUrn(project.Urn.ToString());
 			var generalInformation = await _generalInformationService.GetGeneralInformationByUrn(project.Urn.ToString());
 			var keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(project.Urn.ToString());
@@ -69,6 +76,17 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			var documentByteArray = documentBuilder.Build();
 
 			return File(documentByteArray, "application/vnd.ms-word.document", $"{document.SchoolName}-project-template-{DateTime.Today.ToString("dd-MM-yyyy")}.docx");
+		}
+
+		private async Task AddLegalRequirementsInformation(int id, AcademyConversionProject project)
+		{
+			ApiResponse<ApplyToBecome.Data.Models.AcademyConversion.LegalRequirements> legalRequirements =
+				await _legalRequirementsRepository.GetRequirementsByProjectId(id);
+
+			project.GoverningBodyResolution = legalRequirements.Body.GoverningBodyApproved.ToString();
+			project.Consultation = legalRequirements.Body.ConsultationDone.ToString();
+			project.DiocesanConsent = legalRequirements.Body.DiocesanConsent.ToString();
+			project.FoundationConsent = legalRequirements.Body.FoundationConsent.ToString();
 		}
 
 		private void AddOfstedInformation(DocumentBuilder builder, HtbTemplate document, AcademyConversionProject project)

@@ -58,20 +58,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			}
 
 			KeyStagePerformance keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(Project?.SchoolURN);
-			ApiResponse<ApplyToBecome.Data.Models.AcademyConversion.LegalRequirements> legalRequirements =
-				await _legalRequirementsRepository.GetRequirementsByProjectId(id);
-			if (Project != null)
-			{
-				Project.GoverningBodyResolution = legalRequirements.Body.GoverningBodyApproved.ToString();
-				Project.Consultation = legalRequirements.Body.ConsultationDone.ToString();
-				Project.DiocesanConsent = legalRequirements.Body.DiocesanConsent.ToString();
-				Project.FoundationConsent = legalRequirements.Body.FoundationConsent.ToString();
-				Project.LegalRequirementsSectionComplete = legalRequirements.Body.IsComplete;
-			}
-			if (legalRequirements.Success)
-			{
-				LegalRequirementsStatus = legalRequirements.Body.Status;
-			}
+			await AttachLegalRequirements(id);
 			// 16 plus = 6, All-through = 7, Middle deemed primary = 3, Middle deemed secondary = 5, Not applicable = 0, Nursery = 1, Primary = 2, Secondary = 4
 			if (Project != null) TaskList = TaskListViewModel.Build(Project);
 			if (TaskList != null)
@@ -87,6 +74,25 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			
 
 			return Page();
+		}
+
+		private async Task AttachLegalRequirements(int id)
+		{
+			ApiResponse<ApplyToBecome.Data.Models.AcademyConversion.LegalRequirements> legalRequirements =
+				await _legalRequirementsRepository.GetRequirementsByProjectId(id);
+			if (Project != null)
+			{
+				Project.GoverningBodyResolution = legalRequirements.Body.GoverningBodyApproved.ToString();
+				Project.Consultation = legalRequirements.Body.ConsultationDone.ToString();
+				Project.DiocesanConsent = legalRequirements.Body.DiocesanConsent.ToString();
+				Project.FoundationConsent = legalRequirements.Body.FoundationConsent.ToString();
+				Project.LegalRequirementsSectionComplete = legalRequirements.Body.IsComplete;
+			}
+
+			if (legalRequirements.Success)
+			{
+				LegalRequirementsStatus = legalRequirements.Body.Status;
+			}
 		}
 	}
 }
