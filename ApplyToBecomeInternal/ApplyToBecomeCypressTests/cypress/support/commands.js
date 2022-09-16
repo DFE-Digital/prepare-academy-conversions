@@ -235,10 +235,6 @@ Cypress.Commands.add('recordDecisionDate', (day, month, year) => {
     cy.get('[id="decision-date-year"]').clear().type(year)
 })
 
-// 'Record this decision' button
-Cypress.Commands.add('recordThisDecision', () => {
-    cy.get('[id="submit-btn"]')
-})
 // Change decision button
 Cypress.Commands.add('changeDecision', () => {
     cy.get('[id="record-decision-link"]')

@@ -18,14 +18,14 @@ describe('Landing Page',() => {
 
     it('TC01: Navigates to Conversion site from landing page, and clicks back to landing page', () => {
         cy.get('[id="conversion-radio"]').click()
-        cy.get('[id="submit-btn"]').click()
+        cy.continueBtn().click()
         cy.get('[class="govuk-heading-xl"]').should('contain.text', 'Manage an academy conversion')
         cy.get('[class="govuk-back-link"]').click()
         cy.get('[class="govuk-heading-l"]').should('contain.text', 'What do you want to do?')
     })
 
     it('TC02: Checks error message on unselected project' ,() => {
-        cy.get('[id="submit-btn"]').click()
+        cy.continueBtn().click()
         cy.get('[id="ProjectType-error-link "]').should('contain.text', 'Select a project type')
     })
 })
