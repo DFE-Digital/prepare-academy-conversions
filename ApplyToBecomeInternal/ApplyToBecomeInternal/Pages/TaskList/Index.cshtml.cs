@@ -69,10 +69,6 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 				
 			}
 
-			
-
-			
-
 			return Page();
 		}
 
