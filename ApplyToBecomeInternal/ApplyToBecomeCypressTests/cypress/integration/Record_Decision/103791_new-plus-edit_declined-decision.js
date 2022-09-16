@@ -52,7 +52,7 @@ describe('103791 Edit Declined journey', () => {
         // check date
         cy.decisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
         cy.visit(projecList)
@@ -93,7 +93,7 @@ describe('103791 Edit Declined journey', () => {
         declinedReasons.should('contain.text', 'Performance details 2nd test')
         cy.decisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
         cy.visit(projecList)
@@ -135,7 +135,7 @@ describe('103791 Edit Declined journey', () => {
         declinedReasons.should('contain.text', 'Governance details 2nd test')
         cy.decisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
         cy.visit(projecList)
@@ -175,7 +175,7 @@ describe('103791 Edit Declined journey', () => {
         declinedReasons.should('contain.text', 'Choice of trust:')
         declinedReasons.should('contain.text', 'Trust details 2nd test')
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
         cy.visit(projecList)
@@ -216,7 +216,7 @@ describe('103791 Edit Declined journey', () => {
         declinedReasons.should('contain.text', 'Other details 2nd test')
         cy.decisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
         cy.visit(projecList)

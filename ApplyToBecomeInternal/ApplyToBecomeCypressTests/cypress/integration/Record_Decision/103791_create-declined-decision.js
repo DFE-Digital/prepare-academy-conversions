@@ -40,7 +40,7 @@ describe('103791 Create Declined journey', () => {
         cy.continueBtn().click()
         checkSummary()
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
         checkSummary()
