@@ -140,6 +140,24 @@ namespace ApplyToBecomeInternal.Models
 		[ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
 		public bool? RisksAndIssuesSectionComplete { get; set; }
 
+		// legal requirements
+		[BindProperty(Name = "legal-requirements-complete")]
+		[ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
+		public bool? LegalRequirementsSectionComplete { get; set; }
+		[BindProperty(Name = "governing-body-approved")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
+		public string GoverningBodyResolution { get; set; }
+		[BindProperty(Name = "consultation")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
+		public string Consultation { get; set; }
+		[BindProperty(Name = "diocesan-consent")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
+		public string DiocesanConsent { get; set; }
+		[BindProperty(Name = "foundation-consent")]
+		[DisplayFormat(ConvertEmptyStringToNull = false)]
+		public string FoundationConsent { get; set; }
+		
+
 		// school budget info
 		[BindProperty(Name = "finance-current-year-2021")]
 		[ModelBinder(BinderType = typeof(MonetaryInputModelBinder))]

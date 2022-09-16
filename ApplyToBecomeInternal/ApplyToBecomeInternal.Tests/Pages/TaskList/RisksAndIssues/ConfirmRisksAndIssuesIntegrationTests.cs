@@ -74,6 +74,29 @@ namespace ApplyToBecomeInternal.Tests.Pages.RisksAndIssues
 		}
 
 		[Fact]
+		public async Task Should_be_not_started_and_display_empty_when_legal_requirements_not_prepopulated()
+		{
+			var project = AddGetProject(project =>
+			{
+				project.LegalRequirementsSectionComplete = false;
+			});
+			AddPatchProject(project, r => r.LegalRequirementsSectionComplete, false);
+
+			await OpenUrlAsync($"/task-list/{project.Id}");
+
+			Document.QuerySelector("#legal-status").TextContent.Trim().Should().Be("Not Started");
+			Document.QuerySelector("#legal-status").ClassName.Should().Contain("grey");
+
+			await NavigateAsync("Legal requirements");
+
+			Document.QuerySelector<IHtmlInputElement>("#legal-requirements-complete").IsChecked.Should().BeFalse();
+
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+		}
+
+		[Fact]
 		public async Task Should_show_error_summary_when_there_is_an_API_error()
 		{
 			var project = AddGetProject();
