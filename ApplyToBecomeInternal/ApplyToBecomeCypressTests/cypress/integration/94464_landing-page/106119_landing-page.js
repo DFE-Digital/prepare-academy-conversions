@@ -23,4 +23,9 @@ describe('Landing Page',() => {
         cy.get('[class="govuk-back-link"]').click()
         cy.get('[class="govuk-heading-l"]').should('contain.text', 'What do you want to do?')
     })
+
+    it('TC02: Checks error message on unselected project' ,() => {
+        cy.get('[id="submit-btn"]').click()
+        cy.get('[id="ProjectType-error-link "]').should('contain.text', 'Select a project type')
+    })
 })
