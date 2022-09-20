@@ -26,7 +26,7 @@ namespace ApplyToBecome.Data.Services
 
 		public async Task<ApiResponse<IEnumerable<AcademyConversionProject>>> GetAllProjects(int page = 1, int count = 50)
 		{
-			var response = await _httpClient.GetAsync($"v2/conversion-projects?page={page}&count={count}");
+			var response = await _httpClient.GetAsync($"legacy/projects?page={page}&count={count}");
 			if (!response.IsSuccessStatusCode)
 			{
 				return new ApiResponse<IEnumerable<AcademyConversionProject>>(response.StatusCode, Enumerable.Empty<AcademyConversionProject>());
@@ -39,7 +39,7 @@ namespace ApplyToBecome.Data.Services
 
 		public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)
 		{
-			var response = await _httpClient.GetAsync($"conversion-projects/{id}");
+			var response = await _httpClient.GetAsync($"legacy/project/{id}");
 			if (!response.IsSuccessStatusCode)
 			{
 				return new ApiResponse<AcademyConversionProject>(response.StatusCode, null);
@@ -51,7 +51,7 @@ namespace ApplyToBecome.Data.Services
 
 		public async Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject)
 		{
-			var response = await _httpClient.PatchAsync($"conversion-projects/{id}", JsonContent.Create(updateProject));
+			var response = await _httpClient.PatchAsync($"legacy/project/{id}", JsonContent.Create(updateProject));
 			if (!response.IsSuccessStatusCode)
 			{
 				return new ApiResponse<AcademyConversionProject>(response.StatusCode, null);
