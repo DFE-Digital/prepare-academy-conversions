@@ -24,7 +24,7 @@ Cypress._.each(['iphone-x'], (viewport) => {
             .then(() => {
                 cy.disMiles().click().type('10')
             })
-            cy.get('[id="distance-to-trust-headquarters-additional-information"').click().type('Testing')
+            cy.get('[id="distance-to-trust-headquarters-additional-information"]').click().type('Testing')
             .then(() => {
                 cy.saveContinue().click()
                 })
