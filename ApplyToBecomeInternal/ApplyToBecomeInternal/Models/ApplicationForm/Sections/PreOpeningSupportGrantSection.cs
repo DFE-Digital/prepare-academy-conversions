@@ -1,5 +1,4 @@
 using ApplyToBecome.Data.Models.Application;
-using ApplyToBecomeInternal.Extensions;
 using System.Collections.Generic;
 
 namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections

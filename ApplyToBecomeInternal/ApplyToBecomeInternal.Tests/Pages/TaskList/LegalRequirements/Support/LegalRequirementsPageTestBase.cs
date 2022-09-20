@@ -1,7 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models;
-using ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers;
+using ApplyToBecomeInternal.Models;
 using System;
 using System.Threading.Tasks;
 using Xunit;
