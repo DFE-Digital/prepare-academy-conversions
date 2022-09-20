@@ -20,9 +20,9 @@
 					Governing body resolution
 				</dt>
 				<dd class="govuk-summary-list__value">
-					@if (Model.LegalRequirements.GoverningBodyApproved.HasValue)
+					@if (Model.Requirements.GoverningBodyApproved.HasValue)
 					{
-                        <span id="governing-body-approved" @Select.Legal.Summary.GoverningBody.Status.ToData("cy")>@Model.LegalRequirements.GoverningBodyApproved.ToDescription()</span>
+                        <span id="governing-body-approved" @Select.Legal.Summary.GoverningBody.Status.ToData("cy")>@Model.Requirements.GoverningBodyApproved.ToDescription()</span>
 					}
 					else
 					{
@@ -40,9 +40,9 @@
 					Consultation
 				</dt>
 				<dd class="govuk-summary-list__value">
-					@if (Model.LegalRequirements.ConsultationDone.HasValue)
+					@if (Model.Requirements.ConsultationDone.HasValue)
 					{
-                        <span id="consultation" @Select.Legal.Summary.Consultation.Status.ToData("cy")>@Model.LegalRequirements.ConsultationDone.ToDescription()</span>
+                        <span id="consultation" @Select.Legal.Summary.Consultation.Status.ToData("cy")>@Model.Requirements.ConsultationDone.ToDescription()</span>
 					}
 					else
 					{
@@ -60,9 +60,9 @@
 					Diocesan consent
 				</dt>
 				<dd class="govuk-summary-list__value">
-					@if (Model.LegalRequirements.DiocesanConsent.HasValue)
+					@if (Model.Requirements.DiocesanConsent.HasValue)
 					{
-                        <span id="diocesan-consent" @Select.Legal.Summary.DiocesanConsent.Status.ToData("cy")>@Model.LegalRequirements.DiocesanConsent.ToDescription()</span>
+                        <span id="diocesan-consent" @Select.Legal.Summary.DiocesanConsent.Status.ToData("cy")>@Model.Requirements.DiocesanConsent.ToDescription()</span>
 					}
 					else
 					{
@@ -80,9 +80,9 @@
 					Foundation consent
 				</dt>
 				<dd class="govuk-summary-list__value">
-					@if (Model.LegalRequirements.FoundationConsent.HasValue)
+					@if (Model.Requirements.FoundationConsent.HasValue)
 					{
-						<span id="foundation-consent" @Select.Legal.Summary.FoundationConsent.Status.ToData("cy")>@Model.LegalRequirements.FoundationConsent.ToDescription()</span>
+						<span id="foundation-consent" @Select.Legal.Summary.FoundationConsent.Status.ToData("cy")>@Model.Requirements.FoundationConsent.ToDescription()</span>
 					}
 					else
 					{

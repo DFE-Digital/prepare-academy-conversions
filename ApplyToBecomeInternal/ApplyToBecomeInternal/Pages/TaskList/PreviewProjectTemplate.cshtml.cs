@@ -16,15 +16,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 	public class PreviewHTBTemplateModel : BaseAcademyConversionProjectPageModel
 	{
 		private readonly KeyStagePerformanceService _keyStagePerformanceService;
-		private readonly ILegalRequirementsRepository _legalRequirementsRepository;
 		private readonly ErrorService _errorService;
 
 		public PreviewHTBTemplateModel(KeyStagePerformanceService keyStagePerformanceService, 
-			IAcademyConversionProjectRepository repository, ErrorService errorService,
-			ILegalRequirementsRepository legalRequirementsRepository) : base(repository)
+			IAcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
 		{
 			_keyStagePerformanceService = keyStagePerformanceService;
-			_legalRequirementsRepository = legalRequirementsRepository;
 			_errorService = errorService;
 		}
 
@@ -49,15 +46,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			}
 
 			var keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(Project.SchoolURN);
-			ApiResponse<ApplyToBecome.Data.Models.AcademyConversion.LegalRequirements> legalRequirements =
-				await _legalRequirementsRepository.GetRequirementsByProjectId(id);
-			if (Project != null)
-			{
-				Project.GoverningBodyResolution = legalRequirements.Body.GoverningBodyApproved.ToDescription();
-				Project.Consultation = legalRequirements.Body.ConsultationDone.ToDescription();
-				Project.DiocesanConsent = legalRequirements.Body.DiocesanConsent.ToDescription();
-				Project.FoundationConsent = legalRequirements.Body.FoundationConsent.ToDescription();
-			}
+			
 			// 16 plus = 6, All-through = 7, Middle deemed primary = 3, Middle deemed secondary = 5, Not applicable = 0, Nursery = 1, Primary = 2, Secondary = 4
 			TaskList = TaskListViewModel.Build(Project);
 			TaskList.HasKeyStage2PerformanceTables = keyStagePerformance.HasKeyStage2PerformanceTables;
