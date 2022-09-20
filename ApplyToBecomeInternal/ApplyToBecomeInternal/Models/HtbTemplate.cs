@@ -115,6 +115,16 @@ namespace ApplyToBecomeInternal.Models
 		[DocumentText("EqualitiesImpactAssessmentConsidered")]
 		public string EqualitiesImpactAssessmentConsidered { get; set; }
 
+		// legal requirements
+		[DocumentText("GoverningBodyResolution")]
+		public string GoverningBodyResolution { get; set; }
+		[DocumentText("Consultation")]
+		public string Consultation { get; set; }
+		[DocumentText("DiocesanConsent")]
+		public string DiocesanConsent { get; set; }
+		[DocumentText("FoundationConsent")]
+		public string FoundationConsent { get; set; }
+
 		// school budget info
 		[DocumentText("RevenueCarryForwardAtEndMarchCurrentYear")]
 		public string RevenueCarryForwardAtEndMarchCurrentYear { get; set; }
@@ -218,6 +228,10 @@ namespace ApplyToBecomeInternal.Models
 				RationaleForTrust = project.RationaleForTrust,
 				RisksAndIssues = project.RisksAndIssues,
 				EqualitiesImpactAssessmentConsidered = project.EqualitiesImpactAssessmentConsidered,
+				GoverningBodyResolution = project.GoverningBodyResolution,
+				Consultation = project.Consultation,
+				DiocesanConsent = project.DiocesanConsent,
+				FoundationConsent = project.FoundationConsent,
 				RevenueCarryForwardAtEndMarchCurrentYear = project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true),
 				ProjectedRevenueBalanceAtEndMarchNextYear = project.ProjectedRevenueBalanceAtEndMarchNextYear?.ToMoneyString(true),
 				CapitalCarryForwardAtEndMarchCurrentYear = project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true),

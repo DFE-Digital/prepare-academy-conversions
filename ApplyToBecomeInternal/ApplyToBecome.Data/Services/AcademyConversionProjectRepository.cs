@@ -1,4 +1,5 @@
 ﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -15,10 +16,12 @@ namespace ApplyToBecome.Data.Services
 	public class AcademyConversionProjectRepository : IAcademyConversionProjectRepository
 	{
 		private readonly HttpClient _httpClient;
+		private readonly ILegalRequirementsRepository _legalRequirementsRepository;
 
-		public AcademyConversionProjectRepository(IHttpClientFactory httpClientFactory)
+		public AcademyConversionProjectRepository(IHttpClientFactory httpClientFactory, ILegalRequirementsRepository legalRequirementsRepository)
 		{
 			_httpClient = httpClientFactory.CreateClient("TramsClient");
+			_legalRequirementsRepository = legalRequirementsRepository;
 		}
 
 		public async Task<ApiResponse<IEnumerable<AcademyConversionProject>>> GetAllProjects(int page = 1, int count = 50)

@@ -61,6 +61,12 @@ namespace ApplyToBecomeInternal.ViewModels
 			EqualitiesImpactAssessmentConsidered = project.EqualitiesImpactAssessmentConsidered;
 			RisksAndIssuesSectionComplete = project.RisksAndIssuesSectionComplete ?? false;
 
+			GoverningBodyResolution = project.GoverningBodyResolution;
+			Consultation = project.Consultation;
+			DiocesanConsent = project.DiocesanConsent;
+			FoundationConsent = project.FoundationConsent;
+			LegalRequirementsSectionComplete = project.LegalRequirementsSectionComplete ?? false;
+
 			YearOneProjectedCapacity = project.YearOneProjectedCapacity;
 			YearOneProjectedPupilNumbers = project.YearOneProjectedPupilNumbers;
 			YearTwoProjectedCapacity = project.YearTwoProjectedCapacity;
@@ -140,6 +146,13 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string RisksAndIssues { get; set; }
 		public string EqualitiesImpactAssessmentConsidered { get; set; }
 		public bool RisksAndIssuesSectionComplete { get; set; }
+
+		// legal requirements
+		public string GoverningBodyResolution { get; set; }
+		public string Consultation { get; set; }
+		public string DiocesanConsent { get; set; }
+		public string FoundationConsent { get; set; }
+		public bool LegalRequirementsSectionComplete { get; set; }
 
 		// pupil schools forecast
 		public int? YearOneProjectedCapacity { get; set; }

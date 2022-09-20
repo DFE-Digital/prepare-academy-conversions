@@ -22,5 +22,11 @@ describe('Landing Page',() => {
 		cy.get('[data-cy="select-heading"]').should('contain.text', 'Manage an academy conversion')
 		cy.get('[data-cy="select-backlink"]').click()
 		cy.get('[data-cy="select-heading"').should('contain.text', 'What do you want to do?')
+
+    })
+
+    it('TC02: Checks error message on unselected project' ,() => {
+        cy.continueBtn().click()
+        cy.get('[id="ProjectType-error-link "]').should('contain.text', 'Select a project type')
     })
 })
