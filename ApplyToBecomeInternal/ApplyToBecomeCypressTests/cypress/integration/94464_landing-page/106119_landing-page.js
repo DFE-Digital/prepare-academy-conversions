@@ -21,7 +21,7 @@ describe('Landing Page',() => {
 		cy.get('[data-cy="select-common-submitbutton"]').click()
 		cy.get('[data-cy="select-heading"]').should('contain.text', 'Manage an academy conversion')
 		cy.get('[data-cy="select-backlink"]').click()
-		cy.get('[data-cy="select-heading"').should('contain.text', 'What do you want to do?')
+		cy.get('[data-cy="select-heading"]').should('contain.text', 'What do you want to do?')
     })
 
     it('TC02: Checks error message on unselected project' ,() => {
