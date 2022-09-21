@@ -53,7 +53,7 @@ describe('Edit Deferred journey', () => {
         deferredReasons.should('contain.text', 'Additional info 2nd time')
         cy.deferredDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
         cy.visit(projecList)
@@ -96,7 +96,7 @@ describe('Edit Deferred journey', () => {
         // check date
         cy.deferredDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
         cy.visit(projecList)
@@ -138,7 +138,7 @@ describe('Edit Deferred journey', () => {
         // check date
         cy.deferredDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
         cy.visit(projecList)
@@ -180,7 +180,7 @@ describe('Edit Deferred journey', () => {
 
         cy.deferredDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
         cy.visit(projecList)
@@ -221,7 +221,7 @@ describe('Edit Deferred journey', () => {
          deferredReasons.should('contain.text', 'other details 2nd time')
         cy.deferredDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
         cy.visit(projecList)

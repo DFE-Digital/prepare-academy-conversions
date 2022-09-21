@@ -21,11 +21,11 @@
 				<dd class="govuk-summary-list__value">
 					@if (Model.LegalRequirements.GoverningBodyApproved.HasValue)
 					{
-						<span @Select.Legal.Summary.GoverningBody.Status.ToData("cy")>@Model.LegalRequirements.GoverningBodyApproved.ToDescription()</span>
+                        <span id="governing-body-approved" @Select.Legal.Summary.GoverningBody.Status.ToData("cy")>@Model.LegalRequirements.GoverningBodyApproved.ToDescription()</span>
 					}
 					else
 					{
-						<span class="empty" @Select.Legal.Summary.GoverningBody.Status.ToData("cy")>Empty</span>
+						<span id="governing-body-approved" class="empty" @Select.Legal.Summary.GoverningBody.Status.ToData("cy")>Empty</span>
 					}
 				</dd>
 				<dd class="govuk-summary-list__actions">
@@ -41,11 +41,11 @@
 				<dd class="govuk-summary-list__value">
 					@if (Model.LegalRequirements.ConsultationDone.HasValue)
 					{
-						<span @Select.Legal.Summary.Consultation.Status.ToData("cy")>@Model.LegalRequirements.ConsultationDone.ToDescription()</span>
+                        <span id="consultation" @Select.Legal.Summary.Consultation.Status.ToData("cy")>@Model.LegalRequirements.ConsultationDone.ToDescription()</span>
 					}
 					else
 					{
-						<span class="empty" @Select.Legal.Summary.Consultation.Status.ToData("cy")>Empty</span>
+						<span id="consultation" class="empty" @Select.Legal.Summary.Consultation.Status.ToData("cy")>Empty</span>
 					}
 				</dd>
 				<dd class="govuk-summary-list__actions">
@@ -61,11 +61,11 @@
 				<dd class="govuk-summary-list__value">
 					@if (Model.LegalRequirements.DiocesanConsent.HasValue)
 					{
-						<span @Select.Legal.Summary.DiocesanConsent.Status.ToData("cy")>@Model.LegalRequirements.DiocesanConsent.ToDescription()</span>
+                        <span id="diocesan-consent" @Select.Legal.Summary.DiocesanConsent.Status.ToData("cy")>@Model.LegalRequirements.DiocesanConsent.ToDescription()</span>
 					}
 					else
 					{
-						<span class="empty" @Select.Legal.Summary.DiocesanConsent.Status.ToData("cy")>Empty</span>
+                        <span id="diocesan-consent" class="empty" @Select.Legal.Summary.DiocesanConsent.Status.ToData("cy")>Empty</span>
 					}
 				</dd>
 				<dd class="govuk-summary-list__actions">
@@ -81,11 +81,11 @@
 				<dd class="govuk-summary-list__value">
 					@if (Model.LegalRequirements.FoundationConsent.HasValue)
 					{
-						<span @Select.Legal.Summary.FoundationConsent.Status.ToData("cy")>@Model.LegalRequirements.FoundationConsent.ToDescription()</span>
+						<span id="foundation-consent" @Select.Legal.Summary.FoundationConsent.Status.ToData("cy")>@Model.LegalRequirements.FoundationConsent.ToDescription()</span>
 					}
 					else
 					{
-						<span class="empty" @Select.Legal.Summary.FoundationConsent.Status.ToData("cy")>Empty</span>
+						<span id="foundation-consent" class="empty" @Select.Legal.Summary.FoundationConsent.Status.ToData("cy")>Empty</span>
 					}
 				</dd>
 				<dd class="govuk-summary-list__actions">
@@ -100,7 +100,7 @@
 			<div class="govuk-form-group">
 				<div class="govuk-checkboxes" data-module="govuk-checkboxes">
 					<div class="govuk-checkboxes__item">
-						<input asp-for="@Model.IsComplete" class="govuk-checkboxes__input" type="checkbox" data-cy="@Select.Legal.Summary.IsComplete">
+                        <input asp-for="@Model.IsComplete" class="govuk-checkboxes__input" type="checkbox" data-cy="@Select.Legal.Summary.IsComplete" id="legal-requirements-complete">
 						<label asp-for="@Model.IsComplete" class="govuk-label govuk-checkboxes__label">
 							Mark this section as complete, you can still make changes later
 						</label>

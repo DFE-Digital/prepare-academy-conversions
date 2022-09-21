@@ -45,7 +45,7 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.AprrovedConditionsSet().should('contain.text', 'This is a test')
         cy.ApprovedDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
     })
@@ -83,7 +83,7 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.AprrovedConditionsSet().should('contain.text', 'This is a test')
         cy.ApprovedDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
     })
@@ -120,7 +120,7 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.AprrovedConditionsSet().should('contain.text', 'This is a test')
         cy.ApprovedDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
     })
@@ -157,7 +157,7 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.AprrovedConditionsSet().should('contain.text', 'This is a test')
         cy.ApprovedDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
     })
@@ -195,7 +195,7 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.AprrovedConditionsSet().should('contain.text', 'This is a test')
         cy.ApprovedDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
     })
