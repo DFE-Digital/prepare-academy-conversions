@@ -65,6 +65,13 @@ namespace ApplyToBecome.Data.Models
 		public string EqualitiesImpactAssessmentConsidered { get; set; }
 		public bool? RisksAndIssuesSectionComplete { get; set; }
 
+		// legal requirements
+		public string GoverningBodyResolution { get; set; }
+		public string Consultation { get; set; }
+		public string DiocesanConsent { get; set; }
+		public string FoundationConsent { get; set; }
+		public bool? LegalRequirementsSectionComplete { get; set; }
+
 		// school budget info
 		public decimal? RevenueCarryForwardAtEndMarchCurrentYear { get; set; }
 		public decimal? ProjectedRevenueBalanceAtEndMarchNextYear { get; set; }

@@ -40,7 +40,7 @@ describe('Create Deferred journey', () => {
 
         checkSummary()
         // clicks on the record a decision button to submit
-        cy.recordThisDecision().click()
+        cy.continueBtn().click()
         // recorded decision confirmation        
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
         checkSummary()

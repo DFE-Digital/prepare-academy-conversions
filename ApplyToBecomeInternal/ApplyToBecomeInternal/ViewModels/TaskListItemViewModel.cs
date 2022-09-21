@@ -122,6 +122,24 @@ namespace ApplyToBecomeInternal.ViewModels
 			}
 		}
 
+		public static TaskListItemViewModel GetLegalRequirementsTaskListStatus(ProjectViewModel project)
+		{
+			if (project.LegalRequirementsSectionComplete)
+			{
+				return Completed;
+			}
+			else if (string.IsNullOrWhiteSpace(project.GoverningBodyResolution) &&
+			         string.IsNullOrWhiteSpace(project.Consultation) &&
+			         string.IsNullOrWhiteSpace(project.DiocesanConsent) &&
+			         string.IsNullOrWhiteSpace(project.FoundationConsent))
+			{
+				return NotStarted;
+			}
+
+			return InProgress;
+
+		}
+
 		public static TaskListItemViewModel GetSchoolBudgetInformationTaskListStatus(ProjectViewModel project)
 		{
 			if (project.SchoolBudgetInformationSectionComplete)
