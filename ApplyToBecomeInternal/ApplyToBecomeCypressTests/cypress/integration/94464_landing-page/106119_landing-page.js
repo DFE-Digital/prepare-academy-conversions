@@ -29,4 +29,9 @@ describe('Landing Page',() => {
         cy.continueBtn().click()
         cy.get('[id="ProjectType-error-link "]').should('contain.text', 'Select a project type')
     })
+
+    it('TC02: Checks error message on unselected project' ,() => {
+        cy.continueBtn().click()
+        cy.get('[id="ProjectType-error-link"]').should('contain.text', 'Select a project type')
+    })
 })

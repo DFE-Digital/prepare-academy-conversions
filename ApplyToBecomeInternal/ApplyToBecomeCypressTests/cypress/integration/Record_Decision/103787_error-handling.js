@@ -13,17 +13,17 @@ describe('103787 Error handling', () => {
         // Record the decision:
         cy.get('[id="record-decision-link"]').click()
         cy.continueBtn().click()
-        cy.get('[id="AdvisoryBoardDecision-error-link "]').should('contain.text', 'Select a decision')
+        cy.get('[id="AdvisoryBoardDecision-error-link"]').should('contain.text', 'Select a decision')
         cy.get('[id="approved-radio"]').click()
         cy.continueBtn().click()
         // Who made this decision:
         cy.continueBtn().click()
-        cy.get('[id="DecisionMadeBy-error-link "]').should('contain.text', 'Select who made the decision')
+        cy.get('[id="DecisionMadeBy-error-link"]').should('contain.text', 'Select who made the decision')
         cy.get('[id="regionaldirectorforregion-radio"]').click()
         cy.continueBtn().click()
         // Were conditions met:
         cy.continueBtn().click()
-        cy.get('[id="ApprovedConditionsSet-error-link "]').should('contain.text', 'Select whether any conditions were set')
+        cy.get('[id="ApprovedConditionsSet-error-link"]').should('contain.text', 'Select whether any conditions were set')
         cy.get('[id="no-radio"]').click()
         cy.continueBtn().click()
         // Date conversions:
@@ -35,12 +35,12 @@ describe('103787 Error handling', () => {
         // Record the decision:
         cy.get('[id="record-decision-link"]').click()
         cy.continueBtn().click()
-        cy.get('[id="AdvisoryBoardDecision-error-link "]').should('contain.text', 'Select a decision')
+        cy.get('[id="AdvisoryBoardDecision-error-link"]').should('contain.text', 'Select a decision')
         cy.get('[id="declined-radio"]').click()
         cy.continueBtn().click()
         // Who made this decision:
         cy.continueBtn().click()
-        cy.get('[id="DecisionMadeBy-error-link "]').should('contain.text', 'Select who made the decision')
+        cy.get('[id="DecisionMadeBy-error-link"]').should('contain.text', 'Select who made the decision')
         cy.get('[id="regionaldirectorforregion-radio"]').click()
 
         // continue to declined reason page
@@ -48,7 +48,7 @@ describe('103787 Error handling', () => {
 
         // trigger validation
         cy.continueBtn().click()
-        cy.get('[id="DeclinedReasonSet-error-link "]').should('contain.text', 'Select at least one reason')
+        cy.get('[id="DeclinedReasonSet-error-link"]').should('contain.text', 'Select at least one reason')
 
         // check all boxes on form
         cy.declineFinancebox().click()
@@ -59,11 +59,11 @@ describe('103787 Error handling', () => {
 
         // trigger declined reasons validation
         cy.continueBtn().click()
-        cy.get('[id="DeclineFinanceReason-error-link "]').should('contain.text', 'Enter a reason for selecting Finance')
-        cy.get('[id="DeclinePerformanceReason-error-link "]').should('contain.text', 'Enter a reason for selecting Performance')
-        cy.get('[id="DeclineGovernanceReason-error-link "]').should('contain.text', 'Enter a reason for selecting Governance')
-        cy.get('[id="DeclineChoiceOfTrustReason-error-link "]').should('contain.text', 'Enter a reason for selecting Choice of trust')
-        cy.get('[id="DeclineOtherReason-error-link "]').should('contain.text', 'Enter a reason for selecting Other')
+        cy.get('[id="DeclineFinanceReason-error-link"]').should('contain.text', 'Enter a reason for selecting Finance')
+        cy.get('[id="DeclinePerformanceReason-error-link"]').should('contain.text', 'Enter a reason for selecting Performance')
+        cy.get('[id="DeclineGovernanceReason-error-link"]').should('contain.text', 'Enter a reason for selecting Governance')
+        cy.get('[id="DeclineChoiceOfTrustReason-error-link"]').should('contain.text', 'Enter a reason for selecting Choice of trust')
+        cy.get('[id="DeclineOtherReason-error-link"]').should('contain.text', 'Enter a reason for selecting Other')
 
         // continue to decision date form
         cy.performanceBox().click()
@@ -82,12 +82,12 @@ describe('103787 Error handling', () => {
         // Record the decision:
         cy.get('[id="record-decision-link"]').click()
         cy.continueBtn().click()
-        cy.get('[id="AdvisoryBoardDecision-error-link "]').should('contain.text', 'Select a decision')
+        cy.get('[id="AdvisoryBoardDecision-error-link"]').should('contain.text', 'Select a decision')
         cy.get('[id="deferred-radio"]').click()
         cy.continueBtn().click()
         // Who made this decision:
         cy.continueBtn().click()
-        cy.get('[id="DecisionMadeBy-error-link "]').should('contain.text', 'Select who made the decision')
+        cy.get('[id="DecisionMadeBy-error-link"]').should('contain.text', 'Select who made the decision')
         cy.get('[id="regionaldirectorforregion-radio"]').click()
 
         // continue to deferred reason page
@@ -95,7 +95,7 @@ describe('103787 Error handling', () => {
 
         // trigger validation
         cy.continueBtn().click()
-        cy.get('[id="WasReasonGiven-error-link "]').should('contain.text', 'Select at least one reason')
+        cy.get('[id="WasReasonGiven-error-link"]').should('contain.text', 'Select at least one reason')
 
         // check all boxes on form
         cy.addInfoNeededBox().click()
@@ -105,10 +105,10 @@ describe('103787 Error handling', () => {
 
         // trigger deferred reasons validation
         cy.continueBtn().click()
-        cy.get('[id="AdditionalInformationNeededDetails-error-link "]').should('contain.text', 'Enter a reason for selecting Additional information needed')
-        cy.get('[id="AwaitingNextOfstedReportDetails-error-link "]').should('contain.text', 'Enter a reason for selecting Awaiting next ofsted report')
-        cy.get('[id="PerformanceConcernsDetails-error-link "]').should('contain.text', 'Enter a reason for selecting Performance concerns')
-        cy.get('[id="OtherDetails-error-link "]').should('contain.text', 'Enter a reason for selecting Other')
+        cy.get('[id="AdditionalInformationNeededDetails-error-link"]').should('contain.text', 'Enter a reason for selecting Additional information needed')
+        cy.get('[id="AwaitingNextOfstedReportDetails-error-link"]').should('contain.text', 'Enter a reason for selecting Awaiting next ofsted report')
+        cy.get('[id="PerformanceConcernsDetails-error-link"]').should('contain.text', 'Enter a reason for selecting Performance concerns')
+        cy.get('[id="OtherDetails-error-link"]').should('contain.text', 'Enter a reason for selecting Other')
 
         // continue to decision date form
         cy.addInfoNeededBox().click()
