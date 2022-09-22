@@ -2,13 +2,13 @@ using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
+using ApplyToBecomeInternal.Pages.TaskList.Decision.Models;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {
@@ -123,7 +123,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			public string IdFor(string prefix, object item)
 			{
 				string connector = prefix.EndsWith('-') ? string.Empty : "-";
-				string suffix = item?.ToString().ToLowerInvariant();
+				string suffix = item?.ToString()?.ToLowerInvariant();
 
 				return $"{prefix}{connector}{suffix}";
 			}

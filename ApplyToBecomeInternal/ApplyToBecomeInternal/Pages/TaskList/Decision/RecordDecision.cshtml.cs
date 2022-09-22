@@ -1,14 +1,13 @@
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
-using ApplyToBecomeInternal.Pages.TaskList;
+using ApplyToBecomeInternal.Pages.TaskList.Decision.Models;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 
-namespace ApplyToBecomeInternal.Pages.Decision
+namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {
 	public class RecordDecisionModel : DecisionBaseModel
 	{
@@ -18,6 +17,7 @@ namespace ApplyToBecomeInternal.Pages.Decision
 			: base(repository, session)
 		{
 			_errorService = errorService;
+			PropagateBackLinkOverride = false;
 		}
 
 		[BindProperty, Required(ErrorMessage = "Select a decision")]

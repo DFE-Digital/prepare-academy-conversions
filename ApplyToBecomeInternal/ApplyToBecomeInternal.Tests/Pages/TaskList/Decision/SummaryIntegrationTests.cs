@@ -257,26 +257,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			PageHeading.Should().Be("Check your answers before recording this decision");
 		}
 
-		[Fact]
-		public async Task Should_not_allow_the_user_to_return_directly_to_the_summary_when_changing_the_decision()
-		{
-			AdvisoryBoardDecision decision = new AdvisoryBoardDecision
-			{
-				Decision = AdvisoryBoardDecisions.Approved,
-				AdvisoryBoardDecisionDate = DateTime.Today,
-				ApprovedConditionsSet = false,
-				DecisionMadeBy = DecisionMadeBy.DirectorGeneral
-			};
-
-			await _wizard.StartFor(_project.Id);
-			await _wizard.SubmitThroughTheWizard(decision);
-
-			await NavigateAsync("Change", 0);
-
-			PageHeading.Should().Be("Record the decision");
-			BackLinkPath.Should().NotEndWith("/decision/summary");
-		}
-
 		[Theory]
 		[InlineData(0, "Record the decision", "Who made this decision?")]
 		[InlineData(1, "Who made this decision?", "Were any conditions set?")]
