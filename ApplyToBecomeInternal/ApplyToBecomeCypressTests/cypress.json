@@ -1,4 +1,5 @@
 {
-	"video": true,
+	"video": false,
+	"screenshots": false,
 	"retries": 2	
 }
