@@ -35,16 +35,15 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 		public UIHelpers UI => new UIHelpers(this);
 
-		public async Task<IActionResult> OnGetAsync(int id)
+		public IActionResult OnGet(int id)
 		{
-			await SetDefaults(id);
 			PreloadStateFromSession(id);
 			SetBackLinkModel(Links.Decision.WhoDecided, id);
 
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id)
+		public IActionResult OnPost(int id)
 		{
 			var decision = GetDecisionFromSession(id);
 
@@ -66,10 +65,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			SetDecisionInSession(id, decision);
 
-			if (ModelState.IsValid) return RedirectToPage(Links.Decision.DecisionDate.Page, new { id });
+			if (ModelState.IsValid) return RedirectToPage(Links.Decision.DecisionDate.Page, LinkParameters);
 
 			_errorService.AddErrors(ModelState.Keys, ModelState);
-			return await OnGetAsync(id);
+			return OnGet(id);
 		}
 
 		private IEnumerable<AdvisoryBoardDeclinedReasonDetails> MapSelectedReasons()

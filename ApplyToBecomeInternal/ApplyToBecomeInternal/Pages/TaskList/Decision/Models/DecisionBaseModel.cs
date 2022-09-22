@@ -5,6 +5,7 @@ using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Pages.TaskList.Decision;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
 
@@ -28,18 +29,30 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 		public string SchoolName { get; set; }
 		public int Id { get; set; }
 
-		protected async Task SetDefaults(int id)
+		private async Task SetDefaults(int id)
 		{
 			Id = id;
 			var project = await _repository.GetProjectById(id);
 			SchoolName = project.Body.SchoolName;
 		}
 
+		public override async Task OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, PageHandlerExecutionDelegate next)
+		{
+			if (context.RouteData.Values.ContainsKey("id") &&
+			    int.TryParse(context.RouteData.Values["id"] as string, out int id))
+			{
+				await SetDefaults(id);
+			}
+
+			await next();
+		}
+
+		protected object LinkParameters => bool.TryParse(Request.Query["obl"], out bool obl) ? new { Id, obl } : (object) new { Id };
+
 		protected void SetBackLinkModel(LinkItem linkItem, int linkRouteId)
 		{
 			BackLinkModel = new BackLinkModel { LinkPage = linkItem.Page, LinkText = linkItem.BackText, LinkRouteId = linkRouteId };
 		}
-
 
 		/// <summary>
 		/// Returns the active <see cref="AdvisoryBoardDecision"/> from the current session or a new instance if one is not available

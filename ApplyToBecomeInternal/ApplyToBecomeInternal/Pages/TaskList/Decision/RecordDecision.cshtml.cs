@@ -23,28 +23,27 @@ namespace ApplyToBecomeInternal.Pages.Decision
 		[BindProperty, Required(ErrorMessage = "Select a decision")]
 		public AdvisoryBoardDecisions? AdvisoryBoardDecision { get; set; }
 
-		public async Task<IActionResult> OnGetAsync(int id)
+		public IActionResult OnGet(int id)
 		{
-			await SetDefaults(id);
 			AdvisoryBoardDecision = GetDecisionFromSession(id)?.Decision;
 			SetBackLinkModel(Links.TaskList.Index, id);
 
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id)
+		public IActionResult OnPost(int id)
 		{
 			if (!ModelState.IsValid)
 			{
 				_errorService.AddErrors(new[] { "AdvisoryBoardDecision" }, ModelState);
-				return await OnGetAsync(id);
+				return OnGet(id);
 			}
 
 			var decision = GetDecisionFromSession(id) ?? new AdvisoryBoardDecision();
 			decision.Decision = AdvisoryBoardDecision.Value;
 			SetDecisionInSession(id, decision);
 
-			return RedirectToPage(Links.Decision.WhoDecided.Page, new { id });
+			return RedirectToPage(Links.Decision.WhoDecided.Page, LinkParameters);
 		}
 	}
 }

@@ -28,19 +28,18 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 		public AdvisoryBoardDecision Decision { get; set; }
 		public string DecisionText => Decision.Decision.ToDescription().ToLowerInvariant();
 
-		public async Task<IActionResult> OnGetAsync(int id)
+		public IActionResult OnGet(int id)
 		{
-			await SetDefaults(id);
 			Decision = GetDecisionFromSession(id);
 
-			if (Decision.Decision == null) return RedirectToPage(Links.TaskList.Index.Page, new { id });
+			if (Decision.Decision == null) return RedirectToPage(Links.TaskList.Index.Page, LinkParameters);
 
 			return Page();
 		}
 
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			if (!ModelState.IsValid) return await OnGetAsync(id);
+			if (!ModelState.IsValid) return OnGet(id);
 
 			var decision = GetDecisionFromSession(id);
 			decision.ConversionProjectId = id;

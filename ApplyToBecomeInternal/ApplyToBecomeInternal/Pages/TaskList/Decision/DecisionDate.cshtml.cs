@@ -44,12 +44,11 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			};
 		}
 
-		public async Task<IActionResult> OnGetAsync(int id)
+		public IActionResult OnGet(int id)
 		{
 			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
-			if (decision.Decision == null) return RedirectToPage(Links.TaskList.Index.Page, new { id });
+			if (decision.Decision == null) return RedirectToPage(Links.TaskList.Index.Page, LinkParameters);
 
-			await SetDefaults(id);
 			Decision = GetDecisionFromSession(id);
 			DecisionText = decision.Decision.ToString()?.ToLowerInvariant();
 			DateOfDecision = Decision.AdvisoryBoardDecisionDate;
@@ -59,7 +58,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id)
+		public IActionResult OnPost(int id)
 		{
 			var decision = GetDecisionFromSession(id);
 			decision.AdvisoryBoardDecisionDate = DateOfDecision;
@@ -67,12 +66,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			if (!ModelState.IsValid)
 			{
 				_errorService.AddErrors(Request.Form.Keys, ModelState);
-				return await OnGetAsync(id);
+				return OnGet(id);
 			}
 
 			SetDecisionInSession(id, decision);
 
-			return RedirectToPage(Links.Decision.Summary.Page, new { id });
+			return RedirectToPage(Links.Decision.Summary.Page, LinkParameters);
 		}
 
 		string IDateValidationMessageProvider.SomeMissing(string displayName, IEnumerable<string> missingParts) =>

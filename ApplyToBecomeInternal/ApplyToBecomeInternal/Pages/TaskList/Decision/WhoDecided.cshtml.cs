@@ -31,9 +31,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 	   public IEnumerable<DecisionMadeBy> DecisionMadeByOptions => Enum.GetValues(typeof(DecisionMadeBy)).Cast<DecisionMadeBy>();
 
-		public async Task<IActionResult> OnGetAsync(int id)
+		public IActionResult OnGet(int id)
 		{
-			await SetDefaults(id);
 			SetBackLinkModel(Links.Decision.RecordDecision, id);
 			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
 
@@ -42,12 +41,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id)
+		public IActionResult OnPost(int id)
 		{
 			if (!ModelState.IsValid)
 			{
 				_errorService.AddErrors(new[] { "DecisionMadeBy" }, ModelState);
-				return await OnGetAsync(id);
+				return OnGet(id);
 			}
 
 			var decision = GetDecisionFromSession(id) ?? new AdvisoryBoardDecision();
@@ -57,10 +56,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			return decision.Decision switch
 			{
-				AdvisoryBoardDecisions.Approved => RedirectToPage(Links.Decision.AnyConditions.Page, new { id }),
-				AdvisoryBoardDecisions.Declined => RedirectToPage(Links.Decision.DeclineReason.Page, new { id }),
-				AdvisoryBoardDecisions.Deferred => RedirectToPage(Links.Decision.WhyDeferred.Page, new { id }),
-				_ => RedirectToPage(Links.Decision.AnyConditions.Page, new { id })
+				AdvisoryBoardDecisions.Approved => RedirectToPage(Links.Decision.AnyConditions.Page, LinkParameters),
+				AdvisoryBoardDecisions.Declined => RedirectToPage(Links.Decision.DeclineReason.Page, LinkParameters),
+				AdvisoryBoardDecisions.Deferred => RedirectToPage(Links.Decision.WhyDeferred.Page, LinkParameters),
+				_ => RedirectToPage(Links.Decision.AnyConditions.Page, LinkParameters)
 			};
 		}
 	}
