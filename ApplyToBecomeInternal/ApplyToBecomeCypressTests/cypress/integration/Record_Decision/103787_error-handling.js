@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 // uri to be updated once academisation API is integrated
-let url = Cypress.env('url') + '/task-list/2050?rd=true'
+let url = Cypress.env('url') + '/task-list/2006?rd=true'
 
 describe('103787 Error handling', () => {
     beforeEach(() => {

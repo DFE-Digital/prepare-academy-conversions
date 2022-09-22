@@ -2,7 +2,7 @@
 
 // TO DO: Check Legal Requirement validation on first time use; check Empty tags.
 
-const url = Cypress.env('url') + '/task-list/2054'
+const url = Cypress.env('url') + '/task-list/2006'
 
 describe('Legal Requirements', () => {
     beforeEach(() => {

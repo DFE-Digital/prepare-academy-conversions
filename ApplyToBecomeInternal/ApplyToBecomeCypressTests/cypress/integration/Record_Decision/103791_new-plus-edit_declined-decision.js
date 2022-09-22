@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 // uri to be updated once academisation API is integrated
-let url = Cypress.env('url') + '/task-list/2054?rd=true'
+let url = Cypress.env('url') + '/task-list/2006?rd=true'
 let projecList = Cypress.env('url') + '/project-list'
 
 describe('103791 Edit Declined journey', () => {
@@ -11,9 +11,9 @@ describe('103791 Edit Declined journey', () => {
                     delete from 
                         academisation.ConversionAdvisoryBoardDecisionDeclinedReason 
                     where 
-                        AdvisoryBoardDecisionId = (select Id from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2054)`)
-        cy.sqlServer('delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2054')
-        cy.sqlServer('insert into academisation.ConversionAdvisoryBoardDecision values (2054, \'Declined\', null, null, getdate(), \'None\', getdate(), getdate())')
+                        AdvisoryBoardDecisionId = (select Id from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2006)`)
+        cy.sqlServer('delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2006')
+        cy.sqlServer('insert into academisation.ConversionAdvisoryBoardDecision values (2006, \'Declined\', null, null, getdate(), \'None\', getdate(), getdate())')
         cy.clearCookies()
         cy.visit(url)
     })

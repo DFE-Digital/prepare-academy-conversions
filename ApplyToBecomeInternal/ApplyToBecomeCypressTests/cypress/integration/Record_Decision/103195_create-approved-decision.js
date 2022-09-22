@@ -1,13 +1,13 @@
 /// <reference types ='Cypress'/>
 
 // uri to be updated once academisation API is integrated
-let url = Cypress.env('url') + '/task-list/2054?rd=true'
+let url = Cypress.env('url') + '/task-list/2006?rd=true'
 
 describe('103195 Record new Approved decision', () => {
 
     beforeEach(() => {
         // delete decision
-        cy.sqlServer('DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = 2054')
+        cy.sqlServer('DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = 2006')
         cy.clearCookies()
         cy.visit(url)
     })
