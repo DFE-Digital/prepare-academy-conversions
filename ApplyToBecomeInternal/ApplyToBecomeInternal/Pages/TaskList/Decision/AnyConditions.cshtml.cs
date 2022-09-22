@@ -1,11 +1,11 @@
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
+using ApplyToBecomeInternal.Pages.TaskList.Decision.Models;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {
@@ -27,9 +27,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			_errorService = errorService;
 		}
 
-		public async Task<IActionResult> OnGetAsync(int id)
+		public IActionResult OnGet(int id)
 		{
-			await SetDefaults(id);
 			SetBackLinkModel(Links.Decision.WhoDecided, id);
 
 			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
@@ -39,7 +38,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id)
+		public IActionResult OnPost(int id)
 		{
 			if (HasConditions && string.IsNullOrWhiteSpace(ApprovedConditionsDetails))
 				ModelState.AddModelError(nameof(ApprovedConditionsDetails), "Add the conditions that were set");
@@ -53,11 +52,11 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 				SetDecisionInSession(id, decision);
 
-				return RedirectToPage(Links.Decision.DecisionDate.Page, new { id });
+				return RedirectToPage(Links.Decision.DecisionDate.Page, LinkParameters);
 			}
 
 			_errorService.AddErrors(ModelState.Keys, ModelState);
-			return await OnGetAsync(id);
+			return OnGet(id);
 		}
 	}
 }
