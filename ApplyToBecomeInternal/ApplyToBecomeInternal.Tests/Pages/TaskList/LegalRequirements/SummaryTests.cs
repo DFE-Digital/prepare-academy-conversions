@@ -1,6 +1,6 @@
 ﻿using AngleSharp.Dom;
 using ApplyToBecome.Data.Models;
-using ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers;
+using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support;
 using FluentAssertions;
 using System;

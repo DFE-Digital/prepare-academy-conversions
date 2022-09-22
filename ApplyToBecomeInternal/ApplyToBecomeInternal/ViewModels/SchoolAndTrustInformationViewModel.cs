@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ApplyToBecomeInternal.ViewModels
+﻿namespace ApplyToBecomeInternal.ViewModels
 {
 	public class SchoolAndTrustInformationViewModel
 	{
