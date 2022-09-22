@@ -24,7 +24,7 @@ Cypress._.each(['iphone-x'], (viewport) => {
             .then(() => {
                 cy.disMiles().click().type('10')
             })
-            cy.get('[id="distance-to-trust-headquarters-additional-information"').click().type('Testing')
+            cy.get('[id="distance-to-trust-headquarters-additional-information"]').click().type('Testing')
             .then(() => {
                 cy.saveContinue().click()
                 })
@@ -42,7 +42,7 @@ Cypress._.each(['iphone-x'], (viewport) => {
                     cy.saveContinue().click()
                 })
             cy.get('[id="error-summary-title"]').should('contain.text', 'There is a problem')
-            cy.get('[id="distance-to-trust-headquarters-error-link "]').should('contain.text', "'Distance from the converting school to the trust or other schools in the trust' must be a valid format")
+            cy.get('[id="distance-to-trust-headquarters-error-link"]').should('contain.text', "'Distance from the converting school to the trust or other schools in the trust' must be a valid format")
             })
         })
     })
