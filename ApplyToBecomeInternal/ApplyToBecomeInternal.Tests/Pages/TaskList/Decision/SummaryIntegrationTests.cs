@@ -2,6 +2,7 @@
 using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
+using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Tests.PageObjects;
 using FluentAssertions;
 using System;
@@ -19,6 +20,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		{
 		}
 
+		private IHtmlAnchorElement BackLink => Document.QuerySelector<IHtmlAnchorElement>($"[data-cy='{Select.BackLink}']");
+		private Uri BackLinkUri => new Uri(BackLink?.Href!);
+		private string BackLinkPath => string.IsNullOrWhiteSpace(BackLinkUri.Query) ? BackLinkUri.PathAndQuery : BackLinkUri.PathAndQuery.Replace(BackLinkUri.Query, string.Empty);
 		private string PageHeading => Document.QuerySelector<IHtmlElement>("h1")?.Text().Trim();
 		private string PageSubHeading => Document.QuerySelector<IHtmlElement>("h2")?.Text().Trim();
 		private string NotificationMessage => Document.QuerySelector<IHtmlElement>("#notification-message")?.Text().Trim();
@@ -224,7 +228,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		}
 
 		[Theory]
-		[InlineData(0, "Record the decision")]
 		[InlineData(1, "Who made this decision?")]
 		[InlineData(2, "Were any conditions set?")]
 		[InlineData(3, "Date conversion was approved")]
@@ -246,11 +249,32 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			await NavigateAsync("Change", changeLinkIndex);
 
 			PageHeading.Should().Be(expectedTitle);
+			BackLinkPath.Should().EndWith("/decision/summary");
 
 			// Back to summary
 			await NavigateAsync("Back");
 
 			PageHeading.Should().Be("Check your answers before recording this decision");
+		}
+
+		[Fact]
+		public async Task Should_not_allow_the_user_to_return_directly_to_the_summary_when_changing_the_decision()
+		{
+			AdvisoryBoardDecision decision = new AdvisoryBoardDecision
+			{
+				Decision = AdvisoryBoardDecisions.Approved,
+				AdvisoryBoardDecisionDate = DateTime.Today,
+				ApprovedConditionsSet = false,
+				DecisionMadeBy = DecisionMadeBy.DirectorGeneral
+			};
+
+			await _wizard.StartFor(_project.Id);
+			await _wizard.SubmitThroughTheWizard(decision);
+
+			await NavigateAsync("Change", 0);
+
+			PageHeading.Should().Be("Record the decision");
+			BackLinkPath.Should().NotEndWith("/decision/summary");
 		}
 
 		[Theory]
