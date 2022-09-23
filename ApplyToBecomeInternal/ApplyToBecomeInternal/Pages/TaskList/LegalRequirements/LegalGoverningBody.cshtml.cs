@@ -34,13 +34,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 
 			await LegalRequirementsRepository.UpdateByProjectId(id, LegalRequirements);
 
-			var (returnPage, fragment, back) = GetReturnPageAndFragment();
-			if (ReturnPage(returnPage))
-			{
-				fragment ??= "governing-body-resolution";
-				return !string.IsNullOrEmpty(back) ? RedirectToPage(returnPage, null, new { id, @return = back, back = Links.LegalRequirements.GoverningBodyResolution.Page }, fragment) : RedirectToPage(returnPage, null, new { id }, fragment);
-			}
-			return RedirectToPage(Links.LegalRequirements.Summary.Page, new { id });
+			return ActionResult(id, "governing-body-resolution", Links.LegalRequirements.GoverningBodyResolution.Page);
 		}
+
+		
 	}
 }

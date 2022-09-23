@@ -33,14 +33,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 			};
 			await LegalRequirementsRepository.UpdateByProjectId(id, LegalRequirements);
 
-			var (returnPage, fragment, back) = GetReturnPageAndFragment();
-			if (ReturnPage(returnPage))
-			{
-				fragment ??= "consultation";
-				return !string.IsNullOrEmpty(back) ? RedirectToPage(returnPage, null, new { id, @return = back, back = Links.LegalRequirements.Consultation.Page }, fragment) : RedirectToPage(returnPage, null, new { id }, fragment);
-			}
-
-			return RedirectToPage(Links.LegalRequirements.Summary.Page, new { id });
+			return ActionResult(id, "consultation", Links.LegalRequirements.Consultation.Page);
 		}
 	}
 }

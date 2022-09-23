@@ -31,16 +31,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 				nameof(ThreeOptions.NotApplicable) => ThreeOptions.NotApplicable,
 				_ => LegalRequirements.FoundationConsent
 			};
-
-			var (returnPage, fragment, back) = GetReturnPageAndFragment();
-			if (ReturnPage(returnPage))
-			{
-				fragment ??= "foundation-consent";
-				return !string.IsNullOrEmpty(back) ? RedirectToPage(returnPage, null, new { id, @return = back, back = Links.LegalRequirements.FoundationConsent.Page }, fragment) : RedirectToPage(returnPage, null, new { id }, fragment);
-			}
 			await LegalRequirementsRepository.UpdateByProjectId(id, LegalRequirements);
 
-			return RedirectToPage(Links.LegalRequirements.Summary.Page, new { id });
+			return ActionResult(id, "foundation-consent", Links.LegalRequirements.FoundationConsent.Page);
 		}
 	}
 }

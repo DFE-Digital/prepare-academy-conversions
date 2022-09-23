@@ -33,13 +33,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 			};
 
 			await LegalRequirementsRepository.UpdateByProjectId(id, LegalRequirements);
-			var (returnPage, fragment, back) = GetReturnPageAndFragment();
-			if (ReturnPage(returnPage))
-			{
-				fragment ??= "diocesan-consent";
-				return !string.IsNullOrEmpty(back) ? RedirectToPage(returnPage, null, new { id, @return = back, back = Links.LegalRequirements.DiocesanConsent.Page }, fragment) : RedirectToPage(returnPage, null, new { id }, fragment);
-			}
-			return RedirectToPage(Links.LegalRequirements.Summary.Page, new { id });
+
+			return ActionResult(id, "diocesan-consent", Links.LegalRequirements.DiocesanConsent.Page);
+			
 		}
 	}
 }
