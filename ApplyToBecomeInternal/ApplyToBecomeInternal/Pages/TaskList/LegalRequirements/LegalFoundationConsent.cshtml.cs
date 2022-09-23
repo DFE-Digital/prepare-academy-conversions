@@ -32,6 +32,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 				_ => LegalRequirements.FoundationConsent
 			};
 
+			var (returnPage, fragment, back) = GetReturnPageAndFragment();
+			if (ReturnPage(returnPage))
+			{
+				fragment ??= "foundation-consent";
+				return !string.IsNullOrEmpty(back) ? RedirectToPage(returnPage, null, new { id, @return = back, back = Links.LegalRequirements.FoundationConsent.Page }, fragment) : RedirectToPage(returnPage, null, new { id }, fragment);
+			}
 			await LegalRequirementsRepository.UpdateByProjectId(id, LegalRequirements);
 
 			return RedirectToPage(Links.LegalRequirements.Summary.Page, new { id });

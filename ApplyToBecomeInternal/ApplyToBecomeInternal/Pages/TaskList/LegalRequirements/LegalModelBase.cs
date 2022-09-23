@@ -56,5 +56,16 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 
 			context.Result ??= NotFound();
 		}
+		protected static bool ReturnPage(string returnPage)
+		{
+			return !string.IsNullOrWhiteSpace(returnPage);
+		}
+		protected (string, string, string) GetReturnPageAndFragment()
+		{
+			Request.Query.TryGetValue("return", out var returnQuery);
+			Request.Query.TryGetValue("fragment", out var fragmentQuery);
+			Request.Query.TryGetValue("back", out var backQuery);
+			return (returnQuery, fragmentQuery, backQuery);
+		}
 	}
 }
