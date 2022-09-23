@@ -20,7 +20,7 @@ namespace ApplyToBecome.Data.Services
 
 		public AcademyConversionProjectRepository(IHttpClientFactory httpClientFactory, ILegalRequirementsRepository legalRequirementsRepository)
 		{
-			_httpClient = httpClientFactory.CreateClient("TramsClient");
+			_httpClient = httpClientFactory.CreateClient("AcademisationClient");
 			_legalRequirementsRepository = legalRequirementsRepository;
 		}
 
