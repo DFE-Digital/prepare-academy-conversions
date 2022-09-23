@@ -31,10 +31,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 				nameof(ThreeOptions.NotApplicable) => ThreeOptions.NotApplicable,
 				_ => LegalRequirements.FoundationConsent
 			};
-
 			await LegalRequirementsRepository.UpdateByProjectId(id, LegalRequirements);
 
-			return RedirectToPage(Links.LegalRequirements.Summary.Page, new { id });
+			return ActionResult(id, "foundation-consent", Links.LegalRequirements.FoundationConsent.Page);
 		}
 	}
 }
