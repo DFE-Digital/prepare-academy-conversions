@@ -84,13 +84,14 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 		}
 		protected ThreeOptions? ToLegalRequirementsEnum(ThreeOptions? requirements, string approved)
 		{
-			return requirements = approved switch
+			var result = approved switch
 			{
 				nameof(ThreeOptions.Yes) => ThreeOptions.Yes,
 				nameof(ThreeOptions.No) => ThreeOptions.No,
 				nameof(ThreeOptions.NotApplicable) => ThreeOptions.NotApplicable,
 				_ => requirements
 			};
+			return result;
 		}
 	}
 }
