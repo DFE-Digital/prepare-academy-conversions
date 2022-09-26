@@ -1,5 +1,6 @@
 using ApplyToBecome.Data;
 using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Models.AcademyConversion;
 using ApplyToBecome.Data.Services;
 using ApplyToBecome.Data.Services.Interfaces;
 using ApplyToBecomeInternal.Models;
@@ -14,9 +15,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 	{
 		protected readonly IAcademyConversionProjectRepository AcademyConversionProjectRepository;
 
-		public LegalModelBase(IAcademyConversionProjectRepository academyConversionProjectRepository)
+		public LegalModelBase(IAcademyConversionProjectRepository _academyConversionProjectRepository)
 		{
-			AcademyConversionProjectRepository = academyConversionProjectRepository;
+			AcademyConversionProjectRepository = _academyConversionProjectRepository;
 		}
 
 		public int Id { get; private set; }
@@ -80,6 +81,16 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 			}
 
 			return RedirectToPage(Links.LegalRequirements.Summary.Page, new { id });
+		}
+		protected void ToLegalRequirementsEnum(ThreeOptions? requirements, string approved)
+		{
+			requirements = approved switch
+			{
+				nameof(ThreeOptions.Yes) => ThreeOptions.Yes,
+				nameof(ThreeOptions.No) => ThreeOptions.No,
+				nameof(ThreeOptions.NotApplicable) => ThreeOptions.NotApplicable,
+				_ => requirements
+			};
 		}
 	}
 }

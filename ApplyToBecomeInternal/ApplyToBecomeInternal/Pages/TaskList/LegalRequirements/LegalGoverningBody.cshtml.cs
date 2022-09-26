@@ -24,19 +24,12 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			Requirements.GoverningBodyApproved = Approved switch
-			{
-				nameof(ThreeOptions.Yes) => ThreeOptions.Yes,
-				nameof(ThreeOptions.No) => ThreeOptions.No,
-				nameof(ThreeOptions.NotApplicable) => ThreeOptions.NotApplicable,
-				_ => Requirements.GoverningBodyApproved
-			};
+			ToLegalRequirementsEnum(Requirements.GoverningBodyApproved, Approved);
 
 			await AcademyConversionProjectRepository.UpdateProject(id, Requirements.CreateUpdateAcademyConversionProject());
 
 			return ActionResult(id, "governing-body-resolution", Links.LegalRequirements.GoverningBodyResolution.Page);
 		}
 
-		
 	}
 }
