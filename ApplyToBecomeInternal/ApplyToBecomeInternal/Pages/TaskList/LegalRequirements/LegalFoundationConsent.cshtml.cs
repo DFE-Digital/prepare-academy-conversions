@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			ToLegalRequirementsEnum(Requirements.FoundationConsent, Approved);
+			Requirements.FoundationConsent = ToLegalRequirementsEnum(Requirements.FoundationConsent, Approved);
 
 			await AcademyConversionProjectRepository.UpdateProject(id, Requirements.CreateUpdateAcademyConversionProject());
 

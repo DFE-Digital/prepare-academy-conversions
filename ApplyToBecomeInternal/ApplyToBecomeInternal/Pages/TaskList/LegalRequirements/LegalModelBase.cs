@@ -82,9 +82,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 
 			return RedirectToPage(Links.LegalRequirements.Summary.Page, new { id });
 		}
-		protected void ToLegalRequirementsEnum(ThreeOptions? requirements, string approved)
+		protected ThreeOptions? ToLegalRequirementsEnum(ThreeOptions? requirements, string approved)
 		{
-			requirements = approved switch
+			return requirements = approved switch
 			{
 				nameof(ThreeOptions.Yes) => ThreeOptions.Yes,
 				nameof(ThreeOptions.No) => ThreeOptions.No,
