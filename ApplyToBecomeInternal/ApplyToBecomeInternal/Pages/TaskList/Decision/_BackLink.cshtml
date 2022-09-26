@@ -8,4 +8,4 @@
     }
 }
 
-<a asp-page="@Model.LinkPage" asp-route-id="@Model.LinkRouteId" class="govuk-back-link">@(overideBackLink ? "Back" : Model.LinkText)</a>
+<a asp-page="@Model.LinkPage" asp-route-id="@Model.LinkRouteId" class="govuk-back-link" data-cy="@Select.BackLink">@(overideBackLink ? "Back" : Model.LinkText)</a>

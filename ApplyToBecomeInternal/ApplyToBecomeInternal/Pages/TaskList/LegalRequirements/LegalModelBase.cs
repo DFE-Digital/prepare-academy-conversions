@@ -1,6 +1,9 @@
 using ApplyToBecome.Data;
 using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Services;
+using ApplyToBecome.Data.Services.Interfaces;
+using ApplyToBecomeInternal.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
@@ -51,6 +54,32 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 			}
 
 			context.Result ??= NotFound();
+		}
+		protected static bool ReturnPage(string returnPage)
+		{
+			return !string.IsNullOrWhiteSpace(returnPage);
+		}
+		protected (string, string, string) GetReturnPageAndFragment()
+		{
+			Request.Query.TryGetValue("return", out var returnQuery);
+			Request.Query.TryGetValue("fragment", out var fragmentQuery);
+			Request.Query.TryGetValue("back", out var backQuery);
+			return (returnQuery, fragmentQuery, backQuery);
+		}
+
+		protected IActionResult ActionResult(int id, string fragment, string back)
+		{
+			string returnPage;
+			(returnPage, fragment, back) = GetReturnPageAndFragment();
+			if (ReturnPage(returnPage))
+			{
+				return !string.IsNullOrEmpty(back)
+					? RedirectToPage(returnPage, null,
+						new { id, @return = back, back }, fragment)
+					: RedirectToPage(returnPage, null, new { id }, fragment);
+			}
+
+			return RedirectToPage(Links.LegalRequirements.Summary.Page, new { id });
 		}
 	}
 }

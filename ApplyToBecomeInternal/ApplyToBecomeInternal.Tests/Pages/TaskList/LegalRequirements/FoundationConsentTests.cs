@@ -3,7 +3,7 @@ using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Models.AcademyConversion;
 using ApplyToBecomeInternal.Extensions;
-using ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers;
+using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support;
 using FluentAssertions;
 using System;

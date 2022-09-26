@@ -1,6 +1,6 @@
 ﻿using ApplyToBecomeInternal.Utils;
 
-namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers
+namespace ApplyToBecomeInternal.Models
 {
 	public sealed class Select
 	{
@@ -30,6 +30,19 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements.Helpers
 				private static string _status;
 				public static string Status => Typespace.Name(ref _status);
 			}
+		}
+
+		public sealed class ProjectType
+		{
+			public sealed class Input
+			{
+				private static string _conversionOption, _transferOption;
+
+				public static string Conversion => Typespace.Name(ref _conversionOption);
+				public static string Transfer => Typespace.Name(ref _transferOption);
+
+			}
+
 		}
 
 		public sealed class Legal

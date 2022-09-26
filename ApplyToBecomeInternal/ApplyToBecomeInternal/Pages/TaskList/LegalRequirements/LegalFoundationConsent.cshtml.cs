@@ -34,7 +34,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 
 			await AcademyConversionProjectRepository.UpdateProject(id, Requirements.CreateUpdateAcademyConversionProject());
 
-			return RedirectToPage(Links.LegalRequirements.Summary.Page, new { id });
+			return ActionResult(id, "foundation-consent", Links.LegalRequirements.FoundationConsent.Page);
 		}
 	}
 }
