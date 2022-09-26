@@ -376,7 +376,7 @@ Cypress.Commands.add('decisionDate', () => {
 
 // projectlist number id:2054
 Cypress.Commands.add('projectStateId', () => {
-    cy.get('[id="project-status-2006"]')
+    cy.get('[id="project-status-17"]')
 
 })
 

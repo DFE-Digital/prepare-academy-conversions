@@ -1,13 +1,13 @@
 /// <reference types ='Cypress'/>
 
 // uri to be updated once academisation API is integrated
-let url = Cypress.env('url') + '/task-list/2006?rd=true'
+let url = Cypress.env('url') + '/task-list/17?rd=true'
 
 describe('103195 Edit Approved record decision', ()=> {
 
     beforeEach(() => {
-        cy.sqlServer('delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2006')
-        cy.sqlServer('insert into academisation.ConversionAdvisoryBoardDecision values (2006, \'Approved\', null, null, getdate(), \'None\', getdate(), getdate())')
+        cy.sqlServer('delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 17')
+        cy.sqlServer('insert into academisation.ConversionAdvisoryBoardDecision values (17, \'Approved\', null, null, getdate(), \'None\', getdate(), getdate())')
         cy.clearCookies()
         cy.visit(url)
     })
