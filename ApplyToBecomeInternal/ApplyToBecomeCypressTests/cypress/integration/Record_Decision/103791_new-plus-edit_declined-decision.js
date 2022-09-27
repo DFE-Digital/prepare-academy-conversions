@@ -1,28 +1,22 @@
 /// <reference types ='Cypress'/>
-import {recordDecision} from '../../pages/recordDecision'
+import RecordDecision from '../../pages/recordDecision'
 
-// uri to be updated once academisation API is integrated
-let url = Cypress.env('url')
 let projecList = Cypress.env('url') + '/project-list'
 
 describe('103791 Edit Declined journey', () => {
-    
-    beforeEach(() => {
-        // Step 1
-        // delete declined reasons
-        let id = new recordDecision().urlSliceID()
-        cy.sqlServer(`
-            delete from academisation.ConversionAdvisoryBoardDecisionDeclinedReason 
-                where AdvisoryBoardDecisionId = (select id from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id})`)
-        cy.sqlServer(`delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id}`)
-        cy.sqlServer(`insert into academisation.ConversionAdvisoryBoardDecision values (${id}, \'Declined\', null, null, getdate(), \'None\', getdate(), getdate())`)
-        cy.clearCookies()
 
-        // Step2
-        // Navigates the first project from project list
-        cy.visit(url)
-        cy.firstProjectRecordDecision()
-    })
+    beforeEach(() => {
+        RecordDecision.selectProject().then(id => {
+            cy.sqlServer(`
+                    delete from academisation.ConversionAdvisoryBoardDecisionDeclinedReason 
+                    where AdvisoryBoardDecisionId = (select id from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id})`);
+            cy.sqlServer(`delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id}`);
+            cy.sqlServer(`insert into academisation.ConversionAdvisoryBoardDecision values (${id}, \'Declined\', null, null, getdate(), \'None\', getdate(), getdate())`);
+
+            cy.clearCookies();
+            cy.url().then(url => cy.visit(`${url}?rd=true`));
+        });
+    });
 
     // Edit Approval Path - Regional Director, Finance 
     it('TC01: J2 Edit a recorded decision Declined - Reg Director Region, Finance', () => {
