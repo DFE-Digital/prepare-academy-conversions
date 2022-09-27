@@ -14,17 +14,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 {
 	public class TaskListIndexTests : LegalRequirementsPageTestBase
 	{
+		protected LegalRequirementsTestWizard Wizard;
 		public TaskListIndexTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{
+			Wizard = new LegalRequirementsTestWizard(Context);
 		}
 
-		protected override Func<LegalRequirementsTestWizard, AcademyConversionProject, Task> BeforeEachTest =>
-			async (wizard, project) =>
-			{
-				await wizard.OpenTaskList(project.Id);
-
-				PageHeading.Should().Be(project.SchoolName);
-			};
 
 		private string LegalRequirementsLinkHref =>
 			Document.QuerySelector<IHtmlAnchorElement>(CypressSelectorFor(Select.TaskList.Links.LegalRequirements))?.Href.Trim();
@@ -39,20 +34,32 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 			Document.QuerySelector<IHtmlButtonElement>(CypressSelectorFor(Select.Legal.Summary.SubmitButton));
 
 		[Fact]
-		public void Should_have_a_link_that_points_to_the_legal_summary_page()
+		public async void Should_have_a_link_that_points_to_the_legal_summary_page()
 		{
+			Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
+			await Wizard.OpenTaskList(Project.Id);
 			LegalRequirementsLinkHref.Should().EndWith($"/task-list/{Project.Id}/legal-requirements");
 		}
 
 		[Fact]
-		public void Should_report_not_started_status_when_no_options_have_been_selected()
+		public async void Should_report_not_started_status_when_no_options_have_been_selected()
 		{
+			Project = AddGetProject(project =>
+			{
+				project.Consultation = null;
+				project.DiocesanConsent = null;
+				project.FoundationConsent = null;
+				project.LegalRequirementsSectionComplete = false;
+				project.GoverningBodyResolution = null;
+			});
+			await Wizard.OpenTaskList(Project.Id);
 			LegalRequirementsStatus.Should().BeEquivalentTo(Status.NotStarted.ToDescription());
 		}
 
 		[Fact]
 		public async Task Should_report_in_progress_status_when_some_options_have_been_selected()
 		{
+			Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
 			await Wizard.OpenConsultation(Project.Id);
 			YesOption.IsChecked = true;
 			await SaveAndContinueButton.SubmitAsync();
@@ -65,6 +72,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		[Fact]
 		public async Task Should_report_completed_status_when_the_legal_requirements_are_marked_as_complete()
 		{
+			Project = AddGetProject(project => project.LegalRequirementsSectionComplete = true);
 			await Wizard.OpenSummary(Project.Id);
 			SummaryIsComplete.IsChecked = true;
 			await SummaryConfirmAndContinueButton.SubmitAsync();

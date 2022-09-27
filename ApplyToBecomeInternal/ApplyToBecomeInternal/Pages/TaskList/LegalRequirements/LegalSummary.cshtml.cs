@@ -1,3 +1,4 @@
+using ApplyToBecome.Data.Extensions;
 using ApplyToBecome.Data.Services;
 using ApplyToBecome.Data.Services.Interfaces;
 using ApplyToBecomeInternal.Models;
@@ -8,9 +9,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 {
 	public class LegalSummaryModel : LegalModelBase
 	{
-		public LegalSummaryModel(ILegalRequirementsRepository legalRequirementsRepository,
-			IAcademyConversionProjectRepository academyConversionProjectRepository) :
-			base(legalRequirementsRepository, academyConversionProjectRepository)
+		public LegalSummaryModel(IAcademyConversionProjectRepository academyConversionProjectRepository) :
+			base(academyConversionProjectRepository)
 		{
 		}
 
@@ -18,13 +18,13 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 
 		public void OnGet(int id)
 		{
-			IsComplete = LegalRequirements.IsComplete;
+			IsComplete = Requirements.IsComplete;
 		}
 
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			LegalRequirements.IsComplete = IsComplete;
-			await LegalRequirementsRepository.UpdateByProjectId(id, LegalRequirements);
+			Requirements.IsComplete = IsComplete;
+			await AcademyConversionProjectRepository.UpdateProject(id, Requirements.CreateUpdateAcademyConversionProject());
 			return RedirectToPage(Links.TaskList.Index.Page, new { id });
 		}
 	}

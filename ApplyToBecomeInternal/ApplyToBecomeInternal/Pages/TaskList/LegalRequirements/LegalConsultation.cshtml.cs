@@ -1,3 +1,5 @@
+using ApplyToBecome.Data.Extensions;
+using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Models.AcademyConversion;
 using ApplyToBecome.Data.Services;
 using ApplyToBecome.Data.Services.Interfaces;
@@ -9,9 +11,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 {
 	public class LegalConsultationModel : LegalModelBase
 	{
-		public LegalConsultationModel(ILegalRequirementsRepository legalRequirementsRepository,
-			IAcademyConversionProjectRepository academyConversionProjectRepository) :
-			base(legalRequirementsRepository, academyConversionProjectRepository)
+		public LegalConsultationModel(IAcademyConversionProjectRepository academyConversionProjectRepository) :
+			base(academyConversionProjectRepository)
 		{
 		}
 
@@ -19,19 +20,13 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 
 		public void OnGet(int id)
 		{
-			Done = LegalRequirements.ConsultationDone.ToString();
+			Done = Requirements.ConsultationDone.ToString();
 		}
 
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			LegalRequirements.ConsultationDone = Done switch
-			{
-				nameof(ThreeOptions.Yes) => ThreeOptions.Yes,
-				nameof(ThreeOptions.No) => ThreeOptions.No,
-				nameof(ThreeOptions.NotApplicable) => ThreeOptions.NotApplicable,
-				_ => LegalRequirements.ConsultationDone
-			};
-			await LegalRequirementsRepository.UpdateByProjectId(id, LegalRequirements);
+			Requirements.ConsultationDone = ToLegalRequirementsEnum(Requirements.ConsultationDone, Done);
+			await AcademyConversionProjectRepository.UpdateProject(id, Requirements.CreateUpdateAcademyConversionProject());
 
 			return ActionResult(id, "consultation", Links.LegalRequirements.Consultation.Page);
 		}
