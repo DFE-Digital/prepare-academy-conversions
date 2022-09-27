@@ -2,11 +2,11 @@ using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
+using ApplyToBecomeInternal.Pages.TaskList.Decision.Models;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {
@@ -38,9 +38,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 		public string DecisionText { get; set; }
 
-		public async Task<IActionResult> OnGetAsync(int id)
+		public IActionResult OnGet(int id)
 		{
-			await SetDefaults(id);
 			SetBackLinkModel(Links.Decision.WhoDecided, id);
 
 			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
@@ -52,7 +51,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id)
+		public IActionResult OnPost(int id)
 		{
 			var decision = GetDecisionFromSession(id);
 
@@ -68,9 +67,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			if (!WasReasonGiven) ModelState.AddModelError("WasReasonGiven", "Select at least one reason");
 			
 			_errorService.AddErrors(ModelState.Keys, ModelState);
-			if (_errorService.HasErrors()) return await OnGetAsync(id);
+			if (_errorService.HasErrors()) return OnGet(id);
 
-			return RedirectToPage(Links.Decision.DecisionDate.Page, new { id });
+			return RedirectToPage(Links.Decision.DecisionDate.Page, LinkParameters);
 		}
 
 		private void SetReasonsModel(List<AdvisoryBoardDeferredReasonDetails> reasons)

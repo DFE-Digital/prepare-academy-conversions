@@ -2,13 +2,13 @@ using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
+using ApplyToBecomeInternal.Pages.TaskList.Decision.Models;
 using ApplyToBecomeInternal.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {
@@ -33,6 +33,19 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 		public AdvisoryBoardDecision Decision { get; set; }
 
+		string IDateValidationMessageProvider.SomeMissing(string displayName, IEnumerable<string> missingParts)
+		{
+			return $"Date must include a {string.Join(" and ", missingParts)}";
+		}
+
+		string IDateValidationMessageProvider.AllMissing(string displayName)
+		{
+			string idRaw = Request.RouteValues["id"] as string;
+			int id = int.Parse(idRaw);
+			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
+			return $"Enter the date when the conversion was {decision.Decision.ToDescription().ToLowerInvariant()}";
+		}
+
 		public LinkItem GetPageForBackLink(int id)
 		{
 			return Decision switch
@@ -44,12 +57,11 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			};
 		}
 
-		public async Task<IActionResult> OnGetAsync(int id)
+		public IActionResult OnGet(int id)
 		{
 			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
 			if (decision.Decision == null) return RedirectToPage(Links.TaskList.Index.Page, new { id });
 
-			await SetDefaults(id);
 			Decision = GetDecisionFromSession(id);
 			DecisionText = decision.Decision.ToString()?.ToLowerInvariant();
 			DateOfDecision = Decision.AdvisoryBoardDecisionDate;
@@ -59,31 +71,20 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPostAsync(int id)
+		public IActionResult OnPost(int id)
 		{
-			var decision = GetDecisionFromSession(id);
+			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
 			decision.AdvisoryBoardDecisionDate = DateOfDecision;
 
 			if (!ModelState.IsValid)
 			{
 				_errorService.AddErrors(Request.Form.Keys, ModelState);
-				return await OnGetAsync(id);
+				return OnGet(id);
 			}
 
 			SetDecisionInSession(id, decision);
 
 			return RedirectToPage(Links.Decision.Summary.Page, new { id });
-		}
-
-		string IDateValidationMessageProvider.SomeMissing(string displayName, IEnumerable<string> missingParts) =>
-			$"Date must include a {string.Join(" and ", missingParts)}";
-
-		string IDateValidationMessageProvider.AllMissing(string displayName)
-		{
-			string idRaw = Request.RouteValues["id"] as string;
-			int id = int.Parse(idRaw);
-			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
-			return $"Enter the date when the conversion was {decision.Decision.ToDescription().ToLowerInvariant()}";
 		}
 	}
 }
