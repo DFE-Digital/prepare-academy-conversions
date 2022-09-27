@@ -20,14 +20,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		private string DiocesanConsent => Document.QuerySelector(CypressSelectorFor(Select.Legal.Summary.DiocesanConsent.Status))?.Text().Trim();
 		private string FoundationConsent => Document.QuerySelector(CypressSelectorFor(Select.Legal.Summary.FoundationConsent.Status))?.Text().Trim();
 
-		protected override Func<LegalRequirementsTestWizard, AcademyConversionProject, Task> BeforeEachTest =>
-			async (wizard, project) =>
-			{
-				await wizard.OpenSummary(project.Id);
-
-				PageHeading.Should().Be("Confirm legal requirements");
-			};
-
 
 		[Fact]
 		public void Back_link_to_point_to_the_task_list_page()
