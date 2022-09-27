@@ -49,8 +49,8 @@ namespace ApplyToBecomeInternal
 				});
 
 			services.AddControllersWithViews()
-				.AddMicrosoftIdentityUI();				
-		
+				.AddMicrosoftIdentityUI();
+
 			if (_env.IsDevelopment())
 			{
 				razorPages.AddRazorRuntimeCompilation();
@@ -61,7 +61,7 @@ namespace ApplyToBecomeInternal
 			services.AddHttpContextAccessor();
 			ConfigureRedisConnection(services);
 
-			services.AddAuthorization(options => { options.DefaultPolicy = SetupAuthorizationPolicyBuilder().Build(); });
+			services.AddAuthorization(options => options.DefaultPolicy = SetupAuthorizationPolicyBuilder().Build());			
 
 			services.AddMicrosoftIdentityWebAppAuthentication(Configuration);
 			services.Configure<CookieAuthenticationOptions>(CookieAuthenticationDefaults.AuthenticationScheme,
@@ -95,9 +95,9 @@ namespace ApplyToBecomeInternal
 				client.BaseAddress = new Uri(apiOptions.BaseUrl);
 				client.DefaultRequestHeaders.Add("x-api-key", apiOptions.ApiKey);
 			});
-			
+
 			services.Configure<ServiceLinkOptions>(Configuration.GetSection(ServiceLinkOptions.Name));
-			
+
 			services.AddScoped<ErrorService>();
 			services.AddScoped<IGetEstablishment, EstablishmentService>();
 			services.Decorate<IGetEstablishment, GetEstablishmentItemCacheDecorator>();

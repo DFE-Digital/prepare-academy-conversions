@@ -1,6 +1,17 @@
 ﻿@model ApplyToBecomeInternal.ViewModels.RecordDecisionPreviewViewModel
 @using ApplyToBecome.Data.Models.AdvisoryBoardDecision
 @using ApplyToBecomeInternal.Configuration
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+@if (User.IsInRole("conversions.project.assign"))
+{
+    <h1>This user is allowed access.</h1>
+}
+else
+{
+    <h1>This user is NOT allowed access.</h1>
+}
 
 @if (Model.Decision != null)
 {

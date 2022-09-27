@@ -3,12 +3,14 @@ using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Pages.TaskList.Decision.Models;
 using ApplyToBecomeInternal.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 {
+	[Authorize(Roles ="conversions.project.assign")]
 	public class RecordDecisionModel : DecisionBaseModel
 	{
 		private readonly ErrorService _errorService;
