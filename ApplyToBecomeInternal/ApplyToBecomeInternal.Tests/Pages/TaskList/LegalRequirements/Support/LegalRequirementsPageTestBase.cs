@@ -8,7 +8,7 @@ using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support
 {
-	public abstract class LegalRequirementsPageTestBase : BaseIntegrationTests, IAsyncLifetime
+	public abstract class LegalRequirementsPageTestBase : BaseIntegrationTests
 	{
 		protected AcademyConversionProject Project;
 
