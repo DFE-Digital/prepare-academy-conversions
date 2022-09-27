@@ -1,21 +1,27 @@
 /// <reference types ='Cypress'/>
+import {recordDecision} from '../../pages/recordDecision'
 
 // uri to be updated once academisation API is integrated
-let url = Cypress.env('url') + '/task-list/2054?rd=true'
+let url = Cypress.env('url')
 let projecList = Cypress.env('url') + '/project-list'
 
 describe('103791 Edit Declined journey', () => {
+    
     beforeEach(() => {
+        // Step 1
         // delete declined reasons
+        let id = new recordDecision().urlSliceID()
         cy.sqlServer(`
-                    delete from 
-                        academisation.ConversionAdvisoryBoardDecisionDeclinedReason 
-                    where 
-                        AdvisoryBoardDecisionId = (select Id from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2054)`)
-        cy.sqlServer('delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2054')
-        cy.sqlServer('insert into academisation.ConversionAdvisoryBoardDecision values (2054, \'Declined\', null, null, getdate(), \'None\', getdate(), getdate())')
+            delete from academisation.ConversionAdvisoryBoardDecisionDeclinedReason 
+                where AdvisoryBoardDecisionId = (select id from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id})`)
+        cy.sqlServer(`delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id}`)
+        cy.sqlServer(`insert into academisation.ConversionAdvisoryBoardDecision values (${id}, \'Declined\', null, null, getdate(), \'None\', getdate(), getdate())`)
         cy.clearCookies()
+
+        // Step2
+        // Navigates the first project from project list
         cy.visit(url)
+        cy.firstProjectRecordDecision()
     })
 
     // Edit Approval Path - Regional Director, Finance 
@@ -91,6 +97,7 @@ describe('103791 Edit Declined journey', () => {
         var declinedReasons = cy.get('[id="decline-reasons"]')
         declinedReasons.should('contain.text', 'Performance:')
         declinedReasons.should('contain.text', 'Performance details 2nd test')
+        // check date
         cy.decisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.continueBtn().click()
@@ -133,6 +140,7 @@ describe('103791 Edit Declined journey', () => {
         var declinedReasons = cy.get('[id="decline-reasons"]')
         declinedReasons.should('contain.text', 'Governance:')
         declinedReasons.should('contain.text', 'Governance details 2nd test')
+        // check date
         cy.decisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.continueBtn().click()

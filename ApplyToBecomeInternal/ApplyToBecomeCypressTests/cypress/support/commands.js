@@ -497,6 +497,16 @@ Cypress.Commands.add('foundationConsentStatus', () => {
     cy.get('[data-cy="select-legal-summary-foundationconsent-status"]')
 })
 
+// School Listing Summary Page (Universal)
+Cypress.Commands.add('firstProjectRecordDecision', () => {
+    cy.get('[data-cy="select-projecttype-input-conversion"]').click()
+    cy.get('[data-cy="select-common-submitbutton"]').click()
+    cy.get('[id="school-name-0"]').click()
+    cy.url().then(url => {
+        let modifiedUrl = url + '?rd=true'
+        cy.visit(modifiedUrl)
+    })
+});
 
 // Request external dev - requres environment setup on yml file
 // Cypress.Commands.add('beData', () => {
