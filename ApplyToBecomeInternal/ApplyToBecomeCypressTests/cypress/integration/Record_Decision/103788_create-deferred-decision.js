@@ -1,14 +1,16 @@
 /// <reference types ='Cypress'/>
-
+import RecordDecision from '../../pages/recordDecision'
 // uri to be updated once academisation API is integrated
-let url = Cypress.env('url') + '/task-list/2054?rd=true'
 
 describe('Create Deferred journey', () => {
     beforeEach(() => {
-        // delete decision
-        cy.sqlServer('DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = 2054')
-        cy.clearCookies()
-        cy.visit(url)
+        RecordDecision.selectProject().then(id => {
+            // delete decision
+            cy.sqlServer(`DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = ${id}`)
+            cy.clearCookies()
+            //cy.visit(url)
+            cy.url().then(url => cy.visit(`${url}?rd=true`))
+        })
     })
 
     // Edit Deferred Path - Regional Director, Additional information needed 
@@ -34,10 +36,8 @@ describe('Create Deferred journey', () => {
         cy.deferredReasonChangeLink().click()
         // set details
         cy.addInfoNeededText().clear().type('Additional info 2nd time')
-
         cy.continueBtn().click()
         cy.continueBtn().click()
-
         checkSummary()
         // clicks on the record a decision button to submit
         cy.continueBtn().click()
@@ -45,8 +45,10 @@ describe('Create Deferred journey', () => {
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
         checkSummary()
         // confirm project status has been updated
-        cy.visit(Cypress.env('url') + '/project-list')
-        cy.projectStateId().should('contain.text', 'DEFERRED')
+        RecordDecision.selectProject().then(id => {
+            cy.visit(Cypress.env('url') + '/project-list')
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DEFERRED')
+        })
     })
 
     function checkSummary() {

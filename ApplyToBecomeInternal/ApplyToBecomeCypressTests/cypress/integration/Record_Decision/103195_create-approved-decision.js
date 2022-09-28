@@ -1,15 +1,18 @@
 /// <reference types ='Cypress'/>
 
 // uri to be updated once academisation API is integrated
-let url = Cypress.env('url') + '/task-list/2054?rd=true'
+import RecordDecision from '../../pages/recordDecision'
 
 describe('103195 Record new Approved decision', () => {
 
     beforeEach(() => {
-        // delete decision
-        cy.sqlServer('DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = 2054')
-        cy.clearCookies()
-        cy.visit(url)
+        RecordDecision.selectProject().then(id => {
+            // delete decision
+            cy.sqlServer(`DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = ${id}`)
+            cy.clearCookies()
+            //cy.visit(url)
+            cy.url().then(url => cy.visit(`${url}?rd=true`))
+        })
     })
 
     // Edit Approval Path - Regional Director, No/Yes conditions set
@@ -45,8 +48,10 @@ describe('103195 Record new Approved decision', () => {
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
         checkSummary()
         // confirm project status has been updated
-        cy.visit(Cypress.env('url') + '/project-list')
-        cy.projectStateId().should('contain.text', 'APPROVED')
+        RecordDecision.selectProject().then(id => {
+            cy.visit(Cypress.env('url') + '/project-list')
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
+        })
     })
 
     // Displayed at the end of the journey
@@ -56,5 +61,7 @@ describe('103195 Record new Approved decision', () => {
         cy.AprrovedConditionsSet().should('contain.text', 'Yes')
         cy.AprrovedConditionsSet().should('contain.text', 'This is a test')
         cy.ApprovedDecisionDate().should('contain.text', '10 August 2022')
+        
     }
+
 })

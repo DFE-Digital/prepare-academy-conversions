@@ -1,12 +1,14 @@
 /// <reference types ='Cypress'/>
 
 // uri to be updated once academisation API is integrated
-let url = Cypress.env('url') + '/task-list/2050?rd=true'
+import RecordDecision from '../../pages/recordDecision'
 
 describe('103787 Error handling', () => {
     beforeEach(() => {
-        cy.visit(url)
-        cy.clearCookies()
+        RecordDecision.selectProject().then(() => {
+            cy.url().then(url => cy.visit(`${url}?rd=true`))
+            cy.clearCookies()
+        })
     })
 
     it('Error handling for the approved journey', () => {
