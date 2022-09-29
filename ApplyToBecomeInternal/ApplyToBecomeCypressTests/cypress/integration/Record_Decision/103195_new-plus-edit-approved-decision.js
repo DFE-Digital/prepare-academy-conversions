@@ -1,18 +1,15 @@
 /// <reference types ='Cypress'/>
 
 import RecordDecision from "../../pages/recordDecision"
-let projecList = Cypress.env('url') + '/project-list'
+let projectList = Cypress.env('url') + '/project-list'
 // uri to be updated once academisation API is integrated
 
-
 describe('103195 Edit Approved record decision', ()=> {
-
     beforeEach(() => {
         RecordDecision.selectProject().then(id => {
             cy.sqlServer(`delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id}`)
             cy.sqlServer(`insert into academisation.ConversionAdvisoryBoardDecision values (${id}, \'Approved\', null, null, getdate(), \'None\', getdate(), getdate())`)
             cy.clearCookies()
-            //cy.visit(url)
             cy.url().then(url => cy.visit(`${url}?rd=true`))
         })
     })
@@ -53,8 +50,9 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
-        RecordDecision.selectProject().then(id => {
-            cy.visit(Cypress.env('url') + '/project-list')
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
         })
     })
@@ -95,8 +93,9 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
-        RecordDecision.selectProject().then(id => {
-            cy.visit(projecList)
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
         })
     })
@@ -136,8 +135,9 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
-        RecordDecision.selectProject().then(id => {
-            cy.visit(projecList)
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
         })
     })
@@ -177,8 +177,9 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
-        RecordDecision.selectProject().then(id => {
-            cy.visit(projecList)
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
         })
     })
@@ -219,8 +220,9 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
-        RecordDecision.selectProject().then(id => {
-            cy.visit(projecList)
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
         })
     })

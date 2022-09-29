@@ -491,7 +491,6 @@ Cypress.Commands.add('foundationConsentStatus', () => {
     cy.get('[data-cy="select-legal-summary-foundationconsent-status"]')
 })
 
-// Removing this as it is not needed. 
 // School Listing Summary Page (Universal)
 // Cypress.Commands.add('firstProjectRecordDecision', () => {
 //     cy.get('[data-cy="select-projecttype-input-conversion"]').click()

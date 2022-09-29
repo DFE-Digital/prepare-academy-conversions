@@ -1,6 +1,5 @@
 /// <reference types ='Cypress'/>
 import RecordDecision from '../../pages/recordDecision'
-
 // uri to be updated once academisation API is integrated
 
 describe('103791 Create Declined journey', () => {
@@ -47,7 +46,8 @@ describe('103791 Create Declined journey', () => {
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
         checkSummary()
         // check project status has been updated
-        RecordDecision.selectProject().then(id => {
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
             cy.visit(Cypress.env('url') + '/project-list')
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
         })

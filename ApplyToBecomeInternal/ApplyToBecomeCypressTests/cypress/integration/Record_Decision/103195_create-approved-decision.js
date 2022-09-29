@@ -10,13 +10,12 @@ describe('103195 Record new Approved decision', () => {
             // delete decision
             cy.sqlServer(`DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = ${id}`)
             cy.clearCookies()
-            //cy.visit(url)
             cy.url().then(url => cy.visit(`${url}?rd=true`))
         })
     })
 
     // Edit Approval Path - Regional Director, No/Yes conditions set
-    it.only('TC01: J1 Create a new recorded decision Approval - Reg Director Region, No Conditions', () => {
+    it('TC01: J1 Create a new recorded decision Approval - Reg Director Region, No Conditions', () => {
         // Click on change your decision button
         cy.get('[id="record-decision-link"]').should('contain.text', 'Record a decision').click()
         //select iniital decision

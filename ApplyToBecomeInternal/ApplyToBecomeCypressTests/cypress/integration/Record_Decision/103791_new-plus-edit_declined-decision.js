@@ -1,9 +1,8 @@
 /// <reference types ='Cypress'/>
 import RecordDecision from '../../pages/recordDecision'
-let projecList = Cypress.env('url') + '/project-list'
+let projectList = Cypress.env('url') + '/project-list'
 
 describe('103791 Edit Declined journey', () => {
-
     beforeEach(() => {
         RecordDecision.selectProject().then(id => {
             cy.sqlServer(`
@@ -11,7 +10,6 @@ describe('103791 Edit Declined journey', () => {
                     where AdvisoryBoardDecisionId = (select id from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id})`);
             cy.sqlServer(`delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id}`);
             cy.sqlServer(`insert into academisation.ConversionAdvisoryBoardDecision values (${id}, \'Declined\', null, null, getdate(), \'None\', getdate(), getdate())`);
-
             cy.clearCookies();
             cy.url().then(url => cy.visit(`${url}?rd=true`))
         })
@@ -54,8 +52,9 @@ describe('103791 Edit Declined journey', () => {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
-        RecordDecision.selectProject().then(id => {
-            cy.visit(projecList)
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
         })
     })
@@ -98,8 +97,9 @@ describe('103791 Edit Declined journey', () => {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
-        RecordDecision.selectProject().then(id => {
-            cy.visit(projecList)
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
         })
     })
@@ -142,8 +142,9 @@ describe('103791 Edit Declined journey', () => {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
-        RecordDecision.selectProject().then(id => {
-            cy.visit(projecList)
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
         })
     })
@@ -184,8 +185,9 @@ describe('103791 Edit Declined journey', () => {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
-        RecordDecision.selectProject().then(id => {
-            cy.visit(projecList)
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
         })
     })
@@ -227,8 +229,9 @@ describe('103791 Edit Declined journey', () => {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
-        RecordDecision.selectProject().then(id => {
-            cy.visit(projecList)
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
         })
     })
