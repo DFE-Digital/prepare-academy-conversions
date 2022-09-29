@@ -1,15 +1,16 @@
 /// <reference types ='Cypress'/>
-
+import RecordDecision from '../../pages/recordDecision'
 // uri to be updated once academisation API is integrated
-let url = Cypress.env('url') + '/task-list/2054?rd=true'
-let projecList = Cypress.env('url') + '/project-list'
 
 describe('103791 Create Declined journey', () => {
     beforeEach(() => {
-        // delete decision
-        cy.sqlServer('DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = 2054')
-        cy.clearCookies()
-        cy.visit(url)
+        RecordDecision.selectProject().then(id => {
+                    // delete decision
+            cy.sqlServer(`DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = ${id}`)
+            cy.clearCookies()
+            //cy.visit(url)
+            cy.url().then(url => cy.visit(`${url}?rd=true`))
+        })
     })
 
     // Edit Approval Path - Regional Director, Finance 
@@ -45,8 +46,11 @@ describe('103791 Create Declined journey', () => {
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
         checkSummary()
         // check project status has been updated
-        cy.visit(projecList)
-        cy.projectStateId().should('contain.text', 'DECLINED')
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(Cypress.env('url') + '/project-list')
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
+        })
     })
 
     function checkSummary(){

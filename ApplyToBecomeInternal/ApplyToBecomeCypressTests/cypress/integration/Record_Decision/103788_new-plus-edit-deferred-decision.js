@@ -1,21 +1,22 @@
 /// <reference types ='Cypress'/>
-
 // uri to be updated once academisation API is integrated
-let url = Cypress.env('url') + '/task-list/2054?rd=true'
-let projecList = Cypress.env('url') + '/project-list'
+let projectList = Cypress.env('url') + '/project-list'
+import RecordDecision from '../../pages/recordDecision'
 
 describe('Edit Deferred journey', () => {
     beforeEach(() => {    
-        // delete deferred reasons
-        cy.sqlServer(`
-                    delete from 
-                        academisation.ConversionAdvisoryBoardDecisionDeferredReason 
-                    where 
-                        AdvisoryBoardDecisionId = (select Id from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2054)`) 
-        cy.sqlServer('delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2054')
-        cy.sqlServer('insert into academisation.ConversionAdvisoryBoardDecision values (2054, \'Deferred\', null, null, getdate(), \'None\', getdate(), getdate())')
-        cy.clearCookies()
-        cy.visit(url)
+        RecordDecision.selectProject().then(id => {
+            // delete deferred reasons
+            cy.sqlServer(`
+            delete from 
+                academisation.ConversionAdvisoryBoardDecisionDeferredReason 
+            where 
+                AdvisoryBoardDecisionId = (select Id from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id})`) 
+            cy.sqlServer(`delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id}`)
+            cy.sqlServer(`insert into academisation.ConversionAdvisoryBoardDecision values (${id}, \'Deferred\', null, null, getdate(), \'None\', getdate(), getdate())`)
+            cy.clearCookies()
+            cy.url().then(url => cy.visit(`${url}?rd=true`))
+        })
     })
 
     // Edit Deferred Path - Regional Director, Additional information needed 
@@ -41,7 +42,6 @@ describe('Edit Deferred journey', () => {
         cy.deferredReasonChangeLink().click()
         // set details
         cy.addInfoNeededText().clear().type('Additional info 2nd time')
-
         cy.continueBtn().click()
         cy.continueBtn().click()
         // preview answers before submit
@@ -56,8 +56,11 @@ describe('Edit Deferred journey', () => {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
-        cy.visit(projecList)
-        cy.projectStateId().should('contain.text', 'DEFERRED')
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DEFERRED')
+        })
     })
 
     // Edit Deferred Path - A different Regional Director, ofsted report 
@@ -74,7 +77,6 @@ describe('Edit Deferred journey', () => {
         cy.continueBtn().click()
         cy.awaitOfstedReportBox().click()
             .then(() => cy.awaitOfstedReportText().clear().type('awaiting ofsted'))
-
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -99,8 +101,11 @@ describe('Edit Deferred journey', () => {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
-        cy.visit(projecList)
-        cy.projectStateId().should('contain.text', 'DEFERRED')
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DEFERRED')
+        })
     })
 
     // Edit Deferred Path - Director General, Performance concerns
@@ -141,8 +146,11 @@ describe('Edit Deferred journey', () => {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
-        cy.visit(projecList)
-        cy.projectStateId().should('contain.text', 'DEFERRED')
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DEFERRED')
+        })
     })
 
     // Edit Deferred Path - Minister, Other
@@ -177,14 +185,16 @@ describe('Edit Deferred journey', () => {
         var deferredReasons = cy.get('[id="deferred-reasons"]')
         deferredReasons.should('contain.text', 'Other:')
         deferredReasons.should('contain.text', 'other details 2nd time')
-
         cy.deferredDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
-        cy.visit(projecList)
-        cy.projectStateId().should('contain.text', 'DEFERRED')
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DEFERRED')
+        })
     })
 
     // Edit Deferred Path - None, Other
@@ -224,7 +234,10 @@ describe('Edit Deferred journey', () => {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
-        cy.visit(projecList)
-        cy.projectStateId().should('contain.text', 'DEFERRED')
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DEFERRED')
+        })
     })
 })

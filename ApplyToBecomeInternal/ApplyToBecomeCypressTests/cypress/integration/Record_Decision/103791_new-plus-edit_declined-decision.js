@@ -1,21 +1,18 @@
 /// <reference types ='Cypress'/>
-
-// uri to be updated once academisation API is integrated
-let url = Cypress.env('url') + '/task-list/2054?rd=true'
-let projecList = Cypress.env('url') + '/project-list'
+import RecordDecision from '../../pages/recordDecision'
+let projectList = Cypress.env('url') + '/project-list'
 
 describe('103791 Edit Declined journey', () => {
     beforeEach(() => {
-        // delete declined reasons
-        cy.sqlServer(`
-                    delete from 
-                        academisation.ConversionAdvisoryBoardDecisionDeclinedReason 
-                    where 
-                        AdvisoryBoardDecisionId = (select Id from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2054)`)
-        cy.sqlServer('delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2054')
-        cy.sqlServer('insert into academisation.ConversionAdvisoryBoardDecision values (2054, \'Declined\', null, null, getdate(), \'None\', getdate(), getdate())')
-        cy.clearCookies()
-        cy.visit(url)
+        RecordDecision.selectProject().then(id => {
+            cy.sqlServer(`
+                    delete from academisation.ConversionAdvisoryBoardDecisionDeclinedReason 
+                    where AdvisoryBoardDecisionId = (select id from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id})`);
+            cy.sqlServer(`delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id}`);
+            cy.sqlServer(`insert into academisation.ConversionAdvisoryBoardDecision values (${id}, \'Declined\', null, null, getdate(), \'None\', getdate(), getdate())`);
+            cy.clearCookies();
+            cy.url().then(url => cy.visit(`${url}?rd=true`))
+        })
     })
 
     // Edit Approval Path - Regional Director, Finance 
@@ -55,8 +52,11 @@ describe('103791 Edit Declined journey', () => {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
-        cy.visit(projecList)
-        cy.projectStateId().should('contain.text', 'DECLINED')
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
+        })
     })
 
     // Edit Approval Path - A different Regional Director, Performance 
@@ -91,14 +91,17 @@ describe('103791 Edit Declined journey', () => {
         var declinedReasons = cy.get('[id="decline-reasons"]')
         declinedReasons.should('contain.text', 'Performance:')
         declinedReasons.should('contain.text', 'Performance details 2nd test')
+        // check date
         cy.decisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
-        cy.visit(projecList)
-        cy.projectStateId().should('contain.text', 'DECLINED')
-
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
+        })
     })
 
     // Edit Approval Path - Director General, Governance
@@ -133,13 +136,17 @@ describe('103791 Edit Declined journey', () => {
         var declinedReasons = cy.get('[id="decline-reasons"]')
         declinedReasons.should('contain.text', 'Governance:')
         declinedReasons.should('contain.text', 'Governance details 2nd test')
+        // check date
         cy.decisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
-        cy.visit(projecList)
-        cy.projectStateId().should('contain.text', 'DECLINED')
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
+        })
     })
 
     // Edit Approval Path - Minister, Choice of trust
@@ -178,8 +185,11 @@ describe('103791 Edit Declined journey', () => {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
-        cy.visit(projecList)
-        cy.projectStateId().should('contain.text', 'DECLINED')
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
+        })
     })
 
     // Edit Approval Path - None, Other
@@ -219,7 +229,11 @@ describe('103791 Edit Declined journey', () => {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
-        cy.visit(projecList)
-        cy.projectStateId().should('contain.text', 'DECLINED')
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
+        })
     })
+    
 })

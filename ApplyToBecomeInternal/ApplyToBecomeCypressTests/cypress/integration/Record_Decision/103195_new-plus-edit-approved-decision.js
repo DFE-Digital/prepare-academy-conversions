@@ -1,15 +1,17 @@
 /// <reference types ='Cypress'/>
 
+import RecordDecision from "../../pages/recordDecision"
+let projectList = Cypress.env('url') + '/project-list'
 // uri to be updated once academisation API is integrated
-let url = Cypress.env('url') + '/task-list/2054?rd=true'
 
 describe('103195 Edit Approved record decision', ()=> {
-
     beforeEach(() => {
-        cy.sqlServer('delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = 2054')
-        cy.sqlServer('insert into academisation.ConversionAdvisoryBoardDecision values (2054, \'Approved\', null, null, getdate(), \'None\', getdate(), getdate())')
-        cy.clearCookies()
-        cy.visit(url)
+        RecordDecision.selectProject().then(id => {
+            cy.sqlServer(`delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id}`)
+            cy.sqlServer(`insert into academisation.ConversionAdvisoryBoardDecision values (${id}, \'Approved\', null, null, getdate(), \'None\', getdate(), getdate())`)
+            cy.clearCookies()
+            cy.url().then(url => cy.visit(`${url}?rd=true`))
+        })
     })
 
     // Edit Approval Path - Regional Director, No/Yes conditions set
@@ -48,6 +50,11 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
+        })
     })
 
     // Edit Approval Path - A different Regional Director, No/Yes conditions set
@@ -86,6 +93,11 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
+        })
     })
 
     // Edit Approval Path - Minister, No/Yes conditions set
@@ -123,6 +135,11 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
+        })
     })
     // Edit Approval Path - Director General, No/Yes conditions set
     it('TC04: J1 Edit a recorded decision Approval - Director General, No Conditions', () => {
@@ -160,6 +177,11 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
+        })
     })
 
     // Edit Approval Path - None, No/Yes conditions set
@@ -198,5 +220,10 @@ describe('103195 Edit Approved record decision', ()=> {
         cy.continueBtn().click()
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
+            cy.visit(projectList)
+            cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
+        })
     })
 })
