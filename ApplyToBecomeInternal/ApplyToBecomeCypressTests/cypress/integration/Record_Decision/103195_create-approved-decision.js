@@ -16,7 +16,7 @@ describe('103195 Record new Approved decision', () => {
     })
 
     // Edit Approval Path - Regional Director, No/Yes conditions set
-    it('TC01: J1 Create a new recorded decision Approval - Reg Director Region, No Conditions', () => {
+    it.only('TC01: J1 Create a new recorded decision Approval - Reg Director Region, No Conditions', () => {
         // Click on change your decision button
         cy.get('[id="record-decision-link"]').should('contain.text', 'Record a decision').click()
         //select iniital decision
@@ -48,7 +48,8 @@ describe('103195 Record new Approved decision', () => {
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
         checkSummary()
         // confirm project status has been updated
-        RecordDecision.selectProject().then(id => {
+        cy.url().then(url => {
+            const id = RecordDecision.getIdFromUrl(url)
             cy.visit(Cypress.env('url') + '/project-list')
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
         })
@@ -61,7 +62,7 @@ describe('103195 Record new Approved decision', () => {
         cy.AprrovedConditionsSet().should('contain.text', 'Yes')
         cy.AprrovedConditionsSet().should('contain.text', 'This is a test')
         cy.ApprovedDecisionDate().should('contain.text', '10 August 2022')
-        
+
     }
 
 })
