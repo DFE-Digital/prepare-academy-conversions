@@ -148,7 +148,7 @@ jobs:
           TF_VAR_logit_sink_url: ${{ secrets.LOGIT_SINK_URL }}
           TF_VAR_app_azuread_clientsecret: ${{ secrets.AZUREAD_CLIENTSECRET }}
 
-  cypress-tests:
+  .cypress-tests:
     needs: deploy-image
     environment: staging
     if: ${{ github.event.inputs.environment}} == staging
