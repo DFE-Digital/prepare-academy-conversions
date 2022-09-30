@@ -173,4 +173,4 @@ jobs:
         with:
            name: screenshots
            path: ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots
-           allow_failure: true
+        continue-on-error: true
