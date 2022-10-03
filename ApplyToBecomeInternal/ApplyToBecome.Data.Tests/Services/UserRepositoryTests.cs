@@ -119,6 +119,19 @@ namespace ApplyToBecome.Data.Tests.Services
 			);
 		}
 
+		[Theory, AutoMoqData]
+		public async Task SearchUsers_EmptySearch_ReturnsEmpty([Frozen] Mock<IGraphUserService> graphUserService,
+			UserRepository sut)
+		{
+			var users = GenerateUsers(20);
+
+			graphUserService.Setup(m => m.GetAllUsers()).ReturnsAsync(users);
+
+			var result = (await sut.SearchUsers(""));
+
+			Assert.Empty(result);
+		}
+
 		private List<User>  GenerateUsers(int count)
 		{
 			var users = new List<User>();
