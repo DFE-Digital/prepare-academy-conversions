@@ -18,7 +18,7 @@ namespace ApplyToBecome.Data.Tests.Services
 		private readonly Fixture _fixture = new Fixture();
 
 		[Theory, AutoMoqData]
-		public async Task GetUsers_MatchesGivenName_ReturnsUsers([Frozen] Mock<IGraphUserService> graphUserService,
+		public async Task SearchUsers_MatchesGivenName_ReturnsUsers([Frozen] Mock<IGraphUserService> graphUserService,
 			UserRepository sut)
 		{			
 			var users = GenerateUsers(20);
@@ -28,7 +28,7 @@ namespace ApplyToBecome.Data.Tests.Services
 
 			graphUserService.Setup(m => m.GetAllUsers()).ReturnsAsync(users);
 
-			var result = (await sut.GetUsers("Pe")).ToList();
+			var result = (await sut.SearchUsers("Pe")).ToList();
 
 			Assert.Multiple(
 				// first user
@@ -45,7 +45,7 @@ namespace ApplyToBecome.Data.Tests.Services
 		}		
 
 		[Theory, AutoMoqData]
-		public async Task GetUsers_MatchesSurname_ReturnsUsers([Frozen] Mock<IGraphUserService> graphUserService,
+		public async Task SearchUsers_MatchesSurname_ReturnsUsers([Frozen] Mock<IGraphUserService> graphUserService,
 			UserRepository sut)
 		{
 			var users = GenerateUsers(20);
@@ -55,7 +55,7 @@ namespace ApplyToBecome.Data.Tests.Services
 
 			graphUserService.Setup(m => m.GetAllUsers()).ReturnsAsync(users);
 
-			var result = (await sut.GetUsers("Smi")).ToList();
+			var result = (await sut.SearchUsers("Smi")).ToList();
 
 			Assert.Multiple(
 				// first user
@@ -72,7 +72,7 @@ namespace ApplyToBecome.Data.Tests.Services
 		}
 
 		[Theory, AutoMoqData]
-		public async Task GetUsers_MatchesSurnameAndGivenName_ReturnsBothUsers([Frozen] Mock<IGraphUserService> graphUserService,
+		public async Task SearchUsers_MatchesSurnameAndGivenName_ReturnsBothUsers([Frozen] Mock<IGraphUserService> graphUserService,
 			UserRepository sut)
 		{
 			var users = GenerateUsers(20);
@@ -82,7 +82,7 @@ namespace ApplyToBecome.Data.Tests.Services
 
 			graphUserService.Setup(m => m.GetAllUsers()).ReturnsAsync(users);
 
-			var result = (await sut.GetUsers("Pen")).ToList();
+			var result = (await sut.SearchUsers("Pen")).ToList();
 
 			Assert.Multiple(
 				// first user
@@ -99,7 +99,7 @@ namespace ApplyToBecome.Data.Tests.Services
 		}
 
 		[Theory, AutoMoqData]
-		public async Task GetUsers_MatchesWhenCaseDiffers_ReturnsUsers([Frozen] Mock<IGraphUserService> graphUserService,
+		public async Task SearchUsers_MatchesWhenCaseDiffers_ReturnsUsers([Frozen] Mock<IGraphUserService> graphUserService,
 			UserRepository sut)
 		{
 			var users = GenerateUsers(20);
@@ -108,7 +108,7 @@ namespace ApplyToBecome.Data.Tests.Services
 
 			graphUserService.Setup(m => m.GetAllUsers()).ReturnsAsync(users);
 
-			var result = (await sut.GetUsers("smi")).ToList();
+			var result = (await sut.SearchUsers("smi")).ToList();
 
 			Assert.Multiple(				
 				// first user

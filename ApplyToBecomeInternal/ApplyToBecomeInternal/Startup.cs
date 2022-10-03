@@ -51,8 +51,8 @@ namespace ApplyToBecomeInternal
 				});
 
 			services.AddControllersWithViews()
-				.AddMicrosoftIdentityUI();
-
+				.AddMicrosoftIdentityUI();				
+		
 			if (_env.IsDevelopment())
 			{
 				razorPages.AddRazorRuntimeCompilation();
@@ -97,10 +97,10 @@ namespace ApplyToBecomeInternal
 				client.BaseAddress = new Uri(apiOptions.BaseUrl);
 				client.DefaultRequestHeaders.Add("x-api-key", apiOptions.ApiKey);
 			});
-
+			
 			services.Configure<ServiceLinkOptions>(Configuration.GetSection(ServiceLinkOptions.Name));
 			services.Configure<AzureAdOptions>(Configuration.GetSection(AzureAdOptions.Name));
-
+			
 			services.AddScoped<ErrorService>();
 			services.AddScoped<IGetEstablishment, EstablishmentService>();
 			services.Decorate<IGetEstablishment, GetEstablishmentItemCacheDecorator>();
@@ -117,7 +117,7 @@ namespace ApplyToBecomeInternal
 			services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>();
 			services.AddScoped<IUserRepository, UserRepository>();
 			services.AddScoped<IGraphClientFactory, GraphClientFactory>();
-			services.AddScoped<IGraphUserService, GraphUserService>();
+			services.AddScoped<IGraphUserService, GraphUserService>();			
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -15,7 +15,7 @@ namespace ApplyToBecome.Data.Services
 			_graphUserService = graphUserService;
 		}
 		
-		public async Task<IEnumerable<User>> GetUsers(string searchString)
+		public async Task<IEnumerable<User>> SearchUsers(string searchString)
 		{
 			var users = await _graphUserService.GetAllUsers();
 			
