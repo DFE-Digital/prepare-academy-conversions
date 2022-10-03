@@ -1,0 +1,12 @@
+﻿@page "/list-users/{searchString}"
+@model ApplyToBecomeInternal.Pages.ListUsersModel
+
+@*TODO: Remove this Page. Only meant for testing new functionality*@
+@{
+    foreach (var user in Model.Users)
+    {
+        <div>
+            @user.FirstName @user.LastName | @user.EmailAddress
+        </div>   
+    }
+}
