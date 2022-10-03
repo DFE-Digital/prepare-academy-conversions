@@ -20,15 +20,8 @@ namespace ApplyToBecome.Data.Tests.Services
 		[Theory, AutoMoqData]
 		public async Task GetUsers_MatchesGivenName_ReturnsUsers([Frozen] Mock<IGraphUserService> graphUserService,
 			UserRepository sut)
-		{
-			var users = new List<User>();
-
-			for (int i = 0; i < 20; i++)
-			{
-				users.Add(
-					new User { GivenName = _fixture.Create<string>(), Surname = _fixture.Create<string>(), Mail = _fixture.Create<string>(), Id = _fixture.Create<string>() }
-					);
-			}
+		{			
+			var users = GenerateUsers(20);
 
 			users.First().GivenName = "Penelope";
 			users.Last().GivenName = "Peter";
@@ -49,20 +42,13 @@ namespace ApplyToBecome.Data.Tests.Services
 				() => Assert.Equal(result[1].EmailAddress, users.Last().Mail),
 				() => Assert.Equal(result[1].Id, users.Last().Id)
 			);
-		}
+		}		
 
 		[Theory, AutoMoqData]
 		public async Task GetUsers_MatchesSurname_ReturnsUsers([Frozen] Mock<IGraphUserService> graphUserService,
 			UserRepository sut)
 		{
-			var users = new List<User>();
-
-			for (int i = 0; i < 20; i++)
-			{
-				users.Add(
-					new User { GivenName = _fixture.Create<string>(), Surname = _fixture.Create<string>(), Mail = _fixture.Create<string>(), Id = _fixture.Create<string>() }
-					);
-			}
+			var users = GenerateUsers(20);
 
 			users.First().GivenName = "Smith";
 			users.Last().GivenName = "Smithson";
@@ -89,14 +75,7 @@ namespace ApplyToBecome.Data.Tests.Services
 		public async Task GetUsers_MatchesSurnameAndGivenName_ReturnsBothUsers([Frozen] Mock<IGraphUserService> graphUserService,
 			UserRepository sut)
 		{
-			var users = new List<User>();
-
-			for (int i = 0; i < 20; i++)
-			{
-				users.Add(
-					new User { GivenName = _fixture.Create<string>(), Surname = _fixture.Create<string>(), Mail = _fixture.Create<string>(), Id = _fixture.Create<string>() }
-					);
-			}
+			var users = GenerateUsers(20);
 
 			users.First().GivenName = "Penelope";
 			users.Last().GivenName = "Penn";
@@ -123,14 +102,7 @@ namespace ApplyToBecome.Data.Tests.Services
 		public async Task GetUsers_MatchesWhenCaseDiffers_ReturnsUsers([Frozen] Mock<IGraphUserService> graphUserService,
 			UserRepository sut)
 		{
-			var users = new List<User>();
-
-			for (int i = 0; i < 5; i++)
-			{
-				users.Add(
-					new User { GivenName = _fixture.Create<string>(), Surname = _fixture.Create<string>(), Mail = _fixture.Create<string>(), Id = _fixture.Create<string>() }
-					);
-			}
+			var users = GenerateUsers(20);
 
 			users.First().GivenName = "Smith";			
 
@@ -145,6 +117,20 @@ namespace ApplyToBecome.Data.Tests.Services
 				() => Assert.Equal(result[0].EmailAddress, users[0].Mail),
 				() => Assert.Equal(result[0].Id, users[0].Id)	
 			);
+		}
+
+		private List<User>  GenerateUsers(int count)
+		{
+			var users = new List<User>();
+
+			for (int i = 0; i < count; i++)
+			{
+				users.Add(
+					new User { GivenName = _fixture.Create<string>(), Surname = _fixture.Create<string>(), Mail = _fixture.Create<string>(), Id = _fixture.Create<string>() }
+					);
+			}
+
+			return users;
 		}
 	}
 }
