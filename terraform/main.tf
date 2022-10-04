@@ -29,10 +29,10 @@ resource cloudfoundry_app worker_app {
 		"FeedbackLink"             = var.app_feedback_link
 		"SupportEmail"             = var.app_support_email
 		"SENTRY_RELEASE"           = "a2b-internal:${var.cf_app_image_tag}"
-		"AZUREAD__CLIENTSECRET"    = var.app_azuread_clientsecret
-		"AZUREAD__CLIENTID"        = var.app_azuread_clientid
-		"AZUREAD__TENANTID"        = var.app_azuread_tenantid
-		"AZUREAD__GROUPID"         = var.app_azuread_groupid
+		"AzureAd__ClientSecret"    = var.app_azuread_clientsecret
+		"AzureAd__ClientId"        = var.app_azuread_clientid
+		"AzureAd__TenantId"        = var.app_azuread_tenantid
+		"AzureAd__GroupId"         = var.app_azuread_groupid
 	}
 }
 
