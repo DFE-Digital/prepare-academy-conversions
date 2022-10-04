@@ -69,17 +69,17 @@ variable app_azuread_clientsecret {
   description = "Application variable for the Azure AD Authorization header"
 } 
 
-variable TF_VAR_app_azuread_clientid {
+variable app_azuread_clientid {
   type = string
   description = "Application variable for the Azure AD client id"
 } 
 
-variable TF_VAR_app_azuread_tenantid {
+variable app_azuread_tenantid {
   type = string
   description = "Application variable for the Azure AD tenant id"
 } 
 
-variable TF_VAR_app_azuread_groupid {
+variable app_azuread_groupid {
   type = string
   description = "Application variable for the Azure AD group id"
 } 

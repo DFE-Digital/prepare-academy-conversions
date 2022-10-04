@@ -32,7 +32,7 @@ resource cloudfoundry_app worker_app {
 		"AZUREAD__CLIENTSECRET"    = var.app_azuread_clientsecret
 		"AZUREAD__CLIENTID"        = var.app_azuread_clientid
 		"AZUREAD__TENANTID"        = var.app_azuread_tenantid
-		"AZUREAD__GROUPID"        = var.app_azuread_groupid
+		"AZUREAD__GROUPID"         = var.app_azuread_groupid
 	}
 }
 
