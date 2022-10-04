@@ -84,7 +84,7 @@ variable app_azuread_groupid {
   description = "Application variable for the Azure AD group id"
 } 
 
-variable cypresstest_secret {
+variable app_cypresstest_secret {
   type = string
   description = "Application variable for the Cypress tests secret"
 } 

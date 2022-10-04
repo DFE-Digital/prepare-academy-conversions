@@ -33,7 +33,7 @@ resource cloudfoundry_app worker_app {
 		"AzureAd__ClientId"        = var.app_azuread_clientid
 		"AzureAd__TenantId"        = var.app_azuread_tenantid
 		"AzureAd__GroupId"         = var.app_azuread_groupid
-		"CypressTestSecret"        = var.cypresstest_secret
+		"CypressTestSecret"        = var.app_cypresstest_secret
 	}
 }
 
