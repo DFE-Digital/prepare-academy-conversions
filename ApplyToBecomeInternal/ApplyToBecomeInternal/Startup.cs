@@ -1,4 +1,5 @@
 using ApplyToBecome.Data.Services;
+using ApplyToBecome.Data.Services.AzureAd;
 using ApplyToBecome.Data.Services.Interfaces;
 using ApplyToBecomeInternal.Authorization;
 using ApplyToBecomeInternal.Configuration;
@@ -20,6 +21,7 @@ using Microsoft.Identity.Web.UI;
 using Newtonsoft.Json.Linq;
 using StackExchange.Redis;
 using System;
+using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -56,7 +58,7 @@ namespace ApplyToBecomeInternal
 				razorPages.AddRazorRuntimeCompilation();
 			}
 
-			services.AddScoped(sp => sp.GetService<IHttpContextAccessor>().HttpContext.Session);
+			services.AddScoped(sp => sp.GetService<IHttpContextAccessor>()!.HttpContext.Session);
 			services.AddSession();
 			services.AddHttpContextAccessor();
 			ConfigureRedisConnection(services);
@@ -97,6 +99,7 @@ namespace ApplyToBecomeInternal
 			});
 			
 			services.Configure<ServiceLinkOptions>(Configuration.GetSection(ServiceLinkOptions.Name));
+			services.Configure<AzureAdOptions>(Configuration.GetSection(AzureAdOptions.Name));
 			
 			services.AddScoped<ErrorService>();
 			services.AddScoped<IGetEstablishment, EstablishmentService>();
@@ -112,6 +115,9 @@ namespace ApplyToBecomeInternal
 			services.AddScoped<ApplicationRepository>();
 			services.AddSingleton<IAuthorizationHandler, HeaderRequirementHandler>();
 			services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>();
+			services.AddScoped<IUserRepository, UserRepository>();
+			services.AddScoped<IGraphClientFactory, GraphClientFactory>();
+			services.AddScoped<IGraphUserService, GraphUserService>();			
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
