@@ -39,10 +39,8 @@ Install cypress and dependencies:
 You will need to set a secret in `secrets.json` in the following format to run the Cypress command against (you can use any value):
 
 ```json
-{
-  "AzureAd": {
-    "ClientSecret": "<SECRET HERE>"
-  }
+{  
+  "CypressTestSecret": "<SECRET HERE>" 
 }
 ```
 
@@ -67,6 +65,18 @@ To execute the tests in headless mode, run the following (the output will log to
 
 ```
 npm run cy:run -- --env url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
+```
+
+### Loading users from Azure Active Directory
+You will need to set a secret in `secrets.json` in the following format to run the Cypress command against (you can use any value):
+
+```
+  "AzureAd": {
+    "ClientId": "<clientid>",
+    "ClientSecret": "<clientsecret>",
+    "TenantId": "<tenantid>",
+    "GroupId": "<activedirectory-groupid>"
+  }
 ```
 
 ### Useful tips

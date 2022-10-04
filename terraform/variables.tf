@@ -84,6 +84,11 @@ variable app_azuread_groupid {
   description = "Application variable for the Azure AD group id"
 } 
 
+variable cypresstest_secret {
+  type = string
+  description = "Application variable for the Cypress tests secret"
+} 
+
 variable aspnetcore_environment {
   type = string
   description = ".NET Core Environment to run the service in"
