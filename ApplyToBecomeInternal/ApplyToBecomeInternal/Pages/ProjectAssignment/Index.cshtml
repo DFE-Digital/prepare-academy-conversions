@@ -11,7 +11,7 @@
 	<div class="govuk-grid-column-two-thirds">
 		<form action="../task_list?justAssigned=yes" method="post">
 			<input hidden="" type="text" name="returnToSummary" value="no">
-			<span class="govuk-caption-l">St. Wilfrid's Primary School</span>
+			<span class="govuk-caption-l">@Model.SchoolName</span>
 			<h1 class="govuk-heading-l">Who will be on this project?</h1>
 
 
@@ -37,7 +37,7 @@
 				@{
 					foreach (var deliveryOfficer in Model.DeliveryOfficers)
 					{
-                            <option class="autocomplete__option" value="@deliveryOfficer">@deliveryOfficer</option>
+                            <option class="autocomplete__option" value="@deliveryOfficer.FullName">@deliveryOfficer.FullName</option>
 					}
 				}
 			</select>

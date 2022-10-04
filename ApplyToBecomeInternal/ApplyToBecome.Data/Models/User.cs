@@ -8,13 +8,11 @@ namespace ApplyToBecome.Data.Models
 		{
 			Id = id;
 			EmailAddress = emailAddress;
-			FirstName = firstName;
-			LastName = lastName;
+			FullName = firstName + " " + lastName;
 		}
 
 		public string Id { get; set; }
 		public string EmailAddress { get; private set; }
-		public string FirstName { get; private set; }
-		public string LastName { get; private set; }
+		public string FullName { get; private set; }
 	}
 }
