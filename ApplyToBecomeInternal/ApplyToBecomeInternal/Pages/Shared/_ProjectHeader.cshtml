@@ -2,7 +2,6 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ApplyToBecomeInternal.ViewModels.ProjectViewModel
 @inject ApplyToBecome.Data.Services.Interfaces.IAcademyConversionAdvisoryBoardDecisionRepository decisionRepository
-
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
         <span class="govuk-caption-xl">URN @Model.SchoolURN</span>
@@ -13,8 +12,8 @@
 		    Delivery officer: 
       
 		    <span class="empty">Empty</span>
-      
-		    <a class="govuk-link" href="project-assignment/project-assignment" style="margin-left: 1em;">Change</a>
+
+            <a class="govuk-link" asp-page="@Links.ProjectAssignment.Index.Page" asp-route-id="@Model.Id" style="margin-left: 1em;">Change</a>
 	    </p>
     </div>
     @if (!string.IsNullOrEmpty(Context.Request.Query["rd"]))
