@@ -63,7 +63,8 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 				AssignedDate = academyConversionProject.AssignedDate.ToDateString(),
 				HeadTeacherBoardDate = academyConversionProject.HeadTeacherBoardDate.ToDateString(),
 				ProposedAcademyOpeningDate = academyConversionProject.ProposedAcademyOpeningDate.ToDateString(),
-				Status = MapProjectStatus(academyConversionProject.ProjectStatus)
+				Status = MapProjectStatus(academyConversionProject.ProjectStatus),
+				AssignedUserFullName = academyConversionProject?.AssignedUser?.FullName
 			};
 		}
 

@@ -11,7 +11,10 @@ namespace ApplyToBecomeInternal.Models
 		{
 			public static readonly LinkItem Index = new LinkItem {BackText = "Back to project type", Page = "/ProjectType/Index"};
 		}
-
+		public static class ProjectAssignment
+		{
+			public static readonly LinkItem Index = new LinkItem { BackText = "Back to all conversion projects", Page = "/ProjectAssignment/Index" };
+		}
 		public static class ProjectList
 		{
 			public static readonly LinkItem Index = new LinkItem { BackText = "Back to all conversion projects", Page = "/ProjectList/Index" };
