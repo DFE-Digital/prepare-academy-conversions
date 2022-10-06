@@ -1,71 +1,63 @@
-﻿@page "/project-assignment"
+﻿@page "/project-assignment/{id:int}"
 @using ApplyToBecomeInternal.Utils
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ApplyToBecomeInternal.Pages.ProjectAssignment.IndexModel
 @{
-    ViewData["Title"] = "Project assignment";
+    ViewData["Title"] = "Who will be on this project?";
 }
 
+@section BeforeMain
+    {
+    <a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Id" class="govuk-back-link">Back</a>
+}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
 
-<div class="govuk-grid-row">
-	<div class="govuk-grid-column-two-thirds">
-		<form action="../task_list?justAssigned=yes" method="post">
-			<input hidden="" type="text" name="returnToSummary" value="no">
-			<span class="govuk-caption-l">@Model.SchoolName</span>
-			<h1 class="govuk-heading-l">Who will be on this project?</h1>
+            <span class="govuk-caption-l">@Model.SchoolName</span>
+            <h1 class="govuk-heading-l">Who will be on this project?</h1>
 
+            <div class="govuk-form-group">
+                <label class="govuk-label" for="delivery-officer">
+                    Delivery officer
+                </label>
 
-			<!--
-			<label for="my-autocomplete">Select delivery officer</label>
-			<div id="my-autocomplete-container"></div>
-			-->
+                <div id="delivery-officer-assigned-hint" class="govuk-hint">
+                    The delivery officer responsible for this project
+                </div>
 
+                <form method="post">
+                    <input type="hidden" asp-for="@Model.Id" />
+                    <select name="SelectedName" class="autocomplete__menu govuk-select" id="delivery-officer">
+                        <option value="@Model.SelectedDeliveryOfficer">@Model.SelectedDeliveryOfficer</option>
+                        @{
+                        foreach (var deliveryOfficer in Model.DeliveryOfficers)
+                        {
+                            <option value="@deliveryOfficer.FullName">@deliveryOfficer.FullName</option>
+                        }
+                    }
+                </select>
 
+                <div class="govuk-button-group govuk-!-margin-top-5">
+                    <button class="govuk-button" data-module="govuk-button">
+                        Continue
+                    </button>
+                    <input type="hidden" name="UnassignDeliveryOfficer" id="UnassignDeliveryOfficer" />
+                    <span class="govuk-body govuk-!-margin-right-2 govuk-!-margin-left-1">or </span><a href="#" id="unassign-link" class="govuk-link">Unassign the delivery officer</a>
+                </div>
+            </form>
+        </div>
 
-			
-				<label class="govuk-label" for="delivery-officer-assigned">
-					Delivery officer
-				</label>
-
-
-				<div id="delivery-officer-assigned-hint" class="govuk-hint">
-					The delivery officer responsible for this project
-				</div>
-                
-			<select name="delivery-officer" class="autocomplete__menu govuk-select" id="delivery-officer">
-				<option class="autocomplete__option" value=""></option>
-				@{
-					foreach (var deliveryOfficer in Model.DeliveryOfficers)
-					{
-                            <option class="autocomplete__option" value="@deliveryOfficer.FullName">@deliveryOfficer.FullName</option>
-					}
-				}
-			</select>
-			<div class="govuk-button-group govuk-!-margin-top-5">
-				<button class="govuk-button" data-module="govuk-button">
-					Continue
-				</button>
-
-				<span class="govuk-body govuk-!-margin-right-2 govuk-!-margin-left-1">or </span>
-                <a class="govuk-link">Unassign the delivery officer</a>
-			</div>
-
-		</form>
-
-	</div>
+    </div>
 </div>
-<script type="application/javascript" asp-add-nonce>
-          var selectEl = document.querySelector('#delivery-officer')
-     accessibleAutocomplete.enhanceSelectElement({
-      selectElement: selectEl
-    })
 
-          var queryStringParameters = window.location.search
-          var previouslySubmitted = queryStringParameters.length > 0
-          if (previouslySubmitted) {
-            var submittedEl = document.querySelector('.submitted')
-            submittedEl.classList.remove('submitted--hidden')
-            var params = new URLSearchParams(document.location.search.split('?')[1])
-            document.querySelector('.submitted__delivery-officer').innerHTML = params.get('delivery-officer')
-          }
+<script type="application/javascript" asp-add-nonce>
+    var deliveryOfficerSelect = document.querySelector('#delivery-officer');
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: deliveryOfficerSelect
+    });
+
+    document.querySelector('#unassign-link').onclick = () =>{
+        document.querySelector('#UnassignDeliveryOfficer').value = true;
+        document.querySelector('form').submit();
+    };
 </script>

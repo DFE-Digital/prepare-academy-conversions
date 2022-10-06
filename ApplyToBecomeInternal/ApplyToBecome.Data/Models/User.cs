@@ -3,12 +3,12 @@
 namespace ApplyToBecome.Data.Models
 {
 	public class User
-	{
-		public User(string id, string emailAddress, string firstName, string lastName)
+	{		
+		public User(string id, string emailAddress, string fullName)
 		{
 			Id = id;
 			EmailAddress = emailAddress;
-			FullName = firstName + " " + lastName;
+			FullName = fullName;
 		}
 
 		public string Id { get; set; }

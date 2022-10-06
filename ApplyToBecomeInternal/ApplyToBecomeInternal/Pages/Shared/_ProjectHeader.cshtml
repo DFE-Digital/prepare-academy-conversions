@@ -8,13 +8,20 @@
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-2" @Select.Heading.ToData("cy")>
             @Model.SchoolName
         </h1>
-	    <p class="govuk-body govuk-!-margin-bottom-8">
-		    Delivery officer: 
-      
-		    <span class="empty">Empty</span>
+        <p class="govuk-body govuk-!-margin-bottom-8">
+            Delivery officer:
 
-            <a class="govuk-link" asp-page="@Links.ProjectAssignment.Index.Page" asp-route-id="@Model.Id" style="margin-left: 1em;">Change</a>
-	    </p>
+            @if (Model.AssignedUser == null || string.IsNullOrWhiteSpace(Model?.AssignedUser.FullName))
+            {
+                <span class="empty">Empty</span>
+            }
+            else
+            {
+                <strong>@Model.AssignedUser.FullName</strong>
+            }
+            
+            <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.ProjectAssignment.Index.Page" asp-route-id="@Model.Id">Change</a>
+        </p>
     </div>
     @if (!string.IsNullOrEmpty(Context.Request.Query["rd"]))
     {

@@ -6,6 +6,6 @@ namespace ApplyToBecome.Data.Services.Interfaces
 {
 	public interface IUserRepository
 	{
-		Task<IEnumerable<User>> SearchUsers(string searchString);
+		Task<IEnumerable<User>> GetAllUsers();
 	}
 }

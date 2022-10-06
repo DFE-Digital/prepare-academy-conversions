@@ -6,9 +6,9 @@
 
     var showAnalytics = _configuration["GoogleAnalytics:Enable"] == "Yes" && analyticsConsent;
 
-	var titleDescription = Context.Request.Path == "/project-type" 
-		? string.Empty 
-		: "- Manage an academy conversion";
+    var titleDescription = Context.Request.Path == "/project-type"
+        ? string.Empty
+        : "- Manage an academy conversion";
 }
 
 <!DOCTYPE html>
@@ -27,11 +27,10 @@
     <link rel="apple-touch-icon" sizes="167x167" href="/assets/images/govuk-apple-touch-icon-167x167.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/govuk-apple-touch-icon-152x152.png">
     <link rel="apple-touch-icon" href="/assets/images/govuk-apple-touch-icon.png">
-
-    <script src="~/dist/accessible-autocomplete.min.js" asp-add-nonce></script>
-    <title>@ViewData["Title"] @titleDescription</title>
-    <link href="~/src/css/_autocomplete.css" rel="stylesheet" asp-add-nonce />
+    
+    <title>@ViewData["Title"] @titleDescription</title>    
     <link rel="stylesheet" href="~/dist/site.css" />
+    <link rel="stylesheet" href="~/dist/accessible-autocomplete.min.css" asp-add-nonce/>
     @if (showAnalytics)
     {
         <!-- Google Tag Manager -->
@@ -46,19 +45,23 @@
             })(window, document, 'script', 'dataLayer', 'GTM-5H6G773');</script>
         <!-- End Google Tag Manager -->
     }
-</head>
-<body class="govuk-template__body ">
+
     @if (analyticsConsent)
     {
         <!-- Google Tag Manager (noscript) -->
         <noscript asp-add-nonce>
-            <iframe src=https://www.googletagmanager.com/ns.html?id=GTM-5H6G773 height="0" width="0" style="display:none;visibility:hidden"></iframe>
+            <iframe src=https://www.googletagmanager.com/ns.html?id =GTM-5H6G773 height="0" width="0" style="display:none;visibility:hidden"></iframe>
         </noscript>
         <!-- End Google Tag Manager (noscript) -->
     }
     <script asp-add-nonce>
         document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
+
+    <script type="text/javascript" src="~/dist/accessible-autocomplete.min.js" asp-add-nonce></script>
+
+</head>
+<body class="govuk-template__body">
 
     <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
     <partial name="_CookieBanner" />
@@ -67,7 +70,7 @@
             <div class="govuk-header__logo govuk-!-width-two-thirds">
                 <a asp-page="@Links.ProjectType.Index.Page" class="govuk-header__link govuk-header__link--homepage">
                     <span class="govuk-header__logotype-text">
-	                    Prepare conversions and transfers
+                        Prepare conversions and transfers
                     </span>
                 </a>
             </div>
@@ -88,7 +91,7 @@
         @await RenderSectionAsync("BeforeMain", required: false)
 
         <main class="govuk-main-wrapper gov-main-wrapper--auto-spacing" id="main-content" role="main">
-          
+
             <partial name="_NotificationSummary" />
 
             @RenderBody()
