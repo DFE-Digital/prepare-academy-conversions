@@ -15,7 +15,7 @@ namespace ApplyToBecome.Data.Tests.Services
 	public class UserRepositoryTests
 	{
 		private readonly Fixture _fixture = new Fixture();
-	
+
 		[Theory, AutoMoqData]
 		public async Task GetAllUsers_ReturnsUsers([Frozen] Mock<IGraphUserService> graphUserService,
 			UserRepository sut)
@@ -26,23 +26,18 @@ namespace ApplyToBecome.Data.Tests.Services
 
 			var result = (await sut.GetAllUsers()).ToList();
 
-			Assert.Equivalent(users, result);
+			Assert.Equivalent(users.Select(u => new Data.Models.User(u.Id, u.Mail, $"{u.GivenName} {u.Surname}")), result);
 		}
 
 		[Theory, AutoMoqData]
-		public async Task SearchUsers_EmptySearch_ReturnsEmpty([Frozen] Mock<IGraphUserService> graphUserService,
-			UserRepository sut)
+		public async Task SearchUsers_EmptySearch_ReturnsEmpty(UserRepository sut)
 		{
-			var users = GenerateUsers(20);
-
-			graphUserService.Setup(m => m.GetAllUsers()).ReturnsAsync(users);
-
 			var result = (await sut.GetAllUsers());
 
 			Assert.Empty(result);
 		}
 
-		private List<User>  GenerateUsers(int count)
+		private List<User> GenerateUsers(int count)
 		{
 			var users = new List<User>();
 
