@@ -128,7 +128,7 @@ i.e., greTags=@dev+@stage
 To run tests including multiple tags independently:
 
 ```
-i.e., grepTags=@dev,greTags=@stage
+i.e., grepTags=@dev,grepTags=@stage
 ```
 
 Further details on using cypress-grep test tagging: https://github.com/cypress-io/cypress-grep 
