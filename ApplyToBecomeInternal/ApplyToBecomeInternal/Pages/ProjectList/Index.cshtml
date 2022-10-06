@@ -43,6 +43,14 @@
                                 <p class="govuk-!-margin-top-3">
                                     <div id="@("application-to-join-trust-" + index)">Application to join a trust: @project.NameOfTrust</div>
                                     <div id="@("local-authority-" + index)">Local authority: @project.LocalAuthority</div>
+                                    @if (string.IsNullOrWhiteSpace(project.AssignedUserFullName))
+                                    {
+                                        <div id="@("delivery-officer-" + index)">Delivery officer: <span class="empty">Empty</span></div>                                        
+                                    }
+                                    else
+                                    {
+                                        <div id="@("delivery-officer-" + index)">Delivery officer: <strong>@project.AssignedUserFullName</strong></div>
+                                    }
                                 </p>
                             </td>
                             <td class="govuk-table__cell govuk-table__cell prepare-text-align-right">
