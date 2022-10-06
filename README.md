@@ -132,4 +132,4 @@ i.e., grepTags=@dev,greTags=@stage
 ```
 
 Further details on using cypress-grep test tagging: https://github.com/cypress-io/cypress-grep 
-cypress 10.9.0 Latest changes: https://docs.cypress.io/guides/references/changelog
+cypress 10.9.0 Latest changes: https://docs.cypress.io/guides/references/changelog 
