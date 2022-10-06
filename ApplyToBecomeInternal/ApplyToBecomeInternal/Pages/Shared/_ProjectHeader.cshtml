@@ -2,14 +2,26 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ApplyToBecomeInternal.ViewModels.ProjectViewModel
 @inject ApplyToBecome.Data.Services.Interfaces.IAcademyConversionAdvisoryBoardDecisionRepository decisionRepository
-
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
         <span class="govuk-caption-xl">URN @Model.SchoolURN</span>
-        <h1 class="govuk-heading-xl" @Select.Heading.ToData("cy")>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2" @Select.Heading.ToData("cy")>
             @Model.SchoolName
         </h1>
+        <p class="govuk-body govuk-!-margin-bottom-8">
+            Delivery officer:
 
+            @if (Model.AssignedUser == null || string.IsNullOrWhiteSpace(Model?.AssignedUser.FullName))
+            {
+                <span class="empty">Empty</span>
+            }
+            else
+            {
+                <strong>@Model.AssignedUser.FullName</strong>
+            }
+            
+            <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.ProjectAssignment.Index.Page" asp-route-id="@Model.Id">Change</a>
+        </p>
     </div>
     @if (!string.IsNullOrEmpty(Context.Request.Query["rd"]))
     {
