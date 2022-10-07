@@ -13,7 +13,7 @@
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
 
-            <span class="govuk-caption-l">@Model.SchoolName</span>
+            <span data-id="school-name" class="govuk-caption-l">@Model.SchoolName</span>
             <h1 class="govuk-heading-l">Who will be on this project?</h1>
 
             <div class="govuk-form-group">
@@ -28,11 +28,18 @@
                 <form method="post">
                     <input type="hidden" asp-for="@Model.Id" />
                     <select name="SelectedName" class="autocomplete__menu govuk-select" id="delivery-officer">
-                        <option value="@Model.SelectedDeliveryOfficer">@Model.SelectedDeliveryOfficer</option>
+                        <option value=""></option>
                         @{
                         foreach (var deliveryOfficer in Model.DeliveryOfficers)
                         {
-                            <option value="@deliveryOfficer.FullName">@deliveryOfficer.FullName</option>
+	                        if (Model.SelectedDeliveryOfficer == deliveryOfficer.FullName)
+	                        {
+		                        <option value="@deliveryOfficer.FullName" selected>@deliveryOfficer.FullName</option>
+	                        }
+	                        else
+	                        {
+		                        <option value="@deliveryOfficer.FullName">@deliveryOfficer.FullName</option>   
+	                        }
                         }
                     }
                 </select>

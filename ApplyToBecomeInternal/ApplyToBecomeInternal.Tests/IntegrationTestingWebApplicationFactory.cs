@@ -1,4 +1,6 @@
-﻿using ApplyToBecomeInternal.Models;
+﻿using ApplyToBecome.Data.Services.Interfaces;
+using ApplyToBecomeInternal.Models;
+using ApplyToBecomeInternal.Tests.Pages.ProjectAssignment;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -20,6 +22,7 @@ using WireMock.Server;
 
 namespace ApplyToBecomeInternal.Tests
 {
+
 	public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Startup>, IDisposable
 	{
 		private static int _currentPort = 5080;
@@ -57,6 +60,7 @@ namespace ApplyToBecomeInternal.Tests
 			{
 				services.AddAuthentication("Test");
 				services.AddTransient<IAuthenticationSchemeProvider, MockSchemeProvider>();
+				services.AddTransient<IUserRepository, TestUserRepository>();
 			});
 		}
 
