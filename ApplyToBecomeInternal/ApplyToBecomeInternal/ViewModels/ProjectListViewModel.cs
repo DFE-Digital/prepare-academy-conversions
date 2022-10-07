@@ -1,4 +1,6 @@
-﻿namespace ApplyToBecomeInternal.ViewModels
+﻿using ApplyToBecome.Data.Models;
+
+namespace ApplyToBecomeInternal.ViewModels
 {
 	public class ProjectListViewModel
 	{
@@ -12,6 +14,7 @@
 		public string HeadTeacherBoardDate { get; set; }
 		public string ProposedAcademyOpeningDate { get; set; }
 		public ProjectStatus Status { get; set; }
+		public string AssignedUserFullName { get; set; }
 	}
 
 	public class ProjectStatus
