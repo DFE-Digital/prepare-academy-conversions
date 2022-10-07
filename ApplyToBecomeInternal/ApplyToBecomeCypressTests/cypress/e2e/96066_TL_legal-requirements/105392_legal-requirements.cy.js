@@ -6,7 +6,6 @@ import legalRequirements from "../../pages/legalRequirement"
 describe('Legal Requirements', { tags: '@dev'}, () => {
     beforeEach(() => {
         legalRequirements.selectProject().then(() =>{
-            cy.url()
             cy.get('[data-cy="select-tasklist-links-legalrequirements"]').click()
         })
     })

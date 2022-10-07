@@ -5,6 +5,8 @@ class legalRequirements {
         cy.get('[data-cy="select-projecttype-input-conversion"]').click();
         cy.get('[data-cy="select-common-submitbutton"]').click();
         cy.get('[id="school-name-0"]').click();
+    
+        return cy.url()
     };
 }
 
