@@ -12,6 +12,7 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
+// ***********************************************************
 /**
  * @type {Cypress.PluginConfig}
  */
@@ -34,3 +35,17 @@ module.exports = (on, config) => {
   tasks = sqlServer.loadDBPlugin(dbConfig);
   on('task', tasks); 
 }
+// ***********************************************************
+
+//***Cypress Grep module for filtering tests Any new tags should be added to the examples**
+/**
+ * @example {{tags: '@dev'} : Development
+ * @example {tags: '@stage'} : Staging
+ * @example {tags: '@integration'} : Integration
+ * @example {tags: ['@dev', '@stage']}
+ */
+module.export = (on, config) => {
+  
+  require('cypress-grep/src/plugin')(config)
+}
+// ***********************************************************
