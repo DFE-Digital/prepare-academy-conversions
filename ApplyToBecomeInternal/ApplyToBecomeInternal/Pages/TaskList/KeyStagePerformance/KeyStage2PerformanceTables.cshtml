@@ -24,17 +24,7 @@
 	<div class="govuk-grid-column-full">
 		<vc:key-stage2-performance-tables />
 	</div>
-	<div class="govuk-grid-column-two-thirds">
-		<h2 class="govuk-heading-m">Add any additional information if you need to</h2>
-		<p class="govuk-body">This information will go into your project template under the key stage performance section.</p>
-		<div class="govuk-warning-text">
-			<span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-			<strong class="govuk-warning-text__text">
-				<span class="govuk-warning-text__assistive">Warning</span>
-				Do not add ASK (Academies & Schools Knowledge) data to your template. ASK data is unpublished and should not be used to make a decision about a conversion.
-			</strong>
-		</div>
-	</div>
+	<partial name="Shared/_AddtionalInformation"/>
 	<div class="govuk-grid-column-full">
 		<dl class="govuk-summary-list">
 			<govuk-summary-list-row id="additional-information" name="key-stage-2-additional-information" label="Additional information" value="@Model.Project.KeyStage2PerformanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.KeyStage2PerformanceTablesAdditionalInformation.Page" asp-fragment="additional-information" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
