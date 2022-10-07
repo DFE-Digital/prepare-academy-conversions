@@ -1,13 +1,14 @@
 /// <reference types ='Cypress'/>
 
 // TO DO: Check Legal Requirement validation on first time use; check Empty tags.
+import legalRequirements from "../../pages/legalRequirement"
 
-const url = Cypress.env('url') + '/task-list/2054'
-
-describe('Legal Requirements', { tags: ['@dev', '@stage']}, () => {
+describe('Legal Requirements', { tags: '@dev'}, () => {
     beforeEach(() => {
-        cy.visit(url)
-        cy.get('[data-cy="select-tasklist-links-legalrequirements"]').click()
+        legalRequirements.selectProject().then(() =>{
+            cy.url()
+            cy.get('[data-cy="select-tasklist-links-legalrequirements"]').click()
+        })
     })
 
     it('TC01: Answer to Governing Body and changes current answer from Yes, No, Not Applicable ', () => {
@@ -95,20 +96,20 @@ describe('Legal Requirements', { tags: ['@dev', '@stage']}, () => {
     })
 
     it('TC05: Confirm Legal Requirements page check & marked complete', () => {
-        cy.visit(url)
-        cy.get('[data-cy="select-tasklist-legalrequirements-status"]')
-        .invoke('text')
-        .then((text) => {
-            if (text.includes('Completed')) {
-                return
-            }
-            else {
-                cy.visit(url)
-                cy.get('[data-cy="select-tasklist-links-legalrequirements"]').click()
-                cy.get('[data-cy="select-legal-summary-iscomplete"]').click()
-                cy.get('[data-cy="select-legal-summary-submitbutton"]').click()
-                cy.get('[data-cy="select-tasklist-legalrequirements-status"]').should('contain.text', 'Completed')
-            }
+        legalRequirements.selectProject().then(() => {
+            cy.get('[data-cy="select-tasklist-legalrequirements-status"]')
+            .invoke('text')
+            .then((text) => {
+                if (text.includes('Completed')) {
+                    return
+                }
+                else {
+                    cy.get('[data-cy="select-tasklist-links-legalrequirements"]').click()
+                    cy.get('[data-cy="select-legal-summary-iscomplete"]').click()
+                    cy.get('[data-cy="select-legal-summary-submitbutton"]').click()
+                    cy.get('[data-cy="select-tasklist-legalrequirements-status"]').should('contain.text', 'Completed')
+                }
+        })
         })
     })
 
