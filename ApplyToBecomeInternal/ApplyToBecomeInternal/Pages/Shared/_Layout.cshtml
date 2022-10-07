@@ -27,10 +27,10 @@
     <link rel="apple-touch-icon" sizes="167x167" href="/assets/images/govuk-apple-touch-icon-167x167.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/govuk-apple-touch-icon-152x152.png">
     <link rel="apple-touch-icon" href="/assets/images/govuk-apple-touch-icon.png">
-    
-    <title>@ViewData["Title"] @titleDescription</title>    
+
+    <title>@ViewData["Title"] @titleDescription</title>
     <link rel="stylesheet" href="~/dist/site.css" />
-    <link rel="stylesheet" href="~/dist/accessible-autocomplete.min.css" asp-add-nonce/>
+    <link rel="stylesheet" href="~/dist/accessible-autocomplete.min.css" asp-add-nonce />
     @if (showAnalytics)
     {
         <!-- Google Tag Manager -->
@@ -54,14 +54,15 @@
         </noscript>
         <!-- End Google Tag Manager (noscript) -->
     }
-    <script asp-add-nonce>
-        document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
-    </script>
 
     <script type="text/javascript" src="~/dist/accessible-autocomplete.min.js" asp-add-nonce></script>
 
 </head>
 <body class="govuk-template__body">
+
+    <script asp-add-nonce>
+        document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+    </script>
 
     <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
     <partial name="_CookieBanner" />
