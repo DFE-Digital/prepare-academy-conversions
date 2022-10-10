@@ -79,6 +79,11 @@ To execute tests with grep tags on stage:
 $ npm run cy:run -- --env grepTags=@stage,url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
 ```
 
+To only execute all.cy.js file which has all import test files
+```
+$ npm run cy:run -- --spec "cypress/e2e/all.cy.js", --env grepTags=@stage,url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
+```
+
 ### Loading users from Azure Active Directory
 You will need to set a secret in `secrets.json` in the following format to run the Cypress command against (you can use any value):
 
