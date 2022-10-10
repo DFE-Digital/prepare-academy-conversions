@@ -1,3 +1,4 @@
+using ApplyToBecome.Data.Extensions;
 using ApplyToBecome.Data.Models.AcademyConversion;
 using ApplyToBecome.Data.Services;
 using ApplyToBecome.Data.Services.Interfaces;
@@ -9,9 +10,8 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 {
 	public class LegalFoundationConsentModel : LegalModelBase
 	{
-		public LegalFoundationConsentModel(ILegalRequirementsRepository legalRequirementsRepository,
-			IAcademyConversionProjectRepository academyConversionProjectRepository) :
-			base(legalRequirementsRepository, academyConversionProjectRepository)
+		public LegalFoundationConsentModel(IAcademyConversionProjectRepository academyConversionProjectRepository) :
+			base(academyConversionProjectRepository)
 		{
 		}
 
@@ -19,19 +19,14 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 
 		public void OnGet(int id)
 		{
-			Approved = LegalRequirements.FoundationConsent.ToString();
+			Approved = Requirements.FoundationConsent.ToString();
 		}
 
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			LegalRequirements.FoundationConsent = Approved switch
-			{
-				nameof(ThreeOptions.Yes) => ThreeOptions.Yes,
-				nameof(ThreeOptions.No) => ThreeOptions.No,
-				nameof(ThreeOptions.NotApplicable) => ThreeOptions.NotApplicable,
-				_ => LegalRequirements.FoundationConsent
-			};
-			await LegalRequirementsRepository.UpdateByProjectId(id, LegalRequirements);
+			Requirements.FoundationConsent = ToLegalRequirementsEnum(Requirements.FoundationConsent, Approved);
+
+			await AcademyConversionProjectRepository.UpdateProject(id, Requirements.CreateUpdateAcademyConversionProject());
 
 			return ActionResult(id, "foundation-consent", Links.LegalRequirements.FoundationConsent.Page);
 		}

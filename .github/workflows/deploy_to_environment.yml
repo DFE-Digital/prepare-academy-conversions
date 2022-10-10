@@ -138,6 +138,7 @@ jobs:
           TF_VAR_app_trams_api_key: ${{ secrets.TRAMS_API_KEY }}
           TF_VAR_app_academisation_api_baseurl: ${{ secrets.ACADEMISATION_API_BASEURL }}
           TF_VAR_app_academisation_api_apikey: ${{ secrets.ACADEMISATION_API_APIKEY }}
+          TF_VAR_app_servicelink_transfersurl: ${{ secrets.SERVICELINK_TRANSFERSURL }}
           TF_VAR_app_username: ${{ secrets.USERNAME }}
           TF_VAR_app_password: ${{ secrets.PASSWORD }}
           TF_VAR_cf_app_image_tag: ${{ env.DOCKER_IMAGE_TAG }}
@@ -146,6 +147,10 @@ jobs:
           TF_VAR_enable_google_analytics: Yes
           TF_VAR_logit_sink_url: ${{ secrets.LOGIT_SINK_URL }}
           TF_VAR_app_azuread_clientsecret: ${{ secrets.AZUREAD_CLIENTSECRET }}
+          TF_VAR_app_azuread_clientid: ${{ secrets.AZUREAD_CLIENTID }}
+          TF_VAR_app_azuread_tenantid: ${{ secrets.AZUREAD_TENANTID }}
+          TF_VAR_app_azuread_groupid: ${{ secrets.AZUREAD_GROUPID }}
+          TF_VAR_app_cypresstest_secret : ${{ secrets.CYPRESS_TEST_SECRET }}
 
   cypress-tests:
     needs: deploy-image
@@ -154,7 +159,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ApplyToBecomeInternal/ApplyToBecomeCypressTests
+         working-directory: ApplyToBecomeInternal/ApplyToBecomeCypressTests
     steps:
       - uses: actions/checkout@v2
       - name: Setup node.js
@@ -164,11 +169,11 @@ jobs:
       - name: Npm install
         run: npm install
       - name: Run cypress
-        run: npm run cy:run -- --env url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.AZUREAD_CLIENTSECRET }}'
+        run: npm run cy:run -- --env grepTags=@stage,url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
         env: 
           db: ${{ secrets.DB_CONNECTION_STRING }}
       - uses: actions/upload-artifact@v1
         if: failure()
         with:
-           name: screenshots
-           path: ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots
+         name: screenshots
+         path: ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots

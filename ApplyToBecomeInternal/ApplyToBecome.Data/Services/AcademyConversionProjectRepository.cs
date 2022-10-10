@@ -16,12 +16,10 @@ namespace ApplyToBecome.Data.Services
 	public class AcademyConversionProjectRepository : IAcademyConversionProjectRepository
 	{
 		private readonly HttpClient _httpClient;
-		private readonly ILegalRequirementsRepository _legalRequirementsRepository;
 
-		public AcademyConversionProjectRepository(IHttpClientFactory httpClientFactory, ILegalRequirementsRepository legalRequirementsRepository)
+		public AcademyConversionProjectRepository(IHttpClientFactory httpClientFactory)
 		{
 			_httpClient = httpClientFactory.CreateClient("AcademisationClient");
-			_legalRequirementsRepository = legalRequirementsRepository;
 		}
 
 		public async Task<ApiResponse<IEnumerable<AcademyConversionProject>>> GetAllProjects(int page = 1, int count = 50)
