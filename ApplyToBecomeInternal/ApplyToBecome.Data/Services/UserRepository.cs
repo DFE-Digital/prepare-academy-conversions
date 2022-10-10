@@ -1,4 +1,5 @@
-﻿using ApplyToBecome.Data.Models;
+﻿using ApplyToBecome.Data.Extensions;
+using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +17,11 @@ namespace ApplyToBecome.Data.Services
 		}
 
 		public async Task<IEnumerable<User>> GetAllUsers()
-		{			
-			var users = await _graphUserService.GetAllUsers();			
+		{
+			IEnumerable<Microsoft.Graph.User> users = await _graphUserService.GetAllUsers();
 
-			return users				
-				.Select(u => new User(u.Id, u.Mail, $"{u.GivenName} {u.Surname}"));
+			return users
+				.Select(u => new User(u.Id, u.Mail, $"{u.GivenName} {u.Surname.ToFirstUpper()}"));
 		}
 	}
 }
