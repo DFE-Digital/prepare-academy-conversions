@@ -1,7 +1,6 @@
 /// <reference types ='Cypress'/>
 
 // TO DO: Check Legal Requirement validation on first time use; check Empty tags.
-//import legalRequirements from "../../pages/legalRequirement"
 
 describe('Legal Requirements', { tags: ['@dev', '@stage']}, () => {
     beforeEach(() => {
