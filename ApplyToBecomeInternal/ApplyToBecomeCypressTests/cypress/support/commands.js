@@ -515,3 +515,12 @@ Cypress.Commands.add('foundationConsentStatus', () => {
 //             "Content-type" : "application/json"
 //          }
 //     })
+
+// Universal: selects first project from list
+Cypress.Commands.add('selectFirstProject', () => {
+    let url = Cypress.env('url');
+    cy.visit(url);
+    cy.get('[data-cy="select-projecttype-input-conversion"]').click();
+    cy.get('[data-cy="select-common-submitbutton"]').click();
+    cy.get('[id="school-name-0"]').click();
+})
