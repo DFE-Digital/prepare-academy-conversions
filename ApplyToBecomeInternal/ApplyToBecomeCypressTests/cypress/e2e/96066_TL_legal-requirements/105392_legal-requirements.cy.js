@@ -3,7 +3,7 @@
 // TO DO: Check Legal Requirement validation on first time use; check Empty tags.
 import legalRequirements from "../../pages/legalRequirement"
 
-describe('Legal Requirements', { tags: '@dev'}, () => {
+describe('Legal Requirements', { tags: ['@dev', '@stage']}, () => {
     beforeEach(() => {
         legalRequirements.selectProject().then(() =>{
             cy.get('[data-cy="select-tasklist-links-legalrequirements"]').click()
