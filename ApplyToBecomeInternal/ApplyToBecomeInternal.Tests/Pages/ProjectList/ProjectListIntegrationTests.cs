@@ -41,6 +41,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 				Document.QuerySelector($"#Advisory-Board-date-{i}").TextContent.Should().Contain(project.HeadTeacherBoardDate.ToDateString());
 				Document.QuerySelector($"#opening-date-{i}").TextContent.Should().Contain(project.ProposedAcademyOpeningDate.ToDateString());
 				Document.QuerySelector($"#application-received-date-{i}").TextContent.Should().Contain(project.ApplicationReceivedDate.ToDateString());
+				Document.QuerySelector($"#delivery-officer-{i}").TextContent.Should().Contain(project.AssignedUser.FullName);
 			}
 
 			ResetServer();

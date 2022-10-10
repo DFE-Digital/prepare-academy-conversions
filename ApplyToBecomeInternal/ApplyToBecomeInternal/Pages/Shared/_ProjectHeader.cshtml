@@ -13,11 +13,11 @@
 
             @if (Model.AssignedUser == null || string.IsNullOrWhiteSpace(Model?.AssignedUser.FullName))
             {
-                <span class="empty">Empty</span>
+                <span data-id="assigned-user" class="empty">Empty</span>
             }
             else
             {
-                <strong>@Model.AssignedUser.FullName</strong>
+                <strong data-id="assigned-user">@Model.AssignedUser.FullName</strong>
             }
             
             <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.ProjectAssignment.Index.Page" asp-route-id="@Model.Id">Change</a>
