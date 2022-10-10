@@ -1,4 +1,5 @@
-﻿using ApplyToBecome.Data.Services;
+﻿using ApplyToBecome.Data.Extensions;
+using ApplyToBecome.Data.Services;
 using ApplyToBecome.Data.Services.Interfaces;
 using ApplyToBecome.Data.Tests.AutoFixture;
 using AutoFixture;
@@ -26,7 +27,7 @@ namespace ApplyToBecome.Data.Tests.Services
 
 			var result = (await sut.GetAllUsers()).ToList();
 
-			Assert.Equivalent(users.Select(u => new Data.Models.User(u.Id, u.Mail, $"{u.GivenName} {u.Surname}")), result);
+			Assert.Equivalent(users.Select(u => new Data.Models.User(u.Id, u.Mail, $"{u.GivenName} {u.Surname.ToFirstUpper()}")), result);
 		}
 
 		[Theory, AutoMoqData]
