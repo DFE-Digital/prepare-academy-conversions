@@ -26,6 +26,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 		public bool HasNextPage => Projects.ToList().Count == _pageSize;
 		public int PreviousPage => CurrentPage - 1;
 		public int NextPage => CurrentPage + 1;
+		public int TotalProjects { get; set; }
 
 		[BindProperty(SupportsGet = true)] public int CurrentPage { get; set; } = 1;
 
@@ -37,12 +38,14 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 		public async Task OnGetAsync()
 		{
 			var response = await _repository.GetAllProjects(CurrentPage, _pageSize);
+			
 			if (!response.Success)
 			{
 				// 500 maybe?
 			}
 
-			Projects = response.Body.Select(Build).ToList();
+			Projects = response.Body.Data.Select(Build).ToList();
+			TotalProjects = response.Body?.Paging?.RecordCount ?? 0;
 
 			if (CurrentPage - 5 > 1)
 			{
