@@ -81,7 +81,7 @@ $ npm run cy:run -- --env grepTags=@stage,url="BASE_URL_OF_APP",authorizationHea
 
 To only execute all.cy.js file which has all import test files
 ```
-npm run cy:run -- cypress run --spec "cypress/e2e/all.cy.js", --env grepTags=@stage,url="https://apply-to-become-an-academy-internal-staging.london.cloudapps.digital",authorizationHeader="Rv3oKzr4a3ry3x"
+$ npm run cy:run -- --spec "cypress/e2e/all.cy.js", --env grepTags=@stage,url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
 ```
 
 ### Loading users from Azure Active Directory
