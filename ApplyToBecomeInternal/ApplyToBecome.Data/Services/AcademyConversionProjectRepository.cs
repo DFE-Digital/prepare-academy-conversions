@@ -22,17 +22,21 @@ namespace ApplyToBecome.Data.Services
 			_httpClient = httpClientFactory.CreateClient("TramsClient");
 		}
 
-		public async Task<ApiResponse<IEnumerable<AcademyConversionProject>>> GetAllProjects(int page = 1, int count = 50)
+		public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page = 1, int count = 50)
 		{
 			var response = await _httpClient.GetAsync($"v2/conversion-projects?page={page}&count={count}");
 			if (!response.IsSuccessStatusCode)
 			{
-				return new ApiResponse<IEnumerable<AcademyConversionProject>>(response.StatusCode, Enumerable.Empty<AcademyConversionProject>());
+				return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode,
+					new ApiV2Wrapper<IEnumerable<AcademyConversionProject>>()
+					{
+						Data = Enumerable.Empty<AcademyConversionProject>()
+					});
 			}
 
 			var outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>();
 
-			return new ApiResponse<IEnumerable<AcademyConversionProject>>(response.StatusCode, outerResponse.Data);
+			return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode, outerResponse);
 		}
 
 		public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)
