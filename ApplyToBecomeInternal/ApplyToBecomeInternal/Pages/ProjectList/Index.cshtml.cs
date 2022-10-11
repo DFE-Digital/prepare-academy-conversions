@@ -23,7 +23,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 
 		public int StartingPage { get; private set; } = 1;
 		public bool HasPreviousPage => CurrentPage > 1;
-		public bool HasNextPage => Projects.ToList().Count == _pageSize;
+		public bool HasNextPage { get; private set; }
 		public int PreviousPage => CurrentPage - 1;
 		public int NextPage => CurrentPage + 1;
 		public int TotalProjects { get; set; }
@@ -45,6 +45,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 			}
 
 			Projects = response.Body.Data.Select(Build).ToList();
+			HasNextPage = response.Body?.Paging?.NextPageUrl != null;
 			TotalProjects = response.Body?.Paging?.RecordCount ?? 0;
 
 			if (CurrentPage - 5 > 1)
