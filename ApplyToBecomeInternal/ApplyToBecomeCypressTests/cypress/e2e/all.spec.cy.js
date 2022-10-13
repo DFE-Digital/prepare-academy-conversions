@@ -54,3 +54,6 @@ import './Record_Decision/103788_create-deferred-decision.cy'
 import './Record_Decision/103788_new-plus-edit-deferred-decision.cy'
 import './Record_Decision/103791_create-declined-decision.cy'
 import './Record_Decision/103791_new-plus-edit_declined-decision.cy'
+
+// Assign project
+import './assign-project/108871_assign-project.cy'
