@@ -25,7 +25,7 @@ namespace ApplyToBecomeInternal.Tests.Extensions
 		[Fact]
 		public void Should_still_return_all_elements_if_other_properties_are_not_distinct()
 		{
-			DataForEnumerableTests.DistinctBy(p => p.Property2).Should().HaveCount(4);
+			DataWithDuplicatesForEnumerableTests.DistinctBy(p => p.Property2).Should().HaveCount(4);
 		}
 
 		public class TestClass
