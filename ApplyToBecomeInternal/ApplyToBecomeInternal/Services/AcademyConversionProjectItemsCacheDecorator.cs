@@ -48,5 +48,10 @@ namespace ApplyToBecomeInternal.Services
 
 			return _innerRepository.UpdateProject(id, updateProject);
 		}
+
+		public Task<ApiResponse<List<string>>> GetAvailableStatuses()
+		{
+			return _innerRepository.GetAvailableStatuses();
+		}
 	}
 }
