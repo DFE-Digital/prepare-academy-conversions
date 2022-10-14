@@ -78,7 +78,7 @@ jobs:
             COMMIT_SHA=${{ env.DOCKER_IMAGE_TAG }}  
 
   deploy-image:
-    needs: create-tag
+    needs: build-and-push-image
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment}}
     defaults:
