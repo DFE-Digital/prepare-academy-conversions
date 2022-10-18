@@ -1,8 +1,9 @@
-﻿@model ApplyToBecomeInternal.Models.ProjectList.ProjectListFilters
+﻿@using ApplyToBecomeInternal.Utils
+@model ApplyToBecomeInternal.Models.ProjectList.ProjectListFilters
 
-<details class="govuk-details prepare-project-listing__filters-container" data-module="govuk-details" @(Model.IsVisible ? "open" : null)>
-	<summary class="govuk-details__summary prepare-project-listing__fitlers-details-summary">
-		<span class="govuk-details__summary-text govuk-button govuk-button--secondary prepare-project-listing__button--main">
+<details class="govuk-details prepare-project-listing__filters-container" data-module="govuk-details" data-cy="@Select.ProjectList.Filter.Options" @(Model.IsVisible ? "open" : null)>
+   <summary class="govuk-details__summary prepare-project-listing__fitlers-details-summary" data-cy="@Select.ProjectList.Filter.Expand">
+      <span class="govuk-details__summary-text govuk-button govuk-button--secondary prepare-project-listing__button--main">
 			Filter projects
 		</span>
 	</summary>
@@ -43,8 +44,10 @@
 									foreach (var status in Model.Available)
 									{
 										<div class="govuk-checkboxes__item">
-											<input class="govuk-checkboxes__input" id="filter-project-status-@status.ToLowerInvariant()" name="selected" type="checkbox" value="@status" @(Model.Selected.Contains(status) ? "checked" : null)>
-											<label class="govuk-label govuk-checkboxes__label" for="filter-project-status-@status.ToLowerInvariant()">
+											<input class="govuk-checkboxes__input" id="filter-project-status-@status.Stub()" 
+											       name="selected" type="checkbox" value="@status" @(Model.Selected.Contains(status) ? "checked" : null)
+											       data-cy="@Select.ProjectList.Filter.Status(status)">
+											<label class="govuk-label govuk-checkboxes__label" for="filter-project-status-@status.Stub()">
 												@status
 											</label>
 										</div>
@@ -59,11 +62,11 @@
 			<div class="govuk-grid-row">
 				<div class="govuk-grid-column-full">
 					<div class="govuk-button-group">
-						<button class="govuk-button govuk-button--secondary prepare-project-listing__button--apply" data-module="govuk-button">
+						<button class="govuk-button govuk-button--secondary prepare-project-listing__button--apply" data-module="govuk-button" data-cy="@Select.ProjectList.Filter.Apply">
 							Apply filters
 						</button>
 
-						<a class="govuk-link" href="@Url.RouteUrl(ViewContext.RouteData.Values)">Clear filters</a>
+						<a class="govuk-link" href="@Url.RouteUrl(ViewContext.RouteData.Values)" data-cy="@Select.ProjectList.Filter.Clear">Clear filters</a>
 					</div>
 				</div>
 			</div>
