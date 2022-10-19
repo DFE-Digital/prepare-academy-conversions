@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace ApplyToBecome.Data.Services
 {
@@ -22,9 +23,11 @@ namespace ApplyToBecome.Data.Services
 			_httpClient = httpClientFactory.CreateClient("TramsClient");
 		}
 
-		public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page = 1, int count = 50, string statusFilters = "")
+		public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count, string statusFilters = "",
+			string titleFilter = "")
 		{
-			HttpResponseMessage response = await _httpClient.GetAsync($"v2/conversion-projects?page={page}&count={count}&states={statusFilters}");
+			string encodedTitleFilter = HttpUtility.UrlEncode(titleFilter);
+			HttpResponseMessage response = await _httpClient.GetAsync($"v2/conversion-projects?page={page}&count={count}&states={statusFilters}&title={encodedTitleFilter}");
 			if (!response.IsSuccessStatusCode)
 			{
 				return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode,

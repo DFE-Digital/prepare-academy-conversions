@@ -61,7 +61,9 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 
 		public async Task<IActionResult> OnPostAsync()
 		{
-			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response = await _repository.GetAllProjects(CurrentPage, _pageSize, string.Join(',',Filters.Selected));
+			string selectedStatuses = string.Join(',', Filters.Selected);
+			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response =
+				await _repository.GetAllProjects(CurrentPage, _pageSize, selectedStatuses, Filters.Title);
 
 			ApiResponse<List<string>> availableStatuses = await _repository.GetAvailableStatuses();
 			if (availableStatuses.Success) Filters.Available = availableStatuses.Body;
