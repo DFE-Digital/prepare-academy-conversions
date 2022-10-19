@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -11,7 +12,12 @@ namespace ApplyToBecomeInternal.Utils
 		private static readonly Regex NonAlphaNumeric =
 			new Regex("[^a-z0-9-]", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-		private Typespace() { }
+		private readonly string _suffix;
+
+		private Typespace(string suffix)
+		{
+			_suffix = suffix;
+		}
 
 		/// <summary>
 		///     Enables or disables the Typespace functionality
@@ -26,11 +32,27 @@ namespace ApplyToBecomeInternal.Utils
 		/// <returns>string representing the type hierarchy if enabled, otherwise <paramref name="disabledDefault" /> is returned</returns>
 		public static string Name(ref string cachedValue, string disabledDefault = "")
 		{
-			return IsEnabled ? cachedValue ??= new Typespace() : disabledDefault;
+			return IsEnabled
+				? cachedValue ??= new Typespace(null)
+				: disabledDefault;
+		}
+
+		/// <summary>
+		///     Generates the textual representation of the nested type hierarchy
+		/// </summary>
+		/// <param name="suffix">contextual suffix to be added to the end of the generated output</param>
+		/// <param name="disabledDefault">the value to return when Typespace is disabled. (default: string.Empty)</param>
+		/// <returns>string representing the type hierarchy if enabled, otherwise <paramref name="disabledDefault" /> is returned</returns>
+		/// <remarks>This version does not support caching due to variation by suffix</remarks>
+		public static string Name(string suffix, string disabledDefault = "")
+		{
+			return IsEnabled
+				? new Typespace(suffix)
+				: disabledDefault;
 		}
 
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static implicit operator string(Typespace _)
+		public static implicit operator string(Typespace instance)
 		{
 			StackFrame frame = new StackFrame(2);
 			MethodBase method = frame.GetMethod();
@@ -41,7 +63,8 @@ namespace ApplyToBecomeInternal.Utils
 				ReadOnlySpan<char> typeName = declaringType.FullName.AsSpan(declaringType.Namespace.Length + 1);
 				ReadOnlySpan<char> memberName = RemovePropertyPrefixes(method.Name);
 
-				return NonAlphaNumeric.Replace($"{typeName.ToString()}-{memberName.ToString()}", "-").ToLowerInvariant();
+				string[] components = { typeName.ToString(), memberName.ToString(), instance._suffix };
+				return NonAlphaNumeric.Replace(string.Join('-', components.Where(x => string.IsNullOrWhiteSpace(x) is false)), "-").ToLowerInvariant();
 			}
 
 			return string.Empty;

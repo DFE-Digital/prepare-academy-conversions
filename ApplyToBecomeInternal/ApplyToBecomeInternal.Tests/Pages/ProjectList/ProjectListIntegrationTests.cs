@@ -1,12 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
-using ApplyToBecome.Data.Models;
-using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecomeInternal.Extensions;
-using ApplyToBecomeInternal.Tests.PageObjects;
 using FluentAssertions;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
