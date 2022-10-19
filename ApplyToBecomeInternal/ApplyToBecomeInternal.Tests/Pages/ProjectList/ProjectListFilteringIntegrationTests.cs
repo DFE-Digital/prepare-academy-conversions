@@ -1,6 +1,5 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
-using ApplyToBecome.Data.Models;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Tests.Extensions;
 using FluentAssertions;
@@ -19,16 +18,17 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 		{
 		}
 
-		private IHtmlElement FilterBanner => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Banner.CypressSelector());
-		private IHtmlElement FilterCount => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Count.CypressSelector());
-		private IHtmlElement FilterOptions => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Options.CypressSelector());
-		private IEnumerable<IHtmlInputElement> FilterStatuses => Document.QuerySelectorAll<IHtmlInputElement>(Select.ProjectList.Filter.Status().CypressSelector("^="));
-		private IHtmlButtonElement FilterApply => Document.QuerySelector<IHtmlButtonElement>(Select.ProjectList.Filter.Apply.CypressSelector());
+		private IHtmlElement FilterBanner => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Banner.ToSelector());
+		private IHtmlElement FilterCount => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Count.ToSelector());
+		private IHtmlInputElement FilterTitle => Document.QuerySelector<IHtmlInputElement>(Select.ProjectList.Filter.Title.ToSelector());
+		private IHtmlElement FilterOptions => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Options.ToSelector());
+		private IEnumerable<IHtmlInputElement> FilterStatuses => Document.QuerySelectorAll<IHtmlInputElement>(Select.ProjectList.Filter.Status().ToSelector(comparator: "^="));
+		private IHtmlButtonElement FilterApply => Document.QuerySelector<IHtmlButtonElement>(Select.ProjectList.Filter.Apply.ToSelector());
 
 		public async Task InitializeAsync()
 		{
 			_recordCount = 20;
-			AddGetProjects(recordCount: _recordCount).ToList();
+			AddGetProjects(recordCount: _recordCount);
 
 			await OpenUrlAsync("/project-list");
 
@@ -86,6 +86,16 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 
 			FilterCount.TextContent.Should().ContainEquivalentOf("Filtered projects");
 			FilterCount.TextContent.Should().NotContainEquivalentOf("All projects");
+		}
+
+		[Fact]
+		public async Task Should_keep_the_filter_options_visible_when_title_filter_is_specified()
+		{
+			FilterTitle.Value = "something";
+			await FilterApply.SubmitAsync();
+
+			FilterOptions.HasAttribute("open").Should().BeTrue();
+			FilterTitle.Value.Should().Be("something");
 		}
 	}
 }

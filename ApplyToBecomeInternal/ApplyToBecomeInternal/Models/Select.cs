@@ -102,7 +102,7 @@ namespace ApplyToBecomeInternal.Models
 		{
 			public sealed class Filter
 			{
-				private static string _expand, _apply, _clear, _banner, _count, _row, _options;
+				private static string _expand, _apply, _clear, _banner, _count, _row, _options, _title;
 
 				public static string Status(string suffix = null) => Typespace.Name(suffix);
 
@@ -113,6 +113,7 @@ namespace ApplyToBecomeInternal.Models
 				public static string Clear => Typespace.Name(ref _clear);
 				public static string Row => Typespace.Name(ref _row);
 				public static string Options => Typespace.Name(ref _options);
+				public static string Title => Typespace.Name(ref _title);
 			}
 		}
 	}

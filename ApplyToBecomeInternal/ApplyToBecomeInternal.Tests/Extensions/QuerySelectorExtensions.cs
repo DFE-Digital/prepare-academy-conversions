@@ -2,9 +2,9 @@
 {
 	public static class QuerySelectorExtensions
 	{
-		public static string CypressSelector(this string input, string comparator = "=")
+		public static string ToSelector(this string input, string attribute = "data-cy", string comparator = "=")
 		{
-			return $"[data-cy{comparator}'{input}']";
+			return $"[{attribute}{comparator}'{input}']";
 		}
 	}
 }

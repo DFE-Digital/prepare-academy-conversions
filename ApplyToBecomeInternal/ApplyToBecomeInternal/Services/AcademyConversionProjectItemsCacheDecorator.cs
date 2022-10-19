@@ -20,9 +20,9 @@ namespace ApplyToBecomeInternal.Services
 			_httpContext = httpContextAccessor.HttpContext;
 		}
 
-		public Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page = 1, int count = 50, string statusFilters = "")
+		public Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count, string statusFilters = "", string titleFilter = null)
 		{
-			return _innerRepository.GetAllProjects(page, count, statusFilters);
+			return _innerRepository.GetAllProjects(page, count, statusFilters, titleFilter);
 		}
 
 		public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)
