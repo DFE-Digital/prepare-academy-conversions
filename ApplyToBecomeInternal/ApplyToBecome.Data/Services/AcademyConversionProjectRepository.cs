@@ -24,7 +24,7 @@ namespace ApplyToBecome.Data.Services
 		}
 
 		public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count, string statusFilters = "",
-			string titleFilter = null)
+			string titleFilter = "")
 		{
 			string encodedTitleFilter = HttpUtility.UrlEncode(titleFilter);
 			HttpResponseMessage response = await _httpClient.GetAsync($"v2/conversion-projects?page={page}&count={count}&states={statusFilters}&title={encodedTitleFilter}");

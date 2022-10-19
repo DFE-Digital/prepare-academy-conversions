@@ -20,7 +20,7 @@ namespace ApplyToBecomeInternal.Services
 			_httpContext = httpContextAccessor.HttpContext;
 		}
 
-		public Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count, string statusFilters = "", string titleFilter = null)
+		public Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count, string statusFilters = "", string titleFilter = "")
 		{
 			return _innerRepository.GetAllProjects(page, count, statusFilters, titleFilter);
 		}
