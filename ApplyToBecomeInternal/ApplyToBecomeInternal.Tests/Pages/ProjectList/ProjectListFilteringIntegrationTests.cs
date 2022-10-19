@@ -14,7 +14,6 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 	public class ProjectListFilteringIntegrationTests : BaseIntegrationTests, IAsyncLifetime
 	{
 		private int _recordCount;
-		private IList<AcademyConversionProject> _projects;
 
 		public ProjectListFilteringIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{
@@ -29,7 +28,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 		public async Task InitializeAsync()
 		{
 			_recordCount = 20;
-			_projects = AddGetProjects(recordCount: _recordCount).ToList();
+			AddGetProjects(recordCount: _recordCount).ToList();
 
 			await OpenUrlAsync("/project-list");
 
