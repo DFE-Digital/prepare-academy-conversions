@@ -13,6 +13,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 	public class ProjectListFilteringIntegrationTests : BaseIntegrationTests, IAsyncLifetime
 	{
 		private int _recordCount;
+		private List<string> _statuses;
 
 		public ProjectListFilteringIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{
@@ -29,6 +30,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 		{
 			_recordCount = 20;
 			AddGetProjects(recordCount: _recordCount);
+			_statuses = AddGetStatuses();
 
 			await OpenUrlAsync("/project-list");
 
