@@ -41,11 +41,6 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 		{
 			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response = await _repository.GetAllProjects(CurrentPage, _pageSize);
 
-			if (!response.Success)
-			{
-				// 500 maybe?
-			}
-
 			ApiResponse<List<string>> statusesResponse = await _repository.GetAvailableStatuses();
 			if (statusesResponse.Success) Filters.Available = statusesResponse.Body;
 
