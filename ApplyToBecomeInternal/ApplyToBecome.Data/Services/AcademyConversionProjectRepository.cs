@@ -68,7 +68,7 @@ namespace ApplyToBecome.Data.Services
 			HttpResponseMessage response = await _httpClient.GetAsync("v2/conversion-projects/statuses");
 
 			if (response.IsSuccessStatusCode is false)
-				return new ApiResponse<List<string>>(HttpStatusCode.NotFound, null);
+				return new ApiResponse<List<string>>(response.StatusCode, null);
 
 			return new ApiResponse<List<string>>(HttpStatusCode.OK, await response.Content.ReadFromJsonAsync<List<string>>());
 		}
