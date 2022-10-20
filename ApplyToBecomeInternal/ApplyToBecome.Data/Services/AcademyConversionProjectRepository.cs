@@ -63,18 +63,14 @@ namespace ApplyToBecome.Data.Services
 			return new ApiResponse<AcademyConversionProject>(response.StatusCode, project);
 		}
 
-		public Task<ApiResponse<List<string>>> GetAvailableStatuses()
+		public async Task<ApiResponse<List<string>>> GetAvailableStatuses()
 		{
-			return Task.FromResult(new ApiResponse<List<string>>(HttpStatusCode.OK, new List<string>
-			{
-				"Converter Pre-AO (C)",
-				"Pre Advisory Board",
-				"Active",
-				"Approved",
-				"Approved with Conditions",
-				"Deferred",
-				"Declined"
-			}));
+			HttpResponseMessage response = await _httpClient.GetAsync("v2/conversion-projects/statuses");
+
+			if (response.IsSuccessStatusCode is false)
+				return new ApiResponse<List<string>>(response.StatusCode, null);
+
+			return new ApiResponse<List<string>>(HttpStatusCode.OK, await response.Content.ReadFromJsonAsync<List<string>>());
 		}
 	}
 }
