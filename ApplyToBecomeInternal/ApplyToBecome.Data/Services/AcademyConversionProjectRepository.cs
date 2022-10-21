@@ -36,6 +36,7 @@ namespace ApplyToBecome.Data.Services
 				deliveryOfficerQueryString = deliveryOfficerFilter.Aggregate(string.Empty, (current, officer) => current + ("&deliveryOfficers=" + officer));
 			}
 
+			deliveryOfficerQueryString = HttpUtility.UrlEncode(deliveryOfficerQueryString);
 			HttpResponseMessage response = await _httpClient.GetAsync($"v2/conversion-projects?page={page}&count={count}&states={statusFilters}&title={encodedTitleFilter}{deliveryOfficerQueryString}");
 			if (!response.IsSuccessStatusCode)
 			{
