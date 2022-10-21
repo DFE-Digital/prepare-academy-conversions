@@ -1,12 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
-using ApplyToBecome.Data.Models;
-using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecomeInternal.Extensions;
-using ApplyToBecomeInternal.Tests.PageObjects;
 using FluentAssertions;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -21,6 +16,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 		public async Task Should_display_list_of_projects_and_navigate_to_and_from_task_list()
 		{
 			var projects = AddGetProjects().ToList();
+			AddGetStatuses();
 
 			await OpenUrlAsync($"/project-list");
 			var firstProject = AddGetProject(p => p.Id = projects.First().Id);
@@ -49,8 +45,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 
 		[Fact]
 		public async Task Should_display_approved_after_recording_decision()
-		{						
-			var projects = AddGetProjects(p => p.ProjectStatus = "Approved");			
+		{
+			AddGetStatuses();
+			var projects = AddGetProjects(p => p.ProjectStatus = "Approved");
 
 			await OpenUrlAsync($"/project-list");
 
@@ -61,6 +58,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 		[Fact]
 		public async Task Should_display_preadvisoryboard_by_default()
 		{
+			AddGetStatuses();
 			var projects = AddGetProjects().ToList();
 
 			await OpenUrlAsync($"/project-list");
@@ -72,6 +70,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 		[Fact]
 		public async Task Should_display_application_received_date_when_no_htb_date_set()
 		{
+			AddGetStatuses();
 			var projects = AddGetProjects(p => p.HeadTeacherBoardDate = null);
 
 			await OpenUrlAsync($"/project-list");

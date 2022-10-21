@@ -9,20 +9,20 @@ namespace ApplyToBecomeInternal.Services
 {
 	public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionProjectRepository
 	{
-		private readonly IAcademyConversionProjectRepository _innerRepository;
 		private readonly HttpContext _httpContext;
+		private readonly IAcademyConversionProjectRepository _innerRepository;
 
 		public AcademyConversionProjectItemsCacheDecorator(
-			IAcademyConversionProjectRepository innerRepository, 
+			IAcademyConversionProjectRepository innerRepository,
 			IHttpContextAccessor httpContextAccessor)
 		{
 			_innerRepository = innerRepository;
 			_httpContext = httpContextAccessor.HttpContext;
 		}
 
-		public Task<ApiResponse<IEnumerable<AcademyConversionProject>>> GetAllProjects(int page = 1, int count=50)
+		public Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count, string statusFilters = "", string titleFilter = "")
 		{
-			return _innerRepository.GetAllProjects(page, count);
+			return _innerRepository.GetAllProjects(page, count, statusFilters, titleFilter);
 		}
 
 		public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)
@@ -32,7 +32,7 @@ namespace ApplyToBecomeInternal.Services
 				return cached;
 			}
 
-			var project = await _innerRepository.GetProjectById(id);
+			ApiResponse<AcademyConversionProject> project = await _innerRepository.GetProjectById(id);
 
 			_httpContext.Items.Add(id, project);
 
@@ -47,6 +47,11 @@ namespace ApplyToBecomeInternal.Services
 			}
 
 			return _innerRepository.UpdateProject(id, updateProject);
+		}
+
+		public Task<ApiResponse<List<string>>> GetAvailableStatuses()
+		{
+			return _innerRepository.GetAvailableStatuses();
 		}
 	}
 }

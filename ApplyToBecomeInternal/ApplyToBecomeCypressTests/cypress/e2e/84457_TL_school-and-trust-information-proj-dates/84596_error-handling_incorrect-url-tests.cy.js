@@ -17,6 +17,15 @@ Cypress._.each(['iphone-x'], (viewport) => {
 		before(() => {
 			cy.viewport(viewport)
 		})
+
+        // Place holder for accessbility tests, to unskip once issues is resolved
+        it.skip('Accessbility', () => {
+            let url = Cypress.env('url');
+            cy.visit(url)
+            cy.injectAxe()
+            cy.checkA11y()
+
+        })
     
          it('TC01: Should open first school in the list', () => {
             cy.viewport(viewport)

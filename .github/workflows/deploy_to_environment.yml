@@ -75,7 +75,7 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE}}:${{ env.BRANCH_TAG }}
           push: true
           build-args: |
-            COMMIT_SHA=${{ env.DOCKER_IMAGE_TAG }}
+            COMMIT_SHA=${{ env.DOCKER_IMAGE_TAG }}  
 
   deploy-image:
     needs: build-and-push-image
@@ -152,6 +152,28 @@ jobs:
           TF_VAR_app_azuread_groupid: ${{ secrets.AZUREAD_GROUPID }}
           TF_VAR_app_cypresstest_secret : ${{ secrets.CYPRESS_TEST_SECRET }}
 
+  create-tag:
+    needs: deploy-image
+    runs-on: ubuntu-latest
+    steps:      
+      - uses: actions/checkout@v2
+      - name: Create tag string          
+        run: echo "RELEASE_TAGNAME=${{ github.event.inputs.environment }}-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV
+      - name: Create git tag
+        run: |
+          git tag ${{ env.RELEASE_TAGNAME }}
+      - name: Push git tag
+        run: git push origin ${{ env.RELEASE_TAGNAME }}
+      - name: Create release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.RELEASE_TAGNAME }}
+          release_name: ${{ env.RELEASE_TAGNAME }}
+          draft: ${{ github.event.inputs.environment == 'staging' }}
+          prerelease: ${{ github.event.inputs.environment == 'staging' }}
+
   cypress-tests:
     needs: deploy-image
     environment: staging
@@ -169,7 +191,7 @@ jobs:
       - name: Npm install
         run: npm install
       - name: Run cypress
-        run: npm run cy:run -- --env grepTags=@stage,url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
+        run: npm run cy:run -- --spec "cypress/e2e/all.spec.cy.js" --env grepTags=@stage,url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
         env: 
           db: ${{ secrets.DB_CONNECTION_STRING }}
       - uses: actions/upload-artifact@v1

@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,6 +13,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		[InlineData("/project-list")]
 		public async Task Should_be_success_result_on_get(string url)
 		{
+			AddGetStatuses();
 			AddGetProjects();
 
 			await OpenUrlAsync(url);

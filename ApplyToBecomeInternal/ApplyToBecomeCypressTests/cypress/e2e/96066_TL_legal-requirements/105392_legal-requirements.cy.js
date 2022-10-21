@@ -1,14 +1,13 @@
 /// <reference types ='Cypress'/>
 
 // TO DO: Check Legal Requirement validation on first time use; check Empty tags.
-import legalRequirements from "../../pages/legalRequirement"
 
 const url = Cypress.env('url') + '/task-list/2054'
 
 describe('Legal Requirements', () => {
     beforeEach(() => {
-        legalRequirements.selectProject().then(() =>{
-            cy.get('[data-cy="select-tasklist-links-legalrequirements"]').click()
+        cy.selectFirstProject().then(() =>{
+        cy.get('[data-cy="select-tasklist-links-legalrequirements"]').click()
         })
     })
 
@@ -97,7 +96,7 @@ describe('Legal Requirements', () => {
     })
 
     it('TC05: Confirm Legal Requirements page check & marked complete', () => {
-        legalRequirements.selectProject().then(() => {
+        cy.selectFirstProject().then(() => {
             cy.get('[data-cy="select-tasklist-legalrequirements-status"]')
             .invoke('text')
             .then((text) => {

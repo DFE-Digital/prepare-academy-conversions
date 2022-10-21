@@ -124,7 +124,8 @@ namespace ApplyToBecomeInternal.ViewModels
 
 		public static KeyStage4PerformanceTableViewModel Build(IEnumerable<KeyStage4PerformanceResponse> keyStage4Performance)
 		{
-			var keyStage4PerformanceOrdered = keyStage4Performance.Take(3).OrderByDescending(ks4 => ks4.Year)
+			var distinctKeyStage4Performance = keyStage4Performance.DistinctBy(p => p.Year);
+			var keyStage4PerformanceOrdered = distinctKeyStage4Performance.OrderByDescending(ks4 => ks4.Year)
 				.Concat(Enumerable.Range(0, 3).Select(_ => new KeyStage4PerformanceResponse())).Take(3).ToList();
 
 			return new KeyStage4PerformanceTableViewModel

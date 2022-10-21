@@ -15,7 +15,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 {
 	public abstract partial class BaseIntegrationTests
 	{
-		protected IEnumerable<AcademyConversionProject> AddGetProjects(Action<AcademyConversionProject> postSetup = null)
+		protected IEnumerable<AcademyConversionProject> AddGetProjects(Action<AcademyConversionProject> postSetup = null, int? recordCount = null)
 		{
 			var projects = _fixture.CreateMany<AcademyConversionProject>().ToList();
 			if (postSetup != null)
@@ -23,13 +23,27 @@ namespace ApplyToBecomeInternal.Tests.Pages
 				postSetup(projects.First());
 			}
 
-			var response = new ApiV2Wrapper<IEnumerable<AcademyConversionProject>>()
+			var response = new ApiV2Wrapper<IEnumerable<AcademyConversionProject>>
 			{
-				Data = projects
+				Data = projects, 
+				Paging = new ApiV2PagingInfo
+				{
+					RecordCount = recordCount ?? projects.Count, 
+					Page = 0
+				}
 			};
 
 			_factory.AddGetWithJsonResponse("/v2/conversion-projects", response);
 			return projects;
+		}
+
+		protected List<string> AddGetStatuses()
+		{
+			List<string> statuses = new List<string> { "Accepted", "Accepted with Conditions", "Deferred", "Declined" };
+
+			_factory.AddGetWithJsonResponse("/v2/conversion-projects/statuses", statuses);
+
+			return statuses;
 		}
 
 		public AcademyConversionProject AddGetProject(Action<AcademyConversionProject> postSetup = null)

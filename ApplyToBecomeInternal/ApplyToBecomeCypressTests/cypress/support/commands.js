@@ -491,27 +491,54 @@ Cypress.Commands.add('foundationConsentStatus', () => {
     cy.get('[data-cy="select-legal-summary-foundationconsent-status"]')
 })
 
-// School Listing Summary Page (Universal)
-// Cypress.Commands.add('firstProjectRecordDecision', () => {
-//     cy.get('[data-cy="select-projecttype-input-conversion"]').click()
-//     cy.get('[data-cy="select-common-submitbutton"]').click()
-//     cy.get('[id="school-name-0"]').click()
-//     cy.url().then(url => {
-//         let modifiedUrl = url + '?rd=true'
-//         cy.visit(modifiedUrl)
-//     })
-// });
+// Universal: selects conversion project from list
+Cypress.Commands.add('selectsConversion', () => {
+    let url = Cypress.env('url');
+    cy.visit(url);
+    cy.get('[data-cy="select-projecttype-input-conversion"]').click();
+    cy.get('[data-cy="select-common-submitbutton"]').click();
+})
 
-// Request external dev - requres environment setup on yml file
-// Cypress.Commands.add('beData', () => {
-//     const apiKey = Cypress.env('apiKey')
-//     const beUrl = Cypress.env('beUrl')
+// Universal: selects first project from list
+Cypress.Commands.add('selectFirstProject', () => {
+    let url = Cypress.env('url');
+    cy.visit(url);
+    cy.get('[data-cy="select-projecttype-input-conversion"]').click();
+    cy.get('[data-cy="select-common-submitbutton"]').click();
+    cy.get('[id="school-name-0"]').click();
+})
 
-//     cy.request({
-//         method:'GET',
-//         url: beUrl + '/v2/apply-to-become/application/A2B_1373',
-//         headers: {
-//             ApiKey: apiKey,
-//             "Content-type" : "application/json"
-//          }
-//     })
+// Assign User to project
+
+// Unassign a user
+Cypress.Commands.add('unassignUser', () => {
+    cy.get('[data-id="assigned-user"]')
+    .invoke('text')
+    .then((text) => {
+        if (text.includes('Empty')) {
+            return
+        }
+        else {
+            // assign link
+            cy.get('a[href*="project-assignment"]').click()
+            // unassign link
+            cy.get('[id="unassign-link"]').click()
+            // continue button
+            cy.get('[class="govuk-button"]').click()
+        }
+    })
+})
+
+// Assign User
+
+Cypress.Commands.add('assignUser', () => {
+    cy.get('[data-id="assigned-user"]')
+    .invoke('text')
+    .then((text) => {
+        if (text.includes('Empty')) {
+            cy.get('a[href*="project-assignment"]').click()
+            cy.get('[id="delivery-officer"]').click().type('Chris Sherlock').type('{enter}')
+            cy.get('[class="govuk-button"]').click()
+        }
+    })
+})

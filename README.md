@@ -79,6 +79,11 @@ To execute tests with grep tags on stage:
 $ npm run cy:run -- --env grepTags=@stage,url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
 ```
 
+To only execute all.cy.js file which has all import test files
+```
+$ npm run cy:run -- --spec "cypress/e2e/all.spec.cy.js" --env grepTags=@stage,url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
+```
+
 ### Loading users from Azure Active Directory
 You will need to set a secret in `secrets.json` in the following format to run the Cypress command against (you can use any value):
 
@@ -139,3 +144,29 @@ i.e., grepTags=@dev,grepTags=@stage
 
 Further details on using cypress-grep test tagging: https://github.com/cypress-io/cypress-grep 
 cypress 10.9.0 Latest changes: https://docs.cypress.io/guides/references/changelog 
+
+Accessibility
+```
+i.e.,
+Basic usage
+
+it('Has no detectable a11y violations on load', () => {
+  // Test the page at initial load
+  cy.checkA11y()
+})
+```
+```
+i.e.,
+Applying a context and run parameters
+
+it('Has no detectable a11y violations on load (with custom parameters)', () => {
+  // Test the page at initial load (with context and options)
+  cy.checkA11y('.example-class', {
+    runOnly: {
+      type: 'tag',
+      values: ['wcag2a']
+    }
+  })
+})
+```
+For more receipes: https://www.npmjs.com/package/cypress-axe

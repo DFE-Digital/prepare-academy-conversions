@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "cypress": "^10.9.0",
+    "cypress-axe": "^1.0.0",
     "cypress-data-session": "^1.13.0",
     "cypress-grep": "^3.0.3",
     "cypress-localstorage-commands": "^1.6.1",

@@ -147,7 +147,20 @@ jobs:
           TF_VAR_app_azuread_tenantid: ${{ secrets.AZUREAD_TENANTID }}
           TF_VAR_app_azuread_groupid: ${{ secrets.AZUREAD_GROUPID }}
           TF_VAR_app_cypresstest_secret : ${{ secrets.CYPRESS_TEST_SECRET }}
-                    
+
+  create-tag:    
+    needs: deploy-image
+    runs-on: ubuntu-latest
+    steps:      
+      - uses: actions/checkout@v2
+      - name: Create tag string          
+        run: echo "RELEASE_TAGNAME=dev-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV    
+      - name: Create git tag
+        run: |
+          git tag ${{ env.RELEASE_TAGNAME }}
+      - name: Push git tag
+        run: git push origin ${{ env.RELEASE_TAGNAME }}      
+
   cypress-tests:
     needs: deploy-image
     environment: dev
@@ -164,7 +177,7 @@ jobs:
       - name: Npm install
         run: npm install
       - name: Run cypress
-        run: npm run cy:run -- --env grepTags=@dev,grepTags=@stage,url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
+        run: npm run cy:run -- --spec "cypress/e2e/all.spec.cy.js" --env grepTags=@dev,grepTags=@stage,url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
         env: 
           db: ${{ secrets.DB_CONNECTION_STRING }}
       - uses: actions/upload-artifact@v1
