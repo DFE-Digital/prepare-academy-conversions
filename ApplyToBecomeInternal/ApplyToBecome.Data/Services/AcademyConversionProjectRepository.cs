@@ -17,16 +17,20 @@ namespace ApplyToBecome.Data.Services
 	public class AcademyConversionProjectRepository : IAcademyConversionProjectRepository
 	{
 		private readonly HttpClient _httpClient;
+		private readonly IHttpClientFactory _httpClientFactory;
 
 		public AcademyConversionProjectRepository(IHttpClientFactory httpClientFactory)
 		{
 			_httpClient = httpClientFactory.CreateClient("AcademisationClient");
+			_httpClientFactory = httpClientFactory;
 		}
 
 		public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count, string statusFilters = "",
 			string titleFilter = "")
 		{
-			var response = await _httpClient.GetAsync($"v2/conversion-projects?page={page}&count={count}");
+			var httpClient = _httpClientFactory.CreateClient("TramsClient");
+
+			var response = await httpClient.GetAsync($"v2/conversion-projects?page={page}&count={count}");
 			if (!response.IsSuccessStatusCode)
 			{
 				return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode,
