@@ -8,6 +8,7 @@ using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,14 +41,14 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 		public async Task OnGetAsync()
 		{
 			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response = await _repository.GetAllProjects(CurrentPage, _pageSize);
-
 			ApiResponse<List<string>> statusesResponse = await _repository.GetAvailableStatuses();
-			if (statusesResponse.Success) Filters.Available = statusesResponse.Body;
+			if (statusesResponse.Success) Filters.AvailableStatuses = statusesResponse.Body;
 
 			Projects = response.Body.Data.Select(Build).ToList();
 			HasNextPage = response.Body?.Paging?.NextPageUrl != null;
 			TotalProjects = response.Body?.Paging?.RecordCount ?? 0;
 
+			Filters.AvailableDeliveryOfficers = Projects.Select(a => a.AssignedUserFullName).Where(s => !string.IsNullOrEmpty(s)).ToList();
 			if (CurrentPage - 5 > 1)
 			{
 				StartingPage = CurrentPage - 5;
@@ -56,17 +57,20 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 
 		public async Task<IActionResult> OnPostAsync()
 		{
-			string selectedStatuses = string.Join(',', Filters.Selected);
+			string selectedStatuses = string.Join(',', Filters.SelectedStatuses);
 			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response =
-				await _repository.GetAllProjects(CurrentPage, _pageSize, selectedStatuses, Filters.Title);
+				await _repository.GetAllProjects(CurrentPage, _pageSize, Filters.SelectedOfficers.ToList(), Filters.Title, selectedStatuses);
 
 			ApiResponse<List<string>> availableStatuses = await _repository.GetAvailableStatuses();
-			if (availableStatuses.Success) Filters.Available = availableStatuses.Body;
+			if (availableStatuses.Success) Filters.AvailableStatuses = availableStatuses.Body;
 
 			Projects = response.Body.Data.Select(Build).ToList();
 			HasNextPage = response.Body?.Paging?.NextPageUrl != null;
 			TotalProjects = response.Body?.Paging?.RecordCount ?? 0;
 
+			// Potentially create an endpoint for DO's in the future?
+			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> allResponses = await _repository.GetAllProjects(CurrentPage, _pageSize);
+			Filters.AvailableDeliveryOfficers = allResponses.Body.Data.Select(Build).ToList().Select(a => a.AssignedUserFullName).Where(s => !string.IsNullOrEmpty(s)).ToList();
 			if (CurrentPage - 5 > 1)
 				StartingPage = CurrentPage - 5;
 
