@@ -16,21 +16,18 @@ namespace ApplyToBecome.Data.Services
 	// This would also mean ViewComponents wouldn't need to use this class as the URN would be available in the route data
 	public class AcademyConversionProjectRepository : IAcademyConversionProjectRepository
 	{
-		private readonly HttpClient _httpClient;
-		private readonly IHttpClientFactory _httpClientFactory;
+		private readonly HttpClient _httpClient;		
 
 		public AcademyConversionProjectRepository(IHttpClientFactory httpClientFactory)
 		{
-			_httpClient = httpClientFactory.CreateClient("AcademisationClient");
-			_httpClientFactory = httpClientFactory;
+			_httpClient = httpClientFactory.CreateClient("AcademisationClient");			
 		}
 
 		public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count, string statusFilters = "",
 			string titleFilter = "")
 		{
-			var httpClient = _httpClientFactory.CreateClient("TramsClient");
-
-			var response = await httpClient.GetAsync($"v2/conversion-projects?page={page}&count={count}");
+			string encodedTitleFilter = HttpUtility.UrlEncode(titleFilter);
+			var response = await _httpClient.GetAsync($"legacy/projects?page={page}&count={count}&states={statusFilters}&title={encodedTitleFilter}");
 			if (!response.IsSuccessStatusCode)
 			{
 				return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode,
@@ -44,7 +41,7 @@ namespace ApplyToBecome.Data.Services
 
 		public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)
 		{
-			HttpResponseMessage response = await _httpClient.GetAsync($"conversion-projects/{id}");
+			HttpResponseMessage response = await _httpClient.GetAsync($"legacy/project/{id}");
 			if (!response.IsSuccessStatusCode)
 			{
 				return new ApiResponse<AcademyConversionProject>(response.StatusCode, null);
@@ -56,7 +53,7 @@ namespace ApplyToBecome.Data.Services
 
 		public async Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject)
 		{
-			HttpResponseMessage response = await _httpClient.PatchAsync($"conversion-projects/{id}", JsonContent.Create(updateProject));
+			HttpResponseMessage response = await _httpClient.PatchAsync($"legacy/project/{id}", JsonContent.Create(updateProject));
 			if (!response.IsSuccessStatusCode)
 			{
 				return new ApiResponse<AcademyConversionProject>(response.StatusCode, null);
