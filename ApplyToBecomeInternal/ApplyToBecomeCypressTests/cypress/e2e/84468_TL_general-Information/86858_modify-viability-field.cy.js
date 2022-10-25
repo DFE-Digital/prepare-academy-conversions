@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 Cypress._.each(['iphone-x'], (viewport) => {
-    describe(`86858 Modify viability fields on ${viewport}`, { tags: ['@dev', '@stage']}, () => {
+    describe(`86858 Modify viability fields on ${viewport}`, () => {
         afterEach(() => {
             cy.storeSessionData()
         });
