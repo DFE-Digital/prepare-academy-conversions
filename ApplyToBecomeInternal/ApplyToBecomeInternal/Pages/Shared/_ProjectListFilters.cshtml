@@ -8,7 +8,7 @@
 		</span>
 	</summary>
 	<div class="govuk-details__text prepare-project-listing__filters-details">
-		<form method="post" class="form">
+		<form method="get" class="form">
 			<div class="govuk-grid-row">
 				<div class="govuk-grid-column-one-quarter">
 					<div class="govuk-form-group">
@@ -76,7 +76,7 @@
 									foreach (var officer in Model.AvailableDeliveryOfficers)
 									{
 										<div class="govuk-checkboxes__item">
-											<input class="govuk-checkboxes__input" id="filter--delivery-officer-@officer.Stub()" 
+											<input class="govuk-checkboxes__input" id="filter-delivery-officer-@officer.Stub()" 
 											       name="selectedOfficers" type="checkbox" value="@officer" @(Model.SelectedOfficers.Contains(officer) ? "checked" : null)
 											       data-cy="@Select.ProjectList.Filter.Officer(officer)">
 											<label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-@officer.Stub()">
@@ -85,7 +85,7 @@
 										</div>
 									}
 									<div class="govuk-checkboxes__item">
-										<input class="govuk-checkboxes__input" id="filter--delivery-officer-not-assigned" 
+										<input class="govuk-checkboxes__input" id="filter-delivery-officer-not-assigned" 
 										       name="selectedOfficers" type="checkbox" value="Not assigned" @(Model.SelectedOfficers.Contains("Not assigned") ? "checked" : null)
 										       data-cy="@Select.ProjectList.Filter.Officer("Not assigned")">
 										<label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-not-assigned">

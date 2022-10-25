@@ -1,5 +1,4 @@
 ﻿using ApplyToBecome.Data.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -25,19 +24,24 @@ namespace ApplyToBecome.Data.Services
 		}
 
 		public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count,
-			List<string> deliveryOfficerFilter = null,
-			string statusFilters = "", string titleFilter = "")
+			string titleFilter = "",
+			IEnumerable<string> statusFilters = default,
+			IEnumerable<string> deliveryOfficerFilter = default)
 		{
 			string encodedTitleFilter = HttpUtility.UrlEncode(titleFilter);
-			string deliveryOfficerQueryString = "";
+			string deliveryOfficerQueryString = string.Empty;
 
-			if (deliveryOfficerFilter != null)
+			if (deliveryOfficerFilter != default)
 			{
 				deliveryOfficerQueryString = $@"{deliveryOfficerFilter.Aggregate(string.Empty,
 					(current, officer) => $"{current}&deliveryOfficers={HttpUtility.UrlEncode(officer)}")}";
 			}
-			
-			HttpResponseMessage response = await _httpClient.GetAsync($"v2/conversion-projects?page={page}&count={count}&states={statusFilters}&title={encodedTitleFilter}{deliveryOfficerQueryString}");
+
+			string statusFiltersString = string.Empty;
+			if (statusFilters != null) statusFiltersString = string.Join(',', statusFilters);
+
+			HttpResponseMessage response =
+				await _httpClient.GetAsync($"v2/conversion-projects?page={page}&count={count}&states={statusFiltersString}&title={encodedTitleFilter}{deliveryOfficerQueryString}");
 			if (!response.IsSuccessStatusCode)
 			{
 				return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode,

@@ -1,19 +1,12 @@
 ﻿using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Services;
-using ApplyToBecome.Data.Services.Interfaces;
 using ApplyToBecome.Data.Tests.TestDoubles;
-using Moq;
 using RichardSzalay.MockHttp;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace ApplyToBecome.Data.Tests.Services
@@ -41,7 +34,7 @@ namespace ApplyToBecome.Data.Tests.Services
 			_subject = new AcademyConversionProjectRepository(new MockHttpClientFactory(_messageHandler));
 			var deliveryOfficers = new List<string>() { "John Smith", "Jane Doe" };
 
-			Assert.Equal(project.First().AssignedUser.FullName, _subject.GetAllProjects(1, 50, deliveryOfficers, string.Empty, string.Empty).Result.Body.Data.First().AssignedUser.FullName);
+			Assert.Equal(project.First().AssignedUser.FullName, _subject.GetAllProjects(1, 50, string.Empty, default, deliveryOfficers).Result.Body.Data.First().AssignedUser.FullName);
 		}
 		[Fact]
 		public void GivenDeliveryOfficers_GetsRelevantProjects_WhenMultiple()
@@ -63,7 +56,7 @@ namespace ApplyToBecome.Data.Tests.Services
 			_subject = new AcademyConversionProjectRepository(new MockHttpClientFactory(_messageHandler));
 			var deliveryOfficers = new List<string>() { "John Smith" };
 
-			Assert.Equal(2, _subject.GetAllProjects(1, 50, deliveryOfficers, string.Empty, string.Empty).Result.Body.Data.Count());
+			Assert.Equal(2, _subject.GetAllProjects(1, 50, string.Empty, default, deliveryOfficers).Result.Body.Data.Count());
 		}
 
 		[Fact]
@@ -79,7 +72,7 @@ namespace ApplyToBecome.Data.Tests.Services
 			_subject = new AcademyConversionProjectRepository(new MockHttpClientFactory(_messageHandler));
 			var deliveryOfficers = new List<string>() { "John Smith" };
 
-			Assert.Equal(0, _subject.GetAllProjects(1, 50, deliveryOfficers, string.Empty, string.Empty).Result.Body.Data.Count());
+			Assert.Equal(0, _subject.GetAllProjects(1, 50, string.Empty, default, deliveryOfficers).Result.Body.Data.Count());
 		}
 	}
 }
