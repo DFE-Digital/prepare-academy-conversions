@@ -33,7 +33,7 @@ namespace ApplyToBecome.Data.Services
 
 			if (deliveryOfficerFilter != null)
 			{
-				deliveryOfficerQueryString = $@"&{deliveryOfficerFilter.Aggregate(string.Empty,
+				deliveryOfficerQueryString = $@"{deliveryOfficerFilter.Aggregate(string.Empty,
 					(current, officer) => $"{current}&deliveryOfficers={HttpUtility.UrlEncode(officer)}")}";
 			}
 			

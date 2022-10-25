@@ -31,7 +31,7 @@ namespace ApplyToBecome.Data.Tests.Services
 		[Fact]
 		public void GivenDeliveryOfficers_GetsRelevantProjects()
 		{
-			var path = "http://localhost/v2/conversion-projects?page=1&count=50&states=&title=%26deliveryOfficers%3dJohn+Smith%26deliveryOfficers%3dJane+Doe";
+			var path = "http://localhost/v2/conversion-projects?page=1&count=50&states=&title=&deliveryOfficers=John+Smith&deliveryOfficers=Jane+Doe";
 			var project = new List<AcademyConversionProject>() { new AcademyConversionProject() { AssignedUser = new User("1", "example@email.com", "John Smith") } };
 			var projects = new ApiV2Wrapper<IEnumerable<AcademyConversionProject>>() { Data = project };
 			var payload = JsonSerializer.Serialize(projects);
@@ -46,7 +46,7 @@ namespace ApplyToBecome.Data.Tests.Services
 		[Fact]
 		public void GivenDeliveryOfficers_GetsRelevantProjects_WhenMultiple()
 		{
-			var path = "http://localhost/v2/conversion-projects?page=1&count=50&states=&title=%26deliveryOfficers%3dJohn+Smith";
+			var path = "http://localhost/v2/conversion-projects?page=1&count=50&states=&title=&deliveryOfficers=John+Smith";
 			var project = new List<AcademyConversionProject>() {
 				new AcademyConversionProject() {
 				AssignedUser = new User("1", "example@email.com", "John Smith")
