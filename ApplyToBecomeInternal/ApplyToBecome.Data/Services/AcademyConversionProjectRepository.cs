@@ -31,11 +31,7 @@ namespace ApplyToBecome.Data.Services
 			string encodedTitleFilter = HttpUtility.UrlEncode(titleFilter);
 			string deliveryOfficerQueryString = string.Empty;
 
-			if (deliveryOfficerFilter != default)
-			{
-				deliveryOfficerQueryString = $@"{deliveryOfficerFilter.Aggregate(string.Empty,
-					(current, officer) => $"{current}&deliveryOfficers={HttpUtility.UrlEncode(officer)}")}";
-			}
+			deliveryOfficerQueryString = DeliveryOfficerQueryString(deliveryOfficerFilter, deliveryOfficerQueryString);
 
 			string statusFiltersString = string.Empty;
 			if (statusFilters != null) statusFiltersString = string.Join(',', statusFilters);
@@ -51,6 +47,17 @@ namespace ApplyToBecome.Data.Services
 			ApiV2Wrapper<IEnumerable<AcademyConversionProject>> outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>();
 
 			return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode, outerResponse);
+		}
+
+		private static string DeliveryOfficerQueryString(IEnumerable<string> deliveryOfficerFilter, string deliveryOfficerQueryString)
+		{
+			if (deliveryOfficerFilter != default)
+			{
+				deliveryOfficerQueryString = $@"{deliveryOfficerFilter.Aggregate(string.Empty,
+					(current, officer) => $"{current}&deliveryOfficers={HttpUtility.UrlEncode(officer)}")}";
+			}
+
+			return deliveryOfficerQueryString;
 		}
 
 		public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)
