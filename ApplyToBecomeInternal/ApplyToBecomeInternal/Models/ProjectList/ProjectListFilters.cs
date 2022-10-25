@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
@@ -14,5 +15,12 @@ namespace ApplyToBecomeInternal.Models.ProjectList
 		[BindProperty] public string[] SelectedOfficers { get; set; } = Array.Empty<string>();
 
 		public bool IsVisible => string.IsNullOrWhiteSpace(Title) is false || SelectedStatuses.Length > 0 || SelectedOfficers.Length > 0;
+
+		public void PopulateFrom(IQueryCollection requestQuery)
+		{
+			Title = requestQuery[nameof(Title)];
+			SelectedStatuses = requestQuery[nameof(SelectedStatuses)];
+			SelectedOfficers = requestQuery[nameof(SelectedOfficers)];
+		}
 	}
 }
