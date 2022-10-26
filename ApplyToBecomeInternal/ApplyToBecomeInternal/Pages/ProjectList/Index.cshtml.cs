@@ -5,6 +5,7 @@ using ApplyToBecome.Data.Services;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models.ProjectList;
 using ApplyToBecomeInternal.ViewModels;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
@@ -49,8 +50,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 			TotalProjects = response.Body?.Paging?.RecordCount ?? 0;
 
 			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> allResponses = await _repository.GetAllProjects(CurrentPage, _pageSize);
-			Filters.AvailableDeliveryOfficers = allResponses.Body.Data.Select(x => x.AssignedUser.FullName).Where(s => string.IsNullOrEmpty(s) is false).Distinct().ToList();
-
+			Filters.AvailableDeliveryOfficers = allResponses.Body.Data.Select(x => x.AssignedUser.FullName).Where(s => string.IsNullOrEmpty(s) is false).Distinct().OrderBy(x => x).ToList();
 			ApiResponse<List<string>> statusesResponse = await _repository.GetAvailableStatuses();
 			if (statusesResponse.Success) Filters.AvailableStatuses = statusesResponse.Body.ConvertAll(r => r.SentenceCase());
 

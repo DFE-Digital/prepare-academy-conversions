@@ -73,6 +73,14 @@
 
 							<div class="govuk-checkboxes govuk-checkboxes--small prepare-project-listing__filter" data-module="govuk-checkboxes">
 								@{
+									<div class="govuk-checkboxes__item">
+										<input class="govuk-checkboxes__input" id="filter-delivery-officer-not-assigned" 
+										       name="selectedOfficers" type="checkbox" value="Not assigned" @(Model.SelectedOfficers.Contains("Not assigned") ? "checked" : null)
+										       data-cy="@Select.ProjectList.Filter.Officer("Not assigned")">
+										<label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-not-assigned">
+											Not assigned
+										</label>
+									</div>
 									foreach (var officer in Model.AvailableDeliveryOfficers)
 									{
 										<div class="govuk-checkboxes__item">
@@ -84,14 +92,6 @@
 											</label>
 										</div>
 									}
-									<div class="govuk-checkboxes__item">
-										<input class="govuk-checkboxes__input" id="filter-delivery-officer-not-assigned" 
-										       name="selectedOfficers" type="checkbox" value="Not assigned" @(Model.SelectedOfficers.Contains("Not assigned") ? "checked" : null)
-										       data-cy="@Select.ProjectList.Filter.Officer("Not assigned")">
-										<label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-not-assigned">
-											Not assigned
-										</label>
-									</div>
 								}
 							</div>
 						</fieldset>
