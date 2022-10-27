@@ -16,11 +16,15 @@ namespace ApplyToBecome.Data.Services
 	// This would also mean ViewComponents wouldn't need to use this class as the URN would be available in the route data
 	public class AcademyConversionProjectRepository : IAcademyConversionProjectRepository
 	{
+		private readonly IReadOnlyDictionary<string, string> _aliasedStatuses = new Dictionary<string, string> { { "converter pre-ao (c)", "Pre advisory board" } };
+
 		private readonly HttpClient _httpClient;
+		private readonly IReadOnlyDictionary<string, string> _invertedAliasedStatuses;
 
 		public AcademyConversionProjectRepository(IHttpClientFactory httpClientFactory)
 		{
 			_httpClient = httpClientFactory.CreateClient("TramsClient");
+			_invertedAliasedStatuses = _aliasedStatuses.ToDictionary(x => x.Value.ToLowerInvariant(), x => x.Key);
 		}
 
 		public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count,
@@ -38,7 +42,15 @@ namespace ApplyToBecome.Data.Services
 			}
 
 			string statusFiltersString = string.Empty;
-			if (statusFilters != null) statusFiltersString = string.Join(',', statusFilters);
+			if (statusFilters != null)
+			{
+				IEnumerable<string> projectedStatuses = statusFilters.SelectMany(x =>
+					_invertedAliasedStatuses.ContainsKey(x.ToLowerInvariant())
+						? new[] { x, _invertedAliasedStatuses[x.ToLowerInvariant()] }
+						: new[] { x });
+
+				statusFiltersString = string.Join(',', projectedStatuses);
+			}
 
 			HttpResponseMessage response =
 				await _httpClient.GetAsync($"v2/conversion-projects?page={page}&count={count}&states={statusFiltersString}&title={encodedTitleFilter}{deliveryOfficerQueryString}");
@@ -84,7 +96,14 @@ namespace ApplyToBecome.Data.Services
 			if (response.IsSuccessStatusCode is false)
 				return new ApiResponse<List<string>>(response.StatusCode, null);
 
-			return new ApiResponse<List<string>>(HttpStatusCode.OK, await response.Content.ReadFromJsonAsync<List<string>>());
+			List<string> loadedStatuses = await response.Content.ReadFromJsonAsync<List<string>>();
+
+			List<string> statusList =
+				loadedStatuses.Select(x => _aliasedStatuses.ContainsKey(x.ToLowerInvariant()) ? _aliasedStatuses[x.ToLowerInvariant()] : x)
+					.Distinct()
+					.ToList();
+
+			return new ApiResponse<List<string>>(HttpStatusCode.OK, statusList);
 		}
 	}
 }
