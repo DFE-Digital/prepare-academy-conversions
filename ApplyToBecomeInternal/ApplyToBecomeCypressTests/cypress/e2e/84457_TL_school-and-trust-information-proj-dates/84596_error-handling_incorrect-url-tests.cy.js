@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 Cypress._.each(['iphone-x'], (viewport) => {
-    describe(`84596 Error handling should present correctly to the user on ${viewport}`, { tags: ['@dev', '@stage']},  () => {
+    describe(`84596 Error handling should present correctly to the user on ${viewport}`, () => {
         after(function () {
             cy.clearLocalStorage()
         });

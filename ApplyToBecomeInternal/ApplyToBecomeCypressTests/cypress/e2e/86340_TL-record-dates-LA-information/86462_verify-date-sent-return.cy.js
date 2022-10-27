@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 Cypress._.each(['iphone-x'], (viewport) => {
-	describe(`86462: "Date you sent/return the template" are reflected in preview on ${viewport}`, { tags: ['@dev', '@stage']}, () => {
+	describe(`86462: "Date you sent/return the template" are reflected in preview on ${viewport}`, () => {
 		beforeEach(() => {
 			cy.login()
 			cy.viewport(viewport)

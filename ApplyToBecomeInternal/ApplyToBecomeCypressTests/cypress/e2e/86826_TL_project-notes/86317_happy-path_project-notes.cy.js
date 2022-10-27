@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 Cypress._.each(['iphone-x'], (viewport) => {
-    describe(`86317 Submit and view project notes on ${viewport}`, { tags: ['@dev', '@stage']}, () => {
+    describe(`86317 Submit and view project notes on ${viewport}`, () => {
 		beforeEach(() => {
 			cy.login()
 			cy.viewport(viewport)
