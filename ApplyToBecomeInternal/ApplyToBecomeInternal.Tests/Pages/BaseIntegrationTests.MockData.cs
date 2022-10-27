@@ -37,6 +37,15 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			return projects;
 		}
 
+		protected List<string> AddGetStatuses()
+		{
+			List<string> statuses = new List<string> { "Accepted", "Accepted with Conditions", "Deferred", "Declined" };
+
+			_factory.AddGetWithJsonResponse("/v2/conversion-projects/statuses", statuses);
+
+			return statuses;
+		}
+
 		public AcademyConversionProject AddGetProject(Action<AcademyConversionProject> postSetup = null)
 		{
 			var project = _fixture.Create<AcademyConversionProject>();
