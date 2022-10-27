@@ -2,7 +2,7 @@
 
 const url = Cypress.env('url') + '/project-type'
 
-describe('Landing Page', { tags: ['@dev', '@stage']}, () => {
+describe('Landing Page', () => {
     beforeEach(() => {
         cy.visit(url)
 

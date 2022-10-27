@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 Cypress._.each(['iphone-x'], (viewport) => {
-	describe(`91489: Apply-to-become GET application types on ${viewport}`, { tags: ['@dev', '@stage']}, () => {
+	describe(`91489: Apply-to-become GET application types on ${viewport}`, () => {
 		beforeEach(() => {
 			cy.login()
 

@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-describe('101092: Pagination', { tags: ['@dev', '@stage']}, () => {
+describe('101092: Pagination', () => {
 
 	beforeEach(() => {
 		cy.login()
