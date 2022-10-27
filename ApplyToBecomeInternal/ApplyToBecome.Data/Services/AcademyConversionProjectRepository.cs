@@ -23,11 +23,25 @@ namespace ApplyToBecome.Data.Services
 			_httpClient = httpClientFactory.CreateClient("TramsClient");
 		}
 
-		public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count, string statusFilters = "",
-			string titleFilter = "")
+		public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count,
+			string titleFilter = "",
+			IEnumerable<string> statusFilters = default,
+			IEnumerable<string> deliveryOfficerFilter = default)
 		{
 			string encodedTitleFilter = HttpUtility.UrlEncode(titleFilter);
-			HttpResponseMessage response = await _httpClient.GetAsync($"v2/conversion-projects?page={page}&count={count}&states={statusFilters}&title={encodedTitleFilter}");
+			string deliveryOfficerQueryString = string.Empty;
+
+			if (deliveryOfficerFilter != default)
+			{
+				deliveryOfficerQueryString = $@"{deliveryOfficerFilter.Aggregate(string.Empty,
+					(current, officer) => $"{current}&deliveryOfficers={HttpUtility.UrlEncode(officer)}")}";
+			}
+
+			string statusFiltersString = string.Empty;
+			if (statusFilters != null) statusFiltersString = string.Join(',', statusFilters);
+
+			HttpResponseMessage response =
+				await _httpClient.GetAsync($"v2/conversion-projects?page={page}&count={count}&states={statusFiltersString}&title={encodedTitleFilter}{deliveryOfficerQueryString}");
 			if (!response.IsSuccessStatusCode)
 			{
 				return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode,
@@ -63,18 +77,14 @@ namespace ApplyToBecome.Data.Services
 			return new ApiResponse<AcademyConversionProject>(response.StatusCode, project);
 		}
 
-		public Task<ApiResponse<List<string>>> GetAvailableStatuses()
+		public async Task<ApiResponse<List<string>>> GetAvailableStatuses()
 		{
-			return Task.FromResult(new ApiResponse<List<string>>(HttpStatusCode.OK, new List<string>
-			{
-				"Converter Pre-AO (C)",
-				"Pre Advisory Board",
-				"Active",
-				"Approved",
-				"Approved with Conditions",
-				"Deferred",
-				"Declined"
-			}));
+			HttpResponseMessage response = await _httpClient.GetAsync("v2/conversion-projects/statuses");
+
+			if (response.IsSuccessStatusCode is false)
+				return new ApiResponse<List<string>>(response.StatusCode, null);
+
+			return new ApiResponse<List<string>>(HttpStatusCode.OK, await response.Content.ReadFromJsonAsync<List<string>>());
 		}
 	}
 }

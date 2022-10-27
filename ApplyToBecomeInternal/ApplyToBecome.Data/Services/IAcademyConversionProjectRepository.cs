@@ -6,7 +6,14 @@ namespace ApplyToBecome.Data.Services
 {
 	public interface IAcademyConversionProjectRepository
 	{
-		Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count, string statusFilter = "", string titleFilter = "");
+		Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(
+			int page,
+			int count,
+			string titleFilter = "",
+			IEnumerable<string> statusFilter = default,
+			IEnumerable<string> deliveryOfficerFilter = default
+		);
+
 		Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id);
 		Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject);
 		Task<ApiResponse<List<string>>> GetAvailableStatuses();

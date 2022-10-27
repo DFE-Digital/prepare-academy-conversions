@@ -39,43 +39,25 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 
 		public async Task OnGetAsync()
 		{
-			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response = await _repository.GetAllProjects(CurrentPage, _pageSize);
+			Filters.PopulateFrom(Request.Query);
 
-			if (!response.Success)
-			{
-				// 500 maybe?
-			}
+			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response = 
+				await _repository.GetAllProjects(CurrentPage, _pageSize, Filters.Title, Filters.SelectedOfficers, Filters.SelectedStatuses);
+
+			Projects = response.Body.Data.Select(Build).ToList();
+			HasNextPage = response.Body?.Paging?.NextPageUrl != null;
+			TotalProjects = response.Body?.Paging?.RecordCount ?? 0;
+
+			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> allResponses = await _repository.GetAllProjects(CurrentPage, _pageSize);
+			Filters.AvailableDeliveryOfficers = allResponses.Body.Data.Select(x => x.AssignedUser.FullName).Where(s => string.IsNullOrEmpty(s) is false).Distinct().OrderBy(x => x).ToList();
 
 			ApiResponse<List<string>> statusesResponse = await _repository.GetAvailableStatuses();
-			if (statusesResponse.Success) Filters.Available = statusesResponse.Body;
-
-			Projects = response.Body.Data.Select(Build).ToList();
-			HasNextPage = response.Body?.Paging?.NextPageUrl != null;
-			TotalProjects = response.Body?.Paging?.RecordCount ?? 0;
+			if (statusesResponse.Success) Filters.AvailableStatuses = statusesResponse.Body.ConvertAll(r => r.SentenceCase());
 
 			if (CurrentPage - 5 > 1)
 			{
 				StartingPage = CurrentPage - 5;
 			}
-		}
-
-		public async Task<IActionResult> OnPostAsync()
-		{
-			string selectedStatuses = string.Join(',', Filters.Selected);
-			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response =
-				await _repository.GetAllProjects(CurrentPage, _pageSize, selectedStatuses, Filters.Title);
-
-			ApiResponse<List<string>> availableStatuses = await _repository.GetAvailableStatuses();
-			if (availableStatuses.Success) Filters.Available = availableStatuses.Body;
-
-			Projects = response.Body.Data.Select(Build).ToList();
-			HasNextPage = response.Body?.Paging?.NextPageUrl != null;
-			TotalProjects = response.Body?.Paging?.RecordCount ?? 0;
-
-			if (CurrentPage - 5 > 1)
-				StartingPage = CurrentPage - 5;
-
-			return Page();
 		}
 
 		private ProjectListViewModel Build(AcademyConversionProject academyConversionProject)
