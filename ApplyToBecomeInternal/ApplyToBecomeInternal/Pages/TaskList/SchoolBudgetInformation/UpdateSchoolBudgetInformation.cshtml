@@ -45,7 +45,7 @@
 				<label class="govuk-label govuk-label--s" for="finance-forward">
                     Projected capital balance at end of following financial year
 				</label>
-				<govuk-decimal-input name="finance-forward" asp-for="@Model.Project.CapitalCarryForwardAtEndMarchNextYear" isMonetary="true"/>
+				<govuk-decimal-input name="finance-forward-projected" asp-for="@Model.Project.CapitalCarryForwardAtEndMarchNextYear" isMonetary="true"/>
 			</div>
 
 			<button class="govuk-button" id="save-and-continue-button" data-module="govuk-button" @Select.Common.SubmitButton.ToData("cy")>
