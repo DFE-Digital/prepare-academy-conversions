@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 //***************requres environment setup on yml file******************
-describe('Fetch data from Internal', { tags: ['@integration']},() => {
+describe.skip('Fetch data from Internal', { tags: ['@integration']},() => {
     let fetchProjects = ['2050']
     let url = Cypress.env('url')
 
