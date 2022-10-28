@@ -156,10 +156,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
-			Document.QuerySelector("#finance-current-year").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-following-year").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-forward").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-forward-projected").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-year-current").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-year-following").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-current-capital").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-projected-capital").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#school-budget-information-additional-information").TextContent.Should().Be(project.SchoolBudgetInformationAdditionalInformation);
 		}
 
@@ -170,7 +170,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
-			await NavigateDataTestAsync("change-finance-current-year");
+			await NavigateDataTestAsync("change-finance-year-current");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
 
 			await NavigateAsync("Back");
@@ -190,13 +190,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
-			await NavigateDataTestAsync("change-finance-current-year");
+			await NavigateDataTestAsync("change-finance-year-current");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
 
-			Document.QuerySelector<IHtmlInputElement>("#finance-current-year").Value = request.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString();
-			Document.QuerySelector<IHtmlInputElement>("#finance-following-year").Value = request.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString();
-			Document.QuerySelector<IHtmlInputElement>("#finance-forward").Value = request.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString();
-			Document.QuerySelector<IHtmlInputElement>("#finance-forward-projected").Value = request.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString();
+			Document.QuerySelector<IHtmlInputElement>("#finance-year-current").Value = request.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString();
+			Document.QuerySelector<IHtmlInputElement>("#finance-year-following").Value = request.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString();
+			Document.QuerySelector<IHtmlInputElement>("#finance-current-capital").Value = request.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString();
+			Document.QuerySelector<IHtmlInputElement>("#finance-projected-capital").Value = request.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
