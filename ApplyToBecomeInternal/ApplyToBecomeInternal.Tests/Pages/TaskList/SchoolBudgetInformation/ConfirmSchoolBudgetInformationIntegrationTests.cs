@@ -25,8 +25,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			Document.QuerySelector("#finance-current-year").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#finance-following-year").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-forward-current-year").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-forward-following-year").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-forward").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-forward-projected").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.SchoolBudgetInformationAdditionalInformation);
 		}
 
@@ -51,8 +51,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			Document.QuerySelector("#finance-current-year").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#finance-following-year").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-forward-current-year").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-forward-following-year").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-forward").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#finance-forward-projected").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.SchoolBudgetInformationAdditionalInformation);
 		}
 
@@ -74,8 +74,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			Document.QuerySelector("#finance-current-year").ClassName.Should().Contain("negative-value");
 			Document.QuerySelector("#finance-following-year").ClassName.Should().Contain("negative-value");
-			Document.QuerySelector("#finance-forward-current-year").ClassName.Should().Contain("negative-value");
-			Document.QuerySelector("#finance-forward-following-year").ClassName.Should().Contain("negative-value");
+			Document.QuerySelector("#finance-forward").ClassName.Should().Contain("negative-value");
+			Document.QuerySelector("#finance-forward-projected").ClassName.Should().Contain("negative-value");
 		}
 
 		[Fact]
@@ -96,8 +96,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			Document.QuerySelector("#finance-current-year").ClassName.Should().NotContain("negative-value");
 			Document.QuerySelector("#finance-following-year").ClassName.Should().NotContain("negative-value");
-			Document.QuerySelector("#finance-forward-current-year").ClassName.Should().NotContain("negative-value");
-			Document.QuerySelector("#finance-forward-following-year").ClassName.Should().NotContain("negative-value");
+			Document.QuerySelector("#finance-forward").ClassName.Should().NotContain("negative-value");
+			Document.QuerySelector("#finance-forward-projected").ClassName.Should().NotContain("negative-value");
 		}
 
 		[Fact]
@@ -145,8 +145,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			Document.QuerySelector("#finance-current-year").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#finance-following-year").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#finance-forward-current-year").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#finance-forward-following-year").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#finance-forward").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#finance-forward-projected").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#additional-information").TextContent.Should().Be("Empty");
 			Document.QuerySelector<IHtmlInputElement>("#school-budget-information-complete").IsChecked.Should().BeFalse();
 
