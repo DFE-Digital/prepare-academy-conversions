@@ -46,8 +46,6 @@ namespace ApplyToBecomeInternal.Pages.Public
 			return Page();
 		}
 
-
-
 		public IActionResult OnPost(bool? consent, string returnUrl)
 		{
 			returnPath = returnUrl;
