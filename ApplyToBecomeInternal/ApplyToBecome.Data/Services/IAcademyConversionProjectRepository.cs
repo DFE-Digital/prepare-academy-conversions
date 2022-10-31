@@ -10,7 +10,7 @@ namespace ApplyToBecome.Data.Services
 			int page,
 			int count,
 			string titleFilter = "",
-			IEnumerable<string> statusFilter = default,
+			IEnumerable<string> statusFilters = default,
 			IEnumerable<string> deliveryOfficerFilter = default
 		);
 

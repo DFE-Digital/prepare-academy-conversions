@@ -1,4 +1,5 @@
-﻿using ApplyToBecome.Data.Services.Interfaces;
+﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.Graph;
 using Microsoft.Identity.Client;

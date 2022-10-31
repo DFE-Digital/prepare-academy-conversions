@@ -1,4 +1,5 @@
-﻿using ApplyToBecome.Data.Services.AzureAd;
+﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Services.AzureAd;
 using ApplyToBecome.Data.Tests.AutoFixture;
 using Microsoft.Extensions.Options;
 using Moq;

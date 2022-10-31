@@ -75,7 +75,7 @@ namespace ApplyToBecome.Data.Tests.Services
 
 		public class EstablishmentMockData
 		{
-			public MISEstablishmentResponse MisEstablishment { get; set; }
+			public MisEstablishmentResponse MisEstablishment { get; set; }
 		}
 	}
 }

@@ -18,7 +18,7 @@
 		public string SchoolCapacity { get; set; }
 		public CensusResponse Census { get; set; }
 		public NameAndCodeResponse ParliamentaryConstituency { get; set; }
-		public MISEstablishmentResponse MISEstablishment { get; set; }
+		public MisEstablishmentResponse MISEstablishment { get; set; }
 		public AddressResponse Address { get; set; }
 	}
 }
