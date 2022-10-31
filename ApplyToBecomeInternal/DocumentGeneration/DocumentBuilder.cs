@@ -146,18 +146,21 @@ namespace DocumentGeneration
 
 			settingsPart = mainPart.AddNewPart<DocumentSettingsPart>();
 			settingsPart.Settings = new Settings(
-				new Compatibility(
-					new[] {
-						new CompatibilitySetting
-						{
-							Name = new EnumValue<CompatSettingNameValues>
-								(CompatSettingNameValues.CompatibilityMode),
-							Val = new StringValue("15"),
-							Uri = new StringValue
-								("http://schemas.microsoft.com/office/word")
+				new[]
+				{
+					new Compatibility(
+						new[] {
+							new CompatibilitySetting
+							{
+								Name = new EnumValue<CompatSettingNameValues>
+									(CompatSettingNameValues.CompatibilityMode),
+								Val = new StringValue("15"),
+								Uri = new StringValue
+									("http://schemas.microsoft.com/office/word")
+							}
 						}
-					}
-				)
+					)
+				}
 			);
 			settingsPart.Settings.Save();
 		}

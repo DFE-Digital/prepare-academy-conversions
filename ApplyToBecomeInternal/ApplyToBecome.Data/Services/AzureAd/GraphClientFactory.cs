@@ -30,7 +30,7 @@ namespace ApplyToBecome.Data.Services.AzureAd
 				requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
 			});
 
-			return new GraphServiceClient("https://graph.microsoft.com/V1.0/", provider);
+			return new GraphServiceClient($"{_azureAdOptions.ApiUrl}/V1.0/", provider);
 		}
 	}
 }
