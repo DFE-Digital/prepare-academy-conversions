@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace ApplyToBecomeInternal.ViewModels
 {
-	public class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
+	public sealed class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
 	{
 		private TaskListItemViewModel(string status, string cssClass)
 		{
