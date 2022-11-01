@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ApplyToBecomeInternal.Pages.TaskList.IndexModel
 @{
-    Model.ErrorPage = Links.TaskList.Index.Page;
+    Model.SetErrorPage(Links.TaskList.Index.Page);
     ViewData["Title"] = "Task List";
 }
 

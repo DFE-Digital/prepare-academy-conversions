@@ -1,8 +1,8 @@
 ﻿@page "/task-list/{id:int}/preview-project-template"
-@model ApplyToBecomeInternal.Pages.TaskList.PreviewHTBTemplateModel
+@model ApplyToBecomeInternal.Pages.TaskList.PreviewHtbTemplateModel
 
 @{
-	Model.ErrorPage = Links.TaskList.PreviewHTBTemplate.Page;
+	Model.SetErrorPage(Links.TaskList.PreviewHTBTemplate.Page);
 	ViewBag.Title = "Preview project template";
 	ViewData["Return"] = Links.TaskList.PreviewHTBTemplate.Page;
 	ViewData["IncludeFragment"] = true;
