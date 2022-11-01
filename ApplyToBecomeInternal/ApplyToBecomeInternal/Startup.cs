@@ -21,7 +21,6 @@ using Microsoft.Identity.Web.UI;
 using Newtonsoft.Json.Linq;
 using StackExchange.Redis;
 using System;
-using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -51,7 +50,7 @@ namespace ApplyToBecomeInternal
 				});
 
 			services.AddControllersWithViews()
-				.AddMicrosoftIdentityUI();				
+				.AddMicrosoftIdentityUI();
 		
 			if (_env.IsDevelopment())
 			{
@@ -59,7 +58,13 @@ namespace ApplyToBecomeInternal
 			}
 
 			services.AddScoped(sp => sp.GetService<IHttpContextAccessor>()!.HttpContext.Session);
-			services.AddSession();
+			services.AddSession(options =>
+			{
+				options.IdleTimeout =
+					TimeSpan.FromMinutes(int.Parse(Configuration["AuthenticationExpirationInMinutes"]));
+				options.Cookie.Name = ".PrepareConversionsAndTransfers.Session";				
+				options.Cookie.IsEssential = true;				
+			});
 			services.AddHttpContextAccessor();
 			ConfigureRedisConnection(services);
 
@@ -70,7 +75,7 @@ namespace ApplyToBecomeInternal
 				options =>
 				{
 					options.AccessDeniedPath = "/access-denied";
-					options.Cookie.Name = "ManageAnAcademyTransfer.Login";
+					options.Cookie.Name = ".PrepareConversionsAndTransfers.Login";
 					options.Cookie.HttpOnly = true;
 					options.Cookie.IsEssential = true;
 					options.ExpireTimeSpan =
