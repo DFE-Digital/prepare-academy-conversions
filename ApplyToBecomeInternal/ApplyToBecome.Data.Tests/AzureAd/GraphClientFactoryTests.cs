@@ -19,7 +19,7 @@ namespace ApplyToBecome.Data.Tests.AzureAd
 
 			Assert.Multiple(
 				() => Assert.NotNull(client),
-				() => Assert.Equal("https://graph.microsoft.com/V1.0", client.BaseUrl)
+				() => Assert.Equal($"{azureAdOptions.ApiUrl}/V1.0", client.BaseUrl)
 			);
 		}
 	}
