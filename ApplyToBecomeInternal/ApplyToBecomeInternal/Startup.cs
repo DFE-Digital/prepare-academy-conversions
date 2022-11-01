@@ -1,3 +1,4 @@
+using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Services;
 using ApplyToBecome.Data.Services.AzureAd;
 using ApplyToBecome.Data.Services.Interfaces;

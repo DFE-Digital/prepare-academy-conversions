@@ -3,7 +3,7 @@ using ApplyToBecomeInternal.Pages.TaskList.SchoolAndTrustInformation;
 
 namespace ApplyToBecomeInternal.Models
 {
-	public class SupportGrantValidator : ValidationAttribute
+	public class SupportGrantValidatorAttribute : ValidationAttribute
 	{
 		protected override ValidationResult IsValid(object value, ValidationContext validationContext)
 		{ 
