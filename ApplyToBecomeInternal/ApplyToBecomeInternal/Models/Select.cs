@@ -22,7 +22,7 @@ namespace ApplyToBecomeInternal.Models
 			public sealed class Links
 			{
 				private static string _legalRequirements;
-				public static string LegalRequirements => Typespace.Name(ref _legalRequirements);
+				public static string LegalRequirementLinks => Typespace.Name(ref _legalRequirements);
 			}
 
 			public static class LegalRequirements
@@ -34,7 +34,7 @@ namespace ApplyToBecomeInternal.Models
 
 		public static class ProjectType
 		{
-			public sealed class Input
+			public static class Input
 			{
 				private static string _conversionOption, _transferOption;
 
@@ -47,7 +47,7 @@ namespace ApplyToBecomeInternal.Models
 
 		public static class Legal
 		{
-			public sealed class Input
+			public static class Input
 			{
 				private static string _yesOption, _noOption, _notApplicableOption;
 
