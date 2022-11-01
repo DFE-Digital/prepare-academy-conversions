@@ -542,3 +542,9 @@ Cypress.Commands.add('assignUser', () => {
         }
     })
 })
+
+//Navigate To Filter Projects section
+Cypress.Commands.add('navigateToFilterProjects',() => {  
+  cy.get('[data-cy="select-projectlist-filter-expand"]').click();
+  cy.get('.govuk-details__text').should('be.visible');
+});
