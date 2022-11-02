@@ -3,8 +3,8 @@
 @inject Microsoft.Extensions.Configuration.IConfiguration _configuration
 
 @{
-	var analyticsConsent = Context.Request.Cookies.ContainsKey(".PrepareConversionsAndTransfers.Consent")
-	                       && bool.Parse(Context.Request.Cookies[".PrepareConversionsAndTransfers.Consent"]);
+	var analyticsConsent = Context.Request.Cookies.ContainsKey(".ManageAnAcademyConversion.Consent")
+	                       && bool.Parse(Context.Request.Cookies[".ManageAnAcademyConversion.Consent"]);
 
 	var showAnalytics = _configuration["GoogleAnalytics:Enable"] == "Yes" && analyticsConsent;
 }

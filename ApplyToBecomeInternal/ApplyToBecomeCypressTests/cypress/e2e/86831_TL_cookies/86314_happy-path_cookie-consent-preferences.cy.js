@@ -23,7 +23,7 @@ Cypress._.each(['iphone-x'], (viewport) => {
 			})
 
 			it('TC02: should consent to cookies from cookie header button', () => {
-				let consentCookie = cy.getCookie('.PrepareConversionsAndTransfers.Consent')
+				let consentCookie = cy.getCookie('.ManageAnAcademyConversion.Consent')
 				consentCookie.should('exist')
 				consentCookie.should('have.property', 'value', 'True')
 			});
@@ -47,7 +47,7 @@ Cypress._.each(['iphone-x'], (viewport) => {
 			it('TC05: should set cookie preferences', () => {
 				cy.get('#cookie-consent-deny').click()
 				cy.get("[data-qa='submit']").click()
-				cy.getCookie('.PrepareConversionsAndTransfers.Consent').should('have.property', 'value', 'False')
+				cy.getCookie('.ManageAnAcademyConversion.Consent').should('have.property', 'value', 'False')
 			});
 
 			it('TC06: should return show success banner', () => {
