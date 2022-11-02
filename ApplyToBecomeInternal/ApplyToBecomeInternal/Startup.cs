@@ -63,7 +63,7 @@ namespace ApplyToBecomeInternal
 			{
 				options.IdleTimeout =
 					TimeSpan.FromMinutes(int.Parse(Configuration["AuthenticationExpirationInMinutes"]));
-				options.Cookie.Name = ".PrepareConversionsAndTransfers.Session";				
+				options.Cookie.Name = ".ManageAnAcademyConversion.Session";				
 				options.Cookie.IsEssential = true;				
 			});
 			services.AddHttpContextAccessor();
@@ -76,7 +76,7 @@ namespace ApplyToBecomeInternal
 				options =>
 				{
 					options.AccessDeniedPath = "/access-denied";
-					options.Cookie.Name = ".PrepareConversionsAndTransfers.Login";
+					options.Cookie.Name = ".ManageAnAcademyConversion.Login";
 					options.Cookie.HttpOnly = true;
 					options.Cookie.IsEssential = true;
 					options.ExpireTimeSpan =

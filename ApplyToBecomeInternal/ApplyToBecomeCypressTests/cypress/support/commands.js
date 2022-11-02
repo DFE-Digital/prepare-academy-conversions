@@ -36,7 +36,7 @@ Cypress.Commands.add('login',() => {
 
 // Preserving Session Data (Universal)
 Cypress.Commands.add('storeSessionData', () => {
-	Cypress.Cookies.preserveOnce('.PrepareConversionsAndTransfers.Login')
+	Cypress.Cookies.preserveOnce('.ManageAnAcademyConversion.Login')
 	let str = []
 	cy.getCookies().then((cookie) => {
 		cy.log(cookie)
