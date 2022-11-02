@@ -5,7 +5,7 @@
 describe('Legal Requirements', { tags: ['@dev', '@stage']}, () => {
     beforeEach(() => {
         cy.selectFirstProject().then(() =>{
-        cy.get('[data-cy="select-tasklist-links-legalrequirements"]').click()
+        cy.get('[data-cy="select-tasklist-links-legalrequirementlinks"]').click()
         })
     })
 
@@ -102,7 +102,7 @@ describe('Legal Requirements', { tags: ['@dev', '@stage']}, () => {
                     return
                 }
                 else {
-                    cy.get('[data-cy="select-tasklist-links-legalrequirements"]').click()
+                    cy.get('[data-cy="select-tasklist-links-legalrequirementlinks"]').click()
                     cy.get('[data-cy="select-legal-summary-iscomplete"]').click()
                     cy.get('[data-cy="select-legal-summary-submitbutton"]').click()
                     cy.get('[data-cy="select-tasklist-legalrequirements-status"]').should('contain.text', 'Completed')

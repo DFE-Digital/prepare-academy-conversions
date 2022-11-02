@@ -60,7 +60,7 @@ namespace ApplyToBecomeInternal.Models
 			var validator = new DateValidationService(page);
 			(bool dateValid, string validationMessage) =
 				validator.Validate(dayValueProviderResult.FirstValue, monthValueProviderResult.FirstValue, yearValueProviderResult.FirstValue, displayName);
-			
+
 			if (dateValid)
 			{
 				int day = int.Parse(dayValueProviderResult.FirstValue);
@@ -94,23 +94,21 @@ namespace ApplyToBecomeInternal.Models
 			bool IsOptionalOrFieldTypeMismatch()
 			{
 				return string.IsNullOrWhiteSpace(dayValueProviderResult.FirstValue)
-				       && string.IsNullOrWhiteSpace(monthValueProviderResult.FirstValue)
-				       && string.IsNullOrWhiteSpace(yearValueProviderResult.FirstValue)
-				       && !bindingContext.ModelMetadata.IsRequired
-				       || dayValueProviderResult == ValueProviderResult.None
-				       && monthValueProviderResult == ValueProviderResult.None
-				       && yearValueProviderResult == ValueProviderResult.None;
+					   && string.IsNullOrWhiteSpace(monthValueProviderResult.FirstValue)
+					   && string.IsNullOrWhiteSpace(yearValueProviderResult.FirstValue)
+					   && !bindingContext.ModelMetadata.IsRequired
+					   || dayValueProviderResult == ValueProviderResult.None
+					   && monthValueProviderResult == ValueProviderResult.None
+					   && yearValueProviderResult == ValueProviderResult.None;
 			}
 
 			(bool, string) IsInValidDateRange(DateTime date)
 			{
-				if (bindingContext.ModelMetadata is DefaultModelMetadata defaultModelMetadata)
+				if (bindingContext.ModelMetadata is DefaultModelMetadata defaultModelMetadata
+					&& defaultModelMetadata.Attributes.Attributes.FirstOrDefault(a => a.GetType() == typeof(DateValidationAttribute)) is DateValidationAttribute dateValidation)
 				{
-					if (defaultModelMetadata.Attributes.Attributes.FirstOrDefault(a => a.GetType() == typeof(DateValidationAttribute)) is DateValidationAttribute dateValidation)
-					{
-						var rangeValidator = new DateRangeValidationService();
-						return rangeValidator.Validate(date, dateValidation.DateValidationEnum, displayName);
-					}
+					var rangeValidator = new DateRangeValidationService();
+					return rangeValidator.Validate(date, dateValidation.DateValidationEnum, displayName);
 				}
 
 				return (true, string.Empty);
@@ -119,8 +117,8 @@ namespace ApplyToBecomeInternal.Models
 			bool IsEmptyDate()
 			{
 				return dayValueProviderResult.FirstValue == string.Empty
-				       && monthValueProviderResult.FirstValue == string.Empty
-				       && yearValueProviderResult.FirstValue == string.Empty;
+					   && monthValueProviderResult.FirstValue == string.Empty
+					   && yearValueProviderResult.FirstValue == string.Empty;
 			}
 		}
 	}

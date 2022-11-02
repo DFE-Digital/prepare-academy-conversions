@@ -1,6 +1,6 @@
 ﻿namespace ApplyToBecome.Data.Models.Establishment
 {
-	public class MISEstablishmentResponse
+	public class MisEstablishmentResponse
 	{
 		public string DateOfLatestSection8Inspection { get; set; }
 		public string InspectionEndDate { get; set; }

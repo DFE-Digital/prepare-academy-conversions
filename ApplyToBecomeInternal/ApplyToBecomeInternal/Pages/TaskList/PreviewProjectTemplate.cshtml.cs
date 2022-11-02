@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList
 {
-	public class PreviewHTBTemplateModel : BaseAcademyConversionProjectPageModel
+	public class PreviewHtbTemplateModel : BaseAcademyConversionProjectPageModel
 	{
 		private readonly KeyStagePerformanceService _keyStagePerformanceService;
 		private readonly ErrorService _errorService;
 
-		public PreviewHTBTemplateModel(KeyStagePerformanceService keyStagePerformanceService, 
+		public PreviewHtbTemplateModel(KeyStagePerformanceService keyStagePerformanceService, 
 			IAcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
 		{
 			_keyStagePerformanceService = keyStagePerformanceService;
@@ -21,10 +21,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 		}
 
 		public TaskListViewModel TaskList { get; set; }
-		public bool ShowGenerateHtbTemplateError;
-		public string ErrorPage
+		public bool ShowGenerateHtbTemplateError { get; set; }
+		public void SetErrorPage(string errorPage)
 		{
-			set => TempData[nameof(ErrorPage)] = value;
+			TempData["ErrorPage"] = errorPage;
 		}
 
 		public override async Task<IActionResult> OnGetAsync(int id)

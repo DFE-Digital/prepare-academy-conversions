@@ -16,11 +16,11 @@ namespace ApplyToBecomeInternal.Utils
 
 		public static HtmlString Of(this string stub, string extension)
 		{
-			return string.IsNullOrWhiteSpace(stub)
-				? HtmlString.Empty
-				: string.IsNullOrWhiteSpace(extension)
-					? new HtmlString(stub)
-					: new HtmlString($"{stub}-{extension.Stub()}");
+			if (string.IsNullOrWhiteSpace(stub)) return HtmlString.Empty;
+
+			return string.IsNullOrWhiteSpace(extension)
+				? new HtmlString(stub)
+				: new HtmlString($"{stub}-{extension.Stub()}");
 		}
 
 		public static HtmlString Stub(this string input)

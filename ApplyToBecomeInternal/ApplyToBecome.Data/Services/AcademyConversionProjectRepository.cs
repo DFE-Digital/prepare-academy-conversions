@@ -8,12 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 
 namespace ApplyToBecome.Data.Services
-{
-	// TODO?: Use URN rather than ID.
-	// Noticed that most services use the URN in the url
-	// Should probably do the same and use URN in the URN and as the parameter in TRAMS controllers and DB queries
-	// Could also put an index on the URN column in the DB if not already
-	// This would also mean ViewComponents wouldn't need to use this class as the URN would be available in the route data
+{	
 	public class AcademyConversionProjectRepository : IAcademyConversionProjectRepository
 	{
 		private readonly IReadOnlyDictionary<string, string> _aliasedStatuses = new Dictionary<string, string> { { "converter pre-ao (c)", "Pre advisory board" } };

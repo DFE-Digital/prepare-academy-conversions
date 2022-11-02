@@ -51,7 +51,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 		[Fact]
 		public void Should_display_all_projects_by_default()
 		{
-			FilterCount.TextContent.Should().ContainEquivalentOf($"All Projects ({_recordCount})");
+			FilterCount.TextContent.Should().ContainEquivalentOf($"{_recordCount} projects found");
 			FilterCount.TextContent.Should().NotContainEquivalentOf("Filtered projects");
 		}
 
@@ -86,7 +86,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 			FilterStatuses.First().IsChecked = true;
 			await FilterApply.SubmitAsync();
 
-			FilterCount.TextContent.Should().ContainEquivalentOf("Filtered projects");
+			FilterCount.TextContent.Should().ContainEquivalentOf("20 projects found");
 			FilterCount.TextContent.Should().NotContainEquivalentOf("All projects");
 		}
 
