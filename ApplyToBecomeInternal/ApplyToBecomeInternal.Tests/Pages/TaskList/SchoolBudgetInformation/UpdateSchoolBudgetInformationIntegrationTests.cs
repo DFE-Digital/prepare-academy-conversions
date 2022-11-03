@@ -2,6 +2,7 @@
 using AngleSharp.Html.Dom;
 using ApplyToBecomeInternal.Extensions;
 using FluentAssertions;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -17,15 +18,19 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 		{
 			var project = AddGetProject(project =>
 			{
+				project.EndOfCurrentFinancialYear = null;
 				project.RevenueCarryForwardAtEndMarchCurrentYear = null;
 				project.ProjectedRevenueBalanceAtEndMarchNextYear = null;
+				project.EndOfNextFinancialYear = null;
 				project.CapitalCarryForwardAtEndMarchCurrentYear = null;
 				project.CapitalCarryForwardAtEndMarchNextYear = null;
 				project.SchoolBudgetInformationSectionComplete = false;
 			});
 			var request = AddPatchProjectMany(project, composer =>
 				composer
+				.With(r => r.EndOfCurrentFinancialYear)
 				.With(r => r.RevenueCarryForwardAtEndMarchCurrentYear)
+				.With(r => r.EndOfNextFinancialYear)
 				.With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear)
 				.With(r => r.CapitalCarryForwardAtEndMarchCurrentYear)
 				.With(r => r.CapitalCarryForwardAtEndMarchNextYear));
@@ -49,16 +54,20 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 		{
 			var project = AddGetProject(project =>
 			{
+				project.EndOfCurrentFinancialYear = null;
 				project.RevenueCarryForwardAtEndMarchCurrentYear = null;
 				project.ProjectedRevenueBalanceAtEndMarchNextYear = null;
+				project.EndOfNextFinancialYear = null;
 				project.CapitalCarryForwardAtEndMarchCurrentYear = null;
 				project.CapitalCarryForwardAtEndMarchNextYear = null;
 				project.SchoolBudgetInformationSectionComplete = false;
 			});
 			var request = AddPatchProjectMany(project, composer =>
 				composer
+				.With(r => r.EndOfCurrentFinancialYear, DateTime.Now.AddDays(1))
 				.With(r => r.RevenueCarryForwardAtEndMarchCurrentYear, -100.25M)
 				.With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear, -10.75M)
+				.With(r => r.EndOfNextFinancialYear, DateTime.Now.AddYears(1))
 				.With(r => r.CapitalCarryForwardAtEndMarchCurrentYear, -65.90M)
 				.With(r => r.CapitalCarryForwardAtEndMarchNextYear, -1024.95M));
 
