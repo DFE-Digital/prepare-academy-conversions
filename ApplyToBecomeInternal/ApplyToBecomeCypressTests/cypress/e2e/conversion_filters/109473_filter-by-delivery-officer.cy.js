@@ -31,5 +31,6 @@ Cypress._.each(['ipad-2'], (viewport) => {
         cy.get('[data-cy="select-projectlist-filter-count"]').should('not.contain', '0 projects found');
         cy.get('#delivery-officer-0').should('have.text', 'Delivery officer: Adrian Horan');
       });
-    })
+    });
   });
+  

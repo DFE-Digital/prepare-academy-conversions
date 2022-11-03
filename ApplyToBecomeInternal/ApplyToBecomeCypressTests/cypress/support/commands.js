@@ -548,3 +548,4 @@ Cypress.Commands.add('navigateToFilterProjects',() => {
     cy.get('[data-cy="select-projectlist-filter-expand"]').click();
     cy.get('[data-id="filter-container"]').should('be.visible');
   });
+  
