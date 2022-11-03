@@ -43,7 +43,7 @@ namespace DocumentGeneration.Builders
             _runs = new List<Run>();
         }
 
-        public void AddText(TextElement text)
+        public void AddText(TextElement textElement)
         {
             var run = new Run() {RunProperties = new RunProperties()};
             run.RunProperties.RunFonts = new RunFonts()
@@ -53,32 +53,32 @@ namespace DocumentGeneration.Builders
                 ComplexScript = "Arial"
             };
 
-            DocumentBuilderHelpers.AddTextToElement(run, text.Value);
+            DocumentBuilderHelpers.AddTextToElement(run, textElement.Value);
 
-            if (text.Bold)
+            if (textElement.Bold)
             {
                 run.RunProperties.Bold = new Bold();
             }
 
-            if (text.Italic)
+            if (textElement.Italic)
             {
                 run.RunProperties.Italic = new Italic();
             }
 
-            if (text.Underline)
+            if (textElement.Underline)
             {
                 run.RunProperties.Underline = new Underline
                     {Val = new EnumValue<UnderlineValues>(UnderlineValues.Single), Color = "000000"};
             }
 
-            if (!string.IsNullOrEmpty(text.FontSize))
+            if (!string.IsNullOrEmpty(textElement.FontSize))
             {
-                run.RunProperties.FontSize = new FontSize {Val = text.FontSize};
+                run.RunProperties.FontSize = new FontSize {Val = textElement.FontSize};
             }
 
-            if (!string.IsNullOrEmpty(text.Colour))
+            if (!string.IsNullOrEmpty(textElement.Colour))
             {
-                run.RunProperties.Color = new Color {Val = text.Colour};
+                run.RunProperties.Color = new Color {Val = textElement.Colour};
             }
 		
 			_runs.Add(run);
@@ -99,7 +99,7 @@ namespace DocumentGeneration.Builders
 
         public void AddNewLine()
         {
-            var run = new Run(new Break());
+            var run = new Run(new[] { new Break() });
             _runs.Add(run);
         }
 

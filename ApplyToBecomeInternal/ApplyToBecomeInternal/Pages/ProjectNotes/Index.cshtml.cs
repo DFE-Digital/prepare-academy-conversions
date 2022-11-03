@@ -9,15 +9,14 @@ namespace ApplyToBecomeInternal.Pages.ProjectNotes
 {
 	public class IndexModel : BaseAcademyConversionProjectPageModel
 	{
-		private readonly IProjectNotesRepository _projectNotesRepository;
-
-		public IEnumerable<ProjectNoteViewModel> ProjectNotes;
+		private readonly IProjectNotesRepository _projectNotesRepository;		
 
 		public IndexModel(IProjectNotesRepository projectNotesRepository, IAcademyConversionProjectRepository repository) : base(repository)
 		{
 			_projectNotesRepository = projectNotesRepository;
 		}
 
+		public IEnumerable<ProjectNoteViewModel> ProjectNotes { get; set; }
 		public bool NewNote { get; set; }
 
 		public override async Task<IActionResult> OnGetAsync(int id)

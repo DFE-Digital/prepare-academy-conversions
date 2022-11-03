@@ -22,7 +22,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 
 
 		private string LegalRequirementsLinkHref =>
-			Document.QuerySelector<IHtmlAnchorElement>(CypressSelectorFor(Select.TaskList.Links.LegalRequirements))?.Href.Trim();
+			Document.QuerySelector<IHtmlAnchorElement>(CypressSelectorFor(Select.TaskList.Links.LegalRequirementLinks))?.Href.Trim();
 
 		private string LegalRequirementsStatus =>
 			Document.QuerySelector(CypressSelectorFor(Select.TaskList.LegalRequirements.Status))?.Text().Trim();

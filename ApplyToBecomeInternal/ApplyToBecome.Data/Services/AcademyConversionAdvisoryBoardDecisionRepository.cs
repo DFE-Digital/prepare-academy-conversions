@@ -1,6 +1,6 @@
-﻿using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
+﻿using ApplyToBecome.Data.Exceptions;
+using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
 using ApplyToBecome.Data.Services.Interfaces;
-using System;
 using System.Threading.Tasks;
 
 namespace ApplyToBecome.Data.Services
@@ -19,7 +19,7 @@ namespace ApplyToBecome.Data.Services
 			var result = await _httpClientHelper
 				.Post<AdvisoryBoardDecision, AdvisoryBoardDecision>("/conversion-project/advisory-board-decision", decision);
 
-			if (!result.Success) throw new Exception($"Request to Api failed | StatusCode - {result.StatusCode}");
+			if (!result.Success) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
 		}
 
 		public async Task Update(AdvisoryBoardDecision decision)
@@ -27,13 +27,13 @@ namespace ApplyToBecome.Data.Services
 			var result = await _httpClientHelper
 				.Put<AdvisoryBoardDecision, AdvisoryBoardDecision>("/conversion-project/advisory-board-decision", decision);
 
-			if (!result.Success) throw new Exception($"Request to Api failed | StatusCode - {result.StatusCode}");
+			if (!result.Success) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
 		}
 
-		public async Task<ApiResponse<AdvisoryBoardDecision>> Get(int projectId)
+		public async Task<ApiResponse<AdvisoryBoardDecision>> Get(int id)
 		{
 			return await _httpClientHelper
-				.Get<AdvisoryBoardDecision>($"/conversion-project/advisory-board-decision/{projectId}");
+				.Get<AdvisoryBoardDecision>($"/conversion-project/advisory-board-decision/{id}");
 		}
 	}
 }

@@ -48,7 +48,7 @@ namespace ApplyToBecomeInternal.Models
 		public static class LocalAuthorityInformationTemplateSection
 		{
 			public static readonly LinkItem ConfirmLocalAuthorityInformationTemplateDates = new LinkItem { Page = "/TaskList/LocalAuthorityInformationTemplate/ConfirmLocalAuthorityInformationTemplateDates" };
-			public static LinkItem RecordLocalAuthorityInformationTemplateDates = new LinkItem { Page = "/TaskList/LocalAuthorityInformationTemplate/RecordLocalAuthorityInformationTemplateDates" };
+			public static readonly LinkItem RecordLocalAuthorityInformationTemplateDates = new LinkItem { Page = "/TaskList/LocalAuthorityInformationTemplate/RecordLocalAuthorityInformationTemplateDates" };
 		}
 
 		public static class SchoolAndTrustInformationSection
@@ -68,11 +68,11 @@ namespace ApplyToBecomeInternal.Models
 		public static class GeneralInformationSection
 		{
 			public static readonly LinkItem ConfirmGeneralInformation = new LinkItem { Page = "/TaskList/GeneralInformation/ConfirmGeneralInformation" };
-			public static LinkItem PublishedAdmissionNumber = new LinkItem { Page = "/TaskList/GeneralInformation/PublishedAdmissionNumber" };
-			public static LinkItem ViabilityIssues = new LinkItem { Page = "/TaskList/GeneralInformation/ViabilityIssues" };
-			public static LinkItem FinancialDeficit = new LinkItem { Page = "/TaskList/GeneralInformation/FinancialDeficit" };
+			public static readonly LinkItem PublishedAdmissionNumber = new LinkItem { Page = "/TaskList/GeneralInformation/PublishedAdmissionNumber" };
+			public static readonly LinkItem ViabilityIssues = new LinkItem { Page = "/TaskList/GeneralInformation/ViabilityIssues" };
+			public static readonly LinkItem FinancialDeficit = new LinkItem { Page = "/TaskList/GeneralInformation/FinancialDeficit" };
 			public static readonly LinkItem DistanceFromTrustHeadquarters = new LinkItem { Page = "/TaskList/GeneralInformation/DistanceFromTrustHeadquarters" };
-			public static LinkItem MPDetails = new LinkItem { Page = "/TaskList/GeneralInformation/MPDetails" };
+			public static readonly LinkItem MPDetails = new LinkItem { Page = "/TaskList/GeneralInformation/MPDetails" };
 		}
 
 		public static class RationaleSection
