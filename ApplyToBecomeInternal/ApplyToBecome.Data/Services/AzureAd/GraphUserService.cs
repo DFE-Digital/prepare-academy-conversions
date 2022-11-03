@@ -1,4 +1,5 @@
-﻿using ApplyToBecome.Data.Services.Interfaces;
+﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.Graph;
 using System.Collections.Generic;
@@ -18,9 +19,9 @@ namespace ApplyToBecome.Data.Services.AzureAd
 			_azureAdOptions = azureAdOptions.Value;
 		}
 
-		public async Task<IEnumerable<User>> GetAllUsers()
+		public async Task<IEnumerable<Microsoft.Graph.User>> GetAllUsers()
 		{
-			var users = new List<User>();
+			var users = new List<Microsoft.Graph.User>();
 			IGroupMembersCollectionWithReferencesPage members;
 
 			do
@@ -29,7 +30,7 @@ namespace ApplyToBecome.Data.Services.AzureAd
 					.Request()
 					.GetAsync();
 
-				users.AddRange(members.Cast<User>().ToList());
+				users.AddRange(members.Cast<Microsoft.Graph.User>().ToList());
 			}
 			while (members.NextPageRequest != null);
 

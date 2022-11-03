@@ -16,10 +16,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 	public class IndexModel : BaseAcademyConversionProjectPageModel
 	{
 		private readonly ErrorService _errorService;
-		private readonly KeyStagePerformanceService _keyStagePerformanceService;
-
-		public bool ShowGenerateHtbTemplateError;
-		public Status LegalRequirementsStatus = Status.NotStarted;
+		private readonly KeyStagePerformanceService _keyStagePerformanceService;		
 
 		public IndexModel(KeyStagePerformanceService keyStagePerformanceService,
 			IAcademyConversionProjectRepository repository,
@@ -29,11 +26,13 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			_errorService = errorService;
 		}
 
+		public bool ShowGenerateHtbTemplateError { get; set; }
+		public Status LegalRequirementsStatus { get; set; } = Status.NotStarted;
 		public TaskListViewModel TaskList { get; set; }
 
-		public string ErrorPage
+		public void SetErrorPage(string errorPage)
 		{
-			set => TempData[nameof(ErrorPage)] = value;
+			TempData["ErrorPage"] = errorPage;
 		}
 
 		public override async Task<IActionResult> OnGetAsync(int id)

@@ -10,14 +10,12 @@ namespace DocumentGeneration.Builders
 {
 	public class DocumentBodyBuilder : IDocumentBodyBuilder
 	{
-		private readonly WordprocessingDocument _document;
-		private readonly Body _body;
+		private readonly WordprocessingDocument _document;		
 		private OpenXmlElement _previousElement;
 
 		public DocumentBodyBuilder(WordprocessingDocument document, OpenXmlElement previousElement)
 		{
 			_document = document;
-			_body = document.MainDocumentPart.Document.Body;
 			_previousElement = previousElement;
 		}
 
