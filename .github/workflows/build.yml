@@ -33,7 +33,7 @@ jobs:
     - name: Install SonarCloud scanners
       run: dotnet tool install --global dotnet-sonarscanner
     - name: Install coverlet
-      run: dotnet tool install --global coverlet.console
+      run: dotnet tool install --global coverlet.console --version 1.7.2
     - name: Restore dependencies
       run: dotnet restore ApplyToBecomeInternal/ApplyToBecomeInternal.sln
     - name: Build, Test and Analyze
@@ -41,8 +41,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-        dotnet-sonarscanner begin /k:"DFE-Digital_a2b-internal" /o:"dfe-digital" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=coverage.xml
+        dotnet-sonarscanner begin /k:"DFE-Digital_a2b-internal" /o:"dfe-digital" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=coverage.opencover.xml
         dotnet build ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-restore
-        coverlet ApplyToBecomeInternal/ApplyToBecomeInternal.Tests/bin/Debug/netcoreapp3.1/ApplyToBecomeInternal.Tests.dll --target "dotnet" --targetargs "test --no-build" -f=opencover -o="coverage.xml"
-        coverlet ApplyToBecomeInternal/ApplyToBecome.Data.Tests/bin/Debug/netcoreapp3.1/ApplyToBecome.Data.Tests.dll --target "dotnet" --targetargs "test --no-build" -f=opencover -o="coverage.xml"
+        dotnet test ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
         dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
