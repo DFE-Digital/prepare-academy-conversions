@@ -64,7 +64,7 @@ namespace ApplyToBecomeInternal.TagHelpers
 				{
 					model.Year = yearValue;
 				}
-				if (model.DayInvalid == false && model.MonthInvalid == false && model.YearInvalid == false)
+				if (!model.DayInvalid && !model.MonthInvalid && model.YearInvalid)
 				{
 					model.DayInvalid = model.MonthInvalid = model.YearInvalid = true;
 				}

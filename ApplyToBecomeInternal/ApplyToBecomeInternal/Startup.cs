@@ -140,7 +140,7 @@ namespace ApplyToBecomeInternal
 			}
 
 			app.UseSecurityHeaders(
-				SecureHeadersDefinitions.SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment()));
+				SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment()));
 
 			app.UseStatusCodePagesWithReExecute("/Errors", "?statusCode={0}");
 
