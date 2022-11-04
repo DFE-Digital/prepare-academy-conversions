@@ -155,9 +155,21 @@ namespace ApplyToBecomeInternal.Models
 		[BindProperty(Name = "foundation-consent")]
 		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string FoundationConsent { get; set; }
-		
+
 
 		// school budget info
+		[ModelBinder(BinderType = typeof(DateInputModelBinder))]
+		[DateValidation(DateRangeValidationService.DateRange.Past)]
+		[BindProperty(Name = "financial-year")] 
+		[Display(Name = "End of current financial year")]
+		public DateTime? EndOfCurrentFinancialYear { get; set; }
+
+		[ModelBinder(BinderType = typeof(DateInputModelBinder))]
+		[DateValidation(DateRangeValidationService.DateRange.Past)]
+		[BindProperty(Name = "next-financial-year")]
+		[Display(Name = "End of next financial year")]
+		public DateTime? EndOfNextFinancialYear { get; set; }
+
 		[BindProperty(Name = "finance-year-current")]
 		[ModelBinder(BinderType = typeof(MonetaryInputModelBinder))]
 		[Display(Name = "Revenue carry forward at end of current financial year")]

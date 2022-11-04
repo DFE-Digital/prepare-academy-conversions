@@ -111,10 +111,10 @@ namespace ApplyToBecomeInternal.Tests.Models
 			[Fact]
 			public void ItBuildsTheBudgetInformationSuccessfully()
 			{
-				Assert.Equal(_template.RevenueCarryForwardAtEndMarchCurrentYear, $"£{_project.EndOfCurrentFinancialYear}");
+				Assert.Equal(_template.EndOfCurrentFinancialYear, $"{_project.EndOfCurrentFinancialYear.ToDateString()}");
 				Assert.Equal(_template.RevenueCarryForwardAtEndMarchCurrentYear, $"£{_project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString()}");				
 				Assert.Equal(_template.CapitalCarryForwardAtEndMarchCurrentYear,$"£{_project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString()}");
-				Assert.Equal(_template.RevenueCarryForwardAtEndMarchCurrentYear, $"£{_project.EndOfNextFinancialYear}");
+				Assert.Equal(_template.EndOfNextFinancialYear, $"{_project.EndOfNextFinancialYear.ToDateString()}");
 				Assert.Equal(_template.ProjectedRevenueBalanceAtEndMarchNextYear, $"£{_project.ProjectedRevenueBalanceAtEndMarchNextYear?.ToMoneyString()}");
 				Assert.Equal(_template.CapitalCarryForwardAtEndMarchNextYear, $"£{_project.CapitalCarryForwardAtEndMarchNextYear?.ToMoneyString()}");
 				Assert.Equal(_template.SchoolBudgetInformationAdditionalInformation, _project.SchoolBudgetInformationAdditionalInformation);

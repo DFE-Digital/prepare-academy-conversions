@@ -24,10 +24,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			await NavigateAsync("School budget information");
 
-			Document.QuerySelector("#finance-year-end-date").TextContent.Should().Be(project.EndOfCurrentFinancialYear.Value.ToDateString());
+			Document.QuerySelector("#financial-year").TextContent.Should().Be(project.EndOfCurrentFinancialYear.Value.ToDateString());
 			Document.QuerySelector("#finance-year-current").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#finance-current-capital").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#next-finance-year-end-date").TextContent.Should().Be(project.EndOfNextFinancialYear.Value.ToDateString());
+			Document.QuerySelector("#next-financial-year").TextContent.Should().Be(project.EndOfNextFinancialYear.Value.ToDateString());
 			Document.QuerySelector("#finance-year-following").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));			
 			Document.QuerySelector("#finance-projected-capital").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.SchoolBudgetInformationAdditionalInformation);
@@ -54,10 +54,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			await NavigateAsync("School budget information");
 
-			Document.QuerySelector("#finance-year-end-date").TextContent.Should().Be(project.EndOfCurrentFinancialYear.Value.ToDateString());
+			Document.QuerySelector("#financial-year").TextContent.Should().Be(project.EndOfCurrentFinancialYear.Value.ToDateString());
 			Document.QuerySelector("#finance-year-current").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));			
 			Document.QuerySelector("#finance-current-capital").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#next-finance-year-end-date").TextContent.Should().Be(project.EndOfNextFinancialYear.Value.ToDateString());
+			Document.QuerySelector("#next-financial-year").TextContent.Should().Be(project.EndOfNextFinancialYear.Value.ToDateString());
 			Document.QuerySelector("#finance-year-following").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#finance-projected-capital").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.SchoolBudgetInformationAdditionalInformation);
@@ -156,8 +156,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			await NavigateAsync("School budget information");
 
-			Document.QuerySelector("#finance-year-end-date").TextContent.Should().Be("Empty");
-			Document.QuerySelector("#next-finance-year-end-date").TextContent.Should().Be("Empty");		
+			Document.QuerySelector("#financial-year").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#next-financial-year").TextContent.Should().Be("Empty");		
 			Document.QuerySelector("#finance-year-current").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#finance-year-following").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#finance-current-capital").TextContent.Should().Be("Empty");

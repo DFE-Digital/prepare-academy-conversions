@@ -105,6 +105,8 @@ namespace ApplyToBecomeInternal.Pages
 				Consultation = AcademyConversionProject.Consultation, 
 				DiocesanConsent = AcademyConversionProject.DiocesanConsent, 
 				FoundationConsent = AcademyConversionProject.FoundationConsent, 
+				EndOfCurrentFinancialYear = AcademyConversionProject.EndOfCurrentFinancialYear,
+				EndOfNextFinancialYear = AcademyConversionProject.EndOfNextFinancialYear,
 				RevenueCarryForwardAtEndMarchCurrentYear = AcademyConversionProject.RevenueCarryForwardAtEndMarchCurrentYear,
 				ProjectedRevenueBalanceAtEndMarchNextYear = AcademyConversionProject.ProjectedRevenueBalanceAtEndMarchNextYear,
 				CapitalCarryForwardAtEndMarchCurrentYear = AcademyConversionProject.CapitalCarryForwardAtEndMarchCurrentYear,
