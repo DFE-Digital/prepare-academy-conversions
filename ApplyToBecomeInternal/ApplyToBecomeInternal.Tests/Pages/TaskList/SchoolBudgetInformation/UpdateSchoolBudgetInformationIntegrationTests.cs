@@ -169,16 +169,16 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Revenue carry forward at end of current financial year must be written in the correct format, like 5,000.00");
-			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Projected revenue balance at end of following financial year must be written in the correct format, like 5,000.00");
-			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Capital carry forward at end of current financial year must be written in the correct format, like 5,000.00");
-			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Projected capital balance at end of following financial year must be written in the correct format, like 5,000.00");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Forecasted revenue carry forward at the end of the current financial year must be written in the correct format, like 5,000.00");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Forecasted revenue carry forward at the end of the next financial year must be written in the correct format, like 5,000.00");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Forecasted capital carry forward at the end of the current financial year must be written in the correct format, like 5,000.00");
+			Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Forecasted capital carry forward at the end of the next financial year must be written in the correct format, like 5,000.00");
 
 			Document.QuerySelector(".govuk-error-message").Should().NotBeNull();
-			Document.QuerySelector("#finance-year-current-error").TextContent.Should().Contain("Revenue carry forward at end of current financial year must be written in the correct format, like 5,000.00");
-			Document.QuerySelector("#finance-year-following-error").TextContent.Should().Contain("Projected revenue balance at end of following financial year must be written in the correct format, like 5,000.00");
-			Document.QuerySelector("#finance-current-capital-error").TextContent.Should().Contain("Capital carry forward at end of current financial year must be written in the correct format, like 5,000.00");
-			Document.QuerySelector("#finance-projected-capital-error").TextContent.Should().Contain("Projected capital balance at end of following financial year must be written in the correct format, like 5,000.00");
+			Document.QuerySelector("#finance-year-current-error").TextContent.Should().Contain("Forecasted revenue carry forward at the end of the current financial year must be written in the correct format, like 5,000.00");
+			Document.QuerySelector("#finance-year-following-error").TextContent.Should().Contain("Forecasted revenue carry forward at the end of the next financial year must be written in the correct format, like 5,000.00");
+			Document.QuerySelector("#finance-current-capital-error").TextContent.Should().Contain("Forecasted capital carry forward at the end of the current financial year must be written in the correct format, like 5,000.00");
+			Document.QuerySelector("#finance-projected-capital-error").TextContent.Should().Contain("Forecasted capital carry forward at the end of the next financial year must be written in the correct format, like 5,000.00");
 		}
 	}
 }

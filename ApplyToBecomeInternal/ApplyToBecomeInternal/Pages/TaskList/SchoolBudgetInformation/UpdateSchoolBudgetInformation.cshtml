@@ -28,13 +28,13 @@
 			</div>
 			<div class="govuk-form-group">
 				<label class="govuk-label govuk-label--s" for="finance-year-current">
-                    Revenue carry forward at end of current financial year
+                    Forecasted revenue carry forward at the end of the current financial year
 				</label>
 				<govuk-decimal-input name="finance-year-current" asp-for="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear" isMonetary="true"/>
 			</div>
             <div class="govuk-form-group">
 				<label class="govuk-label govuk-label--s" for="finance-current-capital">
-                    Capital carry forward at end of current financial year
+                    Forecasted capital carry forward at the end of the current financial year
 				</label>
 				<govuk-decimal-input name="finance-current-capital" asp-for="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear" isMonetary="true"/>
 			</div>
@@ -43,13 +43,13 @@
             </div>
 			<div class="govuk-form-group">
 				<label class="govuk-label govuk-label--s" for="finance-year-following">
-                    Projected revenue balance at end of following financial year
+                    Forecasted revenue carry forward at the end of the next financial year
 				</label>
 				<govuk-decimal-input name="finance-year-following" asp-for="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear" isMonetary="true"/>
 			</div>
 			<div class="govuk-form-group">
 				<label class="govuk-label govuk-label--s" for="finance-projected-capital">
-                    Projected capital balance at end of following financial year
+                    Forecasted capital carry forward at the end of the next financial year
 				</label>
 				<govuk-decimal-input name="finance-projected-capital" asp-for="@Model.Project.CapitalCarryForwardAtEndMarchNextYear" isMonetary="true"/>
 			</div>
