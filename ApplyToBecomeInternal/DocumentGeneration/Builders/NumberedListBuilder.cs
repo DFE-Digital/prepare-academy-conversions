@@ -41,7 +41,7 @@ namespace DocumentGeneration.Builders
 				AbstractNumberId = numberingDefinitionCount
 			};
 
-			var numberingInstance = new NumberingInstance(new AbstractNumId { Val = numberingDefinitionCount })
+			var numberingInstance = new NumberingInstance(new[] { new AbstractNumId { Val = numberingDefinitionCount } })
 			{
 				NumberID = numberingDefinitionCount
 			};

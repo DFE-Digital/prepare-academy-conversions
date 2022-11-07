@@ -93,7 +93,7 @@ namespace ApplyToBecomeInternal.Models
 			get
 			{
 				var delimiter = string.Empty;
-				if (string.IsNullOrEmpty(MPName) == false && string.IsNullOrEmpty(MPParty) == false)
+				if (!string.IsNullOrEmpty(MPName) && !string.IsNullOrEmpty(MPParty))
 				{
 					delimiter = ", ";				
 				}
