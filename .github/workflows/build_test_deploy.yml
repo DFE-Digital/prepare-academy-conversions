@@ -8,6 +8,7 @@ env:
   REGISTRY: ghcr.io
   DOCKER_IMAGE: dfe-digital/a2b-internal
   AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+  NODE_VERSION: 18.x
 
 jobs:
   test:
@@ -21,7 +22,7 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: ${ env.NODE_VERSION }
       # This could be cached in the future to allow for quicker build times
       - name: Build Frontend
         run: cd ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot; npm install; npm run build:assets; npm run build:frontend
@@ -51,7 +52,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '14.x'
+          node-version: ${ env.NODE_VERSION }
 
       - name: Build Frontend
         run: cd ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot; npm install; npm run build:assets; npm run build:frontend
@@ -173,7 +174,7 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "16.x"
+          node-version: ${ env.NODE_VERSION }
       - name: Npm install
         run: npm install
       - name: Run cypress
