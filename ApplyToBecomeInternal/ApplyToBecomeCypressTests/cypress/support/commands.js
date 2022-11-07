@@ -36,7 +36,7 @@ Cypress.Commands.add('login',() => {
 
 // Preserving Session Data (Universal)
 Cypress.Commands.add('storeSessionData', () => {
-	Cypress.Cookies.preserveOnce('.PrepareConversionsAndTransfers.Login')
+	Cypress.Cookies.preserveOnce('.ManageAnAcademyConversion.Login')
 	let str = []
 	cy.getCookies().then((cookie) => {
 		cy.log(cookie)
@@ -542,3 +542,10 @@ Cypress.Commands.add('assignUser', () => {
         }
     })
 })
+
+//Navigate To Filter Projects section
+Cypress.Commands.add('navigateToFilterProjects',() => {  
+    cy.get('[data-cy="select-projectlist-filter-expand"]').click();
+    cy.get('[data-id="filter-container"]').should('be.visible');
+  });
+  

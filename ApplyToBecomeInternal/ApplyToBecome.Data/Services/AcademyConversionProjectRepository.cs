@@ -96,6 +96,7 @@ namespace ApplyToBecome.Data.Services
 			List<string> statusList =
 				loadedStatuses.Select(x => _aliasedStatuses.ContainsKey(x.ToLowerInvariant()) ? _aliasedStatuses[x.ToLowerInvariant()] : x)
 					.Distinct()
+					.OrderBy(x => x)
 					.ToList();
 
 			return new ApiResponse<List<string>>(HttpStatusCode.OK, statusList);
