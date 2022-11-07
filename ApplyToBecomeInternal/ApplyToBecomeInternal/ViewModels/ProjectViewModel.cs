@@ -77,9 +77,11 @@ namespace ApplyToBecomeInternal.ViewModels
 			YearFourProjectedPupilNumbers = project.YearFourProjectedPupilNumbers;
 			SchoolPupilForecastsAdditionalInformation = project.SchoolPupilForecastsAdditionalInformation;
 
+			EndOfCurrentFinancialYear = project.EndOfCurrentFinancialYear;
 			RevenueCarryForwardAtEndMarchCurrentYear = project.RevenueCarryForwardAtEndMarchCurrentYear;
-			ProjectedRevenueBalanceAtEndMarchNextYear = project.ProjectedRevenueBalanceAtEndMarchNextYear;
 			CapitalCarryForwardAtEndMarchCurrentYear = project.CapitalCarryForwardAtEndMarchCurrentYear;
+			EndOfNextFinancialYear = project.EndOfNextFinancialYear;
+			ProjectedRevenueBalanceAtEndMarchNextYear = project.ProjectedRevenueBalanceAtEndMarchNextYear;
 			CapitalCarryForwardAtEndMarchNextYear = project.CapitalCarryForwardAtEndMarchNextYear;
 			SchoolBudgetInformationAdditionalInformation = project.SchoolBudgetInformationAdditionalInformation;
 			SchoolBudgetInformationSectionComplete = project.SchoolBudgetInformationSectionComplete ?? false;
@@ -168,9 +170,12 @@ namespace ApplyToBecomeInternal.ViewModels
 		public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
 		//school budget info
+
+		public DateTime? EndOfCurrentFinancialYear { get; set; }
 		public decimal? RevenueCarryForwardAtEndMarchCurrentYear { get; set; }
-		public decimal? ProjectedRevenueBalanceAtEndMarchNextYear { get; set; }
 		public decimal? CapitalCarryForwardAtEndMarchCurrentYear { get; set; }
+		public DateTime? EndOfNextFinancialYear { get; set; }
+		public decimal? ProjectedRevenueBalanceAtEndMarchNextYear { get; set; }
 		public decimal? CapitalCarryForwardAtEndMarchNextYear { get; set; }
 		public string SchoolBudgetInformationAdditionalInformation { get; set; }
 		public bool SchoolBudgetInformationSectionComplete { get; set; }

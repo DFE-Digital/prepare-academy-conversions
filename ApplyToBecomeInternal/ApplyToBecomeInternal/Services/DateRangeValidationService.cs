@@ -37,8 +37,9 @@ namespace ApplyToBecomeInternal.Services
 					{
 						return (false, $"{displayName} date must be today or in the future");
 					}
-
 					break;
+				case DateRange.PastOrFuture:
+					return (true, "");
 			}
 
 			return (true, "");
@@ -49,7 +50,8 @@ namespace ApplyToBecomeInternal.Services
 			Past,
 			PastOrToday,
 			Future,
-			FutureOrToday
+			FutureOrToday,
+			PastOrFuture
 		}
 	}
 }
