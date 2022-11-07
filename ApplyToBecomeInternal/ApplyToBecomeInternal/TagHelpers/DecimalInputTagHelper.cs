@@ -24,9 +24,16 @@ namespace ApplyToBecomeInternal.TagHelpers
 
 		protected override async Task<IHtmlContent> RenderContentAsync()
 		{
-			if (For.ModelExplorer.ModelType != typeof(Decimal?) && For.ModelExplorer.ModelType != typeof(Decimal))
+			DecimalInputViewModel model = ValidateModel();
+
+			return await _htmlHelper.PartialAsync("_DecimalInput", model);
+		}
+
+		private DecimalInputViewModel ValidateModel()
+		{
+			if (For.ModelExplorer.ModelType != typeof(decimal?) && For.ModelExplorer.ModelType != typeof(decimal))
 			{
-				throw new ArgumentException();
+				throw new ArgumentException("For.ModelExplorer.ModelType is not a decimal");
 			}
 
 			var value = (decimal?)For.Model;
@@ -50,7 +57,7 @@ namespace ApplyToBecomeInternal.TagHelpers
 				}
 			}
 
-			return await _htmlHelper.PartialAsync("_DecimalInput", model);
+			return model;
 		}
 	}
 }

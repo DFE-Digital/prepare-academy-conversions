@@ -32,8 +32,10 @@ namespace ApplyToBecomeInternal.Utils
 		/// <returns>string representing the type hierarchy if enabled, otherwise <paramref name="disabledDefault" /> is returned</returns>
 		public static string Name(ref string cachedValue, string disabledDefault = "")
 		{
+			cachedValue ??= new Typespace(null);
+
 			return IsEnabled
-				? cachedValue ??= new Typespace(null)
+				? cachedValue
 				: disabledDefault;
 		}
 
