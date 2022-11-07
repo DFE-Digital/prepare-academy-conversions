@@ -25,7 +25,7 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: ${ env.NODE_VERSION }
+          node-version: ${{ env.NODE_VERSION }}
       # This could be cached in the future to allow for quicker build times
       - name: Build Frontend
         run: cd ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot; npm install; npm run build:assets; npm run build:frontend
@@ -55,7 +55,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: ${ env.NODE_VERSION }
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Build Frontend
         run: cd ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot; npm install; npm run build:assets; npm run build:frontend
@@ -188,7 +188,7 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v1
         with:
-          node-version: ${ env.NODE_VERSION }
+          node-version: ${{ env.NODE_VERSION }}
       - name: Npm install
         run: npm install
       - name: Run cypress
