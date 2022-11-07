@@ -17,7 +17,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 			var request = AddPatchProject(project, r => r.SchoolBudgetInformationAdditionalInformation);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information");
-			await NavigateAsync("Change", 4);
+			await NavigateAsync("Change", 6);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information/additional-information#additional-information");
 			var textArea = Document.QuerySelector<IHtmlTextAreaElement>("#additional-information");

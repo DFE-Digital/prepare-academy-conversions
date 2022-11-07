@@ -159,13 +159,13 @@ namespace ApplyToBecomeInternal.Models
 
 		// school budget info
 		[ModelBinder(BinderType = typeof(DateInputModelBinder))]
-		[DateValidation(DateRangeValidationService.DateRange.Past)]
+		[DateValidation(DateRangeValidationService.DateRange.PastOrFuture)]
 		[BindProperty(Name = "financial-year")] 
 		[Display(Name = "End of current financial year")]
 		public DateTime? EndOfCurrentFinancialYear { get; set; }
 
 		[ModelBinder(BinderType = typeof(DateInputModelBinder))]
-		[DateValidation(DateRangeValidationService.DateRange.Past)]
+		[DateValidation(DateRangeValidationService.DateRange.PastOrFuture)]
 		[BindProperty(Name = "next-financial-year")]
 		[Display(Name = "End of next financial year")]
 		public DateTime? EndOfNextFinancialYear { get; set; }

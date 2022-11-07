@@ -194,11 +194,15 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
-			await NavigateDataTestAsync("change-finance-year-current");
+			await NavigateDataTestAsync("change-financial-year");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
 
-			Document.QuerySelector<IHtmlInputElement>("#financial-year").Value = request.EndOfCurrentFinancialYear.Value.ToDateString();
-			Document.QuerySelector<IHtmlInputElement>("#next-financial-year").Value = request.EndOfNextFinancialYear.Value.ToDateString();
+			Document.QuerySelector<IHtmlInputElement>("#financial-year-day").Value = request.EndOfCurrentFinancialYear.Value.Day.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#financial-year-month").Value = request.EndOfCurrentFinancialYear.Value.Month.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#financial-year-year").Value = request.EndOfCurrentFinancialYear.Value.Year.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#next-financial-year-day").Value = request.EndOfNextFinancialYear.Value.Day.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#next-financial-year-month").Value = request.EndOfNextFinancialYear.Value.Month.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#next-financial-year-year").Value = request.EndOfNextFinancialYear.Value.Year.ToString();
 			Document.QuerySelector<IHtmlInputElement>("#finance-year-current").Value = request.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString();
 			Document.QuerySelector<IHtmlInputElement>("#finance-year-following").Value = request.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString();
 			Document.QuerySelector<IHtmlInputElement>("#finance-current-capital").Value = request.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString();
