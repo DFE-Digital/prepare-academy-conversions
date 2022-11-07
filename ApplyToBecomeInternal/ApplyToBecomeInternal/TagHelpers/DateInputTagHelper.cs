@@ -32,7 +32,7 @@ namespace ApplyToBecomeInternal.TagHelpers
 		{
 			if (For.ModelExplorer.ModelType != typeof(DateTime?))
 			{
-				throw new ArgumentException("ModelType is not a DateTime?");
+				throw new ArgumentException("ModelType is not a nullable DateTime");
 			}
 
 			var date = For.Model as DateTime?;
