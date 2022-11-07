@@ -28,9 +28,9 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 			});
 			var request = AddPatchProjectMany(project, composer =>
 				composer
-				.With(r => r.EndOfCurrentFinancialYear)
+				.With(r => r.EndOfCurrentFinancialYear, new DateTime(2022, 12, 2))
 				.With(r => r.RevenueCarryForwardAtEndMarchCurrentYear)
-				.With(r => r.EndOfNextFinancialYear)
+				.With(r => r.EndOfNextFinancialYear, new DateTime(2023, 12, 2))
 				.With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear)
 				.With(r => r.CapitalCarryForwardAtEndMarchCurrentYear)
 				.With(r => r.CapitalCarryForwardAtEndMarchNextYear));
@@ -71,13 +71,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 			});
 			var request = AddPatchProjectMany(project, composer =>
 				composer
-				.With(r => r.EndOfCurrentFinancialYear, DateTime.Now.AddDays(1))
+				.With(r => r.EndOfCurrentFinancialYear, new DateTime(2022,12,2))
 				.With(r => r.RevenueCarryForwardAtEndMarchCurrentYear, -100.25M)
 				.With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear, -10.75M)
-				.With(r => r.EndOfNextFinancialYear, DateTime.Now.AddYears(1))
+				.With(r => r.EndOfNextFinancialYear, new DateTime(2023, 12, 2))
 				.With(r => r.CapitalCarryForwardAtEndMarchCurrentYear, -65.90M)
 				.With(r => r.CapitalCarryForwardAtEndMarchNextYear, -1024.95M));
-
+			
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information");
 			await NavigateDataTestAsync("change-financial-year");
 
