@@ -31,7 +31,7 @@ namespace ApplyToBecomeInternal.TagHelpers
 		[ViewContext]
 		public ViewContext ViewContext { get; set; }
 
-		public InputTagHelperBase(IHtmlHelper htmlHelper)
+		protected InputTagHelperBase(IHtmlHelper htmlHelper)
 		{
 			_htmlHelper = htmlHelper;
 		}

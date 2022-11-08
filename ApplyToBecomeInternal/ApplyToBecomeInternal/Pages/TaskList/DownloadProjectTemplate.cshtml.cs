@@ -1,7 +1,5 @@
-using ApplyToBecome.Data;
 using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Services;
-using ApplyToBecome.Data.Services.Interfaces;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
 using DocumentGeneration;
@@ -17,13 +15,13 @@ using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages.TaskList
 {
-	public class GenerateHTBTemplateModel : BaseAcademyConversionProjectPageModel
+	public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
 	{
 		private readonly SchoolPerformanceService _schoolPerformanceService;
 		private readonly GeneralInformationService _generalInformationService;
 		private readonly KeyStagePerformanceService _keyStagePerformanceService;
 
-		public GenerateHTBTemplateModel(SchoolPerformanceService schoolPerformanceService,
+		public DownloadProjectTemplate(SchoolPerformanceService schoolPerformanceService,
 			GeneralInformationService generalInformationService,
 			IAcademyConversionProjectRepository repository,
 			KeyStagePerformanceService keyStagePerformanceService) : base(repository)

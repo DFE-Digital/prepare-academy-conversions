@@ -82,13 +82,14 @@ namespace ApplyToBecomeInternal.Services
 
 		private string DateInputId(string id)
 		{
-			foreach (var item in new[] { "-day", "-month", "-year" })
-			{
-				if (id.EndsWith(item))
-				{
-					return id.Substring(0, id.LastIndexOf(item));
-				}
+			var timeUnit = from item in new[] { "-day", "-month", "-year" }
+					where id.EndsWith(item)
+					select item;
+			
+			if (timeUnit.Any()) {
+				return id.Substring(0, id.LastIndexOf(timeUnit.First()));
 			}
+			
 			return id;
 		}
 	}

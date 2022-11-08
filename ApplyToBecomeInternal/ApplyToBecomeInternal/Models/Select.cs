@@ -19,7 +19,7 @@ namespace ApplyToBecomeInternal.Models
 
 		public static class TaskList
 		{
-			public sealed class Links
+			public static class Links
 			{
 				private static string _legalRequirements;
 				public static string LegalRequirementLinks => Typespace.Name(ref _legalRequirements);

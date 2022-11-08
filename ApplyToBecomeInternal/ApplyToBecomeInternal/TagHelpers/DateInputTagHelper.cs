@@ -23,9 +23,16 @@ namespace ApplyToBecomeInternal.TagHelpers
 
 		protected override async Task<IHtmlContent> RenderContentAsync()
 		{
+			DateInputViewModel model = ValidateRequest();
+
+			return await _htmlHelper.PartialAsync("_DateInput", model);
+		}
+
+		private DateInputViewModel ValidateRequest()
+		{
 			if (For.ModelExplorer.ModelType != typeof(DateTime?))
 			{
-				throw new ArgumentException();
+				throw new ArgumentException("ModelType is not a DateTime?");
 			}
 
 			var date = For.Model as DateTime?;
@@ -38,7 +45,7 @@ namespace ApplyToBecomeInternal.TagHelpers
 				Hint = Hint
 			};
 
-			if (date != null && date.HasValue)
+			if (date.HasValue)
 			{
 				model.Day = date.Value.Day.ToString();
 				model.Month = date.Value.Month.ToString();
@@ -64,14 +71,13 @@ namespace ApplyToBecomeInternal.TagHelpers
 				{
 					model.Year = yearValue;
 				}
-				if (model.DayInvalid == false && model.MonthInvalid == false && model.YearInvalid == false)
+				if (!model.DayInvalid && !model.MonthInvalid && model.YearInvalid)
 				{
 					model.DayInvalid = model.MonthInvalid = model.YearInvalid = true;
 				}
 			}
 
-			return await _htmlHelper.PartialAsync("_DateInput", model);
+			return model;
 		}
-
 	}
 }
