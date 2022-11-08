@@ -52,7 +52,7 @@ namespace ApplyToBecomeInternal.Services
 			return validDate ? (true, string.Empty) : (false, _messages.DefaultMessage);
 		}
 
-		private class DefaultDateValidationMessageProvider : IDateValidationMessageProvider
+		private sealed class DefaultDateValidationMessageProvider : IDateValidationMessageProvider
 		{
 			public string AllMissing(string displayName)
 			{

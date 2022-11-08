@@ -42,7 +42,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 			Filters.PopulateFrom(Request.Query);
 
 			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response = 
-				await _repository.GetAllProjects(CurrentPage, _pageSize, Filters.Title, Filters.SelectedOfficers, Filters.SelectedStatuses);
+				await _repository.GetAllProjects(CurrentPage, _pageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers);
 
 			Projects = response.Body.Data.Select(Build).ToList();
 			HasNextPage = response.Body?.Paging?.NextPageUrl != null;
