@@ -1,4 +1,5 @@
-﻿using ApplyToBecome.Data.Services.AzureAd;
+﻿using ApplyToBecome.Data.Models;
+using ApplyToBecome.Data.Services.AzureAd;
 using ApplyToBecome.Data.Tests.AutoFixture;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -18,7 +19,7 @@ namespace ApplyToBecome.Data.Tests.AzureAd
 
 			Assert.Multiple(
 				() => Assert.NotNull(client),
-				() => Assert.Equal("https://graph.microsoft.com/V1.0", client.BaseUrl)
+				() => Assert.Equal($"{azureAdOptions.ApiUrl}/V1.0", client.BaseUrl)
 			);
 		}
 	}

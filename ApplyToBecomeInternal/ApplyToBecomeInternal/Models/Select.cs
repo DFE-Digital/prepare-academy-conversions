@@ -2,7 +2,7 @@
 
 namespace ApplyToBecomeInternal.Models
 {
-	public sealed class Select
+	public static class Select
 	{
 		private static string _pageHeader, _backLink, _schoolName;
 
@@ -11,30 +11,30 @@ namespace ApplyToBecomeInternal.Models
 
 		public static string SchoolName => Typespace.Name(ref _schoolName);
 
-		public sealed class Common
+		public static class Common
 		{
 			private static string _submitButton;
 			public static string SubmitButton => Typespace.Name(ref _submitButton);
 		}
 
-		public sealed class TaskList
+		public static class TaskList
 		{
-			public sealed class Links
+			public static class Links
 			{
 				private static string _legalRequirements;
-				public static string LegalRequirements => Typespace.Name(ref _legalRequirements);
+				public static string LegalRequirementLinks => Typespace.Name(ref _legalRequirements);
 			}
 
-			public sealed class LegalRequirements
+			public static class LegalRequirements
 			{
 				private static string _status;
 				public static string Status => Typespace.Name(ref _status);
 			}
 		}
 
-		public sealed class ProjectType
+		public static class ProjectType
 		{
-			public sealed class Input
+			public static class Input
 			{
 				private static string _conversionOption, _transferOption;
 
@@ -45,9 +45,9 @@ namespace ApplyToBecomeInternal.Models
 
 		}
 
-		public sealed class Legal
+		public static class Legal
 		{
-			public sealed class Input
+			public static class Input
 			{
 				private static string _yesOption, _noOption, _notApplicableOption;
 
@@ -57,14 +57,14 @@ namespace ApplyToBecomeInternal.Models
 
 			}
 
-			public sealed class Summary
+			public static class Summary
 			{
 				private static string _isComplete, _submitButton;
 
 				public static string IsComplete => Typespace.Name(ref _isComplete);
 				public static string SubmitButton => Typespace.Name(ref _submitButton);
 
-				public sealed class GoverningBody
+				public static class GoverningBody
 				{
 					private static string _status, _change;
 
@@ -72,7 +72,7 @@ namespace ApplyToBecomeInternal.Models
 					public static string Change => Typespace.Name(ref _change);
 				}
 
-				public sealed class Consultation
+				public static class Consultation
 				{
 					private static string _status, _change;
 
@@ -80,7 +80,7 @@ namespace ApplyToBecomeInternal.Models
 					public static string Change => Typespace.Name(ref _change);
 				}
 
-				public sealed class DiocesanConsent
+				public static class DiocesanConsent
 				{
 					private static string _status, _change;
 
@@ -88,7 +88,7 @@ namespace ApplyToBecomeInternal.Models
 					public static string Change => Typespace.Name(ref _change);
 				}
 
-				public sealed class FoundationConsent
+				public static class FoundationConsent
 				{
 					private static string _status, _change;
 
@@ -98,9 +98,9 @@ namespace ApplyToBecomeInternal.Models
 			}
 		}
 
-		public sealed class ProjectList
+		public static class ProjectList
 		{
-			public sealed class Filter
+			public static class Filter
 			{
 				private static string _expand, _apply, _clear, _banner, _count, _row, _options, _title;
 

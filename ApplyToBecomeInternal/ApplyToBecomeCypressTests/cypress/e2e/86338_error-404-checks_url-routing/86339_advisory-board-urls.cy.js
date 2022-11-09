@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 Cypress._.each(['iphone-x'], (viewport) => {
-    describe(`86339 validate advisory board urls on ${viewport}`, { tags: ['@dev', '@stage']}, () => {
+    describe(`86339 validate advisory board urls on ${viewport}`, () => {
         let selectedSchool = ''
     
         afterEach(() => {

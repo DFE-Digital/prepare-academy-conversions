@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 Cypress._.each(['iphone-x'], (viewport) => {
-	describe(`86341: Error messaging should be correct on ${viewport}`, { tags: ['@dev', '@stage']}, () => {
+	describe(`86341: Error messaging should be correct on ${viewport}`, () => {
 		beforeEach(() => {
 			cy.viewport(viewport)
 			cy.login()

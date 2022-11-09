@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace ApplyToBecomeInternal.ViewModels
 {
-	public class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
+	public sealed class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
 	{
 		private TaskListItemViewModel(string status, string cssClass)
 		{
@@ -146,9 +146,11 @@ namespace ApplyToBecomeInternal.ViewModels
 			{
 				return Completed;
 			}
-			if (project.RevenueCarryForwardAtEndMarchCurrentYear == null
-				&& project.ProjectedRevenueBalanceAtEndMarchNextYear == null
+			if (project.EndOfCurrentFinancialYear == null
+				&& project.RevenueCarryForwardAtEndMarchCurrentYear == null				
 				&& project.CapitalCarryForwardAtEndMarchCurrentYear == null
+				&& project.EndOfNextFinancialYear == null
+				&& project.ProjectedRevenueBalanceAtEndMarchNextYear == null
 				&& project.CapitalCarryForwardAtEndMarchNextYear == null
 				&& string.IsNullOrWhiteSpace(project.SchoolBudgetInformationAdditionalInformation))
 			{

@@ -46,8 +46,6 @@ namespace ApplyToBecomeInternal.Pages.Public
 			return Page();
 		}
 
-
-
 		public IActionResult OnPost(bool? consent, string returnUrl)
 		{
 			returnPath = returnUrl;
@@ -89,8 +87,13 @@ namespace ApplyToBecomeInternal.Pages.Public
 				{
 					if (cookie.StartsWith("_ga") || cookie.Equals("_gid"))
 					{
-						_logger.LogInformation($"deleting Google analytics cookie: {cookie}");
-						Response.Cookies.Delete(cookie);
+						_logger.LogInformation($"Expiring Google analytics cookie: {cookie}");
+						Response.Cookies.Append(cookie, string.Empty, new CookieOptions 
+						{ 
+							Expires = DateTime.Now.AddDays(-1),
+							Secure = true,
+							SameSite = SameSiteMode.Lax
+						});
 					}
 				}
 			}

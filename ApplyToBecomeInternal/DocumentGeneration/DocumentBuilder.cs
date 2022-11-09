@@ -31,7 +31,7 @@ namespace DocumentGeneration
 			_ms = new MemoryStream();
 			Document = WordprocessingDocument.Create(_ms, WordprocessingDocumentType.Document);
 			Document.AddMainDocumentPart();
-			Document.MainDocumentPart.Document = new Document(new Body());
+			Document.MainDocumentPart.Document = new Document(new[] { new Body() });
 			_body = Document.MainDocumentPart.Document.Body;
 			SetCompatibilityMode();
 			AddNumberingDefinitions();
@@ -146,16 +146,21 @@ namespace DocumentGeneration
 
 			settingsPart = mainPart.AddNewPart<DocumentSettingsPart>();
 			settingsPart.Settings = new Settings(
-				new Compatibility(
-					new CompatibilitySetting
-					{
-						Name = new EnumValue<CompatSettingNameValues>
-							(CompatSettingNameValues.CompatibilityMode),
-						Val = new StringValue("15"),
-						Uri = new StringValue
-							("http://schemas.microsoft.com/office/word")
-					}
-				)
+				new[]
+				{
+					new Compatibility(
+						new[] {
+							new CompatibilitySetting
+							{
+								Name = new EnumValue<CompatSettingNameValues>
+									(CompatSettingNameValues.CompatibilityMode),
+								Val = new StringValue("15"),
+								Uri = new StringValue
+									("http://schemas.microsoft.com/office/word")
+							}
+						}
+					)
+				}
 			);
 			settingsPart.Settings.Save();
 		}

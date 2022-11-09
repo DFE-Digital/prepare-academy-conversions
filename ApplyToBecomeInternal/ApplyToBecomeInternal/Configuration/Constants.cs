@@ -1,6 +1,6 @@
 ﻿namespace ApplyToBecomeInternal.Configuration
 {
-	public class Constants
+	public static class Constants
 	{
 		public const string DateTimeFormat = "dd MMMM yyyy";
 	}

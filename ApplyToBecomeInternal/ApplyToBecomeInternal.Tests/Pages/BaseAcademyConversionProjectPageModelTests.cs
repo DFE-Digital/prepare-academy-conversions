@@ -5,6 +5,7 @@ using ApplyToBecomeInternal.Pages;
 using AutoFixture;
 using Moq;
 using System.Net;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Pages
@@ -24,7 +25,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		}
 
 		[Fact]
-		public async void GivenProjectId_GetsTheProjectFromTheRepository()
+		public async Task GivenProjectId_GetsTheProjectFromTheRepository()
 		{
 			await _model.OnGetAsync(10);
 
@@ -32,7 +33,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		}
 
 		[Fact]
-		public async void GivenProjectId_AssignsTheProjectToThePageModel()
+		public async Task GivenProjectId_AssignsTheProjectToThePageModel()
 		{
 			await _model.OnGetAsync(10);
 			Assert.Equal(_model.Project.Id, _foundProject.Id.ToString());

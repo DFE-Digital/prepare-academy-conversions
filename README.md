@@ -67,23 +67,6 @@ To execute the tests in headless mode, run the following (the output will log to
 npm run cy:run -- --env url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
 ```
 
-To execute tests with grep tags on dev:
-
-```
-$ npm run cy:run -- --env grepTags=@dev,grepTags=@stage,url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
-```
-
-To execute tests with grep tags on stage:
-
-```
-$ npm run cy:run -- --env grepTags=@stage,url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
-```
-
-To only execute all.cy.js file which has all import test files
-```
-$ npm run cy:run -- --spec "cypress/e2e/all.spec.cy.js" --env grepTags=@stage,url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
-```
-
 ### Loading users from Azure Active Directory
 You will need to set a secret in `secrets.json` in the following format to run the Cypress command against (you can use any value):
 
@@ -130,17 +113,6 @@ before(function () {
 
 Further details about Cypress can be found here: https://docs.cypress.io/api/table-of-contents
 
-To run tests with multiple tags in a list:
-
-```
-i.e., greTags=@dev+@stage 
-```
-
-To run tests including multiple tags independently targeting individual tags:
-
-```
-i.e., grepTags=@dev,grepTags=@stage
-```
 
 Further details on using cypress-grep test tagging: https://github.com/cypress-io/cypress-grep 
 cypress 10.9.0 Latest changes: https://docs.cypress.io/guides/references/changelog 

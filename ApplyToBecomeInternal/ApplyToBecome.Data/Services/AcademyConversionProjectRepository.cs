@@ -1,5 +1,4 @@
 ﻿using ApplyToBecome.Data.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,15 +8,13 @@ using System.Threading.Tasks;
 using System.Web;
 
 namespace ApplyToBecome.Data.Services
-{
-	// TODO?: Use URN rather than ID.
-	// Noticed that most services use the URN in the url
-	// Should probably do the same and use URN in the URN and as the parameter in TRAMS controllers and DB queries
-	// Could also put an index on the URN column in the DB if not already
-	// This would also mean ViewComponents wouldn't need to use this class as the URN would be available in the route data
+{	
 	public class AcademyConversionProjectRepository : IAcademyConversionProjectRepository
 	{
-		private readonly HttpClient _httpClient;		
+		private readonly IReadOnlyDictionary<string, string> _aliasedStatuses = new Dictionary<string, string> { { "converter pre-ao (c)", "Pre advisory board" } };
+
+		private readonly HttpClient _httpClient;
+		private readonly IReadOnlyDictionary<string, string> _invertedAliasedStatuses;
 
 		public AcademyConversionProjectRepository(IHttpClientFactory httpClientFactory)
 		{
@@ -25,20 +22,32 @@ namespace ApplyToBecome.Data.Services
 		}
 
 		public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count,
-			List<string> deliveryOfficerFilter = null,
-			string statusFilters = "", string titleFilter = "")
+			string titleFilter = "",
+			IEnumerable<string> statusFilters = default,
+			IEnumerable<string> deliveryOfficerFilter = default)
 		{
 			string encodedTitleFilter = HttpUtility.UrlEncode(titleFilter);
-			string deliveryOfficerQueryString = "";
+			string deliveryOfficerQueryString = string.Empty;
 
-			if (deliveryOfficerFilter != null)
+			if (deliveryOfficerFilter != default)
 			{
 				deliveryOfficerQueryString = $@"{deliveryOfficerFilter.Aggregate(string.Empty,
 					(current, officer) => $"{current}&deliveryOfficers={HttpUtility.UrlEncode(officer)}")}";
+			}						
+
+			string statusFiltersString = string.Empty;
+			if (statusFilters != null)
+			{
+				IEnumerable<string> projectedStatuses = statusFilters.SelectMany(x =>
+					_invertedAliasedStatuses.ContainsKey(x.ToLowerInvariant())
+						? new[] { x, _invertedAliasedStatuses[x.ToLowerInvariant()] }
+						: new[] { x });
+
+				statusFiltersString = string.Join(',', projectedStatuses);
 			}
 			
-			HttpResponseMessage response = await _httpClient.GetAsync($"legacy/projects?page={page}&count={count}&states={statusFilters}&title={encodedTitleFilter}{deliveryOfficerQueryString}");
-			if (!response.IsSuccessStatusCode)
+            HttpResponseMessage response = await _httpClient.GetAsync($"legacy/projects?page={page}&count={count}&states={statusFiltersString}&title={encodedTitleFilter}{deliveryOfficerQueryString}");
+            if (!response.IsSuccessStatusCode)
 			{
 				return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode,
 					new ApiV2Wrapper<IEnumerable<AcademyConversionProject>> { Data = Enumerable.Empty<AcademyConversionProject>() });
@@ -80,7 +89,15 @@ namespace ApplyToBecome.Data.Services
 			if (response.IsSuccessStatusCode is false)
 				return new ApiResponse<List<string>>(response.StatusCode, null);
 
-			return new ApiResponse<List<string>>(HttpStatusCode.OK, await response.Content.ReadFromJsonAsync<List<string>>());
+			List<string> loadedStatuses = await response.Content.ReadFromJsonAsync<List<string>>();
+
+			List<string> statusList =
+				loadedStatuses.Select(x => _aliasedStatuses.ContainsKey(x.ToLowerInvariant()) ? _aliasedStatuses[x.ToLowerInvariant()] : x)
+					.Distinct()
+					.OrderBy(x => x)
+					.ToList();
+
+			return new ApiResponse<List<string>>(HttpStatusCode.OK, statusList);
 		}
 	}
 }

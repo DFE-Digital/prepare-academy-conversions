@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 
-describe('Assign project to user', { tags: ['@dev', '@stage']}, () => {
+describe('Assign project to user', () => {
 
     beforeEach(() => {
         cy.selectFirstProject()

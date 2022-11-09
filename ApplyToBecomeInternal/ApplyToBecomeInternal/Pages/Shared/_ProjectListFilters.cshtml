@@ -7,8 +7,8 @@
 			Filter projects
 		</span>
 	</summary>
-	<div class="govuk-details__text prepare-project-listing__filters-details">
-		<form method="post" class="form">
+	<div class="govuk-details__text prepare-project-listing__filters-details" data-id="filter-container">
+		<form method="get" class="form">
 			<div class="govuk-grid-row">
 				<div class="govuk-grid-column-one-quarter">
 					<div class="govuk-form-group">
@@ -31,9 +31,9 @@
 					<div class="govuk-form-group">
 						<fieldset class="govuk-fieldset" aria-describedby="filter-project-status-hint">
 							<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-								<h1 class="govuk-fieldset__heading">
+								<span class="govuk-fieldset__heading">
 									Project status
-								</h1>
+								</span>
 							</legend>
 
 							<div id="filter-project-status-hint" class="govuk-hint">
@@ -62,9 +62,9 @@
 					<div class="govuk-form-group">
 						<fieldset class="govuk-fieldset" aria-describedby="filter-delivery-officer-hint">
 							<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-								<h1 class="govuk-fieldset__heading">
+								<span class="govuk-fieldset__heading">
 									Delivery officers
-								</h1>
+								</span>
 							</legend>
 
 							<div id="filter-delivery-officer-hint" class="govuk-hint">
@@ -73,25 +73,25 @@
 
 							<div class="govuk-checkboxes govuk-checkboxes--small prepare-project-listing__filter" data-module="govuk-checkboxes">
 								@{
-									foreach (var officer in Model.AvailableDeliveryOfficers)
-									{
-										<div class="govuk-checkboxes__item">
-											<input class="govuk-checkboxes__input" id="filter--delivery-officer-@officer.Stub()" 
-											       name="selectedOfficers" type="checkbox" value="@officer" @(Model.SelectedOfficers.Contains(officer) ? "checked" : null)
-											       data-cy="@Select.ProjectList.Filter.Officer(officer)">
-											<label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-@officer.Stub()">
-												@officer
-											</label>
-										</div>
-									}
-									<div class="govuk-checkboxes__item">
-										<input class="govuk-checkboxes__input" id="filter--delivery-officer-not-assigned" 
-										       name="selectedOfficers" type="checkbox" value="Not assigned" @(Model.SelectedOfficers.Contains("Not assigned") ? "checked" : null)
-										       data-cy="@Select.ProjectList.Filter.Officer("Not assigned")">
-										<label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-not-assigned">
-											Not assigned
-										</label>
-									</div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="filter-delivery-officer-not-assigned"
+                                               name="selectedOfficers" type="checkbox" value="Not assigned" @(Model.SelectedOfficers.Contains("Not assigned") ? "checked" : null)
+                                               data-cy="@Select.ProjectList.Filter.Officer("Not assigned")">
+                                        <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-not-assigned">
+                                            Not assigned
+                                        </label>
+                                    </div>
+                                    foreach (var officer in Model.AvailableDeliveryOfficers)
+                                    {
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="filter-delivery-officer-@officer.Stub()"
+                                               name="selectedOfficers" type="checkbox" value="@officer" @(Model.SelectedOfficers.Contains(officer) ? "checked" : null)
+                                               data-cy="@Select.ProjectList.Filter.Officer(officer)">
+                                            <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-@officer.Stub()">
+                                                @officer
+                                            </label>
+                                        </div>
+                                    }
 								}
 							</div>
 						</fieldset>

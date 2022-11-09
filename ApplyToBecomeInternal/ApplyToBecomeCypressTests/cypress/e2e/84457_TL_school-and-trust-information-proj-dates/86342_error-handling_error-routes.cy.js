@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 Cypress._.each(['iphone-x'], (viewport) => {
-	describe(`86342 Error message link should redirect correctly on ${viewport}`, { tags: ['@dev', '@stage']}, () => {
+	describe(`86342 Error message link should redirect correctly on ${viewport}`, () => {
 		beforeEach(() => {
 			cy.viewport(viewport)
 			cy.login()

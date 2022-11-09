@@ -25,17 +25,17 @@ namespace ApplyToBecomeInternal.ViewModels
 		{
 			get 
 			{				
-				var NegativeStyleClass = string.Empty;
+				var negativeStyleClass = string.Empty;
 				if (HasValue)
 				{
 					decimal decimalValue;
 					if (Decimal.TryParse(Value.Replace("£", ""), out decimalValue))
 					{
-						NegativeStyleClass = HighlightNegativeValue && decimalValue < 0 ? "negative-value" : string.Empty;
+						negativeStyleClass = HighlightNegativeValue && decimalValue < 0 ? "negative-value" : string.Empty;
 					}
 				}
 
-				return NegativeStyleClass;
+				return negativeStyleClass;
 			}
 		}
 	}

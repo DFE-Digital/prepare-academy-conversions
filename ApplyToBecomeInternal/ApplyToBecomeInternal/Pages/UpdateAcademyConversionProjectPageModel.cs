@@ -39,6 +39,11 @@ namespace ApplyToBecomeInternal.Pages
 				_errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FSchoolAndTrustInformation/ConfirmSchoolAndTrustInformation&fragment=advisory-board-date",
 					"Set an Advisory board date before you generate your project template");
 			}
+			if(AcademyConversionProject.EndOfCurrentFinancialYear > AcademyConversionProject.EndOfNextFinancialYear)
+			{		
+				_errorService.AddError($"/task-list/{id}/confirm-school-budget-information/update-school-budget-information?return=%2FTaskList%2FSchoolBudgetInformation/ConfirmSchoolBudgetInformation&fragment=financial-year",
+					"The next financial year cannot be before the current financial year");
+			}
 
 			_errorService.AddErrors(Request.Form.Keys, ModelState);
 			if (_errorService.HasErrors())
@@ -105,6 +110,8 @@ namespace ApplyToBecomeInternal.Pages
 				Consultation = AcademyConversionProject.Consultation, 
 				DiocesanConsent = AcademyConversionProject.DiocesanConsent, 
 				FoundationConsent = AcademyConversionProject.FoundationConsent, 
+				EndOfCurrentFinancialYear = AcademyConversionProject.EndOfCurrentFinancialYear,
+				EndOfNextFinancialYear = AcademyConversionProject.EndOfNextFinancialYear,
 				RevenueCarryForwardAtEndMarchCurrentYear = AcademyConversionProject.RevenueCarryForwardAtEndMarchCurrentYear,
 				ProjectedRevenueBalanceAtEndMarchNextYear = AcademyConversionProject.ProjectedRevenueBalanceAtEndMarchNextYear,
 				CapitalCarryForwardAtEndMarchCurrentYear = AcademyConversionProject.CapitalCarryForwardAtEndMarchCurrentYear,

@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 Cypress._.each(['iphone-x'], (viewport) => {
-    describe(`87641 Check mark should reflect status correctly on LA Information preview page on ${viewport}`, { tags: ['@dev', '@stage']}, () =>{
+    describe(`87641 Check mark should reflect status correctly on LA Information preview page on ${viewport}`, () =>{
 		beforeEach(() => {
 			cy.login()
 			cy.viewport(viewport)
