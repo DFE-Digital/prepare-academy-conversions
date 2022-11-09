@@ -184,8 +184,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			var request = AddPatchProjectMany(project, composer =>
 				composer
-					.With(r => r.EndOfCurrentFinancialYear)
-					.With(r => r.EndOfNextFinancialYear)
+					.With(r => r.EndOfCurrentFinancialYear, new DateTime(2022,04,01))
+					.With(r => r.EndOfNextFinancialYear, new DateTime(2023,04,01))
 					.With(r => r.RevenueCarryForwardAtEndMarchCurrentYear)
 					.With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear)
 					.With(r => r.CapitalCarryForwardAtEndMarchCurrentYear)
@@ -208,6 +208,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector<IHtmlInputElement>("#finance-projected-capital").Value = request.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString();
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
 			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
