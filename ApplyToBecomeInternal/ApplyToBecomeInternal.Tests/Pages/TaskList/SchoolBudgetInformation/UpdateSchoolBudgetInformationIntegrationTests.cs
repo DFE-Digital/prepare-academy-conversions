@@ -1,10 +1,8 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using ApplyToBecomeInternal.Extensions;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using FluentAssertions;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
