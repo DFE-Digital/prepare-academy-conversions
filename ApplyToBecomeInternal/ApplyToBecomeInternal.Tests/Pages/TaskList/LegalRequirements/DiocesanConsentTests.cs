@@ -1,12 +1,10 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
-using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Models.AcademyConversion;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support;
 using FluentAssertions;
-using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -25,7 +23,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		private string SummaryDiocesanConsentStatus => Document.QuerySelector(CypressSelectorFor(Select.Legal.Summary.DiocesanConsent.Status))?.Text().Trim();
 
 		[Fact]
-		public async void Should_have_a_back_link_that_points_to_the_legal_summary_page()
+		public async Task Should_have_a_back_link_that_points_to_the_legal_summary_page()
 		{
 			Project = AddGetProject(project => project.DiocesanConsent = nameof(ThreeOptions.NotApplicable));
 			await Wizard.OpenDiocesanConsent(Project.Id);
@@ -43,7 +41,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		}
 
 		[Fact]
-		public async void Should_display_the_correct_school_name()
+		public async Task Should_display_the_correct_school_name()
 		{
 			Project = AddGetProject(project => project.DiocesanConsent = nameof(ThreeOptions.NotApplicable));
 			await Wizard.OpenDiocesanConsent(Project.Id);
@@ -51,7 +49,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		}
 
 		[Fact]
-		public async void Should_not_select_any_of_the_options_by_default()
+		public async Task Should_not_select_any_of_the_options_by_default()
 		{
 			Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
 			await Wizard.OpenDiocesanConsent(Project.Id);

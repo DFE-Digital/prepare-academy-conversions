@@ -1,9 +1,7 @@
 ﻿using AngleSharp.Dom;
-using ApplyToBecome.Data.Models;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support;
 using FluentAssertions;
-using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -24,7 +22,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 
 
 		[Fact]
-		public async void Back_link_to_point_to_the_task_list_page()
+		public async Task Back_link_to_point_to_the_task_list_page()
 		{
 			Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
 			await Wizard.OpenSummary(Project.Id);
@@ -32,7 +30,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		}
 
 		[Fact]
-		public async void Should_display_the_correct_school_name()
+		public async Task Should_display_the_correct_school_name()
 		{
 			Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
 			await Wizard.OpenSummary(Project.Id);
@@ -40,7 +38,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		}
 
 		[Fact]
-		public async void Should_show_governing_body_resolution_as_empty_if_not_set()
+		public async Task Should_show_governing_body_resolution_as_empty_if_not_set()
 		{
 			Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
 			await Wizard.OpenSummary(Project.Id);
@@ -48,7 +46,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		}
 
 		[Fact]
-		public async void Should_show_consultation_as_empty_if_not_set()
+		public async Task Should_show_consultation_as_empty_if_not_set()
 		{
 			Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
 			await Wizard.OpenSummary(Project.Id);
@@ -56,7 +54,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		}
 
 		[Fact]
-		public async void Should_show_diocesan_consent_as_empty_if_not_set()
+		public async Task Should_show_diocesan_consent_as_empty_if_not_set()
 		{
 			Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
 			await Wizard.OpenSummary(Project.Id);
@@ -64,7 +62,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		}
 
 		[Fact]
-		public async void Should_show_foundation_consent_as_empty_if_not_set()
+		public async Task Should_show_foundation_consent_as_empty_if_not_set()
 		{
 			Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
 			await Wizard.OpenSummary(Project.Id);

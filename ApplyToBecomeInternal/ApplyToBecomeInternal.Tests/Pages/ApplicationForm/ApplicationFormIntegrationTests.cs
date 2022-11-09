@@ -1,12 +1,9 @@
 ﻿using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Models.Application;
 using FluentAssertions;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
@@ -30,7 +27,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		}
 
 		[Fact]
-		public async void The_Application_Form_Link_Is_Present()
+		public async Task The_Application_Form_Link_Is_Present()
 		{
 			AddProjectWithFullApplicationForm();
 
@@ -42,7 +39,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		}
 
 		[Fact]
-		public async void Should_Display_School_Application_Form_Section()
+		public async Task Should_Display_School_Application_Form_Section()
 		{
 			AddProjectWithFullApplicationForm();
 
@@ -55,7 +52,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		}
 
 		[Fact]
-		public async void Should_Display_About_The_Conversion_Section()
+		public async Task Should_Display_About_The_Conversion_Section()
 		{
 			AddProjectWithFullApplicationForm();
 
@@ -72,7 +69,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		}
 
 		[Fact]
-		public async void Should_Display_Further_Information_Section()
+		public async Task Should_Display_Further_Information_Section()
 		{
 			AddProjectWithFullApplicationForm();
 
@@ -85,7 +82,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		}
 
 		[Fact]
-		public async void Should_Display_Finances_Section_With_Leases_And_Loans()
+		public async Task Should_Display_Finances_Section_With_Leases_And_Loans()
 		{
 			AddProjectWithFullApplicationForm();
 
@@ -106,7 +103,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		}
 
 		[Fact]
-		public async void Should_Display_Finances_Section_With_No_Leases_Or_Loans()
+		public async Task Should_Display_Finances_Section_With_No_Leases_Or_Loans()
 		{
 			_project = AddGetProject();
 			_application = AddGetApplication(app =>
@@ -134,7 +131,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		}
 
 		[Fact]
-		public async void Should_Display_Future_Pupil_Numbers_Section()
+		public async Task Should_Display_Future_Pupil_Numbers_Section()
 		{
 			AddProjectWithFullApplicationForm();
 
@@ -151,7 +148,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		}
 
 		[Fact]
-		public async void Should_Display_Land_And_Buildings_Section()
+		public async Task Should_Display_Land_And_Buildings_Section()
 		{
 			AddProjectWithFullApplicationForm();
 
@@ -168,7 +165,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		}
 
 		[Fact]
-		public async void Should_Display_Pre_Opening_Support_Grant_Section()
+		public async Task Should_Display_Pre_Opening_Support_Grant_Section()
 		{
 			AddProjectWithFullApplicationForm();
 
@@ -185,7 +182,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		}
 
 		[Fact]
-		public async void Should_Display_Consultation_Section()
+		public async Task Should_Display_Consultation_Section()
 		{
 			AddProjectWithFullApplicationForm();
 
@@ -202,7 +199,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		}
 
 		[Fact]
-		public async void Should_Display_Declaration_Section()
+		public async Task Should_Display_Declaration_Section()
 		{
 			AddProjectWithFullApplicationForm();
 
@@ -215,7 +212,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		}
 
 		[Fact]
-		public async void Should_Show_404Error_When_Application_Not_Found()
+		public async Task Should_Show_404Error_When_Application_Not_Found()
 		{
 			_project = AddGetProject();
 
@@ -226,7 +223,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		}
 
 		[Fact]
-		public async void Should_Show_501Error_When_Application_Is_Not_Join_Mat()
+		public async Task Should_Show_501Error_When_Application_Is_Not_Join_Mat()
 		{
 			_project = AddGetProject();
 			_application = AddGetApplication(app =>
@@ -242,7 +239,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		}
 
 		[Fact]
-		public async void Should_Show_500Error_When_Application_Is_Not_Valid()
+		public async Task Should_Show_500Error_When_Application_Is_Not_Valid()
 		{
 			_project = AddGetProject();
 			_application = AddGetApplication(app =>
@@ -268,7 +265,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		[InlineData("Pre-opening support grant", "#Pre-opening_support_grant")]
 		[InlineData("Consultation", "#Consultation")]
 		[InlineData("Declaration", "#Declaration")]
-		public async void Should_Contain_Contents_With_Links_To_Correct_Sections(string sectionHeading, string id)
+		public async Task Should_Contain_Contents_With_Links_To_Correct_Sections(string sectionHeading, string id)
 		{
 			// Arrange
 			AddProjectWithFullApplicationForm();
