@@ -3,7 +3,6 @@ using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Tests.Customisations;
-using ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance;
 using static ApplyToBecomeInternal.Extensions.IntegerExtensions;
 using FluentAssertions;
 using System;
