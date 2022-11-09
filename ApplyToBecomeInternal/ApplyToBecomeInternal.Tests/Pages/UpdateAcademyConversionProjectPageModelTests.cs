@@ -17,6 +17,7 @@ using Moq;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Pages
@@ -42,7 +43,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		}
 
 		[Fact]
-		public async void OnSuccessfulSubmit_ItUpdatesTheProjectInTheRepository()
+		public async Task OnSuccessfulSubmit_ItUpdatesTheProjectInTheRepository()
 		{
 			var pageModel = GetPageModel();
 
@@ -51,7 +52,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		}
 		
 		[Fact]
-		public async void OnSuccessfulSubmit_ItRedirectsToTheSuccessPage()
+		public async Task OnSuccessfulSubmit_ItRedirectsToTheSuccessPage()
 		{
 			var pageModel = GetPageModel();
 			pageModel.SuccessPage = Links.TaskList.Index.Page;
