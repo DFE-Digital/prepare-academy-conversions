@@ -42,7 +42,7 @@ namespace ApplyToBecomeInternal.Pages
 			if(AcademyConversionProject.EndOfCurrentFinancialYear > AcademyConversionProject.EndOfNextFinancialYear)
 			{		
 				_errorService.AddError($"/task-list/{id}/confirm-school-budget-information/update-school-budget-information?return=%2FTaskList%2FSchoolBudgetInformation/ConfirmSchoolBudgetInformation&fragment=financial-year",
-					"The next financial year cannot be before the current financial year.");
+					"The next financial year cannot be before the current financial year");
 			}
 
 			_errorService.AddErrors(Request.Form.Keys, ModelState);

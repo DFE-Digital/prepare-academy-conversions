@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using ApplyToBecomeInternal.Extensions;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using FluentAssertions;
 using System;
 using System.Linq;
@@ -96,6 +97,44 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
+		}
+		[Fact]
+		public async Task Should_display_error_summary_on_school_budget_data_when_years_are_invalid()
+		{
+			var project = AddGetProject(project =>
+			{
+				project.EndOfCurrentFinancialYear = null;
+				project.RevenueCarryForwardAtEndMarchCurrentYear = null;
+				project.ProjectedRevenueBalanceAtEndMarchNextYear = null;
+				project.EndOfNextFinancialYear = null;
+				project.CapitalCarryForwardAtEndMarchCurrentYear = null;
+				project.CapitalCarryForwardAtEndMarchNextYear = null;
+				project.SchoolBudgetInformationSectionComplete = false;
+			});
+			var request = AddPatchProjectMany(project, composer =>
+				composer
+				.With(r => r.EndOfCurrentFinancialYear, new DateTime(2023, 12, 2))
+				.With(r => r.RevenueCarryForwardAtEndMarchCurrentYear)
+				.With(r => r.EndOfNextFinancialYear, new DateTime(2022, 12, 2))
+				.With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear)
+				.With(r => r.CapitalCarryForwardAtEndMarchCurrentYear)
+				.With(r => r.CapitalCarryForwardAtEndMarchNextYear));
+
+			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information");
+			await NavigateDataTestAsync("change-financial-year");
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
+
+			Document.QuerySelector<IHtmlInputElement>("#financial-year-day").Value = request.EndOfCurrentFinancialYear.Value.Day.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#financial-year-month").Value = request.EndOfCurrentFinancialYear.Value.Month.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#financial-year-year").Value = request.EndOfCurrentFinancialYear.Value.Year.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#next-financial-year-day").Value = request.EndOfNextFinancialYear.Value.Day.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#next-financial-year-month").Value = request.EndOfNextFinancialYear.Value.Month.ToString();
+			Document.QuerySelector<IHtmlInputElement>("#next-financial-year-year").Value = request.EndOfNextFinancialYear.Value.Year.ToString();
+			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+			await NavigateAsync("The next financial year cannot be before the current financial year");
+
+			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information#/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information?return=%2FTaskList%2FSchoolBudgetInformation/ConfirmSchoolBudgetInformation&fragment=financial-year");
 		}
 
 		[Fact]
