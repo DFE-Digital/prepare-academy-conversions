@@ -93,7 +93,7 @@ namespace ApplyToBecomeInternal.Models
 			get
 			{
 				var delimiter = string.Empty;
-				if (string.IsNullOrEmpty(MPName) == false && string.IsNullOrEmpty(MPParty) == false)
+				if (!string.IsNullOrEmpty(MPName) && !string.IsNullOrEmpty(MPParty))
 				{
 					delimiter = ", ";				
 				}
@@ -126,11 +126,15 @@ namespace ApplyToBecomeInternal.Models
 		public string FoundationConsent { get; set; }
 
 		// school budget info
+		[DocumentText("EndOfCurrentFinancialYear")]
+		public string EndOfCurrentFinancialYear { get; set; }
 		[DocumentText("RevenueCarryForwardAtEndMarchCurrentYear")]
 		public string RevenueCarryForwardAtEndMarchCurrentYear { get; set; }
 
 		[DocumentText("ProjectedRevenueBalanceAtEndMarchNextYear")]
 		public string ProjectedRevenueBalanceAtEndMarchNextYear { get; set; }
+		[DocumentText("EndOfNextFinancialYear")]
+		public string EndOfNextFinancialYear { get; set; }
 
 		[DocumentText("CapitalCarryForwardAtEndMarchCurrentYear")]
 		public string CapitalCarryForwardAtEndMarchCurrentYear { get; set; }
@@ -232,6 +236,8 @@ namespace ApplyToBecomeInternal.Models
 				Consultation = project.Consultation.SplitPascalCase(),
 				DiocesanConsent = project.DiocesanConsent.SplitPascalCase(),
 				FoundationConsent = project.FoundationConsent.SplitPascalCase(),
+				EndOfCurrentFinancialYear = project.EndOfCurrentFinancialYear?.ToDateString(),
+				EndOfNextFinancialYear = project.EndOfNextFinancialYear?.ToDateString(),
 				RevenueCarryForwardAtEndMarchCurrentYear = project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true),
 				ProjectedRevenueBalanceAtEndMarchNextYear = project.ProjectedRevenueBalanceAtEndMarchNextYear?.ToMoneyString(true),
 				CapitalCarryForwardAtEndMarchCurrentYear = project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true),

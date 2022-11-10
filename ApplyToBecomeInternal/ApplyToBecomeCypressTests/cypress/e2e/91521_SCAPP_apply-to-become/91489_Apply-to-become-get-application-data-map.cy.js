@@ -181,7 +181,7 @@ describe('91489: Apply-to-becom GET data application types', () => {
 	// Finance Details 
 	it('TC09: Previous Financial Year', () => {
 		cy.get('[test-id="Finances_Previous_financial_year1_key"]').should('contain.text', 'End of previous financial year')
-		cy.get('[test-id="Finances_Previous_financial_year1_value"]').should('contain.text', '01/09/2021')
+		cy.get('[test-id="Finances_Previous_financial_year1_value"]').should('contain.text', '1 September 2021')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
 			expect(userData.data.applyingSchools[0].previousFinancialYear.fyEndDate).to.eq('2021-09-01T17:49:39.303')
 		})
@@ -214,7 +214,7 @@ describe('91489: Apply-to-becom GET data application types', () => {
 	// Current Financial Year
 	it('TC10: Current Financial Year', () => {
 		cy.get('[test-id="Finances_Current_financial_year1_key"]').should('contain.text', 'End of current financial year')
-		cy.get('[test-id="Finances_Current_financial_year1_value"]').should('contain.text', '16/12/2021')
+		cy.get('[test-id="Finances_Current_financial_year1_value"]').should('contain.text', '16 December 2021')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
 			expect(userData.data.applyingSchools[0].currentFinancialYear.fyEndDate).to.eq('2021-12-16T17:05:19.845')
 		})
@@ -245,7 +245,7 @@ describe('91489: Apply-to-becom GET data application types', () => {
 	// Next Financial Year
 	it('TC11: Next Financial Year', () => {
 		cy.get('[test-id="Finances_Next_financial_year1_key"]').should('contain.text', 'End of next financial year')
-		cy.get('[test-id="Finances_Next_financial_year1_value"]').should('contain.text', '16/09/2021')
+		cy.get('[test-id="Finances_Next_financial_year1_value"]').should('contain.text', '16 September 2021')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
 			expect(userData.data.applyingSchools[0].nextFinancialYear.fyEndDate).to.eq('2021-09-16T19:13:02.81')
 		})

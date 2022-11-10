@@ -2,6 +2,7 @@
 using AngleSharp.Html.Dom;
 using ApplyToBecomeInternal.Extensions;
 using FluentAssertions;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -23,9 +24,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			await NavigateAsync("School budget information");
 
+			Document.QuerySelector("#financial-year").TextContent.Should().Be(project.EndOfCurrentFinancialYear.Value.ToDateString());
 			Document.QuerySelector("#finance-year-current").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-year-following").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#finance-current-capital").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#next-financial-year").TextContent.Should().Be(project.EndOfNextFinancialYear.Value.ToDateString());
+			Document.QuerySelector("#finance-year-following").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));			
 			Document.QuerySelector("#finance-projected-capital").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.SchoolBudgetInformationAdditionalInformation);
 		}
@@ -35,9 +38,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 		{
 			var project = AddGetProject(project => 
 			{
+				project.EndOfCurrentFinancialYear = DateTime.Now.AddDays(1);
 				project.RevenueCarryForwardAtEndMarchCurrentYear = -100.25M;
-				project.ProjectedRevenueBalanceAtEndMarchNextYear = -10.75M;
 				project.CapitalCarryForwardAtEndMarchCurrentYear = -65.90M;
+				project.EndOfNextFinancialYear = DateTime.Now.AddYears(1);
+				project.ProjectedRevenueBalanceAtEndMarchNextYear = -10.75M;				
 				project.CapitalCarryForwardAtEndMarchNextYear = -1024.95M;
 				project.SchoolBudgetInformationSectionComplete = false; 
 			});
@@ -49,9 +54,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			await NavigateAsync("School budget information");
 
-			Document.QuerySelector("#finance-year-current").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#finance-year-following").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#financial-year").TextContent.Should().Be(project.EndOfCurrentFinancialYear.Value.ToDateString());
+			Document.QuerySelector("#finance-year-current").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));			
 			Document.QuerySelector("#finance-current-capital").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
+			Document.QuerySelector("#next-financial-year").TextContent.Should().Be(project.EndOfNextFinancialYear.Value.ToDateString());
+			Document.QuerySelector("#finance-year-following").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#finance-projected-capital").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#additional-information").TextContent.Should().Be(project.SchoolBudgetInformationAdditionalInformation);
 		}
@@ -61,9 +68,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 		{
 			var project = AddGetProject(project =>
 			{
+				project.EndOfCurrentFinancialYear = DateTime.Now.AddDays(1);
 				project.RevenueCarryForwardAtEndMarchCurrentYear = -100.25M;
-				project.ProjectedRevenueBalanceAtEndMarchNextYear = -10.75M;
 				project.CapitalCarryForwardAtEndMarchCurrentYear = -65.90M;
+				project.EndOfNextFinancialYear = DateTime.Now.AddYears(1);
+				project.ProjectedRevenueBalanceAtEndMarchNextYear = -10.75M;
 				project.CapitalCarryForwardAtEndMarchNextYear = -1024.95M;
 				project.SchoolBudgetInformationSectionComplete = false;
 			});
@@ -83,6 +92,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 		{
 			var project = AddGetProject(project =>
 			{
+				project.EndOfCurrentFinancialYear = DateTime.Now.AddDays(1);			
+				project.EndOfNextFinancialYear = DateTime.Now.AddYears(1);		
 				project.RevenueCarryForwardAtEndMarchCurrentYear = 100.25M;
 				project.ProjectedRevenueBalanceAtEndMarchNextYear = 10.75M;
 				project.CapitalCarryForwardAtEndMarchCurrentYear = 65.90M;
@@ -127,6 +138,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 		{
 			var project = AddGetProject(project =>
 			{
+				project.EndOfCurrentFinancialYear = null;
+				project.EndOfNextFinancialYear = null;
 				project.RevenueCarryForwardAtEndMarchCurrentYear = null;
 				project.ProjectedRevenueBalanceAtEndMarchNextYear = null;
 				project.CapitalCarryForwardAtEndMarchCurrentYear = null;
@@ -143,6 +156,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 
 			await NavigateAsync("School budget information");
 
+			Document.QuerySelector("#financial-year").TextContent.Should().Be("Empty");
+			Document.QuerySelector("#next-financial-year").TextContent.Should().Be("Empty");		
 			Document.QuerySelector("#finance-year-current").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#finance-year-following").TextContent.Should().Be("Empty");
 			Document.QuerySelector("#finance-current-capital").TextContent.Should().Be("Empty");
