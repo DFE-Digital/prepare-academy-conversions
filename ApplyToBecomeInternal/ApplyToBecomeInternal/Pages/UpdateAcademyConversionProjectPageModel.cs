@@ -39,7 +39,7 @@ namespace ApplyToBecomeInternal.Pages
 				_errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FSchoolAndTrustInformation/ConfirmSchoolAndTrustInformation&fragment=advisory-board-date",
 					"Set an Advisory board date before you generate your project template");
 			}
-			if (AcademyConversionProject.EndOfCurrentFinancialYear != null && AcademyConversionProject.EndOfNextFinancialYear != null)
+			if (AcademyConversionProject.EndOfCurrentFinancialYear != DateTime.MinValue && AcademyConversionProject.EndOfNextFinancialYear != DateTime.MinValue)
 			{
 				if (AcademyConversionProject.EndOfCurrentFinancialYear.Value.AddYears(1).AddDays(-1) > AcademyConversionProject.EndOfNextFinancialYear)
 				{
