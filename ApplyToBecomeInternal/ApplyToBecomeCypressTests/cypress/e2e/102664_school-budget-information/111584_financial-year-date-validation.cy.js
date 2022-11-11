@@ -39,7 +39,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 			cy.get('[id="error-summary-title"]').should('be.visible');
 			cy.get('[data-cy="error-summary"]')
 			  .invoke('text')
-			  .should('contains', 'The next financial year cannot be before the current financial year')
+			  .should('contains', 'The next financial year cannot be before or within a year of the current financial year')
 		});
 	});
 });
