@@ -12,7 +12,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ApplyToBecomeInternal.Tests.Pages
 {
@@ -22,6 +21,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		private readonly ITestOutputHelper _outputHelper;
 		private readonly IBrowsingContext _browsingContext;
 		protected readonly Fixture _fixture;
+		private JsonSerializerSettings _jsonSerializerSettings;
 
 		protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper)
 		{
@@ -30,6 +30,8 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			var httpClient = factory.CreateClient();
 			_browsingContext = CreateBrowsingContext(httpClient);
 			_fixture = new Fixture();
+
+			_jsonSerializerSettings = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
 		}
 
 		public async Task<IDocument> OpenUrlAsync(string url)
@@ -51,7 +53,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			}
 			catch
 			{
-				_outputHelper.WriteLine($"NavigateAsync - Document error for: {JsonConvert.SerializeObject(Document)}");
+				_outputHelper.WriteLine($"NavigateAsync - Document error for: {JsonConvert.SerializeObject(Document, _jsonSerializerSettings)}");
 				throw;
 			}
 		}
@@ -65,7 +67,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			}
 			catch
 			{
-				_outputHelper.WriteLine($"NavigateDataTestAsync - Document error for: {JsonConvert.SerializeObject(Document)}");
+				_outputHelper.WriteLine($"NavigateDataTestAsync - Document error for: {JsonConvert.SerializeObject(Document, _jsonSerializerSettings)}");
 				throw;
 			}
 		}
