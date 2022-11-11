@@ -53,7 +53,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			}
 			catch
 			{
-				_outputHelper.WriteLine($"NavigateAsync - Document error for: {JsonConvert.SerializeObject(Document, _jsonSerializerSettings)}");
+				_outputHelper.WriteLine($"NavigateAsync - Document error for: {JsonConvert.SerializeObject(Document.Body, _jsonSerializerSettings)}");
 				throw;
 			}
 		}
@@ -67,7 +67,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			}
 			catch
 			{
-				_outputHelper.WriteLine($"NavigateDataTestAsync - Document error for: {JsonConvert.SerializeObject(Document, _jsonSerializerSettings)}");
+				_outputHelper.WriteLine($"NavigateDataTestAsync - Document error for: {JsonConvert.SerializeObject(Document.Body, _jsonSerializerSettings)}");
 				throw;
 			}
 		}
