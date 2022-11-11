@@ -49,6 +49,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			}
 			catch
 			{
+				_outputHelper.WriteLine("HANDLING EXCEPTION!");
 				_outputHelper?.WriteLine(Document.TextContent);
 				throw;
 			}
@@ -56,8 +57,17 @@ namespace ApplyToBecomeInternal.Tests.Pages
 
 		public async Task NavigateDataTestAsync(string dataTest)
 		{
-			var anchors = Document.QuerySelectorAll($"[data-test='{dataTest}']").First() as IHtmlAnchorElement;
-			await anchors.NavigateAsync();
+			try
+			{
+				var anchors = Document.QuerySelectorAll($"[data-test='{dataTest}']").First() as IHtmlAnchorElement;
+				await anchors.NavigateAsync();
+			}
+			catch
+			{
+				_outputHelper.WriteLine("HANDLING EXCEPTION!");
+				_outputHelper?.WriteLine(Document.TextContent);
+				throw;
+			}
 		}
 
 		protected (RadioButton, RadioButton) RandomRadioButtons(string id, params string[] values)
