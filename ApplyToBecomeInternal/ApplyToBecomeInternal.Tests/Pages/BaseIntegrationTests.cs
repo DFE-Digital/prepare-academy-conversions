@@ -34,13 +34,21 @@ namespace ApplyToBecomeInternal.Tests.Pages
 
 		public async Task<IDocument> NavigateAsync(string linkText, int? index = null)
 		{
-			var anchors = Document.QuerySelectorAll("a");
-			var link = (index == null
-					? anchors.Single(a => a.TextContent.Contains(linkText))
-					: anchors.Where(a => a.TextContent.Contains(linkText)).ElementAt(index.Value))
-				as IHtmlAnchorElement;
+			try
+			{
+				var anchors = Document.QuerySelectorAll("a");
+				var link = (index == null
+						? anchors.Single(a => a.TextContent.Contains(linkText))
+						: anchors.Where(a => a.TextContent.Contains(linkText)).ElementAt(index.Value))
+					as IHtmlAnchorElement;
 
-			return await link.NavigateAsync();
+				return await link.NavigateAsync();
+			}
+			catch
+			{
+				await Console.Error.WriteLineAsync(Document.TextContent);
+				throw;
+			}
 		}
 
 		public async Task NavigateDataTestAsync(string dataTest)
