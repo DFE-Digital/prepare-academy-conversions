@@ -41,15 +41,13 @@ namespace ApplyToBecomeInternal.Pages
 			}
 			
 			if (AcademyConversionProject.EndOfCurrentFinancialYear.HasValue &&
-				AcademyConversionProject.EndOfNextFinancialYear.HasValue && 
-				AcademyConversionProject.EndOfCurrentFinancialYear != DateTime.MinValue &&
-				AcademyConversionProject.EndOfNextFinancialYear != DateTime.MinValue)
+			    AcademyConversionProject.EndOfNextFinancialYear.HasValue && 
+			    AcademyConversionProject.EndOfCurrentFinancialYear != DateTime.MinValue &&
+			    AcademyConversionProject.EndOfNextFinancialYear != DateTime.MinValue &&
+			    AcademyConversionProject.EndOfCurrentFinancialYear.Value.AddYears(1).AddDays(-1) > AcademyConversionProject.EndOfNextFinancialYear)
 			{
-				if (AcademyConversionProject.EndOfCurrentFinancialYear.Value.AddYears(1).AddDays(-1) > AcademyConversionProject.EndOfNextFinancialYear)
-				{
-					_errorService.AddError($"/task-list/{id}/confirm-school-budget-information/update-school-budget-information?return=%2FTaskList%2FSchoolBudgetInformation/ConfirmSchoolBudgetInformation&fragment=financial-year",
-						"The next financial year cannot be before or within a year of the current financial year");
-				}
+				_errorService.AddError($"/task-list/{id}/confirm-school-budget-information/update-school-budget-information?return=%2FTaskList%2FSchoolBudgetInformation/ConfirmSchoolBudgetInformation&fragment=financial-year",
+					"The next financial year cannot be before or within a year of the current financial year");
 			}					
 
 			_errorService.AddErrors(Request.Form.Keys, ModelState);
