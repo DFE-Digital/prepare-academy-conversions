@@ -23,6 +23,8 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		protected readonly Fixture _fixture;
 		private JsonSerializerSettings _jsonSerializerSettings;
 
+		private const int PageLoadTimeout = 30000;
+
 		protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper)
 		{
 			_factory = factory;
@@ -43,7 +45,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		{
 			try
 			{
-				await Task.WhenAny(new[] { Document.WaitForReadyAsync(), Task.Delay(2000) });
+				await Task.WhenAny(new[] { Document.WaitForReadyAsync(), Task.Delay(PageLoadTimeout) });
 
 				var anchors = Document.QuerySelectorAll("a");
 				var link = (index == null
@@ -55,7 +57,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			}
 			catch
 			{
-				_outputHelper.WriteLine($"NavigateAsync Exception!");
+				_outputHelper.WriteLine("NavigateAsync Exception!");
 				throw;
 			}
 		}
@@ -64,14 +66,14 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		{
 			try
 			{
-				await Task.WhenAny(new[] { Document.WaitForReadyAsync(), Task.Delay(2000) });
+				await Task.WhenAny(new[] { Document.WaitForReadyAsync(), Task.Delay(PageLoadTimeout) });
 
 				var anchors = Document.QuerySelectorAll($"[data-test='{dataTest}']").First() as IHtmlAnchorElement;
 				await anchors.NavigateAsync();
 			}
 			catch
 			{
-				_outputHelper.WriteLine($"NavigateDataTestAsync Exception!");
+				_outputHelper.WriteLine("NavigateDataTestAsync Exception!");
 				throw;
 			}
 		}
