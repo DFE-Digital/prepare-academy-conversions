@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 	public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTestingWebApplicationFactory>, IDisposable
 	{
 		protected readonly IntegrationTestingWebApplicationFactory _factory;
-		private readonly ITestOutputHelper _outputHelper;
+		protected readonly ITestOutputHelper _outputHelper;
 		private readonly IBrowsingContext _browsingContext;
 		protected readonly Fixture _fixture;
 		private JsonSerializerSettings _jsonSerializerSettings;
@@ -43,6 +43,8 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		{
 			try
 			{
+				await Task.WhenAny(new[] { Document.WaitForReadyAsync(), Task.Delay(2000) });
+
 				var anchors = Document.QuerySelectorAll("a");
 				var link = (index == null
 						? anchors.Single(a => a.TextContent.Contains(linkText))
@@ -53,7 +55,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			}
 			catch
 			{
-				_outputHelper.WriteLine($"NavigateAsync - Document error for: {JsonConvert.SerializeObject(Document.Body, _jsonSerializerSettings)}");
+				_outputHelper.WriteLine($"NavigateAsync Exception!");
 				throw;
 			}
 		}
@@ -62,12 +64,14 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		{
 			try
 			{
+				await Task.WhenAny(new[] { Document.WaitForReadyAsync(), Task.Delay(2000) });
+
 				var anchors = Document.QuerySelectorAll($"[data-test='{dataTest}']").First() as IHtmlAnchorElement;
 				await anchors.NavigateAsync();
 			}
 			catch
 			{
-				_outputHelper.WriteLine($"NavigateDataTestAsync - Document error for: {JsonConvert.SerializeObject(Document.Body, _jsonSerializerSettings)}");
+				_outputHelper.WriteLine($"NavigateDataTestAsync Exception!");
 				throw;
 			}
 		}
