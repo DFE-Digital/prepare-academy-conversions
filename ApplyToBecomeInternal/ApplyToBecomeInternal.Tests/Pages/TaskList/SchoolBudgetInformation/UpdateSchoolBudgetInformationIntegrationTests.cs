@@ -130,7 +130,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 			Document.QuerySelector<IHtmlInputElement>("#next-financial-year-month").Value = request.EndOfNextFinancialYear.Value.Month.ToString();
 			Document.QuerySelector<IHtmlInputElement>("#next-financial-year-year").Value = request.EndOfNextFinancialYear.Value.Year.ToString();
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
-			await NavigateAsync("The next financial year cannot be before the current financial year");
+			await NavigateAsync("The next financial year cannot be before or within a year of the current financial year");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information#/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information?return=%2FTaskList%2FSchoolBudgetInformation/ConfirmSchoolBudgetInformation&fragment=financial-year");
 		}
