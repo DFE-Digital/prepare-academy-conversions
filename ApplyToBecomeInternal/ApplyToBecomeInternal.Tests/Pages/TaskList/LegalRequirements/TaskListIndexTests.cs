@@ -1,12 +1,10 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
-using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Models.AcademyConversion;
 using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support;
 using FluentAssertions;
-using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -34,7 +32,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 			Document.QuerySelector<IHtmlButtonElement>(CypressSelectorFor(Select.Legal.Summary.SubmitButton));
 
 		[Fact]
-		public async void Should_have_a_link_that_points_to_the_legal_summary_page()
+		public async Task Should_have_a_link_that_points_to_the_legal_summary_page()
 		{
 			Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
 			await Wizard.OpenTaskList(Project.Id);
@@ -42,7 +40,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		}
 
 		[Fact]
-		public async void Should_report_not_started_status_when_no_options_have_been_selected()
+		public async Task Should_report_not_started_status_when_no_options_have_been_selected()
 		{
 			Project = AddGetProject(project =>
 			{
