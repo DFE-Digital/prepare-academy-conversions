@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 {
@@ -13,7 +14,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolApplicationForm
 		private AcademyConversionProject _project;
 		private Application _application;
 
-		public ApplicationFormIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public ApplicationFormIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper)
 		{
 		}
 		private void AddProjectWithFullApplicationForm()

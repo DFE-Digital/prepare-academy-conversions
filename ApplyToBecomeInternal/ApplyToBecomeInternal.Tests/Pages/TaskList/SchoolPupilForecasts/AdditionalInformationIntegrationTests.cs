@@ -3,12 +3,13 @@ using AngleSharp.Html.Dom;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.SchoolPupilForecasts
 {
 	public class AdditionalInformationIntegrationTests : BaseIntegrationTests
 	{
-		public AdditionalInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public AdditionalInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_additional_information()

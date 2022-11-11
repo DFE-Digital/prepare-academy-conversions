@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 {
 	public class MPDetailsIntegrationTests : BaseIntegrationTests
 	{
-		public MPDetailsIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public MPDetailsIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_display_MP_Name_and_Party()

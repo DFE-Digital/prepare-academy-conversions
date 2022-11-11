@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using Xunit;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.SchoolPupilForecasts
 {
 	public class ConfirmSchoolPupilForecastsIntegrationTests : BaseIntegrationTests
 	{
-		public ConfirmSchoolPupilForecastsIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ConfirmSchoolPupilForecastsIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_be_reference_only_and_display_school_pupil_forecasts_table()

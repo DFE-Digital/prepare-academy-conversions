@@ -4,12 +4,13 @@ using FluentAssertions;
 using System;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.ProjectType
 {
 	public class ProjectTypeIntegrationTests : BaseIntegrationTests
 	{
-		public ProjectTypeIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ProjectTypeIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 
 		[Fact]

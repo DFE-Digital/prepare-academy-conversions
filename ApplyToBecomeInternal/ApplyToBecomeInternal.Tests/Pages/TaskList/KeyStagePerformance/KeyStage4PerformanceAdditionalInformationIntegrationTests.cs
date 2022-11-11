@@ -3,6 +3,7 @@ using AngleSharp.Html.Dom;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 {
@@ -10,7 +11,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 	{
 		public class KeyStage4PerformanceAdditionalInformationIntegrationTests : BaseIntegrationTests
 		{
-			public KeyStage4PerformanceAdditionalInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+			public KeyStage4PerformanceAdditionalInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 			[Fact]
 			public async Task Should_navigate_to_and_update_additional_information()

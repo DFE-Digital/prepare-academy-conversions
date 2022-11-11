@@ -7,12 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 {
 	public class KeyStage5PerformanceIntegrationTests : BaseIntegrationTests
 	{
-		public KeyStage5PerformanceIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public KeyStage5PerformanceIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_be_reference_only_and_display_KS5_data()

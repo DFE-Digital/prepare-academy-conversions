@@ -8,6 +8,7 @@ using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 {
@@ -16,7 +17,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList
 		private AcademyConversionProject _project;
 		private RecordDecisionWizard _wizard;
 
-		public IndexIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public IndexIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper)
 		{
 		}
 

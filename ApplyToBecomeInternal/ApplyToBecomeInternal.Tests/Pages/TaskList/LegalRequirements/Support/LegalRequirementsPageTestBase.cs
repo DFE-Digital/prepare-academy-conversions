@@ -5,6 +5,7 @@ using ApplyToBecomeInternal.Models;
 using System;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support
 {
@@ -12,7 +13,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support
 	{
 		protected AcademyConversionProject Project;
 
-		protected LegalRequirementsPageTestBase(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		protected LegalRequirementsPageTestBase(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper)
 		{
 		}
 

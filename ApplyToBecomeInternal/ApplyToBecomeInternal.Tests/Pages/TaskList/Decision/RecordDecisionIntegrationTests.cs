@@ -3,12 +3,13 @@ using AngleSharp.Html.Dom;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 {
 	public class RecordDecisionIntegrationTests : BaseIntegrationTests
 	{
-		public RecordDecisionIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public RecordDecisionIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper)
 		{
 		}
 		

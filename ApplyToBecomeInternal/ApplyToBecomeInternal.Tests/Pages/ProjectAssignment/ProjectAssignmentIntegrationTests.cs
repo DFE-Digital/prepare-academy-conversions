@@ -7,12 +7,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.ProjectAssignment
 {
 	public class ProjectAssignmentIntegrationTests : BaseIntegrationTests
 	{
-		public ProjectAssignmentIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public ProjectAssignmentIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper)
 		{			
 		}
 

@@ -3,12 +3,13 @@ using AngleSharp.Html.Dom;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 {
 	public class AcademyOrderRequiredIntegrationTests : BaseIntegrationTests
 	{
-		public AcademyOrderRequiredIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public AcademyOrderRequiredIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_academy_order_required()

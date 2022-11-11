@@ -2,12 +2,13 @@ using FluentAssertions;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 {
 	public class ProjectNotesIntegrationTests : BaseIntegrationTests
 	{
-		public ProjectNotesIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ProjectNotesIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_navigate_to_project_notes_from_submenu_and_back_to_project_list()

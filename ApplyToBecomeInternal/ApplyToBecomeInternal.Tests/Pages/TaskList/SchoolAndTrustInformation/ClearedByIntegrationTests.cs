@@ -3,12 +3,13 @@ using AngleSharp.Html.Dom;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 {
 	public class ClearedByIntegrationTests : BaseIntegrationTests
 	{
-		public ClearedByIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ClearedByIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_cleared_by()

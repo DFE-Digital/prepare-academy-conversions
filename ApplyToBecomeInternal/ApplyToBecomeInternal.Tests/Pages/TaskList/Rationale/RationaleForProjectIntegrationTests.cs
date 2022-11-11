@@ -3,12 +3,13 @@ using AngleSharp.Html.Dom;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 {
 	public class RationaleForProjectIntegrationTests : BaseIntegrationTests
 	{
-		public RationaleForProjectIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public RationaleForProjectIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_display_rationale_for_project()

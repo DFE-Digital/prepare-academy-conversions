@@ -9,12 +9,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 {
 	public class KeyStage4PerformanceIntegrationTests : BaseIntegrationTests
 	{
-		public KeyStage4PerformanceIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public KeyStage4PerformanceIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_be_reference_only_and_display_KS4_data()

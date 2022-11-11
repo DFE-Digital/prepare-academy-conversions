@@ -7,6 +7,7 @@ using FluentAssertions;
 using System;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 {
@@ -17,7 +18,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		private string PageHeading => Document.QuerySelector("h1").TextContent.Trim();
 		private IElement ErrorSummary => Document.QuerySelector(".govuk-error-summary");
 
-		public WhyDeferredIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public WhyDeferredIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper)
 		{
 		}
 

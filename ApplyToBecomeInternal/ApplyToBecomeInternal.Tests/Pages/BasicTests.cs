@@ -2,12 +2,13 @@
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages
 {
 	public class BasicTests : BaseIntegrationTests
 	{
-		public BasicTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public BasicTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Theory]
 		[InlineData("/project-list")]

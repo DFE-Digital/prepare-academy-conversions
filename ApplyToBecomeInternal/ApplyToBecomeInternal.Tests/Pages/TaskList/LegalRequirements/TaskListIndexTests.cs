@@ -7,13 +7,14 @@ using ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 {
 	public class TaskListIndexTests : LegalRequirementsPageTestBase
 	{
 		protected LegalRequirementsTestWizard Wizard;
-		public TaskListIndexTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public TaskListIndexTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper)
 		{
 			Wizard = new LegalRequirementsTestWizard(Context);
 		}

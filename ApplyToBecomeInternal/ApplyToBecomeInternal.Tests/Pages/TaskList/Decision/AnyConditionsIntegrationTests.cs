@@ -6,6 +6,7 @@ using ApplyToBecomeInternal.Tests.PageObjects;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 {
@@ -15,7 +16,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		private RecordDecisionWizard _wizard;
 
 
-		public AnyConditionsIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public AnyConditionsIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper)
 		{
 		}
 

@@ -3,12 +3,13 @@ using AngleSharp.Html.Dom;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.RisksAndIssues
 {
 	public class ConfirmRisksAndIssuesIntegrationTests : BaseIntegrationTests
 	{
-		public ConfirmRisksAndIssuesIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ConfirmRisksAndIssuesIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_be_in_progress_and_display_risks_and_issues()

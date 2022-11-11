@@ -4,12 +4,13 @@ using ApplyToBecomeInternal.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 {
 	public class DistanceFromTrustHeadquartersIntegrationTests : BaseIntegrationTests
 	{
-		public DistanceFromTrustHeadquartersIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public DistanceFromTrustHeadquartersIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_distance_to_trust_headquarters()

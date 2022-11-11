@@ -5,12 +5,13 @@ using FluentAssertions;
 using System;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 {
 	public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTests
 	{
-		public ConfirmSchoolBudgetInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ConfirmSchoolBudgetInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_be_in_progress_and_display_school_budget_information()

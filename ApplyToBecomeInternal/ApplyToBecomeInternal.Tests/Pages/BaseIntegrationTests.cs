@@ -10,18 +10,21 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages
 {
 	public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTestingWebApplicationFactory>, IDisposable
 	{
 		protected readonly IntegrationTestingWebApplicationFactory _factory;
+		private readonly ITestOutputHelper _outputHelper;
 		private readonly IBrowsingContext _browsingContext;
 		protected readonly Fixture _fixture;
 
-		protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory)
+		protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper)
 		{
 			_factory = factory;
+			_outputHelper = outputHelper;
 			var httpClient = factory.CreateClient();
 			_browsingContext = CreateBrowsingContext(httpClient);
 			_fixture = new Fixture();
@@ -46,7 +49,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			}
 			catch
 			{
-				await Console.Error.WriteLineAsync(Document.TextContent);
+				_outputHelper?.WriteLine(Document.TextContent);
 				throw;
 			}
 		}

@@ -3,12 +3,13 @@ using AngleSharp.Html.Dom;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.Public
 {
 	public class AccessibilityStatementTests : BaseIntegrationTests
 	{
-		public AccessibilityStatementTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public AccessibilityStatementTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper)
 		{
 		}
 

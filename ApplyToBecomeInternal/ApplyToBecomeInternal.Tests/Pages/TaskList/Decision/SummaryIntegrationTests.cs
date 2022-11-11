@@ -8,6 +8,7 @@ using FluentAssertions;
 using System;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 {
@@ -16,7 +17,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		private AcademyConversionProject _project;
 		private RecordDecisionWizard _wizard;
 
-		public SummaryIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public SummaryIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper)
 		{
 		}
 

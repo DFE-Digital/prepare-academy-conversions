@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 {
@@ -15,7 +16,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 		private int _recordCount;
 		private List<string> _statuses;
 
-		public ProjectListFilteringIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public ProjectListFilteringIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper)
 		{
 		}
 

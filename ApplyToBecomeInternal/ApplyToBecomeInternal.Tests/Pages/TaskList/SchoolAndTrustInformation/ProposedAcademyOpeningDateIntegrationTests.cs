@@ -6,12 +6,13 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 {
 	public class ProposedAcademyOpeningDateIntegrationTests : BaseIntegrationTests
 	{
-		public ProposedAcademyOpeningDateIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ProposedAcademyOpeningDateIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_proposed_academy_opening_date()

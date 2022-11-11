@@ -5,12 +5,13 @@ using FluentAssertions;
 using System;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 {
 	public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTests
 	{
-		public UpdateSchoolBudgetInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public UpdateSchoolBudgetInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_school_budget_information()

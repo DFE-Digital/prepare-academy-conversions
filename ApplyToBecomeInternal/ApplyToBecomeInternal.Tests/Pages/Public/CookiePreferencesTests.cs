@@ -4,12 +4,13 @@ using AngleSharp.Io;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.Public
 {
 	public class CookiePreferencesTests : BaseIntegrationTests
 	{
-		public CookiePreferencesTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public CookiePreferencesTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper)
 		{
 		}
 

@@ -5,12 +5,13 @@ using AutoFixture;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 {
 	public class AddProjectNoteIntegrationTests : BaseIntegrationTests
 	{
-		public AddProjectNoteIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public AddProjectNoteIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_navigate_to_add_note_from_project_notes_and_back_to_project_notes()

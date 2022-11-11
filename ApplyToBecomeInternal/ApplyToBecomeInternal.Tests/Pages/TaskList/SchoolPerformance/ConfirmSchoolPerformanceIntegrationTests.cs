@@ -3,12 +3,13 @@ using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
 using ApplyToBecome.Data.Models.Establishment;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 {
 	public class ConfirmSchoolPerformanceIntegrationTests : BaseIntegrationTests
 	{
-		public ConfirmSchoolPerformanceIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ConfirmSchoolPerformanceIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_be_reference_only_and_display_school_performance()

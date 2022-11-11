@@ -7,12 +7,13 @@ using FluentAssertions;
 using System;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 {
 	public class DecisionDateIntegrationTests : BaseIntegrationTests
 	{
-		public DecisionDateIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public DecisionDateIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper)
 		{
 		}
 

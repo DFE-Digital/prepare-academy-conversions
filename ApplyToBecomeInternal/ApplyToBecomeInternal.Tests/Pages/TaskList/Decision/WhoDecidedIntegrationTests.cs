@@ -5,12 +5,13 @@ using ApplyToBecomeInternal.Tests.PageObjects;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 {
 	public class WhoDecidedIntegrationTests : BaseIntegrationTests
 	{
-		public WhoDecidedIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public WhoDecidedIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper)
 		{
 		}
 

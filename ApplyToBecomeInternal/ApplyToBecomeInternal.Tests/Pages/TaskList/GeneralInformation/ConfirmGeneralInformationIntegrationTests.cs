@@ -4,12 +4,13 @@ using ApplyToBecomeInternal.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 {
 	public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
 	{
-		public ConfirmGeneralInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ConfirmGeneralInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_be_in_progress_and_display_general_information()

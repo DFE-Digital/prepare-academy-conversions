@@ -5,12 +5,13 @@ using FluentAssertions;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 {
 	public class ProjectListIntegrationTests : BaseIntegrationTests
 	{
-		public ProjectListIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ProjectListIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper) { }
 
 		[Fact]
 		public async Task Should_display_list_of_projects_and_navigate_to_and_from_task_list()

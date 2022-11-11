@@ -5,12 +5,13 @@ using FluentAssertions;
 using System;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 {
 	public class GenerateHTBIntegrationTests : BaseIntegrationTests
 	{
-		public GenerateHTBIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) 
+		public GenerateHTBIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper)
 		{
 			_fixture.Customizations.Add(new RandomDateBuilder(DateTime.Now.AddDays(1), DateTime.Now.AddMonths(12)));
 		}

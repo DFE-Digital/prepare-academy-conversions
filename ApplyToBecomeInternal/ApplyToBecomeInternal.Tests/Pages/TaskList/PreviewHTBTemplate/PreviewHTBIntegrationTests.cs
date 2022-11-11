@@ -11,12 +11,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using ApplyToBecomeInternal.Tests.TestHelpers;
+using Xunit.Abstractions;
 
 namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 {
 	public class PreviewHTBIntegrationTests : BaseIntegrationTests
 	{
-		public PreviewHTBIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public PreviewHTBIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory, outputHelper)
 		{
 			_fixture.Customizations.Add(new RandomDateBuilder(DateTime.Now.AddMonths(-2), DateTime.Now.AddDays(-1)));
 		}
