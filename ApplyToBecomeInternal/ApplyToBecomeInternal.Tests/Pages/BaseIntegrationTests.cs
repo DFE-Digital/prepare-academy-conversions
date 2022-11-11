@@ -4,6 +4,7 @@ using AngleSharp.Html.Dom;
 using AngleSharp.Io;
 using AngleSharp.Io.Network;
 using AutoFixture;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ApplyToBecomeInternal.Tests.Pages
 {
@@ -49,8 +51,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			}
 			catch
 			{
-				_outputHelper.WriteLine("HANDLING EXCEPTION!");
-				_outputHelper?.WriteLine(Document.TextContent);
+				_outputHelper.WriteLine($"NavigateAsync - Document error for: {JsonConvert.SerializeObject(Document)}");
 				throw;
 			}
 		}
@@ -64,8 +65,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			}
 			catch
 			{
-				_outputHelper.WriteLine("HANDLING EXCEPTION!");
-				_outputHelper?.WriteLine(Document.TextContent);
+				_outputHelper.WriteLine($"NavigateDataTestAsync - Document error for: {JsonConvert.SerializeObject(Document)}");
 				throw;
 			}
 		}
