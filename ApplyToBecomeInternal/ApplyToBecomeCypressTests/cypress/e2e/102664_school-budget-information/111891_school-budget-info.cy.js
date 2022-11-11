@@ -20,11 +20,11 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 
 		it('TC01: Verifies that End of Current financial year dates matches in confirm school budget info page', () => {
 			cy.endOfCurrentFinancialYearInfo()
-				.invoke('text')
-				.should('contain', '21 March 2022' )
-				.then((text) => {
-					expect(text).to.match(/^([0-9]){2}\s[a-zA-Z]{1,}\s[0-9]{4}$/)
-				});
+			  .invoke('text')
+			  .should('contain', '21 March 2022' )
+		      .then((text) => {
+				expect(text).to.match(/^([0-9]){2}\s[a-zA-Z]{1,}\s[0-9]{4}$/)
+			});
 		});
 
 		it('TC02: Verifies that End of Current financial year dates matches in preview page', () => {
@@ -35,20 +35,20 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 			cy.get('h1').contains('Preview project template')
 			cy.get('h2').contains('School budget information')
 			cy.get('[id="financial-year"]')
-				.invoke('text')
-				.should('contain', '21 March 2022' )
-				.then((text) => {
-					expect(text).to.match(/^([0-9]){2}\s[a-zA-Z]{1,}\s[0-9]{4}$/)
-				});
+			  .invoke('text')
+			  .should('contain', '21 March 2022' )
+			  .then((text) => {
+				expect(text).to.match(/^([0-9]){2}\s[a-zA-Z]{1,}\s[0-9]{4}$/)
+			});
 		});
 
 		it('TC03: Verifies that End of next financial year dates matches in confirm school budget info page', () => {
 			cy.endOfNextFinancialYearInfo()
-				.invoke('text')
-				.should('contain', '20 March 2023')
-				.then((text) => {
-					expect(text).to.match(/^([0-9]){2}\s[a-zA-Z]{1,}\s[0-9]{4}$/)
-				});
+			  .invoke('text')
+			  .should('contain', '20 March 2023')
+			  .then((text) => {
+			    expect(text).to.match(/^([0-9]){2}\s[a-zA-Z]{1,}\s[0-9]{4}$/)
+			});
 		});
 
 		it('TC04: Verifies that End of next financial year dates matches in preview page', () => {
@@ -62,7 +62,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 			  .invoke('text')
 			  .should('contain', '20 March 2023' )
 			  .then((text) => {
-			     expect(text).to.match(/^([0-9]){2}\s[a-zA-Z]{1,}\s[0-9]{4}$/)
+			    expect(text).to.match(/^([0-9]){2}\s[a-zA-Z]{1,}\s[0-9]{4}$/)
 			});
 		});
 
