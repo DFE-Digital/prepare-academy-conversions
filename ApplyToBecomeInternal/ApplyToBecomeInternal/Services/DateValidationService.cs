@@ -41,6 +41,9 @@ namespace ApplyToBecomeInternal.Services
 			if (month < 1 || month > 12)
 				return (false, _messages.MonthOutOfRange);
 
+			if (year < 2000 || year > 2050)
+				return (false, _messages.YearOutOfRange);
+
 			if (day < 1 || day > DateTime.DaysInMonth(yearParsed ? year : DateTime.Today.Year, month))
 				return (false, _messages.DayOutOfRange(DateTime.DaysInMonth(year, month)));
 
