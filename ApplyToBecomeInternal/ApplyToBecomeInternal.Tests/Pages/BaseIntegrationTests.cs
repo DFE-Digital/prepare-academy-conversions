@@ -22,7 +22,6 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		protected readonly ITestOutputHelper _outputHelper;
 		private readonly IBrowsingContext _browsingContext;
 		protected readonly Fixture _fixture;
-		private JsonSerializerSettings _jsonSerializerSettings;
 
 		private const int PageLoadTimeout = 30000;
 
@@ -33,8 +32,6 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			var httpClient = factory.CreateClient();
 			_browsingContext = CreateBrowsingContext(httpClient);
 			_fixture = new Fixture();
-
-			_jsonSerializerSettings = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
 		}
 
 		public async Task<IDocument> OpenUrlAsync(string url)
@@ -114,7 +111,8 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		{
 			var config = AngleSharp.Configuration.Default
 				.WithRequester(new HttpClientRequester(httpClient))
-				.WithDefaultLoader(new LoaderOptions { IsResourceLoadingEnabled = true });
+				.WithDefaultLoader(new LoaderOptions { IsResourceLoadingEnabled = true })
+				.WithTemporaryCookies();
 
 			return BrowsingContext.New(config);
 		}
