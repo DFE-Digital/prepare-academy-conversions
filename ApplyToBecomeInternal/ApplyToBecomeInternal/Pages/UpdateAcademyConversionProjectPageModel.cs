@@ -22,17 +22,16 @@ namespace ApplyToBecomeInternal.Pages
 
 		public bool ShowError => _errorService.HasErrors();
 
-		[TempData]
 		public string SuccessPage
 		{
-			get;
-			set;
+			get { return TempData["SuccessPage"].ToString(); }
+			set { TempData["SuccessPage"] = value; }
 		}
 
 		public override async Task<IActionResult> OnPostAsync(int id)
 		{
 			await SetProject(id);
-		
+			
 			bool schoolAndTrustInformationSectionComplete = AcademyConversionProject.SchoolAndTrustInformationSectionComplete != null && AcademyConversionProject.SchoolAndTrustInformationSectionComplete.Value;
 			if (schoolAndTrustInformationSectionComplete && !Project.HeadTeacherBoardDate.HasValue)
 			{
