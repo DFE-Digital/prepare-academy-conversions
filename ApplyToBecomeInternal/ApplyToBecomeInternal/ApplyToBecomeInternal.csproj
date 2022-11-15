@@ -23,7 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="AngleSharp" Version="0.17.1" />
+	  <PackageReference Include="AngleSharp" Version="0.16.1" />
 	  <PackageReference Include="DocumentFormat.OpenXml" Version="2.18.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.11" />
