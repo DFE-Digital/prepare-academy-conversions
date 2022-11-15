@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
 using Moq;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
@@ -45,7 +46,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		public async Task OnSuccessfulSubmit_ItUpdatesTheProjectInTheRepository()
 		{
 			UpdateAcademyConversionProjectPageModel pageModel = GetPageModel();
-
+			pageModel.SuccessPage = string.Empty;
 			await pageModel.OnPostAsync(10);
 			_repository.Verify(r => r.UpdateProject(10, It.Is<UpdateAcademyConversionProject>(p => p.Author == _academyConversionProjectPostModel.Author)));
 		}
