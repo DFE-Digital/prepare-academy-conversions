@@ -1,8 +1,10 @@
 using ApplyToBecomeInternal.Models;
+using ApplyToBecomeInternal.Options;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 
 namespace ApplyToBecomeInternal.Pages.Public
@@ -14,15 +16,20 @@ namespace ApplyToBecomeInternal.Pages.Public
 		public bool PreferencesSet { get; set; } = false;
 		public string returnPath { get; set; }
 		private readonly ILogger<CookiePreferences> _logger;
+		private readonly IOptions<ServiceLinkOptions> _options;
 
-		public CookiePreferences(ILogger<CookiePreferences> logger)
+		public CookiePreferences(ILogger<CookiePreferences> logger, IOptions<ServiceLinkOptions> options)
 		{
 			_logger = logger;
+			_options = options;
 		}
+
+		public string TransfersCookiesUrl { get; set; }
 
 		public ActionResult OnGet(bool? consent, string returnUrl)
 		{
 			returnPath = returnUrl;
+			TransfersCookiesUrl = $"{_options.Value.TransfersUrl}/cookie-preferences?returnUrl=%2Fhome";
 
 			if (Request.Cookies.ContainsKey(ConsentCookieName))
 			{
