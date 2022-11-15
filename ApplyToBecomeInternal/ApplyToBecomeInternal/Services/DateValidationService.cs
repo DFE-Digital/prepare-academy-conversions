@@ -34,7 +34,19 @@ namespace ApplyToBecomeInternal.Services
 			bool yearParsed = int.TryParse(yearInput, out int year);
 			bool monthParsed = int.TryParse(monthInput, out int month);
 			bool dayParsed = int.TryParse(dayInput, out int day);
+			var validatedDateParts = ValidateDateParts(dayParsed, monthParsed, yearParsed, month, year, day);
+			if (validatedDateParts.Item1 is false) return validatedDateParts;
 
+			(bool valid, string message) = _messages.ContextSpecificValidation(day, month, year);
+			if (!valid) return (false, message);
+
+			var validDate = DateTime.TryParseExact($"{yearInput}-{monthInput}-{dayInput}", "yyyy-M-d", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+
+			return validDate ? (true, string.Empty) : (false, _messages.DefaultMessage);
+		}
+
+		private (bool, string) ValidateDateParts(bool dayParsed, bool monthParsed, bool yearParsed, int month, int year, int day)
+		{
 			if (!dayParsed || !monthParsed || !yearParsed)
 				return (false, _messages.DefaultMessage);
 
@@ -46,13 +58,7 @@ namespace ApplyToBecomeInternal.Services
 
 			if (day < 1 || day > DateTime.DaysInMonth(yearParsed ? year : DateTime.Today.Year, month))
 				return (false, _messages.DayOutOfRange(DateTime.DaysInMonth(year, month)));
-
-			(bool valid, string message) = _messages.ContextSpecificValidation(day, month, year);
-			if (!valid) return (false, message);
-
-			var validDate = DateTime.TryParseExact($"{yearInput}-{monthInput}-{dayInput}", "yyyy-M-d", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
-
-			return validDate ? (true, string.Empty) : (false, _messages.DefaultMessage);
+			return (true, string.Empty);
 		}
 
 		private sealed class DefaultDateValidationMessageProvider : IDateValidationMessageProvider
