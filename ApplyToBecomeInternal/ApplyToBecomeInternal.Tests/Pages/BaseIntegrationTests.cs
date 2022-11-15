@@ -7,6 +7,7 @@ using AutoFixture;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -45,10 +46,13 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		{
 			try
 			{
+				Stopwatch timer = Stopwatch.StartNew();
 				await Task.WhenAny(new[] { Document.WaitForReadyAsync(), Task.Delay(PageLoadTimeout) });
+				timer.Stop();
+				if (timer.ElapsedMilliseconds >= PageLoadTimeout) _outputHelper.WriteLine("Page load timeout elapsed - page probably not loaded!");
 
-				var anchors = Document.QuerySelectorAll("a");
-				var link = (index == null
+				IHtmlCollection<IElement> anchors = Document.QuerySelectorAll("a");
+				IHtmlAnchorElement link = (index == null
 						? anchors.Single(a => a.TextContent.Contains(linkText))
 						: anchors.Where(a => a.TextContent.Contains(linkText)).ElementAt(index.Value))
 					as IHtmlAnchorElement;
