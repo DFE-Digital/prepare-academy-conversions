@@ -42,7 +42,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
         dotnet-sonarscanner begin /k:"DFE-Digital_a2b-internal" /o:"dfe-digital" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.coverageReportPaths=CoverageReport/SonarQube.xml
-        dotnet build ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-restore
-        dotnet test ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --verbosity normal --collect:"XPlat Code Coverage" --logger "console;verbosity=detailed"
+        dotnet build ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-restore --configuration Release
+        dotnet test ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --logger "console;verbosity=detailed"
         reportgenerator -reports:./**/coverage.cobertura.xml -targetdir:./ApplyToBecomeInternal/CoverageReport -reporttypes:SonarQube
         dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
