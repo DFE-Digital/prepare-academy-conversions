@@ -40,7 +40,7 @@ namespace ApplyToBecomeInternal
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			var razorPages = services
+			services
 				.AddRazorPages(options =>
 				{
 					options.Conventions.AuthorizeFolder("/");
@@ -53,11 +53,6 @@ namespace ApplyToBecomeInternal
 			services.AddControllersWithViews()
 				.AddMicrosoftIdentityUI();
 		
-			if (_env.IsDevelopment())
-			{
-				razorPages.AddRazorRuntimeCompilation();
-			}
-
 			services.AddScoped(sp => sp.GetService<IHttpContextAccessor>()!.HttpContext.Session);
 			services.AddSession(options =>
 			{
