@@ -29,14 +29,12 @@ namespace ApplyToBecomeInternal
 {
 	public class Startup
 	{
-		public Startup(IConfiguration configuration, IWebHostEnvironment env)
+		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
-			_env = env;
 		}
 
 		public IConfiguration Configuration { get; }
-		private readonly IWebHostEnvironment _env;
 
 		public void ConfigureServices(IServiceCollection services)
 		{
