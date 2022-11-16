@@ -15,7 +15,7 @@ env:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET
@@ -37,7 +37,7 @@ jobs:
         run: dotnet test -c Release ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --verbosity normal
   build-and-push-image:
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: write
@@ -80,7 +80,7 @@ jobs:
 
   deploy-image:
     needs: build-and-push-image
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: ${{ github.event.inputs.environment}}
     defaults:
       run:
@@ -155,7 +155,7 @@ jobs:
 
   create-tag:
     needs: deploy-image
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
       - name: Create tag string
@@ -179,7 +179,7 @@ jobs:
     needs: deploy-image
     environment: staging
     if: ${{ github.event.inputs.environment}} == staging
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     defaults:
       run:
          working-directory: ApplyToBecomeInternal/ApplyToBecomeCypressTests
