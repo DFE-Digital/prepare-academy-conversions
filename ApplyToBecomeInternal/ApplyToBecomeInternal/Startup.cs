@@ -29,18 +29,16 @@ namespace ApplyToBecomeInternal
 {
 	public class Startup
 	{
-		public Startup(IConfiguration configuration, IWebHostEnvironment env)
+		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
-			_env = env;
 		}
 
 		public IConfiguration Configuration { get; }
-		private readonly IWebHostEnvironment _env;
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			var razorPages = services
+			services
 				.AddRazorPages(options =>
 				{
 					options.Conventions.AuthorizeFolder("/");
@@ -53,11 +51,6 @@ namespace ApplyToBecomeInternal
 			services.AddControllersWithViews()
 				.AddMicrosoftIdentityUI();
 		
-			if (_env.IsDevelopment())
-			{
-				razorPages.AddRazorRuntimeCompilation();
-			}
-
 			services.AddScoped(sp => sp.GetService<IHttpContextAccessor>()!.HttpContext.Session);
 			services.AddSession(options =>
 			{

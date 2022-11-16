@@ -16,9 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 3.1.301
+          dotnet-version: 6.0
       - name: Setup node.js
         uses: actions/setup-node@v1
         with:
@@ -149,18 +149,18 @@ jobs:
           TF_VAR_app_azuread_groupid: ${{ secrets.AZUREAD_GROUPID }}
           TF_VAR_app_cypresstest_secret : ${{ secrets.CYPRESS_TEST_SECRET }}
 
-  create-tag:    
+  create-tag:
     needs: deploy-image
     runs-on: ubuntu-latest
-    steps:      
+    steps:
       - uses: actions/checkout@v2
-      - name: Create tag string          
-        run: echo "RELEASE_TAGNAME=dev-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV    
+      - name: Create tag string
+        run: echo "RELEASE_TAGNAME=dev-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV
       - name: Create git tag
         run: |
           git tag ${{ env.RELEASE_TAGNAME }}
       - name: Push git tag
-        run: git push origin ${{ env.RELEASE_TAGNAME }}      
+        run: git push origin ${{ env.RELEASE_TAGNAME }}
 
   cypress-tests:
     needs: deploy-image
@@ -179,7 +179,7 @@ jobs:
         run: npm install
       - name: Run cypress
         run: npm run cy:run -- --env url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
-        env: 
+        env:
           db: ${{ secrets.DB_CONNECTION_STRING }}
       - uses: actions/upload-artifact@v1
         if: failure()

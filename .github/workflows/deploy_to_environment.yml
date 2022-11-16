@@ -19,9 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 3.1.301
+          dotnet-version: 6.0
       - name: Setup node.js
         uses: actions/setup-node@v1
         with:
@@ -76,7 +76,7 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE}}:${{ env.BRANCH_TAG }}
           push: true
           build-args: |
-            COMMIT_SHA=${{ env.DOCKER_IMAGE_TAG }}  
+            COMMIT_SHA=${{ env.DOCKER_IMAGE_TAG }}
 
   deploy-image:
     needs: build-and-push-image
@@ -156,9 +156,9 @@ jobs:
   create-tag:
     needs: deploy-image
     runs-on: ubuntu-latest
-    steps:      
+    steps:
       - uses: actions/checkout@v2
-      - name: Create tag string          
+      - name: Create tag string
         run: echo "RELEASE_TAGNAME=${{ github.event.inputs.environment }}-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV
       - name: Create git tag
         run: |
@@ -193,7 +193,7 @@ jobs:
         run: npm install
       - name: Run cypress
         run: npm run cy:run -- --env url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
-        env: 
+        env:
           db: ${{ secrets.DB_CONNECTION_STRING }}
       - uses: actions/upload-artifact@v1
         if: failure()
