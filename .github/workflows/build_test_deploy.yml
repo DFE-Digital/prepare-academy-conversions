@@ -28,10 +28,10 @@ jobs:
         run: cd ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot; npm install; npm run build:assets; npm run build:frontend
       - name: Restore dependencies
         run: dotnet restore ApplyToBecomeInternal/ApplyToBecomeInternal.sln --force --force-evaluate
-      - name: Build
-        run: dotnet build ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-restore --configuration Release
-      - name: Test
-        run: dotnet test ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --configuration Release --verbosity normal
+      - name: Build & Test
+        run: |
+          dotnet build ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-restore --configuration Release
+          dotnet test ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --configuration Release --verbosity normal
   build-and-push-image:
     needs: test
     runs-on: ubuntu-22.04
