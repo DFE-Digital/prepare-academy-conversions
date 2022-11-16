@@ -27,7 +27,7 @@ jobs:
       - name: Build Frontend
         run: cd ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot; npm install; npm run build:assets; npm run build:frontend
       - name: Restore dependencies
-        run: dotnet restore ApplyToBecomeInternal/ApplyToBecomeInternal.sln
+        run: dotnet restore ApplyToBecomeInternal/ApplyToBecomeInternal.sln --force --force-evaluate
       - name: Build
         run: dotnet build ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-restore --configuration Release
       - name: Test
