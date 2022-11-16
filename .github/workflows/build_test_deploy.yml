@@ -29,9 +29,9 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore ApplyToBecomeInternal/ApplyToBecomeInternal.sln
       - name: Build
-        run: dotnet build -c Release ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-restore
+        run: dotnet build ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-restore --configuration Release
       - name: Test
-        run: dotnet test -c Release ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --verbosity normal
+        run: dotnet test ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --configuration Release --verbosity normal
   build-and-push-image:
     needs: test
     runs-on: ubuntu-22.04
