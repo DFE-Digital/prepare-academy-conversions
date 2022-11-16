@@ -2,7 +2,7 @@ name: Test, build, and deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, upgrade-to-dot-net-6 ]
 
 env:
   REGISTRY: ghcr.io
