@@ -56,7 +56,7 @@ jobs:
     - name: Build & Test
       run: |
         dotnet build ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-restore --configuration Release
-        dotnet test ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --configuration Release --verbosity normal
+        dotnet test ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --configuration Release --verbosity normal --collect:"XPlat Code Coverage"
   build-and-push-image:
     needs: test
     runs-on: ubuntu-22.04
