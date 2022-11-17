@@ -17,7 +17,7 @@ Cypress._.each(['iphone-x'], (viewport) => {
 		it('TC01: Should click on error link and allow user to re-enter date', () => {
 			cy.viewport(viewport)
 
-			cy.submitDateSchoolTrust(11, 11, 1980)
+			cy.submitDateSchoolTrust(11, 11, 2005)
 			cy.saveAndContinueButton().click()
 			cy.get('.govuk-error-summary__list li a')
 				.should('have.text', 'Advisory board date must be in the future')
