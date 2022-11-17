@@ -15,13 +15,13 @@ env:
 
 jobs:
   test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 6.0.403
+          dotnet-version: 3.1.301
       - name: Setup node.js
         uses: actions/setup-node@v1
         with:
@@ -37,7 +37,7 @@ jobs:
         run: dotnet test -c Release ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --verbosity normal
   build-and-push-image:
     needs: test
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
@@ -76,11 +76,11 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE}}:${{ env.BRANCH_TAG }}
           push: true
           build-args: |
-            COMMIT_SHA=${{ env.DOCKER_IMAGE_TAG }}
+            COMMIT_SHA=${{ env.DOCKER_IMAGE_TAG }}  
 
   deploy-image:
     needs: build-and-push-image
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment}}
     defaults:
       run:
@@ -155,10 +155,10 @@ jobs:
 
   create-tag:
     needs: deploy-image
-    runs-on: ubuntu-22.04
-    steps:
+    runs-on: ubuntu-latest
+    steps:      
       - uses: actions/checkout@v2
-      - name: Create tag string
+      - name: Create tag string          
         run: echo "RELEASE_TAGNAME=${{ github.event.inputs.environment }}-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV
       - name: Create git tag
         run: |
@@ -179,7 +179,7 @@ jobs:
     needs: deploy-image
     environment: staging
     if: ${{ github.event.inputs.environment}} == staging
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     defaults:
       run:
          working-directory: ApplyToBecomeInternal/ApplyToBecomeCypressTests
@@ -193,7 +193,7 @@ jobs:
         run: npm install
       - name: Run cypress
         run: npm run cy:run -- --env url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
-        env:
+        env: 
           db: ${{ secrets.DB_CONNECTION_STRING }}
       - uses: actions/upload-artifact@v1
         if: failure()
