@@ -13,7 +13,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 	public class ProjectListFilteringIntegrationTests : BaseIntegrationTests, IAsyncLifetime
 	{
 		private int _recordCount;
-		private List<string> _statuses;
+		// private List<string> _statuses;
 
 		public ProjectListFilteringIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{
@@ -22,15 +22,16 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 		private IHtmlElement FilterBanner => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Banner.ToSelector());
 		private IHtmlElement FilterCount => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Count.ToSelector());
 		private IHtmlInputElement FilterTitle => Document.QuerySelector<IHtmlInputElement>(Select.ProjectList.Filter.Title.ToSelector());
-		private IHtmlElement FilterOptions => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Options.ToSelector());
+		// private IHtmlElement FilterOptions => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Options.ToSelector());
 		private IEnumerable<IHtmlInputElement> FilterStatuses => Document.QuerySelectorAll<IHtmlInputElement>(Select.ProjectList.Filter.Status().ToSelector(comparator: "^="));
 		private IHtmlButtonElement FilterApply => Document.QuerySelector<IHtmlButtonElement>(Select.ProjectList.Filter.Apply.ToSelector());
+		private IHtmlElement FilterOptions => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Options.ToSelector());
 
 		public async Task InitializeAsync()
 		{
 			_recordCount = 20;
 			AddGetProjects(recordCount: _recordCount);
-			_statuses = AddGetStatuses();
+			AddGetStatuses();
 
 			await OpenUrlAsync("/project-list");
 
