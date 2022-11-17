@@ -24,7 +24,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
           .should('contain', 'conversions part of our service')
           .click();
         cy.url().then(href => {
-          expect(href).includes('/cookie-preferences');
+          expect(href).includes('/project-list');
         });
       });
 
