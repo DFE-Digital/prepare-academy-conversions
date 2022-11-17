@@ -33,7 +33,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectType
 				return Page();
 			}
 			
-			if (ProjectType is ProjectTypes.Transfer) return Redirect(_transfersUrl);
+			if (ProjectType is ProjectTypes.Transfer) return Redirect($"{_transfersUrl}/home");
 			return RedirectToPage(Links.ProjectList.Index.Page);
 		}
 	}
