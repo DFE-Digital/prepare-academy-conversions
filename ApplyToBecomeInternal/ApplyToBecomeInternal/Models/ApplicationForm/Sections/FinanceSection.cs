@@ -23,7 +23,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 		{
 
 			var previousFinancialYearFields = new List<FormField>();
-			previousFinancialYearFields.Add(new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate?.ToUkDateString()));
+			previousFinancialYearFields.Add(new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate?.ToDateString()));
 			previousFinancialYearFields.Add(new FormField($"Revenue carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.RevenueCarryForward.ToMoneyString(true)));
 			previousFinancialYearFields.Add(new FormField("Surplus or deficit?", applicationFinancialYear.RevenueIsDeficit.ToSurplusDeficitString()));
 			if(applicationFinancialYear.RevenueIsDeficit == true)
@@ -44,7 +44,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 		{
 			var financialYearFields = new List<FormField>();
 			
-			financialYearFields.Add(new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate?.ToUkDateString()));
+			financialYearFields.Add(new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate?.ToDateString()));
 			financialYearFields.Add(new FormField($"Forecasted revenue carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.RevenueCarryForward.ToMoneyString(true)));
 			financialYearFields.Add(new FormField("Surplus or deficit?", applicationFinancialYear.RevenueIsDeficit.ToSurplusDeficitString()));
 			if(applicationFinancialYear.RevenueIsDeficit == true)

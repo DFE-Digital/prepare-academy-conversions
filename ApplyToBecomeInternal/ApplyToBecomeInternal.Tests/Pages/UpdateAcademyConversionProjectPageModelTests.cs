@@ -12,70 +12,70 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Primitives;
 using Moq;
-using System.Collections.Generic;
+using System;
 using System.Net;
-using System.Net.Http;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Pages
 {
 	public class UpdateAcademyConversionProjectPageModelTests
 	{
-		private readonly Mock<IAcademyConversionProjectRepository> _repository;
+		private readonly AcademyConversionProjectPostModel _academyConversionProjectPostModel;
 		private readonly Mock<ErrorService> _errorService;
-		private readonly AcademyConversionProject _foundProject;
-		private readonly UpdateAcademyConversionProjectPageModel _model;
-		private AcademyConversionProjectPostModel _academyConversionProjectPostModel;
+		private readonly Mock<IAcademyConversionProjectRepository> _repository;
 
 		public UpdateAcademyConversionProjectPageModelTests()
 		{
+			Fixture fixture = new Fixture();
+
 			_repository = new Mock<IAcademyConversionProjectRepository>();
 			_errorService = new Mock<ErrorService>();
-			_foundProject = new Fixture().Create<AcademyConversionProject>();
-			_academyConversionProjectPostModel = new Fixture().Create<AcademyConversionProjectPostModel>();
-			_repository.Setup(r => r.GetProjectById(10)).ReturnsAsync(new ApiResponse<AcademyConversionProject>(HttpStatusCode.OK, _foundProject));
+			AcademyConversionProject foundProject = fixture.Create<AcademyConversionProject>();
+
+			_academyConversionProjectPostModel = fixture.Create<AcademyConversionProjectPostModel>();
+			_academyConversionProjectPostModel.EndOfNextFinancialYear = _academyConversionProjectPostModel.EndOfCurrentFinancialYear.Value.AddYears(1);
+
+			_repository.Setup(r => r.GetProjectById(10)).ReturnsAsync(new ApiResponse<AcademyConversionProject>(HttpStatusCode.OK, foundProject));
 			_repository.Setup(r => r.UpdateProject(10, It.IsAny<UpdateAcademyConversionProject>()))
-				.ReturnsAsync(new ApiResponse<AcademyConversionProject>(HttpStatusCode.OK, _foundProject));
-			_model = new UpdateAcademyConversionProjectPageModel(_repository.Object, _errorService.Object);
+				.ReturnsAsync(new ApiResponse<AcademyConversionProject>(HttpStatusCode.OK, foundProject));
 		}
 
 		[Fact]
-		public async void OnSuccessfulSubmit_ItUpdatesTheProjectInTheRepository()
+		public async Task OnSuccessfulSubmit_ItUpdatesTheProjectInTheRepository()
 		{
-			var pageModel = GetPageModel();
-
+			UpdateAcademyConversionProjectPageModel pageModel = GetPageModel();
+			pageModel.SuccessPage = string.Empty;
 			await pageModel.OnPostAsync(10);
 			_repository.Verify(r => r.UpdateProject(10, It.Is<UpdateAcademyConversionProject>(p => p.Author == _academyConversionProjectPostModel.Author)));
 		}
-		
+
 		[Fact]
-		public async void OnSuccessfulSubmit_ItRedirectsToTheSuccessPage()
+		public async Task OnSuccessfulSubmit_ItRedirectsToTheSuccessPage()
 		{
-			var pageModel = GetPageModel();
+			UpdateAcademyConversionProjectPageModel pageModel = GetPageModel();
 			pageModel.SuccessPage = Links.TaskList.Index.Page;
 
-			var response = await pageModel.OnPostAsync(10);
-			var redirectResponse = Assert.IsType<RedirectToPageResult>(response);
+			IActionResult response = await pageModel.OnPostAsync(10);
+			RedirectToPageResult redirectResponse = Assert.IsType<RedirectToPageResult>(response);
 			Assert.Equal(Links.TaskList.Index.Page, redirectResponse.PageName);
 		}
 
 		private UpdateAcademyConversionProjectPageModel GetPageModel()
 		{
-			var httpContext = new DefaultHttpContext();
-			var modelState = new ModelStateDictionary();
+			DefaultHttpContext httpContext = new DefaultHttpContext();
+			ModelStateDictionary modelState = new ModelStateDictionary();
 			httpContext.Request.ContentType = "application/x-www-form-urlencoded";
-			var actionContext = new ActionContext(httpContext, new RouteData(), new PageActionDescriptor(), modelState);
-			var modelMetadataProvider = new EmptyModelMetadataProvider();
-			var viewData = new ViewDataDictionary(modelMetadataProvider, modelState);
-			var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
-			var pageContext = new PageContext(actionContext) { ViewData = viewData };
+			ActionContext actionContext = new ActionContext(httpContext, new RouteData(), new PageActionDescriptor(), modelState);
+			EmptyModelMetadataProvider modelMetadataProvider = new EmptyModelMetadataProvider();
+			ViewDataDictionary viewData = new ViewDataDictionary(modelMetadataProvider, modelState);
+			TempDataDictionary tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
+			PageContext pageContext = new PageContext(actionContext) { ViewData = viewData };
 
-			var pageModel = new UpdateAcademyConversionProjectPageModel(_repository.Object, _errorService.Object)
+			UpdateAcademyConversionProjectPageModel pageModel = new UpdateAcademyConversionProjectPageModel(_repository.Object, _errorService.Object)
 			{
-				PageContext = pageContext, TempData = tempData, Url = new UrlHelper(actionContext),
-				AcademyConversionProject = _academyConversionProjectPostModel
+				PageContext = pageContext, TempData = tempData, Url = new UrlHelper(actionContext), AcademyConversionProject = _academyConversionProjectPostModel
 			};
 			return pageModel;
 		}
