@@ -67,7 +67,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			sectionArray[0].Fields.Should().BeEquivalentTo(expectedFields);
 			sectionArray[1].Fields.Should().BeEquivalentTo(expectedFieldsContactDetails);
 			sectionArray[2].Fields.Should().BeEquivalentTo(expectedFieldsDateForConversion);
-			sectionArray[3].Fields.Should().BeEquivalentTo(expectedFieldsReasonForJoining);
+			sectionArray[3].Fields.Should().ContainEquivalentOf(expectedFieldsReasonForJoining);
 			sectionArray[4].Fields.Should().BeEquivalentTo(expectedFieldsNameChanges);
 		}
 
@@ -116,7 +116,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			sectionArray[0].Fields.Should().BeEquivalentTo(expectedFields);
 			sectionArray[1].Fields.Should().BeEquivalentTo(expectedFieldsContactDetails);
 			sectionArray[2].Fields.Should().BeEquivalentTo(expectedFieldsDateForConversion);
-			sectionArray[3].Fields.Should().BeEquivalentTo(expectedFieldsReasonForJoining);
+			sectionArray[3].Fields.Should().ContainEquivalentOf(expectedFieldsReasonForJoining);
 			sectionArray[4].Fields.Should().BeEquivalentTo(expectedFieldsNameChanges);
 		}
 
@@ -170,7 +170,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 			sectionArray[0].Fields.Should().BeEquivalentTo(expectedFields);
 			sectionArray[1].Fields.Should().BeEquivalentTo(expectedFieldsContactDetails);
 			sectionArray[2].Fields.Should().BeEquivalentTo(expectedFieldsDateForConversion);
-			sectionArray[3].Fields.Should().BeEquivalentTo(expectedFieldsReasonForJoining);
+			sectionArray[3].Fields.Should().ContainEquivalentOf(expectedFieldsReasonForJoining);
 			sectionArray[4].Fields.Should().BeEquivalentTo(expectedFieldsNameChanges);
 		}
 	}

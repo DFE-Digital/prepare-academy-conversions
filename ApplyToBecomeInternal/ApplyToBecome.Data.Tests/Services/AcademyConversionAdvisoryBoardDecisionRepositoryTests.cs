@@ -31,7 +31,7 @@ namespace ApplyToBecome.Data.Tests.Services
 		}
 
 		[Theory, AutoMoqData]
-		public void Should_throw_when_response_not_successful([Frozen] Mock<IHttpClientService> httpHelper,
+		public async Task Should_throw_when_response_not_successful([Frozen] Mock<IHttpClientService> httpHelper,
 			AcademyConversionAdvisoryBoardDecisionRepository sut,
 			AdvisoryBoardDecision decision)
 		{
@@ -40,8 +40,8 @@ namespace ApplyToBecome.Data.Tests.Services
 			m.Post<AdvisoryBoardDecision, AdvisoryBoardDecision>("/conversion-project/advisory-board-decision", decision))
 				.ReturnsAsync(new ApiResponse<AdvisoryBoardDecision>(responseCode, null));
 
-			sut.Invoking(async s => await s.Create(decision))
-				.Should().Throw<Exception>().WithMessage($"Request to Api failed | StatusCode - {responseCode}");
+			await sut.Invoking(async s => await s.Create(decision))
+				.Should().ThrowAsync<Exception>().WithMessage($"Request to Api failed | StatusCode - {responseCode}");
 		}
 
 	}
