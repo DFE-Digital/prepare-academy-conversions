@@ -16,8 +16,7 @@
 <div class="govuk-grid-row">
 	<div class="govuk-grid-column-full">
 		@foreach (var formSection in Model.Sections)
-		{
-            <a name=@formSection.Heading></a>
+		{            
             <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">@formSection.Heading</h2>
 			@if (formSection.Fields.Any())
 			{
