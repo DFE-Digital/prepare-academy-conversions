@@ -21,9 +21,9 @@ namespace ApplyToBecomeInternal.Services
 		}
 
 		public Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count, string titleFilter = "",
-			IEnumerable<string> statusFilters = default, IEnumerable<string> deliveryOfficerFilter = default)
+			IEnumerable<string> statusFilters = default, IEnumerable<string> deliveryOfficerFilter = default, IEnumerable<string> regionsFilter = default)
 		{
-			return _innerRepository.GetAllProjects(page, count, titleFilter, statusFilters, deliveryOfficerFilter);
+			return _innerRepository.GetAllProjects(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter);
 		}
 
 		public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)

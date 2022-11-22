@@ -25,10 +25,13 @@ namespace ApplyToBecome.Data.Services
 		public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count,
 			string titleFilter = "",
 			IEnumerable<string> statusFilters = default,
-			IEnumerable<string> deliveryOfficerFilter = default)
+			IEnumerable<string> deliveryOfficerFilter = default,
+			IEnumerable<string> regionsFilter = default)
 		{
 			string encodedTitleFilter = HttpUtility.UrlEncode(titleFilter);
 			string deliveryOfficerQueryString = string.Empty;
+			string regionQueryString = string.Empty;
+			string regionUrnsQueryString = string.Empty;
 
 			if (deliveryOfficerFilter != default)
 			{
@@ -47,8 +50,19 @@ namespace ApplyToBecome.Data.Services
 				statusFiltersString = string.Join(',', projectedStatuses);
 			}
 
+			if (regionsFilter != null)
+			{
+				regionQueryString = $@"{regionsFilter.Aggregate(string.Empty,
+					(current, region) => $"{current}&regions={HttpUtility.UrlEncode(region)}")}";
+				HttpResponseMessage regionResponse = await _httpClient.GetAsync($"establishment/regions?{regionQueryString.ToLower()}");
+				List<int> regionUrnResponse = await regionResponse.Content.ReadFromJsonAsync<List<int>>();
+				regionUrnsQueryString = $@"{regionUrnResponse.Aggregate(string.Empty,
+					(current, region) => $"{current}&regions={region}")}";
+			}
+			
+
 			HttpResponseMessage response =
-				await _httpClient.GetAsync($"v2/conversion-projects?page={page}&count={count}&states={statusFiltersString}&title={encodedTitleFilter}{deliveryOfficerQueryString}");
+				await _httpClient.GetAsync($"v2/conversion-projects?page={page}&count={count}&states={statusFiltersString}&title={encodedTitleFilter}{deliveryOfficerQueryString}{regionUrnsQueryString}");
 			if (!response.IsSuccessStatusCode)
 			{
 				return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode,
@@ -99,6 +113,7 @@ namespace ApplyToBecome.Data.Services
 					.OrderBy(x => x)
 					.ToList();
 
+			filterParameters.Regions = new List<string> { "East of England" };
 			return new ApiResponse<ProjectFilterParameters>(response.StatusCode, filterParameters);
 		}
 	}

@@ -26,38 +26,71 @@
 						       data-cy="select-projectlist-filter-title">
 					</div>
 				</div>
+                @*REGIONS*@
+                <div class="govuk-grid-column-one-quarter">
+	                <div class="govuk-form-group">
+		                <fieldset class="govuk-fieldset" aria-describedby="filter-project-status-hint">
+			                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+				                <span class="govuk-fieldset__heading">
+					                Project Region
+				                </span>
+			                </legend>
 
-				<div class="govuk-grid-column-one-quarter">
-					<div class="govuk-form-group">
-						<fieldset class="govuk-fieldset" aria-describedby="filter-project-status-hint">
-							<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-								<span class="govuk-fieldset__heading">
-									Project status
-								</span>
-							</legend>
+			                <div id="filter-project-region-hint" class="govuk-hint">
+				                Select all that apply.
+			                </div>
 
-							<div id="filter-project-status-hint" class="govuk-hint">
-								Select all that apply.
-							</div>
+			                <div class="govuk-checkboxes govuk-checkboxes--small prepare-project-listing__filter" data-module="govuk-checkboxes">
+				                @{
+					                foreach (var region in Model.AvailableRegions)
+					                {
+						                <div class="govuk-checkboxes__item">
+							                <input class="govuk-checkboxes__input" id="filter-project-region-@region.Stub()" 
+							                       name="selectedregions" type="checkbox" value="@region" @(Model.SelectedRegions.Contains(region) ? "checked" : null)
+							                       data-cy="select-projectlist-filter-region-@region">
+							                <label class="govuk-label govuk-checkboxes__label" for="filter-project-region-@region.Stub()">
+								                @region
+							                </label>
+						                </div>
+					                }
+				                }
+			                </div>
+		                </fieldset>
+	                </div>
+                </div>
+                @*STATUS*@
+                <div class="govuk-grid-column-one-quarter">
+	                <div class="govuk-form-group">
+		                <fieldset class="govuk-fieldset" aria-describedby="filter-project-status-hint">
+			                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+				                <span class="govuk-fieldset__heading">
+					                Project status
+				                </span>
+			                </legend>
 
-							<div class="govuk-checkboxes govuk-checkboxes--small prepare-project-listing__filter" data-module="govuk-checkboxes">
-								@{
-									foreach (var status in Model.AvailableStatuses)
-									{
-										<div class="govuk-checkboxes__item">
-											<input class="govuk-checkboxes__input" id="filter-project-status-@status.Stub()" 
-											       name="selectedStatuses" type="checkbox" value="@status" @(Model.SelectedStatuses.Contains(status) ? "checked" : null)
-											       data-cy="select-projectlist-filter-status-@status">
-											<label class="govuk-label govuk-checkboxes__label" for="filter-project-status-@status.Stub()">
-												@status
-											</label>
-										</div>
-									}
-								}
-							</div>
-						</fieldset>
-					</div>
-				</div>
+			                <div id="filter-project-status-hint" class="govuk-hint">
+				                Select all that apply.
+			                </div>
+
+			                <div class="govuk-checkboxes govuk-checkboxes--small prepare-project-listing__filter" data-module="govuk-checkboxes">
+				                @{
+					                foreach (var status in Model.AvailableStatuses)
+					                {
+						                <div class="govuk-checkboxes__item">
+							                <input class="govuk-checkboxes__input" id="filter-project-status-@status.Stub()" 
+							                       name="selectedStatuses" type="checkbox" value="@status" @(Model.SelectedStatuses.Contains(status) ? "checked" : null)
+							                       data-cy="select-projectlist-filter-status-@status">
+							                <label class="govuk-label govuk-checkboxes__label" for="filter-project-status-@status.Stub()">
+								                @status
+							                </label>
+						                </div>
+					                }
+				                }
+			                </div>
+		                </fieldset>
+	                </div>
+                </div>
+                @*DELIVERY OFFICERS*@
 				<div class="govuk-grid-column-one-quarter">
 					<div class="govuk-form-group">
 						<fieldset class="govuk-fieldset" aria-describedby="filter-delivery-officer-hint">
