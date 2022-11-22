@@ -2,9 +2,7 @@
 using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models;
 using ApplyToBecomeInternal.Models;
-using System;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support
 {
@@ -16,7 +14,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support
 		{
 		}
 
-		protected string PageHeading => Document.QuerySelector(CypressSelectorFor(Select.Heading))?.Text().Trim();
+		protected string PageHeading => Document.QuerySelector(CypressSelectorFor("select-heading"))?.Text().Trim();
 		protected string SchoolName => Document.QuerySelector(CypressSelectorFor(Select.SchoolName))?.Text().Trim();
 
 		protected string BackLinkHref => Document.QuerySelector<IHtmlAnchorElement>(CypressSelectorFor(Select.BackLink))?.Href.Trim();
