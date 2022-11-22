@@ -25,10 +25,10 @@ namespace ApplyToBecomeInternal.Tests.Pages
 
 			var response = new ApiV2Wrapper<IEnumerable<AcademyConversionProject>>
 			{
-				Data = projects, 
+				Data = projects,
 				Paging = new ApiV2PagingInfo
 				{
-					RecordCount = recordCount ?? projects.Count, 
+					RecordCount = recordCount ?? projects.Count,
 					Page = 0
 				}
 			};
@@ -37,13 +37,17 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			return projects;
 		}
 
-		protected List<string> AddGetStatuses()
+		protected ProjectFilterParameters AddGetStatuses()
 		{
-			List<string> statuses = new List<string> { "Accepted", "Accepted with Conditions", "Deferred", "Declined" };
+			var filterParameters = new ProjectFilterParameters
+			{
+				Statuses = new List<string> { "Accepted", "Accepted with Conditions", "Deferred", "Declined" },
+				AssignedUsers = new List<string> { "Bob" }
+			};
 
-			_factory.AddGetWithJsonResponse("/v2/conversion-projects/statuses", statuses);
+			_factory.AddGetWithJsonResponse("/v2/conversion-projects/parameters", filterParameters);
 
-			return statuses;
+			return filterParameters;
 		}
 
 		public AcademyConversionProject AddGetProject(Action<AcademyConversionProject> postSetup = null)
