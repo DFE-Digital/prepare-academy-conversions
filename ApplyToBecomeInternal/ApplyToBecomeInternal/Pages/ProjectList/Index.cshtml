@@ -1,5 +1,4 @@
 ﻿@page "/project-list"
-@using ApplyToBecomeInternal.Utils
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ApplyToBecomeInternal.Pages.ProjectList.IndexModel
 @{
@@ -17,13 +16,13 @@
 
 @section BeforeMain
 {
-	<a asp-page="@Links.ProjectType.Index.Page" class="govuk-back-link" data-cy="@Select.BackLink">@Links.ProjectType.Index.BackText</a>
+	<a asp-page="@Links.ProjectType.Index.Page" class="govuk-back-link" data-cy="select-backlink">@Links.ProjectType.Index.BackText</a>
 }
 
 @if (Model.Filters.IsVisible)
 {
 	<div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
-	     data-cy="@Select.ProjectList.Filter.Banner">
+	     data-cy="select-projectlist-filter-banner">
 		<div class="govuk-notification-banner__header">
 			<h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
 				Success
@@ -70,7 +69,7 @@
 						var index = 0;
 						foreach (ProjectListViewModel project in Model.Projects)
 						{
-							<tr class="govuk-table__row" data-cy="@Select.ProjectList.Filter.Row">
+							<tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
 								<td class="govuk-table__cell">
 									<h2 class="govuk-caption-l govuk-!-margin-bottom-0 govuk-!-margin-top-1">
 										<strong>

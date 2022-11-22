@@ -1,5 +1,4 @@
 ﻿using AngleSharp.Dom;
-using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support;
 using FluentAssertions;
 using System.Threading.Tasks;
@@ -15,10 +14,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 			Wizard = new LegalRequirementsTestWizard(Context);
 		}
 
-		private string GoverningBodyStatus => Document.QuerySelector(CypressSelectorFor(Select.Legal.Summary.GoverningBody.Status))?.Text().Trim();
-		private string ConsultationStatus => Document.QuerySelector(CypressSelectorFor(Select.Legal.Summary.Consultation.Status))?.Text().Trim();
-		private string DiocesanConsent => Document.QuerySelector(CypressSelectorFor(Select.Legal.Summary.DiocesanConsent.Status))?.Text().Trim();
-		private string FoundationConsent => Document.QuerySelector(CypressSelectorFor(Select.Legal.Summary.FoundationConsent.Status))?.Text().Trim();
+		private string GoverningBodyStatus => Document.QuerySelector(CypressSelectorFor("select-legal-summary-governingbody-status"))?.Text().Trim();
+		private string ConsultationStatus => Document.QuerySelector(CypressSelectorFor("select-legal-summary-consultation-status"))?.Text().Trim();
+		private string DiocesanConsent => Document.QuerySelector(CypressSelectorFor("select-legal-summary-diocesanconsent-status"))?.Text().Trim();
+		private string FoundationConsent => Document.QuerySelector(CypressSelectorFor("select-legal-summary-foundationconsent-status"))?.Text().Trim();
 
 
 		[Fact]
