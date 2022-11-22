@@ -20,11 +20,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 		}
 
 		private IHtmlElement FilterBanner => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Banner.ToSelector());
-		private IHtmlElement FilterCount => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Count.ToSelector());
-		private IHtmlInputElement FilterTitle => Document.QuerySelector<IHtmlInputElement>(Select.ProjectList.Filter.Title.ToSelector());
+		private IHtmlElement FilterCount => Document.QuerySelector<IHtmlElement>("[data-cy='select-projectlist-filter-count']");
+		private IHtmlInputElement FilterTitle => Document.QuerySelector<IHtmlInputElement>("[data-cy='select-projectlist-filter-title']");
 		private IHtmlElement FilterOptions => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Options.ToSelector());
 		private IEnumerable<IHtmlInputElement> FilterStatuses => Document.QuerySelectorAll<IHtmlInputElement>(Select.ProjectList.Filter.Status().ToSelector(comparator: "^="));
-		private IHtmlButtonElement FilterApply => Document.QuerySelector<IHtmlButtonElement>(Select.ProjectList.Filter.Apply.ToSelector());
+		private IHtmlButtonElement FilterApply => Document.QuerySelector<IHtmlButtonElement>("[data-cy='select-projectlist-filter-apply']");
 
 		public async Task InitializeAsync()
 		{

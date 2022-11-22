@@ -4,10 +4,9 @@ namespace ApplyToBecomeInternal.Models
 {
 	public static class Select
 	{
-		private static string _pageHeader, _backLink, _schoolName;
+		private static string _backLink, _schoolName;
 
 		public static string BackLink => Typespace.Name(ref _backLink);
-		public static string Heading => Typespace.Name(ref _pageHeader);
 
 		public static string SchoolName => Typespace.Name(ref _schoolName);
 
@@ -102,19 +101,16 @@ namespace ApplyToBecomeInternal.Models
 		{
 			public static class Filter
 			{
-				private static string _expand, _apply, _clear, _banner, _count, _row, _options, _title;
+				private static string _expand, _clear, _banner, _row, _options;
 
 				public static string Status(string suffix = null) => Typespace.Name(suffix);
 				public static string Officer(string suffix = null) => Typespace.Name(suffix);
 
 				public static string Banner => Typespace.Name(ref _banner);
-				public static string Count => Typespace.Name(ref _count);
 				public static string Expand => Typespace.Name(ref _expand);
-				public static string Apply => Typespace.Name(ref _apply);
 				public static string Clear => Typespace.Name(ref _clear);
 				public static string Row => Typespace.Name(ref _row);
 				public static string Options => Typespace.Name(ref _options);
-				public static string Title => Typespace.Name(ref _title);
 			}
 		}
 	}
