@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 
 namespace ApplyToBecome.Data.Services
-{	
+{
 	public class AcademyConversionProjectRepository : IAcademyConversionProjectRepository
 	{
 		private readonly IReadOnlyDictionary<string, string> _aliasedStatuses = new Dictionary<string, string> { { "converter pre-ao (c)", "Pre advisory board" } };
@@ -84,22 +84,22 @@ namespace ApplyToBecome.Data.Services
 			return new ApiResponse<AcademyConversionProject>(response.StatusCode, project);
 		}
 
-		public async Task<ApiResponse<List<string>>> GetAvailableStatuses()
+		public async Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
 		{
-			HttpResponseMessage response = await _httpClient.GetAsync("v2/conversion-projects/statuses");
+			HttpResponseMessage response = await _httpClient.GetAsync("v2/conversion-projects/parameters");
 
 			if (response.IsSuccessStatusCode is false)
-				return new ApiResponse<List<string>>(response.StatusCode, null);
+				return new ApiResponse<ProjectFilterParameters>(response.StatusCode, null);
 
-			List<string> loadedStatuses = await response.Content.ReadFromJsonAsync<List<string>>();
+			var filterParameters = await response.Content.ReadFromJsonAsync<ProjectFilterParameters>();
 
-			List<string> statusList =
-				loadedStatuses.Select(x => _aliasedStatuses.ContainsKey(x.ToLowerInvariant()) ? _aliasedStatuses[x.ToLowerInvariant()] : x)
+			filterParameters.Statuses =
+				filterParameters.Statuses.Select(x => _aliasedStatuses.ContainsKey(x.ToLowerInvariant()) ? _aliasedStatuses[x.ToLowerInvariant()] : x)
 					.Distinct()
 					.OrderBy(x => x)
 					.ToList();
 
-			return new ApiResponse<List<string>>(HttpStatusCode.OK, statusList);
+			return new ApiResponse<ProjectFilterParameters>(response.StatusCode, filterParameters);
 		}
 	}
 }

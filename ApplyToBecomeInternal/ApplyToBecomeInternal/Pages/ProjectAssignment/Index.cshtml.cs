@@ -31,7 +31,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectAssignment
 		public async Task<IActionResult> OnGet(int id)
 		{
 			var projectResponse = await _academyConversionProjectRepository.GetProjectById(id);
-			Id = id;			
+			Id = id;
 			SchoolName = projectResponse.Body.SchoolName;
 			SelectedDeliveryOfficer = projectResponse.Body?.AssignedUser?.FullName;
 
