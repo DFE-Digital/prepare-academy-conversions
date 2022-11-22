@@ -1,5 +1,4 @@
 ﻿@page "/task-list/{id:int}/confirm-school-pupil-forecasts/additional-information"
-@using ApplyToBecomeInternal.Utils
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
 	Model.SuccessPage = Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.Page;
@@ -47,7 +46,7 @@
 
 			<govuk-textarea-input id="additional-information" name="school-pupil-forecasts-additional-information" asp-for="Project.SchoolPupilForecastsAdditionalInformation" rows="5"/>
 
-			<button class="govuk-button" id="save-and-continue-button" data-module="govuk-button" @Select.Common.SubmitButton.ToData("cy")>
+			<button class="govuk-button" id="save-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton">
 				Save and continue
 			</button>
 		</form>

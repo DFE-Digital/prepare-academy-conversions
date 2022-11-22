@@ -1,6 +1,5 @@
 @page "/task-list/{id:int}/confirm-school-trust-information-project-dates"
 @using ApplyToBecomeInternal.TagHelpers
-@using ApplyToBecomeInternal.Utils
 @using ApplyToBecomeInternal.ViewComponents
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
@@ -37,7 +36,7 @@
 		<form method="post">
 			<govuk-checkbox-input name="school-and-trust-information-complete" asp-for="Project.SchoolAndTrustInformationSectionComplete" label="Mark this section as complete, you can still make changes later"/>
 
-			<button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button" @Select.Common.SubmitButton.ToData("cy")>
+			<button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton">
 				Confirm and continue
 			</button>
 		</form>

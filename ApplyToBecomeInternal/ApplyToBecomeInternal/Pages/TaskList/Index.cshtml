@@ -1,5 +1,4 @@
 ﻿@page "/task-list/{id:int}"
-@using ApplyToBecomeInternal.Utils
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ApplyToBecomeInternal.Pages.TaskList.IndexModel
 @{
@@ -114,11 +113,11 @@
                 </li>
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a class="govuk-link" asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Project.Id" aria-describedby="legal-requirements" data-cy="@Select.TaskList.Links.LegalRequirementLinks">
+                        <a class="govuk-link" asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Project.Id" aria-describedby="legal-requirements" data-cy="select-tasklist-links-legalrequirementlinks">
                             Legal requirements
                         </a>
                     </span>
-                    <strong class="govuk-tag @Model.TaskList.LegalRequirementsTaskListStatus.CssClass app-task-list__tag" id="legal-status" @Select.TaskList.LegalRequirements.Status.ToData("cy")>
+                    <strong class="govuk-tag @Model.TaskList.LegalRequirementsTaskListStatus.CssClass app-task-list__tag" id="legal-status" data-cy="select-tasklist-legalrequirements-status">
                         @Model.TaskList.LegalRequirementsTaskListStatus.Status
                     </strong>
                 </li>

@@ -2,7 +2,6 @@
 using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models.AcademyConversion;
 using ApplyToBecomeInternal.Extensions;
-using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support;
 using FluentAssertions;
 using System.Threading.Tasks;
@@ -20,16 +19,16 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 
 
 		private string LegalRequirementsLinkHref =>
-			Document.QuerySelector<IHtmlAnchorElement>(CypressSelectorFor(Select.TaskList.Links.LegalRequirementLinks))?.Href.Trim();
+			Document.QuerySelector<IHtmlAnchorElement>(CypressSelectorFor("select-tasklist-links-legalrequirementlinks"))?.Href.Trim();
 
 		private string LegalRequirementsStatus =>
-			Document.QuerySelector(CypressSelectorFor(Select.TaskList.LegalRequirements.Status))?.Text().Trim();
+			Document.QuerySelector(CypressSelectorFor("select-tasklist-legalrequirements-status"))?.Text().Trim();
 
 		private IHtmlInputElement SummaryIsComplete =>
-			Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor(Select.Legal.Summary.IsComplete));
+			Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor("select-legal-summary-iscomplete"));
 
 		private IHtmlButtonElement SummaryConfirmAndContinueButton =>
-			Document.QuerySelector<IHtmlButtonElement>(CypressSelectorFor(Select.Legal.Summary.SubmitButton));
+			Document.QuerySelector<IHtmlButtonElement>(CypressSelectorFor("select-legal-summary-submitbutton"));
 
 		[Fact]
 		public async Task Should_have_a_link_that_points_to_the_legal_summary_page()

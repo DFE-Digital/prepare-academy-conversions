@@ -2,7 +2,6 @@
 using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models.AcademyConversion;
 using ApplyToBecomeInternal.Extensions;
-using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support;
 using FluentAssertions;
 using System.Threading.Tasks;
@@ -18,7 +17,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 			Wizard = new LegalRequirementsTestWizard(Context);
 		}
 
-		private string SummaryConsultationStatus => Document.QuerySelector(CypressSelectorFor(Select.Legal.Summary.Consultation.Status))?.Text().Trim();
+		private string SummaryConsultationStatus => Document.QuerySelector(CypressSelectorFor("select-legal-summary-consultation-status"))?.Text().Trim();
 
 
 		[Fact]
