@@ -50,9 +50,9 @@ namespace ApplyToBecomeInternal.Services
 			return _innerRepository.UpdateProject(id, updateProject);
 		}
 
-		public Task<ApiResponse<List<string>>> GetAvailableStatuses()
+		public Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
 		{
-			return _innerRepository.GetAvailableStatuses();
+			return _innerRepository.GetFilterParameters();
 		}
 	}
 }

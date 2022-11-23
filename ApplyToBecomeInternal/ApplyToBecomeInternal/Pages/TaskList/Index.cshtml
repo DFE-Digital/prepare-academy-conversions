@@ -1,5 +1,4 @@
 ﻿@page "/task-list/{id:int}"
-@using ApplyToBecomeInternal.Utils
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ApplyToBecomeInternal.Pages.TaskList.IndexModel
 @{
@@ -114,11 +113,11 @@
                 </li>
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a class="govuk-link" asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Project.Id" aria-describedby="legal-requirements" data-cy="@Select.TaskList.Links.LegalRequirementLinks">
+                        <a class="govuk-link" asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Project.Id" aria-describedby="legal-requirements" data-cy="select-tasklist-links-legalrequirementlinks">
                             Legal requirements
                         </a>
                     </span>
-                    <strong class="govuk-tag @Model.TaskList.LegalRequirementsTaskListStatus.CssClass app-task-list__tag" id="legal-status" @Select.TaskList.LegalRequirements.Status.ToData("cy")>
+                    <strong class="govuk-tag @Model.TaskList.LegalRequirementsTaskListStatus.CssClass app-task-list__tag" id="legal-status" data-cy="select-tasklist-legalrequirements-status">
                         @Model.TaskList.LegalRequirementsTaskListStatus.Status
                     </strong>
                 </li>
@@ -182,8 +181,8 @@
         </h2>
         <p class="govuk-body">Preview your template before you generate it into a Word document, or you can generate the document without previewing it.</p>
         <div class="govuk-button-group">
-            <a asp-page="@Links.TaskList.PreviewHTBTemplate.Page" id="preview-project-template-button" asp-route-id="@Model.Project.Id" class="govuk-button govuk-!-margin-bottom-2">Preview project template</a>
-            <a asp-page="@Links.TaskList.GenerateHTBTemplate.Page" id="generate-project-template-button" asp-route-id="@Model.Project.Id" asp-route-return="@Links.TaskList.Index.Page" asp-route-backText="@Links.TaskList.Index.BackText" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-2">Generate project template</a>
+            <a asp-page="@Links.TaskList.PreviewHTBTemplate.Page" id="preview-project-template-button" asp-route-id="@Model.Project.Id" class="govuk-button govuk-!-margin-bottom-2" role="button">Preview project template</a>
+            <a asp-page="@Links.TaskList.GenerateHTBTemplate.Page" id="generate-project-template-button" asp-route-id="@Model.Project.Id" asp-route-return="@Links.TaskList.Index.Page" asp-route-backText="@Links.TaskList.Index.BackText" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-2" role="button">Generate project template</a>
         </div>
     </div>
 </div>

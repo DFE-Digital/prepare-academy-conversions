@@ -16,6 +16,6 @@ namespace ApplyToBecome.Data.Services
 
 		Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id);
 		Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject);
-		Task<ApiResponse<List<string>>> GetAvailableStatuses();
+		Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters();
 	}
 }

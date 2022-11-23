@@ -41,18 +41,19 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 		{
 			Filters.PopulateFrom(Request.Query);
 
-			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response = 
+			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response =
 				await _repository.GetAllProjects(CurrentPage, _pageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers);
 
 			Projects = response.Body.Data.Select(Build).ToList();
 			HasNextPage = response.Body?.Paging?.NextPageUrl != null;
 			TotalProjects = response.Body?.Paging?.RecordCount ?? 0;
 
-			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> allResponses = await _repository.GetAllProjects(CurrentPage, _pageSize);
-			Filters.AvailableDeliveryOfficers = allResponses.Body.Data.Select(x => x.AssignedUser?.FullName).Where(s => string.IsNullOrEmpty(s) is false).Distinct().OrderBy(x => x).ToList();
-
-			ApiResponse<List<string>> statusesResponse = await _repository.GetAvailableStatuses();
-			if (statusesResponse.Success) Filters.AvailableStatuses = statusesResponse.Body.ConvertAll(r => r.SentenceCase());
+			var filterParametersResponse = await _repository.GetFilterParameters();
+			if (filterParametersResponse.Success)
+			{
+				Filters.AvailableStatuses = filterParametersResponse.Body.Statuses.ConvertAll(r => r.SentenceCase());
+				Filters.AvailableDeliveryOfficers = filterParametersResponse.Body.AssignedUsers;
+			}
 
 			if (CurrentPage - 5 > 1)
 			{

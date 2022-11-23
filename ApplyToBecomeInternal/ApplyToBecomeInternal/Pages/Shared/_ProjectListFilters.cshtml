@@ -1,8 +1,8 @@
 ﻿@using ApplyToBecomeInternal.Utils
 @model ApplyToBecomeInternal.Models.ProjectList.ProjectListFilters
 
-<details class="govuk-details prepare-project-listing__filters-container" data-module="govuk-details" data-cy="@Select.ProjectList.Filter.Options" @(Model.IsVisible ? "open" : null)>
-   <summary class="govuk-details__summary prepare-project-listing__fitlers-details-summary" data-cy="@Select.ProjectList.Filter.Expand">
+<details class="govuk-details prepare-project-listing__filters-container" data-module="govuk-details" data-cy="select-projectlist-filter-options" @(Model.IsVisible ? "open" : null)>
+   <summary class="govuk-details__summary prepare-project-listing__fitlers-details-summary" data-cy="select-projectlist-filter-expand">
       <span class="govuk-details__summary-text govuk-button govuk-button--secondary prepare-project-listing__button--main">
 			Filter projects
 		</span>
@@ -23,7 +23,7 @@
 						</div>
 				
 						<input asp-for="Title" type="text" class="govuk-input" aria-describedby="filter-project-title-hint"
-						       data-cy="@Select.ProjectList.Filter.Title">
+						       data-cy="select-projectlist-filter-title">
 					</div>
 				</div>
 
@@ -47,7 +47,7 @@
 										<div class="govuk-checkboxes__item">
 											<input class="govuk-checkboxes__input" id="filter-project-status-@status.Stub()" 
 											       name="selectedStatuses" type="checkbox" value="@status" @(Model.SelectedStatuses.Contains(status) ? "checked" : null)
-											       data-cy="@Select.ProjectList.Filter.Status(status)">
+											       data-cy="select-projectlist-filter-status-@status">
 											<label class="govuk-label govuk-checkboxes__label" for="filter-project-status-@status.Stub()">
 												@status
 											</label>
@@ -76,7 +76,7 @@
                                     <div class="govuk-checkboxes__item">
                                         <input class="govuk-checkboxes__input" id="filter-delivery-officer-not-assigned"
                                                name="selectedOfficers" type="checkbox" value="Not assigned" @(Model.SelectedOfficers.Contains("Not assigned") ? "checked" : null)
-                                               data-cy="@Select.ProjectList.Filter.Officer("Not assigned")">
+                                               data-cy="select-projectlist-filter-officer-not-assigned">
                                         <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-not-assigned">
                                             Not assigned
                                         </label>
@@ -86,7 +86,7 @@
                                         <div class="govuk-checkboxes__item">
                                             <input class="govuk-checkboxes__input" id="filter-delivery-officer-@officer.Stub()"
                                                name="selectedOfficers" type="checkbox" value="@officer" @(Model.SelectedOfficers.Contains(officer) ? "checked" : null)
-                                               data-cy="@Select.ProjectList.Filter.Officer(officer)">
+                                               data-cy="select-projectlist-filter-officer-@officer">
                                             <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-@officer.Stub()">
                                                 @officer
                                             </label>
@@ -102,11 +102,11 @@
 			<div class="govuk-grid-row">
 				<div class="govuk-grid-column-full">
 					<div class="govuk-button-group">
-						<button class="govuk-button govuk-button--secondary prepare-project-listing__button--apply" data-module="govuk-button" data-cy="@Select.ProjectList.Filter.Apply">
+						<button class="govuk-button govuk-button--secondary prepare-project-listing__button--apply" data-module="govuk-button" data-cy="select-projectlist-filter-apply">
 							Apply filters
 						</button>
 
-						<a class="govuk-link" href="@Url.RouteUrl(ViewContext.RouteData.Values)" data-cy="@Select.ProjectList.Filter.Clear">Clear filters</a>
+						<a class="govuk-link" href="@Url.RouteUrl(ViewContext.RouteData.Values)" data-cy="select-projectlist-filter-clear">Clear filters</a>
 					</div>
 				</div>
 			</div>
