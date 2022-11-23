@@ -55,7 +55,6 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 				Filters.AvailableDeliveryOfficers = filterParametersResponse.Body.AssignedUsers;
 				Filters.AvailableRegions = filterParametersResponse.Body.Regions;
 			}
-
 			if (CurrentPage - 5 > 1)
 			{
 				StartingPage = CurrentPage - 5;
