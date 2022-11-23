@@ -114,7 +114,18 @@ namespace ApplyToBecome.Data.Services
 					.OrderBy(x => x)
 					.ToList();
 
-			filterParameters.Regions = new List<string> { "East of England" };
+			filterParameters.Regions = new List<string>
+			{
+				"East Midlands",
+				"East of England",
+				"London",
+				"North East",
+				"North West",
+				"South East",
+				"South West",
+				"West Midlands",
+				"Yorkshire and the Humber"
+			};
 			return new ApiResponse<ProjectFilterParameters>(response.StatusCode, filterParameters);
 		}
 	}
