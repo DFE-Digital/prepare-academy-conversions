@@ -2,7 +2,7 @@ name: Test, build, and deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, node-version ]
 
 env:
   REGISTRY: ghcr.io
@@ -20,7 +20,7 @@ jobs:
         with:
           dotnet-version: 6.0.403
       - name: Setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
       # This could be cached in the future to allow for quicker build times
