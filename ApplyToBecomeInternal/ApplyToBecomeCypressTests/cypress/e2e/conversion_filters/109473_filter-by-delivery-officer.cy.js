@@ -18,7 +18,7 @@ Cypress._.each(['ipad-2'], (viewport) => {
       });   
   
       it('TC02: should display all the Non assigned projects when Not Assigned option is selected', () => {
-        cy.get('[class="govuk-checkboxes__input"]').first().click();
+        cy.get('[data-cy="select-projectlist-filter-officer-not-assigned"]').click();
         cy.get('[data-cy=select-projectlist-filter-apply]').click();
         cy.get('[data-cy="select-projectlist-filter-count"]').should('contain', 'projects found');
         cy.get('[data-cy="select-projectlist-filter-count"]').should('not.contain', '0 projects found');
@@ -26,7 +26,8 @@ Cypress._.each(['ipad-2'], (viewport) => {
       });
   
       it('TC03: should display all the projects assigned to the DO when a particular DO name option is selected', () => {
-        cy.get('[class="govuk-checkboxes__input"]').eq(1).click();
+        cy.get('[name="selectedOfficers"]').eq(1).click();
+       // cy.get('[class="govuk-checkboxes__input"]').eq(1).click();
         cy.get('[data-cy=select-projectlist-filter-apply]').click();
         cy.get('[data-cy="select-projectlist-filter-count"]').should('not.contain', '0 projects found');
         cy.get('#delivery-officer-0').should('not.have.text', 'Delivery officer: Empty');
