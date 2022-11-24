@@ -18,7 +18,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 {
 	public abstract partial class BaseIntegrationTests
 	{
-		protected IEnumerable<AcademyConversionProject> AddGetProjects(Action<AcademyConversionProject> postSetup = null, int? recordCount = null)
+		protected IEnumerable<AcademyConversionProject> AddGetProjects(Action<AcademyConversionProject> postSetup = null, int? recordCount = null, AcademyConversionSearchModel searchModel = null)
 		{
 			var projects = _fixture.CreateMany<AcademyConversionProject>().ToList();
 			if (postSetup != null)
@@ -35,15 +35,18 @@ namespace ApplyToBecomeInternal.Tests.Pages
 					Page = 0
 				}
 			};
-			AcademyConversionSearchModel searchModel = new()
+			if (searchModel is null)
 			{
-				Page = 1, 
-				Count = 10,
-				TitleFilter = null,
-				StatusQueryString = Array.Empty<string>(),
-				DeliveryOfficerQueryString = Array.Empty<string>(),
-				RegionUrnsQueryString = Array.Empty<int>()
-			};
+				searchModel = new AcademyConversionSearchModel
+				{
+					Page = 1,
+					Count = 20,
+					TitleFilter = null,
+					StatusQueryString = Array.Empty<string>(),
+					DeliveryOfficerQueryString = Array.Empty<string>(),
+					RegionUrnsQueryString = null
+				};
+			}
 			_factory.AddPostWithJsonRequest("/v2/conversion-projects", searchModel, response);
 			return projects;
 		}
