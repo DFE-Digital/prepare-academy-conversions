@@ -10,6 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Web;
 
 namespace ApplyToBecomeInternal.Tests.Pages
 {
@@ -32,8 +35,16 @@ namespace ApplyToBecomeInternal.Tests.Pages
 					Page = 0
 				}
 			};
-
-			_factory.AddGetWithJsonResponse("/v2/conversion-projects", response);
+			AcademyConversionSearchModel searchModel = new()
+			{
+				Page = 1, 
+				Count = 10,
+				TitleFilter = null,
+				StatusQueryString = Array.Empty<string>(),
+				DeliveryOfficerQueryString = Array.Empty<string>(),
+				RegionUrnsQueryString = Array.Empty<int>()
+			};
+			_factory.AddPostWithJsonRequest("/v2/conversion-projects", searchModel, response);
 			return projects;
 		}
 

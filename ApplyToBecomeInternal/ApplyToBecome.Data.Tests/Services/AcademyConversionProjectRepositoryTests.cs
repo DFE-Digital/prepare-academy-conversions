@@ -25,13 +25,13 @@ namespace ApplyToBecome.Data.Tests.Services
 		[Fact]
 		public void GivenDeliveryOfficers_GetsRelevantProjects()
 		{
-			const string path = "http://localhost/v2/conversion-projects?page=1&count=50&states=&title=&deliveryOfficers=John+Smith&deliveryOfficers=Jane+Doe";
+			const string path = "http://localhost/v2/conversion-projects";
 
 			List<AcademyConversionProject> project =
 				new List<AcademyConversionProject> { new AcademyConversionProject { AssignedUser = new User("1", "example@email.com", "John Smith") } };
 			ApiV2Wrapper<IEnumerable<AcademyConversionProject>> projects = new ApiV2Wrapper<IEnumerable<AcademyConversionProject>> { Data = project };
 
-			_messageHandler.Expect(HttpMethod.Get, path)
+			_messageHandler.Expect(HttpMethod.Post, path)
 				.Respond(HttpStatusCode.OK, "application/json", JsonSerializer.Serialize(projects));
 
 			_subject = new AcademyConversionProjectRepository(new MockHttpClientFactory(_messageHandler));
@@ -45,7 +45,7 @@ namespace ApplyToBecome.Data.Tests.Services
 		[Fact]
 		public void GivenDeliveryOfficers_GetsRelevantProjects_WhenMultiple()
 		{
-			const string path = "http://localhost/v2/conversion-projects?page=1&count=50&states=&title=&deliveryOfficers=John+Smith";
+			const string path = "http://localhost/v2/conversion-projects";
 
 			List<AcademyConversionProject> project = new List<AcademyConversionProject>
 			{
@@ -54,7 +54,7 @@ namespace ApplyToBecome.Data.Tests.Services
 			};
 			ApiV2Wrapper<IEnumerable<AcademyConversionProject>> projects = new ApiV2Wrapper<IEnumerable<AcademyConversionProject>> { Data = project };
 
-			_messageHandler.Expect(HttpMethod.Get, path)
+			_messageHandler.Expect(HttpMethod.Post, path)
 				.Respond(HttpStatusCode.OK, "application/json", JsonSerializer.Serialize(projects));
 
 			_subject = new AcademyConversionProjectRepository(new MockHttpClientFactory(_messageHandler));
@@ -68,12 +68,12 @@ namespace ApplyToBecome.Data.Tests.Services
 		[Fact]
 		public void GivenDeliveryOfficers_GetsNoProjects_WhenDeliveryOfficerHasNoneAssigned()
 		{
-			const string path = "http://localhost/v2/conversion-projects?page=1&count=50&states=&title=%26deliveryOfficers%3dJohn+Smith";
+			const string path = "http://localhost/v2/conversion-projects";
 
 			List<AcademyConversionProject> project = new List<AcademyConversionProject>();
 			ApiV2Wrapper<IEnumerable<AcademyConversionProject>> projects = new ApiV2Wrapper<IEnumerable<AcademyConversionProject>> { Data = project };
 
-			_messageHandler.Expect(HttpMethod.Get, path)
+			_messageHandler.Expect(HttpMethod.Post, path)
 				.Respond(HttpStatusCode.OK, "application/json", JsonSerializer.Serialize(projects));
 
 			_subject = new AcademyConversionProjectRepository(new MockHttpClientFactory(_messageHandler));

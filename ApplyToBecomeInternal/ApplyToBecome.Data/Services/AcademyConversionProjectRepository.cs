@@ -61,10 +61,10 @@ namespace ApplyToBecome.Data.Services
 						? new[] { x, _invertedAliasedStatuses[x.ToLowerInvariant()] }
 						: new[] { x });
 
-				searchModel.StatusQueryString = projectedStatuses;
+				searchModel.StatusQueryString = projectedStatuses.ToArray();
 			}
 
-			if (regionsFilter != null)
+			if (regionsFilter != null && regionsFilter.Any())
 			{
 				regionQueryString = $@"{regionsFilter.Aggregate(string.Empty,
 					(current, region) => $"{current}&regions={HttpUtility.UrlEncode(region)}")}";
