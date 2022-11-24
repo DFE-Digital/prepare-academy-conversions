@@ -40,7 +40,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 				searchModel = new AcademyConversionSearchModel
 				{
 					Page = 1,
-					Count = 20,
+					Count = 10,
 					TitleFilter = null,
 					StatusQueryString = Array.Empty<string>(),
 					DeliveryOfficerQueryString = Array.Empty<string>(),

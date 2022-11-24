@@ -82,7 +82,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 		[Fact]
 		public async Task Should_display_filtered_projects_in_place_of_all_projects_when_filter_is_active()
 		{
-			AcademyConversionSearchModel searchModel = new AcademyConversionSearchModel
+			AcademyConversionSearchModel searchModel = new()
 			{
 				Page = 1,
 				Count = 10,
@@ -92,6 +92,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 				RegionUrnsQueryString = null
 			};
 			AddGetProjects(recordCount: _recordCount, searchModel: searchModel);
+
 			FilterStatuses.First().IsChecked = true;
 			await FilterApply.SubmitAsync();
 
