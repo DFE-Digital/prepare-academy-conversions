@@ -1,6 +1,8 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using ApplyToBecome.Data.Models;
 using FluentAssertions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -80,6 +82,17 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 		[Fact]
 		public async Task Should_display_filtered_projects_in_place_of_all_projects_when_filter_is_active()
 		{
+			AcademyConversionSearchModel searchModel = new()
+			{
+				Page = 1,
+				Count = 10,
+				StatusQueryString = new[] { "Accepted" },
+				TitleFilter = string.Empty,
+				DeliveryOfficerQueryString = Array.Empty<string>(),
+				RegionUrnsQueryString = null
+			};
+			AddGetProjects(recordCount: _recordCount, searchModel: searchModel);
+
 			FilterStatuses.First().IsChecked = true;
 			await FilterApply.SubmitAsync();
 
