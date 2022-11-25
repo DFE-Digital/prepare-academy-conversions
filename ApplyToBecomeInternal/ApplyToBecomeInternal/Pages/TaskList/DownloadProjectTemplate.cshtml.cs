@@ -151,7 +151,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			builder.ReplacePlaceholderWithContent("SchoolPerformanceData", builder => builder.AddTable(ofstedInformation));
 		}
 
-		private void AddKeyStage4Information(DocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
+		private static void AddKeyStage4Information(DocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
 		{
 			if (document.KeyStage4 == null)
 			{
@@ -538,7 +538,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			});
 		}
 
-		private void AddKeyStage2Information(DocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
+		private static void AddKeyStage2Information(DocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
 		{
 			if (document.KeyStage2 == null)
 			{
