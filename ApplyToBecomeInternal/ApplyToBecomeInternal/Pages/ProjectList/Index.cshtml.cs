@@ -61,7 +61,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 			}
 		}
 
-		private ProjectListViewModel Build(AcademyConversionProject academyConversionProject)
+		private static ProjectListViewModel Build(AcademyConversionProject academyConversionProject)
 		{
 			return new ProjectListViewModel
 			{
@@ -79,7 +79,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 			};
 		}
 
-		private ProjectStatus MapProjectStatus(string status)
+		private static ProjectStatus MapProjectStatus(string status)
 		{
 			const string green = "green";
 			const string yellow = "yellow";

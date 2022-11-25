@@ -30,6 +30,11 @@ namespace ApplyToBecomeInternal.ViewModels
 			return Status.Equals(other.Status) && CssClass.Equals(other.CssClass);
 		}
 
+		public override bool Equals(object obj)
+		{
+			return Equals((TaskListItemViewModel) obj);
+		}
+
 		public static TaskListItemViewModel GetLocalAuthorityInformationTemplateTaskListStatus(ProjectViewModel project)
 		{
 			if (project.LocalAuthorityInformationTemplateSectionComplete)
@@ -147,7 +152,7 @@ namespace ApplyToBecomeInternal.ViewModels
 				return Completed;
 			}
 			if (project.EndOfCurrentFinancialYear == null
-				&& project.RevenueCarryForwardAtEndMarchCurrentYear == null				
+				&& project.RevenueCarryForwardAtEndMarchCurrentYear == null
 				&& project.CapitalCarryForwardAtEndMarchCurrentYear == null
 				&& project.EndOfNextFinancialYear == null
 				&& project.ProjectedRevenueBalanceAtEndMarchNextYear == null

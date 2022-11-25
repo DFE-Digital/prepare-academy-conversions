@@ -94,7 +94,7 @@ namespace ApplyToBecomeInternal.Pages.Public
 				{
 					if (cookie.StartsWith("_ga") || cookie.Equals("_gid"))
 					{
-						_logger.LogInformation($"Expiring Google analytics cookie: {cookie}");
+						_logger.LogInformation("Expiring Google analytics cookie: {cookie}", cookie);
 						Response.Cookies.Append(cookie, string.Empty, new CookieOptions
 						{
 							Expires = DateTime.Now.AddDays(-1),
