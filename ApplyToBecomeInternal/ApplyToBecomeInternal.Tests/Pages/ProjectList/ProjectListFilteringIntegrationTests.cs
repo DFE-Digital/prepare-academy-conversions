@@ -1,8 +1,8 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
-using ApplyToBecomeInternal.Models;
-using ApplyToBecomeInternal.Tests.Extensions;
+using ApplyToBecome.Data.Models;
 using FluentAssertions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,24 +13,23 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 	public class ProjectListFilteringIntegrationTests : BaseIntegrationTests, IAsyncLifetime
 	{
 		private int _recordCount;
-		private List<string> _statuses;
 
 		public ProjectListFilteringIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{
 		}
 
-		private IHtmlElement FilterBanner => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Banner.ToSelector());
-		private IHtmlElement FilterCount => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Count.ToSelector());
-		private IHtmlInputElement FilterTitle => Document.QuerySelector<IHtmlInputElement>(Select.ProjectList.Filter.Title.ToSelector());
-		private IHtmlElement FilterOptions => Document.QuerySelector<IHtmlElement>(Select.ProjectList.Filter.Options.ToSelector());
-		private IEnumerable<IHtmlInputElement> FilterStatuses => Document.QuerySelectorAll<IHtmlInputElement>(Select.ProjectList.Filter.Status().ToSelector(comparator: "^="));
-		private IHtmlButtonElement FilterApply => Document.QuerySelector<IHtmlButtonElement>(Select.ProjectList.Filter.Apply.ToSelector());
+		private IHtmlElement FilterBanner => Document.QuerySelector<IHtmlElement>("[data-cy='select-projectlist-filter-banner']");
+		private IHtmlElement FilterCount => Document.QuerySelector<IHtmlElement>("[data-cy='select-projectlist-filter-count']");
+		private IHtmlInputElement FilterTitle => Document.QuerySelector<IHtmlInputElement>("[data-cy='select-projectlist-filter-title']");
+		private IHtmlElement FilterOptions => Document.QuerySelector<IHtmlElement>("[data-cy='select-projectlist-filter-options']");
+		private IEnumerable<IHtmlInputElement> FilterStatuses => Document.QuerySelectorAll<IHtmlInputElement>("[data-cy^='select-projectlist-filter-status']");
+		private IHtmlButtonElement FilterApply => Document.QuerySelector<IHtmlButtonElement>("[data-cy='select-projectlist-filter-apply']");
 
 		public async Task InitializeAsync()
 		{
 			_recordCount = 20;
 			AddGetProjects(recordCount: _recordCount);
-			_statuses = AddGetStatuses();
+			AddGetStatuses();
 
 			await OpenUrlAsync("/project-list");
 
@@ -83,6 +82,17 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 		[Fact]
 		public async Task Should_display_filtered_projects_in_place_of_all_projects_when_filter_is_active()
 		{
+			AcademyConversionSearchModel searchModel = new()
+			{
+				Page = 1,
+				Count = 10,
+				StatusQueryString = new[] { "Accepted" },
+				TitleFilter = string.Empty,
+				DeliveryOfficerQueryString = Array.Empty<string>(),
+				RegionUrnsQueryString = null
+			};
+			AddGetProjects(recordCount: _recordCount, searchModel: searchModel);
+
 			FilterStatuses.First().IsChecked = true;
 			await FilterApply.SubmitAsync();
 

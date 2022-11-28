@@ -1,6 +1,5 @@
 ﻿@page "/project-type"
 @using ApplyToBecome.Data.Models
-@using ApplyToBecomeInternal.Utils
 
 @model ApplyToBecomeInternal.Pages.ProjectType.IndexModel
 @{
@@ -11,7 +10,7 @@
     <partial name="_ErrorSummary" />
 }
 
-    <h1 class="govuk-heading-l" @Select.Heading.ToData("cy")>What do you want to do?</h1>
+    <h1 class="govuk-heading-l" data-cy="select-heading">What do you want to do?</h1>
 
     <form method="post">
         <div class="govuk-form-group">
@@ -22,7 +21,7 @@
                     <div class="govuk-radios__item">
                         <input class="govuk-radios__input" type="radio" asp-for="@Model.ProjectType"
                                title="conversion" value="@ProjectTypes.Conversion" id="conversion-radio"
-                               data-cy="@Select.ProjectType.Input.Conversion" />
+                               data-cy="select-projecttype-input-conversion" />
                         <label class="govuk-label govuk-radios__label" for="conversion-radio" id="">
 	                        Manage an academy conversion
                         </label>
@@ -31,7 +30,7 @@
                     <div class="govuk-radios__item">
                         <input class="govuk-radios__input" type="radio" asp-for="@Model.ProjectType"
                                title="@ProjectTypes.Transfer" value="@ProjectTypes.Transfer" id="transfer-radio" 
-                               data-cy="@Select.ProjectType.Input.Transfer" />
+                               data-cy="select-projecttype-input-transfer" />
                         <label class="govuk-label govuk-radios__label" for="transfer-radio" id="">
 	                        Manage an academy transfer
                         </label>
@@ -39,7 +38,7 @@
                 </div>
             </fieldset>
         </div>
-        <button class="govuk-button" data-module="govuk-button" id="submit-btn" @Select.Common.SubmitButton.ToData("cy")>
+        <button class="govuk-button" data-module="govuk-button" id="submit-btn" data-cy="select-common-submitbutton">
             Continue
         </button>
     </form>

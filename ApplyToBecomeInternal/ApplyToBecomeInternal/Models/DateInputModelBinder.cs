@@ -30,11 +30,11 @@ namespace ApplyToBecomeInternal.Models
 			var monthValueProviderResult = bindingContext.ValueProvider.GetValue(monthModelName);
 			var yearValueProviderResult = bindingContext.ValueProvider.GetValue(yearModelName);
 
-			if (IsOptionalOrFieldTypeMismatch())
+			if (IsOptionalOrFieldTypeMismatch(bindingContext, dayValueProviderResult, monthValueProviderResult, yearValueProviderResult))
 			{
 				if (modelType == typeof(DateTime?))
 				{
-					if (IsEmptyDate())
+					if (IsEmptyDate(dayValueProviderResult, monthValueProviderResult, yearValueProviderResult))
 					{
 						var date = default(DateTime);
 						bindingContext.Result = ModelBindingResult.Success(date);
@@ -68,7 +68,7 @@ namespace ApplyToBecomeInternal.Models
 				int year = int.Parse(yearValueProviderResult.FirstValue);
 
 				var date = new DateTime(year, month, day);
-				(bool validDateRange, string message) = IsInValidDateRange(date);
+				(bool validDateRange, string message) = IsInValidDateRange(date, bindingContext, displayName);
 
 				if (validDateRange)
 				{
@@ -90,36 +90,36 @@ namespace ApplyToBecomeInternal.Models
 			}
 
 			return Task.CompletedTask;
+		}
 
-			bool IsOptionalOrFieldTypeMismatch()
+		private static bool IsEmptyDate(ValueProviderResult dayValueProviderResult, ValueProviderResult monthValueProviderResult, ValueProviderResult yearValueProviderResult)
+		{
+			return dayValueProviderResult.FirstValue == string.Empty
+				   && monthValueProviderResult.FirstValue == string.Empty
+				   && yearValueProviderResult.FirstValue == string.Empty;
+		}
+
+		private static (bool, string) IsInValidDateRange(DateTime date, ModelBindingContext bindingContext, string displayName)
+		{
+			if (bindingContext.ModelMetadata is DefaultModelMetadata defaultModelMetadata
+				&& defaultModelMetadata.Attributes.Attributes.FirstOrDefault(a => a.GetType() == typeof(DateValidationAttribute)) is DateValidationAttribute dateValidation)
 			{
-				return string.IsNullOrWhiteSpace(dayValueProviderResult.FirstValue)
-					   && string.IsNullOrWhiteSpace(monthValueProviderResult.FirstValue)
-					   && string.IsNullOrWhiteSpace(yearValueProviderResult.FirstValue)
-					   && !bindingContext.ModelMetadata.IsRequired
-					   || dayValueProviderResult == ValueProviderResult.None
-					   && monthValueProviderResult == ValueProviderResult.None
-					   && yearValueProviderResult == ValueProviderResult.None;
+				var rangeValidator = new DateRangeValidationService();
+				return rangeValidator.Validate(date, dateValidation.DateValidationEnum, displayName);
 			}
 
-			(bool, string) IsInValidDateRange(DateTime date)
-			{
-				if (bindingContext.ModelMetadata is DefaultModelMetadata defaultModelMetadata
-					&& defaultModelMetadata.Attributes.Attributes.FirstOrDefault(a => a.GetType() == typeof(DateValidationAttribute)) is DateValidationAttribute dateValidation)
-				{
-					var rangeValidator = new DateRangeValidationService();
-					return rangeValidator.Validate(date, dateValidation.DateValidationEnum, displayName);
-				}
+			return (true, string.Empty);
+		}
 
-				return (true, string.Empty);
-			}
-
-			bool IsEmptyDate()
-			{
-				return dayValueProviderResult.FirstValue == string.Empty
-					   && monthValueProviderResult.FirstValue == string.Empty
-					   && yearValueProviderResult.FirstValue == string.Empty;
-			}
+		private static bool IsOptionalOrFieldTypeMismatch(ModelBindingContext bindingContext, ValueProviderResult dayValueProviderResult, ValueProviderResult monthValueProviderResult, ValueProviderResult yearValueProviderResult)
+		{
+			return string.IsNullOrWhiteSpace(dayValueProviderResult.FirstValue)
+				   && string.IsNullOrWhiteSpace(monthValueProviderResult.FirstValue)
+				   && string.IsNullOrWhiteSpace(yearValueProviderResult.FirstValue)
+				   && !bindingContext.ModelMetadata.IsRequired
+				   || dayValueProviderResult == ValueProviderResult.None
+				   && monthValueProviderResult == ValueProviderResult.None
+				   && yearValueProviderResult == ValueProviderResult.None;
 		}
 	}
 

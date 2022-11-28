@@ -6,6 +6,7 @@ namespace ApplyToBecomeInternal.Services
 	{
 		public string DefaultMessage => "Enter a date in the correct format";
 		public string MonthOutOfRange => "Month must be between 1 and 12";
+		public string YearOutOfRange => "Year must be between 2000 and 2050";
 
 		public string AllMissing(string displayName);
 

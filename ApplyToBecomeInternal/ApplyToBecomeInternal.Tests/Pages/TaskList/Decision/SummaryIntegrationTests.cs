@@ -2,7 +2,6 @@
 using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Models.AdvisoryBoardDecision;
-using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Tests.PageObjects;
 using FluentAssertions;
 using System;
@@ -20,7 +19,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 		{
 		}
 
-		private IHtmlAnchorElement BackLink => Document.QuerySelector<IHtmlAnchorElement>($"[data-cy='{Select.BackLink}']");
+		private IHtmlAnchorElement BackLink => Document.QuerySelector<IHtmlAnchorElement>($"[data-cy='select-backlink']");
 		private Uri BackLinkUri => new Uri(BackLink?.Href!);
 		private string BackLinkPath => string.IsNullOrWhiteSpace(BackLinkUri.Query) ? BackLinkUri.PathAndQuery : BackLinkUri.PathAndQuery.Replace(BackLinkUri.Query, string.Empty);
 		private string PageHeading => Document.QuerySelector<IHtmlElement>("h1")?.Text().Trim();

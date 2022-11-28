@@ -11,11 +11,12 @@ namespace ApplyToBecome.Data.Services
 			int count,
 			string titleFilter = "",
 			IEnumerable<string> statusFilters = default,
-			IEnumerable<string> deliveryOfficerFilter = default
+			IEnumerable<string> deliveryOfficerFilter = default,
+			IEnumerable<string> regionsFilter = default
 		);
 
 		Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id);
 		Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject);
-		Task<ApiResponse<List<string>>> GetAvailableStatuses();
+		Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters();
 	}
 }

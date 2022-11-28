@@ -12,15 +12,15 @@ env:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 3.1.301
+          dotnet-version: 6.0.403
       - name: Setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
       # This could be cached in the future to allow for quicker build times
@@ -31,10 +31,10 @@ jobs:
       - name: Build
         run: dotnet build -c Release ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-restore
       - name: Test
-        run: dotnet test -c Release ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --verbosity normal
+        run: dotnet test -c Release ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --verbosity normal  --collect:"XPlat Code Coverage"
   build-and-push-image:
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: write
@@ -50,7 +50,7 @@ jobs:
           echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
           echo "DOCKER_IMAGE_TAG=$GITHUB_SHA" >> $GITHUB_ENV
       - name: setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
 
@@ -77,7 +77,7 @@ jobs:
 
   deploy-image:
     needs: build-and-push-image
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: dev
     defaults:
       run:
@@ -149,37 +149,37 @@ jobs:
           TF_VAR_app_azuread_groupid: ${{ secrets.AZUREAD_GROUPID }}
           TF_VAR_app_cypresstest_secret : ${{ secrets.CYPRESS_TEST_SECRET }}
 
-  create-tag:    
+  create-tag:
     needs: deploy-image
-    runs-on: ubuntu-latest
-    steps:      
+    runs-on: ubuntu-22.04
+    steps:
       - uses: actions/checkout@v2
-      - name: Create tag string          
-        run: echo "RELEASE_TAGNAME=dev-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV    
+      - name: Create tag string
+        run: echo "RELEASE_TAGNAME=dev-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV
       - name: Create git tag
         run: |
           git tag ${{ env.RELEASE_TAGNAME }}
       - name: Push git tag
-        run: git push origin ${{ env.RELEASE_TAGNAME }}      
+        run: git push origin ${{ env.RELEASE_TAGNAME }}
 
   cypress-tests:
     needs: deploy-image
     environment: dev
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: ApplyToBecomeInternal/ApplyToBecomeCypressTests
     steps:
       - uses: actions/checkout@v2
       - name: Setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Npm install
         run: npm install
       - name: Run cypress
         run: npm run cy:run -- --env url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
-        env: 
+        env:
           db: ${{ secrets.DB_CONNECTION_STRING }}
       - uses: actions/upload-artifact@v1
         if: failure()

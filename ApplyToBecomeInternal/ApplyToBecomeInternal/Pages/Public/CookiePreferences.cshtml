@@ -28,13 +28,17 @@
         <p class="govuk-body">
             Cookies are small files saved on your phone, tablet or computer when you visit a website.
         </p>
+
         <p class="govuk-body">
-            We use cookies to make this site work and to collect information about how you use our service.
+            We use cookies for the <a asp-page="@Links.ProjectList.Index.Page">conversions part of our Prepare conversions and transfers service.</a> We use them to make our service work and to collect information about how you use the service.
         </p>
 
         <p class="govuk-body">
-            With your permission, we use Google Analytics to collect data about how you use <a asp-page="@Links.ProjectList.Index.Page">the conversions part of our Prepare conversions and transfers service.</a> 
-            This information helps us improve our service.
+            There is a separate <a href="@Model.TransfersCookiesUrl">cookies page for the transfers part of this service.</a>
+        </p>
+
+        <p class="govuk-body">
+            With your permission, we use Google Analytics to collect data about how you use the service. This information helps us improve our service.
             These cookies do not collect your name or address, they do collect a unique user identifier
             code, which is linked to your device.
         </p>
@@ -79,7 +83,7 @@
             to ask permission to use them
         </p>
         <p class="govuk-body">Here are the essential cookies for the <a asp-page="@Links.ProjectList.Index.Page">conversions part of Prepare conversions and transfers:</a></p>
-        <table class="govuk-table">
+        <table class="govuk-table" aria-label="Essential cookies">
             <thead class="govuk-table__header">
                 <tr>
                     <th class="govuk-table__header">Name</th>
@@ -112,12 +116,12 @@
                     <td class="govuk-table__cell">.AspNetCore.Antiforgery.9TtSrW0hzOs</td>
                     <td class="govuk-table__cell">Prevents forgery</td>
                     <td class="govuk-table__cell">1 hour</td>
-                </tr>                
+                </tr>
             </tbody>
         </table>
         <h3 class="govuk-heading-m">Measuring website usage (Google Analytics)</h3>
         <p class="govuk-body">Google Analytics sets the following cookies:</p>
-        <table class="govuk-table">
+        <table class="govuk-table" aria-label="Google analytics cookies">            
             <thead class="govuk-table__header">
                 <tr>
                     <th class="govuk-table__header">Name</th>

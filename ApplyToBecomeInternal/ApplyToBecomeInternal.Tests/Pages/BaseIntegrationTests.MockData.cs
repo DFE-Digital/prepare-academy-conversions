@@ -10,12 +10,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Web;
 
 namespace ApplyToBecomeInternal.Tests.Pages
 {
 	public abstract partial class BaseIntegrationTests
 	{
-		protected IEnumerable<AcademyConversionProject> AddGetProjects(Action<AcademyConversionProject> postSetup = null, int? recordCount = null)
+		protected IEnumerable<AcademyConversionProject> AddGetProjects(Action<AcademyConversionProject> postSetup = null, int? recordCount = null, AcademyConversionSearchModel searchModel = null)
 		{
 			var projects = _fixture.CreateMany<AcademyConversionProject>().ToList();
 			if (postSetup != null)
@@ -25,25 +28,40 @@ namespace ApplyToBecomeInternal.Tests.Pages
 
 			var response = new ApiV2Wrapper<IEnumerable<AcademyConversionProject>>
 			{
-				Data = projects, 
+				Data = projects,
 				Paging = new ApiV2PagingInfo
 				{
-					RecordCount = recordCount ?? projects.Count, 
+					RecordCount = recordCount ?? projects.Count,
 					Page = 0
 				}
 			};
-
-			_factory.AddGetWithJsonResponse("/v2/conversion-projects", response);
+			if (searchModel is null)
+			{
+				searchModel = new AcademyConversionSearchModel
+				{
+					Page = 1,
+					Count = 10,
+					TitleFilter = null,
+					StatusQueryString = Array.Empty<string>(),
+					DeliveryOfficerQueryString = Array.Empty<string>(),
+					RegionUrnsQueryString = null
+				};
+			}
+			_factory.AddPostWithJsonRequest("/v2/conversion-projects", searchModel, response);
 			return projects;
 		}
 
-		protected List<string> AddGetStatuses()
+		protected ProjectFilterParameters AddGetStatuses()
 		{
-			List<string> statuses = new List<string> { "Accepted", "Accepted with Conditions", "Deferred", "Declined" };
+			var filterParameters = new ProjectFilterParameters
+			{
+				Statuses = new List<string> { "Accepted", "Accepted with Conditions", "Deferred", "Declined" },
+				AssignedUsers = new List<string> { "Bob" }
+			};
 
-			_factory.AddGetWithJsonResponse("/v2/conversion-projects/statuses", statuses);
+			_factory.AddGetWithJsonResponse("/v2/conversion-projects/parameters", filterParameters);
 
-			return statuses;
+			return filterParameters;
 		}
 
 		public AcademyConversionProject AddGetProject(Action<AcademyConversionProject> postSetup = null)

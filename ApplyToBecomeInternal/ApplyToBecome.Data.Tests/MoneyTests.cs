@@ -39,7 +39,7 @@ namespace ApplyToBecome.Data.Tests
 		public void ImplicitOperatorForAssignmentToString_WithDecimal_ReturnsMoneyWithValue(decimal input, string output)
 		{
 			var money = new Money(input);
-			money.Should().Equals(output);
+			money.ToString().Should().Be(output);
 		}
 	}
 }

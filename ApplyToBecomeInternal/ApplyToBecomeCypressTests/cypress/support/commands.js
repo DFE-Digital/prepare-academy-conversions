@@ -546,6 +546,34 @@ Cypress.Commands.add('assignUser', () => {
 //Navigate To Filter Projects section
 Cypress.Commands.add('navigateToFilterProjects',() => {  
     cy.get('[data-cy="select-projectlist-filter-expand"]').click();
+    cy.get('[data-cy="select-projectlist-filter-clear"]').click();
+    cy.get('[data-cy="select-projectlist-filter-expand"]').click();
     cy.get('[data-id="filter-container"]').should('be.visible');
   });
-  
+
+  // Submit End of current financial Date (School Budget Info Page)
+Cypress.Commands.add('submitEndOfCurrentFinancialYearDate', (day, month, year) => {
+	cy.get('[id="financial-year-day"]').should('be.visible');
+    cy.get('[id="financial-year-day"]').clear().type(day);
+	cy.get('[id="financial-year-month"]').clear().type(month);
+	cy.get('[id="financial-year-year"]').clear().type(year);
+	cy.saveLocalStorage();
+})
+
+// Submit End of next financial Date (School Budget info Page)
+Cypress.Commands.add('submitEndOfNextFinancialYearDate', (day, month, year) => {
+    cy.get('[id="next-financial-year-day"]').should('be.visible');
+    cy.get('[id="next-financial-year-day"]').clear().type(day);
+    cy.get('[id="next-financial-year-month"]').clear().type(month);
+    cy.get('[id="next-financial-year-year"]').clear().type(year);
+})
+
+// End of Current Financial Year Date (School Budget info Page)
+Cypress.Commands.add('endOfCurrentFinancialYearInfo', () => {
+    cy.get('[id="financial-year"]')
+})
+
+// End of Next Financial Year Date (School Budget info Page)
+Cypress.Commands.add('endOfNextFinancialYearInfo', () => {
+    cy.get('[id="next-financial-year"]')
+})

@@ -2,7 +2,6 @@
 using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models.AcademyConversion;
 using ApplyToBecomeInternal.Extensions;
-using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements.Support;
 using FluentAssertions;
 using System.Threading.Tasks;
@@ -19,7 +18,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.LegalRequirements
 		}
 
 
-		private string SummaryFoundationConsentStatus => Document.QuerySelector(CypressSelectorFor(Select.Legal.Summary.FoundationConsent.Status))?.Text().Trim();
+		private string SummaryFoundationConsentStatus => Document.QuerySelector(CypressSelectorFor("select-legal-summary-foundationconsent-status"))?.Text().Trim();
 
 		[Fact]
 		public async Task Should_have_a_back_link_that_points_to_the_legal_summary_page()

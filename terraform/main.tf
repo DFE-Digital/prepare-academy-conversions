@@ -2,10 +2,10 @@ resource cloudfoundry_app worker_app {
   name               = local.web_app_name
   space              = data.cloudfoundry_space.space.id
 	docker_image			 = local.docker_image
-	strategy           = "blue-green-v2"
+	strategy           = "blue-green-v3"
 
-  service_binding { 
-		service_instance = cloudfoundry_service_instance.redis.id 
+  service_binding {
+		service_instance = cloudfoundry_service_instance.redis.id
 	}
 
   service_binding {
@@ -14,7 +14,7 @@ resource cloudfoundry_app worker_app {
 
 	routes {
 		route = cloudfoundry_route.web_app_cloudapp_digital_route.id
-	} 
+	}
 
 	environment = {
 		"ASPNETCORE_ENVIRONMENT"   = var.aspnetcore_environment
