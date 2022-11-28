@@ -1,5 +1,7 @@
+using ApplyToBecome.Data.Models.KeyStagePerformance;
 using ApplyToBecomeInternal.Extensions;
 using FluentAssertions;
+using Microsoft.AspNetCore.Html;
 using Xunit;
 
 namespace ApplyToBecomeInternal.Tests.Extensions
@@ -11,6 +13,7 @@ namespace ApplyToBecomeInternal.Tests.Extensions
 		[InlineData("2016 - 2017","2016 to 2017")]
 		[InlineData("2015-  2016","2015 to 2016")]
 		[InlineData("2014   -2015","2014 to 2015")]
+		[InlineData("2014", "2014")]
 		public void Should_format_key_stage_date_correctly(string year, string expectedFormattedYear)
 		{
 			var formattedYear = year.FormatKeyStageYear();
@@ -46,6 +49,20 @@ namespace ApplyToBecomeInternal.Tests.Extensions
 		public void Should_return_correctly_if_data(string value, bool expectedValue)
 		{
 			value.HasData().Should().Be(expectedValue);
+		}
+
+		[Theory]
+		[InlineData(null, null)]
+		[InlineData("", "")]
+		public void Should_HtmlFormatKeyStageDisadvantagedResult_returns_no_data(string disadantaged, string notDisadvantaged)
+		{
+			var response = DisplayExtensions.HtmlFormatKeyStageDisadvantagedResult(new DisadvantagedPupilsResponse()
+			{
+				Disadvantaged = disadantaged,
+				NotDisadvantaged = notDisadvantaged
+			});
+
+			response.Value.Should().Be("No data");
 		}
 
 		private static void AssertValueConvertedCorrectly(decimal? value, string expectedValue)
