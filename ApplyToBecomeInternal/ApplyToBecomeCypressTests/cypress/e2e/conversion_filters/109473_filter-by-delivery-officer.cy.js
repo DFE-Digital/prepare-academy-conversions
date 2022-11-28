@@ -13,7 +13,7 @@ Cypress._.each(['ipad-2'], (viewport) => {
       });
   
       it('TC01: should display Not assigned filter option at the top', () => {
-        cy.get(':nth-child(3) > .govuk-form-group > .govuk-fieldset > .govuk-checkboxes > :nth-child(1)')
+        cy.get(':nth-child(4) > .govuk-form-group > .govuk-fieldset > .govuk-checkboxes > :nth-child(1)')
           .should('contain', 'Not assigned'); 
       });   
   

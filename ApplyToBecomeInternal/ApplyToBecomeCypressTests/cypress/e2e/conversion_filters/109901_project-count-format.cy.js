@@ -29,7 +29,7 @@ Cypress._.each(['ipad-2'], (viewport) => {
       });
 
       it('TC03: should display count when match found in the results on applying filter', () => {
-        cy.get('[class="govuk-checkboxes__input"]').eq(1).click();
+		cy.get('[data-cy="select-projectlist-filter-status-Declined"]').click();
         cy.get('[data-cy=select-projectlist-filter-apply]').click();
         cy.get('[data-cy="select-projectlist-filter-row"]')
         cy.get('[data-cy="select-projectlist-filter-count"]')
