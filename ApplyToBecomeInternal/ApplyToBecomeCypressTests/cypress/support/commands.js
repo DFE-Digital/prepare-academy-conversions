@@ -577,3 +577,8 @@ Cypress.Commands.add('endOfCurrentFinancialYearInfo', () => {
 Cypress.Commands.add('endOfNextFinancialYearInfo', () => {
     cy.get('[id="next-financial-year"]')
 })
+
+Cypress.Commands.add('clearFilters', () => {
+    cy.get('[data-cy="select-projectlist-filter-clear"]').should('have.text', 'Clear filters') 
+  cy.get('[data-cy="select-projectlist-filter-clear"]').click();
+})
