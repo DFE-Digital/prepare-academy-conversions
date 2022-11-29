@@ -86,12 +86,7 @@ namespace ApplyToBecomeInternal.Services
 						   where id.EndsWith(item)
 						   select item;
 
-			if (timeUnit.Any())
-			{
-				return id.Substring(0, id.LastIndexOf(timeUnit.First()));
-			}
-
-			return id;
+			return id.Substring(0, id.LastIndexOf(timeUnit.First()));
 		}
 	}
 }
