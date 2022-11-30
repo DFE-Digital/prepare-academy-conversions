@@ -10,7 +10,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			SubSections = new[] {new FormSubSection("Details", GenerateDetailsFields(application))};
 		}
 
-		private IEnumerable<FormField> GenerateDetailsFields(ApplyingSchool application) =>
+		private static IEnumerable<FormField> GenerateDetailsFields(ApplyingSchool application) =>
 			new[]
 			{
 				new FormField("Projected pupil numbers on roll in the year the academy opens (year 1)", application.ProjectedPupilNumbersYear1.ToString()),

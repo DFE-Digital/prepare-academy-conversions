@@ -19,8 +19,8 @@ namespace ApplyToBecomeInternal.Tests.ViewModels
 		public void Should_return_false_when_not_equivalent()
 		{
 			Assert.Multiple(
-				() => Assert.True(TaskListItemViewModel.NotStarted.Equals((object)TaskListItemViewModel.Completed)),
-				() => Assert.True(TaskListItemViewModel.InProgress.Equals(null))
+				() => Assert.False(TaskListItemViewModel.NotStarted.Equals((object)TaskListItemViewModel.Completed)),
+				() => Assert.False(TaskListItemViewModel.InProgress.Equals(null))
 			);
 		}
 	}

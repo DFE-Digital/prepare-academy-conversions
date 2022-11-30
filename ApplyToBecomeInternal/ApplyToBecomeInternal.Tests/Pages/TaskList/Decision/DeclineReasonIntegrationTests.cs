@@ -138,7 +138,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			ExplanationFor(reason).Should().BeNullOrWhiteSpace();
 		}
 
-		private AdvisoryBoardDeclinedReasons ReasonOtherThan(AdvisoryBoardDeclinedReasons reason)
+		private static AdvisoryBoardDeclinedReasons ReasonOtherThan(AdvisoryBoardDeclinedReasons reason)
 		{
 			return Enum.GetValues(typeof(AdvisoryBoardDeclinedReasons))
 				.Cast<AdvisoryBoardDeclinedReasons>()

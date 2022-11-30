@@ -6,5 +6,6 @@ namespace ApplyToBecome.Data.Models
 	{
 		public List<string> Statuses { get; set; }
 		public List<string> AssignedUsers { get; set; }
+		public List<string> Regions { get; set; }
 	}
 }

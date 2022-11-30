@@ -35,14 +35,14 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 		public int TotalProjects { get; set; }
 
 		[BindProperty(SupportsGet = true)] public int CurrentPage { get; set; } = 1;
-		[BindProperty] public ProjectListFilters Filters { get; set; } = new ProjectListFilters();
+		[BindProperty] public ProjectListFilters Filters { get; set; } = new();
 
 		public async Task OnGetAsync()
 		{
 			Filters.PopulateFrom(Request.Query);
 
 			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response =
-				await _repository.GetAllProjects(CurrentPage, _pageSize, Filters.Title?.Trim(), Filters.SelectedStatuses, Filters.SelectedOfficers);
+				await _repository.GetAllProjects(CurrentPage, _pageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions);
 
 			Projects = response.Body.Data.Select(Build).ToList();
 			HasNextPage = response.Body?.Paging?.NextPageUrl != null;
@@ -53,15 +53,15 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 			{
 				Filters.AvailableStatuses = filterParametersResponse.Body.Statuses.ConvertAll(r => r.SentenceCase());
 				Filters.AvailableDeliveryOfficers = filterParametersResponse.Body.AssignedUsers;
+				Filters.AvailableRegions = filterParametersResponse.Body.Regions;
 			}
-
 			if (CurrentPage - 5 > 1)
 			{
 				StartingPage = CurrentPage - 5;
 			}
 		}
 
-		private ProjectListViewModel Build(AcademyConversionProject academyConversionProject)
+		private static ProjectListViewModel Build(AcademyConversionProject academyConversionProject)
 		{
 			return new ProjectListViewModel
 			{
@@ -79,7 +79,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 			};
 		}
 
-		private ProjectStatus MapProjectStatus(string status)
+		private static ProjectStatus MapProjectStatus(string status)
 		{
 			const string green = "green";
 			const string yellow = "yellow";

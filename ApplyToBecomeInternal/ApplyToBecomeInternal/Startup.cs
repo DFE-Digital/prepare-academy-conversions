@@ -132,8 +132,11 @@ namespace ApplyToBecomeInternal
 				app.UseHsts();
 			}
 
+
 			app.UseSecurityHeaders(
-				SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment()));
+				SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment())
+					.AddXssProtectionDisabled()
+			);
 
 			app.UseStatusCodePagesWithReExecute("/Errors", "?statusCode={0}");
 
