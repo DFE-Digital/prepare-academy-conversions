@@ -34,7 +34,7 @@ namespace ApplyToBecome.Data.Services
 			return generalInformation;
 		}
 
-		private string IsPartOfADiocesanTrust(NameAndCodeResponse nameAndCode)
+		private static string IsPartOfADiocesanTrust(NameAndCodeResponse nameAndCode)
 		{
 			if (nameAndCode == null)
 			{
@@ -50,7 +50,7 @@ namespace ApplyToBecome.Data.Services
 			return $"Yes, {nameAndCode.Name}";
 		}
 
-		private int? ToInt(string value)
+		private static int? ToInt(string value)
 		{
 			if (int.TryParse(value, out var result))
 			{

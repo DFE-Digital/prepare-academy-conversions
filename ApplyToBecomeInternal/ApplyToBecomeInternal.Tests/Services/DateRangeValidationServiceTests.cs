@@ -7,8 +7,8 @@ namespace ApplyToBecomeInternal.Tests.Services
 	public class DateRangeValidationServiceTests
 	{
 		private readonly DateRangeValidationService _validator;
-		private DateTime PastDate => DateTime.Today.AddMonths(-1);
-		private DateTime FutureDate => DateTime.Today.AddMonths(1);
+		private static DateTime PastDate => DateTime.Today.AddMonths(-1);
+		private static DateTime FutureDate => DateTime.Today.AddMonths(1);
 
 		public DateRangeValidationServiceTests()
 		{

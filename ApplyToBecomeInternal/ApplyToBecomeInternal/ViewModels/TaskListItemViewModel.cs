@@ -147,7 +147,7 @@ namespace ApplyToBecomeInternal.ViewModels
 				return Completed;
 			}
 			if (project.EndOfCurrentFinancialYear == null
-				&& project.RevenueCarryForwardAtEndMarchCurrentYear == null				
+				&& project.RevenueCarryForwardAtEndMarchCurrentYear == null
 				&& project.CapitalCarryForwardAtEndMarchCurrentYear == null
 				&& project.EndOfNextFinancialYear == null
 				&& project.ProjectedRevenueBalanceAtEndMarchNextYear == null

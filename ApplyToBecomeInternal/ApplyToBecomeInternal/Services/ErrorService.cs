@@ -17,7 +17,7 @@ namespace ApplyToBecomeInternal.Services
 				Key = key,
 				Message = message
 			});
-		 }
+		}
 
 		public void AddErrors(IEnumerable<string> keys, ModelStateDictionary modelState)
 		{
@@ -75,22 +75,18 @@ namespace ApplyToBecomeInternal.Services
 			}
 		}
 
-		private bool IsDateInputId(string id)
+		private static bool IsDateInputId(string id)
 		{
 			return id.EndsWith("-day") || id.EndsWith("-month") || id.EndsWith("-year");
 		}
 
-		private string DateInputId(string id)
+		private static string DateInputId(string id)
 		{
 			var timeUnit = from item in new[] { "-day", "-month", "-year" }
-					where id.EndsWith(item)
-					select item;
-			
-			if (timeUnit.Any()) {
-				return id.Substring(0, id.LastIndexOf(timeUnit.First()));
-			}
-			
-			return id;
+						   where id.EndsWith(item)
+						   select item;
+
+			return id.Substring(0, id.LastIndexOf(timeUnit.First()));
 		}
 	}
 }

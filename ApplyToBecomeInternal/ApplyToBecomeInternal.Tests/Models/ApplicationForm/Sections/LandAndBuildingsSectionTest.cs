@@ -4,7 +4,6 @@ using ApplyToBecomeInternal.Models.ApplicationForm;
 using ApplyToBecomeInternal.Models.ApplicationForm.Sections;
 using AutoFixture;
 using FluentAssertions;
-using System;
 using System.Linq;
 using Xunit;
 using ApplyToBecomeInternal.Extensions;
@@ -13,7 +12,7 @@ namespace ApplyToBecomeInternal.Tests.Models.ApplicationForm.Sections
 {
 	public class LandAndBuildingsSectionTest
 	{
-		private void SetBooleanQuestionsToTrue(ApplyingSchool application, bool value)
+		private static void SetBooleanQuestionsToTrue(ApplyingSchool application, bool value)
 		{
 			application.SchoolBuildLandWorksPlanned = value;
 			application.SchoolBuildLandSharedFacilities = value;

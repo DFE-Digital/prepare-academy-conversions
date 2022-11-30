@@ -73,7 +73,7 @@ namespace ApplyToBecomeInternal.Tests.Services
 			var errors = _errorService.GetErrors();
 			errors.Count().Should().Be(1);
 			var invalidInputs = errors.First().InvalidInputs;
-			invalidInputs.Count().Should().Be(2);
+			invalidInputs.Count.Should().Be(2);
 			invalidInputs.Contains("deadline-day");
 			invalidInputs.Contains("deadline-month");
 		}

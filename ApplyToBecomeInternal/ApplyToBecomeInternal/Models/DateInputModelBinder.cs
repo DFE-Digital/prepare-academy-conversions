@@ -11,16 +11,7 @@ namespace ApplyToBecomeInternal.Models
 	{
 		public Task BindModelAsync(ModelBindingContext bindingContext)
 		{
-			if (bindingContext == null)
-			{
-				throw new ArgumentNullException(nameof(bindingContext));
-			}
-
-			var modelType = bindingContext.ModelType;
-			if (modelType != typeof(DateTime) && modelType != typeof(DateTime?))
-			{
-				throw new InvalidOperationException($"Cannot bind {modelType.Name}.");
-			}
+			Type modelType = ValidateBindingContext(bindingContext);
 
 			var dayModelName = $"{bindingContext.ModelName}-day";
 			var monthModelName = $"{bindingContext.ModelName}-month";
@@ -92,6 +83,22 @@ namespace ApplyToBecomeInternal.Models
 			return Task.CompletedTask;
 		}
 
+		private static Type ValidateBindingContext(ModelBindingContext bindingContext)
+		{
+			if (bindingContext == null)
+			{
+				throw new ArgumentNullException(nameof(bindingContext));
+			}
+
+			var modelType = bindingContext.ModelType;
+			if (modelType != typeof(DateTime) && modelType != typeof(DateTime?))
+			{
+				throw new InvalidOperationException($"Cannot bind {modelType.Name}.");
+			}
+
+			return modelType;
+		}
+
 		private static bool IsEmptyDate(ValueProviderResult dayValueProviderResult, ValueProviderResult monthValueProviderResult, ValueProviderResult yearValueProviderResult)
 		{
 			return dayValueProviderResult.FirstValue == string.Empty
@@ -123,6 +130,7 @@ namespace ApplyToBecomeInternal.Models
 		}
 	}
 
+	[AttributeUsage(AttributeTargets.Property)]
 	public class DateValidationAttribute : Attribute
 	{
 		public DateValidationAttribute(DateRangeValidationService.DateRange dateValidationEnum)

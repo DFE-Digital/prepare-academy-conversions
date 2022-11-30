@@ -17,12 +17,13 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 				new FormSubSection("Name changes", GenerateNameChangesFields(application)),
 			};
 		}
-		private IEnumerable<FormField> GenerateSchoolFields(ApplyingSchool application) =>
+		private static IEnumerable<FormField> GenerateSchoolFields(ApplyingSchool application) =>
 			new[]
 			{
 				new FormField("The name of the school", application.SchoolName)
-			};	
-		private IEnumerable<FormField> GenerateContactFields(ApplyingSchool application)
+			};
+
+		private static IEnumerable<FormField> GenerateContactFields(ApplyingSchool application)
 		{
 			var formFields = new List<FormField>();
 			formFields.Add(new FormField("Name of headteacher", application.SchoolConversionContactHeadName));
@@ -32,7 +33,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			formFields.Add(new FormField("Chair's email address", application.SchoolConversionContactChairEmail));
 			formFields.Add(new FormField("Chair's phone number", application.SchoolConversionContactChairTel));
 			formFields.Add(new FormField("Who is the main contact for the conversion?", application.SchoolConversionContactRole));
-			if (application.SchoolConversionContactRole.ToUpper()== "OTHER")
+			if (application.SchoolConversionContactRole.ToUpper() == "OTHER")
 			{
 				formFields.Add(new FormField("Main contact's name", application.SchoolConversionMainContactOtherName));
 				formFields.Add(new FormField("Main contact's email address", application.SchoolConversionMainContactOtherEmail));
@@ -43,9 +44,9 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			formFields.Add(new FormField("Approver's email address", application.SchoolConversionApproverContactEmail));
 
 			return formFields;
-		}			
+		}
 
-		private IEnumerable<FormField> GenerateConversionDateFields(ApplyingSchool application)
+		private static IEnumerable<FormField> GenerateConversionDateFields(ApplyingSchool application)
 		{
 			var formFields = new List<FormField>();
 			formFields.Add(new FormField("Do you want the conversion to happen on a particular date", application.SchoolConversionTargetDateSpecified.ToYesNoString()));
@@ -58,22 +59,22 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			return formFields;
 		}
 
-		private IEnumerable<FormField> GenerateReasonsForJoiningFields(ApplyingSchool application) =>
+		private static IEnumerable<FormField> GenerateReasonsForJoiningFields(ApplyingSchool application) =>
 			new[]
 			{
 				new FormField("Why does the school want to join this trust in particular?", application.SchoolConversionReasonsForJoining)
 			};
-		
-		private IEnumerable<FormField> GenerateNameChangesFields(ApplyingSchool application)
+
+		private static IEnumerable<FormField> GenerateNameChangesFields(ApplyingSchool application)
 		{
-			var formFields = new List<FormField>();	
-			
-		    formFields.Add(new FormField("Is the school planning to change its name when it becomes an academy?", application.SchoolConversionChangeNamePlanned.ToYesNoString()));			
-			if (application.SchoolConversionChangeNamePlanned==true)
+			var formFields = new List<FormField>();
+
+			formFields.Add(new FormField("Is the school planning to change its name when it becomes an academy?", application.SchoolConversionChangeNamePlanned.ToYesNoString()));
+			if (application.SchoolConversionChangeNamePlanned == true)
 			{
 				formFields.Add(new FormField("What's the proposed new name?", application.SchoolConversionProposedNewSchoolName));
-			}	
-			
+			}
+
 			return formFields;
 		}
 	}

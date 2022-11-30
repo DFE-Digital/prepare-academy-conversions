@@ -19,20 +19,20 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			};
 		}
 
-		private IEnumerable<FormField> GeneratePreviousFinancialYearFields(string name, FinancialYear applicationFinancialYear)
+		private static IEnumerable<FormField> GeneratePreviousFinancialYearFields(string name, FinancialYear applicationFinancialYear)
 		{
 
 			var previousFinancialYearFields = new List<FormField>();
 			previousFinancialYearFields.Add(new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate?.ToDateString()));
 			previousFinancialYearFields.Add(new FormField($"Revenue carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.RevenueCarryForward.ToMoneyString(true)));
 			previousFinancialYearFields.Add(new FormField("Surplus or deficit?", applicationFinancialYear.RevenueIsDeficit.ToSurplusDeficitString()));
-			if(applicationFinancialYear.RevenueIsDeficit == true)
+			if (applicationFinancialYear.RevenueIsDeficit == true)
 			{
 				previousFinancialYearFields.Add(new FormField("Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan", applicationFinancialYear.RevenueStatusExplained));
 			}
 			previousFinancialYearFields.Add(new FormField($"Capital carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.CapitalCarryForward.ToMoneyString(true)));
 			previousFinancialYearFields.Add(new FormField("Surplus or deficit?", applicationFinancialYear.CapitalIsDeficit.ToSurplusDeficitString()));
-			if(applicationFinancialYear.CapitalIsDeficit == true)
+			if (applicationFinancialYear.CapitalIsDeficit == true)
 			{
 				previousFinancialYearFields.Add(new FormField("Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan", applicationFinancialYear.CapitalStatusExplained));
 			}
@@ -40,20 +40,20 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			return previousFinancialYearFields;
 		}
 
-		private IEnumerable<FormField> GenerateFinancialYearFields(string name, FinancialYear applicationFinancialYear)
+		private static IEnumerable<FormField> GenerateFinancialYearFields(string name, FinancialYear applicationFinancialYear)
 		{
 			var financialYearFields = new List<FormField>();
-			
+
 			financialYearFields.Add(new FormField($"End of {name} financial year", applicationFinancialYear.FYEndDate?.ToDateString()));
 			financialYearFields.Add(new FormField($"Forecasted revenue carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.RevenueCarryForward.ToMoneyString(true)));
 			financialYearFields.Add(new FormField("Surplus or deficit?", applicationFinancialYear.RevenueIsDeficit.ToSurplusDeficitString()));
-			if(applicationFinancialYear.RevenueIsDeficit == true)
+			if (applicationFinancialYear.RevenueIsDeficit == true)
 			{
 				financialYearFields.Add(new FormField("Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan", applicationFinancialYear.RevenueStatusExplained));
 			}
 			financialYearFields.Add(new FormField($"Forecasted capital carry forward at the end of the {name} financial year (31 March)", applicationFinancialYear.CapitalCarryForward.ToMoneyString(true)));
 			financialYearFields.Add(new FormField("Surplus or deficit?", applicationFinancialYear.CapitalIsDeficit.ToSurplusDeficitString()));
-			if(applicationFinancialYear.CapitalIsDeficit == true)
+			if (applicationFinancialYear.CapitalIsDeficit == true)
 			{
 				financialYearFields.Add(new FormField("Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan", applicationFinancialYear.CapitalStatusExplained));
 			}
@@ -61,11 +61,11 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			return financialYearFields;
 		}
 
-		private IEnumerable<FormField> GenerateLoansFields(ICollection<Loan> applicationLoans)
+		private static IEnumerable<FormField> GenerateLoansFields(ICollection<Loan> applicationLoans)
 		{
 			bool loansExist = applicationLoans?.Count > 0;
 			var loansFields = new List<FormField> {
-				new FormField("Are there any existing loans?", loansExist.ToYesNoString()) 
+				new FormField("Are there any existing loans?", loansExist.ToYesNoString())
 				};
 
 			if (loansExist)
@@ -82,12 +82,12 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			return loansFields;
 		}
 
-		private IEnumerable<FormField> GenerateFinancialLeasesFields(ICollection<Lease> applicationLeases)
+		private static IEnumerable<FormField> GenerateFinancialLeasesFields(ICollection<Lease> applicationLeases)
 		{
 			bool leasesExist = applicationLeases?.Count > 0;
 			var leaseFields = new List<FormField>
 			{
-				new FormField("Are there any existing leases?", leasesExist.ToYesNoString()) 
+				new FormField("Are there any existing leases?", leasesExist.ToYesNoString())
 			};
 
 			if (leasesExist)
@@ -106,7 +106,7 @@ namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 			return leaseFields;
 		}
 
-		private IEnumerable<FormField> GenerateFinancialInvestigationsFields(ApplyingSchool application)
+		private static IEnumerable<FormField> GenerateFinancialInvestigationsFields(ApplyingSchool application)
 		{
 			var financialInvestigationsFields = new List<FormField>
 			{

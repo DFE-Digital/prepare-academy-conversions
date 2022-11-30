@@ -100,7 +100,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector("#diocesan-multi-academy-trust").TextContent.Should().Be($"Yes, {establishment.Diocese.Name}");
 			Document.QuerySelector("#distance-to-trust-headquarters").TextContent.Should().Be($"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles");
 			Document.QuerySelector("#distance-to-trust-headquarters-additional-text").TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
-			Document.QuerySelector("#parliamentary-constituency").TextContent.Should().Be(establishment.ParliamentaryConstituency.Name);			
+			Document.QuerySelector("#parliamentary-constituency").TextContent.Should().Be(establishment.ParliamentaryConstituency.Name);
 			Document.QuerySelector("#member-of-parliament-name").TextContent.Should().Be(project.MemberOfParliamentName);
 			Document.QuerySelector("#member-of-parliament-party").TextContent.Should().Be(project.MemberOfParliamentParty);
 		}
@@ -158,7 +158,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector("#financial-year").TextContent.Should().Be(project.EndOfCurrentFinancialYear.ToDateString());
 			Document.QuerySelector("#finance-year-current").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#finance-current-capital").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
-			Document.QuerySelector("#next-financial-year").TextContent.Should().Be(project.EndOfNextFinancialYear.ToDateString());			
+			Document.QuerySelector("#next-financial-year").TextContent.Should().Be(project.EndOfNextFinancialYear.ToDateString());
 			Document.QuerySelector("#finance-year-following").TextContent.Should().Be(project.ProjectedRevenueBalanceAtEndMarchNextYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#finance-projected-capital").TextContent.Should().Be(project.CapitalCarryForwardAtEndMarchNextYear.Value.ToMoneyString(true));
 			Document.QuerySelector("#school-budget-information-additional-information").TextContent.Should().Be(project.SchoolBudgetInformationAdditionalInformation);
@@ -708,7 +708,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = "Yes");
 			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDateQuestion, "Yes");
-			var secondPatchRequest = AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate);
+			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -734,7 +734,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 		}
 
-		private string AsPercentageOf(string numberOfPupils, string schoolCapacity)
+		private static string AsPercentageOf(string numberOfPupils, string schoolCapacity)
 		{
 			int? a = int.Parse(numberOfPupils);
 			int? b = int.Parse(schoolCapacity);
