@@ -67,7 +67,7 @@ namespace ApplyToBecomeInternal.Pages.Public
 				Consent = consent;
 				PreferencesSet = true;
 
-				var cookieOptions = new CookieOptions { Expires = DateTime.Today.AddMonths(6), Secure = true, HttpOnly = false };
+				var cookieOptions = new CookieOptions { Expires = DateTime.Today.AddMonths(6), Secure = true };
 				Response.Cookies.Append(ConsentCookieName, consent.Value.ToString(), cookieOptions);
 
 				if (!consent.Value)
@@ -84,7 +84,7 @@ namespace ApplyToBecomeInternal.Pages.Public
 		{
 			if (consent.HasValue)
 			{
-				var cookieOptions = new CookieOptions { Expires = DateTime.Today.AddMonths(6), Secure = true, HttpOnly = false };
+				var cookieOptions = new CookieOptions { Expires = DateTime.Today.AddMonths(6), Secure = true };
 				Response.Cookies.Append(ConsentCookieName, consent.Value.ToString(), cookieOptions);
 			}
 
@@ -99,8 +99,7 @@ namespace ApplyToBecomeInternal.Pages.Public
 						{
 							Expires = DateTime.Now.AddDays(-1),
 							Secure = true,
-							SameSite = SameSiteMode.Lax,
-							HttpOnly = false
+							SameSite = SameSiteMode.Lax
 						});
 					}
 				}

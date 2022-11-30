@@ -30,6 +30,11 @@ namespace ApplyToBecomeInternal.ViewModels
 			return Status.Equals(other.Status) && CssClass.Equals(other.CssClass);
 		}
 
+		public override bool Equals(object obj)
+		{
+			return Equals(obj as TaskListItemViewModel);
+		}
+
 		public static TaskListItemViewModel GetLocalAuthorityInformationTemplateTaskListStatus(ProjectViewModel project)
 		{
 			if (project.LocalAuthorityInformationTemplateSectionComplete)
@@ -157,6 +162,11 @@ namespace ApplyToBecomeInternal.ViewModels
 				return NotStarted;
 			}
 			return InProgress;
+		}
+
+		public override int GetHashCode()
+		{
+			return $"{Status} {CssClass}".GetHashCode();
 		}
 	}
 }
