@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-Cypress._.each(['iphone-x'], (viewport) => {
+Cypress._.each(['ipad-mini'], (viewport) => {
     describe(`87641 Check mark should reflect status correctly on LA Information preview page on ${viewport}`, () =>{
 		beforeEach(() => {
 			cy.login()

@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-Cypress._.each(['iphone-x'], (viewport) => {
+Cypress._.each(['ipad-mini'], (viewport) => {
 	describe(`86316 Submit and view MP details ${viewport}`, () => {
 		before(() => {
 			cy.viewport(viewport)

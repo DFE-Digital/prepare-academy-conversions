@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-Cypress._.each(['ipad-2'], (viewport) => {
+Cypress._.each(['ipad-mini'], (viewport) => {
     describe(`109473: Filter projects and verify the count ${viewport}`, () => {
       beforeEach(() => {
         cy.viewport(viewport);
