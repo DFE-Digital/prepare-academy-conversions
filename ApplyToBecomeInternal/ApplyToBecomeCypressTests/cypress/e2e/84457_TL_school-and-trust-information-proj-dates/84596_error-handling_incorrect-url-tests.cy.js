@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-Cypress._.each(['iphone-x'], (viewport) => {
+Cypress._.each(['ipad-mini'], (viewport) => {
     describe(`84596 Error handling should present correctly to the user on ${viewport}`, () => {
         after(function () {
             cy.clearLocalStorage()

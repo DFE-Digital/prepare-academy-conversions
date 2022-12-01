@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-Cypress._.each(['iphone-x'], (viewport) => {
+Cypress._.each(['ipad-mini'], (viewport) => {
 	describe(`91489: Apply-to-become GET application types on ${viewport}`, () => {
 		beforeEach(() => {
 			cy.login()

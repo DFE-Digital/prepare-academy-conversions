@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-Cypress._.each(['iphone-x'], (viewport) => {
+Cypress._.each(['ipad-mini'], (viewport) => {
     describe(`86339 validate advisory board urls on ${viewport}`, () => {
         let selectedSchool = ''
     

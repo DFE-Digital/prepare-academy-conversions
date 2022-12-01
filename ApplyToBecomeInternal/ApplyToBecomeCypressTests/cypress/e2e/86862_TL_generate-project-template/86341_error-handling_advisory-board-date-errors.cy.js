@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-Cypress._.each(['iphone-x'], (viewport) => {
+Cypress._.each(['ipad-mini'], (viewport) => {
 	describe(`86341: Error messaging should be correct on ${viewport}`, () => {
 		beforeEach(() => {
 			cy.viewport(viewport)
