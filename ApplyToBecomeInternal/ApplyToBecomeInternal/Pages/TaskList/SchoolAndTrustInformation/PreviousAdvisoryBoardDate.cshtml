@@ -3,7 +3,7 @@
 @{
 	Layout = "_QuestionLayout";
 	Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
-	ViewData["Title"] = "Date of previous advisory board";
+    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Date of previous advisory board";
 }
 
 @section BeforeMain

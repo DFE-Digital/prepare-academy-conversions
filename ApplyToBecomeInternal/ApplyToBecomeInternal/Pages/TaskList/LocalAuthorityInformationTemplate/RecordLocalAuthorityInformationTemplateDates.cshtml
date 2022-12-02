@@ -2,7 +2,7 @@
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
 	Model.SuccessPage = Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates.Page;
-	ViewData["Title"] = "Record dates for local authority information template";
+    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Record dates for local authority information template";
 }
 @section BeforeMain
 {

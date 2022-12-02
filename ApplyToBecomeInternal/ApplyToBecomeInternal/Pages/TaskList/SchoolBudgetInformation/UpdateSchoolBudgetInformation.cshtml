@@ -2,7 +2,7 @@
 @model ApplyToBecomeInternal.Pages.UpdateAcademyConversionProjectPageModel
 @{
 	Model.SuccessPage = Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page;
-	ViewData["Title"] = "Update school budget information";
+    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Update school budget information";
 }
 
 @section BeforeMain
