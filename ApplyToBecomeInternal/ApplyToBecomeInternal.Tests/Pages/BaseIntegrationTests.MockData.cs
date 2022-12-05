@@ -64,6 +64,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
          postSetup?.Invoke(project);
 
          _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetProjectById, project.Id), project);
+
 			return project;
 		}
 
@@ -161,7 +162,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
          postSetup?.Invoke(application);
 
          var response = new ApiV2Wrapper<Application> { Data = application };
-			_factory.AddGetWithJsonResponse($"/v2/apply-to-become/application/{application.ApplicationId}", response);
+         _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetApplicationByReference, application.ApplicationId), response);
 			return application;
 		}
 

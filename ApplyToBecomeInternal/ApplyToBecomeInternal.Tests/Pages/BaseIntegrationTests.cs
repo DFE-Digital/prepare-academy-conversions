@@ -24,11 +24,10 @@ namespace ApplyToBecomeInternal.Tests.Pages
       protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory)
 		{
 			_factory = factory;
-			var httpClient = factory.CreateClient();
-			Context = CreateBrowsingContext(httpClient);
-			_fixture = new Fixture();
-
+         _fixture = new Fixture();
          _pathFor = new PathFor(factory.Services.GetService(typeof(IFeatureManager)) as IFeatureManager);
+
+         Context = CreateBrowsingContext(factory.CreateClient());
       }
 
       public async Task<IDocument> OpenUrlAsync(string url)

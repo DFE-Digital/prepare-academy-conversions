@@ -47,6 +47,12 @@
 	  <Folder Include="wwwroot\src\images" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Content Update="appsettings.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
 <!--	<Target Name="BuildFrontEnd" BeforeTargets="Build">-->
 <!--		<Exec WorkingDirectory="$(ProjectDir)" Command="npx gulp build-fe"/>-->
 <!--	</Target>-->

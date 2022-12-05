@@ -1,5 +1,4 @@
-﻿using ApplyToBecome.Data.Features;
-using ApplyToBecome.Data.Services.Interfaces;
+﻿using ApplyToBecome.Data.Services.Interfaces;
 using ApplyToBecomeInternal.Tests.Pages.ProjectAssignment;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
@@ -8,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.FeatureManagement;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
