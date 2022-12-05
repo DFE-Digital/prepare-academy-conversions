@@ -11,8 +11,9 @@ public class PathFor
       _useAcademisation = features.IsEnabledAsync(FeatureFlags.UseAcademisation).Result;
    }
 
+   public static string GetSelectedRegions => "/establishment/regions?{0}";
+
    public string GetAllProjects => _useAcademisation ? "/legacy/projects" : "/v2/conversion-projects";
-   public string GetSelectedRegions => "/establishment/regions?{0}";
    public string GetProjectById => _useAcademisation ? "/legacy/project/{0}" : "/v2/conversion-projects/{0}";
    public string UpdateProject => _useAcademisation ? "/legacy/project/{0}" : "/v2/conversion-projects/{0}";
    public string GetFilterParameters => _useAcademisation ? "/legacy/projects/status" : "/v2/conversion-projects/parameters";

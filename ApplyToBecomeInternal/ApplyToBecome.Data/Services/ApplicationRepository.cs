@@ -28,7 +28,7 @@ public class ApplicationRepository
          return new ApiResponse<Application>(response.StatusCode, outerResponse.Data);
       }
 
-      _logger.LogWarning($"Unable to get school application form data for establishment with id: {id}");
+      _logger.LogWarning("Unable to get school application form data for establishment with id: {id}", id);
       return new ApiResponse<Application>(response.StatusCode, null);
    }
 }
