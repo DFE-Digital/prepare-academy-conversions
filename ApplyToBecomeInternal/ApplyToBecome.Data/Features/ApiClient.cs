@@ -30,7 +30,7 @@ public class ApiClient : IApiClient
 
    public async Task<HttpResponseMessage> GetSelectedRegionsAsync(string regionQueryString)
    {
-      return await TramsClient.GetAsync(string.Format(_pathFor.GetSelectedRegions, regionQueryString.ToLowerInvariant()));
+      return await TramsClient.GetAsync(string.Format(PathFor.GetSelectedRegions, regionQueryString.ToLowerInvariant()));
    }
 
    public async Task<HttpResponseMessage> GetProjectByIdAsync(int id)
