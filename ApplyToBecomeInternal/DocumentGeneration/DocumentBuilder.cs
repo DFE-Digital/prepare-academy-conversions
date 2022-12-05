@@ -58,7 +58,7 @@ namespace DocumentGeneration
 		public void ReplacePlaceholderWithContent(string placeholderText, Action<DocumentBodyBuilder> action)
 		{
 			var paragraphs = _body.Descendants<Paragraph>().ToList();
-			var placeholderElement =  paragraphs.First(element => element.InnerText == $"[{placeholderText}]");
+			var placeholderElement = paragraphs.First(element => element.InnerText == $"[{placeholderText}]");
 
 			var builder = new DocumentBodyBuilder(Document, placeholderElement);
 			action(builder);
@@ -228,14 +228,14 @@ namespace DocumentGeneration
 				if (attribute.IsRichText)
 				{
 					var elements = HtmlToElements.Convert(this, val);
-					
+
 					OpenXmlElement previousElement = paragraph;
-					foreach(var element in elements)
+					foreach (var element in elements)
 					{
 						previousElement.InsertAfterSelf(element);
 						previousElement = element;
 					}
-					
+
 					paragraph.Remove();
 				}
 				else
@@ -257,7 +257,7 @@ namespace DocumentGeneration
 			}
 		}
 
-		private PropertyInfo[] GetProperties<TDocument>()
+		private static PropertyInfo[] GetProperties<TDocument>()
 		{
 			return typeof(TDocument).GetProperties()
 				.Where(p => p.GetCustomAttribute<DocumentTextAttribute>() != null)

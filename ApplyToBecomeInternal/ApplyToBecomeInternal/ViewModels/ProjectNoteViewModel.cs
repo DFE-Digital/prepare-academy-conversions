@@ -13,7 +13,7 @@ namespace ApplyToBecomeInternal.ViewModels
 			Date = FormatDateAndTime(projectNote.Date);
 		}
 
-		private string FormatDateAndTime(DateTime date)
+		private static string FormatDateAndTime(DateTime date)
 		{
 			return $"{date.Day} {date:MMMM} {date.Year} at {date:hh:mm}{date.ToString("tt").ToLower()}";
 		}

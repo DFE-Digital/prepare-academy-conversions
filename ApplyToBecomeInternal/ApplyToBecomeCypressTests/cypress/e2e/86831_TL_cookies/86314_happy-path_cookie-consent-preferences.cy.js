@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-Cypress._.each(['iphone-x'], (viewport) => {
+Cypress._.each(['ipad-mini'], (viewport) => {
 	describe(`86314 Cookie consent details on ${viewport}`, () => {
 		beforeEach(() => {
 			cy.login()

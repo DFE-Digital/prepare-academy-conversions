@@ -30,7 +30,7 @@ namespace ApplyToBecome.Data.Services
 		public async Task<ApiResponse<TResponse>> Put<TRequest, TResponse>(string path, TRequest requestBody)
 			where TResponse : class
 		{
-			var requestPayload = JsonContent.Create(requestBody);			
+			var requestPayload = JsonContent.Create(requestBody);
 			var result = await _client.PutAsync(path, requestPayload);
 
 			return await HandleResponse<TResponse>(result);
@@ -59,7 +59,8 @@ namespace ApplyToBecome.Data.Services
 			var content = "";
 			if (result.Content != null) content = await result.Content.ReadAsStringAsync();
 
-			_logger.LogError($"Request to Api failed | StatusCode - {result.StatusCode} | Content - {content}");
+			_logger.LogError("Request to Api failed | StatusCode - {StatusCode} | Content - {content}",
+				result.StatusCode, content);
 
 			return new ApiResponse<TResponse>(result.StatusCode, null);
 		}

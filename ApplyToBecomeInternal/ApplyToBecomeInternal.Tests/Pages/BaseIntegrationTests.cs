@@ -55,7 +55,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			await anchors.NavigateAsync();
 		}
 
-		protected (RadioButton, RadioButton) RandomRadioButtons(string id, params string[] values)
+		protected static (RadioButton, RadioButton) RandomRadioButtons(string id, params string[] values)
 		{
 			var keyPairs = values.Select((v, i) => new KeyValuePair<int, string>(i, v)).ToDictionary(kv => kv.Key + 1, kv => kv.Value);
 			var selectedPosition = new Random().Next(0, keyPairs.Count);
@@ -94,6 +94,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
       public void Dispose()
 		{
 			_factory.Reset();
+			GC.SuppressFinalize(this);
 		}
 	}
 }

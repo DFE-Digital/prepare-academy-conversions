@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.gpaas-azure-migration
+    command: /bin/bash -c "./docker-entrypoint.sh dotnet ApplyToBecomeInternal.dll"
+    ports:
+      - 80:80/tcp
+    env_file:
+      - .env.development

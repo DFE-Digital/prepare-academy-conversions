@@ -56,7 +56,7 @@ namespace ApplyToBecomeInternal.Pages.Public
 		public IActionResult OnPost(bool? consent, string returnUrl)
 		{
 			returnPath = returnUrl;
-			
+
 			if (Request.Cookies.ContainsKey(ConsentCookieName))
 			{
 				Consent = bool.Parse(Request.Cookies[ConsentCookieName]);
@@ -94,9 +94,9 @@ namespace ApplyToBecomeInternal.Pages.Public
 				{
 					if (cookie.StartsWith("_ga") || cookie.Equals("_gid"))
 					{
-						_logger.LogInformation($"Expiring Google analytics cookie: {cookie}");
-						Response.Cookies.Append(cookie, string.Empty, new CookieOptions 
-						{ 
+						_logger.LogInformation("Expiring Google analytics cookie: {cookie}", cookie);
+						Response.Cookies.Append(cookie, string.Empty, new CookieOptions
+						{
 							Expires = DateTime.Now.AddDays(-1),
 							Secure = true,
 							SameSite = SameSiteMode.Lax

@@ -3,7 +3,7 @@
 @{
 	Layout = "_QuestionLayout";
 	Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
-	ViewData["Title"] = "How far is the converting school from the trust";
+    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "How far is the converting school from the trust";
 	ViewData["SchoolName"] = Model.Project.SchoolName;
 	ViewData["ProjectId"] = Model.Project.Id;
 }

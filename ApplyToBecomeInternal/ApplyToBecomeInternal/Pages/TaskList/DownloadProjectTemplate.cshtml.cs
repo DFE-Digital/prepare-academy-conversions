@@ -72,10 +72,10 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			return File(documentByteArray, "application/vnd.ms-word.document", $"{document.SchoolName}-project-template-{DateTime.Today.ToString("dd-MM-yyyy")}.docx");
 		}
 
-		private void AddOfstedInformation(DocumentBuilder builder, HtbTemplate document, AcademyConversionProject project)
+		private static void AddOfstedInformation(DocumentBuilder builder, HtbTemplate document, AcademyConversionProject project)
 		{
 			var schoolPerformance = document.SchoolPerformance;
-			
+
 			var ofstedInformation = new List<TextElement[]>
 			{
 				new[]
@@ -151,7 +151,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			builder.ReplacePlaceholderWithContent("SchoolPerformanceData", builder => builder.AddTable(ofstedInformation));
 		}
 
-		private void AddKeyStage4Information(DocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
+		private static void AddKeyStage4Information(DocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
 		{
 			if (document.KeyStage4 == null)
 			{
@@ -490,7 +490,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			});
 		}
 
-		private void AddKeyStage5Information(DocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
+		private static void AddKeyStage5Information(DocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
 		{
 			if (document.KeyStage5 == null)
 			{
@@ -538,7 +538,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			});
 		}
 
-		private void AddKeyStage2Information(DocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
+		private static void AddKeyStage2Information(DocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
 		{
 			if (document.KeyStage2 == null)
 			{
@@ -592,7 +592,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			});
 		}
 
-		private MemoryStream CreateMemoryStream(string template)
+		private static MemoryStream CreateMemoryStream(string template)
 		{
 			var assembly = Assembly.GetExecutingAssembly();
 			var resourceName = assembly.GetManifestResourceNames()
@@ -603,7 +603,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList
 			return ms;
 		}
 
-		private TextElement HtmlStringToTextElement(HtmlString str)
+		private static TextElement HtmlStringToTextElement(HtmlString str)
 		{
 			return new TextElement(str.Value.Replace("<br>", "\n"));
 		}

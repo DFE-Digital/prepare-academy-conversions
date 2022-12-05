@@ -18,17 +18,17 @@ public class ApplicationRepository
       _logger = logger;
    }
 
-   public async Task<ApiResponse<Application>> GetApplicationByReference(string id) // id is the application reference number
+   public async Task<ApiResponse<Application>> GetApplicationByReference(string id)
    {
       HttpResponseMessage response = await _apiClient.GetApplicationByReferenceAsync(id);
-      if (!response.IsSuccessStatusCode)
+
+      if (response.IsSuccessStatusCode)
       {
-         _logger.LogWarning($"Unable to get school application form data for establishment with id: {id}");
-         return new ApiResponse<Application>(response.StatusCode, null);
+         ApiV2Wrapper<Application> outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<Application>>();
+         return new ApiResponse<Application>(response.StatusCode, outerResponse.Data);
       }
 
-      ApiV2Wrapper<Application> outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<Application>>();
-
-      return new ApiResponse<Application>(response.StatusCode, outerResponse.Data);
+      _logger.LogWarning($"Unable to get school application form data for establishment with id: {id}");
+      return new ApiResponse<Application>(response.StatusCode, null);
    }
 }

@@ -2,7 +2,8 @@ using System;
 
 namespace DocumentGeneration
 {
-    public class DocumentTextAttribute : Attribute
+	[AttributeUsage(AttributeTargets.Property)]
+	public class DocumentTextAttribute : Attribute
     {
         private readonly string _placeholder;
 

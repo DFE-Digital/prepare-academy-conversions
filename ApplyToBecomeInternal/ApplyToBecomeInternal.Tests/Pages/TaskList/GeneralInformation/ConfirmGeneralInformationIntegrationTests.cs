@@ -156,7 +156,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
 
-		private string AsPercentageOf(string numberOfPupils, string schoolCapacity)
+		private static string AsPercentageOf(string numberOfPupils, string schoolCapacity)
 		{
 			int? a = int.Parse(numberOfPupils);
 			int? b = int.Parse(schoolCapacity);

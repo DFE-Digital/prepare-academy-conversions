@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-Cypress._.each(['iphone-x'], (viewport) => {
+Cypress._.each(['ipad-mini'], (viewport) => {
 	describe(`86342 Error message link should redirect correctly on ${viewport}`, () => {
 		beforeEach(() => {
 			cy.viewport(viewport)

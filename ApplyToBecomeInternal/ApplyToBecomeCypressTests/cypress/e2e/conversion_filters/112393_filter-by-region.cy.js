@@ -13,7 +13,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
       });
   
       it('TC01: should display results when region option is checked', () => {
-        cy.get('[data-cy="select-projectlist-filter-region-South West"]').click();
+        cy.get('[data-cy="select-projectlist-filter-region-West Midlands"]').click();
         cy.get('[data-cy=select-projectlist-filter-apply]').click();
         cy.get('[data-cy="select-projectlist-filter-row"]').should('be.visible');
         cy.get('[data-cy="select-projectlist-filter-banner"]').should('be.visible');
@@ -28,9 +28,25 @@ Cypress._.each(['ipad-mini'], (viewport) => {
   
       it('TC03: should display results when multiple filter options are checked', () => {
         cy.get('[data-cy="select-projectlist-filter-title"]').type('School');
-        cy.get('[data-cy="select-projectlist-filter-region-South West"]').click();
+        cy.get('[data-cy="select-projectlist-filter-region-West Midlands"]').click();
         cy.get('[data-cy=select-projectlist-filter-apply]').click();
         cy.get('[data-cy="select-projectlist-filter-banner"]').should('be.visible');
+        cy.get('[data-cy="select-projectlist-filter-count"]').should('not.contain', '0 projects found');
+      });
+
+      it.skip('TC03: should display results when all the Region filter options are selected', () => {
+        cy.get('[data-cy="select-projectlist-filter-region-East Midlands"]').click();
+        cy.get('[data-cy="select-projectlist-filter-region-East of England"]').click();
+        cy.get('[data-cy="select-projectlist-filter-region-London"]').click();
+        cy.get('[data-cy="select-projectlist-filter-region-North East"]').click();
+        cy.get('[data-cy="select-projectlist-filter-region-North West"]').click();
+        cy.get('[data-cy="select-projectlist-filter-region-South East"]').click();
+        cy.get('[data-cy="select-projectlist-filter-region-South West"]').click();
+        cy.get('[data-cy="select-projectlist-filter-region-West Midlands"]').click();
+        cy.get('[data-cy="select-projectlist-filter-region-Yorkshire and the Humber"]').click();
+        cy.get('[data-cy=select-projectlist-filter-apply]').click();
+        cy.get('[data-cy="select-projectlist-filter-banner"]').should('be.visible');
+        cy.get('[data-cy="select-projectlist-filter-row"]').should('be.visible');
         cy.get('[data-cy="select-projectlist-filter-count"]').should('not.contain', '0 projects found');
       });
     });
