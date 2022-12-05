@@ -1,13 +1,17 @@
-﻿using ApplyToBecome.Data.Models;
+﻿using ApplyToBecome.Data.Features;
+using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Services;
-using ApplyToBecome.Data.Tests.TestDoubles;
 using FluentAssertions;
+using Moq;
 using RichardSzalay.MockHttp;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ApplyToBecome.Data.Tests.Services
@@ -16,26 +20,27 @@ namespace ApplyToBecome.Data.Tests.Services
 	{
 		private readonly MockHttpMessageHandler _messageHandler;
 		private AcademyConversionProjectRepository _subject;
+      private readonly Mock<IApiClient> _mockApiClient;
 
-		public AcademyConversionProjectRepositoryTests()
+      public AcademyConversionProjectRepositoryTests()
 		{
 			_messageHandler = new MockHttpMessageHandler();
-		}
+         _mockApiClient = new Mock<IApiClient>();
+      }
 
 		[Fact]
 		public void GivenDeliveryOfficers_GetsRelevantProjects()
-		{
-			const string path = "http://localhost/v2/conversion-projects";
+      {
+         List<AcademyConversionProject> project = new() { new AcademyConversionProject { AssignedUser = new User("1", "example@email.com", "John Smith") } };
+			ApiV2Wrapper<IEnumerable<AcademyConversionProject>> projects = new() { Data = project };
 
-			List<AcademyConversionProject> project =
-				new List<AcademyConversionProject> { new AcademyConversionProject { AssignedUser = new User("1", "example@email.com", "John Smith") } };
-			ApiV2Wrapper<IEnumerable<AcademyConversionProject>> projects = new ApiV2Wrapper<IEnumerable<AcademyConversionProject>> { Data = project };
+         JsonContent jsonContent = JsonContent.Create(projects, projects.GetType(), MediaTypeHeaderValue.Parse("application/json"), JsonSerializerOptions.Default);
 
-			_messageHandler.Expect(HttpMethod.Post, path)
-				.Respond(HttpStatusCode.OK, "application/json", JsonSerializer.Serialize(projects));
+         _mockApiClient.Setup(x => x.GetAllProjectsAsync(It.IsAny<AcademyConversionSearchModel>()))
+            .Returns(Task.FromResult(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = jsonContent }));
 
-			_subject = new AcademyConversionProjectRepository(new MockHttpClientFactory(_messageHandler));
-			List<string> deliveryOfficers = new List<string> { "John Smith", "Jane Doe" };
+         _subject = new AcademyConversionProjectRepository(_mockApiClient.Object);
+			List<string> deliveryOfficers = new() { "John Smith", "Jane Doe" };
 
 			string firstAssignedFullName = _subject.GetAllProjects(1, 50, string.Empty, default, deliveryOfficers).Result.Body.Data.First().AssignedUser.FullName;
 
@@ -45,20 +50,20 @@ namespace ApplyToBecome.Data.Tests.Services
 		[Fact]
 		public void GivenDeliveryOfficers_GetsRelevantProjects_WhenMultiple()
 		{
-			const string path = "http://localhost/v2/conversion-projects";
-
-			List<AcademyConversionProject> project = new List<AcademyConversionProject>
-			{
+			List<AcademyConversionProject> project = new()
+         {
 				new AcademyConversionProject { AssignedUser = new User("1", "example@email.com", "John Smith") },
 				new AcademyConversionProject { AssignedUser = new User("2", "example@email.com", "John Smith") }
 			};
-			ApiV2Wrapper<IEnumerable<AcademyConversionProject>> projects = new ApiV2Wrapper<IEnumerable<AcademyConversionProject>> { Data = project };
+			ApiV2Wrapper<IEnumerable<AcademyConversionProject>> projects = new() { Data = project };
 
-			_messageHandler.Expect(HttpMethod.Post, path)
-				.Respond(HttpStatusCode.OK, "application/json", JsonSerializer.Serialize(projects));
+         JsonContent jsonContent = JsonContent.Create(projects, projects.GetType(), MediaTypeHeaderValue.Parse("application/json"), JsonSerializerOptions.Default);
 
-			_subject = new AcademyConversionProjectRepository(new MockHttpClientFactory(_messageHandler));
-			List<string> deliveryOfficers = new List<string> { "John Smith" };
+         _mockApiClient.Setup(x => x.GetAllProjectsAsync(It.IsAny<AcademyConversionSearchModel>()))
+            .Returns(Task.FromResult(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = jsonContent }));
+
+         _subject = new AcademyConversionProjectRepository(_mockApiClient.Object);
+			List<string> deliveryOfficers = new() { "John Smith" };
 
 			int projectCountReceived = _subject.GetAllProjects(1, 50, string.Empty, default, deliveryOfficers).Result.Body.Data.Count();
 
@@ -68,16 +73,16 @@ namespace ApplyToBecome.Data.Tests.Services
 		[Fact]
 		public void GivenDeliveryOfficers_GetsNoProjects_WhenDeliveryOfficerHasNoneAssigned()
 		{
-			const string path = "http://localhost/v2/conversion-projects";
+			List<AcademyConversionProject> project = new();
+			ApiV2Wrapper<IEnumerable<AcademyConversionProject>> projects = new() { Data = project };
 
-			List<AcademyConversionProject> project = new List<AcademyConversionProject>();
-			ApiV2Wrapper<IEnumerable<AcademyConversionProject>> projects = new ApiV2Wrapper<IEnumerable<AcademyConversionProject>> { Data = project };
+         JsonContent jsonContent = JsonContent.Create(projects, projects.GetType(), MediaTypeHeaderValue.Parse("application/json"), JsonSerializerOptions.Default);
 
-			_messageHandler.Expect(HttpMethod.Post, path)
-				.Respond(HttpStatusCode.OK, "application/json", JsonSerializer.Serialize(projects));
+         _mockApiClient.Setup(x => x.GetAllProjectsAsync(It.IsAny<AcademyConversionSearchModel>()))
+            .Returns(Task.FromResult(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = jsonContent }));
 
-			_subject = new AcademyConversionProjectRepository(new MockHttpClientFactory(_messageHandler));
-			List<string> deliveryOfficers = new List<string> { "John Smith" };
+         _subject = new AcademyConversionProjectRepository(_mockApiClient.Object);
+			List<string> deliveryOfficers = new() { "John Smith" };
 
 			IEnumerable<AcademyConversionProject> data = _subject.GetAllProjects(1, 50, string.Empty, default, deliveryOfficers).Result.Body.Data;
 

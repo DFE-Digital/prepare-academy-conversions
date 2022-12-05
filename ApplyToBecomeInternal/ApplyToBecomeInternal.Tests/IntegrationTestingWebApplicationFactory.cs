@@ -1,5 +1,5 @@
-﻿using ApplyToBecome.Data.Services.Interfaces;
-using ApplyToBecomeInternal.Models;
+﻿using ApplyToBecome.Data.Features;
+using ApplyToBecome.Data.Services.Interfaces;
 using ApplyToBecomeInternal.Tests.Pages.ProjectAssignment;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
@@ -8,8 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.FeatureManagement;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Claims;
@@ -23,10 +23,10 @@ using WireMock.Server;
 namespace ApplyToBecomeInternal.Tests
 {
 
-	public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Startup>, IDisposable
+	public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Startup>
 	{
 		private static int _currentPort = 5080;
-		private static readonly object _sync = new object();
+		private static readonly object Sync = new();
 
 		private readonly WireMockServer _server;
 		private readonly int _port;
@@ -52,16 +52,16 @@ namespace ApplyToBecomeInternal.Tests
 						{ "AcademisationApi:BaseUrl", $"http://localhost:{_port}" },
 						{ "AzureAd:AllowedRoles", string.Empty }, // Do not restrict access for integration test
 						{ "ServiceLink:TransfersUrl", "https://an-external-service.com/" }
-					})
+               })
 					.AddEnvironmentVariables();
 			});
 
 			builder.ConfigureServices(services =>
 			{
-				services.AddAuthentication("Test");
-				services.AddTransient<IAuthenticationSchemeProvider, MockSchemeProvider>();
-				services.AddTransient<IUserRepository, TestUserRepository>();
-			});
+            services.AddAuthentication("Test");
+            services.AddTransient<IAuthenticationSchemeProvider, MockSchemeProvider>();
+            services.AddTransient<IUserRepository, TestUserRepository>();
+         });
 		}
 
 		public class MockSchemeProvider : AuthenticationSchemeProvider
@@ -188,7 +188,7 @@ namespace ApplyToBecomeInternal.Tests
 
 		private static int AllocateNext()
 		{
-			lock (_sync)
+			lock (Sync)
 			{
 				var next = _currentPort;
 				_currentPort++;

@@ -10,9 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Web;
 
 namespace ApplyToBecomeInternal.Tests.Pages
 {

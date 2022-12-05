@@ -6,10 +6,10 @@ using System.Collections.Generic;
 namespace ApplyToBecomeInternal.Models.ProjectList
 {
 	public class ProjectListFilters
-	{
-		public List<string> AvailableStatuses { get; set; }
-		public List<string> AvailableDeliveryOfficers { get; set; }
-		public List<string> AvailableRegions { get; set; }
+   {
+      public List<string> AvailableStatuses { get; set; } = new();
+      public List<string> AvailableDeliveryOfficers { get; set; } = new();
+      public List<string> AvailableRegions { get; set; } = new();
 
 		[BindProperty] public string Title { get; set; }
 		[BindProperty] public string[] SelectedStatuses { get; set; } = Array.Empty<string>();

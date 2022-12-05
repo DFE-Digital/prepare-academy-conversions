@@ -37,6 +37,4 @@ namespace ApplyToBecomeInternal.Pages.ProjectType
 			return RedirectToPage(Links.ProjectList.Index.Page);
 		}
 	}
-	
-	
 }
