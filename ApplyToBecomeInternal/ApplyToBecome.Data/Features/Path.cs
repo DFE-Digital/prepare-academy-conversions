@@ -67,6 +67,11 @@ public class PathFor
 {
    private readonly bool _useAcademisation;
 
+   private PathFor(bool useAcademisation)
+   {
+      _useAcademisation = useAcademisation;
+   }
+
    public PathFor(IFeatureManager features)
    {
       _useAcademisation = features.IsEnabledAsync(FeatureFlags.UseAcademisation).Result;
@@ -77,4 +82,9 @@ public class PathFor
    public string GetProjectById => _useAcademisation ? "/legacy/project/{0}" : "conversion-projects/{0}";
    public string UpdateProject => _useAcademisation ? "/legacy/project/{0}" : "conversion-projects/{0}";
    public string GetFilterParameters => _useAcademisation ? "/legacy/projects/status" : "v2/conversion-projects/parameters";
+
+   public static PathFor UsingAcademisation(bool useAcademisation)
+   {
+      return new PathFor(useAcademisation);
+   }
 }

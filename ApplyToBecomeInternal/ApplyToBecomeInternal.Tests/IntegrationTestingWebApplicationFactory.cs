@@ -62,7 +62,7 @@ namespace ApplyToBecomeInternal.Tests
             services.AddTransient<IAuthenticationSchemeProvider, MockSchemeProvider>();
             services.AddTransient<IUserRepository, TestUserRepository>();
          });
-		}
+      }
 
 		public class MockSchemeProvider : AuthenticationSchemeProvider
 		{

@@ -18,12 +18,9 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		protected IEnumerable<AcademyConversionProject> AddGetProjects(Action<AcademyConversionProject> postSetup = null, int? recordCount = null, AcademyConversionSearchModel searchModel = null)
 		{
 			var projects = _fixture.CreateMany<AcademyConversionProject>().ToList();
-			if (postSetup != null)
-			{
-				postSetup(projects.First());
-			}
+         postSetup?.Invoke(projects.First());
 
-			var response = new ApiV2Wrapper<IEnumerable<AcademyConversionProject>>
+         var response = new ApiV2Wrapper<IEnumerable<AcademyConversionProject>>
 			{
 				Data = projects,
 				Paging = new ApiV2PagingInfo
@@ -32,19 +29,18 @@ namespace ApplyToBecomeInternal.Tests.Pages
 					Page = 0
 				}
 			};
-			if (searchModel is null)
-			{
-				searchModel = new AcademyConversionSearchModel
-				{
-					Page = 1,
-					Count = 10,
-					TitleFilter = null,
-					StatusQueryString = Array.Empty<string>(),
-					DeliveryOfficerQueryString = Array.Empty<string>(),
-					RegionUrnsQueryString = null
-				};
-			}
-			_factory.AddPostWithJsonRequest("/v2/conversion-projects", searchModel, response);
+
+			searchModel ??= new AcademyConversionSearchModel
+         {
+            Page = 1,
+            Count = 10,
+            TitleFilter = null,
+            StatusQueryString = Array.Empty<string>(),
+            DeliveryOfficerQueryString = Array.Empty<string>(),
+            RegionUrnsQueryString = null
+         };
+
+			_factory.AddPostWithJsonRequest(_pathFor.GetAllProjects, searchModel, response);
 			return projects;
 		}
 
@@ -56,7 +52,8 @@ namespace ApplyToBecomeInternal.Tests.Pages
 				AssignedUsers = new List<string> { "Bob" }
 			};
 
-			_factory.AddGetWithJsonResponse("/v2/conversion-projects/parameters", filterParameters);
+
+			_factory.AddGetWithJsonResponse(_pathFor.GetFilterParameters, filterParameters);
 
 			return filterParameters;
 		}
@@ -64,36 +61,28 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		public AcademyConversionProject AddGetProject(Action<AcademyConversionProject> postSetup = null)
 		{
 			var project = _fixture.Create<AcademyConversionProject>();
-			if (postSetup != null)
-			{
-				postSetup(project);
-			}
+         postSetup?.Invoke(project);
 
-			_factory.AddGetWithJsonResponse($"/conversion-projects/{project.Id}", project);
+         _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetProjectById, project.Id), project);
 			return project;
 		}
 
 		public KeyStagePerformanceResponse AddGetKeyStagePerformance(int urn, Action<KeyStagePerformanceResponse> postSetup = null)
 		{
 			var keyStagePerformance = _fixture.Create<KeyStagePerformanceResponse>();
-			if (postSetup != null)
-			{
-				postSetup(keyStagePerformance);
-			}
+         postSetup?.Invoke(keyStagePerformance);
 
-			_factory.AddGetWithJsonResponse($"/educationPerformance/{urn}", keyStagePerformance);
+         _factory.AddGetWithJsonResponse($"/educationPerformance/{urn}", keyStagePerformance);
 			return keyStagePerformance;
 		}
 
 		public IEnumerable<ProjectNote> AddGetProjectNotes(int academyConversionProjectId, Action<IEnumerable<ProjectNote>> postSetup = null)
 		{
-			var projectNotes = _fixture.CreateMany<ProjectNote>();
-			if (postSetup != null)
-			{
-				postSetup(projectNotes);
-			}
+			IEnumerable<ProjectNote> projectNotes = _fixture.CreateMany<ProjectNote>().ToList();
+         postSetup?.Invoke(projectNotes);
 
-			_factory.AddGetWithJsonResponse($"/project-notes/{academyConversionProjectId}", projectNotes);
+         _factory.AddGetWithJsonResponse($"/project-notes/{academyConversionProjectId}", projectNotes);
+
 			return projectNotes;
 		}
 
@@ -110,7 +99,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 				.With(expectedValue, value)
 				.Create();
 
-			_factory.AddPatchWithJsonRequest($"/conversion-projects/{project.Id}", request, project);
+         _factory.AddPatchWithJsonRequest(string.Format(_pathFor.UpdateProject, project.Id), request, project);
 			return request;
 		}
 
@@ -131,14 +120,14 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			var request = postProcess(composer)
 				.Create();
 
-			_factory.AddPatchWithJsonRequest($"/conversion-projects/{project.Id}", request, project);
+			_factory.AddPatchWithJsonRequest( string.Format(_pathFor.UpdateProject, project.Id), request, project);
 			return request;
 		}
 
 		public void AddPatchError(int id)
-		{
-			_factory.AddErrorResponse($"/conversion-projects/{id}", "patch");
-		}
+      {
+         _factory.AddErrorResponse(string.Format(_pathFor.UpdateProject, id), "patch");
+      }
 
 		public void AddProjectNotePostError(int id)
 		{
@@ -164,28 +153,14 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			return establishmentResponse;
 		}
 
-		private ICollection<ApplyingSchool> GenerateSingleItemApplyingSchoolsList()
-		{
-			return new List<ApplyingSchool> { _fixture.Create<ApplyingSchool>() };
-		}
-
 		public Application AddGetApplication(Action<Application> postSetup = null)
 		{
 			// create just 1 applying school as that's all we accept so far
-			_fixture.Customize<Application>(a => a.With(s => s.ApplyingSchools, () => {
-				return new List<ApplyingSchool> { _fixture.Create<ApplyingSchool>() };
-				}
-			));
+			_fixture.Customize<Application>(a => a.With(s => s.ApplyingSchools, () => new List<ApplyingSchool> { _fixture.Create<ApplyingSchool>() }));
 			var application = _fixture.Create<Application>();
-			if (postSetup != null)
-			{
-				postSetup(application);
-			}
+         postSetup?.Invoke(application);
 
-			var response = new ApiV2Wrapper<Application>()
-			{
-				Data = application
-			};
+         var response = new ApiV2Wrapper<Application> { Data = application };
 			_factory.AddGetWithJsonResponse($"/v2/apply-to-become/application/{application.ApplicationId}", response);
 			return application;
 		}

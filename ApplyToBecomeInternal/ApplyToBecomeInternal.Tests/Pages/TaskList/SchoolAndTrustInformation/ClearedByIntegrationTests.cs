@@ -20,11 +20,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			await NavigateAsync("Change", 7);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/clear-head-teacher-board-template");
-			Document.QuerySelector<IHtmlInputElement>("#cleared-by").Value.Should().Be(project.ClearedBy);
+			Document.QuerySelector<IHtmlInputElement>("#cleared-by")?.Value.Should().Be(project.ClearedBy);
 
-			Document.QuerySelector<IHtmlInputElement>("#cleared-by").Value = request.ClearedBy;
+			Document.QuerySelector<IHtmlInputElement>("#cleared-by")!.Value = request.ClearedBy;
 
-			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+			await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 		}
@@ -37,7 +37,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/clear-head-teacher-board-template");
 
-			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+			await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
 			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
 		}
