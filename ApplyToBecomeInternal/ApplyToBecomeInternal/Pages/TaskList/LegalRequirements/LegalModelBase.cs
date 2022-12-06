@@ -2,7 +2,6 @@ using ApplyToBecome.Data;
 using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Models.AcademyConversion;
 using ApplyToBecome.Data.Services;
-using ApplyToBecome.Data.Services.Interfaces;
 using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -51,8 +50,9 @@ namespace ApplyToBecomeInternal.Pages.TaskList.LegalRequirements
 					context.Result = NotFound();
 				}
 
-				await next();
-			}
+            if (context.Result == default)
+               await next();
+         }
 
 			context.Result ??= NotFound();
 		}
