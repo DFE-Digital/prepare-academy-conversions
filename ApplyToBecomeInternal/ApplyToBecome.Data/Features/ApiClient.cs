@@ -1,8 +1,11 @@
 ﻿using ApplyToBecome.Data.Models;
 using Microsoft.FeatureManagement;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace ApplyToBecome.Data.Features;
 
@@ -28,8 +31,10 @@ public class ApiClient : IApiClient
       return await ActiveClient.PostAsync(_pathFor.GetAllProjects, JsonContent.Create(searchModel));
    }
 
-   public async Task<HttpResponseMessage> GetSelectedRegionsAsync(string regionQueryString)
+   public async Task<HttpResponseMessage> GetSelectedRegionsAsync(IEnumerable<string> regions)
    {
+      string regionQueryString = $@"{regions.Aggregate(string.Empty, (current, region) => $"{current}&regions={HttpUtility.UrlEncode(region)}")}";
+
       return await TramsClient.GetAsync(string.Format(PathFor.GetSelectedRegions, regionQueryString.ToLowerInvariant()));
    }
 

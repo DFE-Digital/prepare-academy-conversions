@@ -283,7 +283,6 @@ namespace DocumentGeneration.Tests.Helpers
 			const string html = "<p>Opening paragraph</p>Meow<b>Woof<u>Quack<i>Moo</i></u></b><p>Second paragraph</p>";
 			var res = HtmlToElements.Convert(_builder, html);
 
-			// Assert.Equal(3, res.Count);
 			Assert.Equal("Opening paragraph", res[0].InnerText);
 			Assert.Equal("MeowWoofQuackMoo", res[1].InnerText);
 			Assert.Equal("Second paragraph", res[2].InnerText);

@@ -30,7 +30,7 @@ namespace ApplyToBecome.Data.Services
 		{
 			AcademyConversionSearchModel searchModel = new() { TitleFilter = titleFilter, Page = page, Count = count };
 
-			await ProcessFilters(statusFilters, deliveryOfficerFilter, regionsFilter, searchModel);
+			await ProcessFilters(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter);
 
          HttpResponseMessage response = await _apiClient.GetAllProjectsAsync(searchModel);
 			if (!response.IsSuccessStatusCode)
@@ -45,7 +45,7 @@ namespace ApplyToBecome.Data.Services
 		}
 
 		private async Task ProcessFilters(IEnumerable<string> statusFilters, IEnumerable<string> deliveryOfficerFilter,
-			IEnumerable<string> regionsFilter, AcademyConversionSearchModel searchModel)
+         AcademyConversionSearchModel searchModel, IEnumerable<string> regionsFilter = default)
 		{
          if (deliveryOfficerFilter != default)
 			{
@@ -62,15 +62,13 @@ namespace ApplyToBecome.Data.Services
 				searchModel.StatusQueryString = projectedStatuses.ToArray();
 			}
 
-			if (regionsFilter != null && regionsFilter.Any())
+			if (regionsFilter != default && regionsFilter.Any())
 			{
-				string regionQueryString = $@"{regionsFilter.Aggregate(string.Empty, (current, region) => $"{current}&regions={HttpUtility.UrlEncode(region)}")}";
-
-				HttpResponseMessage regionResponse = await _apiClient.GetSelectedRegionsAsync(regionQueryString);
+            HttpResponseMessage regionResponse = await _apiClient.GetSelectedRegionsAsync(regionsFilter);
 
             List<int> regionUrnResponse = await regionResponse.Content.ReadFromJsonAsync<List<int>>();
-				searchModel.RegionUrnsQueryString = regionUrnResponse;
-			}
+            searchModel.RegionUrnsQueryString = regionUrnResponse;
+         }
 		}
 
 		public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)

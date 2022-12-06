@@ -24,7 +24,7 @@ namespace ApplyToBecomeInternal.Tests.PageObjects
 		/// </summary>
 		/// <param name="request">An <see cref="AdvisoryBoardDecision" /> configured appropriately for this test run</param>
 		/// <returns>Async <see cref="Void"/></returns>
-		/// <remarks>NOTE: Nullable fields are provided with the appropriate default values if not set</remarks>
+		/// <remarks>Nullable fields are provided with the appropriate default values if not set</remarks>
 		public async Task SubmitThroughTheWizard(AdvisoryBoardDecision request)
 		{
 			await SetDecisionToAndContinue(request.Decision.GetValueOrDefault());
