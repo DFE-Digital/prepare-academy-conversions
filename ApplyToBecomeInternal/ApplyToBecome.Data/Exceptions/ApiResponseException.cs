@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
-namespace ApplyToBecome.Data.Exceptions
+namespace ApplyToBecome.Data.Exceptions;
+
+[Serializable]
+public class ApiResponseException : Exception
 {
-	[Serializable]
-	public class ApiResponseException : Exception
-	{
-		public ApiResponseException(string message) : base(message)
-		{
-		}
-	}
+   public ApiResponseException(string message) : base(message)
+   {
+   }
+
+   protected ApiResponseException(SerializationInfo info, StreamingContext context) : base(info, context)
+   {
+   }
 }
