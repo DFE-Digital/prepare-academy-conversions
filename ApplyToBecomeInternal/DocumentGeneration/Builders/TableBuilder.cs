@@ -28,21 +28,6 @@ namespace DocumentGeneration.Builders
             _tableRows.Add(tableRowBuilder.Build());
         }
 
-        public void SetBorderStyle(TableBorderStyle style)
-        {
-            _tableProperties.TableBorders = style switch
-            {
-                TableBorderStyle.Solid => SolidTableBorders(),
-                TableBorderStyle.None => NoneTableBorders(),
-                _ => _tableProperties.TableBorders
-            };
-        }
-
-        private static TableBorders NoneTableBorders()
-        {
-            return new TableBorders();
-        }
-
         private void AddDefaultTableProperties()
         {
             _tableProperties.TableBorders = SolidTableBorders();

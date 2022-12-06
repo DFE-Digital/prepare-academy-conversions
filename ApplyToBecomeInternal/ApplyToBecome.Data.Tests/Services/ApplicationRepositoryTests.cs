@@ -1,66 +1,66 @@
-﻿using Microsoft.Extensions.Logging;
-using ApplyToBecome.Data.Services;
-using ApplyToBecome.Data.Tests.TestDoubles;
-using MELT;
-using RichardSzalay.MockHttp;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Newtonsoft.Json;
-using AutoFixture.Xunit2;
-using System.Threading.Tasks;
+﻿using ApplyToBecome.Data.Features;
 using ApplyToBecome.Data.Models.Application;
+using ApplyToBecome.Data.Services;
+using AutoFixture.Xunit2;
 using FluentAssertions;
+using MELT;
+using Microsoft.Extensions.Logging;
+using Moq;
+using RichardSzalay.MockHttp;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Xunit;
 
-namespace ApplyToBecome.Data.Tests.Services
+namespace ApplyToBecome.Data.Tests.Services;
+
+public class ApplicationRepositoryTests
 {
-	public class ApplicationRepositoryTests
-	{
-		private readonly MockHttpMessageHandler _mockHandler;
-		private readonly ITestLoggerFactory _testLogger;
-		private readonly ApplicationRepository _applicationRepository;
+   private readonly ApplicationRepository _applicationRepository;
+   private readonly Mock<IApiClient> _mockApiClient;
+   private readonly MockHttpMessageHandler _mockHandler;
 
-		public ApplicationRepositoryTests()
-		{
-			_mockHandler = new MockHttpMessageHandler();
-			_testLogger = TestLoggerFactory.Create();
-			_applicationRepository = new ApplicationRepository(
-					new MockHttpClientFactory(_mockHandler),
-					_testLogger .CreateLogger<ApplicationRepository>()
-				);
-		}
+   public ApplicationRepositoryTests()
+   {
+      _mockHandler = new MockHttpMessageHandler();
+      _mockApiClient = new Mock<IApiClient>();
 
-		[Theory]
-		[AutoData]
-		public async Task Should_get_application_data_by_application_reference(Application applicationMockData)
-		{
-			var responseObject = new ApiV2Wrapper<Application>
-			{
-				Data = applicationMockData
-			};
+      ITestLoggerFactory testLogger = TestLoggerFactory.Create();
+      _applicationRepository = new ApplicationRepository(_mockApiClient.Object, testLogger.CreateLogger<ApplicationRepository>()
+      );
+   }
 
-			_mockHandler.Expect($"/v2/apply-to-become/application/{applicationMockData.ApplicationId}")
-				.Respond("application/json", JsonConvert.SerializeObject(responseObject));
+   [Theory]
+   [AutoData]
+   public async Task Should_get_application_data_by_application_reference(Application applicationMockData)
+   {
+      ApiV2Wrapper<Application> responseObject = new() { Data = applicationMockData };
 
-			var applicationResponse = await _applicationRepository.GetApplicationByReference(applicationMockData.ApplicationId);
+      JsonContent jsonContent = JsonContent.Create(responseObject, responseObject.GetType(), MediaTypeHeaderValue.Parse("application/json"), JsonSerializerOptions.Default);
 
-			applicationResponse.Success.Should().BeTrue();
-			applicationResponse.Body.Should().BeEquivalentTo(applicationMockData);
-		}
+      _mockApiClient.Setup(x => x.GetApplicationByReferenceAsync(It.IsAny<string>()))
+         .Returns(Task.FromResult(new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = jsonContent }));
 
-		[Fact]
-		public async Task Should_return_not_success_when_application_not_found()
-		{
-			// API responses might need more than just Success and !Success 
-			var applicationReference = "123a"; 
-			_mockHandler.Expect($"/v2/apply-to-become/application/{applicationReference}")
-				.Respond(HttpStatusCode.NotFound);
+      ApiResponse<Application> applicationResponse = await _applicationRepository.GetApplicationByReference(applicationMockData.ApplicationId);
 
-			var applicationResponse = await _applicationRepository.GetApplicationByReference(applicationReference);
+      applicationResponse.Success.Should().BeTrue();
+      applicationResponse.Body.Should().BeEquivalentTo(applicationMockData);
+   }
 
-			applicationResponse.Success.Should().BeFalse();
-		}
-	}
+   [Fact]
+   public async Task Should_return_not_success_when_application_not_found()
+   {
+      // API responses might need more than just Success and !Success 
+      string applicationReference = "123a";
+
+      _mockApiClient.Setup(x => x.GetApplicationByReferenceAsync(applicationReference))
+         .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.NotFound)));
+
+      ApiResponse<Application> applicationResponse = await _applicationRepository.GetApplicationByReference(applicationReference);
+
+      applicationResponse.Success.Should().BeFalse();
+   }
 }
