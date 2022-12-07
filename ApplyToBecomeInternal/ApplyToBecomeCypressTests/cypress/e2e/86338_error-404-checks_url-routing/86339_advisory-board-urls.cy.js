@@ -53,7 +53,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
         });
         
         // download-project-template feature is currently removed
-        it.skip('TC05: should correctly render a page when user visits /download-project-template', () => {
+        it('TC05: should correctly render a page when user visits /download-project-template', () => {
             cy.viewport(viewport)
             //Changes the current URL
             cy.visit(selectedSchool+'/download-project-template')
