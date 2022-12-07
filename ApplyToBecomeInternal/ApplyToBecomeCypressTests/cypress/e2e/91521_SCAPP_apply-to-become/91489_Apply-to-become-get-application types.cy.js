@@ -14,10 +14,9 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 			cy.get('[id="error-heading"]').should('contain.text', 'Page not found')
 		});
 
-		// Skipping this test as we don't have a FormMAT type in the DB to test for this
-		it.skip('TC02: FormMAT type should not be valid and should display "Not Implemented"', () => {
+		it('TC02: FormMAT type should not be valid and should display "Page not found"', () => {
 			cy.visit(Cypress.env('url') + '/school-application-form/521', {failOnStatusCode: false})
-			cy.get('[id="error-heading"]').should('contain.text', 'Not implemented')
+			cy.get('[id="error-heading"]').should('contain.text', 'Page not found')
 		});
 	});
 });
