@@ -18,10 +18,12 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using Newtonsoft.Json.Linq;
+using Serilog;
 using StackExchange.Redis;
 using System;
 using System.Security.Claims;
@@ -126,8 +128,10 @@ public class Startup
       services.AddScoped<IGraphUserService, GraphUserService>();
    }
 
-   public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+   public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
    {
+      logger.LogInformation("Feature Flag - Use Academisation API: {usingAcademisationApi}", IsFeatureEnabled(FeatureFlags.UseAcademisation));
+
       if (env.IsDevelopment())
       {
          app.UseDeveloperExceptionPage();
@@ -138,7 +142,6 @@ public class Startup
          // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
          app.UseHsts();
       }
-
 
       app.UseSecurityHeaders(
          SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment())
@@ -174,6 +177,11 @@ public class Startup
          endpoints.MapRazorPages();
          endpoints.MapControllerRoute("default", "{controller}/{action}/");
       });
+
+      bool IsFeatureEnabled(string flag)
+      {
+         return (app.ApplicationServices.GetService(typeof(IFeatureManager)) as IFeatureManager)?.IsEnabledAsync(flag).Result ?? false;
+      }
    }
 
    /// <summary>
