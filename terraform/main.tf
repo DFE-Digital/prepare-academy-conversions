@@ -17,23 +17,24 @@ resource cloudfoundry_app worker_app {
 	}
 
 	environment = {
-		"ASPNETCORE_ENVIRONMENT"   = var.aspnetcore_environment
-		"ASPNETCORE_URLS"          = "http://+:8080"
-		"TramsApi__Endpoint"       = var.app_trams_api_endpoint
-		"TramsApi__ApiKey"         = var.app_trams_api_key
-		"TramsApi__ApiKey"         = var.app_trams_api_key
-		"AcademisationApi__BaseUrl"= var.app_academisation_api_baseurl
-		"AcademisationApi__ApiKey" = var.app_academisation_api_apikey
-		"ServiceLink__TransfersUrl"= var.app_servicelink_transfersurl
-		"GoogleAnalytics__Enable"  = var.enable_google_analytics
-		"FeedbackLink"             = var.app_feedback_link
-		"SupportEmail"             = var.app_support_email
-		"SENTRY_RELEASE"           = "a2b-internal:${var.cf_app_image_tag}"
-		"AzureAd__ClientSecret"    = var.app_azuread_clientsecret
-		"AzureAd__ClientId"        = var.app_azuread_clientid
-		"AzureAd__TenantId"        = var.app_azuread_tenantid
-		"AzureAd__GroupId"         = var.app_azuread_groupid
-		"CypressTestSecret"        = var.app_cypresstest_secret
+		"ASPNETCORE_ENVIRONMENT"              = var.aspnetcore_environment
+		"ASPNETCORE_URLS"                     = "http://+:8080"
+		"TramsApi__Endpoint"                  = var.app_trams_api_endpoint
+		"TramsApi__ApiKey"                    = var.app_trams_api_key
+		"TramsApi__ApiKey"                    = var.app_trams_api_key
+		"AcademisationApi__BaseUrl"           = var.app_academisation_api_baseurl
+		"AcademisationApi__ApiKey"            = var.app_academisation_api_apikey
+		"ServiceLink__TransfersUrl"           = var.app_servicelink_transfersurl
+		"GoogleAnalytics__Enable"             = var.enable_google_analytics
+		"FeedbackLink"                        = var.app_feedback_link
+		"SupportEmail"                        = var.app_support_email
+		"SENTRY_RELEASE"                      = "a2b-internal:${var.cf_app_image_tag}"
+		"AzureAd__ClientSecret"               = var.app_azuread_clientsecret
+		"AzureAd__ClientId"                   = var.app_azuread_clientid
+		"AzureAd__TenantId"                   = var.app_azuread_tenantid
+		"AzureAd__GroupId"                    = var.app_azuread_groupid
+		"CypressTestSecret"                   = var.app_cypresstest_secret
+      "FeatureManagement__UseAcademisation" = var.app_feature_use_academisation
 	}
 }
 
