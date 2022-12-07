@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
@@ -127,9 +128,9 @@ public class Startup
       services.AddScoped<IGraphUserService, GraphUserService>();
    }
 
-   public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+   public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
    {
-      Log.Logger.Information("Feature Flag - Use Academisation API: {usingAcademisationApi}", IsFeatureEnabled(FeatureFlags.UseAcademisation));
+      logger.LogInformation("Feature Flag - Use Academisation API: {usingAcademisationApi}", IsFeatureEnabled(FeatureFlags.UseAcademisation));
 
       if (env.IsDevelopment())
       {
