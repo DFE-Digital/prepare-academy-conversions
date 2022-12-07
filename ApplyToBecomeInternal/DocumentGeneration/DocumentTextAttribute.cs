@@ -1,20 +1,18 @@
 using System;
 
-namespace DocumentGeneration
+namespace DocumentGeneration;
+
+[AttributeUsage(AttributeTargets.Property)]
+public class DocumentTextAttribute : Attribute
 {
-	[AttributeUsage(AttributeTargets.Property)]
-	public class DocumentTextAttribute : Attribute
-    {
-        private readonly string _placeholder;
+   private readonly string _placeholder;
 
-        public DocumentTextAttribute(string placeholder)
-        {
-            _placeholder = placeholder;
-        }
+   public DocumentTextAttribute(string placeholder)
+   {
+      _placeholder = placeholder;
+   }
 
-        public string Placeholder => $"[{_placeholder}]";
+   public string Placeholder => $"[{_placeholder}]";
 
-        public string Default { get; set; }
-        public bool IsRichText { get; set; }
-    }
+   public bool IsRichText { get; set; }
 }
