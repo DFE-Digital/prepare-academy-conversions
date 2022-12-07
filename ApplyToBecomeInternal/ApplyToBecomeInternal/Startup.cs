@@ -22,6 +22,7 @@ using Microsoft.FeatureManagement;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using Newtonsoft.Json.Linq;
+using Serilog;
 using StackExchange.Redis;
 using System;
 using System.Security.Claims;
@@ -128,6 +129,9 @@ public class Startup
 
    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
    {
+      bool? usingAcademisationApi = (app.ApplicationServices.GetService(typeof(IFeatureManager)) as IFeatureManager)?.IsEnabledAsync(FeatureFlags.UseAcademisation).Result;
+      Log.Logger.Information("Feature Flag - Use Academisation API: {usingAcademisationApi}", usingAcademisationApi);
+
       if (env.IsDevelopment())
       {
          app.UseDeveloperExceptionPage();
@@ -138,7 +142,6 @@ public class Startup
          // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
          app.UseHsts();
       }
-
 
       app.UseSecurityHeaders(
          SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment())
