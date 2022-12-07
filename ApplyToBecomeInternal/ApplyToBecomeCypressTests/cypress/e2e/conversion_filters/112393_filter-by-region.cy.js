@@ -34,6 +34,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
         cy.get('[data-cy="select-projectlist-filter-count"]').should('not.contain', '0 projects found');
       });
 
+      //skip until #114627 or #114481 is fixed
       it.skip('TC03: should display results when all the Region filter options are selected', () => {
         cy.get('[data-cy="select-projectlist-filter-region-East Midlands"]').click();
         cy.get('[data-cy="select-projectlist-filter-region-East of England"]').click();

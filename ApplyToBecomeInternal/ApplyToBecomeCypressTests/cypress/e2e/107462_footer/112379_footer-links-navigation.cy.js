@@ -14,14 +14,14 @@ Cypress._.each(['ipad-mini'], (viewport) => {
             .should('contain', 'regionalservices.rg@education.gov.uk');
         });
 
-        it('TC01: should navigate to Give Feedback link', () => {
+        it('TC02: should navigate to Give Feedback link', () => {
           cy.get('h2').should('contain', 'Give feedback');
           cy.get('li').should('contain', 'Email');
           cy.get('#footer-feedback-link')
             .should('contain', 'Give feedback on Prepare conversions and transfers (opens in a new tab)');
         });
 
-        it('TC01: should not have unwanted content', () => {
+        it('TC03: should not have unwanted content', () => {
           cy.get('h2').should('contain', 'Get support');
           cy.get('li').should('contain', 'Email');
           cy.get('[data-cy="get-support-section"]')
