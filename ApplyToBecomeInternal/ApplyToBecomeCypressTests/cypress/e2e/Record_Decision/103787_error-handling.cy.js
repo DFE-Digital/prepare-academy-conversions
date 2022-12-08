@@ -5,8 +5,7 @@ import RecordDecision from '../../pages/recordDecision'
 
 describe('103787 Error handling', { tags: '@dev'}, () => {
     beforeEach(() => {
-        RecordDecision.selectProject().then(() => {
-            cy.url().then(url => cy.visit(`${url}?rd=true`))
+        RecordDecision.selectProject().then(() => {            
             cy.clearCookies()
         })
     })
