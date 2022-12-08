@@ -294,30 +294,37 @@ describe('91489: Apply-to-becom GET data application types', () => {
 	// Financial leases
 	it('TC13: Financial Leases', () => {
 		cy.get('[test-id="Finances_Financial_leases1_key"]').should('contain.text', 'Are there any existing leases?')
-		cy.get('[test-id="Finances_Financial_leases1_value"]').should('contain.text', 'Yes') // THIS IS NOT REPRESENTED IN THE JSON BODY | NOTE from Catherine "This is set as 'yes' if there are leases to display and 'No' if there aren't, as with loans"
-		cy.get('[test-id="Finances_Financial_leases2_key"]').should('contain.text', 'Details of the term of the finance lease agreement')
-		cy.get('[test-id="Finances_Financial_leases2_value"]').should('contain.text', dataAppSch.schoolLeases[0].schoolLeaseTerm)
-		cy.get('[test-id="Finances_Financial_leases3_key"]').should('contain.text', 'Repayment value')
-		cy.get('[test-id="Finances_Financial_leases3_value"]').should('contain.text', '£2,000.00')
-		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].schoolLeases[0].schoolLeaseRepaymentValue).to.eq(2000.00)
-		})
-		cy.get('[test-id="Finances_Financial_leases4_key"]').should('contain.text', 'Interest rate chargeable')
-		cy.get('[test-id="Finances_Financial_leases4_value"]').should('contain.text', '10.00%')
-		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].schoolLeases[0].schoolLeaseInterestRate).to.eq(10.00)
-		})
-		cy.get('[test-id="Finances_Financial_leases5_key"]').should('contain.text', 'Value of payments made to date')
-		cy.get('[test-id="Finances_Financial_leases5_value"]').should('contain.text', '£200.00')
-		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].schoolLeases[0].schoolLeasePaymentToDate).to.eq(200.00)
-		})
-		cy.get('[test-id="Finances_Financial_leases6"]').should('contain.text', 'What was the finance lease for?')
-		cy.get('[test-id="Finances_Financial_leases6_value"]').should('contain.text', dataAppSch.schoolLeases[0].schoolLeasePurpose)
-		cy.get('[test-id="Finances_Financial_leases7_key"]').should('contain.text', 'Value of the assests at the start of the finance lease agreement')
-		cy.get('[test-id="Finances_Financial_leases7_value"]').should('contain.text', dataAppSch.schoolLeases[0].schoolLeaseValueOfAssets)
-		cy.get('[test-id="Finances_Financial_leases8_key"]').should('contain.text', 'Who is responsible for the insurance, repair and maintenance of the assets covered?')
-		cy.get('[test-id="Finances_Financial_leases8_value"]').should('contain.text', 'who is responsible')
+		cy.get('[test-id="Finances_Financial_leases1_value"]')
+		  .invoke('text')
+          .then((text) => {
+            if (text === 'Yes') {
+				cy.get('[test-id="Finances_Financial_leases1_value"]').should('contain.text', 'Yes') // THIS IS NOT REPRESENTED IN THE JSON BODY | NOTE from Catherine "This is set as 'yes' if there are leases to display and 'No' if there aren't, as with loans"
+				cy.get('[test-id="Finances_Financial_leases2_key"]').should('contain.text', 'Details of the term of the finance lease agreement')
+				cy.get('[test-id="Finances_Financial_leases2_value"]').should('contain.text', dataAppSch.schoolLeases[0].schoolLeaseTerm)
+				cy.get('[test-id="Finances_Financial_leases3_key"]').should('contain.text', 'Repayment value')
+				cy.get('[test-id="Finances_Financial_leases3_value"]').should('contain.text', '£2,000.00')
+				cy.fixture('cath121-body.json').as('userData').then((userData) => {
+					expect(userData.data.applyingSchools[0].schoolLeases[0].schoolLeaseRepaymentValue).to.eq(2000.00)
+				})
+				cy.get('[test-id="Finances_Financial_leases4_key"]').should('contain.text', 'Interest rate chargeable')
+				cy.get('[test-id="Finances_Financial_leases4_value"]').should('contain.text', '10.00%')
+				cy.fixture('cath121-body.json').as('userData').then((userData) => {
+					expect(userData.data.applyingSchools[0].schoolLeases[0].schoolLeaseInterestRate).to.eq(10.00)
+				})
+				cy.get('[test-id="Finances_Financial_leases5_key"]').should('contain.text', 'Value of payments made to date')
+				cy.get('[test-id="Finances_Financial_leases5_value"]').should('contain.text', '£200.00')
+				cy.fixture('cath121-body.json').as('userData').then((userData) => {
+					expect(userData.data.applyingSchools[0].schoolLeases[0].schoolLeasePaymentToDate).to.eq(200.00)
+				})
+				cy.get('[test-id="Finances_Financial_leases6"]').should('contain.text', 'What was the finance lease for?')
+				cy.get('[test-id="Finances_Financial_leases6_value"]').should('contain.text', dataAppSch.schoolLeases[0].schoolLeasePurpose)
+				cy.get('[test-id="Finances_Financial_leases7_key"]').should('contain.text', 'Value of the assests at the start of the finance lease agreement')
+				cy.get('[test-id="Finances_Financial_leases7_value"]').should('contain.text', dataAppSch.schoolLeases[0].schoolLeaseValueOfAssets)
+				cy.get('[test-id="Finances_Financial_leases8_key"]').should('contain.text', 'Who is responsible for the insurance, repair and maintenance of the assets covered?')
+				cy.get('[test-id="Finances_Financial_leases8_value"]').should('contain.text', 'who is responsible')
+		    }
+			else return
+	  });		
 	})
 
 	// Financial investigations
