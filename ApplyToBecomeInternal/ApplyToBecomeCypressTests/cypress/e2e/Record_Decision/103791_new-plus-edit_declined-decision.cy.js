@@ -10,8 +10,7 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
                     where AdvisoryBoardDecisionId = (select id from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id})`);
             cy.sqlServer(`delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id}`);
             cy.sqlServer(`insert into academisation.ConversionAdvisoryBoardDecision values (${id}, \'Declined\', null, null, getdate(), \'None\', getdate(), getdate())`);
-            cy.clearCookies();
-            cy.url().then(url => cy.visit(`${url}?rd=true`))
+            cy.clearCookies();            
         })
     })
 

@@ -7,9 +7,7 @@ describe('Create Deferred journey', { tags: '@dev'}, () => {
         RecordDecision.selectProject().then(id => {
             // delete decision
             cy.sqlServer(`DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = ${id}`)
-            cy.clearCookies()
-            //cy.visit(url)
-            cy.url().then(url => cy.visit(`${url}?rd=true`))
+            cy.clearCookies()            
         })
     })
 

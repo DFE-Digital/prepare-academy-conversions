@@ -14,8 +14,7 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
                 AdvisoryBoardDecisionId = (select Id from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id})`) 
             cy.sqlServer(`delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id}`)
             cy.sqlServer(`insert into academisation.ConversionAdvisoryBoardDecision values (${id}, \'Deferred\', null, null, getdate(), \'None\', getdate(), getdate())`)
-            cy.clearCookies()
-            cy.url().then(url => cy.visit(`${url}?rd=true`))
+            cy.clearCookies()            
         })
     })
 
