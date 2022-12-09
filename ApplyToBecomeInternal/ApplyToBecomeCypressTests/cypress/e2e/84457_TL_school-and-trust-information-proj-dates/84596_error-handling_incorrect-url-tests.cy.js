@@ -36,7 +36,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
             });
         });
 
-        it('TC02: Should display user-friendly error when incorrect return parameter passed [80466]', ()=>{
+        it.skip('TC02: Should display user-friendly error when incorrect return parameter passed [80466]', ()=>{
             cy.viewport(viewport)
             cy.selectSchoolListing(0)
             let modifiedUrl
