@@ -10,6 +10,7 @@ describe('103195 Record new Approved decision', { tags: '@dev'}, () => {
             // delete decision
             cy.sqlServer(`DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = ${id}`)
             cy.clearCookies()
+            cy.reload()
         })
     })
 
