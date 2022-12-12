@@ -94,7 +94,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			await _wizard.SubmitThroughTheWizard(request);
 			await _wizard.ClickSubmitButton();
 
-			Document.Url.Should().EndWith($"/task-list/{_project.Id}?rd=true");
+			Document.Url.Should().EndWith($"/task-list/{_project.Id}");
 			NotificationMessage.Should().Be("Decision recorded");
 			NotificationBannerTitle.Should().Be("Done");
 		}
@@ -119,7 +119,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.Decision
 			await _wizard.SubmitThroughTheWizard(request);
 			await _wizard.ClickSubmitButton();
 
-			Document.Url.Should().EndWith($"/task-list/{_project.Id}?rd=true");
+			Document.Url.Should().EndWith($"/task-list/{_project.Id}");
 			NotificationMessage.Should().Be("Decision recorded");
 			NotificationBannerTitle.Should().Be("Done");
 		}

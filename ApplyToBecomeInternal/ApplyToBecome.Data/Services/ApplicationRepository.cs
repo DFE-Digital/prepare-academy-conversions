@@ -1,33 +1,34 @@
-﻿using ApplyToBecome.Data.Models.Application;
+﻿using ApplyToBecome.Data.Features;
+using ApplyToBecome.Data.Models.Application;
 using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace ApplyToBecome.Data.Services
+namespace ApplyToBecome.Data.Services;
+
+public class ApplicationRepository
 {
-	public class ApplicationRepository
-	{
-		private readonly HttpClient _httpClient;
-		private readonly ILogger<ApplicationRepository> _logger;
+   private readonly IApiClient _apiClient;
+   private readonly ILogger<ApplicationRepository> _logger;
 
-		public ApplicationRepository(IHttpClientFactory httpClientFactory, ILogger<ApplicationRepository> logger)
-		{
-			_httpClient = httpClientFactory.CreateClient("TramsClient");
-			_logger = logger;
-		}
+   public ApplicationRepository(IApiClient apiClient, ILogger<ApplicationRepository> logger)
+   {
+      _apiClient = apiClient;
+      _logger = logger;
+   }
 
-		public async Task<ApiResponse<Application>> GetApplicationByReference(string id) // id is the application reference number
-		{
-			var response = await _httpClient.GetAsync($"/v2/apply-to-become/application/{id}");
-			if(!response.IsSuccessStatusCode)
-			{
-				_logger.LogWarning("Unable to get school application form data for establishment with id: {id}", id);
-				return new ApiResponse<Application>(response.StatusCode, null);
-			}
-			var outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<Application>>();
+   public async Task<ApiResponse<Application>> GetApplicationByReference(string id)
+   {
+      HttpResponseMessage response = await _apiClient.GetApplicationByReferenceAsync(id);
 
-			return new ApiResponse<Application>(response.StatusCode, outerResponse.Data);
-		}
-	}
+      if (response.IsSuccessStatusCode)
+      {
+         ApiV2Wrapper<Application> outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<Application>>();
+         return new ApiResponse<Application>(response.StatusCode, outerResponse.Data);
+      }
+
+      _logger.LogWarning("Unable to get school application form data for establishment with id: {id}", id);
+      return new ApiResponse<Application>(response.StatusCode, null);
+   }
 }

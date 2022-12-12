@@ -3,7 +3,9 @@ using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Io;
 using AngleSharp.Io.Network;
+using ApplyToBecome.Data.Features;
 using AutoFixture;
+using Microsoft.FeatureManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,20 +18,21 @@ namespace ApplyToBecomeInternal.Tests.Pages
 	public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTestingWebApplicationFactory>, IDisposable
 	{
 		protected readonly IntegrationTestingWebApplicationFactory _factory;
-		private readonly IBrowsingContext _browsingContext;
-		protected readonly Fixture _fixture;
+      protected readonly Fixture _fixture;
+      protected PathFor _pathFor;
 
-		protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory)
+      protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory)
 		{
 			_factory = factory;
-			var httpClient = factory.CreateClient();
-			_browsingContext = CreateBrowsingContext(httpClient);
-			_fixture = new Fixture();
-		}
+         _fixture = new Fixture();
+         _pathFor = new PathFor(factory.Services.GetService(typeof(IFeatureManager)) as IFeatureManager);
 
-		public async Task<IDocument> OpenUrlAsync(string url)
+         Context = CreateBrowsingContext(factory.CreateClient());
+      }
+
+      public async Task<IDocument> OpenUrlAsync(string url)
 		{
-			return await _browsingContext.OpenAsync($"http://localhost{url}");
+			return await Context.OpenAsync($"http://localhost{url}");
 		}
 
 		public async Task<IDocument> NavigateAsync(string linkText, int? index = null)
@@ -40,12 +43,15 @@ namespace ApplyToBecomeInternal.Tests.Pages
 					: anchors.Where(a => a.TextContent.Contains(linkText)).ElementAt(index.Value))
 				as IHtmlAnchorElement;
 
+         Assert.NotNull(link);
 			return await link.NavigateAsync();
 		}
 
 		public async Task NavigateDataTestAsync(string dataTest)
 		{
 			var anchors = Document.QuerySelectorAll($"[data-test='{dataTest}']").First() as IHtmlAnchorElement;
+         Assert.NotNull(anchors);
+
 			await anchors.NavigateAsync();
 		}
 
@@ -61,14 +67,9 @@ namespace ApplyToBecomeInternal.Tests.Pages
 				new RadioButton { Id = Id(id, toSelect.Key), Value = toSelect.Value });
 
 			static string Id(string name, int position)
-			{
-				if (position == 1)
-				{
-					return $"#{name}";
-				}
-
-				return $"#{name}-{position}";
-			}
+         {
+            return position == 1 ? $"#{name}" : $"#{name}-{position}";
+         }
 		}
 
 		protected class RadioButton
@@ -86,11 +87,11 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			return BrowsingContext.New(config);
 		}
 
-		public IDocument Document => _browsingContext.Active;
+		public IDocument Document => Context.Active;
 
-		public IBrowsingContext Context => _browsingContext;
+		public IBrowsingContext Context { get; }
 
-		public void Dispose()
+      public void Dispose()
 		{
 			_factory.Reset();
 			GC.SuppressFinalize(this);
