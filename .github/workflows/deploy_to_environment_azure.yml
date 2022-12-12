@@ -12,19 +12,33 @@ env:
   NODE_VERSION: 18.x
 
 jobs:
-#   test:
-#     runs-on: ubuntu-22.04
-#     container:
-#       image: node:14.15.0-alpine3.12
-#     steps:
-#       - name: Test the build
-#         run: |
-#           dotnet test -c Release ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --verbosity normal  --collect:"XPlat Code Coverage"
+  cypress-tests:
+    environment: staging
+    if: ${{ github.event.inputs.environment }} == staging
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+         working-directory: ApplyToBecomeInternal/ApplyToBecomeCypressTests
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Npm install
+        run: npm install
+      - name: Run cypress
+        run: npm run cy:run -- --env url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
+        env:
+          db: ${{ secrets.DB_CONNECTION_STRING }}
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+         name: screenshots
+         path: ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots
 
   build-and-push-image:
-    needs: test
     runs-on: ubuntu-22.04
-
     steps:
       - name: checkout repository
         uses: actions/checkout@v2
@@ -77,12 +91,10 @@ jobs:
   deploy-image:
     needs: build-and-push-image
     runs-on: ubuntu-22.04
-
     steps:
       - name: Set environment variables
         run: |
           ENVIRONMENT=${{ github.event.inputs.environment }^^}
-          DOCKER_IMAGE_TAG=${{ env.DOCKER_IMAGE_TAG }}
 
           if [ "$ENVIRONMENT" == "STAGING" ]; then
             ACA_CREDENTIALS=${{ secrets.TEST_AZURE_ACA_CREDENTIALS }}
@@ -103,7 +115,6 @@ jobs:
           echo "ACA_CONTAINERAPP_NAME=$ACA_CONTAINERAPP_NAME" >> $GITHUB_ENV
           echo "ACA_RESOURCE_GROUP=$ACA_RESOURCE_GROUP" >> $GITHUB_ENV
 
-          echo "Deployed `$DOCKER_IMAGE_TAG` to `$ENVIRONMENT`" >> $GITHUB_STEP_SUMMARY
       - name: Azure login with ACA credentials
         uses: azure/login@v1
         with:
@@ -121,51 +132,12 @@ jobs:
               --image ${{ env.ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_IMAGE_TAG }} \
               --output none
 
-  # This has been disabled so that existing Github workflow tags are not overwritten
-  # create-tag:
-  #   needs: deploy-image
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Create tag string
-  #       run: echo "RELEASE_TAGNAME=${{ github.event.inputs.environment }}-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV
-  #     - name: Create git tag
-  #       run: |
-  #         git tag ${{ env.RELEASE_TAGNAME }}
-  #     - name: Push git tag
-  #       run: git push origin ${{ env.RELEASE_TAGNAME }}
-  #     - name: Create release
-  #       uses: actions/create-release@latest
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       with:
-  #         tag_name: ${{ env.RELEASE_TAGNAME }}
-  #         release_name: ${{ env.RELEASE_TAGNAME }}
-  #         draft: ${{ github.event.inputs.environment == 'staging' }}
-  #         prerelease: ${{ github.event.inputs.environment == 'staging' }}
-
-  cypress-tests:
+  summary:
     needs: deploy-image
-    environment: staging
-    if: ${{ github.event.inputs.environment}} == staging
     runs-on: ubuntu-22.04
-    defaults:
-      run:
-         working-directory: ApplyToBecomeInternal/ApplyToBecomeCypressTests
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - name: Npm install
-        run: npm install
-      - name: Run cypress
-        run: npm run cy:run -- --env url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
-        env:
-          db: ${{ secrets.DB_CONNECTION_STRING }}
-      - uses: actions/upload-artifact@v1
-        if: failure()
-        with:
-         name: screenshots
-         path: ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots
+      name: Output
+      run: |
+        ENVIRONMENT=${{ github.event.inputs.environment }^^}
+        echo "Deploying: `$GITHUB_SHA` to `$ENVIRONMENT`" >> $GITHUB_STEP_SUMMARY
+        echo "Status: `${{ jobs.deploy-image.result }}`" >> $GITHUB_STEP_SUMMARY
