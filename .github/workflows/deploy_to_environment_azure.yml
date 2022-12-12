@@ -82,8 +82,7 @@ jobs:
       - name: Set environment variables
         run: |
           ENVIRONMENT=${{ github.event.inputs.environment }^^}
-
-          echo "Deploying to $ENVIRONMENT environment"
+          DOCKER_IMAGE_TAG=${{ env.DOCKER_IMAGE_TAG }}
 
           if [ "$ENVIRONMENT" == "STAGING" ]; then
             ACA_CREDENTIALS=${{ secrets.TEST_AZURE_ACA_CREDENTIALS }}
@@ -104,6 +103,7 @@ jobs:
           echo "ACA_CONTAINERAPP_NAME=$ACA_CONTAINERAPP_NAME" >> $GITHUB_ENV
           echo "ACA_RESOURCE_GROUP=$ACA_RESOURCE_GROUP" >> $GITHUB_ENV
 
+          echo "Deployed `$DOCKER_IMAGE_TAG` to `$ENVIRONMENT`" >> $GITHUB_STEP_SUMMARY
       - name: Azure login with ACA credentials
         uses: azure/login@v1
         with:
