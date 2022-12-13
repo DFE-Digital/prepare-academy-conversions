@@ -4,13 +4,13 @@ ARG NODEJS_IMAGE_TAG=18.12-bullseye
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS publish
 WORKDIR /build
 
-COPY ./ApplyToBecomeInternal/ApplyToBecome.Data/ ./ApplyToBecome.Data/
-COPY ./ApplyToBecomeInternal/DocumentGeneration/ ./DocumentGeneration/
-COPY ./ApplyToBecomeInternal/ApplyToBecomeInternal/ ./ApplyToBecomeInternal/
+COPY ./ApplyToBecomeInternal/ ./ApplyToBecomeInternal/
 
 WORKDIR /build/ApplyToBecomeInternal
-RUN dotnet restore
-RUN dotnet publish -c Release -o /app
+RUN dotnet restore ApplyToBecomeInternal.sln
+RUN dotnet build -c Release ApplyToBecomeInternal.sln --no-restore
+RUN dotnet test -c Release ApplyToBecomeInternal.sln --no-build --no-restore --verbosity normal --collect:"XPlat Code Coverage"
+RUN dotnet publish -c Release -o /app --no-restore
 
 # Stage 2 - Build assets
 FROM node:${NODEJS_IMAGE_TAG} as build
