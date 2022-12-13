@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: "Environment (staging, production)"
+        description: "Environment (Dev, Test, Prod)"
         required: true
 
 env:
@@ -19,18 +19,22 @@ jobs:
 
       - name: Set environment variables
         run: |
-          ENVIRONMENT=${{ github.event.inputs.environment }^^}
+          ENVIRONMENT=${{ github.event.inputs.environment }}
 
-          if [ "$ENVIRONMENT" == "STAGING" ]; then
+          if [ "${ENVIRONMENT^^}" == "TEST" ] || [ "${ENVIRONMENT^^}" == "STAGING" ]; then
             ACR_CLIENTID=${{ secrets.TEST_AZURE_ACR_CLIENTID }}
             ACR_SECRET=${{ secrets.TEST_AZURE_ACR_SECRET }}
             ACR_URL=${{ secrets.TEST_ACR_URL }}
-          elif [ "$ENVIRONMENT" == "PRODUCTION"]; then
+          elif [ "${ENVIRONMENT^^}" == "PRODUCTION" ] || [ "${ENVIRONMENT^^}" == "PROD" ]; then
             ACR_CLIENTID=${{ secrets.PRODUCTION_AZURE_ACR_CLIENTID }}
             ACR_SECRET=${{ secrets.PRODUCTION_AZURE_ACR_SECRET }}
             ACR_URL=${{ secrets.PRODUCTION_ACR_URL }}
+          elif [ "${ENVIRONMENT^^}" == "DEVELOPMENT" ] || [ "${ENVIRONMENT^^}" == "DEV" ]; then
+            ACR_CLIENTID=${{ secrets.DEVELOPMENT_AZURE_ACR_CLIENTID }}
+            ACR_SECRET=${{ secrets.DEVELOPMENT_AZURE_ACR_SECRET }}
+            ACR_URL=${{ secrets.DEVELOPMENT_ACR_URL }}
           else
-              echo "$ENVIRONMENT doesn't match any known options"
+              echo "${ENVIRONMENT^^} doesn't match any known options"
               exit 1
           fi
 
@@ -68,20 +72,25 @@ jobs:
     steps:
       - name: Set environment variables
         run: |
-          ENVIRONMENT=${{ github.event.inputs.environment }^^}
+          ENVIRONMENT=${{ github.event.inputs.environment }}
 
-          if [ "$ENVIRONMENT" == "STAGING" ]; then
+          if [ "${ENVIRONMENT^^}" == "TEST" ] || [ "${ENVIRONMENT^^}" == "STAGING" ]; then
             ACA_CREDENTIALS=${{ secrets.TEST_AZURE_ACA_CREDENTIALS }}
             ACA_CONTAINERAPP_NAME=${{ secrets.TEST_ACA_CONTAINERAPP_NAME }}
             ACA_RESOURCE_GROUP=${{ secrets.TEST_ACA_RESOURCE_GROUP }}
             ACR_URL=${{ secrets.TEST_ACR_URL }}
-          elif [ "$ENVIRONMENT" == "PRODUCTION"]; then
+          elif [ "${ENVIRONMENT^^}" == "PRODUCTION" ] || [ "${ENVIRONMENT^^}" == "PROD" ]; then
             ACA_CREDENTIALS=${{ secrets.PRODUCTION_AZURE_ACA_CREDENTIALS }}
             ACA_CONTAINERAPP_NAME=${{ secrets.PRODUCTION_ACA_CONTAINERAPP_NAME }}
             ACA_RESOURCE_GROUP=${{ secrets.PRODUCTION_ACA_RESOURCE_GROUP }}
             ACR_URL=${{ secrets.PRODUCTION_ACR_URL }}
+          elif [ "${ENVIRONMENT^^}" == "DEVELOPMENT" ] || [ "${ENVIRONMENT^^}" == "DEV" ]; then
+            ACA_CREDENTIALS=${{ secrets.DEVELOPMENT_AZURE_ACA_CREDENTIALS }}
+            ACA_CONTAINERAPP_NAME=${{ secrets.DEVELOPMENT_ACA_CONTAINERAPP_NAME }}
+            ACA_RESOURCE_GROUP=${{ secrets.DEVELOPMENT_ACA_RESOURCE_GROUP }}
+            ACR_URL=${{ secrets.DEVELOPMENT_ACR_URL }}
           else
-              echo "$ENVIRONMENT doesn't match any known options"
+              echo "${ENVIRONMENT^^} doesn't match any known options"
               exit 1
           fi
 
@@ -141,6 +150,6 @@ jobs:
     steps:
       - name: Output
         run: |
-          ENVIRONMENT=${{ github.event.inputs.environment }^^}
+          ENVIRONMENT=${{ github.event.inputs.environment }}
           echo "Deploying: `$GITHUB_SHA` to `$ENVIRONMENT`" >> $GITHUB_STEP_SUMMARY
           echo "Status: `${{ jobs.deploy-image.result }}`" >> $GITHUB_STEP_SUMMARY
