@@ -15,8 +15,7 @@ jobs:
   build-and-push-image:
     runs-on: ubuntu-22.04
     steps:
-      - name: checkout repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Set environment variables
         run: |
@@ -121,12 +120,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
+
       - name: Npm install
         run: npm install
+
       - name: Run cypress
         run: npm run cy:run -- --env url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
         env:
           db: ${{ secrets.DB_CONNECTION_STRING }}
+
       - uses: actions/upload-artifact@v1
         if: failure()
         with:
@@ -134,11 +136,11 @@ jobs:
          path: ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots
 
   summary:
-    needs: cypress-tests
+    needs: deploy-image
     runs-on: ubuntu-22.04
     steps:
-      name: Output
-      run: |
-        ENVIRONMENT=${{ github.event.inputs.environment }^^}
-        echo "Deploying: `$GITHUB_SHA` to `$ENVIRONMENT`" >> $GITHUB_STEP_SUMMARY
-        echo "Status: `${{ jobs.deploy-image.result }}`" >> $GITHUB_STEP_SUMMARY
+      - name: Output
+        run: |
+          ENVIRONMENT=${{ github.event.inputs.environment }^^}
+          echo "Deploying: `$GITHUB_SHA` to `$ENVIRONMENT`" >> $GITHUB_STEP_SUMMARY
+          echo "Status: `${{ jobs.deploy-image.result }}`" >> $GITHUB_STEP_SUMMARY
