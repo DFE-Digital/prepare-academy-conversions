@@ -1,16 +1,24 @@
 /// <reference types ='Cypress'/>
 
-import { data } from "../../fixtures/cath121-body.json"
+import { data } from "../../fixtures/devProject-body.json"
+import { data } from "../../fixtures/stagingProject-body.json"
 
 //***************requres environment setup on yml file******************
 describe('Fetch data from Internal', { tags: ['@integration'] }, () => {
-    let fetchProjects = ['2050']
+    let fetchProjectsDev = ['2050']
+    let fetchProjectsStaging = ['1241']
     let url = Cypress.env('url')
 
     beforeEach(() => {
         cy.login()
         cy.get('[id="school-name-0"]').click()
-        cy.visit(url + '/school-application-form/' + fetchProjects)
+        if (url.toString(). includes('dev') ) {
+          cy.visit(url + '/school-application-form/' + fetchProjectsDev)
+          
+        }
+        else{
+          cy.visit(url + '/school-application-form/' + fetchProjectsStaging)
+        }
     })
 
     // Overview
