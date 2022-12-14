@@ -152,4 +152,4 @@ jobs:
         run: |
           ENVIRONMENT=${{ github.event.inputs.environment }}
           echo "Deploying: `$GITHUB_SHA` to `$ENVIRONMENT`" >> $GITHUB_STEP_SUMMARY
-          echo "Status: `${{ jobs.deploy-image.result }}`" >> $GITHUB_STEP_SUMMARY
+          echo "Status: `${{ job.deploy-image.result }}`" >> $GITHUB_STEP_SUMMARY
