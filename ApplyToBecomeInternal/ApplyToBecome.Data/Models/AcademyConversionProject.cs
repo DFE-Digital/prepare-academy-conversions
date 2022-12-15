@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ApplyToBecome.Data.Models
 {
@@ -100,5 +101,8 @@ namespace ApplyToBecome.Data.Models
 
 		// assigned user
 		public User AssignedUser { get; set; }
+
+      // notes
+      public ICollection<ProjectNote> Notes { get; set; } = new List<ProjectNote>();
 	}
 }

@@ -105,9 +105,9 @@ namespace ApplyToBecomeInternal.Tests.Pages
 		}
 
 		public ProjectNote AddPostProjectNote(int id, AddProjectNote request)
-		{
-			var response = new ProjectNote { Subject = request.Subject, Note = request.Note, Author = request.Author };
-			_factory.AddPostWithJsonRequest($"/project-notes/{id}", request, response);
+      {
+			var response = new ProjectNote { Subject = request.Subject, Note = request.Note, Author = request.Author, Date = request.Date };
+         _factory.AddPostWithJsonRequest(string.Format(_pathFor.AddProjectNote, id), request, response);
 			return response;
 		}
 

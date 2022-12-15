@@ -13,4 +13,5 @@ public interface IApiClient
    Task<HttpResponseMessage> UpdateProjectAsync(int id, UpdateAcademyConversionProject updateProject);
    Task<HttpResponseMessage> GetFilterParametersAsync();
    Task<HttpResponseMessage> GetApplicationByReferenceAsync(string id);
+   Task<HttpResponseMessage> AddProjectNote(int id, AddProjectNote projectNote);
 }

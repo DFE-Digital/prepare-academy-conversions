@@ -1,128 +1,139 @@
-﻿using ApplyToBecome.Data.Features;
+﻿using ApplyToBecome.Data.Extensions;
+using ApplyToBecome.Data.Features;
 using ApplyToBecome.Data.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using System.Web;
 
-namespace ApplyToBecome.Data.Services
+namespace ApplyToBecome.Data.Services;
+
+public class AcademyConversionProjectRepository : IAcademyConversionProjectRepository
 {
-	public class AcademyConversionProjectRepository : IAcademyConversionProjectRepository
-	{
-      private readonly IApiClient _apiClient;
-      private readonly IReadOnlyDictionary<string, string> _aliasedStatuses = new Dictionary<string, string> { { "converter pre-ao (c)", "Pre advisory board" } };
+   private readonly IReadOnlyDictionary<string, string> _aliasedStatuses = new Dictionary<string, string> { { "converter pre-ao (c)", "Pre advisory board" } };
+   private readonly IApiClient _apiClient;
 
-		private readonly IReadOnlyDictionary<string, string> _invertedAliasedStatuses;
+   private readonly IReadOnlyDictionary<string, string> _invertedAliasedStatuses;
 
-		public AcademyConversionProjectRepository(IApiClient apiClient)
-		{
-         _apiClient = apiClient;
-			_invertedAliasedStatuses = _aliasedStatuses.ToDictionary(x => x.Value.ToLowerInvariant(), x => x.Key);
-		}
+   public AcademyConversionProjectRepository(IApiClient apiClient)
+   {
+      _apiClient = apiClient;
+      _invertedAliasedStatuses = _aliasedStatuses.ToDictionary(x => x.Value.ToLowerInvariant(), x => x.Key);
+   }
 
-		public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count,
-			string titleFilter = "",
-			IEnumerable<string> statusFilters = default,
-			IEnumerable<string> deliveryOfficerFilter = default,
-			IEnumerable<string> regionsFilter = default)
-		{
-			AcademyConversionSearchModel searchModel = new() { TitleFilter = titleFilter, Page = page, Count = count };
+   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page,
+                                                                                                      int count,
+                                                                                                      string titleFilter = "",
+                                                                                                      IEnumerable<string> statusFilters = default,
+                                                                                                      IEnumerable<string> deliveryOfficerFilter = default,
+                                                                                                      IEnumerable<string> regionsFilter = default)
+   {
+      AcademyConversionSearchModel searchModel = new() { TitleFilter = titleFilter, Page = page, Count = count };
 
-			await ProcessFilters(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter);
+      await ProcessFilters(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter);
 
-         HttpResponseMessage response = await _apiClient.GetAllProjectsAsync(searchModel);
-			if (!response.IsSuccessStatusCode)
-			{
-				return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode,
-					new ApiV2Wrapper<IEnumerable<AcademyConversionProject>> { Data = Enumerable.Empty<AcademyConversionProject>() });
-			}
+      HttpResponseMessage response = await _apiClient.GetAllProjectsAsync(searchModel);
+      if (!response.IsSuccessStatusCode)
+      {
+         return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode,
+            new ApiV2Wrapper<IEnumerable<AcademyConversionProject>> { Data = Enumerable.Empty<AcademyConversionProject>() });
+      }
 
-			ApiV2Wrapper<IEnumerable<AcademyConversionProject>> outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>();
+      ApiV2Wrapper<IEnumerable<AcademyConversionProject>> outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>();
 
-			return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode, outerResponse);
-		}
+      return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode, outerResponse);
+   }
 
-		private async Task ProcessFilters(IEnumerable<string> statusFilters, IEnumerable<string> deliveryOfficerFilter,
-         AcademyConversionSearchModel searchModel, IEnumerable<string> regionsFilter = default)
-		{
-         if (deliveryOfficerFilter != default)
-			{
-				searchModel.DeliveryOfficerQueryString = deliveryOfficerFilter;
-			}
+   public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)
+   {
+      HttpResponseMessage response = await _apiClient.GetProjectByIdAsync(id);
+      if (!response.IsSuccessStatusCode)
+      {
+         return new ApiResponse<AcademyConversionProject>(response.StatusCode, null);
+      }
 
-			if (statusFilters != null)
-			{
-				IEnumerable<string> projectedStatuses = statusFilters.SelectMany(x =>
-					_invertedAliasedStatuses.ContainsKey(x.ToLowerInvariant())
-						? new[] { x, _invertedAliasedStatuses[x.ToLowerInvariant()] }
-						: new[] { x });
+      AcademyConversionProject project = await response.Content.ReadFromJsonAsync<AcademyConversionProject>();
+      return new ApiResponse<AcademyConversionProject>(response.StatusCode, project);
+   }
 
-				searchModel.StatusQueryString = projectedStatuses.ToArray();
-			}
+   public async Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject)
+   {
+      HttpResponseMessage response = await _apiClient.UpdateProjectAsync(id, updateProject);
+      if (!response.IsSuccessStatusCode)
+      {
+         return new ApiResponse<AcademyConversionProject>(response.StatusCode, null);
+      }
 
-			if (regionsFilter != default && regionsFilter.Any())
-			{
-            HttpResponseMessage regionResponse = await _apiClient.GetSelectedRegionsAsync(regionsFilter);
+      AcademyConversionProject project = await response.Content.ReadFromJsonAsync<AcademyConversionProject>();
+      return new ApiResponse<AcademyConversionProject>(response.StatusCode, project);
+   }
 
-            List<int> regionUrnResponse = await regionResponse.Content.ReadFromJsonAsync<List<int>>();
-            searchModel.RegionUrnsQueryString = regionUrnResponse;
-         }
-		}
+   public async Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
+   {
+      HttpResponseMessage response = await _apiClient.GetFilterParametersAsync();
 
-		public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)
-		{
-         HttpResponseMessage response = await _apiClient.GetProjectByIdAsync(id);
-			if (!response.IsSuccessStatusCode)
-			{
-				return new ApiResponse<AcademyConversionProject>(response.StatusCode, null);
-			}
+      if (response.IsSuccessStatusCode is false)
+         return new ApiResponse<ProjectFilterParameters>(response.StatusCode, null);
 
-			AcademyConversionProject project = await response.Content.ReadFromJsonAsync<AcademyConversionProject>();
-			return new ApiResponse<AcademyConversionProject>(response.StatusCode, project);
-		}
+      ProjectFilterParameters filterParameters = await response.Content.ReadFromJsonAsync<ProjectFilterParameters>();
 
-		public async Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject)
-		{
-         HttpResponseMessage response = await _apiClient.UpdateProjectAsync(id, updateProject);
-			if (!response.IsSuccessStatusCode)
-			{
-				return new ApiResponse<AcademyConversionProject>(response.StatusCode, null);
-			}
+      filterParameters.Statuses =
+         filterParameters.Statuses.Select(x => _aliasedStatuses.ContainsKey(x.ToLowerInvariant()) ? _aliasedStatuses[x.ToLowerInvariant()] : x)
+            .Distinct()
+            .OrderBy(x => x)
+            .ToList();
 
-			AcademyConversionProject project = await response.Content.ReadFromJsonAsync<AcademyConversionProject>();
-			return new ApiResponse<AcademyConversionProject>(response.StatusCode, project);
-		}
+      filterParameters.Regions = new List<string>
+      {
+         "East Midlands",
+         "East of England",
+         "London",
+         "North East",
+         "North West",
+         "South East",
+         "South West",
+         "West Midlands",
+         "Yorkshire and the Humber"
+      };
+      return new ApiResponse<ProjectFilterParameters>(response.StatusCode, filterParameters);
+   }
 
-		public async Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
-		{
-			HttpResponseMessage response = await _apiClient.GetFilterParametersAsync();
+   public async Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote addProjectNote)
+   {
+      HttpResponseMessage response = await _apiClient.AddProjectNote(id, addProjectNote);
 
-			if (response.IsSuccessStatusCode is false)
-				return new ApiResponse<ProjectFilterParameters>(response.StatusCode, null);
+      return response.IsSuccessStatusCode
+         ? new ApiResponse<ProjectNote>(response.StatusCode, addProjectNote.ToProjectNote())
+         : new ApiResponse<ProjectNote>(response.StatusCode, null);
+   }
 
-			var filterParameters = await response.Content.ReadFromJsonAsync<ProjectFilterParameters>();
+   private async Task ProcessFilters(IEnumerable<string> statusFilters,
+                                     IEnumerable<string> deliveryOfficerFilter,
+                                     AcademyConversionSearchModel searchModel,
+                                     IEnumerable<string> regionsFilter = default)
+   {
+      if (deliveryOfficerFilter != default)
+      {
+         searchModel.DeliveryOfficerQueryString = deliveryOfficerFilter;
+      }
 
-			filterParameters.Statuses =
-				filterParameters.Statuses.Select(x => _aliasedStatuses.ContainsKey(x.ToLowerInvariant()) ? _aliasedStatuses[x.ToLowerInvariant()] : x)
-					.Distinct()
-					.OrderBy(x => x)
-					.ToList();
+      if (statusFilters != null)
+      {
+         IEnumerable<string> projectedStatuses = statusFilters.SelectMany(x =>
+            _invertedAliasedStatuses.ContainsKey(x.ToLowerInvariant())
+               ? new[] { x, _invertedAliasedStatuses[x.ToLowerInvariant()] }
+               : new[] { x });
 
-			filterParameters.Regions = new List<string>
-			{
-				"East Midlands",
-				"East of England",
-				"London",
-				"North East",
-				"North West",
-				"South East",
-				"South West",
-				"West Midlands",
-				"Yorkshire and the Humber"
-			};
-			return new ApiResponse<ProjectFilterParameters>(response.StatusCode, filterParameters);
-		}
-	}
+         searchModel.StatusQueryString = projectedStatuses.ToArray();
+      }
+
+      if (regionsFilter != default && regionsFilter.Any())
+      {
+         HttpResponseMessage regionResponse = await _apiClient.GetSelectedRegionsAsync(regionsFilter);
+
+         List<int> regionUrnResponse = await regionResponse.Content.ReadFromJsonAsync<List<int>>();
+         searchModel.RegionUrnsQueryString = regionUrnResponse;
+      }
+   }
 }
