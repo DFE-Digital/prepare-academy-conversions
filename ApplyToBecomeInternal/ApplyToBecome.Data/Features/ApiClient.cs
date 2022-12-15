@@ -50,6 +50,7 @@ public class ApiClient : IApiClient
       await Task.WhenAll(getProjectResponse, getProjectNotesResponse);
 
       if (_useAcademisation) return getProjectResponse.Result;
+      if (getProjectResponse.Result.IsSuccessStatusCode is false) return getProjectResponse.Result;
 
       AcademyConversionProject project = await getProjectResponse.Result.Content.ReadFromJsonAsync<AcademyConversionProject>();
       if (project is null) return new HttpResponseMessage(HttpStatusCode.NotFound);
