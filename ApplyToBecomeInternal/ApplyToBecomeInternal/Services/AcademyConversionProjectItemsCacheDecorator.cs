@@ -54,5 +54,10 @@ namespace ApplyToBecomeInternal.Services
 		{
 			return _innerRepository.GetFilterParameters();
 		}
-	}
+
+      public Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote addProjectNote)
+      {
+         return _innerRepository.AddProjectNote(id, addProjectNote);
+      }
+   }
 }

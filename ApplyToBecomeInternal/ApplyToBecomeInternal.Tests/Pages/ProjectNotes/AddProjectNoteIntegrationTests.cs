@@ -1,8 +1,11 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using ApplyToBecome.Data;
 using ApplyToBecome.Data.Models;
 using AutoFixture;
 using FluentAssertions;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -32,12 +35,16 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 		public async Task Should_add_new_note_and_redirect_to_project_notes()
 		{
 			var project = AddGetProject();
-			AddGetProjectNotes(project.Id);
 
-			var projectNote = new AddProjectNote {Subject = _fixture.Create<string>(), Note = _fixture.Create<string>(), Author = "" };
-			AddPostProjectNote(project.Id, projectNote);
+         string projectNotesPage = $"/project-notes/{project.Id}";
 
-			await OpenUrlAsync($"/project-notes/{project.Id}");
+         DateTime expected = DateTime.UtcNow;
+         DateTimeSource.UtcNow = () => expected;
+
+         var projectNote = new AddProjectNote { Subject = _fixture.Create<string>(), Note = _fixture.Create<string>(), Author = string.Empty, Date = expected };
+         AddPostProjectNote(project.Id, projectNote);
+
+         await OpenUrlAsync(projectNotesPage);
 			await NavigateAsync("Add note");
 
 			Document.QuerySelector<IHtmlTextAreaElement>("#project-note-subject").Value = projectNote.Subject;
@@ -45,7 +52,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			Document.Url.Should().BeUrl($"/project-notes/{project.Id}");
+			Document.Url.Should().BeUrl(projectNotesPage);
 
 			Document.QuerySelector("#project-note-added").TextContent.Should().NotBeNull();;
 		}

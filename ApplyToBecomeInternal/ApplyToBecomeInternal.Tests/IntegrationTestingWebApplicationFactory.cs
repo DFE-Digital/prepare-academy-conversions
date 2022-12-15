@@ -158,7 +158,7 @@ namespace ApplyToBecomeInternal.Tests
 
 		public void AddPostWithJsonRequest<TRequestBody, TResponseBody>(string path, TRequestBody requestBody, TResponseBody responseBody)
 		{
-			_server
+         _server
 				.Given(Request.Create()
 					.WithPath(path)
 					.WithBody(new JsonMatcher(JsonConvert.SerializeObject(requestBody), true))

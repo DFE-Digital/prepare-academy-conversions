@@ -119,7 +119,6 @@ public class Startup
       services.AddScoped<IAcademyConversionAdvisoryBoardDecisionRepository, AcademyConversionAdvisoryBoardDecisionRepository>();
       services.AddScoped<IHttpClientService, HttpClientService>();
       services.Decorate<IAcademyConversionProjectRepository, AcademyConversionProjectItemsCacheDecorator>();
-      services.AddScoped<IProjectNotesRepository, ProjectNotesRepository>();
       services.AddScoped<ApplicationRepository>();
       services.AddSingleton<IAuthorizationHandler, HeaderRequirementHandler>();
       services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>();

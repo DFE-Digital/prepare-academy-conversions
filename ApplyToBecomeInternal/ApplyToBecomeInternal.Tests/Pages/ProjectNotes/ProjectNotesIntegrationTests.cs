@@ -29,18 +29,17 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 		public async Task Should_display_project_notes()
 		{
 			var project = AddGetProject();
-			var projectNotes = AddGetProjectNotes(project.Id);
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 			await NavigateAsync("Project notes");
 
-			var firstProjectNote = projectNotes.First();
+			var firstProjectNote = project.Notes.First();
 			Document.QuerySelector("#project-note-subject-0").TextContent.Trim().Should().Be(firstProjectNote.Subject);
 			Document.QuerySelector("#project-note-body-0").TextContent.Should().Be(firstProjectNote.Note);
 			var expectedFirstProjectNoteAuthorAndDate = $"{firstProjectNote.Author}, {firstProjectNote.Date.Day} {firstProjectNote.Date:MMMM} {firstProjectNote.Date.Year} at {firstProjectNote.Date:hh:mm}{firstProjectNote.Date.ToString("tt").ToLower()}";
 			Document.QuerySelector("#project-note-date-0").TextContent.Trim().Should().Be(expectedFirstProjectNoteAuthorAndDate);
 
-			var secondProjectNote = projectNotes.ElementAt(1);
+			var secondProjectNote = project.Notes.ElementAt(1);
 			Document.QuerySelector("#project-note-subject-1").TextContent.Trim().Should().Be(secondProjectNote.Subject);
 			Document.QuerySelector("#project-note-body-1").TextContent.Should().Be(secondProjectNote.Note);
 			var expectedSecondProjectNoteAuthorAndDate = $"{secondProjectNote.Author}, {secondProjectNote.Date.Day} {secondProjectNote.Date:MMMM} {secondProjectNote.Date.Year} at {secondProjectNote.Date:hh:mm}{secondProjectNote.Date.ToString("tt").ToLower()}";

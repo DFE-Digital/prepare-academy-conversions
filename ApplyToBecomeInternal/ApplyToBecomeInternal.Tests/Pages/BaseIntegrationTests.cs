@@ -19,7 +19,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
 	{
 		protected readonly IntegrationTestingWebApplicationFactory _factory;
       protected readonly Fixture _fixture;
-      protected PathFor _pathFor;
+      private readonly PathFor _pathFor;
 
       protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory)
 		{

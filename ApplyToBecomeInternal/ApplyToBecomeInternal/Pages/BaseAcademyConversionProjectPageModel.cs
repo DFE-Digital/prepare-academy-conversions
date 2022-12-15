@@ -3,6 +3,7 @@ using ApplyToBecomeInternal.Models;
 using ApplyToBecomeInternal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ApplyToBecomeInternal.Pages
@@ -43,5 +44,7 @@ namespace ApplyToBecomeInternal.Pages
 			Project = new ProjectViewModel(project.Body);
 			return Page();
 		}
-	}
+
+      protected string NameOfUser => User.FindFirstValue("name") ?? string.Empty;
+   }
 }
