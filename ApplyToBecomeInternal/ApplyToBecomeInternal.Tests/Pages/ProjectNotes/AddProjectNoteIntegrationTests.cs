@@ -5,6 +5,7 @@ using ApplyToBecome.Data.Models;
 using AutoFixture;
 using FluentAssertions;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -34,6 +35,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectNotes
 		public async Task Should_add_new_note_and_redirect_to_project_notes()
 		{
 			var project = AddGetProject();
+
          string projectNotesPage = $"/project-notes/{project.Id}";
 
          DateTime expected = DateTime.UtcNow;

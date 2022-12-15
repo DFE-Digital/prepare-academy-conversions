@@ -19,5 +19,5 @@ public class PathFor
    public string UpdateProject => _useAcademisation ? "/legacy/project/{0}" : "/conversion-projects/{0}";
    public string GetFilterParameters => _useAcademisation ? "/legacy/projects/status" : "/v2/conversion-projects/parameters";
    public string GetApplicationByReference => _useAcademisation ? "/application/{0}" : "/v2/apply-to-become/application/{0}";
-   public string AddProjectNote => _useAcademisation ? "/legacy/project/{0}/notes" : "project-notes/{0}";
+   public string AddProjectNote => _useAcademisation ? "/legacy/project/{0}/notes" : "/project-notes/{0}";
 }
