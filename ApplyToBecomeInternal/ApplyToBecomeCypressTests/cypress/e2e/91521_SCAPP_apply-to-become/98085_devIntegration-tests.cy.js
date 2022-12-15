@@ -1,23 +1,20 @@
 /// <reference types ='Cypress'/>
 
 import { data } from "../../fixtures/devProject-body.json"
-import { data } from "../../fixtures/stagingProject-body.json"
 
 //***************requres environment setup on yml file******************
 describe('Fetch data from Internal', { tags: ['@integration'] }, () => {
     let fetchProjectsDev = ['2050']
-    let fetchProjectsStaging = ['1241']
     let url = Cypress.env('url')
 
     beforeEach(() => {
         cy.login()
         cy.get('[id="school-name-0"]').click()
-        if (url.toString(). includes('dev') ) {
-          cy.visit(url + '/school-application-form/' + fetchProjectsDev)
-          
+        if (url.toString().includes('dev')) {
+            cy.visit(url + '/school-application-form/' + fetchProjectsDev)
         }
-        else{
-          cy.visit(url + '/school-application-form/' + fetchProjectsStaging)
+        else {
+            Cypress.runner.stop()
         }
     })
 
@@ -35,7 +32,7 @@ describe('Fetch data from Internal', { tags: ['@integration'] }, () => {
                 if (textvalue.length > 0) {
                     let nameSchoolname = data.trustName + ' with ' + data.applyingSchools[0].schoolName
                     expect(nameSchoolname)
-                        .to.contain(text.trim())
+                        .to.contain(textvalue.trim())
                 }
                 else {
                     return null
@@ -51,7 +48,7 @@ describe('Fetch data from Internal', { tags: ['@integration'] }, () => {
                 let textvalue = text.toString()
                 if (textvalue.length > 0) {
                     expect(data.applicationId)
-                        .to.equal(text.trim())
+                        .to.equal(textvalue.trim())
                 }
                 else {
                     return null
@@ -67,7 +64,7 @@ describe('Fetch data from Internal', { tags: ['@integration'] }, () => {
                 let textvalue = text.toString()
                 if (textvalue.length > 0) {
                     expect(data.applicationLeadAuthorName)
-                        .to.equal(text.trim())
+                        .to.equal(textvalue.trim())
                 }
                 else {
                     return null
@@ -86,7 +83,7 @@ describe('Fetch data from Internal', { tags: ['@integration'] }, () => {
                 let textvalue = text.toString()
                 if (textvalue.length > 0) {
                     expect(data.trustName)
-                        .to.equal(text.trim())
+                        .to.equal(textvalue.trim())
                 }
                 else {
                     return null
