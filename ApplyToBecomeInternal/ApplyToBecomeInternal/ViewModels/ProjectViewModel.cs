@@ -189,5 +189,5 @@ public class ProjectViewModel
 
    public User AssignedUser { get; set; }
 
-   public ICollection<ProjectNote> Notes { get; } = new List<ProjectNote>();
+   public ICollection<ProjectNote> Notes { get; }
 }
