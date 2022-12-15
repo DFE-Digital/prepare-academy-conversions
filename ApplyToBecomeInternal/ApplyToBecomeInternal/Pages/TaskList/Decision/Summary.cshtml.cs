@@ -51,7 +51,7 @@ namespace ApplyToBecomeInternal.Pages.TaskList.Decision
 
 			TempData.SetNotification(NotificationType.Success, "Done", "Decision recorded");
 
-			return RedirectToPage(Links.TaskList.Index.Page, new { id, rd = "true" });
+			return RedirectToPage(Links.TaskList.Index.Page, new { id });
 		}
 
 		private async Task CreateOrUpdateDecision(int id, AdvisoryBoardDecision decision)
