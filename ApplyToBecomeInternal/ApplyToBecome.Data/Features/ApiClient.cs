@@ -1,7 +1,5 @@
 ﻿using ApplyToBecome.Data.Models;
-using Azure;
 using Microsoft.FeatureManagement;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -55,7 +53,8 @@ public class ApiClient : IApiClient
       AcademyConversionProject project = await getProjectResponse.Result.Content.ReadFromJsonAsync<AcademyConversionProject>();
       if (project is null) return new HttpResponseMessage(HttpStatusCode.NotFound);
 
-      project.Notes = (await getProjectNotesResponse.Result.Content.ReadFromJsonAsync<IEnumerable<ProjectNote>>())?.ToList();
+      if(getProjectNotesResponse.Result.IsSuccessStatusCode )
+         project.Notes = (await getProjectNotesResponse.Result.Content.ReadFromJsonAsync<IEnumerable<ProjectNote>>())?.ToList();
 
       return new HttpResponseMessage(HttpStatusCode.OK) { Content = JsonContent.Create(project) };
    }
