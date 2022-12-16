@@ -32,7 +32,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 				.With(r => r.EndOfNextFinancialYear, new DateTime(2023, 12, 2))
 				.With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear)
 				.With(r => r.CapitalCarryForwardAtEndMarchCurrentYear)
-				.With(r => r.CapitalCarryForwardAtEndMarchNextYear));
+				.With(r => r.CapitalCarryForwardAtEndMarchNextYear)
+            .With(r => r.Urn, project.Urn));
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information");
 			await NavigateDataTestAsync("change-financial-year");
@@ -75,7 +76,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 				.With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear, -10.75M)
 				.With(r => r.EndOfNextFinancialYear, new DateTime(2023, 12, 2))
 				.With(r => r.CapitalCarryForwardAtEndMarchCurrentYear, -65.90M)
-				.With(r => r.CapitalCarryForwardAtEndMarchNextYear, -1024.95M));
+				.With(r => r.CapitalCarryForwardAtEndMarchNextYear, -1024.95M)
+            .With(r => r.Urn, project.Urn));
 			
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information");
 			await NavigateDataTestAsync("change-financial-year");
@@ -170,7 +172,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 				.With(r => r.RevenueCarryForwardAtEndMarchCurrentYear, default(decimal))
 				.With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear, default(decimal))
 				.With(r => r.CapitalCarryForwardAtEndMarchCurrentYear, default(decimal))
-				.With(r => r.CapitalCarryForwardAtEndMarchNextYear, default(decimal)));
+				.With(r => r.CapitalCarryForwardAtEndMarchNextYear, default(decimal))
+            .With(r => r.Urn, project.Urn));
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
 			Document.QuerySelector<IHtmlInputElement>("#financial-year-day").Value = string.Empty;

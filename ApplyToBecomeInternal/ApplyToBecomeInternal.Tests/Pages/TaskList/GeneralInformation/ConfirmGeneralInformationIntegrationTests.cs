@@ -63,7 +63,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		{
 			var project = AddGetProject(project => project.GeneralInformationSectionComplete = true);
 			AddGetEstablishmentResponse(project.Urn.ToString());
-			AddPatchProject(project, r => r.GeneralInformationSectionComplete, true);
+         AddPatchConfiguredProject(project, x =>
+         {
+            x.GeneralInformationSectionComplete = true;
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
@@ -94,7 +98,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 				project.MemberOfParliamentParty = null;
 			});
 			AddGetEstablishmentResponse(project.Urn.ToString(), true);
-			AddPatchProject(project, r => r.GeneralInformationSectionComplete, false);
+         AddPatchConfiguredProject(project, x =>
+         {
+            x.GeneralInformationSectionComplete = false;
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 

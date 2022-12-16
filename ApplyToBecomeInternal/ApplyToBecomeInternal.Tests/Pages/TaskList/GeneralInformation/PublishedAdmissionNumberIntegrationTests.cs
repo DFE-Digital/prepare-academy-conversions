@@ -1,5 +1,6 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using AutoFixture;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -15,7 +16,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		{
 			var project = AddGetProject();
 			AddGetEstablishmentResponse(project.Urn.ToString());
-			var request = AddPatchProject(project, r => r.PublishedAdmissionNumber);
+         var request = AddPatchConfiguredProject(project, x =>
+         {
+            x.PublishedAdmissionNumber = _fixture.Create<string>();
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");
 			await NavigateAsync("Change", 0);

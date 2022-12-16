@@ -60,7 +60,7 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
    public async Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject)
    {
       ApiResponse<AcademyConversionProject> projectResponse = await GetProjectById(id);
-      if (projectResponse.Success is false) 
+      if (projectResponse.Success is false)
          return new ApiResponse<AcademyConversionProject>(projectResponse.StatusCode, null);
 
       updateProject.Urn = projectResponse.Body.Urn;

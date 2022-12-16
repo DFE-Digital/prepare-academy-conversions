@@ -16,10 +16,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		{
 			var project = AddGetProject();
 			AddGetEstablishmentResponse(project.Urn.ToString());
-			var request = AddPatchProjectMany(project, composer =>
-				composer
-				.With(r => r.DistanceFromSchoolToTrustHeadquarters)
-				.With(r => r.DistanceFromSchoolToTrustHeadquartersAdditionalInformation));
+         var request = AddPatchProjectMany(project, composer =>
+            composer
+               .With(r => r.DistanceFromSchoolToTrustHeadquarters)
+               .With(r => r.DistanceFromSchoolToTrustHeadquartersAdditionalInformation)
+               .With(r => r.Urn, project.Urn));
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");
 			await NavigateAsync("Change", 3);

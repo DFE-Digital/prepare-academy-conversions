@@ -1,5 +1,6 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using AutoFixture;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -14,7 +15,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.RisksAndIssues
 		public async Task Should_navigate_to_and_update_risks_and_issues()
 		{
 			var project = AddGetProject();
-			var request = AddPatchProject(project, r => r.RisksAndIssues);
+         var request = AddPatchConfiguredProject(project, x =>
+         {
+            x.RisksAndIssues = _fixture.Create<string>();
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-risks-issues");
 			await NavigateAsync("Change", 0);

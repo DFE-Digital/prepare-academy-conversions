@@ -1,5 +1,6 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using AutoFixture;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -17,7 +18,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.KeyStagePerformance
 			{
 				var project = AddGetProject();
 				AddGetKeyStagePerformance((int)project.Urn);
-				var request = AddPatchProject(project, r => r.KeyStage2PerformanceAdditionalInformation);
+            var request = AddPatchConfiguredProject(project, x =>
+            {
+               x.KeyStage2PerformanceAdditionalInformation = _fixture.Create<string>();
+               x.Urn = project.Urn;
+            });
 
 				await OpenUrlAsync($"/task-list/{project.Id}/key-stage-2-performance-tables");
 				await NavigateAsync("Change", 0);

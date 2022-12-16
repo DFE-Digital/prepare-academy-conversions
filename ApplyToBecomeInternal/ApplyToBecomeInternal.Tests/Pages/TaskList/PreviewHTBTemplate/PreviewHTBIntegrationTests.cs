@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using ApplyToBecomeInternal.Tests.TestHelpers;
+using AutoFixture;
 
 namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 {
@@ -134,7 +135,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		public async Task Should_update_general_information_pan_and_navigate_back_to_preview()
 		{
 			var project = AddGetProject();
-			var request = AddPatchProject(project, p => p.PublishedAdmissionNumber);
+         var request = AddPatchConfiguredProject(project, x =>
+         {
+            x.PublishedAdmissionNumber = _fixture.Create<string>();
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -182,14 +187,15 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		public async Task Should_update_school_budget_fields_and_navigate_back_to_preview()
 		{
 			var project = AddGetProject();
-			var request = AddPatchProjectMany(project, composer =>
-				composer
-					.With(r => r.EndOfCurrentFinancialYear, new DateTime(2022,04,01))
-					.With(r => r.EndOfNextFinancialYear, new DateTime(2023,04,01))
-					.With(r => r.RevenueCarryForwardAtEndMarchCurrentYear)
-					.With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear)
-					.With(r => r.CapitalCarryForwardAtEndMarchCurrentYear)
-					.With(r => r.CapitalCarryForwardAtEndMarchNextYear));
+         var request = AddPatchProjectMany(project, composer =>
+            composer
+               .With(r => r.EndOfCurrentFinancialYear, new DateTime(2022, 04, 01))
+               .With(r => r.EndOfNextFinancialYear, new DateTime(2023, 04, 01))
+               .With(r => r.RevenueCarryForwardAtEndMarchCurrentYear)
+               .With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear)
+               .With(r => r.CapitalCarryForwardAtEndMarchCurrentYear)
+               .With(r => r.CapitalCarryForwardAtEndMarchNextYear)
+               .With(r => r.Urn, project.Urn));
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -271,7 +277,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		public async Task Should_update_school_pupil_forecasts_additional_information_and_navigate_back_to_preview()
 		{
 			var project = AddGetProject();
-			var request = AddPatchProject(project, p => p.SchoolPupilForecastsAdditionalInformation);
+         var request = AddPatchConfiguredProject(project, x =>
+         {
+            x.SchoolPupilForecastsAdditionalInformation = _fixture.Create<string>();
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -357,7 +367,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			var request = AddPatchProject(project, p => p.KeyStage2PerformanceAdditionalInformation);
+         var request = AddPatchConfiguredProject(project, x =>
+         {
+            x.KeyStage2PerformanceAdditionalInformation = _fixture.Create<string>();
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -416,7 +430,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			var request = AddPatchProject(project, p => p.KeyStage4PerformanceAdditionalInformation);
+         var request = AddPatchConfiguredProject(project, x =>
+         {
+            x.KeyStage4PerformanceAdditionalInformation = _fixture.Create<string>();
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -478,7 +496,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			var request = AddPatchProject(project, p => p.KeyStage5PerformanceAdditionalInformation);
+         var request = AddPatchConfiguredProject(project, x =>
+         {
+            x.KeyStage5PerformanceAdditionalInformation = _fixture.Create<string>();
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -540,7 +562,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 			var (selected, toSelect) = RandomRadioButtons("project-recommendation", "Approve", "Defer", "Decline");
 
 			var project = AddGetProject(p => p.RecommendationForProject = selected.Value);
-			AddPatchProject(project, r => r.RecommendationForProject, toSelect.Value);
+         AddPatchConfiguredProject(project, x =>
+         {
+            x.RecommendationForProject = toSelect.Value;
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -583,8 +609,18 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 				p.PreviousHeadTeacherBoardDateQuestion = null;
 				p.PreviousHeadTeacherBoardDate = null;
 			});
-			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDateQuestion, "Yes");
-			var secondPatchRequest = AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate);
+
+         AddPatchConfiguredProject(project, x =>
+         {
+            x.PreviousHeadTeacherBoardDateQuestion = "Yes";
+            x.Urn = project.Urn;
+         });
+
+         var secondPatchRequest = AddPatchConfiguredProject(project, x =>
+         {
+            x.PreviousHeadTeacherBoardDate = _fixture.Create<DateTime?>();
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -615,9 +651,10 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		public async Task Should_navigate_to_school_and_trust_prev_htb_question_page_and_submit_preview_page_when_user_selects_no()
 		{
 			var project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = null);
-			AddPatchProjectMany(project, composer => composer
-				.With(r => r.PreviousHeadTeacherBoardDateQuestion, "No")
-				.With(r => r.PreviousHeadTeacherBoardDate, default(DateTime)));
+         AddPatchProjectMany(project, composer => composer
+            .With(r => r.PreviousHeadTeacherBoardDateQuestion, "No")
+            .With(r => r.PreviousHeadTeacherBoardDate, default(DateTime))
+            .With(r => r.Urn, project.Urn));
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -652,7 +689,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		public async Task Should_navigate_to_school_and_trust_prev_htb_input_page_and_back()
 		{
 			var project = AddGetProject();
-			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDateQuestion, "Yes");
+         AddPatchConfiguredProject(project, x =>
+         {
+            x.PreviousHeadTeacherBoardDateQuestion = "Yes";
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -674,8 +715,17 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		public async Task Should_navigate_to_school_and_trust_prev_htb_input_page_and_back_to_question_and_submit_again()
 		{
 			var project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = "Yes");
-			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDateQuestion, "Yes");
-			var secondPatchRequest = AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate);
+         AddPatchConfiguredProject(project, x =>
+         {
+            x.PreviousHeadTeacherBoardDateQuestion = "Yes";
+            x.Urn = project.Urn;
+         });
+
+         var secondPatchRequest = AddPatchConfiguredProject(project, x =>
+         {
+            x.PreviousHeadTeacherBoardDate = _fixture.Create<DateTime?>();
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -707,8 +757,17 @@ namespace ApplyToBecomeInternal.Tests.Pages.PreviewHTBTemplate
 		public async Task Should_navigate_to_school_and_trust_prev_htb_input_page_and_back_to_question_and_submit_to_input_and_back()
 		{
 			var project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = "Yes");
-			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDateQuestion, "Yes");
-			AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate);
+			AddPatchConfiguredProject(project, x =>
+         {
+            x.PreviousHeadTeacherBoardDateQuestion = "Yes";
+            x.Urn = project.Urn;
+         });
+
+			AddPatchConfiguredProject(project, x =>
+         {
+            x.PreviousHeadTeacherBoardDate = _fixture.Create<DateTime?>();
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
 
