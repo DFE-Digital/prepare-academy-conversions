@@ -1,8 +1,5 @@
 ﻿using ApplyToBecome.Data.Models;
 using ApplyToBecome.Data.Models.AcademyConversion;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ApplyToBecome.Data.Extensions
 {
@@ -10,7 +7,7 @@ namespace ApplyToBecome.Data.Extensions
 	{
 		public static UpdateAcademyConversionProject CreateUpdateAcademyConversionProject(this LegalRequirements project)
 		{
-			return new UpdateAcademyConversionProject()
+			return new UpdateAcademyConversionProject
 			{
 				Consultation = project.ConsultationDone.ToString(),
 				DiocesanConsent = project.DiocesanConsent.ToString(),
