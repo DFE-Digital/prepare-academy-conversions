@@ -15,7 +15,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 		{
 			var (selected, toSelect) = RandomRadioButtons("academy-order-required", "Yes", "No");
 			var project = AddGetProject(p => p.AcademyOrderRequired = selected.Value);
-			var request = AddPatchProject(project, r => r.AcademyOrderRequired, toSelect.Value);
+         AddPatchConfiguredProject(project, x =>
+         {
+            x.AcademyOrderRequired = toSelect.Value;
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 			await NavigateAsync("Change", 1);

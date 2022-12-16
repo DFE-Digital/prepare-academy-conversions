@@ -16,9 +16,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 			var (selected, toSelect) = RandomRadioButtons("viability-issues", "Yes", "No");
 			var project = AddGetProject(p => p.ViabilityIssues = selected.Value);
 			AddGetEstablishmentResponse(project.Urn.ToString());
-			var request = AddPatchProject(project, r => r.ViabilityIssues, toSelect.Value);
+         AddPatchConfiguredProject(project, x =>
+         {
+            x.ViabilityIssues = toSelect.Value;
+            x.Urn = project.Urn;
+         });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");
+         await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");
 			await NavigateAsync("Change", 1);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/viability-issues");

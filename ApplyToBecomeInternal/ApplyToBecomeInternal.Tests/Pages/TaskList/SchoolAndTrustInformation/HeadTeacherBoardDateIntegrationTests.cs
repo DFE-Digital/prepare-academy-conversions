@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using ApplyToBecomeInternal.Tests.Customisations;
+using AutoFixture;
 using FluentAssertions;
 using System;
 using System.Threading.Tasks;
@@ -19,7 +20,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 		public async Task Should_navigate_to_and_update_head_teacher_board_date()
 		{
 			var project = AddGetProject();
-			var request = AddPatchProject(project, r => r.HeadTeacherBoardDate);
+         var request = AddPatchConfiguredProject(project, x =>
+         {
+            x.HeadTeacherBoardDate = _fixture.Create<DateTime?>();
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 			await NavigateDataTestAsync("change-advisory-board-date");

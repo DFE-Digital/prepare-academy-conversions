@@ -56,12 +56,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 				project.LocalAuthorityInformationTemplateLink = null;
 				project.LocalAuthorityInformationTemplateSectionComplete = false;
 			});
-			var request = AddPatchProjectMany(project, composer =>
-				composer
-				.With(r => r.LocalAuthorityInformationTemplateSentDate)
-				.With(r => r.LocalAuthorityInformationTemplateReturnedDate)
-				.With(r => r.LocalAuthorityInformationTemplateComments)
-				.With(r => r.LocalAuthorityInformationTemplateLink));
+         var request = AddPatchProjectMany(project, composer =>
+            composer
+               .With(r => r.LocalAuthorityInformationTemplateSentDate)
+               .With(r => r.LocalAuthorityInformationTemplateReturnedDate)
+               .With(r => r.LocalAuthorityInformationTemplateComments)
+               .With(r => r.LocalAuthorityInformationTemplateLink)
+               .With(r => r.Urn, project.Urn));
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
 			await NavigateAsync("Change", 0);
@@ -134,12 +135,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 		{
 			var project = AddGetProject();
 
-			AddPatchProjectMany(project, composer =>
-				composer
-				.With(r => r.LocalAuthorityInformationTemplateSentDate, default(DateTime))
-				.With(r => r.LocalAuthorityInformationTemplateReturnedDate, default(DateTime))
-				.With(r => r.LocalAuthorityInformationTemplateComments, project.LocalAuthorityInformationTemplateComments)
-				.With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink));
+         AddPatchProjectMany(project, composer =>
+            composer
+               .With(r => r.LocalAuthorityInformationTemplateSentDate, default(DateTime))
+               .With(r => r.LocalAuthorityInformationTemplateReturnedDate, default(DateTime))
+               .With(r => r.LocalAuthorityInformationTemplateComments, project.LocalAuthorityInformationTemplateComments)
+               .With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink)
+               .With(r => r.Urn, project.Urn));
 
 			await OpenUrlAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
 

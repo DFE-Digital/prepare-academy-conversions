@@ -1,5 +1,6 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using AutoFixture;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -14,7 +15,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolPerformance
 		public async Task Should_navigate_to_and_update_additional_information()
 		{
 			var project = AddGetProject();
-			var request = AddPatchProject(project, r => r.SchoolPerformanceAdditionalInformation);
+         var request = AddPatchConfiguredProject(project, x =>
+         {
+            x.SchoolPerformanceAdditionalInformation = _fixture.Create<string>();
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/school-performance-ofsted-information");
 			await NavigateAsync("Change", 0);

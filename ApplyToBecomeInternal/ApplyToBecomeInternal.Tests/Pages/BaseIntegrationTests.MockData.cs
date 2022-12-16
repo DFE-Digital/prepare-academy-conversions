@@ -104,6 +104,19 @@ namespace ApplyToBecomeInternal.Tests.Pages
 			return request;
 		}
 
+      public UpdateAcademyConversionProject AddPatchConfiguredProject(AcademyConversionProject project, Action<UpdateAcademyConversionProject> configure = null)
+      {
+         UpdateAcademyConversionProject request = _fixture
+            .Build<UpdateAcademyConversionProject>()
+            .OmitAutoProperties()
+            .Create();
+
+         configure?.Invoke(request);
+
+         _factory.AddPatchWithJsonRequest(string.Format(_pathFor.UpdateProject, project.Id), request, project);
+			return request;
+		}
+
 		public ProjectNote AddPostProjectNote(int id, AddProjectNote request)
       {
 			var response = new ProjectNote { Subject = request.Subject, Note = request.Note, Author = request.Author, Date = request.Date };

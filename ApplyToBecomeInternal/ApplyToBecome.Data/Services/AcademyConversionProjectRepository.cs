@@ -59,14 +59,18 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
 
    public async Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject)
    {
-      HttpResponseMessage response = await _apiClient.UpdateProjectAsync(id, updateProject);
-      if (!response.IsSuccessStatusCode)
-      {
-         return new ApiResponse<AcademyConversionProject>(response.StatusCode, null);
-      }
+      ApiResponse<AcademyConversionProject> projectResponse = await GetProjectById(id);
+      if (projectResponse.Success is false)
+         return new ApiResponse<AcademyConversionProject>(projectResponse.StatusCode, null);
 
-      AcademyConversionProject project = await response.Content.ReadFromJsonAsync<AcademyConversionProject>();
-      return new ApiResponse<AcademyConversionProject>(response.StatusCode, project);
+      updateProject.Urn = projectResponse.Body.Urn;
+
+      HttpResponseMessage updateResponse = await _apiClient.UpdateProjectAsync(id, updateProject);
+      if (updateResponse.IsSuccessStatusCode is false)
+         return new ApiResponse<AcademyConversionProject>(updateResponse.StatusCode, null);
+
+      AcademyConversionProject project = await updateResponse.Content.ReadFromJsonAsync<AcademyConversionProject>();
+      return new ApiResponse<AcademyConversionProject>(updateResponse.StatusCode, project);
    }
 
    public async Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()

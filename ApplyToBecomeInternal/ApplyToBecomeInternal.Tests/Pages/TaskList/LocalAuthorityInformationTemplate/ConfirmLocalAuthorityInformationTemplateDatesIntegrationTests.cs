@@ -40,7 +40,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 		public async Task Should_be_completed_and_checked_when_la_info_template_section_complete()
 		{
 			var project = AddGetProject(project => project.LocalAuthorityInformationTemplateSectionComplete = true);
-			AddPatchProject(project, r => r.LocalAuthorityInformationTemplateSectionComplete, true);
+			AddPatchConfiguredProject(project, x =>
+         {
+            x.LocalAuthorityInformationTemplateSectionComplete = true;
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
@@ -88,12 +92,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 		public async Task Should_navigate_between_la_info_template_and_confirm_la_info_template_when_navigated_from_la_info_template()
 		{
 			var project = AddGetProject();
-			AddPatchProjectMany(project, composer =>
-				composer
-					.With(r => r.LocalAuthorityInformationTemplateSentDate, project.LocalAuthorityInformationTemplateSentDate)
-					.With(r => r.LocalAuthorityInformationTemplateReturnedDate, project.LocalAuthorityInformationTemplateReturnedDate)
-					.With(r => r.LocalAuthorityInformationTemplateComments, project.LocalAuthorityInformationTemplateComments)
-					.With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink));
+         AddPatchProjectMany(project, composer =>
+            composer
+               .With(r => r.LocalAuthorityInformationTemplateSentDate, project.LocalAuthorityInformationTemplateSentDate)
+               .With(r => r.LocalAuthorityInformationTemplateReturnedDate, project.LocalAuthorityInformationTemplateReturnedDate)
+               .With(r => r.LocalAuthorityInformationTemplateComments, project.LocalAuthorityInformationTemplateComments)
+               .With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink)
+               .With(r => r.Urn, project.Urn));
 
 			await OpenUrlAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
 

@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using ApplyToBecomeInternal.Tests.Customisations;
+using AutoFixture;
 using FluentAssertions;
 using System;
 using System.Threading.Tasks;
@@ -88,7 +89,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.GenerateHTBTemplate
 		public async Task Should_navigate_from_task_list_error_summary_to_headteacher_board_date_and_confirm_back_to_task_list()
 		{
 			var project = AddGetProject(p => p.HeadTeacherBoardDate = null);
-			var request = AddPatchProject(project, r => r.HeadTeacherBoardDate);
+         var request = AddPatchConfiguredProject(project, x =>
+         {
+            x.HeadTeacherBoardDate = _fixture.Create<DateTime?>();
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 

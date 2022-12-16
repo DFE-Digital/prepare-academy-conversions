@@ -81,7 +81,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 		public async Task Should_be_completed_and_checked_when_school_and_trust_information_complete()
 		{
 			var project = AddGetProject(project => project.SchoolAndTrustInformationSectionComplete = true);
-			AddPatchProject(project, r => r.SchoolAndTrustInformationSectionComplete, true);
+         AddPatchConfiguredProject(project, x =>
+         {
+            x.SchoolAndTrustInformationSectionComplete = true;
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 

@@ -1,5 +1,6 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using AutoFixture;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -14,7 +15,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		public async Task Should_navigate_to_and_update_rationale_for_trust()
 		{
 			var project = AddGetProject();
-			var request = AddPatchProject(project, r => r.RationaleForTrust);
+         var request = AddPatchConfiguredProject(project, x =>
+         {
+            x.RationaleForTrust = _fixture.Create<string>();
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale");
 			await NavigateAsync("Change", 1);

@@ -118,9 +118,13 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 			{
 				project.SchoolBudgetInformationSectionComplete = true;
 			});
-			AddPatchProject(project, r => r.SchoolBudgetInformationSectionComplete, true);
+         AddPatchConfiguredProject(project, x =>
+         {
+            x.SchoolBudgetInformationSectionComplete = true;
+            x.Urn = project.Urn;
+         });
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+         await OpenUrlAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#school-budget-information-status").TextContent.Trim().Should().Be("Completed");
 
@@ -147,7 +151,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolBudgetInformation
 				project.SchoolBudgetInformationAdditionalInformation = null;
 				project.SchoolBudgetInformationSectionComplete = false;
 			});
-			AddPatchProject(project, r => r.SchoolBudgetInformationSectionComplete, false);
+         AddPatchConfiguredProject(project, x =>
+         {
+            x.SchoolBudgetInformationSectionComplete = false;
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 

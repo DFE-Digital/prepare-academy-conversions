@@ -1,7 +1,5 @@
 using ApplyToBecome.Data.Extensions;
-using ApplyToBecome.Data.Models.AcademyConversion;
 using ApplyToBecome.Data.Services;
-using ApplyToBecome.Data.Services.Interfaces;
 using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
