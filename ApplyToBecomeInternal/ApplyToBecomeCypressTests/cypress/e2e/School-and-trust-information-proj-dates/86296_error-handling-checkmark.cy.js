@@ -11,7 +11,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
             cy.viewport(viewport)
         });
     
-        it('TC: Precondition checkbox status', () => {
+        it('TC01: Precondition checkbox status', () => {
             cy.viewport(viewport)
             cy.statusSchoolTrust().should('be.visible')
             .invoke('text')
@@ -25,7 +25,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
             });
         });
         
-        it('TC01: Unchecked and returns as "In Progress"', () => {
+        it('TC02: Unchecked and returns as "In Progress"', () => {
             cy.viewport(viewport)
             cy.get('*[href*="/confirm-school-trust-information-project-dates"]').click()
             cy.completeStatusSchoolTrust().click()
@@ -33,7 +33,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
             cy.statusSchoolTrust().contains('In Progress').should('not.contain', 'Completed')
         });
         
-        it('TC02: Checks and returns as "Completed"', () => {
+        it('TC03: Checks and returns as "Completed"', () => {
             cy.viewport(viewport)
             cy.get('*[href*="/confirm-school-trust-information-project-dates"]').click()
             cy.completeStatusSchoolTrust().click()

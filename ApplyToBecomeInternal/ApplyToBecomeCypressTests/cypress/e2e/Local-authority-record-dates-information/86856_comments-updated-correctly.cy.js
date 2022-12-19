@@ -14,7 +14,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 			});
 		})
 
-        it('TC: Precondition comment box', () => {
+        it('TC01: Precondition comment box', () => {
             cy.get('[id="la-info-template-comments"]').should('be.visible')
             .invoke('text')
             .then((text) => {
@@ -27,7 +27,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
             });
         });
 
-        it('TC01: Navigates to comment section & type alphanumerical characters', () => {
+        it('TC02: Navigates to comment section & type alphanumerical characters', () => {
             let alphanumeric = 'abcdefghijklmnopqrstuvwxyz 1234567890 !"£$%^&*(){}[]:@,./<>?~|'
             cy.get('[data-test="change-la-info-template-comments"]').click()
             cy.commentBoxLaInfo().type(alphanumeric)
@@ -35,7 +35,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
             cy.commentBoxLaInfo().should('contain', alphanumeric)
         });
 
-        it('TC02: Clears text input', () => {
+        it('TC03: Clears text input', () => {
             cy.commentBoxClearLaInfo()
             cy.commentBoxLaInfo().should('contain', 'Empty')
         });
