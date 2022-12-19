@@ -1,5 +1,8 @@
 using ApplyToBecome.Data.Models;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -24,7 +27,8 @@ namespace ApplyToBecome.Data.Services
 			}
 
 			var project = await response.Content.ReadFromJsonAsync<IEnumerable<ProjectNote>>();
-			return new ApiResponse<IEnumerable<ProjectNote>>(response.StatusCode, project);
+			IEnumerable<ProjectNote> projectNotes = (project ?? Enumerable.Empty<ProjectNote>()).ToList().OrderByDescending(x => x.Date);
+			return new ApiResponse<IEnumerable<ProjectNote>>(response.StatusCode, projectNotes);
 		}
 
 		public async Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote projectNote)
