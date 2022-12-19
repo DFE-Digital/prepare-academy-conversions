@@ -8,7 +8,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 			cy.selectSchoolListing(2)
 		})
     
-        it('TC: Precondition checkbox status', () => {
+        it('TC01: Precondition checkbox status', () => {
             cy.statusLaInfo().should('be.visible')
             .invoke('text')
             .then((text) => {
@@ -28,13 +28,13 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 				cy.confirmContinueBtn().click()
 			})
 			
-			it('TC01: Unchecked and returns as "In Progress"', () => {
+			it('TC02: Unchecked and returns as "In Progress"', () => {
 				cy.statusLaInfo()
 					.contains('In Progress')
 					.should('not.contain', 'Completed')
 			});
 
-			it('TC02: Checks and returns as "Completed"', () => {
+			it('TC03: Checks and returns as "Completed"', () => {
 				cy.statusLaInfo()
 					.contains('Completed')
 					.should('not.contain', 'In Progress')
