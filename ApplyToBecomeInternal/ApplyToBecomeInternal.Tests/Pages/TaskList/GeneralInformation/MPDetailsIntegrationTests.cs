@@ -66,10 +66,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		{
 			var project = AddGetProject();
 			AddGetEstablishmentResponse(project.Urn.ToString());
-			var request = AddPatchProjectMany(project, composer =>
-				composer
-				.With(r => r.MemberOfParliamentName)
-				.With(r => r.MemberOfParliamentParty));
+         var request = AddPatchProjectMany(project, composer =>
+            composer
+               .With(r => r.MemberOfParliamentName)
+               .With(r => r.MemberOfParliamentParty)
+               .With(r => r.Urn, project.Urn));
 
 			// open General Information page
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");

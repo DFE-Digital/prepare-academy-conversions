@@ -57,7 +57,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectAssignment
 				var deliveryOfficers = await _userRepository.GetAllUsers();
 				var updatedProject = new UpdateAcademyConversionProject
 				{
-					AssignedUser = deliveryOfficers.SingleOrDefault(u => u.FullName == selectedName)
+               AssignedUser = deliveryOfficers.SingleOrDefault(u => u.FullName == selectedName)
 				};
 
 				await _academyConversionProjectRepository.UpdateProject(id, updatedProject);

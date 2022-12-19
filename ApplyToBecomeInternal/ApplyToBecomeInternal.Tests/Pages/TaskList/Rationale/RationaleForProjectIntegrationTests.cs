@@ -1,5 +1,6 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using AutoFixture;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -46,7 +47,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 		public async Task Should_update_rationale_for_project()
 		{
 			var project = AddGetProject();
-			var request = AddPatchProject(project, r => r.RationaleForProject);
+         var request = AddPatchConfiguredProject(project, x =>
+         {
+            x.RationaleForProject = _fixture.Create<string>();
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/project-rationale");
 			var textArea = Document.QuerySelector<IHtmlTextAreaElement>("#project-rationale");

@@ -16,7 +16,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 			var (selected, toSelect) = RandomRadioButtons("project-recommendation", "Approve", "Defer", "Decline");
 
 			var project = AddGetProject(p => p.RecommendationForProject = selected.Value);
-			AddPatchProject(project, r => r.RecommendationForProject, toSelect.Value);
+         AddPatchConfiguredProject(project, x =>
+         {
+            x.RecommendationForProject = toSelect.Value;
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 			await NavigateAsync("Change", 0);

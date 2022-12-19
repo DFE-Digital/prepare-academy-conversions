@@ -33,7 +33,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.RisksAndIssues
 			{
 				project.RisksAndIssuesSectionComplete = true;
 			});
-			AddPatchProject(project, r => r.RisksAndIssuesSectionComplete, true);
+         AddPatchConfiguredProject(project, x =>
+         {
+            x.RisksAndIssuesSectionComplete = true;
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
@@ -56,7 +60,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.RisksAndIssues
 				project.RisksAndIssues = null;
 				project.RisksAndIssuesSectionComplete = false;
 			});
-			AddPatchProject(project, r => r.RisksAndIssuesSectionComplete, false);
+         AddPatchConfiguredProject(project, x =>
+         {
+            x.RisksAndIssuesSectionComplete = false;
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 

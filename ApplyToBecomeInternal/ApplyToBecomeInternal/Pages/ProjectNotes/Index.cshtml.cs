@@ -14,7 +14,7 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
    }
 
    public IEnumerable<ProjectNoteViewModel> ProjectNotes =>
-      Project.Notes?.Select(note => new ProjectNoteViewModel(note)) ?? Enumerable.Empty<ProjectNoteViewModel>();
+      Project.Notes?.OrderByDescending(x => x.Date).Select(note => new ProjectNoteViewModel(note)) ?? Enumerable.Empty<ProjectNoteViewModel>();
 
    public bool NewNote { get; set; }
 

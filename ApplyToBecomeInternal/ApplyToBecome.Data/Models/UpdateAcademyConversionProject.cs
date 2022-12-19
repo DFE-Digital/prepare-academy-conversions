@@ -3,8 +3,10 @@
 namespace ApplyToBecome.Data.Models
 {
 	public class UpdateAcademyConversionProject
-	{
-		public string ProjectStatus { get; set; }
+   {
+      public int? Urn { get; set; }
+
+      public string ProjectStatus { get; set; }
 		public DateTime? ApplicationReceivedDate { get; set; }
 		public DateTime? AssignedDate { get; set; }
 		public DateTime? HeadTeacherBoardDate { get; set; }		

@@ -33,7 +33,11 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 			{
 				project.RationaleSectionComplete = true;
 			});
-			AddPatchProject(project, r => r.RationaleSectionComplete, true);
+         AddPatchConfiguredProject(project, x =>
+         {
+            x.RationaleSectionComplete = true;
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
@@ -57,7 +61,12 @@ namespace ApplyToBecomeInternal.Tests.Pages.Rationale
 				project.RationaleForTrust = null;
 				project.RationaleSectionComplete = false;
 			});
-			AddPatchProject(project, r => r.RationaleSectionComplete, false);
+
+         AddPatchConfiguredProject(project, x =>
+         {
+            x.RationaleSectionComplete = false;
+            x.Urn = project.Urn;
+         });
 
 			await OpenUrlAsync($"/task-list/{project.Id}");
 

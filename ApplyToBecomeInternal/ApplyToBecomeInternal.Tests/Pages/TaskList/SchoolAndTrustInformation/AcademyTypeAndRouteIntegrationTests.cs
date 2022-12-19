@@ -19,6 +19,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.TaskList.SchoolAndTrustInformation
 				composer
 					.With(r => r.ConversionSupportGrantAmount)
 					.With(r => r.ConversionSupportGrantChangeReason)
+               .With(r => r.Urn, project.Urn)
 			);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
