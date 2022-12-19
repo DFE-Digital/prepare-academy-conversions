@@ -27,7 +27,6 @@ Cypress._.each(['ipad-mini'], (viewport) => {
   
       it('TC03: should display all the projects assigned to the DO when a particular DO name option is selected', () => {
         cy.get('[name="selectedOfficers"]').eq(1).click();
-       // cy.get('[class="govuk-checkboxes__input"]').eq(1).click();
         cy.get('[data-cy=select-projectlist-filter-apply]').click();
         cy.get('[data-cy="select-projectlist-filter-count"]').should('not.contain', '0 projects found');
         cy.get('#delivery-officer-0').should('not.have.text', 'Delivery officer: Empty');

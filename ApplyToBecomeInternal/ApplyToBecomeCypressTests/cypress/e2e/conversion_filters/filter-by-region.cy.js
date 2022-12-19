@@ -35,7 +35,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
       });
 
       //skip until #114627 or #114481 is fixed
-      it.skip('TC03: should display results when all the Region filter options are selected', () => {
+      it.skip('TC04: should display results when all the Region filter options are selected', () => {
         cy.get('[data-cy="select-projectlist-filter-region-East Midlands"]').click();
         cy.get('[data-cy="select-projectlist-filter-region-East of England"]').click();
         cy.get('[data-cy="select-projectlist-filter-region-London"]').click();

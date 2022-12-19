@@ -10,11 +10,11 @@ describe('Fetch data from Internal', { tags: ['@integration'] }, () => {
     beforeEach(() => {
         cy.login()
         cy.get('[id="school-name-0"]').click()
-        if (url.toString().includes('dev')) {
-            Cypress.runner.stop()
+        if (url.toString().includes('staging')) {
+            cy.visit(url + '/school-application-form/' + fetchProjectsStaging)
         }
         else {
-            cy.visit(url + '/school-application-form/' + fetchProjectsStaging)
+            Cypress.runner.stop()  
         }
     })
 

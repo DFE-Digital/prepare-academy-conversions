@@ -10,7 +10,7 @@ describe('103787 Error handling', { tags: '@dev'}, () => {
         })
     })
 
-    it('Error handling for the approved journey', () => {
+    it('TC01: Error handling for the approved journey', () => {
         // Record the decision:
         cy.get('[id="record-decision-link"]').click()
         cy.continueBtn().click()
@@ -32,7 +32,7 @@ describe('103787 Error handling', { tags: '@dev'}, () => {
         cy.get('[data-module=govuk-error-summary]').should('contain.text', 'Enter the date when the conversion was approved')
     })
 
-    it('Error handling for the declined journey', () => {
+    it('TC02: Error handling for the declined journey', () => {
         // Record the decision:
         cy.get('[id="record-decision-link"]').click()
         cy.continueBtn().click()
@@ -79,7 +79,7 @@ describe('103787 Error handling', { tags: '@dev'}, () => {
         cy.get('[data-module=govuk-error-summary]').should('contain.text', 'Enter the date when the conversion was declined')
     })
 
-    it('Error handling for the deferred journey', () => {
+    it('TC03: Error handling for the deferred journey', () => {
         // Record the decision:
         cy.get('[id="record-decision-link"]').click()
         cy.continueBtn().click()

@@ -12,14 +12,14 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 			});
 		})
 
-        it('Precondition: Distance Info Summary is empty', () => {
+        it('TC01: Precondition: Distance Info Summary is empty', () => {
             // Distrance Info 
             cy.milesIsEmpty()
             // Additional Info box
             cy.addInfoIsEmpty()
         })
 
-        it('TC01: Filling in the distance of school info for the first time', () => {
+        it('TC02: Filling in the distance of school info for the first time', () => {
             cy.changeLink().click()
             .then(() => {
                 cy.disMiles().click().type('10')
@@ -33,8 +33,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
             cy.get('[id="distance-to-trust-headquarters-additional-text"]').should('contain.text', 'Testing')
         })
 
-        // raised under 92838
-        it('TC02: Error Message for distance info', () => {
+        it('TC03: Error Message for distance info', () => {
             cy.changeLink().click()
             .then(() => {
                 cy.disMiles().click().type('a')
