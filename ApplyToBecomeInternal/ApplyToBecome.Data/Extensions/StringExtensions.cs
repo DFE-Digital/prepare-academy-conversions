@@ -7,5 +7,5 @@
 			string lowered = input.ToLower();
 			return $"{char.ToUpper(lowered[0])}{lowered[1..]}";
 		}
-	}
+   }
 }
