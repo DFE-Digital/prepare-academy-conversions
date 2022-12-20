@@ -26,8 +26,6 @@ public class LegalRequirements
    public static string HandleLegalRequirementString(string input) =>
       input switch
       {
-         null => throw new ArgumentNullException(nameof(input)),
-         "" => throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input)),
          "yes" => "Yes",
          "no" => "No",
          "notApplicable" => "NotApplicable",
