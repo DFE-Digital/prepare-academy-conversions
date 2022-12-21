@@ -32,9 +32,10 @@ public class NewNoteModel : BaseAcademyConversionProjectPageModel
 
    public override async Task<IActionResult> OnPostAsync(int id)
    {
-      if (string.IsNullOrEmpty(ProjectNoteSubject) && string.IsNullOrEmpty(ProjectNoteBody))
+      if (string.IsNullOrEmpty(ProjectNoteSubject) || string.IsNullOrEmpty(ProjectNoteBody))
       {
          _errorService.AddError("project-note-body", "Enter a subject and project note");
+
          await SetProject(id);
          return Page();
       }
@@ -53,4 +54,5 @@ public class NewNoteModel : BaseAcademyConversionProjectPageModel
 
       return RedirectToPage(SuccessPage, new { id });
    }
+
 }
