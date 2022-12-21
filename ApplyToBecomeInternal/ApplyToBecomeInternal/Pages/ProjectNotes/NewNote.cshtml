@@ -30,13 +30,13 @@
 				<label class="govuk-label govuk-label--m" for="project-note-subject">
 					Subject
 				</label>
-				<textarea class="govuk-textarea" id="project-note-subject" name="project-note-subject" rows="1"></textarea>
+				<textarea class="govuk-textarea" id="project-note-subject" name="project-note-subject" rows="1">@Model.ProjectNoteSubject</textarea>
 			</div>
 			<div class="govuk-form-group">
 				<label class="govuk-label govuk-label--m" for="project-note-body">
 					Note
 				</label>
-				<textarea class="govuk-textarea" id="project-note-body" name="project-note-body" rows="5"></textarea>
+				<textarea class="govuk-textarea" id="project-note-body" name="project-note-body" rows="5">@Model.ProjectNoteBody</textarea>
 			</div>
 			<button type="submit" role="button" draggable="false" class="govuk-button govuk-button" data-module="govuk-button">
 				Save note
