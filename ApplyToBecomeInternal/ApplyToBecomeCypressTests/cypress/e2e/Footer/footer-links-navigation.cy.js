@@ -18,7 +18,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
           cy.get('h2').should('contain', 'Give feedback');
           cy.get('li').should('contain', 'Email');
           cy.get('#footer-feedback-link')
-            .should('contain', 'Give feedbacks on Prepare conversions and transfers (opens in a new tab)');
+            .should('contain', 'Give feedback on Prepare conversions and transfers (opens in a new tab)');
         });
 
         it('TC03: should not have unwanted content', () => {
