@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace ApplyToBecome.Data.Services.AzureAd
-{	
+{
 	public class GraphUserService : IGraphUserService
 	{
 		private readonly GraphServiceClient _client;
@@ -22,19 +22,22 @@ namespace ApplyToBecome.Data.Services.AzureAd
 		public async Task<IEnumerable<Microsoft.Graph.User>> GetAllUsers()
 		{
 			var users = new List<Microsoft.Graph.User>();
-			IGroupMembersCollectionWithReferencesPage members;
 
-			do
+			var queryOptions = new List<QueryOption>()
 			{
-				members = await _client.Groups[_azureAdOptions.GroupId.ToString()].Members
-					.Request()
-					.GetAsync();
+				new QueryOption("$count", "true"),
+				new QueryOption("$top", "999")
+			};
 
-				users.AddRange(members.Cast<Microsoft.Graph.User>().ToList());
-			}
-			while (members.NextPageRequest != null);
+			var members = await _client.Groups[_azureAdOptions.GroupId.ToString()].Members
+				.Request(queryOptions)
+				.Header("ConsistencyLevel", "eventual")
+				.Select("givenName,surname,id,mail")
+				.GetAsync();
+
+			users.AddRange(members.Cast<Microsoft.Graph.User>().ToList());
 
 			return users;
-		}					
+		}
 	}
 }
