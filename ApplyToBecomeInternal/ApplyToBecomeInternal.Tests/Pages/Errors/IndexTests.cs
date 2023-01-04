@@ -49,7 +49,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Errors
 
 			_model.OnGet();
 
-			_model.ErrorMessage.Should().Be("An error occurred while processing your request");
+			_model.ErrorMessage.Should().Be("Sorry, there is a problem with the service");
 		}
 		
 		[Fact]
@@ -89,7 +89,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.Errors
 
 			_model.OnPost();
 
-			_model.ErrorMessage.Should().Be("An error occurred while processing your request");
+			_model.ErrorMessage.Should().Be("Sorry, there is a problem with the service");
 		}
 		
 		[Fact]
