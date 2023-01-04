@@ -7,7 +7,7 @@ namespace ApplyToBecomeInternal.Pages.Errors
 {
 	public class IndexModel : PageModel
 	{
-		public string ErrorMessage { get; private set; } = "An error occurred while processing your request";
+		public string ErrorMessage { get; private set; } = "Sorry, there is a problem with the service";
 
 		public void OnGet(int? statusCode = null)
 		{
