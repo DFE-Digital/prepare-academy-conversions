@@ -112,7 +112,7 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
          : new ApiResponse<ProjectNote>(response.StatusCode, null);
    }
 
-   private async Task ProcessFilters(IEnumerable<string> statusFilters,
+   private Task ProcessFilters(IEnumerable<string> statusFilters,
                                      IEnumerable<string> deliveryOfficerFilter,
                                      AcademyConversionSearchModel searchModel,
                                      IEnumerable<string> regionsFilter = default)
