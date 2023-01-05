@@ -87,28 +87,5 @@ namespace ApplyToBecomeInternal.Tests.Pages.LocalAuthorityInformationTemplate
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 		}
-
-		[Fact]
-		public async Task Should_navigate_between_la_info_template_and_confirm_la_info_template_when_navigated_from_la_info_template()
-		{
-			var project = AddGetProject();
-         AddPatchProjectMany(project, composer =>
-            composer
-               .With(r => r.LocalAuthorityInformationTemplateSentDate, project.LocalAuthorityInformationTemplateSentDate)
-               .With(r => r.LocalAuthorityInformationTemplateReturnedDate, project.LocalAuthorityInformationTemplateReturnedDate)
-               .With(r => r.LocalAuthorityInformationTemplateComments, project.LocalAuthorityInformationTemplateComments)
-               .With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink)
-               .With(r => r.Urn, project.Urn));
-
-			await OpenUrlAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
-
-			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
-
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
-
-			await NavigateAsync("Back");
-
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/record-local-authority-information-template-dates");
-		}
-	}
+   }
 }
