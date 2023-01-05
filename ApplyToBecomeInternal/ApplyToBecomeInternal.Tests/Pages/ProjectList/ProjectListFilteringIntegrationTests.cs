@@ -89,7 +89,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 				StatusQueryString = new[] { "Accepted" },
 				TitleFilter = string.Empty,
 				DeliveryOfficerQueryString = Array.Empty<string>(),
-				RegionUrnsQueryString = null
+				RegionQueryString = null
 			};
 			AddGetProjects(recordCount: _recordCount, searchModel: searchModel);
 

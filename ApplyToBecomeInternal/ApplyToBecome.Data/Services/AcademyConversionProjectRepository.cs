@@ -132,12 +132,9 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
          searchModel.StatusQueryString = projectedStatuses.ToArray();
       }
 
-      if (regionsFilter != default && regionsFilter.Any())
+      if (regionsFilter != default)
       {
-         HttpResponseMessage regionResponse = await _apiClient.GetSelectedRegionsAsync(regionsFilter);
-
-         List<int> regionUrnResponse = await regionResponse.Content.ReadFromJsonAsync<List<int>>();
-         searchModel.RegionUrnsQueryString = regionUrnResponse;
+         searchModel.RegionQueryString = regionsFilter.Select(x => x.ToLower()).ToList();
       }
    }
 }

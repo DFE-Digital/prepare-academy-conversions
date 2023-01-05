@@ -38,7 +38,7 @@ namespace ApplyToBecomeInternal.Tests.Pages
             TitleFilter = null,
             StatusQueryString = Array.Empty<string>(),
             DeliveryOfficerQueryString = Array.Empty<string>(),
-            RegionUrnsQueryString = null
+            RegionQueryString = null
          };
 
 			_factory.AddPostWithJsonRequest(_pathFor.GetAllProjects, searchModel, response);
