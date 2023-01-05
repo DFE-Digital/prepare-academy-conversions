@@ -68,3 +68,8 @@ variable "enable_cdn_frontdoor" {
   description = "Set to true to create a CDN"
   type        = bool
 }
+
+variable "cdn_frontdoor_host_add_response_headers" {
+  description = "List of response headers to add at the CDN Front Door `[{ \"name\" = \"Strict-Transport-Security\", \"value\" = \"max-age=31536000\" }]`"
+  type        = list(map(string))
+}

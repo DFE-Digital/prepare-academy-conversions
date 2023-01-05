@@ -16,5 +16,7 @@ module "azure_container_apps_hosting" {
 
   enable_mssql_database = local.enable_mssql_database
   enable_redis_cache    = local.enable_redis_cache
-  enable_cdn_frontdoor  = local.enable_cdn_frontdoor
+
+  enable_cdn_frontdoor                    = local.enable_cdn_frontdoor
+  cdn_frontdoor_host_add_response_headers = local.cdn_frontdoor_host_add_response_headers
 }
