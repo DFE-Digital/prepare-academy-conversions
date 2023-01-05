@@ -31,7 +31,7 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
    {
       AcademyConversionSearchModel searchModel = new() { TitleFilter = titleFilter, Page = page, Count = count };
 
-      await ProcessFilters(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter);
+      ProcessFilters(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter);
 
       HttpResponseMessage response = await _apiClient.GetAllProjectsAsync(searchModel);
       if (!response.IsSuccessStatusCode)
@@ -112,7 +112,7 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
          : new ApiResponse<ProjectNote>(response.StatusCode, null);
    }
 
-   private async Task ProcessFilters(IEnumerable<string> statusFilters,
+   private void ProcessFilters(IEnumerable<string> statusFilters,
                                      IEnumerable<string> deliveryOfficerFilter,
                                      AcademyConversionSearchModel searchModel,
                                      IEnumerable<string> regionsFilter = default)
@@ -132,12 +132,9 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
          searchModel.StatusQueryString = projectedStatuses.ToArray();
       }
 
-      if (regionsFilter != default && regionsFilter.Any())
+      if (regionsFilter != default)
       {
-         HttpResponseMessage regionResponse = await _apiClient.GetSelectedRegionsAsync(regionsFilter);
-
-         List<int> regionUrnResponse = await regionResponse.Content.ReadFromJsonAsync<List<int>>();
-         searchModel.RegionUrnsQueryString = regionUrnResponse;
+         searchModel.RegionQueryString = regionsFilter.Select(x => x.ToLower()).ToList();
       }
    }
 }

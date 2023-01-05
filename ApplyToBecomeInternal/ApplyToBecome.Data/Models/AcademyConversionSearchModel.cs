@@ -12,7 +12,7 @@ namespace ApplyToBecome.Data.Models
 		public int Count { get; set; }
 		public string TitleFilter { get; set; }
 		public IEnumerable<string> DeliveryOfficerQueryString { get; set; }
-		public IEnumerable<int> RegionUrnsQueryString { get; set; }
+		public IEnumerable<string> RegionQueryString { get; set; }
 		public IEnumerable<string> StatusQueryString { get; set; }
 	}
 }

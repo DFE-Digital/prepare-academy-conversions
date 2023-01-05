@@ -32,12 +32,6 @@ public class ApiClient : IApiClient
       return await ActiveClient.PostAsync(_pathFor.GetAllProjects, JsonContent.Create(searchModel));
    }
 
-   public async Task<HttpResponseMessage> GetSelectedRegionsAsync(IEnumerable<string> regions)
-   {
-      string regionQueryString = $@"{regions.Aggregate(string.Empty, (current, region) => $"{current}&regions={HttpUtility.UrlEncode(region)}")}";
-
-      return await TramsClient.GetAsync(string.Format(PathFor.GetSelectedRegions, regionQueryString.ToLowerInvariant()));
-   }
 
    public async Task<HttpResponseMessage> GetProjectByIdAsync(int id)
    {
