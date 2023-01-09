@@ -6,10 +6,6 @@ Cypress._.each(['ipad-mini'], (viewport) => {
             cy.clearLocalStorage()
         });
     
-        afterEach(() => {
-            cy.storeSessionData()
-        });
-    
         beforeEach(() => {
             cy.login()
         });
@@ -27,7 +23,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 
         })
     
-         it('TC01: Should open first school in the list', () => {
+        it('TC01: Should open first school in the list', () => {
             cy.viewport(viewport)
             cy.selectSchoolListing(0)
             cy.url().then(url => {

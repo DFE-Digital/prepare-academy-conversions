@@ -4,11 +4,7 @@ describe('101092: Pagination', () => {
 
 	beforeEach(() => {
 		cy.login()
-
 	})
-    afterEach(() => {
-        cy.storeSessionData()
-    })
 
     after(function () {
         cy.clearLocalStorage()

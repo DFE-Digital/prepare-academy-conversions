@@ -3,10 +3,6 @@
 Cypress._.each(['ipad-mini'], (viewport) => {
     describe(`86339 validate advisory board urls on ${viewport}`, () => {
         let selectedSchool = ''
-    
-        afterEach(() => {
-            cy.storeSessionData()
-        });
 
 		beforeEach(() => {
 			cy.login()
