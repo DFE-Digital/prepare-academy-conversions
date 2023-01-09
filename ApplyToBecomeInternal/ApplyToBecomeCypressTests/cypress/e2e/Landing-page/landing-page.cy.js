@@ -8,10 +8,6 @@ describe('Landing Page', () => {
 
     })
 
-    afterEach(() => {
-        cy.storeSessionData()
-    })
-
     after(function () {
         cy.clearLocalStorage()
     })
