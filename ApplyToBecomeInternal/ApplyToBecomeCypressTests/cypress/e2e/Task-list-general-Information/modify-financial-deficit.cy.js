@@ -1,10 +1,6 @@
 /// <reference types ='Cypress'/>
 Cypress._.each(['ipad-mini'], (viewport) => {
     describe(`86859 Modify viability fields on ${viewport}`, () => {
-        afterEach(() => {
-            cy.storeSessionData()
-        });
-
 		beforeEach(() => {
 			cy.login()
 			cy.selectSchoolListing(2)
