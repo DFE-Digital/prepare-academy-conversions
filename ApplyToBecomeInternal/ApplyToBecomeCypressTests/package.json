@@ -4,6 +4,7 @@
   "description": "Automated regression tests targeting pre-prod environment",
   "main": "index.js",
   "scripts": {
+    "postinstall": "npm-install-peers",
     "cy:open": "cypress open",
     "cy:run": "cypress run"
   },
@@ -28,11 +29,12 @@
     "mochawesome": "^7.0.1"
   },
   "devDependencies": {
-    "cypress": "^10.11.0",
-    "cypress-axe": "^1.0.0",
+    "cypress": "~12.1.0",
+    "cypress-axe": "^1.2.0",
     "cypress-data-session": "^1.13.0",
     "cypress-grep": "^2.6.1",
     "cypress-localstorage-commands": "^1.6.1",
+    "npm-install-peers": "^1.2.2",
     "typescript": "^4.5.5"
   }
 }
