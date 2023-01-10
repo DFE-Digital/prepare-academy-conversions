@@ -10,6 +10,12 @@ Cypress._.each(['ipad-mini'], (viewport) => {
       });
   
       it('TC01: should navigate to preference page when user click on collect information link', () => {
+        //Log the test run environment
+        cy.url().then((url) => {
+          cy.log('Tests running on env.: ' + url)
+        })
+
+        //Navigate to collect information link
         cy.get('[data-test="cookie-banner-link-1"]')
           .should('have.text', 'collect information')
           .click();
