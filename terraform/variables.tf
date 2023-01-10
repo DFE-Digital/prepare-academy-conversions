@@ -120,6 +120,11 @@ variable app_feature_use_academisation {
    description = "Whether to use the new Academisation API (true) or default to the old Academies API (false)"
 }
 
+variable app_templatefeedback {
+   type = string
+   description = "Feedback form URL used on the template download page"
+}
+
 ## ========================================================================== ##
 #  Locals					                                                   #
 ## ========================================================================== ##
