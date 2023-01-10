@@ -180,7 +180,7 @@ jobs:
   cypress-tests:
     needs: deploy-image
     environment: staging
-    if: ${{ github.event.inputs.environment}} == staging
+    if: ${{ github.event.inputs.environment}} == 'staging'
     runs-on: ubuntu-22.04
     defaults:
       run:
