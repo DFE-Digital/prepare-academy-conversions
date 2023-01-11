@@ -36,7 +36,7 @@ jobs:
           registry: ${{ secrets.CIP_ACR_URL }}
 
       - name: Build and push docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           file: Dockerfile.gpaas-azure-migration
@@ -50,6 +50,7 @@ jobs:
   # deploy-image:
   #   needs: build-and-push-image
   #   runs-on: ubuntu-22.04
+  #   environment: ${{ github.event.inputs.environment }}
   #   steps:
   #     - name: Azure login with ACA credentials
   #       uses: azure/login@v1
@@ -68,41 +69,12 @@ jobs:
   #             --image ${{ secrets.CIP_ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_IMAGE_TAG }} \
   #             --output none
 
-  # cypress-tests:
-  #   needs: deploy-image
-  #   environment: staging
-  #   if: ${{ github.event.inputs.environment }} == staging
-  #   runs-on: ubuntu-22.04
-  #   defaults:
-  #     run:
-  #        working-directory: ApplyToBecomeInternal/ApplyToBecomeCypressTests
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Setup node.js
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: ${{ env.NODE_VERSION }}
-
-  #     - name: Npm install
-  #       run: npm install
-
-  #     - name: Run cypress
-  #       run: npm run cy:run -- --env url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
-  #       env:
-  #         db: ${{ secrets.DB_CONNECTION_STRING }}
-
-  #     - uses: actions/upload-artifact@v1
-  #       if: failure()
-  #       with:
-  #        name: screenshots
-  #        path: ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots
-
-  # summary:
-  #   needs: deploy-image
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - name: Output
-  #       run: |
-  #         ENVIRONMENT=${{ github.event.inputs.environment }}
-  #         echo "Deploying: `$GITHUB_SHA` to `$ENVIRONMENT`" >> $GITHUB_STEP_SUMMARY
-  #         echo "Status: `${{ job.deploy-image.result }}`" >> $GITHUB_STEP_SUMMARY
+  summary:
+    needs: deploy-image
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Output
+        run: |
+          ENVIRONMENT=${{ github.event.inputs.environment }}
+          echo "Deploying: `$GITHUB_SHA` to `$ENVIRONMENT`" >> $GITHUB_STEP_SUMMARY
+          echo "Status: `${{ job.deploy-image.result }}`" >> $GITHUB_STEP_SUMMARY
