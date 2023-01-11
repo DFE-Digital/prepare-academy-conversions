@@ -1,12 +1,16 @@
 name: Deploy to environment (CIP)
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       environment:
         type: environment
         description: "Choose an environment to deploy to"
         required: true
+        default: "Dev"
 
 env:
   DOCKER_IMAGE: a2bint-app
