@@ -51,27 +51,59 @@ jobs:
           build-args: |
             COMMIT_SHA=${{ env.DOCKER_IMAGE_TAG }}
 
-  # deploy-image:
-  #   needs: build-and-push-image
-  #   runs-on: ubuntu-22.04
-  #   environment: ${{ github.event.inputs.environment }}
-  #   steps:
-  #     - name: Azure login with ACA credentials
-  #       uses: azure/login@v1
-  #       with:
-  #         creds: ${{ secrets.CIP_ACA_CREDENTIALS }}
+  create-tag:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
 
-  #     - name: Update Azure Container Apps Revision
-  #       uses: azure/CLI@v1
-  #       with:
-  #         azcliversion: 2.40.0
-  #         inlineScript: |
-  #           az config set extension.use_dynamic_install=yes_without_prompt
-  #           az containerapp update \
-  #             --name ${{ secrets.CIP_ACA_CONTAINERAPP_NAME }} \
-  #             --resource-group ${{ secrets.CIP_ACA_RESOURCE_GROUP }} \
-  #             --image ${{ secrets.CIP_ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_IMAGE_TAG }} \
-  #             --output none
+      - name: Create tag
+        run: |
+          echo "RELEASE_TAGNAME=${{ github.event.inputs.environment }}-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV
+          git tag ${{ env.RELEASE_TAGNAME }}
+          git push origin ${{ env.RELEASE_TAGNAME }}
+
+      - name: Create release
+        uses: "actions/github-script@v6"
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          script: |
+            try {
+              await github.rest.repos.createRelease({
+                draft: ${{ github.event.inputs.environment == 'staging' }},
+                generate_release_notes: true,
+                name: process.env.RELEASE_TAGNAME,
+                owner: context.repo.owner,
+                prerelease: ${{ github.event.inputs.environment == 'staging' }},
+                repo: context.repo.repo,
+                tag_name: process.env.RELEASE_TAGNAME,
+              });
+            } catch (error) {
+              core.setFailed(error.message);
+            }
+
+  deploy-image:
+    needs: build-and-push-image
+    runs-on: ubuntu-22.04
+    environment: ${{ github.event.inputs.environment }}
+    steps:
+      - name: Azure login with ACA credentials
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.CIP_ACA_CREDENTIALS }}
+
+      - name: Update Azure Container Apps Revision
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.40.0
+          inlineScript: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+            az containerapp update \
+              --name ${{ secrets.CIP_ACA_CONTAINERAPP_NAME }} \
+              --resource-group ${{ secrets.CIP_ACA_RESOURCE_GROUP }} \
+              --image ${{ secrets.CIP_ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_IMAGE_TAG }} \
+              --output none
 
   summary:
     needs: deploy-image
