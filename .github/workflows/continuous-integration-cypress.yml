@@ -12,14 +12,17 @@ env:
 
 jobs:
   cypress-tests:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    environment: ${{ github.event.workflow_run.environment }}
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.inputs.environment != 'Production'
+    environment: ${{ github.event.workflow_run.inputs.environment }}
     runs-on: ubuntu-22.04
     defaults:
       run:
          working-directory: ApplyToBecomeInternal/ApplyToBecomeCypressTests
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+
       - name: Setup node.js
         uses: actions/setup-node@v3
         with:
@@ -36,5 +39,5 @@ jobs:
       - uses: actions/upload-artifact@v1
         if: failure()
         with:
-         name: screenshots/${{ github.event.workflow_run.environment }}
+         name: screenshots/${{ github.event.workflow_run.inputs.environment }}
          path: ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots
