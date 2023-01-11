@@ -1,43 +1,65 @@
 ﻿@page "/school-application-form/school-application-tab/{id:int}"
+@using ApplyToBecomeInternal.Models.ApplicationForm
 @model ApplyToBecomeInternal.Pages.ApplicationForm.IndexModel
 @{
-    ViewData["Title"] = "School application form";
+   ViewData["Title"] = "School application form";
 }
-@{     
-    Layout = "~/Pages/Shared/_LayoutNoHeaderAndFooter.cshtml";   
+@{
+   Layout = "~/Pages/Shared/_LayoutNoHeaderAndFooter.cshtml";
 }
 
 @section BeforeMain
 {
-	<a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.TaskList.Index.BackText</a>
+   <a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.TaskList.Index.BackText</a>
 }
 
-<partial name="_SchoolApplicationHeader" model="Model.Project"/>   
 <div class="govuk-grid-row">
-	<div class="govuk-grid-column-full">
-		@foreach (var formSection in Model.Sections)
-		{            
-            <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">@formSection.Heading</h2>
-			@if (formSection.Fields.Any())
-			{
-				<dl class="govuk-summary-list">
-					@foreach (var sectionField in formSection.Fields)
-					{
-						<partial name="_ApplicationFormField" model="sectionField" />
-					}
-				</dl>
-			}
+   <div class="govuk-grid-column-full">
+      <span class="govuk-caption-xl">URN @Model.Project.SchoolURN</span>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom">
+         @Model.Project.SchoolName
+      </h1>
+      <h2 class="govuk-heading-l govuk-!-margin-bottom">School application form </h2>
+   </div>
+</div>
 
-			@foreach (var subSection in formSection.SubSections)
-			{
-				<h3 class="govuk-heading-m govuk-!-margin-bottom govuk-!-font-size-24">@subSection.Heading</h3>
-				<dl class="govuk-summary-list">
-					@foreach (var sectionField in subSection.Fields)
-					{
-						<partial name="_ApplicationFormField" model="sectionField" />
-					}
-				</dl>
-			}
-		}
-	</div>
+<nav class="gem-c-contents-list" aria-label="Pages in this guide" role="navigation" data-module="gem-track-click">
+   <h2 class="gem-c-contents-list__title">Contents</h2>
+   <ol class="gem-c-contents-list__list">
+      @foreach (var formSection in Model.Sections)
+      {
+         <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed"> <a id="@Model.GenerateId(formSection.Heading)_link" class="gem-c-contents-list__link govuk-link" href="#@Model.GenerateId(formSection.Heading)">@formSection.Heading</a></li>
+      }
+   </ol>
+</nav>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-full">
+      @foreach (BaseFormSection formSection in Model.Sections)
+      {
+         <h2 id="@Model.GenerateId(formSection.Heading)" class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">@formSection.Heading</h2>
+         @if (formSection.Fields.Any())
+         {
+            <dl class="govuk-summary-list">
+               @foreach (FormField sectionField in formSection.Fields)
+               {
+                  <partial name="_ApplicationFormField" model="sectionField"/>
+               }
+            </dl>
+         }
+
+         @foreach (FormSubSection subSection in formSection.SubSections)
+         {
+            <h3 class="govuk-heading-m govuk-!-margin-bottom govuk-!-font-size-24">@subSection.Heading</h3>
+            <dl class="govuk-summary-list">
+               @foreach (FormField sectionField in subSection.Fields)
+               {
+                  <partial name="_ApplicationFormField" model="sectionField"/>
+               }
+            </dl>
+         }
+      }
+   </div>
 </div>
