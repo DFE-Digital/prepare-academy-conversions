@@ -1,12 +1,12 @@
 ﻿@model SchoolAndTrustInformationViewModel
 @{
 	var kw = WidthOverride.TwoThirds;
-	var typeAndRoute = "Empty";
-	
-	if (!string.IsNullOrEmpty(Model.AcademyTypeAndRoute))
-	{
-		typeAndRoute = $"{Model.AcademyTypeAndRoute}, {Model.ConversionSupportGrantAmount}";
-	}
+
+   var typeAndRoute = string.IsNullOrWhiteSpace(Model.AcademyTypeAndRoute)
+      ? string.IsNullOrWhiteSpace(Model.ConversionSupportGrantAmount)
+         ? null
+         : Model.ConversionSupportGrantAmount
+      : string.Join(", ", Model.AcademyTypeAndRoute, Model.ConversionSupportGrantAmount);
 }
 
 <dl class="govuk-summary-list">

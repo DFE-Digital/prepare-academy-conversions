@@ -51,6 +51,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.GeneralInformation
 		{
 			var project = AddGetProject(p => p.DistanceFromSchoolToTrustHeadquarters = null);
 
+         project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation.Should().NotBeNullOrWhiteSpace();
+
 			await OpenUrlAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("General information");
