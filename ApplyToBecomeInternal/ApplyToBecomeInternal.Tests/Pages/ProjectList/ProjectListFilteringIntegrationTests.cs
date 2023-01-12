@@ -109,5 +109,14 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectList
 			FilterOptions.HasAttribute("open").Should().BeTrue();
 			FilterTitle.Value.Should().Be("something");
 		}
+
+      [Fact]
+      public async Task Should_trim_leading_and_trailing_whitespace_from_title_filter_text()
+      {
+         FilterTitle.Value = "    spaces    ";
+         await FilterApply.SubmitAsync();
+
+         FilterTitle.Value.Should().Be("spaces");
+      }
 	}
 }
