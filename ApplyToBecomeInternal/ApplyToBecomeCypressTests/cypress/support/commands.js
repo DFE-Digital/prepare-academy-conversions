@@ -582,3 +582,14 @@ Cypress.Commands.add('clearFilters', () => {
     cy.get('[data-cy="select-projectlist-filter-clear"]').should('have.text', 'Clear filters') 
   cy.get('[data-cy="select-projectlist-filter-clear"]').click();
 })
+
+Cypress.Commands.add('excuteAccessibilityTests', (wcagStandards, continueOnFail, impactLevel) => {
+    cy.injectAxe();
+    cy.checkA11y(null, {
+        runOnly: {
+            type: 'tag',
+            values: wcagStandards
+        },
+        includedImpacts: impactLevel
+    }, null, continueOnFail);
+})
