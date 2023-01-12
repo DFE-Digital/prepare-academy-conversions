@@ -15,12 +15,17 @@
 				<span id="@Model.Id" class="@Model.NegativeStyleClass">@Model.Value</span>
 			}
 		}
+      
+      @if (Model.HasAdditionalText)
+      {
+         @if (Model.HasValue)
+         {
+            <br/>
+         }
+         <span id="@(Model.Id + "-additional-text")">@Model.AdditionalText</span>
+      }
 
-		@if (Model.HasAdditionalText)
-		{
-			<br/><span id="@(Model.Id + "-additional-text")">@Model.AdditionalText</span>
-		}
-		@if ((!Model.HasValue) && (!Model.HasAdditionalText))
+      @if ((!Model.HasValue) && (!Model.HasAdditionalText))
 		{
 			<span id="@Model.Id" class="empty">Empty</span>
 		}
