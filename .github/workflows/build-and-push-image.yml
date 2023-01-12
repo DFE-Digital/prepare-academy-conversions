@@ -4,22 +4,34 @@ on:
   push:
     branches:
       - main
+      - workflows
   workflow_dispatch:
     inputs:
       environment:
         type: environment
         description: "Choose an environment to deploy to"
         required: true
-        default: "Dev"
 
 env:
   DOCKER_IMAGE: a2bint-app
   NODE_VERSION: 18.x
 
 jobs:
-  build-and-push-image:
+  set-env:
+    name: Determine environment
     runs-on: ubuntu-22.04
-    environment: ${{ github.event.inputs.environment }}
+    outputs:
+      environment: ${{ steps.var.outputs.environment }}
+    steps:
+      - id: var
+        run: |
+          ENVIRONMENT=${{ github.event.inputs.environment }}
+          echo "environment=${ENVIRONMENT:-"dev"}" >> $GITHUB_OUTPUT
+
+  build-and-push-image:
+    needs: set-env
+    runs-on: ubuntu-22.04
+    environment: ${{ needs.set-env.outputs.environment }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -52,15 +64,17 @@ jobs:
             COMMIT_SHA=${{ env.DOCKER_IMAGE_TAG }}
 
   create-tag:
+    needs: set-env
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
 
+      - run: echo "RELEASE_TAGNAME=${{ needs.set-env.outputs.environment }}-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV
+
       - name: Create tag
         run: |
-          echo "RELEASE_TAGNAME=${{ github.event.inputs.environment }}-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV
           git tag ${{ env.RELEASE_TAGNAME }}
           git push origin ${{ env.RELEASE_TAGNAME }}
 
@@ -84,9 +98,9 @@ jobs:
             }
 
   deploy-image:
-    needs: build-and-push-image
+    needs: [ build-and-push-image, set-env ]
     runs-on: ubuntu-22.04
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ needs.set-env.outputs.environment }}
     steps:
       - name: Azure login with ACA credentials
         uses: azure/login@v1
@@ -106,11 +120,11 @@ jobs:
               --output none
 
   summary:
-    needs: deploy-image
+    needs: [ deploy-image, set-env ]
     runs-on: ubuntu-22.04
     steps:
       - name: Output
         run: |
-          ENVIRONMENT=${{ github.event.inputs.environment }}
+          ENVIRONMENT=${{ needs.set-env.outputs.environment }}
           echo "Deploying: `$GITHUB_SHA` to `$ENVIRONMENT`" >> $GITHUB_STEP_SUMMARY
           echo "Status: `${{ job.deploy-image.result }}`" >> $GITHUB_STEP_SUMMARY
