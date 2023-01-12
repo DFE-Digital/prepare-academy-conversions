@@ -19,8 +19,8 @@ namespace ApplyToBecomeInternal.Models.ProjectList
 		public bool IsVisible => string.IsNullOrWhiteSpace(Title) is false || SelectedStatuses.Length > 0 || SelectedOfficers.Length > 0 || SelectedRegions.Length > 0;
 
 		public void PopulateFrom(IQueryCollection requestQuery)
-		{
-			Title = requestQuery[nameof(Title)].ToString().Trim();
+      {
+         Title = requestQuery.ContainsKey(nameof(Title)) ? requestQuery[nameof(Title)].ToString().Trim() : default;
 			SelectedStatuses = requestQuery[nameof(SelectedStatuses)];
 			SelectedOfficers = requestQuery[nameof(SelectedOfficers)];
 			SelectedRegions = requestQuery[nameof(SelectedRegions)];
