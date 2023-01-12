@@ -1,12 +1,16 @@
 name: Deploy to environment (CIP)
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       environment:
         type: environment
         description: "Choose an environment to deploy to"
         required: true
+        default: "Dev"
 
 env:
   DOCKER_IMAGE: a2bint-app
@@ -36,7 +40,7 @@ jobs:
           registry: ${{ secrets.CIP_ACR_URL }}
 
       - name: Build and push docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           file: Dockerfile.gpaas-azure-migration
@@ -47,62 +51,66 @@ jobs:
           build-args: |
             COMMIT_SHA=${{ env.DOCKER_IMAGE_TAG }}
 
-  # deploy-image:
-  #   needs: build-and-push-image
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - name: Azure login with ACA credentials
-  #       uses: azure/login@v1
-  #       with:
-  #         creds: ${{ secrets.CIP_ACA_CREDENTIALS }}
+  create-tag:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
 
-  #     - name: Update Azure Container Apps Revision
-  #       uses: azure/CLI@v1
-  #       with:
-  #         azcliversion: 2.40.0
-  #         inlineScript: |
-  #           az config set extension.use_dynamic_install=yes_without_prompt
-  #           az containerapp update \
-  #             --name ${{ secrets.CIP_ACA_CONTAINERAPP_NAME }} \
-  #             --resource-group ${{ secrets.CIP_ACA_RESOURCE_GROUP }} \
-  #             --image ${{ secrets.CIP_ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_IMAGE_TAG }} \
-  #             --output none
+      - name: Create tag
+        run: |
+          echo "RELEASE_TAGNAME=${{ github.event.inputs.environment }}-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV
+          git tag ${{ env.RELEASE_TAGNAME }}
+          git push origin ${{ env.RELEASE_TAGNAME }}
 
-  # cypress-tests:
-  #   needs: deploy-image
-  #   environment: staging
-  #   if: ${{ github.event.inputs.environment }} == staging
-  #   runs-on: ubuntu-22.04
-  #   defaults:
-  #     run:
-  #        working-directory: ApplyToBecomeInternal/ApplyToBecomeCypressTests
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Setup node.js
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: ${{ env.NODE_VERSION }}
+      - name: Create release
+        uses: "actions/github-script@v6"
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          script: |
+            try {
+              await github.rest.repos.createRelease({
+                draft: ${{ github.event.inputs.environment == 'staging' }},
+                generate_release_notes: true,
+                name: process.env.RELEASE_TAGNAME,
+                owner: context.repo.owner,
+                prerelease: ${{ github.event.inputs.environment == 'staging' }},
+                repo: context.repo.repo,
+                tag_name: process.env.RELEASE_TAGNAME,
+              });
+            } catch (error) {
+              core.setFailed(error.message);
+            }
 
-  #     - name: Npm install
-  #       run: npm install
+  deploy-image:
+    needs: build-and-push-image
+    runs-on: ubuntu-22.04
+    environment: ${{ github.event.inputs.environment }}
+    steps:
+      - name: Azure login with ACA credentials
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.CIP_ACA_CREDENTIALS }}
 
-  #     - name: Run cypress
-  #       run: npm run cy:run -- --env url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
-  #       env:
-  #         db: ${{ secrets.DB_CONNECTION_STRING }}
+      - name: Update Azure Container Apps Revision
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.40.0
+          inlineScript: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+            az containerapp update \
+              --name ${{ secrets.CIP_ACA_CONTAINERAPP_NAME }} \
+              --resource-group ${{ secrets.CIP_ACA_RESOURCE_GROUP }} \
+              --image ${{ secrets.CIP_ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_IMAGE_TAG }} \
+              --output none
 
-  #     - uses: actions/upload-artifact@v1
-  #       if: failure()
-  #       with:
-  #        name: screenshots
-  #        path: ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots
-
-  # summary:
-  #   needs: deploy-image
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - name: Output
-  #       run: |
-  #         ENVIRONMENT=${{ github.event.inputs.environment }}
-  #         echo "Deploying: `$GITHUB_SHA` to `$ENVIRONMENT`" >> $GITHUB_STEP_SUMMARY
-  #         echo "Status: `${{ job.deploy-image.result }}`" >> $GITHUB_STEP_SUMMARY
+  summary:
+    needs: deploy-image
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Output
+        run: |
+          ENVIRONMENT=${{ github.event.inputs.environment }}
+          echo "Deploying: `$GITHUB_SHA` to `$ENVIRONMENT`" >> $GITHUB_STEP_SUMMARY
+          echo "Status: `${{ job.deploy-image.result }}`" >> $GITHUB_STEP_SUMMARY
