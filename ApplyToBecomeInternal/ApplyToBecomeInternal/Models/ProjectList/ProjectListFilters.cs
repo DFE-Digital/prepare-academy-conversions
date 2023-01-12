@@ -20,7 +20,7 @@ namespace ApplyToBecomeInternal.Models.ProjectList
 
 		public void PopulateFrom(IQueryCollection requestQuery)
 		{
-			Title = requestQuery[nameof(Title)];
+			Title = requestQuery[nameof(Title)].ToString().Trim();
 			SelectedStatuses = requestQuery[nameof(SelectedStatuses)];
 			SelectedOfficers = requestQuery[nameof(SelectedOfficers)];
 			SelectedRegions = requestQuery[nameof(SelectedRegions)];
