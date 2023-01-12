@@ -10,7 +10,7 @@ on:
         type: environment
         description: "Choose an environment to deploy to"
         required: true
-        default: "Dev"
+        default: "dev"
 
 env:
   DOCKER_IMAGE: a2bint-app
@@ -19,7 +19,7 @@ env:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-22.04
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ github.event.inputs.environment || "dev" }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -58,9 +58,10 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
+      - run: echo "RELEASE_TAGNAME=${{ github.event.inputs.environment || "dev" }}-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV
+
       - name: Create tag
         run: |
-          echo "RELEASE_TAGNAME=${{ github.event.inputs.environment }}-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV
           git tag ${{ env.RELEASE_TAGNAME }}
           git push origin ${{ env.RELEASE_TAGNAME }}
 
@@ -86,7 +87,7 @@ jobs:
   deploy-image:
     needs: build-and-push-image
     runs-on: ubuntu-22.04
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ github.event.inputs.environment || "dev" }}
     steps:
       - name: Azure login with ACA credentials
         uses: azure/login@v1
@@ -111,6 +112,6 @@ jobs:
     steps:
       - name: Output
         run: |
-          ENVIRONMENT=${{ github.event.inputs.environment }}
+          ENVIRONMENT=${{ github.event.inputs.environment || "dev" }}
           echo "Deploying: `$GITHUB_SHA` to `$ENVIRONMENT`" >> $GITHUB_STEP_SUMMARY
           echo "Status: `${{ job.deploy-image.result }}`" >> $GITHUB_STEP_SUMMARY
