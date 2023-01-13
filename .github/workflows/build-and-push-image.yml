@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-22.04
     environment: ${{ needs.set-env.outputs.environment }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: ${{ github.ref }}
 
@@ -68,7 +68,7 @@ jobs:
     needs: set-env
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: ${{ github.ref }}
 
@@ -97,7 +97,7 @@ jobs:
             }
 
   deploy-image:
-    name: Deploy to Azure Container Apps
+    name: Deploy to ${{ needs.set-env.outputs.environment }}
     needs: [ build-and-push-image, set-env ]
     runs-on: ubuntu-22.04
     environment: ${{ needs.set-env.outputs.environment }}
