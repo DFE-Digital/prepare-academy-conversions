@@ -25,8 +25,14 @@ jobs:
     steps:
       - id: var
         run: |
-          ENVIRONMENT=${{ github.event.inputs.environment }}
-          echo "environment=${ENVIRONMENT:-"dev"}" >> $GITHUB_OUTPUT
+          GIT_REF=${{ github.ref }}
+          GIT_BRANCH=${GIT_REF##*/}
+          INPUT=${{ github.event.inputs.environment }}
+          ENVIRONMENT=${INPUT:-"dev"}
+          echo "environment=${INPUT:-"dev"}" >> $GITHUB_OUTPUT
+          echo "ENVIRONMENT=${ENVIRONMENT,,}" >> $GITHUB_ENV
+          echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
+          echo "RELEASE_TAG=$ENVIRONMENT-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV
 
   build-and-push-image:
     needs: set-env
@@ -36,13 +42,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
-
-      - name: Set environment variables
-        run: |
-          GIT_REF=${{ github.ref }}
-          GIT_BRANCH=${GIT_REF##*/}
-          echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
-          echo "DOCKER_IMAGE_TAG=$GITHUB_SHA" >> $GITHUB_ENV
 
       - name: Azure Container Registry login
         uses: docker/login-action@v2
@@ -57,11 +56,10 @@ jobs:
           context: .
           file: Dockerfile.gpaas-azure-migration
           tags: |
-            ${{ secrets.CIP_ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_IMAGE_TAG }}
             ${{ secrets.CIP_ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ env.BRANCH_TAG }}
+            ${{ secrets.CIP_ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ env.RELEASE_TAG }}
+            ${{ secrets.CIP_ACR_URL }}/${{ env.DOCKER_IMAGE }}:latest
           push: true
-          build-args: |
-            COMMIT_SHA=${{ env.DOCKER_IMAGE_TAG }}
 
   create-tag:
     needs: set-env
@@ -71,12 +69,10 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      - run: echo "RELEASE_TAGNAME=${{ needs.set-env.outputs.environment }}-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV
-
       - name: Create tag
         run: |
-          git tag ${{ env.RELEASE_TAGNAME }}
-          git push origin ${{ env.RELEASE_TAGNAME }}
+          git tag ${{ env.RELEASE_TAG }}
+          git push origin ${{ env.RELEASE_TAG }}
 
       - name: Create release
         uses: "actions/github-script@v6"
@@ -85,13 +81,13 @@ jobs:
           script: |
             try {
               await github.rest.repos.createRelease({
-                draft: ${{ github.event.inputs.environment == 'staging' }},
+                draft: ${{ needs.set-env.outputs.environment == 'staging' }},
                 generate_release_notes: true,
-                name: process.env.RELEASE_TAGNAME,
+                name: process.env.RELEASE_TAG,
                 owner: context.repo.owner,
-                prerelease: ${{ github.event.inputs.environment == 'staging' }},
+                prerelease: ${{ needs.set-env.outputs.environment == 'staging' }},
                 repo: context.repo.repo,
-                tag_name: process.env.RELEASE_TAGNAME,
+                tag_name: process.env.RELEASE_TAG,
               });
             } catch (error) {
               core.setFailed(error.message);
@@ -116,15 +112,14 @@ jobs:
             az containerapp update \
               --name ${{ secrets.CIP_ACA_CONTAINERAPP_NAME }} \
               --resource-group ${{ secrets.CIP_ACA_RESOURCE_GROUP }} \
-              --image ${{ secrets.CIP_ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_IMAGE_TAG }} \
+              --image ${{ secrets.CIP_ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ env.RELEASE_TAG }} \
               --output none
 
   summary:
-    needs: [ deploy-image, set-env ]
+    needs: [ set-env ]
     runs-on: ubuntu-22.04
     steps:
       - name: Output
         run: |
-          ENVIRONMENT=${{ needs.set-env.outputs.environment }}
-          echo "Deploying: `$GITHUB_SHA` to `$ENVIRONMENT`" >> $GITHUB_STEP_SUMMARY
+          echo "Deploying: `${{ env.RELEASE_TAG }}` to `${{ needs.set-env.outputs.environment }}`" >> $GITHUB_STEP_SUMMARY
           echo "Status: `${{ job.deploy-image.result }}`" >> $GITHUB_STEP_SUMMARY
