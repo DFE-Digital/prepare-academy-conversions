@@ -119,6 +119,8 @@ namespace ApplyToBecomeInternal.Tests.Pages.SchoolAndTrustInformation
 				project.SponsorReferenceNumber = null;
 				project.SponsorName = null;
 				project.AcademyTypeAndRoute = null;
+            project.ConversionSupportGrantAmount = null;
+            project.ConversionSupportGrantChangeReason = null;
 				project.ProposedAcademyOpeningDate = null;
 				project.SchoolAndTrustInformationSectionComplete = false;
 			});

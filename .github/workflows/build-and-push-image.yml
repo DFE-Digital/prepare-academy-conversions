@@ -1,0 +1,117 @@
+name: Deploy to environment (CIP)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        description: "Choose an environment to deploy to"
+        required: true
+        default: "dev"
+
+env:
+  DOCKER_IMAGE: a2bint-app
+  NODE_VERSION: 18.x
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-22.04
+    environment: ${{ github.event.inputs.environment || "dev" }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Set environment variables
+        run: |
+          GIT_REF=${{ github.ref }}
+          GIT_BRANCH=${GIT_REF##*/}
+          echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
+          echo "DOCKER_IMAGE_TAG=$GITHUB_SHA" >> $GITHUB_ENV
+
+      - name: Azure Container Registry login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.CIP_ACR_CLIENTID }}
+          password: ${{ secrets.CIP_ACR_SECRET }}
+          registry: ${{ secrets.CIP_ACR_URL }}
+
+      - name: Build and push docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: Dockerfile.gpaas-azure-migration
+          tags: |
+            ${{ secrets.CIP_ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_IMAGE_TAG }}
+            ${{ secrets.CIP_ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ env.BRANCH_TAG }}
+          push: true
+          build-args: |
+            COMMIT_SHA=${{ env.DOCKER_IMAGE_TAG }}
+
+  create-tag:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+
+      - run: echo "RELEASE_TAGNAME=${{ github.event.inputs.environment || "dev" }}-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_ENV
+
+      - name: Create tag
+        run: |
+          git tag ${{ env.RELEASE_TAGNAME }}
+          git push origin ${{ env.RELEASE_TAGNAME }}
+
+      - name: Create release
+        uses: "actions/github-script@v6"
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          script: |
+            try {
+              await github.rest.repos.createRelease({
+                draft: ${{ github.event.inputs.environment == 'staging' }},
+                generate_release_notes: true,
+                name: process.env.RELEASE_TAGNAME,
+                owner: context.repo.owner,
+                prerelease: ${{ github.event.inputs.environment == 'staging' }},
+                repo: context.repo.repo,
+                tag_name: process.env.RELEASE_TAGNAME,
+              });
+            } catch (error) {
+              core.setFailed(error.message);
+            }
+
+  deploy-image:
+    needs: build-and-push-image
+    runs-on: ubuntu-22.04
+    environment: ${{ github.event.inputs.environment || "dev" }}
+    steps:
+      - name: Azure login with ACA credentials
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.CIP_ACA_CREDENTIALS }}
+
+      - name: Update Azure Container Apps Revision
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.40.0
+          inlineScript: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+            az containerapp update \
+              --name ${{ secrets.CIP_ACA_CONTAINERAPP_NAME }} \
+              --resource-group ${{ secrets.CIP_ACA_RESOURCE_GROUP }} \
+              --image ${{ secrets.CIP_ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_IMAGE_TAG }} \
+              --output none
+
+  summary:
+    needs: deploy-image
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Output
+        run: |
+          ENVIRONMENT=${{ github.event.inputs.environment || "dev" }}
+          echo "Deploying: `$GITHUB_SHA` to `$ENVIRONMENT`" >> $GITHUB_STEP_SUMMARY
+          echo "Status: `${{ job.deploy-image.result }}`" >> $GITHUB_STEP_SUMMARY
