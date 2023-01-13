@@ -12,6 +12,9 @@ on:
         description: "Choose an environment to deploy to"
         required: true
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
 env:
   DOCKER_IMAGE: a2bint-app
 
