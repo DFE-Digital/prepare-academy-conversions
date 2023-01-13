@@ -35,6 +35,7 @@ jobs:
           echo "release=${ENVIRONMENT,,}-`date +%Y-%m-%d`.${{ github.run_number }}" >> $GITHUB_OUTPUT
 
   build-and-push-image:
+    name: Build and push to ACR
     needs: set-env
     runs-on: ubuntu-22.04
     environment: ${{ needs.set-env.outputs.environment }}
@@ -62,6 +63,7 @@ jobs:
           push: true
 
   create-tag:
+    name: Tag and release
     needs: set-env
     runs-on: ubuntu-22.04
     steps:
@@ -83,17 +85,18 @@ jobs:
               await github.rest.repos.createRelease({
                 draft: ${{ needs.set-env.outputs.environment == 'staging' }},
                 generate_release_notes: true,
-                name: ${{ needs.set-env.outputs.release }},
+                name: "${{ needs.set-env.outputs.release }}",
                 owner: context.repo.owner,
                 prerelease: ${{ needs.set-env.outputs.environment == 'staging' }},
                 repo: context.repo.repo,
-                tag_name: ${{ needs.set-env.outputs.release }},
+                tag_name: "${{ needs.set-env.outputs.release }}",
               });
             } catch (error) {
               core.setFailed(error.message);
             }
 
   deploy-image:
+    name: Deploy to Azure Container Apps
     needs: [ build-and-push-image, set-env ]
     runs-on: ubuntu-22.04
     environment: ${{ needs.set-env.outputs.environment }}
@@ -116,6 +119,7 @@ jobs:
               --output none
 
   summary:
+    name: Workflow summary
     needs: [ deploy-image, set-env ]
     runs-on: ubuntu-22.04
     steps:
