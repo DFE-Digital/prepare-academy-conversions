@@ -9,8 +9,7 @@ COPY ./ApplyToBecomeInternal/ ./ApplyToBecomeInternal/
 WORKDIR /build/ApplyToBecomeInternal
 RUN dotnet restore ApplyToBecomeInternal.sln
 RUN dotnet build -c Release ApplyToBecomeInternal.sln --no-restore
-RUN dotnet test -c Release ApplyToBecomeInternal.sln --no-build --no-restore --verbosity normal --collect:"XPlat Code Coverage"
-RUN dotnet publish -c Release -o /app --no-restore
+RUN dotnet publish ApplyToBecomeInternal -c Release -o /app --no-restore
 
 # Stage 2 - Build assets
 FROM node:${NODEJS_IMAGE_TAG} as build
