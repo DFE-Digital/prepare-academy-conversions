@@ -4,11 +4,11 @@ using System.Text;
 
 namespace ApplyToBecome.Data.Models.Application
 {
-	/// <remarks>
-	/// should correspond to TramsDataApi.ResponseModels.ApplyToBecome.A2BApplyingSchoolResponse
-	/// </remarks>
+   /// <remarks>
+   /// should correspond to TramsDataApi.ResponseModels.ApplyToBecome.A2BApplyingSchoolResponse
+   /// </remarks>
 
-	public class ApplyingSchool
+   public class ApplyingSchool
 	{
 		public string SchoolName { get; set; }
 		// contact details

@@ -1,10 +1,11 @@
+using ApplyToBecome.Data.Models.AcademisationApplication;
 using ApplyToBecome.Data.Models.Application;
 using ApplyToBecomeInternal.Extensions;
 using System.Collections.Generic;
 
 namespace ApplyToBecomeInternal.Models.ApplicationForm.Sections
 {
-	public class FinanceSection : BaseFormSection
+   public class FinanceSection : BaseFormSection
 	{
 		public FinanceSection(ApplyingSchool application) : base("Finances")
 		{
