@@ -39,8 +39,8 @@ namespace ApplyToBecomeInternal.Security
 					builder.AddFontSrc().Self();
 					builder.AddStyleSrc().Self();
 					builder.AddBaseUri().Self();
-					builder.AddScriptSrc().From(GoogleAnalyticsUri).UnsafeInline().WithNonce();
-					builder.AddFrameAncestors().None();
+					builder.AddScriptSrc().From(GoogleTagManagerUri).UnsafeInline().WithNonce();
+               builder.AddFrameAncestors().None();
 				})
 				.RemoveServerHeader()
 				.AddPermissionsPolicy(builder =>
