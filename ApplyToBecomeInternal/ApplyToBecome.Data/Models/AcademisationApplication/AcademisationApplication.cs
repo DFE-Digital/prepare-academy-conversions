@@ -12,6 +12,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
       public string ApplicationStatus { get; set; }
       public string ApplicationReference { get; set; }
       public List<Contributor> Contributors { get; set; }
+
       public List<School> Schools { get; set; }
 
       public static Application.Application MapToApplication(AcademisationApplication academisationApplication)
@@ -21,9 +22,95 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          //app.TrustName = academisationApplication.TrustName (exists in current, not present on academisation unless it is foundationTrustOrBodyName?)
          academiesApplication.ApplicationId = academisationApplication.ApplicationReference; //Do we want this to be the case going forwards?
          //academiesApplication.ApplicationLeadAuthorName = academisationApplication.Contributors (we have contributors on academisation but how do we know their the lead)
-         //academiesApplication.ChangesToTrust = academisationApplication.Schools.FirstOrDefault().
-         //academiesApplication.ChangesToTrust
+         //academiesApplication.ChangesToTrust = academisationApplication.Schools.FirstOrDefault() // What property is this on the academisation api?
+         //academiesApplication.ChangesToTrustExplained // same again
+         //academiesApplication.ChangesToLaGovernance // same again
 
+         // SCHOOL
+
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolName = academisationApplication.Schools.FirstOrDefault().SchoolName; // Why are these lists, our application form has just one?
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolConversionContactHeadName = academisationApplication.Schools.FirstOrDefault().SchoolConversionContactHeadName; // Why are these lists, our application form has just one?
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolConversionContactHeadEmail = academisationApplication.Schools.FirstOrDefault().SchoolConversionContactHeadEmail; // Why are these lists, our application form has just one?
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolConversionContactHeadTel = academisationApplication.Schools.FirstOrDefault().SchoolConversionContactHeadTel; // Why are these lists, our application form has just one?
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolConversionContactChairName = academisationApplication.Schools.FirstOrDefault().SchoolConversionContactChairName; // Why are these lists, our application form has just one?
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolConversionContactChairEmail = academisationApplication.Schools.FirstOrDefault().SchoolConversionContactChairEmail; // Why are these lists, our application form has just one?
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolConversionContactChairTel = academisationApplication.Schools.FirstOrDefault().SchoolConversionContactChairTel; // Why are these lists, our application form has just one?
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolConversionMainContactOtherName = academisationApplication.Schools.FirstOrDefault().SchoolConversionMainContactOtherName; // Why are these lists, our application form has just one?
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolConversionMainContactOtherEmail = academisationApplication.Schools.FirstOrDefault().SchoolConversionMainContactOtherEmail; // Why are these lists, our application form has just one?
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolConversionTargetDateSpecified = academisationApplication.Schools.FirstOrDefault().SchoolConversionTargetDateSpecified;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolConversionTargetDate = academisationApplication.Schools.FirstOrDefault().SchoolConversionTargetDate;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolConversionTargetDateExplained = academisationApplication.Schools.FirstOrDefault().SchoolConversionTargetDateExplained;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolConversionReasonsForJoining = academisationApplication.Schools.FirstOrDefault().ApplicationJoinTrustReason;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolConversionChangeNamePlanned = academisationApplication.Schools.FirstOrDefault().ConversionChangeNamePlanned;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolConversionProposedNewSchoolName = academisationApplication.Schools.FirstOrDefault().ProposedNewSchoolName;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolAdSchoolContributionToTrust = academisationApplication.Schools.FirstOrDefault().TrustBenefitDetails; // Is this the correct property for "What will the school bring to the trust they are joining?"
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolAdInspectedButReportNotPublished = academisationApplication.Schools.FirstOrDefault().OfstedInspectionDetails.Any(); // There isn't an equivalent bool but I guess we can work with the details?
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolAdInspectedButReportNotPublishedExplain = academisationApplication.Schools.FirstOrDefault().OfstedInspectionDetails; 
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolOngoingSafeguardingInvestigations = academisationApplication.Schools.FirstOrDefault().SafeguardingDetails.Any(); // There isn't an equivalent bool but I guess we can work with the details?
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolOngoingSafeguardingDetails = academisationApplication.Schools.FirstOrDefault().SafeguardingDetails; 
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolPartOfLaReorganizationPlan = academisationApplication.Schools.FirstOrDefault().LocalAuthorityReorganisationDetails.Any(); // There isn't an equivalent bool but I guess we can work with the details?
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolLaReorganizationDetails = academisationApplication.Schools.FirstOrDefault().LocalAuthorityReorganisationDetails; 
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolPartOfLaClosurePlan = academisationApplication.Schools.FirstOrDefault().LocalAuthorityClosurePlanDetails.Any(); 
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolLaClosurePlanDetails = academisationApplication.Schools.FirstOrDefault().LocalAuthorityClosurePlanDetails; // There isn't an equivalent bool but I guess we can work with the details?
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolFaithSchoolDioceseName = academisationApplication.Schools.FirstOrDefault().DioceseName;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolIsPartOfFederation = academisationApplication.Schools.FirstOrDefault().PartOfFederation;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolIsSupportedByFoundation = academisationApplication.Schools.FirstOrDefault().FoundationTrustOrBodyName.Any(); // There isn't an equivalent bool but I guess we can work with the details?
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolSupportedFoundationBodyName = academisationApplication.Schools.FirstOrDefault().FoundationTrustOrBodyName; 
+         //academiesApplication.ApplyingSchools.FirstOrDefault().SchoolHasSACREException // No equivalent on academisation
+         //academiesApplication.ApplyingSchools.FirstOrDefault().SchoolSACREExemptionEndDate // No equivalent on academisation
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolAdFeederSchools = academisationApplication.Schools.FirstOrDefault().MainFeederSchools; 
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolAdEqualitiesImpactAssessmentCompleted = academisationApplication.Schools.FirstOrDefault().ResolutionConsentFolderIdentifier.Any(); // Is this the related property? Not sure 
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolAdEqualitiesImpactAssessmentDetails = academisationApplication.Schools.FirstOrDefault().ResolutionConsentFolderIdentifier; // Is this the related property? Not sure 
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolAdditionalInformationAdded = academisationApplication.Schools.FirstOrDefault().FurtherInformation.Any(); // Is this the related property? Not sure 
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolAdditionalInformation = academisationApplication.Schools.FirstOrDefault().FurtherInformation; // Is this the related property? Not sure 
+
+         // FINANCES
+
+         academiesApplication.ApplyingSchools.FirstOrDefault().PreviousFinancialYear.FYEndDate = academisationApplication.Schools.FirstOrDefault().PreviousFinancialYear.FinancialYearEndDate;
+         academiesApplication.ApplyingSchools.FirstOrDefault().PreviousFinancialYear.RevenueCarryForward = (decimal?)academisationApplication.Schools.FirstOrDefault().PreviousFinancialYear.Revenue;
+         //academiesApplication.ApplyingSchools.FirstOrDefault().PreviousFinancialYear.RevenueIsDeficit = academisationApplication.Schools.FirstOrDefault().PreviousFinancialYear.RevenueStatus; // is this what this might be
+         academiesApplication.ApplyingSchools.FirstOrDefault().PreviousFinancialYear.CapitalCarryForward = (decimal?)academisationApplication.Schools.FirstOrDefault().PreviousFinancialYear.CapitalCarryForward;
+         //academiesApplication.ApplyingSchools.FirstOrDefault().PreviousFinancialYear.CapitalIsDeficit = academisationApplication.Schools.FirstOrDefault().PreviousFinancialYear.CapitalCarryForwardStatus; // is this what this might be
+
+         academiesApplication.ApplyingSchools.FirstOrDefault().CurrentFinancialYear.FYEndDate = academisationApplication.Schools.FirstOrDefault().CurrentFinancialYear.FinancialYearEndDate;
+         academiesApplication.ApplyingSchools.FirstOrDefault().CurrentFinancialYear.RevenueCarryForward = (decimal?)academisationApplication.Schools.FirstOrDefault().CurrentFinancialYear.Revenue;
+         //academiesApplication.ApplyingSchools.FirstOrDefault().CurrentFinancialYear.RevenueIsDeficit = academisationApplication.Schools.FirstOrDefault().CurrentFinancialYear.RevenueStatus; // is this what this might be
+         academiesApplication.ApplyingSchools.FirstOrDefault().CurrentFinancialYear.CapitalCarryForward = (decimal?)academisationApplication.Schools.FirstOrDefault().CurrentFinancialYear.CapitalCarryForward;
+         //academiesApplication.ApplyingSchools.FirstOrDefault().CurrentFinancialYear.CapitalIsDeficit = academisationApplication.Schools.FirstOrDefault().CurrentFinancialYear.CapitalCarryForwardStatus; // is this what this might be
+
+         academiesApplication.ApplyingSchools.FirstOrDefault().NextFinancialYear.FYEndDate = academisationApplication.Schools.FirstOrDefault().NextFinancialYear.FinancialYearEndDate;
+         academiesApplication.ApplyingSchools.FirstOrDefault().NextFinancialYear.RevenueCarryForward = (decimal?)academisationApplication.Schools.FirstOrDefault().NextFinancialYear.Revenue;
+         //academiesApplication.ApplyingSchools.FirstOrDefault().NextFinancialYear.RevenueIsDeficit = academisationApplication.Schools.FirstOrDefault().NextFinancialYear.RevenueStatus; // is this what this might be
+         academiesApplication.ApplyingSchools.FirstOrDefault().NextFinancialYear.CapitalCarryForward = (decimal?)academisationApplication.Schools.FirstOrDefault().NextFinancialYear.CapitalCarryForward;
+         //academiesApplication.ApplyingSchools.FirstOrDefault().NextFinancialYear.CapitalIsDeficit = academisationApplication.Schools.FirstOrDefault().NextFinancialYear.CapitalCarryForwardStatus; // is this what this might be
+
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolLoans.FirstOrDefault().SchoolLoanAmount = academisationApplication.Schools.FirstOrDefault().Loans.FirstOrDefault().SchoolLoanAmount;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolLoans.FirstOrDefault().SchoolLoanPurpose = academisationApplication.Schools.FirstOrDefault().Loans.FirstOrDefault().SchoolLoanPurpose;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolLoans.FirstOrDefault().SchoolLoanProvider = academisationApplication.Schools.FirstOrDefault().Loans.FirstOrDefault().SchoolLoanProvider;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolLoans.FirstOrDefault().SchoolLoanInterestRate = academisationApplication.Schools.FirstOrDefault().Loans.FirstOrDefault().SchoolLoanInterestRate;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolLoans.FirstOrDefault().SchoolLoanSchedule = academisationApplication.Schools.FirstOrDefault().Loans.FirstOrDefault().SchoolLoanSchedule;
+
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolLeases.FirstOrDefault().SchoolLeaseRepaymentValue = academisationApplication.Schools.FirstOrDefault().Leases.FirstOrDefault().SchoolLeaseRepaymentValue;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolLeases.FirstOrDefault().SchoolLeasePurpose = academisationApplication.Schools.FirstOrDefault().Leases.FirstOrDefault().SchoolLeasePurpose;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolLeases.FirstOrDefault().SchoolLeasePaymentToDate = academisationApplication.Schools.FirstOrDefault().Leases.FirstOrDefault().SchoolLeasePaymentToDate;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolLeases.FirstOrDefault().SchoolLeaseInterestRate = academisationApplication.Schools.FirstOrDefault().Leases.FirstOrDefault().SchoolLeaseInterestRate;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolLeases.FirstOrDefault().SchoolLeaseResponsibleForAssets = academisationApplication.Schools.FirstOrDefault().Leases.FirstOrDefault().SchoolLeaseResponsibleForAssets;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolLeases.FirstOrDefault().SchoolLeaseTerm = academisationApplication.Schools.FirstOrDefault().Leases.FirstOrDefault().SchoolLeaseTerm;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolLeases.FirstOrDefault().SchoolLeaseValueOfAssets = academisationApplication.Schools.FirstOrDefault().Leases.FirstOrDefault().SchoolLeaseValueOfAssets;
+
+         academiesApplication.ApplyingSchools.FirstOrDefault().FinanceOngoingInvestigations = academisationApplication.Schools.FirstOrDefault().FinanceOngoingInvestigations;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolFinancialInvestigationsExplain = academisationApplication.Schools.FirstOrDefault().FinancialInvestigationsExplain;
+         academiesApplication.ApplyingSchools.FirstOrDefault().SchoolFinancialInvestigationsTrustAware = academisationApplication.Schools.FirstOrDefault().FinancialInvestigationsTrustAware;
+         
+         academiesApplication.ApplyingSchools.FirstOrDefault().ProjectedPupilNumbersYear1 = academisationApplication.Schools.FirstOrDefault().ProjectedPupilNumbersYear1;
+         academiesApplication.ApplyingSchools.FirstOrDefault().ProjectedPupilNumbersYear2 = academisationApplication.Schools.FirstOrDefault().ProjectedPupilNumbersYear2;
+         academiesApplication.ApplyingSchools.FirstOrDefault().ProjectedPupilNumbersYear3 = academisationApplication.Schools.FirstOrDefault().ProjectedPupilNumbersYear3;
+         
+         
+         
+         
+         
+         
          return academiesApplication;
       }
    }
@@ -75,15 +162,15 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
       public string SchoolConversionMainContactOtherRole { get; set; }
       public string SchoolConversionApproverContactName { get; set; }
       public string SchoolConversionApproverContactEmail { get; set; }
-      public string SchoolConversionTargetDateSpecified { get; set; }
+      public bool SchoolConversionTargetDateSpecified { get; set; }
       public DateTime SchoolConversionTargetDate { get; set; }
       public string SchoolConversionTargetDateExplained { get; set; }
-      public string ConversionChangeNamePlanned { get; set; }
+      public bool ConversionChangeNamePlanned { get; set; }
       public string ProposedNewSchoolName { get; set; }
       public string ApplicationJoinTrustReason { get; set; }
-      public string ProjectedPupilNumbersYear1 { get; set; }
-      public string ProjectedPupilNumbersYear2 { get; set; }
-      public string ProjectedPupilNumbersYear3 { get; set; }
+      public int? ProjectedPupilNumbersYear1 { get; set; }
+      public int? ProjectedPupilNumbersYear2 { get; set; }
+      public int? ProjectedPupilNumbersYear3 { get; set; }
       public string SchoolCapacityAssumptions { get; set; }
       public string SchoolCapacityPublishedAdmissionNumber { get; set; }
       public string SchoolSupportGrantFundsPaidTo { get; set; }
