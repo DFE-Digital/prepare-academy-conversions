@@ -52,7 +52,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
         
         it('TC03: Should display user-friendly error when incorrect project ID requested', () => {
             cy.viewport(viewport)
-            cy.visit(Cypress.env('url') +'/task-list/9999', {failOnStatusCode: false})
+            cy.visit(Cypress.env('url') +'/task-list/99990', {failOnStatusCode: false})
             cy.get('[id="error-heading"]').should('have.text','Page not found')
         });
         
