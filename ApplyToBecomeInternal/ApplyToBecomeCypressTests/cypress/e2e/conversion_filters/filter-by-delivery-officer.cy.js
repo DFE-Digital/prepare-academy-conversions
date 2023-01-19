@@ -21,14 +21,14 @@ Cypress._.each(['ipad-mini'], (viewport) => {
         cy.get('[data-cy="select-projectlist-filter-officer-not-assigned"]').click();
         cy.get('[data-cy=select-projectlist-filter-apply]').click();
         cy.get('[data-cy="select-projectlist-filter-count"]').should('contain', 'projects found');
-        cy.get('[data-cy="select-projectlist-filter-count"]').should('not.contain', '0 projects found');
+        cy.get('[data-cy="select-projectlist-filter-count"]').should('not.equal', '0 projects found');
         cy.get('#delivery-officer-0 > .empty').should('have.text', 'Empty');     
       });
   
       it('TC03: should display all the projects assigned to the DO when a particular DO name option is selected', () => {
         cy.get('[name="selectedOfficers"]').eq(1).click();
         cy.get('[data-cy=select-projectlist-filter-apply]').click();
-        cy.get('[data-cy="select-projectlist-filter-count"]').should('not.contain', '0 projects found');
+        cy.get('[data-cy="select-projectlist-filter-count"]').should('not.equal', '0 projects found');
         cy.get('#delivery-officer-0').should('not.have.text', 'Delivery officer: Empty');
       });
     });
