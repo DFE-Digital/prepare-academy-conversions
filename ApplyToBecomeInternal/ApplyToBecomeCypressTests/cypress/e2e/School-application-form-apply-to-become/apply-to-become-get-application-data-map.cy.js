@@ -7,7 +7,7 @@ describe('91489: Apply-to-becom GET data application types', () => {
 	beforeEach(() => {
 		cy.login()
 		cy.get('[id="school-name-0"]').click()
-		cy.visit(Cypress.env('url') + '/school-application-form/519')
+		cy.visit(Cypress.env('url') + '/school-application-form/2053')
 	})
 
 	// Overview
