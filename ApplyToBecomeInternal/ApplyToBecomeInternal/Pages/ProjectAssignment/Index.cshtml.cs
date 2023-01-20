@@ -44,7 +44,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectAssignment
 		public async Task<IActionResult> OnPost(int id, string selectedName, bool unassignDeliveryOfficer, string deliveryOfficerInput)
       {
 
-         if (deliveryOfficerInput.IsNullOrEmpty())
+         if (string.IsNullOrWhiteSpace(deliveryOfficerInput))
          {
             selectedName = string.Empty;
          };
