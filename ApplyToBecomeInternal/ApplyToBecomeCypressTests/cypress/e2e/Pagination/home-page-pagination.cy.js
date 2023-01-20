@@ -20,6 +20,7 @@ describe('101092: Pagination', () => {
                     cy.get('[test-id="nextPage"]').click()
                     cy.url().should('contain', 'currentPage=2');
                     cy.get('[test-id="previousPage"]').click()
+                    cy.url().should('contain', 'currentPage=1');
                 }
                 else {
                     cy.log('Number of projects does not exceed 10')
