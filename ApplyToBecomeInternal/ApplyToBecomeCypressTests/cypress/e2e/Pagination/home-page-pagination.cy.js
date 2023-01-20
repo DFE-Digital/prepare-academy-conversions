@@ -2,9 +2,9 @@
 
 describe('101092: Pagination', () => {
 
-	beforeEach(() => {
-		cy.login()
-	})
+    beforeEach(() => {
+        cy.login()
+    })
 
     after(function () {
         cy.clearLocalStorage()
@@ -12,15 +12,18 @@ describe('101092: Pagination', () => {
 
     it('TC01: Next/Previous button if project number is greater than 10', () => {
         cy.get('[test-id="projectCount"]')
-        .invoke('text')
-        .then((text) => {
-            if (text.includes('Projects (10)')) {
-                cy.get('[test-id="nextPage"]').click()
-                cy.get('[test-id="previousPage"]').click()
-            }
-            else {
-                cy.log('Number of projects does not exceed 10')
-            }
-        })
+            .invoke('text')
+            .then((text) => {
+                cy.log(text)
+                const total_count = text.replace('projects found', '').trim()
+                if (total_count > 10) {
+                    cy.get('[test-id="nextPage"]').click()
+                    cy.url().should('contain', 'currentPage=2');
+                    cy.get('[test-id="previousPage"]').click()
+                }
+                else {
+                    cy.log('Number of projects does not exceed 10')
+                }
+            })
     })
 })
