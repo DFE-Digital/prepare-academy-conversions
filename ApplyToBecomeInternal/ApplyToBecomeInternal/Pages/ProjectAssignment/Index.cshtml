@@ -25,8 +25,9 @@
                     The delivery officer responsible for this project
                 </div>
 
-                <form method="post">
+                <form method="post" id="assign-user-form">
                     <input type="hidden" asp-for="@Model.Id" />
+                    <input type="hidden" id="delivery-officer-input" name="DeliveryOfficerInput"/>
                     <select name="SelectedName" class="autocomplete__menu govuk-select" id="delivery-officer">
                         <option value=""></option>
                         @{
@@ -61,6 +62,11 @@
     var deliveryOfficerSelect = document.querySelector('#delivery-officer');
     accessibleAutocomplete.enhanceSelectElement({
         selectElement: deliveryOfficerSelect
+    });
+
+   
+    document.querySelector('#delivery-officer').addEventListener('change',function(){
+         document.querySelector('#delivery-officer-input').value = this.value;      
     });
 
     document.querySelector('#unassign-link').onclick = () =>{

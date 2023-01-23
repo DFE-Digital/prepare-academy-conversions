@@ -6,6 +6,7 @@ using ApplyToBecomeInternal.Extensions;
 using ApplyToBecomeInternal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectAssignment
 		public IEnumerable<User> DeliveryOfficers { get; set; }
 		public string SelectedDeliveryOfficer { get; set; }
 
-		public async Task<IActionResult> OnGet(int id)
+      public async Task<IActionResult> OnGet(int id)
 		{
 			var projectResponse = await _academyConversionProjectRepository.GetProjectById(id);
 			Id = id;
@@ -40,9 +41,15 @@ namespace ApplyToBecomeInternal.Pages.ProjectAssignment
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPost(int id, string selectedName, bool unassignDeliveryOfficer)
-		{
-			if (unassignDeliveryOfficer)
+		public async Task<IActionResult> OnPost(int id, string selectedName, bool unassignDeliveryOfficer, string deliveryOfficerInput)
+      {
+
+         if (string.IsNullOrWhiteSpace(deliveryOfficerInput))
+         {
+            selectedName = string.Empty;
+         }
+
+         if (unassignDeliveryOfficer)
 			{
 				var updatedProject = new UpdateAcademyConversionProject
 				{
