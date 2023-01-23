@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using ApplyToBecome.Data.Models;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using FluentAssertions;
 using System;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace ApplyToBecomeInternal.Tests.Pages.ProjectAssignment
 			var project = AddGetProject();
 			await OpenUrlAsync($"/project-assignment/{project.Id}");
 			var fullName = "Bob 1";
-
+         Document.QuerySelector<IHtmlInputElement>("[id='delivery-officer-input']").Value = fullName;
 			Document.QuerySelector<IHtmlOptionElement>($"[value='{fullName}']")!.IsSelected = true;
 			await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
