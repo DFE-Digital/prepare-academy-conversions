@@ -47,8 +47,9 @@ namespace ApplyToBecomeInternal.Pages.ProjectAssignment
          if (string.IsNullOrWhiteSpace(deliveryOfficerInput))
          {
             selectedName = string.Empty;
-         };
-			if (unassignDeliveryOfficer)
+         }
+
+         if (unassignDeliveryOfficer)
 			{
 				var updatedProject = new UpdateAcademyConversionProject
 				{
