@@ -63,7 +63,7 @@
     accessibleAutocomplete.enhanceSelectElement({
         selectElement: deliveryOfficerSelect
     });
-
+      document.querySelector('#delivery-officer-input').value = document.querySelector('#delivery-officer').value;
    
     document.querySelector('#delivery-officer').addEventListener('change',function(){
          document.querySelector('#delivery-officer-input').value = this.value;      
