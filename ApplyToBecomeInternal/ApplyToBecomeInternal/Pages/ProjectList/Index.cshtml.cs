@@ -23,7 +23,7 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 		public IndexModel(IAcademyConversionProjectRepository repository)
 		{
 			_repository = repository;
-		}
+      }
 
 		public IEnumerable<ProjectListViewModel> Projects { get; set; }
 		public int ProjectCount => Projects.Count();
@@ -35,11 +35,12 @@ namespace ApplyToBecomeInternal.Pages.ProjectList
 		public int TotalProjects { get; set; }
 
 		[BindProperty(SupportsGet = true)] public int CurrentPage { get; set; } = 1;
-		[BindProperty] public ProjectListFilters Filters { get; set; } = new();
+      [BindProperty] public ProjectListFilters Filters { get; set; } = new();
 
 		public async Task OnGetAsync()
-		{
-			Filters.PopulateFrom(Request.Query);
+      {
+         Filters.PersistUsing(TempData)
+            .PopulateFrom(Request.Query);
 
 			ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response =
 				await _repository.GetAllProjects(CurrentPage, _pageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions);

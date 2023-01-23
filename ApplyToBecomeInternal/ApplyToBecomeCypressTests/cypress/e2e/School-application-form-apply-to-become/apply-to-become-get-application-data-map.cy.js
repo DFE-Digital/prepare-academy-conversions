@@ -7,7 +7,7 @@ describe('91489: Apply-to-becom GET data application types', () => {
 	beforeEach(() => {
 		cy.login()
 		cy.get('[id="school-name-0"]').click()
-		cy.visit(Cypress.env('url') + '/school-application-form/519')
+		cy.visit(Cypress.env('url') + '/school-application-form/2053')
 	})
 
 	// Overview
@@ -29,14 +29,14 @@ describe('91489: Apply-to-becom GET data application types', () => {
 
 		
 		cy.get('[test-id="Overview_Details2_key"]').should('contain.text', 'Will there be any changes to the governance of the trust due to the school joining?')
-		cy.get('[test-id="Overview_Details2_value"]').should('contain.text', 'No')
+		cy.get('[test-id="Overview_Details2_value"]').should('contain.text', 'Yes')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.changesToLaGovernance).to.eq(false)
+			expect(userData.data.changesToLaGovernance).to.eq(true)
 		})
-		cy.get('[test-id="Overview_Details3_key"]').should('contain.text', 'Will there be any changes at a local level due to this school joining?')
-		cy.get('[test-id="Overview_Details3_value"]').should('contain.text', 'No')
+		cy.get('[test-id="Overview_Details4_key"]').should('contain.text', 'Will there be any changes at a local level due to this school joining?')
+		cy.get('[test-id="Overview_Details4_value"]').should('contain.text', 'Yes')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.changesToTrust).to.eq(false)
+			expect(userData.data.changesToTrust).to.eq(true)
 		})
 	})
 
@@ -62,7 +62,7 @@ describe('91489: Apply-to-becom GET data application types', () => {
 		cy.get('[test-id="About_the_conversion_Contact_details6_value"]').should('contain.text', dataAppSch.schoolConversionContactChairTel)
 		cy.get('[test-id="About_the_conversion_Contact_details7_key"]').should('contain.text', "Who is the main contact for the conversion?")
 		cy.get('[test-id="About_the_conversion_Contact_details7_value"]').should('contain.text', dataAppSch.schoolConversionContactRole)
-		cy.get('[test-id="About_the_conversion_Contact_details8_key"]').should('contain.text', "Approver's name")
+		cy.get('[test-id="About_the_conversion_Contact_details8_key"]').should('contain.text', "Main contact's name")
 		cy.get('[test-id="About_the_conversion_Contact_details8_value"]').should('contain.text', dataAppSch.schoolConversionApproverContactName)
 	})
 
@@ -75,9 +75,9 @@ describe('91489: Apply-to-becom GET data application types', () => {
 			expect(userData.data.applyingSchools[0].schoolConversionTargetDateSpecified).to.eq(true)
 		})
 		cy.get('[test-id="About_the_conversion_Date_for_conversion2_key"]').should('contain.text', 'Preferred date')
-		cy.get('[test-id="About_the_conversion_Date_for_conversion2_value"]').should('contain.text', '1 May 2021')
+		cy.get('[test-id="About_the_conversion_Date_for_conversion2_value"]').should('contain.text', '11 August 2049')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].schoolConversionTargetDate).to.eq('2021-05-01T06:03:43.824')
+         expect(userData.data.applyingSchools[0].schoolConversionTargetDate).to.eq('2049-08-11T00:00:00')
 		})
 	})
 
@@ -181,14 +181,14 @@ describe('91489: Apply-to-becom GET data application types', () => {
 	// Finance Details 
 	it('TC09: Previous Financial Year', () => {
 		cy.get('[test-id="Finances_Previous_financial_year1_key"]').should('contain.text', 'End of previous financial year')
-		cy.get('[test-id="Finances_Previous_financial_year1_value"]').should('contain.text', '1 September 2021')
+		cy.get('[test-id="Finances_Previous_financial_year1_value"]').should('contain.text', '10 April 2018')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].previousFinancialYear.fyEndDate).to.eq('2021-09-01T17:49:39.303')
+			expect(userData.data.applyingSchools[0].previousFinancialYear.fyEndDate).to.eq('2018-04-10T00:00:00')
 		})
 		cy.get('[test-id="Finances_Previous_financial_year2_key"]').should('contain.text', 'Revenue carry forward at the end of the previous financial year (31 March)')
-		cy.get('[test-id="Finances_Previous_financial_year2_value"]').should('contain.text', '-£3,300.00')
+      cy.get('[test-id="Finances_Previous_financial_year2_value"]').should('contain.text', '£8,999,110.45')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].previousFinancialYear.revenueCarryForward).to.eq(-3300.00)
+         expect(userData.data.applyingSchools[0].previousFinancialYear.revenueCarryForward).to.eq(8999110.45)
 		})
 		cy.get('[test-id="Finances_Previous_financial_year3_key"]').should('contain.text', 'Surplus or deficit?')
 		cy.get('[test-id="Finances_Previous_financial_year3_value"]').should('contain.text', 'Deficit')
@@ -198,14 +198,14 @@ describe('91489: Apply-to-becom GET data application types', () => {
 		cy.get('[test-id="Finances_Previous_financial_year4_key"]').should('contain.text', 'Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan')
 		cy.get('[test-id="Finances_Previous_financial_year4_value"]').should('contain.text', dataAppSch.previousFinancialYear.revenueStatusExplained)
 		cy.get('[test-id="Finances_Previous_financial_year5_key"]').should('contain.text', 'Capital carry forward at the end of the previous financial year (31 March)')
-		cy.get('[test-id="Finances_Previous_financial_year5_value"]').should('contain.text', '£1,577.00')
+      cy.get('[test-id="Finances_Previous_financial_year5_value"]').should('contain.text', '£6,180,703.25')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].previousFinancialYear.capitalCarryForward).to.eq(1577.00)
+         expect(userData.data.applyingSchools[0].previousFinancialYear.capitalCarryForward).to.eq(6180703.25)
 		})
 		cy.get('[test-id="Finances_Previous_financial_year6_key"]').should('contain.text', 'Surplus or deficit?')
-		cy.get('[test-id="Finances_Previous_financial_year6_value"]').should('contain.text', 'Surplus')
+		cy.get('[test-id="Finances_Previous_financial_year6_value"]').should('contain.text', 'Deficit')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].previousFinancialYear.capitalIsDeficit).to.eq(false)
+			expect(userData.data.applyingSchools[0].previousFinancialYear.capitalIsDeficit).to.eq(true)
 			// "capitalStatusExplained": "Soluta repellendus assumenda." NOT INCLUDED ON FRONTEND
 			// NOTE from Catherine "will be added as part of ticket 83618 - 'Add follow up answers to questions on application form' and will appear on the view only if capitalIsDeficit == true"
 		})
@@ -214,45 +214,47 @@ describe('91489: Apply-to-becom GET data application types', () => {
 	// Current Financial Year
 	it('TC10: Current Financial Year', () => {
 		cy.get('[test-id="Finances_Current_financial_year1_key"]').should('contain.text', 'End of current financial year')
-		cy.get('[test-id="Finances_Current_financial_year1_value"]').should('contain.text', '16 December 2021')
+		cy.get('[test-id="Finances_Current_financial_year1_value"]').should('contain.text', '26 April 2020')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].currentFinancialYear.fyEndDate).to.eq('2021-12-16T17:05:19.845')
+			expect(userData.data.applyingSchools[0].currentFinancialYear.fyEndDate).to.eq('2021-04-26T00:00:00')
 		})
 		cy.get('[test-id="Finances_Current_financial_year2_key"]').should('contain.text', 'Forecasted revenue carry forward at the end of the current financial year (31 March)')
-		cy.get('[test-id="Finances_Current_financial_year2_value"]').should('contain.text', '£4,160.00')
+      cy.get('[test-id="Finances_Current_financial_year2_value"]').should('contain.text', '£1,875,092.83')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].currentFinancialYear.revenueCarryForward).to.eq(4160.00)
+         expect(userData.data.applyingSchools[0].currentFinancialYear.revenueCarryForward).to.eq(1875092.83)
 		})
 		cy.get('[test-id="Finances_Current_financial_year3_key"]').should('contain.text', 'Surplus or deficit?')
-		cy.get('[test-id="Finances_Current_financial_year3_value"]').should('contain.text', 'Surplus')
+		cy.get('[test-id="Finances_Current_financial_year3_value"]').should('contain.text', 'Deficit')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].currentFinancialYear.revenueIsDeficit).to.eq(false)
-		})
-		cy.get('[test-id="Finances_Current_financial_year4_key"]').should('contain.text', 'Forecasted capital carry forward at the end of the current financial year (31 March)')
-		cy.get('[test-id="Finances_Current_financial_year4_value"]').should('contain.text', '£5,895.00')
+			expect(userData.data.applyingSchools[0].currentFinancialYear.revenueIsDeficit).to.eq(true)
+      })
+      cy.get('[test-id="Finances_Current_financial_year4_key"]').should('contain.text', 'Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan')
+      cy.get('[test-id="Finances_Current_financial_year4_value"]').should('contain.text', dataAppSch.currentFinancialYear.revenueStatusExplained)
+		cy.get('[test-id="Finances_Current_financial_year5_key"]').should('contain.text', 'Forecasted capital carry forward at the end of the current financial year (31 March)')
+      cy.get('[test-id="Finances_Current_financial_year5_value"]').should('contain.text', '£4,137,118.87')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].currentFinancialYear.capitalCarryForward).to.eq(5895.00)
+         expect(userData.data.applyingSchools[0].currentFinancialYear.capitalCarryForward).to.eq(4137118.87)
 		})
-		cy.get('[test-id="Finances_Current_financial_year5_key"]').should('contain.text', 'Surplus or deficit?')
-		cy.get('[test-id="Finances_Current_financial_year5_value"]').should('contain.text', 'Deficit')
+		cy.get('[test-id="Finances_Current_financial_year6_key"]').should('contain.text', 'Surplus or deficit?')
+		cy.get('[test-id="Finances_Current_financial_year6_value"]').should('contain.text', 'Deficit')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
 			expect(userData.data.applyingSchools[0].currentFinancialYear.capitalIsDeficit).to.eq(true)
 		})
-		cy.get('[test-id="Finances_Current_financial_year6_key"]').should('contain.text', 'Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan')
-		cy.get('[test-id="Finances_Current_financial_year6_value"]').should('contain.text', dataAppSch.currentFinancialYear.capitalStatusExplained)
+		cy.get('[test-id="Finances_Current_financial_year7_key"]').should('contain.text', 'Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan')
+		cy.get('[test-id="Finances_Current_financial_year7_value"]').should('contain.text', dataAppSch.currentFinancialYear.capitalStatusExplained)
 	})
 
 	// Next Financial Year
 	it('TC11: Next Financial Year', () => {
 		cy.get('[test-id="Finances_Next_financial_year1_key"]').should('contain.text', 'End of next financial year')
-		cy.get('[test-id="Finances_Next_financial_year1_value"]').should('contain.text', '16 September 2021')
+		cy.get('[test-id="Finances_Next_financial_year1_value"]').should('contain.text', '12 March 2012')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].nextFinancialYear.fyEndDate).to.eq('2021-09-16T19:13:02.81')
+			expect(userData.data.applyingSchools[0].nextFinancialYear.fyEndDate).to.eq('2012-03-12T00:00:00')
 		})
 		cy.get('[test-id="Finances_Next_financial_year2_key"]').should('contain.text', 'Forecasted revenue carry forward at the end of the next financial year (31 March)')
-		cy.get('[test-id="Finances_Next_financial_year2_value"]').should('contain.text', '£6,943.00')
+      cy.get('[test-id="Finances_Next_financial_year2_value"]').should('contain.text', '£6,396,907.56')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].nextFinancialYear.revenueCarryForward).to.eq(6943.00)
+         expect(userData.data.applyingSchools[0].nextFinancialYear.revenueCarryForward).to.eq(6396907.56)
 		})
 		cy.get('[test-id="Finances_Next_financial_year3_key"]').should('contain.text', 'Surplus or deficit?')
 		cy.get('[test-id="Finances_Next_financial_year3_value"]').should('contain.text', 'Deficit')
@@ -262,9 +264,9 @@ describe('91489: Apply-to-becom GET data application types', () => {
 		cy.get('[test-id="Finances_Next_financial_year4_key"]').should('contain.text', 'Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan')
 		cy.get('[test-id="Finances_Next_financial_year4_value"]').should('contain.text', dataAppSch.nextFinancialYear.revenueStatusExplained)
 		cy.get('[test-id="Finances_Next_financial_year5_key"]').should('contain.text', 'Forecasted capital carry forward at the end of the next financial year (31 March)')
-		cy.get('[test-id="Finances_Next_financial_year5_value"]').should('contain.text', '£1,953.00')
+      cy.get('[test-id="Finances_Next_financial_year5_value"]').should('contain.text', '£8,701,709.63')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].nextFinancialYear.capitalCarryForward).to.eq(1953.00)
+         expect(userData.data.applyingSchools[0].nextFinancialYear.capitalCarryForward).to.eq(8701709.63)
 		})
 		cy.get('[test-id="Finances_Next_financial_year6_key"]').should('contain.text', 'Surplus or deficit?')
 		cy.get('[test-id="Finances_Next_financial_year6_value"]').should('contain.text', 'Deficit')
@@ -280,7 +282,7 @@ describe('91489: Apply-to-becom GET data application types', () => {
 		cy.get('[test-id="Finances_Loans1_key"]').should('contain.text', 'Are there any existing loans?')
 		cy.get('[test-id="Finances_Loans1_value"]').should('contain.text', 'Yes') // THIS IS NOT REPRESENTED IN THE JSON BODY | NOTE from Catherine "This is set as 'yes' if there are loans to display and 'No' if there aren't"
 		cy.get('[test-id="Finances_Loans2_key"]').should('contain.text', 'Total amount')
-		cy.get('[test-id="Finances_Loans2_value"]').should('contain.text', '£1,000.00')
+      cy.get('[test-id="Finances_Loans2_value"]').should('contain.text', '£630,093.49')
 		cy.get('[test-id="Finances_Loans3_key"]').should('contain.text', 'Purpose of the loan')
 		cy.get('[test-id="Finances_Loans3_value"]').should('contain.text', dataAppSch.schoolLoans[0].schoolLoanPurpose)
 		cy.get('[test-id="Finances_Loans4_key"]').should('contain.text', 'Loan provider')
@@ -346,24 +348,24 @@ describe('91489: Apply-to-becom GET data application types', () => {
 	// Future Pupil numbers
 	it('TC15: Future Pupil Numbers Details', () => {
 		cy.get('[test-id="Future_pupil_numbers_Details1_key"]').should('contain.text', 'Projected pupil numbers on roll in the year the academy opens (year 1)')
-		cy.get('[test-id="Future_pupil_numbers_Details1_value"]').should('contain.text', '45')
+		cy.get('[test-id="Future_pupil_numbers_Details1_value"]').should('contain.text', '104')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].schoolCapacityYear1).to.eq(45)
+         expect(userData.data.applyingSchools[0].projectedPupilNumbersYear1).to.eq(104)
 		})
 		cy.get('[test-id="Future_pupil_numbers_Details2_key"]').should('contain.text', 'Projected pupil numbers on roll in the following year after the academy has opened (year 2)')
-		cy.get('[test-id="Future_pupil_numbers_Details2_value"]').should('contain.text', '12')
+		cy.get('[test-id="Future_pupil_numbers_Details2_value"]').should('contain.text', '239')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].schoolCapacityYear2).to.eq(12)
+         expect(userData.data.applyingSchools[0].projectedPupilNumbersYear2).to.eq(239)
 		})
 		cy.get('[test-id="Future_pupil_numbers_Details3_key"]').should('contain.text', 'Projected pupil numbers on roll in the following year (year 3)')
-		cy.get('[test-id="Future_pupil_numbers_Details3_value"]').should('contain.text', '44')
+		cy.get('[test-id="Future_pupil_numbers_Details3_value"]').should('contain.text', '370')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].schoolCapacityYear3).to.eq(44)
+         expect(userData.data.applyingSchools[0].projectedPupilNumbersYear3).to.eq(370)
 		})
 		cy.get('[test-id="Future_pupil_numbers_Details4_key"]').should('contain.text', 'What do you base these projected numbers on?')
 		cy.get('[test-id="Future_pupil_numbers_Details4_value"]').should('contain.text', dataAppSch.schoolCapacityAssumptions)
 		cy.get('[test-id="Future_pupil_numbers_Details5_key"]').should('contain.text', "What is the school's published admissions number (PAN)?")
-		cy.get('[test-id="Future_pupil_numbers_Details5_value"]').should('contain.text', '0')
+		cy.get('[test-id="Future_pupil_numbers_Details5_value"]').should('contain.text', '60673')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
 			expect(userData.data.applyingSchools[0].declarationBodyAgree).to.eq(true)
 		})
@@ -403,9 +405,9 @@ describe('91489: Apply-to-becom GET data application types', () => {
 		cy.get('[test-id="Land_and_buildings_Details10_value"]').should('contain.text', dataAppSch.schoolBuildLandPFISchemeType)
 
 		cy.get('[test-id="Land_and_buildings_Details11_key"]').should('contain.text', 'Is the school part of a Priority School Building Programme?')
-		cy.get('[test-id="Land_and_buildings_Details11_value"]').should('contain.text', 'Yes')
+		cy.get('[test-id="Land_and_buildings_Details11_value"]').should('contain.text', 'No')
 		cy.get('[test-id="Land_and_buildings_Details12_key"]').should('contain.text', 'Is the school part of a Building Schools for the Future Programme?')
-		cy.get('[test-id="Land_and_buildings_Details12_value"]').should('contain.text', 'Yes')
+		cy.get('[test-id="Land_and_buildings_Details12_value"]').should('contain.text', 'No')
 	})
 
 	// Pre-opening support grant
@@ -417,10 +419,7 @@ describe('91489: Apply-to-becom GET data application types', () => {
 	// Consultation Details
 	it('TC18: Consultation Details', () => {
 		cy.get('[test-id="Consultation_Details1_key"]').should('contain.text', 'Has the governing body consulted the relevant stakeholders?')
-		cy.get('[test-id="Consultation_Details1_value"]').should('contain.text', 'Yes')
-		cy.fixture('cath121-body.json').as('userData').then((userData) => {
-			expect(userData.data.applyingSchools[0].declarationBodyAgree).to.eq(true)
-		})
+		cy.get('[test-id="Consultation_Details1_value"]').should('contain.text', 'No')
 	})
 
 	// Declaration Details
