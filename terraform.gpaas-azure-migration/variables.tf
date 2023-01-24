@@ -65,11 +65,21 @@ variable "enable_redis_cache" {
 }
 
 variable "enable_cdn_frontdoor" {
-  description = "Set to true to create a CDN"
+  description = "Enable Azure CDN Front Door. This will use the Container Apps endpoint as the origin."
+  type        = bool
+}
+
+variable "cdn_frontdoor_enable_rate_limiting" {
+  description = "Enable CDN Front Door Rate Limiting. This will create a WAF policy, and CDN security policy. For pricing reasons, there will only be one WAF policy created."
   type        = bool
 }
 
 variable "cdn_frontdoor_host_add_response_headers" {
-  description = "List of response headers to add at the CDN Front Door `[{ \"name\" = \"Strict-Transport-Security\", \"value\" = \"max-age=31536000\" }]`"
+  description = "List of response headers to add at the CDN Front Door `[{ \"Name\" = \"Strict-Transport-Security\", \"value\" = \"max-age=31536000\" }]`"
   type        = list(map(string))
+}
+
+variable "restrict_container_apps_to_cdn_inbound_only" {
+  description = "Restricts access to the Container Apps by creating a network security group that only allows 'AzureFrontDoor.Backend' inbound, and attaches it to the subnet of the container app environment."
+  type        = bool
 }
