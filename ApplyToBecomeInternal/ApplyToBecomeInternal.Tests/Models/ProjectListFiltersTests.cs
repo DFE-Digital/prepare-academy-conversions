@@ -13,7 +13,7 @@ namespace ApplyToBecomeInternal.Tests.Models;
 
 public class ProjectListFiltersTests
 {
-   private ProjectListFilters System_under_test()
+   private static ProjectListFilters System_under_test()
    {
       return new ProjectListFilters();
    }
