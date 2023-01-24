@@ -34,8 +34,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
         cy.get('[data-cy="select-projectlist-filter-count"]').should('not.contain', '0 projects found');
       });
 
-      //skip until #114627 or #114481 is fixed
-      it.skip('TC04: should display results when all the Region filter options are selected', () => {
+      it('TC04: should display results when all the Region filter options are selected and retain selection on different pages', () => {
         cy.get('[data-cy="select-projectlist-filter-region-East Midlands"]').click();
         cy.get('[data-cy="select-projectlist-filter-region-East of England"]').click();
         cy.get('[data-cy="select-projectlist-filter-region-London"]').click();
@@ -49,7 +48,39 @@ Cypress._.each(['ipad-mini'], (viewport) => {
         cy.get('[data-cy="select-projectlist-filter-banner"]').should('be.visible');
         cy.get('[data-cy="select-projectlist-filter-row"]').should('be.visible');
         cy.get('[data-cy="select-projectlist-filter-count"]').should('not.contain', '0 projects found');
+        cy.get('[test-id="projectCount"]')
+            .invoke('text')
+            .then((text) => {
+                cy.log(text)
+                const total_count = text.replace('projects found', '').trim()
+                if (total_count > 10) {
+                    cy.get('[test-id="nextPage"]').click()
+                    cy.url().should('contain', 'currentPage=2');
+                    cy.get('[data-cy="select-projectlist-filter-region-North East"]').should('have.attr', 'checked');
+                    cy.get('[test-id="previousPage"]').click()
+                    cy.get('[data-cy="select-projectlist-filter-region-North East"]').should('have.attr', 'checked');
+                }
+                else {
+                    cy.log('Number of projects does not exceed 10')
+                }
+            })
       });
-    });
-  });
-  
+
+      it('TC05: should retain multiple filter selection or non selection while paginating', () => {
+        cy.get('[data-cy="select-projectlist-filter-region-London"]').click();
+        cy.get('[data-cy="select-projectlist-filter-region-North East"]').click();
+        cy.get('[data-cy="select-projectlist-filter-officer-not-assigned"]').click();
+        cy.get('[data-cy=select-projectlist-filter-apply]').click();
+        cy.get('[data-cy="select-projectlist-filter-banner"]').should('be.visible');
+        cy.get('[data-cy="select-projectlist-filter-row"]').should('be.visible');
+        cy.get('[data-cy="select-projectlist-filter-count"]').should('not.contain', '0 projects found');
+          cy.get('[data-cy="select-projectlist-filter-region-North East"]').should('have.attr', 'checked');
+          cy.get('[data-cy="select-projectlist-filter-officer-not-assigned"]').should('have.attr', 'checked');
+          cy.get('[data-cy="select-projectlist-filter-region-North East"]').click();
+          cy.get('[data-cy="select-projectlist-filter-officer-not-assigned"]').click();
+          cy.get('[data-cy=select-projectlist-filter-apply]').click();
+          cy.get('[data-cy="select-projectlist-filter-region-North East"]').should('not.have.attr', 'checked');
+          cy.get('[data-cy="select-projectlist-filter-officer-not-assigned"]').should('not.have.attr', 'checked');
+      });
+   });
+});  
