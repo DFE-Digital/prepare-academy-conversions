@@ -28,13 +28,13 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       # This could be cached in the future to allow for quicker build times
       - name: Build Frontend
-        run: cd ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot; npm install; npm run build:assets; npm run build:frontend
+        run: cd Dfe.PrepareConversions/Dfe.PrepareConversions/wwwroot; npm install; npm run build:assets; npm run build:frontend
       - name: Restore dependencies
-        run: dotnet restore ApplyToBecomeInternal/ApplyToBecomeInternal.sln
+        run: dotnet restore Dfe.PrepareConversions/Dfe.PrepareConversions.sln
       - name: Build
-        run: dotnet build -c Release ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-restore
+        run: dotnet build -c Release Dfe.PrepareConversions/Dfe.PrepareConversions.sln --no-restore
       - name: Test
-        run: dotnet test -c Release ApplyToBecomeInternal/ApplyToBecomeInternal.sln --no-build --verbosity normal  --collect:"XPlat Code Coverage"
+        run: dotnet test -c Release Dfe.PrepareConversions/Dfe.PrepareConversions.sln --no-build --verbosity normal  --collect:"XPlat Code Coverage"
   build-and-push-image:
     needs: test
     runs-on: ubuntu-22.04
@@ -58,7 +58,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Build Frontend
-        run: cd ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot; npm install; npm run build:assets; npm run build:frontend
+        run: cd Dfe.PrepareConversions/Dfe.PrepareConversions/wwwroot; npm install; npm run build:assets; npm run build:frontend
 
       - name: Log in to the Container registry
         uses: docker/login-action@v1
@@ -185,7 +185,7 @@ jobs:
     runs-on: ubuntu-22.04
     defaults:
       run:
-         working-directory: ApplyToBecomeInternal/ApplyToBecomeCypressTests
+         working-directory: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
     steps:
       - uses: actions/checkout@v2
       - name: Setup node.js
@@ -202,4 +202,4 @@ jobs:
         if: failure()
         with:
          name: screenshots
-         path: ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots
+         path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots

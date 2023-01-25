@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-22.04
     defaults:
       run:
-         working-directory: ApplyToBecomeInternal/ApplyToBecomeCypressTests
+         working-directory: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
     steps:
       - uses: actions/checkout@v2
         with:
@@ -40,4 +40,4 @@ jobs:
         if: failure()
         with:
          name: screenshots/${{ github.event.workflow_run.inputs.environment }}
-         path: ApplyToBecomeInternal/ApplyToBecomeCypressTests/cypress/screenshots
+         path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots

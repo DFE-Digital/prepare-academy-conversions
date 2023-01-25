@@ -1,4 +1,4 @@
-# Apply to Become an academy, internal service
+# Prepare academy conversions service
 Internal service for managing applications for schools to become academies.
 
 ## Requirements
@@ -7,9 +7,9 @@ Internal service for managing applications for schools to become academies.
 
 ## Development Setup
 
-- Run `npm install; npm run build` from the `ApplyToBecomeInternal/wwwroot` directory to build the styles.
-- Run `dotnet restore` from the `ApplyToBecomeInternal` project to restore dependencies.
-- Run `dotnet run` from the `ApplyToBecomeInternal` project to run the application.
+- Run `npm install; npm run build` from the `Dfe.PrepareConversions/wwwroot` directory to build the styles.
+- Run `dotnet restore` from the `Dfe.PrepareConversions` project to restore dependencies.
+- Run `dotnet run` from the `Dfe.PrepareConversions` project to run the application.
 
 ### User-secrets
 The following user secrets are required to be able to connect to the TRAMS API (also known as the Academies API):
@@ -24,7 +24,7 @@ The following user secret is required for the landing page to be able to navigat
 - `ServiceLink:TransfersUrl` - The URL for the Transfers service.
 
 For local development, user secrets can be set using the command:
-- `dotnet user-secrets set "key" "value"` from the `ApplyToBecomeInternal` project.
+- `dotnet user-secrets set "key" "value"` from the `Dfe.PrepareConversions` project.
 
 Alternatively, there is a Rider plugin called `.NET Core User Secrets` that allows the secrets to be managed via a json file, accessed by right clicking on the project -> `Tools` -> `Open Project User Secrets`.
 
@@ -33,7 +33,7 @@ Alternatively, there is a Rider plugin called `.NET Core User Secrets` that allo
 > Note: We've introduced a new [Cypress Selector process](Cypress_Selectors.md).
 
 Install cypress and dependencies:
-- Run 'npm install' from the ApplyToBecomeCypressTests directory
+- Run 'npm install' from the Dfe.PrepareConversions.CypressTests directory
 
 ### Test execution
 You will need to set a secret in `secrets.json` in the following format to run the Cypress command against (you can use any value):

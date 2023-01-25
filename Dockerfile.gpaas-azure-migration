@@ -4,12 +4,12 @@ ARG NODEJS_IMAGE_TAG=18.12-bullseye
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS publish
 WORKDIR /build
 
-COPY ./ApplyToBecomeInternal/ ./ApplyToBecomeInternal/
+COPY ./Dfe.PrepareConversions/ ./Dfe.PrepareConversions/
 
-WORKDIR /build/ApplyToBecomeInternal
-RUN dotnet restore ApplyToBecomeInternal.sln
-RUN dotnet build -c Release ApplyToBecomeInternal.sln --no-restore
-RUN dotnet publish ApplyToBecomeInternal -c Release -o /app --no-restore
+WORKDIR /build/Dfe.PrepareConversions
+RUN dotnet restore Dfe.PrepareConversions.sln
+RUN dotnet build -c Release Dfe.PrepareConversions.sln --no-restore
+RUN dotnet publish Dfe.PrepareConversions -c Release -o /app --no-restore
 
 # Stage 2 - Build assets
 FROM node:${NODEJS_IMAGE_TAG} as build

@@ -450,8 +450,8 @@ $RECYCLE.BIN/
 *.css.map
 
 # govuk frontend stuff
-/ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot/assets
-/ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot/dist
+/Dfe.PrepareConversions/Dfe.PrepareConversions/wwwroot/assets
+/Dfe.PrepareConversions/Dfe.PrepareConversions/wwwroot/dist
 
 # minified js
 *.min.js
