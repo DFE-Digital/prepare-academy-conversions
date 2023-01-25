@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Dfe.PrepareConversions.Extensions
 {
@@ -6,7 +7,7 @@ namespace Dfe.PrepareConversions.Extensions
 	{
 		public static string SplitPascalCase<T>(this T source)
 		{
-			return source == null ? string.Empty : Regex.Replace(source.ToString(), "[A-Z]", " $0").Trim();
+			return source == null ? string.Empty : Regex.Replace(source.ToString(), "[A-Z]", " $0", RegexOptions.None, TimeSpan.FromSeconds(1)).Trim();
 		}
 
 		/// <summary>

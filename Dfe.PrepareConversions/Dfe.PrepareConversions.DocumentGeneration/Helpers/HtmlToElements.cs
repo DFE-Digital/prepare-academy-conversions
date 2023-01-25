@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Dfe.PrepareConversions.DocumentGeneration.Elements;
 using Dfe.PrepareConversions.DocumentGeneration.Interfaces;
 using Dfe.PrepareConversions.DocumentGeneration.Interfaces.Parents;
+using System;
 
 namespace Dfe.PrepareConversions.DocumentGeneration.Helpers
 {
@@ -68,20 +69,20 @@ namespace Dfe.PrepareConversions.DocumentGeneration.Helpers
 		{
 			var res = new List<List<string>>();
 
-			if (!elementsToGroup.Any(element => Regex.IsMatch(element, TopLevelElementOpenPattern)))
+			if (!elementsToGroup.Any(element => Regex.IsMatch(element, TopLevelElementOpenPattern, RegexOptions.None, TimeSpan.FromSeconds(1))))
 			{
 				return res.Append(elementsToGroup.Prepend("<p>").ToList()).ToList();
 			}
 
-			if (!Regex.IsMatch(elementsToGroup[0], TopLevelElementOpenPattern))
+			if (!Regex.IsMatch(elementsToGroup[0], TopLevelElementOpenPattern, RegexOptions.None, TimeSpan.FromSeconds(1)))
 			{
 				var nextElements = elementsToGroup
-					.TakeWhile(element => !Regex.IsMatch(element, TopLevelElementOpenPattern))
+					.TakeWhile(element => !Regex.IsMatch(element, TopLevelElementOpenPattern, RegexOptions.None, TimeSpan.FromSeconds(1)))
 					.Prepend("<p>").ToList();
 				res.Add(nextElements);
 
 				elementsToGroup = elementsToGroup
-					.SkipWhile(element => !Regex.IsMatch(element, TopLevelElementOpenPattern))
+					.SkipWhile(element => !Regex.IsMatch(element, TopLevelElementOpenPattern, RegexOptions.None, TimeSpan.FromSeconds(1)))
 					.ToList();
 			}
 
@@ -97,7 +98,7 @@ namespace Dfe.PrepareConversions.DocumentGeneration.Helpers
 
 		private static List<string> SplitHtmlIntoElements(string html)
 		{
-			return Regex.Split(html, ElementPattern).Where(element => !string.IsNullOrEmpty(element)).ToList();
+			return Regex.Split(html, ElementPattern, RegexOptions.None, TimeSpan.FromSeconds(1)).Where(element => !string.IsNullOrEmpty(element)).ToList();
 		}
 
 		private static void BuildListFromElements(IListBuilder lBuilder, List<string> elements)
@@ -146,7 +147,7 @@ namespace Dfe.PrepareConversions.DocumentGeneration.Helpers
 						pBuilder.AddNewLine();
 						break;
 					default:
-						if (!Regex.IsMatch(element, ElementPattern))
+						if (!Regex.IsMatch(element, ElementPattern, RegexOptions.None, TimeSpan.FromSeconds(1)))
 						{
 							AddTextElementToParagraph(pBuilder, element, tagsEnabled);
 						}
@@ -176,14 +177,14 @@ namespace Dfe.PrepareConversions.DocumentGeneration.Helpers
 		{
 			var next = elements[0];
 			var remaining = elements.Skip(1).ToList();
-			if (!Regex.IsMatch(next, TopLevelElementOpenPattern))
+			if (!Regex.IsMatch(next, TopLevelElementOpenPattern, RegexOptions.None, TimeSpan.FromSeconds(1)))
 			{
 				var nextElements = remaining
-					.TakeWhile(word => !Regex.IsMatch(word, TopLevelElementOpenPattern))
+					.TakeWhile(word => !Regex.IsMatch(word, TopLevelElementOpenPattern, RegexOptions.None, TimeSpan.FromSeconds(1)))
 					.Prepend(next)
 					.ToList();
 				var leftover = remaining
-					.SkipWhile(word => !Regex.IsMatch(word, TopLevelElementOpenPattern))
+					.SkipWhile(word => !Regex.IsMatch(word, TopLevelElementOpenPattern, RegexOptions.None, TimeSpan.FromSeconds(1)))
 					.ToList();
 
 				return (nextElements, leftover);
