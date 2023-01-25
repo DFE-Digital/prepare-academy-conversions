@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@* TO DO 
+	this layout relies on model data and would be better refactored as a partial 
+*@
+@{
+	Layout = "_Layout";
+}
+
+@section BeforeMain
+{
+	@await RenderSectionAsync("BeforeMain", required: false)
+}
+
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<form method="post" novalidate>
+			<span class="govuk-caption-l">@ViewData["SchoolName"]</span>
+			@RenderBody()
+			<button class="govuk-button" id="save-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton">
+				Save and continue
+			</button>
+		</form>
+	</div>
+
+	<partial name="_UsefulInformation"/>
+</div>

@@ -1,0 +1,38 @@
+﻿@page "/task-list/{id:int}/key-stage-5-performance-tables/additional-information"
+@model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
+@{
+    Model.SuccessPage = Links.KeyStagePerformanceSection.KeyStage5PerformanceTables.Page;
+    ViewData["Title"] = "Key stage 5 performance tables additional information";
+}
+
+@section BeforeMain
+    {
+    <govuk-back-link link-item="@Links.KeyStagePerformanceSection.KeyStage5PerformanceTables" />
+}
+
+@if (Model.ShowError)
+{
+    <partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+        <h1 class="govuk-heading-l">Key stage 5 performance tables</h1>
+        <p class="govuk-body">This information comes from TRAMS and you can add any <a class="govuk-link" href="#additional-information">additional information</a> if you need to. These performance tables and additional information will go into your project template.</p>
+        <p class="govuk-body-s">
+            <br>
+            <a href="https://www.compare-school-performance.service.gov.uk/school/@Model.Project.SchoolURN" class="govuk-link" rel="noreferrer noopener" target="_blank">Source of data: Find and compare school performance (opens in new tab)</a>
+        </p>
+    </div>
+    <div class="govuk-grid-column-full">
+        <vc:key-stage5-performance-tables />
+    </div>
+    <form method="post">
+        <partial name="Shared/_AddtionalInformation" />
+        <govuk-textarea-input id="additional-information" name="key-stage-5-additional-information" asp-for="Project.KeyStage5PerformanceAdditionalInformation" rows="5" />
+        <button class="govuk-button" id="save-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton">
+            Save and continue
+        </button>
+    </form>
+</div>

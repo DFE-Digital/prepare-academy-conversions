@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<CodeAnalysisRuleSet>..\.sonarlint\dfe-digital_a2b-internalcsharp.ruleset</CodeAnalysisRuleSet>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <AdditionalFiles Include="..\.sonarlint\dfe-digital_a2b-internal\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Azure.Identity" Version="1.8.0" />
+	  <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
+	  <PackageReference Include="Microsoft.FeatureManagement" Version="2.5.1" />
+	  <PackageReference Include="Microsoft.Graph" Version="4.49.0" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	  <PackageReference Include="System.Net.Http.Json" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Models\AcademyConversion\" />
+	</ItemGroup>
+
+</Project>

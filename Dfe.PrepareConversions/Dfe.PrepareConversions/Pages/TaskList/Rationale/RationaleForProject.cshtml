@@ -1,0 +1,20 @@
+﻿@page "/task-list/{id:int}/confirm-project-trust-rationale/project-rationale"
+@model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	Model.SuccessPage = Links.RationaleSection.ConfirmProjectAndTrustRationale.Page;
+	ViewData["Title"] = "Project rationale";
+	ViewData["SchoolName"] = Model.Project.SchoolName;
+	ViewData["ProjectId"] = Model.Project.Id;
+}
+
+@section BeforeMain
+{
+	<govuk-back-link link-item="@Links.RationaleSection.ConfirmProjectAndTrustRationale"/>
+}
+
+<govuk-textarea-input
+	heading-label="true" label="Write the rationale for the project"
+	hint="Edit the school's rationale to add your own analysis"
+	id="project-rationale" name="project-rationale"
+	asp-for="Project.RationaleForProject" rows="15" />

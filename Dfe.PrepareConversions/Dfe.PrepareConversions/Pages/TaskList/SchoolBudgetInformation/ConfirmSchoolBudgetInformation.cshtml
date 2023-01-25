@@ -1,0 +1,62 @@
+﻿@page "/task-list/{id:int}/confirm-school-budget-information"
+@model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Model.SuccessPage = Links.TaskList.Index.Page;
+	ViewData["Title"] = "Confirm school budget information";
+	var kw = WidthOverride.TwoThirds;
+}
+
+@section BeforeMain
+{
+	<govuk-back-link link-item="@Links.TaskList.Index" />
+}
+
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+        <h1 class="govuk-heading-l">
+        	Confirm school budget information
+        </h1>
+		<div class="govuk-body">
+			<p>
+				This information comes from the
+				<a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+				The table will go into your project template.
+			</p>
+			<p>
+				You can add <a href="#additional-information">additional information</a> if you need to, this will also go into your project template.
+			</p>
+		</div>
+	</div>
+	<div class="govuk-grid-column-full">
+		<dl class="govuk-summary-list">
+            <govuk-summary-list-row name="financial-year" label="End of current financial year" key-width="@kw" value="@Model.Project.EndOfCurrentFinancialYear.ToDateString()" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="End of current financial year" />
+            <govuk-summary-list-row name="finance-year-current" label="Forecasted revenue carry forward at the end of the current financial year" key-width="@kw" value="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true)" highlight-negative-value="true" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted revenue carry forward at the end of the current financial year" />
+            <govuk-summary-list-row name="finance-current-capital" label="Forecasted capital carry forward at the end of the current financial year" key-width="@kw" value="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true)" highlight-negative-value="true" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted capital carry forward at the end of the current financial year" />
+            <govuk-summary-list-row name="next-financial-year" label="End of next financial year" key-width="@kw" value="@Model.Project.EndOfNextFinancialYear.ToDateString()" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="End of next financial year" />
+            <govuk-summary-list-row name="finance-year-following" label="Forecasted revenue carry forward at the end of the next financial year" key-width="@kw" value="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear?.ToMoneyString(true)" highlight-negative-value="true" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted revenue carry forward at the end of the next financial year" />
+            <govuk-summary-list-row name="finance-projected-capital" label="Forecasted capital carry forward at the end of the next financial year" key-width="@kw" value="@Model.Project.CapitalCarryForwardAtEndMarchNextYear?.ToMoneyString(true)" highlight-negative-value="true" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted capital carry forward at the end of the next financial year" />
+		</dl>
+	</div>
+	<div class="govuk-grid-column-two-thirds">
+		<h2 class="govuk-heading-m">Add any additional information if you need to</h2>
+		<p class="govuk-body">This information will go into your project template under the school budget information section.</p>
+	</div>
+	<div class="govuk-grid-column-full">
+		<dl class="govuk-summary-list">
+			<govuk-summary-list-row id="additional-information" name="school-budget-information-additional-information" label="Additional information" value="@Model.Project.SchoolBudgetInformationAdditionalInformation" asp-page="@Links.SchoolBudgetInformationSection.AdditionalInformation.Page" asp-fragment="additional-information" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
+		</dl>
+		<form method="post">
+			<govuk-checkbox-input name="school-budget-information-complete" asp-for="Project.SchoolBudgetInformationSectionComplete" label="Mark this section as complete, you can still make changes later" />
+
+			<button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
+				Confirm and continue
+			</button>
+		</form>
+	</div>
+</div>

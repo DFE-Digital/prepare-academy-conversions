@@ -1,0 +1,49 @@
+﻿@model IEnumerable<KeyStage2PerformanceTableViewModel>
+<div>
+@{
+	var index = 0;
+	@foreach (var vm in Model)
+	{
+		<table class="govuk-table govuk-!-margin-bottom-9">
+			<caption class="govuk-table__caption govuk-table__caption--m">@vm.Year key stage 2</caption>
+			<thead class="govuk-table__head">
+			<tr class="govuk-table__row">
+				<td class="govuk-table__header"></td>
+				<th scope="col" class="govuk-table__header">Percentage meeting expected standard in reading, writing and maths</th>
+				<th scope="col" class="govuk-table__header">Percentage achieving a higher standard in reading, writing and maths</th>
+				<th scope="col" class="govuk-table__header">Reading progress scores</th>
+				<th scope="col" class="govuk-table__header">Writing progress scores</th>
+				<th scope="col" class="govuk-table__header">Maths progress scores</th>
+			</tr>
+			</thead>
+			<tbody class="govuk-table__body">
+			<tr class="govuk-table__row">
+				<th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
+				<td class="govuk-table__cell" id="@("percentage-meeting-expected-in-rwm-" + index)">@vm.PercentageMeetingExpectedStdInRWM</td>
+				<td class="govuk-table__cell" id="@("percentage-achieving-higher-in-rwm-" + index)">@vm.PercentageAchievingHigherStdInRWM</td>
+				<td class="govuk-table__cell" id="@("reading-progress-score-" + index)">@vm.ReadingProgressScore</td>
+				<td class="govuk-table__cell" id="@("writing-progress-score-" + index)">@vm.WritingProgressScore</td>
+				<td class="govuk-table__cell" id="@("maths-progress-score-" + index)">@vm.MathsProgressScore</td>
+			</tr>
+			<tr class="govuk-table__row">
+				<th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA average</th>
+				<td class="govuk-table__cell" id="@("la-percentage-meeting-expected-in-rwm-" + index)">@vm.LAAveragePercentageMeetingExpectedStdInRWM</td>
+				<td class="govuk-table__cell" id="@("la-percentage-achieving-higher-in-rwm-" + index)">@vm.LAAveragePercentageAchievingHigherStdInRWM</td>
+				<td class="govuk-table__cell" id="@("la-reading-progress-score-" + index)">@vm.LAAverageReadingProgressScore</td>
+				<td class="govuk-table__cell" id="@("la-writing-progress-score-" + index)">@vm.LAAverageWritingProgressScore</td>
+				<td class="govuk-table__cell" id="@("la-maths-progress-score-" + index)">@vm.LAAverageMathsProgressScore</td>
+			</tr>
+			<tr class="govuk-table__row">
+				<th scope="row" class="govuk-table__header">National average</th>
+				<td class="govuk-table__cell" id="@("na-percentage-meeting-expected-in-rwm-" + index)">@vm.NationalAveragePercentageMeetingExpectedStdInRWM</td>
+				<td class="govuk-table__cell" id="@("na-percentage-achieving-higher-in-rwm-" + index)">@vm.NationalAveragePercentageAchievingHigherStdInRWM</td>
+				<td class="govuk-table__cell" id="@("na-reading-progress-score-" + index)">@vm.NationalAverageReadingProgressScore</td>
+				<td class="govuk-table__cell" id="@("na-writing-progress-score-" + index)">@vm.NationalAverageWritingProgressScore</td>
+				<td class="govuk-table__cell" id="@("na-maths-progress-score-" + index)">@vm.NationalAverageMathsProgressScore</td>
+			</tr>
+			</tbody>
+		</table>
+		index++;
+	}
+}
+</div>

@@ -1,0 +1,40 @@
+{
+  "name": "a2b-internal-cypress-tests",
+  "version": "1.0.0",
+  "description": "Automated regression tests targeting pre-prod environment",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npm-install-peers",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DFE-Digital/a2b-internal.git"
+  },
+  "keywords": [
+    "regression",
+    "cypress",
+    "testing"
+  ],
+  "author": "Mike Dally",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DFE-Digital/a2b-internal/issues"
+  },
+  "homepage": "https://github.com/DFE-Digital/a2b-internal#readme",
+  "dependencies": {
+    "axe-core": "^4.5.2",
+    "cypress-sql-server": "^1.0.0",
+    "mochawesome": "^7.0.1"
+  },
+  "devDependencies": {
+    "cypress": "~12.1.0",
+    "cypress-axe": "^1.2.0",
+    "cypress-data-session": "^1.13.0",
+    "cypress-grep": "^2.6.1",
+    "cypress-localstorage-commands": "^1.6.1",
+    "npm-install-peers": "^1.2.2",
+    "typescript": "^4.5.5"
+  }
+}

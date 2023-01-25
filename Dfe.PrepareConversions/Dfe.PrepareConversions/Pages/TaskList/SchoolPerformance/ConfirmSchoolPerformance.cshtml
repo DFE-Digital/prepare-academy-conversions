@@ -1,0 +1,35 @@
+﻿@page "/task-list/{id:int}/school-performance-ofsted-information"
+@model Dfe.PrepareConversions.Pages.BaseAcademyConversionProjectPageModel
+@{
+	ViewData["Title"] = "School performance (Ofsted information)";
+}
+
+@section BeforeMain
+{
+	<govuk-back-link link-item="@Links.TaskList.Index" />
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+        <h1 class="govuk-heading-l">School performance (Ofsted information)</h1>
+		<p class="govuk-body">This information comes from Ofsted. The table will go into your project template.</p>
+		<p class="govuk-body">You can add <a href="#additional-information">additional information</a> if you need to, this will also go into your project template.</p>
+		<br>
+	</div>
+	<div class="govuk-grid-column-full">
+		<vc:school-performance show-additional-information="false" is-preview="false"/>
+	</div>
+	<div class="govuk-grid-column-full">
+		<h2 class="govuk-heading-m">Add any additional information if you need to</h2>
+		<p class="govuk-body">This information will go into your project template under the school performance (Ofsted information) section.</p>
+	</div>
+	<div class="govuk-grid-column-full">
+		<dl class="govuk-summary-list">
+			<govuk-summary-list-row id="additional-information" name="school-performance-additional-information" label="Additional information" value="@Model.Project.SchoolPerformanceAdditionalInformation" asp-page="@Links.SchoolPerformance.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
+		</dl>
+		<form method="post">
+			<button class="govuk-button" id="confirm-and-continue-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</button>
+		</form>
+	</div>
+</div>

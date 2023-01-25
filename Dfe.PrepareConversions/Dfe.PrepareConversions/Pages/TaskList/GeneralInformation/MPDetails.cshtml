@@ -1,0 +1,33 @@
+﻿@page  "/task-list/{id:int}/confirm-general-information/enter-MP-name-and-political-party"
+@model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
+	ViewData["Title"] = "MP details";
+	ViewData["ShowTheyWorkForYouLink"] = true;
+	ViewData["SchoolName"] = Model.Project.SchoolName;
+	ViewData["ProjectId"] = Model.Project.Id;
+}
+
+@section BeforeMain
+{
+	<govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation" />
+}
+
+<div class="govuk-form-group">
+	<h1 class="govuk-label-wrapper">
+		<label class="govuk-label govuk-label--l" for="cleared-by">
+			Enter the name of the MP and their political party
+		</label>
+	</h1>
+	<p class="govuk-body-s">Use the school's postcode to find the name of the MP and their political party on <a href="https://www.theyworkforyou.com" target="blank" id="link-to-they-work-for-you-page">They Work For You (opens in a new tab)</a></p>
+	<vc:school-postcode />
+	<label class="govuk-label govuk-label--m" for="member-of-parliament-name">
+		Enter the MP's name
+	</label>
+	<govuk-text-input name="member-of-parliament-name" id="member-of-parliament-name" asp-for="@Model.Project.MPName" width="20" />
+	<label class="govuk-label govuk-label--m" for="member-of-parliament-party">
+		Enter the MP's political party
+	</label>
+	<govuk-text-input name="member-of-parliament-party" id="member-of-parliament-party" asp-for="@Model.Project.MPParty" width="20" />
+</div>

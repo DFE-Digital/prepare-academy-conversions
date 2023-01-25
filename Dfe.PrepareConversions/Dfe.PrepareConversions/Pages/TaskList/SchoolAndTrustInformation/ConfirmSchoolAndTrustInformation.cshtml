@@ -1,0 +1,44 @@
+@page "/task-list/{id:int}/confirm-school-trust-information-project-dates"
+@using Dfe.PrepareConversions.TagHelpers
+@using Dfe.PrepareConversions.ViewComponents
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Model.SuccessPage = Links.TaskList.Index.Page;
+	ViewData["Title"] = "Confirm school and trust information and project dates";
+}
+
+@section BeforeMain
+{
+	<govuk-back-link link-item="@Links.TaskList.Index" />
+}
+
+@if (Model.ShowError)
+{
+	<partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-two-thirds">
+		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
+		<h1 class="govuk-heading-l">
+			Confirm school and trust information and project dates
+		</h1>
+		<div class="govuk-body">
+			<p>
+				This information is pre-populated from TRAMS and the
+				<a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+			</p>
+		</div>
+	</div>
+	<div class="govuk-grid-column-full">
+		<vc:school-and-trust-information/>
+		<form method="post">
+			<govuk-checkbox-input name="school-and-trust-information-complete" asp-for="Project.SchoolAndTrustInformationSectionComplete" label="Mark this section as complete, you can still make changes later"/>
+
+			<button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton">
+				Confirm and continue
+			</button>
+		</form>
+	</div>
+</div>

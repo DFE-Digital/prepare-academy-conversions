@@ -1,0 +1,113 @@
+﻿// Task list pattern
+
+.app-task-list {
+	list-style-type: none;
+	padding-left: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+
+	@include govuk-media-query($from: tablet) {
+		min-width: 550px;
+	}
+}
+
+.app-task-list__section {
+	display: table;
+	@include govuk-font($size:24, $weight: bold);
+}
+
+.app-task-list__section-number {
+	display: table-cell;
+
+	@include govuk-media-query($from: tablet) {
+		min-width: govuk-spacing(6);
+		padding-right: 0;
+	}
+}
+
+.app-task-list__items {
+	@include govuk-font($size: 19);
+	@include govuk-responsive-margin(9, "bottom");
+	list-style: none;
+	padding-left: 0;
+
+	@include govuk-media-query($from: tablet) {
+		padding-left: govuk-spacing(6);
+	}
+}
+
+.app-task-list__item {
+	border-bottom: 1px solid $govuk-border-colour;
+	margin-bottom: 0 !important;
+	padding-top: govuk-spacing(2);
+	padding-bottom: govuk-spacing(2);
+	@include govuk-clearfix;
+}
+
+.app-task-list__item:first-child {
+	border-top: 1px solid $govuk-border-colour;
+}
+
+.app-task-list__task-name {
+	display: block;
+
+	@include govuk-media-query($from: 450px) {
+		float: left;
+	}
+}
+
+// The `app-task-list__task-completed` class was previously used on the task
+// list for the completed tag (changed in 86c90ec) – it's still included here to
+// avoid breaking task lists in existing prototypes.
+.app-task-list__tag,
+.app-task-list__task-completed {
+	margin-top: govuk-spacing(2);
+	margin-bottom: govuk-spacing(1);
+
+	@include govuk-media-query($from: 450px) {
+		float: right;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}
+
+.empty {
+  display: inline-block;
+  border: 2px solid;
+  outline-offset: -2px;
+  color: #505a5f;
+  background-color: #ffffff;
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 700;
+  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 1;
+  padding-top: 3px;
+  padding-right: 8px;
+  padding-bottom: 3px;
+  padding-left: 8px;
+  margin-right: 8px;
+}
+
+.negative-value {
+	background-color: #F8DDD8;
+	padding: 3px;
+}
+
+.gem-c-contents-list__list-item--numbered
+.gem-c-contents-list__link{display:table}
+.gem-c-contents-list__number
+.gem-c-contents-list__numbered-text{display:table-cell}
+.gem-c-contents-list__number{min-width:1.5em}
+.gem-c-contents-list__numbered-text{padding-left:.3em}
+.direction-rtl
+.gem-c-contents-list__numbered-text{padding-left:0;padding-right:.3em}
+.gem-c-contents-list{position:relative;margin:0 0 20px 0;z-index:1;background:#fff;box-shadow:0 20px 15px -10px #fff}
+.gem-c-contents-list__title{color:#0b0c0c;font-family:"nta",arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-weight:400;font-size:14px;line-height:1.5;margin:0
+
+}@media print {.gem-c-contents-list__title {color: #000 }}@media print {.gem-c-contents-list__title {font-family: sans-serif }}@media (min-width: 40.0625em) {.gem-c-contents-list__title {font-size: 16px;line-height: 1.5 }}@media print {.gem-c-contents-list__title {font-size: 14pt;line-height: 1.5 }}.gem-c-contents-list__list, .gem-c-contents-list__nested-list {color: #0b0c0c;font-family: "nta", arial, sans-serif;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;font-weight: 400;font-size: 14px;line-height: 1.1428571429;margin: 0;padding: 0;list-style-type: none }@media print {.gem-c-contents-list__list, .gem-c-contents-list__nested-list {color: #000 }}@media print {.gem-c-contents-list__list, .gem-c-contents-list__nested-list {font-family: sans-serif }}@media (min-width: 40.0625em) {.gem-c-contents-list__list, .gem-c-contents-list__nested-list {font-size: 16px;line-height: 1.25 }}@media print {.gem-c-contents-list__list, .gem-c-contents-list__nested-list {font-size: 14pt;line-height: 1.2 }}.gem-c-contents-list__list-item--parent>.gem-c-contents-list__link {font-weight: bold }.gem-c-contents-list__link:focus, .gem-c-contents-list__link:active:focus, .gem-c-contents-list__link:link:focus, .gem-c-contents-list__link:visited:focus {outline: 3px solid transparent;background-color: #fd0;box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;text-decoration: none;color: #0b0c0c !important }.gem-c-contents-list__list-item {padding-top: 10px;line-height: 1.3;list-style-type: none }@media (min-width: 40.0625em) {.gem-c-contents-list__list-item {padding-top: 7.5px }}.gem-c-contents-list__list-item--dashed {position: relative;padding-left: 25px;padding-right: 25px }.gem-c-contents-list__list-item--dashed:before {content: "—";position: absolute;left: 0;width: 20px;overflow: hidden }.direction-rtl .gem-c-contents-list__list-item--dashed:before {left: auto;right: 0 }.lte-ie8 .gem-c-contents-list__list-item--dashed .gem-c-contents-list__link {display: inline-block;vertical-align: top }
