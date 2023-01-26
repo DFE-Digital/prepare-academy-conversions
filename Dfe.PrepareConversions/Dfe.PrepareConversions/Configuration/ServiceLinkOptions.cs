@@ -1,4 +1,4 @@
-﻿namespace Dfe.PrepareConversions.Options
+﻿namespace Dfe.PrepareConversions.Configuration
 {
 	public class ServiceLinkOptions
 	{

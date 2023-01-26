@@ -7,6 +7,7 @@ namespace Dfe.PrepareConversions.Data.Models
 	public class AzureAdOptions
 	{
 		public const string Name = "AzureAd";
+
 		public Guid ClientId { get; set; }
 		public string ClientSecret { get; set; }
 		public Guid TenantId { get; set; }
