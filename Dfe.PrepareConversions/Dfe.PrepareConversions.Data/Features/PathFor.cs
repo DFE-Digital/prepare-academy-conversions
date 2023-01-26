@@ -13,7 +13,7 @@ public class PathFor
 
    public static string GetSelectedRegions => "/establishment/regions?{0}";
    public static string GetProjectNotes => "/project-notes/{0}";
-   public static string GetApplicationByReference => "/v2/apply-to-become/application/{0}";
+   public string GetApplicationByReference => _useAcademisation ? "/v2/apply-to-become/application/{0}" : "/application/{0}/applicationReference";
 
    public string GetAllProjects => _useAcademisation ? "/legacy/projects" : "/v2/conversion-projects";
    public string GetProjectById => _useAcademisation ? "/legacy/project/{0}" : "/conversion-projects/{0}";

@@ -63,9 +63,9 @@ public class ApiClient : IApiClient
       return await ActiveClient.GetAsync(_pathFor.GetFilterParameters);
    }
 
-   public async Task<HttpResponseMessage> GetApplicationByReferenceAsync(string id)
+   public async Task<(HttpResponseMessage, bool)> GetApplicationByReferenceAsync(string id)
    {
-      return await TramsClient.GetAsync(string.Format(PathFor.GetApplicationByReference, id));
+      return (await ActiveClient.GetAsync(string.Format(_pathFor.GetApplicationByReference, id)), _useAcademisation);
    }
 
    public async Task<HttpResponseMessage> AddProjectNote(int id, AddProjectNote projectNote)
