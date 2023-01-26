@@ -42,7 +42,7 @@ public class Startup
    private IConfigurationSection GetConfigurationSectionFor<T>()
    {
       string sectionName = typeof(T).Name.Replace("Options", string.Empty);
-      return Configuration.GetSection(sectionName);
+      return Configuration.GetRequiredSection(sectionName);
    }
 
    private T GetTypedConfigurationFor<T>()
