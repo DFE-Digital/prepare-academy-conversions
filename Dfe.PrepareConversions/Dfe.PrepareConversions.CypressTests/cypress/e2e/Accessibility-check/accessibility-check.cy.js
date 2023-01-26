@@ -7,7 +7,7 @@ const impactLevel = ["critical", "minor", "moderate", "serious"];
 const continueOnFail = false;
 
 Cypress._.each(['ipad-mini'], (viewport) => {
-    describe('Check accessibility of the different pages', function () {
+    describe(`Check accessibility of the different pages ${viewport}`, function () {
         conversionLinks.forEach((link) => {
 
             it('Validate accessibility on different pages on Dev env.', function () {

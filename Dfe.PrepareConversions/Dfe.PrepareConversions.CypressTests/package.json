@@ -6,7 +6,8 @@
   "scripts": {
     "postinstall": "npm-install-peers",
     "cy:open": "cypress open",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run",
+    "lint": "eslint . --ext .cy.js,.jsx,.ts,.tsx --ignore-path .gitignore"
   },
   "repository": {
     "type": "git",
