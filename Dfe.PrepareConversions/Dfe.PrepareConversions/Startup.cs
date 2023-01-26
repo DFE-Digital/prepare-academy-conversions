@@ -39,10 +39,15 @@ public class Startup
 
    private IConfiguration Configuration { get; }
 
-   private T GetConfigurationFor<T>()
+   private IConfigurationSection GetConfigurationSectionFor<T>()
    {
       string sectionName = typeof(T).Name.Replace("Options", string.Empty);
-      return Configuration.GetSection(sectionName).Get<T>();
+      return Configuration.GetSection(sectionName);
+   }
+
+   private T GetTypedConfigurationFor<T>()
+   {
+      return GetConfigurationSectionFor<T>().Get<T>();
    }
 
    public void ConfigureServices(IServiceCollection services)
@@ -94,20 +99,20 @@ public class Startup
 
       services.AddHttpClient("TramsClient", (_, client) =>
       {
-         TramsApiOptions tramsApiOptions = GetConfigurationFor<TramsApiOptions>();
+         TramsApiOptions tramsApiOptions = GetTypedConfigurationFor<TramsApiOptions>();
          client.BaseAddress = new Uri(tramsApiOptions.Endpoint);
          client.DefaultRequestHeaders.Add("ApiKey", tramsApiOptions.ApiKey);
       });
 
       services.AddHttpClient("AcademisationClient", (_, client) =>
       {
-         AcademisationApiOptions apiOptions = GetConfigurationFor<AcademisationApiOptions>();
+         AcademisationApiOptions apiOptions = GetTypedConfigurationFor<AcademisationApiOptions>();
          client.BaseAddress = new Uri(apiOptions.BaseUrl);
          client.DefaultRequestHeaders.Add("x-api-key", apiOptions.ApiKey);
       });
 
-      services.Configure<ServiceLinkOptions>(Configuration.GetSection(ServiceLinkOptions.Name));
-      services.Configure<AzureAdOptions>(Configuration.GetSection(AzureAdOptions.Name));
+      services.Configure<ServiceLinkOptions>(GetConfigurationSectionFor<ServiceLinkOptions>());
+      services.Configure<AzureAdOptions>(GetConfigurationSectionFor<AzureAdOptions>());
 
       services.AddScoped<ErrorService>();
       services.AddScoped<IGetEstablishment, EstablishmentService>();

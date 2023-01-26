@@ -1,8 +1,6 @@
-﻿namespace Dfe.PrepareConversions.Configuration
+﻿namespace Dfe.PrepareConversions.Configuration;
+
+public class ServiceLinkOptions
 {
-	public class ServiceLinkOptions
-	{
-		public const string Name = "ServiceLink";
-		public string TransfersUrl { get; set; }
-	}
+   public string TransfersUrl { get; set; }
 }
