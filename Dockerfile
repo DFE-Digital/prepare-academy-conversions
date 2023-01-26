@@ -3,11 +3,11 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /build
 
 # Copy csproj and restore as distinct layers
-COPY ApplyToBecomeInternal/ApplyToBecome.Data/ ./ApplyToBecome.Data/
-COPY ApplyToBecomeInternal/DocumentGeneration/ ./DocumentGeneration/
-COPY ApplyToBecomeInternal/ApplyToBecomeInternal/ ./ApplyToBecomeInternal/
+COPY Dfe.PrepareConversions/Dfe.PrepareConversions.Data/ ./Dfe.PrepareConversions.Data/
+COPY Dfe.PrepareConversions/Dfe.PrepareConversions.DocumentGeneration/ ./Dfe.PrepareConversions.DocumentGeneration/
+COPY Dfe.PrepareConversions/Dfe.PrepareConversions/ ./Dfe.PrepareConversions/
 
-WORKDIR ApplyToBecomeInternal
+WORKDIR Dfe.PrepareConversions
 RUN dotnet restore
 RUN dotnet publish -c Release -o /app
 
@@ -15,4 +15,4 @@ RUN dotnet publish -c Release -o /app
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["dotnet", "ApplyToBecomeInternal.dll"]
+ENTRYPOINT ["dotnet", "Dfe.PrepareConversions.dll"]

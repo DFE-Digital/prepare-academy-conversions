@@ -1,0 +1,32 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Dfe.PrepareConversions.ViewModels.ProjectViewModel
+@inject Dfe.PrepareConversions.Data.Services.Interfaces.IAcademyConversionAdvisoryBoardDecisionRepository decisionRepository
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <span class="govuk-caption-xl">URN @Model.SchoolURN</span>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2" data-cy="select-heading">
+            @Model.SchoolName
+        </h1>
+        <p class="govuk-body govuk-!-margin-bottom-8">
+            Delivery officer:
+
+            @if (Model.AssignedUser == null || string.IsNullOrWhiteSpace(Model?.AssignedUser.FullName))
+            {
+                <span data-id="assigned-user" class="empty">Empty</span>
+            }
+            else
+            {
+                <strong data-id="assigned-user">@Model.AssignedUser.FullName</strong>
+            }
+
+            <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.ProjectAssignment.Index.Page" asp-route-id="@Model.Id">Change</a>
+        </p>
+    </div>
+
+    @(await Component.InvokeAsync("RecordDecisionPreview", new { id = int.Parse(Model.Id) }))
+
+    <div class="govuk-grid-column-full">
+        <partial name="_SubMenu" />
+
+    </div>
+</div>

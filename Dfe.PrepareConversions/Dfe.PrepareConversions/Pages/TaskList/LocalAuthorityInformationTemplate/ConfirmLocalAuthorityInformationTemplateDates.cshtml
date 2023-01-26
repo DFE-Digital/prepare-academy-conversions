@@ -1,0 +1,42 @@
+﻿@page "/task-list/{id:int}/confirm-local-authority-information-template-dates"
+@model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
+@{
+   Model.SuccessPage = Links.TaskList.Index.Page;
+   ViewData["Title"] = "Confirm local authority information template dates";
+}
+
+@section BeforeMain
+{
+   <govuk-back-link link-item="@Links.TaskList.Index"/>
+}
+
+@if (Model.ShowError)
+{
+   <partial name="_ErrorSummary"/>
+}
+
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+      <h1 class="govuk-heading-l">
+         Confirm local authority information template dates
+      </h1>
+   </div>
+   <div class="govuk-grid-column-full">
+      <dl class="govuk-summary-list">
+         <govuk-summary-list-row name="la-info-template-sent-date" label="Date you sent the template" value="@Model.Project.LocalAuthorityInformationTemplateSentDate.ToDateString()" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" hidden-text="date LA proforma was sent to LA"/>
+         <govuk-summary-list-row name="la-info-template-returned-date" label="Date you want the template returned" value="@Model.Project.LocalAuthorityInformationTemplateReturnedDate.ToDateString()" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" hidden-text="date LA proforma was sent back from LA"/>
+         <govuk-summary-list-row name="la-info-template-comments" label="Comments (optional)" asp-for="Project.LocalAuthorityInformationTemplateComments" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" hidden-text="comments"/>
+         <govuk-summary-list-row name="la-info-template-sharepoint-link" label="Add a link to where you have stored the template in Sharepoint" asp-for="Project.LocalAuthorityInformationTemplateLink" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" hidden-text="sharepoint link"/>
+      </dl>
+   </div>
+   <div class="govuk-grid-column-two-thirds">
+      <form method="post">
+         <govuk-checkbox-input name="la-info-template-complete" asp-for="Project.LocalAuthorityInformationTemplateSectionComplete" label="Mark this section as complete, you can still make changes later"/>
+
+         <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
+            Confirm and continue
+         </button>
+      </form>
+   </div>
+</div>

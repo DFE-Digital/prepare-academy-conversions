@@ -1,0 +1,32 @@
+﻿@page "/task-list/{id:int}/confirm-general-information/how-far-converting-school-from-trust"
+@model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
+    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "How far is the converting school from the trust";
+	ViewData["SchoolName"] = Model.Project.SchoolName;
+	ViewData["ProjectId"] = Model.Project.Id;
+}
+
+@section BeforeMain
+{
+	<govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation" />
+}
+
+<div class="govuk-form-group">
+	<h1 class="govuk-label-wrapper">
+		<label class="govuk-label govuk-label--l" for="distance-to-trust-headquarters">
+			How far is the converting school from the trust or other schools in the trust?
+		</label>
+	</h1>
+	<p class="govuk-body">Use the school and trust's postcodes to measure the distance on Bing or Google maps.</p>
+	<div id="distance-to-trust-headquarters-hint" class="govuk-hint">
+		For example, 20
+	</div>
+	<govuk-decimal-input id="distance-to-trust-headquarters" suffix="miles" name="distance-to-trust-headquarters" asp-for="@Model.Project.DistanceFromSchoolToTrustHeadquarters" />
+</div>
+<govuk-textarea-input name="distance-to-trust-headquarters-additional-information"
+					  asp-for="Project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation"
+					  rows="5"
+					  label="Add any additional information if you need to"
+					  hint="This information will go into your project template under the general information section." />

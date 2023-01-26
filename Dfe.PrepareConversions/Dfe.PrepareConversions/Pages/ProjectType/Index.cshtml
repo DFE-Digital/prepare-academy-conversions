@@ -1,0 +1,44 @@
+﻿@page "/project-type"
+@using Dfe.PrepareConversions.Data.Models
+
+@model Dfe.PrepareConversions.Pages.ProjectType.IndexModel
+@{
+    ViewData["Title"] = "Project type - Prepare conversions and transfers";
+}
+@section BeforeMain
+    {
+    <partial name="_ErrorSummary" />
+}
+
+    <h1 class="govuk-heading-l" data-cy="select-heading">What do you want to do?</h1>
+
+    <form method="post">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                </legend>
+                <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios" id="ProjectType">
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" type="radio" asp-for="@Model.ProjectType"
+                               title="conversion" value="@ProjectTypes.Conversion" id="conversion-radio"
+                               data-cy="select-projecttype-input-conversion" />
+                        <label class="govuk-label govuk-radios__label" for="conversion-radio" id="">
+	                        Manage an academy conversion
+                        </label>
+                    </div>
+
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" type="radio" asp-for="@Model.ProjectType"
+                               title="@ProjectTypes.Transfer" value="@ProjectTypes.Transfer" id="transfer-radio" 
+                               data-cy="select-projecttype-input-transfer" />
+                        <label class="govuk-label govuk-radios__label" for="transfer-radio" id="">
+	                        Manage an academy transfer
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <button class="govuk-button" data-module="govuk-button" id="submit-btn" data-cy="select-common-submitbutton">
+            Continue
+        </button>
+    </form>

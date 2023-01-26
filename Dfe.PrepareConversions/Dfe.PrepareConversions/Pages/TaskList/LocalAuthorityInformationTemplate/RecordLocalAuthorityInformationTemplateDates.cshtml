@@ -1,0 +1,38 @@
+﻿@page "/task-list/{id:int}/record-local-authority-information-template-dates"
+@model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
+@{
+   Model.SuccessPage = Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates.Page;
+   ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Record dates for local authority information template";
+}
+
+@section BeforeMain
+{
+   <govuk-back-link link-item="@Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates"/>
+}
+
+@if (Model.ShowError)
+{
+   <partial name="_ErrorSummary"/>
+}
+
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+      <h1 class="govuk-heading-l">
+         Record dates for the local authority information template
+      </h1>
+      <p class="govuk-body">
+         Send the local authority information template like you normally would on your email. Then record the date you sent it and when you want it returned to you.
+      </p>
+      <form method="post" novalidate>
+         <govuk-date-input name="la-info-template-sent-date" asp-for="Project.LocalAuthorityInformationTemplateSentDate" label="Date you sent the template" hint="For example, 27 3 2021"/>
+         <govuk-date-input name="la-info-template-returned-date" asp-for="Project.LocalAuthorityInformationTemplateReturnedDate" label="Date you want the template returned to you" hint="For example, 27 3 2021"/>
+         <govuk-textarea-input name="la-info-template-comments" asp-for="Project.LocalAuthorityInformationTemplateComments" rows="5" label="Comments (optional)"/>
+         <govuk-text-input name="la-info-template-sharepoint-link" asp-for="Project.LocalAuthorityInformationTemplateLink" label="Add a link to where you have stored the template in Sharepoint"/>
+
+         <button class="govuk-button" id="save-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton">
+            Save and continue
+         </button>
+      </form>
+   </div>
+</div>

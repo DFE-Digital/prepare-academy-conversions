@@ -1,0 +1,12 @@
+﻿@model Dfe.PrepareConversions.ViewModels.CheckboxInputViewModel
+<div class="govuk-form-group">
+	<div class="govuk-checkboxes">
+		<div class="govuk-checkboxes__item">
+			<input name="@Model.Name-hidden" type="hidden" value="false" />
+			<input class="govuk-checkboxes__input" id="@Model.Id" name="@Model.Name" type="checkbox" value="true" checked="@("true".Equals(Model.Value, StringComparison.OrdinalIgnoreCase))">
+			<label class="govuk-label govuk-checkboxes__label" for="@Model.Id">
+				@Model.Label
+			</label>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,17 @@
+﻿@page "/task-list/{id:int}/risks-issues"
+@model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	Model.SuccessPage = Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page;
+	ViewData["Title"] = "Risks and issues";
+	ViewData["SchoolName"] = Model.Project.SchoolName;
+	ViewData["ProjectId"] = Model.Project.Id;
+}
+
+@section BeforeMain
+{
+	<govuk-back-link link-item="@Links.RisksAndIssuesSection.ConfirmRisksAndIssues"/>
+}
+
+<govuk-textarea-input heading-label="true" label="Write about any risks or issues for this conversion"
+                      name="risks-and-issues" asp-for="Project.RisksAndIssues" rows="15" />

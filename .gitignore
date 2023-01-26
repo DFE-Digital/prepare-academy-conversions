@@ -450,8 +450,8 @@ $RECYCLE.BIN/
 *.css.map
 
 # govuk frontend stuff
-/ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot/assets
-/ApplyToBecomeInternal/ApplyToBecomeInternal/wwwroot/dist
+/Dfe.PrepareConversions/Dfe.PrepareConversions/wwwroot/assets
+/Dfe.PrepareConversions/Dfe.PrepareConversions/wwwroot/dist
 
 # minified js
 *.min.js
@@ -478,3 +478,6 @@ backend.vars
 /Brewfile.lock.json
 /terraform/Brewfile.lock.json
 /terraform.gpaas-azure-migration/Brewfile.lock.json
+
+# sonar cloud
+/Dfe.PrepareConversions/.sonarlint
