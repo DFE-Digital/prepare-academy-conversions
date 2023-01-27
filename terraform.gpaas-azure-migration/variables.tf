@@ -59,11 +59,6 @@ variable "enable_mssql_database" {
   type        = bool
 }
 
-variable "enable_redis_cache" {
-  description = "Set to true to create a Redis Cache"
-  type        = bool
-}
-
 variable "enable_cdn_frontdoor" {
   description = "Enable Azure CDN Front Door. This will use the Container Apps endpoint as the origin."
   type        = bool
