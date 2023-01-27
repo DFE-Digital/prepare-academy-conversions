@@ -1,10 +1,7 @@
-﻿namespace Dfe.PrepareConversions.Configuration
-{
-	public class TramsApiOptions
-	{
-		public const string Name = "TramsApi";
+﻿namespace Dfe.PrepareConversions.Configuration;
 
-		public string ApiKey { get; set; }
-		public string Endpoint { get; set; }
-	}
+public class TramsApiOptions
+{
+   public string ApiKey { get; set; }
+   public string Endpoint { get; set; }
 }
