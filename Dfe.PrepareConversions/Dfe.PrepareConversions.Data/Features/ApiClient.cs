@@ -14,7 +14,7 @@ public class ApiClient : IApiClient
 {
    private readonly IHttpClientFactory _httpClientFactory;
    private readonly PathFor _pathFor;
-   private readonly bool _useAcademisation;
+   public readonly bool _useAcademisation;
 
    public ApiClient(IHttpClientFactory httpClientFactory, IFeatureManager features, PathFor pathFor)
    {
@@ -63,9 +63,10 @@ public class ApiClient : IApiClient
       return await ActiveClient.GetAsync(_pathFor.GetFilterParameters);
    }
 
-   public async Task<(HttpResponseMessage, bool)> GetApplicationByReferenceAsync(string id)
+   public async Task<HttpResponseMessage> GetApplicationByReferenceAsync(string id)
    {
-      return (await ActiveClient.GetAsync(string.Format(_pathFor.GetApplicationByReference, id)), _useAcademisation);
+      var test = await ActiveClient.GetAsync(string.Format(_pathFor.GetApplicationByReference, id));
+      return await ActiveClient.GetAsync(string.Format(_pathFor.GetApplicationByReference, id));
    }
 
    public async Task<HttpResponseMessage> AddProjectNote(int id, AddProjectNote projectNote)

@@ -1,7 +1,9 @@
 ﻿using ApplyToBecome.Data.Models.AcademisationApplication;
 using Dfe.PrepareConversions.Data.Features;
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.Application;
 using Microsoft.Extensions.Logging;
+using Microsoft.FeatureManagement;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -12,30 +14,33 @@ public class ApplicationRepository
 {
    private readonly IApiClient _apiClient;
    private readonly ILogger<ApplicationRepository> _logger;
+   private readonly bool _useAcademisation;
 
-   public ApplicationRepository(IApiClient apiClient, ILogger<ApplicationRepository> logger)
+   public ApplicationRepository(IApiClient apiClient, IFeatureManager features, ILogger<ApplicationRepository> logger)
    {
       _apiClient = apiClient;
       _logger = logger;
+      _useAcademisation = features.IsEnabledAsync(FeatureFlags.UseAcademisation).Result;
    }
 
    public async Task<ApiResponse<Application>> GetApplicationByReference(string id)
    {
-      (HttpResponseMessage, bool) response = await _apiClient.GetApplicationByReferenceAsync(id);
+      HttpResponseMessage response = await _apiClient.GetApplicationByReferenceAsync(id);
 
-      if (response.Item1.IsSuccessStatusCode)
+      if (response.IsSuccessStatusCode)
       {
-         if (response.Item2)
+         if (_useAcademisation)
          {
-            ApiV2Wrapper<AcademisationApplication> academisationOuterResponse = await response.Item1.Content.ReadFromJsonAsync<ApiV2Wrapper<AcademisationApplication>>();
-            
-            return new ApiResponse<Application>(response.Item1.StatusCode, AcademisationApplication.MapToApplication(academisationOuterResponse.Data));
+            AcademisationApplication academisationOuterResponse = await response.Content.ReadFromJsonAsync<AcademisationApplication>();
+            return new ApiResponse<Application>(response.StatusCode, AcademisationApplication.MapToApplication(academisationOuterResponse));
          }
-         ApiV2Wrapper<Application> outerResponse = await response.Item1.Content.ReadFromJsonAsync<ApiV2Wrapper<Application>>();
-         return new ApiResponse<Application>(response.Item1.StatusCode, outerResponse.Data);
+
+         ApiV2Wrapper<Application> outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<Application>>();
+         return new ApiResponse<Application>(response.StatusCode, outerResponse.Data);
       }
 
       _logger.LogWarning("Unable to get school application form data for establishment with id: {id}", id);
-      return new ApiResponse<Application>(response.Item1.StatusCode, null);
+      return new ApiResponse<Application>(response.StatusCode, null);
+
    }
 }
