@@ -14,6 +14,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
+using Microsoft.FeatureManagement;
 
 namespace Dfe.PrepareConversions.Data.Tests.Services;
 
@@ -22,14 +23,15 @@ public class ApplicationRepositoryTests
    private readonly ApplicationRepository _applicationRepository;
    private readonly Mock<IApiClient> _mockApiClient;
    private readonly MockHttpMessageHandler _mockHandler;
+   private readonly Mock<IFeatureManager> _mockFeatures;
 
    public ApplicationRepositoryTests()
    {
       _mockHandler = new MockHttpMessageHandler();
       _mockApiClient = new Mock<IApiClient>();
-
+      _mockFeatures = new Mock<IFeatureManager>();
       ITestLoggerFactory testLogger = TestLoggerFactory.Create();
-      _applicationRepository = new ApplicationRepository(_mockApiClient.Object, testLogger.CreateLogger<ApplicationRepository>()
+      _applicationRepository = new ApplicationRepository(_mockApiClient.Object, _mockFeatures.Object, testLogger.CreateLogger<ApplicationRepository>()
       );
    }
 
