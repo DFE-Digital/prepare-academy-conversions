@@ -1,3 +1,5 @@
+/* eslint  no-unused-vars: 0 */
+/* eslint  no-constant-condition: 0 */
 /// <reference types ='Cypress'/>
 
 import { data } from "../../fixtures/stagingProject-body.json"

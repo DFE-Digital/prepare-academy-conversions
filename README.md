@@ -126,6 +126,7 @@ it('Has no detectable a11y violations on load', () => {
   // Test the page at initial load
   cy.checkA11y()
 })
+//By default, it will scan the whole page but it also can be configured to run against a specific element, or to exclude some elements.
 ```
 ```
 i.e.,
@@ -142,3 +143,70 @@ it('Has no detectable a11y violations on load (with custom parameters)', () => {
 })
 ```
 For more receipes: https://www.npmjs.com/package/cypress-axe
+
+##### Upgrading Cypress version
+EVERY 6 to 8 weeks, there is a significant update that will be rolled out with some changes.
+To see the cypress change longs navigate to this link: https://docs.cypress.io/guides/references/changelog#
+Here you can view the bug fixes, performance fixes and features etc. Latest version you will find at the top of the list with release date. You can jump to the specific version by clicking on the links on the right side under section on this page.
+
+##Update Cypress using NPM
+-Close the cypress runner properly by clicking on Stop button then x button.
+
+-Type below command. Here replace 12.2.0 with latest version
+ `npm install --save-dev cypress@12.2.0`
+
+-Check Cypress version is updated using below command
+ `$ npx cypress --version`
+
+ ##Update Cypress using package.json
+ -Cose the cypress runner properly by clicking on Stop button then x button.
+ 
+ -Navigate to your package.json.
+ 
+ -Change the cypress version to the current updated version in package.json
+  `"cypress": "12.2.0"`
+
+ -Type below command
+  `$ npx install cypress`
+
+ -Check cypress version
+  `$ npx cypress --version`
+
+
+##### Cypress Linting
+ Cypress ESLint Plugin
+ ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs.
+
+ Note: If you installed ESLint globally then you must also install eslint-plugin-cypress globally.
+
+ -Installation using npm
+  `npm install eslint-plugin-cypress --save-dev`
+
+ -Installation using yarn
+  `yarn add eslint-plugin-cypress --dev` 
+ 
+ -Usage: Add an .eslintrc.json file to your cypress directory with the following:
+   {
+      "plugins": [
+      "cypress"
+     ]
+    }
+
+-Add rules, example:
+  {
+    "rules": {
+      "cypress/no-assigning-return-values": "error",
+      "cypress/no-unnecessary-waiting": "error",
+      "cypress/assertion-before-screenshot": "warn",
+      "cypress/no-force": "warn",
+      "cypress/no-async-tests": "error",
+      "cypress/no-pause": "error"
+    }
+  }
+ -Use the recommended configuration and you can forego configuring plugins, rules, and env individually.
+  {
+    "extends": [
+      "plugin:cypress/recommended"
+    ]
+  }
+```
