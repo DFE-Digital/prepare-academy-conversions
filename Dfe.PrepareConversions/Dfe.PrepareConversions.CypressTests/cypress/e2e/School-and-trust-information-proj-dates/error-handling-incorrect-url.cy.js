@@ -1,5 +1,4 @@
 /// <reference types ='Cypress'/>
-const axe = require("axe-core");
 
 Cypress._.each(['ipad-mini'], (viewport) => {
     describe(`84596 Error handling should present correctly to the user on ${viewport}`, () => {

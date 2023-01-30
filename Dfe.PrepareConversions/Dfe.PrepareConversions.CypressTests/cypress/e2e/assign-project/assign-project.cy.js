@@ -1,8 +1,7 @@
 /// <reference types ='Cypress'/>
 
 Cypress._.each(['ipad-mini'], (viewport) => {
-    describe('Assign project to user', () => {
-
+    describe(`Assign project to user ${viewport}`, () => {
         beforeEach(() => {
             cy.selectFirstProject();
         })
