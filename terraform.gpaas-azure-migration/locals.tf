@@ -9,7 +9,6 @@ locals {
   container_command                           = var.container_command
   container_secret_environment_variables      = var.container_secret_environment_variables
   enable_mssql_database                       = var.enable_mssql_database
-  enable_redis_cache                          = var.enable_redis_cache
   enable_cdn_frontdoor                        = var.enable_cdn_frontdoor
   restrict_container_apps_to_cdn_inbound_only = var.restrict_container_apps_to_cdn_inbound_only
   cdn_frontdoor_enable_rate_limiting          = var.cdn_frontdoor_enable_rate_limiting

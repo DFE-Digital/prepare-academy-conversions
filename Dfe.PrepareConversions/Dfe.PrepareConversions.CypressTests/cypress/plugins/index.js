@@ -49,3 +49,7 @@ module.export = (on, config) => {
   require('cypress-grep/src/plugin')(config)
 }
 // ***********************************************************
+
+module.export = (on, config) => {
+  require('eslint/src/plugin')(config)
+}

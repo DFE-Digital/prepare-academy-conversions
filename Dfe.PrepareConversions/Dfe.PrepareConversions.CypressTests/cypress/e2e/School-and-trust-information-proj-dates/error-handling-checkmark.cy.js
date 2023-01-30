@@ -21,7 +21,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
                 }
                 else {
                     cy.uncheckSchoolTrust()
-                };
+                }
             });
         });
         
