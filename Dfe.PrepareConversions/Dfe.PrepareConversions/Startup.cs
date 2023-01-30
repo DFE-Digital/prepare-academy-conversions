@@ -1,17 +1,15 @@
+using Dfe.PrepareConversions.Authorization;
+using Dfe.PrepareConversions.Configuration;
 using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.AzureAd;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
-using Dfe.PrepareConversions.Authorization;
-using Dfe.PrepareConversions.Configuration;
-using Dfe.PrepareConversions.Options;
 using Dfe.PrepareConversions.Security;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -22,9 +20,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
-using Newtonsoft.Json.Linq;
-using Serilog;
-using StackExchange.Redis;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -33,12 +28,27 @@ namespace Dfe.PrepareConversions;
 
 public class Startup
 {
+   private readonly TimeSpan _authenticationExpiration;
+
    public Startup(IConfiguration configuration)
    {
       Configuration = configuration;
+
+      _authenticationExpiration = TimeSpan.FromMinutes(int.Parse(Configuration["AuthenticationExpirationInMinutes"] ?? "60"));
    }
 
-   public IConfiguration Configuration { get; }
+   private IConfiguration Configuration { get; }
+
+   private IConfigurationSection GetConfigurationSectionFor<T>()
+   {
+      string sectionName = typeof(T).Name.Replace("Options", string.Empty);
+      return Configuration.GetRequiredSection(sectionName);
+   }
+
+   private T GetTypedConfigurationFor<T>()
+   {
+      return GetConfigurationSectionFor<T>().Get<T>();
+   }
 
    public void ConfigureServices(IServiceCollection services)
    {
@@ -57,16 +67,14 @@ public class Startup
       services.AddControllersWithViews()
          .AddMicrosoftIdentityUI();
 
-      services.AddScoped(sp => sp.GetService<IHttpContextAccessor>()!.HttpContext.Session);
+      services.AddScoped(sp => sp.GetService<IHttpContextAccessor>()?.HttpContext?.Session);
       services.AddSession(options =>
       {
-         options.IdleTimeout =
-            TimeSpan.FromMinutes(int.Parse(Configuration["AuthenticationExpirationInMinutes"]));
+         options.IdleTimeout = _authenticationExpiration;
          options.Cookie.Name = ".ManageAnAcademyConversion.Session";
          options.Cookie.IsEssential = true;
       });
       services.AddHttpContextAccessor();
-      ConfigureRedisConnection(services);
 
       services.AddAuthorization(options => { options.DefaultPolicy = SetupAuthorizationPolicyBuilder().Build(); });
 
@@ -78,8 +86,7 @@ public class Startup
             options.Cookie.Name = ".ManageAnAcademyConversion.Login";
             options.Cookie.HttpOnly = true;
             options.Cookie.IsEssential = true;
-            options.ExpireTimeSpan =
-               TimeSpan.FromMinutes(int.Parse(Configuration["AuthenticationExpirationInMinutes"]));
+            options.ExpireTimeSpan = _authenticationExpiration;
             options.SlidingExpiration = true;
             if (string.IsNullOrEmpty(Configuration["CI"]))
             {
@@ -90,24 +97,22 @@ public class Startup
       services.AddScoped<IApiClient, ApiClient>();
       services.AddSingleton<PathFor>();
 
-      services.AddHttpClient("TramsClient", (sp, client) =>
+      services.AddHttpClient("TramsClient", (_, client) =>
       {
-         IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
-         TramsApiOptions tramsApiOptions = configuration.GetSection(TramsApiOptions.Name).Get<TramsApiOptions>();
+         TramsApiOptions tramsApiOptions = GetTypedConfigurationFor<TramsApiOptions>();
          client.BaseAddress = new Uri(tramsApiOptions.Endpoint);
          client.DefaultRequestHeaders.Add("ApiKey", tramsApiOptions.ApiKey);
       });
 
-      services.AddHttpClient("AcademisationClient", (sp, client) =>
+      services.AddHttpClient("AcademisationClient", (_, client) =>
       {
-         IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
-         AcademisationApiOptions apiOptions = configuration.GetSection(AcademisationApiOptions.Name).Get<AcademisationApiOptions>();
+         AcademisationApiOptions apiOptions = GetTypedConfigurationFor<AcademisationApiOptions>();
          client.BaseAddress = new Uri(apiOptions.BaseUrl);
          client.DefaultRequestHeaders.Add("x-api-key", apiOptions.ApiKey);
       });
 
-      services.Configure<ServiceLinkOptions>(Configuration.GetSection(ServiceLinkOptions.Name));
-      services.Configure<AzureAdOptions>(Configuration.GetSection(AzureAdOptions.Name));
+      services.Configure<ServiceLinkOptions>(GetConfigurationSectionFor<ServiceLinkOptions>());
+      services.Configure<AzureAdOptions>(GetConfigurationSectionFor<AzureAdOptions>());
 
       services.AddScoped<ErrorService>();
       services.AddScoped<IGetEstablishment, EstablishmentService>();
@@ -152,15 +157,13 @@ public class Startup
       app.UseHttpsRedirection();
 
       //For Azure AD redirect uri to remain https
-      ForwardedHeadersOptions forwardOptions = new ForwardedHeadersOptions { ForwardedHeaders = ForwardedHeaders.All, RequireHeaderSymmetry = false };
+      ForwardedHeadersOptions forwardOptions = new() { ForwardedHeaders = ForwardedHeaders.All, RequireHeaderSymmetry = false };
       forwardOptions.KnownNetworks.Clear();
       forwardOptions.KnownProxies.Clear();
       app.UseForwardedHeaders(forwardOptions);
 
       app.UseStaticFiles();
-
       app.UseRouting();
-
       app.UseSentryTracing();
       app.UseSession();
       app.UseAuthentication();
@@ -190,56 +193,15 @@ public class Startup
    /// <returns>AuthorizationPolicyBuilder</returns>
    private AuthorizationPolicyBuilder SetupAuthorizationPolicyBuilder()
    {
-      AuthorizationPolicyBuilder policyBuilder = new AuthorizationPolicyBuilder();
-      string allowedRoles = Configuration.GetSection("AzureAd")["AllowedRoles"];
+      AuthorizationPolicyBuilder policyBuilder = new();
       policyBuilder.RequireAuthenticatedUser();
-      if (!string.IsNullOrWhiteSpace(allowedRoles))
+
+      string allowedRoles = Configuration.GetSection("AzureAd")["AllowedRoles"];
+      if (string.IsNullOrWhiteSpace(allowedRoles) is false)
       {
          policyBuilder.RequireClaim(ClaimTypes.Role, allowedRoles.Split(','));
       }
 
       return policyBuilder;
-   }
-
-   private void ConfigureRedisConnection(IServiceCollection services)
-   {
-      bool vcapServicesDefined = !string.IsNullOrEmpty(Configuration["VCAP_SERVICES"]);
-      bool redisUrlDefined = !string.IsNullOrEmpty(Configuration["REDIS_URL"]);
-
-      if (!vcapServicesDefined && !redisUrlDefined)
-      {
-         return;
-      }
-
-      string redisPass;
-      string redisHost;
-      string redisPort;
-      bool redisTls = false;
-
-
-      if (vcapServicesDefined)
-      {
-         JObject vcapConfiguration = JObject.Parse(Configuration["VCAP_SERVICES"]);
-         JToken redisCredentials = vcapConfiguration["redis"]?[0]?["credentials"];
-         redisPass = (string)redisCredentials?["password"];
-         redisHost = (string)redisCredentials?["host"];
-         redisPort = (string)redisCredentials?["port"];
-         redisTls = (bool)redisCredentials?["tls_enabled"];
-      }
-      else
-      {
-         Uri redisUri = new Uri(Configuration["REDIS_URL"]);
-         redisPass = redisUri.UserInfo.Split(":")[1];
-         redisHost = redisUri.Host;
-         redisPort = redisUri.Port.ToString();
-      }
-
-      ConfigurationOptions redisConfigurationOptions = new ConfigurationOptions { Password = redisPass, EndPoints = { $"{redisHost}:{redisPort}" }, Ssl = redisTls };
-
-      ConnectionMultiplexer redisConnection = ConnectionMultiplexer.Connect(redisConfigurationOptions);
-
-      services.AddStackExchangeRedisCache(
-         options => { options.ConfigurationOptions = redisConfigurationOptions; });
-      services.AddDataProtection().PersistKeysToStackExchangeRedis(redisConnection, "DataProtectionKeys");
    }
 }
