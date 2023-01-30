@@ -65,7 +65,6 @@ public class ApiClient : IApiClient
 
    public async Task<HttpResponseMessage> GetApplicationByReferenceAsync(string id)
    {
-      var test = await ActiveClient.GetAsync(string.Format(_pathFor.GetApplicationByReference, id));
       return await ActiveClient.GetAsync(string.Format(_pathFor.GetApplicationByReference, id));
    }
 
