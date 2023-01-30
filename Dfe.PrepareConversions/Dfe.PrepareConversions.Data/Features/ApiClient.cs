@@ -14,7 +14,7 @@ public class ApiClient : IApiClient
 {
    private readonly IHttpClientFactory _httpClientFactory;
    private readonly PathFor _pathFor;
-   public readonly bool _useAcademisation;
+   private readonly bool _useAcademisation;
 
    public ApiClient(IHttpClientFactory httpClientFactory, IFeatureManager features, PathFor pathFor)
    {
