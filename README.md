@@ -144,6 +144,7 @@ it('Has no detectable a11y violations on load (with custom parameters)', () => {
 ```
 For more receipes: https://www.npmjs.com/package/cypress-axe
 
+
 ##### Upgrading Cypress version
 EVERY 6 to 8 weeks, there is a significant update that will be rolled out with some changes.
 To see the cypress change longs navigate to this link: https://docs.cypress.io/guides/references/changelog#
