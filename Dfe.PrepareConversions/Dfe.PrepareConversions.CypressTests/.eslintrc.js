@@ -16,3 +16,4 @@ module.exports = {
         "cypress/no-assigning-return-values": 1
       }
   };
+  

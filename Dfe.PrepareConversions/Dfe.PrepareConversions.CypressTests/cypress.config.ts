@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
