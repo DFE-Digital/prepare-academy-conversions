@@ -2,7 +2,7 @@ name: Pull request checks
 
 on:
   push:
-    branches: [ main, 'ci/lint' ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
     types: [opened, synchronize, reopened]
