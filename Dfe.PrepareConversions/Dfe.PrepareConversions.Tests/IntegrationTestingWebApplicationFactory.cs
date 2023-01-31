@@ -49,7 +49,8 @@ namespace Dfe.PrepareConversions.Tests
 						{ "TramsApi:Endpoint", $"http://localhost:{_port}" },
 						{ "AcademisationApi:BaseUrl", $"http://localhost:{_port}" },
 						{ "AzureAd:AllowedRoles", string.Empty }, // Do not restrict access for integration test
-						{ "ServiceLink:TransfersUrl", "https://an-external-service.com/" }
+						{ "ServiceLink:TransfersUrl", "https://an-external-service.com/" },
+                  { "FeatureManagement:UseAcademisation", "false" }
                })
 					.AddEnvironmentVariables();
 			});

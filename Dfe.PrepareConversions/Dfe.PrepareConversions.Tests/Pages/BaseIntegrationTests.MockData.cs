@@ -41,7 +41,7 @@ namespace Dfe.PrepareConversions.Tests.Pages
             RegionQueryString = Array.Empty<string>()
          };
 
-			_factory.AddPostWithJsonRequest(_pathFor.GetAllProjects, searchModel, response);
+			_factory.AddPostWithJsonRequest(PathFor.GetAllProjects, searchModel, response);
 			return projects;
 		}
 
@@ -54,7 +54,7 @@ namespace Dfe.PrepareConversions.Tests.Pages
 			};
 
 
-			_factory.AddGetWithJsonResponse(_pathFor.GetFilterParameters, filterParameters);
+			_factory.AddGetWithJsonResponse(PathFor.GetFilterParameters, filterParameters);
 
 			return filterParameters;
 		}
@@ -64,7 +64,7 @@ namespace Dfe.PrepareConversions.Tests.Pages
 			var project = _fixture.Create<AcademyConversionProject>();
          postSetup?.Invoke(project);
 
-         _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetProjectById, project.Id), project);
+         _factory.AddGetWithJsonResponse(string.Format(PathFor.GetProjectById, project.Id), project);
 
 			return project;
 		}
@@ -101,7 +101,7 @@ namespace Dfe.PrepareConversions.Tests.Pages
 				.With(expectedValue, value)
 				.Create();
 
-         _factory.AddPatchWithJsonRequest(string.Format(_pathFor.UpdateProject, project.Id), request, project);
+         _factory.AddPatchWithJsonRequest(string.Format(PathFor.UpdateProject, project.Id), request, project);
 			return request;
 		}
 
@@ -114,14 +114,14 @@ namespace Dfe.PrepareConversions.Tests.Pages
 
          configure?.Invoke(request);
 
-         _factory.AddPatchWithJsonRequest(string.Format(_pathFor.UpdateProject, project.Id), request, project);
+         _factory.AddPatchWithJsonRequest(string.Format(PathFor.UpdateProject, project.Id), request, project);
 			return request;
 		}
 
 		public ProjectNote AddPostProjectNote(int id, AddProjectNote request)
       {
 			var response = new ProjectNote { Subject = request.Subject, Note = request.Note, Author = request.Author, Date = request.Date };
-         _factory.AddPostWithJsonRequest(string.Format(_pathFor.AddProjectNote, id), request, response);
+         _factory.AddPostWithJsonRequest(string.Format(PathFor.AddProjectNote, id), request, response);
 			return response;
 		}
 
@@ -135,13 +135,13 @@ namespace Dfe.PrepareConversions.Tests.Pages
 			var request = postProcess(composer)
 				.Create();
 
-			_factory.AddPatchWithJsonRequest( string.Format(_pathFor.UpdateProject, project.Id), request, project);
+			_factory.AddPatchWithJsonRequest( string.Format(PathFor.UpdateProject, project.Id), request, project);
 			return request;
 		}
 
 		public void AddPatchError(int id)
       {
-         _factory.AddErrorResponse(string.Format(_pathFor.UpdateProject, id), "patch");
+         _factory.AddErrorResponse(string.Format(PathFor.UpdateProject, id), "patch");
       }
 
 		public void AddProjectNotePostError(int id)
@@ -176,7 +176,7 @@ namespace Dfe.PrepareConversions.Tests.Pages
          postSetup?.Invoke(application);
 
          var response = new ApiV2Wrapper<Application> { Data = application };
-         _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetApplicationByReference, application.ApplicationId), response);
+         _factory.AddGetWithJsonResponse(string.Format(PathFor.GetApplicationByReference, application.ApplicationId), response);
 			return application;
 		}
 

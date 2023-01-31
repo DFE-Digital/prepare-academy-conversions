@@ -19,14 +19,14 @@ namespace Dfe.PrepareConversions.Tests.Pages
 	{
 		protected readonly IntegrationTestingWebApplicationFactory _factory;
       protected readonly Fixture _fixture;
-      private readonly PathFor _pathFor;
+      protected PathFor PathFor { get; }
 
       protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory)
 		{
 			_factory = factory;
          _fixture = new Fixture();
-         _pathFor = new PathFor(factory.Services.GetService(typeof(IFeatureManager)) as IFeatureManager);
-
+         PathFor = new PathFor();
+         
          Context = CreateBrowsingContext(factory.CreateClient());
       }
 

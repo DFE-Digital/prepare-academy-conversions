@@ -300,7 +300,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          academiesApplication.TrustName = academisationApplication.JoinTrustDetails.TrustName;
          academiesApplication.ApplicationType = academisationApplication.ApplicationType;
          academiesApplication.ApplicationId =
-            academisationApplication.ApplicationReference; //Do we want this to be the case going forwards?
+            academisationApplication.ApplicationReference; 
          //academiesApplication.ApplicationLeadAuthorName = academisationApplication.Contributors (we have contributors on academisation but how do we know their the lead)
          academiesApplication.ChangesToTrust = academisationApplication.JoinTrustDetails.ChangesToTrust switch
          {
