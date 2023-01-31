@@ -8,7 +8,7 @@ module.exports = {
       'plugin:cypress/recommended',
     ],
     "rules": {
-        "no-mixed-spaces-and-tabs": 1, // disable rule
+        "no-mixed-spaces-and-tabs": 1,
         "no-constant-condition": 1,
         "no-unused-vars": 1,
         "no-undef": 1,
@@ -16,4 +16,3 @@ module.exports = {
         "cypress/no-assigning-return-values": 1
       }
   };
-  
