@@ -13,6 +13,6 @@ module.exports = {
         "no-unused-vars": 1,
         "no-undef": 1,
         "no-useless-escape": 1,
-        "no-assigning-return-values": 1
+        "cypress/no-assigning-return-values": 1
       }
   };
