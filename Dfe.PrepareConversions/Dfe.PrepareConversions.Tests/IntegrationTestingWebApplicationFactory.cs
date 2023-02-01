@@ -57,9 +57,10 @@ namespace Dfe.PrepareConversions.Tests
 			});
 
 			var featureManager = new Mock<IFeatureManager>();
-			featureManager.Setup(m => m.IsEnabledAsync(It.IsAny<string>())).ReturnsAsync(true);
+         featureManager.Setup(m => m.IsEnabledAsync(("UseAcademisation"))).ReturnsAsync(true);
+         featureManager.Setup(m => m.IsEnabledAsync(("UseAcademisationApplication"))).ReturnsAsync(false);
 
-			builder.ConfigureServices(services =>
+         builder.ConfigureServices(services =>
 			{
 				services.AddAuthentication("Test");
 				services.AddTransient<IAuthenticationSchemeProvider, MockSchemeProvider>();
