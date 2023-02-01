@@ -1,5 +1,4 @@
 ﻿
-#nullable enable
 using Dfe.PrepareConversions.Data.Models.Application;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -323,13 +322,13 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
 
       public string TrustName { get; set; }
 
-      public string? ChangesToTrust { get; set; }
+      public string ChangesToTrust { get; set; }
 
-      public string? ChangesToTrustExplained { get; set; }
+      public string ChangesToTrustExplained { get; set; }
 
       public bool? ChangesToLaGovernance { get; set; }
 
-      public string? ChangesToLaGovernanceExplained { get; set; }
+      public string ChangesToLaGovernanceExplained { get; set; }
    }
    public class Contributor
    {

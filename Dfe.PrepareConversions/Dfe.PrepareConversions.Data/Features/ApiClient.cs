@@ -15,10 +15,12 @@ public class ApiClient : IApiClient
    private readonly IHttpClientFactory _httpClientFactory;
    private readonly PathFor _pathFor;
    private readonly bool _useAcademisation;
+   private readonly bool _useAcademisationApplication;
 
    public ApiClient(IHttpClientFactory httpClientFactory, IFeatureManager features, PathFor pathFor)
    {
       _pathFor = pathFor;
+      _useAcademisationApplication = features.IsEnabledAsync(FeatureFlags.UseAcademisationApplication).Result;
       _httpClientFactory = httpClientFactory;
       _useAcademisation = features.IsEnabledAsync(FeatureFlags.UseAcademisation).Result;
    }
@@ -26,6 +28,7 @@ public class ApiClient : IApiClient
    private HttpClient TramsClient => _httpClientFactory.CreateClient("TramsClient");
    private HttpClient AcademisationClient => _httpClientFactory.CreateClient("AcademisationClient");
    private HttpClient ActiveClient => _useAcademisation ? AcademisationClient : TramsClient;
+   private HttpClient ActiveApplicationClient => _useAcademisationApplication ? AcademisationClient : TramsClient;
 
    public async Task<HttpResponseMessage> GetAllProjectsAsync(AcademyConversionSearchModel searchModel)
    {
@@ -65,7 +68,7 @@ public class ApiClient : IApiClient
 
    public async Task<HttpResponseMessage> GetApplicationByReferenceAsync(string id)
    {
-      return await ActiveClient.GetAsync(string.Format(_pathFor.GetApplicationByReference, id));
+      return await ActiveApplicationClient.GetAsync(string.Format(_pathFor.GetApplicationByReference, id));
    }
 
    public async Task<HttpResponseMessage> AddProjectNote(int id, AddProjectNote projectNote)

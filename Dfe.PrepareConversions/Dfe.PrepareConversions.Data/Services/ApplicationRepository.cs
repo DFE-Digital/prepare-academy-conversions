@@ -14,13 +14,13 @@ public class ApplicationRepository
 {
    private readonly IApiClient _apiClient;
    private readonly ILogger<ApplicationRepository> _logger;
-   private readonly bool _useAcademisation;
+   private readonly bool _useAcademisationApplication;
 
    public ApplicationRepository(IApiClient apiClient, IFeatureManager features, ILogger<ApplicationRepository> logger)
    {
       _apiClient = apiClient;
       _logger = logger;
-      _useAcademisation = features.IsEnabledAsync(FeatureFlags.UseAcademisation).Result;
+      _useAcademisationApplication = features.IsEnabledAsync(FeatureFlags.UseAcademisationApplication).Result;
    }
 
    public async Task<ApiResponse<Application>> GetApplicationByReference(string id)
@@ -29,7 +29,7 @@ public class ApplicationRepository
 
       if (response.IsSuccessStatusCode)
       {
-         if (_useAcademisation)
+         if (_useAcademisationApplication)
          {
             AcademisationApplication academisationOuterResponse = await response.Content.ReadFromJsonAsync<AcademisationApplication>();
             return new ApiResponse<Application>(response.StatusCode, AcademisationApplication.MapToApplication(academisationOuterResponse));
