@@ -223,7 +223,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
       [InlineData("/school-application-form/school-application-tab/{0}")]
 		public async Task Should_Show_501Error_When_Application_Is_Not_Join_Mat(string path)
 		{
-			_project = AddGetProject();
+         _project = AddGetProject();
 			AddGetApplication(app =>
 				{
 				app.ApplicationId = _project.ApplicationReferenceNumber;

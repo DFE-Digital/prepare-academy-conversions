@@ -1,4 +1,5 @@
 ﻿
+#nullable enable
 using Dfe.PrepareConversions.Data.Models.Application;
 using Microsoft.IdentityModel.Tokens;
 using System;

@@ -5,5 +5,5 @@
 /// </summary>
 public interface ISetAcademisationFlag
 {
-   bool UseAcademisation { set; }
+   bool UseAcademisation { get; set; }
 }
