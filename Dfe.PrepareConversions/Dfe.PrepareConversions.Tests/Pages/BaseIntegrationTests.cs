@@ -12,25 +12,29 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
+using Moq;
 
 namespace Dfe.PrepareConversions.Tests.Pages
 {
 	public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTestingWebApplicationFactory>, IDisposable
 	{
 		protected readonly IntegrationTestingWebApplicationFactory _factory;
-      protected readonly Fixture _fixture;
-      private readonly PathFor _pathFor;
+		protected readonly Fixture _fixture;
+		private readonly PathFor _pathFor;
 
-      protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory)
+		protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory)
 		{
 			_factory = factory;
-         _fixture = new Fixture();
-         _pathFor = new PathFor(factory.Services.GetService(typeof(IFeatureManager)) as IFeatureManager);
+			_fixture = new Fixture();
 
-         Context = CreateBrowsingContext(factory.CreateClient());
-      }
+			var featureManager = new Mock<IFeatureManager>();
+			featureManager.Setup(m => m.IsEnabledAsync(It.IsAny<string>())).ReturnsAsync(true);
+			_pathFor = new PathFor(featureManager.Object);
 
-      public async Task<IDocument> OpenUrlAsync(string url)
+			Context = CreateBrowsingContext(factory.CreateClient());
+		}
+
+		public async Task<IDocument> OpenUrlAsync(string url)
 		{
 			return await Context.OpenAsync($"http://localhost{url}");
 		}
@@ -43,14 +47,14 @@ namespace Dfe.PrepareConversions.Tests.Pages
 					: anchors.Where(a => a.TextContent.Contains(linkText)).ElementAt(index.Value))
 				as IHtmlAnchorElement;
 
-         Assert.NotNull(link);
+			Assert.NotNull(link);
 			return await link.NavigateAsync();
 		}
 
 		public async Task NavigateDataTestAsync(string dataTest)
 		{
 			var anchors = Document.QuerySelectorAll($"[data-test='{dataTest}']").First() as IHtmlAnchorElement;
-         Assert.NotNull(anchors);
+			Assert.NotNull(anchors);
 
 			await anchors.NavigateAsync();
 		}
@@ -67,9 +71,9 @@ namespace Dfe.PrepareConversions.Tests.Pages
 				new RadioButton { Id = Id(id, toSelect.Key), Value = toSelect.Value });
 
 			static string Id(string name, int position)
-         {
-            return position == 1 ? $"#{name}" : $"#{name}-{position}";
-         }
+			{
+				return position == 1 ? $"#{name}" : $"#{name}-{position}";
+			}
 		}
 
 		protected class RadioButton
@@ -91,7 +95,7 @@ namespace Dfe.PrepareConversions.Tests.Pages
 
 		public IBrowsingContext Context { get; }
 
-      public void Dispose()
+		public void Dispose()
 		{
 			_factory.Reset();
 			GC.SuppressFinalize(this);
