@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
+using Moq;
 
 namespace Dfe.PrepareConversions.Tests.Pages
 {
@@ -19,14 +20,18 @@ namespace Dfe.PrepareConversions.Tests.Pages
 	{
 		protected readonly IntegrationTestingWebApplicationFactory _factory;
       protected readonly Fixture _fixture;
-      protected PathFor PathFor { get; }
+      protected PathFor _pathFor;
 
       protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory)
 		{
 			_factory = factory;
          _fixture = new Fixture();
-         PathFor = new PathFor();
-         
+
+         var featureManager = new Mock<IFeatureManager>();
+         featureManager.Setup(m => m.IsEnabledAsync(("UseAcademisation"))).ReturnsAsync(true);
+         featureManager.Setup(m => m.IsEnabledAsync(("UseAcademisationApplication"))).ReturnsAsync(false);
+         _pathFor = new PathFor(featureManager.Object);
+
          Context = CreateBrowsingContext(factory.CreateClient());
       }
 

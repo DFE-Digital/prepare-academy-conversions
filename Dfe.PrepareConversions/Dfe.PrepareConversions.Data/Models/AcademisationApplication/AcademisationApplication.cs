@@ -70,7 +70,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
             academisationApplicationSchool.LandAndBuildings.FacilitiesSharedExplained;
          academiesApplicationSchool.SchoolBuildLandGrants = academisationApplicationSchool.LandAndBuildings.Grants;
          academiesApplicationSchool.SchoolBuildLandGrantsExplained =
-            academisationApplicationSchool.LandAndBuildings.GrantsAwardingBodies; // Is this correct?
+            academisationApplicationSchool.LandAndBuildings.GrantsAwardingBodies; // Paul L - awaiting confirmation
          academiesApplicationSchool.SchoolBuildLandPFIScheme =
             academisationApplicationSchool.LandAndBuildings.PartOfPfiScheme;
          academiesApplicationSchool.SchoolBuildLandPFISchemeType =
@@ -93,7 +93,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          academiesApplicationSchool.SchoolCapacityAssumptions = academisationApplicationSchool.SchoolCapacityAssumptions;
          academiesApplicationSchool.SchoolCapacityPublishedAdmissionsNumber =
             Convert.ToInt32(academisationApplicationSchool
-               .SchoolCapacityPublishedAdmissionNumber); // Is this a string for a reason? 
+               .SchoolCapacityPublishedAdmissionNumber);
       }
 
       private static void PopulateFinancialInvestigations(ApplyingSchool academiesApplicationSchool,
@@ -207,45 +207,45 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          // Further Information
          academiesApplicationSchool.SchoolAdSchoolContributionToTrust =
             academisationApplicationSchool
-               .TrustBenefitDetails; // Is this the correct property for "What will the school bring to the trust they are joining?"
-         academiesApplicationSchool.SchoolAdInspectedButReportNotPublished = !academisationApplicationSchool.OfstedInspectionDetails.IsNullOrEmpty(); // There isn't an equivalent bool but I guess we can work with the details?
+               .TrustBenefitDetails; // Paul L - awaiting confirmation
+         academiesApplicationSchool.SchoolAdInspectedButReportNotPublished = !academisationApplicationSchool.OfstedInspectionDetails.IsNullOrEmpty(); // Paul L - awaiting confirmation
          academiesApplicationSchool.SchoolAdInspectedButReportNotPublishedExplain =
             academisationApplicationSchool.OfstedInspectionDetails;
          academiesApplicationSchool.SchoolOngoingSafeguardingInvestigations =
             !academisationApplicationSchool.SafeguardingDetails
-               .IsNullOrEmpty(); // There isn't an equivalent bool but I guess we can work with the details?
+               .IsNullOrEmpty(); // Paul L - awaiting confirmation
          academiesApplicationSchool.SchoolOngoingSafeguardingDetails = academisationApplicationSchool.SafeguardingDetails;
          academiesApplicationSchool.SchoolPartOfLaReorganizationPlan =
             !academisationApplicationSchool.LocalAuthorityReorganisationDetails
-               .IsNullOrEmpty(); // There isn't an equivalent bool but I guess we can work with the details?
+               .IsNullOrEmpty();// Paul L - awaiting confirmation
          academiesApplicationSchool.SchoolLaReorganizationDetails =
             academisationApplicationSchool.LocalAuthorityReorganisationDetails;
          academiesApplicationSchool.SchoolPartOfLaClosurePlan =
             !academisationApplicationSchool.LocalAuthorityClosurePlanDetails.IsNullOrEmpty();
          academiesApplicationSchool.SchoolLaClosurePlanDetails =
             academisationApplicationSchool
-               .LocalAuthorityClosurePlanDetails; // There isn't an equivalent bool but I guess we can work with the details?
+               .LocalAuthorityClosurePlanDetails; // Paul L - awaiting confirmation
          academiesApplicationSchool.SchoolFaithSchool =
             !academisationApplicationSchool.DioceseName
-               .IsNullOrEmpty(); // There isn't an equivalent bool but I guess we can work with the details?
+               .IsNullOrEmpty(); // Paul L - awaiting confirmation
          academiesApplicationSchool.SchoolFaithSchoolDioceseName = academisationApplicationSchool.DioceseName;
          academiesApplicationSchool.SchoolIsPartOfFederation = academisationApplicationSchool.PartOfFederation;
          academiesApplicationSchool.SchoolIsSupportedByFoundation =
-            !academisationApplicationSchool.FoundationTrustOrBodyName.IsNullOrEmpty(); // There isn't an equivalent bool but I guess we can work with the details?
+            !academisationApplicationSchool.FoundationTrustOrBodyName.IsNullOrEmpty(); // Paul L - awaiting confirmation
          academiesApplicationSchool.SchoolSupportedFoundationBodyName =
             academisationApplicationSchool.FoundationTrustOrBodyName;
          if (academisationApplicationSchool.ExemptionEndDate is not null)
-            academiesApplicationSchool.SchoolHasSACREException = true; // No equivalent on academisation
-         if(academisationApplicationSchool.ExemptionEndDate is not null) academiesApplicationSchool.SchoolSACREExemptionEndDate = academisationApplicationSchool.ExemptionEndDate.Value.DateTime; // No equivalent on academisation
+            academiesApplicationSchool.SchoolHasSACREException = true; // Paul L - awaiting confirmation
+         if (academisationApplicationSchool.ExemptionEndDate is not null) academiesApplicationSchool.SchoolSACREExemptionEndDate = academisationApplicationSchool.ExemptionEndDate.Value.DateTime; // Paul L - awaiting confirmation
          academiesApplicationSchool.SchoolAdFeederSchools = academisationApplicationSchool.MainFeederSchools;
          academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentCompleted =
-            !academisationApplicationSchool.ResolutionConsentFolderIdentifier.IsNullOrEmpty(); // Is this the related property? Not sure 
+            !academisationApplicationSchool.ResolutionConsentFolderIdentifier.IsNullOrEmpty(); // Paul L - awaiting confirmation 
          academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentDetails =
-            academisationApplicationSchool.ResolutionConsentFolderIdentifier; // Is this the related property? Not sure 
+            academisationApplicationSchool.ResolutionConsentFolderIdentifier; // Paul L - awaiting confirmation
          academiesApplicationSchool.SchoolAdditionalInformationAdded =
-            !academisationApplicationSchool.FurtherInformation.IsNullOrEmpty(); // Is this the related property? Not sure 
+            !academisationApplicationSchool.FurtherInformation.IsNullOrEmpty(); // Paul L - awaiting confirmation
          academiesApplicationSchool.SchoolAdditionalInformation =
-            academisationApplicationSchool.FurtherInformation; // Is this the related property? Not sure 
+            academisationApplicationSchool.FurtherInformation; // Paul L - awaiting confirmation
       }
 
       private static void PopulateSchoolDetails(ApplyingSchool academiesApplicationSchool,
@@ -300,8 +300,8 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          academiesApplication.TrustName = academisationApplication.JoinTrustDetails.TrustName;
          academiesApplication.ApplicationType = academisationApplication.ApplicationType;
          academiesApplication.ApplicationId =
-            academisationApplication.ApplicationReference; 
-         //academiesApplication.ApplicationLeadAuthorName = academisationApplication.Contributors (we have contributors on academisation but how do we know their the lead)
+            academisationApplication.ApplicationReference;
+         //academiesApplication.ApplicationLeadAuthorName = academisationApplication.Contributors (we have contributors on academisation but how do we know their the lead) // Paul L - awaiting confirmation
          academiesApplication.ChangesToTrust = academisationApplication.JoinTrustDetails.ChangesToTrust switch
          {
             "yes" => true,

@@ -2,7 +2,7 @@
 
 namespace Dfe.PrepareConversions.Data.Features;
 
-public class PathFor : ISetAcademisationFlag
+public class PathFor 
 {
    private readonly bool _useAcademisationApplication;
    private readonly bool _useAcademisation;
@@ -11,9 +11,6 @@ public class PathFor : ISetAcademisationFlag
    {
       _useAcademisation = features.IsEnabledAsync(FeatureFlags.UseAcademisation).Result;
       _useAcademisationApplication = features.IsEnabledAsync(FeatureFlags.UseAcademisationApplication).Result;
-   }
-   public PathFor()
-   {
    }
 
    public static string GetSelectedRegions => "/establishment/regions?{0}";
@@ -24,5 +21,4 @@ public class PathFor : ISetAcademisationFlag
    public string UpdateProject => _useAcademisation ? "/legacy/project/{0}" : "/conversion-projects/{0}";
    public string GetFilterParameters => _useAcademisation ? "/legacy/projects/status" : "/v2/conversion-projects/parameters";
    public string AddProjectNote => _useAcademisation ? "/legacy/project/{0}/notes" : "/project-notes/{0}";
-   bool ISetAcademisationFlag.UseAcademisation { get; set; }
 }
