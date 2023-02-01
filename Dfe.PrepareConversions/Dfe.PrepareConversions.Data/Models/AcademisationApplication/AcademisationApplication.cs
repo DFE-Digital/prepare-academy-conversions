@@ -37,14 +37,14 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          return academiesApplication;
       }
 
-      private static void PopulateDeclaration(ApplyingSchool academiesApplicationSchool,
+      public static void PopulateDeclaration(ApplyingSchool academiesApplicationSchool,
          School academisationApplicationSchool)
       {
          academiesApplicationSchool.DeclarationBodyAgree = academisationApplicationSchool.DeclarationBodyAgree;
          academiesApplicationSchool.DeclarationSignedByName = academisationApplicationSchool.DeclarationSignedByName;
       }
 
-      private static void PopulateConsultation(ApplyingSchool academiesApplicationSchool,
+      public static void PopulateConsultation(ApplyingSchool academiesApplicationSchool,
          School academisationApplicationSchool)
       {
          academiesApplicationSchool.SchoolHasConsultedStakeholders =
@@ -53,7 +53,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
             academisationApplicationSchool.SchoolPlanToConsultStakeholders;
       }
 
-      private static void PopulateLandAndBuildings(ApplyingSchool academiesApplicationSchool,
+      public static void PopulateLandAndBuildings(ApplyingSchool academiesApplicationSchool,
          School academisationApplicationSchool)
       {
          academiesApplicationSchool.SchoolBuildLandOwnerExplained =
@@ -84,7 +84,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
             academisationApplicationSchool.SchoolSupportGrantFundsPaidTo;
       }
 
-      private static void PopulateFuturePupilNumbers(ApplyingSchool academiesApplicationSchool,
+      public static void PopulateFuturePupilNumbers(ApplyingSchool academiesApplicationSchool,
          School academisationApplicationSchool)
       {
          academiesApplicationSchool.ProjectedPupilNumbersYear1 = academisationApplicationSchool.ProjectedPupilNumbersYear1;
@@ -96,7 +96,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
                .SchoolCapacityPublishedAdmissionNumber);
       }
 
-      private static void PopulateFinancialInvestigations(ApplyingSchool academiesApplicationSchool,
+      public static void PopulateFinancialInvestigations(ApplyingSchool academiesApplicationSchool,
          School academisationApplicationSchool)
       {
          academiesApplicationSchool.FinanceOngoingInvestigations =
@@ -107,10 +107,10 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
             academisationApplicationSchool.FinancialInvestigationsTrustAware;
       }
 
-      private static void PopulateSchoolLeases(ApplyingSchool academiesApplicationSchool,
+      public static void PopulateSchoolLeases(ApplyingSchool academiesApplicationSchool,
          School academisationApplicationSchool)
       {
-         if (academiesApplicationSchool.SchoolLeases.IsNullOrEmpty() is false)
+         if (academisationApplicationSchool.Leases.IsNullOrEmpty() is false)
          {
             foreach (var lease in academisationApplicationSchool.Leases)
             {
@@ -120,7 +120,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
                   SchoolLeaseRepaymentValue = lease.SchoolLeaseRepaymentValue,
                   SchoolLeaseInterestRate = lease.SchoolLeaseInterestRate,
                   SchoolLeasePaymentToDate = lease.SchoolLeasePaymentToDate,
-                  SchoolLeaseResponsibleForAssets = lease.SchoolLeasePurpose,
+                  SchoolLeaseResponsibleForAssets = lease.SchoolLeaseResponsibleForAssets,
                   SchoolLeaseValueOfAssets = lease.SchoolLeaseValueOfAssets,
                   SchoolLeaseTerm = lease.SchoolLeaseTerm
                };
@@ -129,10 +129,10 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          }
       }
 
-      private static void PopulateSchoolLoans(ApplyingSchool academiesApplicationSchool,
+      public static void PopulateSchoolLoans(ApplyingSchool academiesApplicationSchool,
          School academisationApplicationSchool)
       {
-         if (academiesApplicationSchool.SchoolLoans.IsNullOrEmpty() is false)
+         if (academisationApplicationSchool.Loans.IsNullOrEmpty() is false)
          {
             foreach (var loan in academisationApplicationSchool.Loans)
             {
@@ -149,7 +149,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          }
       }
 
-      private static void PopulateSchoolFinances(ApplyingSchool academiesApplicationSchool,
+      public static void PopulateSchoolFinances(ApplyingSchool academiesApplicationSchool,
          School academisationApplicationSchool)
       {
          // FINANCES
@@ -160,8 +160,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
             academisationApplicationSchool.PreviousFinancialYear.FinancialYearEndDate;
          academiesApplicationSchool.PreviousFinancialYear.RevenueCarryForward =
             (decimal?)academisationApplicationSchool.PreviousFinancialYear.Revenue;
-         if (academisationApplicationSchool.PreviousFinancialYear.RevenueStatus == "Deficit")
-            academiesApplicationSchool.PreviousFinancialYear.RevenueIsDeficit = true;
+         academiesApplicationSchool.PreviousFinancialYear.RevenueIsDeficit = academisationApplicationSchool.PreviousFinancialYear.RevenueStatus == "Deficit";
          academiesApplicationSchool.PreviousFinancialYear.RevenueStatusExplained =
             academisationApplicationSchool.PreviousFinancialYear.RevenueStatusExplained;
          academiesApplicationSchool.PreviousFinancialYear.CapitalCarryForward =
@@ -170,20 +169,20 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
             academisationApplicationSchool.PreviousFinancialYear.CapitalCarryForwardExplained;
          if (academisationApplicationSchool.PreviousFinancialYear.CapitalCarryForwardStatus == "Deficit")
             academiesApplicationSchool.PreviousFinancialYear.CapitalIsDeficit = true;
+         academiesApplicationSchool.PreviousFinancialYear.CapitalIsDeficit = academisationApplicationSchool.PreviousFinancialYear.CapitalCarryForwardStatus == "Deficit";
+
          academiesApplicationSchool.CurrentFinancialYear.FYEndDate =
             academisationApplicationSchool.CurrentFinancialYear.FinancialYearEndDate;
          academiesApplicationSchool.CurrentFinancialYear.RevenueCarryForward =
             (decimal?)academisationApplicationSchool.CurrentFinancialYear.Revenue;
          academiesApplicationSchool.CurrentFinancialYear.RevenueStatusExplained =
             academisationApplicationSchool.CurrentFinancialYear.RevenueStatusExplained;
-         if (academisationApplicationSchool.CurrentFinancialYear.RevenueStatus == "Deficit")
-            academiesApplicationSchool.CurrentFinancialYear.RevenueIsDeficit = true;
+         academiesApplicationSchool.CurrentFinancialYear.RevenueIsDeficit = academisationApplicationSchool.CurrentFinancialYear.RevenueStatus == "Deficit";
          academiesApplicationSchool.CurrentFinancialYear.CapitalCarryForward =
             (decimal?)academisationApplicationSchool.CurrentFinancialYear.CapitalCarryForward;
          academiesApplicationSchool.CurrentFinancialYear.CapitalStatusExplained =
             academisationApplicationSchool.CurrentFinancialYear.CapitalCarryForwardExplained;
-         if (academisationApplicationSchool.CurrentFinancialYear.CapitalCarryForwardStatus == "Deficit")
-            academiesApplicationSchool.CurrentFinancialYear.CapitalIsDeficit = true;
+         academiesApplicationSchool.CurrentFinancialYear.CapitalIsDeficit = academisationApplicationSchool.CurrentFinancialYear.CapitalCarryForwardStatus == "Deficit";
 
          academiesApplicationSchool.NextFinancialYear.FYEndDate =
             academisationApplicationSchool.NextFinancialYear.FinancialYearEndDate;
@@ -191,17 +190,15 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
             (decimal?)academisationApplicationSchool.NextFinancialYear.Revenue;
          academiesApplicationSchool.NextFinancialYear.RevenueStatusExplained =
             academisationApplicationSchool.NextFinancialYear.RevenueStatusExplained;
-         if (academisationApplicationSchool.NextFinancialYear.RevenueStatus == "Deficit")
-            academiesApplicationSchool.NextFinancialYear.RevenueIsDeficit = true;
+         academiesApplicationSchool.NextFinancialYear.RevenueIsDeficit = academisationApplicationSchool.NextFinancialYear.RevenueStatus == "Deficit";
          academiesApplicationSchool.NextFinancialYear.CapitalCarryForward =
             (decimal?)academisationApplicationSchool.NextFinancialYear.CapitalCarryForward;
          academiesApplicationSchool.NextFinancialYear.CapitalStatusExplained =
             academisationApplicationSchool.NextFinancialYear.CapitalCarryForwardExplained;
-         if (academisationApplicationSchool.NextFinancialYear.CapitalCarryForwardStatus == "Deficit")
-            academiesApplicationSchool.NextFinancialYear.CapitalIsDeficit = true;
+         academiesApplicationSchool.NextFinancialYear.CapitalIsDeficit = academisationApplicationSchool.NextFinancialYear.CapitalCarryForwardStatus == "Deficit";
       }
 
-      private static void PopulateFurtherInformation(ApplyingSchool academiesApplicationSchool,
+      public static void PopulateFurtherInformation(ApplyingSchool academiesApplicationSchool,
          School academisationApplicationSchool)
       {
          // Further Information
@@ -248,7 +245,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
             academisationApplicationSchool.FurtherInformation; // Paul L - awaiting confirmation
       }
 
-      private static void PopulateSchoolDetails(ApplyingSchool academiesApplicationSchool,
+      public static void PopulateSchoolDetails(ApplyingSchool academiesApplicationSchool,
          School academisationApplicationSchool)
       {
          // School
@@ -290,7 +287,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
             academisationApplicationSchool.ProposedNewSchoolName;
       }
 
-      private static Application PopulateOverview(AcademisationApplication academisationApplication,
+      public static Application PopulateOverview(AcademisationApplication academisationApplication,
          out School academisationApplicationSchool, out ApplyingSchool academiesApplicationSchool)
       {
          var academiesApplication = new Application();
