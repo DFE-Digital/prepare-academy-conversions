@@ -1,4 +1,4 @@
-name: .NET
+name: Pull request checks 
 
 on:
   push:
@@ -8,10 +8,20 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  build:
-
+  lint:
     runs-on: ubuntu-latest
+    steps:     
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # Shallow clones disabled for a better relevancy of SC analysis
+    - name: lint cypress tests    
+      run: |
+        cd Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
+        npm ci
+        npm run lint
 
+  build:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
       with:
