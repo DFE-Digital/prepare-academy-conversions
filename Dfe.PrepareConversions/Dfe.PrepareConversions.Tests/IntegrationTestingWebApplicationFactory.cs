@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.FeatureManagement;
+using Moq;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
@@ -42,27 +44,29 @@ namespace Dfe.PrepareConversions.Tests
             var projectDir = Directory.GetCurrentDirectory();
             var configPath = Path.Combine(projectDir, "appsettings.json");
 
-            config.Sources.Clear();
-            config
-               .AddJsonFile(configPath)
-               .AddInMemoryCollection(new Dictionary<string, string> {
-                  { "TramsApi:Endpoint", $"http://localhost:{_port}" },
-                  { "AcademisationApi:BaseUrl", $"http://localhost:{_port}" },
-                  { "AzureAd:AllowedRoles", string.Empty }, // Do not restrict access for integration test
-						{ "ServiceLink:TransfersUrl", "https://an-external-service.com/" },
-                  { "FeatureManagement:UseAcademisation", "true" },
-                  { "FeatureManagement:UseAcademisationApplication", "false"}
-               })
-               .AddEnvironmentVariables();
-         });
+				config.Sources.Clear();
+				config
+					.AddJsonFile(configPath)
+					.AddInMemoryCollection(new Dictionary<string, string> {
+						{ "TramsApi:Endpoint", $"http://localhost:{_port}" },
+						{ "AcademisationApi:BaseUrl", $"http://localhost:{_port}" },
+						{ "AzureAd:AllowedRoles", string.Empty }, // Do not restrict access for integration test
+						{ "ServiceLink:TransfersUrl", "https://an-external-service.com/" }
+			   })
+					.AddEnvironmentVariables();
+			});
 
-         builder.ConfigureServices(services =>
-         {
-            services.AddAuthentication("Test");
-            services.AddTransient<IAuthenticationSchemeProvider, MockSchemeProvider>();
-            services.AddTransient<IUserRepository, TestUserRepository>();
-         });
-      }
+			var featureManager = new Mock<IFeatureManager>();
+			featureManager.Setup(m => m.IsEnabledAsync(It.IsAny<string>())).ReturnsAsync(true);
+
+			builder.ConfigureServices(services =>
+			{
+				services.AddAuthentication("Test");
+				services.AddTransient<IAuthenticationSchemeProvider, MockSchemeProvider>();
+				services.AddTransient<IUserRepository, TestUserRepository>();
+				services.AddTransient(sp => featureManager.Object);
+			});
+		}
 
       public class MockSchemeProvider : AuthenticationSchemeProvider
       {
@@ -158,18 +162,18 @@ namespace Dfe.PrepareConversions.Tests
                .WithBody(JsonConvert.SerializeObject(responseBody)));
       }
 
-      public void AddPostWithJsonRequest<TRequestBody, TResponseBody>(string path, TRequestBody requestBody, TResponseBody responseBody)
-      {
-         _server
-            .Given(Request.Create()
-               .WithPath(path)
-               .WithBody(new JsonMatcher(JsonConvert.SerializeObject(requestBody), true))
-               .UsingPost())
-            .RespondWith(Response.Create()
-               .WithStatusCode(200)
-               .WithHeader("Content-Type", "application/json")
-               .WithBody(JsonConvert.SerializeObject(responseBody)));
-      }
+		public void AddPostWithJsonRequest<TRequestBody, TResponseBody>(string path, TRequestBody requestBody, TResponseBody responseBody)
+		{
+			_server
+				   .Given(Request.Create()
+					   .WithPath(path)
+					   .WithBody(new JsonMatcher(JsonConvert.SerializeObject(requestBody), true))
+					   .UsingPost())
+				   .RespondWith(Response.Create()
+					   .WithStatusCode(200)
+					   .WithHeader("Content-Type", "application/json")
+					   .WithBody(JsonConvert.SerializeObject(responseBody)));
+		}
 
       public void AddErrorResponse(string path, string method)
       {

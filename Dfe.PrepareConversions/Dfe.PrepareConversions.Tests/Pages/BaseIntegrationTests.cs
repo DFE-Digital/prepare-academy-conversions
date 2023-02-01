@@ -19,10 +19,10 @@ namespace Dfe.PrepareConversions.Tests.Pages
 	public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTestingWebApplicationFactory>, IDisposable
 	{
 		protected readonly IntegrationTestingWebApplicationFactory _factory;
-      protected readonly Fixture _fixture;
-      protected PathFor _pathFor;
+		protected readonly Fixture _fixture;
+		private readonly PathFor _pathFor;
 
-      protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory)
+		protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory)
 		{
 			_factory = factory;
          _fixture = new Fixture();
@@ -32,10 +32,10 @@ namespace Dfe.PrepareConversions.Tests.Pages
          featureManager.Setup(m => m.IsEnabledAsync(("UseAcademisationApplication"))).ReturnsAsync(false);
          _pathFor = new PathFor(featureManager.Object);
 
-         Context = CreateBrowsingContext(factory.CreateClient());
-      }
+			Context = CreateBrowsingContext(factory.CreateClient());
+		}
 
-      public async Task<IDocument> OpenUrlAsync(string url)
+		public async Task<IDocument> OpenUrlAsync(string url)
 		{
 			return await Context.OpenAsync($"http://localhost{url}");
 		}
@@ -48,14 +48,14 @@ namespace Dfe.PrepareConversions.Tests.Pages
 					: anchors.Where(a => a.TextContent.Contains(linkText)).ElementAt(index.Value))
 				as IHtmlAnchorElement;
 
-         Assert.NotNull(link);
+			Assert.NotNull(link);
 			return await link.NavigateAsync();
 		}
 
 		public async Task NavigateDataTestAsync(string dataTest)
 		{
 			var anchors = Document.QuerySelectorAll($"[data-test='{dataTest}']").First() as IHtmlAnchorElement;
-         Assert.NotNull(anchors);
+			Assert.NotNull(anchors);
 
 			await anchors.NavigateAsync();
 		}
@@ -72,9 +72,9 @@ namespace Dfe.PrepareConversions.Tests.Pages
 				new RadioButton { Id = Id(id, toSelect.Key), Value = toSelect.Value });
 
 			static string Id(string name, int position)
-         {
-            return position == 1 ? $"#{name}" : $"#{name}-{position}";
-         }
+			{
+				return position == 1 ? $"#{name}" : $"#{name}-{position}";
+			}
 		}
 
 		protected class RadioButton
@@ -96,7 +96,7 @@ namespace Dfe.PrepareConversions.Tests.Pages
 
 		public IBrowsingContext Context { get; }
 
-      public void Dispose()
+		public void Dispose()
 		{
 			_factory.Reset();
 			GC.SuppressFinalize(this);
