@@ -31,6 +31,7 @@ resource cloudfoundry_app worker_app {
 		"AzureAd__GroupId"                    = var.app_azuread_groupid
 		"CypressTestSecret"                   = var.app_cypresstest_secret
       "FeatureManagement__UseAcademisation" = var.app_feature_use_academisation
+      "FeatureManagement__UseAcademisationApplication" = var.app_feature_use_academisationApplication
       "AccessRequest"                       = var.app_accessrequest
       "TemplateFeedback"                    = var.app_templatefeedback
 	}
