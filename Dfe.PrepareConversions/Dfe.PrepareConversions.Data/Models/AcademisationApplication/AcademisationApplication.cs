@@ -1,5 +1,4 @@
-﻿
-using Dfe.PrepareConversions.Data.Models.Application;
+﻿using Dfe.PrepareConversions.Data.Models.Application;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
