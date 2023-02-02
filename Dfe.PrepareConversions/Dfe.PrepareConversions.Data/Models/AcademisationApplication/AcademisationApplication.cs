@@ -409,7 +409,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
       public bool Grants { get; set; }
       public string GrantsAwardingBodies { get; set; }
       public bool PartOfPfiScheme { get; set; }
-      public string? PartOfPfiSchemeType { get; init; }
+      public string PartOfPfiSchemeType { get; init; }
       public bool PartOfPrioritySchoolsBuildingProgramme { get; set; }
       public bool PartOfBuildingSchoolsForFutureProgramme { get; set; }
    }
