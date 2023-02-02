@@ -10,11 +10,8 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 {
 	public class SearchSchoolIntegrationTests : BaseIntegrationTests
 	{
-		private readonly IntegrationTestingWebApplicationFactory _factory;
-
 		public SearchSchoolIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{
-			_factory = factory;
 		}
 
 		[Fact]
