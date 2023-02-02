@@ -19,6 +19,7 @@ using WireMock.Matchers;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 using WireMock.Server;
+using System.Linq;
 
 namespace Dfe.PrepareConversions.Tests
 {
