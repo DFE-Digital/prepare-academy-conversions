@@ -114,6 +114,11 @@ variable app_feature_use_academisation {
    default = false
    description = "Whether to use the new Academisation API (true) or default to the old Academies API (false)"
 }
+variable app_feature_use_academisation_application {
+   type = bool
+   default = false
+   description = "Whether to use the new Academisation API (true) or default to the old Academies API (false) for School Application forms"
+}
 
 variable app_accessrequest {
    type = string

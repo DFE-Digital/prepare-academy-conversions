@@ -26,16 +26,17 @@ namespace Dfe.PrepareConversions.Pages.ApplicationForm
 			{
 				return NotFound();
 			}
-			var applicationReference = base.Project.ApplicationReferenceNumber;
+			var applicationReferenceId = base.Project.ApplicationReferenceNumber;
+			
 
-			var applicationResponse = await _applicationRepository.GetApplicationByReference(applicationReference);
+			var applicationResponse = await _applicationRepository.GetApplicationByReference(applicationReferenceId);
 
 			if (!applicationResponse.Success)
 			{
 				return NotFound();
 			}
-			if (applicationResponse.Body.ApplicationType != "JoinMat")
-			{
+			if (applicationResponse.Body.ApplicationType is not ("JoinMat" or "joinAMat"))
+         {
 				return StatusCode(501);
 			}
 			if (applicationResponse.Body.ApplyingSchools.Count != 1)

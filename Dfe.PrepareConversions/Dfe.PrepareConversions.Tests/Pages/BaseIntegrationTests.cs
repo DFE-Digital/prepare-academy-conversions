@@ -25,11 +25,12 @@ namespace Dfe.PrepareConversions.Tests.Pages
 		protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory)
 		{
 			_factory = factory;
-			_fixture = new Fixture();
+         _fixture = new Fixture();
 
-			var featureManager = new Mock<IFeatureManager>();
-			featureManager.Setup(m => m.IsEnabledAsync(It.IsAny<string>())).ReturnsAsync(true);
-			_pathFor = new PathFor(featureManager.Object);
+         var featureManager = new Mock<IFeatureManager>();
+         featureManager.Setup(m => m.IsEnabledAsync(("UseAcademisation"))).ReturnsAsync(true);
+         featureManager.Setup(m => m.IsEnabledAsync(("UseAcademisationApplication"))).ReturnsAsync(false);
+         _pathFor = new PathFor(featureManager.Object);
 
 			Context = CreateBrowsingContext(factory.CreateClient());
 		}

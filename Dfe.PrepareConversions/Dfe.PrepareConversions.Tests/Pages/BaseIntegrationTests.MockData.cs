@@ -176,7 +176,7 @@ namespace Dfe.PrepareConversions.Tests.Pages
          postSetup?.Invoke(application);
 
          var response = new ApiV2Wrapper<Application> { Data = application };
-         _factory.AddGetWithJsonResponse(string.Format(PathFor.GetApplicationByReference, application.ApplicationId), response);
+         _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetApplicationByReference, application.ApplicationId), response);
 			return application;
 		}
 

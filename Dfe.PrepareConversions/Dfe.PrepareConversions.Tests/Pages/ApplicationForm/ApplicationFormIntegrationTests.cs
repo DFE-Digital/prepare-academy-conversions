@@ -1,4 +1,5 @@
 ﻿using AngleSharp.Dom;
+using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.Application;
 using FluentAssertions;
@@ -15,7 +16,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 
 		public ApplicationFormIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
 		{
-		}
+      }
 		private void AddProjectWithFullApplicationForm()
 		{
 			_project = AddGetProject();
@@ -222,7 +223,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
       [InlineData("/school-application-form/school-application-tab/{0}")]
 		public async Task Should_Show_501Error_When_Application_Is_Not_Join_Mat(string path)
 		{
-			_project = AddGetProject();
+         _project = AddGetProject();
 			AddGetApplication(app =>
 				{
 				app.ApplicationId = _project.ApplicationReferenceNumber;

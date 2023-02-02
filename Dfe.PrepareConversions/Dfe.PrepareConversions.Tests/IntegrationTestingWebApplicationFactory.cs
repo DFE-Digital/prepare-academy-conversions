@@ -23,26 +23,26 @@ using WireMock.Server;
 namespace Dfe.PrepareConversions.Tests
 {
 
-	public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Startup>
-	{
-		private static int _currentPort = 5080;
-		private static readonly object Sync = new();
+   public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Startup>
+   {
+      private static int _currentPort = 5080;
+      private static readonly object Sync = new();
 
-		private readonly WireMockServer _server;
-		private readonly int _port;
+      private readonly WireMockServer _server;
+      private readonly int _port;
 
-		public IntegrationTestingWebApplicationFactory()
-		{
-			_port = AllocateNext();
-			_server = WireMockServer.Start(_port);
-		}
+      public IntegrationTestingWebApplicationFactory()
+      {
+         _port = AllocateNext();
+         _server = WireMockServer.Start(_port);
+      }
 
-		protected override void ConfigureWebHost(IWebHostBuilder builder)
-		{
-			builder.ConfigureAppConfiguration(config =>
-			{
-				var projectDir = Directory.GetCurrentDirectory();
-				var configPath = Path.Combine(projectDir, "appsettings.json");
+      protected override void ConfigureWebHost(IWebHostBuilder builder)
+      {
+         builder.ConfigureAppConfiguration(config =>
+         {
+            var projectDir = Directory.GetCurrentDirectory();
+            var configPath = Path.Combine(projectDir, "appsettings.json");
 
 				config.Sources.Clear();
 				config
@@ -57,9 +57,10 @@ namespace Dfe.PrepareConversions.Tests
 			});
 
 			var featureManager = new Mock<IFeatureManager>();
-			featureManager.Setup(m => m.IsEnabledAsync(It.IsAny<string>())).ReturnsAsync(true);
+         featureManager.Setup(m => m.IsEnabledAsync(("UseAcademisation"))).ReturnsAsync(true);
+         featureManager.Setup(m => m.IsEnabledAsync(("UseAcademisationApplication"))).ReturnsAsync(false);
 
-			builder.ConfigureServices(services =>
+         builder.ConfigureServices(services =>
 			{
 				services.AddAuthentication("Test");
 				services.AddTransient<IAuthenticationSchemeProvider, MockSchemeProvider>();
@@ -68,99 +69,99 @@ namespace Dfe.PrepareConversions.Tests
 			});
 		}
 
-		public class MockSchemeProvider : AuthenticationSchemeProvider
-		{
-			public MockSchemeProvider(IOptions<AuthenticationOptions> options)
-				: base(options)
-			{
-			}
+      public class MockSchemeProvider : AuthenticationSchemeProvider
+      {
+         public MockSchemeProvider(IOptions<AuthenticationOptions> options)
+            : base(options)
+         {
+         }
 
-			protected MockSchemeProvider(
-				IOptions<AuthenticationOptions> options,
-				IDictionary<string, AuthenticationScheme> schemes
-			)
-				: base(options, schemes)
-			{
-			}
+         protected MockSchemeProvider(
+            IOptions<AuthenticationOptions> options,
+            IDictionary<string, AuthenticationScheme> schemes
+         )
+            : base(options, schemes)
+         {
+         }
 
-			public override Task<AuthenticationScheme> GetSchemeAsync(string name)
-			{
-				if (name == "Test")
-				{
-					var scheme = new AuthenticationScheme(
-						"Test",
-						"Test",
-						typeof(MockAuthenticationHandler)
-					);
-					return Task.FromResult(scheme);
-				}
+         public override Task<AuthenticationScheme> GetSchemeAsync(string name)
+         {
+            if (name == "Test")
+            {
+               var scheme = new AuthenticationScheme(
+                  "Test",
+                  "Test",
+                  typeof(MockAuthenticationHandler)
+               );
+               return Task.FromResult(scheme);
+            }
 
-				return base.GetSchemeAsync(name);
-			}
-		}
+            return base.GetSchemeAsync(name);
+         }
+      }
 
-		public class MockAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
-		{
-			public MockAuthenticationHandler(
-				IOptionsMonitor<AuthenticationSchemeOptions> options,
-				ILoggerFactory logger,
-				UrlEncoder encoder,
-				ISystemClock clock
-			)
-				: base(options, logger, encoder, clock)
-			{
-			}
+      public class MockAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+      {
+         public MockAuthenticationHandler(
+            IOptionsMonitor<AuthenticationSchemeOptions> options,
+            ILoggerFactory logger,
+            UrlEncoder encoder,
+            ISystemClock clock
+         )
+            : base(options, logger, encoder, clock)
+         {
+         }
 
-			protected override Task<AuthenticateResult> HandleAuthenticateAsync()
-			{
-				var claims = new List<Claim> { new Claim(ClaimTypes.Name, "Name") };
-				var identity = new ClaimsIdentity(claims, "Test");
-				var principal = new ClaimsPrincipal(identity);
-				var ticket = new AuthenticationTicket(principal, "Test");
+         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
+         {
+            var claims = new List<Claim> { new Claim(ClaimTypes.Name, "Name") };
+            var identity = new ClaimsIdentity(claims, "Test");
+            var principal = new ClaimsPrincipal(identity);
+            var ticket = new AuthenticationTicket(principal, "Test");
 
-				return Task.FromResult(AuthenticateResult.Success(ticket));
-			}
-		}
-
-
-		public void AddGetWithJsonResponse<TResponseBody>(string path, TResponseBody responseBody)
-		{
-			_server
-				.Given(Request.Create()
-					.WithPath(path)
-					.UsingGet())
-				.RespondWith(Response.Create()
-					.WithStatusCode(200)
-					.WithHeader("Content-Type", "application/json")
-					.WithBody(JsonConvert.SerializeObject(responseBody)));
-		}
+            return Task.FromResult(AuthenticateResult.Success(ticket));
+         }
+      }
 
 
-		public void AddPatchWithJsonRequest<TRequestBody, TResponseBody>(string path, TRequestBody requestBody, TResponseBody responseBody)
-		{
-			_server
-				.Given(Request.Create()
-					.WithPath(path)
-					.WithBody(new JsonMatcher(JsonConvert.SerializeObject(requestBody), true))
-					.UsingPatch())
-				.RespondWith(Response.Create()
-					.WithStatusCode(200)
-					.WithHeader("Content-Type", "application/json")
-					.WithBody(JsonConvert.SerializeObject(responseBody)));
-		}
+      public void AddGetWithJsonResponse<TResponseBody>(string path, TResponseBody responseBody)
+      {
+         _server
+            .Given(Request.Create()
+               .WithPath(path)
+               .UsingGet())
+            .RespondWith(Response.Create()
+               .WithStatusCode(200)
+               .WithHeader("Content-Type", "application/json")
+               .WithBody(JsonConvert.SerializeObject(responseBody)));
+      }
 
-		public void AddPutWithJsonRequest<TRequestBody, TResponseBody>(string path, TRequestBody requestBody, TResponseBody responseBody)
-		{
-			_server
-				.Given(Request.Create()
-					.WithPath(path)
-					.WithBody(new JsonMatcher(JsonConvert.SerializeObject(requestBody), true))
-					.UsingPut())
-				.RespondWith(Response.Create()
-					.WithStatusCode(200)
-					.WithHeader("Content-Type", "application/json")
-					.WithBody(JsonConvert.SerializeObject(responseBody)));
-		}
+
+      public void AddPatchWithJsonRequest<TRequestBody, TResponseBody>(string path, TRequestBody requestBody, TResponseBody responseBody)
+      {
+         _server
+            .Given(Request.Create()
+               .WithPath(path)
+               .WithBody(new JsonMatcher(JsonConvert.SerializeObject(requestBody), true))
+               .UsingPatch())
+            .RespondWith(Response.Create()
+               .WithStatusCode(200)
+               .WithHeader("Content-Type", "application/json")
+               .WithBody(JsonConvert.SerializeObject(responseBody)));
+      }
+
+      public void AddPutWithJsonRequest<TRequestBody, TResponseBody>(string path, TRequestBody requestBody, TResponseBody responseBody)
+      {
+         _server
+            .Given(Request.Create()
+               .WithPath(path)
+               .WithBody(new JsonMatcher(JsonConvert.SerializeObject(requestBody), true))
+               .UsingPut())
+            .RespondWith(Response.Create()
+               .WithStatusCode(200)
+               .WithHeader("Content-Type", "application/json")
+               .WithBody(JsonConvert.SerializeObject(responseBody)));
+      }
 
 		public void AddPostWithJsonRequest<TRequestBody, TResponseBody>(string path, TRequestBody requestBody, TResponseBody responseBody)
 		{
@@ -175,39 +176,39 @@ namespace Dfe.PrepareConversions.Tests
 					   .WithBody(JsonConvert.SerializeObject(responseBody)));
 		}
 
-		public void AddErrorResponse(string path, string method)
-		{
-			_server
-				.Given(Request.Create()
-					.WithPath(path)
-					.UsingMethod(method))
-				.RespondWith(Response.Create()
-					.WithStatusCode(500));
-		}
+      public void AddErrorResponse(string path, string method)
+      {
+         _server
+            .Given(Request.Create()
+               .WithPath(path)
+               .UsingMethod(method))
+            .RespondWith(Response.Create()
+               .WithStatusCode(500));
+      }
 
-		public void Reset()
-		{
-			_server.Reset();
-		}
+      public void Reset()
+      {
+         _server.Reset();
+      }
 
-		private static int AllocateNext()
-		{
-			lock (Sync)
-			{
-				var next = _currentPort;
-				_currentPort++;
-				return next;
-			}
-		}
+      private static int AllocateNext()
+      {
+         lock (Sync)
+         {
+            var next = _currentPort;
+            _currentPort++;
+            return next;
+         }
+      }
 
-		protected override void Dispose(bool disposing)
-		{
-			base.Dispose(disposing);
+      protected override void Dispose(bool disposing)
+      {
+         base.Dispose(disposing);
 
-			if (disposing)
-			{
-				_server.Stop();
-			}
-		}
-	}
+         if (disposing)
+         {
+            _server.Stop();
+         }
+      }
+   }
 }
