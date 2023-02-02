@@ -2,16 +2,14 @@
 using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Data.Services
 {
-	public class EstablishmentService : IGetEstablishment
+   public class EstablishmentService : IGetEstablishment
 	{
 		private readonly HttpClient _httpClient;
 		private readonly ILogger<EstablishmentService> _logger;
@@ -39,7 +37,11 @@ namespace Dfe.PrepareConversions.Data.Services
 
 		public async Task<IEnumerable<EstablishmentResponse>> SearchEstablishments(string searchQuery)
 		{
-			var result = await _httpClientService.Get<IEnumerable<EstablishmentResponse>>(_httpClient, $"establishments?name={searchQuery}");
+			var path = int.TryParse(searchQuery, out int urn)
+				? $"establishments?urn={urn}"
+				: $"establishments?name={searchQuery}";
+
+			var result = await _httpClientService.Get<IEnumerable<EstablishmentResponse>>(_httpClient, path);
 
 			if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
 
