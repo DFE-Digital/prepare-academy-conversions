@@ -9,6 +9,7 @@ using Xunit;
 using FluentAssertions;
 using Dfe.PrepareConversions.Data.Tests.AutoFixture;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
+using System.Net.Http;
 
 namespace Dfe.PrepareConversions.Data.Tests.Services
 {
@@ -21,13 +22,13 @@ namespace Dfe.PrepareConversions.Data.Tests.Services
 		{
 			var apiResponse = new ApiResponse<AdvisoryBoardDecision>(HttpStatusCode.Created, decision);
 			httpHelper.Setup(m =>
-			m.Post<AdvisoryBoardDecision, AdvisoryBoardDecision>("/conversion-project/advisory-board-decision", decision))
+			m.Post<AdvisoryBoardDecision, AdvisoryBoardDecision>(It.IsAny<HttpClient>(), "/conversion-project/advisory-board-decision", decision))
 				.ReturnsAsync(apiResponse);
 
 			await sut.Create(decision);
 
 			httpHelper.Verify(m => m
-				.Post<AdvisoryBoardDecision, AdvisoryBoardDecision>("/conversion-project/advisory-board-decision", decision), Times.Once);
+				.Post<AdvisoryBoardDecision, AdvisoryBoardDecision>(It.IsAny<HttpClient>(), "/conversion-project/advisory-board-decision", decision), Times.Once);
 		}
 
 		[Theory, AutoMoqData]
@@ -37,7 +38,7 @@ namespace Dfe.PrepareConversions.Data.Tests.Services
 		{
 			var responseCode = HttpStatusCode.BadRequest;
 			httpHelper.Setup(m =>
-			m.Post<AdvisoryBoardDecision, AdvisoryBoardDecision>("/conversion-project/advisory-board-decision", decision))
+			m.Post<AdvisoryBoardDecision, AdvisoryBoardDecision>(It.IsAny<HttpClient>(), "/conversion-project/advisory-board-decision", decision))
 				.ReturnsAsync(new ApiResponse<AdvisoryBoardDecision>(responseCode, null));
 
 			await sut.Invoking(async s => await s.Create(decision))

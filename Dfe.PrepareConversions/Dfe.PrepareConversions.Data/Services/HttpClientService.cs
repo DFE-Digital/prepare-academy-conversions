@@ -10,36 +10,34 @@ namespace Dfe.PrepareConversions.Data.Services
 	public class HttpClientService : IHttpClientService
 	{
 		private readonly ILogger<HttpClientService> _logger;
-		private readonly HttpClient _client;
 
-		public HttpClientService(IHttpClientFactory httpClientFactory, ILogger<HttpClientService> logger)
+		public HttpClientService(ILogger<HttpClientService> logger)
 		{
 			_logger = logger;
-			_client = httpClientFactory.CreateClient("AcademisationClient");
 		}
 
-		public async Task<ApiResponse<TResponse>> Post<TRequest, TResponse>(string path, TRequest requestBody)
+		public async Task<ApiResponse<TResponse>> Post<TRequest, TResponse>(HttpClient httpClient, string path, TRequest requestBody)
 			where TResponse : class
 		{
 			var requestPayload = JsonContent.Create(requestBody);
-			var result = await _client.PostAsync(path, requestPayload);
+			var result = await httpClient.PostAsync(path, requestPayload);
 
 			return await HandleResponse<TResponse>(result);
 		}
 
-		public async Task<ApiResponse<TResponse>> Put<TRequest, TResponse>(string path, TRequest requestBody)
+		public async Task<ApiResponse<TResponse>> Put<TRequest, TResponse>(HttpClient httpClient, string path, TRequest requestBody)
 			where TResponse : class
 		{
 			var requestPayload = JsonContent.Create(requestBody);
-			var result = await _client.PutAsync(path, requestPayload);
+			var result = await httpClient.PutAsync(path, requestPayload);
 
 			return await HandleResponse<TResponse>(result);
 		}
 
-		public async Task<ApiResponse<TResponse>> Get<TResponse>(string path)
+		public async Task<ApiResponse<TResponse>> Get<TResponse>(HttpClient httpClient, string path)
 			where TResponse : class
 		{
-			var result = await _client.GetAsync(path);
+			var result = await httpClient.GetAsync(path);
 
 			return await HandleResponse<TResponse>(result);
 		}
