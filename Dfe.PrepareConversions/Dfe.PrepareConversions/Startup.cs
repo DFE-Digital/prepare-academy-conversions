@@ -53,7 +53,7 @@ public class Startup
    public void ConfigureServices(IServiceCollection services)
    {
       services.AddFeatureManagement();
-
+      services.AddHealthChecks();
       services
          .AddRazorPages(options =>
          {
@@ -155,6 +155,7 @@ public class Startup
       app.UseStatusCodePagesWithReExecute("/Errors", "?statusCode={0}");
 
       app.UseHttpsRedirection();
+      app.UseHealthChecks("/health");
 
       //For Azure AD redirect uri to remain https
       ForwardedHeadersOptions forwardOptions = new() { ForwardedHeaders = ForwardedHeaders.All, RequireHeaderSymmetry = false };
