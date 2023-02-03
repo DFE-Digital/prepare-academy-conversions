@@ -1,4 +1,5 @@
 using Dfe.PrepareConversions.Data.Services;
+using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -39,8 +40,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 
 			if (schools.Any())
 			{
-               // TODO: redirect to SchoolResults
-				return Page();
+				return RedirectToPage(Links.InvoluntaryProject.SchoolResults.Page, new { query = SearchQuery });
 			}
 			else
 			{

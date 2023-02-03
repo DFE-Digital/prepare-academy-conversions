@@ -32,10 +32,10 @@ namespace Dfe.PrepareConversions.Services
 			return establishment;
 		}
 
-		public Task<IEnumerable<EstablishmentResponse>> SearchEstablishments(string searchQuery)
+		public Task<IEnumerable<EstablishmentSearchResponse>> SearchEstablishments(string searchQuery)
 		{
 			var key = $"establishments-{searchQuery}";
-			if (_httpContext.Items.ContainsKey(key) && _httpContext.Items[key] is IEnumerable<EstablishmentResponse> cached)
+			if (_httpContext.Items.ContainsKey(key) && _httpContext.Items[key] is IEnumerable<EstablishmentSearchResponse> cached)
 			{
 				return Task.FromResult(cached);
 			}

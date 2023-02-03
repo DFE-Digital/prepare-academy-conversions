@@ -1,0 +1,53 @@
+﻿@page "/start-new-project/select-school"
+@model Dfe.PrepareConversions.Pages.InvoluntaryProject.SchoolResultsModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Select the school - Manage an academy conversion";
+    var formClasses = ViewData.ModelState.IsValid ? "" : "govuk-form-group--error";
+}
+
+@section BeforeMain
+    {
+    <a class="govuk-back-link" asp-page="@Links.InvoluntaryProject.SearchSchool.Page">Back</a>
+    <partial name="_ErrorSummary" />
+}
+
+    <div asp-gds-validation-summary></div>
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form asp-page="/Transfers/OutgoingTrustDetails" method="get" novalidate="">
+                <input type="text" name="query" value="@Model.SearchQuery" hidden />
+                <div class="govuk-form-group @formClasses">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl" id="@nameof(Model.Schools)">
+                            <h1 class="govuk-fieldset__heading" aria-label="Select one of the @Model.Schools.Count() options">
+                                Select the school
+                            </h1>
+                        </legend>
+
+                        <p asp-gds-validation-for="Trusts"></p>
+
+                        <div class="govuk-radios">
+                            @foreach (var school in Model.Schools)
+                        {
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="@school.Ukprn" name="trustId" type="radio" value="@school.Ukprn" aria-describedby="@school.Ukprn-hint">
+                                <label class="govuk-label govuk-radios__label" for="@school.Ukprn">
+                                    @school.Name (@school.Ukprn)
+                                </label>
+                                <div id="select-the-school-item-hint" class="govuk-hint govuk-radios__hint">
+                                    URN: @school.Urn
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </fieldset>
+            </div>
+            <button class="govuk-button" data-module="govuk-button" type="submit">
+               Continue
+            </button>
+        </form>
+    </div>
+</div>
