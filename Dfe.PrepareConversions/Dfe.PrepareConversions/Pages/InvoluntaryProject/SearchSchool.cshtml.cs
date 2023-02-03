@@ -21,10 +21,8 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 		[BindProperty(Name = "query", SupportsGet = true)]
 		public string SearchQuery { get; set; } = "";
 
-		public IActionResult OnGet(bool change = false)
+		public IActionResult OnGet()
 		{
-			ViewData["ChangeLink"] = change;
-
 			return Page();
 		}
 
@@ -32,7 +30,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 		{
 			if (string.IsNullOrWhiteSpace(SearchQuery))
 			{
-				ModelState.AddModelError(nameof(SearchQuery), "Enter the school name");
+				ModelState.AddModelError(nameof(SearchQuery), "Enter the school name or URN");
 				_errorService.AddErrors(ModelState.Keys, ModelState);
 				return Page();
 			}
@@ -41,7 +39,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 
 			if (schools.Any())
 			{
-				//return RedirectToPage(Links.InvoluntaryProject.SchoolResults.Page);
+               // TODO: redirect to SchoolResults
 				return Page();
 			}
 			else
