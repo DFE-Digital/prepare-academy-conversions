@@ -1,6 +1,5 @@
 ﻿using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Services;
-using Dfe.PrepareConversions.Data.Tests.TestDoubles;
 using AutoFixture.Xunit2;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -23,31 +22,31 @@ namespace Dfe.PrepareConversions.Data.Tests.Services
 			Mock<ILogger<HttpClientService>> logger,
 			AdvisoryBoardDecision decision)
 		{
-			var path = "/api/save";
+			var path = "http://localhost/api/save";
 			var payload = JsonSerializer.Serialize(decision);
 			mockHandler.Expect(HttpMethod.Post, path)
 				.Respond(HttpStatusCode.Created, "application/json", payload);
 
-			var sut = new HttpClientService(new MockHttpClientFactory(mockHandler), logger.Object);
+			var sut = new HttpClientService(logger.Object);
 
-			var result = await sut.Post<AdvisoryBoardDecision, AdvisoryBoardDecision>(path, decision);
-		
+			var result = await sut.Post<AdvisoryBoardDecision, AdvisoryBoardDecision>(mockHandler.ToHttpClient(), path, decision);
+
 			mockHandler.VerifyNoOutstandingExpectation();
 			result.Body.Should().BeEquivalentTo(decision);
-		}		
+		}
 
 		[Theory, AutoMoqData]
 		public async Task Should_return_null_body_when_response_not_successful_on_post([Frozen] MockHttpMessageHandler mockHandler,
 			Mock<ILogger<HttpClientService>> logger,
 			AdvisoryBoardDecision decision)
 		{
-			var path = "/api/save";
+			var path = "http://localhost/api/save";
 			var responseCode = HttpStatusCode.BadRequest;
 			mockHandler.Expect(path).Respond(responseCode);
 
-			var sut = new HttpClientService(new MockHttpClientFactory(mockHandler), logger.Object);
+			var sut = new HttpClientService(logger.Object);
 
-			var result = await sut.Post<AdvisoryBoardDecision, AdvisoryBoardDecision>(path, decision);
+			var result = await sut.Post<AdvisoryBoardDecision, AdvisoryBoardDecision>(mockHandler.ToHttpClient(), path, decision);
 
 			result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
 			result.Success.Should().BeFalse();
@@ -61,13 +60,13 @@ namespace Dfe.PrepareConversions.Data.Tests.Services
 		{
 			var responseCode = HttpStatusCode.BadRequest;
 			var content = "{ \"error\": \"badrequest\" }";
-			var path = "/api/save";
+			var path = "http://localhost/api/save";
 			var logMock = TestLoggerFactory.Create();
 			mockHandler.Expect(path).Respond(responseCode, "application/json", content);
 
-			var sut = new HttpClientService(new MockHttpClientFactory(mockHandler), logMock.CreateLogger<HttpClientService>());
+			var sut = new HttpClientService(logMock.CreateLogger<HttpClientService>());
 
-			await sut.Post<AdvisoryBoardDecision, AdvisoryBoardDecision>(path, decision);
+			await sut.Post<AdvisoryBoardDecision, AdvisoryBoardDecision>(mockHandler.ToHttpClient(), path, decision);
 
 			logMock.Sink.LogEntries.Should()
 				.ContainSingle(l => l.Message.Contains($"Request to Api failed | StatusCode - {responseCode} | Content - {content}"));
@@ -78,14 +77,14 @@ namespace Dfe.PrepareConversions.Data.Tests.Services
 			Mock<ILogger<HttpClientService>> logger,
 			AdvisoryBoardDecision decision)
 		{
-			var path = "/api/save";
+			var path = "http://localhost/api/save";
 			var payload = JsonSerializer.Serialize(decision);
 			mockHandler.Expect(HttpMethod.Get, path)
 				.Respond(HttpStatusCode.Created, "application/json", payload);
 
-			var sut = new HttpClientService(new MockHttpClientFactory(mockHandler), logger.Object);
+			var sut = new HttpClientService(logger.Object);
 
-			var result = await sut.Get<AdvisoryBoardDecision>(path);
+			var result = await sut.Get<AdvisoryBoardDecision>(mockHandler.ToHttpClient(), path);
 
 			mockHandler.VerifyNoOutstandingExpectation();
 			result.Body.Should().BeEquivalentTo(decision);
@@ -95,13 +94,13 @@ namespace Dfe.PrepareConversions.Data.Tests.Services
 		public async Task Should_return_null_body_when_response_not_successful_on_get([Frozen] MockHttpMessageHandler mockHandler,
 			Mock<ILogger<HttpClientService>> logger)
 		{
-			var path = "/api/save";
+			var path = "http://localhost/api/save";
 			var responseCode = HttpStatusCode.BadRequest;
 			mockHandler.Expect(path).Respond(responseCode);
 
-			var sut = new HttpClientService(new MockHttpClientFactory(mockHandler), logger.Object);
+			var sut = new HttpClientService(logger.Object);
 
-			var result = await sut.Get<AdvisoryBoardDecision>(path);
+			var result = await sut.Get<AdvisoryBoardDecision>(mockHandler.ToHttpClient(), path);
 
 			result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
 			result.Success.Should().BeFalse();
@@ -114,13 +113,13 @@ namespace Dfe.PrepareConversions.Data.Tests.Services
 		{
 			var responseCode = HttpStatusCode.BadRequest;
 			var content = "{ \"error\": \"badrequest\" }";
-			var path = "/api/save";
+			var path = "http://localhost/api/save";
 			var logMock = TestLoggerFactory.Create();
 			mockHandler.Expect(path).Respond(responseCode, "application/json", content);
 
-			var sut = new HttpClientService(new MockHttpClientFactory(mockHandler), logMock.CreateLogger<HttpClientService>());
+			var sut = new HttpClientService(logMock.CreateLogger<HttpClientService>());
 
-			await sut.Get<AdvisoryBoardDecision>(path);
+			await sut.Get<AdvisoryBoardDecision>(mockHandler.ToHttpClient(), path);
 
 			logMock.Sink.LogEntries.Should()
 				.ContainSingle(l => l.Message.Contains($"Request to Api failed | StatusCode - {responseCode} | Content - {content}"));
@@ -131,14 +130,14 @@ namespace Dfe.PrepareConversions.Data.Tests.Services
 			Mock<ILogger<HttpClientService>> logger,
 			AdvisoryBoardDecision decision)
 		{
-			var path = "/api/save";
+			var path = "http://localhost/api/save";
 			var payload = JsonSerializer.Serialize(decision);
 			mockHandler.Expect(HttpMethod.Put, path)
 				.Respond(HttpStatusCode.Created, "application/json", payload);
 
-			var sut = new HttpClientService(new MockHttpClientFactory(mockHandler), logger.Object);
+			var sut = new HttpClientService(logger.Object);
 
-			var result = await sut.Put<AdvisoryBoardDecision, AdvisoryBoardDecision>(path, decision);
+			var result = await sut.Put<AdvisoryBoardDecision, AdvisoryBoardDecision>(mockHandler.ToHttpClient(), path, decision);
 
 			mockHandler.VerifyNoOutstandingExpectation();
 			result.Body.Should().BeEquivalentTo(decision);
@@ -149,13 +148,13 @@ namespace Dfe.PrepareConversions.Data.Tests.Services
 			Mock<ILogger<HttpClientService>> logger,
 			AdvisoryBoardDecision decision)
 		{
-			var path = "/api/save";
+			var path = "http://localhost/api/save";
 			var responseCode = HttpStatusCode.BadRequest;
 			mockHandler.Expect(path).Respond(responseCode);
 
-			var sut = new HttpClientService(new MockHttpClientFactory(mockHandler), logger.Object);
+			var sut = new HttpClientService(logger.Object);
 
-			var result = await sut.Put<AdvisoryBoardDecision, AdvisoryBoardDecision>(path, decision);
+			var result = await sut.Put<AdvisoryBoardDecision, AdvisoryBoardDecision>(mockHandler.ToHttpClient(), path, decision);
 
 			result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
 			result.Success.Should().BeFalse();
@@ -169,13 +168,13 @@ namespace Dfe.PrepareConversions.Data.Tests.Services
 		{
 			var responseCode = HttpStatusCode.BadRequest;
 			var content = "{ \"error\": \"badrequest\" }";
-			var path = "/api/save";
+			var path = "http://localhost/api/save";
 			var logMock = TestLoggerFactory.Create();
 			mockHandler.Expect(path).Respond(responseCode, "application/json", content);
 
-			var sut = new HttpClientService(new MockHttpClientFactory(mockHandler), logMock.CreateLogger<HttpClientService>());
+			var sut = new HttpClientService(logMock.CreateLogger<HttpClientService>());
 
-			await sut.Put<AdvisoryBoardDecision, AdvisoryBoardDecision>(path, decision);
+			await sut.Put<AdvisoryBoardDecision, AdvisoryBoardDecision>(mockHandler.ToHttpClient(), path, decision);
 
 			logMock.Sink.LogEntries.Should()
 				.ContainSingle(l => l.Message.Contains($"Request to Api failed | StatusCode - {responseCode} | Content - {content}"));

@@ -1,6 +1,7 @@
 ﻿using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Data.Services;
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Services
@@ -29,6 +30,21 @@ namespace Dfe.PrepareConversions.Services
 			_httpContext.Items[key] = establishment;
 
 			return establishment;
+		}
+
+		public Task<IEnumerable<EstablishmentResponse>> SearchEstablishments(string searchQuery)
+		{
+			var key = $"establishments-{searchQuery}";
+			if (_httpContext.Items.ContainsKey(key) && _httpContext.Items[key] is IEnumerable<EstablishmentResponse> cached)
+			{
+				return Task.FromResult(cached);
+			}
+
+			var establishments = _getEstablishment.SearchEstablishments(searchQuery);
+
+			_httpContext.Items[key] = establishments;
+
+			return establishments;
 		}
 	}
 }

@@ -6,6 +6,7 @@
 	public class EstablishmentResponse
 	{
 		public string Urn { get; set; }
+		public string Ukprn { get; set; }
 		public string LocalAuthorityCode { get; set; }
 		public string LocalAuthorityName { get; set; }
 		public string EstablishmentNumber { get; set; }

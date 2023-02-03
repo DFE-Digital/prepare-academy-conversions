@@ -1,20 +1,26 @@
-﻿using Dfe.PrepareConversions.Data.Models.Establishment;
+﻿using Dfe.PrepareConversions.Data.Exceptions;
+using Dfe.PrepareConversions.Data.Models.Establishment;
+using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Data.Services
 {
-	public class EstablishmentService : IGetEstablishment
+   public class EstablishmentService : IGetEstablishment
 	{
 		private readonly HttpClient _httpClient;
 		private readonly ILogger<EstablishmentService> _logger;
+		private readonly IHttpClientService _httpClientService;
 
-		public EstablishmentService(IHttpClientFactory httpClientFactory, ILogger<EstablishmentService> logger)
+		public EstablishmentService(IHttpClientFactory httpClientFactory, ILogger<EstablishmentService> logger,
+			 IHttpClientService httpClientService)
 		{
 			_httpClient = httpClientFactory.CreateClient("TramsClient");
 			_logger = logger;
+			_httpClientService = httpClientService;
 		}
 
 		public async Task<EstablishmentResponse> GetEstablishmentByUrn(string urn)
@@ -27,6 +33,19 @@ namespace Dfe.PrepareConversions.Data.Services
 			}
 
 			return await response.Content.ReadFromJsonAsync<EstablishmentResponse>();
+		}
+
+		public async Task<IEnumerable<EstablishmentResponse>> SearchEstablishments(string searchQuery)
+		{
+			var path = int.TryParse(searchQuery, out int urn)
+				? $"establishments?urn={urn}"
+				: $"establishments?name={searchQuery}";
+
+			var result = await _httpClientService.Get<IEnumerable<EstablishmentResponse>>(_httpClient, path);
+
+			if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+
+			return result.Body;
 		}
 	}
 }

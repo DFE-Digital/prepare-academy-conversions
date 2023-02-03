@@ -13,6 +13,8 @@ using Dfe.PrepareConversions.Data.Tests.TestDoubles;
 using Newtonsoft.Json;
 using Dfe.PrepareConversions.Data.Models.Establishment;
 using System.Globalization;
+using Moq;
+using Dfe.PrepareConversions.Data.Services.Interfaces;
 
 namespace Dfe.PrepareConversions.Data.Tests.Services
 {
@@ -29,7 +31,8 @@ namespace Dfe.PrepareConversions.Data.Tests.Services
 			_schoolPerformanceService = new SchoolPerformanceService(
 				new EstablishmentService(
 					new MockHttpClientFactory(_mockHandler),
-					_testLogger.CreateLogger<EstablishmentService>()
+					_testLogger.CreateLogger<EstablishmentService>(),
+					Mock.Of<IHttpClientService>()
 				)
 			);
 		}
