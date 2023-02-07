@@ -1,23 +1,24 @@
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.Establishment;
-using Dfe.PrepareConversions.Data.Services;
-using Dfe.PrepareConversions.Models;
+using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 {
-	public class SearchSchoolModel : PageModel
+	public class SearchTrustModel : PageModel
 	{
-		private readonly IGetEstablishment _getEstablishment;
+		private readonly ITrustsRespository _trustsRepository;
 		private readonly ErrorService _errorService;
 
-		public SearchSchoolModel(IGetEstablishment getEstablishment, ErrorService errorService)
+		public SearchTrustModel(ITrustsRespository trustsRepository, ErrorService errorService)
 		{
-			_getEstablishment = getEstablishment;
+			_trustsRepository = trustsRepository;
 			_errorService = errorService;
 		}
 
@@ -37,12 +38,18 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 				searchQuery = searchQuery.Replace(searchQuery.Substring(startIndex), "");
 			}
 
-			var schools = await _getEstablishment.SearchEstablishments(searchQuery.Trim());
+			var trusts = await _trustsRepository.SearchTrusts(searchQuery.Trim());
 
-			return new JsonResult(schools.Select(s => new
+			return new JsonResult(trusts.Select(t =>
 			{
-				suggestion = HighlightSearchMatch($"{s.Name} ({s.Urn})", searchQuery, s),
-				value = $"{s.Name} ({s.Urn})"
+				var suggestion = $@"{t.GroupName} ({t.Urn})
+									<br />
+									Companies House number: {t.CompaniesHouseNumber}";
+				return new
+				{
+					suggestion = HighlightSearchMatch(suggestion, searchQuery, t),
+					value = $"{t.GroupName} ({t.Urn})"
+				};
 			}));
 		}
 
@@ -55,12 +62,12 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 				return Page();
 			}
 
-			return RedirectToPage(Links.InvoluntaryProject.SearchTrusts);
+			return Page();
 		}
 
-		private static string HighlightSearchMatch(string input, string toReplace, EstablishmentSearchResponse school)
+		private static string HighlightSearchMatch(string input, string toReplace, Trust school)
 		{
-			if (school == null || string.IsNullOrWhiteSpace(school.Urn) || string.IsNullOrWhiteSpace(school.Name)) return string.Empty;
+			//if (school == null || string.IsNullOrWhiteSpace(school.Urn) || string.IsNullOrWhiteSpace(school.Name)) return string.Empty;
 
 			var index = input.IndexOf(toReplace, StringComparison.InvariantCultureIgnoreCase);
 			var correctCaseSearchString = input.Substring(index, toReplace.Length);
