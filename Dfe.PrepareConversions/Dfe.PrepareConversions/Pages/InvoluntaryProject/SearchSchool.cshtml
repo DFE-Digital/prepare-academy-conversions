@@ -3,34 +3,67 @@
 
 @{
     Layout = "_Layout";
-    ViewBag.Title = "What is the school name - Manage an academy conversion";
+    ViewBag.Title = "What is the school name";
 }
 
 @section BeforeMain
-{
+    {
     <a class="govuk-back-link" asp-page="@Links.ProjectList.Index.Page">Back</a>
-    <partial name="_ErrorSummary"/>
+    <partial name="_ErrorSummary" />
 }
 
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-        <form method="post" data-id="form">
-            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
-                <h1 class="govuk-label-wrapper">
-                    <label class="govuk-label govuk-label--xl" for="SearchQuery">
-                        What is the outgoing trust name?
-                    </label>
-                </h1>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form method="post" data-id="form">
+                <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+                    <h1 class="govuk-label-wrapper">
+                        <label class="govuk-label govuk-label--xl" for="SearchQuery">
+                            What is the outgoing trust name?
+                        </label>
+                    </h1>
 
-                <p asp-gds-validation-for="SearchQuery"></p>
+                    <p asp-gds-validation-for="SearchQuery"></p>
 
-                <div id="query-hint" class="govuk-hint">
-                    Search by name or URN (Unique Reference Number).
+                    <div id="query-hint" class="govuk-hint">
+                        Search by name or URN (Unique Reference Number).
+                    </div>
+
+                    <div id="school-search"></div>
+                    <input type="hidden" id="SearchQuery" name="SearchQuery" />
                 </div>
-
-                <input class="govuk-input" name="query" id="@nameof(Model.SearchQuery)" type="text" aria-describedby="query-hint" value="@Model.SearchQuery" />
-            </div>
-            <button class="govuk-button" type="submit" data-id="submit">Search</button>
-        </form>
+                <button class="govuk-button" type="submit" data-id="submit">Continue</button>
+            </form>
+        </div>
     </div>
-</div>
+
+    <script type="application/javascript" asp-add-nonce>
+
+        function valueTemplate (result) {
+          return result && result.value;
+        }
+
+        function suggestionTemplate (result) {
+           return result.suggestion;
+        }
+
+        function suggest(query, populateResults) {
+          if (query != null & query.length > 2){
+           var xhttp = new XMLHttpRequest();
+           xhttp.onload = function() { populateResults(JSON.parse(this.responseText)); }
+           xhttp.open('GET', `/start-new-project/school-name?handler=Search&searchQuery=${query}`, true);
+           xhttp.send();
+          }
+        }
+
+        accessibleAutocomplete({
+           element: document.querySelector('#school-search'),
+           id: 'SearchQuery',
+           name: 'SearchQuery',
+           source:  suggest,
+           defaultValue: '@Model.SearchQuery',
+           templates: {
+              inputValue: valueTemplate,
+              suggestion: suggestionTemplate
+           }
+        });
+    </script>

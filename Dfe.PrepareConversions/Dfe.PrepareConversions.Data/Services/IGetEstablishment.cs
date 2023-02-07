@@ -7,6 +7,6 @@ namespace Dfe.PrepareConversions.Data.Services
 	public interface IGetEstablishment
 	{
 		Task<EstablishmentResponse> GetEstablishmentByUrn(string urn);
-		Task<IEnumerable<EstablishmentResponse>> SearchEstablishments(string searchQuery);
+		Task<IEnumerable<EstablishmentSearchResponse>> SearchEstablishments(string searchQuery);
 	}
 }

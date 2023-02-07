@@ -35,13 +35,13 @@ namespace Dfe.PrepareConversions.Data.Services
 			return await response.Content.ReadFromJsonAsync<EstablishmentResponse>();
 		}
 
-		public async Task<IEnumerable<EstablishmentResponse>> SearchEstablishments(string searchQuery)
+		public async Task<IEnumerable<EstablishmentSearchResponse>> SearchEstablishments(string searchQuery)
 		{
 			var path = int.TryParse(searchQuery, out int urn)
 				? $"establishments?urn={urn}"
 				: $"establishments?name={searchQuery}";
 
-			var result = await _httpClientService.Get<IEnumerable<EstablishmentResponse>>(_httpClient, path);
+			var result = await _httpClientService.Get<IEnumerable<EstablishmentSearchResponse>>(_httpClient, path);
 
 			if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
 
