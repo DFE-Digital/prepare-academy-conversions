@@ -1,5 +1,5 @@
+using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Data.Services;
-using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -30,10 +30,10 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 
       public async Task<IActionResult> OnGetSearch(string searchQuery)
       {
-         if (searchQuery.Contains("("))
+         if (searchQuery.Contains('('))
          {
             // if the school name contains the URN as well remove from the search
-            var startIndex = searchQuery.IndexOf("(");
+            var startIndex = searchQuery.IndexOf('(');
             searchQuery = searchQuery.Replace(searchQuery.Substring(startIndex), "");
           }
 
@@ -41,7 +41,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 
          return new JsonResult(schools.Select(s => new
          {
-            suggestion = HighlightSearchMatch($"{s.Name} ({s.Urn})", searchQuery),
+            suggestion = HighlightSearchMatch($"{s.Name} ({s.Urn})", searchQuery, s),
             value = $"{s.Name} ({s.Urn})"
          }));
       }
@@ -58,8 +58,10 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
          return Page();
       }
 
-      private static string HighlightSearchMatch(string input, string toReplace)
+      private static string HighlightSearchMatch(string input, string toReplace, EstablishmentSearchResponse school)
       {
+         if (school == null || string.IsNullOrWhiteSpace(school.Urn) || string.IsNullOrWhiteSpace(school.Name)) return string.Empty;
+
          var index = input.IndexOf(toReplace, StringComparison.InvariantCultureIgnoreCase);
          var correctCaseSearchString = input.Substring(index, toReplace.Length);
 
