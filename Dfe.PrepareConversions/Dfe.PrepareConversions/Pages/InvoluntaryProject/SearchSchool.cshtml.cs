@@ -20,8 +20,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
          _errorService = errorService;
       }
 
-      [BindProperty]
-      public string SearchQuery { get; set; } = "";
+      [BindProperty] public string SearchQuery { get; set; } = "";
 
       public IActionResult OnGet()
       {
