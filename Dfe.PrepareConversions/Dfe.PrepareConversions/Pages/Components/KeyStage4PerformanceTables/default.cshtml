@@ -1,4 +1,5 @@
-﻿@model KeyStage4PerformanceTableViewModel
+﻿@using Dfe.PrepareConversions.TagHelpers
+@model KeyStage4PerformanceTableViewModel
 
 <h2 class="govuk-heading-l">
     Attainment 8
@@ -16,23 +17,29 @@
     </thead>
     <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
-	    @* disadvantaged *@
-	    <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
-	    <td class="govuk-table__cell" id="attainment8">@Model.Attainment8Score</td>
-	    <td class="govuk-table__cell" id="attainment8-previous-year">@Model.Attainment8ScorePreviousYear</td>
-	    <td class="govuk-table__cell" id="attainment8-two-years-ago">@Model.Attainment8ScoreTwoYearsAgo</td>
+       <th scope="row" class="govuk-table__header">Status</th>
+         @Html.Raw(Html.KeyStageDataTag(DateTime.Now))
+         @Html.Raw(Html.KeyStageDataTag(DateTime.Now.AddYears(-1)))
+         @Html.Raw(Html.KeyStageDataTag(DateTime.Now.AddYears(-2)))
     </tr>
     <tr class="govuk-table__row">
-	    <th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA average</th>
-	    <td class="govuk-table__cell" id="la-attainment8">@Model.LaAverageAttainment8Score</td>
-        <td class="govuk-table__cell" id="la-attainment8-previous-year">@Model.LaAverageAttainment8ScorePreviousYear</td>
-	    <td class="govuk-table__cell" id="la-attainment8-two-years-ago">@Model.LaAverageAttainment8ScoreTwoYearsAgo</td>
+       @* disadvantaged *@
+       <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
+       <td class="govuk-table__cell" id="attainment8">@Model.Attainment8Score</td>
+       <td class="govuk-table__cell" id="attainment8-previous-year">@Model.Attainment8ScorePreviousYear</td>
+       <td class="govuk-table__cell" id="attainment8-two-years-ago">@Model.Attainment8ScoreTwoYearsAgo</td>
     </tr>
     <tr class="govuk-table__row">
-	    <th scope="row" class="govuk-table__header">National average</th>
-	    <td class="govuk-table__cell" id="na-attainment8">@Model.NationalAverageAttainment8Score</td>
-        <td class="govuk-table__cell" id="na-attainment8-previous-year">@Model.NationalAverageAttainment8ScorePreviousYear</td>
-	    <td class="govuk-table__cell" id="na-attainment8-two-years-ago">@Model.NationalAverageAttainment8ScoreTwoYearsAgo</td>
+       <th scope="row" class="govuk-table__header">@ViewData["LocalAuthority"] LA average</th>
+       <td class="govuk-table__cell" id="la-attainment8">@Model.LaAverageAttainment8Score</td>
+       <td class="govuk-table__cell" id="la-attainment8-previous-year">@Model.LaAverageAttainment8ScorePreviousYear</td>
+       <td class="govuk-table__cell" id="la-attainment8-two-years-ago">@Model.LaAverageAttainment8ScoreTwoYearsAgo</td>
+    </tr>
+    <tr class="govuk-table__row">
+       <th scope="row" class="govuk-table__header">National average</th>
+       <td class="govuk-table__cell" id="na-attainment8">@Model.NationalAverageAttainment8Score</td>
+       <td class="govuk-table__cell" id="na-attainment8-previous-year">@Model.NationalAverageAttainment8ScorePreviousYear</td>
+       <td class="govuk-table__cell" id="na-attainment8-two-years-ago">@Model.NationalAverageAttainment8ScoreTwoYearsAgo</td>
     </tr>
     </tbody>
 </table>
