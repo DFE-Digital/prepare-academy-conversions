@@ -2,22 +2,27 @@ using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Dfe.PrepareConversions.Extensions;
 
 namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 {
 	public class SearchSchoolModel : PageModel
 	{
 		private readonly IGetEstablishment _getEstablishment;
+		private readonly ISession _session;
 		private readonly ErrorService _errorService;
+		private const string INVOLUNTARY_PROJECT_SCHOOL_KEY = "InvoluntaryProjectSchool";
 
-		public SearchSchoolModel(IGetEstablishment getEstablishment, ErrorService errorService)
+		public SearchSchoolModel(IGetEstablishment getEstablishment, ISession session, ErrorService errorService)
 		{
 			_getEstablishment = getEstablishment;
+			_session = session;
 			_errorService = errorService;
 		}
 
@@ -25,28 +30,30 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 
 		public IActionResult OnGet()
 		{
+			var establishment = _session.Get<EstablishmentResponse>(INVOLUNTARY_PROJECT_SCHOOL_KEY);
+
+			if (establishment != null)
+			{
+				SearchQuery = $"{establishment.EstablishmentName} ({establishment.Urn})";
+			}
+
 			return Page();
 		}
 
 		public async Task<IActionResult> OnGetSearch(string searchQuery)
 		{
-			if (searchQuery.Contains('('))
-			{
-				// if the school name contains the URN as well remove from the search
-				var startIndex = searchQuery.IndexOf('(');
-				searchQuery = searchQuery.Replace(searchQuery.Substring(startIndex), "");
-			}
+			var searchSplit = searchQuery.Split('(', ')');
 
-			var schools = await _getEstablishment.SearchEstablishments(searchQuery.Trim());
+			var schools = await _getEstablishment.SearchEstablishments(searchSplit[0].Trim());
 
 			return new JsonResult(schools.Select(s => new
 			{
-				suggestion = HighlightSearchMatch($"{s.Name} ({s.Urn})", searchQuery, s),
+				suggestion = HighlightSearchMatch($"{s.Name} ({s.Urn})", searchSplit[0].Trim(), s),
 				value = $"{s.Name} ({s.Urn})"
 			}));
 		}
 
-		public IActionResult OnPost()
+		public async Task<IActionResult> OnPost()
 		{
 			if (string.IsNullOrWhiteSpace(SearchQuery))
 			{
@@ -55,7 +62,17 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 				return Page();
 			}
 
-			return RedirectToPage(Links.InvoluntaryProject.SearchTrusts);
+			var splitSearch = SearchQuery.Split('(', ')');
+			if (splitSearch.Count() < 1) return Page();
+
+			var establishment = await _getEstablishment.GetEstablishmentByUrn(splitSearch[1]);
+			if (establishment != null)
+			{
+				_session.Set(INVOLUNTARY_PROJECT_SCHOOL_KEY, establishment);
+				return RedirectToPage(Links.InvoluntaryProject.SearchTrusts.Page);
+			}
+
+			return Page();
 		}
 
 		private static string HighlightSearchMatch(string input, string toReplace, EstablishmentSearchResponse school)

@@ -4,22 +4,25 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Tests.AutoFixture;
 using Dfe.PrepareConversions.Pages.InvoluntaryProject;
 using Dfe.PrepareConversions.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 {
-   public class SearchSchoolModelUnitTests
+	public class SearchSchoolModelUnitTests
 	{
 		[Theory, AutoMoqData]
-		public async Task OnGetSearch_ReturnsSchoolNames([Frozen] Mock<IGetEstablishment> getEstablishment, List<EstablishmentSearchResponse> schools)
+		public async Task OnGetSearch_ReturnsSchoolNames([Frozen] Mock<IGetEstablishment> getEstablishment, List<EstablishmentSearchResponse> schools,
+		   Mock<ISession> session)
 		{
 			// Arrange
-			var sut = new SearchSchoolModel(getEstablishment.Object, new ErrorService());
+			var sut = new SearchSchoolModel(getEstablishment.Object, session.Object, new ErrorService());
 			getEstablishment.Setup(m => m.SearchEstablishments(It.IsAny<string>())).ReturnsAsync(schools);
 
 			// Act
@@ -33,10 +36,10 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 		}
 
 		[Theory, AutoMoqData]
-		public async Task OnGetSearch_ReturnsSuggestion([Frozen] Mock<IGetEstablishment> getEstablishment)
+		public async Task OnGetSearch_ReturnsSuggestion([Frozen] Mock<IGetEstablishment> getEstablishment, Mock<ISession> session)
 		{
 			// Arrange
-			var sut = new SearchSchoolModel(getEstablishment.Object, new ErrorService());
+			var sut = new SearchSchoolModel(getEstablishment.Object, session.Object, new ErrorService());
 			var searchResponse = new EstablishmentSearchResponse { Name = "bristol", Urn = "100" };
 			getEstablishment.Setup(m => m.SearchEstablishments(It.IsAny<string>())).ReturnsAsync(new List<EstablishmentSearchResponse> { searchResponse });
 
@@ -49,10 +52,10 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 		}
 
 		[Theory, AutoMoqData]
-		public async Task OnGetSearch_ReturnsSuggestion_WhenUrnIsIncludedInSearch([Frozen] Mock<IGetEstablishment> getEstablishment)
+		public async Task OnGetSearch_ReturnsSuggestion_WhenUrnIsIncludedInSearch([Frozen] Mock<IGetEstablishment> getEstablishment, Mock<ISession> session)
 		{
 			// Arrange
-			var sut = new SearchSchoolModel(getEstablishment.Object, new ErrorService());
+			var sut = new SearchSchoolModel(getEstablishment.Object, session.Object, new ErrorService());
 			var searchResponse = new EstablishmentSearchResponse { Name = "bristol", Urn = "100" };
 			getEstablishment.Setup(m => m.SearchEstablishments(It.IsAny<string>())).ReturnsAsync(new List<EstablishmentSearchResponse> { searchResponse });
 
@@ -62,14 +65,14 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 
 			// Assert
 			Assert.Equal($"{searchResponse.Name} ({searchResponse.Urn})", json[0].value);
-			Assert.Equal($"<strong>{searchResponse.Name} </strong>({searchResponse.Urn})", json[0].suggestion);
+			Assert.Equal($"<strong>{searchResponse.Name}</strong> ({searchResponse.Urn})", json[0].suggestion);
 		}
 
 		[Theory, AutoMoqData]
-		public async Task OnGetSearch_DoesNotThrow_WhenEmptySchool([Frozen] Mock<IGetEstablishment> getEstablishment)
+		public async Task OnGetSearch_DoesNotThrow_WhenEmptySchool([Frozen] Mock<IGetEstablishment> getEstablishment, Mock<ISession> session)
 		{
 			// Arrange
-			var sut = new SearchSchoolModel(getEstablishment.Object, new ErrorService());
+			var sut = new SearchSchoolModel(getEstablishment.Object, session.Object, new ErrorService());
 			var searchResponse = new EstablishmentSearchResponse { Name = string.Empty, Urn = string.Empty };
 			getEstablishment.Setup(m => m.SearchEstablishments(It.IsAny<string>())).ReturnsAsync(new List<EstablishmentSearchResponse> { searchResponse });
 
@@ -79,6 +82,23 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 
 			// Assert
 			Assert.Equal(string.Empty, json[0].suggestion);
+		}
+
+		[Theory, AutoMoqData]
+		public void OnGetSearch_SearchSchool_Prepopulated([Frozen] Mock<IGetEstablishment> getEstablishment, Mock<ISession> session)
+		{
+			// Arrange
+			var sut = new SearchSchoolModel(getEstablishment.Object, session.Object, new ErrorService());
+			var establishmentResponse = new EstablishmentResponse { EstablishmentName = "Bristol", Urn = "100" };
+			getEstablishment.Setup(m => m.GetEstablishmentByUrn(It.IsAny<string>())).ReturnsAsync(establishmentResponse);
+			var output = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(establishmentResponse));
+			session.Setup(m => m.TryGetValue(It.IsAny<string>(), out output));
+
+			// Act
+			sut.OnGet();
+
+			// Assert
+			Assert.Equal($"{establishmentResponse.EstablishmentName} ({establishmentResponse.Urn})", sut.SearchQuery);
 		}
 
 		private static T ExtractType<T>(JsonResult result)

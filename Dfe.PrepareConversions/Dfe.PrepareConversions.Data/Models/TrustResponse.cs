@@ -2,10 +2,19 @@
 
 namespace Dfe.PrepareConversions.Data.Models
 {
+	public class TrustsResponse
+	{
+		public List<Trust> Data { get; set; }
+	}
+
+	public class TrustResponse
+	{
+		public Trust Data { get; set; }
+	}
+
 	public class Trust
 	{
 		public string Ukprn { get; set; }
-		public string Urn { get; set; }
 		public string GroupName { get; set; }
 		public string CompaniesHouseNumber { get; set; }
 		public string TrustType { get; set; }
