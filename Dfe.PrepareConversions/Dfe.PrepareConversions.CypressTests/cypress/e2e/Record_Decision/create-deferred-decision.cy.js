@@ -55,9 +55,10 @@ describe('Create Deferred journey', { tags: '@dev'}, () => {
         cy.deferredDecision().should('contain.text', 'Deferred')
         cy.deferredDecisionMadeBy().should('contain.text', 'Regional Director for the region')
         // check reasons
-        var deferredReasons = cy.get('[id="deferred-reasons"]')
-        deferredReasons.should('contain.text', 'Additional information needed:')
-        deferredReasons.should('contain.text', 'Additional info 2nd time')
-        cy.deferredDecisionDate().should('contain.text', '10 August 2022')
+        cy.get('[id="deferred-reasons"]')
+          .should('contain.text', 'Additional information needed:');
+        cy.get('[id="deferred-reasons"]')
+          .should('contain.text', 'Additional info 2nd time');
+        cy.deferredDecisionDate().should('contain.text', '10 August 2022');
     }
 })
