@@ -15,7 +15,7 @@ using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 {
-	public class SearchSchoolModelUnitTests
+   public class SearchSchoolModelUnitTests
 	{
 		[Theory, AutoMoqData]
 		public async Task OnGetSearch_ReturnsSchoolNames([Frozen] Mock<IGetEstablishment> getEstablishment, List<EstablishmentSearchResponse> schools,
@@ -106,11 +106,5 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 			var resultAsJson = JsonConvert.SerializeObject(result.Value);
 			return JsonConvert.DeserializeObject<T>(resultAsJson);
 		}
-	}
-
-	public class SearchResponse
-	{
-		public string value { get; set; }
-		public string suggestion { get; set; }
 	}
 }

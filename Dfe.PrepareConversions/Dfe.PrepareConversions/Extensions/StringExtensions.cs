@@ -28,7 +28,7 @@ namespace Dfe.PrepareConversions.Extensions
 		public static string ToTitleCase(this string str)
 		{
 			var textInfo = CultureInfo.CurrentCulture.TextInfo;
-			return textInfo.ToTitleCase(str.ToLower());
+			return textInfo.ToTitleCase(str);
 		}
 	}
 }
