@@ -7,11 +7,6 @@ namespace Dfe.PrepareConversions.Data.Models
 		public List<Trust> Data { get; set; }
 	}
 
-	public class TrustResponse
-	{
-		public Trust Data { get; set; }
-	}
-
 	public class Trust
 	{
 		public string Ukprn { get; set; }
