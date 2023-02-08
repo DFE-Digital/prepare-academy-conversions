@@ -89,9 +89,10 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 				return string.Empty;
 			}
 
-			var trustName = input.Split('(', ')')[0].Trim();
+			var index = input.IndexOf(toReplace, StringComparison.InvariantCultureIgnoreCase);
+			var correctCaseSearchString = input.Substring(index, toReplace.Length);
 
-			return input.Replace(toReplace, $"<strong>{trustName}</strong>", StringComparison.InvariantCultureIgnoreCase);
+			return input.Replace(toReplace, $"<strong>{correctCaseSearchString}</strong>", StringComparison.InvariantCultureIgnoreCase);
 		}
 	}
 }

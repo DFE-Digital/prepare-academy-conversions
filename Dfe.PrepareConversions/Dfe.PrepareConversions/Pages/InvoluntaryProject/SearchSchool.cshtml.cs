@@ -79,9 +79,10 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 		{
 			if (school == null || string.IsNullOrWhiteSpace(school.Urn) || string.IsNullOrWhiteSpace(school.Name)) return string.Empty;
 
-			var schoolName = input.Split('(', ')')[0];
+			var index = input.IndexOf(toReplace, StringComparison.InvariantCultureIgnoreCase);
+			var correctCaseSearchString = input.Substring(index, toReplace.Length);
 
-			return input.Replace(toReplace, $"<strong>{schoolName}</strong>", StringComparison.InvariantCultureIgnoreCase);
+			return input.Replace(toReplace, $"<strong>{correctCaseSearchString}</strong>", StringComparison.InvariantCultureIgnoreCase);
 		}
 	}
 }
