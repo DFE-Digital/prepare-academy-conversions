@@ -15,16 +15,21 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 	{
 		private readonly ITrustsRespository _trustsRepository;
 		private readonly ErrorService _errorService;
+		private const string SEARCH_LABEL = "Search by name, UKPRN or Companies House number.";
+		private const string SEARCH_ENDPOINT = "/start-new-project/trust-name?handler=Search&searchQuery=";
+
 
 		public SearchTrustModel(ITrustsRespository trustsRepository, ErrorService errorService)
 		{
 			_trustsRepository = trustsRepository;
 			_errorService = errorService;
+			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, "", SEARCH_ENDPOINT);
 		}
 
 		[BindProperty] public string SearchQuery { get; set; } = "";
 		public string Urn { get; set; }
 		public string Ukprn { get; set; }
+		public AutoCompleteSearchModel AutoCompleteSearchModel { get; set; }
 
 		public async Task<IActionResult> OnGet(string ukprn, string urn)
 		{
@@ -40,12 +45,14 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 				SearchQuery = $"{trust.GroupName} ({trust.Ukprn})";
 			}
 
+			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
+
 			return Page();
 		}
 
 		public async Task<IActionResult> OnGetSearch(string searchQuery)
 		{
-			var searchSplit = searchQuery.Split('(', ')');
+			var searchSplit = SplitOnBrackets(searchQuery);
 
 			var trusts = await _trustsRepository.SearchTrusts(searchSplit[0].Trim());
 
@@ -64,6 +71,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 
 		public async Task<IActionResult> OnPost(string urn)
 		{
+			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
 			if (string.IsNullOrWhiteSpace(SearchQuery))
 			{
 				ModelState.AddModelError(nameof(SearchQuery), "Enter the trust, UKPRN or Companies House number");
@@ -71,15 +79,13 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 				return Page();
 			}
 
-			var searchSplit = SearchQuery.Split('(', ')');
-			if (searchSplit.Count() < 1) return Page();
+			var searchSplit = SplitOnBrackets(SearchQuery);
+			if (searchSplit.Length < 2) return Page();
 
-			var ukprn = SearchQuery.Split('(', ')')[1];
+			var ukprn = SplitOnBrackets(SearchQuery)[1];
+
 			var trust = await _trustsRepository.SearchTrusts(ukprn);
-			if (trust != null)
-			{
-				return RedirectToPage(Links.InvoluntaryProject.SearchTrusts.Page, new { ukprn, urn });
-			}
+			if (trust != null) return RedirectToPage(Links.InvoluntaryProject.SearchTrusts.Page, new { ukprn, urn });
 
 			return Page();
 		}
@@ -98,6 +104,11 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 			var correctCaseSearchString = input.Substring(index, toReplace.Length);
 
 			return input.Replace(toReplace, $"<strong>{correctCaseSearchString}</strong>", StringComparison.InvariantCultureIgnoreCase);
+		}
+
+		private static string[] SplitOnBrackets(string input)
+		{
+			return input.Split(new[] { '(', ')' }, 3, StringSplitOptions.None);
 		}
 	}
 }

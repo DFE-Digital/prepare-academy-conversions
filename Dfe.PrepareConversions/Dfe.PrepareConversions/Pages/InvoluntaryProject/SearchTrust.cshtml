@@ -21,58 +21,10 @@
                         </label>
                     </h1>
 
-                    <p asp-gds-validation-for="SearchQuery"></p>
+                    <partial name="_AutoComplete" model="@Model.AutoCompleteSearchModel"  />
 
-                    <div id="query-hint" class="govuk-hint">
-                        Search by name, UKPRN or Companies House number.
-                    </div>
-
-                    <div id="trust-search"></div>
-                    <input type="hidden" id="SearchQuery" name="SearchQuery" />
                 </div>
                 <button class="govuk-button" type="submit" data-id="submit">Continue</button>
             </form>
         </div>
     </div>
-
-    <script type="application/javascript" asp-add-nonce>
-
-        function debounce(func, timeout = 500) {
-            let timer;
-            return (...args) => {
-                clearTimeout(timer);
-                timer = setTimeout(() => func.apply(this, args), timeout);
-            };
-        }
-
-        var loading = true;
-
-        function suggest(query, populateResults) {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onload = function() {
-               if (!loading || '@Html.Raw(Model.SearchQuery)' == '') populateResults(JSON.parse(this.responseText));
-               loading = false;
-            }
-            xhttp.open('GET', `/start-new-project/trust-name?handler=Search&searchQuery=${query}`, true);
-            xhttp.send();
-        }
-
-        var suggestDebounce = debounce((query, populateResults) => suggest(query, populateResults));
-
-        accessibleAutocomplete({
-            element: document.querySelector('#trust-search'),
-            id: 'SearchQuery',
-            name: 'SearchQuery',
-            source: suggestDebounce,
-            showNoOptionsFound: false,
-            minLength: 3,
-            templates: {
-                inputValue: function(r) { return r && r.value; },
-                suggestion: function(r) { return r.suggestion; }
-            }
-        });
-
-        // setting the default option manually due to bug in autoselect - https://github.com/alphagov/accessible-autocomplete/issues/424
-        document.querySelector('#SearchQuery').value = '@Html.Raw(Model.SearchQuery)';
-
-    </script>

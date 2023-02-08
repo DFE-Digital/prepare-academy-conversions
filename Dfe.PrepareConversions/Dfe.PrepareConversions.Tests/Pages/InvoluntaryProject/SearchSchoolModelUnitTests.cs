@@ -18,9 +18,8 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 	public class SearchSchoolModelUnitTests
 	{
 		[Theory, AutoMoqData]
-		public async Task OnGetSearch_ReturnsSchoolNames([Frozen] Mock<IGetEstablishment> getEstablishment, List<EstablishmentSearchResponse> schools,
-		   Mock<ISession> session)
-		{
+		public async Task OnGetSearch_ReturnsSchoolNames([Frozen] Mock<IGetEstablishment> getEstablishment, List<EstablishmentSearchResponse> schools)
+      {
 			// Arrange
 			var sut = new SearchSchoolModel(getEstablishment.Object, new ErrorService());
 			getEstablishment.Setup(m => m.SearchEstablishments(It.IsAny<string>())).ReturnsAsync(schools);

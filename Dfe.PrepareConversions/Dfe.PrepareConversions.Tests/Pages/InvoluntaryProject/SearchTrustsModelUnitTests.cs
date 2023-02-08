@@ -19,9 +19,8 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
    public class SearchTrustModelUnitTests
 	{
 		[Theory, AutoMoqData]
-		public async Task OnGetSearch_ReturnsTrustNames([Frozen] Mock<ITrustsRespository> trustsRepository, TrustsResponse trusts,
-		   Mock<ISession> session)
-		{
+		public async Task OnGetSearch_ReturnsTrustNames([Frozen] Mock<ITrustsRespository> trustsRepository, TrustsResponse trusts)
+      {
 			// Arrange
 			var sut = new SearchTrustModel(trustsRepository.Object, new ErrorService());
 			trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(trusts);

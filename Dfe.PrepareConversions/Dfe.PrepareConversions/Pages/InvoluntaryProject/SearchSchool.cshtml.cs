@@ -14,6 +14,8 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 	{
 		private readonly IGetEstablishment _getEstablishment;
 		private readonly ErrorService _errorService;
+		private const string SEARCH_LABEL = "Search by name, UKPRN or Companies House number.";
+		private const string SEARCH_ENDPOINT = "/start-new-project/school-name?handler=Search&searchQuery=";
 
 		public SearchSchoolModel(IGetEstablishment getEstablishment, ErrorService errorService)
 		{
@@ -22,6 +24,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 		}
 
 		[BindProperty] public string SearchQuery { get; set; } = "";
+		public AutoCompleteSearchModel AutoCompleteSearchModel { get; set; }
 
 		public async Task<IActionResult> OnGet(string urn, string ukprn)
 		{
@@ -31,12 +34,14 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 				SearchQuery = $"{establishment.EstablishmentName} ({establishment.Urn})";
 			}
 
+			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
+
 			return Page();
 		}
 
 		public async Task<IActionResult> OnGetSearch(string searchQuery)
 		{
-			var searchSplit = searchQuery.Split('(', ')');
+			var searchSplit = SplitOnBrackets(searchQuery);
 
 			var schools = await _getEstablishment.SearchEstablishments(searchSplit[0].Trim());
 
@@ -49,6 +54,8 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 
 		public IActionResult OnPost(string ukprn)
 		{
+			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
+
 			if (string.IsNullOrWhiteSpace(SearchQuery))
 			{
 				ModelState.AddModelError(nameof(SearchQuery), "Enter the school name or URN");
@@ -56,8 +63,8 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 				return Page();
 			}
 
-			var splitSearch = SearchQuery.Split('(', ')');
-			if (splitSearch.Count() < 1) return Page();
+			var splitSearch = SplitOnBrackets(SearchQuery);
+			if (splitSearch.Length < 2) return Page();
 
 			return RedirectToPage(Links.InvoluntaryProject.SearchTrusts.Page, new { urn = splitSearch[1], ukprn });
 		}
@@ -70,6 +77,11 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 			var correctCaseSearchString = input.Substring(index, toReplace.Length);
 
 			return input.Replace(toReplace, $"<strong>{correctCaseSearchString}</strong>", StringComparison.InvariantCultureIgnoreCase);
+		}
+
+		private static string[] SplitOnBrackets(string input)
+		{
+			return input.Split(new[] { '(', ')' }, 3, StringSplitOptions.None);
 		}
 	}
 }
