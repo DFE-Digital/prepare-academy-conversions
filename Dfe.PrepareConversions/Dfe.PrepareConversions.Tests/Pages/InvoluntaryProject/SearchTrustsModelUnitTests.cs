@@ -23,7 +23,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 		   Mock<ISession> session)
 		{
 			// Arrange
-			var sut = new SearchTrustModel(trustsRepository.Object, session.Object, new ErrorService());
+			var sut = new SearchTrustModel(trustsRepository.Object, new ErrorService());
 			trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(trusts);
 
 			// Act
@@ -37,10 +37,10 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 		}
 
 		[Theory, AutoMoqData]
-		public async Task OnGetSearch_ReturnsSuggestion([Frozen] Mock<ITrustsRespository> trustsRepository, Mock<ISession> session)
+		public async Task OnGetSearch_ReturnsSuggestion([Frozen] Mock<ITrustsRespository> trustsRepository)
 		{
 			// Arrange
-			var sut = new SearchTrustModel(trustsRepository.Object, session.Object, new ErrorService());
+			var sut = new SearchTrustModel(trustsRepository.Object, new ErrorService());
 			var trust = new Trust { GroupName = "bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
 			trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
 			   new TrustsResponse { Data = new List<Trust> { trust } });
@@ -55,10 +55,10 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 		}
 
 		[Theory, AutoMoqData]
-		public async Task OnGetSearch_ReturnsSuggestion_WhenUkprnIsIncludedInSearch([Frozen] Mock<ITrustsRespository> trustsRepository, Mock<ISession> session)
+		public async Task OnGetSearch_ReturnsSuggestion_WhenUkprnIsIncludedInSearch([Frozen] Mock<ITrustsRespository> trustsRepository)
 		{
 			// Arrange
-			var sut = new SearchTrustModel(trustsRepository.Object, session.Object, new ErrorService());
+			var sut = new SearchTrustModel(trustsRepository.Object, new ErrorService());
 			var trust = new Trust { GroupName = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
 			trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
 			   new TrustsResponse { Data = new List<Trust> { trust } });
@@ -74,10 +74,10 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 		}
 
 		[Theory, AutoMoqData]
-		public async Task OnGetSearch_DoesNotThrow_WhenEmptyTrust([Frozen] Mock<ITrustsRespository> trustsRepository, Mock<ISession> session)
+		public async Task OnGetSearch_DoesNotThrow_WhenEmptyTrust([Frozen] Mock<ITrustsRespository> trustsRepository)
 		{
 			// Arrange
-			var sut = new SearchTrustModel(trustsRepository.Object, session.Object, new ErrorService());
+			var sut = new SearchTrustModel(trustsRepository.Object, new ErrorService());
 			var trust = new Trust { GroupName = string.Empty, Ukprn = string.Empty, CompaniesHouseNumber = string.Empty };
 			trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
 			   new TrustsResponse { Data = new List<Trust> { trust } });
@@ -91,19 +91,16 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 		}
 
 		[Theory, AutoMoqData]
-		public void OnGetSearch_SearchTrust_Prepopulated([Frozen] Mock<ITrustsRespository> trustsRepository, Mock<ISession> session)
+		public async Task OnGetSearch_SearchTrust_Prepopulated([Frozen] Mock<ITrustsRespository> trustsRepository)
 		{
 			// Arrange
-			var sut = new SearchTrustModel(trustsRepository.Object, session.Object, new ErrorService());
+			var sut = new SearchTrustModel(trustsRepository.Object, new ErrorService());
 			var trust = new Trust { GroupName = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
 			trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
 			   new TrustsResponse { Data = new List<Trust> { trust } });
 
-			var output = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(trust));
-			session.Setup(m => m.TryGetValue(It.IsAny<string>(), out output));
-
 			// Act
-			sut.OnGet();
+			await sut.OnGet(trust.Ukprn, string.Empty);
 
 			// Assert
 			Assert.Equal($"{trust.GroupName} ({trust.Ukprn})", sut.SearchQuery);

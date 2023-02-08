@@ -51,7 +51,7 @@
         function suggest(query, populateResults) {
            var xhttp = new XMLHttpRequest();
            xhttp.onload = function(){
-               if (!loading) populateResults(JSON.parse(this.responseText));
+               if (!loading || '@Html.Raw(Model.SearchQuery)' == '') populateResults(JSON.parse(this.responseText));
                loading = false;
            }
            xhttp.open('GET', `/start-new-project/school-name?handler=Search&searchQuery=${query}`, true);

@@ -7,7 +7,7 @@
 
 @section BeforeMain
 {
-    <a class="govuk-back-link" asp-page="@Links.InvoluntaryProject.SearchSchool.Page">Back</a>
+    <a class="govuk-back-link" asp-page="@Links.InvoluntaryProject.SearchSchool.Page" asp-route-urn="@Model.Urn" asp-route-ukprn="@Model.Ukprn">Back</a>
     <partial name="_ErrorSummary" />
 }
 
@@ -50,7 +50,7 @@
         function suggest(query, populateResults) {
             var xhttp = new XMLHttpRequest();
             xhttp.onload = function() {
-               if (!loading) populateResults(JSON.parse(this.responseText));
+               if (!loading || '@Html.Raw(Model.SearchQuery)' == '') populateResults(JSON.parse(this.responseText));
                loading = false;
             }
             xhttp.open('GET', `/start-new-project/trust-name?handler=Search&searchQuery=${query}`, true);

@@ -1,37 +1,42 @@
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Dfe.PrepareConversions.Extensions;
+using Dfe.PrepareConversions.Models;
 
 namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 {
 	public class SearchTrustModel : PageModel
 	{
 		private readonly ITrustsRespository _trustsRepository;
-		private readonly ISession _session;
 		private readonly ErrorService _errorService;
-		private const string INVOLUNTARY_PROJECT_TRUST_KEY = "InvoluntaryProjectTrust";
 
-		public SearchTrustModel(ITrustsRespository trustsRepository, ISession session, ErrorService errorService)
+		public SearchTrustModel(ITrustsRespository trustsRepository, ErrorService errorService)
 		{
 			_trustsRepository = trustsRepository;
-			_session = session;
 			_errorService = errorService;
 		}
 
 		[BindProperty] public string SearchQuery { get; set; } = "";
+		public string Urn { get; set; }
+		public string Ukprn { get; set; }
 
-		public IActionResult OnGet()
+		public async Task<IActionResult> OnGet(string ukprn, string urn)
 		{
-			var trust = _session.Get<Trust>(INVOLUNTARY_PROJECT_TRUST_KEY);
-			if (trust != null)
+			Urn = urn;
+			Ukprn = ukprn;
+
+			if (string.IsNullOrWhiteSpace(ukprn)) return Page();
+
+			var trusts = await _trustsRepository.SearchTrusts(ukprn);
+			if (trusts.Data.Any())
 			{
+				var trust = trusts.Data.First();
 				SearchQuery = $"{trust.GroupName} ({trust.Ukprn})";
 			}
 
@@ -57,7 +62,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 			}));
 		}
 
-		public async Task<IActionResult> OnPost()
+		public async Task<IActionResult> OnPost(string urn)
 		{
 			if (string.IsNullOrWhiteSpace(SearchQuery))
 			{
@@ -69,11 +74,11 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 			var searchSplit = SearchQuery.Split('(', ')');
 			if (searchSplit.Count() < 1) return Page();
 
-			var trust = await _trustsRepository.SearchTrusts(SearchQuery.Split('(', ')')[1]);
+			var ukprn = SearchQuery.Split('(', ')')[1];
+			var trust = await _trustsRepository.SearchTrusts(ukprn);
 			if (trust != null)
 			{
-				_session.Set(INVOLUNTARY_PROJECT_TRUST_KEY, trust.Data?.First());
-				return Page();
+				return RedirectToPage(Links.InvoluntaryProject.SearchTrusts.Page, new { ukprn, urn });
 			}
 
 			return Page();

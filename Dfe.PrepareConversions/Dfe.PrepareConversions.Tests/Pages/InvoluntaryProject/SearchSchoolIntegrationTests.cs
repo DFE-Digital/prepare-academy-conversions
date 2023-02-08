@@ -48,6 +48,6 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 			await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]").SubmitAsync();
 
 			Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]").Should().BeNull();
-		}		
+		}
 	}
 }

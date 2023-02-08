@@ -2,37 +2,31 @@ using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Dfe.PrepareConversions.Extensions;
 
 namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 {
 	public class SearchSchoolModel : PageModel
 	{
 		private readonly IGetEstablishment _getEstablishment;
-		private readonly ISession _session;
 		private readonly ErrorService _errorService;
-		private const string INVOLUNTARY_PROJECT_SCHOOL_KEY = "InvoluntaryProjectSchool";
 
-		public SearchSchoolModel(IGetEstablishment getEstablishment, ISession session, ErrorService errorService)
+		public SearchSchoolModel(IGetEstablishment getEstablishment, ErrorService errorService)
 		{
 			_getEstablishment = getEstablishment;
-			_session = session;
 			_errorService = errorService;
 		}
 
 		[BindProperty] public string SearchQuery { get; set; } = "";
 
-		public IActionResult OnGet()
+		public async Task<IActionResult> OnGet(string urn, string ukprn)
 		{
-			var establishment = _session.Get<EstablishmentResponse>(INVOLUNTARY_PROJECT_SCHOOL_KEY);
-
-			if (establishment != null)
+			var establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
+			if (!string.IsNullOrWhiteSpace(establishment.Urn))
 			{
 				SearchQuery = $"{establishment.EstablishmentName} ({establishment.Urn})";
 			}
@@ -53,7 +47,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 			}));
 		}
 
-		public async Task<IActionResult> OnPost()
+		public IActionResult OnPost(string ukprn)
 		{
 			if (string.IsNullOrWhiteSpace(SearchQuery))
 			{
@@ -65,14 +59,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 			var splitSearch = SearchQuery.Split('(', ')');
 			if (splitSearch.Count() < 1) return Page();
 
-			var establishment = await _getEstablishment.GetEstablishmentByUrn(splitSearch[1]);
-			if (establishment != null)
-			{
-				_session.Set(INVOLUNTARY_PROJECT_SCHOOL_KEY, establishment);
-				return RedirectToPage(Links.InvoluntaryProject.SearchTrusts.Page);
-			}
-
-			return Page();
+			return RedirectToPage(Links.InvoluntaryProject.SearchTrusts.Page, new { urn = splitSearch[1], ukprn });
 		}
 
 		private static string HighlightSearchMatch(string input, string toReplace, EstablishmentSearchResponse school)
