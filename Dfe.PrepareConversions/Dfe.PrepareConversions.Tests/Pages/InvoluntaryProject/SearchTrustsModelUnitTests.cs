@@ -50,8 +50,8 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 			var json = ExtractType<List<SearchResponse>>(Assert.IsType<JsonResult>(result));
 
 			// Assert
-			Assert.Equal($"<strong>Bristol</strong> (100)\r\n\t\t\t\t\t\t\t\t\t<br />\r\n\t\t\t\t\t\t\t\t\tCompanies House number: {trust.CompaniesHouseNumber}",
-			   json[0].suggestion);
+			Assert.Equal($"<strong>Bristol</strong> (100)<br />Companies House number: {trust.CompaniesHouseNumber}",
+			   SanatiseString(json[0].suggestion));
 		}
 
 		[Theory, AutoMoqData]
@@ -68,8 +68,8 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 			var json = ExtractType<List<SearchResponse>>(Assert.IsType<JsonResult>(result));
 
 			// Assert
-			Assert.Equal($"<strong>Bristol</strong> (100)\r\n\t\t\t\t\t\t\t\t\t<br />\r\n\t\t\t\t\t\t\t\t\tCompanies House number: {trust.CompaniesHouseNumber}",
-				  json[0].suggestion);
+			Assert.Equal($"<strong>Bristol</strong> (100)<br />Companies House number: {trust.CompaniesHouseNumber}",
+				  SanatiseString(json[0].suggestion));
 			Assert.Equal($"{trust.GroupName} ({trust.Ukprn})", json[0].value);
 		}
 
@@ -105,6 +105,11 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 			// Assert
 			Assert.Equal($"{trust.GroupName} ({trust.Ukprn})", sut.SearchQuery);
 		}
+
+		private static string SanatiseString(string input)
+      {
+			return input.Replace("\r", "").Replace("\n", "").Replace("\t", "");
+      }
 
 		private static T ExtractType<T>(JsonResult result)
 		{
