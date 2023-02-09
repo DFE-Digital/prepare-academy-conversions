@@ -57,9 +57,10 @@ describe('103791 Create Declined journey', { tags: '@dev'}, () => {
           cy.decision().should('contain.text', 'Declined')
           cy.decisionMadeBy().should('contain.text', 'Regional Director for the region')        
           // check reasons
-          var declinedReasons = cy.get('[id="decline-reasons"]')
-          declinedReasons.should('contain.text', 'Finance:')
-          declinedReasons.should('contain.text', 'finance details 2nd test')
+          cy.get('[id="decline-reasons"]')
+            .should('contain.text', 'Finance:')
+          cy.get('[id="decline-reasons"]')
+            .should('contain.text', 'finance details 2nd test')
           // check date                
           cy.decisionDate().should('contain.text', '10 August 2022')
     }
