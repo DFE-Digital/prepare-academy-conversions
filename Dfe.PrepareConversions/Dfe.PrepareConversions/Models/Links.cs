@@ -161,6 +161,7 @@ namespace Dfe.PrepareConversions.Models
 		{
 			public static readonly LinkItem SearchSchool = AddLinkItem(page: "/InvoluntaryProject/SearchSchool");
 			public static readonly LinkItem SearchTrusts = AddLinkItem(page: "/InvoluntaryProject/SearchTrust");
+			public static readonly LinkItem Summary = AddLinkItem(page: "/InvoluntaryProject/Summary");
 		}
 	}
 

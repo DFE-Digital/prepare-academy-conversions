@@ -82,10 +82,10 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 			var searchSplit = SplitOnBrackets(SearchQuery);
 			if (searchSplit.Length < 2) return Page();
 
-			var ukprn = SplitOnBrackets(SearchQuery)[1];
+			var ukprn = searchSplit[1];
 
 			var trust = await _trustsRepository.SearchTrusts(ukprn);
-			if (trust != null) return RedirectToPage(Links.InvoluntaryProject.SearchTrusts.Page, new { ukprn, urn });
+			if (trust != null) return RedirectToPage(Links.InvoluntaryProject.Summary.Page, new { ukprn, urn });
 
 			return Page();
 		}
