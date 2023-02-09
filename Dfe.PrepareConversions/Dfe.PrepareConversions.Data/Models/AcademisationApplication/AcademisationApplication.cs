@@ -293,6 +293,8 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          academisationApplicationSchool = academisationApplication.Schools.FirstOrDefault();
          academiesApplication.ApplyingSchools = new List<ApplyingSchool>(){ new() };
          academiesApplicationSchool = academiesApplication.ApplyingSchools.FirstOrDefault();
+         academiesApplicationSchool!.SchoolLoans = new List<Loan>();
+         academiesApplicationSchool!.SchoolLeases = new List<Lease>();
          academiesApplication.TrustName = academisationApplication.JoinTrustDetails.TrustName;
          academiesApplication.ApplicationType = academisationApplication.ApplicationType;
          academiesApplication.ApplicationId =
