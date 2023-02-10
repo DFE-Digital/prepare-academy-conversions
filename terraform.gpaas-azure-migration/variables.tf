@@ -54,11 +54,6 @@ variable "container_secret_environment_variables" {
   sensitive   = true
 }
 
-variable "enable_mssql_database" {
-  description = "Set to true to create an Azure SQL server/database, with a private endpoint within the virtual network"
-  type        = bool
-}
-
 variable "enable_cdn_frontdoor" {
   description = "Enable Azure CDN Front Door. This will use the Container Apps endpoint as the origin."
   type        = bool
@@ -74,14 +69,14 @@ variable "cdn_frontdoor_host_add_response_headers" {
   type        = list(map(string))
 }
 
-variable "restrict_container_apps_to_cdn_inbound_only" {
-  description = "Restricts access to the Container Apps by creating a network security group that only allows 'AzureFrontDoor.Backend' inbound, and attaches it to the subnet of the container app environment."
-  type        = bool
+variable "container_health_probe_path" {
+  description = "Specifies the path that is used to determine the liveness of the Container"
+  type        = string
 }
 
-variable "enable_event_hub" {
-  description = "Send Azure Container App logs to an Event Hub sink"
-  type        = bool
+variable "cdn_frontdoor_health_probe_path" {
+  description = "Specifies the path relative to the origin that is used to determine the health of the origin."
+  type        = string
 }
 
 variable "enable_monitoring" {
@@ -92,4 +87,9 @@ variable "enable_monitoring" {
 variable "monitor_email_receivers" {
   description = "A list of email addresses that should be notified by monitoring alerts"
   type        = list(string)
+}
+
+variable "monitor_endpoint_healthcheck" {
+  description = "Specify a route that should be monitored for a 200 OK status"
+  type        = string
 }

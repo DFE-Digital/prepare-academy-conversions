@@ -43,9 +43,10 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         cy.decision().should('contain.text', 'Declined')
         cy.decisionMadeBy().should('contain.text', 'Regional Director for the region')
         // check reasons
-        var declinedReasons = cy.get('[id="decline-reasons"]')
-        declinedReasons.should('contain.text', 'Finance:')
-        declinedReasons.should('contain.text', 'Finance details 2nd test')
+        cy.get('[id="decline-reasons"]')
+          .should('contain.text', 'Finance:');
+        cy.get('[id="decline-reasons"]')
+          .should('contain.text', 'Finance details 2nd test')
         // check date
         cy.decisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
@@ -88,9 +89,10 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         cy.decision().should('contain.text', 'Declined')
         cy.decisionMadeBy().should('contain.text', 'A different Regional Director')
         // check reasons
-        var declinedReasons = cy.get('[id="decline-reasons"]')
-        declinedReasons.should('contain.text', 'Performance:')
-        declinedReasons.should('contain.text', 'Performance details 2nd test')
+        cy.get('[id="decline-reasons"]')
+          .should('contain.text', 'Performance:')
+        cy.get('[id="decline-reasons"]')
+          .should('contain.text', 'Performance details 2nd test')
         // check date
         cy.decisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
@@ -133,9 +135,10 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         cy.decision().should('contain.text', 'Declined')
         cy.decisionMadeBy().should('contain.text', 'Director General')
         // check reasons
-        var declinedReasons = cy.get('[id="decline-reasons"]')
-        declinedReasons.should('contain.text', 'Governance:')
-        declinedReasons.should('contain.text', 'Governance details 2nd test')
+        cy.get('[id="decline-reasons"]')
+          .should('contain.text', 'Governance:')
+        cy.get('[id="decline-reasons"]')
+          .should('contain.text', 'Governance details 2nd test')
         // check date
         cy.decisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
@@ -178,9 +181,10 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         cy.decision().should('contain.text', 'Declined')
         cy.decisionMadeBy().should('contain.text', 'Minister')
         // check reasons
-        var declinedReasons = cy.get('[id="decline-reasons"]')
-        declinedReasons.should('contain.text', 'Choice of trust:')
-        declinedReasons.should('contain.text', 'Trust details 2nd test')
+        cy.get('[id="decline-reasons"]')
+          .should('contain.text', 'Choice of trust:')
+        cy.get('[id="decline-reasons"]')
+          .should('contain.text', 'Trust details 2nd test')
         // clicks on the record a decision button to submit
         cy.continueBtn().click()
         // recorded decision confirmation
@@ -221,9 +225,10 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         cy.decision().should('contain.text', 'Declined')
         cy.decisionMadeBy().should('contain.text', 'None')
         // check reasons
-        var declinedReasons = cy.get('[id="decline-reasons"]')
-        declinedReasons.should('contain.text', 'Other:')
-        declinedReasons.should('contain.text', 'Other details 2nd test')
+        cy.get('[id="decline-reasons"]')
+          .should('contain.text', 'Other:')
+        cy.get('[id="decline-reasons"]')
+          .should('contain.text', 'Other details 2nd test')
         cy.decisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.continueBtn().click()

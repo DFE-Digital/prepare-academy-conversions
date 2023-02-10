@@ -48,9 +48,10 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         cy.deferredDecision().should('contain.text', 'Deferred')
         cy.deferredDecisionMadeBy().should('contain.text', 'Regional Director for the region')
         // check reasons
-        var deferredReasons = cy.get('[id="deferred-reasons"]')
-        deferredReasons.should('contain.text', 'Additional information needed:')
-        deferredReasons.should('contain.text', 'Additional info 2nd time')
+        cy.get('[id="deferred-reasons"]')
+          .should('contain.text', 'Additional information needed:')
+        cy.get('[id="deferred-reasons"]')
+          .should('contain.text', 'Additional info 2nd time')
         cy.deferredDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.continueBtn().click()
@@ -92,9 +93,10 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         cy.deferredDecision().should('contain.text', 'Deferred')
         cy.deferredDecisionMadeBy().should('contain.text', 'A different Regional Director')
         // check reasons
-        var deferredReasons = cy.get('[id="deferred-reasons"]')
-        deferredReasons.should('contain.text', 'Awaiting next ofsted report:')
-        deferredReasons.should('contain.text', 'awaiting ofsted 2nd time')
+        cy.get('[id="deferred-reasons"]')
+          .should('contain.text', 'Awaiting next ofsted report:')
+        cy.get('[id="deferred-reasons"]')
+          .should('contain.text', 'awaiting ofsted 2nd time')
         // check date
         cy.deferredDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
@@ -137,9 +139,10 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         cy.deferredDecision().should('contain.text', 'Deferred')
         cy.deferredDecisionMadeBy().should('contain.text', 'Director General')
         // check reasons
-        var deferredReasons = cy.get('[id="deferred-reasons"]')
-        deferredReasons.should('contain.text', 'Performance concerns:')
-        deferredReasons.should('contain.text', 'performance details 2nd time')
+        cy.get('[id="deferred-reasons"]')
+          .should('contain.text', 'Performance concerns:')
+        cy.get('[id="deferred-reasons"]')
+          .should('contain.text', 'performance details 2nd time')
         // check date
         cy.deferredDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
@@ -182,9 +185,10 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         cy.deferredDecision().should('contain.text', 'Deferred')
         cy.deferredDecisionMadeBy().should('contain.text', 'Minister')
         // check reasons
-        var deferredReasons = cy.get('[id="deferred-reasons"]')
-        deferredReasons.should('contain.text', 'Other:')
-        deferredReasons.should('contain.text', 'other details 2nd time')
+        cy.get('[id="deferred-reasons"]')
+          .should('contain.text', 'Other:')
+        cy.get('[id="deferred-reasons"]')
+          .should('contain.text', 'other details 2nd time')
         cy.deferredDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.continueBtn().click()
@@ -226,9 +230,10 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         cy.deferredDecision().should('contain.text', 'Deferred')
         cy.deferredDecisionMadeBy().should('contain.text', 'None')
          // check reasons
-         var deferredReasons = cy.get('[id="deferred-reasons"]')
-         deferredReasons.should('contain.text', 'Other:')
-         deferredReasons.should('contain.text', 'other details 2nd time')
+        cy.get('[id="deferred-reasons"]')
+          .should('contain.text', 'Other:')
+        cy.get('[id="deferred-reasons"]')
+          .should('contain.text', 'other details 2nd time')
         cy.deferredDecisionDate().should('contain.text', '10 August 2022')
         // clicks on the record a decision button to submit
         cy.continueBtn().click()
