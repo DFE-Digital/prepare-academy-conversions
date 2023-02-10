@@ -23,7 +23,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 		{
 			_trustsRepository = trustsRepository;
 			_errorService = errorService;
-			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, "", SEARCH_ENDPOINT);
+			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, string.Empty, SEARCH_ENDPOINT);
 		}
 
 		[BindProperty] public string SearchQuery { get; set; } = "";

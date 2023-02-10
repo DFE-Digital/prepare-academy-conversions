@@ -3,13 +3,13 @@
 	public class AutoCompleteSearchModel
 	{
 		public AutoCompleteSearchModel(string label, string searchQuery, string searchEndpoint)
-      {
-         Label = label;
-         SearchQuery = searchQuery;
-         SearchEndpoint = searchEndpoint;
-      }
+		{
+			Label = label;
+			SearchQuery = searchQuery;
+			SearchEndpoint = searchEndpoint;
+		}
 
-      public string Label { get; set; }
+		public string Label { get; set; }
 
 		public string SearchQuery { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿@page "/start-new-project/check-school-trust-details"
+@using Dfe.PrepareConversions.Pages.TaskList.Decision
 
 @model Dfe.PrepareConversions.Pages.InvoluntaryProject.SummaryModel
 @{
@@ -8,13 +9,20 @@
     var routeParams = new Dictionary<string, string>
     {
         { "urn", Model.Establishment.Urn },
-        { "ukprn", Model.Trust.Ukprn }
+        { "ukprn", Model.Trust.Ukprn },
+    };
+
+    var backLinkRouteParams = new Dictionary<string, string>
+    {
+        { "urn", Model.Establishment.Urn },
+        { "ukprn", Model.Trust.Ukprn },
+        { "r", $"{Request.Path}{Request.QueryString.ToStringOrDefault()}" }
     };
 }
 
 @section BeforeMain
-    {
-    <a class="govuk-back-link" asp-page="@Links.ProjectList.Index.Page">Back</a>
+{
+    <partial name="_BackLink" model="@(new BackLink(Links.InvoluntaryProject.SearchTrusts.Page, routeParams))" />
 }
 
     <div class="govuk-grid-row">
@@ -39,11 +47,11 @@
                         Name
                     </dt>
                     <dd class="govuk-summary-list__value">
-                        Cheltenham Spa Primary School
+                        @Model.Establishment.EstablishmentName
                     </dd>
                     <dd class="govuk-summary-list__actions">
                         <a asp-page="@Links.InvoluntaryProject.SearchSchool.Page" class="govuk-link"
-                            asp-all-route-data="@routeParams">
+                       asp-all-route-data="@backLinkRouteParams">
                             Change<span class="govuk-visually-hidden">School name</span>
                         </a>
                     </dd>
@@ -54,7 +62,7 @@
                         URN
                     </dt>
                     <dd class="govuk-summary-list__value">
-                        @Model.Establishment.EstablishmentName
+                        @Model.Establishment.Urn
                     </dd>
                     <dd class="govuk-summary-list__value"></dd>
                 </div>
@@ -104,7 +112,7 @@
                         Last inspection
                     </dt>
                     <dd class="govuk-summary-list__value">
-                        @Model.Establishment.OfstedLastInspection
+                        @DateTime.Parse(@Model.Establishment.OfstedLastInspection).ToDateString()
                     </dd>
                     <dd class="govuk-summary-list__value"></dd>
                 </div>
@@ -140,7 +148,7 @@
                     </dd>
                     <dd class="govuk-summary-list__actions">
                         <a a asp-page="@Links.InvoluntaryProject.SearchTrusts.Page" class="govuk-link"
-                            asp-all-route-data="@routeParams">
+                       asp-all-route-data="@backLinkRouteParams">
                             Change<span class="govuk-visually-hidden">Trust name</span>
                         </a>
                     </dd>
@@ -171,20 +179,10 @@
         </div>
 
         <div class="govuk-grid-column-two-thirds">
-            <form action="/version-4/pre-htb/school-1/st-wilfreds-ps" method="post" novalidate="">
-
-                <input type="hidden" name="answers-checked" value="true">
-
-                <div class="govuk-button-group">
-
-
-                    <a href="../../projects-list-involuntary-conversions-after.html?userName=Zara%20Laney&amp;userRole=Regional%20Team%20Lead" role="button" draggable="false" class="govuk-button govuk-button" data-module="govuk-button">Continue</a>
-
-
-
-                </div>
-
+            <form method="post">
+                <input type="hidden" value="@Model.Establishment.Urn" />
+                <input type="hidden" value="@Model.Trust.Ukprn" />
+                <button class="govuk-button" type="submit" data-id="submit">Continue</button>
             </form>
         </div>
-    </div>
     </div>
