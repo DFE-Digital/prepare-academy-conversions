@@ -102,7 +102,7 @@
                         Ofsted rating
                     </dt>
                     <dd class="govuk-summary-list__value">
-                        @Model.Establishment.OfstedRating
+                        @(Model.Establishment.OfstedRating ?? "Not available")
                     </dd>
                     <dd class="govuk-summary-list__value"></dd>
                 </div>
@@ -112,7 +112,14 @@
                         Last inspection
                     </dt>
                     <dd class="govuk-summary-list__value">
-                        @DateTime.Parse(@Model.Establishment.OfstedLastInspection).ToDateString()
+                        @if(string.IsNullOrEmpty(Model.Establishment.OfstedLastInspection))
+                        {
+                            <span>Not available</span>
+                        }
+                        else
+                        {
+                            @DateTime.Parse(@Model.Establishment.OfstedLastInspection).ToDateString()
+                        }
                     </dd>
                     <dd class="govuk-summary-list__value"></dd>
                 </div>
