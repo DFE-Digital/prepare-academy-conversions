@@ -291,6 +291,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          out School academisationApplicationSchool, out ApplyingSchool academiesApplicationSchool)
       {
          var academiesApplication = new Application();
+         academisationApplication!.Contributors = new List<Contributor>();
          academisationApplicationSchool = academisationApplication.Schools.FirstOrDefault();
          academiesApplication.ApplyingSchools = new List<ApplyingSchool>(){ new() };
          academiesApplicationSchool = academiesApplication.ApplyingSchools.FirstOrDefault();
@@ -300,8 +301,12 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          academiesApplication.ApplicationType = academisationApplication.ApplicationType;
          academiesApplication.ApplicationId =
             academisationApplication.ApplicationReference;
-         academiesApplication.ApplicationLeadAuthorName =
-            academisationApplication.Contributors.FirstOrDefault()!.FirstName + " " + academisationApplication.Contributors.FirstOrDefault()!.LastName;
+         var academisationContributors = academisationApplication.Contributors.FirstOrDefault();
+         if (academisationContributors?.FirstName.IsNullOrEmpty() is false && academisationContributors.LastName.IsNullOrEmpty() is false)
+         {
+            academiesApplication.ApplicationLeadAuthorName =
+               academisationApplication.Contributors.FirstOrDefault()!.FirstName + " " + academisationApplication.Contributors.FirstOrDefault()!.LastName;
+         }
          academiesApplication.ChangesToTrust = academisationApplication.JoinTrustDetails.ChangesToTrust switch
          {
             "yes" => true,
