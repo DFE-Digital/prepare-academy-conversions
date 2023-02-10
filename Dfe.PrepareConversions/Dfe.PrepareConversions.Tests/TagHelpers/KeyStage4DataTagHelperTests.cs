@@ -16,27 +16,6 @@ namespace Dfe.PrepareConversions.Tests.TagHelpers
       public KeyStage4DataTagHelperTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
       {
       }
-      public static IEnumerable<object[]> ProvisionalDates()
-      {
-         yield return new object[] { new DateTime(DateTime.Now.Year - 1, 9, 3) };
-         yield return new object[] { new DateTime(DateTime.Now.Year - 1, 10, 11) };
-         yield return new object[] { new DateTime(DateTime.Now.Year - 1, 11, 21) };
-         yield return new object[] { new DateTime(DateTime.Now.Year - 1, 12, 14) };
-      }
-      public static IEnumerable<object[]> RevisedDates()
-      {
-         yield return new object[] { new DateTime(DateTime.Now.Year, 1, 3) };
-         yield return new object[] { new DateTime(DateTime.Now.Year, 2, 11) };
-         yield return new object[] { new DateTime(DateTime.Now.Year, 3, 21) };
-         yield return new object[] { new DateTime(DateTime.Now.Year, 4, 14) };
-      }
-      public static IEnumerable<object[]> FinalDates()
-      {
-         yield return new object[] { new DateTime(DateTime.Now.Year -2, 1, 3) };
-         yield return new object[] { new DateTime(DateTime.Now.Year -2, 2, 11) };
-         yield return new object[] { new DateTime(DateTime.Now.Year, 5, 21) };
-         yield return new object[] { new DateTime(DateTime.Now.Year, 6, 14) };
-      }
 
       [Theory, MemberData(nameof(ProvisionalDates))]
       public void Should_return_provisional_status_on_relevant_months(DateTime date)
@@ -56,6 +35,27 @@ namespace Dfe.PrepareConversions.Tests.TagHelpers
       {
          var result = KeyStage4DataTagHelper.KeyStageDataTag(date);
          result.Should().Contain("green").And.Contain("Final");
+      }
+      public static IEnumerable<object[]> ProvisionalDates()
+      {
+         yield return new object[] { new DateTime(DateTime.Now.Year - 1, 9, 3) };
+         yield return new object[] { new DateTime(DateTime.Now.Year - 1, 10, 11) };
+         yield return new object[] { new DateTime(DateTime.Now.Year - 1, 11, 21) };
+         yield return new object[] { new DateTime(DateTime.Now.Year - 1, 12, 14) };
+      }
+      public static IEnumerable<object[]> RevisedDates()
+      {
+         yield return new object[] { new DateTime(DateTime.Now.Year, 1, 3) };
+         yield return new object[] { new DateTime(DateTime.Now.Year, 2, 11) };
+         yield return new object[] { new DateTime(DateTime.Now.Year, 3, 21) };
+         yield return new object[] { new DateTime(DateTime.Now.Year, 4, 14) };
+      }
+      public static IEnumerable<object[]> FinalDates()
+      {
+         yield return new object[] { new DateTime(DateTime.Now.Year - 2, 1, 3) };
+         yield return new object[] { new DateTime(DateTime.Now.Year - 2, 2, 11) };
+         yield return new object[] { new DateTime(DateTime.Now.Year, 5, 21) };
+         yield return new object[] { new DateTime(DateTime.Now.Year, 6, 14) };
       }
    }
 }
