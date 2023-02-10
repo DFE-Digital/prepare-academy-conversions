@@ -4,20 +4,22 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Tests.AutoFixture;
 using Dfe.PrepareConversions.Pages.InvoluntaryProject;
 using Dfe.PrepareConversions.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 {
-   public class SearchSchoolModelUnitTests
+	public class SearchSchoolModelUnitTests
 	{
 		[Theory, AutoMoqData]
 		public async Task OnGetSearch_ReturnsSchoolNames([Frozen] Mock<IGetEstablishment> getEstablishment, List<EstablishmentSearchResponse> schools)
-		{
+      {
 			// Arrange
 			var sut = new SearchSchoolModel(getEstablishment.Object, new ErrorService());
 			getEstablishment.Setup(m => m.SearchEstablishments(It.IsAny<string>())).ReturnsAsync(schools);
@@ -62,7 +64,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 
 			// Assert
 			Assert.Equal($"{searchResponse.Name} ({searchResponse.Urn})", json[0].value);
-			Assert.Equal($"<strong>{searchResponse.Name} </strong>({searchResponse.Urn})", json[0].suggestion);
+			Assert.Equal($"<strong>{searchResponse.Name}</strong> ({searchResponse.Urn})", json[0].suggestion);
 		}
 
 		[Theory, AutoMoqData]
@@ -81,16 +83,25 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 			Assert.Equal(string.Empty, json[0].suggestion);
 		}
 
+		[Theory, AutoMoqData]
+		public async Task OnGetSearch_SearchSchool_Prepopulated([Frozen] Mock<IGetEstablishment> getEstablishment)
+		{
+			// Arrange
+			var sut = new SearchSchoolModel(getEstablishment.Object, new ErrorService());
+			var establishmentResponse = new EstablishmentResponse { EstablishmentName = "Bristol", Urn = "100" };
+			getEstablishment.Setup(m => m.GetEstablishmentByUrn(It.IsAny<string>())).ReturnsAsync(establishmentResponse);
+
+			// Act
+			await sut.OnGet(establishmentResponse.Urn, string.Empty);
+
+			// Assert
+			Assert.Equal($"{establishmentResponse.EstablishmentName} ({establishmentResponse.Urn})", sut.SearchQuery);
+		}
+
 		private static T ExtractType<T>(JsonResult result)
 		{
 			var resultAsJson = JsonConvert.SerializeObject(result.Value);
 			return JsonConvert.DeserializeObject<T>(resultAsJson);
 		}
-	}
-
-	public class SearchResponse
-	{
-		public string value { get; set; }
-		public string suggestion { get; set; }
 	}
 }
