@@ -1,11 +1,10 @@
 ﻿@using System.Web
 @model AutoCompleteSearchModel
-<p asp-gds-validation-for="SearchQuery"></p>
 
+<p asp-gds-validation-for="SearchQuery"></p>
 <div id="query-hint" class="govuk-hint">
     @Model.Label
 </div>
-
 <div id="search"></div>
 <input type="hidden" id="SearchQuery" name="SearchQuery" />
 
