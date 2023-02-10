@@ -160,7 +160,7 @@ namespace Dfe.PrepareConversions.Models
 		public static class InvoluntaryProject
 		{
 			public static readonly LinkItem SearchSchool = AddLinkItem(page: "/InvoluntaryProject/SearchSchool");
-			public static readonly LinkItem SchoolResults = AddLinkItem(page: "/InvoluntaryProject/SchoolResults");
+			public static readonly LinkItem SearchTrusts = AddLinkItem(page: "/InvoluntaryProject/SearchTrust");
 		}
 	}
 
