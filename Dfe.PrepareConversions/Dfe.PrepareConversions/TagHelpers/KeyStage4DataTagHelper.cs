@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Linq;
+using System.Text;
 
 namespace Dfe.PrepareConversions.TagHelpers
 {
@@ -10,7 +11,6 @@ namespace Dfe.PrepareConversions.TagHelpers
       public static string KeyStageDataTag(DateTime date)
       {
          // Check where and which academic year the tag is in relation too
-         // Is it the current academic year?
          bool isItCurrentAcademicYear = (date.Month < 9 && date.Year == DateTime.Now.Year ) || (date.Month >= 9 && date.Year == DateTime.Now.Year - 1);
          var status = isItCurrentAcademicYear switch
          {
@@ -35,13 +35,13 @@ namespace Dfe.PrepareConversions.TagHelpers
 
       public static string KeyStageDataRow(this IHtmlHelper helper)
       {
-         var rowString = "<tr class='govuk-table__row'>";
-         rowString += "<th scope='row' class='govuk-table__header'>Status</th>";
-         rowString += KeyStageDataTag(DateTime.Now);
-         rowString += KeyStageDataTag(DateTime.Now.AddYears(-1));
-         rowString += KeyStageDataTag(DateTime.Now.AddYears(-2));
-         rowString += "</tr>";
-         return rowString;
+         StringBuilder rowString = new StringBuilder("<tr class='govuk-table__row'>");
+         rowString.Append("<th scope='row' class='govuk-table__header'>Status</th>");
+         rowString.Append(KeyStageDataTag(DateTime.Now));
+         rowString.Append(KeyStageDataTag(DateTime.Now.AddYears(-1)));
+         rowString.Append(KeyStageDataTag(DateTime.Now.AddYears(-2)));
+         rowString.Append("</tr>");
+         return rowString.ToString();
       }
    }
 }
