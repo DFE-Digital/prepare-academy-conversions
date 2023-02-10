@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Dfe.PrepareConversions.Extensions
@@ -22,6 +23,12 @@ namespace Dfe.PrepareConversions.Extensions
 
 			string sentence = input.ToLower();
 			return char.ToUpper(sentence[0]) + sentence[1..];
+		}
+
+		public static string ToTitleCase(this string str)
+		{
+			var textInfo = CultureInfo.CurrentCulture.TextInfo;
+			return textInfo.ToTitleCase(str);
 		}
 	}
 }
