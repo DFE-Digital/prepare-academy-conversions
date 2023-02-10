@@ -4,14 +4,14 @@ using System;
 using System.Linq;
 using System.Text;
 
-namespace Dfe.PrepareConversions.TagHelpers
+namespace Dfe.PrepareConversions.Utils
 {
-   public static class KeyStage4DataTagHelper
+   public static class KeyStage4DataStatusHelper
    {
       public static string KeyStageDataTag(DateTime date)
       {
          // Check where and which academic year the tag is in relation too
-         bool isItCurrentAcademicYear = (date.Month < 9 && date.Year == DateTime.Now.Year ) || (date.Month >= 9 && date.Year == DateTime.Now.Year - 1);
+         bool isItCurrentAcademicYear = date.Month < 9 && date.Year == DateTime.Now.Year || date.Month >= 9 && date.Year == DateTime.Now.Year - 1;
          var status = isItCurrentAcademicYear switch
          {
             // Rules - KS4 – Provisional October, Revised January; Final April
@@ -33,9 +33,9 @@ namespace Dfe.PrepareConversions.TagHelpers
          return $"<td class='govuk-table__cell'><strong class='govuk-tag govuk-tag--{colour}'>{status}</strong></td>";
       }
 
-      public static string KeyStageDataRow(this IHtmlHelper helper)
+      public static string KeyStageDataRow()
       {
-         StringBuilder rowString = new StringBuilder("<tr class='govuk-table__row'>");
+         StringBuilder rowString = new("<tr class='govuk-table__row'>");
          rowString.Append("<th scope='row' class='govuk-table__header'>Status</th>");
          rowString.Append(KeyStageDataTag(DateTime.Now));
          rowString.Append(KeyStageDataTag(DateTime.Now.AddYears(-1)));
