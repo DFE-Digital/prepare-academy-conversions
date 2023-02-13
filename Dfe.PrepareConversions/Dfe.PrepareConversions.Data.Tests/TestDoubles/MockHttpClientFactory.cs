@@ -16,7 +16,7 @@ namespace Dfe.PrepareConversions.Data.Tests.TestDoubles
 		public HttpClient CreateClient(string name)
 		{
 			var client = _mockHttpMessageHandler.ToHttpClient();
-			client.BaseAddress = new Uri("http://localhost/");
+			client.BaseAddress = new Uri("https://localhost/");
 			return client;
 		}
 	}
