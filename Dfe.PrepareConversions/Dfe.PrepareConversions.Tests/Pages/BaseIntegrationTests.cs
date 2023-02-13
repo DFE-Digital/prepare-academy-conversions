@@ -37,7 +37,7 @@ namespace Dfe.PrepareConversions.Tests.Pages
 
 		public async Task<IDocument> OpenUrlAsync(string url)
 		{
-			return await Context.OpenAsync($"http://localhost{url}");
+			return await Context.OpenAsync($"https://localhost{url}");
 		}
 
 		public async Task<IDocument> NavigateAsync(string linkText, int? index = null)

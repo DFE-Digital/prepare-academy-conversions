@@ -94,7 +94,7 @@ public class Startup
             options.ExpireTimeSpan = _authenticationExpiration;
             options.SlidingExpiration = true;
 
-            if (string.IsNullOrEmpty(Configuration["CI"])) 
+            if (string.IsNullOrEmpty(Configuration["CI"]))
                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
          });
 

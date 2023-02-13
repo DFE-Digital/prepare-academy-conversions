@@ -19,7 +19,6 @@ using WireMock.Matchers;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 using WireMock.Server;
-using System.Linq;
 
 namespace Dfe.PrepareConversions.Tests
 {
@@ -29,13 +28,13 @@ namespace Dfe.PrepareConversions.Tests
       private static int _currentPort = 5080;
       private static readonly object Sync = new();
 
-      private readonly WireMockServer _server;
+      private readonly WireMockServer _mockApiServer;
       private readonly int _port;
 
       public IntegrationTestingWebApplicationFactory()
       {
          _port = AllocateNext();
-         _server = WireMockServer.Start(_port);
+         _mockApiServer = WireMockServer.Start(_port);
       }
 
       protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -49,8 +48,8 @@ namespace Dfe.PrepareConversions.Tests
 				config
 					.AddJsonFile(configPath)
 					.AddInMemoryCollection(new Dictionary<string, string> {
-						{ "TramsApi:Endpoint", $"http://localhost:{_port}" },
-						{ "AcademisationApi:BaseUrl", $"http://localhost:{_port}" },
+						{ "TramsApi:Endpoint", _mockApiServer.Url },
+						{ "AcademisationApi:BaseUrl", _mockApiServer.Url },
 						{ "AzureAd:AllowedRoles", string.Empty }, // Do not restrict access for integration test
 						{ "ServiceLink:TransfersUrl", "https://an-external-service.com/" }
 			   })
@@ -127,7 +126,7 @@ namespace Dfe.PrepareConversions.Tests
 
       public void AddGetWithJsonResponse<TResponseBody>(string path, TResponseBody responseBody)
       {
-         _server
+         _mockApiServer
             .Given(Request.Create()
                .WithPath(path)
                .UsingGet())
@@ -140,7 +139,7 @@ namespace Dfe.PrepareConversions.Tests
 
       public void AddPatchWithJsonRequest<TRequestBody, TResponseBody>(string path, TRequestBody requestBody, TResponseBody responseBody)
       {
-         _server
+         _mockApiServer
             .Given(Request.Create()
                .WithPath(path)
                .WithBody(new JsonMatcher(JsonConvert.SerializeObject(requestBody), true))
@@ -153,7 +152,7 @@ namespace Dfe.PrepareConversions.Tests
 
       public void AddPutWithJsonRequest<TRequestBody, TResponseBody>(string path, TRequestBody requestBody, TResponseBody responseBody)
       {
-         _server
+         _mockApiServer
             .Given(Request.Create()
                .WithPath(path)
                .WithBody(new JsonMatcher(JsonConvert.SerializeObject(requestBody), true))
@@ -166,7 +165,7 @@ namespace Dfe.PrepareConversions.Tests
 
 		public void AddPostWithJsonRequest<TRequestBody, TResponseBody>(string path, TRequestBody requestBody, TResponseBody responseBody)
 		{
-			_server
+			_mockApiServer
 				   .Given(Request.Create()
 					   .WithPath(path)
 					   .WithBody(new JsonMatcher(JsonConvert.SerializeObject(requestBody), true))
@@ -179,7 +178,7 @@ namespace Dfe.PrepareConversions.Tests
 
       public void AddErrorResponse(string path, string method)
       {
-         _server
+         _mockApiServer
             .Given(Request.Create()
                .WithPath(path)
                .UsingMethod(method))
@@ -189,7 +188,7 @@ namespace Dfe.PrepareConversions.Tests
 
       public void Reset()
       {
-         _server.Reset();
+         _mockApiServer.Reset();
       }
 
       private static int AllocateNext()
@@ -208,7 +207,7 @@ namespace Dfe.PrepareConversions.Tests
 
          if (disposing)
          {
-            _server.Stop();
+            _mockApiServer.Stop();
          }
       }
    }
