@@ -74,7 +74,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
 			if (string.IsNullOrWhiteSpace(SearchQuery))
 			{
-				ModelState.AddModelError(nameof(SearchQuery), "Enter the trust, UKPRN or Companies House number");
+				ModelState.AddModelError(nameof(SearchQuery), "Enter the trust name, UKPRN or Companies House number");
 				_errorService.AddErrors(ModelState.Keys, ModelState);
 				return Page();
 			}
