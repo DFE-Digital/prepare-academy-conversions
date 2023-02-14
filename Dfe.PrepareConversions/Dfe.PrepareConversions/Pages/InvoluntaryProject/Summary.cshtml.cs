@@ -42,7 +42,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 		public async Task<IActionResult> OnPostAsync(string urn, string ukprn)
 		{
 			var establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
-			var trust = (await _trustRepository.GetTrustByUkprn(ukprn));
+			var trust = await _trustRepository.GetTrustByUkprn(ukprn);
 
 			await _academyConversionProjectRepository.CreateInvoluntaryProject(MapToDto(establishment, trust));
 
