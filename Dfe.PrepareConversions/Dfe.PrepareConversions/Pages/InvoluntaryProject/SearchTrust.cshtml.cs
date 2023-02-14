@@ -90,7 +90,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 			return Page();
 		}
 
-		private static string HighlightSearchMatch(string input, string toReplace, Trust trust)
+		private static string HighlightSearchMatch(string input, string toReplace, TrustSummary trust)
 		{
 			if (trust == null ||
 				string.IsNullOrWhiteSpace(trust.Ukprn) ||

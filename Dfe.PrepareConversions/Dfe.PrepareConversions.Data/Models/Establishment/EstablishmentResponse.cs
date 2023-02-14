@@ -25,6 +25,7 @@
 		public MisEstablishmentResponse MISEstablishment { get; set; }
 		public AddressResponse Address { get; set; }
 		public ViewAcademyConversion ViewAcademyConversion { get; set; }
+		public string OpenDate { get; set; }
 	}
 
 	public class ViewAcademyConversion

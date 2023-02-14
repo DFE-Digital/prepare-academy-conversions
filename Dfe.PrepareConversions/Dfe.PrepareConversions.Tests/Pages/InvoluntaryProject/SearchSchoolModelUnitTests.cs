@@ -92,7 +92,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 			getEstablishment.Setup(m => m.GetEstablishmentByUrn(It.IsAny<string>())).ReturnsAsync(establishmentResponse);
 
 			// Act
-			await sut.OnGet(establishmentResponse.Urn, string.Empty);
+			await sut.OnGet(establishmentResponse.Urn);
 
 			// Assert
 			Assert.Equal($"{establishmentResponse.EstablishmentName} ({establishmentResponse.Urn})", sut.SearchQuery);
