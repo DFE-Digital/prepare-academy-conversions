@@ -6,7 +6,7 @@ namespace FluentAssertions
 	{
 		public static void BeUrl(this StringAssertions stringAssertions, string url)
 		{
-			stringAssertions.Be($"http://localhost{url}");
+			stringAssertions.Be($"https://localhost{url}");
 		}
 	}
 }

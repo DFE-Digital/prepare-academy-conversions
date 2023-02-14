@@ -3,7 +3,7 @@
 @model Dfe.PrepareConversions.Pages.InvoluntaryProject.SearchTrustModel
 @{
     Layout = "_Layout";
-    ViewBag.Title = "What is the trust name";
+    ViewBag.Title = (!ViewData.ModelState.IsValid ? "Error: " : "") + "What is the trust name";
     var routeParams = new Dictionary<string, string>
     {
         { "urn", Request.Query["urn"] },
