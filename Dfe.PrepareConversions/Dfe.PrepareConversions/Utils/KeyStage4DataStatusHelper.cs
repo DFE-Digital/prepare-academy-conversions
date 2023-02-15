@@ -10,8 +10,22 @@ namespace Dfe.PrepareConversions.Utils
    {
       public static string KeyStageDataTag(DateTime date)
       {
+         string status = DetermineKeyStageDataStatus(date);
+         var colour = status.ToLower() switch
+         {
+            "revised" => "orange",
+            "final" => "green",
+            "provisional" => "grey",
+            _ => string.Empty
+         };
+         return $"<td class='govuk-table__cell'><strong class='govuk-tag govuk-tag--{colour}'>{status}</strong></td>";
+      }
+
+      public static string DetermineKeyStageDataStatus(DateTime date)
+      {
          // Check where and which academic year the tag is in relation too
-         bool isItCurrentAcademicYear = date.Month < 9 && date.Year == DateTime.Now.Year || date.Month >= 9 && date.Year == DateTime.Now.Year - 1;
+         bool isItCurrentAcademicYear = date.Month < 9 && date.Year == DateTime.Now.Year ||
+                                        date.Month >= 9 && date.Year == DateTime.Now.Year - 1;
          var status = isItCurrentAcademicYear switch
          {
             // Rules - KS4 – Provisional October, Revised January; Final April
@@ -23,14 +37,7 @@ namespace Dfe.PrepareConversions.Utils
             },
             false => "Final"
          };
-         var colour = status.ToLower() switch
-         {
-            "revised" => "orange",
-            "final" => "green",
-            "provisional" => "grey",
-            _ => string.Empty
-         };
-         return $"<td class='govuk-table__cell'><strong class='govuk-tag govuk-tag--{colour}'>{status}</strong></td>";
+         return status;
       }
 
       public static string KeyStageDataRow()
