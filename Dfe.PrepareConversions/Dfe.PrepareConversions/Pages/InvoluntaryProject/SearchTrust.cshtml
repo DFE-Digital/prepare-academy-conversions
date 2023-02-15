@@ -1,13 +1,19 @@
 ﻿@page "/start-new-project/trust-name"
+@using Dfe.PrepareConversions.Pages.TaskList.Decision
 @model Dfe.PrepareConversions.Pages.InvoluntaryProject.SearchTrustModel
 @{
     Layout = "_Layout";
     ViewBag.Title = (!ViewData.ModelState.IsValid ? "Error: " : "") + "What is the trust name";
+    var routeParams = new Dictionary<string, string>
+    {
+        { "urn", Request.Query["urn"] },
+        { "ukprn", Request.Query["ukprn"] }
+    };
 }
 
 @section BeforeMain
 {
-    <a class="govuk-back-link" asp-page="@Links.InvoluntaryProject.SearchSchool.Page" asp-route-urn="@Model.Urn" asp-route-ukprn="@Model.Ukprn">Back</a>
+    <partial name="_BackLink" model="@(new BackLink(Links.InvoluntaryProject.SearchSchool.Page, routeParams))" />
     <partial name="_ErrorSummary" />
 }
 
@@ -21,7 +27,7 @@
                         </label>
                     </h1>
 
-                    <partial name="_AutoComplete" model="@Model.AutoCompleteSearchModel"  />
+                    <partial name="_AutoComplete" model="@Model.AutoCompleteSearchModel" />
 
                 </div>
                 <button class="govuk-button" type="submit" data-id="submit">Continue</button>

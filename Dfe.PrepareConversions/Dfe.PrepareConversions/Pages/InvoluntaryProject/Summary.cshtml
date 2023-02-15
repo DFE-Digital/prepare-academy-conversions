@@ -1,0 +1,195 @@
+﻿@page "/start-new-project/check-school-trust-details"
+@using Dfe.PrepareConversions.Pages.TaskList.Decision
+
+@model Dfe.PrepareConversions.Pages.InvoluntaryProject.SummaryModel
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "What is the school name";
+
+    var routeParams = new Dictionary<string, string>
+    {
+        { "urn", Model.Establishment.Urn },
+        { "ukprn", Model.Trust.Ukprn },
+    };
+
+    var backLinkRouteParams = new Dictionary<string, string>
+    {
+        { "urn", Model.Establishment.Urn },
+        { "ukprn", Model.Trust.Ukprn },
+        { "r", $"{Request.Path}{Request.QueryString.ToStringOrDefault()}" }
+    };
+}
+
+@section BeforeMain
+{
+    <partial name="_BackLink" model="@(new BackLink(Links.InvoluntaryProject.SearchTrusts.Page, routeParams))" />
+}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <h1 class="govuk-heading-xl">
+                Check school and trust details
+            </h1>
+        </div>
+
+        <div class="govuk-grid-column-two-thirds">
+            <h2 class="govuk-heading-m">
+                School
+            </h2>
+        </div>
+
+        <div class="govuk-grid-column-full">
+
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Name
+                    </dt>
+                    <dd class="govuk-summary-list__value" data-cy="school-name">
+                        @Model.Establishment.EstablishmentName
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a asp-page="@Links.InvoluntaryProject.SearchSchool.Page" class="govuk-link"
+                       asp-all-route-data="@backLinkRouteParams">
+                            Change<span class="govuk-visually-hidden">School name</span>
+                        </a>
+                    </dd>
+                </div>
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        URN
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Model.Establishment.Urn
+                    </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                </div>
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Local authority
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Model.Establishment.LocalAuthorityName
+                    </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                </div>
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        School type
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Model.Establishment.EstablishmentType.Name
+                    </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                </div>
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Faith school
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Model.Establishment.ReligiousCharacter.Name
+                    </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                </div>
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Ofsted rating
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @(Model.Establishment.OfstedRating ?? "Not available")
+                    </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                </div>
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Last inspection
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @if(string.IsNullOrEmpty(Model.Establishment.OfstedLastInspection))
+                        {
+                            <span>Not available</span>
+                        }
+                        else
+                        {
+                            @DateTime.Parse(@Model.Establishment.OfstedLastInspection).ToDateString()
+                        }
+                    </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                </div>
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        PFI (private finance initiative)
+                    </dt>
+                    <dd class="govuk-summary-list__value">@(Model.Establishment?.ViewAcademyConversion?.Pfi ?? "Does not apply")</dd>
+                </div>
+
+            </dl>
+        </div>
+
+
+        <div class="govuk-grid-column-two-thirds">
+
+            <h2 class="govuk-heading-m">
+                Incoming trust
+            </h2>
+        </div>
+
+        <div class="govuk-grid-column-full">
+
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Name
+                    </dt>
+                    <dd class="govuk-summary-list__value" data-cy="trust-name">
+                        @Model.Trust.GroupName
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a a asp-page="@Links.InvoluntaryProject.SearchTrusts.Page" class="govuk-link"
+                       asp-all-route-data="@backLinkRouteParams">
+                            Change<span class="govuk-visually-hidden">Trust name</span>
+                        </a>
+                    </dd>
+                </div>
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        UKPRN
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Model.Trust.Ukprn
+                    </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                </div>
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Companies House Number
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Model.Trust.CompaniesHouseNumber
+                    </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                </div>
+
+            </dl>
+
+        </div>
+
+        <div class="govuk-grid-column-two-thirds">
+            <form method="post">
+                <input type="hidden" value="@Model.Establishment.Urn" />
+                <input type="hidden" value="@Model.Trust.Ukprn" />
+                <button class="govuk-button" type="submit" data-id="submit">Continue</button>
+            </form>
+        </div>
+    </div>
