@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using static ApplyToBecome.Data.Models.AcademisationApplication.AcademisationApplication;
+using Loan = Dfe.PrepareConversions.Data.Models.AcademisationApplication.Loan;
 
 namespace Dfe.PrepareConversions.Data.Tests.Models.AcademisationApplication
 {
@@ -20,11 +21,11 @@ namespace Dfe.PrepareConversions.Data.Tests.Models.AcademisationApplication
          {
             Loans = new List<Loan>
             {
-               new() { SchoolLoanAmount = 1000, SchoolLoanPurpose = "Education", SchoolLoanProvider = "Provider1", SchoolLoanInterestRate = "2.5", SchoolLoanSchedule = "Monthly" },
-               new() { SchoolLoanAmount = 2000, SchoolLoanPurpose = "Training", SchoolLoanProvider = "Provider2", SchoolLoanInterestRate = "3.5", SchoolLoanSchedule = "Yearly" },
+               new() { Amount = 1000, Purpose = "Education", Provider = "Provider1", InterestRate = 2.5, Schedule = "Monthly" },
+               new() { Amount = 2000, Purpose = "Training", Provider = "Provider2", InterestRate = 3.5, Schedule = "Yearly" },
             }
          };
-         var academiesApplicationSchool = new ApplyingSchool { SchoolLoans = new List<Loan>() };
+         var academiesApplicationSchool = new ApplyingSchool { SchoolLoans = new List<Dfe.PrepareConversions.Data.Models.Application.Loan>() };
          // Act
          PopulateSchoolLoans(academiesApplicationSchool, academisationApplicationSchool);
          // Assert
