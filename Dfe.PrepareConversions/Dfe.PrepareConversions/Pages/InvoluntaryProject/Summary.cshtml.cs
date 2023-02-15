@@ -34,7 +34,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 		public async Task<IActionResult> OnGetAsync(string urn, string ukprn)
 		{
 			Establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
-			Trust = (await _trustRepository.SearchTrusts(ukprn)).Data.First();
+			Trust = (await _trustRepository.SearchTrusts(ukprn)).Data.FirstOrDefault();
 
 			return Page();
 		}
