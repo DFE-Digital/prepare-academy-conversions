@@ -1,0 +1,18 @@
+﻿@model Dfe.PrepareConversions.Pages.TaskList.Decision.BackLink
+@{
+    string redirectPath = Context.Request.Query["r"];
+    string linkText = Model.LinkText;
+}
+
+@if (!string.IsNullOrEmpty(redirectPath))
+{
+    <a href="@redirectPath" class="govuk-back-link" data-cy="select-backlink">
+        @linkText
+    </a>
+}
+else
+{
+    <a asp-page="@Model.LinkPage" asp-all-route-data="@Model.LinkRouteValues" class="govuk-back-link" data-cy="select-backlink">
+        @linkText
+    </a>
+}
