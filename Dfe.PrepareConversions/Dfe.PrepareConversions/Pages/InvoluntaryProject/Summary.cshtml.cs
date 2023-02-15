@@ -8,6 +8,7 @@ using Dfe.PrepareConversions.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -54,9 +55,6 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 			var createSchool = new InvoluntaryProjectSchool(
 								establishment.EstablishmentName,
 								establishment.Urn,
-								string.IsNullOrEmpty(establishment?.OpenDate)
-									? null
-									: DateTime.Parse(establishment?.OpenDate),
 								establishment.ViewAcademyConversion?.Pfi != null && establishment.ViewAcademyConversion?.Pfi != "No");
 
 			var createTrust = new InvoluntaryProjectTrust(
