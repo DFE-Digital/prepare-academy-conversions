@@ -10,6 +10,7 @@ using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -73,6 +74,10 @@ public class Startup
          options.IdleTimeout = _authenticationExpiration;
          options.Cookie.Name = ".ManageAnAcademyConversion.Session";
          options.Cookie.IsEssential = true;
+         options.Cookie.HttpOnly = true;
+
+         if (string.IsNullOrWhiteSpace(Configuration["CI"]))
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
       });
       services.AddHttpContextAccessor();
 
@@ -88,10 +93,9 @@ public class Startup
             options.Cookie.IsEssential = true;
             options.ExpireTimeSpan = _authenticationExpiration;
             options.SlidingExpiration = true;
+
             if (string.IsNullOrEmpty(Configuration["CI"]))
-            {
                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-            }
          });
 
       services.AddScoped<IApiClient, ApiClient>();
@@ -152,6 +156,8 @@ public class Startup
          SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment())
             .AddXssProtectionDisabled()
       );
+
+      app.UseCookiePolicy(new CookiePolicyOptions { Secure = CookieSecurePolicy.Always, HttpOnly = HttpOnlyPolicy.Always });
 
       app.UseStatusCodePagesWithReExecute("/Errors", "?statusCode={0}");
 

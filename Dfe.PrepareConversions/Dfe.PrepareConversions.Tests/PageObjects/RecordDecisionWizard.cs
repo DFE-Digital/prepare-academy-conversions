@@ -35,7 +35,7 @@ namespace Dfe.PrepareConversions.Tests.PageObjects
 
 		public async Task StartFor(int projectId)
 		{
-			await _browsingContext.OpenAsync($"http://localhost/task-list/{projectId}/decision/record-decision");
+			await _browsingContext.OpenAsync($"https://localhost/task-list/{projectId}/decision/record-decision");
 		}
 
 		/// <summary>
