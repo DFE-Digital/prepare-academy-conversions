@@ -53,7 +53,7 @@ public class School
    public int? ProjectedPupilNumbersYear2 { get; set; }
    public int? ProjectedPupilNumbersYear3 { get; set; }
    public string SchoolCapacityAssumptions { get; set; }
-   public string SchoolCapacityPublishedAdmissionNumber { get; set; }
+   public int SchoolCapacityPublishedAdmissionsNumber { get; set; }
    public string SchoolSupportGrantFundsPaidTo { get; set; }
    public bool ConfirmPaySupportGrantToSchool { get; set; }
    public bool SchoolHasConsultedStakeholders { get; set; }

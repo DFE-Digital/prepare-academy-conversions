@@ -32,7 +32,6 @@ public class ApplicationRepository
          if (_useAcademisationApplication)
          {
             AcademisationApplication academisationOuterResponse = await response.Content.ReadFromJsonAsync<AcademisationApplication>();
-            
             return new ApiResponse<Application>(response.StatusCode, AcademisationApplication.MapToApplication(academisationOuterResponse));
          }
 

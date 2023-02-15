@@ -91,9 +91,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          academiesApplicationSchool.ProjectedPupilNumbersYear2 = academisationApplicationSchool.ProjectedPupilNumbersYear2;
          academiesApplicationSchool.ProjectedPupilNumbersYear3 = academisationApplicationSchool.ProjectedPupilNumbersYear3;
          academiesApplicationSchool.SchoolCapacityAssumptions = academisationApplicationSchool.SchoolCapacityAssumptions;
-         academiesApplicationSchool.SchoolCapacityPublishedAdmissionsNumber =
-            Convert.ToInt32(academisationApplicationSchool
-               .SchoolCapacityPublishedAdmissionNumber);
+         academiesApplicationSchool.SchoolCapacityPublishedAdmissionsNumber = academisationApplicationSchool.SchoolCapacityPublishedAdmissionsNumber;
       }
 
       public static void PopulateFinancialInvestigations(ApplyingSchool academiesApplicationSchool,
@@ -291,7 +289,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          out School academisationApplicationSchool, out ApplyingSchool academiesApplicationSchool)
       {
          var academiesApplication = new Application();
-         academisationApplication!.Contributors = new List<Contributor>();
+         academisationApplication!.Contributors ??= new List<Contributor>();
          academisationApplicationSchool = academisationApplication.Schools.FirstOrDefault();
          academiesApplication.ApplyingSchools = new List<ApplyingSchool>(){ new() };
          academiesApplicationSchool = academiesApplication.ApplyingSchools.FirstOrDefault();
