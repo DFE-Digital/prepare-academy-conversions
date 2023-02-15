@@ -13,6 +13,9 @@
 		public string EstablishmentName { get; set; }
 		public NameAndCodeResponse EstablishmentType { get; set; }
 		public NameAndCodeResponse PhaseOfEducation { get; set; }
+		public NameAndCodeResponse ReligiousCharacter { get; set; }
+		public string OfstedRating { get; set; }
+		public string OfstedLastInspection { get; set; }
 		public string StatutoryLowAge { get; set; }
 		public string StatutoryHighAge { get; set; }
 		public NameAndCodeResponse Diocese { get; set; }
@@ -21,5 +24,12 @@
 		public NameAndCodeResponse ParliamentaryConstituency { get; set; }
 		public MisEstablishmentResponse MISEstablishment { get; set; }
 		public AddressResponse Address { get; set; }
+		public ViewAcademyConversion ViewAcademyConversion { get; set; }
+		public string OpenDate { get; set; }
+	}
+
+	public class ViewAcademyConversion
+	{
+		public string Pfi { get; set; }
 	}
 }

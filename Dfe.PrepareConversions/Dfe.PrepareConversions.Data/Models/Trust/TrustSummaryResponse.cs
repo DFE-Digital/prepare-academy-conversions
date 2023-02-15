@@ -2,12 +2,12 @@
 
 namespace Dfe.PrepareConversions.Data.Models
 {
-	public class TrustsResponse
+	public class TrustSummaryResponse
 	{
-		public List<Trust> Data { get; set; }
+		public List<TrustSummary> Data { get; set; }
 	}
 
-	public class Trust
+	public class TrustSummary
 	{
 		public string Ukprn { get; set; }
 		public string GroupName { get; set; }

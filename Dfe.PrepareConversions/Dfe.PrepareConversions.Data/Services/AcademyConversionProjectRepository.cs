@@ -1,6 +1,9 @@
-﻿using Dfe.PrepareConversions.Data.Extensions;
+﻿using Dfe.PrepareConversions.Data.Exceptions;
+using Dfe.PrepareConversions.Data.Extensions;
 using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Data.Models.InvoluntaryProject;
+using Dfe.PrepareConversions.Data.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -13,12 +16,17 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
 {
    private readonly IReadOnlyDictionary<string, string> _aliasedStatuses = new Dictionary<string, string> { { "converter pre-ao (c)", "Pre advisory board" } };
    private readonly IApiClient _apiClient;
-
+   private readonly IHttpClientFactory _httpClientFactory;
+   private readonly IHttpClientService _httpClientService;
    private readonly IReadOnlyDictionary<string, string> _invertedAliasedStatuses;
 
-   public AcademyConversionProjectRepository(IApiClient apiClient)
+    public AcademyConversionProjectRepository(IApiClient apiClient,
+       IHttpClientFactory httpClientFactory = null,
+       IHttpClientService httpClientService = null)
    {
       _apiClient = apiClient;
+      _httpClientFactory = httpClientFactory;
+      _httpClientService = httpClientService;
       _invertedAliasedStatuses = _aliasedStatuses.ToDictionary(x => x.Value.ToLowerInvariant(), x => x.Key);
    }
 
@@ -72,6 +80,18 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       AcademyConversionProject project = await updateResponse.Content.ReadFromJsonAsync<AcademyConversionProject>();
       return new ApiResponse<AcademyConversionProject>(updateResponse.StatusCode, project);
    }
+
+   public async Task CreateInvoluntaryProject(CreateInvoluntaryProject involuntaryProject)
+   {
+      var httpClient = _httpClientFactory.CreateClient("AcademisationClient");
+
+      var result = await _httpClientService.Post<CreateInvoluntaryProject, string>(
+         httpClient,
+         @"legacy/project/involuntary-conversion-project",
+         involuntaryProject);
+
+      if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+    }
 
    public async Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
    {
@@ -138,3 +158,6 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       }
    }
 }
+
+
+

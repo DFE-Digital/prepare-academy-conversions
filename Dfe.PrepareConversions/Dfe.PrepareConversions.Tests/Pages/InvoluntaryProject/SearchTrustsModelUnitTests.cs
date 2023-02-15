@@ -19,7 +19,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
    public class SearchTrustModelUnitTests
 	{
 		[Theory, AutoMoqData]
-		public async Task OnGetSearch_ReturnsTrustNames([Frozen] Mock<ITrustsRespository> trustsRepository, TrustsResponse trusts)
+		public async Task OnGetSearch_ReturnsTrustNames([Frozen] Mock<ITrustsRespository> trustsRepository, TrustSummaryResponse trusts)
       {
 			// Arrange
 			var sut = new SearchTrustModel(trustsRepository.Object, new ErrorService());
@@ -40,9 +40,9 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 		{
 			// Arrange
 			var sut = new SearchTrustModel(trustsRepository.Object, new ErrorService());
-			var trust = new Trust { GroupName = "bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
+			var trust = new TrustSummary { GroupName = "bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
 			trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
-			   new TrustsResponse { Data = new List<Trust> { trust } });
+			   new TrustSummaryResponse { Data = new List<TrustSummary> { trust } });
 
 			// Act
 			var result = await sut.OnGetSearch(trust.GroupName);
@@ -58,9 +58,9 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 		{
 			// Arrange
 			var sut = new SearchTrustModel(trustsRepository.Object, new ErrorService());
-			var trust = new Trust { GroupName = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
+			var trust = new TrustSummary { GroupName = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
 			trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
-			   new TrustsResponse { Data = new List<Trust> { trust } });
+			   new TrustSummaryResponse { Data = new List<TrustSummary> { trust } });
 
 			// Act
 			var result = await sut.OnGetSearch($"{trust.GroupName} ({trust.Ukprn})");
@@ -77,9 +77,9 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 		{
 			// Arrange
 			var sut = new SearchTrustModel(trustsRepository.Object, new ErrorService());
-			var trust = new Trust { GroupName = string.Empty, Ukprn = string.Empty, CompaniesHouseNumber = string.Empty };
+			var trust = new TrustSummary { GroupName = string.Empty, Ukprn = string.Empty, CompaniesHouseNumber = string.Empty };
 			trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
-			   new TrustsResponse { Data = new List<Trust> { trust } });
+			   new TrustSummaryResponse { Data = new List<TrustSummary> { trust } });
 
 			// Act
 			var result = await sut.OnGetSearch(trust.GroupName);
@@ -94,9 +94,9 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 		{
 			// Arrange
 			var sut = new SearchTrustModel(trustsRepository.Object, new ErrorService());
-			var trust = new Trust { GroupName = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
+			var trust = new TrustSummary { GroupName = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
 			trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
-			   new TrustsResponse { Data = new List<Trust> { trust } });
+			   new TrustSummaryResponse { Data = new List<TrustSummary> { trust } });
 
 			// Act
 			await sut.OnGet(trust.Ukprn, string.Empty);

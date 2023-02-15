@@ -22,7 +22,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 			await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]").SubmitAsync();
 
 			Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
-				.Be("Enter the trust name, UKPRN or Companies House number");
+				.Be("Enter the Trust name, UKPRN or Companies House number");
 		}
 
 		[Fact]
