@@ -56,7 +56,7 @@
             {
                 <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
-                        Why was this project deferred
+                        Why was this project declined
                     </dt>
                     <dd class="govuk-summary-list__value" id="decline-reasons">
 
@@ -67,7 +67,7 @@
                             <div class="govuk-!-margin-bottom-2">@reason.Details</div>
 
                         }
-                    </dd>                    
+                    </dd>
                 </div>
             }
 
@@ -87,7 +87,7 @@
                             <div class="govuk-!-margin-bottom-2">@reason.Details</div>
 
                         }
-                    </dd>                    
+                    </dd>
                 </div>
             }
 
@@ -95,22 +95,22 @@
             {
                 var conditionsSet = Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value;
 
-	            <div class="govuk-summary-list__row">
-		            <dt class="govuk-summary-list__key">
-			            Were any conditions set
-		            </dt>
-		            <dd class="govuk-summary-list__value" id="condition-set">
-			            @if (conditionsSet)
-			            {
-				            <div>Yes:</div>
-				            <div>@Model.Decision.ApprovedConditionsDetails</div>
-			            }
-			            else
-			            {
-				            <span>No</span>
-			            }
-		            </dd>
-	            </div>
+               <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                     Were any conditions set
+                  </dt>
+                  <dd class="govuk-summary-list__value" id="condition-set">
+                     @if (conditionsSet)
+                     {
+                        <div>Yes:</div>
+                        <div>@Model.Decision.ApprovedConditionsDetails</div>
+                     }
+                     else
+                     {
+                        <span>No</span>
+                     }
+                  </dd>
+               </div>
             }
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
