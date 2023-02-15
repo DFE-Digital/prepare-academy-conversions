@@ -1,5 +1,8 @@
 ﻿using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Data.Models.Establishment;
+using Dfe.PrepareConversions.Data.Models.InvoluntaryProject;
+using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
@@ -20,10 +23,10 @@ namespace Dfe.PrepareConversions.Services
 			_httpContext = httpContextAccessor.HttpContext;
 		}
 
-		public Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count, string titleFilter = "",
+		public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count, string titleFilter = "",
 			IEnumerable<string> statusFilters = default, IEnumerable<string> deliveryOfficerFilter = default, IEnumerable<string> regionsFilter = default)
 		{
-			return _innerRepository.GetAllProjects(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter);
+			return await _innerRepository.GetAllProjects(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter);
 		}
 
 		public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)
@@ -39,25 +42,29 @@ namespace Dfe.PrepareConversions.Services
 
 			return project;
 		}
+		public async Task CreateInvoluntaryProject(CreateInvoluntaryProject involuntaryProject)
+		{
+			await _innerRepository.CreateInvoluntaryProject(involuntaryProject);
+		}
 
-		public Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject)
+		public async Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject)
 		{
 			if (_httpContext.Items.ContainsKey(id))
 			{
 				_httpContext.Items.Remove(id);
 			}
 
-			return _innerRepository.UpdateProject(id, updateProject);
+			return await _innerRepository.UpdateProject(id, updateProject);
 		}
 
-		public Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
+		public async Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
 		{
-			return _innerRepository.GetFilterParameters();
+			return await _innerRepository.GetFilterParameters();
 		}
 
-      public Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote addProjectNote)
-      {
-         return _innerRepository.AddProjectNote(id, addProjectNote);
-      }
-   }
+		public async Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote addProjectNote)
+		{
+			return await _innerRepository.AddProjectNote(id, addProjectNote);
+		}
+	}
 }

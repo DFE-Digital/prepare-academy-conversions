@@ -176,7 +176,19 @@ namespace Dfe.PrepareConversions.Tests
 					   .WithBody(JsonConvert.SerializeObject(responseBody)));
 		}
 
-      public void AddErrorResponse(string path, string method)
+        public void AddAnyPostWithJsonRequest<TResponseBody>(string path, TResponseBody responseBody)
+        {
+            _mockApiServer
+                   .Given(Request.Create()
+                       .WithPath(path)
+                       .UsingPost())
+                   .RespondWith(Response.Create()
+                       .WithStatusCode(200)
+                       .WithHeader("Content-Type", "application/json")
+                       .WithBody(JsonConvert.SerializeObject(responseBody)));
+        }
+
+        public void AddErrorResponse(string path, string method)
       {
          _mockApiServer
             .Given(Request.Create()
