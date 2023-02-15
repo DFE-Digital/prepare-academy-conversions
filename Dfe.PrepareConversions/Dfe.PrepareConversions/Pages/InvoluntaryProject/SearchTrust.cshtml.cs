@@ -23,7 +23,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 		{
 			_trustsRepository = trustsRepository;
 			_errorService = errorService;
-			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, "", SEARCH_ENDPOINT);
+			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, string.Empty, SEARCH_ENDPOINT);
 		}
 
 		[BindProperty] public string SearchQuery { get; set; } = "";
@@ -74,7 +74,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
 			if (string.IsNullOrWhiteSpace(SearchQuery))
 			{
-				ModelState.AddModelError(nameof(SearchQuery), "Enter the trust name, UKPRN or Companies House number");
+				ModelState.AddModelError(nameof(SearchQuery), "Enter the Trust name, UKPRN or Companies House number");
 				_errorService.AddErrors(ModelState.Keys, ModelState);
 				return Page();
 			}
@@ -82,15 +82,15 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 			var searchSplit = SplitOnBrackets(SearchQuery);
 			if (searchSplit.Length < 2) return Page();
 
-			var ukprn = SplitOnBrackets(SearchQuery)[1];
+			var ukprn = searchSplit[1];
 
 			var trust = await _trustsRepository.SearchTrusts(ukprn);
-			if (trust != null) return RedirectToPage(Links.InvoluntaryProject.SearchTrusts.Page, new { ukprn, urn });
+			if (trust != null) return RedirectToPage(Links.InvoluntaryProject.Summary.Page, new { ukprn, urn });
 
 			return Page();
 		}
 
-		private static string HighlightSearchMatch(string input, string toReplace, Trust trust)
+		private static string HighlightSearchMatch(string input, string toReplace, TrustSummary trust)
 		{
 			if (trust == null ||
 				string.IsNullOrWhiteSpace(trust.Ukprn) ||

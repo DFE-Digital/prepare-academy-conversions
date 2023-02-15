@@ -26,7 +26,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 		[BindProperty] public string SearchQuery { get; set; } = "";
 		public AutoCompleteSearchModel AutoCompleteSearchModel { get; set; }
 
-		public async Task<IActionResult> OnGet(string urn, string ukprn)
+		public async Task<IActionResult> OnGet(string urn)
 		{
 			var establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
 			if (!string.IsNullOrWhiteSpace(establishment.Urn))
