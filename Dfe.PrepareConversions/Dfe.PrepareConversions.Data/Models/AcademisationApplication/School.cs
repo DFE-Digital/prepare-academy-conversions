@@ -1,6 +1,7 @@
-﻿using Dfe.PrepareConversions.Data.Models.Application;
+﻿using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 using System;
 using System.Collections.Generic;
+using Loan = Dfe.PrepareConversions.Data.Models.AcademisationApplication.Loan;
 
 namespace ApplyToBecome.Data.Models.AcademisationApplication;
 
@@ -27,8 +28,8 @@ public class School
    public FinancialYear PreviousFinancialYear { get; set; }
    public FinancialYear CurrentFinancialYear { get; set; }
    public FinancialYear NextFinancialYear { get; set; }
-   public List<Loan> Loans { get; set; } // Based off current
-   public List<Lease> Leases { get; set; } // Based off current
+   public List<Loan> Loans { get; set; }
+   public List<Lease> Leases { get; set; } 
    public string SchoolConversionContactHeadName { get; set; }
    public string SchoolConversionContactHeadEmail { get; set; }
    public string SchoolConversionContactHeadTel { get; set; }
@@ -52,7 +53,7 @@ public class School
    public int? ProjectedPupilNumbersYear2 { get; set; }
    public int? ProjectedPupilNumbersYear3 { get; set; }
    public string SchoolCapacityAssumptions { get; set; }
-   public string SchoolCapacityPublishedAdmissionNumber { get; set; }
+   public int SchoolCapacityPublishedAdmissionsNumber { get; set; }
    public string SchoolSupportGrantFundsPaidTo { get; set; }
    public bool ConfirmPaySupportGrantToSchool { get; set; }
    public bool SchoolHasConsultedStakeholders { get; set; }
