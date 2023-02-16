@@ -1,18 +1,12 @@
 ﻿@model Dfe.PrepareConversions.Pages.TaskList.Decision.BackLink
 @{
-    string redirectPath = Context.Request.Query["r"];
-    string linkText = Model.LinkText;
+    var redirect = Context.Request.Query["redirect"];
+    bool overideBackLink = false;
+    if (!string.IsNullOrEmpty(redirect))
+    {
+        overideBackLink = true;
+        Model.LinkPage = redirect;
+    }
 }
 
-@if (!string.IsNullOrEmpty(redirectPath))
-{
-    <a href="@redirectPath" class="govuk-back-link" data-cy="select-backlink">
-        @linkText
-    </a>
-}
-else
-{
-    <a asp-page="@Model.LinkPage" asp-all-route-data="@Model.LinkRouteValues" class="govuk-back-link" data-cy="select-backlink">
-        @linkText
-    </a>
-}
+<a asp-page="@Model.LinkPage" asp-all-route-data="@Model.LinkRouteValues" class="govuk-back-link" data-cy="select-backlink">@(overideBackLink ? "Back" : Model.LinkText)</a>
