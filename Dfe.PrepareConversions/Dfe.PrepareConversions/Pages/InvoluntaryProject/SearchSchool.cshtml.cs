@@ -52,7 +52,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 			}));
 		}
 
-		public IActionResult OnPost(string ukprn)
+		public IActionResult OnPost(string ukprn, string redirect)
 		{
 			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
 
@@ -66,7 +66,9 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 			var splitSearch = SplitOnBrackets(SearchQuery);
 			if (splitSearch.Length < 2) return Page();
 
-			return RedirectToPage(Links.InvoluntaryProject.SearchTrusts.Page, new { urn = splitSearch[1], ukprn });
+			redirect = string.IsNullOrEmpty(redirect) ? Links.InvoluntaryProject.SearchTrusts.Page : redirect;
+
+			return RedirectToPage(redirect, new { urn = splitSearch[1], ukprn });
 		}
 
 		private static string HighlightSearchMatch(string input, string toReplace, EstablishmentSearchResponse school)
