@@ -17,7 +17,7 @@
     {
         { "urn", Model.Establishment.Urn },
         { "ukprn", Model.Trust.Ukprn },
-        { "r", $"{Request.Path}{Request.QueryString.ToStringOrDefault()}" }
+        { "redirect", Links.InvoluntaryProject.Summary.Page }
     };
 }
 
@@ -130,6 +130,7 @@
                         PFI (private finance initiative)
                     </dt>
                     <dd class="govuk-summary-list__value">@(Model.Establishment?.ViewAcademyConversion?.Pfi ?? "Does not apply")</dd>
+                    <dd class="govuk-summary-list__value"></dd>
                 </div>
 
             </dl>
