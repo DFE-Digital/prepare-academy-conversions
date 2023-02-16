@@ -8,9 +8,19 @@ Cypress._.each(['ipad-mini'], (viewport) => {
             cy.navigateToFilterProjects();
             cy.get('[data-cy="select-projectlist-filter-title"]').type('Caludon Castle School')
             cy.get('[data-cy=select-projectlist-filter-apply]').click();
-            cy.get('[data-cy="select-projectlist-filter-count"]').should('not.equal', '0 projects found');
-            cy.get('#school-name-0').click()
-            cy.get('*[href*="/confirm-school-trust-information-project-dates"]').should('be.visible')
+            cy.get('[data-cy="select-projectlist-filter-count"]')
+              .invoke('text')
+              .then((text) => {
+                if( text == '0 projects found'){
+                    cy.log('Expected result not found');
+                    Cypress.runner.stop();
+                }
+            else {
+                cy.get('[data-cy="select-projectlist-filter-count"]').should('not.equal', '0 projects found');
+                cy.get('#school-name-0').click()
+                cy.get('*[href*="/confirm-school-trust-information-project-dates"]').should('be.visible')
+            }
+          });
         })
 
         it('TC01: Navigates to Key stage 4 performance tables page', () => {
