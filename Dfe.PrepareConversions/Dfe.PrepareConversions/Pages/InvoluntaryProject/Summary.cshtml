@@ -1,10 +1,11 @@
 ﻿@page "/start-new-project/check-school-trust-details"
 @using Dfe.PrepareConversions.Pages.TaskList.Decision
+@using System.Globalization
 
 @model Dfe.PrepareConversions.Pages.InvoluntaryProject.SummaryModel
 @{
     Layout = "_Layout";
-    ViewBag.Title = "What is the school name";
+    ViewBag.Title = "Check school and trust details";
 
     var routeParams = new Dictionary<string, string>
     {
@@ -118,7 +119,7 @@
                         }
                         else
                         {
-                            @DateTime.Parse(@Model.Establishment.OfstedLastInspection).ToDateString()
+                            @DateTime.ParseExact(@Model.Establishment.OfstedLastInspection, "dd-mm-yyyy", CultureInfo.CurrentCulture).ToDateString()
                         }
                     </dd>
                     <dd class="govuk-summary-list__value"></dd>
