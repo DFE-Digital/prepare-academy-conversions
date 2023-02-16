@@ -22,7 +22,7 @@ namespace Dfe.PrepareConversions.Data.Tests.Models.AcademisationApplication
             ProjectedPupilNumbersYear2 = 20,
             ProjectedPupilNumbersYear3 = 30,
             SchoolCapacityAssumptions = "Test Assumptions",
-            SchoolCapacityPublishedAdmissionNumber = "40"
+            SchoolCapacityPublishedAdmissionsNumber = 40
          };
          var academiesApplicationSchool = new ApplyingSchool();
 

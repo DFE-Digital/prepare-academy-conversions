@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using static ApplyToBecome.Data.Models.AcademisationApplication.AcademisationApplication;
+using Lease = Dfe.PrepareConversions.Data.Models.AcademisationApplication.Lease;
 
 namespace Dfe.PrepareConversions.Data.Tests.Models.AcademisationApplication
 {
@@ -20,11 +21,11 @@ namespace Dfe.PrepareConversions.Data.Tests.Models.AcademisationApplication
          {
             Leases = new List<Lease>
             {
-               new() { SchoolLeasePurpose = "Equipment", SchoolLeaseRepaymentValue = 1000, SchoolLeaseInterestRate = (decimal)2.5, SchoolLeasePaymentToDate = (decimal)2.5, SchoolLeaseResponsibleForAssets = "School", SchoolLeaseValueOfAssets = "5000", SchoolLeaseTerm = "36" },
-               new() { SchoolLeasePurpose = "Facility", SchoolLeaseRepaymentValue = 2000, SchoolLeaseInterestRate = (decimal)3.5, SchoolLeasePaymentToDate = (decimal)2.5, SchoolLeaseResponsibleForAssets = "Landlord", SchoolLeaseValueOfAssets = "10000", SchoolLeaseTerm = "48" },
+               new() { Purpose = "Equipment", RepaymentAmount = 1000, InterestRate = (decimal)2.5, PaymentsToDate = (decimal)2.5, ResponsibleForAssets = "School", ValueOfAssets = "5000", LeaseTerm = "36" },
+               new() { Purpose = "Facility", RepaymentAmount = 2000, InterestRate = (decimal)3.5, PaymentsToDate = (decimal)2.5, ResponsibleForAssets = "Landlord", ValueOfAssets = "10000", LeaseTerm = "48" },
             }
          };
-         var academiesApplicationSchool = new ApplyingSchool { SchoolLeases = new List<Lease>() };
+         var academiesApplicationSchool = new ApplyingSchool { SchoolLeases = new List<Dfe.PrepareConversions.Data.Models.Application.Lease>() };
 
          // Act
          PopulateSchoolLeases(academiesApplicationSchool, academisationApplicationSchool);

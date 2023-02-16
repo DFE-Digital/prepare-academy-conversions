@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace ApplyToBecome.Data.Models.AcademisationApplication
@@ -90,9 +91,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          academiesApplicationSchool.ProjectedPupilNumbersYear2 = academisationApplicationSchool.ProjectedPupilNumbersYear2;
          academiesApplicationSchool.ProjectedPupilNumbersYear3 = academisationApplicationSchool.ProjectedPupilNumbersYear3;
          academiesApplicationSchool.SchoolCapacityAssumptions = academisationApplicationSchool.SchoolCapacityAssumptions;
-         academiesApplicationSchool.SchoolCapacityPublishedAdmissionsNumber =
-            Convert.ToInt32(academisationApplicationSchool
-               .SchoolCapacityPublishedAdmissionNumber);
+         academiesApplicationSchool.SchoolCapacityPublishedAdmissionsNumber = academisationApplicationSchool.SchoolCapacityPublishedAdmissionsNumber;
       }
 
       public static void PopulateFinancialInvestigations(ApplyingSchool academiesApplicationSchool,
@@ -115,13 +114,13 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
             {
                var newLease = new Lease()
                {
-                  SchoolLeasePurpose = lease.SchoolLeasePurpose,
-                  SchoolLeaseRepaymentValue = lease.SchoolLeaseRepaymentValue,
-                  SchoolLeaseInterestRate = lease.SchoolLeaseInterestRate,
-                  SchoolLeasePaymentToDate = lease.SchoolLeasePaymentToDate,
-                  SchoolLeaseResponsibleForAssets = lease.SchoolLeaseResponsibleForAssets,
-                  SchoolLeaseValueOfAssets = lease.SchoolLeaseValueOfAssets,
-                  SchoolLeaseTerm = lease.SchoolLeaseTerm
+                  SchoolLeasePurpose = lease.Purpose,
+                  SchoolLeaseRepaymentValue = lease.RepaymentAmount,
+                  SchoolLeaseInterestRate = lease.InterestRate,
+                  SchoolLeasePaymentToDate = lease.PaymentsToDate,
+                  SchoolLeaseResponsibleForAssets = lease.ResponsibleForAssets,
+                  SchoolLeaseValueOfAssets = lease.ValueOfAssets,
+                  SchoolLeaseTerm = lease.LeaseTerm
                };
                academiesApplicationSchool.SchoolLeases.Add(newLease);
             }
@@ -137,11 +136,11 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
             {
                var newLoan = new Loan
                {
-                  SchoolLoanAmount = loan.SchoolLoanAmount,
-                  SchoolLoanPurpose = loan.SchoolLoanPurpose,
-                  SchoolLoanProvider = loan.SchoolLoanProvider,
-                  SchoolLoanInterestRate = loan.SchoolLoanInterestRate,
-                  SchoolLoanSchedule = loan.SchoolLoanSchedule
+                  SchoolLoanAmount = loan.Amount,
+                  SchoolLoanPurpose = loan.Purpose,
+                  SchoolLoanProvider = loan.Provider,
+                  SchoolLoanInterestRate = loan.InterestRate.ToString(CultureInfo.InvariantCulture),
+                  SchoolLoanSchedule = loan.Schedule
                };
                academiesApplicationSchool.SchoolLoans.Add(newLoan);
             }
@@ -290,6 +289,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          out School academisationApplicationSchool, out ApplyingSchool academiesApplicationSchool)
       {
          var academiesApplication = new Application();
+         academisationApplication!.Contributors ??= new List<Contributor>();
          academisationApplicationSchool = academisationApplication.Schools.FirstOrDefault();
          academiesApplication.ApplyingSchools = new List<ApplyingSchool>(){ new() };
          academiesApplicationSchool = academiesApplication.ApplyingSchools.FirstOrDefault();
@@ -299,7 +299,12 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          academiesApplication.ApplicationType = academisationApplication.ApplicationType;
          academiesApplication.ApplicationId =
             academisationApplication.ApplicationReference;
-         //academiesApplication.ApplicationLeadAuthorName = academisationApplication.Contributors (we have contributors on academisation but how do we know their the lead) // Paul L - awaiting confirmation
+         var academisationContributors = academisationApplication.Contributors.FirstOrDefault();
+         if (academisationContributors?.FirstName.IsNullOrEmpty() is false && academisationContributors.LastName.IsNullOrEmpty() is false)
+         {
+            academiesApplication.ApplicationLeadAuthorName =
+               academisationApplication.Contributors.FirstOrDefault()!.FirstName + " " + academisationApplication.Contributors.FirstOrDefault()!.LastName;
+         }
          academiesApplication.ChangesToTrust = academisationApplication.JoinTrustDetails.ChangesToTrust switch
          {
             "yes" => true,
