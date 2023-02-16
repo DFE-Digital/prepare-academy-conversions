@@ -4,6 +4,7 @@ using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.DocumentGeneration;
 using Dfe.PrepareConversions.DocumentGeneration.Elements;
+using Dfe.PrepareConversions.Utils;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -175,7 +176,8 @@ namespace Dfe.PrepareConversions.Pages.TaskList
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
 					},
-					new[]
+               KeyStageStatus(),
+               new[]
 					{
 						new TextElement(project.SchoolName) { Bold = true }, HtmlStringToTextElement(ks4Data.Attainment8Score),
 						HtmlStringToTextElement(ks4Data.Attainment8ScorePreviousYear), HtmlStringToTextElement(ks4Data.Attainment8ScoreTwoYearsAgo),
@@ -204,7 +206,8 @@ namespace Dfe.PrepareConversions.Pages.TaskList
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
 					},
-					new[]
+               KeyStageStatus(),
+               new[]
 					{
 						new TextElement(project.SchoolName) { Bold = true }, HtmlStringToTextElement(ks4Data.Attainment8ScoreEnglish),
 						HtmlStringToTextElement(ks4Data.Attainment8ScoreEnglishPreviousYear), HtmlStringToTextElement(ks4Data.Attainment8ScoreEnglishTwoYearsAgo)
@@ -234,7 +237,8 @@ namespace Dfe.PrepareConversions.Pages.TaskList
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
 					},
-					new[]
+               KeyStageStatus(),
+               new[]
 					{
 						new TextElement(project.SchoolName) { Bold = true }, HtmlStringToTextElement(ks4Data.Attainment8ScoreMaths),
 						HtmlStringToTextElement(ks4Data.Attainment8ScoreMathsPreviousYear), HtmlStringToTextElement(ks4Data.Attainment8ScoreMathsTwoYearsAgo),
@@ -263,7 +267,8 @@ namespace Dfe.PrepareConversions.Pages.TaskList
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
-					new[]
+               KeyStageStatus(),
+               new[]
 					{
 						new TextElement(project.SchoolName) { Bold = true }, HtmlStringToTextElement(ks4Data.Attainment8ScoreEbacc),
 						HtmlStringToTextElement(ks4Data.Attainment8ScoreEbaccPreviousYear), HtmlStringToTextElement(ks4Data.Attainment8ScoreEbaccTwoYearsAgo),
@@ -294,7 +299,8 @@ namespace Dfe.PrepareConversions.Pages.TaskList
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
-					new[]
+               KeyStageStatus(),
+               new[]
 					{
 						new TextElement(project.SchoolName) { Bold = true }, HtmlStringToTextElement(ks4Data.NumberOfPupilsProgress8),
 						HtmlStringToTextElement(ks4Data.NumberOfPupilsProgress8PreviousYear), HtmlStringToTextElement(ks4Data.NumberOfPupilsProgress8TwoYearsAgo),
@@ -324,7 +330,8 @@ namespace Dfe.PrepareConversions.Pages.TaskList
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
-					new[]
+               KeyStageStatus(),
+               new[]
 					{
 						new TextElement(project.SchoolName) { Bold = true }, HtmlStringToTextElement(ks4Data.Progress8Score),
 						HtmlStringToTextElement(ks4Data.Progress8ScorePreviousYear), HtmlStringToTextElement(ks4Data.Progress8ScoreTwoYearsAgo),
@@ -368,7 +375,8 @@ namespace Dfe.PrepareConversions.Pages.TaskList
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
-					new[]
+               KeyStageStatus(),
+               new[]
 					{
 						new TextElement(project.SchoolName) { Bold = true }, HtmlStringToTextElement(ks4Data.Progress8ScoreEnglish),
 						HtmlStringToTextElement(ks4Data.Progress8ScoreEnglishPreviousYear), HtmlStringToTextElement(ks4Data.Progress8ScoreEnglishTwoYearsAgo),
@@ -398,7 +406,8 @@ namespace Dfe.PrepareConversions.Pages.TaskList
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
-					new[]
+               KeyStageStatus(),
+               new[]
 					{
 						new TextElement(project.SchoolName) { Bold = true }, HtmlStringToTextElement(ks4Data.Progress8ScoreMaths),
 						HtmlStringToTextElement(ks4Data.Progress8ScoreMathsPreviousYear), HtmlStringToTextElement(ks4Data.Progress8ScoreMathsTwoYearsAgo),
@@ -427,7 +436,8 @@ namespace Dfe.PrepareConversions.Pages.TaskList
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
-					new[]
+               KeyStageStatus(),
+               new[]
 					{
 						new TextElement(project.SchoolName) { Bold = true }, HtmlStringToTextElement(ks4Data.Progress8ScoreEbacc),
 						HtmlStringToTextElement(ks4Data.Progress8ScoreEbaccPreviousYear), HtmlStringToTextElement(ks4Data.Progress8ScoreEbaccTwoYearsAgo),
@@ -456,7 +466,8 @@ namespace Dfe.PrepareConversions.Pages.TaskList
 						new TextElement(ks4Data.PreviousYear) { Bold = true },
 						new TextElement(ks4Data.TwoYearsAgo) { Bold = true },
 					},
-					new[]
+               KeyStageStatus(),
+               new[]
 					{
 						new TextElement(project.SchoolName) { Bold = true },
 						new TextElement(ks4Data.PercentageEnteringEbacc),
@@ -607,5 +618,14 @@ namespace Dfe.PrepareConversions.Pages.TaskList
 		{
 			return new TextElement(str.Value.Replace("<br>", "\n"));
 		}
-	}
+      private static TextElement[] KeyStageStatus()
+      {
+         return new[]
+         {
+            new TextElement("Status") { Bold = true }, new TextElement(KeyStage4DataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now)) { Bold = true },
+            new TextElement(KeyStage4DataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now.AddYears(-1))) { Bold = true },
+            new TextElement(KeyStage4DataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now.AddYears(-2))) { Bold = true }
+         };
+      }
+   }
 }

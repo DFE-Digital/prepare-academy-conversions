@@ -21,21 +21,27 @@ namespace Dfe.PrepareConversions.Tests.TagHelpers
       [Theory, MemberData(nameof(ProvisionalDates))]
       public void Should_return_provisional_status_on_relevant_months(DateTime date)
       {
-         var result = KeyStage4DataStatusHelper.KeyStageDataTag(date);
-         result.Should().Contain("grey").And.Contain("Provisional");
+         var resultingHtml = KeyStage4DataStatusHelper.KeyStageDataTag(date);
+         var result = KeyStage4DataStatusHelper.DetermineKeyStageDataStatus(date);
+         resultingHtml.Should().Contain("grey").And.Contain("Provisional");
+         result.Should().Be("Provisional");
       }
 
       [Theory, MemberData(nameof(RevisedDates))]
       public void Should_return_revised_status_on_relevant_months(DateTime date)
       {
-         var result = KeyStage4DataStatusHelper.KeyStageDataTag(date);
-         result.Should().Contain("orange").And.Contain("Revised");
+         var resultingHtml = KeyStage4DataStatusHelper.KeyStageDataTag(date);
+         var result = KeyStage4DataStatusHelper.DetermineKeyStageDataStatus(date);
+         resultingHtml.Should().Contain("orange").And.Contain("Revised");
+         result.Should().Be("Revised");
       }
       [Theory, MemberData(nameof(FinalDates))]
       public void Should_return_final_status_on_relevant_months(DateTime date)
       {
-         var result = KeyStage4DataStatusHelper.KeyStageDataTag(date);
-         result.Should().Contain("green").And.Contain("Final");
+         var resultingHtml = KeyStage4DataStatusHelper.KeyStageDataTag(date);
+         var result = KeyStage4DataStatusHelper.DetermineKeyStageDataStatus(date);
+         resultingHtml.Should().Contain("green").And.Contain("Final");
+         result.Should().Be("Final");
       }
       public static IEnumerable<object[]> ProvisionalDates()
       {
