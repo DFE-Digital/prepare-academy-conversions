@@ -1,8 +1,8 @@
-﻿using Dfe.PrepareConversions.Data.Models;
+﻿using System;
 
 namespace Dfe.PrepareConversions.ViewModels
 {
-	public class ProjectListViewModel
+   public class ProjectListViewModel
 	{
 		public string Id { get; set; }
 		public string NameOfTrust { get; set; }
@@ -15,14 +15,15 @@ namespace Dfe.PrepareConversions.ViewModels
 		public string ProposedAcademyOpeningDate { get; set; }
 		public ProjectStatus Status { get; set; }
 		public string AssignedUserFullName { get; set; }
+		public DateTime? CreatedOn { get; set; }
 	}
 
 	public class ProjectStatus
-	{				
+	{
 		public ProjectStatus(string value, string colour)
 		{
 			Value = value;
-			Colour = colour;	
+			Colour = colour;
 		}
 		public string Value { get; set; }
 		public string Colour { get; set; }

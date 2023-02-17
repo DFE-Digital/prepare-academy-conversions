@@ -76,7 +76,8 @@ namespace Dfe.PrepareConversions.Pages.ProjectList
 				HeadTeacherBoardDate = academyConversionProject.HeadTeacherBoardDate.ToDateString(),
 				ProposedAcademyOpeningDate = academyConversionProject.ProposedAcademyOpeningDate.ToDateString(),
 				Status = MapProjectStatus(academyConversionProject.ProjectStatus),
-				AssignedUserFullName = academyConversionProject?.AssignedUser?.FullName
+				AssignedUserFullName = academyConversionProject?.AssignedUser?.FullName,
+				CreatedOn = academyConversionProject.CreatedOn
 			};
 		}
 
