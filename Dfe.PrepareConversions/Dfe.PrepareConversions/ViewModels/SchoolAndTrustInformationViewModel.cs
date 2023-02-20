@@ -20,8 +20,10 @@
 		public string SponsorName { get; set; }
 		public string AcademyTypeAndRoute { get; set; }
 		public string Form7Received { get; set; }
+		public string Form7ReceivedDate { get; set; }
 		public string ProposedAcademyOpeningDate { get; set; }
 		public string ConversionSupportGrantAmount { get; set; }
 		public string ConversionSupportGrantChangeReason { get; set; }
-	}
+      public bool IsDao { get; set; }
+   }
 }

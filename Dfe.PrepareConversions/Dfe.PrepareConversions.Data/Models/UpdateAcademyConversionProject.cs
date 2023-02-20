@@ -24,7 +24,9 @@ namespace Dfe.PrepareConversions.Data.Models
 		public string Author { get; set; }
 		public string ClearedBy { get; set; }
 		public string AcademyOrderRequired { get; set; }
-		public DateTime? ProposedAcademyOpeningDate { get; set; }
+		public string Form7Received { get; set; }
+      public DateTime? Form7ReceivedDate { get; set; }
+      public DateTime? ProposedAcademyOpeningDate { get; set; }
 		public bool? SchoolAndTrustInformationSectionComplete { get; set; }
 		public string PreviousHeadTeacherBoardDateQuestion { get; set; }
 		public DateTime? PreviousHeadTeacherBoardDate { get; set; }
@@ -81,5 +83,5 @@ namespace Dfe.PrepareConversions.Data.Models
 
 		// assigned user
 		public User AssignedUser { get; set; }
-	}
+   }
 }

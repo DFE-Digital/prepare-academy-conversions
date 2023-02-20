@@ -46,13 +46,17 @@ namespace Dfe.PrepareConversions.ViewComponents
 				SponsorReferenceNumber = project.SponsorReferenceNumber ?? "Not applicable",
 				SponsorName = project.SponsorName ?? "Not applicable",
 				AcademyTypeAndRoute = project.AcademyTypeAndRoute,
-				Form7Received = (project.Form7Received ?? false) ? "Yes" : "No",
-				ConversionSupportGrantAmount = project.ConversionSupportGrantAmount?.ToMoneyString(true),
+				Form7Received = project.Form7Received,
+				Form7ReceivedDate = project.Form7ReceivedDate.ToDateString(),
+            ConversionSupportGrantAmount = project.ConversionSupportGrantAmount?.ToMoneyString(true),
 				ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
 				ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(true)
 			};
-
-			return View(viewModel);
+         if (project.ApplicationReceivedDate.HasValue is false)
+         {
+            viewModel.IsDao = true;
+         }
+         return View(viewModel);
 		}
 	}
 }

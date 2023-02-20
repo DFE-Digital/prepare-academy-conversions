@@ -90,6 +90,8 @@ namespace Dfe.PrepareConversions.Pages
 				Author = AcademyConversionProject.Author,
 				ClearedBy = AcademyConversionProject.ClearedBy,
 				AcademyOrderRequired = AcademyConversionProject.AcademyOrderRequired,
+				Form7Received = AcademyConversionProject.Form7Received,
+				Form7ReceivedDate = AcademyConversionProject.Form7ReceivedDate,
 				ProposedAcademyOpeningDate = AcademyConversionProject.ProposedAcademyOpeningDate,
 				PreviousHeadTeacherBoardDateQuestion = AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion,
 				PreviousHeadTeacherBoardDate = AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion == "No" ? default(DateTime) : AcademyConversionProject.PreviousHeadTeacherBoardDate,

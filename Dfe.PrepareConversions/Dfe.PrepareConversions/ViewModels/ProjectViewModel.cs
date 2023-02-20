@@ -38,6 +38,8 @@ public class ProjectViewModel
       SponsorReferenceNumber = project.SponsorReferenceNumber;
       SponsorName = project.SponsorName;
       AcademyTypeAndRoute = project.AcademyTypeAndRoute;
+      Form7Received = project.Form7Received;
+      Form7ReceivedDate = project.Form7ReceivedDate;
       ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate;
       SchoolAndTrustInformationSectionComplete = project.SchoolAndTrustInformationSectionComplete ?? false;
       ConversionSupportGrantAmount = project.ConversionSupportGrantAmount ?? 0;
@@ -96,7 +98,6 @@ public class ProjectViewModel
       Notes = project.Notes;
    }
 
-
    public string Id { get; }
    public string ApplicationReferenceNumber { get; set; }
    public string SchoolName { get; }
@@ -119,6 +120,8 @@ public class ProjectViewModel
    public string Version { get; set; }
    public string ClearedBy { get; set; }
    public string AcademyOrderRequired { get; set; }
+   public string Form7Received { get; set; }
+   public DateTime? Form7ReceivedDate { get; set; }
    public string PreviousHeadTeacherBoardDateQuestion { get; set; }
    public DateTime? PreviousHeadTeacherBoardDate { get; set; }
    public string PreviousHeadTeacherBoardLink { get; set; }
