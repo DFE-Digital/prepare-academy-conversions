@@ -46,6 +46,7 @@ namespace Dfe.PrepareConversions.ViewComponents
 				SponsorReferenceNumber = project.SponsorReferenceNumber ?? "Not applicable",
 				SponsorName = project.SponsorName ?? "Not applicable",
 				AcademyTypeAndRoute = project.AcademyTypeAndRoute,
+				Form7Received = (project.Form7Received ?? false) ? "Yes" : "No",
 				ConversionSupportGrantAmount = project.ConversionSupportGrantAmount?.ToMoneyString(true),
 				ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
 				ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(true)

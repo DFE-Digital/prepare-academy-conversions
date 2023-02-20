@@ -76,6 +76,7 @@ namespace Dfe.PrepareConversions.Models
 			public static readonly LinkItem HeadTeacherBoardDate = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/AdvisoryBoardDate");
 			public static readonly LinkItem PreviousHeadTeacherBoardDateQuestion = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/PreviousAdvisoryBoard");
 			public static readonly LinkItem PreviousHeadTeacherBoardDate = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/PreviousAdvisoryBoardDate");
+			public static readonly LinkItem Form7 = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Form7");
 			public static readonly LinkItem ProposedAcademyOpeningDate = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/ProposedAcademyOpeningDate");
 			public static readonly LinkItem RouteAndGrant = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/RouteAndGrant");
 		}
