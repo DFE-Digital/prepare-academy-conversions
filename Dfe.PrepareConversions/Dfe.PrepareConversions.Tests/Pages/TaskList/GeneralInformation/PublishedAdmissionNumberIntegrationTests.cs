@@ -23,7 +23,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
          });
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");
-			await NavigateAsync("Change", 0);
+			await NavigateAsync("Change", 0); 
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
 			Document.QuerySelector<IHtmlInputElement>("#published-admission-number").Value.Should().Be(project.PublishedAdmissionNumber);
