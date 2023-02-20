@@ -12,6 +12,8 @@ using Moq;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -27,14 +29,14 @@ namespace Dfe.PrepareConversions.Tests
    {
       private static int _currentPort = 5080;
       private static readonly object Sync = new();
+      private static readonly IPEndPoint DefaultLoopbackEndpoint = new IPEndPoint(IPAddress.Loopback, port: 0);
 
       private readonly WireMockServer _mockApiServer;
-      private readonly int _port;
 
       public IntegrationTestingWebApplicationFactory()
       {
-         _port = AllocateNext();
-         _mockApiServer = WireMockServer.Start(_port);
+         int port = GetAvailablePort();
+         _mockApiServer = WireMockServer.Start(port);
       }
 
       protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -203,13 +205,13 @@ namespace Dfe.PrepareConversions.Tests
          _mockApiServer.Reset();
       }
 
-      private static int AllocateNext()
+      private static int GetAvailablePort()
       {
          lock (Sync)
          {
-            var next = _currentPort;
-            _currentPort++;
-            return next;
+            using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socket.Bind(DefaultLoopbackEndpoint);
+            return ((IPEndPoint)socket.LocalEndPoint)!.Port;
          }
       }
 
