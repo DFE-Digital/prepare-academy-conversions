@@ -8,7 +8,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Public
 {
 	public class CookiePreferencesIntegrationTests : BaseIntegrationTests
 	{
-		public CookiePreferencesIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public CookiePreferencesIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{
 		}
 

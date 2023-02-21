@@ -10,7 +10,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 {
 	public class WhoDecidedIntegrationTests : BaseIntegrationTests
 	{
-		public WhoDecidedIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public WhoDecidedIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{
 		}
 

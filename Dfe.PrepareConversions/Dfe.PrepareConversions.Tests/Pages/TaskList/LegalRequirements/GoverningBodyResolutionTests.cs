@@ -12,7 +12,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.LegalRequirements
 	public class GoverningBodyResolutionTests : LegalRequirementsPageTestBase
 	{
 		protected LegalRequirementsTestWizard Wizard;
-		public GoverningBodyResolutionTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public GoverningBodyResolutionTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{
 			Wizard = new LegalRequirementsTestWizard(Context);
 		}

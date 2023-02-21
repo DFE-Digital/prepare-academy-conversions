@@ -11,7 +11,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolPupilForecasts
 {
 	public class ConfirmSchoolPupilForecastsIntegrationTests : BaseIntegrationTests
 	{
-		public ConfirmSchoolPupilForecastsIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ConfirmSchoolPupilForecastsIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_be_reference_only_and_display_school_pupil_forecasts_table()

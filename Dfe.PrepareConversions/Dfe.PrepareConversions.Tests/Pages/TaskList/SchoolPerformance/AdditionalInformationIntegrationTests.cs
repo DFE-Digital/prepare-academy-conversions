@@ -9,7 +9,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolPerformance
 {
 	public class AdditionalInformationIntegrationTests : BaseIntegrationTests
 	{
-		public AdditionalInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public AdditionalInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_additional_information()

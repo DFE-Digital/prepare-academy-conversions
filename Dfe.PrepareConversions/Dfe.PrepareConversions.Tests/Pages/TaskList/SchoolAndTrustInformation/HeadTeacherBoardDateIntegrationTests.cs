@@ -11,7 +11,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 {
 	public class HeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
 	{
-		public HeadTeacherBoardDateIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) 
+		public HeadTeacherBoardDateIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) 
 		{
 			_fixture.Customizations.Add(new RandomDateBuilder(DateTime.Now.AddDays(1), DateTime.Now.AddMonths(12)));
 		}

@@ -10,7 +10,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectList
 {
 	public class ProjectListIntegrationTests : BaseIntegrationTests
 	{
-		public ProjectListIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ProjectListIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_display_list_of_projects_and_navigate_to_and_from_task_list()

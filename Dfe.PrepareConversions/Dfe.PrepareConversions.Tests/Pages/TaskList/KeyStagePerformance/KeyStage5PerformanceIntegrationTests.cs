@@ -12,7 +12,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.KeyStagePerformance
 {
 	public class KeyStage5PerformanceIntegrationTests : BaseIntegrationTests
 	{
-		public KeyStage5PerformanceIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public KeyStage5PerformanceIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_be_reference_only_and_display_KS5_data()

@@ -10,7 +10,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 {
 	public class SearchSchoolIntegrationTests : BaseIntegrationTests
 	{
-		public SearchSchoolIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public SearchSchoolIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{
 		}
 

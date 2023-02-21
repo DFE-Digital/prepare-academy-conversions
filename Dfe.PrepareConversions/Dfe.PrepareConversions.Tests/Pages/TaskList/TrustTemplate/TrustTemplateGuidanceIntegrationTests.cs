@@ -6,7 +6,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.TrustTemplate
 {
 	public class TrustTemplateGuidanceIntegrationTests : BaseIntegrationTests
 	{
-		public TrustTemplateGuidanceIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public TrustTemplateGuidanceIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_navigate_between_trust_template_guidance_and_task_list()

@@ -9,7 +9,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 {
 	public class AuthorIntegrationTests : BaseIntegrationTests
 	{
-		public AuthorIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public AuthorIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_author()

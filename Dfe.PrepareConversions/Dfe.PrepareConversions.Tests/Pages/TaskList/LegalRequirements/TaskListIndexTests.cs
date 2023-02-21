@@ -12,7 +12,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.LegalRequirements
 	public class TaskListIndexTests : LegalRequirementsPageTestBase
 	{
 		protected LegalRequirementsTestWizard Wizard;
-		public TaskListIndexTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public TaskListIndexTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{
 			Wizard = new LegalRequirementsTestWizard(Context);
 		}

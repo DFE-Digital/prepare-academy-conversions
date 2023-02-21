@@ -33,7 +33,7 @@ namespace Dfe.PrepareConversions.Tests
 
       public IntegrationTestingWebApplicationFactory()
       {
-         _port = AllocateNext();
+         _port = _currentPort;
          _mockApiServer = WireMockServer.Start(_port);
       }
 

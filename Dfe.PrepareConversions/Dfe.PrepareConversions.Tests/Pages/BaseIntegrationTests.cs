@@ -1,4 +1,6 @@
-﻿using AngleSharp;
+﻿global using Xunit.Abstractions;
+
+using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Io;
@@ -13,18 +15,21 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 using Moq;
+using Xunit.Abstractions;
 
 namespace Dfe.PrepareConversions.Tests.Pages
 {
 	public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTestingWebApplicationFactory>, IDisposable
 	{
 		protected readonly IntegrationTestingWebApplicationFactory _factory;
-		protected readonly Fixture _fixture;
+      private readonly ITestOutputHelper _output;
+      protected readonly Fixture _fixture;
 		private readonly PathFor _pathFor;
 
-		protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory)
+		protected BaseIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output)
 		{
 			_factory = factory;
+         _output = output;
          _fixture = new Fixture();
 
          var featureManager = new Mock<IFeatureManager>();
@@ -42,6 +47,11 @@ namespace Dfe.PrepareConversions.Tests.Pages
 
 		public async Task<IDocument> NavigateAsync(string linkText, int? index = null)
 		{
+         _output.WriteLine($"********** DEBUG **********");
+         _output.WriteLine($"navigating to {linkText}, index {index}");
+         _output.WriteLine($"the current url is - {Document.Url}");
+         _output.WriteLine(Document.Body.Text());
+            
 			var anchors = Document.QuerySelectorAll("a");
 			var link = (index == null
 					? anchors.Single(a => a.TextContent.Contains(linkText))

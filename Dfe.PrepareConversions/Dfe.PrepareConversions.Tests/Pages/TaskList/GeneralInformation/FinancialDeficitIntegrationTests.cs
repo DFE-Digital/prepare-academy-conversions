@@ -8,7 +8,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 {
 	public class FinancialDeficitIntegrationTests : BaseIntegrationTests
 	{
-		public FinancialDeficitIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public FinancialDeficitIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_financial_deficit()

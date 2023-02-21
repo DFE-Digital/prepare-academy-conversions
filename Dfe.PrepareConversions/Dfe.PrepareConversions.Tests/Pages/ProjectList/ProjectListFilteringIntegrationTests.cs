@@ -14,7 +14,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectList
 	{
 		private int _recordCount;
 
-		public ProjectListFilteringIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public ProjectListFilteringIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{
 		}
 

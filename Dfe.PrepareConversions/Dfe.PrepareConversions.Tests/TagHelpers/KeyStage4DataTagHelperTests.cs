@@ -14,7 +14,7 @@ namespace Dfe.PrepareConversions.Tests.TagHelpers
    public class KeyStage4DataTagHelperTests : BaseIntegrationTests
    {
       public DateTime _currentDate = DateTime.Now;
-      public KeyStage4DataTagHelperTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+      public KeyStage4DataTagHelperTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
       {
       }
 

@@ -9,7 +9,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 {
 	public class PublishedAdmissionNumberIntegrationTests : BaseIntegrationTests
 	{
-		public PublishedAdmissionNumberIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public PublishedAdmissionNumberIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_published_admission_number()

@@ -10,7 +10,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
 {
 	public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTests
 	{
-		public ConfirmSchoolBudgetInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ConfirmSchoolBudgetInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_be_in_progress_and_display_school_budget_information()

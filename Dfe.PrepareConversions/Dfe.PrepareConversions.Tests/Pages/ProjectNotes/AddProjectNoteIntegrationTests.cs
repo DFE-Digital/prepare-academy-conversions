@@ -13,7 +13,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectNotes
 {
 	public class AddProjectNoteIntegrationTests : BaseIntegrationTests
 	{
-		public AddProjectNoteIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public AddProjectNoteIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_navigate_to_add_note_from_project_notes_and_back_to_project_notes()

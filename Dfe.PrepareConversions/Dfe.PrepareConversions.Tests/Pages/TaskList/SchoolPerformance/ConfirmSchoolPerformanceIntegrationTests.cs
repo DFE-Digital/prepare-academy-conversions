@@ -8,7 +8,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolPerformance
 {
 	public class ConfirmSchoolPerformanceIntegrationTests : BaseIntegrationTests
 	{
-		public ConfirmSchoolPerformanceIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ConfirmSchoolPerformanceIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_be_reference_only_and_display_school_performance()

@@ -8,7 +8,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Rationale
 {
 	public class ConfirmProjectAndTrustRationaleIntegrationTests : BaseIntegrationTests
 	{
-		public ConfirmProjectAndTrustRationaleIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ConfirmProjectAndTrustRationaleIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_be_in_progress_and_display_rationale_when_rationale_populated()

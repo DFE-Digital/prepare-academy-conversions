@@ -8,7 +8,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 {
 	public class AcademyOrderRequiredIntegrationTests : BaseIntegrationTests
 	{
-		public AcademyOrderRequiredIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public AcademyOrderRequiredIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_academy_order_required()

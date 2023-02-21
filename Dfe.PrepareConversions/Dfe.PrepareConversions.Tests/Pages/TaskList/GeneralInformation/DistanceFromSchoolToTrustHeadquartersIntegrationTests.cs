@@ -9,7 +9,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 {
 	public class DistanceFromTrustHeadquartersIntegrationTests : BaseIntegrationTests
 	{
-		public DistanceFromTrustHeadquartersIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public DistanceFromTrustHeadquartersIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_distance_to_trust_headquarters()

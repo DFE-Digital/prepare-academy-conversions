@@ -16,7 +16,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList
 		private AcademyConversionProject _project;
 		private RecordDecisionWizard _wizard;
 
-		public IndexIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public IndexIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{
 		}
 

@@ -9,7 +9,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Rationale
 {
 	public class RationaleForProjectIntegrationTests : BaseIntegrationTests
 	{
-		public RationaleForProjectIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public RationaleForProjectIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_display_rationale_for_project()

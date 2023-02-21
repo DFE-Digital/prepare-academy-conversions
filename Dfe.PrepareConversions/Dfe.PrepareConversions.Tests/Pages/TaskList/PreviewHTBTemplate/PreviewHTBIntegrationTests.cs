@@ -17,7 +17,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 {
 	public class PreviewHTBIntegrationTests : BaseIntegrationTests
 	{
-		public PreviewHTBIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public PreviewHTBIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{
 			_fixture.Customizations.Add(new RandomDateBuilder(DateTime.Now.AddMonths(-2), DateTime.Now.AddDays(-1)));
 		}

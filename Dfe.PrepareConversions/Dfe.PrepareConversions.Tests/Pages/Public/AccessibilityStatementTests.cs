@@ -8,7 +8,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Public
 {
 	public class AccessibilityStatementTests : BaseIntegrationTests
 	{
-		public AccessibilityStatementTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public AccessibilityStatementTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{
 		}
 

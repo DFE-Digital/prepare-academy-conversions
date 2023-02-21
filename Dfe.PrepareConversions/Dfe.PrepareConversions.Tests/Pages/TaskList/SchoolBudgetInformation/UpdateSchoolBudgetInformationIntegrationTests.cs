@@ -10,7 +10,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
 {
 	public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTests
 	{
-		public UpdateSchoolBudgetInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public UpdateSchoolBudgetInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_school_budget_information()

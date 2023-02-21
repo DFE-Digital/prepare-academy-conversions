@@ -9,7 +9,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Rationale
 {
 	public class RationaleForTrustIntegrationTests : BaseIntegrationTests
 	{
-		public RationaleForTrustIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public RationaleForTrustIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_rationale_for_trust()

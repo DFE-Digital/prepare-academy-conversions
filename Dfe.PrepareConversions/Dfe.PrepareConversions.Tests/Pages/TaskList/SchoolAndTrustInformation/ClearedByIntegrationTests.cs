@@ -9,7 +9,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 {
 	public class ClearedByIntegrationTests : BaseIntegrationTests
 	{
-		public ClearedByIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ClearedByIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_cleared_by()

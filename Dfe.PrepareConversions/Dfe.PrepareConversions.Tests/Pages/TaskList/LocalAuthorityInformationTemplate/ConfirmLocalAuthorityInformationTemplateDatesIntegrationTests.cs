@@ -11,7 +11,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.LocalAuthorityInformationTemplate
 {
 	public class ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests : BaseIntegrationTests
 	{
-		public ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{
 			_fixture.Customizations.Add(new RandomDateBuilder(DateTime.Now.AddMonths(-24), DateTime.Now.AddMonths(6)));
 		}

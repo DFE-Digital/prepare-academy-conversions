@@ -9,7 +9,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectType
 {
 	public class ProjectTypeIntegrationTests : BaseIntegrationTests
 	{
-		public ProjectTypeIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ProjectTypeIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 
 		[Fact]

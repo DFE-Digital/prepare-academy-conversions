@@ -8,7 +8,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 {
 	public class ProjectRecommendationIntegrationTests : BaseIntegrationTests
 	{
-		public ProjectRecommendationIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ProjectRecommendationIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_project_recommendation()

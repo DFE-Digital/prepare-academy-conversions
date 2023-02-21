@@ -13,7 +13,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectAssignment
 {
 	public class ProjectAssignmentIntegrationTests : BaseIntegrationTests
 	{
-		public ProjectAssignmentIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public ProjectAssignmentIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{			
 		}
 

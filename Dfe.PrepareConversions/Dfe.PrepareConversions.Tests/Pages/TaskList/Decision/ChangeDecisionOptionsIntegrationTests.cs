@@ -15,7 +15,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 		private AcademyConversionProject _project;
 		private RecordDecisionWizard _wizard;
 
-		public ChangeDecisionOptionsIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public ChangeDecisionOptionsIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{
 		}
 

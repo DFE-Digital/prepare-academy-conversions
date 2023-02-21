@@ -11,7 +11,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.KeyStagePerformance
 	{
 		public class KeyStage2PerformanceAdditionalInformationIntegrationTests : BaseIntegrationTests
 		{
-			public KeyStage2PerformanceAdditionalInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+			public KeyStage2PerformanceAdditionalInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 			[Fact]
 			public async Task Should_navigate_to_and_update_additional_information()

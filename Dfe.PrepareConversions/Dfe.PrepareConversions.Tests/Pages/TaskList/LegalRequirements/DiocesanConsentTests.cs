@@ -12,7 +12,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.LegalRequirements
 	public class DiocesanConsentTests : LegalRequirementsPageTestBase
 	{
 		protected LegalRequirementsTestWizard Wizard;
-		public DiocesanConsentTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public DiocesanConsentTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{
 			Wizard = new LegalRequirementsTestWizard(Context);
 		}

@@ -17,7 +17,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 		private string PageHeading => Document.QuerySelector("h1").TextContent.Trim();
 		private IElement ErrorSummary => Document.QuerySelector(".govuk-error-summary");
 
-		public WhyDeferredIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public WhyDeferredIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{
 		}
 

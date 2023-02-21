@@ -9,7 +9,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.LegalRequirements.Support
 	{
 		protected AcademyConversionProject Project;
 
-		protected LegalRequirementsPageTestBase(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		protected LegalRequirementsPageTestBase(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{
 		}
 

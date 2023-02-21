@@ -10,7 +10,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 {
 	public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationTests
 	{
-		public ConfirmSchoolAndTrustInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ConfirmSchoolAndTrustInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_be_in_progress_and_display_school_and_trust_information()

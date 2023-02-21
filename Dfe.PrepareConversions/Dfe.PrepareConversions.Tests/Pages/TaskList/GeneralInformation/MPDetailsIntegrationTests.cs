@@ -11,7 +11,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 {
 	public class MPDetailsIntegrationTests : BaseIntegrationTests
 	{
-		public MPDetailsIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public MPDetailsIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_display_MP_Name_and_Party()

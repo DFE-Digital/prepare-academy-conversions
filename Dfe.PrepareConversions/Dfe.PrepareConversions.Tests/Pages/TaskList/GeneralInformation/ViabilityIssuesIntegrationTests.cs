@@ -8,7 +8,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 {
 	public class ViabilityIssuesIntegrationTests : BaseIntegrationTests
 	{
-		public ViabilityIssuesIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ViabilityIssuesIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_viability_issues()

@@ -9,7 +9,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.RisksAndIssues
 {
 	public class RisksAndIssuesIntegrationTests : BaseIntegrationTests
 	{
-		public RisksAndIssuesIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public RisksAndIssuesIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_risks_and_issues()

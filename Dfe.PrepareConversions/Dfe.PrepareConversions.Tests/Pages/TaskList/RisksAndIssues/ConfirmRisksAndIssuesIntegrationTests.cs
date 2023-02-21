@@ -8,7 +8,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.RisksAndIssues
 {
 	public class ConfirmRisksAndIssuesIntegrationTests : BaseIntegrationTests
 	{
-		public ConfirmRisksAndIssuesIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public ConfirmRisksAndIssuesIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_be_in_progress_and_display_risks_and_issues()

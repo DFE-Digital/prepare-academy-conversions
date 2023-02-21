@@ -7,7 +7,7 @@ namespace Dfe.PrepareConversions.Tests.Pages
 {
 	public class BasicTests : BaseIntegrationTests
 	{
-		public BasicTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public BasicTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Theory]
 		[InlineData("/project-list")]

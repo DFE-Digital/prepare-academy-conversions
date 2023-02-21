@@ -13,7 +13,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 	{
 		private AcademyConversionProject _project;
 
-		public ApplicationFormIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public ApplicationFormIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{
       }
 		private void AddProjectWithFullApplicationForm()

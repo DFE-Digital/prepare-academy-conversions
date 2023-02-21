@@ -9,7 +9,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolAndTrustInformation
 {
 	public class AcademyTypeAndRouteIntegrationTests : BaseIntegrationTests
 	{
-		public AcademyTypeAndRouteIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+		public AcademyTypeAndRouteIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_conversion_support_grant_amount()

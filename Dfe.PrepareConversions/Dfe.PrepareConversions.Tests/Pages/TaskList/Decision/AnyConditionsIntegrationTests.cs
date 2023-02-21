@@ -15,7 +15,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 		private RecordDecisionWizard _wizard;
 
 
-		public AnyConditionsIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+		public AnyConditionsIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output)
 		{
 		}
 
