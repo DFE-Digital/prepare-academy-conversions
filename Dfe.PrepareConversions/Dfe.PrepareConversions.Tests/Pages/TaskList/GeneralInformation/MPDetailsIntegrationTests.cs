@@ -63,7 +63,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 
 		[Fact]
 		public async Task Should_navigate_to_and_update_mp_name_and_party()
-		{
+		{ 
 			var project = AddGetProject();
 			AddGetEstablishmentResponse(project.Urn.ToString());
          var request = AddPatchProjectMany(project, composer =>
