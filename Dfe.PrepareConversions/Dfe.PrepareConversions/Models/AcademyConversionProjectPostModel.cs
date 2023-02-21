@@ -74,6 +74,12 @@ namespace Dfe.PrepareConversions.Models
 		[Required]
 		[Display(Name = "Previous advisory board")]
 		public DateTime? PreviousHeadTeacherBoardDate { get; set; }
+
+      [ModelBinder(BinderType = typeof(DateInputModelBinder))]
+      [DateValidation(DateRangeValidationService.DateRange.Past)]
+      [BindProperty(Name = "dao-pack-send-date")]
+      [Display(Name = "DAO pack sent")]
+      public DateTime? DaoPackSendDate { get; set; }
 		
 		//general info
 

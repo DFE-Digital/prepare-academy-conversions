@@ -41,6 +41,7 @@ namespace Dfe.PrepareConversions.Data.Models
 		public bool? SchoolAndTrustInformationSectionComplete { get; set; }
 		public decimal? ConversionSupportGrantAmount { get; set; }
 		public string ConversionSupportGrantChangeReason { get; set; }
+      public DateTime? DaoPackSendDate { get; set; }
 
 		//general info
 		public string PublishedAdmissionNumber { get; set; }

@@ -42,6 +42,7 @@ public class ProjectViewModel
       SchoolAndTrustInformationSectionComplete = project.SchoolAndTrustInformationSectionComplete ?? false;
       ConversionSupportGrantAmount = project.ConversionSupportGrantAmount ?? 0;
       ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason;
+      DaoPackSendDate = project.DaoPackSendDate;
 
       PublishedAdmissionNumber = project.PublishedAdmissionNumber;
       ViabilityIssues = project.ViabilityIssues;
@@ -131,6 +132,7 @@ public class ProjectViewModel
    public bool SchoolAndTrustInformationSectionComplete { get; set; }
    public decimal ConversionSupportGrantAmount { get; set; }
    public string ConversionSupportGrantChangeReason { get; set; }
+   public DateTime? DaoPackSendDate { get; set; }
 
    //general info
    public string PublishedAdmissionNumber { get; set; }

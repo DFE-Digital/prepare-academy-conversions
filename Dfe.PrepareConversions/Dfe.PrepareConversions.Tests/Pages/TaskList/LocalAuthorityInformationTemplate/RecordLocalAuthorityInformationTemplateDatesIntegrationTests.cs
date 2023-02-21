@@ -116,7 +116,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.LocalAuthorityInformationTemplate
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			Document.QuerySelector(".govuk-error-summary").InnerHtml.Should().Contain("There is a problem with TRAMS");
+			Document.QuerySelector(".govuk-error-summary").InnerHtml.Should().Contain("There is a system problem");
 		}
 
 		[Fact]

@@ -1,0 +1,22 @@
+﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/dao-pack-sent-date"
+@model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
+@{
+	Layout = "_QuestionLayout";
+	Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
+	ViewData["Title"] = "Academy order required";
+	ViewData["SchoolName"] = Model.Project.SchoolName;
+	ViewData["ProjectId"] = Model.Project.Id;
+}
+
+@section BeforeMain
+{
+	<govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation" />
+}
+
+<h1 class="govuk-label-wrapper">
+   <label class="govuk-label govuk-label--l" for="dao-pack-send-date">
+      Date you sent the directive academy order (DAO) pack to the school
+   </label>
+</h1>
+
+<govuk-date-input heading-label="false" id="dao-pack-send-date" name="dao-pack-send-date" asp-for="Project.DaoPackSendDate" hint="For example, 27 3 2021" />

@@ -59,7 +59,7 @@ namespace Dfe.PrepareConversions.Pages
 
 			if (!response.Success)
 			{
-				_errorService.AddTramsError();
+				_errorService.AddApiError();
 				return Page();
 			}
 
@@ -125,8 +125,9 @@ namespace Dfe.PrepareConversions.Pages
 				SchoolPupilForecastsAdditionalInformation = AcademyConversionProject.SchoolPupilForecastsAdditionalInformation,
 				KeyStage2PerformanceAdditionalInformation = AcademyConversionProject.KeyStage2PerformanceAdditionalInformation,
 				KeyStage4PerformanceAdditionalInformation = AcademyConversionProject.KeyStage4PerformanceAdditionalInformation,
-				KeyStage5PerformanceAdditionalInformation = AcademyConversionProject.KeyStage5PerformanceAdditionalInformation
-			};
+				KeyStage5PerformanceAdditionalInformation = AcademyConversionProject.KeyStage5PerformanceAdditionalInformation,
+            DaoPackSentDate = AcademyConversionProject.DaoPackSendDate
+         };
 		}
 
 		private (string, string) GetReturnPageAndFragment()

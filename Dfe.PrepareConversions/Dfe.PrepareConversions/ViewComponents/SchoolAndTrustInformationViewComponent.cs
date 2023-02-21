@@ -30,7 +30,8 @@ namespace Dfe.PrepareConversions.ViewComponents
 
 			var viewModel = new SchoolAndTrustInformationViewModel
 			{
-				Id = project.Id.ToString(),
+            Id = project.Id.ToString(),
+            IsDao = project.ApplicationReceivedDate is null,
 				RecommendationForProject = project.RecommendationForProject,
 				Author = project.Author,
 				ClearedBy = project.ClearedBy,
@@ -48,7 +49,8 @@ namespace Dfe.PrepareConversions.ViewComponents
 				AcademyTypeAndRoute = project.AcademyTypeAndRoute,
 				ConversionSupportGrantAmount = project.ConversionSupportGrantAmount?.ToMoneyString(true),
 				ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
-				ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(true)
+				ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(true),
+            DaoPackSentDate = project.DaoPackSendDate.ToDateString(true)
 			};
 
 			return View(viewModel);
