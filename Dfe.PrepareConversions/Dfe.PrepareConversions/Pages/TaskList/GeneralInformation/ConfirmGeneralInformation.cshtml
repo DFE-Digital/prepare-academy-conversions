@@ -29,8 +29,8 @@
         </div>
 	</div>
 	<div class="govuk-grid-column-full">
-      @await Component.InvokeAsync("GeneralInformation")
-      <form method="post">
+		<vc:general-information/>
+		<form method="post">
 			<govuk-checkbox-input name="general-information-complete" asp-for="Project.GeneralInformationSectionComplete" label="Mark this section as complete, you can still make changes later"/>
 
 			<button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">

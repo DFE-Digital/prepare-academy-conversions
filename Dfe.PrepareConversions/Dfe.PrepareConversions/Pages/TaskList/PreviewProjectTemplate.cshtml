@@ -35,7 +35,7 @@
 		</h2>
 	</header>
 	<div class="app-summary-card__body">
-      @await Component.InvokeAsync("SchoolAndTrustInformation")
+		<vc:school-and-trust-information />
 	</div>
 </section>
 
@@ -47,7 +47,7 @@
 		</h2>
 	</header>
 	<div class="app-summary-card__body">
-		@await Component.InvokeAsync("GeneralInformation")
+		<vc:general-information />
 	</div>
 </section>
 
@@ -59,7 +59,7 @@
 		</h2>
 	</header>
 	<div class="app-summary-card__body">
-      @await Component.InvokeAsync("SchoolPerformance", new { showAdditionalInformation=true, isPreview = true} )
+		<vc:school-performance show-additional-information="true" is-preview="true"/>
 	</div>
 </section>
 
@@ -155,8 +155,8 @@
 			</h2>
 		</header>
 		<div class="app-summary-card__body">
-         @await Component.InvokeAsync("KeyStage2PerformanceTables")
-         <dl class="govuk-summary-list">
+			<vc:key-stage2-performance-tables />
+			<dl class="govuk-summary-list">
 				<govuk-summary-list-row name="key-stage-2-additional-information" label="Additional information" value="@Model.Project.KeyStage2PerformanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.KeyStage2PerformanceTablesAdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
 			</dl>
 		</div>
@@ -173,7 +173,7 @@
 			</h2>
 		</header>
 		<div class="app-summary-card__body">
-			@await Component.InvokeAsync("KeyStage4PerformanceTables")
+			<vc:key-stage4-performance-tables />
 			<dl class="govuk-summary-list">
 				<govuk-summary-list-row name="key-stage-4-additional-information" label="Additional information" value="@Model.Project.KeyStage4PerformanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.KeyStage4PerformanceTablesAdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
 			</dl>
@@ -191,7 +191,7 @@
 			</h2>
 		</header>
 		<div class="app-summary-card__body">
-			@await Component.InvokeAsync("KeyStage5PerformanceTables")
+			<vc:key-stage5-performance-tables />
 			<dl class="govuk-summary-list">
 				<govuk-summary-list-row name="key-stage-5-additional-information" label="Additional information" value="@Model.Project.KeyStage5PerformanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.KeyStage5PerformanceTablesAdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
 			</dl>
