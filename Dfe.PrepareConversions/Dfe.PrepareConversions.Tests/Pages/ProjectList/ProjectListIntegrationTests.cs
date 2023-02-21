@@ -36,7 +36,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectList
 				Document.QuerySelector($"#local-authority-{i}").TextContent.Should().Contain(project.LocalAuthority);
 				Document.QuerySelector($"#Advisory-Board-date-{i}").TextContent.Should().Contain(project.HeadTeacherBoardDate.ToDateString());
 				Document.QuerySelector($"#opening-date-{i}").TextContent.Should().Contain(project.ProposedAcademyOpeningDate.ToDateString());
-				Document.QuerySelector($"#application-received-date-{i}").TextContent.Should().Contain(project.ApplicationReceivedDate.ToDateString());
+				Document.QuerySelector($"#application-received-date-{i}").TextContent.Should().Contain(project.CreatedOn.ToDateString());
 				Document.QuerySelector($"#delivery-officer-{i}").TextContent.Should().Contain(project.AssignedUser.FullName);
 			}
 
@@ -78,7 +78,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectList
 			var project = projects.First();
 			Document.QuerySelector("#application-to-join-trust-0").TextContent.Should().Contain(project.NameOfTrust);
 			Document.QuerySelector("#local-authority-0").TextContent.Should().Contain(project.LocalAuthority);
-			Document.QuerySelector("#application-received-date-0").TextContent.Should().Contain(project.ApplicationReceivedDate.ToDateString());
+			Document.QuerySelector("#application-received-date-0").TextContent.Should().Contain(project.CreatedOn.ToDateString());
 
 			ResetServer();
 		}
