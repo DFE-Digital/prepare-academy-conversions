@@ -6,12 +6,16 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 {
 	public class MPDetailsIntegrationTests : BaseIntegrationTests
 	{
-		public MPDetailsIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+      private readonly ITestOutputHelper _output;
+      public MPDetailsIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory) {
+         _output = output;
+      }
 
 		[Fact]
 		public async Task Should_display_MP_Name_and_Party()
@@ -56,7 +60,10 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 			var establishment = AddGetEstablishmentResponse(project.Urn.ToString(), true);
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");
-
+         
+         _output.WriteLine("******** Logging html start *************");
+         _output.WriteLine(Document.Body.Html());
+         _output.WriteLine("******** Logging html end *************");
 			var testElement = Document.QuerySelector("#school-postcode");
 			testElement.TextContent.Should().Be("No data");
 		}
