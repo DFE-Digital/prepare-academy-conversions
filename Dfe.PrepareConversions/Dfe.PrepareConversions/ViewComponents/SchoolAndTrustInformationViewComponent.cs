@@ -50,12 +50,10 @@ namespace Dfe.PrepareConversions.ViewComponents
 				Form7ReceivedDate = project.Form7ReceivedDate.ToDateString(),
             ConversionSupportGrantAmount = project.ConversionSupportGrantAmount?.ToMoneyString(true),
 				ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
-				ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(true)
-			};
-         if (project.ApplicationReceivedDate.HasValue is false)
-         {
-            viewModel.IsDao = true;
-         }
+				ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(true),
+            IsDao = project.ApplicationReceivedDate.HasValue is false
+         };
+
          return View(viewModel);
 		}
 	}
