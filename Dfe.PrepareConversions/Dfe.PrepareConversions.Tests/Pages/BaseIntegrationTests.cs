@@ -47,10 +47,10 @@ namespace Dfe.PrepareConversions.Tests.Pages
 
 		public async Task<IDocument> NavigateAsync(string linkText, int? index = null)
 		{
-         _output.WriteLine($"********** DEBUG **********");
-         _output.WriteLine($"navigating to {linkText}, index {index}");
-         _output.WriteLine($"the current url is - {Document.Url}");
-         _output.WriteLine(Document.Body.Text());
+         // _output.WriteLine($"********** DEBUG **********");
+         // _output.WriteLine($"navigating to {linkText}, index {index}");
+         // _output.WriteLine($"the current url is - {Document.Url}");
+         // _output.WriteLine(Document.Body.Text());
             
 			var anchors = Document.QuerySelectorAll("a");
 			var link = (index == null

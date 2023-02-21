@@ -11,7 +11,10 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 {
 	public class MPDetailsIntegrationTests : BaseIntegrationTests
 	{
-		public MPDetailsIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) { }
+      private readonly ITestOutputHelper _output;
+      public MPDetailsIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper output) : base(factory, output) {
+         _output = output;
+      }
 
 		[Fact]
 		public async Task Should_display_MP_Name_and_Party()
@@ -57,7 +60,10 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 
 			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");
 
+         _output.WriteLine("The URL is  " + Document.Url);
+         _output.WriteLine(Document.Body.Html());
 			var testElement = Document.QuerySelector("#school-postcode");
+         _output.WriteLine("postcode is  " + testElement?.Text());
 			testElement.TextContent.Should().Be("No data");
 		}
 
