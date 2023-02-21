@@ -26,8 +26,8 @@
 		</div>
 	</div>
 	<div class="govuk-grid-column-full">
-		<vc:school-performance show-additional-information="false" is-preview="false"/>
-	</div>
+      @await Component.InvokeAsync("SchoolPerformance", new { showAdditionalInformation = false, isPreview = false })
+   </div>
 	<div class="govuk-grid-column-two-thirds">
 		<form method="post">
 			<h2 class="govuk-heading-m">
