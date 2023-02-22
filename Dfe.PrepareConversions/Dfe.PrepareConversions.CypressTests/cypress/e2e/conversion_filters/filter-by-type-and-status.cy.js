@@ -23,7 +23,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
     });
 
     it('TC02: should display 0 count when no match found for the projects', () => {
-      cy.get('[data-cy="select-projectlist-filter-title"]').type('test')
+      cy.get('[data-cy="select-projectlist-filter-title"]').type('this is a completely made up school name unlikely to ever exist')
       cy.get('[data-cy=select-projectlist-filter-apply]').click();
       cy.get('[data-cy="select-projectlist-filter-count"]').should('contain', '0 projects found');
     });

@@ -1,11 +1,11 @@
 /// <reference types ='Cypress'/>
 // uri to be updated once academisation API is integrated
 let projectList = Cypress.env('url') + '/project-list'
-import RecordDecision from '../../pages/recordDecision'
+import ProjectList from '../../pages/projectList'
 
 describe('Edit Deferred journey', {tags: '@dev'}, () => {
     beforeEach(() => {    
-        RecordDecision.selectProject().then(id => {
+        ProjectList.selectProject().then(id => {
             // delete deferred reasons
             cy.sqlServer(`
             delete from 
@@ -58,7 +58,7 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         // recorded decision confirmation
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
         cy.url().then(url => {
-            const id = RecordDecision.getIdFromUrl(url)
+            const id = ProjectList.getIdFromUrl(url)
             cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DEFERRED')
         })
@@ -104,7 +104,7 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         // recorded decision confirmation
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
         cy.url().then(url => {
-            const id = RecordDecision.getIdFromUrl(url)
+            const id = ProjectList.getIdFromUrl(url)
             cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DEFERRED')
         })
@@ -150,7 +150,7 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         // recorded decision confirmation
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
         cy.url().then(url => {
-            const id = RecordDecision.getIdFromUrl(url)
+            const id = ProjectList.getIdFromUrl(url)
             cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DEFERRED')
         })
@@ -195,7 +195,7 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         // recorded decision confirmation
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
         cy.url().then(url => {
-            const id = RecordDecision.getIdFromUrl(url)
+            const id = ProjectList.getIdFromUrl(url)
             cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DEFERRED')
         })
@@ -240,7 +240,7 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         // recorded decision confirmation
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
         cy.url().then(url => {
-            const id = RecordDecision.getIdFromUrl(url)
+            const id = ProjectList.getIdFromUrl(url)
             cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DEFERRED')
         })
