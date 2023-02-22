@@ -26,7 +26,8 @@
         </p>
     </div>
     <div class="govuk-grid-column-full">
-        <vc:key-stage5-performance-tables />
+       
+       @await Component.InvokeAsync("KeyStage5PerformanceTables")
     </div>
     <form method="post">
         <partial name="Shared/_AddtionalInformation" />

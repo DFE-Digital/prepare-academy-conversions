@@ -7,6 +7,7 @@ namespace Dfe.PrepareConversions.Data.Models
 	{
 		public int Id { get; set; }
 		public int? Urn { get; set; }
+		public DateTime CreatedOn { get; set; }
 		public string SchoolName { get; set; }
 		public string LocalAuthority { get; set; }
 		public string ApplicationReferenceNumber { get; set; }
@@ -103,7 +104,7 @@ namespace Dfe.PrepareConversions.Data.Models
 		// assigned user
 		public User AssignedUser { get; set; }
 
-      // notes
-      public ICollection<ProjectNote> Notes { get; set; } = new List<ProjectNote>();
+		// notes
+		public ICollection<ProjectNote> Notes { get; set; } = new List<ProjectNote>();
 	}
 }
