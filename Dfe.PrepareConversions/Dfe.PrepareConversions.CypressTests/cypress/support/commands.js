@@ -603,7 +603,7 @@ Cypress.Commands.add('createInvoluntaryProject', () => {
   cy.get('[data-id="submit"]').click()
   cy.url().should('include', 'project-list')
   cy.get('[id="school-name-0"]').should('include.text', 'Glo' )
-  cy.get('#application-to-join-trust-0').should('include.text', 'NEW')
+  cy.get('#application-to-join-trust-0').should('include.text', 'CIT')
 })
 
 Cypress.Commands.add('selectSchool', () => {
@@ -615,7 +615,7 @@ Cypress.Commands.add('selectSchool', () => {
 
 Cypress.Commands.add('selectTrust', () => {
     cy.url().should('include', 'start-new-project/trust-name')
-    cy.get('[id="SearchQuery"]').first().type('new')
+    cy.get('[id="SearchQuery"]').first().type('cit')
     cy.get('#SearchQuery__option--1').click();
     cy.get('[data-id="submit"]').click()
 })
