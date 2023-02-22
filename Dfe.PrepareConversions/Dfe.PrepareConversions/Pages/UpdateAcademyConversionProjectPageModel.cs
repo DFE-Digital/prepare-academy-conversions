@@ -126,7 +126,7 @@ namespace Dfe.PrepareConversions.Pages
 				KeyStage2PerformanceAdditionalInformation = AcademyConversionProject.KeyStage2PerformanceAdditionalInformation,
 				KeyStage4PerformanceAdditionalInformation = AcademyConversionProject.KeyStage4PerformanceAdditionalInformation,
 				KeyStage5PerformanceAdditionalInformation = AcademyConversionProject.KeyStage5PerformanceAdditionalInformation,
-            DaoPackSentDate = AcademyConversionProject.DaoPackSendDate
+            DaoPackSentDate = AcademyConversionProject.DaoPackSentDate
          };
 		}
 
