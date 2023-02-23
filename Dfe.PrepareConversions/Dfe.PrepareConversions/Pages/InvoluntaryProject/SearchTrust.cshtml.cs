@@ -15,7 +15,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 	{
 		private readonly ITrustsRespository _trustsRepository;
 		private readonly ErrorService _errorService;
-		private const string SEARCH_LABEL = "Search by name, UKPRN or Companies House number.";
+		private const string SEARCH_LABEL = "Search by name, UKPRN or Companies House number. Entering more characters will give quicker results. You should write UKPRN or Companies House number in full.";
 		private const string SEARCH_ENDPOINT = "/start-new-project/trust-name?handler=Search&searchQuery=";
 
 
