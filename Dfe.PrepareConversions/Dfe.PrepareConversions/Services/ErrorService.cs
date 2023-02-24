@@ -78,7 +78,7 @@ public class ErrorService
 
    private static string DateInputId(string id)
    {
-      string timeUnit = new[] { "-day", "-month", "-year" }.Where(id.EndsWith).FirstOrDefault();
+      string timeUnit = new[] { "-day", "-month", "-year" }.FirstOrDefault(id.EndsWith);
 
       return timeUnit is null
          ? id
