@@ -107,7 +107,7 @@ Cypress.Commands.add('completeStatusLaInfo', () => {
 Cypress.Commands.add('uncheckLaInfo', () => {
     cy.get('*[href*="/confirm-local-authority-information-template-dates"]').click()
     cy.get('[id="la-info-template-complete"]').click()
-    cy.get('[id="save-and-continue-button"]').click()
+    cy.get('[id="confirm-and-continue-button"]').click()
 })
 
 // Commentbox (LA info Page)
