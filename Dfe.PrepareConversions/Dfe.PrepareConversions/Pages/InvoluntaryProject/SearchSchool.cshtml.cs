@@ -14,7 +14,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 	{
 		private readonly IGetEstablishment _getEstablishment;
 		private readonly ErrorService _errorService;
-		private const string SEARCH_LABEL = "Search by name or URN (Unique Reference Number).";
+		private const string SEARCH_LABEL = "Search by name or URN (Unique Reference Number). Entering more characters will give quicker results. You should write URNs in full.";
 		private const string SEARCH_ENDPOINT = "/start-new-project/school-name?handler=Search&searchQuery=";
 
 		public SearchSchoolModel(IGetEstablishment getEstablishment, ErrorService errorService)

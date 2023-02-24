@@ -15,7 +15,7 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 	{
 		private readonly ITrustsRespository _trustsRepository;
 		private readonly ErrorService _errorService;
-		private const string SEARCH_LABEL = "Search by name, UKPRN or Companies House number.";
+		private const string SEARCH_LABEL = "Search by name, UKPRN or Companies House number. Entering more characters will give quicker results. You should write UKPRN or Companies House number in full.";
 		private const string SEARCH_ENDPOINT = "/start-new-project/trust-name?handler=Search&searchQuery=";
 
 
@@ -57,8 +57,9 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 			var trusts = await _trustsRepository.SearchTrusts(searchSplit[0].Trim());
 
 			return new JsonResult(trusts.Data.Select(t =>
-			{
-				var suggestion = $@"{t.GroupName.ToTitleCase()} ({t.Ukprn})
+         {
+            var displayUkprn = string.IsNullOrWhiteSpace(t.Ukprn) ? string.Empty : $"({t.Ukprn})";
+				var suggestion = $@"{t.GroupName.ToTitleCase()} {displayUkprn}
 									<br />
 									Companies House number: {t.CompaniesHouseNumber}";
 				return new
@@ -93,10 +94,8 @@ namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
 		private static string HighlightSearchMatch(string input, string toReplace, TrustSummary trust)
 		{
 			if (trust == null ||
-				string.IsNullOrWhiteSpace(trust.Ukprn) ||
-				string.IsNullOrWhiteSpace(trust.GroupName) ||
-				string.IsNullOrWhiteSpace(trust.CompaniesHouseNumber))
-			{
+             string.IsNullOrWhiteSpace(trust.GroupName))
+         {
 				return string.Empty;
 			}
 

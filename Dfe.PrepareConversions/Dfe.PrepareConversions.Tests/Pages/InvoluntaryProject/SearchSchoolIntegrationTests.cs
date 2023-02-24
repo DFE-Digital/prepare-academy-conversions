@@ -21,7 +21,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 			await NavigateAsync("Start a new involuntary conversion project");
 
 			Document.QuerySelector<IHtmlElement>("h1")!.Text().Trim().Should()
-				.Be("What is the school name?");
+				.Be("Which school is involved?");
 		}
 
 		[Fact]
