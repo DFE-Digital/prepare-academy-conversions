@@ -32,7 +32,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 		{
 			AddProjectWithFullApplicationForm();
 
-			await OpenUrlAsync($"/school-application-form/{_project.Id}");
+			await OpenAndConfirmPathAsync($"/school-application-form/{_project.Id}");
 
 			var pageItem = Document.QuerySelector("#application-form-link");
          pageItem.Should().NotBeNull();
@@ -48,7 +48,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 		{
 			AddProjectWithFullApplicationForm();
 
-         await OpenUrlAsync(string.Format(path, _project.Id));
+         await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
 
 			Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "School application form").Should().NotBeEmpty();
 			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
@@ -61,7 +61,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 		{
 			AddProjectWithFullApplicationForm();
 
-         await OpenUrlAsync(string.Format(path, _project.Id));
+         await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
 
 			Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "About the conversion").Should().NotBeEmpty();
 			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "The school joining the trust").Should().NotBeEmpty();
@@ -78,7 +78,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 		{
 			AddProjectWithFullApplicationForm();
 
-         await OpenUrlAsync(string.Format(path, _project.Id));
+         await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
 
 			Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Further information").Should().NotBeEmpty();
 			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Additional details").Should().NotBeEmpty();
@@ -91,7 +91,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 		{
 			AddProjectWithFullApplicationForm();
 
-         await OpenUrlAsync(string.Format(path, _project.Id));
+         await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
 
          Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Finances").Should().NotBeEmpty();
 			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Previous financial year").Should().NotBeEmpty();
@@ -121,7 +121,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 				app.ApplyingSchools.First().SchoolLoans = new List<Loan>();
 			});
 
-         await OpenUrlAsync(string.Format(path, _project.Id));
+         await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
 
          Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Finances").Should().NotBeEmpty();
 			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Previous financial year").Should().NotBeEmpty();
@@ -144,7 +144,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 		{
 			AddProjectWithFullApplicationForm();
 
-         await OpenUrlAsync(string.Format(path, _project.Id));
+         await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
 
          Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Future pupil numbers").Should().NotBeEmpty();
          Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
@@ -157,7 +157,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 		{
 			AddProjectWithFullApplicationForm();
 
-         await OpenUrlAsync(string.Format(path, _project.Id));
+         await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
 
          Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Land and buildings").Should().NotBeEmpty();
          Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
@@ -170,7 +170,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 		{
 			AddProjectWithFullApplicationForm();
 
-         await OpenUrlAsync(string.Format(path, _project.Id));
+         await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
 
          Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Pre-opening support grant").Should().NotBeEmpty();
          Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
@@ -183,7 +183,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 		{
 			AddProjectWithFullApplicationForm();
 
-         await OpenUrlAsync(string.Format(path, _project.Id));
+         await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
 
          Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Consultation").Should().NotBeEmpty();
          Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
@@ -196,7 +196,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 		{
 			AddProjectWithFullApplicationForm();
 
-         await OpenUrlAsync(string.Format(path, _project.Id));
+         await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
 
 			Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Declaration").Should().NotBeEmpty();
 			Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
@@ -209,7 +209,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 		{
 			_project = AddGetProject();
 
-         await OpenUrlAsync(string.Format(path, _project.Id));
+         await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
 
          IElement errorHeading = Document.QuerySelector("#error-heading");
          errorHeading.Should().NotBeNull();
@@ -229,7 +229,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 				app.ApplicationType = "FormMat";
 			});
 
-         await OpenUrlAsync(string.Format(path, _project.Id));
+         await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
 
          IElement errorHeading = Document.QuerySelector("#error-heading");
          errorHeading.Should().NotBeNull();
@@ -250,7 +250,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 				app.ApplyingSchools = new List<ApplyingSchool>();
 			});
 
-         await OpenUrlAsync(string.Format(path, _project.Id));
+         await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
 
          IElement errorHeading = Document.QuerySelector("#error-heading");
          errorHeading.Should().NotBeNull();
@@ -280,7 +280,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm
 			AddProjectWithFullApplicationForm();
 
          // Act
-         await OpenUrlAsync(string.Format(path, _project.Id));
+         await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
 
          foreach ((string sectionHeading, string id) in headings)
          {

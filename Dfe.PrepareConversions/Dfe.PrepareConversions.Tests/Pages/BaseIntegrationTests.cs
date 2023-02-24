@@ -1,4 +1,4 @@
-﻿using AngleSharp;
+using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Io;
@@ -35,9 +35,16 @@ namespace Dfe.PrepareConversions.Tests.Pages
 			Context = CreateBrowsingContext(factory.CreateClient());
 		}
 
-		public async Task<IDocument> OpenUrlAsync(string url)
+      private static string BuildRequestAddress(string path)
 		{
-			return await Context.OpenAsync($"https://localhost{url}");
+         return $"https://localhost{(path.StartsWith('/') ? path : $"/{path}")}";
+      }
+
+      protected async Task OpenAndConfirmPathAsync(string path, string expectedPath = null, string because = null)
+      {
+         await Context.OpenAsync(BuildRequestAddress(path));
+
+         Document.Url.Should().Be(BuildRequestAddress(expectedPath ?? path), because: because ?? "navigation should be successful");
 		}
 
 		public async Task<IDocument> NavigateAsync(string linkText, int? index = null)

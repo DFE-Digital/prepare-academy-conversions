@@ -50,7 +50,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/decision-date");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/decision-date");
 
 			var day = DayPart.Value;
 			var month = MonthPart.Value;
@@ -98,7 +98,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 		public async Task Should_redirect_onSubmit()
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
 			var request = new AdvisoryBoardDecision
 			{

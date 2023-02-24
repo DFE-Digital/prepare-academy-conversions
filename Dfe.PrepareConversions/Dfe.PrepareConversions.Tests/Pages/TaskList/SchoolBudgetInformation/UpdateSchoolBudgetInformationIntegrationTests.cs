@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Extensions;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
 				.With(r => r.CapitalCarryForwardAtEndMarchNextYear)
             .With(r => r.Urn, project.Urn));
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information");
 			await NavigateDataTestAsync("change-financial-year");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
@@ -79,7 +80,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
 				.With(r => r.CapitalCarryForwardAtEndMarchNextYear, -1024.95M)
             .With(r => r.Urn, project.Urn));
 			
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information");
 			await NavigateDataTestAsync("change-financial-year");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
@@ -120,7 +121,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
 				.With(r => r.CapitalCarryForwardAtEndMarchCurrentYear)
 				.With(r => r.CapitalCarryForwardAtEndMarchNextYear));
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information");
 			await NavigateDataTestAsync("change-financial-year");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
@@ -143,7 +144,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -155,7 +156,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
 			await NavigateAsync("Back");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
@@ -175,7 +176,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
 				.With(r => r.CapitalCarryForwardAtEndMarchNextYear, default(decimal))
             .With(r => r.Urn, project.Urn));
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
 			Document.QuerySelector<IHtmlInputElement>("#financial-year-day").Value = string.Empty;
 			Document.QuerySelector<IHtmlInputElement>("#financial-year-month").Value = string.Empty;
 			Document.QuerySelector<IHtmlInputElement>("#financial-year-year").Value = string.Empty;
@@ -197,7 +198,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
 
 			Document.QuerySelector<IHtmlInputElement>("#finance-year-current").Value = "abc";
 			Document.QuerySelector<IHtmlInputElement>("#finance-year-following").Value = "456*&";

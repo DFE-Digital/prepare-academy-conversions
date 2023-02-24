@@ -1,13 +1,16 @@
-﻿using AngleSharp.Dom;
+using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Extensions;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
-{
+namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation;
+
 	public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationTests
 	{
 		public ConfirmSchoolAndTrustInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
@@ -15,9 +18,9 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 		[Fact]
 		public async Task Should_be_in_progress_and_display_school_and_trust_information()
 		{
-			var project = AddGetProject(p => p.SchoolAndTrustInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolAndTrustInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#school-and-trust-information-status").TextContent.Trim().Should().Be("In Progress");
 			Document.QuerySelector("#school-and-trust-information-status").ClassName.Should().Contain("blue");
@@ -46,9 +49,9 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 		[Fact]
 		public async Task Previous_head_teacher_board_date_should_be_no_when_question_field_set_to_no()
 		{
-			var project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = "No");
+      AcademyConversionProject project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = "No");
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 			await NavigateAsync("School and trust information and project dates");
 
 			Document.QuerySelector("#previous-advisory-board").TextContent.Should().Be("No");
@@ -57,7 +60,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 		[Fact]
 		public async Task Should_display_an_error_when_school_and_trust_information_is_marked_as_complete_without_advisory_board_date_set()
 		{
-			var project = AddGetProject(project =>
+      AcademyConversionProject project = AddGetProject(project =>
 			{
 				project.SchoolAndTrustInformationSectionComplete = false;
 				project.HeadTeacherBoardDate = null;
@@ -65,7 +68,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 			
 			AddPatchProject(project, r => r.SchoolAndTrustInformationSectionComplete, true);
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("School and trust information and project dates");
 
@@ -80,14 +83,14 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 		[Fact]
 		public async Task Should_be_completed_and_checked_when_school_and_trust_information_complete()
 		{
-			var project = AddGetProject(project => project.SchoolAndTrustInformationSectionComplete = true);
+      AcademyConversionProject project = AddGetProject(project => project.SchoolAndTrustInformationSectionComplete = true);
          AddPatchConfiguredProject(project, x =>
          {
             x.SchoolAndTrustInformationSectionComplete = true;
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#school-and-trust-information-status").TextContent.Trim().Should().Be("Completed");
 
@@ -103,7 +106,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 		[Fact]
 		public async Task Should_be_not_started_and_display_empty_when_school_and_trust_information_not_prepopulated()
 		{
-			var project = AddGetProject(project =>
+      AcademyConversionProject project = AddGetProject(project =>
 			{
 				project.RecommendationForProject = null;
 				project.Author = null;
@@ -126,7 +129,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 			});
 			AddPatchProject(project, r => r.SchoolAndTrustInformationSectionComplete, false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#school-and-trust-information-status").TextContent.Trim().Should().Be("Not Started");
 			Document.QuerySelector("#school-and-trust-information-status").ClassName.Should().Contain("grey");
@@ -158,10 +161,10 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 		[Fact]
 		public async Task Should_show_error_summary_when_there_is_an_API_error()
 		{
-			var project = AddGetProject();
+      AcademyConversionProject project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -171,7 +174,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 		[Fact]
 		public async Task Should_show_error_summary_when_grant_amount_less_than_full_amount_and_no_reason_entered()
 		{
-			var project = AddGetProject(project =>
+      AcademyConversionProject project = AddGetProject(project =>
 			{
 				project.ConversionSupportGrantAmount = 2000m;
 				project.ConversionSupportGrantChangeReason = null;
@@ -181,7 +184,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 				.With(r => r.ConversionSupportGrantAmount, project.ConversionSupportGrantAmount)
 				.With(r => r.ConversionSupportGrantChangeReason, String.Empty));
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("School and trust information and project dates");
 			await NavigateAsync("Change", 2);
@@ -189,16 +192,16 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/route-and-grant");
-			var test = Document.QuerySelector(".govuk-error-summary");
+      IElement test = Document.QuerySelector(".govuk-error-summary");
 			test.Should().NotBe(null);
 		}
 
 		[Fact]
 		public async Task Should_navigate_between_task_list_and_school_and_trust_information()
 		{
-			var project = AddGetProject();
+      AcademyConversionProject project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 			await NavigateAsync("School and trust information and project dates");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");

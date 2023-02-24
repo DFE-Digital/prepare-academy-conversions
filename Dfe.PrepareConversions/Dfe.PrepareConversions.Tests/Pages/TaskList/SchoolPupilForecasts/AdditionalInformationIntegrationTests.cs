@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -23,7 +24,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolPupilForecasts
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-pupil-forecasts");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-pupil-forecasts");
 			await NavigateAsync("Change", 0);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information#additional-information");
@@ -44,7 +45,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolPupilForecasts
 
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -57,7 +58,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolPupilForecasts
 			var project = AddGetProject();
 			AddGetEstablishmentResponse(project.Urn.ToString());
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information");
 			await NavigateAsync("Back");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-pupil-forecasts");

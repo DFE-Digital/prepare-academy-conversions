@@ -16,7 +16,7 @@ namespace Dfe.PrepareConversions.Tests.Pages
 			AddGetStatuses();
 			AddGetProjects();
 
-			await OpenUrlAsync(url);
+			await OpenAndConfirmPathAsync(url);
 
 			Document.StatusCode.Should().Be(HttpStatusCode.OK);
 			Document.ContentType.Should().Be("text/html");

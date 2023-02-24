@@ -1,5 +1,6 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");
 
 			Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-name").Value.Should().Be(project.MemberOfParliamentName);
 			Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-party").Value.Should().Be(project.MemberOfParliamentParty);
@@ -30,7 +31,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 			var project = AddGetProject();
 			AddGetEstablishmentResponse(project.Urn.ToString());
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");
 
 			var requiredLink = Document.QuerySelector<IHtmlAnchorElement>("#link-to-they-work-for-you-page");
 			requiredLink.InnerHtml.Should().Be("They Work For You (opens in a new tab)");
@@ -43,7 +44,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 			var project = AddGetProject();
 			var establishment = AddGetEstablishmentResponse(project.Urn.ToString());
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");
 
 			var testElement = Document.QuerySelector("#school-postcode");
 			testElement.TextContent.Should().Be(establishment.Address.Postcode);
@@ -55,7 +56,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 			var project = AddGetProject();
 			var establishment = AddGetEstablishmentResponse(project.Urn.ToString(), true);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");
 
 			var testElement = Document.QuerySelector("#school-postcode");
 			testElement.TextContent.Should().Be("No data");
@@ -73,7 +74,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
                .With(r => r.Urn, project.Urn));
 
 			// open General Information page
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
 
 			// move to MP details page
 			await NavigateAsync("Change", 4);

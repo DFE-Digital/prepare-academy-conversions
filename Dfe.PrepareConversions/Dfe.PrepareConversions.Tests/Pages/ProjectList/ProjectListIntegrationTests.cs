@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Extensions;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectList
 			var projects = AddGetProjects().ToList();
 			AddGetStatuses();
 
-			await OpenUrlAsync($"/project-list");
+			await OpenAndConfirmPathAsync($"/project-list");
 			var firstProject = AddGetProject(p => p.Id = projects.First().Id);
 
 			await NavigateAsync(projects.First().SchoolName);
@@ -49,7 +50,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectList
 			AddGetStatuses();
 			var projects = AddGetProjects(p => p.ProjectStatus = "Approved");
 
-			await OpenUrlAsync($"/project-list");
+			await OpenAndConfirmPathAsync($"/project-list");
 
 			Document.QuerySelector<IHtmlElement>($"#project-status-{projects.First().Id}").Text().Should()
 				.Be("APPROVED");
@@ -61,7 +62,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectList
 			AddGetStatuses();
 			var projects = AddGetProjects().ToList();
 
-			await OpenUrlAsync($"/project-list");
+			await OpenAndConfirmPathAsync($"/project-list");
 
 			Document.QuerySelector<IHtmlElement>($"#project-status-{projects.First().Id}").Text().Should()
 				.Be("PRE ADVISORY BOARD");
@@ -73,7 +74,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectList
 			AddGetStatuses();
 			var projects = AddGetProjects(p => p.HeadTeacherBoardDate = null);
 
-			await OpenUrlAsync($"/project-list");
+			await OpenAndConfirmPathAsync($"/project-list");
 
 			var project = projects.First();
 			Document.QuerySelector("#application-to-join-trust-0").TextContent.Should().Contain(project.NameOfTrust);

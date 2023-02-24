@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Extensions;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -17,7 +18,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 			var establishment = AddGetEstablishmentResponse(project.Urn.ToString());
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#general-information-status").TextContent.Trim().Should().Be("In Progress");
 			Document.QuerySelector("#general-information-status").ClassName.Should().Contain("blue");
@@ -53,7 +54,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 
          project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation.Should().NotBeNullOrWhiteSpace();
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("General information");
 
@@ -71,7 +72,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#general-information-status").TextContent.Trim().Should().Be("Completed");
 
@@ -106,7 +107,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#general-information-status").TextContent.Trim().Should().Be("Not Started");
 			Document.QuerySelector("#general-information-status").ClassName.Should().Contain("grey");
@@ -143,7 +144,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 			AddGetEstablishmentResponse(project.Urn.ToString());
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -156,7 +157,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 			var project = AddGetProject();
 			AddGetEstablishmentResponse(project.Urn.ToString());
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 			await NavigateAsync("General information");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");

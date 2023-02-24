@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Xunit;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using Dfe.PrepareConversions.Tests.Extensions;
 
 namespace Dfe.PrepareConversions.Tests.Pages.SchoolPupilForecasts
 {
@@ -27,7 +28,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolPupilForecasts
 			});
 			var establishment = AddGetEstablishmentResponse(project.Urn.ToString());
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#school-pupil-forecasts-status").TextContent.Trim().Should().Be("Reference only");
 			Document.QuerySelector("#school-pupil-forecasts-status").ClassName.Should().Contain("grey");
@@ -65,7 +66,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolPupilForecasts
 			});
 			AddGetEstablishmentResponse(project.Urn.ToString(), true);
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#school-pupil-forecasts-status").TextContent.Trim().Should().Be("Reference only");
 			Document.QuerySelector("#school-pupil-forecasts-status").ClassName.Should().Contain("grey");
@@ -95,7 +96,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolPupilForecasts
 			var project = AddGetProject();
 			AddGetEstablishmentResponse(project.Urn.ToString());
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 			await NavigateAsync("School pupil forecasts");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-pupil-forecasts");
@@ -110,7 +111,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolPupilForecasts
 			var project = AddGetProject();
 			AddGetEstablishmentResponse(project.Urn.ToString());
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 			await NavigateAsync("School pupil forecasts");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-pupil-forecasts");

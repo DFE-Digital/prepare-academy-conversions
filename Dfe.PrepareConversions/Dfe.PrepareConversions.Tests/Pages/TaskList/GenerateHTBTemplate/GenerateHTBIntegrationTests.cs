@@ -2,6 +2,7 @@ using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Tests.Customisations;
 using AutoFixture;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GenerateHTBTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("Generate project template");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/download-project-template");
@@ -35,7 +36,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GenerateHTBTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Generate project template");
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/download-project-template");
@@ -49,7 +50,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GenerateHTBTemplate
 		{
 			var project = AddGetProject(p => p.HeadTeacherBoardDate = null);
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("Generate project template");
 
@@ -69,7 +70,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GenerateHTBTemplate
 		{
 			var project = AddGetProject(p => p.HeadTeacherBoardDate = null);
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("Generate project template");
 
@@ -95,7 +96,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GenerateHTBTemplate
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("Generate project template");
 

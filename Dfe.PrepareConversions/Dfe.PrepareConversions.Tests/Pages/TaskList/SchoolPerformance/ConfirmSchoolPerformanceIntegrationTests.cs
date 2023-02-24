@@ -3,6 +3,7 @@ using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
 using Dfe.PrepareConversions.Data.Models.Establishment;
+using Dfe.PrepareConversions.Tests.Extensions;
 
 namespace Dfe.PrepareConversions.Tests.Pages.SchoolPerformance
 {
@@ -16,7 +17,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolPerformance
 			var project = AddGetProject();
 			var schoolPerformance = AddGetEstablishmentResponse(project.Urn.ToString());
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#school-performance-status").TextContent.Trim().Should().Be("Reference only");
 			Document.QuerySelector("#school-performance-status").ClassName.Should().Contain("grey");
@@ -39,7 +40,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolPerformance
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 			await NavigateAsync("School performance (Ofsted information)");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-performance-ofsted-information");
@@ -55,7 +56,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolPerformance
 			var project = AddGetProject();
 			var schoolPerformance = new EstablishmentResponse();
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("School performance (Ofsted information)");
 

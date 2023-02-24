@@ -19,7 +19,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/who-decided");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/who-decided");
 
 			var selectedSchool = Document.QuerySelector<IHtmlElement>("#selection-span").Text();
 
@@ -31,12 +31,12 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/who-decided");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/who-decided");
 
 			Document.QuerySelector<IHtmlInputElement>("#directorgeneral-radio").IsChecked = true;
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/who-decided");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/who-decided");
 
 			var formElement = Document.QuerySelector<IHtmlInputElement>("#directorgeneral-radio");
 
@@ -48,7 +48,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/who-decided");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/who-decided");
 
 			await NavigateAsync("Back");
 
@@ -60,7 +60,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/who-decided");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/who-decided");
 
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 

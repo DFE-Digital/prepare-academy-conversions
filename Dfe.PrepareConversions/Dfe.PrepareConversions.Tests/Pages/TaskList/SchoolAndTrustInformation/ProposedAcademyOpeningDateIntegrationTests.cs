@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Extensions;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 			await NavigateDataTestAsync("change-proposed-academy-opening-date");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-academy-opening-date");
@@ -49,7 +50,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-academy-opening-date");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-academy-opening-date");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -61,7 +62,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-academy-opening-date");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-academy-opening-date");
 			await NavigateAsync("Back");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");

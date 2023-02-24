@@ -25,7 +25,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 			_factory.AddGetWithJsonResponse($"/establishment/urn/{establishment.Urn}", establishment);
 			_factory.AddGetWithJsonResponse($"/v2/trusts*", trustSummaryResponse);
 
-			await OpenUrlAsync($"/start-new-project/check-school-trust-details?ukprn={ukprn}&urn={establishment.Urn}");
+			await OpenAndConfirmPathAsync($"/start-new-project/check-school-trust-details?ukprn={ukprn}&urn={establishment.Urn}");
 
 			Document.QuerySelector<IHtmlElement>("[data-cy=school-name]").Text().Trim().Should()
 				.Be(establishment.EstablishmentName);
@@ -43,7 +43,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 			_factory.AddGetWithJsonResponse($"/establishment/urn/{establishment.Urn}", establishment);
 			_factory.AddGetWithJsonResponse("/v2/trusts*", trustSummaryResponse);
 
-			await OpenUrlAsync($"/start-new-project/check-school-trust-details?ukprn={ukprn}&urn={establishment.Urn}");
+			await OpenAndConfirmPathAsync($"/start-new-project/check-school-trust-details?ukprn={ukprn}&urn={establishment.Urn}");
 
 			_factory.AddGetWithJsonResponse(@"/v2/trusts/bulk*", trustDetail);
 			_factory.AddAnyPostWithJsonRequest($"/legacy/project/involuntary-conversion-project", "");

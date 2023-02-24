@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Extensions;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
 		{
 			var project = AddGetProject(p => p.SchoolBudgetInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#school-budget-information-status").TextContent.Trim().Should().Be("In Progress");
 			Document.QuerySelector("#school-budget-information-status").ClassName.Should().Contain("blue");
@@ -47,7 +48,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
 				project.SchoolBudgetInformationSectionComplete = false; 
 			});
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#school-budget-information-status").TextContent.Trim().Should().Be("In Progress");
 			Document.QuerySelector("#school-budget-information-status").ClassName.Should().Contain("blue");
@@ -77,7 +78,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
 				project.SchoolBudgetInformationSectionComplete = false;
 			});
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("School budget information");
 
@@ -101,7 +102,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
 				project.SchoolBudgetInformationSectionComplete = false;
 			});
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("School budget information");
 
@@ -124,7 +125,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
             x.Urn = project.Urn;
          });
 
-         await OpenUrlAsync($"/task-list/{project.Id}");
+         await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#school-budget-information-status").TextContent.Trim().Should().Be("Completed");
 
@@ -157,7 +158,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#school-budget-information-status").TextContent.Trim().Should().Be("Not Started");
 			Document.QuerySelector("#school-budget-information-status").ClassName.Should().Contain("grey");
@@ -184,7 +185,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-budget-information");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -196,7 +197,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolBudgetInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 			await NavigateAsync("School budget information");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
