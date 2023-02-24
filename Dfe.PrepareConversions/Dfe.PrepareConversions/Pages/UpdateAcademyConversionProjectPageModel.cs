@@ -47,7 +47,7 @@ namespace Dfe.PrepareConversions.Pages
 			{
 				_errorService.AddError($"/task-list/{id}/confirm-school-budget-information/update-school-budget-information?return=%2FTaskList%2FSchoolBudgetInformation/ConfirmSchoolBudgetInformation&fragment=financial-year",
 					"The next financial year cannot be before or within a year of the current financial year");
-			}					
+			}
 
 			_errorService.AddErrors(Request.Form.Keys, ModelState);
 			if (_errorService.HasErrors())
@@ -126,7 +126,7 @@ namespace Dfe.PrepareConversions.Pages
 				KeyStage2PerformanceAdditionalInformation = AcademyConversionProject.KeyStage2PerformanceAdditionalInformation,
 				KeyStage4PerformanceAdditionalInformation = AcademyConversionProject.KeyStage4PerformanceAdditionalInformation,
 				KeyStage5PerformanceAdditionalInformation = AcademyConversionProject.KeyStage5PerformanceAdditionalInformation,
-            DaoPackSentDate = AcademyConversionProject.DaoPackSentDate
+            DaoPackSentDate = AcademyConversionProject.DaoPackSentDate == default(DateTime) ? null : AcademyConversionProject.DaoPackSentDate
          };
 		}
 

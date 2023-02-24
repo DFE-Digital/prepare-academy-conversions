@@ -50,7 +50,7 @@ namespace Dfe.PrepareConversions.ViewComponents
 				ConversionSupportGrantAmount = project.ConversionSupportGrantAmount?.ToMoneyString(true),
 				ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
 				ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(true),
-            DaoPackSentDate = project.DaoPackSentDate.ToDateString(true)
+            DaoPackSentDate = project.DaoPackSentDate.ToDateString()
 			};
 
 			return View(viewModel);
