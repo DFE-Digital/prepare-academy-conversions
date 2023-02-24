@@ -77,7 +77,7 @@ namespace Dfe.PrepareConversions.Models
 
       [ModelBinder(BinderType = typeof(DateInputModelBinder))]
       [DateValidation(DateRangeValidationService.DateRange.Past)]
-      [BindProperty(Name = "dao-pack-send-date")]
+      [BindProperty(Name = "dao-pack-sent-date")]
       [Display(Name = "DAO pack sent")]
       public DateTime? DaoPackSentDate { get; set; }
 		
