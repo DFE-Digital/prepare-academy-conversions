@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -21,8 +22,8 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolAndTrustInformation
             x.Urn = project.Urn;
          });
 
-         await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
-         await NavigateAsync("Change", 3);
+         await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+         await NavigateAsync("Change", 2);
 
          Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received");
          // Do the input boxes on the page default to none selected when coming from an empty value
@@ -54,8 +55,8 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolAndTrustInformation
             x.Urn = project.Urn;
          });
 
-         await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
-         await NavigateAsync("Change", 3);
+         await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+         await NavigateAsync("Change", 2);
 
          Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received");
          // Do the input boxes on the page default to none selected when coming from an empty value
@@ -78,7 +79,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolAndTrustInformation
       {
          var project = AddGetProject(p => p.ApplicationReceivedDate = null);
 
-         await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received");
+         await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received");
          await NavigateAsync("Back");
 
          Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");

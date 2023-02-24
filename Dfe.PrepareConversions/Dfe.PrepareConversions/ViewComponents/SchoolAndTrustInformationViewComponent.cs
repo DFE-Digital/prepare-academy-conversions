@@ -51,7 +51,6 @@ namespace Dfe.PrepareConversions.ViewComponents
                 Form7ReceivedDate = project.Form7ReceivedDate.ToDateString(),
                 ConversionSupportGrantAmount = project.ConversionSupportGrantAmount?.ToMoneyString(true),
                 ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
-                IsDao = project.ApplicationReceivedDate.HasValue is false,
                 ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(true),
                 DaoPackSentDate = project.DaoPackSentDate.ToDateString()
             };

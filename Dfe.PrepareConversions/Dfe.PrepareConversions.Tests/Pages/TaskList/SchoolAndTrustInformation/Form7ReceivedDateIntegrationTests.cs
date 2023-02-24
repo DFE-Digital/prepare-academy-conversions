@@ -1,6 +1,8 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
+using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -13,67 +15,164 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolAndTrustInformation
 {
    public class Form7ReceivedDateIntegrationTests : BaseIntegrationTests
    {
+      private static readonly DateTime Tomorrow = DateTime.Today.Add(TimeSpan.FromDays(1));
+      private static readonly DateTime Yesterday = DateTime.Today.Subtract(TimeSpan.FromDays(1));
       public Form7ReceivedDateIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+      private void FillInDateWith(DateTime? date)
+      {
+         InputWithId("form-7-received-date-day").Value = date?.Day.ToString() ?? string.Empty;
+         InputWithId("form-7-received-date-month").Value = date?.Month.ToString() ?? string.Empty;
+         InputWithId("form-7-received-date-year").Value = date?.Year.ToString() ?? string.Empty;
+      }
 
       [Fact]
       public async Task Should_navigate_to_and_update_form_7_received_date()
       {
-         _fixture.Customizations.Add(new RandomDateTimeSequenceGenerator(
-            minDate: DateTime.Now.AddYears(-2),
-            maxDate: DateTime.Now.AddDays(-1)
-            ));
-         var project = AddGetProject(p =>
+         AcademyConversionProject project = AddGetProject(project =>
          {
-            p.ApplicationReceivedDate = null;
-            p.Form7Received = "Yes";
-         });
-         var request = AddPatchConfiguredProject(project, x =>
-         {
-            x.Form7ReceivedDate = _fixture.Create<DateTime?>();
-            x.Urn = project.Urn;
+            project.ApplicationReceivedDate = null;
+            project.Form7ReceivedDate = null;
          });
 
-         await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
-         await NavigateAsync("Change", 4);
+         ExpectPatchProjectMatching(project, update => update.Form7ReceivedDate == Yesterday &&
+                                                       update.Urn.Equals(project.Urn));
 
-         Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received-date");
+         await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received-date");
 
-         Document.QuerySelector<IHtmlInputElement>("#form-7-received-date-day").Value = request.Form7ReceivedDate.Value.Day.ToString();
-         Document.QuerySelector<IHtmlInputElement>("#form-7-received-date-month").Value = request.Form7ReceivedDate.Value.Month.ToString();
-         Document.QuerySelector<IHtmlInputElement>("#form-7-received-date-year").Value = request.Form7ReceivedDate.Value.Year.ToString();
+         FillInDateWith(Yesterday);
 
-         await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+         await ClickCommonSubmitButtonAsync();
 
          Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
       }
-
       [Fact]
-      public async Task Should_show_error_summary_when_there_is_an_API_error()
+      public async Task Should_accept_a_blank_value_and_return_to_the_project_dates_page()
       {
-         var project = AddGetProject(p => p.ApplicationReceivedDate = null);
-         AddPatchConfiguredProject(project, x =>
+         AcademyConversionProject project = AddGetProject(project =>
          {
-            x.Form7Received = "Yes";
-            x.Urn = project.Urn;
+            project.ApplicationReceivedDate = null;
+            project.Form7ReceivedDate = null;
          });
 
-         await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
-         await NavigateAsync("Change", 3);
+         ExpectPatchProjectMatching(project, update => update.Form7ReceivedDate is null);
 
-         Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received");
-         // Do the input boxes on the page default to none selected when coming from an empty value
-         // Yes 
-         Document.QuerySelector<IHtmlInputElement>("#form-7-received").IsChecked.Should().BeFalse();
-         // No
-         Document.QuerySelector<IHtmlInputElement>("#form-7-received-2").IsChecked.Should().BeFalse();
-         // Not sure
-         Document.QuerySelector<IHtmlInputElement>("#form-7-received-3").IsChecked.Should().BeFalse();
-         // Not applicable
-         Document.QuerySelector<IHtmlInputElement>("#form-7-received-4").IsChecked.Should().BeFalse();
+         await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received-date");
 
-         await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+         FillInDateWith(null);
 
-         Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received");
+         await ClickCommonSubmitButtonAsync();
+
+         Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      }
+      [Fact]
+      public async Task Should_display_an_error_if_the_save_api_call_fails()
+      {
+         AcademyConversionProject project = AddGetProject(project =>
+         {
+            project.ApplicationReceivedDate = null;
+            project.Form7ReceivedDate = null;
+         });
+
+         AddPatchError(project.Id);
+
+         await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received-date");
+
+         FillInDateWith(Yesterday);
+
+         await ClickCommonSubmitButtonAsync();
+
+         Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received-date");
+
+         Document.QuerySelector("[data-cy=\"error-summary\"]")!.TextContent
+            .Should().Contain("There is a system problem and we could not save your changes.");
+      }
+
+      [Fact]
+      public async Task Should_report_an_error_if_the_day_value_is_not_specified()
+      {
+         AcademyConversionProject project = AddGetProject(project =>
+         {
+            project.ApplicationReceivedDate = null;
+            project.Form7ReceivedDate = null;
+         });
+
+         await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received-date");
+
+         FillInDateWith(Yesterday);
+
+         InputWithId("form-7-received-date-day").Value = default!;
+
+         await ClickCommonSubmitButtonAsync();
+
+         Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received-date");
+
+         Document.QuerySelector("[data-cy=\"error-summary\"]")!.TextContent
+            .Should().Contain("must include a day");
+      }
+
+      [Fact]
+      public async Task Should_report_an_error_if_the_month_component_is_not_specified()
+      {
+         AcademyConversionProject project = AddGetProject(project =>
+         {
+            project.ApplicationReceivedDate = null;
+            project.Form7ReceivedDate = null;
+         });
+
+         await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received-date");
+
+         FillInDateWith(Yesterday);
+         InputWithId("form-7-received-date-month").Value = default!;
+
+         await ClickCommonSubmitButtonAsync();
+
+         Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received-date");
+
+         Document.QuerySelector("[data-cy=\"error-summary\"]")!.TextContent
+            .Should().Contain("must include a month");
+      }
+
+      [Fact]
+      public async Task Should_report_an_error_if_the_year_component_is_not_specified()
+      {
+         AcademyConversionProject project = AddGetProject(project =>
+         {
+            project.ApplicationReceivedDate = null;
+            project.Form7ReceivedDate = null;
+         });
+
+         await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received-date");
+
+         FillInDateWith(Yesterday);
+         InputWithId("form-7-received-date-year").Value = default!;
+
+         await ClickCommonSubmitButtonAsync();
+
+         Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received-date");
+
+         Document.QuerySelector("[data-cy=\"error-summary\"]")!.TextContent
+            .Should().Contain("must include a year");
+      }
+
+      [Fact]
+      public async Task Should_report_an_error_if_the_date_provided_is_in_the_future()
+      {
+         AcademyConversionProject project = AddGetProject(project =>
+         {
+            project.ApplicationReceivedDate = null;
+            project.Form7ReceivedDate = null;
+         });
+
+         await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received-date");
+
+         FillInDateWith(Tomorrow);
+
+         await ClickCommonSubmitButtonAsync();
+
+         Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received-date");
+
+         Document.QuerySelector("[data-cy=\"error-summary\"]")!.TextContent
+            .Should().Contain("date must be in the past");
       }
 
       [Fact]
@@ -81,7 +180,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolAndTrustInformation
       {
          var project = AddGetProject(p => p.ApplicationReceivedDate = null);
 
-         await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received");
+         await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received-date");
          await NavigateAsync("Back");
 
          Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");

@@ -91,7 +91,7 @@ namespace Dfe.PrepareConversions.Pages
 				ClearedBy = AcademyConversionProject.ClearedBy,
 				AcademyOrderRequired = AcademyConversionProject.AcademyOrderRequired,
 				Form7Received = AcademyConversionProject.Form7Received,
-				Form7ReceivedDate = default(DateTime) ? null : AcademyConversionProject.Form7ReceivedDate,
+				Form7ReceivedDate = AcademyConversionProject.Form7ReceivedDate == default(DateTime) ? null : AcademyConversionProject.Form7ReceivedDate,
 				ProposedAcademyOpeningDate = AcademyConversionProject.ProposedAcademyOpeningDate,
 				PreviousHeadTeacherBoardDateQuestion = AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion,
 				PreviousHeadTeacherBoardDate = AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion == "No" ? default(DateTime) : AcademyConversionProject.PreviousHeadTeacherBoardDate,
@@ -128,7 +128,7 @@ namespace Dfe.PrepareConversions.Pages
 				KeyStage2PerformanceAdditionalInformation = AcademyConversionProject.KeyStage2PerformanceAdditionalInformation,
 				KeyStage4PerformanceAdditionalInformation = AcademyConversionProject.KeyStage4PerformanceAdditionalInformation,
 				KeyStage5PerformanceAdditionalInformation = AcademyConversionProject.KeyStage5PerformanceAdditionalInformation,
-                DaoPackSentDate = AcademyConversionProject.DaoPackSentDate == default(DateTime) ? null : AcademyConversionProject.DaoPackSentDate
+            DaoPackSentDate = AcademyConversionProject.DaoPackSentDate == default(DateTime) ? null : AcademyConversionProject.DaoPackSentDate
          };
 		}
 
