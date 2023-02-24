@@ -1,12 +1,12 @@
 /// <reference types ='Cypress'/>
 
 // uri to be updated once academisation API is integrated
-import RecordDecision from '../../pages/recordDecision'
+import ProjectList from '../../pages/projectList'
 
 describe('103195 Record new Approved decision', { tags: '@dev'}, () => {
 
     beforeEach(() => {
-        RecordDecision.selectProject().then(id => {
+        ProjectList.selectProject().then(id => {
             // delete decision
             cy.sqlServer(`DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = ${id}`)
             cy.clearCookies()
@@ -48,7 +48,7 @@ describe('103195 Record new Approved decision', { tags: '@dev'}, () => {
         checkSummary()
         // confirm project status has been updated
         cy.url().then(url => {
-            const id = RecordDecision.getIdFromUrl(url)
+            const id = ProjectList.getIdFromUrl(url)
             cy.visit(Cypress.env('url') + '/project-list')
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
         })

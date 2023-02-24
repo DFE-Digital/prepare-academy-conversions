@@ -4,7 +4,7 @@
 
 @{
     Layout = "_Layout";
-    ViewBag.Title = (!ViewData.ModelState.IsValid ? "Error: " : "") + "What is the school name";
+    ViewBag.Title = (!ViewData.ModelState.IsValid ? "Error: " : "") + "Which school is involved";
     var routeParams = new Dictionary<string, string>
     {
         { "urn", Request.Query["urn"] },
@@ -24,7 +24,7 @@
                 <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
                     <h1 class="govuk-label-wrapper">
                         <label class="govuk-label govuk-label--xl" for="SearchQuery">
-                            What is the school name?
+                            Which school is involved?
                         </label>
                     </h1>
 

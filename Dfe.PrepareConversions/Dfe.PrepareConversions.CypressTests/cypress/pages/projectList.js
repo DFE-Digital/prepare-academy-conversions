@@ -1,4 +1,4 @@
-class RecordDecision {
+class ProjectList {
 
     selectProject() {
         let url = Cypress.env('url');
@@ -22,4 +22,4 @@ class RecordDecision {
     };
 };
 
-export default new RecordDecision();
+export default new ProjectList();
