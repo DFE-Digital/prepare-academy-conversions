@@ -1,11 +1,11 @@
 /// <reference types ='Cypress'/>
 
 // uri to be updated once academisation API is integrated
-import RecordDecision from '../../pages/recordDecision'
+import ProjectList from '../../pages/projectList'
 
 describe('103787 Error handling', { tags: '@dev'}, () => {
     beforeEach(() => {
-        RecordDecision.selectProject().then(() => {            
+        ProjectList.selectProject().then(() => {            
             cy.clearCookies()
         })
     })

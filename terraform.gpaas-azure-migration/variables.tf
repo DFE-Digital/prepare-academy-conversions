@@ -64,6 +64,11 @@ variable "cdn_frontdoor_enable_rate_limiting" {
   type        = bool
 }
 
+variable "cdn_frontdoor_rate_limiting_threshold" {
+  description = "CDN Front Door rate limiting duration in minutes"
+  type        = number
+}
+
 variable "cdn_frontdoor_host_add_response_headers" {
   description = "List of response headers to add at the CDN Front Door `[{ \"Name\" = \"Strict-Transport-Security\", \"value\" = \"max-age=31536000\" }]`"
   type        = list(map(string))
@@ -91,5 +96,30 @@ variable "monitor_email_receivers" {
 
 variable "monitor_endpoint_healthcheck" {
   description = "Specify a route that should be monitored for a 200 OK status"
+  type        = string
+}
+
+variable "monitor_enable_slack_webhook" {
+  description = "Enable slack webhooks to send monitoring notifications to a channel"
+  type        = bool
+}
+
+variable "monitor_slack_webhook_receiver" {
+  description = "A Slack App webhook URL"
+  type        = string
+}
+
+variable "monitor_slack_channel" {
+  description = "Slack channel name/id to send messages to"
+  type        = string
+}
+
+variable "existing_network_watcher_name" {
+  description = "Use an existing network watcher to add flow logs."
+  type        = string
+}
+
+variable "existing_network_watcher_resource_group_name" {
+  description = "Existing network watcher resource group."
   type        = string
 }

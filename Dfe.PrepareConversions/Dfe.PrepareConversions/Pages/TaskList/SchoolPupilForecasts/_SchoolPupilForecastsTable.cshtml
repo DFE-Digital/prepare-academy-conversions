@@ -10,8 +10,8 @@
 	</tr>
 	</thead>
 	<tbody class="govuk-table__body">
-		<vc:school-pupil-forecasts-current-year />
-		<tr class="govuk-table__row">
+     @await Component.InvokeAsync("SchoolPupilForecastsCurrentYear")
+     <tr class="govuk-table__row">
          <th scope="row" class="govuk-table__header">Projected pupil numbers on roll in the year the academy opens (year 1)</th>
 			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearOneProjectedCapacity</td>
 			<td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearOneProjectedPupilNumbers</td>
