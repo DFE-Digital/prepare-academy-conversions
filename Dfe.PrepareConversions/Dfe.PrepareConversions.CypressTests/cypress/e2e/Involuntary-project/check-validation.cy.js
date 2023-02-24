@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 Cypress._.each(['ipad-mini'], (viewport) => {
-  describe(`119898 Check validation for school and trus on ${viewport}`, () => {
+  describe(`119898 Check validation for school and trust on ${viewport}`, () => {
     beforeEach(() => {
       cy.login()
       cy.viewport(viewport)
