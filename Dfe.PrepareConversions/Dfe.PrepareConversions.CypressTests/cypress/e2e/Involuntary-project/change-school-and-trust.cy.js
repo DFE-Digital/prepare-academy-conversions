@@ -16,7 +16,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
     it('TC01: should update the changed school', () => {
       cy.get('[data-cy="change-school"]').should('be.visible').click();
       cy.wait(500) //need to explicitly wait due to performance issue
-      cy.get('.govuk-label').should('contain', 'What is the school name?');
+      cy.get('.govuk-label').should('contain', 'Which school is involved?');
       cy.get('[id="SearchQuery"]').first().clear();
       cy.get('[id="SearchQuery"]').first().type('lon');
       cy.get('#SearchQuery__option--0').click();
@@ -30,7 +30,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
       cy.wait(500) //need to explicitly wait due to performance issue
       cy.get('#query-hint').should('contain.text', 'Search by name, UKPRN or Companies House number.')
       cy.url().should('include', '/start-new-project/trust-name?urn')
-      cy.get('.govuk-label').should('contain', 'What is the trust name?');
+      cy.get('.govuk-label').should('contain', 'Which trust is involved?');
       cy.get('[id="SearchQuery"]').first().clear();
       cy.get('[id="SearchQuery"]').first().type('bristol');
       cy.get('#SearchQuery__option--0').click();
