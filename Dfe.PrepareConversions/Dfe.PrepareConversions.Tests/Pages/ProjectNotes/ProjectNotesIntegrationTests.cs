@@ -1,3 +1,4 @@
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectNotes
          var project = AddGetProject();
          AddGetProjectNotes(project.Id);
 
-         await OpenUrlAsync($"/task-list/{project.Id}");
+         await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
          await NavigateAsync("Project notes");
 
          Document.Url.Should().BeUrl($"/project-notes/{project.Id}");
@@ -30,7 +31,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectNotes
       {
          var project = AddGetProject();
 
-         await OpenUrlAsync($"/task-list/{project.Id}");
+         await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
          await NavigateAsync("Project notes");
 
          var firstProjectNote = project.Notes.OrderByDescending(x => x.Date).First();

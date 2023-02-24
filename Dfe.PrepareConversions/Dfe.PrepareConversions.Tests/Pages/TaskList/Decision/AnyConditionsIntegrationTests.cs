@@ -53,7 +53,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 
 			await _wizard.SetIsConditionalAndContinue(true, details);
 
-			await OpenUrlAsync($"/task-list/{_project.Id}/decision/any-conditions");
+			await OpenAndConfirmPathAsync($"/task-list/{_project.Id}/decision/any-conditions");
 
 			bool isConditional = Document.QuerySelector<IHtmlInputElement>("#yes-radio").IsChecked;
 			string conditionDetails = Document.QuerySelector<IHtmlTextAreaElement>("#ApprovedConditionsDetails")?.Text().Trim();

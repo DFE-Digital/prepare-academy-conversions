@@ -3,6 +3,7 @@ using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
 using AutoFixture;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectNotes
 			var project = AddGetProject();
 			AddGetProjectNotes(project.Id);
 
-			await OpenUrlAsync($"/project-notes/{project.Id}");
+			await OpenAndConfirmPathAsync($"/project-notes/{project.Id}");
 			await NavigateAsync("Add note");
 
 			Document.Url.Should().BeUrl($"/project-notes/{project.Id}/new-note");
@@ -44,7 +45,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectNotes
          var projectNote = new AddProjectNote { Subject = _fixture.Create<string>(), Note = _fixture.Create<string>(), Author = string.Empty, Date = expected };
          AddPostProjectNote(project.Id, projectNote);
 
-         await OpenUrlAsync(projectNotesPage);
+         await OpenAndConfirmPathAsync(projectNotesPage);
 			await NavigateAsync("Add note");
 
 			Document.QuerySelector<IHtmlTextAreaElement>("#project-note-subject").Value = projectNote.Subject;
@@ -66,7 +67,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectNotes
 			var projectNote = new AddProjectNote {Subject = null, Note = null, Author = "" };
 			AddPostProjectNote(project.Id, projectNote);
 
-			await OpenUrlAsync($"/project-notes/{project.Id}");
+			await OpenAndConfirmPathAsync($"/project-notes/{project.Id}");
 			await NavigateAsync("Add note");
 
 			Document.QuerySelector<IHtmlTextAreaElement>("#project-note-subject").Value = null;
@@ -85,7 +86,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectNotes
 			var project = AddGetProject();
 			AddProjectNotePostError(project.Id);
 
-			await OpenUrlAsync($"/project-notes/{project.Id}/new-note");
+			await OpenAndConfirmPathAsync($"/project-notes/{project.Id}/new-note");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 

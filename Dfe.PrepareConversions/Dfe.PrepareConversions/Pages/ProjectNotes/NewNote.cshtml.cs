@@ -45,7 +45,7 @@ public class NewNoteModel : BaseAcademyConversionProjectPageModel
 
       if (!response.Success)
       {
-         _errorService.AddTramsError();
+         _errorService.AddApiError();
          await SetProject(id);
          return Page();
       }

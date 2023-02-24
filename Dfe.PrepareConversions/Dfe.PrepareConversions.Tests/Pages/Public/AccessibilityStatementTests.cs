@@ -16,7 +16,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Public
 		public async Task Should_navigate_to_the_accessibility_statement_from_the_link()
 		{
 			var project = AddGetProject();
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateDataTestAsync("accessibility-statement");
 

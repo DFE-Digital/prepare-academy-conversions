@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -21,13 +22,13 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 			await NavigateAsync("Change", 7);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/clear-head-teacher-board-template");
-			Document.QuerySelector<IHtmlInputElement>("#cleared-by")?.Value.Should().Be(project.ClearedBy);
 
-			Document.QuerySelector<IHtmlInputElement>("#cleared-by")!.Value = request.ClearedBy;
+			Document.QuerySelector<IHtmlInputElement>("#cleared-by")?.Value.Should().Be(project.ClearedBy);
+         Document.QuerySelector<IHtmlInputElement>("#cleared-by")!.Value = request.ClearedBy;
 
 			await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
@@ -40,7 +41,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/clear-head-teacher-board-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/clear-head-teacher-board-template");
 
 			await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
@@ -52,7 +53,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/clear-head-teacher-board-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/clear-head-teacher-board-template");
 			await NavigateAsync("Back");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");

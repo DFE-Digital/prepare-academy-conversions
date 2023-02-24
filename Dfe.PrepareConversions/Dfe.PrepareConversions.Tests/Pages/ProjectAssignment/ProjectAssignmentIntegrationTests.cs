@@ -22,7 +22,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectAssignment
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 			await NavigateAsync("Change");
 
 			Document.QuerySelector<IHtmlElement>("[data-id=school-name]")!.Text().Should()
@@ -35,7 +35,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectAssignment
 		public async Task Should_assign_a_project()
 		{
 			var project = AddGetProject();
-			await OpenUrlAsync($"/project-assignment/{project.Id}");
+			await OpenAndConfirmPathAsync($"/project-assignment/{project.Id}");
 			var fullName = "Bob 1";
          Document.QuerySelector<IHtmlInputElement>("[id='delivery-officer-input']").Value = fullName;
 			Document.QuerySelector<IHtmlOptionElement>($"[value='{fullName}']")!.IsSelected = true;
@@ -51,7 +51,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectAssignment
 		{
 			var fullName = "Bob Bob";
 			var project = AddGetProject(p => p.AssignedUser = new User(Guid.NewGuid().ToString(), "", fullName));
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 			
 			Document.QuerySelector<IHtmlElement>("[data-id=assigned-user]")!.TextContent.Trim().Should()
 				.Be(fullName);
@@ -61,7 +61,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectAssignment
 		public async Task Should_display_unassigned_user()
 		{
 			var project = AddGetProject(p => p.AssignedUser = new User(Guid.Empty.ToString(), string.Empty, string.Empty));
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 			
 			Document.QuerySelector<IHtmlElement>("[data-id=assigned-user]")!.TextContent.Trim().Should()
 				.Be("Empty");
@@ -71,7 +71,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectAssignment
 		public async Task Should_unassign_a_project()
 		{
 			var project = AddGetProject();
-			await OpenUrlAsync($"/project-assignment/{project.Id}");
+			await OpenAndConfirmPathAsync($"/project-assignment/{project.Id}");
 
 			Document.QuerySelector<IHtmlInputElement>("#UnassignDeliveryOfficer")!.Value = "true";
 			await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();

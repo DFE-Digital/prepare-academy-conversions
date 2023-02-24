@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -24,7 +25,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.KeyStagePerformance
                x.Urn = project.Urn;
             });
 
-				await OpenUrlAsync($"/task-list/{project.Id}/key-stage-5-performance-tables");
+				await OpenAndConfirmPathAsync($"/task-list/{project.Id}/key-stage-5-performance-tables");
 				await NavigateAsync("Change", 0);
 
 				Document.Url.Should().BeUrl($"/task-list/{project.Id}/key-stage-5-performance-tables/additional-information#additional-information");
@@ -44,7 +45,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.KeyStagePerformance
 				AddGetKeyStagePerformance((int)project.Urn);
 				AddPatchError(project.Id);
 
-				await OpenUrlAsync($"/task-list/{project.Id}/key-stage-5-performance-tables");
+				await OpenAndConfirmPathAsync($"/task-list/{project.Id}/key-stage-5-performance-tables");
 				await NavigateAsync("Change", 0);
 
 				await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
@@ -58,7 +59,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.KeyStagePerformance
 				var project = AddGetProject();
 				AddGetKeyStagePerformance((int)project.Urn);
 
-				await OpenUrlAsync($"/task-list/{project.Id}/key-stage-5-performance-tables");
+				await OpenAndConfirmPathAsync($"/task-list/{project.Id}/key-stage-5-performance-tables");
 				await NavigateAsync("Change", 0);
 
 				await NavigateAsync("Back");

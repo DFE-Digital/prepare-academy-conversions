@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Tests.Customisations;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.LocalAuthorityInformationTemplate
 				project.LocalAuthorityInformationTemplateSectionComplete = false;
 			});
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#la-info-template-status").TextContent.Trim().Should().Be("Not Started");
 			Document.QuerySelector("#la-info-template-status").ClassName.Should().Contain("grey");
@@ -64,7 +65,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.LocalAuthorityInformationTemplate
                .With(r => r.LocalAuthorityInformationTemplateLink)
                .With(r => r.Urn, project.Urn));
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
 			await NavigateAsync("Change", 0);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/record-local-authority-information-template-dates");
@@ -94,7 +95,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.LocalAuthorityInformationTemplate
 				project.LocalAuthorityInformationTemplateLink = "https://www.google.com";
 			});
 
-			await OpenUrlAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
 
 			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-day").Value.Should().Be(project.LocalAuthorityInformationTemplateSentDate.Value.Day.ToString());
 			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-month").Value.Should().Be(project.LocalAuthorityInformationTemplateSentDate.Value.Month.ToString());
@@ -112,11 +113,11 @@ namespace Dfe.PrepareConversions.Tests.Pages.LocalAuthorityInformationTemplate
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			Document.QuerySelector(".govuk-error-summary").InnerHtml.Should().Contain("There is a problem with TRAMS");
+			Document.QuerySelector(".govuk-error-summary").InnerHtml.Should().Contain("There is a system problem");
 		}
 
 		[Fact]
@@ -124,7 +125,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.LocalAuthorityInformationTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
 			await NavigateAsync("Back");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
@@ -144,7 +145,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.LocalAuthorityInformationTemplate
                .With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink)
                .With(r => r.Urn, project.Urn));
 
-			await OpenUrlAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
 
 			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-day").Value = string.Empty;
 			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-month").Value = string.Empty;
@@ -170,7 +171,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.LocalAuthorityInformationTemplate
 				.With(r => r.LocalAuthorityInformationTemplateComments, project.LocalAuthorityInformationTemplateComments)
 				.With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink));
 
-			await OpenUrlAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
 
 			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-day").Value = response.LocalAuthorityInformationTemplateSentDate?.Day.ToString();
 			Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-month").Value = response.LocalAuthorityInformationTemplateSentDate?.Month.ToString();

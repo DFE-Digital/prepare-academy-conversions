@@ -1,3 +1,4 @@
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -13,7 +14,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.TrustTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 			await NavigateAsync("Prepare your trust template");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/trust-template-guidance");
@@ -28,7 +29,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.TrustTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/trust-template-guidance");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/trust-template-guidance");
 
 			await NavigateAsync("Getting your template from Sharepoint");
 
@@ -40,7 +41,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.TrustTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/trust-template-guidance");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/trust-template-guidance");
 
 			await NavigateAsync("Updating your template in the trust area in KIM");
 
@@ -52,7 +53,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.TrustTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/trust-template-guidance");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/trust-template-guidance");
 
 			await NavigateAsync("Updating your template in the sponsor area in KIM (if the trust has sponsor status)");
 
@@ -64,7 +65,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.TrustTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/trust-template-guidance");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/trust-template-guidance");
 
 			await NavigateAsync("Download your trust template from KIM");
 
@@ -76,7 +77,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.TrustTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/trust-template-guidance");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/trust-template-guidance");
 
 			await NavigateAsync("Send your project template and trust template for review");
 

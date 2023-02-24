@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -21,7 +22,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolPerformance
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/school-performance-ofsted-information");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-performance-ofsted-information");
 			await NavigateAsync("Change", 0);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-performance-ofsted-information/additional-information");
@@ -40,7 +41,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolPerformance
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/school-performance-ofsted-information/additional-information");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-performance-ofsted-information/additional-information");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -52,7 +53,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolPerformance
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/school-performance-ofsted-information/additional-information");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-performance-ofsted-information/additional-information");
 			await NavigateAsync("Back");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-performance-ofsted-information");

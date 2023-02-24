@@ -1,5 +1,6 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -15,7 +16,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Rationale
 		{
 			var project = AddGetProject(p => p.RationaleSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#rationale-status").TextContent.Trim().Should().Be("In Progress");
 			Document.QuerySelector("#rationale-status").ClassName.Should().Contain("blue");
@@ -39,7 +40,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Rationale
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#rationale-status").TextContent.Trim().Should().Be("Completed");
 
@@ -68,7 +69,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Rationale
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#rationale-status").TextContent.Trim().Should().Be("Not Started");
 			Document.QuerySelector("#rationale-status").ClassName.Should().Contain("grey");
@@ -90,7 +91,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Rationale
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -102,7 +103,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Rationale
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 			await NavigateAsync("Rationale");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale");

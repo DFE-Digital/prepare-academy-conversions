@@ -80,7 +80,8 @@ namespace Dfe.PrepareConversions.Models
 			public static readonly LinkItem Form7ReceivedDate = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Form7ReceivedDate");
 			public static readonly LinkItem ProposedAcademyOpeningDate = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/ProposedAcademyOpeningDate");
 			public static readonly LinkItem RouteAndGrant = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/RouteAndGrant");
-		}
+         public static readonly LinkItem DaoPackSent = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/DaoPackSentDate");
+      }
 
 		public static class GeneralInformationSection
 		{

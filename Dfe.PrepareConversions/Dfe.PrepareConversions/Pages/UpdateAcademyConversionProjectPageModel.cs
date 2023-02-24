@@ -47,8 +47,7 @@ namespace Dfe.PrepareConversions.Pages
 			{
 				_errorService.AddError($"/task-list/{id}/confirm-school-budget-information/update-school-budget-information?return=%2FTaskList%2FSchoolBudgetInformation/ConfirmSchoolBudgetInformation&fragment=financial-year",
 					"The next financial year cannot be before or within a year of the current financial year");
-			}		
-         
+			}
 
 			_errorService.AddErrors(Request.Form.Keys, ModelState);
 			if (_errorService.HasErrors())
@@ -60,7 +59,7 @@ namespace Dfe.PrepareConversions.Pages
 
 			if (!response.Success)
 			{
-				_errorService.AddTramsError();
+				_errorService.AddApiError();
 				return Page();
 			}
 
@@ -92,7 +91,7 @@ namespace Dfe.PrepareConversions.Pages
 				ClearedBy = AcademyConversionProject.ClearedBy,
 				AcademyOrderRequired = AcademyConversionProject.AcademyOrderRequired,
 				Form7Received = AcademyConversionProject.Form7Received,
-				Form7ReceivedDate = AcademyConversionProject.Form7ReceivedDate,
+				Form7ReceivedDate = default(DateTime) ? null : AcademyConversionProject.Form7ReceivedDate,
 				ProposedAcademyOpeningDate = AcademyConversionProject.ProposedAcademyOpeningDate,
 				PreviousHeadTeacherBoardDateQuestion = AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion,
 				PreviousHeadTeacherBoardDate = AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion == "No" ? default(DateTime) : AcademyConversionProject.PreviousHeadTeacherBoardDate,
@@ -128,8 +127,9 @@ namespace Dfe.PrepareConversions.Pages
 				SchoolPupilForecastsAdditionalInformation = AcademyConversionProject.SchoolPupilForecastsAdditionalInformation,
 				KeyStage2PerformanceAdditionalInformation = AcademyConversionProject.KeyStage2PerformanceAdditionalInformation,
 				KeyStage4PerformanceAdditionalInformation = AcademyConversionProject.KeyStage4PerformanceAdditionalInformation,
-				KeyStage5PerformanceAdditionalInformation = AcademyConversionProject.KeyStage5PerformanceAdditionalInformation
-			};
+				KeyStage5PerformanceAdditionalInformation = AcademyConversionProject.KeyStage5PerformanceAdditionalInformation,
+                DaoPackSentDate = AcademyConversionProject.DaoPackSentDate == default(DateTime) ? null : AcademyConversionProject.DaoPackSentDate
+         };
 		}
 
 		private (string, string) GetReturnPageAndFragment()

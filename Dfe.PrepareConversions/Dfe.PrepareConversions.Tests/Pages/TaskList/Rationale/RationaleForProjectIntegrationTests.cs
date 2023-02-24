@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -16,7 +17,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Rationale
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/project-rationale");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/project-rationale");
 
 			Document.QuerySelector("#project-rationale").TextContent.Should().Be(project.RationaleForProject);
 		}
@@ -26,7 +27,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Rationale
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale");
 			await NavigateAsync("Change", 0);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale/project-rationale");
@@ -37,7 +38,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Rationale
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/project-rationale");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/project-rationale");
 			await NavigateAsync("Back");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale");
@@ -53,7 +54,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Rationale
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/project-rationale");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/project-rationale");
 			var textArea = Document.QuerySelector<IHtmlTextAreaElement>("#project-rationale");
 			textArea.Value = request.RationaleForProject;
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
@@ -67,7 +68,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Rationale
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/project-rationale");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/project-rationale");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 

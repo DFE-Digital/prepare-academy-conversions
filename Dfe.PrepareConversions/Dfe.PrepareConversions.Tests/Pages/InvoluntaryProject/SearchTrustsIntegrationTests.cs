@@ -17,7 +17,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 		[Fact]
 		public async Task Should_show_error_when_no_trust_provided()
 		{
-			await OpenUrlAsync($"/start-new-project/trust-name");
+			await OpenAndConfirmPathAsync($"/start-new-project/trust-name");
 
 			await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]").SubmitAsync();
 
@@ -28,7 +28,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 		[Fact]
 		public async Task Should_show_no_error()
 		{
-			await OpenUrlAsync($"/start-new-project/trust-name");
+			await OpenAndConfirmPathAsync($"/start-new-project/trust-name");
 			var trustName = "faketrustname";
 
 			_factory.AddGetWithJsonResponse($"/establishments",

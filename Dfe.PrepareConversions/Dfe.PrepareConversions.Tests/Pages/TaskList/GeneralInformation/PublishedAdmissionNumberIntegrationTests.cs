@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -22,7 +23,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
 			await NavigateAsync("Change", 0);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
@@ -41,7 +42,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -53,7 +54,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
 			await NavigateAsync("Back");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");

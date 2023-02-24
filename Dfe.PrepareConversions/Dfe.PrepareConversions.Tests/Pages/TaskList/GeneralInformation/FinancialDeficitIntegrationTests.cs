@@ -1,5 +1,6 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -22,7 +23,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
             x.Urn = project.Urn;
          });
 
-         await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information");
+         await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
 			await NavigateAsync("Change", 2);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/financial-deficit");
@@ -46,7 +47,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/financial-deficit");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/financial-deficit");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -58,7 +59,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.GeneralInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-general-information/financial-deficit");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/financial-deficit");
 			await NavigateAsync("Back");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
