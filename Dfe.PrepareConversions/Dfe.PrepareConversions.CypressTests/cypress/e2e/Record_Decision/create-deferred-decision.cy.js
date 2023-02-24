@@ -1,10 +1,10 @@
 /// <reference types ='Cypress'/>
-import RecordDecision from '../../pages/recordDecision'
+import ProjectList from '../../pages/projectList'
 // uri to be updated once academisation API is integrated
 
 describe('Create Deferred journey', { tags: '@dev'}, () => {
     beforeEach(() => {
-        RecordDecision.selectProject().then(id => {
+        ProjectList.selectProject().then(id => {
             // delete decision
             cy.sqlServer(`DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = ${id}`)
             cy.clearCookies()
@@ -44,7 +44,7 @@ describe('Create Deferred journey', { tags: '@dev'}, () => {
         cy.deferredProjectStateId().should('contain.text', 'Decision recorded')
         checkSummary()
         // confirm project status has been updated
-        RecordDecision.selectProject().then(id => {
+        ProjectList.selectProject().then(id => {
             cy.visit(Cypress.env('url') + '/project-list')
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DEFERRED')
         })

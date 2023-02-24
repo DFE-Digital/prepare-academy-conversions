@@ -1,12 +1,12 @@
 /// <reference types ='Cypress'/>
 
-import RecordDecision from "../../pages/recordDecision"
+import ProjectList from "../../pages/projectList"
 let projectList = Cypress.env('url') + '/project-list'
 // uri to be updated once academisation API is integrated
 
 describe('103195 Edit Approved record decision', { tags: '@dev'}, ()=> {
     beforeEach(() => {
-        RecordDecision.selectProject().then(id => {
+        ProjectList.selectProject().then(id => {
             cy.sqlServer(`delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id}`)
             cy.sqlServer(`insert into academisation.ConversionAdvisoryBoardDecision values (${id}, \'Approved\', null, null, getdate(), \'None\', getdate(), getdate())`)            
             cy.clearCookies()
@@ -51,7 +51,7 @@ describe('103195 Edit Approved record decision', { tags: '@dev'}, ()=> {
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
         cy.url().then(url => {
-            const id = RecordDecision.getIdFromUrl(url)
+            const id = ProjectList.getIdFromUrl(url)
             cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
         })
@@ -94,7 +94,7 @@ describe('103195 Edit Approved record decision', { tags: '@dev'}, ()=> {
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
         cy.url().then(url => {
-            const id = RecordDecision.getIdFromUrl(url)
+            const id = ProjectList.getIdFromUrl(url)
             cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
         })
@@ -136,7 +136,7 @@ describe('103195 Edit Approved record decision', { tags: '@dev'}, ()=> {
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
         cy.url().then(url => {
-            const id = RecordDecision.getIdFromUrl(url)
+            const id = ProjectList.getIdFromUrl(url)
             cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
         })
@@ -178,7 +178,7 @@ describe('103195 Edit Approved record decision', { tags: '@dev'}, ()=> {
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
         cy.url().then(url => {
-            const id = RecordDecision.getIdFromUrl(url)
+            const id = ProjectList.getIdFromUrl(url)
             cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
         })
@@ -221,7 +221,7 @@ describe('103195 Edit Approved record decision', { tags: '@dev'}, ()=> {
         // recorded decision confirmation
         cy.ApprovedMessageBanner().should('contain.text', 'Decision recorded')
         cy.url().then(url => {
-            const id = RecordDecision.getIdFromUrl(url)
+            const id = ProjectList.getIdFromUrl(url)
             cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'APPROVED WITH CONDITIONS')
         })

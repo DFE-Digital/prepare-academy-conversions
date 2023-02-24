@@ -85,7 +85,7 @@
                                             <strong>
                                                 <a id="@("school-name-" + index)" class="govuk-link" asp-page="@Links.TaskList.Index.Page" asp-route-id="@project.Id">@project.SchoolName</a>
                                             </strong>
-                                            <span id="@("urn-" + index)">URN @project.SchoolURN</span>
+                                            <span id="@("urn-" + index)">URN: @project.SchoolURN</span>
                                         </h2>
                                         <p class="govuk-!-margin-top-3">
                                             <div data-cy="route">Route: @(string.IsNullOrWhiteSpace(project.ApplicationReceivedDate) ? "Involuntary conversion" : "Voluntary conversion")</div>
@@ -111,10 +111,17 @@
                                             </span>
                                             @if (ShowHtbDate(project))
                                             {
-                                                <span id="@("Advisory-Board-date-" + index)">
-                                                    @("Advisory board date: " + project.HeadTeacherBoardDate)<br>
-                                                </span>
-                                                <span id="@("opening-date-" + index)">@("Opening date: " + project.ProposedAcademyOpeningDate)</span>
+                                               <span id="@("Advisory-Board-date-" + index)">
+                                                  @("Advisory board date: " + project.HeadTeacherBoardDate)<br>
+                                               </span>
+                                               <span id="@("opening-date-" + index)">
+                                                  Opening date:
+                                                  @if (string.IsNullOrWhiteSpace(project.ProposedAcademyOpeningDate)) { <span class="empty">EMPTY</span> }
+                                                  else
+                                                  {
+                                                     @project.ProposedAcademyOpeningDate
+                                                  }
+                                               </span>
                                             }
                                         </p>
                                     </td>

@@ -5,7 +5,7 @@
 		public AutoCompleteSearchModel(string label, string searchQuery, string searchEndpoint)
 		{
 			Label = label;
-			SearchQuery = searchQuery;
+			SearchQuery = searchQuery?.Replace("'", "\\'");
 			SearchEndpoint = searchEndpoint;
 		}
 
