@@ -1,10 +1,11 @@
-using AngleSharp;
+﻿using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Io;
 using AngleSharp.Io.Network;
 using Dfe.PrepareConversions.Data.Features;
 using AutoFixture;
+using FluentAssertions;
 using Microsoft.FeatureManagement;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ using Moq;
 
 namespace Dfe.PrepareConversions.Tests.Pages
 {
-	public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTestingWebApplicationFactory>, IDisposable
+   public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTestingWebApplicationFactory>, IDisposable
 	{
 		protected readonly IntegrationTestingWebApplicationFactory _factory;
 		protected readonly Fixture _fixture;
@@ -36,7 +37,7 @@ namespace Dfe.PrepareConversions.Tests.Pages
 		}
 
       private static string BuildRequestAddress(string path)
-		{
+      {
          return $"https://localhost{(path.StartsWith('/') ? path : $"/{path}")}";
       }
 
@@ -45,7 +46,7 @@ namespace Dfe.PrepareConversions.Tests.Pages
          await Context.OpenAsync(BuildRequestAddress(path));
 
          Document.Url.Should().Be(BuildRequestAddress(expectedPath ?? path), because: because ?? "navigation should be successful");
-		}
+      }
 
 		public async Task<IDocument> NavigateAsync(string linkText, int? index = null)
 		{
@@ -108,5 +109,27 @@ namespace Dfe.PrepareConversions.Tests.Pages
 			_factory.Reset();
 			GC.SuppressFinalize(this);
 		}
-	}
+
+      protected IEnumerable<IElement> ElementsWithText(string tag, string content)
+      {
+         return Document.QuerySelectorAll(tag).Where(t => t.TextContent.Contains(content));
+      }
+
+      protected IHtmlInputElement InputWithId(string inputId)
+      {
+         IHtmlInputElement inputElement = Document.QuerySelector<IHtmlInputElement>(inputId.StartsWith('#') ? inputId : $"#{inputId}");
+         inputElement.Should().NotBeNull(because: $"element with ID {inputId} should be available on the page ({Document.Url})");
+         return inputElement;
+      }
+
+      protected async Task ClickCommonSubmitButtonAsync()
+      {
+         IHtmlButtonElement buttonElement = Document.QuerySelector<IHtmlButtonElement>("button[data-cy=\"select-common-submitbutton\"]");
+
+         buttonElement.Should()
+            .NotBeNull(because: $"A button with the common submit button selector (data-cy=\"select-common-submitbutton\") is expected on this page ({Document.Url})");
+
+         await buttonElement.SubmitAsync();
+      }
+   }
 }

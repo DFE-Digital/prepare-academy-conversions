@@ -7,10 +7,13 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Tests.Customisations;
 using AutoFixture;
 using AutoFixture.Dsl;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Http;
+using WireMock.Util;
 
 namespace Dfe.PrepareConversions.Tests.Pages
 {
@@ -88,18 +91,13 @@ namespace Dfe.PrepareConversions.Tests.Pages
 			return projectNotes;
 		}
 
-		public UpdateAcademyConversionProject AddPatchProject<TProperty>(AcademyConversionProject project, Expression<Func<UpdateAcademyConversionProject, TProperty>> expectedValue)
-		{
-			return AddPatchProject(project, expectedValue, _fixture.Create<TProperty>());
-		}
-
-		public UpdateAcademyConversionProject AddPatchProject<TProperty>(AcademyConversionProject project, Expression<Func<UpdateAcademyConversionProject, TProperty>> expectedValue, TProperty value)
+		public UpdateAcademyConversionProject AddPatchProject<TProperty>(AcademyConversionProject project, Expression<Func<UpdateAcademyConversionProject, TProperty>> propertyThatWillChange, TProperty expectedNewValue)
 		{
 			var request = _fixture
 				.Build<UpdateAcademyConversionProject>()
 				.OmitAutoProperties()
-				.With(expectedValue, value)
-				.Create();
+				.With(propertyThatWillChange, expectedNewValue)
+            .Create();
 
          _factory.AddPatchWithJsonRequest(string.Format(_pathFor.UpdateProject, project.Id), request, project);
 			return request;
@@ -118,7 +116,18 @@ namespace Dfe.PrepareConversions.Tests.Pages
 			return request;
 		}
 
-		public ProjectNote AddPostProjectNote(int id, AddProjectNote request)
+      protected void ExpectPatchProjectMatching(AcademyConversionProject project, Func<UpdateAcademyConversionProject, bool> matcher)
+      {
+         _factory.AddApiCallWithBodyDelegate(
+            string.Format(_pathFor.UpdateProject, project.Id),
+            x => x?.BodyAsString != null && matcher(JsonConvert.DeserializeObject<UpdateAcademyConversionProject>(x.BodyAsString)),
+            project,
+            HttpMethod.Patch
+         );
+
+      }
+
+      public ProjectNote AddPostProjectNote(int id, AddProjectNote request)
       {
 			var response = new ProjectNote { Subject = request.Subject, Note = request.Note, Author = request.Author, Date = request.Date };
          _factory.AddPostWithJsonRequest(string.Format(_pathFor.AddProjectNote, id), request, response);

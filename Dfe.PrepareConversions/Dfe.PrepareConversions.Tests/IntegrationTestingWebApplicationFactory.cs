@@ -10,15 +10,23 @@ using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
 using Moq;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using WireMock.Logging;
 using WireMock.Matchers;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 using WireMock.Server;
+using WireMock.Util;
+using Xunit.Abstractions;
+
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable UnusedMember.Global
 
 namespace Dfe.PrepareConversions.Tests
 {
@@ -29,12 +37,26 @@ namespace Dfe.PrepareConversions.Tests
       private static readonly object Sync = new();
 
       private readonly WireMockServer _mockApiServer;
-      private readonly int _port;
+
+      public ITestOutputHelper DebugOutput { get; set; }
+
+      public IEnumerable<LogEntry> GetMockServerLogs(string path, HttpMethod verb = null)
+      {
+         IRequestBuilder requestBuilder = Request.Create().WithPath(path);
+         if (verb is not null) requestBuilder.UsingMethod(verb.Method);
+         return _mockApiServer.FindLogEntries(requestBuilder);
+      }
 
       public IntegrationTestingWebApplicationFactory()
       {
-         _port = AllocateNext();
-         _mockApiServer = WireMockServer.Start(_port);
+         int port = AllocateNext();
+         _mockApiServer = WireMockServer.Start(port);
+         _mockApiServer.LogEntriesChanged += EntriesChanged;
+      }
+
+      private void EntriesChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+      {
+         DebugOutput?.WriteLine($"API Server change: {JsonConvert.SerializeObject(e)}");
       }
 
       protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -144,6 +166,19 @@ namespace Dfe.PrepareConversions.Tests
                .WithPath(path)
                .WithBody(new JsonMatcher(JsonConvert.SerializeObject(requestBody), true))
                .UsingPatch())
+            .RespondWith(Response.Create()
+               .WithStatusCode(200)
+               .WithHeader("Content-Type", "application/json")
+               .WithBody(JsonConvert.SerializeObject(responseBody)));
+      }
+
+      public void AddApiCallWithBodyDelegate<TResponseBody>(string path, Func<IBodyData, bool> bodyDelegate,TResponseBody responseBody, HttpMethod verb = null)
+      {
+         _mockApiServer
+            .Given(Request.Create()
+               .WithPath(path)
+               .WithBody(bodyDelegate)
+               .UsingMethod(verb == null ? HttpMethod.Post.ToString() : verb.ToString()))
             .RespondWith(Response.Create()
                .WithStatusCode(200)
                .WithHeader("Content-Type", "application/json")
