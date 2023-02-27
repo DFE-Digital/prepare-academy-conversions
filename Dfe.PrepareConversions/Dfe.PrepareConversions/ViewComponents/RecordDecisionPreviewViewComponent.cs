@@ -8,31 +8,22 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.ViewComponents
 {
-	public class RecordDecisionPreviewViewComponent : ViewComponent
-	{
-		private readonly IAcademyConversionAdvisoryBoardDecisionRepository _decisionRepository;
-		private readonly ISession _session;
+   public class RecordDecisionPreviewViewComponent : ViewComponent
+   {
+      private readonly IAcademyConversionAdvisoryBoardDecisionRepository _decisionRepository;
 
-		public RecordDecisionPreviewViewComponent(IAcademyConversionAdvisoryBoardDecisionRepository decisionRepository, ISession session)
-		{
-			_decisionRepository = decisionRepository;
-			_session = session;
-		}
+      public RecordDecisionPreviewViewComponent(IAcademyConversionAdvisoryBoardDecisionRepository decisionRepository)
+      {
+         _decisionRepository = decisionRepository;
+      }
 
-		public async Task<IViewComponentResult> InvokeAsync(int id)
-		{			
-			var sessionKey = $"Decision_{id}";
-			var decision = _session.Get<AdvisoryBoardDecision>(sessionKey);
+      public async Task<IViewComponentResult> InvokeAsync(int id)
+      {
+         var decision = (await _decisionRepository.Get(id)).Body;
 
-			if (decision == null)
-			{
-				decision = (await _decisionRepository.Get(id)).Body;
-				_session.Set(sessionKey, decision);
-			}
+         var viewModel = new RecordDecisionPreviewViewModel(id, decision);
 
-			var viewModel = new RecordDecisionPreviewViewModel(id, decision);
-
-			return View(viewModel);
-		}
-	}
+         return View(viewModel);
+      }
+   }
 }
