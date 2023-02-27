@@ -23,5 +23,9 @@ public class SchoolAndTrustInformationViewModel
    public string ConversionSupportGrantAmount { get; set; }
    public string ConversionSupportGrantChangeReason { get; set; }
    public string DaoPackSentDate { get; set; }
-   public bool IsDao { get; set; }
+   public string Form7Received { get; set; }
+   public string Form7ReceivedDate { get; set; }
+    public bool IsDao { get; set; }
+    public bool WasForm7Received { get; set; }
+
 }
