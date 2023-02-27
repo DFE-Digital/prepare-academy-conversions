@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Dfe.PrepareConversions.Tests.TestHelpers;
 using AutoFixture;
+using Dfe.PrepareConversions.Tests.Extensions;
 
 namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 {
@@ -27,7 +28,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("Preview project template");
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
@@ -41,7 +42,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject(p => p.HeadTeacherBoardDate = null);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Generate project template");
 
@@ -64,7 +65,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject(p => p.HeadTeacherBoardDate = null);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Generate project template");
 
@@ -84,7 +85,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			var establishment = AddGetEstablishmentResponse(project.Urn.ToString());
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector("#school-phase").TextContent.Should().Be(establishment.PhaseOfEducation.Name);
@@ -111,7 +112,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject(p => p.DistanceFromSchoolToTrustHeadquarters = null) ;
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			var element = Document.QuerySelector("#distance-to-trust-headquarters-additional-text");
 			element.TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
@@ -122,7 +123,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-published-admission-number");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
@@ -141,7 +142,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-published-admission-number");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
@@ -158,7 +159,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject(p => p.SchoolBudgetInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector("#financial-year").TextContent.Should().Be(project.EndOfCurrentFinancialYear.ToDateString());
 			Document.QuerySelector("#finance-year-current").TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear.Value.ToMoneyString(true));
@@ -174,7 +175,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-finance-year-current");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
@@ -197,7 +198,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
                .With(r => r.CapitalCarryForwardAtEndMarchNextYear)
                .With(r => r.Urn, project.Urn));
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-financial-year");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
@@ -224,7 +225,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-school-budget-information-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-budget-information/additional-information");
@@ -239,7 +240,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			var establishment = AddGetEstablishmentResponse(project.Urn.ToString());
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector("#school-pupil-forecasts-additional-information").TextContent.Should().Be(project.SchoolPupilForecastsAdditionalInformation);
@@ -264,7 +265,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-school-pupil-forecasts-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information");
@@ -283,7 +284,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-school-pupil-forecasts-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information");
@@ -301,7 +302,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			var keyStage2Response = AddGetKeyStagePerformance((int)project.Urn).KeyStage2.ToList();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector("#key-stage-2-additional-information").TextContent.Should().Be(project.KeyStage2PerformanceAdditionalInformation);
@@ -342,7 +343,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn, ks => ks.KeyStage2 = new List<KeyStage2PerformanceResponse>());
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 			Document.QuerySelector("#key-stage-2-performance-tables").Should().BeNull();
 		}
 
@@ -352,7 +353,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-key-stage-2-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-2-performance-tables/additional-information");
@@ -373,7 +374,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-key-stage-2-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-2-performance-tables/additional-information");
@@ -391,7 +392,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			var keyStage4Response = AddGetKeyStagePerformance((int)project.Urn).KeyStage4.ToList();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector("#key-stage-4-additional-information").TextContent.Should().Be(project.KeyStage4PerformanceAdditionalInformation);
@@ -405,7 +406,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn, ks => ks.KeyStage4 = new List<KeyStage4PerformanceResponse>());
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 			Document.QuerySelector("#key-stage-4-performance-tables").Should().BeNull();
 		}
 
@@ -415,7 +416,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-key-stage-4-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-4-performance-tables/additional-information");
@@ -436,7 +437,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-key-stage-4-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-4-performance-tables/additional-information");
@@ -454,7 +455,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			var keyStage5Response = AddGetKeyStagePerformance((int)project.Urn).KeyStage5.ToList();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector("#key-stage-5-additional-information").TextContent.Should().Be(project.KeyStage5PerformanceAdditionalInformation);
@@ -481,7 +482,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-key-stage-5-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-5-performance-tables/additional-information");
@@ -502,7 +503,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateDataTestAsync("change-key-stage-5-additional-information");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-5-performance-tables/additional-information");
@@ -519,7 +520,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 			Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 
 			Document.QuerySelector("#project-recommendation").TextContent.Should().Be(project.RecommendationForProject);
@@ -547,7 +548,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 0);
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/project-recommendation");
@@ -568,7 +569,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 0);
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/project-recommendation");
@@ -592,7 +593,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 5);
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
@@ -622,7 +623,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 5);
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
@@ -656,7 +657,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
             .With(r => r.PreviousHeadTeacherBoardDate, default(DateTime))
             .With(r => r.Urn, project.Urn));
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 5);
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
@@ -676,7 +677,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 5);
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
@@ -695,7 +696,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 5);
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
@@ -727,7 +728,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 5);
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
@@ -769,7 +770,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/preview-project-template");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
 			await NavigateAsync("Change", 5);
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");

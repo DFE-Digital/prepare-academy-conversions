@@ -20,7 +20,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 		}
 
 		private IHtmlAnchorElement BackLink => Document.QuerySelector<IHtmlAnchorElement>($"[data-cy='select-backlink']");
-		private Uri BackLinkUri => new Uri(BackLink?.Href!);
+		private Uri BackLinkUri => new(BackLink?.Href!);
 		private string BackLinkPath => string.IsNullOrWhiteSpace(BackLinkUri.Query) ? BackLinkUri.PathAndQuery : BackLinkUri.PathAndQuery.Replace(BackLinkUri.Query, string.Empty);
 		private string PageHeading => Document.QuerySelector<IHtmlElement>("h1")?.Text().Trim();
 		private string PageSubHeading => Document.QuerySelector<IHtmlElement>("h2")?.Text().Trim();
@@ -42,12 +42,12 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 
 			_factory.AddPostWithJsonRequest("/conversion-project/advisory-board-decision", request, "");
 
-			await OpenUrlAsync($"/task-list/{_project.Id}/decision/record-decision");
+			await OpenAndConfirmPathAsync($"/task-list/{_project.Id}/decision/record-decision");
 
 			await _wizard.SubmitThroughTheWizard(request);
 			await _wizard.ClickSubmitButton();
 
-			await OpenUrlAsync($"/task-list/{_project.Id}/decision/summary");
+         await OpenAndConfirmPathAsync($"/task-list/{_project.Id}/decision/summary", expectedPath: $"/task-list/{_project.Id}");
 
 			PageSubHeading.Should().Be("Task list");
 		}
@@ -67,7 +67,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 
 			_factory.AddPostWithJsonRequest("/conversion-project/advisory-board-decision", request, "");
 
-			await OpenUrlAsync($"/task-list/{_project.Id}/decision/record-decision");
+			await OpenAndConfirmPathAsync($"/task-list/{_project.Id}/decision/record-decision");
 
 			await _wizard.SubmitThroughTheWizard(request);
 

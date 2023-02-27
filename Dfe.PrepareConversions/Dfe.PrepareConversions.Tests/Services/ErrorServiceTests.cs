@@ -1,11 +1,8 @@
-﻿using Dfe.PrepareConversions.Models;
-using Dfe.PrepareConversions.Services;
+﻿using Dfe.PrepareConversions.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Services
@@ -24,10 +21,10 @@ namespace Dfe.PrepareConversions.Tests.Services
 		[Fact]
 		public void GivenAddTramsError_CanRetrieveTramsError()
 		{
-			_errorService.AddTramsError();
+			_errorService.AddApiError();
 			var errors = _errorService.GetErrors();
 			errors.Count().Should().Be(1);
-			errors.First().Message.Should().Contain("There is a problem with TRAMS");
+			errors.First().Message.Should().Contain("There is a system problem");
 		}
 
 		[Fact]

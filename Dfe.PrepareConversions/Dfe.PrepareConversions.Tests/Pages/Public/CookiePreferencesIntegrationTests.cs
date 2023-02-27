@@ -16,7 +16,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Public
 		public async Task Should_navigate_to_the_cookie_preferences_from_the_link()
 		{
 			var project = AddGetProject();
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateDataTestAsync("cookie-preferences");
 
@@ -27,7 +27,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Public
 		public async Task Should_navigate_to_the_cookie_preferences_from_the_first_link_in_the_banner()
 		{
 			var project = AddGetProject();
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateDataTestAsync("cookie-banner-link-1");
 
@@ -38,7 +38,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Public
 		public async Task Should_navigate_to_the_cookie_preferences_from_the_second_link_in_the_banner()
 		{
 			var project = AddGetProject();
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateDataTestAsync("cookie-banner-link-2");
 
@@ -50,7 +50,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Public
 		{
 			var project = AddGetProject();
 			string url = $"/task-list/{project.Id}";
-			await OpenUrlAsync(url);
+			await OpenAndConfirmPathAsync(url);
 
 			await NavigateDataTestAsync("cookie-banner-accept");
 
@@ -60,7 +60,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Public
 		[Fact]
 		public async Task Should_stay_on_the_cookie_page_when_accepting_cookies_on_the_page()
 		{
-			await OpenUrlAsync("/public/cookie-preferences");
+			await OpenAndConfirmPathAsync("/public/cookie-preferences");
 
 			Document.QuerySelector<IHtmlInputElement>("#cookie-consent-accept").IsChecked = true;
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
@@ -71,7 +71,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Public
 		[Fact]
 		public async Task Should_stayon_cookie_page_to_page_accepting_cookies_on_banner()
 		{
-			await OpenUrlAsync("/public/cookie-preferences");
+			await OpenAndConfirmPathAsync("/public/cookie-preferences");
 
 			await NavigateDataTestAsync("cookie-banner-accept");
 
@@ -81,7 +81,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Public
 		[Fact]
 		public async Task Should_stay_on_the_cookie_page_when_rejecting_cookies_on_the_page()
 		{
-			await OpenUrlAsync("/public/cookie-preferences");
+			await OpenAndConfirmPathAsync("/public/cookie-preferences");
 
 			Document.QuerySelector<IHtmlInputElement>("#cookie-consent-deny").IsChecked = true;
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
@@ -94,7 +94,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Public
 		{
 			var project = AddGetProject();
 			string url = $"/task-list/{project.Id}";
-			await OpenUrlAsync(url);
+			await OpenAndConfirmPathAsync(url);
 
 			await NavigateDataTestAsync("cookie-banner-link-2");
 
@@ -113,7 +113,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Public
 		{
 			var project = AddGetProject();
 			string url = $"/task-list/{project.Id}";
-			await OpenUrlAsync(url);
+			await OpenAndConfirmPathAsync(url);
 
 			await NavigateDataTestAsync("cookie-banner-link-2");
 

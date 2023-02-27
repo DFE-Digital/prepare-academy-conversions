@@ -28,7 +28,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList
 		[Fact]
 		public async Task Should_redirect_to_record_decision()
 		{
-			await OpenUrlAsync($"/task-list/{_project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{_project.Id}");
 
 			await NavigateAsync("Record a decision");
 
@@ -48,11 +48,11 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList
 				ConversionProjectId = _project.Id
 			};
 
-			await OpenUrlAsync($"/task-list/{_project.Id}/decision/record-decision");
+			await OpenAndConfirmPathAsync($"/task-list/{_project.Id}/decision/record-decision");
 
 			await new RecordDecisionWizard(Context).SubmitThroughTheWizard(request);
 
-			await OpenUrlAsync($"/task-list/{_project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{_project.Id}");
 
 			DecisionElement.Text().Should()
 				.Be("APPROVED WITH CONDITIONS");
@@ -78,7 +78,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList
 			await _wizard.SetDeferredReasonsAndContinue(Tuple.Create(AdvisoryBoardDeferredReason.Other, "other explanation"));
 			await _wizard.SetDecisionDateAndContinue(new DateTime(DateTime.Today.Year, 1, 1));
 
-			await OpenUrlAsync($"/task-list/{_project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{_project.Id}");
 
 			DecisionElement.Text().Should()
 				.Be("Deferred");
@@ -99,7 +99,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList
 			await _wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Other, "other explanation"));
 			await _wizard.SetDecisionDateAndContinue(new DateTime(DateTime.Today.Year, 1, 1));
 
-			await OpenUrlAsync($"/task-list/{_project.Id}?");
+			await OpenAndConfirmPathAsync($"/task-list/{_project.Id}?");
 
 			DecisionElement.Text().Should()
 				.Be("Declined");
@@ -126,7 +126,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList
 
 			_factory.AddGetWithJsonResponse($"/conversion-project/advisory-board-decision/{_project.Id}", response);
 
-			await OpenUrlAsync($"/task-list/{_project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{_project.Id}");
 
 			DecisionElement.Text().Should()
 				.Be("APPROVED WITH CONDITIONS");

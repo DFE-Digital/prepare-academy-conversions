@@ -1,5 +1,6 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -15,7 +16,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.RisksAndIssues
 		{
 			var project = AddGetProject(p => p.RisksAndIssuesSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#risks-and-issues-status").TextContent.Trim().Should().Be("In Progress");
 			Document.QuerySelector("#risks-and-issues-status").ClassName.Should().Contain("blue");
@@ -39,7 +40,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.RisksAndIssues
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#risks-and-issues-status").TextContent.Trim().Should().Be("Completed");
 
@@ -66,7 +67,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.RisksAndIssues
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#risks-and-issues-status").TextContent.Trim().Should().Be("Not Started");
 			Document.QuerySelector("#risks-and-issues-status").ClassName.Should().Contain("grey");
@@ -87,7 +88,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.RisksAndIssues
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-risks-issues");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-risks-issues");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -99,7 +100,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.RisksAndIssues
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 			await NavigateAsync("Risks and issues");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-risks-issues");

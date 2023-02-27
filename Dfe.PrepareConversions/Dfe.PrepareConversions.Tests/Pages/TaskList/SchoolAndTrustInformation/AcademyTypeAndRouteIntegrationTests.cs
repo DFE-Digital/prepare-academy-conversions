@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Extensions;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -22,7 +23,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolAndTrustInformation
                .With(r => r.Urn, project.Urn)
 			);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 			await NavigateDataTestAsync("change-academy-type-and-route");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/route-and-grant");

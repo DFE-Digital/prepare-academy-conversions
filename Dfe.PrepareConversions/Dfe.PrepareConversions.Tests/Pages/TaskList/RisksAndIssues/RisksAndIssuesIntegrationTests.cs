@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -21,7 +22,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.RisksAndIssues
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-risks-issues");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-risks-issues");
 			await NavigateAsync("Change", 0);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/risks-issues");
@@ -40,7 +41,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.RisksAndIssues
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/risks-issues");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/risks-issues");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -52,7 +53,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.RisksAndIssues
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/risks-issues");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/risks-issues");
 			await NavigateAsync("Back");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-risks-issues");

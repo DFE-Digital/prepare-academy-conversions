@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -21,7 +22,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Rationale
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale");
 			await NavigateAsync("Change", 1);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale/trust-rationale");
@@ -40,7 +41,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Rationale
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/trust-rationale");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/trust-rationale");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -52,7 +53,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.Rationale
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/trust-rationale");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/trust-rationale");
 			await NavigateAsync("Back");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale");

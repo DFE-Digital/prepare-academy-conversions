@@ -31,7 +31,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectList
 			AddGetProjects(recordCount: _recordCount);
 			AddGetStatuses();
 
-			await OpenUrlAsync("/project-list");
+			await OpenAndConfirmPathAsync("/project-list");
 
 			FilterStatuses.Should().NotBeEmpty();
 		}

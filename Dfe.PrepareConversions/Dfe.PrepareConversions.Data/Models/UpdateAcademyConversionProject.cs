@@ -30,6 +30,7 @@ namespace Dfe.PrepareConversions.Data.Models
 		public DateTime? PreviousHeadTeacherBoardDate { get; set; }
 		public decimal? ConversionSupportGrantAmount { get; set; }
 		public string ConversionSupportGrantChangeReason { get; set; }
+      public DateTime? DaoPackSentDate { get; set; }
 
 		//general info
 		public string PublishedAdmissionNumber { get; set; }

@@ -17,7 +17,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
 			var selectedSchool = Document.QuerySelector<IHtmlElement>("#selection-span").Text();
 
@@ -29,12 +29,12 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
 			Document.QuerySelector<IHtmlInputElement>("#approved-radio").IsChecked = true;
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
 			var formElement = Document.QuerySelector<IHtmlInputElement>("#approved-radio");
 
@@ -46,7 +46,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
 			Document.QuerySelector<IHtmlInputElement>("#approved-radio").IsChecked = true;
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
@@ -59,7 +59,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
 			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
 
@@ -73,7 +73,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
 			await NavigateAsync("Back to task list");
 

@@ -2,6 +2,7 @@ using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.KeyStagePerformance
 			var project = AddGetProject();
 			var keyStage2Response = AddGetKeyStagePerformance((int)project.Urn).KeyStage2.ToList();
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#key-stage-2-performance-tables-status").TextContent.Trim().Should().Be("Reference only");
 			Document.QuerySelector("#key-stage-2-performance-tables-status").ClassName.Should().Contain("grey");
@@ -66,7 +67,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.KeyStagePerformance
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("Key stage 2 performance tables");
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/key-stage-2-performance-tables");
@@ -82,7 +83,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.KeyStagePerformance
 			var project = AddGetProject();
 			AddGetKeyStagePerformance((int)project.Urn);
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("Key stage 2 performance tables");
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/key-stage-2-performance-tables");
@@ -103,7 +104,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.KeyStagePerformance
 
 			AddGetKeyStagePerformance((int)project.Urn, ks => ks.KeyStage2 = ks2ResponseOrderedByYear);
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			await NavigateAsync("Key stage 2 performance tables");
 
@@ -121,7 +122,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.KeyStagePerformance
 
 			AddGetKeyStagePerformance((int)project.Urn, ks => ks.KeyStage2 = new List<KeyStage2PerformanceResponse>());
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#key-stage-2-performance-tables").Should().BeNull();
 		}

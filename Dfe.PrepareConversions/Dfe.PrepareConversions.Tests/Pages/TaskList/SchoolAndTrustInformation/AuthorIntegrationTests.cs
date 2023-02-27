@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -21,7 +22,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 			await NavigateAsync("Change", 6);
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/author");
@@ -40,7 +41,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/author");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/author");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
@@ -52,7 +53,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/author");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/author");
 			await NavigateAsync("Back");
 
 			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");

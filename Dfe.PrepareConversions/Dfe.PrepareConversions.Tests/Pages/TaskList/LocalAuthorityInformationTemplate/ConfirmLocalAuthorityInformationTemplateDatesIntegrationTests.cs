@@ -2,6 +2,7 @@
 using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Tests.Customisations;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.LocalAuthorityInformationTemplate
 		{
 			var project = AddGetProject(p => p.LocalAuthorityInformationTemplateSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#la-info-template-status").TextContent.Trim().Should().Be("In Progress");
 			Document.QuerySelector("#la-info-template-status").ClassName.Should().Contain("blue");
@@ -46,7 +47,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.LocalAuthorityInformationTemplate
             x.Urn = project.Urn;
          });
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
 			Document.QuerySelector("#la-info-template-status").TextContent.Trim().Should().Be("Completed");
 
@@ -66,11 +67,11 @@ namespace Dfe.PrepareConversions.Tests.Pages.LocalAuthorityInformationTemplate
 			var project = AddGetProject();
 			AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
 
 			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
-			var element = Document.QuerySelector(".govuk-error-summary").InnerHtml.Should().Contain("There is a problem with TRAMS");
+			Document.QuerySelector(".govuk-error-summary").InnerHtml.Should().Contain("There is a system problem");
 		}
 
 		[Fact]
@@ -78,7 +79,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.LocalAuthorityInformationTemplate
 		{
 			var project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+			await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 			await NavigateAsync("Record dates for the LA information template");
 
 			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
