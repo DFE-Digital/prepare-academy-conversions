@@ -1,10 +1,7 @@
-using Dfe.PrepareConversions.Data;
-using Dfe.PrepareConversions.Data.Models.AcademyConversion;
 using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.Data.Services;
-using Dfe.PrepareConversions.Data.Services.Interfaces;
-using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Models;
+using Dfe.PrepareConversions.Models.ProjectList;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -24,11 +21,10 @@ namespace Dfe.PrepareConversions.Pages.TaskList
 		{
 			_keyStagePerformanceService = keyStagePerformanceService;
 			_errorService = errorService;
-		}
+      }
 
 		public bool ShowGenerateHtbTemplateError { get; set; }
-		public Status LegalRequirementsStatus { get; set; } = Status.NotStarted;
-		public TaskListViewModel TaskList { get; set; }
+      public TaskListViewModel TaskList { get; set; }
 
 		public void SetErrorPage(string errorPage)
 		{
@@ -37,7 +33,9 @@ namespace Dfe.PrepareConversions.Pages.TaskList
 
 		public override async Task<IActionResult> OnGetAsync(int id)
 		{
-			IActionResult result = await SetProject(id);
+         ProjectListFilters.ClearFiltersFrom(TempData);
+
+         IActionResult result = await SetProject(id);
 
 			if ((result as StatusCodeResult)?.StatusCode == (int)HttpStatusCode.NotFound)
 			{
