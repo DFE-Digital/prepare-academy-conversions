@@ -26,6 +26,6 @@ public class SchoolAndTrustInformationViewModel
    public string Form7Received { get; set; }
    public string Form7ReceivedDate { get; set; }
     public bool IsDao { get; set; }
-    public bool WasForm7Recieved { get; set; }
+    public bool WasForm7Received { get; set; }
 
 }
