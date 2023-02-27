@@ -17,7 +17,9 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolAndTrustInformation
    {
       private static readonly DateTime Tomorrow = DateTime.Today.Add(TimeSpan.FromDays(1));
       private static readonly DateTime Yesterday = DateTime.Today.Subtract(TimeSpan.FromDays(1));
+
       public Form7ReceivedDateIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+
       private void FillInDateWith(DateTime? date)
       {
          InputWithId("form-7-received-date-day").Value = date?.Day.ToString() ?? string.Empty;
