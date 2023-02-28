@@ -263,8 +263,8 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 		[InlineData(3, "Date conversion was approved", "Check your answers before recording this decision")]
 		public async Task Should_go_back_to_choose_and_submit_back_to_summary(int changeLinkIndex, string changePageTitle, string nextPageTitle)
 		{
-			AdvisoryBoardDecision request = new AdvisoryBoardDecision
-			{
+			AdvisoryBoardDecision request = new()
+         {
 				Decision = AdvisoryBoardDecisions.Approved,
 				DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
 				ApprovedConditionsSet = true,

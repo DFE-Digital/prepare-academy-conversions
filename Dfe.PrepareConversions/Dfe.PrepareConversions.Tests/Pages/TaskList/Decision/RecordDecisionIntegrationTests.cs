@@ -1,5 +1,6 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -8,9 +9,9 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 {
 	public class RecordDecisionIntegrationTests : BaseIntegrationTests
 	{
-		public RecordDecisionIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
-		{
-		}
+      public RecordDecisionIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+      {
+      }
 		
 		[Fact]
 		public async Task Should_display_selected_schoolname()
@@ -28,6 +29,8 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
 		public async Task Should_persist_selected_decision()
 		{
 			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+         _factory.AddGetWithJsonResponse($"/conversion-project/advisory-board-decision/{project.Id}", 
+            new AdvisoryBoardDecision { Decision = AdvisoryBoardDecisions.Approved});
 
 			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
