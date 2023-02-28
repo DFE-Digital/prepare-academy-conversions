@@ -38,7 +38,9 @@ namespace Dfe.PrepareConversions.Data.Models
 		public string SponsorReferenceNumber { get; set; }
 		public string SponsorName { get; set; }
 		public string AcademyTypeAndRoute { get; set; }
-		public DateTime? ProposedAcademyOpeningDate { get; set; }
+      public string Form7Received { get; set; }
+      public DateTime? Form7ReceivedDate { get; set; }
+      public DateTime? ProposedAcademyOpeningDate { get; set; }
 		public bool? SchoolAndTrustInformationSectionComplete { get; set; }
 		public decimal? ConversionSupportGrantAmount { get; set; }
 		public string ConversionSupportGrantChangeReason { get; set; }

@@ -57,7 +57,17 @@ namespace Dfe.PrepareConversions.Models
 		[BindProperty(Name = "academy-order-required")]
 		public string AcademyOrderRequired { get; set; }
 
-		[BindProperty(Name = "proposed-academy-opening-date")]
+      [BindProperty(Name = "form-7-received")]
+      [DisplayFormat(ConvertEmptyStringToNull = false)]
+      public string Form7Received { get; set; }
+
+      [BindProperty(Name = "form-7-received-date")]
+      [ModelBinder(BinderType = typeof(DateInputModelBinder))]
+      [DateValidation(DateRangeValidationService.DateRange.Past)]
+      [Display(Name = "Form 7 Received Date")]
+      public DateTime? Form7ReceivedDate { get; set; }
+
+      [BindProperty(Name = "proposed-academy-opening-date")]
 		public DateTime? ProposedAcademyOpeningDate { get; set; }
 
 		[BindProperty(Name = "school-and-trust-information-complete")]
@@ -221,5 +231,6 @@ namespace Dfe.PrepareConversions.Models
 		[BindProperty(Name = "key-stage-5-additional-information")]
 		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string KeyStage5PerformanceAdditionalInformation { get; set; }
-	}
+
+   }
 }
