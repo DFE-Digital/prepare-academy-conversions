@@ -55,8 +55,6 @@ namespace Dfe.PrepareConversions.Pages
 				return Page();
 			}
 
-         if (AcademyConversionProject.Form7ReceivedDate == DateTime.MinValue) AcademyConversionProject.Form7ReceivedDate = null;
-         if (AcademyConversionProject.DaoPackSentDate == DateTime.MinValue) AcademyConversionProject.DaoPackSentDate = null;
 			var response = await _repository.UpdateProject(id, Build());
 
 			if (!response.Success)
