@@ -3,7 +3,6 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Graph;
 using System;
 using System.Threading.Tasks;
 
