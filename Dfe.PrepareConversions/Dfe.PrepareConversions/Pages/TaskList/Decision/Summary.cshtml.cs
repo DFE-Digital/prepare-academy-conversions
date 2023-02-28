@@ -64,9 +64,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.Decision
 			}
 			else
          {
-            decision.AdvisoryBoardDecisionId = savedDecision.Body.AdvisoryBoardDecisionId;
-            decision.ConversionProjectId = savedDecision.Body.ConversionProjectId;
-				await _advisoryBoardDecisionRepository.Update(decision);
+            await _advisoryBoardDecisionRepository.Update(decision);
 			}
 
 			await _academyConversionProjectRepository.UpdateProject(id, new UpdateAcademyConversionProject { ProjectStatus = decision.GetDecisionAsFriendlyName() });

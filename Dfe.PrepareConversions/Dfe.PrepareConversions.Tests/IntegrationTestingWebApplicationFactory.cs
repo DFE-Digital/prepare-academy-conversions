@@ -74,13 +74,14 @@ namespace Dfe.PrepareConversions.Tests
 						{ "AcademisationApi:BaseUrl", _mockApiServer.Url },
 						{ "AzureAd:AllowedRoles", string.Empty }, // Do not restrict access for integration test
 						{ "ServiceLink:TransfersUrl", "https://an-external-service.com/" }
-			   })
+               })
 					.AddEnvironmentVariables();
 			});
 
 			var featureManager = new Mock<IFeatureManager>();
-         featureManager.Setup(m => m.IsEnabledAsync(("UseAcademisation"))).ReturnsAsync(true);
-         featureManager.Setup(m => m.IsEnabledAsync(("UseAcademisationApplication"))).ReturnsAsync(false);
+         featureManager.Setup(m => m.IsEnabledAsync("UseAcademisation")).ReturnsAsync(true);
+         featureManager.Setup(m => m.IsEnabledAsync("UseAcademisationApplication")).ReturnsAsync(false);
+         featureManager.Setup(m => m.IsEnabledAsync("ShowDirectedAcademyOrders")).ReturnsAsync(true);
 
          builder.ConfigureServices(services =>
 			{
