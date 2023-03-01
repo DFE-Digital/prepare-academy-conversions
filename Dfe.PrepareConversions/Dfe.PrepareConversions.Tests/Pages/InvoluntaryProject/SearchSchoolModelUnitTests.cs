@@ -6,6 +6,7 @@ using Dfe.PrepareConversions.Pages.InvoluntaryProject;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -87,11 +88,15 @@ namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
 		public async Task OnGetSearch_SearchSchool_Prepopulated([Frozen] Mock<IGetEstablishment> getEstablishment)
 		{
 			// Arrange
-			var sut = new SearchSchoolModel(getEstablishment.Object, new ErrorService());
-			var establishmentResponse = new EstablishmentResponse { EstablishmentName = "Bristol", Urn = "100" };
-			getEstablishment.Setup(m => m.GetEstablishmentByUrn(It.IsAny<string>())).ReturnsAsync(establishmentResponse);
+         var sut = new SearchSchoolModel(getEstablishment.Object, new ErrorService())
+         {
+            TempData = new TempDataDictionary(Mock.Of<HttpContext>(), Mock.Of<ITempDataProvider>())
+         };
+         var establishmentResponse = new EstablishmentResponse { EstablishmentName = "Bristol", Urn = "100" };
+         getEstablishment.Setup(m => m.GetEstablishmentByUrn(It.IsAny<string>())).ReturnsAsync(establishmentResponse);
 
-			// Act
+
+         // Act
 			await sut.OnGet(establishmentResponse.Urn);
 
 			// Assert

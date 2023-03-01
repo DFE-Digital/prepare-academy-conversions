@@ -64,6 +64,7 @@ namespace Dfe.PrepareConversions.Models
       [BindProperty(Name = "form-7-received-date")]
       [ModelBinder(BinderType = typeof(DateInputModelBinder))]
       [DateValidation(DateRangeValidationService.DateRange.Past)]
+      [Display(Name = "Form 7 Received Date")]
       public DateTime? Form7ReceivedDate { get; set; }
 
       [BindProperty(Name = "proposed-academy-opening-date")]

@@ -53,7 +53,7 @@ namespace Dfe.PrepareConversions.TagHelpers
 			}
 
 			var error = _errorService.GetError(Name);
-			if (error != null)
+			if (error is not null)
 			{
 				model.ErrorMessage = error.Message;
 				model.DayInvalid = error.InvalidInputs.Contains($"{Name}-day");

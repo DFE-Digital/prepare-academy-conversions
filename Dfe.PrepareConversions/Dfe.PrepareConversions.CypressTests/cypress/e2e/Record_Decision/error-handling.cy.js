@@ -5,8 +5,10 @@ import ProjectList from '../../pages/projectList'
 
 describe('103787 Error handling', { tags: '@dev'}, () => {
     beforeEach(() => {
-        ProjectList.selectProject().then(() => {            
+        ProjectList.selectProject().then(id => {            
+            cy.sqlServer(`DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = ${id}`)
             cy.clearCookies()
+            cy.reload()
         })
     })
 
