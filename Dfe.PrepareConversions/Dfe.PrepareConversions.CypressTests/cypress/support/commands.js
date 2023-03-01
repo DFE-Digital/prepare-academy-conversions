@@ -619,3 +619,19 @@ Cypress.Commands.add('selectTrust', () => {
     cy.get('#SearchQuery__option--1').click();
     cy.get('[data-id="submit"]').click()
 })
+
+Cypress.Commands.add('submitDateSNMReceivedForm', (day, month, year) => {
+	cy.get('#form-7-received-date-day').should('be.visible')
+	cy.get('#form-7-received-date-day').clear().type(day)
+	cy.get('#form-7-received-date-month').clear().type(month)
+	cy.get('#form-7-received-date-year').clear().type(year)
+	cy.saveLocalStorage()
+});
+
+Cypress.Commands.add('submitDAODate', (day, month, year) => {
+	cy.get('#dao-pack-sent-date-day').should('be.visible')
+	cy.get('#dao-pack-sent-date-day').clear().type(day)
+	cy.get('#dao-pack-sent-date-month').clear().type(month)
+	cy.get('#dao-pack-sent-date-year').clear().type(year)
+	cy.saveLocalStorage()
+});
