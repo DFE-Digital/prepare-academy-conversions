@@ -104,6 +104,8 @@ jobs:
     needs: [ build-and-push-image, set-env ]
     runs-on: ubuntu-22.04
     environment: ${{ needs.set-env.outputs.environment }}
+    outputs:
+      endpoint: ${{ steps.azure.outputs.endpoint }}
     steps:
       - name: Azure login with ACA credentials
         uses: azure/login@v1
@@ -122,6 +124,9 @@ jobs:
               --resource-group ${{ secrets.CIP_ACA_RESOURCE_GROUP }} \
               --image ${{ secrets.CIP_ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ needs.set-env.outputs.release }} \
               --output none
+            ENDPOINT=$(az afd endpoint list -g ${{ secrets.CIP_ACA_RESOURCE_GROUP }} --profile-name ${{ secrets.CIP_ACA_RESOURCE_GROUP }}cdn --only-show-errors | jq -r '.[] | .hostName')
+            echo "::add-mask::$ENDPOINT"
+            echo "endpoint=https://${ENDPOINT}" >> $GITHUB_OUTPUT
 
   cypress-tests:
     name: Run Cypress Tests
@@ -146,11 +151,11 @@ jobs:
         run: npm install
 
       - name: Run cypress
-        run: npm run cy:run -- --env url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
+        run: npm run cy:run -- --env url='${{ needs.deploy-image.outputs.endpoint }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
         env:
           db: ${{ secrets.DB_CONNECTION_STRING }}
 
       - uses: actions/upload-artifact@v1
         with:
-          name: screenshots-${{ matrix.environment }}
+          name: screenshots-${{ needs.set-env.outputs.environment }}
           path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots
