@@ -27,7 +27,6 @@ public class IndexModel : PaginatedPageModel
    public IEnumerable<ProjectListViewModel> Projects { get; set; }
    public int ProjectCount => Projects.Count();
 
-
    public int TotalProjects { get; set; }
 
    [BindProperty]
@@ -35,15 +34,14 @@ public class IndexModel : PaginatedPageModel
 
    public async Task OnGetAsync()
    {
-      Filters.PersistUsing(TempData)
-         .PopulateFrom(Request.Query);
+      Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
 
       ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response =
          await _repository.GetAllProjects(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions);
 
       Paging = response.Body?.Paging;
 
-      Projects = response.Body.Data.Select(Build).ToList();
+      Projects = response.Body?.Data.Select(Build).ToList();
       TotalProjects = response.Body?.Paging?.RecordCount ?? 0;
 
       ApiResponse<ProjectFilterParameters> filterParametersResponse = await _repository.GetFilterParameters();
@@ -77,16 +75,18 @@ public class IndexModel : PaginatedPageModel
 
    private static ProjectStatus MapProjectStatus(string status)
    {
-      const string green = "green";
-      const string yellow = "yellow";
+      const string green = nameof(green);
+      const string yellow = nameof(yellow);
+      const string orange = nameof(orange);
+      const string red = nameof(red);
 
       if (Enum.TryParse(status, out AdvisoryBoardDecisions result))
       {
          return result switch
          {
             AdvisoryBoardDecisions.Approved => new ProjectStatus(result.ToString().ToUpper(), green),
-            AdvisoryBoardDecisions.Deferred => new ProjectStatus(result.ToString().ToUpper(), "orange"),
-            AdvisoryBoardDecisions.Declined => new ProjectStatus(result.ToString().ToUpper(), "red"),
+            AdvisoryBoardDecisions.Deferred => new ProjectStatus(result.ToString().ToUpper(), orange),
+            AdvisoryBoardDecisions.Declined => new ProjectStatus(result.ToString().ToUpper(), red),
             _ => new ProjectStatus(result.ToString().ToUpper(), yellow)
          };
       }
