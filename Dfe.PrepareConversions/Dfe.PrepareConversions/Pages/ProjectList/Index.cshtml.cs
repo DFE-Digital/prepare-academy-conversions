@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.ProjectList
 {
-	public class IndexModel : PageModel
+   public class IndexModel : PageModel, IPagination
 	{
 		private readonly int _pageSize = 10;
 
@@ -27,6 +27,7 @@ namespace Dfe.PrepareConversions.Pages.ProjectList
 
 		public IEnumerable<ProjectListViewModel> Projects { get; set; }
 		public int ProjectCount => Projects.Count();
+
 		public int StartingPage { get; private set; } = 1;
 		public bool HasPreviousPage => CurrentPage > 1;
 		public bool HasNextPage { get; private set; }
