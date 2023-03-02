@@ -4,44 +4,18 @@ namespace Dfe.PrepareConversions.ViewModels;
 
 public class ProjectListViewModel
 {
-   public string Id { get; set; }
-   public string NameOfTrust { get; set; }
-   public string SchoolName { get; set; }
-   public string SchoolURN { get; set; }
-   public string LocalAuthority { get; set; }
-   public string ApplicationReceivedDate { get; set; }
+   public string Id { get; init; }
+   public string NameOfTrust { get; init; }
+   public string SchoolName { get; init; }
+   public string SchoolURN { get; init; }
+   public string LocalAuthority { get; init; }
+   public string ApplicationReceivedDate { get; init; }
    public string AssignedDate { get; set; }
-   public string HeadTeacherBoardDate { get; set; }
-   public string ProposedAcademyOpeningDate { get; set; }
-   public ProjectStatus Status { get; set; }
-   public string AssignedUserFullName { get; set; }
-   public DateTime? CreatedOn { get; set; }
+   public string HeadTeacherBoardDate { get; init; }
+   public string ProposedAcademyOpeningDate { get; init; }
+   public ProjectStatus Status { get; init; }
+   public string AssignedUserFullName { get; init; }
+   public DateTime? CreatedOn { get; init; }
 
    public bool ShowHtbDate => string.IsNullOrWhiteSpace(HeadTeacherBoardDate) is false;
-}
-
-public class ProjectStatus
-{
-   public ProjectStatus(string value, string colour)
-   {
-      Value = value;
-      Colour = colour;
-   }
-
-   public string Value { get; set; }
-   public string Colour { get; set; }
-}
-
-public class ProjectListRowViewModel
-{
-   public ProjectListViewModel Item { get; init; }
-   public int Index { get; init; }
-}
-
-public static class ProjectListRowViewModelHelpers
-{
-   public static ProjectListRowViewModel Row(this ProjectListViewModel project, int index)
-   {
-      return new ProjectListRowViewModel { Item = project, Index = index };
-   }
 }
