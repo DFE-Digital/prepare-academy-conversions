@@ -54,4 +54,17 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Pages\Shared\_ProjectListRow.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="Pages\Shared\_Pagination.cshtml" />
+	  <_ContentIncludedByDefault Remove="Pages\Shared\_ProjectListRow.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Pages\Shared\_Pagination.cshtml" />
+	</ItemGroup>
 </Project>
