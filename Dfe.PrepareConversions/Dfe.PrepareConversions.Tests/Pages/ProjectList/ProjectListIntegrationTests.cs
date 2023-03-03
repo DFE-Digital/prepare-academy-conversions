@@ -8,17 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Dfe.PrepareConversions.Tests.Pages.ProjectList
 {
    public class ProjectListIntegrationTests : BaseIntegrationTests
    {
-      private readonly ITestOutputHelper _outputHelper;
-
-      public ProjectListIntegrationTests(IntegrationTestingWebApplicationFactory factory, ITestOutputHelper outputHelper) : base(factory)
+      public ProjectListIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
       {
-         _outputHelper = outputHelper;
       }
 
       [Fact]
@@ -39,7 +35,6 @@ namespace Dfe.PrepareConversions.Tests.Pages.ProjectList
          for (int i = 0; i < 2; i++)
          {
             AcademyConversionProject project = projects.ElementAt(i);
-            _outputHelper.WriteLine(project.AcademyTypeAndRoute);
 
             Document.QuerySelector($"#school-name-{i}")?.TextContent.Should().Contain(project.SchoolName);
             Document.QuerySelector($"#urn-{i}")?.TextContent.Should().Contain(project.Urn.ToString());
