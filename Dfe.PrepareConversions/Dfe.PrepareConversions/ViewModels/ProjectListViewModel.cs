@@ -16,12 +16,16 @@ public class ProjectListViewModel
    public ProjectStatus Status { get; init; }
    public string AssignedUserFullName { get; init; }
    public DateTime? CreatedOn { get; init; }
-   public string TypeAndRoute { get; set; }
+   public string TypeAndRoute { get; init; }
 
    public bool ShowHtbDate => string.IsNullOrWhiteSpace(HeadTeacherBoardDate) is false;
    public bool ShowProposedOpeningDate => string.IsNullOrWhiteSpace(ProposedAcademyOpeningDate) is false;
-   public bool IsSponsored => string.IsNullOrWhiteSpace(ApplicationReceivedDate);
-   public bool IsVoluntary => IsSponsored is false && IsFormAMat is false;
+
+   public bool IsSponsored => string.IsNullOrWhiteSpace(TypeAndRoute) is false &&
+                              TypeAndRoute.Equals("Sponsored", StringComparison.InvariantCultureIgnoreCase);
+
+   public bool IsVoluntary => string.IsNullOrWhiteSpace(TypeAndRoute) is false &&
+                              TypeAndRoute.Equals("Converter", StringComparison.InvariantCultureIgnoreCase);
 
    public bool IsFormAMat => string.IsNullOrWhiteSpace(TypeAndRoute) is false &&
                              TypeAndRoute.Equals("Form a MAT", StringComparison.InvariantCultureIgnoreCase);
