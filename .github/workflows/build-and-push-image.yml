@@ -150,7 +150,9 @@ jobs:
         env:
           db: ${{ secrets.DB_CONNECTION_STRING }}
 
-      - uses: actions/upload-artifact@v1
+      - name: Upload screenshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v1
         with:
           name: screenshots-${{ needs.set-env.outputs.environment }}
           path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots
