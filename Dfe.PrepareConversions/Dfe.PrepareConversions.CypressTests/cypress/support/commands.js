@@ -635,3 +635,39 @@ Cypress.Commands.add('submitDAODate', (day, month, year) => {
 	cy.get('#dao-pack-sent-date-year').clear().type(year)
 	cy.saveLocalStorage()
 });
+
+Cypress.Commands.add('setAdvisoryBoardDate', (day, month, year) => {
+	cy.get('#head-teacher-board-date-day').should('be.visible')
+	cy.get('#head-teacher-board-date-day').clear().type(day)
+	cy.get('#head-teacher-board-date-month').clear().type(month)
+	cy.get('#head-teacher-board-date-year').clear().type(year)
+    cy.get('#save-and-continue-button').click()
+	cy.saveLocalStorage()
+});
+
+Cypress.Commands.add('navigateToAllCreateProjectTemplateLinks', () => {
+    cy.get('[aria-describedby="school-and-trust-information-status"]').click()
+    cy.get('h1').should('not.contain', 'Page not found')
+    cy.get('[id="confirm-and-continue-button"]').click()
+    cy.get('[aria-describedby="general-information-status"]').click()
+    cy.get('h1').should('not.contain', 'Page not found')
+    cy.get('[id="confirm-and-continue-button"]').click()
+    cy.get('[aria-describedby="school-performance-status"]').click()
+    cy.get('h1').should('not.contain', 'Page not found')
+    cy.get('[id="confirm-and-continue-button"]').click()
+    cy.get('[aria-describedby="rationale-status"]').click()
+    cy.get('h1').should('not.contain', 'Page not found')
+    cy.get('[id="confirm-and-continue-button"]').click()
+    cy.get('[aria-describedby="risks-and-issues"]').click()
+    cy.get('h1').should('not.contain', 'Page not found')
+    cy.get('[id="confirm-and-continue-button"]').click()
+    cy.get('[aria-describedby="legal-requirements"]').click()
+    cy.get('h1').should('not.contain', 'Page not found')
+    cy.get('[data-cy="select-legal-summary-submitbutton"]').click()
+    cy.get('[aria-describedby="school-budget-information-status"]').click()
+    cy.get('h1').should('not.contain', 'Page not found')
+    cy.get('[id="confirm-and-continue-button"]').click()
+    cy.get('[aria-describedby="school-pupil-forecasts-status"]').click()
+    cy.get('h1').should('not.contain', 'Page not found')
+    cy.get('[id="confirm-and-continue-button"]').click()
+});
