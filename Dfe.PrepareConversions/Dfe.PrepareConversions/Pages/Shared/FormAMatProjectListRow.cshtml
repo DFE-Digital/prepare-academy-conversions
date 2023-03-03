@@ -9,14 +9,9 @@
          <span id="@("urn-" + Model.Index)">URN: @Model.Item.SchoolURN</span>
       </h2>
       <p class="govuk-!-margin-top-3">
-         <div data-cy="route">Route: @(string.IsNullOrWhiteSpace(Model.Item.ApplicationReceivedDate) ? "Involuntary conversion" : "Voluntary conversion")</div>
+         <div data-cy="route">Route: @Model.Item.TypeAndRoute.RouteDescription()</div>
          <div id="@("application-to-join-trust-" + Model.Index)">Application to join a trust: @Model.Item.NameOfTrust</div>
          <div id="@("local-authority-" + Model.Index)">Local authority: @Model.Item.LocalAuthority</div>
-         <div id="@("delivery-officer-" + Model.Index)">
-            Delivery officer:
-            <span if="Model.Item.AssignedUserFullName.IsEmpty()" class="empty">Empty</span>
-            <strong if="Model.Item.AssignedUserFullName.IsPresent()">@Model.Item.AssignedUserFullName</strong>
-         </div>
       </p>
    </td>
    <td class="govuk-table__cell govuk-table__cell prepare-text-align-right">
@@ -30,9 +25,8 @@
          <span if="Model.Item.ShowHtbDate" id="@("Advisory-Board-date-" + Model.Index)">
             @("Advisory board date: " + Model.Item.HeadTeacherBoardDate)<br>
          </span>
-         <span if="Model.Item.ShowHtbDate" id="@("opening-date-" + Model.Index)">
+         <span if="Model.Item.ShowProposedOpeningDate" id="@("opening-date-" + Model.Index)">
             Opening date:
-            <span if="Model.Item.ProposedAcademyOpeningDate.IsEmpty()" class="empty">EMPTY</span>
             <span if="Model.Item.ProposedAcademyOpeningDate.IsPresent()">@Model.Item.ProposedAcademyOpeningDate</span>
          </span>
       </p>
