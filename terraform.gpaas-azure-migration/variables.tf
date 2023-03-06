@@ -54,6 +54,11 @@ variable "container_secret_environment_variables" {
   sensitive   = true
 }
 
+variable "container_max_replicas" {
+  description = "Container max replicas"
+  type        = number
+}
+
 variable "enable_cdn_frontdoor" {
   description = "Enable Azure CDN Front Door. This will use the Container Apps endpoint as the origin."
   type        = bool
