@@ -151,6 +151,7 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          School academisationApplicationSchool)
       {
          // FINANCES
+         string deficit = "deficit";
          academiesApplicationSchool.PreviousFinancialYear = new Dfe.PrepareConversions.Data.Models.Application.FinancialYear();
          academiesApplicationSchool.CurrentFinancialYear = new Dfe.PrepareConversions.Data.Models.Application.FinancialYear();
          academiesApplicationSchool.NextFinancialYear = new Dfe.PrepareConversions.Data.Models.Application.FinancialYear();
@@ -158,16 +159,16 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
             academisationApplicationSchool.PreviousFinancialYear.FinancialYearEndDate;
          academiesApplicationSchool.PreviousFinancialYear.RevenueCarryForward =
             (decimal?)academisationApplicationSchool.PreviousFinancialYear.Revenue;
-         academiesApplicationSchool.PreviousFinancialYear.RevenueIsDeficit = academisationApplicationSchool.PreviousFinancialYear.RevenueStatus == "Deficit";
+         academiesApplicationSchool.PreviousFinancialYear.RevenueIsDeficit = academisationApplicationSchool.PreviousFinancialYear.RevenueStatus == deficit;
          academiesApplicationSchool.PreviousFinancialYear.RevenueStatusExplained =
             academisationApplicationSchool.PreviousFinancialYear.RevenueStatusExplained;
          academiesApplicationSchool.PreviousFinancialYear.CapitalCarryForward =
             (decimal?)academisationApplicationSchool.PreviousFinancialYear.CapitalCarryForward;
          academiesApplicationSchool.PreviousFinancialYear.CapitalStatusExplained =
             academisationApplicationSchool.PreviousFinancialYear.CapitalCarryForwardExplained;
-         if (academisationApplicationSchool.PreviousFinancialYear.CapitalCarryForwardStatus == "Deficit")
+         if (academisationApplicationSchool.PreviousFinancialYear.CapitalCarryForwardStatus == deficit)
             academiesApplicationSchool.PreviousFinancialYear.CapitalIsDeficit = true;
-         academiesApplicationSchool.PreviousFinancialYear.CapitalIsDeficit = academisationApplicationSchool.PreviousFinancialYear.CapitalCarryForwardStatus == "Deficit";
+         academiesApplicationSchool.PreviousFinancialYear.CapitalIsDeficit = academisationApplicationSchool.PreviousFinancialYear.CapitalCarryForwardStatus == deficit;
 
          academiesApplicationSchool.CurrentFinancialYear.FYEndDate =
             academisationApplicationSchool.CurrentFinancialYear.FinancialYearEndDate;
@@ -175,12 +176,12 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
             (decimal?)academisationApplicationSchool.CurrentFinancialYear.Revenue;
          academiesApplicationSchool.CurrentFinancialYear.RevenueStatusExplained =
             academisationApplicationSchool.CurrentFinancialYear.RevenueStatusExplained;
-         academiesApplicationSchool.CurrentFinancialYear.RevenueIsDeficit = academisationApplicationSchool.CurrentFinancialYear.RevenueStatus == "Deficit";
+         academiesApplicationSchool.CurrentFinancialYear.RevenueIsDeficit = academisationApplicationSchool.CurrentFinancialYear.RevenueStatus == deficit;
          academiesApplicationSchool.CurrentFinancialYear.CapitalCarryForward =
             (decimal?)academisationApplicationSchool.CurrentFinancialYear.CapitalCarryForward;
          academiesApplicationSchool.CurrentFinancialYear.CapitalStatusExplained =
             academisationApplicationSchool.CurrentFinancialYear.CapitalCarryForwardExplained;
-         academiesApplicationSchool.CurrentFinancialYear.CapitalIsDeficit = academisationApplicationSchool.CurrentFinancialYear.CapitalCarryForwardStatus == "Deficit";
+         academiesApplicationSchool.CurrentFinancialYear.CapitalIsDeficit = academisationApplicationSchool.CurrentFinancialYear.CapitalCarryForwardStatus == deficit;
 
          academiesApplicationSchool.NextFinancialYear.FYEndDate =
             academisationApplicationSchool.NextFinancialYear.FinancialYearEndDate;
@@ -188,12 +189,12 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
             (decimal?)academisationApplicationSchool.NextFinancialYear.Revenue;
          academiesApplicationSchool.NextFinancialYear.RevenueStatusExplained =
             academisationApplicationSchool.NextFinancialYear.RevenueStatusExplained;
-         academiesApplicationSchool.NextFinancialYear.RevenueIsDeficit = academisationApplicationSchool.NextFinancialYear.RevenueStatus == "Deficit";
+         academiesApplicationSchool.NextFinancialYear.RevenueIsDeficit = academisationApplicationSchool.NextFinancialYear.RevenueStatus == deficit;
          academiesApplicationSchool.NextFinancialYear.CapitalCarryForward =
             (decimal?)academisationApplicationSchool.NextFinancialYear.CapitalCarryForward;
          academiesApplicationSchool.NextFinancialYear.CapitalStatusExplained =
             academisationApplicationSchool.NextFinancialYear.CapitalCarryForwardExplained;
-         academiesApplicationSchool.NextFinancialYear.CapitalIsDeficit = academisationApplicationSchool.NextFinancialYear.CapitalCarryForwardStatus == "Deficit";
+         academiesApplicationSchool.NextFinancialYear.CapitalIsDeficit = academisationApplicationSchool.NextFinancialYear.CapitalCarryForwardStatus == deficit;
       }
 
       public static void PopulateFurtherInformation(ApplyingSchool academiesApplicationSchool,
