@@ -235,9 +235,14 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          if (academisationApplicationSchool.ExemptionEndDate is not null) academiesApplicationSchool.SchoolSACREExemptionEndDate = academisationApplicationSchool.ExemptionEndDate.Value.DateTime; // Paul L - awaiting confirmation
          academiesApplicationSchool.SchoolAdFeederSchools = academisationApplicationSchool.MainFeederSchools;
          academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentCompleted =
-            !academisationApplicationSchool.ResolutionConsentFolderIdentifier.IsNullOrEmpty(); // Paul L - awaiting confirmation 
+            !academisationApplicationSchool.ProtectedCharacteristics.IsNullOrEmpty();
          academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentDetails =
-            academisationApplicationSchool.ResolutionConsentFolderIdentifier; // Paul L - awaiting confirmation
+            academisationApplicationSchool.ProtectedCharacteristics switch
+            {
+               "unlikely" => "That the Secretary of State's decision is unlikely to disproportionately affect any particular person or group who share protected characteristics.",
+               "willnot" => "That there are some impacts but on balance the changes will not disproportionately affect any particular person or group who share protected characteristics.",
+               _ => string.Empty
+            };
          academiesApplicationSchool.SchoolAdditionalInformationAdded =
             !academisationApplicationSchool.FurtherInformation.IsNullOrEmpty(); // Paul L - awaiting confirmation
          academiesApplicationSchool.SchoolAdditionalInformation =
