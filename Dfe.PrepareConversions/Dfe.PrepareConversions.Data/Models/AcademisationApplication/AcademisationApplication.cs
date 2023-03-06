@@ -231,8 +231,8 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          academiesApplicationSchool.SchoolSupportedFoundationBodyName =
             academisationApplicationSchool.FoundationTrustOrBodyName;
          if (academisationApplicationSchool.ExemptionEndDate is not null)
-            academiesApplicationSchool.SchoolHasSACREException = true; // Paul L - awaiting confirmation
-         if (academisationApplicationSchool.ExemptionEndDate is not null) academiesApplicationSchool.SchoolSACREExemptionEndDate = academisationApplicationSchool.ExemptionEndDate.Value.DateTime; // Paul L - awaiting confirmation
+            academiesApplicationSchool.SchoolHasSACREException = academisationApplicationSchool.ExemptionEndDate.HasValue;
+         if (academisationApplicationSchool.ExemptionEndDate is not null) academiesApplicationSchool.SchoolSACREExemptionEndDate = academisationApplicationSchool.ExemptionEndDate.Value.DateTime; 
          academiesApplicationSchool.SchoolAdFeederSchools = academisationApplicationSchool.MainFeederSchools;
          academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentCompleted =
             !academisationApplicationSchool.ProtectedCharacteristics.IsNullOrEmpty();
