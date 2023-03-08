@@ -11,5 +11,6 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       return require('./cypress/plugins/index.js')(on, config)
     },
+    baseUrl: 'https://s184d01-acacdnendpoint-ata0dwfremepeff8.z01.azurefd.net/swagger/index.html'
   },
 })
