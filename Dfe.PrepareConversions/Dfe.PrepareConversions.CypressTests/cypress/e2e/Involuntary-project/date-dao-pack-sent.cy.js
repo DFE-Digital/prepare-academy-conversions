@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 Cypress._.each(['ipad-mini'], (viewport) => {
-    describe(`121477: Add DAO pack sent page on Involuntry project on ${viewport}`, () => {
+    describe(`121477: Add DAO pack sent page on Involuntry project on ${viewport}`, { tags: ['@dao'] }, () => {
         beforeEach(() => {
             cy.login()
             cy.viewport(viewport)

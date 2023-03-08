@@ -2,7 +2,7 @@
 /// <reference types ='Cypress'/>
 
 Cypress._.each(['ipad-mini'], (viewport) => {
-  describe(`119898 Change school for Involuntry project on ${viewport}`, () => {
+  describe(`119898 Change school for Involuntry project on ${viewport}`, { tags: ['@dao'] }, () => {
     beforeEach(() => {
       cy.login();
       cy.viewport(viewport);
