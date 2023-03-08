@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 Cypress._.each(['ipad-mini'], (viewport) => {
-  describe(`121477: Add Form 7 for Confirm school and trust information and project dates page on ${viewport}`, () => {
+  describe(`121477: Add Form 7 for Confirm school and trust information and project dates page on ${viewport}`, { tags: ['@dao'] }, () => {
     beforeEach(() => {
       cy.login()
       cy.viewport(viewport)
