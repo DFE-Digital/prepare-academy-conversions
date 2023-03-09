@@ -1,4 +1,5 @@
 using Dfe.PrepareConversions.Data.Models.Application;
+using Dfe.PrepareConversions.Extensions;
 using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Models.ApplicationForm.Sections
@@ -14,7 +15,7 @@ namespace Dfe.PrepareConversions.Models.ApplicationForm.Sections
 		}
 		private static IEnumerable<FormField> GenerateDetailsFields(ApplyingSchool application) =>
 			new[] {
-				new FormField("Do you want these funds paid to the school or the trust?", application.SchoolSupportGrantFundsPaidTo) // might be int with conversion ToSchoolOrTrust()
+				new FormField("Do you want these funds paid to the school or the trust?", application.SchoolSupportGrantFundsPaidTo.ToTitleCase()) // might be int with conversion ToSchoolOrTrust()
 			};
 	}
 }

@@ -14,7 +14,7 @@ namespace Dfe.PrepareConversions.Tests.Models.ApplicationForm.Sections
 		{
 			var application = new ApplyingSchool
 			{
-				SchoolSupportGrantFundsPaidTo = "To the trust the school is joining"
+				SchoolSupportGrantFundsPaidTo = "School"
 			};
 
 			var formSection = new PreOpeningSupportGrantSection(application);

@@ -64,4 +64,5 @@ public class School
    public bool DeclarationBodyAgree { get; set; }
    public bool DeclarationIAmTheChairOrHeadteacher { get; set; }
    public string DeclarationSignedByName { get; set; }
+   public string ProtectedCharacteristics { get; set; }
 }

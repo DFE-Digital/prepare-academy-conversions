@@ -149,7 +149,8 @@ jobs:
           TF_VAR_app_azuread_groupid: ${{ secrets.AZUREAD_GROUPID }}
           TF_VAR_app_cypresstest_secret : ${{ secrets.CYPRESS_TEST_SECRET }}
           TF_VAR_app_feature_use_academisation : true
-          TF_VAR_app_feature_use_academisation_application : false
+          TF_VAR_app_feature_use_academisation_application : true
+          TF_VAR_app_feature_show_directedacademyorders : true
           TF_VAR_app_accessrequest : ${{ secrets.ACCESSREQUEST }}
           TF_VAR_app_templatefeedback : ${{ secrets.TEMPLATEFEEDBACK }}
 

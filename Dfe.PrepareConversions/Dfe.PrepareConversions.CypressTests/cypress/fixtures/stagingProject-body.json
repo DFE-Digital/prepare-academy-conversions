@@ -1,7 +1,7 @@
 {
     "data": {
         "name": "Bristol gateway",
-        "trustName": "",
+        "trustName": "LADY MARGARET SCHOOL",
         "applicationId": "A2B_0275",
         "applicationType": "JoinMat",
         "trustId": "0x5ec28a7dA9",

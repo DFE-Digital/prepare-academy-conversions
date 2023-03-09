@@ -28,7 +28,7 @@ namespace Dfe.PrepareConversions.Data.Tests.Models.AcademisationApplication
             FoundationTrustOrBodyName = "Foundation",
             ExemptionEndDate = DateTime.Today,
             MainFeederSchools = "Feeder Schools",
-            ResolutionConsentFolderIdentifier = "Equalities Impact Assessment",
+            ProtectedCharacteristics = "unlikely",
             FurtherInformation = "Additional Information"
          };
          var academiesApplicationSchool = new ApplyingSchool();
@@ -53,7 +53,8 @@ namespace Dfe.PrepareConversions.Data.Tests.Models.AcademisationApplication
          Assert.Equal(DateTime.Today, academiesApplicationSchool.SchoolSACREExemptionEndDate);
          Assert.Equal("Feeder Schools", academiesApplicationSchool.SchoolAdFeederSchools);
          Assert.True(academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentCompleted);
-         Assert.Equal("Equalities Impact Assessment", academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentDetails);
+         Assert.Equal("That the Secretary of State's decision is unlikely to disproportionately affect any particular person or group who share protected characteristics.", 
+            academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentDetails);
          Assert.True(academiesApplicationSchool.SchoolAdditionalInformationAdded);
          Assert.Equal("Additional Information", academiesApplicationSchool.SchoolAdditionalInformation);
       }

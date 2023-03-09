@@ -23,32 +23,32 @@ namespace Dfe.PrepareConversions.Data.Tests.Models.AcademisationApplication
                {
                   FinancialYearEndDate = new System.DateTime(2020, 8, 31),
                   Revenue = 100,
-                  RevenueStatus = "Deficit",
+                  RevenueStatus = "deficit",
                   RevenueStatusExplained = "Revenue is in deficit",
                   CapitalCarryForward = 200,
                   CapitalCarryForwardExplained = "Capital carry forward explained",
-                  CapitalCarryForwardStatus = "Deficit"
+                  CapitalCarryForwardStatus = "deficit"
                },
             CurrentFinancialYear =
                new FinancialYear
                {
                   FinancialYearEndDate = new System.DateTime(2021, 8, 31),
                   Revenue = 300,
-                  RevenueStatus = "Surplus",
+                  RevenueStatus = "surplus",
                   RevenueStatusExplained = "Revenue is in surplus",
                   CapitalCarryForward = 400,
                   CapitalCarryForwardExplained = "Capital carry forward explained",
-                  CapitalCarryForwardStatus = "Surplus"
+                  CapitalCarryForwardStatus = "surplus"
                },
             NextFinancialYear = new FinancialYear
             {
                FinancialYearEndDate = new System.DateTime(2022, 8, 31),
                Revenue = 500,
-               RevenueStatus = "Deficit",
+               RevenueStatus = "deficit",
                RevenueStatusExplained = "Revenue is in deficit",
                CapitalCarryForward = 600,
                CapitalCarryForwardExplained = "Capital carry forward explained",
-               CapitalCarryForwardStatus = "Deficit"
+               CapitalCarryForwardStatus = "deficit"
             },
          };
          var academiesApplicationSchool = new ApplyingSchool();
