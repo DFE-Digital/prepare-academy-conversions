@@ -147,7 +147,7 @@ jobs:
 
       - name: Run cypress (staging)
         if: needs.set-env.outputs.environment == 'staging'
-        run: npm run cy:run -- --env url='${{ secrets.CIP_ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}',grep='-dao'
+        run: npm run cy:run -- --env url='${{ secrets.CIP_ENDPOINT }}',grep='-dao',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
         env:
           db: ${{ secrets.DB_CONNECTION_STRING }}
     
