@@ -32,6 +32,7 @@ resource cloudfoundry_app worker_app {
 		"CypressTestSecret"                   = var.app_cypresstest_secret
       "FeatureManagement__UseAcademisation" = var.app_feature_use_academisation
       "FeatureManagement__UseAcademisationApplication" = var.app_feature_use_academisation_application
+	  "FeatureManagement__ShowDirectedAcademyOrders" = var.app_feature_show_directedacademyorders
       "AccessRequest"                       = var.app_accessrequest
       "TemplateFeedback"                    = var.app_templatefeedback
 	}
