@@ -5,7 +5,7 @@ module "azure_container_apps_hosting" {
   project_name   = local.project_name
   azure_location = local.azure_location
   tags           = local.tags
-
+  container_max_replicas = local.container_max_replicas
   virtual_network_address_space = local.virtual_network_address_space
 
   enable_container_registry = local.enable_container_registry
