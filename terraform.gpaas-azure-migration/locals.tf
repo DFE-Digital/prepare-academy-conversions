@@ -7,7 +7,6 @@ locals {
   enable_container_registry                    = var.enable_container_registry
   image_name                                   = var.image_name
   container_command                            = var.container_command
-  container_max_replicas                       = var.container_max_replicas
   container_secret_environment_variables       = var.container_secret_environment_variables
   container_max_replicas                       = var.container_max_replicas
   enable_cdn_frontdoor                         = var.enable_cdn_frontdoor
