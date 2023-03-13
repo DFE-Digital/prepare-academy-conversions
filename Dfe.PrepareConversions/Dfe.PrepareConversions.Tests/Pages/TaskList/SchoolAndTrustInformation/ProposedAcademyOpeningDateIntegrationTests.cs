@@ -19,7 +19,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
 		{
 			var dates = Enumerable.Range(1, 12).Select(i => DateTime.Today.FirstOfMonth(i).ToDateString(true)).ToArray();
 			var (selected, toSelect) = RandomRadioButtons("proposed-academy-opening-date", dates);
-			var project = AddGetProject(p => p.ProposedAcademyOpeningDate = DateTime.Parse(selected.Value));
+			var project = AddGetProject(p => p.OpeningDate = DateTime.Parse(selected.Value));
          AddPatchConfiguredProject(project, x =>
          {
             x.ProposedAcademyOpeningDate = DateTime.Parse(toSelect.Value);

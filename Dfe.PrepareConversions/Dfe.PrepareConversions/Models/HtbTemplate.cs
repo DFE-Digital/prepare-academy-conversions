@@ -206,7 +206,7 @@ namespace Dfe.PrepareConversions.Models
 				SponsorName = project.SponsorName ?? "Not applicable",
 				AcademyTypeRouteAndConversionGrant = $"{project.AcademyTypeAndRoute} - {project.ConversionSupportGrantAmount?.ToMoneyString(true)}",
 				ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
-				ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(),
+				ProposedAcademyOpeningDate = project.OpeningDate.ToDateString(),
 				SchoolPhase = generalInformation.SchoolPhase,
 				AgeRange = !string.IsNullOrEmpty(generalInformation.AgeRangeLower) && !string.IsNullOrEmpty(generalInformation.AgeRangeUpper)
 					? $"{generalInformation.AgeRangeLower} to {generalInformation.AgeRangeUpper}"

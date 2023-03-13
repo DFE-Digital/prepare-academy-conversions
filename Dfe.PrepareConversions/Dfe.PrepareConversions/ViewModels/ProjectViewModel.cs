@@ -40,7 +40,7 @@ public class ProjectViewModel
       AcademyTypeAndRoute = project.AcademyTypeAndRoute;
       Form7Received = project.Form7Received;
       Form7ReceivedDate = project.Form7ReceivedDate;
-      ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate;
+      ProposedAcademyOpeningDate = project.OpeningDate;
       SchoolAndTrustInformationSectionComplete = project.SchoolAndTrustInformationSectionComplete ?? false;
       ConversionSupportGrantAmount = project.ConversionSupportGrantAmount ?? 0;
       ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason;

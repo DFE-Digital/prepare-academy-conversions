@@ -46,7 +46,7 @@ namespace Dfe.PrepareConversions.Tests.Models
 				Assert.Equal(_project.AcademyOrderRequired, _template.AcademyOrderRequired);
 				Assert.Equal($"{_project.AcademyTypeAndRoute} - {_project.ConversionSupportGrantAmount?.ToMoneyString(true)}", _template.AcademyTypeRouteAndConversionGrant);
 				Assert.Equal(_project.HeadTeacherBoardDate.ToDateString(), _template.HeadTeacherBoardDate);
-				Assert.Equal(_project.ProposedAcademyOpeningDate.ToDateString(), _template.ProposedAcademyOpeningDate);
+				Assert.Equal(_project.OpeningDate.ToDateString(), _template.ProposedAcademyOpeningDate);
 				Assert.Equal(_project.PreviousHeadTeacherBoardDate.ToDateString(), _template.PreviousHeadTeacherBoardDate);
 
 				Assert.Equal(_project.TrustReferenceNumber, _template.TrustReferenceNumber);
