@@ -44,11 +44,17 @@ namespace Dfe.PrepareConversions.Models
 		public static class TaskList
 		{
 			public static readonly LinkItem Index = AddLinkItem(backText: "Back to task list", page: "/TaskList/Index");
-			public static readonly LinkItem PreviewHTBTemplate = AddLinkItem(backText: "Back to preview", page: "/TaskList/PreviewProjectTemplate");
+         public static readonly LinkItem PreviewHTBTemplate = AddLinkItem(backText: "Back to preview", page: "/TaskList/PreviewProjectTemplate");
 			public static readonly LinkItem GenerateHTBTemplate = AddLinkItem(page: "/TaskList/DownloadProjectTemplate");
 		}
+      public static class FormAMat
+      {
+         public static readonly LinkItem Index = AddLinkItem(backText: "Back to project listing", page: "/FormAMat/Index");
+         public static readonly LinkItem OtherSchoolsInMat = AddLinkItem(backText: "Back to project listing", page: "/FormAMat/OtherSchoolsInMat");
+         
+      }
 
-		public static class SchoolPerformance
+      public static class SchoolPerformance
 		{
 			public static readonly LinkItem ConfirmSchoolPerformance = AddLinkItem(page: "/TaskList/SchoolPerformance/ConfirmSchoolPerformance");
 			public static readonly LinkItem AdditionalInformation = AddLinkItem(page: "/TaskList/SchoolPerformance/AdditionalInformation");

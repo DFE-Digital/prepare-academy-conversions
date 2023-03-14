@@ -1,0 +1,25 @@
+﻿@page "/form-a-mat/{id:int}"
+@model Dfe.PrepareConversions.Pages.FormAMat.FormAMatIndexModel
+@{
+    Model.SetErrorPage(Links.FormAMat.Index.Page);
+    ViewData["Title"] = "School Application Form";
+}
+
+@section BeforeMain
+    {
+    <a asp-page="@Links.ProjectList.Index" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
+}
+
+@if (Model.ShowGenerateHtbTemplateError)
+{
+    <partial name="_ErrorSummary" />
+}
+
+<partial name="Shared/_FormAMatProjectHeader" model="Model.Project" />
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-l govuk-!-margin-bottom-2">School application form</h2>
+        <p class="govuk-body">Contents</p>
+    </div>
+</div>
