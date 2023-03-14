@@ -52,7 +52,7 @@ namespace Dfe.PrepareConversions.ViewComponents
             WasForm7Received = project.Form7Received is not null && project.Form7Received.Equals("Yes"),
             ConversionSupportGrantAmount = project.ConversionSupportGrantAmount?.ToMoneyString(true),
             ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
-            ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(true),
+            ProposedAcademyOpeningDate = project.OpeningDate.ToDateString(true),
             DaoPackSentDate = project.DaoPackSentDate.ToDateString()
          };
 

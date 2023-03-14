@@ -539,7 +539,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.PreviewHTBTemplate
 			Document.QuerySelector("#academy-type-and-route").TextContent.Should().Contain(project.AcademyTypeAndRoute);
 			Document.QuerySelector("#academy-type-and-route").TextContent.Should().Contain(project.ConversionSupportGrantAmount.Value.ToMoneyString());
 			Document.QuerySelector("#academy-type-and-route-additional-text").TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
-			Document.QuerySelector("#proposed-academy-opening-date").TextContent.Should().Be(project.ProposedAcademyOpeningDate.ToDateString(true));
+			Document.QuerySelector("#proposed-academy-opening-date").TextContent.Should().Be(project.OpeningDate.ToDateString(true));
 		}
 
 		[Fact]
