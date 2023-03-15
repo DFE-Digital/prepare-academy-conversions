@@ -1,7 +1,9 @@
 ﻿@page "/task-list/{id:int}/consultation-been-done"
 @using Dfe.PrepareConversions.Data.Models.AcademyConversion
 @model Dfe.PrepareConversions.Pages.TaskList.LegalRequirements.LegalConsultationModel
-
+@{
+    ViewData["Title"] = "Consultation";
+}
 @section BeforeMain
 {
 	<a asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Id" class="govuk-back-link" data-cy="select-backlink">Back</a>
