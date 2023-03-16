@@ -13,8 +13,9 @@ public interface IAcademyConversionProjectRepository
 	   string titleFilter = "",
 	   IEnumerable<string> statusFilters = default,
 	   IEnumerable<string> deliveryOfficerFilter = default,
-	   IEnumerable<string> regionsFilter = default
-	);
+	   IEnumerable<string> regionsFilter = default,
+      IEnumerable<string> applicationReferences = default
+   );
 
 	Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id);
 	Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject);

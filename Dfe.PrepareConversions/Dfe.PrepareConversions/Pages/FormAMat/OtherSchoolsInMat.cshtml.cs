@@ -50,15 +50,18 @@ namespace Dfe.PrepareConversions.Pages.FormAMat
          }
 
          ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response =
-            await _repository.GetAllProjects(CurrentPage, 50, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions);
+            await _repository.GetAllProjects(CurrentPage, 50, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions,
+               new List<string> { Project.ApplicationReferenceNumber });
 
          Paging = response.Body?.Paging;
 
          Projects = response.Body?.Data.Select(Build).ToList();
+         var currentSchool = Project.SchoolURN;
+         Projects = Projects!.Where(x => x.SchoolURN != currentSchool);
          TotalProjects = response.Body?.Paging?.RecordCount ?? 0;
 
          ApiResponse<ProjectFilterParameters> filterParametersResponse = await _repository.GetFilterParameters();
-
+         
          if (filterParametersResponse.Success)
          {
             Filters.AvailableStatuses = filterParametersResponse.Body.Statuses.ConvertAll(r => r.SentenceCase());
