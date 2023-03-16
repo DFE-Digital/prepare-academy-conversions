@@ -1,54 +1,53 @@
-using System.Collections.Generic;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Dfe.PrepareConversions.DocumentGeneration.Elements;
 using Dfe.PrepareConversions.DocumentGeneration.Interfaces;
+using DocumentFormat.OpenXml.Wordprocessing;
+using System.Collections.Generic;
 
-namespace Dfe.PrepareConversions.DocumentGeneration.Builders
+namespace Dfe.PrepareConversions.DocumentGeneration.Builders;
+
+public class HeadingBuilder : IHeadingBuilder, IElementBuilder<List<Paragraph>>
 {
-    public class HeadingBuilder : IHeadingBuilder, IElementBuilder<List<Paragraph>>
-    {
-        private HeadingLevel _headingLevel;
-        private readonly List<Paragraph> _elements;
+   private readonly List<Paragraph> _elements;
+   private HeadingLevel _headingLevel;
 
-        public HeadingBuilder()
-        {
-            _elements = new List<Paragraph>();
-        }
+   public HeadingBuilder()
+   {
+      _elements = new List<Paragraph>();
+   }
 
-        public void SetHeadingLevel(HeadingLevel level)
-        {
-            _headingLevel = level;
-        }
+   public List<Paragraph> Build()
+   {
+      return _elements;
+   }
 
-        public void AddText(string text)
-        {
-            AddText(new TextElement {Value = text, Bold = true});
-        }
+   public void SetHeadingLevel(HeadingLevel level)
+   {
+      _headingLevel = level;
+   }
 
-        public void AddText(TextElement text)
-        {
-            var paragraph = new Paragraph();
-            var builder = new ParagraphBuilder(paragraph);
-            text.FontSize = HeadingLevelToFontSize();
-            text.Colour = "104f75";
-            builder.AddText(text);
-            _elements.Add(builder.Build());
-        }
+   public void AddText(string text)
+   {
+      AddText(new TextElement { Value = text, Bold = true });
+   }
 
-        private string HeadingLevelToFontSize()
-        {
-            return _headingLevel switch
-            {
-                HeadingLevel.One => "36",
-                HeadingLevel.Two => "32",
-                HeadingLevel.Three => "28",
-                _ => "28"
-            };
-        }
+   public void AddText(TextElement text)
+   {
+      Paragraph paragraph = new();
+      ParagraphBuilder builder = new(paragraph);
+      text.FontSize = HeadingLevelToFontSize();
+      text.Colour = "104f75";
+      builder.AddText(text);
+      _elements.Add(builder.Build());
+   }
 
-        public List<Paragraph> Build()
-        {
-            return _elements;
-        }
-    }
+   private string HeadingLevelToFontSize()
+   {
+      return _headingLevel switch
+      {
+         HeadingLevel.One => "36",
+         HeadingLevel.Two => "32",
+         HeadingLevel.Three => "28",
+         _ => "28"
+      };
+   }
 }

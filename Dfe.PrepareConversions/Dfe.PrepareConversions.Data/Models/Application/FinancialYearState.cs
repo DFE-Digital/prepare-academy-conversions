@@ -1,7 +1,7 @@
-namespace Dfe.PrepareConversions.Data.Models.Application
+namespace Dfe.PrepareConversions.Data.Models.Application;
+
+public enum FinancialYearState
 {
-	public enum FinancialYearState {
-		Surplus,
-		Deficit
-	}
+   Surplus,
+   Deficit
 }

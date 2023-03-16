@@ -1,55 +1,55 @@
-﻿@model Dfe.PrepareConversions.ViewModels.TextAreaInputViewModel
+﻿@model TextAreaInputViewModel
 @{
-	var showHint = !string.IsNullOrWhiteSpace(Model.Hint);
-	var showError = !string.IsNullOrWhiteSpace(Model.ErrorMessage);
+   var showHint = !string.IsNullOrWhiteSpace(Model.Hint);
+   var showError = !string.IsNullOrWhiteSpace(Model.ErrorMessage);
 }
 <div class="govuk-form-group @(showError ? "govuk-form-group--error" : "")">
-	@if (!string.IsNullOrWhiteSpace(Model.Label))
-	{
-		if (Model.HeadingLabel)
-		{
-			<h1 class="govuk-label-wrapper">
-				<label class="govuk-label govuk-label--l" for="@Model.Id">
-					@Model.Label
-				</label>
-			</h1>
-		}
-		else
-		{
-			<label class="govuk-label" for="@Model.Id">
-				@Model.Label
-			</label>
-		}
-	}
-	@if (showHint)
-	{
-		<div id="@Model.Id-hint" class="govuk-hint">
-			@Model.Hint
-		</div>
-	}
-	@if (showError)
-	{
-		<span id="@Model.Id-error" class="govuk-error-message">
-			<span class="govuk-visually-hidden">Error:</span> @Model.ErrorMessage
-		</span>
-	}
-	@if (Model.RichText)
-	{
-		<textarea class="govuk-textarea @(showError ? "govuk-textarea--error" : "")"
+   @if (!string.IsNullOrWhiteSpace(Model.Label))
+   {
+      if (Model.HeadingLabel)
+      {
+         <h1 class="govuk-label-wrapper">
+            <label class="govuk-label govuk-label--l" for="@Model.Id">
+               @Model.Label
+            </label>
+         </h1>
+      }
+      else
+      {
+         <label class="govuk-label" for="@Model.Id">
+            @Model.Label
+         </label>
+      }
+   }
+   @if (showHint)
+   {
+      <div id="@Model.Id-hint" class="govuk-hint">
+         @Model.Hint
+      </div>
+   }
+   @if (showError)
+   {
+      <span id="@Model.Id-error" class="govuk-error-message">
+         <span class="govuk-visually-hidden">Error:</span> @Model.ErrorMessage
+      </span>
+   }
+   @if (Model.RichText)
+   {
+      <textarea class="govuk-textarea @(showError ? "govuk-textarea--error" : "")"
 			id="@Model.Id"
 			name="@Model.Name"
 			rows="@Model.Rows"
 			data-module="moj-rich-text-editor"
 			data-moj-rich-text-editor-toolbar="bold,italic,underline,bullets,numbers"
 			@(showHint ? $"aria-describedby=\"{Model.Id}-hint\"" : "")>@Model.Value</textarea>
-	}
-	else
-	{
-		<textarea class="govuk-textarea @(showError ? "govuk-textarea--error" : "")"
+   }
+   else
+   {
+      <textarea class="govuk-textarea @(showError ? "govuk-textarea--error" : "")"
 			id="@Model.Id"
 			name="@Model.Name"
 			rows="@Model.Rows"
 			@(showHint ? $"aria-describedby=\"{Model.Id}-hint\"" : "")>@Model.Value</textarea>
-	}
+   }
 
 </div>

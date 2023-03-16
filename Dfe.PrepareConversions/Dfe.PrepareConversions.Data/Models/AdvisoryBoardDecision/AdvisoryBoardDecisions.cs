@@ -1,9 +1,8 @@
-﻿namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
+﻿namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
+
+public enum AdvisoryBoardDecisions
 {
-	public enum AdvisoryBoardDecisions
-	{
-		Approved = 0,
-		Declined = 1,
-		Deferred = 2
-	}
+   Approved = 0,
+   Declined = 1,
+   Deferred = 2
 }

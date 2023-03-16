@@ -1,62 +1,62 @@
-﻿@model Dfe.PrepareConversions.ViewModels.RadiosInputViewModel
+﻿@model RadiosInputViewModel
 @{
-	var showError = !string.IsNullOrWhiteSpace(Model.ErrorMessage);
+   var showError = !string.IsNullOrWhiteSpace(Model.ErrorMessage);
 }
 
 @functions{
 
-	string Id(string id, int position)
-	{
-		if (position == 0)
-		{
-			return id;
-		}
-		return $"{id}-{position + 1}";
-	}
+   static string Id(string id, int position)
+   {
+      if (position == 0)
+      {
+         return id;
+      }
+      return $"{id}-{position + 1}";
+   }
 
 }
 
 <div class="govuk-form-group @(showError ? "govuk-form-group--error" : "")">
-	<fieldset class="govuk-fieldset">
-		@if (!string.IsNullOrWhiteSpace(Model.Label))
-		{
-			if (Model.HeadingLabel)
-			{
-				<legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-					<h1 class="govuk-fieldset__heading">
-						@Model.Label
-					</h1>
-				</legend>
-			}
-			else
-			{
-				<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-					@Model.Label
-				</legend>
-			}
-		}
-		
-		@if (!string.IsNullOrWhiteSpace(Model.LeadingParagraph))
-		{
-			<p class="govuk-body">@Model.LeadingParagraph</p>
-		}
-		
-		@if (showError)
-		{
-			<span id="@Model.Id-error" class="govuk-error-message">
-				<span class="govuk-visually-hidden">Error:</span> @Model.ErrorMessage
-			</span>
-		}
-		<div class="govuk-radios">
-			@for (var i = 0; i < Model.Values.Length; i++)
-			{
-				<div class="govuk-radios__item">
-					<input class="govuk-radios__input" id="@Id(Model.Id, i)" name="@Model.Name" type="radio" value="@Model.Values[i]" checked="@(Model.Values[i].Equals(Model.Value, StringComparison.OrdinalIgnoreCase))">
-					<label class="govuk-label govuk-radios__label" for="@Id(Model.Id, i)">
-						@Model.Labels[i]
-					</label>
-				</div>
-			}
-		</div>
-	</fieldset>
+   <fieldset class="govuk-fieldset">
+      @if (!string.IsNullOrWhiteSpace(Model.Label))
+      {
+         if (Model.HeadingLabel)
+         {
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+               <h1 class="govuk-fieldset__heading">
+                  @Model.Label
+               </h1>
+            </legend>
+         }
+         else
+         {
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+               @Model.Label
+            </legend>
+         }
+      }
+
+      @if (!string.IsNullOrWhiteSpace(Model.LeadingParagraph))
+      {
+         <p class="govuk-body">@Model.LeadingParagraph</p>
+      }
+
+      @if (showError)
+      {
+         <span id="@Model.Id-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> @Model.ErrorMessage
+         </span>
+      }
+      <div class="govuk-radios">
+         @for (var i = 0; i < Model.Values.Length; i++)
+         {
+            <div class="govuk-radios__item">
+               <input class="govuk-radios__input" id="@Id(Model.Id, i)" name="@Model.Name" type="radio" value="@Model.Values[i]" checked="@(Model.Values[i].Equals(Model.Value, StringComparison.OrdinalIgnoreCase))">
+               <label class="govuk-label govuk-radios__label" for="@Id(Model.Id, i)">
+                  @Model.Labels[i]
+               </label>
+            </div>
+         }
+      </div>
+   </fieldset>
 </div>

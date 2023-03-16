@@ -5,30 +5,23 @@ using FluentAssertions;
 using System.Linq;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Models.ApplicationForm.Sections
+namespace Dfe.PrepareConversions.Tests.Models.ApplicationForm.Sections;
+
+public class DeclarationSectionTests
 {
-	public class DeclarationSectionTests
-	{
-		[Fact]
-		public void Constructor_WithApplication_SetsFields()
-		{
-			var application = new ApplyingSchool
-			{
-				DeclarationBodyAgree = true,
-				DeclarationSignedByName = "Garth Brown"
-			};
+   [Fact]
+   public void Constructor_WithApplication_SetsFields()
+   {
+      ApplyingSchool application = new() { DeclarationBodyAgree = true, DeclarationSignedByName = "Garth Brown" };
 
-			var formSection = new DeclarationSection(application);
+      DeclarationSection formSection = new(application);
 
-			var expectedFields = new[]
-			{
-				new FormField("I agree with all of these statements, and believe that the facts stated in this application are true", "Yes"),
-				new FormField("Signed by", "Garth Brown")
-			};
+      FormField[] expectedFields = {
+         new("I agree with all of these statements, and believe that the facts stated in this application are true", "Yes"), new("Signed by", "Garth Brown")
+      };
 
-			formSection.Heading.Should().Be("Declaration");
-			formSection.SubSections.First().Heading.Should().Be("Details");
-			formSection.SubSections.First().Fields.Should().BeEquivalentTo(expectedFields);
-		}
-	}
+      formSection.Heading.Should().Be("Declaration");
+      formSection.SubSections.First().Heading.Should().Be("Details");
+      formSection.SubSections.First().Fields.Should().BeEquivalentTo(expectedFields);
+   }
 }

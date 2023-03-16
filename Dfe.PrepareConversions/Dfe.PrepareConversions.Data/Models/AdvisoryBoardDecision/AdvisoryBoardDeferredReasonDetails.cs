@@ -1,19 +1,17 @@
-﻿namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
+﻿namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
+
+public class AdvisoryBoardDeferredReasonDetails
 {
-	public class AdvisoryBoardDeferredReasonDetails
-	{
-		public AdvisoryBoardDeferredReasonDetails()
-		{
+   public AdvisoryBoardDeferredReasonDetails()
+   {
+   }
 
-		}
+   public AdvisoryBoardDeferredReasonDetails(AdvisoryBoardDeferredReason reason, string details)
+   {
+      Reason = reason;
+      Details = details;
+   }
 
-		public AdvisoryBoardDeferredReasonDetails(AdvisoryBoardDeferredReason reason, string details)
-		{
-			Reason = reason;
-			Details = details;
-		}
-
-		public AdvisoryBoardDeferredReason Reason { get; set; }
-		public string Details { get; set; }
-	}
+   public AdvisoryBoardDeferredReason Reason { get; set; }
+   public string Details { get; set; }
 }

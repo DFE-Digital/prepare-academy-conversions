@@ -1,46 +1,46 @@
 ﻿@page "/project-notes/{id:int}/new-note"
 @model Dfe.PrepareConversions.Pages.ProjectNotes.NewNoteModel
 @{
-	Model.SuccessPage = Links.ProjectNotes.Index.Page;
-	ViewData["Title"] = "Project notes";
-	if (Model.ShowError)
-	{
-		ViewData["Title"] = $"Error: {ViewData["Title"]}";
-	}
+   Model.SuccessPage = Links.ProjectNotes.Index.Page;
+   ViewData["Title"] = "Project notes";
+   if (Model.ShowError)
+   {
+      ViewData["Title"] = $"Error: {ViewData["Title"]}";
+   }
 }
 
 @section BeforeMain
 {
-	<govuk-back-link link-item="@Links.ProjectNotes.Index"/>
+   <govuk-back-link link-item="@Links.ProjectNotes.Index"/>
 }
 
 @if (Model.ShowError)
 {
-	<partial name="_ErrorSummary"/>
+   <partial name="_ErrorSummary"/>
 }
 
 <div class="govuk-grid-row">
-	<div class="govuk-grid-column-two-thirds">
-		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
-		<h1 class="govuk-heading-l">
-			Project notes
-		</h1>
-		<form method="post">
-			<div class="govuk-form-group">
-				<label class="govuk-label govuk-label--m" for="project-note-subject">
-					Subject
-				</label>
-				<textarea class="govuk-textarea" id="project-note-subject" name="project-note-subject" rows="1">@Model.ProjectNoteSubject</textarea>
-			</div>
-			<div class="govuk-form-group">
-				<label class="govuk-label govuk-label--m" for="project-note-body">
-					Note
-				</label>
-				<textarea class="govuk-textarea" id="project-note-body" name="project-note-body" rows="5">@Model.ProjectNoteBody</textarea>
-			</div>
-			<button type="submit" role="button" draggable="false" class="govuk-button govuk-button" data-module="govuk-button">
-				Save note
-			</button>
-		</form>
-	</div>
+   <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+      <h1 class="govuk-heading-l">
+         Project notes
+      </h1>
+      <form method="post">
+         <div class="govuk-form-group">
+            <label class="govuk-label govuk-label--m" for="project-note-subject">
+               Subject
+            </label>
+            <textarea class="govuk-textarea" id="project-note-subject" name="project-note-subject" rows="1">@Model.ProjectNoteSubject</textarea>
+         </div>
+         <div class="govuk-form-group">
+            <label class="govuk-label govuk-label--m" for="project-note-body">
+               Note
+            </label>
+            <textarea class="govuk-textarea" id="project-note-body" name="project-note-body" rows="5">@Model.ProjectNoteBody</textarea>
+         </div>
+         <button type="submit" role="button" draggable="false" class="govuk-button govuk-button" data-module="govuk-button">
+            Save note
+         </button>
+      </form>
+   </div>
 </div>

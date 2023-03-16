@@ -1,19 +1,20 @@
 ﻿@page "/task-list/{id:int}/download-project-template/{handler?}"
-@inject Microsoft.Extensions.Configuration.IConfiguration _configuration
+@inject IConfiguration Configuration
+@using Microsoft.Extensions.Configuration
 @model Dfe.PrepareConversions.Pages.TaskList.DownloadProjectTemplate
 @{
-	ViewData["Title"] = "Download project template";
+   ViewData["Title"] = "Download project template";
 }
 
 @section BeforeMain
 {
-	<govuk-back-link link-item="@Links.TaskList.PreviewHTBTemplate" />
+   <govuk-back-link link-item="@Links.TaskList.PreviewHTBTemplate"/>
 }
 
 <div class="govuk-grid-row">
-	<div class="govuk-grid-column-full">
-		<span class="govuk-caption-xl">@Model.Project.SchoolName</span>
-		<h1 class="govuk-heading-xl">Download project template</h1>
+   <div class="govuk-grid-column-full">
+      <span class="govuk-caption-xl">@Model.Project.SchoolName</span>
+      <h1 class="govuk-heading-xl">Download project template</h1>
 
       <section class="app-c-attachment">
          <div class="app-c-attachment__thumbnail">
@@ -36,13 +37,13 @@
             </p>
          </div>
       </section>
-      
+
       <div class="govuk-!-margin-top-6">
          <h2 class="govuk-heading-m">What happens next</h2>
          <p class="govuk-body">Get the downloaded template ready for advisory board.</p>
          <p class="govuk-body">Save the template in the school's SharePoint folder.</p>
          <p class="govuk-body">
-            <a href="@_configuration["TemplateFeedback"]" class="govuk-link" target="_blank" rel="noopener">What did you think of this service? (opens in new tab)</a>. This takes 2 minutes.
+            <a href="@Configuration["TemplateFeedback"]" class="govuk-link" target="_blank" rel="noopener">What did you think of this service? (opens in new tab)</a>. This takes 2 minutes.
          </p>
       </div>
    </div>

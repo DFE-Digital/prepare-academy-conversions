@@ -1,113 +1,112 @@
-using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
+using Dfe.PrepareConversions.Extensions;
+using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Dfe.PrepareConversions.Extensions;
-using Dfe.PrepareConversions.Models;
 
-namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
+namespace Dfe.PrepareConversions.Pages.InvoluntaryProject;
+
+public class SearchTrustModel : PageModel
 {
-	public class SearchTrustModel : PageModel
-	{
-		private readonly ITrustsRespository _trustsRepository;
-		private readonly ErrorService _errorService;
-		private const string SEARCH_LABEL = "Search by name, UKPRN or Companies House number. Entering more characters will give quicker results. You should write UKPRN or Companies House number in full.";
-		private const string SEARCH_ENDPOINT = "/start-new-project/trust-name?handler=Search&searchQuery=";
+   private const string SEARCH_LABEL =
+      "Search by name, UKPRN or Companies House number. Entering more characters will give quicker results. You should write UKPRN or Companies House number in full.";
+
+   private const string SEARCH_ENDPOINT = "/start-new-project/trust-name?handler=Search&searchQuery=";
+   private readonly ErrorService _errorService;
+   private readonly ITrustsRepository _trustsRepository;
 
 
-		public SearchTrustModel(ITrustsRespository trustsRepository, ErrorService errorService)
-		{
-			_trustsRepository = trustsRepository;
-			_errorService = errorService;
-			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, string.Empty, SEARCH_ENDPOINT);
-		}
+   public SearchTrustModel(ITrustsRepository trustsRepository, ErrorService errorService)
+   {
+      _trustsRepository = trustsRepository;
+      _errorService = errorService;
+      AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, string.Empty, SEARCH_ENDPOINT);
+   }
 
-		[BindProperty] public string SearchQuery { get; set; } = "";
-		public string Urn { get; set; }
-		public string Ukprn { get; set; }
-		public AutoCompleteSearchModel AutoCompleteSearchModel { get; set; }
+   [BindProperty]
+   public string SearchQuery { get; set; } = "";
 
-		public async Task<IActionResult> OnGet(string ukprn, string urn)
-		{
-			Urn = urn;
-			Ukprn = ukprn;
+   public string Urn { get; set; }
+   public string Ukprn { get; set; }
+   public AutoCompleteSearchModel AutoCompleteSearchModel { get; set; }
 
-			if (string.IsNullOrWhiteSpace(ukprn)) return Page();
+   public async Task<IActionResult> OnGet(string ukprn, string urn)
+   {
+      Urn = urn;
+      Ukprn = ukprn;
 
-			var trusts = await _trustsRepository.SearchTrusts(ukprn);
-			if (trusts.Data.Any())
-			{
-				var trust = trusts.Data.First();
-				SearchQuery = $"{trust.GroupName} ({trust.Ukprn})";
-			}
+      if (string.IsNullOrWhiteSpace(ukprn)) return Page();
 
-			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
+      TrustSummaryResponse trusts = await _trustsRepository.SearchTrusts(ukprn);
+      if (trusts.Data.Any())
+      {
+         TrustSummary trust = trusts.Data.First();
+         SearchQuery = $"{trust.GroupName} ({trust.Ukprn})";
+      }
 
-			return Page();
-		}
+      AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
 
-		public async Task<IActionResult> OnGetSearch(string searchQuery)
-		{
-			var searchSplit = SplitOnBrackets(searchQuery);
+      return Page();
+   }
 
-			var trusts = await _trustsRepository.SearchTrusts(searchSplit[0].Trim());
+   public async Task<IActionResult> OnGetSearch(string searchQuery)
+   {
+      string[] searchSplit = SplitOnBrackets(searchQuery);
 
-			return new JsonResult(trusts.Data.Select(t =>
-         {
-            var displayUkprn = string.IsNullOrWhiteSpace(t.Ukprn) ? string.Empty : $"({t.Ukprn})";
-				var suggestion = $@"{t.GroupName.ToTitleCase()} {displayUkprn}
+      TrustSummaryResponse trusts = await _trustsRepository.SearchTrusts(searchSplit[0].Trim());
+
+      return new JsonResult(trusts.Data.Select(t =>
+      {
+         string displayUkprn = string.IsNullOrWhiteSpace(t.Ukprn) ? string.Empty : $"({t.Ukprn})";
+         string suggestion = $@"{t.GroupName.ToTitleCase()} {displayUkprn}
 									<br />
 									Companies House number: {t.CompaniesHouseNumber}";
-				return new
-				{
-					suggestion = HighlightSearchMatch(suggestion, searchSplit[0].Trim(), t),
-					value = $"{t.GroupName.ToTitleCase()} ({t.Ukprn})"
-				};
-			}));
-		}
+         return new { suggestion = HighlightSearchMatch(suggestion, searchSplit[0].Trim(), t), value = $"{t.GroupName.ToTitleCase()} ({t.Ukprn})" };
+      }));
+   }
 
-		public async Task<IActionResult> OnPost(string urn)
-		{
-			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
-			if (string.IsNullOrWhiteSpace(SearchQuery))
-			{
-				ModelState.AddModelError(nameof(SearchQuery), "Enter the Trust name, UKPRN or Companies House number");
-				_errorService.AddErrors(ModelState.Keys, ModelState);
-				return Page();
-			}
+   public async Task<IActionResult> OnPost(string urn)
+   {
+      AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
+      if (string.IsNullOrWhiteSpace(SearchQuery))
+      {
+         ModelState.AddModelError(nameof(SearchQuery), "Enter the Trust name, UKPRN or Companies House number");
+         _errorService.AddErrors(ModelState.Keys, ModelState);
+         return Page();
+      }
 
-			var searchSplit = SplitOnBrackets(SearchQuery);
-			if (searchSplit.Length < 2) return Page();
+      string[] searchSplit = SplitOnBrackets(SearchQuery);
+      if (searchSplit.Length < 2) return Page();
 
-			var ukprn = searchSplit[1];
+      string ukprn = searchSplit[1];
 
-			var trust = await _trustsRepository.SearchTrusts(ukprn);
-			if (trust != null) return RedirectToPage(Links.InvoluntaryProject.Summary.Page, new { ukprn, urn });
+      TrustSummaryResponse trust = await _trustsRepository.SearchTrusts(ukprn);
+      if (trust != null) return RedirectToPage(Links.InvoluntaryProject.Summary.Page, new { ukprn, urn });
 
-			return Page();
-		}
+      return Page();
+   }
 
-		private static string HighlightSearchMatch(string input, string toReplace, TrustSummary trust)
-		{
-			if (trust == null ||
-             string.IsNullOrWhiteSpace(trust.GroupName))
-         {
-				return string.Empty;
-			}
+   private static string HighlightSearchMatch(string input, string toReplace, TrustSummary trust)
+   {
+      if (trust == null ||
+          string.IsNullOrWhiteSpace(trust.GroupName))
+      {
+         return string.Empty;
+      }
 
-			var index = input.IndexOf(toReplace, StringComparison.InvariantCultureIgnoreCase);
-			var correctCaseSearchString = input.Substring(index, toReplace.Length);
+      int index = input.IndexOf(toReplace, StringComparison.InvariantCultureIgnoreCase);
+      string correctCaseSearchString = input.Substring(index, toReplace.Length);
 
-			return input.Replace(toReplace, $"<strong>{correctCaseSearchString}</strong>", StringComparison.InvariantCultureIgnoreCase);
-		}
+      return input.Replace(toReplace, $"<strong>{correctCaseSearchString}</strong>", StringComparison.InvariantCultureIgnoreCase);
+   }
 
-		private static string[] SplitOnBrackets(string input)
-		{
-			return input.Split(new[] { '(', ')' }, 3, StringSplitOptions.None);
-		}
-	}
+   private static string[] SplitOnBrackets(string input)
+   {
+      return input.Split(new[] { '(', ')' }, 3, StringSplitOptions.None);
+   }
 }

@@ -1,9 +1,8 @@
 ﻿using Microsoft.Graph;
 
-namespace Dfe.PrepareConversions.Data.Services.Interfaces
+namespace Dfe.PrepareConversions.Data.Services.Interfaces;
+
+public interface IGraphClientFactory
 {
-	public interface IGraphClientFactory
-	{
-		public GraphServiceClient Create();
-	}
+   public GraphServiceClient Create();
 }

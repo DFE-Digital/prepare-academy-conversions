@@ -20,9 +20,9 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
    private readonly IHttpClientService _httpClientService;
    private readonly IReadOnlyDictionary<string, string> _invertedAliasedStatuses;
 
-    public AcademyConversionProjectRepository(IApiClient apiClient,
-       IHttpClientFactory httpClientFactory = null,
-       IHttpClientService httpClientService = null)
+   public AcademyConversionProjectRepository(IApiClient apiClient,
+                                             IHttpClientFactory httpClientFactory = null,
+                                             IHttpClientService httpClientService = null)
    {
       _apiClient = apiClient;
       _httpClientFactory = httpClientFactory;
@@ -83,15 +83,15 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
 
    public async Task CreateInvoluntaryProject(CreateInvoluntaryProject involuntaryProject)
    {
-      var httpClient = _httpClientFactory.CreateClient("AcademisationClient");
+      HttpClient httpClient = _httpClientFactory.CreateClient("AcademisationClient");
 
-      var result = await _httpClientService.Post<CreateInvoluntaryProject, string>(
+      ApiResponse<string> result = await _httpClientService.Post<CreateInvoluntaryProject, string>(
          httpClient,
          @"legacy/project/involuntary-conversion-project",
          involuntaryProject);
 
       if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
-    }
+   }
 
    public async Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
    {
@@ -133,9 +133,9 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
    }
 
    private void ProcessFilters(IEnumerable<string> statusFilters,
-                                     IEnumerable<string> deliveryOfficerFilter,
-                                     AcademyConversionSearchModel searchModel,
-                                     IEnumerable<string> regionsFilter = default)
+                               IEnumerable<string> deliveryOfficerFilter,
+                               AcademyConversionSearchModel searchModel,
+                               IEnumerable<string> regionsFilter = default)
    {
       if (deliveryOfficerFilter != default)
       {
@@ -158,6 +158,3 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       }
    }
 }
-
-
-

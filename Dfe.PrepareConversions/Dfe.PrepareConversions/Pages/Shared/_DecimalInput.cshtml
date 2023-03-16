@@ -1,27 +1,27 @@
-﻿@model Dfe.PrepareConversions.ViewModels.DecimalInputViewModel
+﻿@model DecimalInputViewModel
 @{
-	var showError = !string.IsNullOrWhiteSpace(Model.ErrorMessage);
+   var showError = !string.IsNullOrWhiteSpace(Model.ErrorMessage);
 }
 <div class="govuk-form-group @(showError ? "govuk-form-group--error" : "")">
-	@if (showError)
-	{
-		<span id="@Model.Id-error" class="govuk-error-message">
-			<span class="govuk-visually-hidden">Error:</span> @Model.ErrorMessage
-		</span>
-	}
+   @if (showError)
+   {
+      <span id="@Model.Id-error" class="govuk-error-message">
+         <span class="govuk-visually-hidden">Error:</span> @Model.ErrorMessage
+      </span>
+   }
 
-	@if (Model.IsMonetary)
-	{
-		<div class="govuk-input__wrapper">
-			<div class="govuk-input__prefix" aria-hidden="true">£</div>
-			<input class="govuk-input govuk-input--width-10" id="@Model.Id" name="@Model.Name" type="text" value="@Model.Value">
-		</div>
-	}
-	else
-	{
-		<div class="govuk-input__wrapper">
-			<input class="govuk-input govuk-input--width-10" id="@Model.Id" name="@Model.Name" type="text" value="@Model.Value">
-			<div class="govuk-input__suffix" id="@Model.Name-suffix" aria-hidden="true">@Model.Suffix</div> 
-		</div>
-	}
+   @if (Model.IsMonetary)
+   {
+      <div class="govuk-input__wrapper">
+         <div class="govuk-input__prefix" aria-hidden="true">£</div>
+         <input class="govuk-input govuk-input--width-10" id="@Model.Id" name="@Model.Name" type="text" value="@Model.Value">
+      </div>
+   }
+   else
+   {
+      <div class="govuk-input__wrapper">
+         <input class="govuk-input govuk-input--width-10" id="@Model.Id" name="@Model.Name" type="text" value="@Model.Value">
+         <div class="govuk-input__suffix" id="@Model.Name-suffix" aria-hidden="true">@Model.Suffix</div>
+      </div>
+   }
 </div>

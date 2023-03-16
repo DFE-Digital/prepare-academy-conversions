@@ -3,18 +3,13 @@ using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Tests.Extensions;
-using DocumentFormat.OpenXml.Bibliography;
 using FluentAssertions;
-using Microsoft.Graph;
-using Microsoft.Graph.TermStore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using WireMock.Pact.Models.V2;
 using Xunit;
-using static Dfe.PrepareConversions.Tests.Services.DateRangeValidationServiceTests;
 
-namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation;
+namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolAndTrustInformation;
 
 public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationTests
 {
@@ -27,28 +22,28 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      Document.QuerySelector("#school-and-trust-information-status").TextContent.Trim().Should().Be("In Progress");
-      Document.QuerySelector("#school-and-trust-information-status").ClassName.Should().Contain("blue");
+      Document.QuerySelector("#school-and-trust-information-status")!.TextContent.Trim().Should().Be("In Progress");
+      Document.QuerySelector("#school-and-trust-information-status")!.ClassName.Should().Contain("blue");
 
       await NavigateAsync("School and trust information and project dates");
 
-      Document.QuerySelector("#project-recommendation").TextContent.Should().Be(project.RecommendationForProject);
-      Document.QuerySelector("#author").TextContent.Should().Be(project.Author);
-      Document.QuerySelector("#cleared-by").TextContent.Should().Be(project.ClearedBy);
-      Document.QuerySelector("#academy-order-required").TextContent.Should().Be(project.AcademyOrderRequired);
-      Document.QuerySelector("#advisory-board-date").TextContent.Should().Be(project.HeadTeacherBoardDate.ToDateString());
-      Document.QuerySelector("#previous-advisory-board").TextContent.Should().Be(project.PreviousHeadTeacherBoardDate.ToDateString());
-      Document.QuerySelector("#school-name").TextContent.Should().Be(project.SchoolName);
-      Document.QuerySelector("#unique-reference-number").TextContent.Should().Be(project.Urn.ToString());
-      Document.QuerySelector("#local-authority").TextContent.Should().Be(project.LocalAuthority);
-      Document.QuerySelector("#trust-reference-number").TextContent.Should().Be(project.TrustReferenceNumber);
-      Document.QuerySelector("#name-of-trust").TextContent.Should().Be(project.NameOfTrust);
-      Document.QuerySelector("#sponsor-reference-number").TextContent.Should().Be(project.SponsorReferenceNumber);
-      Document.QuerySelector("#sponsor-name").TextContent.Should().Be(project.SponsorName);
-      Document.QuerySelector("#academy-type-and-route").TextContent.Should().Contain(project.AcademyTypeAndRoute);
-      Document.QuerySelector("#academy-type-and-route").TextContent.Should().Contain(project.ConversionSupportGrantAmount.Value.ToMoneyString(true));
-      Document.QuerySelector("#academy-type-and-route-additional-text").TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
-      Document.QuerySelector("#proposed-academy-opening-date").TextContent.Should().Be(project.OpeningDate.ToDateString(true));
+      Document.QuerySelector("#project-recommendation")!.TextContent.Should().Be(project.RecommendationForProject);
+      Document.QuerySelector("#author")!.TextContent.Should().Be(project.Author);
+      Document.QuerySelector("#cleared-by")!.TextContent.Should().Be(project.ClearedBy);
+      Document.QuerySelector("#academy-order-required")!.TextContent.Should().Be(project.AcademyOrderRequired);
+      Document.QuerySelector("#advisory-board-date")!.TextContent.Should().Be(project.HeadTeacherBoardDate.ToDateString());
+      Document.QuerySelector("#previous-advisory-board")!.TextContent.Should().Be(project.PreviousHeadTeacherBoardDate.ToDateString());
+      Document.QuerySelector("#school-name")!.TextContent.Should().Be(project.SchoolName);
+      Document.QuerySelector("#unique-reference-number")!.TextContent.Should().Be(project.Urn.ToString());
+      Document.QuerySelector("#local-authority")!.TextContent.Should().Be(project.LocalAuthority);
+      Document.QuerySelector("#trust-reference-number")!.TextContent.Should().Be(project.TrustReferenceNumber);
+      Document.QuerySelector("#name-of-trust")!.TextContent.Should().Be(project.NameOfTrust);
+      Document.QuerySelector("#sponsor-reference-number")!.TextContent.Should().Be(project.SponsorReferenceNumber);
+      Document.QuerySelector("#sponsor-name")!.TextContent.Should().Be(project.SponsorName);
+      Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Contain(project.AcademyTypeAndRoute);
+      Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Contain(project.ConversionSupportGrantAmount?.ToMoneyString(true));
+      Document.QuerySelector("#academy-type-and-route-additional-text")!.TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
+      Document.QuerySelector("#proposed-academy-opening-date")!.TextContent.Should().Be(project.OpeningDate.ToDateString(true));
    }
 
    [Fact]
@@ -59,7 +54,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("School and trust information and project dates");
 
-      Document.QuerySelector("#previous-advisory-board").TextContent.Should().Be("No");
+      Document.QuerySelector("#previous-advisory-board")!.TextContent.Should().Be("No");
    }
 
    [Fact]
@@ -77,9 +72,9 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
 
       await NavigateAsync("School and trust information and project dates");
 
-      Document.QuerySelector<IHtmlInputElement>("#school-and-trust-information-complete").DoClick();
+      Document.QuerySelector<IHtmlInputElement>("#school-and-trust-information-complete")!.DoClick();
 
-      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
       Document.QuerySelector(".govuk-error-summary").Should().NotBe(null);
@@ -97,13 +92,13 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      Document.QuerySelector("#school-and-trust-information-status").TextContent.Trim().Should().Be("Completed");
+      Document.QuerySelector("#school-and-trust-information-status")!.TextContent.Trim().Should().Be("Completed");
 
       await NavigateAsync("School and trust information and project dates");
 
-      Document.QuerySelector<IHtmlInputElement>("#school-and-trust-information-complete").IsChecked.Should().BeTrue();
+      Document.QuerySelector<IHtmlInputElement>("#school-and-trust-information-complete")!.IsChecked.Should().BeTrue();
 
-      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
    }
@@ -136,29 +131,29 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      Document.QuerySelector("#school-and-trust-information-status").TextContent.Trim().Should().Be("Not Started");
-      Document.QuerySelector("#school-and-trust-information-status").ClassName.Should().Contain("grey");
+      Document.QuerySelector("#school-and-trust-information-status")!.TextContent.Trim().Should().Be("Not Started");
+      Document.QuerySelector("#school-and-trust-information-status")!.ClassName.Should().Contain("grey");
 
       await NavigateAsync("School and trust information and project dates");
 
-      Document.QuerySelector("#project-recommendation").TextContent.Should().Be("Empty");
-      Document.QuerySelector("#author").TextContent.Should().Be("Empty");
-      Document.QuerySelector("#cleared-by").TextContent.Should().Be("Empty");
-      Document.QuerySelector("#academy-order-required").TextContent.Should().Be("Empty");
-      Document.QuerySelector("#advisory-board-date").TextContent.Should().Be("Empty");
-      Document.QuerySelector("#previous-advisory-board").TextContent.Should().Be("Empty");
-      Document.QuerySelector("#school-name").TextContent.Should().Be("Empty");
-      Document.QuerySelector("#unique-reference-number").TextContent.Should().Be("Empty");
-      Document.QuerySelector("#local-authority").TextContent.Should().Be("Empty");
-      Document.QuerySelector("#trust-reference-number").TextContent.Should().Be("Empty");
-      Document.QuerySelector("#name-of-trust").TextContent.Should().Be("Empty");
-      Document.QuerySelector("#sponsor-reference-number").TextContent.Should().Be("Not applicable");
-      Document.QuerySelector("#sponsor-name").TextContent.Should().Be("Not applicable");
-      Document.QuerySelector("#academy-type-and-route").TextContent.Should().Be("Empty");
-      Document.QuerySelector("#proposed-academy-opening-date").TextContent.Should().Be("Empty");
-      Document.QuerySelector<IHtmlInputElement>("#school-and-trust-information-complete").IsChecked.Should().BeFalse();
+      Document.QuerySelector("#project-recommendation")!.TextContent.Should().Be("Empty");
+      Document.QuerySelector("#author")!.TextContent.Should().Be("Empty");
+      Document.QuerySelector("#cleared-by")!.TextContent.Should().Be("Empty");
+      Document.QuerySelector("#academy-order-required")!.TextContent.Should().Be("Empty");
+      Document.QuerySelector("#advisory-board-date")!.TextContent.Should().Be("Empty");
+      Document.QuerySelector("#previous-advisory-board")!.TextContent.Should().Be("Empty");
+      Document.QuerySelector("#school-name")!.TextContent.Should().Be("Empty");
+      Document.QuerySelector("#unique-reference-number")!.TextContent.Should().Be("Empty");
+      Document.QuerySelector("#local-authority")!.TextContent.Should().Be("Empty");
+      Document.QuerySelector("#trust-reference-number")!.TextContent.Should().Be("Empty");
+      Document.QuerySelector("#name-of-trust")!.TextContent.Should().Be("Empty");
+      Document.QuerySelector("#sponsor-reference-number")!.TextContent.Should().Be("Not applicable");
+      Document.QuerySelector("#sponsor-name")!.TextContent.Should().Be("Not applicable");
+      Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Be("Empty");
+      Document.QuerySelector("#proposed-academy-opening-date")!.TextContent.Should().Be("Empty");
+      Document.QuerySelector<IHtmlInputElement>("#school-and-trust-information-complete")!.IsChecked.Should().BeFalse();
 
-      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
    }
@@ -171,7 +166,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
 
-      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
    }
@@ -194,7 +189,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       await NavigateAsync("School and trust information and project dates");
       await NavigateAsync("Change", 2);
 
-      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/route-and-grant");
       IElement test = Document.QuerySelector(".govuk-error-summary");

@@ -1,4 +1,6 @@
-﻿using Dfe.PrepareConversions.Data.Services;
+﻿using Dfe.PrepareConversions.Data;
+using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -6,45 +8,44 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareConversions.Pages
+namespace Dfe.PrepareConversions.Pages;
+
+public class BaseAcademyConversionProjectPageModel : PageModel
 {
-	public class BaseAcademyConversionProjectPageModel : PageModel
-	{
-		protected readonly IAcademyConversionProjectRepository _repository;
+   protected readonly IAcademyConversionProjectRepository _repository;
 
-		public ProjectViewModel Project { get; set; }
+   public BaseAcademyConversionProjectPageModel(IAcademyConversionProjectRepository repository)
+   {
+      _repository = repository;
+   }
 
-		public BaseAcademyConversionProjectPageModel(IAcademyConversionProjectRepository repository)
-		{
-			_repository = repository;
-		}
+   public ProjectViewModel Project { get; set; }
 
-		public virtual async Task<IActionResult> OnGetAsync(int id)
-		{
-			return await SetProject(id);
-		}
+   protected string NameOfUser => User.FindFirstValue("name") ?? string.Empty;
 
-		public virtual async Task<IActionResult> OnPostAsync(int id)
-		{
-			await SetProject(id);
+   public virtual async Task<IActionResult> OnGetAsync(int id)
+   {
+      return await SetProject(id);
+   }
 
-			return RedirectToPage(Links.TaskList.Index.Page, new { id });
-		}
-	
+   public virtual async Task<IActionResult> OnPostAsync(int id)
+   {
+      await SetProject(id);
 
-		protected async Task<IActionResult> SetProject(int id)
-		{
-			var project = await _repository.GetProjectById(id);
-			if (!project.Success)
-			{
-				// 404 logic
-				return NotFound();
-			}
+      return RedirectToPage(Links.TaskList.Index.Page, new { id });
+   }
 
-			Project = new ProjectViewModel(project.Body);
-			return Page();
-		}
 
-      protected string NameOfUser => User.FindFirstValue("name") ?? string.Empty;
+   protected async Task<IActionResult> SetProject(int id)
+   {
+      ApiResponse<AcademyConversionProject> project = await _repository.GetProjectById(id);
+      if (!project.Success)
+      {
+         // 404 logic
+         return NotFound();
+      }
+
+      Project = new ProjectViewModel(project.Body);
+      return Page();
    }
 }

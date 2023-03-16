@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace Dfe.PrepareConversions.Data.Models.Application
+namespace Dfe.PrepareConversions.Data.Models.Application;
+
+public class DateForConversion
 {
-	public class DateForConversion
-	{
-		public bool HasPreferredDate { get; set; }
-		public DateTime PreferredDate { get; set; }
-	}
+   public bool HasPreferredDate { get; set; }
+   public DateTime PreferredDate { get; set; }
 }

@@ -1,45 +1,45 @@
 ﻿@page "/task-list/{id:int}/school-performance-ofsted-information/additional-information"
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
-	Model.SuccessPage = Links.SchoolPerformance.ConfirmSchoolPerformance.Page;
-	ViewData["Title"] = "School performance Ofsted information additional information";
+   Model.SuccessPage = Links.SchoolPerformance.ConfirmSchoolPerformance.Page;
+   ViewData["Title"] = "School performance Ofsted information additional information";
 }
 
 @section BeforeMain
 {
-	<govuk-back-link link-item="@Links.SchoolPerformance.ConfirmSchoolPerformance"/>
+   <govuk-back-link link-item="@Links.SchoolPerformance.ConfirmSchoolPerformance"/>
 }
 
 @if (Model.ShowError)
 {
-	<partial name="_ErrorSummary"/>
+   <partial name="_ErrorSummary"/>
 }
 
 <div class="govuk-grid-row">
-	<div class="govuk-grid-column-two-thirds">
-		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
-		<h1 class="govuk-heading-l">School performance (Ofsted information)</h1>
-		<div class="govuk-body">
-			<p class="govuk-body">This information comes from Ofsted. The table will go into your project template.</p>
-			<p class="govuk-body">You can add <a href="#additional-information">additional information</a> if you need to, this will also go into your project template.</p>
-			<p class="govuk-body-s">TRAMS last updated on: 23 March 2021</p><br>
-		</div>
-	</div>
-	<div class="govuk-grid-column-full">
+   <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+      <h1 class="govuk-heading-l">School performance (Ofsted information)</h1>
+      <div class="govuk-body">
+         <p class="govuk-body">This information comes from Ofsted. The table will go into your project template.</p>
+         <p class="govuk-body">You can add <a href="#additional-information">additional information</a> if you need to, this will also go into your project template.</p>
+         <p class="govuk-body-s">TRAMS last updated on: 23 March 2021</p><br>
+      </div>
+   </div>
+   <div class="govuk-grid-column-full">
       @await Component.InvokeAsync("SchoolPerformance", new { showAdditionalInformation = false, isPreview = false })
    </div>
-	<div class="govuk-grid-column-two-thirds">
-		<form method="post">
-			<h2 class="govuk-heading-m">
-				<label for="additional-information">Add any additional information if you need to</label>
-			</h2>
-			<p class="govuk-body">This information will go into your project template under the school performance (Ofsted information) section.</p>
+   <div class="govuk-grid-column-two-thirds">
+      <form method="post">
+         <h2 class="govuk-heading-m">
+            <label for="additional-information">Add any additional information if you need to</label>
+         </h2>
+         <p class="govuk-body">This information will go into your project template under the school performance (Ofsted information) section.</p>
 
-			<govuk-textarea-input id="additional-information" name="school-performance-additional-information" asp-for="Project.SchoolPerformanceAdditionalInformation" rows="5"/>
+         <govuk-textarea-input id="additional-information" name="school-performance-additional-information" asp-for="Project.SchoolPerformanceAdditionalInformation" rows="5"/>
 
-			<button class="govuk-button" id="save-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton">
-				Save and continue
-			</button>
-		</form>
-	</div>
+         <button class="govuk-button" id="save-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton">
+            Save and continue
+         </button>
+      </form>
+   </div>
 </div>

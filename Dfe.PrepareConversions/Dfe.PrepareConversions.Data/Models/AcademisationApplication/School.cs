@@ -1,9 +1,7 @@
-﻿using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Loan = Dfe.PrepareConversions.Data.Models.AcademisationApplication.Loan;
 
-namespace ApplyToBecome.Data.Models.AcademisationApplication;
+namespace Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 
 public class School
 {
@@ -29,7 +27,7 @@ public class School
    public FinancialYear CurrentFinancialYear { get; set; }
    public FinancialYear NextFinancialYear { get; set; }
    public List<Loan> Loans { get; set; }
-   public List<Lease> Leases { get; set; } 
+   public List<Lease> Leases { get; set; }
    public string SchoolConversionContactHeadName { get; set; }
    public string SchoolConversionContactHeadEmail { get; set; }
    public string SchoolConversionContactHeadTel { get; set; }

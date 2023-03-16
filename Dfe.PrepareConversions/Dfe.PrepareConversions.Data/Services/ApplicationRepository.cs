@@ -1,6 +1,5 @@
-﻿using ApplyToBecome.Data.Models.AcademisationApplication;
-using Dfe.PrepareConversions.Data.Features;
-using Dfe.PrepareConversions.Data.Models;
+﻿using Dfe.PrepareConversions.Data.Features;
+using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 using Dfe.PrepareConversions.Data.Models.Application;
 using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
@@ -41,6 +40,5 @@ public class ApplicationRepository
 
       _logger.LogWarning("Unable to get school application form data for establishment with id: {id}", id);
       return new ApiResponse<Application>(response.StatusCode, null);
-
    }
 }

@@ -1,9 +1,8 @@
-namespace Dfe.PrepareConversions.Data.Models.Application
+namespace Dfe.PrepareConversions.Data.Models.Application;
+
+public class ApplicationDetails
 {
-	public class ApplicationDetails
-	{
-		public Link EvidenceDocument { get; set; }
-		public bool ChangesToGovernance { get; set; }
-		public bool ChangesAtLocalLevel { get; set; }
-	}
+   public Link EvidenceDocument { get; set; }
+   public bool ChangesToGovernance { get; set; }
+   public bool ChangesAtLocalLevel { get; set; }
 }
