@@ -17,7 +17,7 @@
 
 @{
    DateTime firstDate = DateTime.Today.FirstOfMonth(1);
-   var values = Enumerable.Range(0, 12).Select(i => firstDate.FirstOfMonth(i).ToString(CultureInfo.GetCultureInfo("en-GB"))).ToArray();
+   var values = Enumerable.Range(0, 12).Select(i => firstDate.FirstOfMonth(i).ToString(CultureInfo.CurrentCulture)).ToArray();
    var labels = Enumerable.Range(0, 12).Select(i => firstDate.FirstOfMonth(i).ToDateString(true)).ToArray();
 }
 
