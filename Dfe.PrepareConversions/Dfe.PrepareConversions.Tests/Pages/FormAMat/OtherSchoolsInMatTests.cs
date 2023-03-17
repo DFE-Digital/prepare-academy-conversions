@@ -47,5 +47,28 @@ namespace Dfe.PrepareConversions.Tests.Pages.FormAMat
 
          ResetServer();
       }
+      [Fact]
+      public async Task Should_display_pre_advisory_board_status_on_list_of_projects_within_the_same_Mat()
+      {
+         List<AcademyConversionProject> projects = AddGetProjects(project =>
+         {
+            project.ApplicationReceivedDate = null;
+            project.Form7ReceivedDate = null;
+            project.ApplicationReferenceNumber = "A2B_1";
+            project.AcademyTypeAndRoute = "Form a Mat";
+         }).ToList();
+         AddGetStatuses();
+         AcademyConversionProject firstProject = AddGetProject(p => p.Id = projects.First().Id);
+         await OpenAndConfirmPathAsync($"/other-schools-in-mat/{firstProject.Id}");
+
+         for (int i = 0; i < 2; i++)
+         {
+            AcademyConversionProject project = projects.ElementAt(i);
+
+            Document.QuerySelector($"#project-status-{project.Id}")?.TextContent.Should().Contain("PRE ADVISORY BOARD");
+         }
+
+         ResetServer();
+      }
    }
 }
