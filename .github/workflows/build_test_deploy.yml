@@ -2,7 +2,7 @@ name: Test, build, and deploy
 
 on:
   push:
-    branches: [ main, code-clean-up ]
+    branches: [ main ]
 
 env:
   REGISTRY: ghcr.io
