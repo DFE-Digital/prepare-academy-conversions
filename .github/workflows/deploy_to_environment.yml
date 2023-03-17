@@ -154,6 +154,7 @@ jobs:
           TF_VAR_app_cypresstest_secret : ${{ secrets.CYPRESS_TEST_SECRET }}
           TF_VAR_app_feature_use_academisation : true
           TF_VAR_app_feature_use_academisationApplication : false
+          TF_VAR_app_feature_show_directedacademyorders : false
           TF_VAR_app_accessrequest : ${{ secrets.ACCESSREQUEST }}
           TF_VAR_app_templatefeedback : ${{ secrets.TEMPLATEFEEDBACK }}
 
@@ -196,7 +197,7 @@ jobs:
       - name: Npm install
         run: npm install
       - name: Run cypress
-        run: npm run cy:run -- --env url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
+        run: npm run cy:run -- --env url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}',grep='-dao'
         env:
           db: ${{ secrets.DB_CONNECTION_STRING }}
       - uses: actions/upload-artifact@v1

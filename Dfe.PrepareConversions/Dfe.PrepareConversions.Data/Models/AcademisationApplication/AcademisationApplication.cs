@@ -239,8 +239,8 @@ namespace ApplyToBecome.Data.Models.AcademisationApplication
          academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentDetails =
             academisationApplicationSchool.ProtectedCharacteristics switch
             {
-               "unlikely" => "That the Secretary of State's decision is unlikely to disproportionately affect any particular person or group who share protected characteristics.",
-               "willnot" => "That there are some impacts but on balance the changes will not disproportionately affect any particular person or group who share protected characteristics.",
+               "unlikely" => "That the Secretary of State's decision is unlikely to disproportionately affect any particular person or group who share protected characteristics",
+               "willnot" => "That there are some impacts but on balance the changes will not disproportionately affect any particular person or group who share protected characteristics",
                _ => string.Empty
             };
          academiesApplicationSchool.SchoolAdditionalInformationAdded =

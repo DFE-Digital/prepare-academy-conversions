@@ -59,6 +59,11 @@ variable "container_max_replicas" {
   type        = number
 }
 
+variable "enable_event_hub" {
+  description = "Send Azure Container App logs to an Event Hub sink"
+  type        = bool
+}
+
 variable "enable_cdn_frontdoor" {
   description = "Enable Azure CDN Front Door. This will use the Container Apps endpoint as the origin."
   type        = bool
@@ -127,4 +132,24 @@ variable "existing_network_watcher_name" {
 variable "existing_network_watcher_resource_group_name" {
   description = "Existing network watcher resource group."
   type        = string
+}
+
+variable "enable_dns_zone" {
+  description = "Conditionally create a DNS zone"
+  type        = bool
+}
+
+variable "dns_zone_domain_name" {
+  description = "DNS zone domain name. If created, records will automatically be created to point to the CDN."
+  type        = string
+}
+
+variable "cdn_frontdoor_custom_domains" {
+  description = "Azure CDN Front Door custom domains. If they are within the DNS zone (optionally created), the Validation TXT records and ALIAS/CNAME records will be created"
+  type        = list(string)
+}
+
+variable "cdn_frontdoor_host_redirects" {
+  description = "CDN FrontDoor host redirects `[{ \"from\" = \"example.com\", \"to\" = \"www.example.com\" }]`"
+  type        = list(map(string))
 }

@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 
 Cypress._.each(['ipad-mini'], (viewport) => {
-  describe(`119898 Create Involuntry project and generate it's template on ${viewport}`, () => {
+  describe(`119898 Create Involuntry project and generate it's template on ${viewport}`, { tags: ['@dao'] }, () => {
     beforeEach(() => {
       cy.login()
       cy.viewport(viewport)

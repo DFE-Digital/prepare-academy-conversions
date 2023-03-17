@@ -66,7 +66,7 @@ public class IndexModel : PaginatedPageModel
          ApplicationReceivedDate = academyConversionProject.ApplicationReceivedDate.ToDateString(),
          AssignedDate = academyConversionProject.AssignedDate.ToDateString(),
          HeadTeacherBoardDate = academyConversionProject.HeadTeacherBoardDate.ToDateString(),
-         ProposedAcademyOpeningDate = academyConversionProject.ProposedAcademyOpeningDate.ToDateString(),
+         ProposedAcademyOpeningDate = academyConversionProject.OpeningDate.ToDateString(),
          Status = MapProjectStatus(academyConversionProject.ProjectStatus),
          AssignedUserFullName = academyConversionProject?.AssignedUser?.FullName,
          CreatedOn = academyConversionProject.CreatedOn,

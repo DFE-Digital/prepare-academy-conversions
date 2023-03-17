@@ -53,7 +53,7 @@ namespace Dfe.PrepareConversions.Data.Tests.Models.AcademisationApplication
          Assert.Equal(DateTime.Today, academiesApplicationSchool.SchoolSACREExemptionEndDate);
          Assert.Equal("Feeder Schools", academiesApplicationSchool.SchoolAdFeederSchools);
          Assert.True(academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentCompleted);
-         Assert.Equal("That the Secretary of State's decision is unlikely to disproportionately affect any particular person or group who share protected characteristics.", 
+         Assert.Equal("That the Secretary of State's decision is unlikely to disproportionately affect any particular person or group who share protected characteristics", 
             academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentDetails);
          Assert.True(academiesApplicationSchool.SchoolAdditionalInformationAdded);
          Assert.Equal("Additional Information", academiesApplicationSchool.SchoolAdditionalInformation);
