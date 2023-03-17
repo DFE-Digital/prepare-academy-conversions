@@ -20,13 +20,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.FormAMat
       [Fact]
       public async Task Should_display_list_of_projects_within_the_same_Mat()
       {
-         List<AcademyConversionProject> projects = AddGetProjects( project =>
-         {
-            project.ApplicationReceivedDate = null;
-            project.Form7ReceivedDate = null;
-            project.ApplicationReferenceNumber = "A2B_1";
-            project.AcademyTypeAndRoute = "Form a Mat";
-         }).ToList();
+         List<AcademyConversionProject> projects = GenerateProjects();
          AddGetStatuses();
          AcademyConversionProject firstProject = AddGetProject(p => p.Id = projects.First().Id);
          await OpenAndConfirmPathAsync($"/other-schools-in-mat/{firstProject.Id}");
@@ -47,16 +41,11 @@ namespace Dfe.PrepareConversions.Tests.Pages.FormAMat
 
          ResetServer();
       }
+
       [Fact]
       public async Task Should_display_pre_advisory_board_status_on_list_of_projects_within_the_same_Mat()
       {
-         List<AcademyConversionProject> projects = AddGetProjects(project =>
-         {
-            project.ApplicationReceivedDate = null;
-            project.Form7ReceivedDate = null;
-            project.ApplicationReferenceNumber = "A2B_1";
-            project.AcademyTypeAndRoute = "Form a Mat";
-         }).ToList();
+         List<AcademyConversionProject> projects = GenerateProjects();
          AddGetStatuses();
          AcademyConversionProject firstProject = AddGetProject(p => p.Id = projects.First().Id);
          await OpenAndConfirmPathAsync($"/other-schools-in-mat/{firstProject.Id}");
@@ -69,6 +58,17 @@ namespace Dfe.PrepareConversions.Tests.Pages.FormAMat
          }
 
          ResetServer();
+      }
+      private List<AcademyConversionProject> GenerateProjects()
+      {
+         List<AcademyConversionProject> projects = AddGetProjects(project =>
+         {
+            project.ApplicationReceivedDate = null;
+            project.Form7ReceivedDate = null;
+            project.ApplicationReferenceNumber = "A2B_1";
+            project.AcademyTypeAndRoute = "Form a Mat";
+         }).ToList();
+         return projects;
       }
    }
 }
