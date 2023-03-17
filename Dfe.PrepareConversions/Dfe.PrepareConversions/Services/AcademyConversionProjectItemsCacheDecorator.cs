@@ -21,14 +21,10 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
       _httpContext = httpContextAccessor.HttpContext;
    }
 
-   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page,
-                                                                                                      int count,
-                                                                                                      string titleFilter = "",
-                                                                                                      IEnumerable<string> statusFilters = default,
-                                                                                                      IEnumerable<string> deliveryOfficerFilter = default,
-                                                                                                      IEnumerable<string> regionsFilter = default)
+   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count, string titleFilter = "",
+      IEnumerable<string> statusFilters = default, IEnumerable<string> deliveryOfficerFilter = default, IEnumerable<string> regionsFilter = default, IEnumerable<string> applicationReferences = default)
    {
-      return await _innerRepository.GetAllProjects(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter);
+      return await _innerRepository.GetAllProjects(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter, applicationReferences);
    }
 
    public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)

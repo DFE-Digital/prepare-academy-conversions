@@ -10,4 +10,5 @@ public class AcademyConversionSearchModel
    public IEnumerable<string> DeliveryOfficerQueryString { get; set; }
    public IEnumerable<string> RegionQueryString { get; set; }
    public IEnumerable<string> StatusQueryString { get; set; }
+   public IEnumerable<string> ApplicationReferences { get; set; }
 }

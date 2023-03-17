@@ -35,11 +35,12 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
                                                                                                       string titleFilter = "",
                                                                                                       IEnumerable<string> statusFilters = default,
                                                                                                       IEnumerable<string> deliveryOfficerFilter = default,
-                                                                                                      IEnumerable<string> regionsFilter = default)
+                                                                                                      IEnumerable<string> regionsFilter = default,
+                                                                                                      IEnumerable<string> applicationReferences = default)
    {
       AcademyConversionSearchModel searchModel = new() { TitleFilter = titleFilter, Page = page, Count = count };
 
-      ProcessFilters(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter);
+      ProcessFilters(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter, applicationReferences);
 
       HttpResponseMessage response = await _apiClient.GetAllProjectsAsync(searchModel);
       if (!response.IsSuccessStatusCode)
@@ -133,15 +134,15 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
    }
 
    private void ProcessFilters(IEnumerable<string> statusFilters,
-                               IEnumerable<string> deliveryOfficerFilter,
-                               AcademyConversionSearchModel searchModel,
-                               IEnumerable<string> regionsFilter = default)
+                                     IEnumerable<string> deliveryOfficerFilter,
+                                     AcademyConversionSearchModel searchModel,
+                                     IEnumerable<string> regionsFilter = default,
+                                     IEnumerable<string> applicationReferences = default)
    {
       if (deliveryOfficerFilter != default)
       {
          searchModel.DeliveryOfficerQueryString = deliveryOfficerFilter;
       }
-
       if (statusFilters != null)
       {
          IEnumerable<string> projectedStatuses = statusFilters.SelectMany(x =>
@@ -151,10 +152,13 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
 
          searchModel.StatusQueryString = projectedStatuses.ToArray();
       }
-
       if (regionsFilter != default)
       {
          searchModel.RegionQueryString = regionsFilter.Select(x => x.ToLower()).ToList();
+      }
+      if (applicationReferences != default)
+      {
+         searchModel.ApplicationReferences = applicationReferences;
       }
    }
 }
