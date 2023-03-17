@@ -4,6 +4,7 @@ using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Models.ProjectList;
+using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -40,8 +41,7 @@ public class IndexModel : PaginatedPageModel
          await _repository.GetAllProjects(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions);
 
       Paging = response.Body?.Paging;
-
-      Projects = response.Body?.Data.Select(Build).ToList();
+      Projects = response.Body?.Data.Select(ProjectListHelper.Build).ToList();
       TotalProjects = response.Body?.Paging?.RecordCount ?? 0;
 
       ApiResponse<ProjectFilterParameters> filterParametersResponse = await _repository.GetFilterParameters();
@@ -52,50 +52,5 @@ public class IndexModel : PaginatedPageModel
          Filters.AvailableDeliveryOfficers = filterParametersResponse.Body.AssignedUsers;
          Filters.AvailableRegions = filterParametersResponse.Body.Regions;
       }
-   }
-
-   private static ProjectListViewModel Build(AcademyConversionProject academyConversionProject)
-   {
-      return new ProjectListViewModel
-      {
-         Id = academyConversionProject.Id.ToString(),
-         SchoolURN = academyConversionProject.Urn.HasValue ? academyConversionProject.Urn.ToString() : "",
-         SchoolName = academyConversionProject.SchoolName,
-         LocalAuthority = academyConversionProject.LocalAuthority,
-         NameOfTrust = academyConversionProject.NameOfTrust,
-         ApplicationReceivedDate = academyConversionProject.ApplicationReceivedDate.ToDateString(),
-         AssignedDate = academyConversionProject.AssignedDate.ToDateString(),
-         HeadTeacherBoardDate = academyConversionProject.HeadTeacherBoardDate.ToDateString(),
-         ProposedAcademyOpeningDate = academyConversionProject.OpeningDate.ToDateString(),
-         Status = MapProjectStatus(academyConversionProject.ProjectStatus),
-         AssignedUserFullName = academyConversionProject?.AssignedUser?.FullName,
-         CreatedOn = academyConversionProject.CreatedOn,
-         TypeAndRoute = academyConversionProject.AcademyTypeAndRoute
-      };
-   }
-
-   private static ProjectStatus MapProjectStatus(string status)
-   {
-      const string green = nameof(green);
-      const string yellow = nameof(yellow);
-      const string orange = nameof(orange);
-      const string red = nameof(red);
-
-      if (Enum.TryParse(status, out AdvisoryBoardDecisions result))
-      {
-         return result switch
-         {
-            AdvisoryBoardDecisions.Approved => new ProjectStatus(result.ToString().ToUpper(), green),
-            AdvisoryBoardDecisions.Deferred => new ProjectStatus(result.ToString().ToUpper(), orange),
-            AdvisoryBoardDecisions.Declined => new ProjectStatus(result.ToString().ToUpper(), red),
-            _ => new ProjectStatus(result.ToString().ToUpper(), yellow)
-         };
-      }
-
-      return status switch
-      {
-         "APPROVED WITH CONDITIONS" => new ProjectStatus(status, green),
-         _ => new ProjectStatus("PRE ADVISORY BOARD", yellow)
-      };
    }
 }

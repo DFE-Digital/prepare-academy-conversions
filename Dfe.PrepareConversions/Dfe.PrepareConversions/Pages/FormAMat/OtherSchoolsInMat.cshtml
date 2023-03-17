@@ -14,21 +14,18 @@
    <div class="govuk-grid-column-full">
       <h2 class="govuk-heading-l govuk-!-margin-bottom-2">Other schools in this MAT</h2>
       <table class="govuk-table" aria-describedby="Table of projects within the same Form a Mat application">
-
          <thead class="govuk-table__head">
          <tr class="govuk-table__row">
             <th class="govuk-table__header app-!-width-three-fifths">Application information</th>
             <th class="govuk-table__header govuk-!-text-align-right app-!-width-two-fifths prepare-text-align-right">Project status and dates</th>
          </tr>
          </thead>
-
          <tbody class="govuk-table__body">
          @{
             var index = 0;
             foreach (ProjectListViewModel project in Model.Projects)
             {
                <partial if="project.IsFormAMat" name="Shared/FormAMatProjectListRow" model="project.Row(index)"/>
-
                index++;
             }
          }
