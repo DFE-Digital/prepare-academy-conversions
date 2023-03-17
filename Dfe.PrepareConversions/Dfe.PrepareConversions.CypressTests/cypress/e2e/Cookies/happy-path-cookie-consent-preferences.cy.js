@@ -3,7 +3,7 @@
 Cypress._.each(['ipad-mini'], (viewport) => {
 	describe(`86314 Cookie consent details on ${viewport}`, () => {
 		beforeEach(() => {
-			cy.login()
+			cy.login({titleFilter: 'Gloucester school'})
 			cy.viewport(viewport)
 			cy.selectSchoolListing(2)
 			cy.url().then(url => {

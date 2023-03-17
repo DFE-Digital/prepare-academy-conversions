@@ -30,8 +30,11 @@ sqlServer.loadDBCommands();
 
 //--Universal
 
-Cypress.Commands.add('login',() => {
-	cy.visit(`${Cypress.env('url')}${'/project-list'}`)
+Cypress.Commands.add('urlPath', () => cy.location().then(location => `${location.origin}${location.pathname}`));
+
+Cypress.Commands.add('login',({titleFilter} = {}) => {
+   const filterQuery = titleFilter ? `?Title=${encodeURIComponent(titleFilter)}` : '';
+   cy.visit(`${Cypress.env('url')}/project-list${filterQuery}`)
 });
 
 // Preserving Session Data (Universal)
@@ -544,7 +547,7 @@ Cypress.Commands.add('assignUser', () => {
 })
 
 //Navigate To Filter Projects section
-Cypress.Commands.add('navigateToFilterProjects',() => {  
+Cypress.Commands.add('navigateToFilterProjects',() => {
     cy.get('[data-cy="select-projectlist-filter-expand"]').click();
     cy.get('[data-cy="select-projectlist-filter-clear"]').click();
     cy.get('[data-cy="select-projectlist-filter-expand"]').click();
@@ -579,7 +582,7 @@ Cypress.Commands.add('endOfNextFinancialYearInfo', () => {
 })
 
 Cypress.Commands.add('clearFilters', () => {
-    cy.get('[data-cy="select-projectlist-filter-clear"]').should('have.text', 'Clear filters') 
+    cy.get('[data-cy="select-projectlist-filter-clear"]').should('have.text', 'Clear filters')
   cy.get('[data-cy="select-projectlist-filter-clear"]').click();
 })
 
