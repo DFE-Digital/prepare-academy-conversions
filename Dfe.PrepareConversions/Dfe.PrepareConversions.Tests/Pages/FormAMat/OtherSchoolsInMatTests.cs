@@ -18,7 +18,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.FormAMat
       }
 
       [Fact]
-      public async Task Should_display_list_of_projects_and_navigate_to_and_from_task_list()
+      public async Task Should_display_list_of_projects_within_the_same_Mat()
       {
          List<AcademyConversionProject> projects = AddGetProjects( project =>
          {
