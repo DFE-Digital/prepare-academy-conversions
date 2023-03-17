@@ -17,28 +17,28 @@ namespace Dfe.PrepareConversions.Tests.Utils
       }
 
       [Fact]
-      public async Task MapProjectString_Approved_ReturnsCorrectValues()
+      public void MapProjectString_Approved_ReturnsCorrectValues()
       {
          var actual = ProjectListHelper.MapProjectStatus("Approved");
          Assert.Equivalent(new ProjectStatus("APPROVED", green), actual);
       }
 
       [Fact]
-      public async Task MapProjectString_Deferred_ReturnsCorrectValues()
+      public void MapProjectString_Deferred_ReturnsCorrectValues()
       {
          var actual = ProjectListHelper.MapProjectStatus("Deferred");
          Assert.Equivalent(new ProjectStatus("DEFERRED", orange), actual);
       }
 
       [Fact]
-      public async Task MapProjectString_Declined_ReturnsCorrectValues()
+      public void MapProjectString_Declined_ReturnsCorrectValues()
       {
          var actual = ProjectListHelper.MapProjectStatus("Declined");
          Assert.Equivalent(new ProjectStatus("DECLINED", red), actual);
       }
 
       [Fact]
-      public async Task MapProjectString_OtherValue_ReturnsCorrectValues()
+      public void MapProjectString_OtherValue_ReturnsCorrectValues()
       {
          var actual = ProjectListHelper.MapProjectStatus("Hello!");
          Assert.Equivalent(new ProjectStatus("PRE ADVISORY BOARD", yellow), actual);
