@@ -4,60 +4,59 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareConversions.TagHelpers
+namespace Dfe.PrepareConversions.TagHelpers;
+
+public abstract class InputTagHelperBase : TagHelper
 {
-	public abstract class InputTagHelperBase : TagHelper
-	{
-		protected readonly IHtmlHelper _htmlHelper;
+   protected readonly IHtmlHelper _htmlHelper;
 
-		[HtmlAttributeName("id")]
-		public string Id { get; set; }
+   protected InputTagHelperBase(IHtmlHelper htmlHelper)
+   {
+      _htmlHelper = htmlHelper;
+   }
 
-		[HtmlAttributeName("name")]
-		public string Name { get; set; }
+   [HtmlAttributeName("id")]
+   public string Id { get; set; }
 
-		[HtmlAttributeName("label")]
-		public string Label { get; set; }
+   [HtmlAttributeName("name")]
+   public string Name { get; set; }
 
-		[HtmlAttributeName("suffix")]
-		public string Suffix { get; set; }
+   [HtmlAttributeName("label")]
+   public string Label { get; set; }
 
-		[HtmlAttributeName("asp-for")]
-		public ModelExpression For { get; set; }
+   [HtmlAttributeName("suffix")]
+   public string Suffix { get; set; }
 
-		[HtmlAttributeName("hint")]
-		public string Hint { get; set; }
+   [HtmlAttributeName("asp-for")]
+   public ModelExpression For { get; set; }
 
-		[ViewContext]
-		public ViewContext ViewContext { get; set; }
+   [HtmlAttributeName("hint")]
+   public string Hint { get; set; }
 
-		protected InputTagHelperBase(IHtmlHelper htmlHelper)
-		{
-			_htmlHelper = htmlHelper;
-		}
+   [ViewContext]
+   public ViewContext ViewContext { get; set; }
 
-		public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
-		{
-			if (_htmlHelper is IViewContextAware viewContextAware)
-			{
-				viewContextAware.Contextualize(ViewContext);
-			}
+   public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+   {
+      if (_htmlHelper is IViewContextAware viewContextAware)
+      {
+         viewContextAware.Contextualize(ViewContext);
+      }
 
-			if (string.IsNullOrWhiteSpace(Id))
-			{
-				Id = Name;
-			}
+      if (string.IsNullOrWhiteSpace(Id))
+      {
+         Id = Name;
+      }
 
-			if (string.IsNullOrWhiteSpace(Name))
-			{
-				Name = Id;
-			}
+      if (string.IsNullOrWhiteSpace(Name))
+      {
+         Name = Id;
+      }
 
-			var content = await RenderContentAsync();
-			output.TagName = null;
-			output.PostContent.AppendHtml(content);
-		}
+      IHtmlContent content = await RenderContentAsync();
+      output.TagName = null;
+      output.PostContent.AppendHtml(content);
+   }
 
-		protected abstract Task<IHtmlContent> RenderContentAsync();
-	}
+   protected abstract Task<IHtmlContent> RenderContentAsync();
 }

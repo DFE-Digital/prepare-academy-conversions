@@ -1,8 +1,7 @@
-﻿namespace Dfe.PrepareConversions.Data.Models
+﻿namespace Dfe.PrepareConversions.Data.Models;
+
+public enum ProjectTypes
 {
-	public enum ProjectTypes
-	{
-		Conversion = 0,
-		Transfer = 1
-	}
+   Conversion = 0,
+   Transfer = 1
 }

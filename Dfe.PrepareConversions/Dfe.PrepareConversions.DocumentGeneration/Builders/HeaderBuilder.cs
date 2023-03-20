@@ -1,55 +1,54 @@
-using System;
-using System.Collections.Generic;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Dfe.PrepareConversions.DocumentGeneration.Elements;
 using Dfe.PrepareConversions.DocumentGeneration.Interfaces;
+using DocumentFormat.OpenXml.Wordprocessing;
+using System;
+using System.Collections.Generic;
 
-namespace Dfe.PrepareConversions.DocumentGeneration.Builders
+namespace Dfe.PrepareConversions.DocumentGeneration.Builders;
+
+public class HeaderBuilder : IHeaderBuilder, IElementBuilder<Header>
 {
-    public class HeaderBuilder : IHeaderBuilder, IElementBuilder<Header>
-    {
-        private readonly Header _header;
+   private readonly Header _header;
 
-        public HeaderBuilder()
-        {
-            _header = new Header();
-        }
+   public HeaderBuilder()
+   {
+      _header = new Header();
+   }
 
-        public void AddParagraph(Action<IParagraphBuilder> action)
-        {
-            var builder = new ParagraphBuilder();
-            action(builder);
-            _header.AppendChild(builder.Build());
-        }
+   public Header Build()
+   {
+      return _header;
+   }
 
-        public void AddParagraph(string text)
-        {
-            var builder = new ParagraphBuilder();
-            builder.AddText(text);
-            _header.AppendChild(builder.Build());
-        }
+   public void AddParagraph(Action<IParagraphBuilder> action)
+   {
+      ParagraphBuilder builder = new();
+      action(builder);
+      _header.AppendChild(builder.Build());
+   }
 
-        public void AddTable(Action<ITableBuilder> action)
-        {
-            var builder = new TableBuilder();
-            action(builder);
-            _header.AppendChild(builder.Build());
-        }
+   public void AddParagraph(string text)
+   {
+      ParagraphBuilder builder = new();
+      builder.AddText(text);
+      _header.AppendChild(builder.Build());
+   }
 
-        public void AddTable(IEnumerable<TextElement[]> rows)
-        {
-            var builder = new TableBuilder();
-            foreach (var row in rows)
-            {
-                builder.AddRow(rBuilder => { rBuilder.AddCells(row); });
-            }
+   public void AddTable(Action<ITableBuilder> action)
+   {
+      TableBuilder builder = new();
+      action(builder);
+      _header.AppendChild(builder.Build());
+   }
 
-            _header.AppendChild(builder.Build());
-        }
+   public void AddTable(IEnumerable<TextElement[]> rows)
+   {
+      TableBuilder builder = new();
+      foreach (TextElement[] row in rows)
+      {
+         builder.AddRow(rBuilder => { rBuilder.AddCells(row); });
+      }
 
-        public Header Build()
-        {
-            return _header;
-        }
-    }
+      _header.AppendChild(builder.Build());
+   }
 }

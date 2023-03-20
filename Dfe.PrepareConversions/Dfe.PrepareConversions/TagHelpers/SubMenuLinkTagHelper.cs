@@ -1,26 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Dfe.PrepareConversions.TagHelpers
+namespace Dfe.PrepareConversions.TagHelpers;
+
+public class SubMenuLinkTagHelper : AnchorTagHelper
 {
-	public class SubMenuLinkTagHelper : AnchorTagHelper
-	{
-		public SubMenuLinkTagHelper(IHtmlGenerator generator) : base(generator){}
+   private const string PAGE = "page";
+   public SubMenuLinkTagHelper(IHtmlGenerator generator) : base(generator) { }
 
-		private const string PAGE = "page";
+   public override void Process(TagHelperContext context, TagHelperOutput output)
+   {
+      string page = ViewContext.RouteData.Values[PAGE]!.ToString();
+      if (page == Page)
+      {
+         output.Attributes.SetAttribute("aria-current", PAGE);
+      }
 
-		public override void Process(TagHelperContext context, TagHelperOutput output)
-		{
-			var page = ViewContext.RouteData.Values[PAGE].ToString();
-			if (page == Page)
-			{
-				output.Attributes.SetAttribute("aria-current", PAGE);
-			}
+      output.TagName = "a";
 
-			output.TagName = "a";
-
-			base.Process(context, output);
-		}
-	}
+      base.Process(context, output);
+   }
 }

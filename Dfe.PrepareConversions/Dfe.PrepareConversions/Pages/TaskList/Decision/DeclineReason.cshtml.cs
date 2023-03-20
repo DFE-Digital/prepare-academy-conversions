@@ -10,146 +10,161 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Dfe.PrepareConversions.Pages.TaskList.Decision
+namespace Dfe.PrepareConversions.Pages.TaskList.Decision;
+
+public class DeclineReasonModel : DecisionBaseModel
 {
-	public class DeclineReasonModel : DecisionBaseModel
-	{
-		private readonly ErrorService _errorService;
+   private readonly ErrorService _errorService;
 
-		public DeclineReasonModel(ErrorService errorService, IAcademyConversionProjectRepository repository, ISession session)
-			: base(repository, session)
-		{
-			_errorService = errorService;
-			DeclineOptions = Enum.GetValues(typeof(AdvisoryBoardDeclinedReasons)).Cast<AdvisoryBoardDeclinedReasons>();
-		}
+   public DeclineReasonModel(ErrorService errorService, IAcademyConversionProjectRepository repository, ISession session)
+      : base(repository, session)
+   {
+      _errorService = errorService;
+      DeclineOptions = Enum.GetValues(typeof(AdvisoryBoardDeclinedReasons)).Cast<AdvisoryBoardDeclinedReasons>();
+   }
 
-		[BindProperty] public IEnumerable<string> DeclinedReasons { get; set; }
-		[BindProperty] public string DeclineOtherReason { get; set; }
-		[BindProperty] public string DeclineFinanceReason { get; set; }
-		[BindProperty] public string DeclinePerformanceReason { get; set; }
-		[BindProperty] public string DeclineGovernanceReason { get; set; }
-		[BindProperty] public string DeclineChoiceOfTrustReason { get; set; }
+   [BindProperty]
+   public IEnumerable<string> DeclinedReasons { get; set; }
 
-		public IEnumerable<AdvisoryBoardDeclinedReasons> DeclineOptions { get; }
-		public string DecisionText { get; set; }
+   [BindProperty]
+   public string DeclineOtherReason { get; set; }
 
-		public UIHelpers UI => new UIHelpers(this);
+   [BindProperty]
+   public string DeclineFinanceReason { get; set; }
 
-		public IActionResult OnGet(int id)
-		{
-			PreloadStateFromSession(id);
-			SetBackLinkModel(Links.Decision.WhoDecided, id);
+   [BindProperty]
+   public string DeclinePerformanceReason { get; set; }
 
-			return Page();
-		}
+   [BindProperty]
+   public string DeclineGovernanceReason { get; set; }
 
-		public IActionResult OnPost(int id)
-		{
-			var decision = GetDecisionFromSession(id);
+   [BindProperty]
+   public string DeclineChoiceOfTrustReason { get; set; }
 
-			if (DeclinedReasons.Any())
-			{
-				decision.DeclinedReasons.Clear();
-				decision.DeclinedReasons.AddRange(MapSelectedReasons());
-			}
-			else
-			{
-				ModelState.AddModelError("DeclinedReasonSet", "Select at least one reason");
-			}
+   public IEnumerable<AdvisoryBoardDeclinedReasons> DeclineOptions { get; }
+   public string DecisionText { get; set; }
 
-			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Finance, DeclineFinanceReason);
-			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Performance, DeclinePerformanceReason);
-			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Governance, DeclineGovernanceReason);
-			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.ChoiceOfTrust, DeclineChoiceOfTrustReason);
-			EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Other, DeclineOtherReason);
+   public UIHelpers UI => new(this);
 
-			SetDecisionInSession(id, decision);
+   public IActionResult OnGet(int id)
+   {
+      PreloadStateFromSession(id);
+      SetBackLinkModel(Links.Decision.WhoDecided, id);
 
-			if (ModelState.IsValid) return RedirectToPage(Links.Decision.DecisionDate.Page, LinkParameters);
+      return Page();
+   }
 
-			_errorService.AddErrors(ModelState.Keys, ModelState);
-			return OnGet(id);
-		}
+   public IActionResult OnPost(int id)
+   {
+      AdvisoryBoardDecision decision = GetDecisionFromSession(id);
 
-		private IEnumerable<AdvisoryBoardDeclinedReasonDetails> MapSelectedReasons()
-		{
-			return DeclinedReasons
-				.Select(reasonText => Enum.Parse<AdvisoryBoardDeclinedReasons>(reasonText, true))
-				.Select(reason => reason switch
-				{
-					AdvisoryBoardDeclinedReasons.Finance => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineFinanceReason),
-					AdvisoryBoardDeclinedReasons.Performance => new AdvisoryBoardDeclinedReasonDetails(reason, DeclinePerformanceReason),
-					AdvisoryBoardDeclinedReasons.Governance => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineGovernanceReason),
-					AdvisoryBoardDeclinedReasons.ChoiceOfTrust => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineChoiceOfTrustReason),
-					AdvisoryBoardDeclinedReasons.Other => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineOtherReason),
-					_ => throw new ArgumentOutOfRangeException(nameof(reason), reason, "Unexpected value for AdvisoryBoardDeclinedReason")
-				});
-		}
+      if (DeclinedReasons.Any())
+      {
+         decision.DeclinedReasons.Clear();
+         decision.DeclinedReasons.AddRange(MapSelectedReasons());
+      }
+      else
+      {
+         ModelState.AddModelError("DeclinedReasonSet", "Select at least one reason");
+      }
 
-		private void PreloadStateFromSession(int id)
-		{
-			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
-			DecisionText = decision.Decision.ToDescription().ToLowerInvariant();
+      EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Finance, DeclineFinanceReason);
+      EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Performance, DeclinePerformanceReason);
+      EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Governance, DeclineGovernanceReason);
+      EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.ChoiceOfTrust, DeclineChoiceOfTrustReason);
+      EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons.Other, DeclineOtherReason);
 
-			var reasons = decision.DeclinedReasons?.ToDictionary(key => key.Reason, value => value.Details);
+      SetDecisionInSession(id, decision);
 
-			DeclinedReasons = reasons.Select(r => r.Key.ToString());
-			DeclineOtherReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.Other);
-			DeclineFinanceReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.Finance);
-			DeclinePerformanceReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.Performance);
-			DeclineGovernanceReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.Governance);
-			DeclineChoiceOfTrustReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.ChoiceOfTrust);
-		}
+      if (ModelState.IsValid) return RedirectToPage(Links.Decision.DecisionDate.Page, LinkParameters);
 
-		private void EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons reason, string explanation)
-		{
-			string reasonName = reason.ToString();
+      _errorService.AddErrors(ModelState.Keys, ModelState);
+      return OnGet(id);
+   }
 
-			if (DeclinedReasons.Contains(reasonName) && string.IsNullOrWhiteSpace(explanation))
-				ModelState.AddModelError(UI.ReasonFieldFor(reason), $"Enter a reason for selecting {reason.ToDescription()}");
-		}
+   private IEnumerable<AdvisoryBoardDeclinedReasonDetails> MapSelectedReasons()
+   {
+      return DeclinedReasons
+         .Select(reasonText => Enum.Parse<AdvisoryBoardDeclinedReasons>(reasonText, true))
+         .Select(reason => reason switch
+         {
+            AdvisoryBoardDeclinedReasons.Finance => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineFinanceReason),
+            AdvisoryBoardDeclinedReasons.Performance => new AdvisoryBoardDeclinedReasonDetails(reason, DeclinePerformanceReason),
+            AdvisoryBoardDeclinedReasons.Governance => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineGovernanceReason),
+            AdvisoryBoardDeclinedReasons.ChoiceOfTrust => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineChoiceOfTrustReason),
+            AdvisoryBoardDeclinedReasons.Other => new AdvisoryBoardDeclinedReasonDetails(reason, DeclineOtherReason),
+            _ => throw new ArgumentOutOfRangeException(nameof(reason), reason, "Unexpected value for AdvisoryBoardDeclinedReason")
+         });
+   }
 
-		public class UIHelpers
-		{
-			private readonly DeclineReasonModel _model;
+   private void PreloadStateFromSession(int id)
+   {
+      AdvisoryBoardDecision decision = GetDecisionFromSession(id);
+      DecisionText = decision.Decision.ToDescription().ToLowerInvariant();
 
-			public UIHelpers(DeclineReasonModel model) => _model = model;
+      Dictionary<AdvisoryBoardDeclinedReasons, string> reasons = decision.DeclinedReasons?.ToDictionary(key => key.Reason, value => value.Details);
 
-			public bool IsChecked(AdvisoryBoardDeclinedReasons reason)
-			{
-				return _model.DeclinedReasons.Contains(reason.ToString());
-			}
+      if (reasons == null) return;
 
-			public string IdFor(string prefix, object item)
-			{
-				string connector = prefix.EndsWith('-') ? string.Empty : "-";
-				string suffix = item?.ToString()?.ToLowerInvariant();
+      DeclinedReasons = reasons.Select(r => r.Key.ToString());
+      DeclineOtherReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.Other);
+      DeclineFinanceReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.Finance);
+      DeclinePerformanceReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.Performance);
+      DeclineGovernanceReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.Governance);
+      DeclineChoiceOfTrustReason = reasons.GetValueOrDefault(AdvisoryBoardDeclinedReasons.ChoiceOfTrust);
+   }
 
-				return $"{prefix}{connector}{suffix}";
-			}
+   private void EnsureExplanationIsProvidedFor(AdvisoryBoardDeclinedReasons reason, string explanation)
+   {
+      string reasonName = reason.ToString();
 
-			public string ValueFor(object item)
-			{
-				return item.ToString();
-			}
+      if (DeclinedReasons.Contains(reasonName) && string.IsNullOrWhiteSpace(explanation))
+         ModelState.AddModelError(UI.ReasonFieldFor(reason), $"Enter a reason for selecting {reason.ToDescription()}");
+   }
 
-			public string ReasonFieldFor(object item)
-			{
-				return $"Decline{item}Reason";
-			}
+   public class UIHelpers
+   {
+      private readonly DeclineReasonModel _model;
 
-			public string ReasonValueFor(AdvisoryBoardDeclinedReasons reason)
-			{
-				return reason switch
-				{
-					AdvisoryBoardDeclinedReasons.Finance => _model.DeclineFinanceReason,
-					AdvisoryBoardDeclinedReasons.Performance => _model.DeclinePerformanceReason,
-					AdvisoryBoardDeclinedReasons.Governance => _model.DeclineGovernanceReason,
-					AdvisoryBoardDeclinedReasons.ChoiceOfTrust => _model.DeclineChoiceOfTrustReason,
-					AdvisoryBoardDeclinedReasons.Other => _model.DeclineOtherReason,
-					_ => string.Empty
-				};
-			}
-		}
-	}
+      public UIHelpers(DeclineReasonModel model)
+      {
+         _model = model;
+      }
+
+      public bool IsChecked(AdvisoryBoardDeclinedReasons reason)
+      {
+         return _model.DeclinedReasons.Contains(reason.ToString());
+      }
+
+      public string IdFor(string prefix, object item)
+      {
+         string connector = prefix.EndsWith('-') ? string.Empty : "-";
+         string suffix = item?.ToString()?.ToLowerInvariant();
+
+         return $"{prefix}{connector}{suffix}";
+      }
+
+      public string ValueFor(object item)
+      {
+         return item.ToString();
+      }
+
+      public string ReasonFieldFor(object item)
+      {
+         return $"Decline{item}Reason";
+      }
+
+      public string ReasonValueFor(AdvisoryBoardDeclinedReasons reason)
+      {
+         return reason switch
+         {
+            AdvisoryBoardDeclinedReasons.Finance => _model.DeclineFinanceReason,
+            AdvisoryBoardDeclinedReasons.Performance => _model.DeclinePerformanceReason,
+            AdvisoryBoardDeclinedReasons.Governance => _model.DeclineGovernanceReason,
+            AdvisoryBoardDeclinedReasons.ChoiceOfTrust => _model.DeclineChoiceOfTrustReason,
+            AdvisoryBoardDeclinedReasons.Other => _model.DeclineOtherReason,
+            _ => string.Empty
+         };
+      }
+   }
 }

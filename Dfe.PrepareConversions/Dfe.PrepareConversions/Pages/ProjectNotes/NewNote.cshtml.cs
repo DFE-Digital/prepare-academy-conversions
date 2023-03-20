@@ -54,5 +54,4 @@ public class NewNoteModel : BaseAcademyConversionProjectPageModel
 
       return RedirectToPage(SuccessPage, new { id });
    }
-
 }

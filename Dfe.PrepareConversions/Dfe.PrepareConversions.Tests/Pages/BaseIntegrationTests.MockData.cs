@@ -138,7 +138,7 @@ public abstract partial class BaseIntegrationTests
 
    public ProjectNote AddPostProjectNote(int id, AddProjectNote request)
    {
-      ProjectNote response = new ProjectNote { Subject = request.Subject, Note = request.Note, Author = request.Author, Date = request.Date };
+      ProjectNote response = new() { Subject = request.Subject, Note = request.Note, Author = request.Author, Date = request.Date };
       _factory.AddPostWithJsonRequest(string.Format(_pathFor.AddProjectNote, id), request, response);
       return response;
    }
@@ -194,7 +194,7 @@ public abstract partial class BaseIntegrationTests
       Application application = _fixture.Create<Application>();
       postSetup?.Invoke(application);
 
-      ApiV2Wrapper<Application> response = new ApiV2Wrapper<Application> { Data = application };
+      ApiV2Wrapper<Application> response = new() { Data = application };
       _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetApplicationByReference, application.ApplicationId), response);
       return application;
    }

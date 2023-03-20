@@ -2,44 +2,44 @@
 
 @if (!Model.IsPreview)
 {
-    @if (Model.LatestInspectionIsSection8)
-    {
-    <h2 class="govuk-heading-m">Short inspection</h2>
-    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-        <govuk-summary-list-row id="ofsted-short-inspection-date" label="Ofsted inspection date" value="@Model.DateOfLatestSection8Inspection" />
-    </dl>
-    }
-    <h2 class="govuk-heading-m" id="overall-effectiveness">Last full inspection: @Model.OverallEffectiveness</h2>
+   @if (Model.LatestInspectionIsSection8)
+   {
+      <h2 class="govuk-heading-m">Short inspection</h2>
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+         <govuk-summary-list-row id="ofsted-short-inspection-date" label="Ofsted inspection date" value="@Model.DateOfLatestSection8Inspection"/>
+      </dl>
+   }
+   <h2 class="govuk-heading-m" id="overall-effectiveness">Last full inspection: @Model.OverallEffectiveness</h2>
 }
 
 <dl class="govuk-summary-list">
-    @if (Model.IsPreview && Model.LatestInspectionIsSection8)
-    {
-        <govuk-summary-list-row id="ofsted-short-inspection-date" label="Ofsted short inspection date" value="@Model.DateOfLatestSection8Inspection" />
-    }
-    @if (Model.IsPreview)
-    {
-        <govuk-summary-list-row id="overall-effectiveness" label="Overall effectiveness" value="@Model.OverallEffectiveness" />
-    }
-    <govuk-summary-list-row id="ofsted-full-inspection-date" label="@($"Ofsted {(Model.IsPreview ? "full " : "")}inspection date")" value="@Model.InspectionEndDate" />
-	<govuk-summary-list-row id="leadership-and-management" label="Leadership and management" value="@Model.EffectivenessOfLeadershipAndManagement" />
-	<govuk-summary-list-row id="quality-of-education" label="Quality of education" value="@Model.QualityOfEducation" />
-	<govuk-summary-list-row id="behaviour-and-attitudes" label="Behaviour and attitudes" value="@Model.BehaviourAndAttitudes" />
-	<govuk-summary-list-row id="personal-development" label="Personal development" value="@Model.PersonalDevelopment" />
-    @if (Model.EarlyYearsProvisionApplicable)
-    {
-         <govuk-summary-list-row id="early-years-provision" label="Early years provision" value="@Model.EarlyYearsProvision" />
-    }
-    @if (Model.SixthFormProvisionApplicable)
-    {
-         <govuk-summary-list-row id="sixth-form-provision" label="Sixth form provision" value="@Model.SixthFormProvision" />
-    }
-	@if (!string.IsNullOrWhiteSpace(Model.OfstedReport))
-	{
-		<govuk-summary-list-row id="ofsted-report" label="Ofsted report" value-link="@Model.OfstedReport" value="View the school's latest inspection report on Ofsted's website" />
-	}
-	@if (Model.ShowAdditionalInformation)
-	{
-		<govuk-summary-list-row name="school-performance-additional-information" label="Additional information" value="@Model.AdditionalInformation" asp-page="@Links.SchoolPerformance.AdditionalInformation.Page" asp-route-id="@Model.Id" hidden-text="additional information" />
-	}
+   @if (Model.IsPreview && Model.LatestInspectionIsSection8)
+   {
+      <govuk-summary-list-row id="ofsted-short-inspection-date" label="Ofsted short inspection date" value="@Model.DateOfLatestSection8Inspection"/>
+   }
+   @if (Model.IsPreview)
+   {
+      <govuk-summary-list-row id="overall-effectiveness" label="Overall effectiveness" value="@Model.OverallEffectiveness"/>
+   }
+   <govuk-summary-list-row id="ofsted-full-inspection-date" label="@($"Ofsted {(Model.IsPreview ? "full " : "")}inspection date")" value="@Model.InspectionEndDate"/>
+   <govuk-summary-list-row id="leadership-and-management" label="Leadership and management" value="@Model.EffectivenessOfLeadershipAndManagement"/>
+   <govuk-summary-list-row id="quality-of-education" label="Quality of education" value="@Model.QualityOfEducation"/>
+   <govuk-summary-list-row id="behaviour-and-attitudes" label="Behaviour and attitudes" value="@Model.BehaviourAndAttitudes"/>
+   <govuk-summary-list-row id="personal-development" label="Personal development" value="@Model.PersonalDevelopment"/>
+   @if (Model.EarlyYearsProvisionApplicable)
+   {
+      <govuk-summary-list-row id="early-years-provision" label="Early years provision" value="@Model.EarlyYearsProvision"/>
+   }
+   @if (Model.SixthFormProvisionApplicable)
+   {
+      <govuk-summary-list-row id="sixth-form-provision" label="Sixth form provision" value="@Model.SixthFormProvision"/>
+   }
+   @if (!string.IsNullOrWhiteSpace(Model.OfstedReport))
+   {
+      <govuk-summary-list-row id="ofsted-report" label="Ofsted report" value-link="@Model.OfstedReport" value="View the school's latest inspection report on Ofsted's website"/>
+   }
+   @if (Model.ShowAdditionalInformation)
+   {
+      <govuk-summary-list-row name="school-performance-additional-information" label="Additional information" value="@Model.AdditionalInformation" asp-page="@Links.SchoolPerformance.AdditionalInformation.Page" asp-route-id="@Model.Id" hidden-text="additional information"/>
+   }
 </dl>

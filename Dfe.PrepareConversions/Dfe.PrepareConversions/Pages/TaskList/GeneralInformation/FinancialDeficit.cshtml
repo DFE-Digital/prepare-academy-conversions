@@ -1,17 +1,17 @@
 ﻿@page "/task-list/{id:int}/confirm-general-information/financial-deficit"
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
-	Layout = "_QuestionLayout";
-	Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
-	ViewData["Title"] = "Financial deficit";
-	ViewData["SchoolName"] = Model.Project.SchoolName;
-	ViewData["ProjectId"] = Model.Project.Id;
-	var values = new[] { "Yes", "No" };
+   Layout = "_QuestionLayout";
+   Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
+   ViewData["Title"] = "Financial deficit";
+   ViewData["SchoolName"] = Model.Project.SchoolName;
+   ViewData["ProjectId"] = Model.Project.Id;
+   var values = new[] { "Yes", "No" };
 }
 
 @section BeforeMain
 {
-	<govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation" />
+   <govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation"/>
 }
 
-<govuk-radios-input heading-label="true" label="Is there a financial deficit at the school in its current financial year?" name="financial-deficit" asp-for="Project.FinancialDeficit" values="@values" labels="@values" />
+<govuk-radios-input heading-label="true" label="Is there a financial deficit at the school in its current financial year?" name="financial-deficit" asp-for="Project.FinancialDeficit" values="@values" labels="@values"/>

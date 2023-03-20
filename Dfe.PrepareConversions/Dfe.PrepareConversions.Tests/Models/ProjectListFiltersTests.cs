@@ -67,10 +67,9 @@ public class ProjectListFiltersTests
    public void Should_leave_filters_blank_if_filters_are_not_present()
    {
       Dictionary<string, object?> store = new();
-      Dictionary<string, StringValues> query = new();
 
       ProjectListFilters filters = System_under_test();
-      filters.PersistUsing(store).PopulateFrom(query);
+      filters.PersistUsing(store).PopulateFrom(new Dictionary<string, StringValues>());
 
       filters.Title.Should().BeNullOrWhiteSpace();
       filters.SelectedStatuses.Should().BeEmpty();
@@ -90,10 +89,9 @@ public class ProjectListFiltersTests
          { ProjectListFilters.FilterOfficers, new[] { "First", "Second", "Third" } },
          { ProjectListFilters.FilterRegions, new[] { "Alpha", "Beta", "Gamma" } }
       };
-      Dictionary<string, StringValues> query = new();
 
       ProjectListFilters filters = System_under_test();
-      filters.PersistUsing(store).PopulateFrom(query);
+      filters.PersistUsing(store).PopulateFrom(new Dictionary<string, StringValues>());
 
       filters.Title.Should().Be((store[ProjectListFilters.FilterTitle] as string[])!.First());
       filters.SelectedStatuses.Should().BeEquivalentTo(store[ProjectListFilters.FilterStatuses] as string[]);

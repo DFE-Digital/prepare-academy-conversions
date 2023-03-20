@@ -1,7 +1,6 @@
 ﻿using Dfe.PrepareConversions.Tests.Pages;
 using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Utils
@@ -12,6 +11,7 @@ namespace Dfe.PrepareConversions.Tests.Utils
       const string yellow = nameof(yellow);
       const string orange = nameof(orange);
       const string red = nameof(red);
+
       public ProjectListHelperTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
       {
       }

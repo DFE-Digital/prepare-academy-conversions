@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareConversions.Data.Services
+namespace Dfe.PrepareConversions.Data.Services;
+
+public interface IGetEstablishment
 {
-	public interface IGetEstablishment
-	{
-		Task<EstablishmentResponse> GetEstablishmentByUrn(string urn);
-		Task<IEnumerable<EstablishmentSearchResponse>> SearchEstablishments(string searchQuery);
-	}
+   Task<EstablishmentResponse> GetEstablishmentByUrn(string urn);
+   Task<IEnumerable<EstablishmentSearchResponse>> SearchEstablishments(string searchQuery);
 }

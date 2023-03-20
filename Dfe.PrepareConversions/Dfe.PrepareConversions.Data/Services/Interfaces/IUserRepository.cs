@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareConversions.Data.Services.Interfaces
+namespace Dfe.PrepareConversions.Data.Services.Interfaces;
+
+public interface IUserRepository
 {
-	public interface IUserRepository
-	{
-		Task<IEnumerable<User>> GetAllUsers();
-	}
+   Task<IEnumerable<User>> GetAllUsers();
 }

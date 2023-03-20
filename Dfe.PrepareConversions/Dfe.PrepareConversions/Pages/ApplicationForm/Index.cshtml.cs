@@ -1,69 +1,75 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
+using Dfe.PrepareConversions.Data;
+using Dfe.PrepareConversions.Data.Models.Application;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models.ApplicationForm;
 using Dfe.PrepareConversions.Models.ApplicationForm.Sections;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
-namespace Dfe.PrepareConversions.Pages.ApplicationForm
+namespace Dfe.PrepareConversions.Pages.ApplicationForm;
+
+public class IndexModel : BaseAcademyConversionProjectPageModel
 {
-	public class IndexModel : BaseAcademyConversionProjectPageModel
-	{
-		protected readonly ApplicationRepository _applicationRepository;
-		public IEnumerable<BaseFormSection> Sections { get; set; }
+   protected readonly ApplicationRepository _applicationRepository;
 
-		public IndexModel(IAcademyConversionProjectRepository repository, ApplicationRepository applicationRepository) : base(repository)
-		{
-			_applicationRepository = applicationRepository;
-		}
-		
-		public override async Task<IActionResult> OnGetAsync(int id)
-        {
-			var result = await base.OnGetAsync(id);
-			if ((result as StatusCodeResult)?.StatusCode == (int)HttpStatusCode.NotFound)
-			{
-				return NotFound();
-			}
-			var applicationReferenceId = base.Project.ApplicationReferenceNumber;
-			
+   public IndexModel(IAcademyConversionProjectRepository repository, ApplicationRepository applicationRepository) : base(repository)
+   {
+      _applicationRepository = applicationRepository;
+   }
 
-			var applicationResponse = await _applicationRepository.GetApplicationByReference(applicationReferenceId);
+   public IEnumerable<BaseFormSection> Sections { get; set; }
 
-			if (!applicationResponse.Success)
-			{
-				return NotFound();
-			}
-			if (applicationResponse.Body.ApplicationType is not ("JoinMat" or "joinAMat"))
-         {
-				return StatusCode(501);
-			}
-			if (applicationResponse.Body.ApplyingSchools.Count != 1)
-			{
-				return StatusCode(500);
-			}
-			var application = applicationResponse.Body;
+   public override async Task<IActionResult> OnGetAsync(int id)
+   {
+      IActionResult result = await base.OnGetAsync(id);
+      if ((result as StatusCodeResult)?.StatusCode == (int)HttpStatusCode.NotFound)
+      {
+         return NotFound();
+      }
 
-			Sections = new BaseFormSection[]
-			{
-				new ApplicationFormSection(application),
-				new AboutConversionSection(application.ApplyingSchools.First()),
-				new FurtherInformationSection(application.ApplyingSchools.First()),
-				new FinanceSection(application.ApplyingSchools.First()),
-				new FuturePupilNumberSection(application.ApplyingSchools.First()),
-				new LandAndBuildingsSection(application.ApplyingSchools.First()),
-				new PreOpeningSupportGrantSection(application.ApplyingSchools.First()),
-				new ConsultationSection(application.ApplyingSchools.First()),
-				new DeclarationSection(application.ApplyingSchools.First())
-			};
+      string applicationReferenceId = Project.ApplicationReferenceNumber;
 
-			return result;
-		}
 
-		public string GenerateId(string heading)
-		{
-			return heading.Replace(" ", "_");
-		}
-	}
+      ApiResponse<Application> applicationResponse = await _applicationRepository.GetApplicationByReference(applicationReferenceId);
+
+      if (!applicationResponse.Success)
+      {
+         return NotFound();
+      }
+
+      if (applicationResponse.Body.ApplicationType is not ("JoinMat" or "joinAMat"))
+      {
+         return StatusCode(501);
+      }
+
+      if (applicationResponse.Body.ApplyingSchools.Count != 1)
+      {
+         return StatusCode(500);
+      }
+
+      Application application = applicationResponse.Body;
+
+      Sections = new BaseFormSection[]
+      {
+         new ApplicationFormSection(application),
+         new AboutConversionSection(application.ApplyingSchools.First()),
+         new FurtherInformationSection(application.ApplyingSchools.First()),
+         new FinanceSection(application.ApplyingSchools.First()),
+         new FuturePupilNumberSection(application.ApplyingSchools.First()),
+         new LandAndBuildingsSection(application.ApplyingSchools.First()),
+         new PreOpeningSupportGrantSection(application.ApplyingSchools.First()),
+         new ConsultationSection(application.ApplyingSchools.First()),
+         new DeclarationSection(application.ApplyingSchools.First())
+      };
+
+      return result;
+   }
+
+   public string GenerateId(string heading)
+   {
+      return heading.Replace(" ", "_");
+   }
 }

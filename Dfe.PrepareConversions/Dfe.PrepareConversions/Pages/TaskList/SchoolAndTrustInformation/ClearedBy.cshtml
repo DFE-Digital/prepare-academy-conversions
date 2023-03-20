@@ -1,21 +1,21 @@
 ﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/clear-head-teacher-board-template"
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
-	Layout = "_QuestionLayout";
-	Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
-	ViewData["Title"] = "Enter the full name of the person who will clear the project template";
-	ViewData["SchoolName"] = Model.Project.SchoolName;
-	ViewData["ProjectId"] = Model.Project.Id;
+   Layout = "_QuestionLayout";
+   Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
+   ViewData["Title"] = "Enter the full name of the person who will clear the project template";
+   ViewData["SchoolName"] = Model.Project.SchoolName;
+   ViewData["ProjectId"] = Model.Project.Id;
 }
 
 @section BeforeMain
 {
-	<govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation"/>
+   <govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation"/>
 }
 
 <h1 class="govuk-label-wrapper">
-	<label class="govuk-label govuk-label--l" for="cleared-by">
-		Enter the full name of the person who will clear the project template
-	</label>
+   <label class="govuk-label govuk-label--l" for="cleared-by">
+      Enter the full name of the person who will clear the project template
+   </label>
 </h1>
 <govuk-text-input name="cleared-by" id="cleared-by" asp-for="Project.ClearedBy" width="20" hint="Entering the person's name will not send the template to them. You will still need to add the template to Sharepoint when you download it."/>

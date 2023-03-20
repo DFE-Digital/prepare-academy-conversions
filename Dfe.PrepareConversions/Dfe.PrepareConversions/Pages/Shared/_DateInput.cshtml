@@ -1,6 +1,6 @@
-﻿@model Dfe.PrepareConversions.ViewModels.DateInputViewModel
+﻿@model DateInputViewModel
 @{
-	var showError = !string.IsNullOrWhiteSpace(Model.ErrorMessage);
+   var showError = !string.IsNullOrWhiteSpace(Model.ErrorMessage);
 }
 
 <div class="govuk-form-group @(showError ? "govuk-form-group--error" : "")">

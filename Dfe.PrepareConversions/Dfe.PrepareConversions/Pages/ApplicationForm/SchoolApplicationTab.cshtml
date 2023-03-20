@@ -26,9 +26,11 @@
 <nav class="gem-c-contents-list" aria-label="Pages in this guide" role="navigation" data-module="gem-track-click">
    <h2 class="gem-c-contents-list__title">Contents</h2>
    <ol class="gem-c-contents-list__list">
-      @foreach (var formSection in Model.Sections)
+      @foreach (BaseFormSection formSection in Model.Sections)
       {
-         <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed"> <a id="@Model.GenerateId(formSection.Heading)_link" class="gem-c-contents-list__link govuk-link" href="#@Model.GenerateId(formSection.Heading)">@formSection.Heading</a></li>
+         <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
+            <a id="@Model.GenerateId(formSection.Heading)_link" class="gem-c-contents-list__link govuk-link" href="#@Model.GenerateId(formSection.Heading)">@formSection.Heading</a>
+         </li>
       }
    </ol>
 </nav>

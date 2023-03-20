@@ -1,44 +1,44 @@
 ﻿@page "/task-list/{id:int}/confirm-school-pupil-forecasts"
 @model Dfe.PrepareConversions.Pages.BaseAcademyConversionProjectPageModel
 @{
-	ViewData["Title"] = "Confirm school pupil forecasts";
+   ViewData["Title"] = "Confirm school pupil forecasts";
 }
 
 @section BeforeMain
 {
-	<govuk-back-link link-item="@Links.TaskList.Index" />
+   <govuk-back-link link-item="@Links.TaskList.Index"/>
 }
 
 <div class="govuk-grid-row">
-	<div class="govuk-grid-column-two-thirds">
-		<span class="govuk-caption-l">@Model.Project.SchoolName</span>
-        <h1 class="govuk-heading-l">
-        	School pupil forecasts
-        </h1>
-		<div class="govuk-body">
-			<p>
-				This information comes from TRAMS and the
-				<a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
-				The table will go into your project template.
-			</p>
-			<p>
-				You can add <a href="#additional-information">additional information</a> if you need to, this will also go into your project template.
-			</p>
-		</div>
-	</div>
-	<div class="govuk-grid-column-full">
-		<partial name="_SchoolPupilForecastsTable" model="Model.Project" />
-	</div>
-	<div class="govuk-grid-column-two-thirds">
-		<h2 class="govuk-heading-m">Add any additional information if you need to</h2>
-		<p class="govuk-body">This information will go into your project template under the school pupil forecasts section.</p>
-	</div>
-	<div class="govuk-grid-column-full">
-		<dl class="govuk-summary-list">
-			<govuk-summary-list-row id="additional-information" name="school-pupil-forecasts-additional-information" label="Additional information" value="@Model.Project.SchoolPupilForecastsAdditionalInformation" asp-page="@Links.SchoolPupilForecastsSection.AdditionalInformation.Page" asp-fragment="additional-information" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
-		</dl>
-		<form method="post">
-			<button class="govuk-button" id="confirm-and-continue-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</button>
-		</form>
-	</div>
+   <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+      <h1 class="govuk-heading-l">
+         School pupil forecasts
+      </h1>
+      <div class="govuk-body">
+         <p>
+            This information comes from TRAMS and the
+            <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+            The table will go into your project template.
+         </p>
+         <p>
+            You can add <a href="#additional-information">additional information</a> if you need to, this will also go into your project template.
+         </p>
+      </div>
+   </div>
+   <div class="govuk-grid-column-full">
+      <partial name="_SchoolPupilForecastsTable" model="Model.Project"/>
+   </div>
+   <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-m">Add any additional information if you need to</h2>
+      <p class="govuk-body">This information will go into your project template under the school pupil forecasts section.</p>
+   </div>
+   <div class="govuk-grid-column-full">
+      <dl class="govuk-summary-list">
+         <govuk-summary-list-row id="additional-information" name="school-pupil-forecasts-additional-information" label="Additional information" value="@Model.Project.SchoolPupilForecastsAdditionalInformation" asp-page="@Links.SchoolPupilForecastsSection.AdditionalInformation.Page" asp-fragment="additional-information" asp-route-id="@Model.Project.Id" hidden-text="additional information"/>
+      </dl>
+      <form method="post">
+         <button class="govuk-button" id="confirm-and-continue-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</button>
+      </form>
+   </div>
 </div>

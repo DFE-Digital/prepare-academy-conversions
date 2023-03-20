@@ -6,7 +6,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Dfe.PrepareConversions.Data.Features;
 
@@ -50,7 +49,7 @@ public class ApiClient : IApiClient
       AcademyConversionProject project = await getProjectResponse.Result.Content.ReadFromJsonAsync<AcademyConversionProject>();
       if (project is null) return new HttpResponseMessage(HttpStatusCode.NotFound);
 
-      if(getProjectNotesResponse.Result.IsSuccessStatusCode )
+      if (getProjectNotesResponse.Result.IsSuccessStatusCode)
          project.Notes = (await getProjectNotesResponse.Result.Content.ReadFromJsonAsync<IEnumerable<ProjectNote>>())?.ToList();
 
       return new HttpResponseMessage(HttpStatusCode.OK) { Content = JsonContent.Create(project) };

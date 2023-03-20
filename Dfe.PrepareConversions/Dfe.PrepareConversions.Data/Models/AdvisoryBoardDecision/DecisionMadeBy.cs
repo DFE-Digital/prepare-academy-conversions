@@ -1,18 +1,15 @@
 ﻿using System.ComponentModel;
 
-namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
+namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
+
+public enum DecisionMadeBy
 {
-	public enum DecisionMadeBy
-	{
-		[Description("Regional Director for the region")]
-		RegionalDirectorForRegion = 0,
-		[Description("A different Regional Director")]
-		OtherRegionalDirector = 1,
-		[Description("Minister")]
-		Minister = 2,
-		[Description("Director General")]
-		DirectorGeneral = 3,
-		[Description("None")]
-		None = 4
-	}
+   [Description("Regional Director for the region")]
+   RegionalDirectorForRegion = 0,
+
+   [Description("A different Regional Director")]
+   OtherRegionalDirector = 1,
+   [Description("Minister")] Minister = 2,
+   [Description("Director General")] DirectorGeneral = 3,
+   [Description("None")] None = 4
 }

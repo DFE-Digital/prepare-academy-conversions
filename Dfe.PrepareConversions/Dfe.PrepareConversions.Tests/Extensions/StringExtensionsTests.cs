@@ -1,6 +1,5 @@
 ﻿using Dfe.PrepareConversions.Extensions;
 using FluentAssertions;
-using System;
 using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Extensions;

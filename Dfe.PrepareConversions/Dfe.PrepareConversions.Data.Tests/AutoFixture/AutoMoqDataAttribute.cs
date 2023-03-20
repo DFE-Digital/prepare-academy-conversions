@@ -2,16 +2,15 @@
 using AutoFixture.AutoMoq;
 using AutoFixture.Xunit2;
 
-namespace Dfe.PrepareConversions.Data.Tests.AutoFixture
+namespace Dfe.PrepareConversions.Data.Tests.AutoFixture;
+
+public class AutoMoqDataAttribute : AutoDataAttribute
 {
-	public class AutoMoqDataAttribute : AutoDataAttribute
-	{
-		public AutoMoqDataAttribute()
-			: base(() =>
-			{
-				return new Fixture().Customize(new CompositeCustomization(new AutoMoqCustomization()));
-			})
-		{
-		}
-	}
+   public AutoMoqDataAttribute()
+      : base(() =>
+      {
+         return new Fixture().Customize(new CompositeCustomization(new AutoMoqCustomization()));
+      })
+   {
+   }
 }

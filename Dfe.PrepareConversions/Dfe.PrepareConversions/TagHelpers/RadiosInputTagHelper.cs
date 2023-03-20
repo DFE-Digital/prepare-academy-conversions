@@ -4,40 +4,39 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareConversions.TagHelpers
+namespace Dfe.PrepareConversions.TagHelpers;
+
+[HtmlTargetElement("govuk-radios-input", TagStructure = TagStructure.WithoutEndTag)]
+public class RadiosInputTagHelper : InputTagHelperBase
 {
-	[HtmlTargetElement("govuk-radios-input", TagStructure = TagStructure.WithoutEndTag)]
-	public class RadiosInputTagHelper : InputTagHelperBase
-	{
-		[HtmlAttributeName("leading-paragraph")]
-		public string LeadingParagraph { get; set; }
-		
-		[HtmlAttributeName("heading-label")]
-		public bool HeadingLabel { get; set; }
-		
-		[HtmlAttributeName("values")]
-		public string[] Values { get; set; }
+   public RadiosInputTagHelper(IHtmlHelper htmlHelper) : base(htmlHelper) { }
 
-		[HtmlAttributeName("labels")]
-		public string[] Labels { get; set; }
+   [HtmlAttributeName("leading-paragraph")]
+   public string LeadingParagraph { get; set; }
 
-		public RadiosInputTagHelper(IHtmlHelper htmlHelper) : base(htmlHelper) { }
+   [HtmlAttributeName("heading-label")]
+   public bool HeadingLabel { get; set; }
 
-		protected override async Task<IHtmlContent> RenderContentAsync()
-		{
-			var model = new RadiosInputViewModel
-			{
-				Id = Id,
-				Name = Name,
-				Label = Label,
-				Value = For.Model?.ToString(),
-				Values = Values,
-				Labels = Labels,
-				HeadingLabel = HeadingLabel,
-				LeadingParagraph = LeadingParagraph
-			};
+   [HtmlAttributeName("values")]
+   public string[] Values { get; set; }
 
-			return await _htmlHelper.PartialAsync("_RadiosInput", model);
-		}
-	}
+   [HtmlAttributeName("labels")]
+   public string[] Labels { get; set; }
+
+   protected override async Task<IHtmlContent> RenderContentAsync()
+   {
+      RadiosInputViewModel model = new()
+      {
+         Id = Id,
+         Name = Name,
+         Label = Label,
+         Value = For.Model?.ToString(),
+         Values = Values,
+         Labels = Labels,
+         HeadingLabel = HeadingLabel,
+         LeadingParagraph = LeadingParagraph
+      };
+
+      return await _htmlHelper.PartialAsync("_RadiosInput", model);
+   }
 }

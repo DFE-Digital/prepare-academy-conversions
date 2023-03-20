@@ -4,7 +4,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 	describe(`86341: Error messaging should be correct on ${viewport}`, () => {
 		beforeEach(() => {
 			cy.viewport(viewport)
-			cy.login()
+			cy.login({titleFilter: 'Gloucester school'})
 			cy.get('#school-name-0').click()
 		})
 

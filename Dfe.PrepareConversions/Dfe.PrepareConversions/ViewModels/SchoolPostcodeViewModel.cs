@@ -1,7 +1,6 @@
-﻿namespace Dfe.PrepareConversions.ViewModels
+﻿namespace Dfe.PrepareConversions.ViewModels;
+
+public class SchoolPostcodeViewModel
 {
-	public class SchoolPostcodeViewModel
-	{
-		public string SchoolPostcode { get; set; }
-	}
+   public string SchoolPostcode { get; set; }
 }

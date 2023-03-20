@@ -8,7 +8,7 @@ public static class StringExtensions
 {
    public static string SplitPascalCase<T>(this T source)
    {
-      return source == null ? string.Empty : Regex.Replace(source.ToString(), "[A-Z]", " $0", RegexOptions.None, TimeSpan.FromSeconds(1)).Trim();
+      return source == null ? string.Empty : Regex.Replace(source.ToString() ?? string.Empty, "[A-Z]", " $0", RegexOptions.None, TimeSpan.FromSeconds(1)).Trim();
    }
 
    /// <summary>

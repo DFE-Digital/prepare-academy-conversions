@@ -2,29 +2,32 @@
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Primitives;
 
-namespace Dfe.PrepareConversions.Models
+namespace Dfe.PrepareConversions.Models;
+
+public class CommonPageModel : PageModel
 {
-	public class CommonPageModel : PageModel
-	{
-		[BindProperty(SupportsGet = true)]
-		public int Id { get; set; }
-		public string SchoolName { get; set; }
+   protected readonly ErrorService _errorService;
 
-		protected readonly IAcademyConversionProjectRepository _repository;
-		protected readonly ErrorService _errorService;
+   protected readonly IAcademyConversionProjectRepository _repository;
 
-		public CommonPageModel(IAcademyConversionProjectRepository repository, ErrorService errorService)
-		{
-			_repository = repository;
-			_errorService = errorService;
-		}
-		public bool ShowError => _errorService.HasErrors();
-		protected (string, string) GetReturnPageAndFragment()
-		{
-			Request.Query.TryGetValue("return", out var returnQuery);
-			Request.Query.TryGetValue("fragment", out var fragmentQuery);
-			return (returnQuery, fragmentQuery);
-		}
-	}
+   public CommonPageModel(IAcademyConversionProjectRepository repository, ErrorService errorService)
+   {
+      _repository = repository;
+      _errorService = errorService;
+   }
+
+   [BindProperty(SupportsGet = true)]
+   public int Id { get; set; }
+
+   public string SchoolName { get; set; }
+   public bool ShowError => _errorService.HasErrors();
+
+   protected (string, string) GetReturnPageAndFragment()
+   {
+      Request.Query.TryGetValue("return", out StringValues returnQuery);
+      Request.Query.TryGetValue("fragment", out StringValues fragmentQuery);
+      return (returnQuery, fragmentQuery);
+   }
 }
