@@ -3,10 +3,10 @@
 Cypress._.each(['ipad-mini'], (viewport) => {
 	describe(`111891: "School budget information dates are saved and reflected in preview on ${viewport}`, () => {
 		beforeEach(() => {
-			cy.login();
+			cy.login({titleFilter: 'Gloucester school'});
 			cy.viewport(viewport);
 			cy.selectSchoolListing(2);
-			cy.url().then(url => {
+			cy.urlPath().then(url => {
 				//changes the current URL
 				let modifiedUrl = url + '/confirm-school-budget-information'
 				cy.visit(modifiedUrl);
@@ -79,7 +79,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 			cy.get('dl').contains('End of next financial year');
 			cy.get('dl').contains('Forecasted revenue carry forward at the end of the next financial year');
 			cy.get('dl').contains('Forecasted capital carry forward at the end of the next financial year');
-		    cy.get('dl').contains('Additional information');	
+		    cy.get('dl').contains('Additional information');
 		});
 	});
 });

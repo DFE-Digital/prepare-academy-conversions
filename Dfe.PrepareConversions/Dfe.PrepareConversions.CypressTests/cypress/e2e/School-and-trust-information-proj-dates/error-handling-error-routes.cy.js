@@ -4,7 +4,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 	describe(`86342 Error message link should redirect correctly on ${viewport}`, () => {
 		beforeEach(() => {
 			cy.viewport(viewport)
-			cy.login()
+			cy.login({titleFilter: 'Gloucester school'})
 			cy.selectSchoolListing(1)
 
 			cy.url().then(url => {

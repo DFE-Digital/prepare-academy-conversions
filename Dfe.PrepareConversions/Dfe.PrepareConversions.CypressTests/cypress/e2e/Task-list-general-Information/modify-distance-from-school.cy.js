@@ -3,17 +3,17 @@
 Cypress._.each(['ipad-mini'], (viewport) => {
     describe(`92796 Modify Distance from School Info ${viewport}`, () => {
 		beforeEach(() => {
-			cy.login()
+			cy.login({titleFilter: 'Gloucester school'})
 			cy.viewport(viewport)
 			cy.selectSchoolListing(2)
-			cy.url().then(url => {
+			cy.urlPath().then(url => {
 				let modifiedUrl = url + '/confirm-general-information'
 				cy.visit(modifiedUrl)
 			});
 		})
 
         it('TC01: Precondition: Distance Info Summary is empty', () => {
-            // Distrance Info 
+            // Distrance Info
             cy.milesIsEmpty()
             // Additional Info box
             cy.addInfoIsEmpty()
