@@ -3,9 +3,9 @@
 Cypress._.each(['ipad-mini'], (viewport) => {
     describe(`86858 Modify viability fields on ${viewport}`, () => {
 		beforeEach(() => {
-			cy.login()
+			cy.login({titleFilter: 'Gloucester school'})
 			cy.selectSchoolListing(2)
-			cy.url().then(url =>{
+			cy.urlPath().then(url =>{
 				//Changes the current URL
 				let modifiedUrl = url + '/confirm-general-information'
 				cy.visit(modifiedUrl)

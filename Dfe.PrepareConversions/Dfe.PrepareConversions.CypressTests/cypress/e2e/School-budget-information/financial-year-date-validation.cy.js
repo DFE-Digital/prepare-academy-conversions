@@ -3,10 +3,10 @@
 Cypress._.each(['ipad-mini'], (viewport) => {
 	describe(`111891: "Dates user sent/return the template" are reflected in preview on ${viewport}`, () => {
 		beforeEach(() => {
-		  cy.login();
+		  cy.login({titleFilter: 'Gloucester school'});
 		  cy.viewport(viewport);
 		  cy.selectSchoolListing(2);
-		  cy.url().then(url => {
+		  cy.urlPath().then(url => {
 		 	let modifiedUrl = url + '/confirm-school-budget-information'
 			cy.visit(modifiedUrl);
 		  });
