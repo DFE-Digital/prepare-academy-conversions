@@ -11,7 +11,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
         });
     
         beforeEach(() => {
-            cy.login()
+            cy.login({titleFilter: 'Gloucester school'})
         });
 		
 		before(() => {
