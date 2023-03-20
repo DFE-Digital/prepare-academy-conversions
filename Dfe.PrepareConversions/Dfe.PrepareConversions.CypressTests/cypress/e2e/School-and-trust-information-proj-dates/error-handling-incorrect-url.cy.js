@@ -9,11 +9,11 @@ Cypress._.each(['ipad-mini'], (viewport) => {
         after(function () {
             cy.clearLocalStorage()
         });
-    
+
         beforeEach(() => {
-            cy.login()
+            cy.login({titleFilter: 'Gloucester school'})
         });
-		
+
 		before(() => {
 			cy.viewport(viewport)
 		})
@@ -24,11 +24,11 @@ Cypress._.each(['ipad-mini'], (viewport) => {
             cy.visit(url)
             cy.excuteAccessibilityTests(wcagStandards, continueOnFail, impactLevel)
         });
-    
+
         it('TC01: Should open first school in the list', () => {
             cy.viewport(viewport)
             cy.selectSchoolListing(0)
-            cy.url().then(url => {
+            cy.urlPath().then(url => {
                 let modifiedUrl = url + '/confirm-school-trust-information-project-dates'
                 cy.visit(modifiedUrl)
             });
@@ -39,22 +39,22 @@ Cypress._.each(['ipad-mini'], (viewport) => {
             cy.selectSchoolListing(0)
             let modifiedUrl
             cy.get('[aria-describedby*=la-info-template-status]').click()
-            cy.url().then(url =>{
+            cy.urlPath().then(url =>{
                 //Changes the current URL to:
                 ///task-list/<SOME_VALID_ID>/confirm-local-authority-information-template-dates?return=someInvalideParam/SomeInvalidPath
                 modifiedUrl = url.replace('%2FTaskList%2FIndex&backText=Back%20to%20task%20list','someInvalideParam')
-                cy.visit(modifiedUrl+'/SomeInvalidPath', {failOnStatusCode: false});   
+                cy.visit(modifiedUrl+'/SomeInvalidPath', {failOnStatusCode: false});
             });
             cy.get('.govuk-button').click()
             cy.get('h1').should('not.contain.text','An unhandled exception occurred while processing the request.')
         });
-        
+
         it('TC03: Should display user-friendly error when incorrect project ID requested', () => {
             cy.viewport(viewport)
             cy.visit(Cypress.env('url') +'/task-list/99990', {failOnStatusCode: false})
             cy.get('[id="error-heading"]').should('have.text','Page not found')
         });
-        
+
         it('TC04: Should display user-friendly error when incorrect url requested', () => {
             cy.viewport(viewport)
             cy.visit(Cypress.env('url') +'/task-list-nonsense', {failOnStatusCode: false})
