@@ -1,6 +1,7 @@
 /* eslint-env node */
 
 import { defineConfig } from 'cypress'
+import { generateZapReport } from './cypress/plugins/generateZapReport'
 
 export default defineConfig({
   video: false,
@@ -9,7 +10,20 @@ export default defineConfig({
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config)
+
+      on('before:run', () => {
+        // Map cypress env vars to process env vars for usage outside of Cypress run
+        process.env = config.env
+      })
+
+      on('after:run', async () => {
+        if(process.env.zapReport) {
+          await generateZapReport()
+        }
+      })
+
+      require('./cypress/plugins/index.js')(on, config)
+      return config;
     },
   },
 })
