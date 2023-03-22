@@ -20,7 +20,7 @@ public class OtherSchoolsInMatTests : BaseIntegrationTests
       List<AcademyConversionProject> projects = GenerateProjects();
       AddGetStatuses();
       AcademyConversionProject firstProject = AddGetProject(p => p.Id = projects.First().Id);
-      await OpenAndConfirmPathAsync($"/other-schools-in-mat/{firstProject.Id}");
+      await OpenAndConfirmPathAsync($"/schools-in-this-mat/{firstProject.Id}");
 
       for (int i = 0; i < 2; i++)
       {
@@ -45,7 +45,7 @@ public class OtherSchoolsInMatTests : BaseIntegrationTests
       List<AcademyConversionProject> projects = GenerateProjects();
       AddGetStatuses();
       AcademyConversionProject firstProject = AddGetProject(p => p.Id = projects.First().Id);
-      await OpenAndConfirmPathAsync($"/other-schools-in-mat/{firstProject.Id}");
+      await OpenAndConfirmPathAsync($"/schools-in-this-mat/{firstProject.Id}");
 
       for (int i = 0; i < 2; i++)
       {
