@@ -14,6 +14,7 @@ public class AcademisationApplication
    public string ApplicationReference { get; set; }
    public List<Contributor> Contributors { get; set; }
    public JoinTrustDetails JoinTrustDetails { get; set; }
+   public FormTrustDetails FormTrustDetails { get; set; }
 
    public List<School> Schools { get; set; }
 
@@ -21,6 +22,7 @@ public class AcademisationApplication
    {
       // Following the fields used by the front end
       Application.Application academiesApplication = PopulateOverview(academisationApplication, out School academisationApplicationSchool, out ApplyingSchool academiesApplicationSchool);
+      if(academiesApplication.ApplicationType.Equals("formAMat")) PopulateFormAMatTrustInformation(academiesApplication, academisationApplication);
       PopulateSchoolDetails(academiesApplicationSchool, academisationApplicationSchool);
       PopulateFurtherInformation(academiesApplicationSchool, academisationApplicationSchool);
       PopulateSchoolFinances(academiesApplicationSchool, academisationApplicationSchool);
@@ -34,6 +36,24 @@ public class AcademisationApplication
 
 
       return academiesApplication;
+   }
+
+   private static void PopulateFormAMatTrustInformation(Application.Application academiesApplication, AcademisationApplication academisationApplication)
+   {
+      academiesApplication.FormTrustOpeningDate = academisationApplication.FormTrustDetails.FormTrustOpeningDate;
+      academiesApplication.TrustApproverName = academisationApplication.FormTrustDetails.TrustApproverName;
+      academiesApplication.TrustApproverEmail = academisationApplication.FormTrustDetails.TrustApproverEmail;
+      academiesApplication.FormTrustReasonForming = academisationApplication.FormTrustDetails.FormTrustReasonForming;
+      academiesApplication.FormTrustReasonVision = academisationApplication.FormTrustDetails.FormTrustReasonVision;
+      academiesApplication.FormTrustReasonGeoAreas = academisationApplication.FormTrustDetails.FormTrustReasonGeoAreas;
+      academiesApplication.FormTrustReasonFreedom = academisationApplication.FormTrustDetails.FormTrustReasonFreedom;
+      academiesApplication.FormTrustReasonImproveTeaching = academisationApplication.FormTrustDetails.FormTrustReasonImproveTeaching;
+      academiesApplication.FormTrustGrowthPlansYesNo = academisationApplication.FormTrustDetails.FormTrustGrowthPlansYesNo;
+      academiesApplication.FormTrustPlanForGrowth = academisationApplication.FormTrustDetails.FormTrustPlanForGrowth;
+      academiesApplication.FormTrustPlansForNoGrowth = academisationApplication.FormTrustDetails.FormTrustPlanForGrowth;
+      academiesApplication.FormTrustImprovementSupport = academisationApplication.FormTrustDetails.FormTrustImprovementSupport;
+      academiesApplication.FormTrustImprovementStrategy = academisationApplication.FormTrustDetails.FormTrustImprovementStrategy;
+
    }
 
    public static void PopulateDeclaration(ApplyingSchool academiesApplicationSchool,
@@ -303,7 +323,13 @@ public class AcademisationApplication
       academiesApplicationSchool = academiesApplication.ApplyingSchools.FirstOrDefault();
       academiesApplicationSchool!.SchoolLoans = new List<Application.Loan>();
       academiesApplicationSchool!.SchoolLeases = new List<Application.Lease>();
-      academiesApplication.TrustName = academisationApplication.JoinTrustDetails.TrustName;
+      academiesApplication.TrustName = academisationApplication.ApplicationType switch
+      {
+         "joinAMat" => academisationApplication.JoinTrustDetails.TrustName,
+         "formAMat" => academisationApplication.FormTrustDetails.FormTrustProposedNameOfTrust,
+         _ => academiesApplication.TrustName
+      };
+
       academiesApplication.ApplicationType = academisationApplication.ApplicationType;
       academiesApplication.ApplicationId =
          academisationApplication.ApplicationReference;
@@ -314,16 +340,21 @@ public class AcademisationApplication
             academisationApplication.Contributors.FirstOrDefault()!.FirstName + " " + academisationApplication.Contributors.FirstOrDefault()!.LastName;
       }
 
-      academiesApplication.ChangesToTrust = academisationApplication.JoinTrustDetails.ChangesToTrust switch
+      if (academiesApplication.ApplicationType.Equals("joinAMat"))
       {
-         "yes" => true,
-         "no" => false,
-         _ => academiesApplication.ChangesToTrust
-      };
-      academiesApplication.ChangesToTrustExplained = academisationApplication.JoinTrustDetails.ChangesToTrustExplained;
-      academiesApplication.ChangesToLaGovernance = academisationApplication.JoinTrustDetails.ChangesToLaGovernance;
-      academiesApplication.ChangesToLaGovernanceExplained =
-         academisationApplication.JoinTrustDetails.ChangesToLaGovernanceExplained;
+         academiesApplication.ChangesToTrust = academisationApplication.JoinTrustDetails.ChangesToTrust switch
+         {
+            "yes" => true,
+            "no" => false,
+            _ => academiesApplication.ChangesToTrust
+         };
+         academiesApplication.ChangesToTrustExplained = academisationApplication.JoinTrustDetails.ChangesToTrustExplained;
+         academiesApplication.ChangesToLaGovernance = academisationApplication.JoinTrustDetails.ChangesToLaGovernance;
+         academiesApplication.ChangesToLaGovernanceExplained =
+            academisationApplication.JoinTrustDetails.ChangesToLaGovernanceExplained;
+      }
+      
+      
       return academiesApplication;
    }
 }
