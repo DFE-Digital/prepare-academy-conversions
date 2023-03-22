@@ -57,7 +57,7 @@ describe('Add Form-a-MAT application through API request and verify on the front
 		});
 	});
 
-	it('TC03: should create a Form a MAT project on the FE', () => {
+	it('TC03: should create a Form a MAT project on the FE with correct details', () => {
 		cy.login()
 		cy.get('[data-cy="select-projectlist-filter-row"]').first().should('be.visible')
 			.invoke('text')
@@ -71,12 +71,33 @@ describe('Add Form-a-MAT application through API request and verify on the front
 					cy.get('#opening-date-0').contains('Opening date: ')
 					cy.get('#school-name-0').click()
 					cy.url().should('include', 'form-a-mat')
+
 					//check school application form
 					cy.get('[class="moj-sub-navigation__link"]').contains('School application form')
-						.click()
+					  .click()
+                    cy.get('h1').should('not.contain', 'Page not found')
 					//check Other schools in this MAT
 					cy.get('[class="moj-sub-navigation__link"]').contains('Other schools in this MAT')
-						.click()
+					  .click()
+					cy.get('h1').should('not.contain', 'Page not found')
+					cy.title().should('contain', 'Schools in this MAT')
+					cy.url().should('include', 'schools-in-this-MAT')
+					cy.get('[data-cy="select-projectlist-filter-row"]').invoke('text')
+					  .should('contain', 'PRE ADVISORY BOARD')
+					cy.get('[data-cy="route"]').should('contain', 'Route: Form a MAT')
+                    cy.get('#school-name-0').should('be.visible')
+					cy.get('#urn-0').contains('URN: ')
+					cy.get('#application-to-join-trust-0').contains('Application to join a trust: ')
+					cy.get('#application-received-date-0').contains('Project created date: ')
+					cy.get('#local-authority-0').contains('Local authority: ')
+
+					//navigate to other school
+                    cy.get('#school-name-0').click()
+					cy.title().should('contain', 'School Application Form')
+					cy.get('h1').should('not.contain', 'Page not found')
+					cy.get('[class="moj-sub-navigation__link"]').contains('Other schools in this MAT')
+					  .click()
+				    cy.get('h1').should('not.contain', 'Page not found')
 				}
 				else {
 					cy.log('this is not Form a MAT project')
