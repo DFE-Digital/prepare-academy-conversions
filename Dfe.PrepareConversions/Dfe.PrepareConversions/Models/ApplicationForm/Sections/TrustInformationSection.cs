@@ -19,7 +19,7 @@ namespace Dfe.PrepareConversions.Models.ApplicationForm.Sections
          };
       }
 
-      private IEnumerable<FormField> GenerateProposedName(Application application)
+      private static IEnumerable<FormField> GenerateProposedName(Application application)
       {
          List<FormField> formFields = new();
          formFields.Add(new FormField("Proposed name of the trust", application.TrustName));
@@ -27,7 +27,7 @@ namespace Dfe.PrepareConversions.Models.ApplicationForm.Sections
          return formFields;
       }
 
-      private IEnumerable<FormField> GenerateSchoolImprovementStrategyFields(Application application)
+      private static IEnumerable<FormField> GenerateSchoolImprovementStrategyFields(Application application)
       {
          List<FormField> formFields = new();
          formFields.Add(new FormField("How will the trust support and improve the academies in the trust?", application.FormTrustImprovementSupport));
