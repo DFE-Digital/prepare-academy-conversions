@@ -57,7 +57,7 @@ describe('Add Form-a-MAT application through API request and verify on the front
 		});
 	});
 
-	it.only('TC03: should create a Form a MAT project on the FE with correct details', () => {
+	it('TC03: should create a Form a MAT project on the FE with correct details', () => {
 		cy.login({ titleFilter: 'Redruth School' })
 		cy.get('[data-cy="select-projectlist-filter-row"]').first().should('be.visible')
 			.invoke('text')
