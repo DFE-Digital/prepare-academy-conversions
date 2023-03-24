@@ -1,3 +1,4 @@
+using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 using System;
 using System.Collections.Generic;
 
@@ -30,6 +31,7 @@ public class Application
    public string FormTrustImprovementSupport { get; set; }
    public string FormTrustImprovementStrategy { get; set; }
    public string FormTrustImprovementApprovedSponsor { get; set; }
+   public List<TrustKeyPerson> KeyPeople { get; set; } = new();
    // School(s)
    public ICollection<ApplyingSchool> ApplyingSchools { get; set; }
 }

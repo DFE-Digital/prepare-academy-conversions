@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,5 +26,10 @@ namespace Dfe.PrepareConversions.Data.Models.AcademisationApplication
       public string? FormTrustImprovementSupport { get; set; }
       public string? FormTrustImprovementStrategy { get; set; }
       public string? FormTrustImprovementApprovedSponsor { get; set; }
+      public List<TrustKeyPerson> KeyPeople { get; set; }
    }
+
+   public record TrustKeyPerson(int Id, string Name, DateTime DateOfBirth, string Biography, List<TrustKeyPersonRole> Roles);
+
+   public record TrustKeyPersonRole(int Id, string Role, string TimeInRole);
 }

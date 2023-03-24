@@ -50,9 +50,11 @@ public class AcademisationApplication
       academiesApplication.FormTrustReasonImproveTeaching = academisationApplication.FormTrustDetails.FormTrustReasonImproveTeaching;
       academiesApplication.FormTrustGrowthPlansYesNo = academisationApplication.FormTrustDetails.FormTrustGrowthPlansYesNo;
       academiesApplication.FormTrustPlanForGrowth = academisationApplication.FormTrustDetails.FormTrustPlanForGrowth;
-      academiesApplication.FormTrustPlansForNoGrowth = academisationApplication.FormTrustDetails.FormTrustPlanForGrowth;
+      academiesApplication.FormTrustPlansForNoGrowth = academisationApplication.FormTrustDetails.FormTrustPlansForNoGrowth;
       academiesApplication.FormTrustImprovementSupport = academisationApplication.FormTrustDetails.FormTrustImprovementSupport;
       academiesApplication.FormTrustImprovementStrategy = academisationApplication.FormTrustDetails.FormTrustImprovementStrategy;
+      academiesApplication.FormTrustImprovementApprovedSponsor = academisationApplication.FormTrustDetails.FormTrustImprovementApprovedSponsor;
+      academiesApplication.KeyPeople = academisationApplication.FormTrustDetails.KeyPeople;
 
    }
 

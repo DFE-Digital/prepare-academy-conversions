@@ -54,6 +54,7 @@ public class FormAMatIndexModel : BaseAcademyConversionProjectPageModel
       {
          new FamApplicationFormSection(application),
          new TrustInformationSection(application),
+         new KeyPeopleSection(application),
          new AboutConversionSection(application.ApplyingSchools.First()),
          new FurtherInformationSection(application.ApplyingSchools.First()),
          new FinanceSection(application.ApplyingSchools.First()),
