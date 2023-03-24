@@ -2,18 +2,18 @@
 @model Dfe.PrepareConversions.Models.ApplicationForm.FormField
 
 <div class="govuk-summary-list__row" test-id="@Model.Id">
-   <dt class="govuk-summary-list__key" test-id="@(Model.Id + "_key")">
-      @Model.Title
-   </dt>
-   <dd class="govuk-summary-list__value" test-id="@(Model.Id + "_value")">
-      @switch (Model)
-      {
-         case LinkFormField link:
-            <a class="govuk-link" href="@link.Url">@link.Content</a>
-            break;
-         default:
-            <text>@Model.Content</text>
-            break;
-      }
-   </dd>
+   <dl class="govuk-summary-list__key" test-id="@(Model.Id + "_key")">
+            @Model.Title
+        </dl>
+       <dd class="govuk-summary-list__value" test-id="@(Model.Id + "_value")">
+            @switch (Model)
+            {
+                case LinkFormField link:
+                    <a class="govuk-link" href="@link.Url">@link.Content</a>
+                    break;
+                default:
+                    <text>@Model.Content</text>
+                    break;
+            }
+        </dd>
 </div>
