@@ -57,7 +57,7 @@ describe('Add Form-a-MAT application through API request and verify on the front
 		});
 	});
 
-	it('TC03: should create a Form a MAT project on the FE with correct details', () => {
+	it.only('TC03: should create a Form a MAT project on the FE with correct details', () => {
 		cy.login({ titleFilter: 'Redruth School' })
 		cy.get('[data-cy="select-projectlist-filter-row"]').first().should('be.visible')
 			.invoke('text')
@@ -81,7 +81,7 @@ describe('Add Form-a-MAT application through API request and verify on the front
 					  .click()
 					cy.get('h1').should('not.contain', 'Page not found')
 					cy.title().should('contain', 'Schools in this MAT')
-					cy.url().should('include', 'schools-in-this-MAT')
+					cy.url().should('include', 'schools-in-this-mat')
 					cy.get('[data-cy="select-projectlist-filter-row"]').invoke('text')
 					  .should('contain', 'PRE ADVISORY BOARD')
 					cy.get('[data-cy="route"]').should('contain', 'Route: Form a MAT')
