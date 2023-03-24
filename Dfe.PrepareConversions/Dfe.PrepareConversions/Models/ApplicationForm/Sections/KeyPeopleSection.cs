@@ -20,7 +20,7 @@ namespace Dfe.PrepareConversions.Models.ApplicationForm.Sections
          SubSections = formSubSections.ToArray();
       }
 
-      private IEnumerable<FormField> GenerateKeyPeople(TrustKeyPerson person)
+      private static IEnumerable<FormField> GenerateKeyPeople(TrustKeyPerson person)
       {
          List<FormField> formFields = new();
          
