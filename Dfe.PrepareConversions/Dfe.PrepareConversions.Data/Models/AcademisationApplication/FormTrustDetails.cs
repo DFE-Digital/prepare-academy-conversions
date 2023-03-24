@@ -27,7 +27,7 @@ namespace Dfe.PrepareConversions.Data.Models.AcademisationApplication
       public string? FormTrustImprovementSupport { get; set; }
       public string? FormTrustImprovementStrategy { get; set; }
       public string? FormTrustImprovementApprovedSponsor { get; set; }
-      public List<TrustKeyPerson> KeyPeople { get; set; }
+      public List<TrustKeyPerson>? KeyPeople { get; set; }
    }
 
    public record TrustKeyPerson(int Id, string Name, DateTime DateOfBirth, string Biography, List<TrustKeyPersonRole> Roles);
