@@ -1,22 +1,22 @@
 ﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/academy-order-required"
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
-	Layout = "_QuestionLayout";
-	Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
-	ViewData["Title"] = "Academy order required";
-	ViewData["SchoolName"] = Model.Project.SchoolName;
-	ViewData["ProjectId"] = Model.Project.Id;
-	var values = new[] { "Yes", "No" };
+   Layout = "_QuestionLayout";
+   Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
+   ViewData["Title"] = "Academy order required";
+   ViewData["SchoolName"] = Model.Project.SchoolName;
+   ViewData["ProjectId"] = Model.Project.Id;
+   var values = new[] { "Yes", "No" };
 }
 
 @section BeforeMain
 {
-	<govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation" />
+   <govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation"/>
 }
 
 <h1 class="govuk-label-wrapper">
-	<label class="govuk-label govuk-label--l" for="academy-order-required">
-		Is an academy order required for this conversion?
-	</label>
+   <label class="govuk-label govuk-label--l" for="academy-order-required">
+      Is an academy order required for this conversion?
+   </label>
 </h1>
-<govuk-radios-input name="academy-order-required" id="academy-order-required" asp-for="Project.AcademyOrderRequired" values="@values" labels="@values" />
+<govuk-radios-input name="academy-order-required" id="academy-order-required" asp-for="Project.AcademyOrderRequired" values="@values" labels="@values"/>

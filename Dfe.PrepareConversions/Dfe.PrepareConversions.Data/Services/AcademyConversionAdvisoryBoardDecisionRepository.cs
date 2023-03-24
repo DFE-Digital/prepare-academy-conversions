@@ -4,39 +4,38 @@ using Dfe.PrepareConversions.Data.Services.Interfaces;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareConversions.Data.Services
+namespace Dfe.PrepareConversions.Data.Services;
+
+public class AcademyConversionAdvisoryBoardDecisionRepository : IAcademyConversionAdvisoryBoardDecisionRepository
 {
-	public class AcademyConversionAdvisoryBoardDecisionRepository : IAcademyConversionAdvisoryBoardDecisionRepository
-	{
-		private readonly HttpClient _httpClient;
-		private readonly IHttpClientService _httpClientHelper;
+   private readonly HttpClient _httpClient;
+   private readonly IHttpClientService _httpClientHelper;
 
-		public AcademyConversionAdvisoryBoardDecisionRepository(IHttpClientFactory httpClientFactory, IHttpClientService httpClientHelper)
-		{
-			_httpClient = httpClientFactory.CreateClient("AcademisationClient");
-			_httpClientHelper = httpClientHelper;
-		}
+   public AcademyConversionAdvisoryBoardDecisionRepository(IHttpClientFactory httpClientFactory, IHttpClientService httpClientHelper)
+   {
+      _httpClient = httpClientFactory.CreateClient("AcademisationClient");
+      _httpClientHelper = httpClientHelper;
+   }
 
-		public async Task Create(AdvisoryBoardDecision decision)
-		{
-			var result = await _httpClientHelper
-				.Post<AdvisoryBoardDecision, AdvisoryBoardDecision>(_httpClient, "/conversion-project/advisory-board-decision", decision);
+   public async Task Create(AdvisoryBoardDecision decision)
+   {
+      ApiResponse<AdvisoryBoardDecision> result = await _httpClientHelper
+         .Post<AdvisoryBoardDecision, AdvisoryBoardDecision>(_httpClient, "/conversion-project/advisory-board-decision", decision);
 
-			if (!result.Success) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
-		}
+      if (!result.Success) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+   }
 
-		public async Task Update(AdvisoryBoardDecision decision)
-		{
-			var result = await _httpClientHelper
-				.Put<AdvisoryBoardDecision, AdvisoryBoardDecision>(_httpClient, "/conversion-project/advisory-board-decision", decision);
+   public async Task Update(AdvisoryBoardDecision decision)
+   {
+      ApiResponse<AdvisoryBoardDecision> result = await _httpClientHelper
+         .Put<AdvisoryBoardDecision, AdvisoryBoardDecision>(_httpClient, "/conversion-project/advisory-board-decision", decision);
 
-			if (!result.Success) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
-		}
+      if (!result.Success) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+   }
 
-		public async Task<ApiResponse<AdvisoryBoardDecision>> Get(int id)
-		{
-			return await _httpClientHelper
-				.Get<AdvisoryBoardDecision>(_httpClient, $"/conversion-project/advisory-board-decision/{id}");
-		}
-	}
+   public async Task<ApiResponse<AdvisoryBoardDecision>> Get(int id)
+   {
+      return await _httpClientHelper
+         .Get<AdvisoryBoardDecision>(_httpClient, $"/conversion-project/advisory-board-decision/{id}");
+   }
 }

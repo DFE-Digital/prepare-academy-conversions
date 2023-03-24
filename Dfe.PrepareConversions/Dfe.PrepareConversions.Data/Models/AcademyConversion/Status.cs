@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel;
 
-namespace Dfe.PrepareConversions.Data.Models.AcademyConversion
+namespace Dfe.PrepareConversions.Data.Models.AcademyConversion;
+
+public enum Status
 {
-	public enum Status
-	{
-		[Description("Not Started")] NotStarted = 0,
-		[Description("In Progress")] InProgress = 1,
-		Completed = 2
-	}
+   [Description("Not Started")] NotStarted = 0,
+   [Description("In Progress")] InProgress = 1,
+   Completed = 2
 }

@@ -1,9 +1,8 @@
-﻿namespace Dfe.PrepareConversions.Data.Models.Establishment
+﻿namespace Dfe.PrepareConversions.Data.Models.Establishment;
+
+public class EstablishmentSearchResponse
 {
-   public class EstablishmentSearchResponse
-   {
-      public string Name { get; set; }
-      public string Urn { get; set; }
-      public string Ukprn { get; set; }
-   }
+   public string Name { get; set; }
+   public string Urn { get; set; }
+   public string Ukprn { get; set; }
 }

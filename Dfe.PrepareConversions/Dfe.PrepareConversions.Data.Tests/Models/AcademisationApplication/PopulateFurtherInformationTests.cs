@@ -1,62 +1,57 @@
-﻿using ApplyToBecome.Data.Models.AcademisationApplication;
+﻿using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 using Dfe.PrepareConversions.Data.Models.Application;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
-using static ApplyToBecome.Data.Models.AcademisationApplication.AcademisationApplication;
+using static Dfe.PrepareConversions.Data.Models.AcademisationApplication.AcademisationApplication;
 
-namespace Dfe.PrepareConversions.Data.Tests.Models.AcademisationApplication
+namespace Dfe.PrepareConversions.Data.Tests.Models.AcademisationApplication;
+
+public class PopulateFurtherInformationTests
 {
-   public class PopulateFurtherInformationTests
+   [Fact]
+   public void PopulateFurtherInformation_ShouldPopulateDataCorrectly()
    {
-      [Fact]
-      public void PopulateFurtherInformation_ShouldPopulateDataCorrectly()
+      // Arrange
+      School academisationApplicationSchool = new()
       {
-         // Arrange
-         var academisationApplicationSchool = new School
-         {
-            TrustBenefitDetails = "Trust Benefit",
-            OfstedInspectionDetails = "Ofsted Inspection",
-            SafeguardingDetails = "Safeguarding",
-            LocalAuthorityReorganisationDetails = "LA Reorganization",
-            LocalAuthorityClosurePlanDetails = "LA Closure",
-            DioceseName = "Diocese",
-            PartOfFederation = true,
-            FoundationTrustOrBodyName = "Foundation",
-            ExemptionEndDate = DateTime.Today,
-            MainFeederSchools = "Feeder Schools",
-            ProtectedCharacteristics = "unlikely",
-            FurtherInformation = "Additional Information"
-         };
-         var academiesApplicationSchool = new ApplyingSchool();
-         // Act
-         PopulateFurtherInformation(academiesApplicationSchool, academisationApplicationSchool);
-         // Assert
-         Assert.Equal("Trust Benefit", academiesApplicationSchool.SchoolAdSchoolContributionToTrust);
-         Assert.True(academiesApplicationSchool.SchoolAdInspectedButReportNotPublished);
-         Assert.Equal("Ofsted Inspection", academiesApplicationSchool.SchoolAdInspectedButReportNotPublishedExplain);
-         Assert.True(academiesApplicationSchool.SchoolOngoingSafeguardingInvestigations);
-         Assert.Equal("Safeguarding", academiesApplicationSchool.SchoolOngoingSafeguardingDetails);
-         Assert.True(academiesApplicationSchool.SchoolPartOfLaReorganizationPlan);
-         Assert.Equal("LA Reorganization", academiesApplicationSchool.SchoolLaReorganizationDetails);
-         Assert.True(academiesApplicationSchool.SchoolPartOfLaClosurePlan);
-         Assert.Equal("LA Closure", academiesApplicationSchool.SchoolLaClosurePlanDetails);
-         Assert.True(academiesApplicationSchool.SchoolFaithSchool);
-         Assert.Equal("Diocese", academiesApplicationSchool.SchoolFaithSchoolDioceseName);
-         Assert.True(academiesApplicationSchool.SchoolIsPartOfFederation);
-         Assert.True(academiesApplicationSchool.SchoolIsSupportedByFoundation);
-         Assert.Equal("Foundation", academiesApplicationSchool.SchoolSupportedFoundationBodyName);
-         Assert.True(academiesApplicationSchool.SchoolHasSACREException);
-         Assert.Equal(DateTime.Today, academiesApplicationSchool.SchoolSACREExemptionEndDate);
-         Assert.Equal("Feeder Schools", academiesApplicationSchool.SchoolAdFeederSchools);
-         Assert.True(academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentCompleted);
-         Assert.Equal("That the Secretary of State's decision is unlikely to disproportionately affect any particular person or group who share protected characteristics", 
-            academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentDetails);
-         Assert.True(academiesApplicationSchool.SchoolAdditionalInformationAdded);
-         Assert.Equal("Additional Information", academiesApplicationSchool.SchoolAdditionalInformation);
-      }
+         TrustBenefitDetails = "Trust Benefit",
+         OfstedInspectionDetails = "Ofsted Inspection",
+         SafeguardingDetails = "Safeguarding",
+         LocalAuthorityReorganisationDetails = "LA Reorganization",
+         LocalAuthorityClosurePlanDetails = "LA Closure",
+         DioceseName = "Diocese",
+         PartOfFederation = true,
+         FoundationTrustOrBodyName = "Foundation",
+         ExemptionEndDate = DateTime.Today,
+         MainFeederSchools = "Feeder Schools",
+         ProtectedCharacteristics = "unlikely",
+         FurtherInformation = "Additional Information"
+      };
+      ApplyingSchool academiesApplicationSchool = new();
+      // Act
+      PopulateFurtherInformation(academiesApplicationSchool, academisationApplicationSchool);
+      // Assert
+      Assert.Equal("Trust Benefit", academiesApplicationSchool.SchoolAdSchoolContributionToTrust);
+      Assert.True(academiesApplicationSchool.SchoolAdInspectedButReportNotPublished);
+      Assert.Equal("Ofsted Inspection", academiesApplicationSchool.SchoolAdInspectedButReportNotPublishedExplain);
+      Assert.True(academiesApplicationSchool.SchoolOngoingSafeguardingInvestigations);
+      Assert.Equal("Safeguarding", academiesApplicationSchool.SchoolOngoingSafeguardingDetails);
+      Assert.True(academiesApplicationSchool.SchoolPartOfLaReorganizationPlan);
+      Assert.Equal("LA Reorganization", academiesApplicationSchool.SchoolLaReorganizationDetails);
+      Assert.True(academiesApplicationSchool.SchoolPartOfLaClosurePlan);
+      Assert.Equal("LA Closure", academiesApplicationSchool.SchoolLaClosurePlanDetails);
+      Assert.True(academiesApplicationSchool.SchoolFaithSchool);
+      Assert.Equal("Diocese", academiesApplicationSchool.SchoolFaithSchoolDioceseName);
+      Assert.True(academiesApplicationSchool.SchoolIsPartOfFederation);
+      Assert.True(academiesApplicationSchool.SchoolIsSupportedByFoundation);
+      Assert.Equal("Foundation", academiesApplicationSchool.SchoolSupportedFoundationBodyName);
+      Assert.True(academiesApplicationSchool.SchoolHasSACREException);
+      Assert.Equal(DateTime.Today, academiesApplicationSchool.SchoolSACREExemptionEndDate);
+      Assert.Equal("Feeder Schools", academiesApplicationSchool.SchoolAdFeederSchools);
+      Assert.True(academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentCompleted);
+      Assert.Equal("That the Secretary of State's decision is unlikely to disproportionately affect any particular person or group who share protected characteristics",
+         academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentDetails);
+      Assert.True(academiesApplicationSchool.SchoolAdditionalInformationAdded);
+      Assert.Equal("Additional Information", academiesApplicationSchool.SchoolAdditionalInformation);
    }
 }

@@ -1,16 +1,16 @@
 ﻿@page "/task-list/{id:int}/confirm-general-information/published-admission-number"
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
-	Layout = "_QuestionLayout";
-	Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
-	ViewData["Title"] = "Update the school's published admission number (PAN)";
-	ViewData["SchoolName"] = Model.Project.SchoolName;
-	ViewData["ProjectId"] = Model.Project.Id;
+   Layout = "_QuestionLayout";
+   Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
+   ViewData["Title"] = "Update the school's published admission number (PAN)";
+   ViewData["SchoolName"] = Model.Project.SchoolName;
+   ViewData["ProjectId"] = Model.Project.Id;
 }
 
 @section BeforeMain
 {
-	<govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation" />
+   <govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation"/>
 }
 
-<govuk-text-input heading-label="true" label="Update the school's published admission number (PAN) if it's not correct" name="published-admission-number" asp-for="Project.PublishedAdmissionNumber" width="5" hint="For example, 30" />
+<govuk-text-input heading-label="true" label="Update the school's published admission number (PAN) if it's not correct" name="published-admission-number" asp-for="Project.PublishedAdmissionNumber" width="5" hint="For example, 30"/>

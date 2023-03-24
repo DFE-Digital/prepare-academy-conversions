@@ -13,9 +13,9 @@ namespace Dfe.PrepareConversions.Pages.ProjectType;
 public class IndexModel : PageModel
 {
    private const string ERROR_MESSAGE = "Select a project type";
+   private readonly ErrorService _errorService;
 
    private readonly string _transfersUrl;
-   private readonly ErrorService _errorService;
 
    public IndexModel(IOptions<ServiceLinkOptions> options, ErrorService errorService)
    {

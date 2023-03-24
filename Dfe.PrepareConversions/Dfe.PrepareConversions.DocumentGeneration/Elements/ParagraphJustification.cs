@@ -1,9 +1,8 @@
-namespace Dfe.PrepareConversions.DocumentGeneration.Elements
+namespace Dfe.PrepareConversions.DocumentGeneration.Elements;
+
+public enum ParagraphJustification
 {
-    public enum ParagraphJustification
-    {
-        Left,
-        Center,
-        Right
-    }
+   Left,
+   Center,
+   Right
 }

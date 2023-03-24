@@ -1,4 +1,7 @@
-﻿namespace ApplyToBecome.Data.Models.AcademisationApplication;
+﻿// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable UnusedMember.Global
+
+namespace Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 
 public class Contributor
 {

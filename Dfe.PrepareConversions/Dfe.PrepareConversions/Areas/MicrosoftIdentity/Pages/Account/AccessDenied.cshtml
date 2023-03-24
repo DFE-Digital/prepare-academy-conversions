@@ -1,10 +1,11 @@
 @page "/access-denied"
-@inject Microsoft.Extensions.Configuration.IConfiguration _configuration
+@inject IConfiguration Configuration
+@using Microsoft.Extensions.Configuration
 @model Microsoft.Identity.Web.UI.Areas.MicrosoftIdentity.Pages.Account.AccessDeniedModel
 @{
-    Layout = "_Layout";
-    ViewData["Title"] = "Access denied";
+   Layout = "_Layout";
+   ViewData["Title"] = "Access denied";
 }
 
 <h1 class="govuk-heading-l">You do not have access to this service</h1>
-<p class="govuk-body">If you think you need access, <a href="@_configuration["AccessRequest"]" class="govuk-link">request access to this service</a>.</p>
+<p class="govuk-body">If you think you need access, <a href="@Configuration["AccessRequest"]" class="govuk-link">request access to this service</a>.</p>

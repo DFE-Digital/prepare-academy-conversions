@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ApplyToBecome.Data.Models.AcademisationApplication;
+namespace Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 
 public class FinancialYear
 {

@@ -1,23 +1,24 @@
 ﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/proposed-academy-opening-date"
+@using System.Globalization
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
-	Layout = "_QuestionLayout";
-	Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
-	ViewData["Title"] = "Set academy opening date";
-	ViewData["SchoolName"] = Model.Project.SchoolName;
-	ViewData["ProjectId"] = Model.Project.Id;
-	const string leadingParagraph = "Academies must open on the first day of every month. You should tell the school and the trust what the opening date will be if you change their preferred date.";
+   Layout = "_QuestionLayout";
+   Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
+   ViewData["Title"] = "Set academy opening date";
+   ViewData["SchoolName"] = Model.Project.SchoolName;
+   ViewData["ProjectId"] = Model.Project.Id;
+   const string leadingParagraph = "Academies must open on the first day of every month. You should tell the school and the trust what the opening date will be if you change their preferred date.";
 }
 
 @section BeforeMain
 {
-	<govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation" />
+   <govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation"/>
 }
 
 @{
-	var firstDate = DateTime.Today.FirstOfMonth(1);
-	var values = Enumerable.Range(0, 12).Select(i => firstDate.FirstOfMonth(i).ToString()).ToArray();
-	var labels = Enumerable.Range(0, 12).Select(i => firstDate.FirstOfMonth(i).ToDateString(true)).ToArray();
+   DateTime firstDate = DateTime.Today.FirstOfMonth(1);
+   var values = Enumerable.Range(0, 12).Select(i => firstDate.FirstOfMonth(i).ToString(CultureInfo.CurrentCulture)).ToArray();
+   var labels = Enumerable.Range(0, 12).Select(i => firstDate.FirstOfMonth(i).ToDateString(true)).ToArray();
 }
 
-<govuk-radios-input heading-label="true" label="Choose the opening date for the academy" leading-paragraph="@leadingParagraph" name="proposed-academy-opening-date" asp-for="Project.ProposedAcademyOpeningDate" values="@values" labels="@labels" />
+<govuk-radios-input heading-label="true" label="Choose the opening date for the academy" leading-paragraph="@leadingParagraph" name="proposed-academy-opening-date" asp-for="Project.ProposedAcademyOpeningDate" values="@values" labels="@labels"/>

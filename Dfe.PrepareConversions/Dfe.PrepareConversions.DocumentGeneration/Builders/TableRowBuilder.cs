@@ -1,52 +1,50 @@
-﻿using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Wordprocessing;
-using Dfe.PrepareConversions.DocumentGeneration.Elements;
+﻿using Dfe.PrepareConversions.DocumentGeneration.Elements;
 using Dfe.PrepareConversions.DocumentGeneration.Interfaces;
+using DocumentFormat.OpenXml.Wordprocessing;
 
-namespace Dfe.PrepareConversions.DocumentGeneration.Builders
+namespace Dfe.PrepareConversions.DocumentGeneration.Builders;
+
+public class TableRowBuilder : ITableRowBuilder, IElementBuilder<TableRow>
 {
-    public class TableRowBuilder : ITableRowBuilder, IElementBuilder<TableRow>
-    {
-        private readonly TableRow _tableRow;
+   private readonly TableRow _tableRow;
 
-        public TableRowBuilder()
-        {
-            _tableRow = new TableRow();
-        }
+   public TableRowBuilder()
+   {
+      _tableRow = new TableRow();
+   }
 
-        public void AddCell(string text)
-        {
-            AddCell(new TextElement {Value = text});
-        }
+   public TableRow Build()
+   {
+      return _tableRow;
+   }
 
-        public void AddCell(TextElement textElement)
-        {
-            var tableCell = new TableCell();
-            var paragraphBuilder = new ParagraphBuilder();
-            paragraphBuilder.AddText(textElement);
-            tableCell.AppendChild(paragraphBuilder.Build());
-            _tableRow.AppendChild(tableCell);
-        }
+   public void AddCell(string text)
+   {
+      AddCell(new TextElement { Value = text });
+   }
 
-        public void AddCells(string[] text)
-        {
-            foreach (var t in text)
-            {
-                AddCell(t);
-            }
-        }
+   public void AddCell(TextElement textElement)
+   {
+      TableCell tableCell = new();
+      ParagraphBuilder paragraphBuilder = new();
+      paragraphBuilder.AddText(textElement);
+      tableCell.AppendChild(paragraphBuilder.Build());
+      _tableRow.AppendChild(tableCell);
+   }
 
-        public void AddCells(TextElement[] text)
-        {
-            foreach (var t in text)
-            {
-                AddCell(t);
-            }
-        }
+   public void AddCells(string[] text)
+   {
+      foreach (string t in text)
+      {
+         AddCell(t);
+      }
+   }
 
-        public TableRow Build()
-        {
-            return _tableRow;
-        }
-    }
+   public void AddCells(TextElement[] text)
+   {
+      foreach (TextElement t in text)
+      {
+         AddCell(t);
+      }
+   }
 }

@@ -1,7 +1,6 @@
-namespace Dfe.PrepareConversions.DocumentGeneration.Interfaces
+namespace Dfe.PrepareConversions.DocumentGeneration.Interfaces;
+
+public interface IElementBuilder<out T>
 {
-    public interface IElementBuilder<out T>
-    {
-        public T Build();
-    }
+   public T Build();
 }

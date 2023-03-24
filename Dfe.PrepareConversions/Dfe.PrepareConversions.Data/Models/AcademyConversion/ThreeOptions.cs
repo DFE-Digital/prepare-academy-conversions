@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel;
 
-namespace Dfe.PrepareConversions.Data.Models.AcademyConversion
+namespace Dfe.PrepareConversions.Data.Models.AcademyConversion;
+
+public enum ThreeOptions
 {
-	public enum ThreeOptions
-	{
-		Yes = 1,
-		No = 2,
-		[Description("Not applicable")] NotApplicable = 3
-	}
+   Yes = 1,
+   No = 2,
+   [Description("Not applicable")] NotApplicable = 3
 }

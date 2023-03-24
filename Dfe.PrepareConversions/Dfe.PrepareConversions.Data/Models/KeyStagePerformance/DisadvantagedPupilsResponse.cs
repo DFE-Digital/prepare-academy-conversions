@@ -1,8 +1,7 @@
-﻿namespace Dfe.PrepareConversions.Data.Models.KeyStagePerformance
+﻿namespace Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
+
+public class DisadvantagedPupilsResponse
 {
-	public class DisadvantagedPupilsResponse
-	{
-		public string NotDisadvantaged { get; set; }
-		public string Disadvantaged { get; set; }
-	}
+   public string NotDisadvantaged { get; set; }
+   public string Disadvantaged { get; set; }
 }

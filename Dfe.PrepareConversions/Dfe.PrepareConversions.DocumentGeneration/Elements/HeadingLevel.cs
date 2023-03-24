@@ -1,9 +1,8 @@
-namespace Dfe.PrepareConversions.DocumentGeneration.Elements
+namespace Dfe.PrepareConversions.DocumentGeneration.Elements;
+
+public enum HeadingLevel
 {
-    public enum HeadingLevel
-    {
-        One,
-        Two,
-        Three
-    }
+   One,
+   Two,
+   Three
 }

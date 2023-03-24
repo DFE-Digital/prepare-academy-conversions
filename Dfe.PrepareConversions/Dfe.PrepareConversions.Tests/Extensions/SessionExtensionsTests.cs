@@ -1,5 +1,5 @@
-﻿using Dfe.PrepareConversions.Data.Tests.AutoFixture;
-using Dfe.PrepareConversions.Extensions;
+﻿using Dfe.PrepareConversions.Extensions;
+using Dfe.PrepareConversions.Tests.Customisations;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Moq;
@@ -8,37 +8,38 @@ using System.Text;
 using System.Text.Json;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Extensions
+namespace Dfe.PrepareConversions.Tests.Extensions;
+
+public class SessionExtensionsTests
 {
-	public class SessionExtensionsTests
-	{
-		[Theory, AutoMoqData]
-		public void Should_set_object_to_session(Mock<ISession> session, Test toSet, string key)
-		{			
-			var json = JsonSerializer.Serialize(toSet);
-			var expectedObj = Encoding.UTF8.GetBytes(json);
+   [Theory]
+   [AutoMoqData]
+   public void Should_set_object_to_session(Mock<ISession> session, Test toSet, string key)
+   {
+      string json = JsonSerializer.Serialize(toSet);
+      byte[] expectedObj = Encoding.UTF8.GetBytes(json);
 
-			session.Object.Set(key, toSet);
-			
-			session.Verify(m => m.Set(key, It.Is<byte[]>(actualObj => Enumerable.SequenceEqual(actualObj, expectedObj))), Times.Once);
-		}
+      session.Object.Set(key, toSet);
 
-		[Theory, AutoMoqData]
-		public void Should_get_object_from_session(Mock<ISession> session, Test expectedResult, string key)
-		{
-			var json = JsonSerializer.Serialize(expectedResult);
-			var expectedObj = Encoding.UTF8.GetBytes(json);
+      session.Verify(m => m.Set(key, It.Is<byte[]>(actualObj => actualObj.SequenceEqual(expectedObj))), Times.Once);
+   }
 
-			session.Setup(m => m.TryGetValue(It.IsAny<string>(), out expectedObj));
+   [Theory]
+   [AutoMoqData]
+   public void Should_get_object_from_session(Mock<ISession> session, Test expectedResult, string key)
+   {
+      string json = JsonSerializer.Serialize(expectedResult);
+      byte[] expectedObj = Encoding.UTF8.GetBytes(json);
 
-			var actualResult = session.Object.Get<Test>(key);
+      session.Setup(m => m.TryGetValue(It.IsAny<string>(), out expectedObj));
 
-			actualResult.Should().BeEquivalentTo(expectedResult);
-		}
+      Test actualResult = session.Object.Get<Test>(key);
 
-		public class Test
-		{
-			public string TestProperty { get; set; }
-		}
-	}
+      actualResult.Should().BeEquivalentTo(expectedResult);
+   }
+
+   public class Test
+   {
+      public string TestProperty { get; set; }
+   }
 }

@@ -3,20 +3,20 @@
 @{
    Layout = "_QuestionLayout";
    Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
-    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Has the Schools Notification Mailbox (SNM) received a Form 7?";
+   ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Has the Schools Notification Mailbox (SNM) received a Form 7?";
    ViewData["SchoolName"] = Model.Project.SchoolName;
    ViewData["ProjectId"] = Model.Project.Id;
-    var values = new[] { "Yes", "No", "Not sure", "Not applicable" };
+   var values = new[] { "Yes", "No", "Not sure", "Not applicable" };
 }
 
 @section BeforeMain
 {
-    <govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation" />
+   <govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation"/>
 }
 
 <h1 class="govuk-label-wrapper">
    <label class="govuk-label govuk-label--l" for="form-7-received">
-        Has the Schools Notification Mailbox (SNM) received a Form 7?
+      Has the Schools Notification Mailbox (SNM) received a Form 7?
    </label>
 </h1>
-<govuk-radios-input name="form-7-received" id="form-7-received" asp-for="Project.Form7Received" hint="Form 7 is a letter from Ofsted confirming that the school requires significant improvement" values="@values" labels="@values" />
+<govuk-radios-input name="form-7-received" id="form-7-received" asp-for="Project.Form7Received" hint="Form 7 is a letter from Ofsted confirming that the school requires significant improvement" values="@values" labels="@values"/>

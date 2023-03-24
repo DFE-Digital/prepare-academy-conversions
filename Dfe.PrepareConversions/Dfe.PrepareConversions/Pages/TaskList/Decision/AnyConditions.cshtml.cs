@@ -7,56 +7,58 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace Dfe.PrepareConversions.Pages.TaskList.Decision
+namespace Dfe.PrepareConversions.Pages.TaskList.Decision;
+
+public class AnyConditionsModel : DecisionBaseModel
 {
-	public class AnyConditionsModel : DecisionBaseModel
-	{
-		private readonly ErrorService _errorService;
+   private readonly ErrorService _errorService;
 
-		[BindProperty, Required(ErrorMessage = "Select whether any conditions were set")]
-		public bool? ApprovedConditionsSet { get; set; }
+   public AnyConditionsModel(IAcademyConversionProjectRepository repository,
+                             ISession session,
+                             ErrorService errorService)
+      : base(repository, session)
+   {
+      _errorService = errorService;
+   }
 
-		[BindProperty] public string ApprovedConditionsDetails { get; set; }
+   [BindProperty]
+   [Required(ErrorMessage = "Select whether any conditions were set")]
+   public bool? ApprovedConditionsSet { get; set; }
 
-		private bool HasConditions => ApprovedConditionsSet.GetValueOrDefault();
+   [BindProperty]
+   public string ApprovedConditionsDetails { get; set; }
 
-		public AnyConditionsModel(IAcademyConversionProjectRepository repository, ISession session,
-			ErrorService errorService)
-			: base(repository, session)
-		{
-			_errorService = errorService;
-		}
+   private bool HasConditions => ApprovedConditionsSet.GetValueOrDefault();
 
-		public IActionResult OnGet(int id)
-		{
-			SetBackLinkModel(Links.Decision.WhoDecided, id);
+   public IActionResult OnGet(int id)
+   {
+      SetBackLinkModel(Links.Decision.WhoDecided, id);
 
-			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
-			ApprovedConditionsSet = decision.ApprovedConditionsSet;
-			ApprovedConditionsDetails = decision.ApprovedConditionsDetails;
+      AdvisoryBoardDecision decision = GetDecisionFromSession(id);
+      ApprovedConditionsSet = decision.ApprovedConditionsSet;
+      ApprovedConditionsDetails = decision.ApprovedConditionsDetails;
 
-			return Page();
-		}
+      return Page();
+   }
 
-		public IActionResult OnPost(int id)
-		{
-			if (HasConditions && string.IsNullOrWhiteSpace(ApprovedConditionsDetails))
-				ModelState.AddModelError(nameof(ApprovedConditionsDetails), "Add the conditions that were set");
+   public IActionResult OnPost(int id)
+   {
+      if (HasConditions && string.IsNullOrWhiteSpace(ApprovedConditionsDetails))
+         ModelState.AddModelError(nameof(ApprovedConditionsDetails), "Add the conditions that were set");
 
-			if (ModelState.IsValid)
-			{
-				var decision = GetDecisionFromSession(id);
+      if (ModelState.IsValid)
+      {
+         AdvisoryBoardDecision decision = GetDecisionFromSession(id);
 
-				decision.ApprovedConditionsSet = HasConditions;
-				decision.ApprovedConditionsDetails = HasConditions ? ApprovedConditionsDetails : string.Empty;
+         decision.ApprovedConditionsSet = HasConditions;
+         decision.ApprovedConditionsDetails = HasConditions ? ApprovedConditionsDetails : string.Empty;
 
-				SetDecisionInSession(id, decision);
+         SetDecisionInSession(id, decision);
 
-				return RedirectToPage(Links.Decision.DecisionDate.Page, LinkParameters);
-			}
+         return RedirectToPage(Links.Decision.DecisionDate.Page, LinkParameters);
+      }
 
-			_errorService.AddErrors(ModelState.Keys, ModelState);
-			return OnGet(id);
-		}
-	}
+      _errorService.AddErrors(ModelState.Keys, ModelState);
+      return OnGet(id);
+   }
 }

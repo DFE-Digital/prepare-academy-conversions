@@ -1,5 +1,6 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
@@ -8,64 +9,63 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.SchoolAndTrustInformation
+namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolAndTrustInformation;
+
+public class ProposedAcademyOpeningDateIntegrationTests : BaseIntegrationTests
 {
-	public class ProposedAcademyOpeningDateIntegrationTests : BaseIntegrationTests
-	{
-		public ProposedAcademyOpeningDateIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+   public ProposedAcademyOpeningDateIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
 
-		[Fact]
-		public async Task Should_navigate_to_and_update_proposed_academy_opening_date()
-		{
-			var dates = Enumerable.Range(1, 12).Select(i => DateTime.Today.FirstOfMonth(i).ToDateString(true)).ToArray();
-			var (selected, toSelect) = RandomRadioButtons("proposed-academy-opening-date", dates);
-			var project = AddGetProject(p => p.OpeningDate = DateTime.Parse(selected.Value));
-         AddPatchConfiguredProject(project, x =>
-         {
-            x.ProposedAcademyOpeningDate = DateTime.Parse(toSelect.Value);
-            x.Urn = project.Urn;
-         });
+   [Fact]
+   public async Task Should_navigate_to_and_update_proposed_academy_opening_date()
+   {
+      string[] dates = Enumerable.Range(1, 12).Select(i => DateTime.Today.FirstOfMonth(i).ToDateString(true)).ToArray();
+      (RadioButton selected, RadioButton toSelect) = RandomRadioButtons("proposed-academy-opening-date", dates);
+      AcademyConversionProject project = AddGetProject(p => p.OpeningDate = DateTime.Parse(selected.Value));
+      AddPatchConfiguredProject(project, x =>
+      {
+         x.ProposedAcademyOpeningDate = DateTime.Parse(toSelect.Value);
+         x.Urn = project.Urn;
+      });
 
-			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
-			await NavigateDataTestAsync("change-proposed-academy-opening-date");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      await NavigateDataTestAsync("change-proposed-academy-opening-date");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-academy-opening-date");
-			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked.Should().BeFalse();
-			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked.Should().BeTrue();
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-academy-opening-date");
+      Document.QuerySelector<IHtmlInputElement>(toSelect.Id)!.IsChecked.Should().BeFalse();
+      Document.QuerySelector<IHtmlInputElement>(selected.Id)!.IsChecked.Should().BeTrue();
 
-			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked = false;
-			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked = true;
+      Document.QuerySelector<IHtmlInputElement>(toSelect.Id)!.IsChecked = true;
+      Document.QuerySelector<IHtmlInputElement>(selected.Id)!.IsChecked = false;
 
-			Document.QuerySelector<IHtmlInputElement>(toSelect.Id).IsChecked.Should().BeTrue();
-			Document.QuerySelector<IHtmlInputElement>(selected.Id).IsChecked.Should().BeFalse();
+      Document.QuerySelector<IHtmlInputElement>(toSelect.Id)!.IsChecked.Should().BeTrue();
+      Document.QuerySelector<IHtmlInputElement>(selected.Id)!.IsChecked.Should().BeFalse();
 
-			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
-		}
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+   }
 
-		[Fact]
-		public async Task Should_show_error_summary_when_there_is_an_API_error()
-		{
-			var project = AddGetProject();
-			AddPatchError(project.Id);
+   [Fact]
+   public async Task Should_show_error_summary_when_there_is_an_API_error()
+   {
+      AcademyConversionProject project = AddGetProject();
+      AddPatchError(project.Id);
 
-			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-academy-opening-date");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-academy-opening-date");
 
-			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-			Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-		}
+      Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+   }
 
-		[Fact]
-		public async Task Should_navigate_back_to_proposed_academy_opening_date()
-		{
-			var project = AddGetProject();
+   [Fact]
+   public async Task Should_navigate_back_to_proposed_academy_opening_date()
+   {
+      AcademyConversionProject project = AddGetProject();
 
-			await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-academy-opening-date");
-			await NavigateAsync("Back");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-academy-opening-date");
+      await NavigateAsync("Back");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
-		}
-	}
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+   }
 }

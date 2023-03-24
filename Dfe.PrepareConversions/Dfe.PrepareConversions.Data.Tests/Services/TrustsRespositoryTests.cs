@@ -1,6 +1,6 @@
 ﻿using AutoFixture.Xunit2;
 using Dfe.PrepareConversions.Data.Exceptions;
-using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Data.Tests.AutoFixture;
@@ -12,46 +12,47 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Data.Tests.Services
+namespace Dfe.PrepareConversions.Data.Tests.Services;
+
+public class TrustsRespositoryTests
 {
-   public class TrustsRespositoryTests
-	{
-		[Theory, AutoMoqData]
-		public async Task SearchTrusts_ReturnsTrusts(
-			   [Frozen] Mock<IHttpClientService> httpService,
-			   TrustSummaryResponse expectedResponse,
-			   MockHttpMessageHandler mockHandler,
-			   string name)
-		{
-			// Arrange
-			var sut = new TrustsRespository(new MockHttpClientFactory(mockHandler), httpService.Object);
-			httpService.Setup(m => m.Get<TrustSummaryResponse>(It.IsAny<HttpClient>(), It.IsAny<string>()))
-				.ReturnsAsync(new ApiResponse<TrustSummaryResponse>(HttpStatusCode.OK, expectedResponse));
+   [Theory]
+   [AutoMoqData]
+   public async Task SearchTrusts_ReturnsTrusts(
+      [Frozen] Mock<IHttpClientService> httpService,
+      TrustSummaryResponse expectedResponse,
+      MockHttpMessageHandler mockHandler,
+      string name)
+   {
+      // Arrange
+      TrustsRepository sut = new(new MockHttpClientFactory(mockHandler), httpService.Object);
+      httpService.Setup(m => m.Get<TrustSummaryResponse>(It.IsAny<HttpClient>(), It.IsAny<string>()))
+         .ReturnsAsync(new ApiResponse<TrustSummaryResponse>(HttpStatusCode.OK, expectedResponse));
 
-			// Act
-			var results = await sut.SearchTrusts(name);
+      // Act
+      TrustSummaryResponse results = await sut.SearchTrusts(name);
 
-			// Assert
-			Assert.Equivalent(expectedResponse, results);
-		}
+      // Assert
+      Assert.Equivalent(expectedResponse, results);
+   }
 
-		[Theory, AutoMoqData]
-		public async Task Should_throw_exception(
-				 [Frozen] Mock<IHttpClientService> httpService,
-				 TrustSummaryResponse expectedResponse,
-				 MockHttpMessageHandler mockHandler,
-				 string name)
-		{
-			// Arrange
-			var sut = new TrustsRespository(new MockHttpClientFactory(mockHandler), httpService.Object);
-			httpService.Setup(m => m.Get<TrustSummaryResponse>(It.IsAny<HttpClient>(), It.IsAny<string>()))
-				.ReturnsAsync(new ApiResponse<TrustSummaryResponse>(HttpStatusCode.InternalServerError, expectedResponse));
+   [Theory]
+   [AutoMoqData]
+   public async Task Should_throw_exception(
+      [Frozen] Mock<IHttpClientService> httpService,
+      TrustSummaryResponse expectedResponse,
+      MockHttpMessageHandler mockHandler,
+      string name)
+   {
+      // Arrange
+      TrustsRepository sut = new(new MockHttpClientFactory(mockHandler), httpService.Object);
+      httpService.Setup(m => m.Get<TrustSummaryResponse>(It.IsAny<HttpClient>(), It.IsAny<string>()))
+         .ReturnsAsync(new ApiResponse<TrustSummaryResponse>(HttpStatusCode.InternalServerError, expectedResponse));
 
-			// Act
-			var ex = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SearchTrusts(name));
+      // Act
+      ApiResponseException ex = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SearchTrusts(name));
 
-			// Assert
-			Assert.Equal("Request to Api failed | StatusCode - InternalServerError", ex.Message);
-		}
-	}
+      // Assert
+      Assert.Equal("Request to Api failed | StatusCode - InternalServerError", ex.Message);
+   }
 }

@@ -3,11 +3,11 @@
 Cypress._.each(['ipad-mini'], (viewport) => {
     describe(`87641 Check mark should reflect status correctly on LA Information preview page on ${viewport}`, () =>{
 		beforeEach(() => {
-			cy.login()
+			cy.login({titleFilter: 'Gloucester school'})
 			cy.viewport(viewport)
 			cy.selectSchoolListing(2)
 		})
-    
+
         it('TC01: Precondition checkbox status', () => {
             cy.statusLaInfo().should('be.visible')
             .invoke('text')
@@ -20,14 +20,14 @@ Cypress._.each(['ipad-mini'], (viewport) => {
                 }
             });
         });
-		
+
 		context("when form submitted", () => {
 			beforeEach(() => {
 				cy.get('*[href*="/confirm-local-authority-information-template-dates"]').click()
 				cy.completeStatusLaInfo().click()
 				cy.confirmContinueBtn().click()
 			})
-			
+
 			it('TC02: Unchecked and returns as "In Progress"', () => {
 				cy.statusLaInfo()
 					.contains('In Progress')
