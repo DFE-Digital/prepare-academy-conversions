@@ -17,7 +17,7 @@ public class PopulateOverviewTests
          new()
          {
             ApplicationReference = "A12345",
-            ApplicationType = "Type1",
+            ApplicationType = "joinAMat",
             JoinTrustDetails = new JoinTrustDetails
             {
                TrustName = "Trust1",
@@ -32,7 +32,7 @@ public class PopulateOverviewTests
       Application application = PopulateOverview(academisationApplication, out School academisationApplicationSchool, out ApplyingSchool academiesApplicationSchool);
       // Assert
       Assert.Equal("A12345", application.ApplicationId);
-      Assert.Equal("Type1", application.ApplicationType);
+      Assert.Equal("joinAMat", application.ApplicationType);
       Assert.Equal("Trust1", application.TrustName);
       Assert.True(application.ChangesToTrust);
       Assert.Equal("Changes explained", application.ChangesToTrustExplained);
