@@ -52,7 +52,8 @@ public class FormAMatIndexModel : BaseAcademyConversionProjectPageModel
 
       Sections = new BaseFormSection[]
       {
-         new ApplicationFormSection(application),
+         new FamApplicationFormSection(application),
+         new TrustInformationSection(application),
          new AboutConversionSection(application.ApplyingSchools.First()),
          new FurtherInformationSection(application.ApplyingSchools.First()),
          new FinanceSection(application.ApplyingSchools.First()),

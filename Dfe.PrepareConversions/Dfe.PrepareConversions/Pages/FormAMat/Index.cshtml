@@ -14,19 +14,62 @@
 <partial name="Shared/_FormAMatProjectHeader" model="Model.Project" />
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-       <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">School application form</h2>
-       <nav class="gem-c-contents-list" aria-label="Pages in this guide" role="navigation" data-module="gem-track-click">
-          <h2 class="gem-c-contents-list__title">Contents</h2>
-          <ol class="gem-c-contents-list__list">
-             @foreach (BaseFormSection formSection in Model.Sections)
-             {
-                <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
-                   <a id="@Model.GenerateId(formSection.Heading)_link" class="gem-c-contents-list__link govuk-link" href="#@Model.GenerateId(formSection.Heading)">@formSection.Heading</a>
-                </li>
-             }
-          </ol>
-       </nav>
-        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+   <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">School application form</h2>
+      <nav class="gem-c-contents-list" aria-label="Pages in this guide" role="navigation" data-module="gem-track-click">
+         <h2 class="gem-c-contents-list__title">Contents</h2>
+         <ol class="gem-c-contents-list__list">
+            @foreach (BaseFormSection formSection in Model.Sections)
+            {
+               <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
+                  <a id="@Model.GenerateId(formSection.Heading)_link" class="gem-c-contents-list__link govuk-link" href="#@Model.GenerateId(formSection.Heading)">@formSection.Heading</a>
+               </li>
+            }
+         </ol>
+      </nav>
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+   </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        @foreach (BaseFormSection formSection in Model.Sections)
+        {
+            <h2 id="@Model.GenerateId(formSection.Heading)" class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-36">@formSection.Heading</h2>
+           @if (formSection.Fields.Any())
+            {
+                <dl class="govuk-summary-list">
+                    @{
+                        var index = 1;
+                        foreach (FormField sectionField in formSection.Fields)
+                        {
+                            // generate test-id
+                            sectionField.Id = Model.GenerateId(formSection.Heading + index);
+
+                            <partial name="_FamApplicationFormField" model="sectionField" />
+                            index++;
+                        }
+                    }
+                </dl>
+            }
+
+            @foreach (FormSubSection subSection in formSection.SubSections)
+            {
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-font-size-24">@subSection.Heading</h3>
+                <dl class="govuk-summary-list">
+                    @{
+                        var index = 1;
+                        foreach (FormField sectionField in subSection.Fields)
+                        {
+                            // generate test-id
+                            sectionField.Id = Model.GenerateId(formSection.Heading + "_" + subSection.Heading + index);
+                            <partial name="_FamApplicationFormField" model="sectionField" />
+                            index++;
+                        }
+                    }
+
+                </dl>
+            }
+        }
     </div>
 </div>
