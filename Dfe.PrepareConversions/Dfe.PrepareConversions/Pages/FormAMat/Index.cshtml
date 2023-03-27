@@ -36,22 +36,19 @@
         @foreach (BaseFormSection formSection in Model.Sections)
         {
             <h2 id="@Model.GenerateId(formSection.Heading)" class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-36">@formSection.Heading</h2>
-            @if (formSection.Fields.Any())
-            {
-                <dl class="govuk-summary-list">
-                    @{
-                        var index = 1;
-                        foreach (FormField sectionField in formSection.Fields)
-                        {
-                            // generate test-id
-                            sectionField.Id = Model.GenerateId(formSection.Heading + index);
+            <dl if="formSection.Fields.Any()" class="govuk-summary-list">
+                @{
+                    var index = 1;
+                    foreach (FormField sectionField in formSection.Fields)
+                    {
+                        // generate test-id
+                        sectionField.Id = Model.GenerateId(formSection.Heading + index);
 
-                            <partial name="_FamApplicationFormField" model="sectionField" />
-                            index++;
-                        }
+                        <partial name="_FamApplicationFormField" model="sectionField" />
+                        index++;
                     }
-                </dl>
-            }
+                }
+            </dl>
 
             @foreach (FormSubSection subSection in formSection.SubSections)
             {

@@ -5,6 +5,7 @@ using Dfe.PrepareConversions.Models.ApplicationForm.Sections;
 using Dfe.PrepareConversions.Models.ApplicationForm;
 using Dfe.PrepareConversions.Models.ProjectList;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -39,13 +40,13 @@ public class FormAMatIndexModel : BaseAcademyConversionProjectPageModel
       string applicationReferenceId = Project.ApplicationReferenceNumber;
       ApiResponse<Application> applicationResponse = await _applicationRepository.GetApplicationByReference(applicationReferenceId);
 
-      if (!applicationResponse.Success)
+      if (applicationResponse.Success is false)
       {
          return NotFound();
       }
       if (applicationResponse.Body.ApplicationType is not ("formMat" or "formAMat"))
       {
-         return StatusCode(501);
+         throw new NotImplementedException("Only Join a MAT and Form a MAT are available at this time");
       }
 
       Application application = applicationResponse.Body;
