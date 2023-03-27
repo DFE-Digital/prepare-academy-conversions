@@ -41,7 +41,7 @@
                 <dl class="govuk-summary-list">
                     @{
                         var index = 1;
-                        foreach (FormField sectionField in formSection.Fields.Where(x => x.Title is not "Key people"))
+                        foreach (FormField sectionField in formSection.Fields)
                         {
                             // generate test-id
                             sectionField.Id = Model.GenerateId(formSection.Heading + index);
