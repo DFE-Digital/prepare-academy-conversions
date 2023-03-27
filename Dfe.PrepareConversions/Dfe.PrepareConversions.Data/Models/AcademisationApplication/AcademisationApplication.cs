@@ -1,4 +1,5 @@
-﻿using Dfe.PrepareConversions.Data.Models.Application;
+﻿using Dfe.PrepareConversions.Data.Features;
+using Dfe.PrepareConversions.Data.Models.Application;
 using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
 using System.Globalization;
@@ -22,7 +23,7 @@ public class AcademisationApplication
    {
       // Following the fields used by the front end
       Application.Application academiesApplication = PopulateOverview(academisationApplication, out School academisationApplicationSchool, out ApplyingSchool academiesApplicationSchool);
-      if(academiesApplication.ApplicationType.Equals("formAMat")) PopulateFormAMatTrustInformation(academiesApplication, academisationApplication);
+      if(academiesApplication.ApplicationType.Equals(GlobalStrings.FormAMat)) PopulateFormAMatTrustInformation(academiesApplication, academisationApplication);
       PopulateSchoolDetails(academiesApplicationSchool, academisationApplicationSchool);
       PopulateFurtherInformation(academiesApplicationSchool, academisationApplicationSchool);
       PopulateSchoolFinances(academiesApplicationSchool, academisationApplicationSchool);
@@ -327,8 +328,8 @@ public class AcademisationApplication
       academiesApplicationSchool!.SchoolLeases = new List<Application.Lease>();
       academiesApplication.TrustName = academisationApplication.ApplicationType switch
       {
-         "joinAMat" => academisationApplication.JoinTrustDetails.TrustName,
-         "formAMat" => academisationApplication.FormTrustDetails.FormTrustProposedNameOfTrust,
+         GlobalStrings.JoinAMat => academisationApplication.JoinTrustDetails.TrustName,
+         GlobalStrings.FormAMat => academisationApplication.FormTrustDetails.FormTrustProposedNameOfTrust,
          _ => academiesApplication.TrustName
       };
 
@@ -342,7 +343,7 @@ public class AcademisationApplication
             academisationApplication.Contributors.FirstOrDefault()!.FirstName + " " + academisationApplication.Contributors.FirstOrDefault()!.LastName;
       }
 
-      if (academiesApplication.ApplicationType.Equals("joinAMat"))
+      if (academiesApplication.ApplicationType.Equals(GlobalStrings.JoinAMat))
       {
          academiesApplication.ChangesToTrust = academisationApplication.JoinTrustDetails.ChangesToTrust switch
          {
