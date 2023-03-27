@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Data.Features
 {
-   public class GlobalStrings
+   public static class GlobalStrings
    {
       public const string FormAMat = "formAMat";
       public const string FormMat = "formMat";
