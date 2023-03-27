@@ -7,11 +7,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm;
+namespace Dfe.PrepareConversions.Tests.Pages.FormAMat;
 
 public class FamApplicationFormIntegrationTests : BaseIntegrationTests
 {
    private AcademyConversionProject _project;
+   private static readonly string Path = "/form-a-mat/{0}";
 
    public FamApplicationFormIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
    {
@@ -39,25 +40,23 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       pageItem.Should().BeNull();
    }
 
-   [Theory]
-   [InlineData("/form-a-mat/{0}")]
-   public async Task Should_Display_School_Application_Form_Section(string path)
+   [Fact]
+   public async Task Should_Display_School_Application_Form_Section()
    {
       AddProjectWithFullApplicationForm();
 
-      await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
+      await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
 
       Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "School application form").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
    }
 
-   [Theory]
-   [InlineData("/form-a-mat/{0}")]
-   public async Task Should_Display_About_The_Conversion_Section(string path)
+   [Fact]
+   public async Task Should_Display_About_The_Conversion_Section()
    {
       AddProjectWithFullApplicationForm();
 
-      await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
+      await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
 
       Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "About the conversion").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "The school joining the trust").Should().NotBeEmpty();
@@ -67,25 +66,23 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Name changes").Should().NotBeEmpty();
    }
 
-   [Theory]
-   [InlineData("/form-a-mat/{0}")]
-   public async Task Should_Display_Further_Information_Section(string path)
+   [Fact]
+   public async Task Should_Display_Further_Information_Section()
    {
       AddProjectWithFullApplicationForm();
 
-      await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
+      await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
 
       Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Further information").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Additional details").Should().NotBeEmpty();
    }
 
-   [Theory]
-   [InlineData("/form-a-mat/{0}")]
-   public async Task Should_Display_Finances_Section_With_Leases_And_Loans(string path)
+   [Fact]
+   public async Task Should_Display_Finances_Section_With_Leases_And_Loans()
    {
       AddProjectWithFullApplicationForm();
 
-      await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
+      await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
 
       Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Finances").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Previous financial year").Should().NotBeEmpty();
@@ -101,9 +98,8 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       anyLoans.First().InnerHtml.Should().Contain("Yes");
    }
 
-   [Theory]
-   [InlineData("/form-a-mat/{0}")]
-   public async Task Should_Display_Finances_Section_With_No_Leases_Or_Loans(string path)
+   [Fact]
+   public async Task Should_Display_Finances_Section_With_No_Leases_Or_Loans()
    {
       _project = AddGetProject();
       AddGetApplication(app =>
@@ -114,7 +110,7 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
          app.ApplyingSchools.First().SchoolLoans = new List<Loan>();
       });
 
-      await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
+      await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
 
       Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Finances").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Previous financial year").Should().NotBeEmpty();
@@ -130,48 +126,44 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       anyLoans.First().InnerHtml.Should().Contain("No");
    }
 
-   [Theory]
-   [InlineData("/form-a-mat/{0}")]
-   public async Task Should_Display_Future_Pupil_Numbers_Section(string path)
+   [Fact]
+   public async Task Should_Display_Future_Pupil_Numbers_Section()
    {
       AddProjectWithFullApplicationForm();
 
-      await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
+      await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
 
       Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Future pupil numbers").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
    }
 
-   [Theory]
-   [InlineData("/form-a-mat/{0}")]
-   public async Task Should_Display_Land_And_Buildings_Section(string path)
+   [Fact]
+   public async Task Should_Display_Land_And_Buildings_Section()
    {
       AddProjectWithFullApplicationForm();
 
-      await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
+      await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
 
       Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Land and buildings").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
    }
 
-   [Theory]
-   [InlineData("/form-a-mat/{0}")]
-   public async Task Should_Display_Pre_Opening_Support_Grant_Section(string path)
+   [Fact]
+   public async Task Should_Display_Pre_Opening_Support_Grant_Section()
    {
       AddProjectWithFullApplicationForm();
 
-      await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
+      await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
 
       Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Pre-opening support grant").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
    }
-   [Theory]
-   [InlineData("/form-a-mat/{0}")]
-   public async Task Should_Display_Trust_Information_Section(string path)
+   [Fact]
+   public async Task Should_Display_Trust_Information_Section()
    {
       AddProjectWithFullApplicationForm();
 
-      await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
+      await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
 
       Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Trust information").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Opening date").Should().NotBeEmpty();
@@ -180,37 +172,34 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "School improvement strategy").Should().NotBeEmpty();
    }
 
-   [Theory]
-   [InlineData("/form-a-mat/{0}")]
-   public async Task Should_Display_Consultation_Section(string path)
+   [Fact]
+   public async Task Should_Display_Consultation_Section()
    {
       AddProjectWithFullApplicationForm();
 
-      await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
+      await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
 
       Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Consultation").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
    }
 
-   [Theory]
-   [InlineData("/form-a-mat/{0}")]
-   public async Task Should_Display_Declaration_Section(string path)
+   [Fact]
+   public async Task Should_Display_Declaration_Section()
    {
       AddProjectWithFullApplicationForm();
 
-      await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
+      await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
 
       Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Declaration").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
    }
 
-   [Theory]
-   [InlineData("/form-a-mat/{0}")]
-   public async Task Should_Show_404Error_When_Application_Not_Found(string path)
+   [Fact]
+   public async Task Should_Show_404Error_When_Application_Not_Found()
    {
       _project = AddGetProject();
 
-      await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
+      await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
 
       IElement errorHeading = Document.QuerySelector("#error-heading");
       errorHeading.Should().NotBeNull();
@@ -218,9 +207,8 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       errorHeading?.TextContent.Should().Contain("not found");
    }
 
-   [Theory]
-   [InlineData("/form-a-mat/{0}")]
-   public async Task Should_Show_Page_Not_Found_When_Application_Is_Not_Valid(string path)
+   [Fact]
+   public async Task Should_Show_Page_Not_Found_When_Application_Is_Not_Valid()
    {
       _project = AddGetProject();
       AddGetApplication(app =>
@@ -230,7 +218,7 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
          app.ApplyingSchools = new List<ApplyingSchool>();
       });
 
-      await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
+      await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
 
       IElement errorHeading = Document.QuerySelector("#error-heading");
       errorHeading.Should().NotBeNull();
@@ -238,16 +226,15 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       errorHeading?.TextContent.Should().Contain("Page not found");
    }
 
-   [Theory]
-   [InlineData("/form-a-mat/{0}")]
-   public async Task Should_Contain_Contents_With_Links_To_Correct_Sections(string path)
+   [Fact]
+   public async Task Should_Contain_Contents_With_Links_To_Correct_Sections()
    {
       // Arrange
       Dictionary<string, string> headings = new()
       {
          { "Overview", "#Overview" },
          { "Trust information", "#Trust_information" },
-         { "Key people", "#Key_people"},
+         { "Key people within trust", "#Key_people_within_trust"},
          { "About the conversion", "#About_the_conversion" },
          { "Further information", "#Further_information" },
          { "Finances", "#Finances" },
@@ -261,7 +248,7 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       AddProjectWithFullApplicationForm();
 
       // Act
-      await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
+      await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
 
       foreach ((string sectionHeading, string id) in headings)
       {
