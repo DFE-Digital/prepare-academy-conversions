@@ -1,4 +1,5 @@
-﻿using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
+﻿using Dfe.PrepareConversions.Data.Features;
+using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 using Dfe.PrepareConversions.Data.Models.Application;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ public class PopulateOverviewTests
          new()
          {
             ApplicationReference = "A12345",
-            ApplicationType = "joinAMat",
+            ApplicationType = GlobalStrings.JoinAMat,
             JoinTrustDetails = new JoinTrustDetails
             {
                TrustName = "Trust1",
@@ -32,7 +33,7 @@ public class PopulateOverviewTests
       Application application = PopulateOverview(academisationApplication, out School academisationApplicationSchool, out ApplyingSchool academiesApplicationSchool);
       // Assert
       Assert.Equal("A12345", application.ApplicationId);
-      Assert.Equal("joinAMat", application.ApplicationType);
+      Assert.Equal(GlobalStrings.JoinAMat, application.ApplicationType);
       Assert.Equal("Trust1", application.TrustName);
       Assert.True(application.ChangesToTrust);
       Assert.Equal("Changes explained", application.ChangesToTrustExplained);

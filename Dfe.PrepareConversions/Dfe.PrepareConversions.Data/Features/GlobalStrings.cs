@@ -10,5 +10,6 @@ namespace Dfe.PrepareConversions.Data.Features
    {
       public const string FormAMat = "formAMat";
       public const string FormMat = "formMat";
+      public const string JoinAMat = "joinAMat";
    }
 }
