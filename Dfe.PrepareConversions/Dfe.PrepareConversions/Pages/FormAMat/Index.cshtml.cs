@@ -1,4 +1,6 @@
 using Dfe.PrepareConversions.Data;
+using Dfe.PrepareConversions.Data.Extensions;
+using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models.Application;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models.ApplicationForm.Sections;
@@ -44,7 +46,7 @@ public class FormAMatIndexModel : BaseAcademyConversionProjectPageModel
       {
          return NotFound();
       }
-      if (applicationResponse.Body.ApplicationType is not ("formMat" or "formAMat"))
+      if (applicationResponse.Body.ApplicationType is not (GlobalStrings.FormMat or GlobalStrings.FormAMat))
       {
          throw new NotImplementedException("Only Join a MAT and Form a MAT are available at this time");
       }
@@ -71,9 +73,5 @@ public class FormAMatIndexModel : BaseAcademyConversionProjectPageModel
    public string GenerateId(string heading)
    {
       return heading.Replace(" ", "_");
-   }
-   public IEnumerable<BaseFormSection> ExcludeKeyPeople(IEnumerable<BaseFormSection> sections)
-   {
-      return sections.Where(x => x.Heading != "Key people");
    }
 }

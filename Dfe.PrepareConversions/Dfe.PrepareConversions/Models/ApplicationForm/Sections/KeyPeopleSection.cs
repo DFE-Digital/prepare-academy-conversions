@@ -9,7 +9,7 @@ namespace Dfe.PrepareConversions.Models.ApplicationForm.Sections
 {
    public class KeyPeopleSection : BaseFormSection
    {
-      public KeyPeopleSection(Application application) : base("Key people within trust")
+      public KeyPeopleSection(Application application) : base("Key people within the trust")
       {
          List<FormSubSection> formSubSections = new();
          foreach (var person in application.KeyPeople)

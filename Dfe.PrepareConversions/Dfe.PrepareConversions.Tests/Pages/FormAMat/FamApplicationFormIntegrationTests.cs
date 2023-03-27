@@ -1,4 +1,5 @@
 ﻿using AngleSharp.Dom;
+using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.Application;
 using FluentAssertions;
@@ -25,7 +26,7 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       AddGetApplication(app =>
       {
          app.ApplicationId = _project.ApplicationReferenceNumber;
-         app.ApplicationType = "formAMat";
+         app.ApplicationType = GlobalStrings.FormAMat;
       });
    }
 
@@ -105,7 +106,7 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       AddGetApplication(app =>
       {
          app.ApplicationId = _project.ApplicationReferenceNumber;
-         app.ApplicationType = "formAMat";
+         app.ApplicationType = GlobalStrings.FormAMat;
          app.ApplyingSchools.First().SchoolLeases = new List<Lease>();
          app.ApplyingSchools.First().SchoolLoans = new List<Loan>();
       });
@@ -214,7 +215,7 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       AddGetApplication(app =>
       {
          app.ApplicationId = "999";
-         app.ApplicationType = "formAMat";
+         app.ApplicationType = GlobalStrings.FormAMat;
          app.ApplyingSchools = new List<ApplyingSchool>();
       });
 
@@ -234,7 +235,7 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       {
          { "Overview", "#Overview" },
          { "Trust information", "#Trust_information" },
-         { "Key people within trust", "#Key_people_within_trust"},
+         { "Key people within the trust", "#Key_people_within_the_trust"},
          { "About the conversion", "#About_the_conversion" },
          { "Further information", "#Further_information" },
          { "Finances", "#Finances" },
