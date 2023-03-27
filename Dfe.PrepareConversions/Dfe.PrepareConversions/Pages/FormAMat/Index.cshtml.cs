@@ -71,4 +71,8 @@ public class FormAMatIndexModel : BaseAcademyConversionProjectPageModel
    {
       return heading.Replace(" ", "_");
    }
+   public IEnumerable<BaseFormSection> ExcludeKeyPeople(IEnumerable<BaseFormSection> sections)
+   {
+      return sections.Where(x => x.Heading != "Key people");
+   }
 }
