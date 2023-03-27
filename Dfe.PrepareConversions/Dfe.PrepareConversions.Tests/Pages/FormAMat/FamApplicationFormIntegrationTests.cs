@@ -37,8 +37,6 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
 
       IElement pageItem = Document.QuerySelector("#application-form-link");
       pageItem.Should().BeNull();
-
-      pageItem?.BaseUri.Should().Contain($"form-a-mat/{_project.Id}");
    }
 
    [Theory]
