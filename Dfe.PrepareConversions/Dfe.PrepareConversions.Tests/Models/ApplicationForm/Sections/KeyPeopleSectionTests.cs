@@ -41,7 +41,7 @@ namespace Dfe.PrepareConversions.Tests.Models.ApplicationForm.Sections
             new("Biography", $"{application.KeyPeople.ElementAt(1).Biography}")
          };
 
-         formSection.Heading.Should().Be("Key people");
+         formSection.Heading.Should().Be("Key people within the trust");
          formSection.SubSections.Should().HaveCount(2);
          FormSubSection[] subSections = formSection.SubSections.ToArray();
          subSections[0].Heading.Should().Be(application.KeyPeople.ElementAt(0).Name);
