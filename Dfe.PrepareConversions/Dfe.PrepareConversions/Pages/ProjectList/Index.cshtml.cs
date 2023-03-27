@@ -2,6 +2,7 @@ using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Extensions;
+using Dfe.PrepareConversions.Models.ApplicationForm;
 using Dfe.PrepareConversions.Models.ProjectList;
 using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
@@ -20,9 +21,8 @@ public class IndexModel : PaginatedPageModel
    {
       _repository = repository;
    }
-
+   public IEnumerable<BaseFormSection> Sections { get; set; }
    protected override ApiV2PagingInfo Paging { get; set; }
-
    public IEnumerable<ProjectListViewModel> Projects { get; set; }
    public int ProjectCount => Projects.Count();
 
