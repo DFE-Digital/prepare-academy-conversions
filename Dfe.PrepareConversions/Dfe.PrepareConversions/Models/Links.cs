@@ -25,6 +25,12 @@ public static class Links
       public static readonly LinkItem Index = AddLinkItem(page: "/ApplicationForm/Index");
    }
 
+   public static class AnnexB
+   {
+      public static readonly LinkItem Index = AddLinkItem(backText: "Back to task list", page: "/AnnexB/Index");
+      public static readonly LinkItem Edit = AddLinkItem(page: "/AnnexB/Edit");
+   }
+
    public static class ProjectType
    {
       public static readonly LinkItem Index = AddLinkItem(backText: "Back to project type", page: "/ProjectType/Index");
