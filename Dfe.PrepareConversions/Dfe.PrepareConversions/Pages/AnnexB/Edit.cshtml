@@ -46,13 +46,7 @@
                         The Annex B form is saved in the school's SharePoint folder
                      </div>
 
-                     @if (ModelState.ContainsKey(nameof(Model.AnnexFormUrl)))
-                     {
-                        <span id="annex-b-url-error" class="govuk-error-message">
-                           <span class="govuk-visually-hidden">Error:</span> @ModelState[nameof(Model.AnnexFormUrl)]?.Errors.First().ErrorMessage
-                        </span>
-                     }
-
+                     <inline-error for="@nameof(Model.AnnexFormUrl)"/>
                      <textarea asp-for="@Model.AnnexFormUrl" class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.AnnexFormUrl))" rows="5" aria-describedby="application-form-url-hint"></textarea>
                   </div>
                </div>
