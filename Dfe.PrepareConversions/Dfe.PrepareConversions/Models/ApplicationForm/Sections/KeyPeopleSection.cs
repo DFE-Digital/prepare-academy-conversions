@@ -23,9 +23,16 @@ namespace Dfe.PrepareConversions.Models.ApplicationForm.Sections
       private static IEnumerable<FormField> GenerateKeyPeople(TrustKeyPerson person)
       {
          List<FormField> formFields = new();
-         
-         formFields.Add(new FormField("Position(s) within the trust", string.Join(", ", person.Roles.Select(r => r.Role.ToFirstUpper()))));
-         formFields.Add(new FormField("Date of birth", person.DateOfBirth.ToDateString()));
+
+         formFields.Add(new FormField("Position(s) within the trust", string.Join(", ", person.Roles.Select(r => {
+            string role = r.Role.ToFirstUpper();
+            if (role == "Financialdirector")
+            {
+               role = "Financial director";
+            }
+            return role;
+         }))));
+         //formFields.Add(new FormField("Date of birth", person.DateOfBirth.ToDateString()));
          formFields.Add(new FormField("Biography", person.Biography));
 
          return formFields;
