@@ -10,5 +10,6 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
 
    public bool HasLink => string.IsNullOrWhiteSpace(Project.AnnexBFormUrl) is false;
 
+   public bool? AnnexBFormReceived => Project.AnnexBFormReceived;
    public string AnnexBLink => Project.AnnexBFormUrl;
 }

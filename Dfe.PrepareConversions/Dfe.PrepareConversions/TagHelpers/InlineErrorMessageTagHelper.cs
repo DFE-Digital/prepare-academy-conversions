@@ -31,8 +31,9 @@ public class InlineErrorMessageTagHelper : TagHelper
       output.Attributes.Add("class", "govuk-error-message");
       output.Attributes.Add("id", $"{For}-error");
 
-      string message = ' ' + ViewContext.ModelState[For]?.Errors.First().ErrorMessage;
+      string message = ViewContext.ModelState[For]?.Errors.FirstOrDefault()?.ErrorMessage;
 
-      output.Content.SetHtmlContent($"<span class=\"govuk-visually-hidden\">Error:</span> {message}");
+      if (string.IsNullOrWhiteSpace(message) is false)
+         output.Content.SetHtmlContent($"<span class=\"govuk-visually-hidden\">Error:</span> {message}");
    }
 }

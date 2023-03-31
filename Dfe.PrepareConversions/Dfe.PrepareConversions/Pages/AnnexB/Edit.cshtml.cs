@@ -23,6 +23,16 @@ public class EditModel : BaseAcademyConversionProjectPageModel
    [BindProperty]
    public string AnnexFormUrl { get; set; }
 
+   public override async Task<IActionResult> OnGetAsync(int id)
+   {
+      await base.OnGetAsync(id);
+
+      YesChecked = Project.AnnexBFormReceived;
+      AnnexFormUrl = Project.AnnexBFormUrl;
+
+      return Page();
+   }
+
    public override async Task<IActionResult> OnPostAsync(int id)
    {
       if (YesChecked is true && string.IsNullOrWhiteSpace(AnnexFormUrl))

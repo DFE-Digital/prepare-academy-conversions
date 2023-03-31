@@ -11,13 +11,14 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.LegalRequirements;
 
 public class TaskListIndexTests : LegalRequirementsPageTestBase
 {
-   protected LegalRequirementsTestWizard Wizard;
+   private readonly LegalRequirementsTestWizard _wizard;
+
+   private static readonly string Yes = nameof(Yes).ToLowerInvariant();
 
    public TaskListIndexTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
    {
-      Wizard = new LegalRequirementsTestWizard(Context);
+      _wizard = new LegalRequirementsTestWizard(Context);
    }
-
 
    private string LegalRequirementsLinkHref =>
       Document.QuerySelector<IHtmlAnchorElement>(CypressSelectorFor("select-tasklist-links-legalrequirementlinks"))?.Href.Trim();
@@ -25,17 +26,11 @@ public class TaskListIndexTests : LegalRequirementsPageTestBase
    private string LegalRequirementsStatus =>
       Document.QuerySelector(CypressSelectorFor("select-tasklist-legalrequirements-status"))?.Text().Trim();
 
-   private IHtmlInputElement SummaryIsComplete =>
-      Document.QuerySelector<IHtmlInputElement>(CypressSelectorFor("select-legal-summary-iscomplete"));
-
-   private IHtmlButtonElement SummaryConfirmAndContinueButton =>
-      Document.QuerySelector<IHtmlButtonElement>(CypressSelectorFor("select-legal-summary-submitbutton"));
-
    [Fact]
    public async Task Should_have_a_link_that_points_to_the_legal_summary_page()
    {
       Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
-      await Wizard.OpenTaskList(Project.Id);
+      await _wizard.OpenTaskList(Project.Id);
       LegalRequirementsLinkHref.Should().EndWith($"/task-list/{Project.Id}/legal-requirements");
    }
 
@@ -47,22 +42,28 @@ public class TaskListIndexTests : LegalRequirementsPageTestBase
          project.Consultation = null;
          project.DiocesanConsent = null;
          project.FoundationConsent = null;
-         project.LegalRequirementsSectionComplete = false;
          project.GoverningBodyResolution = null;
+         project.LegalRequirementsSectionComplete = false;
       });
-      await Wizard.OpenTaskList(Project.Id);
+
+      await _wizard.OpenTaskList(Project.Id);
+
       LegalRequirementsStatus.Should().BeEquivalentTo(Status.NotStarted.ToDescription());
    }
 
    [Fact]
    public async Task Should_report_in_progress_status_when_some_options_have_been_selected()
    {
-      Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
-      await Wizard.OpenConsultation(Project.Id);
-      YesOption.IsChecked = true;
-      await SaveAndContinueButton.SubmitAsync();
+      Project = AddGetProject(project =>
+      {
+         project.GoverningBodyResolution = Yes;
+         project.Consultation = null;
+         project.DiocesanConsent = null;
+         project.FoundationConsent = null;
+         project.LegalRequirementsSectionComplete = false;
+      });
 
-      await Wizard.OpenTaskList(Project.Id);
+      await _wizard.OpenTaskList(Project.Id);
 
       LegalRequirementsStatus.Should().BeEquivalentTo(Status.InProgress.ToDescription());
    }
@@ -71,11 +72,8 @@ public class TaskListIndexTests : LegalRequirementsPageTestBase
    public async Task Should_report_completed_status_when_the_legal_requirements_are_marked_as_complete()
    {
       Project = AddGetProject(project => project.LegalRequirementsSectionComplete = true);
-      await Wizard.OpenSummary(Project.Id);
-      SummaryIsComplete.IsChecked = true;
-      await SummaryConfirmAndContinueButton.SubmitAsync();
 
-      await Wizard.OpenTaskList(Project.Id);
+      await _wizard.OpenTaskList(Project.Id);
 
       LegalRequirementsStatus.Should().BeEquivalentTo(Status.Completed.ToDescription());
    }
