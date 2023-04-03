@@ -13,7 +13,7 @@ public class AcademyConversionProjectPostModel
 
    [BindProperty(Name = "head-teacher-board-date")]
    [ModelBinder(BinderType = typeof(DateInputModelBinder))]
-   [DateValidation(DateRangeValidationService.DateRange.Future)]
+   [DateValidation(DateRangeValidationService.DateRange.PastOrFuture)]
    [Display(Name = "Advisory board")]
    public DateTime? HeadTeacherBoardDate { get; set; }
 
