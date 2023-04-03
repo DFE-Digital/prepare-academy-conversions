@@ -338,7 +338,6 @@ public class AcademisationApplication
          _ => academiesApplication.TrustName
       };
 
-
       academiesApplication.ApplicationType = academisationApplication.ApplicationType;
       academiesApplication.ApplicationId =
          academisationApplication.ApplicationReference;

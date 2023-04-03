@@ -40,7 +40,7 @@ public class FormAMatIndexModel : BaseAcademyConversionProjectPageModel
          return NotFound();
       }
       string applicationReferenceId = Project.ApplicationReferenceNumber;
-      ApiResponse<Application> applicationResponse = await _applicationRepository.GetFamApplicationByReferenceAndSchool(applicationReferenceId, Project.SchoolName);
+      ApiResponse<Application> applicationResponse = await _applicationRepository.GetApplicationByReference(applicationReferenceId, Project.SchoolName);
 
       if (applicationResponse.Success is false)
       {
