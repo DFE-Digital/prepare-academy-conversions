@@ -26,6 +26,7 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       AddGetApplication(app =>
       {
          app.ApplicationId = _project.ApplicationReferenceNumber;
+         app.ApplyingSchools.FirstOrDefault()!.SchoolName = _project.SchoolName;
          app.ApplicationType = GlobalStrings.FormAMat;
       });
    }
@@ -107,6 +108,7 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       {
          app.ApplicationId = _project.ApplicationReferenceNumber;
          app.ApplicationType = GlobalStrings.FormAMat;
+         app.ApplyingSchools.First().SchoolName = _project.SchoolName;
          app.ApplyingSchools.First().SchoolLeases = new List<Lease>();
          app.ApplyingSchools.First().SchoolLoans = new List<Loan>();
       });

@@ -16,7 +16,7 @@ public class PreOpeningSupportGrantSection : BaseFormSection
       return new[]
       {
          new FormField("Do you want these funds paid to the school or the trust?",
-            application.SchoolSupportGrantFundsPaidTo.ToTitleCase()) // might be int with conversion ToSchoolOrTrust()
+            application.SchoolSupportGrantFundsPaidTo?.ToTitleCase() ?? string.Empty) // might be int with conversion ToSchoolOrTrust()
       };
    }
 }

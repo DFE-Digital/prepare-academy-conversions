@@ -40,7 +40,7 @@ public class FormAMatIndexModel : BaseAcademyConversionProjectPageModel
          return NotFound();
       }
       string applicationReferenceId = Project.ApplicationReferenceNumber;
-      ApiResponse<Application> applicationResponse = await _applicationRepository.GetApplicationByReference(applicationReferenceId);
+      ApiResponse<Application> applicationResponse = await _applicationRepository.GetApplicationByReference(applicationReferenceId, Project.SchoolName);
 
       if (applicationResponse.Success is false)
       {
@@ -52,20 +52,21 @@ public class FormAMatIndexModel : BaseAcademyConversionProjectPageModel
       }
 
       Application application = applicationResponse.Body;
+      ApplyingSchool currentSchool = application.ApplyingSchools.First(x => x.SchoolName == Project.SchoolName);
 
       Sections = new BaseFormSection[]
       {
          new FamApplicationFormSection(application),
          new TrustInformationSection(application),
          new KeyPeopleSection(application),
-         new AboutConversionSection(application.ApplyingSchools.First()),
-         new FurtherInformationSection(application.ApplyingSchools.First()),
-         new FinanceSection(application.ApplyingSchools.First()),
-         new FuturePupilNumberSection(application.ApplyingSchools.First()),
-         new LandAndBuildingsSection(application.ApplyingSchools.First()),
-         new PreOpeningSupportGrantSection(application.ApplyingSchools.First()),
-         new ConsultationSection(application.ApplyingSchools.First()),
-         new DeclarationSection(application.ApplyingSchools.First())
+         new AboutConversionSection(currentSchool),
+         new FurtherInformationSection(currentSchool),
+         new FinanceSection(currentSchool),
+         new FuturePupilNumberSection(currentSchool),
+         new LandAndBuildingsSection(currentSchool),
+         new PreOpeningSupportGrantSection(currentSchool),
+         new ConsultationSection(currentSchool),
+         new DeclarationSection(currentSchool)
       };
 
       return result;
