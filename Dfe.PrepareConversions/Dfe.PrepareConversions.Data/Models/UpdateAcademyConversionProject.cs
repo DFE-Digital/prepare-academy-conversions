@@ -45,6 +45,10 @@ public class UpdateAcademyConversionProject
    public string MemberOfParliamentParty { get; set; }
    public bool? GeneralInformationSectionComplete { get; set; }
 
+   // Annex B
+   public bool? AnnexBFormReceived { get; set; }
+   public string AnnexBFormUrl { get; set; }
+
    //school performance ofsted information
    public string SchoolPerformanceAdditionalInformation { get; set; }
 
