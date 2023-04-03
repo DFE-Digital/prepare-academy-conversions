@@ -43,7 +43,7 @@ public class FurtherInformationSection : BaseFormSection
       formFields.Add(new FormField("Is your school linked to a diocese?", application.SchoolFaithSchool.ToYesNoString()));
       if (application.SchoolFaithSchool == true)
       {
-         formFields.Add(new FormField("Name of diocese", application.SchoolFaithSchoolDioceseName));
+         formFields.Add(new FormField("Name of diocese?", application.SchoolFaithSchoolDioceseName));
       }
 
       formFields.Add(new FormField("Is your school part of a federation?", application.SchoolIsPartOfFederation.ToYesNoString()));
@@ -51,7 +51,7 @@ public class FurtherInformationSection : BaseFormSection
          application.SchoolIsSupportedByFoundation.ToYesNoString()));
       if (application.SchoolIsSupportedByFoundation == true)
       {
-         formFields.Add(new FormField("Name of this body", application.SchoolSupportedFoundationBodyName));
+         formFields.Add(new FormField("Name of this body?", application.SchoolSupportedFoundationBodyName));
       }
 
       formFields.Add(new FormField(

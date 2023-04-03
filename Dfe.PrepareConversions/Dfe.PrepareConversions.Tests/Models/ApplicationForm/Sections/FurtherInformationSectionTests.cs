@@ -80,10 +80,10 @@ public class FurtherInformationSectionTests
          new("Is the school part of any local authority closure plans?", "Yes"),
          new("Details of the closure plan", application.SchoolLaClosurePlanDetails),
          new("Is your school linked to a diocese?", "Yes"),
-         new("Name of diocese", application.SchoolFaithSchoolDioceseName),
+         new("Name of diocese?", application.SchoolFaithSchoolDioceseName),
          new("Is your school part of a federation?", "Yes"),
          new("Is the school supported by a foundation, trust or other body (e.g. parish council) that appoints foundation governors?", "Yes"),
-         new("Name of this body", application.SchoolSupportedFoundationBodyName),
+         new("Name of this body?", application.SchoolSupportedFoundationBodyName),
          new(
             "Does the school currently have an exemption from providing broadly Christian collective worship issued by the local Standing Committee on Religious Education (SACRE)?",
             "Yes"),

@@ -28,7 +28,7 @@ namespace Dfe.PrepareConversions.Tests.Models.ApplicationForm.Sections
          };
          FormField[] expectedOpeningDateFields = {
             new("When do you plan to establish the new multi-academy trust?", $"{application.FormTrustOpeningDate.ToDateString()}"),
-            new("Approver full name", $"{application.TrustApproverName}"),
+            new("Approver name", $"{application.TrustApproverName}"),
             new("Approver email address", $"{application.TrustApproverEmail}")
          };
          FormField[] expectedReasonsForJoiningFields = {

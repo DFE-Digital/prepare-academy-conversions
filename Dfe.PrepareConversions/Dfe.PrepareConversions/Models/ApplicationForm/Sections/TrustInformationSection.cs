@@ -41,7 +41,7 @@ namespace Dfe.PrepareConversions.Models.ApplicationForm.Sections
       {
          List<FormField> formFields = new();
          formFields.Add(new FormField("When do you plan to establish the new multi-academy trust?", application.FormTrustOpeningDate.ToDateString()));
-         formFields.Add(new FormField("Approver full name", application.TrustApproverName));
+         formFields.Add(new FormField("Approver name", application.TrustApproverName));
          formFields.Add(new FormField("Approver email address", application.TrustApproverEmail));
          
          return formFields;
