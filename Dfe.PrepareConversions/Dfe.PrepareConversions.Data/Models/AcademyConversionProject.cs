@@ -46,6 +46,10 @@ public class AcademyConversionProject
    public string ConversionSupportGrantChangeReason { get; set; }
    public DateTime? DaoPackSentDate { get; set; }
 
+   // Annex B
+   public bool? AnnexBFormReceived { get; set; }
+   public string AnnexBFormUrl { get; set; }
+
    //general info
    public string PublishedAdmissionNumber { get; set; }
    public string PartOfPfiScheme { get; set; }

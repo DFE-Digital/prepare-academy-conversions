@@ -72,32 +72,23 @@ describe('Add Form-a-MAT application through API request and verify on the front
 					cy.get('#school-name-0').click()
 					cy.url().should('include', 'form-a-mat')
 
-					//check school application form
+					//verify school application form tab info
 					cy.get('[class="moj-sub-navigation__link"]').contains('School application form')
-					  .click()
-                    cy.get('h1').should('not.contain', 'Page not found')
-					//check Other schools in this MAT
+						.click()
+					cy.schoolApplicationForm();
+
+					//verify Other schools in this MAT tab info
 					cy.get('[class="moj-sub-navigation__link"]').contains('Other schools in this MAT')
-					  .click()
-					cy.get('h1').should('not.contain', 'Page not found')
-					cy.title().should('contain', 'Schools in this MAT')
-					cy.url().should('include', 'schools-in-this-mat')
-					cy.get('[data-cy="select-projectlist-filter-row"]').invoke('text')
-					  .should('contain', 'PRE ADVISORY BOARD')
-					cy.get('[data-cy="route"]').should('contain', 'Route: Form a MAT')
-                    cy.get('#school-name-0').should('be.visible')
-					cy.get('#urn-0').contains('URN: ')
-					cy.get('#application-to-join-trust-0').contains('Application to join a trust: ')
-					cy.get('#application-received-date-0').contains('Project created date: ')
-					cy.get('#local-authority-0').contains('Local authority: ')
+						.click()
+					cy.schoolsInThisMAT();
 
 					//navigate to other school
-                    cy.get('#school-name-0').click()
+					cy.get('#school-name-0').click()
 					cy.title().should('contain', 'School Application Form')
 					cy.get('h1').should('not.contain', 'Page not found')
 					cy.get('[class="moj-sub-navigation__link"]').contains('Other schools in this MAT')
-					  .click()
-				    cy.get('h1').should('not.contain', 'Page not found')
+						.click()
+					cy.get('h1').should('not.contain', 'Page not found')
 				}
 				else {
 					cy.log('this is not Form a MAT project')
