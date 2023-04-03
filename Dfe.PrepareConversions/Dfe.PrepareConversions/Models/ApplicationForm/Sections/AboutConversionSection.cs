@@ -33,7 +33,7 @@ public class AboutConversionSection : BaseFormSection
       formFields.Add(new FormField("Chair's email address", application.SchoolConversionContactChairEmail));
       formFields.Add(new FormField("Chair's phone number", application.SchoolConversionContactChairTel));
       formFields.Add(new FormField("Who is the main contact for the conversion?", application.SchoolConversionContactRole));
-      if (application.SchoolConversionContactRole.ToUpper() == "OTHER")
+      if (application.SchoolConversionContactRole is not null && application.SchoolConversionContactRole.ToUpper() == "OTHER")
       {
          formFields.Add(new FormField("Main contact's name", application.SchoolConversionMainContactOtherName));
          formFields.Add(new FormField("Main contact's email address", application.SchoolConversionMainContactOtherEmail));

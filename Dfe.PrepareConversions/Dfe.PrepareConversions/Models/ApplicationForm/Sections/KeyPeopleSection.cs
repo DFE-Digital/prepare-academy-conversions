@@ -32,7 +32,7 @@ namespace Dfe.PrepareConversions.Models.ApplicationForm.Sections
             }
             return role;
          }))));
-         //formFields.Add(new FormField("Date of birth", person.DateOfBirth.ToDateString()));
+         formFields.Add(new FormField("Date of birth", person.DateOfBirth.ToDateString()));
          formFields.Add(new FormField("Biography", person.Biography));
 
          return formFields;

@@ -19,10 +19,10 @@ public class AcademisationApplication
 
    public List<School> Schools { get; set; }
 
-   public static Application.Application MapToApplication(AcademisationApplication academisationApplication)
+   public static Application.Application MapToApplication(AcademisationApplication academisationApplication, string schoolName = null)
    {
       // Following the fields used by the front end
-      Application.Application academiesApplication = PopulateOverview(academisationApplication, out School academisationApplicationSchool, out ApplyingSchool academiesApplicationSchool);
+      Application.Application academiesApplication = PopulateOverview(academisationApplication, out School academisationApplicationSchool, out ApplyingSchool academiesApplicationSchool, schoolName);
       if(academiesApplication.ApplicationType.Equals(GlobalStrings.FormAMat)) PopulateFormAMatTrustInformation(academiesApplication, academisationApplication);
       PopulateSchoolDetails(academiesApplicationSchool, academisationApplicationSchool);
       PopulateFurtherInformation(academiesApplicationSchool, academisationApplicationSchool);
@@ -317,11 +317,16 @@ public class AcademisationApplication
 
    public static Application.Application PopulateOverview(AcademisationApplication academisationApplication,
                                                           out School academisationApplicationSchool,
-                                                          out ApplyingSchool academiesApplicationSchool)
+                                                          out ApplyingSchool academiesApplicationSchool,
+                                                          string schoolName = null)
    {
       Application.Application academiesApplication = new();
       academisationApplication!.Contributors ??= new List<Contributor>();
-      academisationApplicationSchool = academisationApplication.Schools.FirstOrDefault();
+      // Filter the schools by name if schoolName is not null, otherwise use the first school
+      academisationApplicationSchool = schoolName != null
+         ? academisationApplication.Schools.FirstOrDefault(s => s.SchoolName == schoolName)
+         : academisationApplication.Schools.FirstOrDefault();
+
       academiesApplication.ApplyingSchools = new List<ApplyingSchool> { new() };
       academiesApplicationSchool = academiesApplication.ApplyingSchools.FirstOrDefault();
       academiesApplicationSchool!.SchoolLoans = new List<Application.Loan>();
@@ -332,6 +337,7 @@ public class AcademisationApplication
          GlobalStrings.FormAMat => academisationApplication.FormTrustDetails.FormTrustProposedNameOfTrust,
          _ => academiesApplication.TrustName
       };
+
 
       academiesApplication.ApplicationType = academisationApplication.ApplicationType;
       academiesApplication.ApplicationId =

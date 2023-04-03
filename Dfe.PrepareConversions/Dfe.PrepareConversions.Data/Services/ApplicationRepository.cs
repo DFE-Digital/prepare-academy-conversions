@@ -23,7 +23,7 @@ public class ApplicationRepository
       _useAcademisationApplication = features.IsEnabledAsync(FeatureFlags.UseAcademisationApplication).Result;
    }
 
-   public async Task<ApiResponse<Application>> GetApplicationByReference(string id)
+   public async Task<ApiResponse<Application>> GetApplicationByReference(string id, string schoolName = null)
    {
       HttpResponseMessage response = await _apiClient.GetApplicationByReferenceAsync(id);
 
@@ -32,7 +32,7 @@ public class ApplicationRepository
          if (_useAcademisationApplication)
          {
             AcademisationApplication academisationOuterResponse = await response.Content.ReadFromJsonAsync<AcademisationApplication>();
-            return new ApiResponse<Application>(response.StatusCode, AcademisationApplication.MapToApplication(academisationOuterResponse));
+            return new ApiResponse<Application>(response.StatusCode, AcademisationApplication.MapToApplication(academisationOuterResponse, schoolName));
          }
 
          ApiV2Wrapper<Application> outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<Application>>();
