@@ -3,7 +3,7 @@
 Cypress._.each(['ipad-mini'], (viewport) => {
     describe(`121477: Add DAO pack sent page on Involuntry project on ${viewport}`, { tags: ['@dao'] }, () => {
         beforeEach(() => {
-            cy.login()
+            cy.login({ titleFilter: 'Gloucester school' })
             cy.viewport(viewport)
             cy.get('[data-cy="select-projectlist-filter-row"]').first().should('be.visible')
                 .invoke('text')
@@ -24,6 +24,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
                     }
                     else {
                         cy.log('this is not involuntary project')
+                        Cypress.runner.stop()
                     }
                 });
         });

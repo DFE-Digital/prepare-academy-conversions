@@ -92,6 +92,7 @@ describe('Add Form-a-MAT application through API request and verify on the front
 				}
 				else {
 					cy.log('this is not Form a MAT project')
+					Cypress.runner.stop()
 				}
 			});
 	});
