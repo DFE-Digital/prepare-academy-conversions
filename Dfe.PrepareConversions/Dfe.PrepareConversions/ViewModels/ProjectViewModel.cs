@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.ViewModels;
 
-public class ProjectViewModel
+public class ProjectViewModel: ProjectTypeBase
 {
    public ProjectViewModel(AcademyConversionProject project)
    {
@@ -45,6 +45,9 @@ public class ProjectViewModel
       ConversionSupportGrantAmount = project.ConversionSupportGrantAmount ?? 0;
       ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason;
       DaoPackSentDate = project.DaoPackSentDate;
+
+      AnnexBFormReceived = project.AnnexBFormReceived;
+      AnnexBFormUrl = project.AnnexBFormUrl;
 
       PublishedAdmissionNumber = project.PublishedAdmissionNumber;
       ViabilityIssues = project.ViabilityIssues;
@@ -137,6 +140,10 @@ public class ProjectViewModel
    public string ConversionSupportGrantChangeReason { get; set; }
    public DateTime? DaoPackSentDate { get; set; }
 
+   // Annex B
+   public bool? AnnexBFormReceived { get; set; }
+   public string AnnexBFormUrl { get; set; }
+
    //general info
    public string PublishedAdmissionNumber { get; set; }
    public string ViabilityIssues { get; set; }
@@ -195,4 +202,6 @@ public class ProjectViewModel
    public User AssignedUser { get; set; }
 
    public ICollection<ProjectNote> Notes { get; }
+
+   protected override string TypeAndRouteValue => AcademyTypeAndRoute;
 }

@@ -24,7 +24,7 @@
    @await Component.InvokeAsync("RecordDecisionPreview", new { id = int.Parse(Model?.Id ?? string.Empty) })
 
    <div class="govuk-grid-column-full">
-      <partial name="_SubMenu"/>
+      <partial name="_SubMenu" model="@Model"/>
 
    </div>
 </div>
