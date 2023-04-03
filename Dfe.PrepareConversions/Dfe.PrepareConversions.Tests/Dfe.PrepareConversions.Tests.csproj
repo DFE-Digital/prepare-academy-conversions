@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\AnnexB\" />
     <Folder Include="Pages\ProjectList\" />
 	<Folder Include="Services" />
   </ItemGroup>

@@ -2,7 +2,7 @@
 
 namespace Dfe.PrepareConversions.ViewModels;
 
-public class ProjectListViewModel
+public class ProjectListViewModel: ProjectTypeBase
 {
    public string Id { get; init; }
    public string NameOfTrust { get; init; }
@@ -21,12 +21,5 @@ public class ProjectListViewModel
    public bool ShowHtbDate => string.IsNullOrWhiteSpace(HeadTeacherBoardDate) is false;
    public bool ShowProposedOpeningDate => string.IsNullOrWhiteSpace(ProposedAcademyOpeningDate) is false;
 
-   public bool IsSponsored => string.IsNullOrWhiteSpace(TypeAndRoute) is false &&
-                              TypeAndRoute.Equals("Sponsored", StringComparison.InvariantCultureIgnoreCase);
-
-   public bool IsVoluntary => string.IsNullOrWhiteSpace(TypeAndRoute) is false &&
-                              TypeAndRoute.Equals("Converter", StringComparison.InvariantCultureIgnoreCase);
-
-   public bool IsFormAMat => string.IsNullOrWhiteSpace(TypeAndRoute) is false &&
-                             TypeAndRoute.Equals("Form a MAT", StringComparison.InvariantCultureIgnoreCase);
+   protected override string TypeAndRouteValue => TypeAndRoute;
 }

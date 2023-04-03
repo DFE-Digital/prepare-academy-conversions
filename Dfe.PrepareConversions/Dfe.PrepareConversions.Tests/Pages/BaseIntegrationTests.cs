@@ -126,6 +126,11 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
       await buttonElement!.SubmitAsync();
    }
 
+   protected static string CypressSelectorFor(string name)
+   {
+      return $"[data-cy='{name}']";
+   }
+
    protected class RadioButton
    {
       public string Value { get; init; }
