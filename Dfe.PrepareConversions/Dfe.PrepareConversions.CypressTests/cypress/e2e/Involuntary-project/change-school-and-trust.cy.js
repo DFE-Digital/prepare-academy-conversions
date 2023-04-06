@@ -4,7 +4,7 @@
 Cypress._.each(['ipad-mini'], (viewport) => {
   describe(`119898 Change school for Involuntry project on ${viewport}`, { tags: ['@dao'] }, () => {
     beforeEach(() => {
-      cy.login();
+      cy.login({ titleFilter: 'Gloucester school' })
       cy.viewport(viewport);
       cy.get('[role="button"]').should('contain.text', "Start a new involuntary conversion project");
       cy.get('a[href="/start-new-project/school-name"]').click();
