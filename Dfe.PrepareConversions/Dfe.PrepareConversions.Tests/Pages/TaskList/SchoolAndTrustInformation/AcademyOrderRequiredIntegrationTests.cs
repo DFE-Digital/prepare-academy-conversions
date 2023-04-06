@@ -12,7 +12,7 @@ public class AcademyOrderRequiredIntegrationTests : BaseIntegrationTests
 {
    public AcademyOrderRequiredIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
    [Fact]
-   public async Task Shouldnt_be_able_to_navigate_to_academy_order_required()
+   public async Task Shouldnt_be_able_to_navigate_to_academy_order_required_when_sponsored_conversion()
    {
       (RadioButton selected, RadioButton toSelect) = RandomRadioButtons("project-recommendation", "Approve", "Defer", "Decline");
 
