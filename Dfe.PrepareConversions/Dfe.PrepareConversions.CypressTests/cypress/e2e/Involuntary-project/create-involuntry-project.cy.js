@@ -3,7 +3,7 @@
 Cypress._.each(['ipad-mini'], (viewport) => {
   describe(`119898 Create Involuntry project and generate it's template on ${viewport}`, { tags: ['@dao'] }, () => {
     beforeEach(() => {
-      cy.login({ titleFilter: 'Gloucester school' })
+      cy.login()
       cy.viewport(viewport)
     })
 
