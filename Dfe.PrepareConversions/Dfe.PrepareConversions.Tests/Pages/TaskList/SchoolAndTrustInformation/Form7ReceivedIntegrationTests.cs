@@ -23,7 +23,7 @@ public class Form7ReceivedIntegrationTests : BaseIntegrationTests
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
-      await NavigateAsync("Change", 2);
+      await NavigateAsync("Change", 0);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received");
       // Do the input boxes on the page default to none selected when coming from an empty value
@@ -56,7 +56,7 @@ public class Form7ReceivedIntegrationTests : BaseIntegrationTests
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
-      await NavigateAsync("Change", 2);
+      await NavigateAsync("Change", 0);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received");
       // Do the input boxes on the page default to none selected when coming from an empty value
