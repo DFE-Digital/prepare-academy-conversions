@@ -24,7 +24,6 @@ Cypress._.each(['ipad-mini'], (viewport) => {
                     }
                     else {
                         cy.log('this is not involuntary project')
-                        Cypress.runner.stop()
                     }
                 });
         });
