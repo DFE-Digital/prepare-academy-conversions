@@ -154,6 +154,12 @@ variable "cdn_frontdoor_host_redirects" {
   type        = list(map(string))
 }
 
+variable "cdn_frontdoor_origin_fqdn_override" {
+  description = "Manually specify the hostname that the CDN Front Door should target. Defaults to the Container App FQDN"
+  type        = string
+  default     = ""
+}
+
 variable "dns_ns_records" {
   description = "DNS NS records to add to the DNS Zone"
   type = map(

@@ -28,6 +28,7 @@ module "azure_container_apps_hosting" {
   cdn_frontdoor_host_add_response_headers = local.cdn_frontdoor_host_add_response_headers
   cdn_frontdoor_custom_domains            = local.cdn_frontdoor_custom_domains
   cdn_frontdoor_host_redirects            = local.cdn_frontdoor_host_redirects
+  cdn_frontdoor_origin_fqdn_override      = local.cdn_frontdoor_origin_fqdn_override
 
   enable_monitoring               = local.enable_monitoring
   monitor_email_receivers         = local.monitor_email_receivers
