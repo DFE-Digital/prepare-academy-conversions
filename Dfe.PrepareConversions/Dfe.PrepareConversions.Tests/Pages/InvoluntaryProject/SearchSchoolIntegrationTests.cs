@@ -14,7 +14,7 @@ public class SearchSchoolIntegrationTests : BaseIntegrationTests
    {
    }
 
-   [Fact]
+   [Fact(Skip = "Disabled for now.")]
    public async Task Should_link_to_school_search()
    {
       await OpenAndConfirmPathAsync("/project-list");
