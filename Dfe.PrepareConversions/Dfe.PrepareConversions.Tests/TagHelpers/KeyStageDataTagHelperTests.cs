@@ -19,14 +19,32 @@ public class KeyStageDataTagHelperTests : BaseIntegrationTests
    [InlineData(2, StatusType.Final)]
    [InlineData(3, StatusType.Final)] // Edge case: If greater than our expected (Likely due to extending the number of years served in the future)
    [InlineData(-1, StatusType.Final)] // Edge case: Default to Final
-   public void KeyStage2DataRow_ReturnsExpectedStatusHeader(int yearIndex, StatusType expectedStatusType)
+   public void KeyStage2Header_ReturnsExpectedStatusHeader(int yearIndex, StatusType expectedStatusType)
    {
       // Arrange
       DateTime currentDate = new(2022, 9, 17);
       string expectedStatusHeader = GenerateStatusHeader(expectedStatusType.ToString());
 
       // Act
-      string result = KeyStage2DataRow(yearIndex, currentDate);
+      string result = KeyStage2And5Header(yearIndex, currentDate, KeyStages.KS2);
+
+      // Assert
+      Assert.Equal(expectedStatusHeader, result);
+   }
+   [Theory]
+   [InlineData(0, StatusType.Provisional)]
+   [InlineData(1, StatusType.Final)]
+   [InlineData(2, StatusType.Final)]
+   [InlineData(3, StatusType.Final)] // Edge case: If greater than our expected (Likely due to extending the number of years served in the future)
+   [InlineData(-1, StatusType.Final)] // Edge case: Default to Final
+   public void KeyStage5Header_ReturnsExpectedStatusHeader(int yearIndex, StatusType expectedStatusType)
+   {
+      // Arrange
+      DateTime currentDate = new(2022, 9, 17);
+      string expectedStatusHeader = GenerateStatusHeader(expectedStatusType.ToString());
+
+      // Act
+      string result = KeyStage2And5Header(yearIndex, currentDate, KeyStages.KS5);
 
       // Assert
       Assert.Equal(expectedStatusHeader, result);

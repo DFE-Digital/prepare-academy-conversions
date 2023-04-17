@@ -91,20 +91,20 @@ public static class KeyStageDataStatusHelper
       rowString.Append("</tr>");
       return rowString.ToString();
    }
-   public static string KeyStage2DataRow(int yearIndex)
+   public static string KeyStage2And5Header(int yearIndex, KeyStages keyStage)
    {
-      return KeyStage2DataRow(yearIndex, DateTime.Now);
+      return KeyStage2And5Header(yearIndex, DateTime.Now, keyStage);
    }
-   public static string KeyStage2DataRow(int yearIndex, DateTime currentDate)
+   public static string KeyStage2And5Header(int yearIndex, DateTime currentDate, KeyStages keyStage)
    {
       StringBuilder rowString = new();
 
       string statusType = yearIndex switch
       {
-         0 => DetermineKeyStageDataStatus(currentDate, KeyStages.KS2),
-         1 => DetermineKeyStageDataStatus(currentDate.AddYears(-yearIndex), KeyStages.KS2),
-         2 => DetermineKeyStageDataStatus(currentDate.AddYears(-yearIndex), KeyStages.KS2),
-         _ => DetermineKeyStageDataStatus(currentDate.AddYears(-3), KeyStages.KS2)
+         0 => DetermineKeyStageDataStatus(currentDate, keyStage),
+         1 => DetermineKeyStageDataStatus(currentDate.AddYears(-yearIndex), keyStage),
+         2 => DetermineKeyStageDataStatus(currentDate.AddYears(-yearIndex), keyStage),
+         _ => DetermineKeyStageDataStatus(currentDate.AddYears(-3), keyStage)
       };
 
       rowString.Append(GenerateStatusHeader(statusType));
