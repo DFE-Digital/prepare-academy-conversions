@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace Dfe.PrepareConversions.Utils;
@@ -19,12 +20,17 @@ public static class KeyStageDataStatusHelper
       Green
    }
 
-   public static readonly Dictionary<StatusType, (StatusColour Colour, string Description)> StatusMap = new()
+   private static readonly Dictionary<StatusType, (StatusColour Colour, string Description)> StatusMap = new()
    {
       { StatusType.Provisional, (StatusColour.Grey, StatusType.Provisional.ToString()) },
       { StatusType.Revised, (StatusColour.Orange, StatusType.Revised.ToString()) },
       { StatusType.Final, (StatusColour.Green, StatusType.Final.ToString()) },
    };
+
+   public static IReadOnlyDictionary<StatusType, (StatusColour Colour, string Description)> GetStatusMap()
+   {
+      return StatusMap.ToImmutableDictionary();
+   }
    public static string KeyStageDataTag(DateTime date)
    {
       string status = DetermineKeyStageDataStatus(date);

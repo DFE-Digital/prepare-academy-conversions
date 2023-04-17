@@ -41,7 +41,7 @@ public class KeyStageDataTagHelperTests : BaseIntegrationTests
    public void GenerateStatusHeader_ReturnsExpectedHeader(StatusType statusType)
    {
       // Arrange
-      (StatusColour expectedColorString, string expectedDescription) = StatusMap[statusType];
+      (StatusColour expectedColorString, string expectedDescription) = GetStatusMap()[statusType];
       string expectedHeader = $"<th scope='col' class='govuk-table__header'>Status<br><strong class='govuk-tag govuk-tag--{expectedColorString.ToString().ToLowerInvariant()}'>{expectedDescription}</strong></th>";
 
       // Act
