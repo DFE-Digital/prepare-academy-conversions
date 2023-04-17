@@ -19,6 +19,12 @@ public static class KeyStageDataStatusHelper
       Orange,
       Green
    }
+   public enum KeyStages
+   {
+      KS2,
+      KS4,
+      KS5
+   }
 
    private static readonly Dictionary<StatusType, (StatusColour Colour, string Description)> StatusMap = new()
    {
@@ -31,55 +37,74 @@ public static class KeyStageDataStatusHelper
    {
       return StatusMap.ToImmutableDictionary();
    }
-   public static string KeyStageDataTag(DateTime date)
+   public static string KeyStage4DataTag(DateTime date)
    {
-      string status = DetermineKeyStageDataStatus(date);
+      string status = DetermineKeyStageDataStatus(date, KeyStages.KS4);
       StatusType statusType = Enum.Parse<StatusType>(status);
       StatusColour colour = StatusMap[statusType].Colour;
       string colorString = colour.ToString().ToLowerInvariant();
       return $"<td class='govuk-table__cell'><strong class='govuk-tag govuk-tag--{colorString}'>{status}</strong></td>";
    }
 
-
-   public static string DetermineKeyStageDataStatus(DateTime date)
+   public static string DetermineKeyStageDataStatus(DateTime date, KeyStages keyStage)
    {
       // Check where and which academic year the tag is in relation to
       bool isItCurrentAcademicYear = (date.Month < 9 && date.Year == DateTime.Now.Year) ||
                                      (date.Month >= 9 && date.Year == DateTime.Now.Year - 1);
       StatusType statusType = isItCurrentAcademicYear switch
       {
-         // Rules - KS4 – Provisional October, Revised January; Final April
-         true => date.Month switch
+         true => keyStage switch
          {
-            >= 9 => StatusType.Provisional,
-            <= 4 => StatusType.Revised,
-            > 4 => StatusType.Final
+            KeyStages.KS2 => date.Month switch
+            {
+               >= 9 => StatusType.Provisional,
+               <= 3 => StatusType.Revised,
+               > 3 => StatusType.Final
+            },
+            KeyStages.KS4 => date.Month switch
+            {
+               >= 9 => StatusType.Provisional,
+               <= 4 => StatusType.Revised,
+               > 4 => StatusType.Final
+            },
+            KeyStages.KS5 => date.Month switch
+            {
+               >= 9 => StatusType.Provisional,
+               <= 4 => StatusType.Revised,
+               > 4 => StatusType.Final
+            },
+            _ => throw new ArgumentException("Invalid key stage")
          },
          false => StatusType.Final
       };
       return statusType.ToString();
    }
 
-   public static string KeyStageDataRow()
+
+   public static string KeyStage4DataRow()
    {
       StringBuilder rowString = new("<tr class='govuk-table__row'>");
       rowString.Append("<th scope='row' class='govuk-table__header'>Status</th>");
-      rowString.Append(KeyStageDataTag(DateTime.Now));
-      rowString.Append(KeyStageDataTag(DateTime.Now.AddYears(-1)));
-      rowString.Append(KeyStageDataTag(DateTime.Now.AddYears(-2)));
+      rowString.Append(KeyStage4DataTag(DateTime.Now));
+      rowString.Append(KeyStage4DataTag(DateTime.Now.AddYears(-1)));
+      rowString.Append(KeyStage4DataTag(DateTime.Now.AddYears(-2)));
       rowString.Append("</tr>");
       return rowString.ToString();
    }
    public static string KeyStage2DataRow(int yearIndex)
    {
+      return KeyStage2DataRow(yearIndex, DateTime.Now);
+   }
+   public static string KeyStage2DataRow(int yearIndex, DateTime currentDate)
+   {
       StringBuilder rowString = new();
 
-      StatusType statusType = yearIndex switch
+      string statusType = yearIndex switch
       {
-         0 => StatusType.Provisional,
-         1 => StatusType.Revised,
-         2 => StatusType.Final,
-         _ => StatusType.Final
+         0 => DetermineKeyStageDataStatus(currentDate, KeyStages.KS2),
+         1 => DetermineKeyStageDataStatus(currentDate.AddYears(-yearIndex), KeyStages.KS2),
+         2 => DetermineKeyStageDataStatus(currentDate.AddYears(-yearIndex), KeyStages.KS2),
+         _ => DetermineKeyStageDataStatus(currentDate.AddYears(-3), KeyStages.KS2)
       };
 
       rowString.Append(GenerateStatusHeader(statusType));
@@ -87,9 +112,9 @@ public static class KeyStageDataStatusHelper
       return rowString.ToString();
    }
 
-   public static string GenerateStatusHeader(StatusType statusType)
+   public static string GenerateStatusHeader(string statusType)
    {
-      (StatusColour colour, string description) = StatusMap[statusType];
+      (StatusColour colour, string description) = StatusMap[Enum.Parse<StatusType>(statusType)];
       string colorString = colour.ToString().ToLowerInvariant();
       return $"<th scope='col' class='govuk-table__header'>Status<br><strong class='govuk-tag govuk-tag--{colorString}'>{description}</strong></th>";
    }

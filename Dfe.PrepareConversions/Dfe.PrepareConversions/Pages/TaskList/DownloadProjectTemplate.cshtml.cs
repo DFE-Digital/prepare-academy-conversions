@@ -154,7 +154,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -189,7 +189,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -224,7 +224,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -259,7 +259,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -295,7 +295,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -330,7 +330,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -386,7 +386,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -421,7 +421,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -456,7 +456,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -491,7 +491,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -662,14 +662,14 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
       return new TextElement(str.Value!.Replace("<br>", "\n"));
    }
 
-   private static TextElement[] KeyStageStatus()
+   private static TextElement[] KeyStage4Status()
    {
       return new[]
       {
          new TextElement("Status") { Bold = true },
-         new TextElement(KeyStageDataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now)) { Bold = true },
-         new TextElement(KeyStageDataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now.AddYears(-1))) { Bold = true },
-         new TextElement(KeyStageDataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now.AddYears(-2))) { Bold = true }
+         new TextElement(KeyStageDataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now, KeyStageDataStatusHelper.KeyStages.KS4)) { Bold = true },
+         new TextElement(KeyStageDataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now.AddYears(-1), KeyStageDataStatusHelper.KeyStages.KS4)) { Bold = true },
+         new TextElement(KeyStageDataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now.AddYears(-2), KeyStageDataStatusHelper.KeyStages.KS4)) { Bold = true }
       };
    }
 }
