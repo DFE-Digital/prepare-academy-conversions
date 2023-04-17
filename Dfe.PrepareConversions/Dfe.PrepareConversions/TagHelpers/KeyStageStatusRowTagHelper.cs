@@ -11,9 +11,7 @@ namespace Dfe.PrepareConversions.TagHelpers
 
       public override void Process(TagHelperContext context, TagHelperOutput output)
       {
-         output.TagName = "tr";
-         output.Attributes.SetAttribute("class", "govuk-table__row");
-
+         output.TagName = null;
          string rowContent = KeyStageDataStatusHelper.KeyStage4DataRow();
          output.Content.SetHtmlContent(rowContent);
       }

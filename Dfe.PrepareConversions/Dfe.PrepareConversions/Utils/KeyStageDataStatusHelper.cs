@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Dfe.PrepareConversions.Utils;
 
-public class KeyStageDataStatusHelper
+public class KeyStageDataStatusHelper 
 {
    public enum StatusType
    {
