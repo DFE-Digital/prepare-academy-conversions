@@ -23,7 +23,7 @@ public class KeyStageDataTagHelperTests : BaseIntegrationTests
    {
       // Arrange
       DateTime currentDate = new(2022, 9, 17);
-      string expectedStatusHeader = GenerateStatusHeaderContent(expectedStatusType.ToString());
+      string expectedStatusHeader = GenerateStatusHeader(expectedStatusType.ToString());
 
       // Act
       string keyStage2Result = KeyStageHeader(yearIndex, currentDate, KeyStages.KS2);
@@ -47,7 +47,7 @@ public class KeyStageDataTagHelperTests : BaseIntegrationTests
       string expectedHeader = $"<th scope='col' class='govuk-table__header'>Status<br><strong class='govuk-tag govuk-tag--{expectedColorString.ToString().ToLowerInvariant()}'>{expectedDescription}</strong></th>";
 
       // Act
-      string result = GenerateStatusHeaderContent(statusType.ToString());
+      string result = GenerateStatusHeader(statusType.ToString());
 
       // Assert
       Assert.Equal(expectedHeader, result);
