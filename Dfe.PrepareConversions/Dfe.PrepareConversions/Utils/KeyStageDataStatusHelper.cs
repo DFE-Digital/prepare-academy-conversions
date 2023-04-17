@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Razor.TagHelpers;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 
 namespace Dfe.PrepareConversions.Utils;
 
-public static class KeyStageDataStatusHelper
+public class KeyStageDataStatusHelper
 {
    public enum StatusType
    {
