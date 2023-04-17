@@ -48,36 +48,30 @@ public static class KeyStageDataStatusHelper
 
    public static string DetermineKeyStageDataStatus(DateTime date, KeyStages keyStage)
    {
-      // Check where and which academic year the tag is in relation to
       bool isItCurrentAcademicYear = (date.Month < 9 && date.Year == DateTime.Now.Year) ||
                                      (date.Month >= 9 && date.Year == DateTime.Now.Year - 1);
-      StatusType statusType = isItCurrentAcademicYear switch
-      {
-         true => keyStage switch
-         {
-            KeyStages.KS2 => date.Month switch
-            {
-               >= 9 => StatusType.Provisional,
-               <= 3 => StatusType.Revised,
-               > 3 => StatusType.Final
-            },
-            KeyStages.KS4 => date.Month switch
-            {
-               >= 9 => StatusType.Provisional,
-               <= 4 => StatusType.Revised,
-               > 4 => StatusType.Final
-            },
-            KeyStages.KS5 => date.Month switch
-            {
-               >= 9 => StatusType.Provisional,
-               <= 4 => StatusType.Revised,
-               > 4 => StatusType.Final
-            },
-            _ => throw new ArgumentException("Invalid key stage")
-         },
-         false => StatusType.Final
-      };
+      StatusType statusType = isItCurrentAcademicYear ? DetermineStatusType(date, keyStage) : StatusType.Final;
       return statusType.ToString();
+   }
+
+   private static StatusType DetermineStatusType(DateTime date, KeyStages keyStage)
+   {
+      return keyStage switch
+      {
+         KeyStages.KS2 => date.Month switch
+         {
+            >= 9 => StatusType.Provisional,
+            <= 3 => StatusType.Revised,
+            _ => StatusType.Final
+         },
+         KeyStages.KS4 or KeyStages.KS5 => date.Month switch
+         {
+            >= 9 => StatusType.Provisional,
+            <= 4 => StatusType.Revised,
+            _ => StatusType.Final
+         },
+         _ => throw new ArgumentException("Invalid key stage")
+      };
    }
 
 
@@ -91,11 +85,11 @@ public static class KeyStageDataStatusHelper
       rowString.Append("</tr>");
       return rowString.ToString();
    }
-   public static string KeyStage2And5Header(int yearIndex, KeyStages keyStage)
+   public static string KeyStageHeader(int yearIndex, KeyStages keyStage)
    {
-      return KeyStage2And5Header(yearIndex, DateTime.Now, keyStage);
+      return KeyStageHeader(yearIndex, DateTime.Now, keyStage);
    }
-   public static string KeyStage2And5Header(int yearIndex, DateTime currentDate, KeyStages keyStage)
+   public static string KeyStageHeader(int yearIndex, DateTime currentDate, KeyStages keyStage)
    {
       StringBuilder rowString = new();
 

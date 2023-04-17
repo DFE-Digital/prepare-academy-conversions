@@ -14,40 +14,24 @@ public class KeyStageDataTagHelperTests : BaseIntegrationTests
    }
 
    [Theory]
-   [InlineData(0, StatusType.Provisional)]
-   [InlineData(1, StatusType.Final)]
-   [InlineData(2, StatusType.Final)]
-   [InlineData(3, StatusType.Final)] // Edge case: If greater than our expected (Likely due to extending the number of years served in the future)
-   [InlineData(-1, StatusType.Final)] // Edge case: Default to Final
-   public void KeyStage2Header_ReturnsExpectedStatusHeader(int yearIndex, StatusType expectedStatusType)
+   [InlineData(0, StatusType.Provisional, "YearIndex 0 would be the current year, thus, provisional based on the currentDate variables month")]
+   [InlineData(1, StatusType.Final, "YearIndex 1 would be a year ago, thus, Final")]
+   [InlineData(2, StatusType.Final, "YearIndex 2 would be two years ago, thus, Final")]
+   [InlineData(3, StatusType.Final, "Edge case: If greater than our expected (Likely due to extending the number of years served in the future)")]
+   [InlineData(-1, StatusType.Final, "Edge case: Default to Final")] 
+   public void KeyStageHeader_ReturnsExpectedStatusHeader(int yearIndex, StatusType expectedStatusType, string reason)
    {
       // Arrange
       DateTime currentDate = new(2022, 9, 17);
       string expectedStatusHeader = GenerateStatusHeader(expectedStatusType.ToString());
 
       // Act
-      string result = KeyStage2And5Header(yearIndex, currentDate, KeyStages.KS2);
+      string keyStage2Result = KeyStageHeader(yearIndex, currentDate, KeyStages.KS2);
+      string keyStage5Result = KeyStageHeader(yearIndex, currentDate, KeyStages.KS5);
 
       // Assert
-      Assert.Equal(expectedStatusHeader, result);
-   }
-   [Theory]
-   [InlineData(0, StatusType.Provisional)]
-   [InlineData(1, StatusType.Final)]
-   [InlineData(2, StatusType.Final)]
-   [InlineData(3, StatusType.Final)] // Edge case: If greater than our expected (Likely due to extending the number of years served in the future)
-   [InlineData(-1, StatusType.Final)] // Edge case: Default to Final
-   public void KeyStage5Header_ReturnsExpectedStatusHeader(int yearIndex, StatusType expectedStatusType)
-   {
-      // Arrange
-      DateTime currentDate = new(2022, 9, 17);
-      string expectedStatusHeader = GenerateStatusHeader(expectedStatusType.ToString());
-
-      // Act
-      string result = KeyStage2And5Header(yearIndex, currentDate, KeyStages.KS5);
-
-      // Assert
-      Assert.Equal(expectedStatusHeader, result);
+      keyStage2Result.Should().Be(expectedStatusHeader, because: reason);
+      keyStage5Result.Should().Be(expectedStatusHeader, because: reason);
    }
 
 
