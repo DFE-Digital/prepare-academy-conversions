@@ -1,4 +1,5 @@
-﻿@model IEnumerable<KeyStage2PerformanceTableViewModel>
+﻿@using Dfe.PrepareConversions.Utils
+@model IEnumerable<KeyStage2PerformanceTableViewModel>
 <div>
    @{
       var index = 0;
@@ -8,7 +9,7 @@
             <caption class="govuk-table__caption govuk-table__caption--m">@vm.Year key stage 2</caption>
             <thead class="govuk-table__head">
             <tr class="govuk-table__row">
-               <td class="govuk-table__header"></td>
+               @Html.Raw(KeyStageDataStatusHelper.KeyStage2DataRow(index))
                <th scope="col" class="govuk-table__header">Percentage meeting expected standard in reading, writing and maths</th>
                <th scope="col" class="govuk-table__header">Percentage achieving a higher standard in reading, writing and maths</th>
                <th scope="col" class="govuk-table__header">Reading progress scores</th>

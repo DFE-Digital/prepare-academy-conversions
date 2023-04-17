@@ -1,26 +1,63 @@
 ﻿using Dfe.PrepareConversions.Tests.Pages;
-using Dfe.PrepareConversions.Utils;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using Xunit;
+using static Dfe.PrepareConversions.Utils.KeyStageDataStatusHelper;
 
 namespace Dfe.PrepareConversions.Tests.TagHelpers;
 
-public class KeyStage4DataTagHelperTests : BaseIntegrationTests
+public class KeyStageDataTagHelperTests : BaseIntegrationTests
 {
    public DateTime _currentDate = DateTime.Now;
 
-   public KeyStage4DataTagHelperTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+   public KeyStageDataTagHelperTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
    {
    }
+
+   [Theory]
+   [InlineData(0, StatusType.Provisional)]
+   [InlineData(1, StatusType.Revised)]
+   [InlineData(2, StatusType.Final)]
+   [InlineData(3, StatusType.Final)] // Edge case: If greater than our expected (Likely due to extending the number of years served in the future)
+   [InlineData(-1, StatusType.Final)] // Edge case: Default to Final
+   public void KeyStage2DataRow_ReturnsExpectedStatusHeader(int yearIndex, StatusType expectedStatusType)
+   {
+      // Arrange
+      string expectedStatusHeader = GenerateStatusHeader(expectedStatusType);
+
+      // Act
+      string result = KeyStage2DataRow(yearIndex);
+
+      // Assert
+      Assert.Equal(expectedStatusHeader, result);
+   }
+
+
+   [Theory]
+   [InlineData(StatusType.Provisional)]
+   [InlineData(StatusType.Revised)]
+   [InlineData(StatusType.Final)]
+   public void GenerateStatusHeader_ReturnsExpectedHeader(StatusType statusType)
+   {
+      // Arrange
+      (StatusColour expectedColorString, string expectedDescription) = StatusMap[statusType];
+      string expectedHeader = $"<th scope='col' class='govuk-table__header'>Status<br><strong class='govuk-tag govuk-tag--{expectedColorString.ToString().ToLowerInvariant()}'>{expectedDescription}</strong></th>";
+
+      // Act
+      string result = GenerateStatusHeader(statusType);
+
+      // Assert
+      Assert.Equal(expectedHeader, result);
+   }
+
 
    [Theory]
    [MemberData(nameof(ProvisionalDates))]
    public void Should_return_provisional_status_on_relevant_months(DateTime date)
    {
-      string resultingHtml = KeyStage4DataStatusHelper.KeyStageDataTag(date);
-      string result = KeyStage4DataStatusHelper.DetermineKeyStageDataStatus(date);
+      string resultingHtml = KeyStageDataTag(date);
+      string result = DetermineKeyStageDataStatus(date);
       resultingHtml.Should().Contain("grey").And.Contain("Provisional");
       result.Should().Be("Provisional");
    }
@@ -29,8 +66,8 @@ public class KeyStage4DataTagHelperTests : BaseIntegrationTests
    [MemberData(nameof(RevisedDates))]
    public void Should_return_revised_status_on_relevant_months(DateTime date)
    {
-      string resultingHtml = KeyStage4DataStatusHelper.KeyStageDataTag(date);
-      string result = KeyStage4DataStatusHelper.DetermineKeyStageDataStatus(date);
+      string resultingHtml = KeyStageDataTag(date);
+      string result = DetermineKeyStageDataStatus(date);
       resultingHtml.Should().Contain("orange").And.Contain("Revised");
       result.Should().Be("Revised");
    }
@@ -39,8 +76,8 @@ public class KeyStage4DataTagHelperTests : BaseIntegrationTests
    [MemberData(nameof(FinalDates))]
    public void Should_return_final_status_on_relevant_months(DateTime date)
    {
-      string resultingHtml = KeyStage4DataStatusHelper.KeyStageDataTag(date);
-      string result = KeyStage4DataStatusHelper.DetermineKeyStageDataStatus(date);
+      string resultingHtml = KeyStageDataTag(date);
+      string result = DetermineKeyStageDataStatus(date);
       resultingHtml.Should().Contain("green").And.Contain("Final");
       result.Should().Be("Final");
    }

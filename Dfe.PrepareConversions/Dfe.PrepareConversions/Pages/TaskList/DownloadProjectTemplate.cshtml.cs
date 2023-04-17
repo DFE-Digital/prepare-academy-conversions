@@ -667,9 +667,9 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
       return new[]
       {
          new TextElement("Status") { Bold = true },
-         new TextElement(KeyStage4DataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now)) { Bold = true },
-         new TextElement(KeyStage4DataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now.AddYears(-1))) { Bold = true },
-         new TextElement(KeyStage4DataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now.AddYears(-2))) { Bold = true }
+         new TextElement(KeyStageDataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now)) { Bold = true },
+         new TextElement(KeyStageDataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now.AddYears(-1))) { Bold = true },
+         new TextElement(KeyStageDataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now.AddYears(-2))) { Bold = true }
       };
    }
 }
