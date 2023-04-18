@@ -94,6 +94,15 @@ public class KeyStageDataStatusHelper
    {
       StringBuilder rowString = new();
 
+      string statusType = DetermineStatusType(yearIndex, currentDate, keyStage);
+
+      rowString.Append(GenerateStatusHeader(statusType));
+
+      return rowString.ToString();
+   }
+
+   public static string DetermineStatusType(int yearIndex, DateTime currentDate, KeyStages keyStage)
+   {
       string statusType = yearIndex switch
       {
          0 => DetermineKeyStageDataStatus(currentDate, keyStage),
@@ -101,10 +110,7 @@ public class KeyStageDataStatusHelper
          2 => DetermineKeyStageDataStatus(currentDate.AddYears(-yearIndex), keyStage),
          _ => DetermineKeyStageDataStatus(currentDate.AddYears(-3), keyStage)
       };
-
-      rowString.Append(GenerateStatusHeader(statusType));
-
-      return rowString.ToString();
+      return statusType;
    }
 
    public static string GenerateStatusHeader(string statusType)

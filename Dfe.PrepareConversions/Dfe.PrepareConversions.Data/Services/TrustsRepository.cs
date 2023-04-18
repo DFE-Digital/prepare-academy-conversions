@@ -33,6 +33,8 @@ public class TrustsRepository : ITrustsRepository
 
    public async Task<TrustDetail> GetTrustByUkprn(string ukprn)
    {
+      if (string.IsNullOrWhiteSpace(ukprn)) return default;
+
       string path = $@"/v2/trusts/bulk?Ukprn={ukprn.Trim()}&Establishments=false";
 
       ApiResponse<TrustDetailResponse> result = await _httpClientService.Get<TrustDetailResponse>(_httpClient, path);
