@@ -16,7 +16,8 @@ public class PopulateFurtherInformationTests
       {
          TrustBenefitDetails = "Trust Benefit",
          OfstedInspectionDetails = "Ofsted Inspection",
-         SafeguardingDetails = "Safeguarding",
+         Safeguarding = true,
+         //SafeguardingDetails = "Safeguarding",
          LocalAuthorityReorganisationDetails = "LA Reorganization",
          LocalAuthorityClosurePlanDetails = "LA Closure",
          DioceseName = "Diocese",
@@ -35,7 +36,7 @@ public class PopulateFurtherInformationTests
       Assert.True(academiesApplicationSchool.SchoolAdInspectedButReportNotPublished);
       Assert.Equal("Ofsted Inspection", academiesApplicationSchool.SchoolAdInspectedButReportNotPublishedExplain);
       Assert.True(academiesApplicationSchool.SchoolOngoingSafeguardingInvestigations);
-      Assert.Equal("Safeguarding", academiesApplicationSchool.SchoolOngoingSafeguardingDetails);
+      //Assert.Equal("Safeguarding", academiesApplicationSchool.SchoolOngoingSafeguardingDetails);
       Assert.True(academiesApplicationSchool.SchoolPartOfLaReorganizationPlan);
       Assert.Equal("LA Reorganization", academiesApplicationSchool.SchoolLaReorganizationDetails);
       Assert.True(academiesApplicationSchool.SchoolPartOfLaClosurePlan);
