@@ -24,8 +24,9 @@
       </h1>
       <div class="govuk-body">
          <p>
-            This information comes from the
-            <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+            <span if="@Model.Project.IsSponsored is false">This information comes from the
+               <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+            </span>
             The table will go into your project template.
          </p>
          <p>
