@@ -92,7 +92,7 @@ public class AcademisationApplication
          academisationApplicationSchool.LandAndBuildings.FacilitiesSharedExplained;
       academiesApplicationSchool.SchoolBuildLandGrants = academisationApplicationSchool.LandAndBuildings.Grants;
       academiesApplicationSchool.SchoolBuildLandGrantsExplained =
-         academisationApplicationSchool.LandAndBuildings.GrantsAwardingBodies; // Paul L - awaiting confirmation
+         academisationApplicationSchool.LandAndBuildings.GrantsAwardingBodies; 
       academiesApplicationSchool.SchoolBuildLandPFIScheme =
          academisationApplicationSchool.LandAndBuildings.PartOfPfiScheme;
       academiesApplicationSchool.SchoolBuildLandPFISchemeType =
@@ -225,31 +225,31 @@ public class AcademisationApplication
       // Further Information
       academiesApplicationSchool.SchoolAdSchoolContributionToTrust =
          academisationApplicationSchool
-            .TrustBenefitDetails; // Paul L - awaiting confirmation
-      academiesApplicationSchool.SchoolAdInspectedButReportNotPublished = !academisationApplicationSchool.OfstedInspectionDetails.IsNullOrEmpty(); // Paul L - awaiting confirmation
+            .TrustBenefitDetails; 
+      academiesApplicationSchool.SchoolAdInspectedButReportNotPublished = !academisationApplicationSchool.OfstedInspectionDetails.IsNullOrEmpty(); 
       academiesApplicationSchool.SchoolAdInspectedButReportNotPublishedExplain =
          academisationApplicationSchool.OfstedInspectionDetails;
       academiesApplicationSchool.SchoolOngoingSafeguardingInvestigations =
-         !academisationApplicationSchool.SafeguardingDetails
-            .IsNullOrEmpty(); // Paul L - awaiting confirmation
-      academiesApplicationSchool.SchoolOngoingSafeguardingDetails = academisationApplicationSchool.SafeguardingDetails;
+         academisationApplicationSchool.Safeguarding; 
+      // Questions regarding the below are outstanding
+      // academiesApplicationSchool.SchoolOngoingSafeguardingDetails = academisationApplicationSchool.SafeguardingDetails;
       academiesApplicationSchool.SchoolPartOfLaReorganizationPlan =
          !academisationApplicationSchool.LocalAuthorityReorganisationDetails
-            .IsNullOrEmpty(); // Paul L - awaiting confirmation
+            .IsNullOrEmpty(); 
       academiesApplicationSchool.SchoolLaReorganizationDetails =
          academisationApplicationSchool.LocalAuthorityReorganisationDetails;
       academiesApplicationSchool.SchoolPartOfLaClosurePlan =
          !academisationApplicationSchool.LocalAuthorityClosurePlanDetails.IsNullOrEmpty();
       academiesApplicationSchool.SchoolLaClosurePlanDetails =
          academisationApplicationSchool
-            .LocalAuthorityClosurePlanDetails; // Paul L - awaiting confirmation
+            .LocalAuthorityClosurePlanDetails; 
       academiesApplicationSchool.SchoolFaithSchool =
          !academisationApplicationSchool.DioceseName
-            .IsNullOrEmpty(); // Paul L - awaiting confirmation
+            .IsNullOrEmpty(); 
       academiesApplicationSchool.SchoolFaithSchoolDioceseName = academisationApplicationSchool.DioceseName;
       academiesApplicationSchool.SchoolIsPartOfFederation = academisationApplicationSchool.PartOfFederation;
       academiesApplicationSchool.SchoolIsSupportedByFoundation =
-         !academisationApplicationSchool.FoundationTrustOrBodyName.IsNullOrEmpty(); // Paul L - awaiting confirmation
+         !academisationApplicationSchool.FoundationTrustOrBodyName.IsNullOrEmpty(); 
       academiesApplicationSchool.SchoolSupportedFoundationBodyName =
          academisationApplicationSchool.FoundationTrustOrBodyName;
       if (academisationApplicationSchool.ExemptionEndDate is not null)
@@ -268,9 +268,9 @@ public class AcademisationApplication
             _ => string.Empty
          };
       academiesApplicationSchool.SchoolAdditionalInformationAdded =
-         !academisationApplicationSchool.FurtherInformation.IsNullOrEmpty(); // Paul L - awaiting confirmation
+         !academisationApplicationSchool.FurtherInformation.IsNullOrEmpty(); 
       academiesApplicationSchool.SchoolAdditionalInformation =
-         academisationApplicationSchool.FurtherInformation; // Paul L - awaiting confirmation
+         academisationApplicationSchool.FurtherInformation; 
    }
 
    public static void PopulateSchoolDetails(ApplyingSchool academiesApplicationSchool,
