@@ -30,8 +30,6 @@ Alternatively, there is a Rider plugin called `.NET Core User Secrets` that allo
 
 ## Cypress testing
 
-> Note: We've introduced a new [Cypress Selector process](Cypress_Selectors.md).
-
 Install cypress and dependencies:
 - Run 'npm install' from the Dfe.PrepareConversions.CypressTests directory
 
@@ -161,9 +159,9 @@ Here you can view the bug fixes, performance fixes and features etc. Latest vers
 
  ##Update Cypress using package.json
  -Cose the cypress runner properly by clicking on Stop button then x button.
- 
+
  -Navigate to your package.json.
- 
+
  -Change the cypress version to the current updated version in package.json
   `"cypress": "12.2.0"`
 
@@ -184,8 +182,8 @@ Here you can view the bug fixes, performance fixes and features etc. Latest vers
   `npm install eslint-plugin-cypress --save-dev`
 
  -Installation using yarn
-  `yarn add eslint-plugin-cypress --dev` 
- 
+  `yarn add eslint-plugin-cypress --dev`
+
  -Usage: Add an .eslintrc.json file to your cypress directory with the following:
    {
       "plugins": [
