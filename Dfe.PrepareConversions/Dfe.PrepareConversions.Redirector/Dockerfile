@@ -1,22 +1,25 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
-
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Dfe.PrepareConversions.Redirector/Dfe.PrepareConversions.Redirector.csproj", "Dfe.PrepareConversions.Redirector/"]
 RUN dotnet restore "Dfe.PrepareConversions.Redirector/Dfe.PrepareConversions.Redirector.csproj"
 COPY . .
-WORKDIR "/src/Dfe.PrepareConversions.Redirector"
-RUN dotnet build "Dfe.PrepareConversions.Redirector.csproj" -c Release -o /app/build
 
-FROM build AS publish
-RUN dotnet publish "Dfe.PrepareConversions.Redirector.csproj" -c Release -o /app/publish /p:UseAppHost=false
+# Stage 2 - Build assets
+FROM node:18.12-bullseye as frontend
+COPY --from=build /src /src
+WORKDIR /src/Dfe.PrepareConversions/wwwroot
+RUN npm install
+RUN npm run build
+RUN mkdir -p /src/Dfe.PrepareConversions.Redirector/wwwroot/css/
+RUN mv dist/site.css /src/Dfe.PrepareConversions.Redirector/wwwroot/css/site.css
 
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS sdk
+COPY --from=frontend /src /src
+WORKDIR /src/Dfe.PrepareConversions.Redirector
+RUN dotnet build "Dfe.PrepareConversions.Redirector.csproj" -c Release
+RUN dotnet publish "Dfe.PrepareConversions.Redirector.csproj" -c Release -o /app /p:UseAppHost=false
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final
+COPY --from=sdk /app /app
 WORKDIR /app
-COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Dfe.PrepareConversions.Redirector.dll"]
