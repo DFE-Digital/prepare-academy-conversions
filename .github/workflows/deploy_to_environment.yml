@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  DOCKER_IMAGE: dfe-digital/a2b-internal
+  DOCKER_IMAGE: dfe-digital/a2b-internal:redirector
   AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
   NODE_VERSION: 18.x
 
