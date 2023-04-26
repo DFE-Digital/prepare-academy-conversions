@@ -67,19 +67,19 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          tags: |
-            ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE}}:${{ env.DOCKER_IMAGE_TAG }}
-            ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE}}:${{ env.BRANCH_TAG }}
-          push: true
-          build-args: |
-            COMMIT_SHA=${{ env.DOCKER_IMAGE_TAG }}
+      #- name: Build and push docker image
+      #  uses: docker/build-push-action@v2
+      #  with:
+      #    context: .
+      #    tags: |
+      #      ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE}}:${{ env.DOCKER_IMAGE_TAG }}
+      #      ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE}}:${{ env.BRANCH_TAG }}
+      #    push: true
+      #    build-args: |
+      #      COMMIT_SHA=${{ env.DOCKER_IMAGE_TAG }}
 
   deploy-image:
-    needs: build-and-push-image
+    #needs: build-and-push-image
     runs-on: ubuntu-22.04
     environment: ${{ github.event.inputs.environment}}
     defaults:
