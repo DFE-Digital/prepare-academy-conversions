@@ -1,8 +1,7 @@
-namespace Dfe.PrepareConversions.DocumentGeneration.Elements
+namespace Dfe.PrepareConversions.DocumentGeneration.Elements;
+
+public enum TableBorderStyle
 {
-    public enum TableBorderStyle
-    {
-        Solid,
-        None
-    }
+   Solid,
+   None
 }

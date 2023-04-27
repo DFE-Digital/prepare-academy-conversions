@@ -10,12 +10,13 @@ on:
         type: environment
         description: "Choose an environment to deploy to"
         required: true
-        
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 
 env:
   DOCKER_IMAGE: a2bint-app
+  NODE_VERSION: 18.x
 
 jobs:
   set-env:
@@ -99,7 +100,7 @@ jobs:
             }
 
   deploy-image:
-    name: Deploy to ${{ needs.set-env.outputs.environment }}
+    name: Deploy to ${{ needs.set-env.outputs.environment }} (${{ needs.set-env.outputs.release }})
     needs: [ build-and-push-image, set-env ]
     runs-on: ubuntu-22.04
     environment: ${{ needs.set-env.outputs.environment }}
@@ -111,8 +112,9 @@ jobs:
 
       - name: Update Azure Container Apps Revision
         uses: azure/CLI@v1
+        id: azure
         with:
-          azcliversion: 2.40.0
+          azcliversion: 2.45.0
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
             az containerapp update \
@@ -120,3 +122,44 @@ jobs:
               --resource-group ${{ secrets.CIP_ACA_RESOURCE_GROUP }} \
               --image ${{ secrets.CIP_ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ needs.set-env.outputs.release }} \
               --output none
+
+  cypress-tests:
+    name: Run Cypress Tests
+    if: needs.set-env.outputs.environment == 'staging' || needs.set-env.outputs.environment == 'dev'
+    needs: [ deploy-image, set-env ]
+    runs-on: ubuntu-22.04
+    environment: ${{ needs.set-env.outputs.environment }}
+    defaults:
+      run:
+        working-directory: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Npm install
+        run: npm install
+
+      - name: Run cypress (staging)
+        if: needs.set-env.outputs.environment == 'staging'
+        run: npm run cy:run -- --env url='${{ secrets.CIP_ENDPOINT }}',grep='-dao',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
+        env:
+          db: ${{ secrets.DB_CONNECTION_STRING }}
+
+      - name: Run cypress (dev)
+        if: needs.set-env.outputs.environment == 'dev'
+        run: npm run cy:run -- --env url='${{ secrets.CIP_ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
+        env:
+          db: ${{ secrets.DB_CONNECTION_STRING }}
+
+      - name: Upload screenshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v1
+        with:
+          name: screenshots-${{ needs.set-env.outputs.environment }}
+          path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots

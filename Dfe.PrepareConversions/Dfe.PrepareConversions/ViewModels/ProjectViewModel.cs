@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.ViewModels;
 
-public class ProjectViewModel
+public class ProjectViewModel: ProjectTypeBase
 {
    public ProjectViewModel(AcademyConversionProject project)
    {
@@ -38,10 +38,16 @@ public class ProjectViewModel
       SponsorReferenceNumber = project.SponsorReferenceNumber;
       SponsorName = project.SponsorName;
       AcademyTypeAndRoute = project.AcademyTypeAndRoute;
-      ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate;
+      Form7Received = project.Form7Received;
+      Form7ReceivedDate = project.Form7ReceivedDate;
+      ProposedAcademyOpeningDate = project.OpeningDate;
       SchoolAndTrustInformationSectionComplete = project.SchoolAndTrustInformationSectionComplete ?? false;
       ConversionSupportGrantAmount = project.ConversionSupportGrantAmount ?? 0;
       ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason;
+      DaoPackSentDate = project.DaoPackSentDate;
+
+      AnnexBFormReceived = project.AnnexBFormReceived;
+      AnnexBFormUrl = project.AnnexBFormUrl;
 
       PublishedAdmissionNumber = project.PublishedAdmissionNumber;
       ViabilityIssues = project.ViabilityIssues;
@@ -96,7 +102,6 @@ public class ProjectViewModel
       Notes = project.Notes;
    }
 
-
    public string Id { get; }
    public string ApplicationReferenceNumber { get; set; }
    public string SchoolName { get; }
@@ -119,6 +124,8 @@ public class ProjectViewModel
    public string Version { get; set; }
    public string ClearedBy { get; set; }
    public string AcademyOrderRequired { get; set; }
+   public string Form7Received { get; set; }
+   public DateTime? Form7ReceivedDate { get; set; }
    public string PreviousHeadTeacherBoardDateQuestion { get; set; }
    public DateTime? PreviousHeadTeacherBoardDate { get; set; }
    public string PreviousHeadTeacherBoardLink { get; set; }
@@ -131,6 +138,11 @@ public class ProjectViewModel
    public bool SchoolAndTrustInformationSectionComplete { get; set; }
    public decimal ConversionSupportGrantAmount { get; set; }
    public string ConversionSupportGrantChangeReason { get; set; }
+   public DateTime? DaoPackSentDate { get; set; }
+
+   // Annex B
+   public bool? AnnexBFormReceived { get; set; }
+   public string AnnexBFormUrl { get; set; }
 
    //general info
    public string PublishedAdmissionNumber { get; set; }
@@ -190,4 +202,6 @@ public class ProjectViewModel
    public User AssignedUser { get; set; }
 
    public ICollection<ProjectNote> Notes { get; }
+
+   protected override string TypeAndRouteValue => AcademyTypeAndRoute;
 }

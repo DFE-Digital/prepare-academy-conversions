@@ -1,12 +1,13 @@
-﻿@model Dfe.PrepareConversions.Pages.TaskList.Decision.BackLink
+﻿@using Microsoft.Extensions.Primitives
+@model Dfe.PrepareConversions.Pages.Shared.BackLink
 @{
-    var redirect = Context.Request.Query["redirect"];
-    bool overideBackLink = false;
-    if (!string.IsNullOrEmpty(redirect))
-    {
-        overideBackLink = true;
-        Model.LinkPage = redirect;
-    }
+   StringValues redirect = Context.Request.Query["redirect"];
+   var overideBackLink = false;
+   if (!string.IsNullOrEmpty(redirect))
+   {
+      overideBackLink = true;
+      Model.LinkPage = redirect;
+   }
 }
 
 <a asp-page="@Model.LinkPage" asp-all-route-data="@Model.LinkRouteValues" class="govuk-back-link" data-cy="select-backlink">@(overideBackLink ? "Back" : Model.LinkText)</a>

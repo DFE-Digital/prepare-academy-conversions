@@ -17,13 +17,13 @@ Cypress._.each(['ipad-mini'], (viewport) => {
         cy.get('[data-cy=select-projectlist-filter-apply]').click();
         cy.get('[data-cy="select-projectlist-filter-row"]').should('be.visible');
         cy.get('[data-cy="select-projectlist-filter-banner"]').should('be.visible');
-        cy.get('[data-cy="select-projectlist-filter-count"]').should('not.have.text', '0 projects found'); 
+        cy.get('[data-cy="select-projectlist-filter-count"]').should('not.equal', '0 projects found');
       });   
   
       it('TC02: should display all the results when all filters are cleared', () => {
         cy.clearFilters();
         cy.get('[data-cy="select-projectlist-filter-banner"]').should('not.exist');
-        cy.get('[data-cy="select-projectlist-filter-count"]').should('not.have.text', '0 projects found');    
+        cy.get('[data-cy="select-projectlist-filter-count"]').should('not.equal', '0 projects found');
       });
   
       it('TC03: should display results when multiple filter options are checked', () => {
@@ -47,7 +47,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
         cy.get('[data-cy=select-projectlist-filter-apply]').click();
         cy.get('[data-cy="select-projectlist-filter-banner"]').should('be.visible');
         cy.get('[data-cy="select-projectlist-filter-row"]').should('be.visible');
-        cy.get('[data-cy="select-projectlist-filter-count"]').should('not.contain', '0 projects found');
+        cy.get('[data-cy="select-projectlist-filter-count"]').should('not.equal', '0 projects found');
         cy.get('[test-id="projectCount"]')
             .invoke('text')
             .then((text) => {
@@ -73,7 +73,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
         cy.get('[data-cy=select-projectlist-filter-apply]').click();
         cy.get('[data-cy="select-projectlist-filter-banner"]').should('be.visible');
         cy.get('[data-cy="select-projectlist-filter-row"]').should('be.visible');
-        cy.get('[data-cy="select-projectlist-filter-count"]').should('not.contain', '0 projects found');
+        cy.get('[data-cy="select-projectlist-filter-count"]').should('not.equal', '0 projects found');
           cy.get('[data-cy="select-projectlist-filter-region-North East"]').should('have.attr', 'checked');
           cy.get('[data-cy="select-projectlist-filter-officer-not-assigned"]').should('have.attr', 'checked');
           cy.get('[data-cy="select-projectlist-filter-region-North East"]').click();

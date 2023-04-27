@@ -20,9 +20,9 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
    private readonly IHttpClientService _httpClientService;
    private readonly IReadOnlyDictionary<string, string> _invertedAliasedStatuses;
 
-    public AcademyConversionProjectRepository(IApiClient apiClient,
-       IHttpClientFactory httpClientFactory = null,
-       IHttpClientService httpClientService = null)
+   public AcademyConversionProjectRepository(IApiClient apiClient,
+                                             IHttpClientFactory httpClientFactory = null,
+                                             IHttpClientService httpClientService = null)
    {
       _apiClient = apiClient;
       _httpClientFactory = httpClientFactory;
@@ -35,11 +35,12 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
                                                                                                       string titleFilter = "",
                                                                                                       IEnumerable<string> statusFilters = default,
                                                                                                       IEnumerable<string> deliveryOfficerFilter = default,
-                                                                                                      IEnumerable<string> regionsFilter = default)
+                                                                                                      IEnumerable<string> regionsFilter = default,
+                                                                                                      IEnumerable<string> applicationReferences = default)
    {
       AcademyConversionSearchModel searchModel = new() { TitleFilter = titleFilter, Page = page, Count = count };
 
-      ProcessFilters(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter);
+      ProcessFilters(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter, applicationReferences);
 
       HttpResponseMessage response = await _apiClient.GetAllProjectsAsync(searchModel);
       if (!response.IsSuccessStatusCode)
@@ -83,15 +84,15 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
 
    public async Task CreateInvoluntaryProject(CreateInvoluntaryProject involuntaryProject)
    {
-      var httpClient = _httpClientFactory.CreateClient("AcademisationClient");
+      HttpClient httpClient = _httpClientFactory.CreateClient("AcademisationClient");
 
-      var result = await _httpClientService.Post<CreateInvoluntaryProject, string>(
+      ApiResponse<string> result = await _httpClientService.Post<CreateInvoluntaryProject, string>(
          httpClient,
          @"legacy/project/involuntary-conversion-project",
          involuntaryProject);
 
       if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
-    }
+   }
 
    public async Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
    {
@@ -135,13 +136,13 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
    private void ProcessFilters(IEnumerable<string> statusFilters,
                                      IEnumerable<string> deliveryOfficerFilter,
                                      AcademyConversionSearchModel searchModel,
-                                     IEnumerable<string> regionsFilter = default)
+                                     IEnumerable<string> regionsFilter = default,
+                                     IEnumerable<string> applicationReferences = default)
    {
       if (deliveryOfficerFilter != default)
       {
          searchModel.DeliveryOfficerQueryString = deliveryOfficerFilter;
       }
-
       if (statusFilters != null)
       {
          IEnumerable<string> projectedStatuses = statusFilters.SelectMany(x =>
@@ -151,13 +152,13 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
 
          searchModel.StatusQueryString = projectedStatuses.ToArray();
       }
-
       if (regionsFilter != default)
       {
          searchModel.RegionQueryString = regionsFilter.Select(x => x.ToLower()).ToList();
       }
+      if (applicationReferences != default)
+      {
+         searchModel.ApplicationReferences = applicationReferences;
+      }
    }
 }
-
-
-

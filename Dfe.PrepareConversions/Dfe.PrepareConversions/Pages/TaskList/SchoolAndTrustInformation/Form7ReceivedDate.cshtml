@@ -1,0 +1,16 @@
+﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/form-7-received-date"
+@model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
+@{
+   Layout = "_QuestionLayout";
+   Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
+   ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Date SNM received Form 7";
+   ViewData["SchoolName"] = Model.Project.SchoolName;
+   ViewData["ProjectId"] = Model.Project.Id;
+}
+
+@section BeforeMain
+{
+   <govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation"/>
+}
+
+<govuk-date-input heading-label="true" label="Date SNM received Form 7" name="form-7-received-date" id="form-7-received-date" asp-for="Project.Form7ReceivedDate" hint="For example, 27 3 2021"/>

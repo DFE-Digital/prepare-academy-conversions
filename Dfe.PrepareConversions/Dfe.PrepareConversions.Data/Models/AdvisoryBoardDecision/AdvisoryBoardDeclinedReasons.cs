@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel;
 
-namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
+namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
+
+public enum AdvisoryBoardDeclinedReasons
 {
-	public enum AdvisoryBoardDeclinedReasons
-	{
-		Finance = 0,
-		Performance = 1,
-		Governance = 2,
-		[Description("Choice of trust")] ChoiceOfTrust = 3,
-		Other = 4
-	}
+   Finance = 0,
+   Performance = 1,
+   Governance = 2,
+   [Description("Choice of trust")] ChoiceOfTrust = 3,
+   Other = 4
 }

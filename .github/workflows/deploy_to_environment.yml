@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  DOCKER_IMAGE: dfe-digital/a2b-internal
+  DOCKER_IMAGE_TAG: redirector
   AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
   NODE_VERSION: 18.x
 
@@ -35,51 +35,51 @@ jobs:
         run: dotnet build -c Release Dfe.PrepareConversions/Dfe.PrepareConversions.sln --no-restore
       - name: Test
         run: dotnet test -c Release Dfe.PrepareConversions/Dfe.PrepareConversions.sln --no-build --verbosity normal  --collect:"XPlat Code Coverage"
-  build-and-push-image:
-    needs: test
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      packages: write
+  #build-and-push-image:
+  #  needs: test
+  #  runs-on: ubuntu-22.04
+  #  permissions:
+  #    contents: read
+  #    packages: write
 
-    steps:
-      - name: checkout repository
-        uses: actions/checkout@v2
+  #  steps:
+  #    - name: checkout repository
+  #      uses: actions/checkout@v2
 
-      - name: Set environment variables
-        run: |
-          GIT_REF=${{ github.ref }}
-          GIT_BRANCH=${GIT_REF##*/}
-          echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
-          echo "DOCKER_IMAGE_TAG=$GITHUB_SHA" >> $GITHUB_ENV
-      - name: setup node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
+  #    - name: Set environment variables
+  #      run: |
+  #        GIT_REF=${{ github.ref }}
+  #        GIT_BRANCH=${GIT_REF##*/}
+  #        echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
+  #        echo "DOCKER_IMAGE_TAG=$GITHUB_SHA" >> $GITHUB_ENV
+  #    - name: setup node.js
+  #      uses: actions/setup-node@v3
+  #      with:
+  #        node-version: ${{ env.NODE_VERSION }}
 
-      - name: Build Frontend
-        run: cd Dfe.PrepareConversions/Dfe.PrepareConversions/wwwroot; npm install; npm run build:assets; npm run build:frontend
+  #    - name: Build Frontend
+  #      run: cd Dfe.PrepareConversions/Dfe.PrepareConversions/wwwroot; npm install; npm run build:assets; npm run build:frontend
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+  #    - name: Log in to the Container registry
+  #      uses: docker/login-action@v1
+  #      with:
+  #        registry: ${{ env.REGISTRY }}
+  #        username: ${{ github.actor }}
+  #        password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          tags: |
-            ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE}}:${{ env.DOCKER_IMAGE_TAG }}
-            ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE}}:${{ env.BRANCH_TAG }}
-          push: true
-          build-args: |
-            COMMIT_SHA=${{ env.DOCKER_IMAGE_TAG }}
+      #- name: Build and push docker image
+      #  uses: docker/build-push-action@v2
+      #  with:
+      #    context: .
+      #    tags: |
+      #      ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE}}:${{ env.DOCKER_IMAGE_TAG }}
+      #      ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE}}:${{ env.BRANCH_TAG }}
+      #    push: true
+      #    build-args: |
+      #      COMMIT_SHA=${{ env.DOCKER_IMAGE_TAG }}
 
   deploy-image:
-    needs: build-and-push-image
+    #needs: build-and-push-image
     runs-on: ubuntu-22.04
     environment: ${{ github.event.inputs.environment}}
     defaults:
@@ -100,9 +100,6 @@ jobs:
           echo "[default]" > ~/.aws/credentials
           echo "aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
           echo "aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
-      - name: Set environment variables
-        run: |
-          echo "DOCKER_IMAGE_TAG=$GITHUB_SHA" >> $GITHUB_ENV
       # Downloads a specific version of Terraform CLI and adds it to PATH
       # Marketplace: https://github.com/marketplace/actions/hashicorp-setup-terraform
       - name: "Setup - Terraform CLI"
@@ -153,7 +150,8 @@ jobs:
           TF_VAR_app_azuread_groupid: ${{ secrets.AZUREAD_GROUPID }}
           TF_VAR_app_cypresstest_secret : ${{ secrets.CYPRESS_TEST_SECRET }}
           TF_VAR_app_feature_use_academisation : true
-          TF_VAR_app_feature_use_academisationApplication : false
+          TF_VAR_app_feature_use_academisation_application : true
+          TF_VAR_app_feature_show_directedacademyorders : false
           TF_VAR_app_accessrequest : ${{ secrets.ACCESSREQUEST }}
           TF_VAR_app_templatefeedback : ${{ secrets.TEMPLATEFEEDBACK }}
 
@@ -196,7 +194,7 @@ jobs:
       - name: Npm install
         run: npm install
       - name: Run cypress
-        run: npm run cy:run -- --env url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
+        run: npm run cy:run -- --env url='${{ secrets.ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}',grep='-dao'
         env:
           db: ${{ secrets.DB_CONNECTION_STRING }}
       - uses: actions/upload-artifact@v1

@@ -1,17 +1,17 @@
 ﻿@page "/task-list/{id:int}/confirm-general-information/viability-issues"
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
-	Layout = "_QuestionLayout";
-	Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
-	ViewData["Title"] = "Viability issues";
-	ViewData["SchoolName"] = Model.Project.SchoolName;
-	ViewData["ProjectId"] = Model.Project.Id;
-	var values = new[] { "Yes", "No" };
+   Layout = "_QuestionLayout";
+   Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
+   ViewData["Title"] = "Viability issues";
+   ViewData["SchoolName"] = Model.Project.SchoolName;
+   ViewData["ProjectId"] = Model.Project.Id;
+   var values = new[] { "Yes", "No" };
 }
 
 @section BeforeMain
 {
-	<govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation" />
+   <govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation"/>
 }
 
-<govuk-radios-input heading-label="true" label="Are there viability issues at the school?" name="viability-issues" asp-for="Project.ViabilityIssues" values="@values" labels="@values" />
+<govuk-radios-input heading-label="true" label="Are there viability issues at the school?" name="viability-issues" asp-for="Project.ViabilityIssues" values="@values" labels="@values"/>

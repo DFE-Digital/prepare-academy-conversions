@@ -1,21 +1,21 @@
-﻿@model Dfe.PrepareConversions.ViewModels.SummaryListRowViewModel
+﻿@model SummaryListRowViewModel
 <div class="govuk-summary-list__row">
-	<dt class="govuk-summary-list__key @Model.KeyWidth">
-		@Model.Key
-	</dt>
-	<dd class="govuk-summary-list__value @Model.ValueWidth">
-		@if (Model.HasValue)
-		{
-			@if (Model.HasValueLink)
-			{
-				<a class="govuk-link" href="@Model.ValueLink" target="_blank">@($"{Model.Value} (opens in new tab)")</a>
-			}
-			else
-			{
-				<span id="@Model.Id" class="@Model.NegativeStyleClass">@Model.Value</span>
-			}
-		}
-      
+   <dt class="govuk-summary-list__key @Model.KeyWidth">
+      @Model.Key
+   </dt>
+   <dd class="govuk-summary-list__value @Model.ValueWidth">
+      @if (Model.HasValue)
+      {
+         @if (Model.HasValueLink)
+         {
+            <a class="govuk-link" href="@Model.ValueLink" target="_blank">@($"{Model.Value} (opens in new tab)")</a>
+         }
+         else
+         {
+            <span id="@Model.Id" class="@Model.NegativeStyleClass">@Model.Value</span>
+         }
+      }
+
       @if (Model.HasAdditionalText)
       {
          @if (Model.HasValue)
@@ -25,53 +25,53 @@
          <span id="@(Model.Id + "-additional-text")">@Model.AdditionalText</span>
       }
 
-      @if ((!Model.HasValue) && (!Model.HasAdditionalText))
-		{
-			<span id="@Model.Id" class="empty">Empty</span>
-		}
-	</dd>
-	<dd class="govuk-summary-list__actions">
-		@if (!string.IsNullOrEmpty(Model.Page) && !string.IsNullOrEmpty(Model.RouteId))
-		{
-			if (ViewData["IncludeFragment"] is bool includeFragment && includeFragment)
-			{
-				if (Model.Page == Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDateQuestion.Page)
-				{
-					<a class="govuk-link"
-					   data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
-					   asp-page="@Model.Page" asp-route-id="@Model.RouteId"
-					   asp-route-return="@Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDate.Page"
-					   asp-route-fragment="@Model.Id" asp-route-back="@Model.Return">
-						Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
-					</a>
-				}
-				else
-				{
-					<a class="govuk-link"
-					   data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
-					   asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return"
-					   asp-route-fragment="@Model.Id">
-						Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
-					</a>
-				}
-			}
-			else if (!string.IsNullOrEmpty(Model.Fragment))
-			{
-				<a class="govuk-link"
-				   data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
-				   asp-page="@Model.Page" asp-fragment="@Model.Fragment"
-				   asp-route-id="@Model.RouteId" asp-route-return="@Model.Return">
-					Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
-				</a>
-			}
-			else
-			{
-				<a class="govuk-link"
-				   data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
-				   asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return">
-					Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
-				</a>
-			}
-		}
-	</dd>
+      @if (!Model.HasValue && !Model.HasAdditionalText)
+      {
+         <span id="@Model.Id" class="empty">Empty</span>
+      }
+   </dd>
+   <dd class="govuk-summary-list__actions">
+      @if (!string.IsNullOrEmpty(Model.Page) && !string.IsNullOrEmpty(Model.RouteId))
+      {
+         if (ViewData["IncludeFragment"] is bool includeFragment && includeFragment)
+         {
+            if (Model.Page == Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDateQuestion.Page)
+            {
+               <a class="govuk-link"
+                  data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
+                  asp-page="@Model.Page" asp-route-id="@Model.RouteId"
+                  asp-route-return="@Links.SchoolAndTrustInformationSection.PreviousHeadTeacherBoardDate.Page"
+                  asp-route-fragment="@Model.Id" asp-route-back="@Model.Return">
+                  Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
+               </a>
+            }
+            else
+            {
+               <a class="govuk-link"
+                  data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
+                  asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return"
+                  asp-route-fragment="@Model.Id">
+                  Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
+               </a>
+            }
+         }
+         else if (!string.IsNullOrEmpty(Model.Fragment))
+         {
+            <a class="govuk-link"
+               data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
+               asp-page="@Model.Page" asp-fragment="@Model.Fragment"
+               asp-route-id="@Model.RouteId" asp-route-return="@Model.Return">
+               Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
+            </a>
+         }
+         else
+         {
+            <a class="govuk-link"
+               data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
+               asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return">
+               Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
+            </a>
+         }
+      }
+   </dd>
 </div>

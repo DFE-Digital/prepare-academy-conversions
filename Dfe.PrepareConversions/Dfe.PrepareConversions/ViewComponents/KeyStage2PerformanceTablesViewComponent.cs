@@ -1,45 +1,46 @@
-﻿using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
+﻿using Dfe.PrepareConversions.Data;
+using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using static Dfe.PrepareConversions.Extensions.DisplayExtensions;
 
-namespace Dfe.PrepareConversions.ViewComponents
+namespace Dfe.PrepareConversions.ViewComponents;
+
+public class KeyStage2PerformanceTablesViewComponent : ViewComponent
 {
-	public class KeyStage2PerformanceTablesViewComponent : ViewComponent
-	{
-		private readonly KeyStagePerformanceService _keyStagePerformanceService;
-		private readonly IAcademyConversionProjectRepository _repository;
+   private readonly KeyStagePerformanceService _keyStagePerformanceService;
+   private readonly IAcademyConversionProjectRepository _repository;
 
-		public KeyStage2PerformanceTablesViewComponent(
-			KeyStagePerformanceService keyStagePerformanceService,
-			IAcademyConversionProjectRepository repository)
-		{
-			_keyStagePerformanceService = keyStagePerformanceService;
-			_repository = repository;
-		}
+   public KeyStage2PerformanceTablesViewComponent(
+      KeyStagePerformanceService keyStagePerformanceService,
+      IAcademyConversionProjectRepository repository)
+   {
+      _keyStagePerformanceService = keyStagePerformanceService;
+      _repository = repository;
+   }
 
-		public async Task<IViewComponentResult> InvokeAsync()
-		{
-			var id = int.Parse(ViewContext.RouteData.Values["id"].ToString());
+   public async Task<IViewComponentResult> InvokeAsync()
+   {
+      int id = int.Parse(ViewContext.RouteData.Values["id"]?.ToString() ?? string.Empty);
 
-			var response = await _repository.GetProjectById(id);
-			if (!response.Success)
-			{
-				throw new InvalidOperationException();
-			}
+      ApiResponse<AcademyConversionProject> response = await _repository.GetProjectById(id);
+      if (!response.Success)
+      {
+         throw new InvalidOperationException();
+      }
 
-			var project = response.Body;
-			ViewData["SchoolName"] = project.SchoolName;
-			ViewData["LocalAuthority"] = project.LocalAuthority;
-			var keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(project.Urn.ToString());
+      AcademyConversionProject project = response.Body;
+      ViewData["SchoolName"] = project.SchoolName;
+      ViewData["LocalAuthority"] = project.LocalAuthority;
+      KeyStagePerformance keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(project.Urn.ToString());
 
-			var viewModel = keyStagePerformance.KeyStage2.Select(KeyStage2PerformanceTableViewModel.Build).OrderByDescending(ks => ks.Year);
+      IOrderedEnumerable<KeyStage2PerformanceTableViewModel> viewModel = keyStagePerformance.KeyStage2.Select(KeyStage2PerformanceTableViewModel.Build)
+         .OrderByDescending(ks => ks.Year);
 
-			return View(viewModel);
-		}
-	}
+      return View(viewModel);
+   }
 }

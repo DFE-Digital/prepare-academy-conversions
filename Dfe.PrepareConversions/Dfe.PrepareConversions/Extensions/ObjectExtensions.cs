@@ -1,14 +1,14 @@
-﻿namespace Dfe.PrepareConversions.Extensions
+﻿namespace Dfe.PrepareConversions.Extensions;
+
+public static class ObjectExtensions
 {
-	public static class ObjectExtensions
-	{
-		public static string ToStringOrDefault(this object obj, string @default = null)
-		{
-			if (obj == null)
-			{
-				return @default;
-			}
-			return obj.ToString();
-		}
-	}
+   public static string ToStringOrDefault(this object obj, string @default = null)
+   {
+      if (obj == null)
+      {
+         return @default;
+      }
+
+      return obj.ToString();
+   }
 }

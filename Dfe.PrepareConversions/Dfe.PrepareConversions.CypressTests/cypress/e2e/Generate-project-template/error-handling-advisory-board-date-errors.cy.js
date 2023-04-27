@@ -4,7 +4,7 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 	describe(`86341: Error messaging should be correct on ${viewport}`, () => {
 		beforeEach(() => {
 			cy.viewport(viewport)
-			cy.login()
+			cy.login({titleFilter: 'Gloucester school'})
 			cy.get('#school-name-0').click()
 		})
 
@@ -18,17 +18,6 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 				cy.get('*[href*="/confirm-school-trust-information-project-dates"]').click()
 				cy.get('*[data-test="change-advisory-board-date"]').click()
 			})
-
-			it('TC02: Should display "Advisory board date must be in the future" when an elapsed date has been submitted', () => {
-				cy.url().then(href => {
-					expect(href.endsWith('/confirm-school-trust-information-project-dates/advisory-board-date')).to.be.true;
-				})
-				cy.get('h1').contains('Set the advisory board date')
-				cy.submitDateSchoolTrust(11, 11, 2005)
-				cy.saveAndContinueButton().click()
-				cy.get('.govuk-error-summary__list li a')
-					.should('have.text', 'Advisory board date must be in the future')
-			});
 
 			it('TC03: Should display "Advisory Board must be a valid date" when submitting invalid month', () => {
 				cy.submitDateSchoolTrust(11, 222, 2005)

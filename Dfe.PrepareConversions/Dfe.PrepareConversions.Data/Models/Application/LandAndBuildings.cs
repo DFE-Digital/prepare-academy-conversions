@@ -1,13 +1,12 @@
-﻿namespace Dfe.PrepareConversions.Data.Models.Application
+﻿namespace Dfe.PrepareConversions.Data.Models.Application;
+
+public class LandAndBuildings
 {
-	public class LandAndBuildings
-	{
-		public string BuildingAndLandOwner { get; set; }
-		public bool HasCurrentPlannedBuildingWorks { get; set; }
-		public bool HasSharedFacilitiesOnSite { get; set; }
-		public bool HasSchoolGrants { get; set; }
-		public bool HasPrivateFinanceInitiativeScheme { get; set; }
-		public bool IsInPrioritySchoolBuildingProgramme { get; set; }
-		public bool IsInBuildingSchoolsForFutureProgramme { get; set; }
-	}
+   public string BuildingAndLandOwner { get; set; }
+   public bool HasCurrentPlannedBuildingWorks { get; set; }
+   public bool HasSharedFacilitiesOnSite { get; set; }
+   public bool HasSchoolGrants { get; set; }
+   public bool HasPrivateFinanceInitiativeScheme { get; set; }
+   public bool IsInPrioritySchoolBuildingProgramme { get; set; }
+   public bool IsInBuildingSchoolsForFutureProgramme { get; set; }
 }

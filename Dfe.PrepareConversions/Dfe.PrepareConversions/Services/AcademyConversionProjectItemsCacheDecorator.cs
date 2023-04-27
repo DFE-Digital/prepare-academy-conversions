@@ -6,63 +6,63 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareConversions.Services
+namespace Dfe.PrepareConversions.Services;
+
+public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionProjectRepository
 {
-   public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionProjectRepository
-	{
-		private readonly HttpContext _httpContext;
-		private readonly IAcademyConversionProjectRepository _innerRepository;
+   private readonly HttpContext _httpContext;
+   private readonly IAcademyConversionProjectRepository _innerRepository;
 
-		public AcademyConversionProjectItemsCacheDecorator(
-			IAcademyConversionProjectRepository innerRepository,
-			IHttpContextAccessor httpContextAccessor)
-		{
-			_innerRepository = innerRepository;
-			_httpContext = httpContextAccessor.HttpContext;
-		}
+   public AcademyConversionProjectItemsCacheDecorator(
+      IAcademyConversionProjectRepository innerRepository,
+      IHttpContextAccessor httpContextAccessor)
+   {
+      _innerRepository = innerRepository;
+      _httpContext = httpContextAccessor.HttpContext;
+   }
 
-		public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count, string titleFilter = "",
-			IEnumerable<string> statusFilters = default, IEnumerable<string> deliveryOfficerFilter = default, IEnumerable<string> regionsFilter = default)
-		{
-			return await _innerRepository.GetAllProjects(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter);
-		}
+   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjects(int page, int count, string titleFilter = "",
+      IEnumerable<string> statusFilters = default, IEnumerable<string> deliveryOfficerFilter = default, IEnumerable<string> regionsFilter = default, IEnumerable<string> applicationReferences = default)
+   {
+      return await _innerRepository.GetAllProjects(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter, applicationReferences);
+   }
 
-		public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)
-		{
-			if (_httpContext.Items.ContainsKey(id) && _httpContext.Items[id] is ApiResponse<AcademyConversionProject> cached)
-			{
-				return cached;
-			}
+   public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)
+   {
+      if (_httpContext.Items.ContainsKey(id) && _httpContext.Items[id] is ApiResponse<AcademyConversionProject> cached)
+      {
+         return cached;
+      }
 
-			ApiResponse<AcademyConversionProject> project = await _innerRepository.GetProjectById(id);
+      ApiResponse<AcademyConversionProject> project = await _innerRepository.GetProjectById(id);
 
-			_httpContext.Items.Add(id, project);
+      _httpContext.Items.Add(id, project);
 
-			return project;
-		}
-		public async Task CreateInvoluntaryProject(CreateInvoluntaryProject involuntaryProject)
-		{
-			await _innerRepository.CreateInvoluntaryProject(involuntaryProject);
-		}
+      return project;
+   }
 
-		public async Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject)
-		{
-			if (_httpContext.Items.ContainsKey(id))
-			{
-				_httpContext.Items.Remove(id);
-			}
+   public async Task CreateInvoluntaryProject(CreateInvoluntaryProject involuntaryProject)
+   {
+      await _innerRepository.CreateInvoluntaryProject(involuntaryProject);
+   }
 
-			return await _innerRepository.UpdateProject(id, updateProject);
-		}
+   public async Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject)
+   {
+      if (_httpContext.Items.ContainsKey(id))
+      {
+         _httpContext.Items.Remove(id);
+      }
 
-		public async Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
-		{
-			return await _innerRepository.GetFilterParameters();
-		}
+      return await _innerRepository.UpdateProject(id, updateProject);
+   }
 
-		public async Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote addProjectNote)
-		{
-			return await _innerRepository.AddProjectNote(id, addProjectNote);
-		}
-	}
+   public async Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
+   {
+      return await _innerRepository.GetFilterParameters();
+   }
+
+   public async Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote addProjectNote)
+   {
+      return await _innerRepository.AddProjectNote(id, addProjectNote);
+   }
 }

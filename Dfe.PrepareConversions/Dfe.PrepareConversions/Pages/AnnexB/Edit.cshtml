@@ -1,0 +1,68 @@
+@page "/task-list/{id:int}/annex-b-form-saved/edit"
+@model Dfe.PrepareConversions.Pages.AnnexB.EditModel
+@{
+   ViewData["Title"] = "Have you saved the Annex B form";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.AnnexB.Index.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.AnnexB.Index.BackText</a>
+   <partial name="_ErrorSummary"/>
+}
+
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-two-thirds">
+      <form method="post">
+         <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+         <h1 class="govuk-heading-l">Have you saved the school's completed Annex B form in SharePoint?</h1>
+
+         <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+               <span class="govuk-details__summary-text">
+                  What is the Annex B form?
+               </span>
+            </summary>
+            <div class="govuk-details__text">
+               The Annex B form was sent in the directive academy order (DAO) pack to the school. You'll need the completed Annex B form to get the project template ready for advisory board.
+            </div>
+         </details>
+
+         <div class="govuk-form-group">
+            <div class="govuk-radios" data-module="govuk-radios">
+               <div class="govuk-radios__item">
+                  <input asp-for="@Model.YesChecked" class="govuk-radios__input" type="radio" value="true" aria-controls="conditional-annexBsaved" id="radio-yes" data-cy="select-radio-yes">
+                  <label class="govuk-label govuk-radios__label" for="radio-yes">
+                     Yes
+                  </label>
+               </div>
+
+               <div class="govuk-radios__conditional" id="conditional-annexBsaved" data-cy="select-sharepoint-section">
+                  <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+                     <label class="govuk-label" for="application-form-url">
+                        What is the link for the Annex B form?
+                     </label>
+
+                     <div id="application-form-url-hint" class="govuk-hint">
+                        The Annex B form is saved in the school's SharePoint folder
+                     </div>
+
+                     <inline-error for="@nameof(Model.AnnexFormUrl)"/>
+                     <textarea asp-for="@Model.AnnexFormUrl" class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.AnnexFormUrl))" rows="5" aria-describedby="application-form-url-hint" data-cy="select-sharepoint-url"></textarea>
+                  </div>
+               </div>
+
+               <div class="govuk-radios__item">
+                  <input asp-for="@Model.YesChecked" class="govuk-radios__input" type="radio" value="false" id="radio-no" data-cy="select-radio-no">
+                  <label class="govuk-label govuk-radios__label" for="radio-no">
+                     No
+                  </label>
+               </div>
+            </div>
+         </div>
+
+         <button class="govuk-button" data-module="govuk-button" data-cy="select-save-and-continue">
+            Save and continue
+         </button>
+      </form>
+   </div>
+</div>

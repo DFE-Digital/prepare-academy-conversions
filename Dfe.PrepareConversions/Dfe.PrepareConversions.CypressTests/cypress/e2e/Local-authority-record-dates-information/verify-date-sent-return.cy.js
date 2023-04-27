@@ -3,7 +3,7 @@
 Cypress._.each(['ipad-mini'], (viewport) => {
 	describe(`86462: "Date you sent/return the template" are reflected in preview on ${viewport}`, () => {
 		beforeEach(() => {
-			cy.login()
+			cy.login({titleFilter: 'Gloucester school'})
 			cy.viewport(viewport)
 			cy.selectSchoolListing(2)
 			cy.url().then(url => {

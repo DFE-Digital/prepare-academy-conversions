@@ -1,12 +1,11 @@
+using Dfe.PrepareConversions.DocumentGeneration.Elements;
 using System;
 using System.Collections.Generic;
-using Dfe.PrepareConversions.DocumentGeneration.Elements;
 
-namespace Dfe.PrepareConversions.DocumentGeneration.Interfaces.Parents
+namespace Dfe.PrepareConversions.DocumentGeneration.Interfaces.Parents;
+
+public interface ITableParent
 {
-    public interface ITableParent
-    {
-        public void AddTable(Action<ITableBuilder> action);
-        public void AddTable(IEnumerable<TextElement[]> rows);
-    }
+   public void AddTable(Action<ITableBuilder> action);
+   public void AddTable(IEnumerable<TextElement[]> rows);
 }

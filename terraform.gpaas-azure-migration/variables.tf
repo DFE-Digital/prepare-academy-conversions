@@ -8,6 +8,11 @@ variable "key_vault_access_users" {
   type        = list(string)
 }
 
+variable "key_vault_access_ipv4" {
+  description = "List of IPv4 Addresses that are permitted to access the Key Vault"
+  type        = list(string)
+}
+
 variable "tfvars_filename" {
   description = "tfvars filename. This file is uploaded and stored encrupted within Key Vault, to ensure that the latest tfvars are stored in a shared place."
   type        = string
@@ -54,6 +59,16 @@ variable "container_secret_environment_variables" {
   sensitive   = true
 }
 
+variable "container_max_replicas" {
+  description = "Container max replicas"
+  type        = number
+}
+
+variable "enable_event_hub" {
+  description = "Send Azure Container App logs to an Event Hub sink"
+  type        = bool
+}
+
 variable "enable_cdn_frontdoor" {
   description = "Enable Azure CDN Front Door. This will use the Container Apps endpoint as the origin."
   type        = bool
@@ -62,6 +77,11 @@ variable "enable_cdn_frontdoor" {
 variable "cdn_frontdoor_enable_rate_limiting" {
   description = "Enable CDN Front Door Rate Limiting. This will create a WAF policy, and CDN security policy. For pricing reasons, there will only be one WAF policy created."
   type        = bool
+}
+
+variable "cdn_frontdoor_rate_limiting_threshold" {
+  description = "CDN Front Door rate limiting duration in minutes"
+  type        = number
 }
 
 variable "cdn_frontdoor_host_add_response_headers" {
@@ -92,4 +112,69 @@ variable "monitor_email_receivers" {
 variable "monitor_endpoint_healthcheck" {
   description = "Specify a route that should be monitored for a 200 OK status"
   type        = string
+}
+
+variable "monitor_enable_slack_webhook" {
+  description = "Enable slack webhooks to send monitoring notifications to a channel"
+  type        = bool
+}
+
+variable "monitor_slack_webhook_receiver" {
+  description = "A Slack App webhook URL"
+  type        = string
+}
+
+variable "monitor_slack_channel" {
+  description = "Slack channel name/id to send messages to"
+  type        = string
+}
+
+variable "existing_network_watcher_name" {
+  description = "Use an existing network watcher to add flow logs."
+  type        = string
+}
+
+variable "existing_network_watcher_resource_group_name" {
+  description = "Existing network watcher resource group."
+  type        = string
+}
+
+variable "enable_dns_zone" {
+  description = "Conditionally create a DNS zone"
+  type        = bool
+}
+
+variable "dns_zone_domain_name" {
+  description = "DNS zone domain name. If created, records will automatically be created to point to the CDN."
+  type        = string
+}
+
+variable "cdn_frontdoor_custom_domains" {
+  description = "Azure CDN Front Door custom domains. If they are within the DNS zone (optionally created), the Validation TXT records and ALIAS/CNAME records will be created"
+  type        = list(string)
+}
+
+variable "cdn_frontdoor_host_redirects" {
+  description = "CDN FrontDoor host redirects `[{ \"from\" = \"example.com\", \"to\" = \"www.example.com\" }]`"
+  type        = list(map(string))
+}
+
+variable "dns_ns_records" {
+  description = "DNS NS records to add to the DNS Zone"
+  type = map(
+    object({
+      ttl : optional(number, 300),
+      records : list(string)
+    })
+  )
+}
+
+variable "dns_txt_records" {
+  description = "DNS TXT records to add to the DNS Zone"
+  type = map(
+    object({
+      ttl : optional(number, 300),
+      records : list(string)
+    })
+  )
 }

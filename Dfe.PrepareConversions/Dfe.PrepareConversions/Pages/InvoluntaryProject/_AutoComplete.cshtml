@@ -1,12 +1,11 @@
-﻿@using System.Web
-@model AutoCompleteSearchModel
+﻿@model AutoCompleteSearchModel
 
 <p asp-gds-validation-for="SearchQuery"></p>
 <div id="query-hint" class="govuk-hint">
-    @Model.Label
+   @Model.Label
 </div>
 <div id="search"></div>
-<input type="hidden" id="SearchQuery" name="SearchQuery" />
+<input type="hidden" id="SearchQuery" name="SearchQuery"/>
 
 <script type="application/javascript" asp-add-nonce>
 
@@ -16,21 +15,21 @@
             clearTimeout(timer);
             timer = setTimeout(() => func.apply(this, args), timeout);
         };
-    }
-
-    var loading = true;
+    }    
+    
+    let loading = true;
 
     function suggest(query, populateResults) {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onload = function() {
-           if (!loading || '@Html.Raw(Model.SearchQuery)' == '') populateResults(JSON.parse(this.responseText));
+        const http = new XMLHttpRequest();        
+        http.onload = function() {
+           if (!loading || '@Html.Raw(Model.SearchQuery)' === '') populateResults(JSON.parse(this.responseText));
            loading = false;
         }
-        xhttp.open('GET', `@Html.Raw(Model.SearchEndpoint)${query}`, true);
-        xhttp.send();
+        http.open('GET', `@Html.Raw(Model.SearchEndpoint)${query}`, true);
+        http.send();
     }
 
-    var suggestDebounce = debounce((query, populateResults) => suggest(query, populateResults));
+    const suggestDebounce = debounce((query, populateResults) => suggest(query, populateResults));
 
     accessibleAutocomplete({
         element: document.querySelector('#search'),
@@ -47,5 +46,4 @@
 
     // setting the default option manually due to bug in autoselect - https://github.com/alphagov/accessible-autocomplete/issues/424
     document.querySelector('#SearchQuery').value = '@Html.Raw(Model.SearchQuery)';
-
 </script>

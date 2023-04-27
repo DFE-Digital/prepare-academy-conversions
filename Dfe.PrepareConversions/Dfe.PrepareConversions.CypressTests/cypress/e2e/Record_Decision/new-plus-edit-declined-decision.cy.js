@@ -1,10 +1,11 @@
 /// <reference types ='Cypress'/>
-import RecordDecision from '../../pages/recordDecision'
+import ProjectList from '../../pages/projectList'
 let projectList = Cypress.env('url') + '/project-list'
 
+//skipped due to sql error //TODO
 describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
     beforeEach(() => {
-        RecordDecision.selectProject().then(id => {
+        ProjectList.selectProject().then(id => {
             cy.sqlServer(`
                     delete from academisation.ConversionAdvisoryBoardDecisionDeclinedReason 
                     where AdvisoryBoardDecisionId = (select id from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id})`);
@@ -54,7 +55,7 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
         cy.url().then(url => {
-            const id = RecordDecision.getIdFromUrl(url)
+            const id = ProjectList.getIdFromUrl(url)
             cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
         })
@@ -100,7 +101,7 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
         cy.url().then(url => {
-            const id = RecordDecision.getIdFromUrl(url)
+            const id = ProjectList.getIdFromUrl(url)
             cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
         })
@@ -146,7 +147,7 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
         cy.url().then(url => {
-            const id = RecordDecision.getIdFromUrl(url)
+            const id = ProjectList.getIdFromUrl(url)
             cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
         })
@@ -190,7 +191,7 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
         cy.url().then(url => {
-            const id = RecordDecision.getIdFromUrl(url)
+            const id = ProjectList.getIdFromUrl(url)
             cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
         })
@@ -235,7 +236,7 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         // recorded decision confirmation
         cy.recordnoteMsg().should('contain.text', 'Decision recorded')
         cy.url().then(url => {
-            const id = RecordDecision.getIdFromUrl(url)
+            const id = ProjectList.getIdFromUrl(url)
             cy.visit(projectList)
             cy.get(`[id="project-status-${id}"]`).should('contain.text', 'DECLINED')
         })

@@ -1,89 +1,90 @@
 using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
+using Dfe.PrepareConversions.Models.ProjectList;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareConversions.Pages.InvoluntaryProject
+namespace Dfe.PrepareConversions.Pages.InvoluntaryProject;
+
+public class SearchSchoolModel : PageModel
 {
-	public class SearchSchoolModel : PageModel
-	{
-		private readonly IGetEstablishment _getEstablishment;
-		private readonly ErrorService _errorService;
-		private const string SEARCH_LABEL = "Search by name or URN (Unique Reference Number).";
-		private const string SEARCH_ENDPOINT = "/start-new-project/school-name?handler=Search&searchQuery=";
+   private const string SEARCH_LABEL = "Search by name or URN (Unique Reference Number). Entering more characters will give quicker results. You should write URNs in full.";
+   private const string SEARCH_ENDPOINT = "/start-new-project/school-name?handler=Search&searchQuery=";
+   private readonly ErrorService _errorService;
+   private readonly IGetEstablishment _getEstablishment;
 
-		public SearchSchoolModel(IGetEstablishment getEstablishment, ErrorService errorService)
-		{
-			_getEstablishment = getEstablishment;
-			_errorService = errorService;
-		}
+   public SearchSchoolModel(IGetEstablishment getEstablishment, ErrorService errorService)
+   {
+      _getEstablishment = getEstablishment;
+      _errorService = errorService;
+   }
 
-		[BindProperty] public string SearchQuery { get; set; } = "";
-		public AutoCompleteSearchModel AutoCompleteSearchModel { get; set; }
+   [BindProperty]
+   public string SearchQuery { get; set; } = "";
 
-		public async Task<IActionResult> OnGet(string urn)
-		{
-			var establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
-			if (!string.IsNullOrWhiteSpace(establishment.Urn))
-			{
-				SearchQuery = $"{establishment.EstablishmentName} ({establishment.Urn})";
-			}
+   public AutoCompleteSearchModel AutoCompleteSearchModel { get; set; }
 
-			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
+   public async Task<IActionResult> OnGet(string urn)
+   {
+      ProjectListFilters.ClearFiltersFrom(TempData);
 
-			return Page();
-		}
+      EstablishmentResponse establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
+      if (!string.IsNullOrWhiteSpace(establishment.Urn))
+      {
+         SearchQuery = $"{establishment.EstablishmentName} ({establishment.Urn})";
+      }
 
-		public async Task<IActionResult> OnGetSearch(string searchQuery)
-		{
-			var searchSplit = SplitOnBrackets(searchQuery);
+      AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
 
-			var schools = await _getEstablishment.SearchEstablishments(searchSplit[0].Trim());
+      return Page();
+   }
 
-			return new JsonResult(schools.Select(s => new
-			{
-				suggestion = HighlightSearchMatch($"{s.Name} ({s.Urn})", searchSplit[0].Trim(), s),
-				value = $"{s.Name} ({s.Urn})"
-			}));
-		}
+   public async Task<IActionResult> OnGetSearch(string searchQuery)
+   {
+      string[] searchSplit = SplitOnBrackets(searchQuery);
 
-		public IActionResult OnPost(string ukprn, string redirect)
-		{
-			AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
+      IEnumerable<EstablishmentSearchResponse> schools = await _getEstablishment.SearchEstablishments(searchSplit[0].Trim());
 
-			if (string.IsNullOrWhiteSpace(SearchQuery))
-			{
-				ModelState.AddModelError(nameof(SearchQuery), "Enter the school name or URN");
-				_errorService.AddErrors(ModelState.Keys, ModelState);
-				return Page();
-			}
+      return new JsonResult(schools.Select(s => new { suggestion = HighlightSearchMatch($"{s.Name} ({s.Urn})", searchSplit[0].Trim(), s), value = $"{s.Name} ({s.Urn})" }));
+   }
 
-			var splitSearch = SplitOnBrackets(SearchQuery);
-			if (splitSearch.Length < 2) return Page();
+   public IActionResult OnPost(string ukprn, string redirect)
+   {
+      AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
 
-			redirect = string.IsNullOrEmpty(redirect) ? Links.InvoluntaryProject.SearchTrusts.Page : redirect;
+      if (string.IsNullOrWhiteSpace(SearchQuery))
+      {
+         ModelState.AddModelError(nameof(SearchQuery), "Enter the school name or URN");
+         _errorService.AddErrors(ModelState.Keys, ModelState);
+         return Page();
+      }
 
-			return RedirectToPage(redirect, new { urn = splitSearch[1], ukprn });
-		}
+      string[] splitSearch = SplitOnBrackets(SearchQuery);
+      if (splitSearch.Length < 2) return Page();
 
-		private static string HighlightSearchMatch(string input, string toReplace, EstablishmentSearchResponse school)
-		{
-			if (school == null || string.IsNullOrWhiteSpace(school.Urn) || string.IsNullOrWhiteSpace(school.Name)) return string.Empty;
+      redirect = string.IsNullOrEmpty(redirect) ? Links.InvoluntaryProject.SearchTrusts.Page : redirect;
 
-			var index = input.IndexOf(toReplace, StringComparison.InvariantCultureIgnoreCase);
-			var correctCaseSearchString = input.Substring(index, toReplace.Length);
+      return RedirectToPage(redirect, new { urn = splitSearch[1], ukprn });
+   }
 
-			return input.Replace(toReplace, $"<strong>{correctCaseSearchString}</strong>", StringComparison.InvariantCultureIgnoreCase);
-		}
+   private static string HighlightSearchMatch(string input, string toReplace, EstablishmentSearchResponse school)
+   {
+      if (school == null || string.IsNullOrWhiteSpace(school.Urn) || string.IsNullOrWhiteSpace(school.Name)) return string.Empty;
 
-		private static string[] SplitOnBrackets(string input)
-		{
-			return input.Split(new[] { '(', ')' }, 3, StringSplitOptions.None);
-		}
-	}
+      int index = input.IndexOf(toReplace, StringComparison.InvariantCultureIgnoreCase);
+      string correctCaseSearchString = input.Substring(index, toReplace.Length);
+
+      return input.Replace(toReplace, $"<strong>{correctCaseSearchString}</strong>", StringComparison.InvariantCultureIgnoreCase);
+   }
+
+   private static string[] SplitOnBrackets(string input)
+   {
+      return input.Split(new[] { '(', ')' }, 3, StringSplitOptions.None);
+   }
 }

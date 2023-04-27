@@ -36,6 +36,7 @@
     "cypress-data-session": "^1.13.0",
     "cypress-grep": "^2.6.1",
     "cypress-localstorage-commands": "^1.6.1",
+    "cypress-plugin-api": "^2.10.3",
     "eslint": "^8.32.0",
     "eslint-plugin-cypress": "^2.12.1",
     "npm-install-peers": "^1.2.2",

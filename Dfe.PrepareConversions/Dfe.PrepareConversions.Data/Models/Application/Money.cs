@@ -1,19 +1,28 @@
 using System.Globalization;
 
-namespace Dfe.PrepareConversions.Data.Models.Application
+namespace Dfe.PrepareConversions.Data.Models.Application;
+
+public class Money
 {
-	public class Money
-	{
-		public Money(decimal value)
-		{
-			Value = value;
-		}
+   public Money(decimal value)
+   {
+      Value = value;
+   }
 
-		public decimal Value { get; }
+   public decimal Value { get; }
 
-		public static implicit operator Money(decimal value) => new Money(value);
-		public static implicit operator string(Money money) => money.ToString();
+   public static implicit operator Money(decimal value)
+   {
+      return new(value);
+   }
 
-		public override string ToString() => Value.ToString("C2", CultureInfo.CreateSpecificCulture("en-GB"));
-	}
+   public static implicit operator string(Money money)
+   {
+      return money.ToString();
+   }
+
+   public override string ToString()
+   {
+      return Value.ToString("C2", CultureInfo.CreateSpecificCulture("en-GB"));
+   }
 }

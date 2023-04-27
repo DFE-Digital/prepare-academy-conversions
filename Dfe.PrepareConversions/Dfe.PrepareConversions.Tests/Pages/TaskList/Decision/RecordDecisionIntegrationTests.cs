@@ -1,84 +1,87 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision
+namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision;
+
+public class RecordDecisionIntegrationTests : BaseIntegrationTests
 {
-	public class RecordDecisionIntegrationTests : BaseIntegrationTests
-	{
-		public RecordDecisionIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
-		{
-		}
-		
-		[Fact]
-		public async Task Should_display_selected_schoolname()
-		{
-			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+   public RecordDecisionIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+   {
+   }
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+   [Fact]
+   public async Task Should_display_selected_schoolname()
+   {
+      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			var selectedSchool = Document.QuerySelector<IHtmlElement>("#selection-span").Text();
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
-			selectedSchool.Should().Be(project.SchoolName);
-		}
+      string selectedSchool = Document.QuerySelector<IHtmlElement>("#selection-span")!.Text();
 
-		[Fact]
-		public async Task Should_persist_selected_decision()
-		{
-			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      selectedSchool.Should().Be(project.SchoolName);
+   }
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+   [Fact]
+   public async Task Should_persist_selected_decision()
+   {
+      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      _factory.AddGetWithJsonResponse($"/conversion-project/advisory-board-decision/{project.Id}",
+         new AdvisoryBoardDecision { Decision = AdvisoryBoardDecisions.Approved });
 
-			Document.QuerySelector<IHtmlInputElement>("#approved-radio").IsChecked = true;
-			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+      Document.QuerySelector<IHtmlInputElement>("#approved-radio")!.IsChecked = true;
+      await Document.QuerySelector<IHtmlButtonElement>("#submit-btn")!.SubmitAsync();
 
-			var formElement = Document.QuerySelector<IHtmlInputElement>("#approved-radio");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
-			formElement.IsChecked.Should().BeTrue();
-		}
+      IHtmlInputElement formElement = Document.QuerySelector<IHtmlInputElement>("#approved-radio");
 
-		[Fact]
-		public async Task Should_redirect_on_succesful_submission()
-		{
-			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      formElement!.IsChecked.Should().BeTrue();
+   }
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+   [Fact]
+   public async Task Should_redirect_on_successful_submission()
+   {
+      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			Document.QuerySelector<IHtmlInputElement>("#approved-radio").IsChecked = true;
-			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
-			Document.Url.Should().EndWith($"/task-list/{project.Id}/decision/who-decided");
-		}
+      Document.QuerySelector<IHtmlInputElement>("#approved-radio")!.IsChecked = true;
+      await Document.QuerySelector<IHtmlButtonElement>("#submit-btn")!.SubmitAsync();
 
-		[Fact]
-		public async Task Should_display_error_when_nothing_selected()
-		{
-			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      Document.Url.Should().EndWith($"/task-list/{project.Id}/decision/who-decided");
+   }
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+   [Fact]
+   public async Task Should_display_error_when_nothing_selected()
+   {
+      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await Document.QuerySelector<IHtmlButtonElement>("#submit-btn").SubmitAsync();
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
-			Document.QuerySelector<IHtmlElement>("[href='#AdvisoryBoardDecision']").Text().Should()
-				.Be("Select a decision");
-			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be("Record the decision");
-		}
+      await Document.QuerySelector<IHtmlButtonElement>("#submit-btn")!.SubmitAsync();
 
-		[Fact]
-		public async Task Should_go_back_to_tasklist()
-		{
-			var project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      Document.QuerySelector<IHtmlElement>("[href='#AdvisoryBoardDecision']")!.Text().Should()
+         .Be("Select a decision");
+      Document.QuerySelector<IHtmlElement>("h1")!.Text().Trim().Should().Be("Record the decision");
+   }
 
-			await OpenUrlAsync($"/task-list/{project.Id}/decision/record-decision");
+   [Fact]
+   public async Task Should_go_back_to_task_list()
+   {
+      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
 
-			await NavigateAsync("Back to task list");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
-			Document.QuerySelector<IHtmlElement>("h1").Text().Trim().Should().Be(project.SchoolName);
-			Document.Url.Should().EndWith($"/task-list/{project.Id}");
-		}
-	}
+      await NavigateAsync("Back to task list");
+
+      Document.QuerySelector<IHtmlElement>("h1")!.Text().Trim().Should().Be(project.SchoolName);
+      Document.Url.Should().EndWith($"/task-list/{project.Id}");
+   }
 }

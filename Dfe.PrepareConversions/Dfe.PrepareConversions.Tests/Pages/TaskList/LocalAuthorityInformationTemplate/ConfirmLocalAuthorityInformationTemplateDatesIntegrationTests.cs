@@ -1,91 +1,92 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Tests.Customisations;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.LocalAuthorityInformationTemplate
+namespace Dfe.PrepareConversions.Tests.Pages.TaskList.LocalAuthorityInformationTemplate;
+
+public class ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests : BaseIntegrationTests
 {
-	public class ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests : BaseIntegrationTests
-	{
-		public ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
-		{
-			_fixture.Customizations.Add(new RandomDateBuilder(DateTime.Now.AddMonths(-24), DateTime.Now.AddMonths(6)));
-		}
+   public ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+   {
+      _fixture.Customizations.Add(new RandomDateBuilder(DateTime.Now.AddMonths(-24), DateTime.Now.AddMonths(6)));
+   }
 
-		[Fact]
-		public async Task Should_be_in_progress_and_display_la_info_template_when_populated()
-		{
-			var project = AddGetProject(p => p.LocalAuthorityInformationTemplateSectionComplete = false);
+   [Fact]
+   public async Task Should_be_in_progress_and_display_la_info_template_when_populated()
+   {
+      AcademyConversionProject project = AddGetProject(p => p.LocalAuthorityInformationTemplateSectionComplete = false);
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#la-info-template-status").TextContent.Trim().Should().Be("In Progress");
-			Document.QuerySelector("#la-info-template-status").ClassName.Should().Contain("blue");
+      Document.QuerySelector("#la-info-template-status")!.TextContent.Trim().Should().Be("In Progress");
+      Document.QuerySelector("#la-info-template-status")!.ClassName.Should().Contain("blue");
 
-			await NavigateAsync("Record dates for the LA information template");
+      await NavigateAsync("Record dates for the LA information template");
 
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
-			Document.QuerySelector("#la-info-template-sent-date").TextContent.Should().Be(project.LocalAuthorityInformationTemplateSentDate.ToDateString());
-			Document.QuerySelector("#la-info-template-returned-date").TextContent.Should().Be(project.LocalAuthorityInformationTemplateReturnedDate.ToDateString());
-			Document.QuerySelector("#la-info-template-comments").TextContent.Should().Be(project.LocalAuthorityInformationTemplateComments);
-			Document.QuerySelector("#la-info-template-sharepoint-link").TextContent.Should().Be(project.LocalAuthorityInformationTemplateLink);
-			Document.QuerySelector<IHtmlInputElement>("#la-info-template-complete").IsChecked.Should().BeFalse();
-		}
+      Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
+      Document.QuerySelector("#la-info-template-sent-date")!.TextContent.Should().Be(project.LocalAuthorityInformationTemplateSentDate.ToDateString());
+      Document.QuerySelector("#la-info-template-returned-date")!.TextContent.Should().Be(project.LocalAuthorityInformationTemplateReturnedDate.ToDateString());
+      Document.QuerySelector("#la-info-template-comments")!.TextContent.Should().Be(project.LocalAuthorityInformationTemplateComments);
+      Document.QuerySelector("#la-info-template-sharepoint-link")!.TextContent.Should().Be(project.LocalAuthorityInformationTemplateLink);
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-complete")!.IsChecked.Should().BeFalse();
+   }
 
-		[Fact]
-		public async Task Should_be_completed_and_checked_when_la_info_template_section_complete()
-		{
-			var project = AddGetProject(project => project.LocalAuthorityInformationTemplateSectionComplete = true);
-			AddPatchConfiguredProject(project, x =>
-         {
-            x.LocalAuthorityInformationTemplateSectionComplete = true;
-            x.Urn = project.Urn;
-         });
+   [Fact]
+   public async Task Should_be_completed_and_checked_when_la_info_template_section_complete()
+   {
+      AcademyConversionProject project = AddGetProject(project => project.LocalAuthorityInformationTemplateSectionComplete = true);
+      AddPatchConfiguredProject(project, x =>
+      {
+         x.LocalAuthorityInformationTemplateSectionComplete = true;
+         x.Urn = project.Urn;
+      });
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-			Document.QuerySelector("#la-info-template-status").TextContent.Trim().Should().Be("Completed");
+      Document.QuerySelector("#la-info-template-status")!.TextContent.Trim().Should().Be("Completed");
 
-			await NavigateAsync("Record dates for the LA information template");
+      await NavigateAsync("Record dates for the LA information template");
 
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
-			Document.QuerySelector<IHtmlInputElement>("#la-info-template-complete").IsChecked.Should().BeTrue();
+      Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-complete")!.IsChecked.Should().BeTrue();
 
-			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
-		}
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+   }
 
-		[Fact]
-		public async Task Should_show_error_summary_when_there_is_an_API_error()
-		{
-			var project = AddGetProject();
-			AddPatchError(project.Id);
+   [Fact]
+   public async Task Should_show_error_summary_when_there_is_an_API_error()
+   {
+      AcademyConversionProject project = AddGetProject();
+      AddPatchError(project.Id);
 
-			await OpenUrlAsync($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
 
-			await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-			var element = Document.QuerySelector(".govuk-error-summary").InnerHtml.Should().Contain("There is a problem with TRAMS");
-		}
+      Document.QuerySelector(".govuk-error-summary")!.InnerHtml.Should().Contain("There is a system problem");
+   }
 
-		[Fact]
-		public async Task Should_navigate_between_task_list_and_confirm_la_info_template_when_navigated_from_task_list()
-		{
-			var project = AddGetProject();
+   [Fact]
+   public async Task Should_navigate_between_task_list_and_confirm_la_info_template_when_navigated_from_task_list()
+   {
+      AcademyConversionProject project = AddGetProject();
 
-			await OpenUrlAsync($"/task-list/{project.Id}");
-			await NavigateAsync("Record dates for the LA information template");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
+      await NavigateAsync("Record dates for the LA information template");
 
-			Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
+      Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
 
-			await NavigateAsync("Back to task list");
+      await NavigateAsync("Back to task list");
 
-			Document.Url.Should().BeUrl($"/task-list/{project.Id}");
-		}
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}");
    }
 }

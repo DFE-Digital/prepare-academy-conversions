@@ -8,87 +8,99 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-namespace Dfe.PrepareConversions.Pages.TaskList.Decision
+namespace Dfe.PrepareConversions.Pages.TaskList.Decision;
+
+public class WhyDeferredModel : DecisionBaseModel
 {
-	public class WhyDeferredModel : DecisionBaseModel
-	{
-		private readonly ErrorService _errorService;
+   private readonly ErrorService _errorService;
 
-		public WhyDeferredModel(IAcademyConversionProjectRepository repository, ISession session,
-			ErrorService errorService)
-			: base(repository, session)
-		{
-			_errorService = errorService;
-		}
+   public WhyDeferredModel(IAcademyConversionProjectRepository repository,
+                           ISession session,
+                           ErrorService errorService)
+      : base(repository, session)
+   {
+      _errorService = errorService;
+   }
 
-		[BindProperty] public string AdditionalInformationNeededDetails { get; set; }
-		[BindProperty] public bool AdditionalInformationNeededIsChecked { get; set; }
+   [BindProperty]
+   public string AdditionalInformationNeededDetails { get; set; }
 
-		[BindProperty] public string AwaitingNextOfstedReportDetails { get; set; }
-		[BindProperty] public bool AwaitingNextOfstedReportIsChecked { get; set; }
+   [BindProperty]
+   public bool AdditionalInformationNeededIsChecked { get; set; }
 
-		[BindProperty] public string PerformanceConcernsDetails { get; set; }
-		[BindProperty] public bool PerformanceConcernsIsChecked { get; set; }
+   [BindProperty]
+   public string AwaitingNextOfstedReportDetails { get; set; }
 
-		[BindProperty] public string OtherDetails { get; set; }
-		[BindProperty] public bool OtherIsChecked { get; set; }
+   [BindProperty]
+   public bool AwaitingNextOfstedReportIsChecked { get; set; }
 
-		[BindProperty]
-		public bool WasReasonGiven => AdditionalInformationNeededIsChecked || AwaitingNextOfstedReportIsChecked || PerformanceConcernsIsChecked || OtherIsChecked;
+   [BindProperty]
+   public string PerformanceConcernsDetails { get; set; }
 
-		public string DecisionText { get; set; }
+   [BindProperty]
+   public bool PerformanceConcernsIsChecked { get; set; }
 
-		public IActionResult OnGet(int id)
-		{
-			SetBackLinkModel(Links.Decision.WhoDecided, id);
+   [BindProperty]
+   public string OtherDetails { get; set; }
 
-			AdvisoryBoardDecision decision = GetDecisionFromSession(id);
-			DecisionText = decision.Decision.ToDescription().ToLowerInvariant();
+   [BindProperty]
+   public bool OtherIsChecked { get; set; }
 
-			var reasons = decision.DeferredReasons;
-			SetReasonsModel(reasons);
+   [BindProperty]
+   public bool WasReasonGiven => AdditionalInformationNeededIsChecked || AwaitingNextOfstedReportIsChecked || PerformanceConcernsIsChecked || OtherIsChecked;
 
-			return Page();
-		}
+   public string DecisionText { get; set; }
 
-		public IActionResult OnPost(int id)
-		{
-			var decision = GetDecisionFromSession(id);
+   public IActionResult OnGet(int id)
+   {
+      SetBackLinkModel(Links.Decision.WhoDecided, id);
 
-			decision.DeferredReasons.Clear();
-			decision.DeferredReasons
-				.AddReasonIfValid(AdditionalInformationNeededIsChecked, AdvisoryBoardDeferredReason.AdditionalInformationNeeded, AdditionalInformationNeededDetails, ModelState)
-				.AddReasonIfValid(AwaitingNextOfstedReportIsChecked, AdvisoryBoardDeferredReason.AwaitingNextOfstedReport, AwaitingNextOfstedReportDetails, ModelState)
-				.AddReasonIfValid(PerformanceConcernsIsChecked, AdvisoryBoardDeferredReason.PerformanceConcerns, PerformanceConcernsDetails, ModelState)
-				.AddReasonIfValid(OtherIsChecked, AdvisoryBoardDeferredReason.Other, OtherDetails, ModelState);
+      AdvisoryBoardDecision decision = GetDecisionFromSession(id);
+      DecisionText = decision.Decision.ToDescription().ToLowerInvariant();
 
-			SetDecisionInSession(id, decision);
+      List<AdvisoryBoardDeferredReasonDetails> reasons = decision.DeferredReasons;
+      SetReasonsModel(reasons);
 
-			if (!WasReasonGiven) ModelState.AddModelError("WasReasonGiven", "Select at least one reason");
-			
-			_errorService.AddErrors(ModelState.Keys, ModelState);
-			if (_errorService.HasErrors()) return OnGet(id);
+      return Page();
+   }
 
-			return RedirectToPage(Links.Decision.DecisionDate.Page, LinkParameters);
-		}
+   public IActionResult OnPost(int id)
+   {
+      AdvisoryBoardDecision decision = GetDecisionFromSession(id);
 
-		private void SetReasonsModel(List<AdvisoryBoardDeferredReasonDetails> reasons)
-		{
-			var additionalInfo = reasons.GetReason(AdvisoryBoardDeferredReason.AdditionalInformationNeeded);
-			AdditionalInformationNeededIsChecked = additionalInfo != null;
-			AdditionalInformationNeededDetails = additionalInfo?.Details;
+      decision.DeferredReasons.Clear();
+      decision.DeferredReasons
+         .AddReasonIfValid(AdditionalInformationNeededIsChecked, AdvisoryBoardDeferredReason.AdditionalInformationNeeded, AdditionalInformationNeededDetails, ModelState)
+         .AddReasonIfValid(AwaitingNextOfstedReportIsChecked, AdvisoryBoardDeferredReason.AwaitingNextOfstedReport, AwaitingNextOfstedReportDetails, ModelState)
+         .AddReasonIfValid(PerformanceConcernsIsChecked, AdvisoryBoardDeferredReason.PerformanceConcerns, PerformanceConcernsDetails, ModelState)
+         .AddReasonIfValid(OtherIsChecked, AdvisoryBoardDeferredReason.Other, OtherDetails, ModelState);
 
-			var ofsted = reasons.GetReason(AdvisoryBoardDeferredReason.AwaitingNextOfstedReport);
-			AwaitingNextOfstedReportIsChecked = ofsted != null;
-			AwaitingNextOfstedReportDetails = ofsted?.Details;
+      SetDecisionInSession(id, decision);
 
-			var perf = reasons.GetReason(AdvisoryBoardDeferredReason.PerformanceConcerns);
-			PerformanceConcernsIsChecked = perf != null;
-			PerformanceConcernsDetails = perf?.Details;
+      if (!WasReasonGiven) ModelState.AddModelError("WasReasonGiven", "Select at least one reason");
 
-			var other = reasons.GetReason(AdvisoryBoardDeferredReason.Other);
-			OtherIsChecked = other != null;
-			OtherDetails = other?.Details;
-		}
-	}
+      _errorService.AddErrors(ModelState.Keys, ModelState);
+      if (_errorService.HasErrors()) return OnGet(id);
+
+      return RedirectToPage(Links.Decision.DecisionDate.Page, LinkParameters);
+   }
+
+   private void SetReasonsModel(List<AdvisoryBoardDeferredReasonDetails> reasons)
+   {
+      AdvisoryBoardDeferredReasonDetails additionalInfo = reasons.GetReason(AdvisoryBoardDeferredReason.AdditionalInformationNeeded);
+      AdditionalInformationNeededIsChecked = additionalInfo != null;
+      AdditionalInformationNeededDetails = additionalInfo?.Details;
+
+      AdvisoryBoardDeferredReasonDetails ofsted = reasons.GetReason(AdvisoryBoardDeferredReason.AwaitingNextOfstedReport);
+      AwaitingNextOfstedReportIsChecked = ofsted != null;
+      AwaitingNextOfstedReportDetails = ofsted?.Details;
+
+      AdvisoryBoardDeferredReasonDetails perf = reasons.GetReason(AdvisoryBoardDeferredReason.PerformanceConcerns);
+      PerformanceConcernsIsChecked = perf != null;
+      PerformanceConcernsDetails = perf?.Details;
+
+      AdvisoryBoardDeferredReasonDetails other = reasons.GetReason(AdvisoryBoardDeferredReason.Other);
+      OtherIsChecked = other != null;
+      OtherDetails = other?.Details;
+   }
 }

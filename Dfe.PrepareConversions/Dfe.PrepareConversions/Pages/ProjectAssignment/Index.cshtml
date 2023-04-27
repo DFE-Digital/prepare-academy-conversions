@@ -1,61 +1,61 @@
 ﻿@page "/project-assignment/{id:int}"
-@using Dfe.PrepareConversions.Utils
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Dfe.PrepareConversions.Data.Models
 @model Dfe.PrepareConversions.Pages.ProjectAssignment.IndexModel
 @{
-    ViewData["Title"] = "Who will be on this project?";
+   ViewData["Title"] = "Who will be on this project?";
 }
 
 @section BeforeMain
-    {
-    <a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Id" class="govuk-back-link">Back</a>
+{
+   <a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Id" class="govuk-back-link">Back</a>
 }
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
 
-            <span data-id="school-name" class="govuk-caption-l">@Model.SchoolName</span>
-            <h1 class="govuk-heading-l">Who will be on this project?</h1>
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-two-thirds">
 
-            <div class="govuk-form-group">
-                <label class="govuk-label" for="delivery-officer">
-                    Delivery officer
-                </label>
+      <span data-id="school-name" class="govuk-caption-l">@Model.SchoolName</span>
+      <h1 class="govuk-heading-l">Who will be on this project?</h1>
 
-                <div id="delivery-officer-assigned-hint" class="govuk-hint">
-                    The delivery officer responsible for this project
-                </div>
+      <div class="govuk-form-group">
+         <label class="govuk-label" for="delivery-officer">
+            Delivery officer
+         </label>
 
-                <form method="post" id="assign-user-form">
-                    <input type="hidden" asp-for="@Model.Id" />
-                    <input type="hidden" id="delivery-officer-input" name="DeliveryOfficerInput"/>
-                    <select name="SelectedName" class="autocomplete__menu govuk-select" id="delivery-officer">
-                        <option value=""></option>
-                        @{
-                        foreach (var deliveryOfficer in Model.DeliveryOfficers)
-                        {
-	                        if (Model.SelectedDeliveryOfficer == deliveryOfficer.FullName)
-	                        {
-		                        <option value="@deliveryOfficer.FullName" selected>@deliveryOfficer.FullName</option>
-	                        }
-	                        else
-	                        {
-		                        <option value="@deliveryOfficer.FullName">@deliveryOfficer.FullName</option>   
-	                        }
-                        }
-                    }
-                </select>
+         <div id="delivery-officer-assigned-hint" class="govuk-hint">
+            The delivery officer responsible for this project
+         </div>
 
-                <div class="govuk-button-group govuk-!-margin-top-5">
-                    <button class="govuk-button" data-module="govuk-button">
-                        Continue
-                    </button>
-                    <input type="hidden" name="UnassignDeliveryOfficer" id="UnassignDeliveryOfficer" />
-                    <span class="govuk-body govuk-!-margin-right-2 govuk-!-margin-left-1">or </span><a href="#" id="unassign-link" class="govuk-link">Unassign the delivery officer</a>
-                </div>
-            </form>
-        </div>
+         <form method="post" id="assign-user-form">
+            <input type="hidden" asp-for="@Model.Id"/>
+            <input type="hidden" id="delivery-officer-input" name="DeliveryOfficerInput"/>
+            <select name="SelectedName" class="autocomplete__menu govuk-select" id="delivery-officer">
+               <option value=""></option>
+               @{
+                  foreach (User deliveryOfficer in Model.DeliveryOfficers)
+                  {
+                     if (Model.SelectedDeliveryOfficer == deliveryOfficer.FullName)
+                     {
+                        <option value="@deliveryOfficer.FullName" selected>@deliveryOfficer.FullName</option>
+                     }
+                     else
+                     {
+                        <option value="@deliveryOfficer.FullName">@deliveryOfficer.FullName</option>
+                     }
+                  }
+               }
+            </select>
 
-    </div>
+            <div class="govuk-button-group govuk-!-margin-top-5">
+               <button class="govuk-button" data-module="govuk-button">
+                  Continue
+               </button>
+               <input type="hidden" name="UnassignDeliveryOfficer" id="UnassignDeliveryOfficer"/>
+               <span class="govuk-body govuk-!-margin-right-2 govuk-!-margin-left-1">or </span><a href="#" id="unassign-link" class="govuk-link">Unassign the delivery officer</a>
+            </div>
+         </form>
+      </div>
+
+   </div>
 </div>
 
 <script type="application/javascript" asp-add-nonce>

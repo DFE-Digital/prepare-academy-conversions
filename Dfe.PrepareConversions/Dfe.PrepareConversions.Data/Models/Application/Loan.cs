@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace Dfe.PrepareConversions.Data.Models.Application;
 
-namespace Dfe.PrepareConversions.Data.Models.Application
+public class Loan
 {
-	public class Loan
-	{
-		public decimal SchoolLoanAmount { get; set; }
-		public string SchoolLoanPurpose { get; set; }
-		public string SchoolLoanProvider { get; set; }
-		public string SchoolLoanInterestRate { get; set; }
-		public string SchoolLoanSchedule { get; set; }
-	}
+   public decimal SchoolLoanAmount { get; set; }
+   public string SchoolLoanPurpose { get; set; }
+   public string SchoolLoanProvider { get; set; }
+   public string SchoolLoanInterestRate { get; set; }
+   public string SchoolLoanSchedule { get; set; }
 }

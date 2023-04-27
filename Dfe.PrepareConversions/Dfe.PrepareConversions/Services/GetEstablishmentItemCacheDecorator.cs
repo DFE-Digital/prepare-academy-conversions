@@ -4,47 +4,46 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareConversions.Services
+namespace Dfe.PrepareConversions.Services;
+
+public class GetEstablishmentItemCacheDecorator : IGetEstablishment
 {
-	public class GetEstablishmentItemCacheDecorator : IGetEstablishment
-	{
-		private readonly IGetEstablishment _getEstablishment;
-		private readonly HttpContext _httpContext;
+   private readonly IGetEstablishment _getEstablishment;
+   private readonly HttpContext _httpContext;
 
-		public GetEstablishmentItemCacheDecorator(IGetEstablishment getEstablishment, IHttpContextAccessor httpContextAccessor)
-		{
-			_getEstablishment = getEstablishment;
-			_httpContext = httpContextAccessor.HttpContext;
-		}
+   public GetEstablishmentItemCacheDecorator(IGetEstablishment getEstablishment, IHttpContextAccessor httpContextAccessor)
+   {
+      _getEstablishment = getEstablishment;
+      _httpContext = httpContextAccessor.HttpContext;
+   }
 
-		public async Task<EstablishmentResponse> GetEstablishmentByUrn(string urn)
-		{
-			var key = $"establishment-{urn}";
-			if (_httpContext.Items.ContainsKey(key) && _httpContext.Items[key] is EstablishmentResponse cached)
-			{
-				return cached;
-			}
+   public async Task<EstablishmentResponse> GetEstablishmentByUrn(string urn)
+   {
+      string key = $"establishment-{urn}";
+      if (_httpContext.Items.ContainsKey(key) && _httpContext.Items[key] is EstablishmentResponse cached)
+      {
+         return cached;
+      }
 
-			var establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
+      EstablishmentResponse establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
 
-			_httpContext.Items[key] = establishment;
+      _httpContext.Items[key] = establishment;
 
-			return establishment;
-		}
+      return establishment;
+   }
 
-		public Task<IEnumerable<EstablishmentSearchResponse>> SearchEstablishments(string searchQuery)
-		{
-			var key = $"establishments-{searchQuery}";
-			if (_httpContext.Items.ContainsKey(key) && _httpContext.Items[key] is IEnumerable<EstablishmentSearchResponse> cached)
-			{
-				return Task.FromResult(cached);
-			}
+   public Task<IEnumerable<EstablishmentSearchResponse>> SearchEstablishments(string searchQuery)
+   {
+      string key = $"establishments-{searchQuery}";
+      if (_httpContext.Items.ContainsKey(key) && _httpContext.Items[key] is IEnumerable<EstablishmentSearchResponse> cached)
+      {
+         return Task.FromResult(cached);
+      }
 
-			var establishments = _getEstablishment.SearchEstablishments(searchQuery);
+      Task<IEnumerable<EstablishmentSearchResponse>> establishments = _getEstablishment.SearchEstablishments(searchQuery);
 
-			_httpContext.Items[key] = establishments;
+      _httpContext.Items[key] = establishments;
 
-			return establishments;
-		}
-	}
+      return establishments;
+   }
 }

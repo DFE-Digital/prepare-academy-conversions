@@ -1,7 +1,6 @@
-﻿namespace Dfe.PrepareConversions.Configuration
+﻿namespace Dfe.PrepareConversions.Configuration;
+
+public static class Constants
 {
-	public static class Constants
-	{
-		public const string DateTimeFormat = "dd MMMM yyyy";
-	}
+   public const string DateTimeFormat = "dd MMMM yyyy";
 }

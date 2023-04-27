@@ -6,48 +6,47 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
+namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject;
+
+public class SearchSchoolIntegrationTests : BaseIntegrationTests
 {
-	public class SearchSchoolIntegrationTests : BaseIntegrationTests
-	{
-		public SearchSchoolIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
-		{
-		}
+   public SearchSchoolIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+   {
+   }
 
-		[Fact]
-		public async Task Should_link_to_school_search()
-		{
-			await OpenUrlAsync($"/project-list");
-			await NavigateAsync("Start a new involuntary conversion project");
+   [Fact]
+   public async Task Should_link_to_school_search()
+   {
+      await OpenAndConfirmPathAsync("/project-list");
+      await NavigateAsync("Start a new involuntary conversion project");
 
-			Document.QuerySelector<IHtmlElement>("h1")!.Text().Trim().Should()
-				.Be("What is the school name?");
-		}
+      Document.QuerySelector<IHtmlElement>("h1")!.Text().Trim().Should()
+         .Be("Which school is involved?");
+   }
 
-		[Fact]
-		public async Task Should_show_error_when_no_school_provided()
-		{
-			await OpenUrlAsync($"/start-new-project/school-name");
+   [Fact]
+   public async Task Should_show_error_when_no_school_provided()
+   {
+      await OpenAndConfirmPathAsync("/start-new-project/school-name");
 
-			await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]").SubmitAsync();
+      await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]")!.SubmitAsync();
 
-			Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
-				.Be("Enter the school name or URN");
-		}
+      Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
+         .Be("Enter the school name or URN");
+   }
 
-		[Fact]
-		public async Task Should_show_no_error()
-		{
-			await OpenUrlAsync($"/start-new-project/school-name");
-			var schoolName = "fakeschoolname";
+   [Fact]
+   public async Task Should_show_no_error()
+   {
+      await OpenAndConfirmPathAsync("/start-new-project/school-name");
+      string schoolName = "fakeschoolname";
 
-			_factory.AddGetWithJsonResponse($"/establishments",
-			   new List<EstablishmentResponse>() { new EstablishmentResponse() });
+      _factory.AddGetWithJsonResponse("/establishments",
+         new List<EstablishmentResponse> { new() });
 
-			Document.QuerySelector<IHtmlInputElement>("#SearchQuery").Value = schoolName;
-			await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]").SubmitAsync();
+      Document.QuerySelector<IHtmlInputElement>("#SearchQuery")!.Value = schoolName;
+      await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]")!.SubmitAsync();
 
-			Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]").Should().BeNull();
-		}
-	}
+      Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]").Should().BeNull();
+   }
 }

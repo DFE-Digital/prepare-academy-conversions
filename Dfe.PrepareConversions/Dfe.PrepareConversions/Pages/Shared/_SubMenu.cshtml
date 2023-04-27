@@ -1,29 +1,40 @@
-﻿@{
-	var id = ViewContext.RouteData.Values["id"];
+﻿@model ProjectTypeBase
+@{
+   var id = ViewContext.RouteData.Values["id"];
 }
 
 <nav class="moj-sub-navigation" aria-label="Sub navigation">
-	<ul class="moj-sub-navigation__list govuk-!-margin-top-6">
-		<li class="moj-sub-navigation__item">
-			<sub-menu-link class="moj-sub-navigation__link"
-					  asp-page="@Links.TaskList.Index.Page"
-					  asp-route-id="@id">
-				Task list
-			</sub-menu-link>
-		</li>
-		<li class="moj-sub-navigation__item">
-			<sub-menu-link class="moj-sub-navigation__link"
-					  asp-page="@Links.ApplicationForm.Index.Page"
-					  asp-route-id="@id">
-				School application form
-			</sub-menu-link>
-		</li>
-		<li class="moj-sub-navigation__item">
-			<sub-menu-link class="moj-sub-navigation__link"
-					  asp-page="@Links.ProjectNotes.Index.Page"
-					  asp-route-id="@id">
-				Project notes
-			</sub-menu-link>
-		</li>
-	</ul>
+   <ul class="moj-sub-navigation__list govuk-!-margin-top-6">
+      <li class="moj-sub-navigation__item">
+         <sub-menu-link class="moj-sub-navigation__link"
+                        asp-page="@Links.TaskList.Index.Page"
+                        asp-route-id="@id">
+            Task list
+         </sub-menu-link>
+      </li>
+
+      <li if="@Model.IsVoluntary" class="moj-sub-navigation__item">
+         <sub-menu-link class="moj-sub-navigation__link"
+                        asp-page="@Links.ApplicationForm.Index.Page"
+                        asp-route-id="@id">
+            School application form
+         </sub-menu-link>
+      </li>
+
+      <li if="@Model.IsSponsored" class="moj-sub-navigation__item">
+         <sub-menu-link class="moj-sub-navigation__link"
+                        asp-page="@Links.AnnexB.Index.Page"
+                        asp-route-id="@id">
+            Annex B form
+         </sub-menu-link>
+      </li>
+
+      <li class="moj-sub-navigation__item">
+         <sub-menu-link class="moj-sub-navigation__link"
+                        asp-page="@Links.ProjectNotes.Index.Page"
+                        asp-route-id="@id">
+            Project notes
+         </sub-menu-link>
+      </li>
+   </ul>
 </nav>

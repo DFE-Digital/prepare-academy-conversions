@@ -1,9 +1,7 @@
-﻿using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Loan = Dfe.PrepareConversions.Data.Models.AcademisationApplication.Loan;
 
-namespace ApplyToBecome.Data.Models.AcademisationApplication;
+namespace Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 
 public class School
 {
@@ -13,6 +11,7 @@ public class School
    public LandAndBuildings LandAndBuildings { get; set; }
    public string TrustBenefitDetails { get; set; }
    public string OfstedInspectionDetails { get; set; }
+   public bool? Safeguarding { get; set; }
    public string SafeguardingDetails { get; set; }
    public string LocalAuthorityReorganisationDetails { get; set; }
    public string LocalAuthorityClosurePlanDetails { get; set; }
@@ -29,7 +28,7 @@ public class School
    public FinancialYear CurrentFinancialYear { get; set; }
    public FinancialYear NextFinancialYear { get; set; }
    public List<Loan> Loans { get; set; }
-   public List<Lease> Leases { get; set; } 
+   public List<Lease> Leases { get; set; }
    public string SchoolConversionContactHeadName { get; set; }
    public string SchoolConversionContactHeadEmail { get; set; }
    public string SchoolConversionContactHeadTel { get; set; }
@@ -64,4 +63,5 @@ public class School
    public bool DeclarationBodyAgree { get; set; }
    public bool DeclarationIAmTheChairOrHeadteacher { get; set; }
    public string DeclarationSignedByName { get; set; }
+   public string ProtectedCharacteristics { get; set; }
 }

@@ -120,6 +120,12 @@ variable app_feature_use_academisation_application {
    description = "Whether to use the new Academisation API (true) or default to the old Academies API (false) for School Application forms"
 }
 
+variable app_feature_show_directedacademyorders {
+   type = bool
+   default = false
+   description = "Whether to show the directed academy orders button"
+}
+
 variable app_accessrequest {
    type = string
    description = "URL for form used to request access to the service"

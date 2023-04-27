@@ -5,27 +5,20 @@ using FluentAssertions;
 using System.Linq;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Models.ApplicationForm.Sections
+namespace Dfe.PrepareConversions.Tests.Models.ApplicationForm.Sections;
+
+public class PreOpeningSupportGrantSectionTests
 {
-	public class PreOpeningSupportGrantSectionTests
-	{
-		[Fact]
-		public static void Constructor_WithApplication_SetFields()
-		{
-			var application = new ApplyingSchool
-			{
-				SchoolSupportGrantFundsPaidTo = "To the trust the school is joining"
-			};
+   [Fact]
+   public static void Constructor_WithApplication_SetFields()
+   {
+      ApplyingSchool application = new() { SchoolSupportGrantFundsPaidTo = "School" };
 
-			var formSection = new PreOpeningSupportGrantSection(application);
+      PreOpeningSupportGrantSection formSection = new(application);
 
-			var expectedFields = new[]
-			{
-				new FormField("Do you want these funds paid to the school or the trust?", application.SchoolSupportGrantFundsPaidTo)
-			};
+      FormField[] expectedFields = { new("Do you want these funds paid to the school or the trust?", application.SchoolSupportGrantFundsPaidTo) };
 
-			formSection.Heading.Should().Be("Pre-opening support grant");
-			formSection.SubSections.First().Fields.Should().BeEquivalentTo(expectedFields);
-		}
-	}
+      formSection.Heading.Should().Be("Pre-opening support grant");
+      formSection.SubSections.First().Fields.Should().BeEquivalentTo(expectedFields);
+   }
 }

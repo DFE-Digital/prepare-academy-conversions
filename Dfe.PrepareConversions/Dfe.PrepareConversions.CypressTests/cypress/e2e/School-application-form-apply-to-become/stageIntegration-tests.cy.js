@@ -33,8 +33,8 @@ describe('Fetch data from Internal', { tags: ['@integration'] }, () => {
                 let textvalue = text.toString()
                 if (textvalue.length > 0) {
                     let nameSchoolname = data.trustName + ' with ' + data.applyingSchools[0].schoolName
-                    expect(nameSchoolname)
-                        .to.contain(textvalue.trim())
+                    expect(textvalue)
+                        .to.contain(nameSchoolname.trim())
                 }
                 else {
                     return null

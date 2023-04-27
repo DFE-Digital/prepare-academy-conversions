@@ -1,8 +1,9 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using AutoFixture;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Tests.Customisations;
-using AutoFixture;
+using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System;
 using System.Threading.Tasks;
@@ -38,30 +39,30 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
          x.Urn = project.Urn;
       });
 
-      await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
       await NavigateAsync("Change", 5);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeFalse();
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2").IsChecked.Should().BeFalse();
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeFalse();
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2")!.IsChecked.Should().BeFalse();
 
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked = true;
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeTrue();
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked = true;
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeTrue();
 
-      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value.Should().Be("");
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value.Should().Be("");
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year").Value.Should().Be("");
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day")!.Value.Should().Be("");
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month")!.Value.Should().Be("");
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year")!.Value.Should().Be("");
 
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value = secondPatchRequest.PreviousHeadTeacherBoardDate.Value.Day.ToString();
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value = secondPatchRequest.PreviousHeadTeacherBoardDate.Value.Month.ToString();
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year").Value = secondPatchRequest.PreviousHeadTeacherBoardDate.Value.Year.ToString();
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day")!.Value = secondPatchRequest.PreviousHeadTeacherBoardDate?.Day.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month")!.Value = secondPatchRequest.PreviousHeadTeacherBoardDate?.Month.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year")!.Value = secondPatchRequest.PreviousHeadTeacherBoardDate?.Year.ToString()!;
 
-      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
    }
@@ -76,15 +77,15 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
          x.Urn = project.Urn;
       });
 
-      await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
       await NavigateAsync("Change", 5);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeFalse();
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2").IsChecked.Should().BeFalse();
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeFalse();
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2")!.IsChecked.Should().BeFalse();
 
-      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
    }
@@ -98,18 +99,18 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
          .With(r => r.PreviousHeadTeacherBoardDate, default(DateTime))
          .With(r => r.Urn, project.Urn));
 
-      await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
       await NavigateAsync("Change", 5);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeFalse();
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2").IsChecked.Should().BeFalse();
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeFalse();
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2")!.IsChecked.Should().BeFalse();
 
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2").IsChecked = true;
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2").IsChecked.Should().BeTrue();
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2")!.IsChecked = true;
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2")!.IsChecked.Should().BeTrue();
 
-      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
    }
@@ -119,10 +120,10 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
    {
       AcademyConversionProject project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = "Yes");
 
-      await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked.Should().BeTrue();
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2").IsChecked.Should().BeFalse();
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeTrue();
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question-2")!.IsChecked.Should().BeFalse();
 
       await NavigateAsync("Back");
 
@@ -134,11 +135,11 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
    {
       AcademyConversionProject project = AddGetProject();
 
-      await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value.Should().Be(project.PreviousHeadTeacherBoardDate.Value.Day.ToString());
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value.Should().Be(project.PreviousHeadTeacherBoardDate.Value.Month.ToString());
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year").Value.Should().Be(project.PreviousHeadTeacherBoardDate.Value.Year.ToString());
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day")!.Value.Should().Be(project.PreviousHeadTeacherBoardDate?.Day.ToString());
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month")!.Value.Should().Be(project.PreviousHeadTeacherBoardDate?.Month.ToString());
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year")!.Value.Should().Be(project.PreviousHeadTeacherBoardDate?.Year.ToString());
 
       await NavigateAsync("Back");
 
@@ -152,19 +153,19 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
       AcademyConversionProject project = AddGetProject();
       AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate, today);
 
-      await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value = today.Day.ToString();
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value = today.Month.ToString();
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year").Value = today.Year.ToString();
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day")!.Value = today.Day.ToString();
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month")!.Value = today.Month.ToString();
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year")!.Value = today.Year.ToString();
 
-      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
       Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
 
-      Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Previous advisory board date must be in the past");
+      Document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Previous advisory board date must be in the past");
    }
 
    [Fact]
@@ -173,18 +174,18 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
       AcademyConversionProject project = AddGetProject();
       AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate, default(DateTime));
 
-      await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value = "";
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value = "";
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year").Value = "";
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day")!.Value = "";
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month")!.Value = "";
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year")!.Value = "";
 
-      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
       Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-      Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Enter a date for the previous advisory board");
+      Document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Enter a date for the previous advisory board");
    }
 
    [Fact]
@@ -193,18 +194,18 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
       AcademyConversionProject project = AddGetProject();
       AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate, default(DateTime));
 
-      await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value = "230";
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value = "2";
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year").Value = "2021";
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day")!.Value = "230";
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month")!.Value = "2";
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year")!.Value = "2021";
 
-      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
       Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-      Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Day must be between 1 and 28");
+      Document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Day must be between 1 and 28");
    }
 
    [Fact]
@@ -213,19 +214,19 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
       AcademyConversionProject project = AddGetProject();
       AddPatchProject(project, r => r.PreviousHeadTeacherBoardDate, default(DateTime));
 
-      await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day").Value = "testday";
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month").Value = "testmonth";
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year").Value = "testyear";
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-day")!.Value = "testday";
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-month")!.Value = "testmonth";
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-year")!.Value = "testyear";
 
 
-      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date");
 
       Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-      Document.QuerySelector(".govuk-error-summary").TextContent.Should().Contain("Enter a date in the correct format");
+      Document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Enter a date in the correct format");
    }
 
    [Fact]
@@ -234,9 +235,9 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
       AcademyConversionProject project = AddGetProject();
       AddPatchError(project.Id);
 
-      await OpenUrlAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
-      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
    }

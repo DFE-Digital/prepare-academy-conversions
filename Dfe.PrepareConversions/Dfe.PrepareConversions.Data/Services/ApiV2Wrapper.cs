@@ -1,8 +1,7 @@
-﻿namespace Dfe.PrepareConversions.Data.Services
+﻿namespace Dfe.PrepareConversions.Data.Services;
+
+public sealed class ApiV2Wrapper<T>
 {
-	public sealed class ApiV2Wrapper<T>
-	{
-		public T Data { get; set; }
-		public ApiV2PagingInfo Paging { get; set; }
-	}
+   public T Data { get; set; }
+   public ApiV2PagingInfo Paging { get; set; }
 }

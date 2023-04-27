@@ -6,31 +6,30 @@ using Microsoft.Identity.Client;
 using System;
 using System.Net.Http.Headers;
 
-namespace Dfe.PrepareConversions.Data.Services.AzureAd
+namespace Dfe.PrepareConversions.Data.Services.AzureAd;
+
+public class GraphClientFactory : IGraphClientFactory
 {
-	public class GraphClientFactory : IGraphClientFactory
-	{
-		private readonly AzureAdOptions _azureAdOptions;
+   private readonly AzureAdOptions _azureAdOptions;
 
-		public GraphClientFactory(IOptions<AzureAdOptions> azureAdOptions)
-		{
-			_azureAdOptions = azureAdOptions.Value;
-		}
+   public GraphClientFactory(IOptions<AzureAdOptions> azureAdOptions)
+   {
+      _azureAdOptions = azureAdOptions.Value;
+   }
 
-		public GraphServiceClient Create()
-		{
-			var app = ConfidentialClientApplicationBuilder.Create(_azureAdOptions.ClientId.ToString())
-				.WithClientSecret(_azureAdOptions.ClientSecret)
-				.WithAuthority(new Uri(_azureAdOptions.Authority))
-				.Build();
+   public GraphServiceClient Create()
+   {
+      IConfidentialClientApplication app = ConfidentialClientApplicationBuilder.Create(_azureAdOptions.ClientId.ToString())
+         .WithClientSecret(_azureAdOptions.ClientSecret)
+         .WithAuthority(new Uri(_azureAdOptions.Authority))
+         .Build();
 
-			DelegateAuthenticationProvider provider = new DelegateAuthenticationProvider(async requestMessage =>
-			{
-				var result = await app.AcquireTokenForClient(_azureAdOptions.Scopes).ExecuteAsync();
-				requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
-			});
+      DelegateAuthenticationProvider provider = new(async requestMessage =>
+      {
+         AuthenticationResult result = await app.AcquireTokenForClient(_azureAdOptions.Scopes).ExecuteAsync();
+         requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
+      });
 
-			return new GraphServiceClient($"{_azureAdOptions.ApiUrl}/V1.0/", provider);
-		}
-	}
+      return new GraphServiceClient($"{_azureAdOptions.ApiUrl}/V1.0/", provider);
+   }
 }

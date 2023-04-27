@@ -6,10 +6,8 @@ using Dfe.PrepareConversions.Data.Models.InvoluntaryProject;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Data.Tests.AutoFixture;
-using Dfe.PrepareConversions.Data.Tests.TestDoubles;
 using FluentAssertions;
 using Moq;
-using RichardSzalay.MockHttp;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -93,30 +91,32 @@ public class AcademyConversionProjectRepositoryTests
       data.Should().BeEmpty();
    }
 
-    [Theory, AutoMoqData]
-    public async Task GivenAValidProject_PostToApi([Frozen] Mock<IHttpClientService> httpService, AcademyConversionProjectRepository subject)
-    {
+   [Theory]
+   [AutoMoqData]
+   public async Task GivenAValidProject_PostToApi([Frozen] Mock<IHttpClientService> httpService, AcademyConversionProjectRepository subject)
+   {
       httpService.Setup(m => m.Post<CreateInvoluntaryProject, string>(
-         It.IsAny<HttpClient>(), @"legacy/project/involuntary-conversion-project", It.IsAny<CreateInvoluntaryProject>()))
+            It.IsAny<HttpClient>(), @"legacy/project/involuntary-conversion-project", It.IsAny<CreateInvoluntaryProject>()))
          .ReturnsAsync(new ApiResponse<string>(HttpStatusCode.OK, string.Empty));
 
-      var project = new CreateInvoluntaryProject(null, null);
+      CreateInvoluntaryProject project = new(null, null);
       await subject.CreateInvoluntaryProject(project);
 
       httpService.Verify(m => m.Post<CreateInvoluntaryProject, string>(
          It.IsAny<HttpClient>(), @"legacy/project/involuntary-conversion-project", project), Times.Once);
-    }
+   }
 
-    [Theory, AutoMoqData]
-    public async Task GivenAFailedResponse_ThrowAnException([Frozen] Mock<IHttpClientService> httpService, AcademyConversionProjectRepository subject)
-    {
-        httpService.Setup(m => m.Post<CreateInvoluntaryProject, string>(
-           It.IsAny<HttpClient>(), @"legacy/project/involuntary-conversion-project", It.IsAny<CreateInvoluntaryProject>()))
-           .ReturnsAsync(new ApiResponse<string>(HttpStatusCode.InternalServerError, string.Empty));
+   [Theory]
+   [AutoMoqData]
+   public async Task GivenAFailedResponse_ThrowAnException([Frozen] Mock<IHttpClientService> httpService, AcademyConversionProjectRepository subject)
+   {
+      httpService.Setup(m => m.Post<CreateInvoluntaryProject, string>(
+            It.IsAny<HttpClient>(), @"legacy/project/involuntary-conversion-project", It.IsAny<CreateInvoluntaryProject>()))
+         .ReturnsAsync(new ApiResponse<string>(HttpStatusCode.InternalServerError, string.Empty));
 
-        var project = new CreateInvoluntaryProject(null, null);
-        var exception = await Assert.ThrowsAsync<ApiResponseException>(() => subject.CreateInvoluntaryProject(project));
+      CreateInvoluntaryProject project = new(null, null);
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => subject.CreateInvoluntaryProject(project));
 
-        Assert.Equal("Request to Api failed | StatusCode - InternalServerError", exception.Message);
-    }
+      Assert.Equal("Request to Api failed | StatusCode - InternalServerError", exception.Message);
+   }
 }

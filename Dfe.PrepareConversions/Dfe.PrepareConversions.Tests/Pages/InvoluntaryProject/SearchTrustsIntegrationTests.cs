@@ -6,38 +6,37 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject
+namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject;
+
+public class SearchTrustIntegrationTests : BaseIntegrationTests
 {
-	public class SearchTrustIntegrationTests : BaseIntegrationTests
-	{
-		public SearchTrustIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
-		{
-		}
+   public SearchTrustIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+   {
+   }
 
-		[Fact]
-		public async Task Should_show_error_when_no_trust_provided()
-		{
-			await OpenUrlAsync($"/start-new-project/trust-name");
+   [Fact]
+   public async Task Should_show_error_when_no_trust_provided()
+   {
+      await OpenAndConfirmPathAsync("/start-new-project/trust-name");
 
-			await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]").SubmitAsync();
+      await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]")!.SubmitAsync();
 
-			Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
-				.Be("Enter the Trust name, UKPRN or Companies House number");
-		}
+      Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
+         .Be("Enter the Trust name, UKPRN or Companies House number");
+   }
 
-		[Fact]
-		public async Task Should_show_no_error()
-		{
-			await OpenUrlAsync($"/start-new-project/trust-name");
-			var trustName = "faketrustname";
+   [Fact]
+   public async Task Should_show_no_error()
+   {
+      await OpenAndConfirmPathAsync("/start-new-project/trust-name");
+      string trustName = "faketrustname";
 
-			_factory.AddGetWithJsonResponse($"/establishments",
-			   new List<EstablishmentResponse>() { new EstablishmentResponse() });
+      _factory.AddGetWithJsonResponse("/establishments",
+         new List<EstablishmentResponse> { new() });
 
-			Document.QuerySelector<IHtmlInputElement>("#SearchQuery").Value = trustName;
-			await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]").SubmitAsync();
+      Document.QuerySelector<IHtmlInputElement>("#SearchQuery")!.Value = trustName;
+      await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]")!.SubmitAsync();
 
-			Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]").Should().BeNull();
-		}
-	}
+      Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]").Should().BeNull();
+   }
 }

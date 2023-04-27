@@ -4,34 +4,33 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareConversions.Data.Services
+namespace Dfe.PrepareConversions.Data.Services;
+
+public class KeyStagePerformanceService
 {
-	public class KeyStagePerformanceService
-	{
-		private readonly HttpClient _httpClient;
-		private readonly ILogger<KeyStagePerformanceService> _logger;
+   private readonly HttpClient _httpClient;
+   private readonly ILogger<KeyStagePerformanceService> _logger;
 
-		public KeyStagePerformanceService(IHttpClientFactory httpClientFactory, ILogger<KeyStagePerformanceService> logger)
-		{
-			_httpClient = httpClientFactory.CreateClient("TramsClient");
-			_logger = logger;
-		}
+   public KeyStagePerformanceService(IHttpClientFactory httpClientFactory, ILogger<KeyStagePerformanceService> logger)
+   {
+      _httpClient = httpClientFactory.CreateClient("TramsClient");
+      _logger = logger;
+   }
 
-		public async Task<KeyStagePerformance> GetKeyStagePerformance(string urn)
-		{
-			var response = await _httpClient.GetAsync($"/educationPerformance/{urn}");
-			if (!response.IsSuccessStatusCode)
-			{
-				_logger.LogWarning("Unable to get key stage performance data for establishment with URN: {urn}", urn);
-				return new KeyStagePerformance();
-			}
+   public async Task<KeyStagePerformance> GetKeyStagePerformance(string urn)
+   {
+      HttpResponseMessage response = await _httpClient.GetAsync($"/educationPerformance/{urn}");
+      if (!response.IsSuccessStatusCode)
+      {
+         _logger.LogWarning("Unable to get key stage performance data for establishment with URN: {urn}", urn);
+         return new KeyStagePerformance();
+      }
 
-			var keyStagePerformanceResponse = await response.Content.ReadFromJsonAsync<KeyStagePerformanceResponse>();
-			
-			return new KeyStagePerformance
-			{
-				KeyStage2 = keyStagePerformanceResponse.KeyStage2, KeyStage4 = keyStagePerformanceResponse.KeyStage4, KeyStage5 = keyStagePerformanceResponse.KeyStage5
-			};
-		}
-	}
+      KeyStagePerformanceResponse keyStagePerformanceResponse = await response.Content.ReadFromJsonAsync<KeyStagePerformanceResponse>();
+
+      return new KeyStagePerformance
+      {
+         KeyStage2 = keyStagePerformanceResponse.KeyStage2, KeyStage4 = keyStagePerformanceResponse.KeyStage4, KeyStage5 = keyStagePerformanceResponse.KeyStage5
+      };
+   }
 }

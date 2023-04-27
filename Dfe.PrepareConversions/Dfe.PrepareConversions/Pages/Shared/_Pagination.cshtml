@@ -1,0 +1,34 @@
+﻿@model IPagination
+
+<nav class="moj-pagination" id="pagination-label" aria-label="pagination">
+   <p class="govuk-visually-hidden" aria-labelledby="pagination-label">Pagination navigation</p>
+
+   <ul class="moj-pagination__list">
+      @if (Model.HasPreviousPage)
+      {
+         <li class="moj-pagination__item  moj-pagination__item--prev">
+            <a class="moj-pagination__link" asp-page="/ProjectList/Index" asp-route-currentPage="@Model.PreviousPage" test-id="previousPage">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
+         </li>
+
+         @for (var i = Model.StartingPage; i < Model.CurrentPage; i++)
+         {
+            var current = i;
+            <li class="moj-pagination__item">
+               <a asp-page="/ProjectList/Index" asp-route-currentPage="@current" class="moj-pagination__link">@current</a>
+            </li>
+         }
+      }
+
+      <li class="moj-pagination__item moj-pagination__item--active">@Model.CurrentPage</li>
+
+      @if (Model.HasNextPage)
+      {
+         <li class="moj-pagination__item">
+            <a asp-page="/ProjectList/Index" asp-route-currentPage="@Model.NextPage" class="moj-pagination__link">@Model.NextPage</a>
+         </li>
+         <li class="moj-pagination__item  moj-pagination__item--next">
+            <a class="moj-pagination__link" asp-page="/ProjectList/Index" asp-route-currentPage="@Model.NextPage" test-id="nextPage">Next<span class="govuk-visually-hidden"> set of pages</span></a>
+         </li>
+      }
+   </ul>
+</nav>

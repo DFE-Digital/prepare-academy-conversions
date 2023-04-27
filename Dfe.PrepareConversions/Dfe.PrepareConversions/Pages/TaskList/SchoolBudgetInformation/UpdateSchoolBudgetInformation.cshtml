@@ -1,61 +1,78 @@
 ﻿@page "/task-list/{id:int}/confirm-school-budget-information/update-school-budget-information"
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
-	Model.SuccessPage = Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page;
-    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Update school budget information";
+   Model.SuccessPage = Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page;
+   ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Update school budget information";
 }
 
 @section BeforeMain
 {
-	<govuk-back-link link-item="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation" />
+   <govuk-back-link link-item="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation"/>
 }
 
 @if (Model.ShowError)
 {
-	<partial name="_ErrorSummary" />
+   <partial name="_ErrorSummary"/>
 }
 <span class="govuk-caption-l">@Model.Project.SchoolName</span>
 <h1 class="govuk-heading-l">
-	School budget information
+   School budget information
 </h1>
 
 <div class="govuk-grid-row">
-	<div class="govuk-grid-column-full">
-		<form method="post">
-            <div class="govuk-form-group">              
-                <govuk-date-input name="financial-year" asp-for="@Model.Project.EndOfCurrentFinancialYear" label="End of current financial year" hint="For example, 27 3 2021" />
-			</div>
-			<div class="govuk-form-group">
-				<label class="govuk-label govuk-label--s" for="finance-year-current">
-                    Forecasted revenue carry forward at the end of the current financial year
-				</label>
-				<govuk-decimal-input name="finance-year-current" asp-for="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear" isMonetary="true"/>
-			</div>
-            <div class="govuk-form-group">
-				<label class="govuk-label govuk-label--s" for="finance-current-capital">
-                    Forecasted capital carry forward at the end of the current financial year
-				</label>
-				<govuk-decimal-input name="finance-current-capital" asp-for="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear" isMonetary="true"/>
-			</div>
-            <div class="govuk-form-group">              
-                <govuk-date-input name="next-financial-year" asp-for="@Model.Project.EndOfNextFinancialYear" label="End of next financial year" hint="For example, 27 3 2021" />
-            </div>
-			<div class="govuk-form-group">
-				<label class="govuk-label govuk-label--s" for="finance-year-following">
-                    Forecasted revenue carry forward at the end of the next financial year
-				</label>
-				<govuk-decimal-input name="finance-year-following" asp-for="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear" isMonetary="true"/>
-			</div>
-			<div class="govuk-form-group">
-				<label class="govuk-label govuk-label--s" for="finance-projected-capital">
-                    Forecasted capital carry forward at the end of the next financial year
-				</label>
-				<govuk-decimal-input name="finance-projected-capital" asp-for="@Model.Project.CapitalCarryForwardAtEndMarchNextYear" isMonetary="true"/>
-			</div>
+   <div class="govuk-grid-column-two-thirds">
+      <form method="post">
+         <div class="govuk-form-group">
+            <govuk-date-input name="financial-year" asp-for="@Model.Project.EndOfCurrentFinancialYear" label="End of current financial year" hint="For example, 27 3 2021"/>
+         </div>
+         <div class="govuk-form-group">
+            <label class="govuk-label govuk-label--s" for="finance-year-current">
+               Forecasted revenue carry forward at the end of the current financial year
+            </label>
+            <govuk-decimal-input name="finance-year-current" asp-for="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear" isMonetary="true"/>
+         </div>
+         <div class="govuk-form-group">
+            <label class="govuk-label govuk-label--s" for="finance-current-capital">
+               Forecasted capital carry forward at the end of the current financial year
+            </label>
+            <govuk-decimal-input name="finance-current-capital" asp-for="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear" isMonetary="true"/>
+         </div>
+         <div class="govuk-form-group">
+            <govuk-date-input name="next-financial-year" asp-for="@Model.Project.EndOfNextFinancialYear" label="End of next financial year" hint="For example, 27 3 2021"/>
+         </div>
+         <div class="govuk-form-group">
+            <label class="govuk-label govuk-label--s" for="finance-year-following">
+               Forecasted revenue carry forward at the end of the next financial year
+            </label>
+            <govuk-decimal-input name="finance-year-following" asp-for="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear" isMonetary="true"/>
+         </div>
+         <div class="govuk-form-group">
+            <label class="govuk-label govuk-label--s" for="finance-projected-capital">
+               Forecasted capital carry forward at the end of the next financial year
+            </label>
+            <govuk-decimal-input name="finance-projected-capital" asp-for="@Model.Project.CapitalCarryForwardAtEndMarchNextYear" isMonetary="true"/>
+         </div>
 
-			<button class="govuk-button" id="save-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton">
-				Save and continue
-			</button>
-		</form>
-	</div>
+         <button class="govuk-button" id="save-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton">
+            Save and continue
+         </button>
+      </form>
+   </div>
+
+   <div if="@Model.Project.IsSponsored" class="govuk-grid-column-one-third">
+      <aside class="app-related-items" role="complementary">
+         <h2 class="govuk-heading-s" id="subsection-title">
+            Useful information
+         </h2>
+         <nav role="navigation" aria-labelledby="subsection-title">
+            <ul class="govuk-list govuk-!-font-size-16">
+               <li>
+                  <p class="govuk-body-s">
+                     If you <a asp-page="@Links.AnnexB.Index.Page" asp-route-id="@Model.Project.Id">attach an Annex B form</a> to this project, it will appear here for reference.
+                  </p>
+               </li>
+            </ul>
+         </nav>
+      </aside>
+   </div>
 </div>

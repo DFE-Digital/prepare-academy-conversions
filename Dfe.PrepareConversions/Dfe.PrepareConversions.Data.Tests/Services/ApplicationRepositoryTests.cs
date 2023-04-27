@@ -1,12 +1,12 @@
-﻿using Dfe.PrepareConversions.Data.Features;
+﻿using AutoFixture.Xunit2;
+using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models.Application;
 using Dfe.PrepareConversions.Data.Services;
-using AutoFixture.Xunit2;
 using FluentAssertions;
 using MELT;
 using Microsoft.Extensions.Logging;
+using Microsoft.FeatureManagement;
 using Moq;
-using RichardSzalay.MockHttp;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -14,7 +14,6 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
-using Microsoft.FeatureManagement;
 
 namespace Dfe.PrepareConversions.Data.Tests.Services;
 
@@ -22,16 +21,13 @@ public class ApplicationRepositoryTests
 {
    private readonly ApplicationRepository _applicationRepository;
    private readonly Mock<IApiClient> _mockApiClient;
-   private readonly MockHttpMessageHandler _mockHandler;
-   private readonly Mock<IFeatureManager> _mockFeatures;
 
    public ApplicationRepositoryTests()
    {
-      _mockHandler = new MockHttpMessageHandler();
       _mockApiClient = new Mock<IApiClient>();
-      _mockFeatures = new Mock<IFeatureManager>();
+      Mock<IFeatureManager> mockFeatures = new();
       ITestLoggerFactory testLogger = TestLoggerFactory.Create();
-      _applicationRepository = new ApplicationRepository(_mockApiClient.Object, _mockFeatures.Object, testLogger.CreateLogger<ApplicationRepository>()
+      _applicationRepository = new ApplicationRepository(_mockApiClient.Object, mockFeatures.Object, testLogger.CreateLogger<ApplicationRepository>()
       );
    }
 

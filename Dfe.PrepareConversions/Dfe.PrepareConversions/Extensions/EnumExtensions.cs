@@ -1,22 +1,25 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
 
-namespace Dfe.PrepareConversions.Extensions
+namespace Dfe.PrepareConversions.Extensions;
+
+public static class EnumExtensions
 {
-	public static class EnumExtensions
-	{
-		public static string ToDescription<T>(this T source)
-		{
-			if (source == null) return string.Empty;
+   public static string ToDescription<T>(this T source)
+   {
+      if (source == null) return string.Empty;
 
-			FieldInfo fi = source.GetType().GetField(source.ToString());
+      string description = source.ToString();
 
-			var attributes = (DescriptionAttribute[])fi.GetCustomAttributes(
-				typeof(DescriptionAttribute), false);
+      if (string.IsNullOrWhiteSpace(description)) return string.Empty;
 
-			if (attributes != null && attributes.Length > 0) return attributes[0].Description;
+      FieldInfo fi = source.GetType().GetField(description);
 
-			else return source.ToString();
-		}
-	}
+      DescriptionAttribute[] attributes = (DescriptionAttribute[])fi?.GetCustomAttributes(
+         typeof(DescriptionAttribute), false);
+
+      return attributes is { Length: > 0 }
+         ? attributes[0].Description
+         : description;
+   }
 }

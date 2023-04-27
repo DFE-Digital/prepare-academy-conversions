@@ -25,5 +25,6 @@ export default defineConfig({
       require('./cypress/plugins/index.js')(on, config)
       return config;
     },
+    baseUrl: 'http://s184d01-acacdnendpoint-ata0dwfremepeff8.z01.azurefd.net/'
   },
 })
