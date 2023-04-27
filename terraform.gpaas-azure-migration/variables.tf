@@ -74,6 +74,12 @@ variable "enable_cdn_frontdoor" {
   type        = bool
 }
 
+variable "cdn_frontdoor_origin_fqdn_override" {
+  description = "Manually specify the hostname that the CDN Front Door should target. Defaults to the Container App FQDN"
+  type        = string
+  default     = ""
+}
+
 variable "cdn_frontdoor_enable_rate_limiting" {
   description = "Enable CDN Front Door Rate Limiting. This will create a WAF policy, and CDN security policy. For pricing reasons, there will only be one WAF policy created."
   type        = bool
