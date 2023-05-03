@@ -18,21 +18,10 @@
 
 <div class="govuk-grid-row">
    <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l">@Model.Project.SchoolName</span>
-      <h1 class="govuk-heading-l">
-         Confirm school budget information
-      </h1>
-      <div class="govuk-body">
-         <p>
-            <span if="@Model.Project.IsSponsored is false">This information comes from the
-               <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
-            </span>
-            The table will go into your project template.
-         </p>
-         <p>
-            You can add <a href="#additional-information">additional information</a> if you need to, this will also go into your project template.
-         </p>
-      </div>
+        <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+      <h1 class="govuk-heading-l">Confirm school budget information</h1>
+      <p class="govuk-body-m">This table will go into your project template. You can<a href="#additional-information"> add additional information</a> if you need to.</p>
+      <br>
    </div>
    <div class="govuk-grid-column-full">
       <dl class="govuk-summary-list">
