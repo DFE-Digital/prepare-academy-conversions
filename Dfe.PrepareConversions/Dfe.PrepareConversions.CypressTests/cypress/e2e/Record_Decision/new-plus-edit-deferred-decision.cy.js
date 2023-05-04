@@ -32,7 +32,8 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         // clicks on the continue button
         cy.continueBtn().click()
         cy.addInfoNeededBox().click()
-            .then(() => cy.addInfoNeededText().clear().type('Additional info'))
+        cy.addInfoNeededText().clear()
+        cy.addInfoNeededText().type('Additional info')
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -42,7 +43,8 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         // give deferred reason
         cy.deferredReasonChangeLink().click()
         // set details
-        cy.addInfoNeededText().clear().type('Additional info 2nd time')
+        cy.addInfoNeededText().clear()
+        cy.addInfoNeededText().type('Additional info 2nd time')
         cy.continueBtn().click()
         cy.continueBtn().click()
         // preview answers before submit
@@ -78,7 +80,8 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         // clicks on the continue button
         cy.continueBtn().click()
         cy.awaitOfstedReportBox().click()
-            .then(() => cy.awaitOfstedReportText().clear().type('awaiting ofsted'))
+        cy.awaitOfstedReportText().clear()
+        cy.awaitOfstedReportText().type('awaiting ofsted')
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -87,7 +90,8 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         cy.continueBtn().click()
         // Change condition
         cy.deferredReasonChangeLink().click()
-        cy.awaitOfstedReportText().clear().type('awaiting ofsted 2nd time')
+        cy.awaitOfstedReportText().clear()
+        cy.awaitOfstedReportText().type('awaiting ofsted 2nd time')
         cy.continueBtn().click()
         cy.continueBtn().click()
         // preview answers before submit
@@ -124,7 +128,8 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         // clicks on the continue button
         cy.continueBtn().click()
         cy.performanceCheckBox().click()
-            .then(() => cy.performanceCheckText().clear().type('performance details'))
+        cy.performanceCheckText().clear()
+        cy.performanceCheckText().type('performance details')
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -133,7 +138,8 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         cy.continueBtn().click()
         // Change condition
         cy.deferredReasonChangeLink().click()        
-        cy.performanceCheckText().clear().type('performance details 2nd time')
+        cy.performanceCheckText().clear()
+        cy.performanceCheckText().type('performance details 2nd time')
         cy.continueBtn().click()
         cy.continueBtn().click()
         // preview answers before submit
@@ -170,7 +176,8 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         // clicks on the continue button
         cy.continueBtn().click()
         cy.OtherCheckBox().click()            
-            .then(() => cy.OtherCheckText().clear().type('other details'))
+        cy.OtherCheckText().clear()
+        cy.OtherCheckText().type('other details')
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -179,7 +186,8 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         cy.continueBtn().click()
         // Change condition
         cy.deferredReasonChangeLink().click()
-        cy.OtherCheckText().clear().type('other details 2nd time')
+        cy.OtherCheckText().clear()
+        cy.OtherCheckText().type('other details 2nd time')
         cy.continueBtn().click()
         cy.continueBtn().click()
         // preview answers before submit
@@ -215,7 +223,8 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         // clicks on the continue button
         cy.continueBtn().click()
         cy.OtherCheckBox().click()
-            .then(() => cy.OtherCheckText().clear().type('other details'))
+        cy.OtherCheckText().clear()
+        cy.OtherCheckText().type('other details')
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -224,7 +233,8 @@ describe('Edit Deferred journey', {tags: '@dev'}, () => {
         cy.continueBtn().click()
         // Change condition
         cy.deferredReasonChangeLink().click()
-        cy.OtherCheckText().clear().type('other details 2nd time')
+        cy.OtherCheckText().clear()
+        cy.OtherCheckText().type('other details 2nd time')
         cy.continueBtn().click()
         cy.continueBtn().click()
         // preview answers before submit

@@ -9,7 +9,8 @@ Cypress._.each(['ipad-mini'], (viewport) => {
         it('TC01: Assign a project to user for the first time', () => {
             cy.unassignUser();
             cy.get('a[href*="project-assignment"]').click();
-            cy.get('[id="delivery-officer"]').click().type('Richika Dogra').type('{enter}');
+            cy.get('[id="delivery-officer"]').click()
+            cy.get('[id="delivery-officer"]').type('Richika Dogra{enter}');
             cy.get('[class="govuk-button"]').click();
             cy.get('[id="notification-message"]').should('contain.text', 'Project is assigned');
             cy.selectsConversion();
@@ -25,7 +26,8 @@ Cypress._.each(['ipad-mini'], (viewport) => {
         it('TC03: Remove assigned user via keyboard delete', () => {
             cy.assignUser();
             cy.get('a[href*="project-assignment"]').click();
-            cy.get('[id="delivery-officer"]').click().type('{backspace}');
+            cy.get('[id="delivery-officer"]').click()
+            cy.get('[id="delivery-officer"]').type('{backspace}');
             cy.get('[class="govuk-button"]').click();
         });
 

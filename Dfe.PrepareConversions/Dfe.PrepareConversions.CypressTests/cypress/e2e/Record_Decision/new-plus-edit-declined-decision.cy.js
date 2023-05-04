@@ -28,7 +28,8 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         // clicks on the continue button
         cy.continueBtn().click()
         cy.declineFinancebox().click()
-            .then(() => cy.declineFinancText().clear().type('Finance details'))
+        cy.declineFinancText().clear()
+        cy.declineFinancText().type('Finance details')
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -37,7 +38,8 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         cy.continueBtn().click()
         // Change condition
         cy.reasonchangeLink().click()
-        cy.declineFinancText().clear().type('Finance details 2nd test')
+        cy.declineFinancText().clear()
+        cy.declineFinancText().type('Finance details 2nd test')
         cy.continueBtn().click()
         cy.continueBtn().click()
         // preview answers before submit
@@ -74,7 +76,8 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         // clicks on the continue button
         cy.continueBtn().click()
         cy.performanceBox().click()
-            .then(() => cy.performanceText().clear().type('Performance details'))
+        cy.performanceText().clear()
+        cy.performanceText().type('Performance details')
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -83,7 +86,8 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         cy.continueBtn().click()
         // Change condition
         cy.reasonchangeLink().click()
-        cy.performanceText().clear().type('Performance details 2nd test')
+        cy.performanceText().clear()
+        cy.performanceText().type('Performance details 2nd test')
         cy.continueBtn().click()
         cy.continueBtn().click()
         // preview answers before submit
@@ -120,7 +124,8 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         // clicks on the continue button
         cy.continueBtn().click()
         cy.governanceBox().click()
-            .then(() => cy.governanceText().clear().type('Governance details'))
+        cy.governanceText().clear()
+        cy.governanceText().type('Governance details')
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -129,7 +134,8 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         cy.continueBtn().click()
         // Change condition
         cy.reasonchangeLink().click()
-        cy.governanceText().clear().type('Governance details 2nd test')
+        cy.governanceText().clear()
+        cy.governanceText().type('Governance details 2nd test')
         cy.continueBtn().click()
         cy.continueBtn().click()
         // preview answers before submit
@@ -166,7 +172,8 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         // clicks on the continue button
         cy.continueBtn().click()
         cy.trustBox().click()
-            .then(() => cy.trustText().clear().type('Trust details'))
+        cy.trustText().clear()
+        cy.trustText().type('Trust details')
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -175,7 +182,8 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         cy.continueBtn().click()
         // Change condition
         cy.reasonchangeLink().click()
-        cy.trustText().clear().type('Trust details 2nd test')
+        cy.trustText().clear()
+        cy.trustText().type('Trust details 2nd test')
         cy.continueBtn().click()
         cy.continueBtn().click()
         // preview answers before submit
@@ -210,7 +218,8 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         // clicks on the continue button
         cy.continueBtn().click()
         cy.declineOtherbox().click()
-            .then(() => cy.declineOthertxt().clear().type('Other details'))
+        cy.declineOthertxt().clear()
+        cy.declineOthertxt().type('Other details')
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -219,7 +228,8 @@ describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
         cy.continueBtn().click()
         // Change condition
         cy.reasonchangeLink().click()
-        cy.declineOthertxt().clear().type('Other details 2nd test')
+        cy.declineOthertxt().clear()
+        cy.declineOthertxt().type('Other details 2nd test')
         cy.continueBtn().click()
         cy.continueBtn().click()
         // preview answers before submit

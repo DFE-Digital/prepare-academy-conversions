@@ -60,7 +60,8 @@ Cypress._.each(['ipad-mini'], (viewport) => {
             cy.viewport(viewport)
             cy.urlPath().then(url =>  cy.visit(url + '/confirm-local-authority-information-template-dates'));
             cy.get('[data-test="change-la-info-template-sent-date"]').click()
-            cy.get('[id="la-info-template-sent-date-day"]').clear().type('a')
+            cy.get('[id="la-info-template-sent-date-day"]').clear()
+            cy.get('[id="la-info-template-sent-date-day"]').type('a')
             cy.get('[data-module="govuk-button"]').click()
             cy.get('[id="error-summary-title"]').invoke('text').should('contain', 'There is a problem')
         });
