@@ -18,7 +18,7 @@ public class TrustTemplateGuidanceIntegrationTests : BaseIntegrationTests
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Prepare your trust template");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/trust-template-guidance");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/template-guidance");
 
       await NavigateAsync("Back to task list");
 
@@ -30,11 +30,11 @@ public class TrustTemplateGuidanceIntegrationTests : BaseIntegrationTests
    {
       AcademyConversionProject project = AddGetProject();
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/trust-template-guidance");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/template-guidance");
 
       await NavigateAsync("Getting your template from Sharepoint");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/trust-template-guidance#sharepoint");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/template-guidance#sharepoint");
    }
 
    [Fact]
@@ -42,11 +42,11 @@ public class TrustTemplateGuidanceIntegrationTests : BaseIntegrationTests
    {
       AcademyConversionProject project = AddGetProject();
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/trust-template-guidance");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/template-guidance");
 
       await NavigateAsync("Updating your template in the trust area in KIM");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/trust-template-guidance#trust");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/template-guidance#trust");
    }
 
    [Fact]
@@ -54,11 +54,11 @@ public class TrustTemplateGuidanceIntegrationTests : BaseIntegrationTests
    {
       AcademyConversionProject project = AddGetProject();
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/trust-template-guidance");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/template-guidance");
 
       await NavigateAsync("Updating your template in the sponsor area in KIM (if the trust has sponsor status)");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/trust-template-guidance#sponsor");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/template-guidance#sponsor");
    }
 
    [Fact]
@@ -66,11 +66,11 @@ public class TrustTemplateGuidanceIntegrationTests : BaseIntegrationTests
    {
       AcademyConversionProject project = AddGetProject();
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/trust-template-guidance");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/template-guidance");
 
       await NavigateAsync("Download your trust template from KIM");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/trust-template-guidance#download");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/template-guidance#download");
    }
 
    [Fact]
@@ -78,10 +78,10 @@ public class TrustTemplateGuidanceIntegrationTests : BaseIntegrationTests
    {
       AcademyConversionProject project = AddGetProject();
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/trust-template-guidance");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/template-guidance");
 
       await NavigateAsync("Send your project template and trust template for review");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/trust-template-guidance#send");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/template-guidance#send");
    }
 }

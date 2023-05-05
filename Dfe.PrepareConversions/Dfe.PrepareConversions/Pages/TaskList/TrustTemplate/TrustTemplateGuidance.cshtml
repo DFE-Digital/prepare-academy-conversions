@@ -1,4 +1,4 @@
-@page "/task-list/{id:int}/trust-template-guidance"
+@page "/task-list/{id:int}/template-guidance"
 @model Dfe.PrepareConversions.Pages.BaseAcademyConversionProjectPageModel
 @{
    ViewData["Title"] = "Prepare your trust template";
@@ -6,138 +6,14 @@
 
 @section BeforeMain
 {
-   <govuk-back-link link-item="@Links.TaskList.Index"/>
+   <govuk-back-link link-item="@Links.TaskList.Index" />
 }
-
-<div class="govuk-grid-row">
-   <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l">@Model.Project.SchoolName</span>
-      <h1 class="govuk-heading-l">
-         Prepare your trust template
-      </h1>
-
-      <nav class="gem-c-contents-list" aria-label="Pages in this guide" role="navigation" data-module="gem-track-click">
-         <h2 class="gem-c-contents-list__title"> Contents</h2>
-         <ol class="gem-c-contents-list__list">
-            <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed gem-c-contents-list__list-item--active" aria-current="true">Overview</li>
-            <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
-               <a class="gem-c-contents-list__link govuk-link" href="#sharepoint">Getting your template from Sharepoint</a>
-            </li>
-            <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
-               <a class="gem-c-contents-list__link govuk-link" href="#trust">Updating your template in the trust area in KIM</a>
-            </li>
-            <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
-               <a class="gem-c-contents-list__link govuk-link" href="#sponsor">Updating your template in the sponsor area in KIM (if the trust has sponsor status)</a>
-            </li>
-            <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
-               <a class="gem-c-contents-list__link govuk-link" href="#download">Download your trust template from KIM</a>
-            </li>
-            <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
-               <a class="gem-c-contents-list__link govuk-link" href="#send">Send your project template and trust template for review</a>
-            </li>
-         </ol>
-      </nav>
-
-      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-
-      <p class="govuk-body">At the moment, this system does not have access to multi-academy trust (MAT) or sponsor templates. </p>
-      <p class="govuk-body">There are 2 ways you can get these templates outside of this system:</p>
-      <ul class="govuk-body">
-         <li>check if there is a MAT or sponsor template in Sharepoint</li>
-         <li>download a MAT or sponsor template from KIM</li>
-      </ul>
-      <p class="govuk-body">If the trust has sponsor status, you will need to use a sponsor template. If the trust does not have sponsor status you will need a multi-academy trust (MAT) template.</p>
-
-      <h2 class="govuk-heading-m govuk-!-margin-top-6">Getting your template from Sharepoint</h2>
-      <p class="govuk-body">Check the trust or sponsor folder in Sharepoint because there might already be a template for the trust. </p>
-      <p class="govuk-body">Make sure the template is not older than 3 months, if it is you will need to download a new template from KIM or request an update from the trust relationship manager.</p>
-
-      <h2 class="govuk-heading-m govuk-!-margin-top-6">Updating your template in the trust area in KIM</h2>
-      <p class="govuk-body">If the trust does not have sponsor status, use the trust area in KIM to check the template information is up to date.</p>
-      <p class="govuk-body">
-         <strong>Step 1</strong><br>
-         Log into KIM, on the left hand side you will see a folder called Infrastructure and Funding.
-         Within this folder select Trusts.
-      </p>
-      <img class="govuk-body" src="@Url.Content("~/src/images/TrustTemplateGuidance/1-Infrastructure-and-funding-trusts.png")" alt="Folder structure on KIM showing the trust area">
-
-      <p class="govuk-!-margin-top-4 govuk-body">
-         <strong>Step 2</strong><br>
-         Search for the relevant trust by name in the search bar.
-      </p>
-      <p class="govuk-body">When the trust information appears, check you have the right trust by checking the Trust reference number, for example TR03464.</p>
-      <br>
-      <img class="govuk-body" src="@Url.Content("~/src/images/TrustTemplateGuidance/2-Search-for-trust.png")" alt="Search bar in trust area in KIM">
-      <br><br><br>
-
-      <p class="govuk-body">
-         <strong>Step 3</strong><br>
-         On the main screen select MAT template.
-         Read through the information to check it’s up to date. Make any changes you need to and select Save Data.
-      </p>
-      <br>
-      <img class="govuk-body" src="@Url.Content("~/src/images/TrustTemplateGuidance/3-MAT-template.png")" alt="Multi-academy trust template area in KIM">
-      <br><br>
-
-      <h2 class="govuk-heading-m govuk-!-margin-top-6">Updating your template in the sponsor area in KIM (if the trust has sponsor status)</h2>
-      <p class="govuk-body">In the sponsor area in KIM, the information will sometimes be more detailed than in the trust area. You might need to align the information in the trust area and the sponsor area in KIM.</p>
-
-      <p class="govuk-!-margin-top-6 govuk-body">
-         <strong>Step 1</strong><br>
-         Log into KIM, on the left hand side you will see a folder called Infrastructure and Funding.
-         Within this folder select Sponsors.
-      </p>
-      <br>
-      <img class="govuk-body" src="@Url.Content("~/src/images/TrustTemplateGuidance/4-Infrastructure-and-funding-sponsors.png")" alt="Folder structure on KIM showing the sponsor area">
-      <br>
-
-      <p class="govuk-!-margin-top-6 govuk-body">
-         <strong>Step 2</strong><br>
-         Search for the relevant trust or sponsor by name in the search bar.
-      </p>
-      <p class="govuk-body">When the sponsor information appears, check you have the right sponsor by checking the sponsor ID, for example SP02090.</p>
-      <br>
-      <img class="govuk-body" src="@Url.Content("~/src/images/TrustTemplateGuidance/5-Search-for-sponsor.png")" alt="Search bar in sponsor area in KIM">
-      <br>
-
-      <p class="govuk-!-margin-top-6 govuk-body">
-         <strong>Step 3</strong><br>
-         On the main screen select Sponsor template information.
-         Read through the information to check it’s up to date. Make any changes you need to and select Save Data.
-      </p>
-      <br>
-      <img class="govuk-body" src="@Url.Content("~/src/images/TrustTemplateGuidance/6-Sponsor-template-information.png")" alt="Sponsor template information area in KIM">
-      <br>
-
-      <h2 class="govuk-heading-m govuk-!-margin-top-8">Download your trust template from KIM</h2>
-      <p class="govuk-body">Once you’ve checked the information in your MAT or sponsor template is up to date, you can download it to your desktop.</p>
-      <p class="govuk-body">
-         <strong>Step 1</strong><br>
-         On the main view in KIM, select Academy Approval Templates
-      </p>
-      <br>
-      <img class="govuk-body" src="@Url.Content("~/src/images/TrustTemplateGuidance/7-Academy-approval-templates.png")" alt="Academy approval templates on  KIM main page">
-      <br>
-      <p class="govuk-!-margin-top-6 govuk-body"><strong>Step 2</strong><br>You will be taken to a new page. At the top of the page in the field called Template Type, select if you want a Trust or Sponsor. </p>
-      <p class="govuk-body">You only need to select Sponsor if the trust has sponsor status.</p>
-      <br>
-      <img class="govuk-body" src="@Url.Content("~/src/images/TrustTemplateGuidance/8-Template-type.png")" alt="Template type selection in KIM"/>
-      <br>
-      <p class="govuk-!-margin-top-6 govuk-body">
-         <strong>Step 3</strong><br>
-         In the field called Sponsor/MAT, start typing the trust’s name. The correct trust should come up.
-      </p>
-      <p class="govuk-body">Select View Report and your trust template will generate.</p>
-      <br>
-      <img class="govuk-body" src="@Url.Content("~/src/images/TrustTemplateGuidance/9-Sponsor-or-trust-name.png")" alt="Sponsor or trust name search bar">
-      <br>
-      <p class="govuk-!-margin-top-6 govuk-body"><strong>Step 4</strong><br>Wait 5 minutes before downloading your template onto your desktop. This is because KIM data refreshes every 5 minutes.</p>
-      <p class="govuk-body">To download the template, select the Save icon.</p>
-      <br>
-      <img class="govuk-body" src="@Url.Content("~/src/images/TrustTemplateGuidance/10-Generated-trust-template.png")" alt="Generated sponsor template viewed in KIM">
-
-      <h2 class="govuk-heading-m govuk-!-margin-top-6"><strong>Step 5</strong>Send your project template and trust template for review</h2>
-      <p class="govuk-body">When both the project template and trust templates are downloaded onto your desktop, store them in Sharepoint.</p>
-      <p class="govuk-body">Once the templates are in Sharepoint, you can send them for review. You can do this in the same way you normally would through Teams or Email.</p>
-   </div>
-</div>
+@if (@Model.Project.IsSponsored)
+{
+    @Html.Partial("_SponsoredTemplateGuidance")
+    ;
+}
+else
+{
+    @Html.Partial("_TrustTemplateGuidance");
+}
