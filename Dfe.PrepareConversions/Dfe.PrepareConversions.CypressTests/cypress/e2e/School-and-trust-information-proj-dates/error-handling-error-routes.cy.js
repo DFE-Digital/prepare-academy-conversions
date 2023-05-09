@@ -14,13 +14,13 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 			cy.get('*[data-test="change-advisory-board-date"]').click()
 		})
 
-		it('TC01: Should click on error link and allow user to re-enter date', () => {
+		it('TC01: Should click on error link and allow user to re-enter date after invalid date', () => {
 			cy.viewport(viewport)
 
-			cy.submitDateSchoolTrust(11, 11, 2005)
+			cy.submitDateSchoolTrust(31, 12, 1999)
 			cy.saveAndContinueButton().click()
 			cy.get('.govuk-error-summary__list li a')
-				.should('have.text', 'Advisory board date must be in the future')
+				.should('have.text', 'Year must be between 2000 and 2050')
 				.click()
 			cy.submitDateSchoolTrust(1, 2, 2025)
 			cy.saveAndContinueButton().click()
