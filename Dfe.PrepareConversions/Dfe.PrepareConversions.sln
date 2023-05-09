@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.PrepareConversions.Docu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.PrepareConversions.DocumentGeneration.Tests", "Dfe.PrepareConversions.DocumentGeneration.Tests\Dfe.PrepareConversions.DocumentGeneration.Tests.csproj", "{31CF8831-E5BD-4D54-8D10-110EDF81180E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dfe.PrepareConversions.Redirector", "Dfe.PrepareConversions.Redirector\Dfe.PrepareConversions.Redirector.csproj", "{600F77EC-B7C5-49E0-9488-04ED4A5BC36F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.PrepareConversions.Redirector", "Dfe.PrepareConversions.Redirector\Dfe.PrepareConversions.Redirector.csproj", "{600F77EC-B7C5-49E0-9488-04ED4A5BC36F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
