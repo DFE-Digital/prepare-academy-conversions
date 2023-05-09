@@ -25,7 +25,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.TrustTemplate
          await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
          await NavigateAsync("Prepare your sponsor template");
 
-         Document.Url.Should().BeUrl($"/task-list/{project.Id}/template-guidance");
+         Document.Url.Should().BeUrl($"/task-list/{project.Id}/sponsor-guidance");
 
          await NavigateAsync("Back to task list");
 
@@ -40,7 +40,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.TrustTemplate
             x.AcademyTypeAndRoute = "Sponsored";
          });
 
-         await OpenAndConfirmPathAsync($"/task-list/{project.Id}/template-guidance");
+         await OpenAndConfirmPathAsync($"/task-list/{project.Id}/sponsor-guidance");
 
          Document.QuerySelector("h1.govuk-heading-l")!.InnerHtml.Should().Be("Prepare your sponsor template");
       }

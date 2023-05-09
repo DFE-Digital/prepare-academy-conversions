@@ -10,10 +10,9 @@ namespace Dfe.PrepareConversions.TagHelpers
 
       public override void Process(TagHelperContext context, TagHelperOutput output)
       {
-         string urlSlug = $"{ProjectId}/template-guidance";
          output.Content.SetHtmlContent(IsSponsored
-            ? GetHtmlContent("Sponsor template guidance", urlSlug, "Prepare your sponsor template")
-            : GetHtmlContent("Trust template guidance", urlSlug, "Prepare your trust template"));
+            ? GetHtmlContent("Sponsor template guidance", $"{ProjectId}/sponsor-guidance", "Prepare your sponsor template")
+            : GetHtmlContent("Trust template guidance", $"{ProjectId}/trust-guidance", "Prepare your trust template"));
       }
 
       private static string GetHtmlContent(string title, string urlSlug, string linkText)
