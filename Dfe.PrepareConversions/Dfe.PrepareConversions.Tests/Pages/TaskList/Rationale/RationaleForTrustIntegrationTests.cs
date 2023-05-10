@@ -53,7 +53,7 @@ public class RationaleForTrustIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_back_to_rationale_from_rationale_for_trust()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/trust-rationale");
       await NavigateAsync("Back");
