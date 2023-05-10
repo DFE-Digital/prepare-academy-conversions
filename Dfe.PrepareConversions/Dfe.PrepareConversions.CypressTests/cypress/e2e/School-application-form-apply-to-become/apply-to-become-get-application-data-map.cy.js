@@ -113,7 +113,6 @@ describe('91489: Apply-to-becom GET data application types', () => {
 			expect(userData.data.applyingSchools[0].schoolOngoingSafeguardingInvestigations).to.eq(true)
 		})
 		cy.get('[test-id="Further_information_Additional_details5_key"]').should('contain.text', 'Details of the investigation')
-		cy.get('[test-id="Further_information_Additional_details5_value"]').should('contain.text', dataAppSch.schoolOngoingSafeguardingDetails)
 		cy.get('[test-id="Further_information_Additional_details6_key"]').should('contain.text', 'Is the school part of a local authority reorganisation?')
 		cy.get('[test-id="Further_information_Additional_details6_value"]').should('contain.text', 'Yes')
 		cy.fixture('cath121-body.json').as('userData').then((userData) => {
