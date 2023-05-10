@@ -16,7 +16,7 @@ public class RationaleForTrustIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_and_update_rationale_for_trust()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
       {
          x.RationaleForTrust = _fixture.Create<string>();
