@@ -26,7 +26,12 @@ public class ConfirmProjectAndTrustRationaleIntegrationTests : BaseIntegrationTe
    [Fact]
    public async Task Should_be_in_progress_and_display_rationale_when_rationale_populated()
    {
-      AcademyConversionProject project = AddGetProject(p => p.RationaleSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(project =>
+      {
+         project.RationaleSectionComplete = false;
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+      });
+
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
@@ -73,6 +78,7 @@ public class ConfirmProjectAndTrustRationaleIntegrationTests : BaseIntegrationTe
          project.RationaleForProject = null;
          project.RationaleForTrust = null;
          project.RationaleSectionComplete = false;
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
       });
 
       AddPatchConfiguredProject(project, x =>

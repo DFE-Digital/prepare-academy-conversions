@@ -1,5 +1,4 @@
 ﻿using Dfe.PrepareConversions.Services;
-using Dfe.PrepareConversions.Validators;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -101,7 +100,7 @@ public class AcademyConversionProjectPostModel
 
    [BindProperty(Name = "conversion-support-grant-change-reason")]
    [DisplayFormat(ConvertEmptyStringToNull = false)]
-   [SupportGrantValidator]
+   
    public string ConversionSupportGrantChangeReason { get; set; }
 
    //general info
