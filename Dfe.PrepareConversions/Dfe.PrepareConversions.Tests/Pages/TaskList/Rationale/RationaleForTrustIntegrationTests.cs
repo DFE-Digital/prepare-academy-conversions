@@ -35,19 +35,7 @@ public class RationaleForTrustIntegrationTests : BaseIntegrationTests
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale");
    }
-   [Fact]
-   public async Task Should_have_annex_b_information_when_sponsored()
-   {
-      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored);
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale");
-      await NavigateAsync("Change", 1);
-
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale/trust-rationale");
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
-      Document.QuerySelector("#project-rationale")!
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale");
-   }
 
    [Fact]
    public async Task Should_show_error_summary_when_there_is_an_API_error()

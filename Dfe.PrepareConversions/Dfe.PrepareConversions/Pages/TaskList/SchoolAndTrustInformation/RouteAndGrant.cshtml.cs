@@ -37,7 +37,9 @@ public class RouteAndGrant : CommonPageModel
       AcademyConversionProject conversionProject = project.Body;
       RouteAndGrantViewModel = new InputModel
       {
-         ConversionSupportGrantAmount = conversionProject.ConversionSupportGrantAmount, ConversionSupportGrantChangeReason = conversionProject.ConversionSupportGrantChangeReason
+         ConversionSupportGrantAmount = conversionProject.ConversionSupportGrantAmount, 
+         ConversionSupportGrantChangeReason = conversionProject.ConversionSupportGrantChangeReason,
+         AcademyTypeAndRoute = conversionProject.AcademyTypeAndRoute
       };
 
       return Page();
@@ -73,7 +75,7 @@ public class RouteAndGrant : CommonPageModel
       return new UpdateAcademyConversionProject
       {
          ConversionSupportGrantAmount = RouteAndGrantViewModel.ConversionSupportGrantAmount,
-         ConversionSupportGrantChangeReason = RouteAndGrantViewModel.ConversionSupportGrantChangeReason
+         ConversionSupportGrantChangeReason = RouteAndGrantViewModel.ConversionSupportGrantChangeReason,
       };
    }
 
@@ -89,5 +91,6 @@ public class RouteAndGrant : CommonPageModel
       [DisplayFormat(ConvertEmptyStringToNull = false)]
       [SupportGrantValidator]
       public string ConversionSupportGrantChangeReason { get; set; }
+      public string AcademyTypeAndRoute { get; set; }
    }
 }

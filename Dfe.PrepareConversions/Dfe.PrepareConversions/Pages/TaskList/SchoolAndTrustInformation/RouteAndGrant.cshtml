@@ -6,6 +6,7 @@
    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Academy type, route and conversion support grant";
    ViewData["SchoolName"] = Model.SchoolName;
    ViewData["ProjectId"] = Model.Id;
+   ViewData["AcademyTypeAndRoute"] = Model.RouteAndGrantViewModel.AcademyTypeAndRoute;
    const string grantAmountHint = "If the school has tried to convert before and was unsuccessful, it may have already spent some of its support grant, so you can decrease the amount for this project if you need to. For example, £20,000";
 }
 
