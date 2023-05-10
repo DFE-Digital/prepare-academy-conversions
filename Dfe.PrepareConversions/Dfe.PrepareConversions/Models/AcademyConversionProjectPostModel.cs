@@ -1,4 +1,5 @@
 ﻿using Dfe.PrepareConversions.Services;
+using Dfe.PrepareConversions.Validators;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -91,6 +92,17 @@ public class AcademyConversionProjectPostModel
    [BindProperty(Name = "dao-pack-sent-date")]
    [Display(Name = "DAO pack sent")]
    public DateTime? DaoPackSentDate { get; set; }
+
+   [ModelBinder(BinderType = typeof(MonetaryInputModelBinder))]
+   [Display(Name = "Conversion support grant")]
+   [Range(typeof(decimal), "0", "25000", ErrorMessage = "Enter an amount that is £25,000 or less, for example £20,000")]
+   [BindProperty(Name = "conversion-support-grant-amount")]
+   public decimal? ConversionSupportGrantAmount { get; set; }
+
+   [BindProperty(Name = "conversion-support-grant-change-reason")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+   [SupportGrantValidator]
+   public string ConversionSupportGrantChangeReason { get; set; }
 
    //general info
 

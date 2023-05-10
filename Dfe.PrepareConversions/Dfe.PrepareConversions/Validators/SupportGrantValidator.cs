@@ -9,14 +9,14 @@ public class SupportGrantValidatorAttribute : ValidationAttribute
    {
       string reason = value as string;
 
-      if (string.IsNullOrWhiteSpace(reason))
-      {
-         RouteAndGrant.InputModel context = validationContext.ObjectInstance as RouteAndGrant.InputModel;
-         if (context!.ConversionSupportGrantAmount < 25000)
-         {
-            return new ValidationResult("Give a reason why you have changed the support grant amount");
-         }
-      }
+      //if (string.IsNullOrWhiteSpace(reason))
+      //{
+      //   RouteAndGrant.InputModel context = validationContext.ObjectInstance as RouteAndGrant.InputModel;
+      //   if (context!.ConversionSupportGrantAmount < 25000)
+      //   {
+      //      return new ValidationResult("Give a reason why you have changed the support grant amount");
+      //   }
+      //}
 
       return ValidationResult.Success;
    }
