@@ -26,13 +26,15 @@
          </button>
       </form>
    </div>
-
-    @if (ViewData["AcademyTypeAndRoute"]!.Equals(AcademyTypeAndRoutes.Sponsored))
+    @if (ViewData["AcademyTypeAndRoute"] is not null)
     {
-        <partial name="_SponsoredUsefulInformation" />
-    }
-    else if (ViewData["AcademyTypeAndRoute"].Equals(AcademyTypeAndRoutes.Voluntary) || ViewData["AcademyTypeAndRoute"].Equals(AcademyTypeAndRoutes.FormAMat))
-    {
-        <partial name="_UsefulInformation" />
+       @if (ViewData["AcademyTypeAndRoute"]!.Equals(AcademyTypeAndRoutes.Sponsored))
+       {
+          <partial name="_SponsoredUsefulInformation"/>
+       }
+       else if (ViewData["AcademyTypeAndRoute"].Equals(AcademyTypeAndRoutes.Voluntary) || ViewData["AcademyTypeAndRoute"].Equals(AcademyTypeAndRoutes.FormAMat))
+       {
+          <partial name="_UsefulInformation"/>
+       }
     }
 </div>
