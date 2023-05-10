@@ -15,7 +15,7 @@ public class ConfirmProjectAndTrustRationaleIntegrationTests : BaseIntegrationTe
    [Fact]
    public async Task Should_remove_rationale_for_project_if_sponsored()
    {
-      AcademyConversionProject project = AddGetProject(p => p.AcademyTypeAndRoute = "Sponsored");
+      AcademyConversionProject project = AddGetProject(p => p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Rationale");

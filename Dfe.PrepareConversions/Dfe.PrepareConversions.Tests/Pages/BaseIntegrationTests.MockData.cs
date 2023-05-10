@@ -17,7 +17,7 @@ namespace Dfe.PrepareConversions.Tests.Pages;
 
 public abstract partial class BaseIntegrationTests
 {
-   private readonly string[] _routes = { "Converter", "Sponsored", "Form a MAT" };
+   private readonly string[] _routes = { AcademyTypeAndRoutes.Voluntary, AcademyTypeAndRoutes.Sponsored, AcademyTypeAndRoutes.FormAMat };
 
    protected IEnumerable<AcademyConversionProject> AddGetProjects(Action<AcademyConversionProject> postSetup = null,
                                                                   int? recordCount = null,

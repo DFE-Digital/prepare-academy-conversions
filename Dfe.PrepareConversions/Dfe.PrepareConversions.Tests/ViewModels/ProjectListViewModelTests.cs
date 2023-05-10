@@ -1,4 +1,5 @@
-﻿using Dfe.PrepareConversions.ViewModels;
+﻿using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.ViewModels;
 using FluentAssertions;
 using System;
 using System.Globalization;
@@ -31,7 +32,7 @@ public class ProjectListViewModelTests
    [Fact]
    public void Should_be_considered_sponsored_if_the_route_is_sponsored()
    {
-      new ProjectListViewModel { TypeAndRoute = "Sponsored" }
+      new ProjectListViewModel { TypeAndRoute = AcademyTypeAndRoutes.Sponsored }
          .IsSponsored.Should().BeTrue();
 
       new ProjectListViewModel { ApplicationReceivedDate = DateTime.Today.ToString(CultureInfo.InvariantCulture) }
@@ -41,7 +42,7 @@ public class ProjectListViewModelTests
    [Fact]
    public void Should_be_considered_a_form_a_mat_project_if_the_route_is_form_a_met()
    {
-      new ProjectListViewModel { TypeAndRoute = "Form a MAT" }
+      new ProjectListViewModel { TypeAndRoute = AcademyTypeAndRoutes.FormAMat }
          .IsFormAMat.Should().BeTrue();
 
       new ProjectListViewModel { TypeAndRoute = "Anything else" }
@@ -51,7 +52,7 @@ public class ProjectListViewModelTests
    [Fact]
    public void Should_be_considered_a_voluntary_conversion_if_the_project_is_neither_sponsored_nor_form_a_mat()
    {
-      new ProjectListViewModel { TypeAndRoute = "Converter", ApplicationReceivedDate = DateTime.Today.ToString(CultureInfo.InvariantCulture) }
+      new ProjectListViewModel { TypeAndRoute = AcademyTypeAndRoutes.Voluntary, ApplicationReceivedDate = DateTime.Today.ToString(CultureInfo.InvariantCulture) }
          .IsVoluntary.Should().BeTrue();
    }
 }

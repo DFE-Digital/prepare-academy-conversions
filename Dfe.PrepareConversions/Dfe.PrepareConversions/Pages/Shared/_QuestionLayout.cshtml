@@ -27,7 +27,7 @@
       </form>
    </div>
 
-    @if (ViewData["AcademyTypeAndRoute"]!.Equals("Sponsored"))
+    @if (ViewData["AcademyTypeAndRoute"]!.Equals(AcademyTypeAndRoutes.Sponsored))
     {
         <partial name="_SponsoredUsefulInformation" />
     }

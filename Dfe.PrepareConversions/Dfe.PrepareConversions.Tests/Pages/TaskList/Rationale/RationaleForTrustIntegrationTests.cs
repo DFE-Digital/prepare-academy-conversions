@@ -38,7 +38,7 @@ public class RationaleForTrustIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_have_annex_b_information_when_sponsored()
    {
-      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = "Sponsored");
+      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale");
       await NavigateAsync("Change", 1);
