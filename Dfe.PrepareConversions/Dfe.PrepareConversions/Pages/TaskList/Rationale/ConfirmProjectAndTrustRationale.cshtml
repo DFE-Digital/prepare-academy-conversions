@@ -23,16 +23,22 @@
       <h1 class="govuk-heading-l">
          Confirm project and trust rationale
       </h1>
-      <div class="govuk-body">
-         <p>
-            This information is pre-populated from the
-            <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
-         </p>
-      </div>
+      @if (@Model.Project.AcademyTypeAndRoute is not "Sponsored")
+      {
+         <div class="govuk-body">
+            <p>
+               This information is pre-populated from the
+               <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+            </p>
+         </div>
+      }
    </div>
    <div class="govuk-grid-column-full">
       <dl class="govuk-summary-list">
+      @if (@Model.Project.AcademyTypeAndRoute is not "Sponsored")
+      {
          <govuk-summary-list-row name="rationale-for-project" key-width="@kw" value-width="@vw" label="Rationale for project" value="@Model.Project.RationaleForProject" asp-page="@Links.RationaleSection.RationaleForProject.Page" asp-route-id="@Model.Project.Id" hidden-text="project rationale"/>
+      }
          <govuk-summary-list-row name="rationale-for-trust" key-width="@kw" value-width="@vw" label="Rationale for the trust or sponsor" value="@Model.Project.RationaleForTrust" asp-page="@Links.RationaleSection.RationaleForTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="sponsor rationale"/>
       </dl>
       <form method="post">
