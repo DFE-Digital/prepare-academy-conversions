@@ -1,0 +1,16 @@
+﻿@page "/task-list/{id:int}/sponsor-guidance"
+@model Dfe.PrepareConversions.Pages.BaseAcademyConversionProjectPageModel
+@{
+   ViewData["Title"] = "Prepare your sponsor template";
+}
+@section BeforeMain
+{
+   <govuk-back-link link-item="@Links.TaskList.Index" />
+}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+        <h1 class="govuk-heading-l">Prepare your sponsor template</h1>
+       @await Html.PartialAsync("_GenericTemplateGuidance")
+    </div>
+</div>

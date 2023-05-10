@@ -15,7 +15,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
+using static Dfe.PrepareConversions.Utils.KeyStageDataStatusHelper;
 
 namespace Dfe.PrepareConversions.Pages.TaskList;
 
@@ -154,7 +156,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -189,7 +191,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -224,7 +226,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -259,7 +261,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -295,7 +297,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -330,7 +332,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -386,7 +388,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -421,7 +423,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -456,7 +458,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -491,7 +493,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                new TextElement(ks4Data.PreviousYear) { Bold = true },
                new TextElement(ks4Data.TwoYearsAgo) { Bold = true }
             },
-            KeyStageStatus(),
+            KeyStage4Status(),
             new[]
             {
                new TextElement(project.SchoolName) { Bold = true },
@@ -536,17 +538,16 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
       documentBuilder.ReplacePlaceholderWithContent("KS5PerformanceData", builder =>
       {
          builder.AddHeading("Key stage 5 performance tables", HeadingLevel.One);
-
+         int yearIndex = 0;
          foreach (KeyStage5PerformanceTableViewModel ks5Data in document.KeyStage5)
          {
             builder.AddHeading($"{ks5Data.Year} scores for academic and applied general qualifications", HeadingLevel.Two);
             builder.AddHeading($"Local authority: {project.LocalAuthority}", HeadingLevel.Three);
-
             builder.AddTable(new List<TextElement[]>
             {
                new[]
                {
-                  new TextElement(),
+                  new TextElement($"{KeyStageHeaderStatus(KeyStages.KS5, yearIndex)}"){ Bold = true },
                   new TextElement("Academic progress") { Bold = true },
                   new TextElement("Academic average") { Bold = true },
                   new TextElement("Applied general progress") { Bold = true },
@@ -569,7 +570,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                   new TextElement(ks5Data.NationalAverageAppliedGeneralAverage)
                }
             });
-
+            yearIndex++;
             builder.AddParagraph("");
          }
 
@@ -592,7 +593,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
       documentBuilder.ReplacePlaceholderWithContent("KS2PerformanceData", builder =>
       {
          builder.AddHeading("Key stage 2 performance tables", HeadingLevel.One);
-
+         int yearIndex = 0;
          foreach (KeyStage2PerformanceTableViewModel ks2Data in document.KeyStage2)
          {
             builder.AddHeading($"{ks2Data.Year} key stage 2", HeadingLevel.Two);
@@ -600,7 +601,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
             {
                new[]
                {
-                  new TextElement(),
+                  new TextElement($"{KeyStageHeaderStatus(KeyStages.KS2, yearIndex)}"){ Bold = true },
                   new TextElement("Percentage meeting expected standard in reading, writing and maths") { Bold = true },
                   new TextElement("Percentage achieving a higher standard in reading, writing and maths") { Bold = true },
                   new TextElement("Reading progress scores") { Bold = true },
@@ -636,6 +637,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
                }
             });
             builder.AddParagraph("");
+            yearIndex++;
          }
 
          builder.AddTable(new List<TextElement[]>
@@ -662,14 +664,19 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
       return new TextElement(str.Value!.Replace("<br>", "\n"));
    }
 
-   private static TextElement[] KeyStageStatus()
+   private static TextElement[] KeyStage4Status()
    {
       return new[]
       {
          new TextElement("Status") { Bold = true },
-         new TextElement(KeyStage4DataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now)) { Bold = true },
-         new TextElement(KeyStage4DataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now.AddYears(-1))) { Bold = true },
-         new TextElement(KeyStage4DataStatusHelper.DetermineKeyStageDataStatus(DateTime.Now.AddYears(-2))) { Bold = true }
+         new TextElement(DetermineKeyStageDataStatus(DateTime.Now, KeyStages.KS4)) { Bold = true },
+         new TextElement(DetermineKeyStageDataStatus(DateTime.Now.AddYears(-1), KeyStages.KS4)) { Bold = true },
+         new TextElement(DetermineKeyStageDataStatus(DateTime.Now.AddYears(-2), KeyStages.KS4)) { Bold = true }
       };
+   }
+   private static string KeyStageHeaderStatus(KeyStages keyStage, int yearIndex)
+   {
+      string statusType = DetermineStatusType(yearIndex, DateTime.Now, keyStage);
+      return ("Status: " + statusType);
    }
 }
