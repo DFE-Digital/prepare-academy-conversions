@@ -15,23 +15,34 @@ Cypress._.each(['ipad-mini'], (viewport) => {
                     cy.log('Expected result not found');
                     Cypress.runner.stop();
                 }
-            else {
-                cy.get('[data-cy="select-projectlist-filter-count"]').should('not.equal', '0 projects found');
-                cy.get('#school-name-0').click()
-                cy.get('*[href*="/confirm-school-trust-information-project-dates"]').should('be.visible')
-            }
-          });
+                else {
+                    cy.get('[data-cy="select-projectlist-filter-count"]').should('not.equal', '0 projects found');
+                    cy.get('#school-name-0').click()
+                    cy.get('*[href*="/confirm-school-trust-information-project-dates"]').should('be.visible')
+                }});
         })
 
         it('TC01: Navigates to Key stage 4 performance tables page', () => {
             cy.get('[aria-describedby="key-stage-4-performance-tables"]').click();
             cy.url().should('contain', '/key-stage-4-performance-tables')
-            cy.get('.govuk-grid-row > :nth-child(2) > :nth-child(2)')
-                .invoke('text')
-                .then((text) => {
-                    cy.log(text)
-                    cy.get('[class="govuk-tag govuk-tag--orange"]').should('contain', 'Revised');
-                    cy.get('[class="govuk-tag govuk-tag--green"]').should('contain', 'Final');
+            
+            // Conditional test because we cannot control the data coming back from Trams. This is nothing more than a best effort
+            // test Revised tags are orange.
+            cy.get('body')
+                .then($body => {
+                    if ($body.find('[class="govuk-tag govuk-tag--orange"]').length) {
+                        console.log('checking Revised tags');
+                        cy.get('[class="govuk-tag govuk-tag--orange"]').should('contain', 'Revised');
+                    }
+                });
+
+            // test any Final tags are green
+            cy.get('body')
+                .then($body => {
+                    if ($body.find('[class="govuk-tag govuk-tag--green"]').length) {
+                        console.log('checking Final tags');
+                        cy.get('[class="govuk-tag govuk-tag--green"]').should('contain', 'Final');
+                    }
                 });
         });
 
@@ -40,14 +51,25 @@ Cypress._.each(['ipad-mini'], (viewport) => {
             cy.url().should('include', '/preview-project-template');
             cy.get('h1').contains('Preview project template')
             cy.get('#key-stage-4-performance-tables').should('have.text', 'Key stage 4 performance tables')
-            cy.get(':nth-child(19) > .app-summary-card__body')
-                .invoke('text')
-                .then((text) => {
-                    cy.log(text)
-                    cy.get('[class="govuk-tag govuk-tag--orange"]').should('contain', 'Revised');
-                    cy.get('[class="govuk-tag govuk-tag--green"]').should('contain', 'Final');
+
+            // Conditional test because we cannot control the data coming back from Trams. This is nothing more than a best effort
+            // test any Revised tags are orange.
+            cy.get('body')
+                .then($body => {
+                    if ($body.find('[class="govuk-tag govuk-tag--orange"]').length) {
+                        console.log('checking Revised tags');
+                        cy.get('[class="govuk-tag govuk-tag--orange"]').should('contain', 'Revised');
+                    }
+                });
+
+            // test any Final tags are green
+            cy.get('body')
+                .then($body => {
+                    if ($body.find('[class="govuk-tag govuk-tag--green"]').length) {
+                        console.log('checking Final tags');
+                        cy.get('[class="govuk-tag govuk-tag--green"]').should('contain', 'Final');
+                    }
                 });
         });
-
     });
 });
