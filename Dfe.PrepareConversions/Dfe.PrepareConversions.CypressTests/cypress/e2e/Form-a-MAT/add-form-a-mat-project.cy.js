@@ -1,5 +1,6 @@
 let APPLICATION_ID = 31;
 let URN_ID = null;
+let apiKey =  Cypress.env('academisationApiKey');
 
 describe('Add Form-a-MAT application through API request and verify on the frontend', () => {
 	beforeEach(() => {
@@ -22,6 +23,9 @@ describe('Add Form-a-MAT application through API request and verify on the front
 	it('TC01: should create a Form-a-MAT project using Api', () => {
 		cy.request({
 			method: 'POST',
+			headers: {
+				'x-api-key': apiKey
+			},
 			url: `application/${APPLICATION_ID}/submit`,
 			response: [],
 		}).then((response) => {
@@ -48,6 +52,9 @@ describe('Add Form-a-MAT application through API request and verify on the front
 		//TC02: should NOT create a Form a MAT project if it's NOT in Progress to submit
 		cy.api({
 			method: 'POST',
+			headers: {
+				'x-api-key': apiKey
+			},
 			url: `application/${APPLICATION_ID}/submit`, failOnStatusCode: false,
 			response: [],
 		}).then((response) => {
