@@ -19,7 +19,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.TrustTemplate
       {
          AcademyConversionProject project = AddGetProject(x =>
          {
-            x.AcademyTypeAndRoute = "Sponsored";
+            x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored;
          });
 
          await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
@@ -37,7 +37,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.TrustTemplate
       {
          AcademyConversionProject project = AddGetProject(x =>
          {
-            x.AcademyTypeAndRoute = "Sponsored";
+            x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored;
          });
 
          await OpenAndConfirmPathAsync($"/task-list/{project.Id}/sponsor-guidance");

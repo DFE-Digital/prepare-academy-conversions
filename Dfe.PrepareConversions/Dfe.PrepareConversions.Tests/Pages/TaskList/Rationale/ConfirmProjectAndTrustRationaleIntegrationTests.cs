@@ -13,9 +13,25 @@ public class ConfirmProjectAndTrustRationaleIntegrationTests : BaseIntegrationTe
    public ConfirmProjectAndTrustRationaleIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
 
    [Fact]
+   public async Task Should_remove_rationale_for_project_if_sponsored()
+   {
+      AcademyConversionProject project = AddGetProject(p => p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored);
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
+      await NavigateAsync("Rationale");
+
+      Document.QuerySelector("#rationale-for-project").Should().BeNull();
+      Document.QuerySelector("#rationale-for-trust")!.TextContent.Should().Be(project.RationaleForTrust);
+   }
+   [Fact]
    public async Task Should_be_in_progress_and_display_rationale_when_rationale_populated()
    {
-      AcademyConversionProject project = AddGetProject(p => p.RationaleSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(project =>
+      {
+         project.RationaleSectionComplete = false;
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+      });
+
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
@@ -62,6 +78,7 @@ public class ConfirmProjectAndTrustRationaleIntegrationTests : BaseIntegrationTe
          project.RationaleForProject = null;
          project.RationaleForTrust = null;
          project.RationaleSectionComplete = false;
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
       });
 
       AddPatchConfiguredProject(project, x =>
