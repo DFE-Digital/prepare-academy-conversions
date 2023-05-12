@@ -22,14 +22,6 @@ describe('Add Form-a-MAT application through API request and verify on the front
 
 	it('TC01: should create a Form-a-MAT project using Api', () => {
 		cy.callAcademisationApi('POST', `application/${APPLICATION_ID}/submit`)
-
-		// cy.request({
-		// 	method: 'POST',
-		// 	url: `${Cypress.env('academisationApiUrl')}/application/${APPLICATION_ID}/submit`,			
-		// 	// headers: {
-		// 	// 	'x-api-key': apiKey
-		// 	// },
-		// 	response: [],
 		.then((response) => {
 			console.log(response.body)
 			assert.equal(response.status, 201)
@@ -53,14 +45,6 @@ describe('Add Form-a-MAT application through API request and verify on the front
 
 		//TC02: should NOT create a Form a MAT project if it's NOT in Progress to submit
 		cy.callAcademisationApi('POST', `application/${APPLICATION_ID}/submit`, null, false)
-
-		// cy.api({
-		// 	method: 'POST',
-		// 	url: `${Cypress.env('academisationApiUrl')}/application/${APPLICATION_ID}/submit`, failOnStatusCode: false,
-		// 	headers: {
-		// 		'x-api-key': apiKey
-		// 	},			
-		// 	response: [],
 		.then((response) => {
 			expect(response.status).to.equal(400);
 			expect(response.body[0]).to.have.property('errorMessage');
