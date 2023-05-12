@@ -708,3 +708,30 @@ Cypress.Commands.add('schoolApplicationForm', () => {
     cy.get('#Consultation_link').should('be.visible')
     cy.get('#Declaration_link').should('be.visible')
 });
+
+
+// Interceptors do not run for cy.request or cy.Api. Therefore use a command to make the request instead, an include the required headers etc.
+Cypress.Commands.add('callAcademisationApi',
+(method, url, body=null, failOnStatusCode=true) => {          
+    let requestDefinition =
+        {
+            method: method,
+            url: `${Cypress.env('academisationApiUrl')}/${url}`,			
+            headers: {
+                'x-api-key': Cypress.env('academisationApiKey')
+            },
+            failOnStatusCode: failOnStatusCode,
+            response: []
+        };
+    
+    // add body to a post/put/patch request, otherwise leave as not supplied
+    switch (method.toUpperCase()) {
+        case 'POST':
+        case 'PUT':
+        case 'PATCH':
+            requestDefinition.body = body;
+        break;
+    }
+    
+    return cy.request(requestDefinition);
+});

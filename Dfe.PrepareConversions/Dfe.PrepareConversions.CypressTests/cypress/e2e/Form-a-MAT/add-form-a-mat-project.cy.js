@@ -1,7 +1,7 @@
+/// <reference types ='Cypress'/>
 let APPLICATION_ID = 31;
 let URN_ID = null;
 let apiKey =  Cypress.env('academisationApiKey');
-
 describe('Add Form-a-MAT application through API request and verify on the frontend', () => {
 	beforeEach(() => {
 		cy.sqlServer(`UPDATE [academisation].[ConversionApplication]
@@ -21,14 +21,16 @@ describe('Add Form-a-MAT application through API request and verify on the front
 	});
 
 	it('TC01: should create a Form-a-MAT project using Api', () => {
-		cy.request({
-			method: 'POST',
-			headers: {
-				'x-api-key': apiKey
-			},
-			url: `application/${APPLICATION_ID}/submit`,
-			response: [],
-		}).then((response) => {
+		cy.callAcademisationApi('POST', `application/${APPLICATION_ID}/submit`)
+
+		// cy.request({
+		// 	method: 'POST',
+		// 	url: `${Cypress.env('academisationApiUrl')}/application/${APPLICATION_ID}/submit`,			
+		// 	// headers: {
+		// 	// 	'x-api-key': apiKey
+		// 	// },
+		// 	response: [],
+		.then((response) => {
 			console.log(response.body)
 			assert.equal(response.status, 201)
 			expect(response.body).to.not.be.null
@@ -50,14 +52,16 @@ describe('Add Form-a-MAT application through API request and verify on the front
 		});
 
 		//TC02: should NOT create a Form a MAT project if it's NOT in Progress to submit
-		cy.api({
-			method: 'POST',
-			headers: {
-				'x-api-key': apiKey
-			},
-			url: `application/${APPLICATION_ID}/submit`, failOnStatusCode: false,
-			response: [],
-		}).then((response) => {
+		cy.callAcademisationApi('POST', `application/${APPLICATION_ID}/submit`, null, false)
+
+		// cy.api({
+		// 	method: 'POST',
+		// 	url: `${Cypress.env('academisationApiUrl')}/application/${APPLICATION_ID}/submit`, failOnStatusCode: false,
+		// 	headers: {
+		// 		'x-api-key': apiKey
+		// 	},			
+		// 	response: [],
+		.then((response) => {
 			expect(response.status).to.equal(400);
 			expect(response.body[0]).to.have.property('errorMessage');
 			expect(response.body[0].errorMessage).to.equal('Application must be In Progress to submit');

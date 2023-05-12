@@ -1,7 +1,6 @@
 /* eslint-env node */
 
 import { defineConfig } from 'cypress'
-
 export default defineConfig({
   video: false,
   retries: 2,
@@ -10,7 +9,6 @@ export default defineConfig({
     // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
       return require('./cypress/plugins/index.js')(on, config)
-    },
-    baseUrl: 'http://s184d01-acacdnendpoint-ata0dwfremepeff8.z01.azurefd.net/'
+    }
   },
 })

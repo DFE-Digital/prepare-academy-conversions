@@ -147,13 +147,13 @@ jobs:
 
       - name: Run cypress (staging)
         if: needs.set-env.outputs.environment == 'staging'
-        run: npm run cy:run -- --env url='${{ secrets.CIP_ENDPOINT }}',grep='-dao',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }},academisationApiKey=${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}'
+        run: npm run cy:run -- --env url='${{ secrets.CIP_ENDPOINT }}',grep='-dao',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}, academisationApiUrl=${{secrets.CYPRESS_ACADEMISATION_API_URL}}, academisationApiKey=${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}'
         env:
           db: ${{ secrets.DB_CONNECTION_STRING }}
 
       - name: Run cypress (dev)
         if: needs.set-env.outputs.environment == 'dev'
-        run: npm run cy:run -- --env url='${{ secrets.CIP_ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}'
+        run: npm run cy:run -- --env url='${{ secrets.CIP_ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}, academisationApiUrl=${{secrets.CYPRESS_ACADEMISATION_API_URL}}, academisationApiKey=${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}'
         env:
           db: ${{ secrets.DB_CONNECTION_STRING }}
 
