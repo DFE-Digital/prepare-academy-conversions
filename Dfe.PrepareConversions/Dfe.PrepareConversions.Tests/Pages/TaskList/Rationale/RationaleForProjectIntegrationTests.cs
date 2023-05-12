@@ -26,7 +26,7 @@ public class RationaleForProjectIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_rationale_for_project_from_rationale()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale");
       await NavigateAsync("Change", 0);
@@ -37,7 +37,7 @@ public class RationaleForProjectIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_back_to_rationale_from_rationale_for_project()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/project-rationale");
       await NavigateAsync("Back");
@@ -48,7 +48,7 @@ public class RationaleForProjectIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_update_rationale_for_project()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
       {
          x.RationaleForProject = _fixture.Create<string>();

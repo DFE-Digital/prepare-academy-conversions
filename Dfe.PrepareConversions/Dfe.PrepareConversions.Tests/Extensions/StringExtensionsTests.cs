@@ -1,4 +1,5 @@
-﻿using Dfe.PrepareConversions.Extensions;
+﻿using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Extensions;
 using FluentAssertions;
 using Xunit;
 
@@ -24,19 +25,19 @@ public class StringExtensionsTests
    [Fact]
    public void Should_be_able_to_convert_voluntary_conversion_route_to_the_correct_description()
    {
-      "Converter".RouteDescription().Should().Be("Voluntary conversion");
+      AcademyTypeAndRoutes.Voluntary.RouteDescription().Should().Be("Voluntary conversion");
    }
 
    [Fact]
    public void Should_be_able_to_convert_involuntary_conversion_route_to_the_correct_description()
    {
-      "Sponsored".RouteDescription().Should().Be("Involuntary conversion");
+      AcademyTypeAndRoutes.Sponsored.RouteDescription().Should().Be("Involuntary conversion");
    }
 
    [Fact]
    public void Should_convert_form_a_mat_route_to_the_correct_description()
    {
-      "Form a MAT".RouteDescription().Should().Be("Form a MAT");
+      AcademyTypeAndRoutes.FormAMat.RouteDescription().Should().Be("Form a MAT");
    }
 
    [Fact]

@@ -13,7 +13,10 @@ public class TrustTemplateGuidanceIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_between_trust_template_guidance_and_task_list()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(project =>
+      {
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+      });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Prepare your trust template");

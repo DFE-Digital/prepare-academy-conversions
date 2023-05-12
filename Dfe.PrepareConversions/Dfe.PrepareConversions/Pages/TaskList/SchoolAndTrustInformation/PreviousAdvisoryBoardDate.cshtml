@@ -4,6 +4,7 @@
    Layout = "_QuestionLayout";
    Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Date of previous advisory board";
+   ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
 }
 
 @section BeforeMain

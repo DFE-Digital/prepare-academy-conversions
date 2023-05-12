@@ -1,18 +1,18 @@
-﻿@* TO DO 
-	this layout relies on model data and would be better refactored as a partial 
+﻿@using Dfe.PrepareConversions.Data.Models
+@* TO DO
+	this layout relies on model data and would be better refactored as a partial
 *@
 @{
-   Layout = "_Layout";
+    Layout = "_Layout";
 }
-
 @section BeforeMain
 {
-   @await RenderSectionAsync("BeforeMain", false)
+    @await RenderSectionAsync("BeforeMain", false)
 }
 
 @if (Model.ShowError)
 {
-   <partial name="_ErrorSummary"/>
+    <partial name="_ErrorSummary" />
 }
 
 <div class="govuk-grid-row">
@@ -25,6 +25,15 @@
          </button>
       </form>
    </div>
-
-   <partial name="_UsefulInformation"/>
+    @if (ViewData["AcademyTypeAndRoute"] is not null)
+    {
+       @if (ViewData["AcademyTypeAndRoute"]!.Equals(AcademyTypeAndRoutes.Sponsored))
+       {
+          <partial name="_SponsoredUsefulInformation"/>
+       }
+       else if (ViewData["AcademyTypeAndRoute"].Equals(AcademyTypeAndRoutes.Voluntary) || ViewData["AcademyTypeAndRoute"].Equals(AcademyTypeAndRoutes.FormAMat))
+       {
+          <partial name="_UsefulInformation"/>
+       }
+    }
 </div>

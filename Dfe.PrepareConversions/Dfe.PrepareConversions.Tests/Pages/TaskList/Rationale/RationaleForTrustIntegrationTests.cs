@@ -16,7 +16,7 @@ public class RationaleForTrustIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_and_update_rationale_for_trust()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
       {
          x.RationaleForTrust = _fixture.Create<string>();
@@ -36,6 +36,7 @@ public class RationaleForTrustIntegrationTests : BaseIntegrationTests
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale");
    }
 
+
    [Fact]
    public async Task Should_show_error_summary_when_there_is_an_API_error()
    {
@@ -52,7 +53,7 @@ public class RationaleForTrustIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_back_to_rationale_from_rationale_for_trust()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/trust-rationale");
       await NavigateAsync("Back");

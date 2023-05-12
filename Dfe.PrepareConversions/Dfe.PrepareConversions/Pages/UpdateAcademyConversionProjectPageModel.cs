@@ -82,6 +82,8 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
       return new UpdateAcademyConversionProject
       {
          ProjectStatus = AcademyConversionProject.ProjectStatus,
+         ConversionSupportGrantAmount = AcademyConversionProject.ConversionSupportGrantAmount,
+         ConversionSupportGrantChangeReason = AcademyConversionProject.ConversionSupportGrantChangeReason,
          ApplicationReceivedDate = AcademyConversionProject.ApplicationReceivedDate,
          AssignedDate = AcademyConversionProject.AssignedDate,
          HeadTeacherBoardDate = AcademyConversionProject.HeadTeacherBoardDate,
