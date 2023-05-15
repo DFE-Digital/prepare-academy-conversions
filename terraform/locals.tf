@@ -16,6 +16,7 @@ locals {
   dns_txt_records                              = var.dns_txt_records
   enable_cdn_frontdoor                         = var.enable_cdn_frontdoor
   cdn_frontdoor_origin_fqdn_override           = var.cdn_frontdoor_origin_fqdn_override
+  cdn_frontdoor_origin_host_header_override    = var.cdn_frontdoor_origin_host_header_override
   cdn_frontdoor_enable_rate_limiting           = var.cdn_frontdoor_enable_rate_limiting
   cdn_frontdoor_host_add_response_headers      = var.cdn_frontdoor_host_add_response_headers
   cdn_frontdoor_custom_domains                 = var.cdn_frontdoor_custom_domains

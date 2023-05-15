@@ -95,6 +95,13 @@ variable "cdn_frontdoor_origin_fqdn_override" {
   default     = ""
 }
 
+variable "cdn_frontdoor_origin_host_header_override" {
+  description = "Manually specify the host header that the CDN sends to the target. Defaults to the recieved host header. Set to null to set it to the host_name (`cdn_frontdoor_origin_fqdn_override`)"
+  type        = string
+  default     = ""
+  nullable    = true
+}
+
 variable "container_health_probe_path" {
   description = "Specifies the path that is used to determine the liveness of the Container"
   type        = string
