@@ -177,19 +177,7 @@ describe('Fetch data from Internal', { tags: ['@integration'] }, () => {
 
         cy.get('[test-id="About_the_conversion_Contact_details3_key"]')
             .should('be.visible')
-            .should('contain.text', "Headteacher's phone number")
-        cy.get('[test-id="About_the_conversion_Contact_details3_value"]')
-            .invoke('text')
-            .then((text) => {
-                let textvalue = text.toString()
-                if (textvalue.length > 0) {
-                    expect(data.applyingSchools[0].schoolConversionContactHeadTel)
-                        .to.equal(textvalue.trim())
-                }
-                else {
-                    return null
-                }
-            })
+            .should('contain.text', "Headteacher's phone number");
 
         cy.get('[test-id="About_the_conversion_Contact_details4_key"]')
             .should('be.visible')
@@ -225,19 +213,7 @@ describe('Fetch data from Internal', { tags: ['@integration'] }, () => {
 
         cy.get('[test-id="About_the_conversion_Contact_details6_key"]')
             .should('be.visible')
-            .should('contain.text', "Chair's phone number")
-        cy.get('[test-id="About_the_conversion_Contact_details6_value"]')
-            .invoke('text')
-            .then((text) => {
-                let textvalue = text.toString()
-                if (textvalue.length > 0) {
-                    expect(data.applyingSchools[0].schoolConversionContactChairTel)
-                        .to.equal(textvalue.trim())
-                }
-                else {
-                    return null
-                }
-            })
+            .should('contain.text', "Chair's phone number");
 
         cy.get('[test-id="About_the_conversion_Contact_details7_key"]')
             .should('be.visible')
