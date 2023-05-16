@@ -21,7 +21,7 @@ beforeEach(() => {
 		//Add authorization to all Cypress requests
 		(req) => req.headers['Authorization'] = 'Bearer ' + Cypress.env('authorizationHeader'),
 		(req) => req.headers['AuthorizationRole'] = 'conversions.create'
-	)
+	);
 })
 // ***********************************************************
 

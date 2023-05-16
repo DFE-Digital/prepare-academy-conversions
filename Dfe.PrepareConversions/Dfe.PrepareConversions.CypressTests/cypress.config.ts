@@ -10,7 +10,7 @@ export default defineConfig({
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
-
+      
       on('before:run', () => {
         // Map cypress env vars to process env vars for usage outside of Cypress run
         process.env = config.env

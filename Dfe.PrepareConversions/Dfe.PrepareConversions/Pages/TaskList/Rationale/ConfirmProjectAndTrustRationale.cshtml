@@ -1,46 +1,53 @@
 @page "/task-list/{id:int}/confirm-project-trust-rationale"
+@using Dfe.PrepareConversions.Data.Models
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
-   Model.SuccessPage = Links.TaskList.Index.Page;
-   ViewData["Title"] = "Confirm project and trust rationale";
-   var kw = WidthOverride.OneQuarter;
-   var vw = WidthOverride.Full;
+    Model.SuccessPage = Links.TaskList.Index.Page;
+    ViewData["Title"] = "Confirm project and trust rationale";
+    var kw = WidthOverride.OneQuarter;
+    var vw = WidthOverride.Full;
 }
 
 @section BeforeMain
-{
-   <govuk-back-link link-item="@Links.TaskList.Index"/>
+    {
+    <govuk-back-link link-item="@Links.TaskList.Index" />
 }
 
 @if (Model.ShowError)
 {
-   <partial name="_ErrorSummary"/>
+    <partial name="_ErrorSummary" />
 }
 
 <div class="govuk-grid-row">
-   <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l">@Model.Project.SchoolName</span>
-      <h1 class="govuk-heading-l">
-         Confirm project and trust rationale
-      </h1>
-      <div class="govuk-body">
-         <p>
-            This information is pre-populated from the
-            <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
-         </p>
-      </div>
-   </div>
-   <div class="govuk-grid-column-full">
-      <dl class="govuk-summary-list">
-         <govuk-summary-list-row name="rationale-for-project" key-width="@kw" value-width="@vw" label="Rationale for project" value="@Model.Project.RationaleForProject" asp-page="@Links.RationaleSection.RationaleForProject.Page" asp-route-id="@Model.Project.Id" hidden-text="project rationale"/>
-         <govuk-summary-list-row name="rationale-for-trust" key-width="@kw" value-width="@vw" label="Rationale for the trust or sponsor" value="@Model.Project.RationaleForTrust" asp-page="@Links.RationaleSection.RationaleForTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="sponsor rationale"/>
-      </dl>
-      <form method="post">
-         <govuk-checkbox-input name="rationale-complete" asp-for="Project.RationaleSectionComplete" label="Mark this section as complete, you can still make changes later"/>
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+        <h1 class="govuk-heading-l">
+            Confirm project and trust rationale
+        </h1>
+        @if (@Model.Project.AcademyTypeAndRoute != AcademyTypeAndRoutes.Sponsored)
+        {
+            <div class="govuk-body">
+                <p>
+                    This information is pre-populated from the
+                    <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+                </p>
+            </div>
+        }
+    </div>
+    <div class="govuk-grid-column-full">
+        <dl class="govuk-summary-list">
+            @if (@Model.Project.AcademyTypeAndRoute != AcademyTypeAndRoutes.Sponsored)
+            {
+                <govuk-summary-list-row name="rationale-for-project" key-width="@kw" value-width="@vw" label="Rationale for project" value="@Model.Project.RationaleForProject" asp-page="@Links.RationaleSection.RationaleForProject.Page" asp-route-id="@Model.Project.Id" hidden-text="project rationale" />
+            }
+            <govuk-summary-list-row name="rationale-for-trust" key-width="@kw" value-width="@vw" label="Rationale for the trust or sponsor" value="@Model.Project.RationaleForTrust" asp-page="@Links.RationaleSection.RationaleForTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="sponsor rationale" />
+        </dl>
+        <form method="post">
+            <govuk-checkbox-input name="rationale-complete" asp-for="Project.RationaleSectionComplete" label="Mark this section as complete, you can still make changes later" />
 
-         <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
-            Confirm and continue
-         </button>
-      </form>
-   </div>
+            <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
+                Confirm and continue
+            </button>
+        </form>
+    </div>
 </div>
