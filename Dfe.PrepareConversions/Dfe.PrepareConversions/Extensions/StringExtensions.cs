@@ -16,7 +16,7 @@ public static class StringExtensions
    /// </summary>
    /// <param name="input">The string to convert.</param>
    /// <returns>A string</returns>
-   public static string SentenceCase(this string input)
+   public static string ToSentenceCase(this string input)
    {
       if (input.Length < 2)
          return input.ToUpper();

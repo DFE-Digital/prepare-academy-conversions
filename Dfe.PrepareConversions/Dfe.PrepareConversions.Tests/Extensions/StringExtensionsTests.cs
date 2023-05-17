@@ -13,13 +13,13 @@ public class StringExtensionsTests
    [Fact]
    public void ToSentenceCase_WithFullCaps_ReturnsCorrectly()
    {
-      FULL_CAPS.SentenceCase().Should().Be("This is full caps");
+      FULL_CAPS.ToSentenceCase().Should().Be("This is full caps");
    }
 
    [Fact]
    public void ToSentenceCase_WithLowerCase_ReturnsCorrectly()
    {
-      LOWER_CASE.SentenceCase().Should().Be("This is lower case");
+      LOWER_CASE.ToSentenceCase().Should().Be("This is lower case");
    }
 
    [Fact]
