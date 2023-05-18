@@ -1,4 +1,6 @@
-﻿namespace Dfe.PrepareConversions.Configuration;
+﻿using System.Collections.Generic;
+
+namespace Dfe.PrepareConversions.Configuration;
 
 public static class Constants
 {

@@ -46,7 +46,7 @@ public class IndexModel : PaginatedPageModel
 
       if (filterParametersResponse.Success)
       {
-         Filters.AvailableStatuses = filterParametersResponse.Body.Statuses.ConvertAll(r => r.SentenceCase());
+         Filters.AvailableStatuses = filterParametersResponse.Body.Statuses.ConvertAll(r => r.ToSentenceCase());
          Filters.AvailableDeliveryOfficers = filterParametersResponse.Body.AssignedUsers;
          Filters.AvailableRegions = filterParametersResponse.Body.Regions;
       }
