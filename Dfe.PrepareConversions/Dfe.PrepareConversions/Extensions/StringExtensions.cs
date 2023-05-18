@@ -14,7 +14,7 @@ public static class StringExtensions
    }
 
    /// <summary>
-   ///    Converts a string to sentence case.
+   /// Converts a string to sentence case, ignoring acronyms.
    /// </summary>
    /// <param name="input">The string to convert.</param>
    /// <returns>A string</returns>
@@ -22,20 +22,13 @@ public static class StringExtensions
    {
       if (string.IsNullOrEmpty(input)) return input;
 
-      var acronyms = Constants.Acronyms.Select(acronym => acronym.ToUpperInvariant())
-         .ToHashSet();
-
       string[] words = input.Split(' ');
-
       bool firstNonAcronymCapitalized = false;
 
       for (int i = 0; i < words.Length; i++)
       {
-         if (acronyms.Contains(words[i].ToUpperInvariant())) // It's an acronym
-         {
-            words[i] = words[i].ToUpperInvariant();
-         }
-         else // Not an acronym
+         // Not an acronym
+         if (IsAcronym(words[i]) is false)
          {
             words[i] = words[i].ToLowerInvariant();
 
@@ -49,6 +42,29 @@ public static class StringExtensions
 
       return string.Join(' ', words);
    }
+
+   public static bool IsAcronym(string word)
+   {
+      if (string.IsNullOrEmpty(word) || word.Length < 2)
+      {
+         return false;
+      }
+
+      return char.IsUpper(word[0]) && char.IsUpper(word[^1]);
+   }
+
+
+   /// <summary>
+   ///  Checks a string to see if it contains exclusively capital letters
+   /// </summary>
+   /// <param name="word">The string to check.</param>
+   /// <returns>A string</returns>
+   public static bool IsAllCaps(string word)
+   {
+      if (string.IsNullOrEmpty(word)) return false;
+      return word.All(char.IsUpper);
+   }
+
 
    public static string ToTitleCase(this string str)
    {

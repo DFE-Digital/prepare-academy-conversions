@@ -7,13 +7,13 @@ namespace Dfe.PrepareConversions.Tests.Extensions;
 
 public class StringExtensionsTests
 {
-   private const string FULL_CAPS = "THIS IS FULL CAPS";
+   private const string ACRONYM_SENTENCE = "DAO is CaptuRed CoRrectLy with MAT in DfE";
    private const string LOWER_CASE = "this is lower case";
 
    [Fact]
-   public void ToSentenceCase_WithFullCaps_ReturnsCorrectly()
+   public void ToSentenceCase_WithAcronyms_ReturnsCorrectly()
    {
-      FULL_CAPS.ToSentenceCase().Should().Be("This is full caps");
+      ACRONYM_SENTENCE.ToSentenceCase().Should().Be("DAO Is captured correctly with MAT in DfE");
    }
 
    [Fact]
@@ -21,6 +21,39 @@ public class StringExtensionsTests
    {
       LOWER_CASE.ToSentenceCase().Should().Be("This is lower case");
    }
+
+   [Theory]
+   [InlineData("MAT", true)]
+   [InlineData("TEAM", true)]
+   [InlineData("DAO-", false)]
+   [InlineData("", false)]
+   [InlineData(null, false)]
+   public void IsAcronym_ShouldReturnExpectedResult(string word, bool expected)
+   {
+      // Act
+      var result = StringExtensions.IsAcronym(word);
+
+      // Assert
+      result.Should().Be(expected);
+   }
+
+   [Theory]
+   [InlineData("MAT", true)]
+   [InlineData("TEAM", true)]
+   [InlineData("Mat", false)]
+   [InlineData("Hello", false)]
+   [InlineData("", false)]
+   [InlineData(null, false)]
+   public void IsAllCaps_ShouldReturnExpectedResult(string word, bool expected)
+   {
+      // Act
+      var result = StringExtensions.IsAllCaps(word);
+
+      // Assert
+      result.Should().Be(expected);
+   }
+
+
 
    [Fact]
    public void Should_be_able_to_convert_voluntary_conversion_route_to_the_correct_description()
