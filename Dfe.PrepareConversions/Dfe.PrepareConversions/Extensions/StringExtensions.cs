@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Dfe.PrepareConversions.Configuration;
+using System;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Dfe.PrepareConversions.Extensions;
@@ -12,18 +14,57 @@ public static class StringExtensions
    }
 
    /// <summary>
-   ///    Converts a string to sentence case.
+   /// Converts a string to sentence case, ignoring acronyms.
    /// </summary>
    /// <param name="input">The string to convert.</param>
    /// <returns>A string</returns>
-   public static string SentenceCase(this string input)
+   public static string ToSentenceCase(this string input)
    {
-      if (input.Length < 2)
-         return input.ToUpper();
+      if (string.IsNullOrEmpty(input)) return input;
 
-      string sentence = input.ToLower();
-      return char.ToUpper(sentence[0]) + sentence[1..];
+      string[] words = input.Split(' ');
+      bool firstNonAcronymCapitalized = false;
+
+      for (int i = 0; i < words.Length; i++)
+      {
+         // Not an acronym
+         if (IsAcronym(words[i]) is false)
+         {
+            words[i] = words[i].ToLowerInvariant();
+
+            if (firstNonAcronymCapitalized is false)
+            {
+               words[i] = char.ToUpperInvariant(words[i][0]) + words[i].Substring(1);
+               firstNonAcronymCapitalized = true;
+            }
+         }
+      }
+
+      return string.Join(' ', words);
    }
+
+   public static bool IsAcronym(string word)
+   {
+      if (string.IsNullOrEmpty(word) || word.Length < 2)
+      {
+         return false;
+      }
+
+      return char.IsUpper(word[0]) && char.IsUpper(word[^1]);
+   }
+
+
+   /// <summary>
+   ///  Checks a string to see if it contains exclusively capital letters
+   /// </summary>
+   /// <param name="word">The string to check.</param>
+   /// <returns>A string</returns>
+   public static bool IsAllCaps(string word)
+   {
+      if (string.IsNullOrEmpty(word)) return false;
+      return word.All(char.IsUpper);
+   }
+
 
    public static string ToTitleCase(this string str)
    {

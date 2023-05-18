@@ -1,4 +1,5 @@
-﻿using Dfe.PrepareConversions.Models;
+﻿using Dfe.PrepareConversions.Extensions;
+using Dfe.PrepareConversions.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
@@ -60,7 +61,7 @@ public class ErrorService
          Error dateError = GetError(DateInputId(key));
          if (dateError == null)
          {
-            dateError = new Error { Key = DateInputId(key), Message = dateEntry.Errors.First().ErrorMessage };
+            dateError = new Error { Key = DateInputId(key), Message = dateEntry.Errors.First().ErrorMessage.ToSentenceCase() };
             _errors.Add(dateError);
          }
 
