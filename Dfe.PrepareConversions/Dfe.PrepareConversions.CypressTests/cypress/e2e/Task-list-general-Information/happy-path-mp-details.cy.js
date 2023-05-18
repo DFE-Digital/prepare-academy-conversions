@@ -15,8 +15,10 @@ Cypress._.each(['ipad-mini'], (viewport) => {
 			});
 			cy.viewport(viewport)
 			cy.get('[data-test="change-member-of-parliament-party"]').click()
-			cy.mpName().clear().type('An MP')
-			cy.mpParty().clear().type('A Party')
+			cy.mpName().clear()
+			cy.mpName().type('An MP')
+			cy.mpParty().clear()
+			cy.mpParty().type('A Party')
 		})
 
         it('TC01: Should navigate to MP details page', () => {

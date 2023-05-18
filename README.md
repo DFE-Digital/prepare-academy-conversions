@@ -148,7 +148,7 @@ EVERY 6 to 8 weeks, there is a significant update that will be rolled out with s
 To see the cypress change longs navigate to this link: https://docs.cypress.io/guides/references/changelog#
 Here you can view the bug fixes, performance fixes and features etc. Latest version you will find at the top of the list with release date. You can jump to the specific version by clicking on the links on the right side under section on this page.
 
-##Update Cypress using NPM
+## Update Cypress using NPM
 -Close the cypress runner properly by clicking on Stop button then x button.
 
 -Type below command. Here replace 12.2.0 with latest version
@@ -173,7 +173,6 @@ Here you can view the bug fixes, performance fixes and features etc. Latest vers
 
 
 ##### Cypress Linting
- Cypress ESLint Plugin
  ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs.
 
  Note: If you installed ESLint globally then you must also install eslint-plugin-cypress globally.
@@ -185,13 +184,15 @@ Here you can view the bug fixes, performance fixes and features etc. Latest vers
   `yarn add eslint-plugin-cypress --dev`
 
  -Usage: Add an .eslintrc.json file to your cypress directory with the following:
+```
    {
       "plugins": [
       "cypress"
      ]
     }
-
+```
 -Add rules, example:
+```
   {
     "rules": {
       "cypress/no-assigning-return-values": "error",
@@ -202,10 +203,51 @@ Here you can view the bug fixes, performance fixes and features etc. Latest vers
       "cypress/no-pause": "error"
     }
   }
+```
  -Use the recommended configuration and you can forego configuring plugins, rules, and env individually.
+```
   {
     "extends": [
       "plugin:cypress/recommended"
     ]
   }
 ```
+### Security testing with ZAP
+
+The Cypress tests can also be run, proxied via OWASP ZAP for passive security scanning of the application.
+
+These can be run using the configured docker-compose.yml, which will spin up containers for the ZAP daemon and the Cypress tests, including all networking required. You will need to update any config in the file before running
+
+Create a .env file for docker, this file needs to include
+
+* all of your required cypress configuration
+* HTTP_PROXY e.g. http://zap:8080
+* ZAP_API_KEY, can be any random guid
+
+Example env:
+```
+URL=<Enter URL>
+API_KEY=<Enter API key>
+HTTP_PROXY=http://zap:8080
+ZAP_API_KEY=<Enter random guid>
+```
+_Note: You might have trouble running this locally because of docker thinking localhost is the container and not your machine_
+
+To run docker compose use:
+
+`docker-compose -f docker-compose.yml --exit-code-from cypress`
+
+_Note: `--exit-code-from cypress` tells the container to quit when cypress finishes_
+
+You can also exclude URLs from being intercepted by using the NO_PROXY setting
+
+e.g. `NO_PROXY=*.google.com,yahoo.co.uk`
+
+Alternatively, you can run the Cypress tests against an existing ZAP proxy by setting the environment configuration
+```
+HTTP_PROXY="<zap-daemon-url>"
+NO_PROXY="<list-of-urls-to-ignore>"
+```
+and setting the runtime variables
+
+`zapReport=true,zapApiKey=<zap-api-key>,zapUrl="<zap-daemon-url>"`
