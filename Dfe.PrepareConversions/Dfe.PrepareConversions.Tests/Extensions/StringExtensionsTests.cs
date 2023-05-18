@@ -26,6 +26,7 @@ public class StringExtensionsTests
    [InlineData("MAT", true)]
    [InlineData("TEAM", true)]
    [InlineData("DAO-", false)]
+   [InlineData("DfE", true)]
    [InlineData("", false)]
    [InlineData(null, false)]
    public void IsAcronym_ShouldReturnExpectedResult(string word, bool expected)
