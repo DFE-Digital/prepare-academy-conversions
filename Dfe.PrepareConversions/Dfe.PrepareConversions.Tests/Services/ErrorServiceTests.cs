@@ -41,7 +41,7 @@ public class ErrorServiceTests
       List<Error> errors = _errorService.GetErrors().ToList();
       errors.Count.Should().Be(1);
       errors.First().Key.Should().Be("deadline");
-      errors.First().Message.Should().Be("deadline date should be present");
+      errors.First().Message.Should().Be("Deadline date should be present");
    }
 
    [Fact]
@@ -55,7 +55,7 @@ public class ErrorServiceTests
       var errors = _errorService.GetErrors().ToList();
       errors.Count.Should().Be(1);
       errors.First().Key.Should().Be("deadline");
-      errors.First().Message.Should().Be("deadline date should be present");
+      errors.First().Message.Should().Be("Deadline date should be present");
    }
 
    [Fact]
@@ -91,11 +91,11 @@ public class ErrorServiceTests
 
       List<Error> deadlineError = errors.Where(x => x.Key == "deadline").ToList();
       deadlineError.Count.Should().Be(1);
-      deadlineError.First().Message.Should().Be("deadline date should be present");
+      deadlineError.First().Message.Should().Be("Deadline date should be present");
 
       List<Error> startDateError = errors.Where(x => x.Key == "start-date").ToList();
       startDateError.Count.Should().Be(1);
-      startDateError.First().Message.Should().Be("start date should be present");
+      startDateError.First().Message.Should().Be("Start date should be present");
    }
 
    [Fact]

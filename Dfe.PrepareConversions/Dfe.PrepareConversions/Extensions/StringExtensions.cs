@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Dfe.PrepareConversions.Configuration;
+using System;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Dfe.PrepareConversions.Extensions;
@@ -18,11 +20,34 @@ public static class StringExtensions
    /// <returns>A string</returns>
    public static string ToSentenceCase(this string input)
    {
-      if (input.Length < 2)
-         return input.ToUpper();
+      if (string.IsNullOrEmpty(input)) return input;
 
-      string sentence = input.ToLower();
-      return char.ToUpper(sentence[0]) + sentence[1..];
+      var acronyms = Constants.Acronyms.Select(acronym => acronym.ToUpperInvariant())
+         .ToHashSet();
+
+      string[] words = input.Split(' ');
+
+      bool firstNonAcronymCapitalized = false;
+
+      for (int i = 0; i < words.Length; i++)
+      {
+         if (acronyms.Contains(words[i].ToUpperInvariant())) // It's an acronym
+         {
+            words[i] = words[i].ToUpperInvariant();
+         }
+         else // Not an acronym
+         {
+            words[i] = words[i].ToLowerInvariant();
+
+            if (firstNonAcronymCapitalized is false)
+            {
+               words[i] = char.ToUpperInvariant(words[i][0]) + words[i].Substring(1);
+               firstNonAcronymCapitalized = true;
+            }
+         }
+      }
+
+      return string.Join(' ', words);
    }
 
    public static string ToTitleCase(this string str)

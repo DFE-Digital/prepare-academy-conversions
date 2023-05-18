@@ -108,7 +108,7 @@ public class DaoPackSentDateIntegrationTests : BaseIntegrationTests
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/dao-pack-sent-date");
 
       Document.QuerySelector("[data-cy=\"error-summary\"]")!.TextContent
-         .Should().Contain("DAO pack sent must include a day");
+         .Should().Contain("DAO Pack sent must include a day");
    }
 
    [Fact]
@@ -130,7 +130,7 @@ public class DaoPackSentDateIntegrationTests : BaseIntegrationTests
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/dao-pack-sent-date");
 
       Document.QuerySelector("[data-cy=\"error-summary\"]")!.TextContent
-         .Should().Contain("DAO pack sent must include a month");
+         .Should().Contain("DAO Pack sent must include a month");
    }
 
    [Fact]
@@ -152,7 +152,7 @@ public class DaoPackSentDateIntegrationTests : BaseIntegrationTests
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/dao-pack-sent-date");
 
       Document.QuerySelector("[data-cy=\"error-summary\"]")!.TextContent
-         .Should().Contain("DAO pack sent must include a year");
+         .Should().Contain("DAO Pack sent must include a year");
    }
 
    [Fact]
@@ -173,6 +173,6 @@ public class DaoPackSentDateIntegrationTests : BaseIntegrationTests
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/dao-pack-sent-date");
 
       Document.QuerySelector("[data-cy=\"error-summary\"]")!.TextContent
-         .Should().Contain("DAO pack sent date must be in the past");
+         .Should().Contain("DAO Pack sent date must be in the past");
    }
 }
