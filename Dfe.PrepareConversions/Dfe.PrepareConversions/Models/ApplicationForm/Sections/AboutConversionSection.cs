@@ -28,16 +28,13 @@ public class AboutConversionSection : BaseFormSection
       List<FormField> formFields = new();
       formFields.Add(new FormField("Name of headteacher", application.SchoolConversionContactHeadName));
       formFields.Add(new FormField("Headteacher's email address", application.SchoolConversionContactHeadEmail));
-      formFields.Add(new FormField("Headteacher's phone number", application.SchoolConversionContactHeadTel));
       formFields.Add(new FormField("Name of the chair of the Governing Body", application.SchoolConversionContactChairName));
       formFields.Add(new FormField("Chair's email address", application.SchoolConversionContactChairEmail));
-      formFields.Add(new FormField("Chair's phone number", application.SchoolConversionContactChairTel));
       formFields.Add(new FormField("Who is the main contact for the conversion?", application.SchoolConversionContactRole));
       if (application.SchoolConversionContactRole is not null && application.SchoolConversionContactRole.ToUpper() == "OTHER")
       {
          formFields.Add(new FormField("Main contact's name", application.SchoolConversionMainContactOtherName));
          formFields.Add(new FormField("Main contact's email address", application.SchoolConversionMainContactOtherEmail));
-         formFields.Add(new FormField("Main contact's phone number", application.SchoolConversionMainContactOtherTelephone));
          formFields.Add(new FormField("Main contact's role", application.SchoolConversionMainContactOtherRole));
       }
 
