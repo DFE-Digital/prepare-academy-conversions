@@ -81,7 +81,12 @@ public class SearchTrustModel : PageModel
       }
 
       string[] searchSplit = SplitOnBrackets(SearchQuery);
-      if (searchSplit.Length < 2) return Page();
+      if (searchSplit.Length < 2)
+      {
+         ModelState.AddModelError(nameof(SearchQuery), "We could not find any trusts matching your search criteria");
+         _errorService.AddErrors(ModelState.Keys, ModelState);
+         return Page();
+      }
 
       string ukprn = searchSplit[1];
 
