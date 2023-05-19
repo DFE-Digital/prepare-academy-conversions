@@ -3,6 +3,7 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
+using DocumentFormat.OpenXml.Bibliography;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -57,6 +58,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
       _errorService.AddErrors(Request.Form.Keys, ModelState);
       if (_errorService.HasErrors())
       {
+         RePopDatePickerModelsAfterValidationFail();
          return Page();
       }
 
@@ -75,6 +77,12 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
       }
 
       return RedirectToPage(SuccessPage, new { id });
+   }
+
+   private void RePopDatePickerModelsAfterValidationFail()
+   {
+      Project.LocalAuthorityInformationTemplateSentDate = AcademyConversionProject.LocalAuthorityInformationTemplateSentDate;
+      Project.LocalAuthorityInformationTemplateReturnedDate = AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate;
    }
 
    protected UpdateAcademyConversionProject Build()
