@@ -1,12 +1,14 @@
 ## 1.1.1
 * Error messages relating to date now formatted with sentence case
 * Error page tab title now displaying
+* Irrelevant rationale for project field removed for the sponsored journey. (In favour of 'Rationale for the trust or Sponsor')
+* Sponsored journey pages for changing or adding addtional information have had sidebars updated with a link to upload their Annex B form (Excluding budget and legal section)
 
 ___
 ## 1.1.0 
 * Flexible Advisory Board Dates: Users can now set advisory board dates in either the future or the past for better planning and tracking.
-* Project listing page now states Project route: Voluntary/Form a MAT and Involuntary (Involuntary is due to change to ‘Sponsored’ and won’t appear in live until the feature is complete)
-* Status tags on Key Stage performance data – Provisional, Revised and Final: This provides much needed context, allowing users to make any informed decisions with the knowledge of whether the data is still subject to change.
+* Project listing page now states Project route: Voluntary/Form a MAT and Involuntary (Involuntary is due to change to â€˜Sponsoredâ€™ and wonâ€™t appear in live until the feature is complete)
+* Status tags on Key Stage performance data â€“ Provisional, Revised and Final: This provides much needed context, allowing users to make any informed decisions with the knowledge of whether the data is still subject to change.
 * New domains introduced:
    * https://www.prepare-conversions.education.gov.uk (Production)
    * https://dev.prepare-conversions.education.gov.uk/ (Development)
