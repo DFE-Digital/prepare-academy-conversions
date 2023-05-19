@@ -1,6 +1,7 @@
 ## 1.1.1
 * Error messages relating to date now formatted with sentence case
 * Error page tab title now displaying
+* Dates now maintained on validation error - RecordLocalAuthorityInformationTemplateDates
 * Telephone numbers for contact details on the school application form page have been removed inline with removing them from the data returned by the academisation API.
 ___
 ## 1.1.0 
