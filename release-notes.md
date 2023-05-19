@@ -1,7 +1,7 @@
 ## 1.1.1
 * Error messages relating to date now formatted with sentence case
 * Error page tab title now displaying
-* Dates now maintainaiend on validation error - RecordLocalAuthorityInformationTemplateDates
+* Dates now maintained on validation error - RecordLocalAuthorityInformationTemplateDates
 
 ___
 ## 1.1.0 
