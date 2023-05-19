@@ -57,6 +57,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
       _errorService.AddErrors(Request.Form.Keys, ModelState);
       if (_errorService.HasErrors())
       {
+         RePopDatePickerModelsAfterValidationFail();
          return Page();
       }
 
@@ -75,6 +76,12 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
       }
 
       return RedirectToPage(SuccessPage, new { id });
+   }
+
+   private void RePopDatePickerModelsAfterValidationFail()
+   {
+      Project.LocalAuthorityInformationTemplateSentDate = AcademyConversionProject.LocalAuthorityInformationTemplateSentDate;
+      Project.LocalAuthorityInformationTemplateReturnedDate = AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate;
    }
 
    protected UpdateAcademyConversionProject Build()
