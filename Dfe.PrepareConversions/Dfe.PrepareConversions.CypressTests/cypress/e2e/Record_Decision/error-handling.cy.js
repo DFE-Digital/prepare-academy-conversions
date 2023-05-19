@@ -73,7 +73,8 @@ describe('103787 Error handling', { tags: '@dev'}, () => {
         cy.governanceBox().click()
         cy.trustBox().click()
         cy.declineOtherbox().click()
-        cy.declineFinancText().clear().type('Finance reason....')
+        cy.declineFinancText().clear()
+        cy.declineFinancText().type('Finance reason....')
         cy.continueBtn().click()
 
         // trigger decision date validation
@@ -117,7 +118,8 @@ describe('103787 Error handling', { tags: '@dev'}, () => {
         cy.addInfoNeededBox().click()
         cy.awaitOfstedReportBox().click()
         cy.performanceCheckBox().click()
-        cy.OtherCheckText().clear().type('Other reason....')
+        cy.OtherCheckText().clear()
+        cy.OtherCheckText().type('Other reason....')
         cy.continueBtn().click()
 
         // trigger decision date validation

@@ -3,6 +3,7 @@
 @model Dfe.PrepareConversions.Pages.Errors.IndexModel
 @inject IConfiguration Configuration
 @{
+    ViewData["Title"] = @Model.ErrorMessage;
 }
 <div class="govuk-width-container">
    <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">

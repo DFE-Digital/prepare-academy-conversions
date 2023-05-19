@@ -24,7 +24,8 @@ describe('103791 Create Declined journey', { tags: '@dev'}, () => {
         // clicks on the continue button
         cy.continueBtn().click()
         cy.declineFinancebox().click()
-            .then(() => cy.declineFinancText().clear().type('finance details'))
+        cy.declineFinancText().clear()
+        cy.declineFinancText().type('finance details')
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -35,7 +36,8 @@ describe('103791 Create Declined journey', { tags: '@dev'}, () => {
         cy.reasonchangeLink().click()
         cy.declineFinancebox()
         .invoke('attr', 'aria-expanded')
-        cy.declineFinancText().clear().type('finance details 2nd test')
+        cy.declineFinancText().clear()
+        cy.declineFinancText().type('finance details 2nd test')
         cy.continueBtn().click()
         cy.continueBtn().click()
         checkSummary()

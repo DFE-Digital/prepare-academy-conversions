@@ -24,7 +24,8 @@ describe('Create Deferred journey', { tags: '@dev'}, () => {
         // clicks on the continue button
         cy.continueBtn().click()
         cy.addInfoNeededBox().click()
-            .then(() => cy.addInfoNeededText().clear().type('Additional info'))
+        cy.addInfoNeededBox().clear()
+        cy.addInfoNeededBox().type('Additional info')
         // clicks on the continue button
         cy.continueBtn().click()
         // date entry
@@ -34,7 +35,8 @@ describe('Create Deferred journey', { tags: '@dev'}, () => {
         // give deferred reason
         cy.deferredReasonChangeLink().click()
         // set details
-        cy.addInfoNeededText().clear().type('Additional info 2nd time')
+        cy.addInfoNeededText().clear()
+        cy.addInfoNeededText().type('Additional info 2nd time')
         cy.continueBtn().click()
         cy.continueBtn().click()
         checkSummary()
