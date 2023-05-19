@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 import {data} from "../../fixtures/cath121-body.json"
 
-describe('91489: Apply-to-becom GET data application types', () => {
+describe('91489): Apply-to-become GET data application types', () => {
 	let dataAppSch = data.applyingSchools[0]
 
 	beforeEach(() => {
@@ -52,22 +52,18 @@ describe('91489: Apply-to-becom GET data application types', () => {
 		cy.get('[test-id="About_the_conversion_Contact_details1_value"]').should('contain.text', dataAppSch.schoolConversionContactHeadName)
 		cy.get('[test-id="About_the_conversion_Contact_details2_key"]').should('contain.text', "Headteacher's email address")
 		cy.get('[test-id="About_the_conversion_Contact_details2_value"]').should('contain.text', dataAppSch.schoolConversionContactHeadEmail)
-		cy.get('[test-id="About_the_conversion_Contact_details3_key"]').should('contain.text', "Headteacher's phone number")
-		cy.get('[test-id="About_the_conversion_Contact_details3_value"]').should('have.value', '')
-		cy.get('[test-id="About_the_conversion_Contact_details4_key"]').should('contain.text', 'Name of the chair of the Governing Body')
-		cy.get('[test-id="About_the_conversion_Contact_details4_value"]').should('contain.text', dataAppSch.schoolConversionContactChairName)
-		cy.get('[test-id="About_the_conversion_Contact_details5_key"]').should('contain.text', "Chair's email address")
-		cy.get('[test-id="About_the_conversion_Contact_details5_value"]').should('contain.text', dataAppSch.schoolConversionContactChairEmail)
-		cy.get('[test-id="About_the_conversion_Contact_details6_key"]').should('contain.text', "Chair's phone number")
-		cy.get('[test-id="About_the_conversion_Contact_details6_value"]').should('have.value', '')
-		cy.get('[test-id="About_the_conversion_Contact_details7_key"]').should('contain.text', "Who is the main contact for the conversion?")
-		cy.get('[test-id="About_the_conversion_Contact_details7_value"]').should('contain.text', dataAppSch.schoolConversionContactRole)
-		cy.get('[test-id="About_the_conversion_Contact_details8_key"]').should('contain.text', "Main contact's name")
-		cy.get('[test-id="About_the_conversion_Contact_details8_value"]').should('contain.text', dataAppSch.schoolConversionApproverContactName)
+		cy.get('[test-id="About_the_conversion_Contact_details3_key"]').should('contain.text', 'Name of the chair of the Governing Body')
+		cy.get('[test-id="About_the_conversion_Contact_details3_value"]').should('contain.text', dataAppSch.schoolConversionContactChairName)
+		cy.get('[test-id="About_the_conversion_Contact_details4_key"]').should('contain.text', "Chair's email address")
+		cy.get('[test-id="About_the_conversion_Contact_details4_value"]').should('contain.text', dataAppSch.schoolConversionContactChairEmail)
+		cy.get('[test-id="About_the_conversion_Contact_details5_key"]').should('contain.text', "Who is the main contact for the conversion?")
+		cy.get('[test-id="About_the_conversion_Contact_details5_value"]').should('contain.text', dataAppSch.schoolConversionContactRole)
+		cy.get('[test-id="About_the_conversion_Contact_details6_key"]').should('contain.text', "Main contact's name")
+		cy.get('[test-id="About_the_conversion_Contact_details6_value"]').should('contain.text', dataAppSch.schoolConversionApproverContactName)
 	})
 
 	// Date for Conversion
-	it.only('TC05: Date for Conversion', () => {
+	it('TC05: Date for Conversion', () => {
 		cy.get('[test-id="About_the_conversion_Date_for_conversion1_key"]').should('contain.text', 'Do you want the conversion to happen on a particular date')
 		cy.get('[test-id="About_the_conversion_Date_for_conversion1_value"]')
 			.should('contain.text', 'Yes')

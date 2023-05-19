@@ -175,10 +175,6 @@ describe('Fetch data from Internal', { tags: ['@integration'] }, () => {
                 }
             })
 
-        cy.get('[test-id="About_the_conversion_Contact_details3_key"]')
-            .should('be.visible')
-            .should('contain.text', "Headteacher's phone number");        
-
         cy.get('[test-id="About_the_conversion_Contact_details4_key"]')
             .should('be.visible')
             .should('contain.text', 'Name of the chair of the Governing Body')
@@ -210,10 +206,6 @@ describe('Fetch data from Internal', { tags: ['@integration'] }, () => {
                     return null
                 }
             })
-
-        cy.get('[test-id="About_the_conversion_Contact_details6_key"]')
-            .should('be.visible')
-            .should('contain.text', "Chair's phone number");
 
         cy.get('[test-id="About_the_conversion_Contact_details7_key"]')
             .should('be.visible')
