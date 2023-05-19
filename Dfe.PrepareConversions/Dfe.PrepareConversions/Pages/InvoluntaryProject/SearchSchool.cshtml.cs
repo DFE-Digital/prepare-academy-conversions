@@ -26,7 +26,8 @@ public class SearchSchoolModel : PageModel
    }
 
    [BindProperty]
-   public string SearchQuery { get; set; } = "";
+   
+	public string SearchQuery { get; set; } = "";
 
    public AutoCompleteSearchModel AutoCompleteSearchModel { get; set; }
 
@@ -66,8 +67,12 @@ public class SearchSchoolModel : PageModel
       }
 
       string[] splitSearch = SplitOnBrackets(SearchQuery);
-      if (splitSearch.Length < 2) return Page();
-
+      if (splitSearch.Length < 2)
+      {
+         ModelState.AddModelError(nameof(SearchQuery), "We could not find any schools matching your search criteria");
+         _errorService.AddErrors(ModelState.Keys, ModelState);
+         return Page();
+      }
       redirect = string.IsNullOrEmpty(redirect) ? Links.InvoluntaryProject.SearchTrusts.Page : redirect;
 
       return RedirectToPage(redirect, new { urn = splitSearch[1], ukprn });

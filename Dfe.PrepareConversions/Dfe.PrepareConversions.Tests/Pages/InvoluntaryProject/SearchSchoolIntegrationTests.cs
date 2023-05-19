@@ -36,7 +36,7 @@ public class SearchSchoolIntegrationTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Should_show_no_error()
+   public async Task Should_show_school_not_found_error()
    {
       await OpenAndConfirmPathAsync("/start-new-project/school-name");
       string schoolName = "fakeschoolname";
@@ -47,6 +47,7 @@ public class SearchSchoolIntegrationTests : BaseIntegrationTests
       Document.QuerySelector<IHtmlInputElement>("#SearchQuery")!.Value = schoolName;
       await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]")!.SubmitAsync();
 
-      Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]").Should().BeNull();
+       Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
+         .Be("We could not find any schools matching your search criteria");
    }
 }
