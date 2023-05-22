@@ -3,6 +3,9 @@
 * Error page tab title now displaying
 * Dates now maintained on validation error - RecordLocalAuthorityInformationTemplateDates
 * Telephone numbers for contact details on the school application form page have been removed inline with removing them from the data returned by the academisation API.
+* Fixed bug 129478 : Conversions approved with conditions filter now displays as 'Approved with Conditions'
+* Fixed bug 120010 : Navigation to links content is not working on 'Prepare you trust' page
+
 ___
 ## 1.1.0 
 * Flexible Advisory Board Dates: Users can now set advisory board dates in either the future or the past for better planning and tracking.
