@@ -81,7 +81,7 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
 
       Mock<IFeatureManager> featureManager = new();
       featureManager.Setup(m => m.IsEnabledAsync("UseAcademisation")).ReturnsAsync(true);
-      featureManager.Setup(m => m.IsEnabledAsync("UseAcademisationApplication")).ReturnsAsync(false);
+      featureManager.Setup(m => m.IsEnabledAsync("UseAcademisationApplication")).ReturnsAsync(true);
       featureManager.Setup(m => m.IsEnabledAsync("ShowDirectedAcademyOrders")).ReturnsAsync(true);
 
       builder.ConfigureServices(services =>
