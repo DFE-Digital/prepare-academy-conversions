@@ -35,7 +35,7 @@ public class TrustTemplateGuidanceIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/trust-guidance");
 
-      await NavigateAsync("Getting your template from SharePoint");
+      await NavigateAsync("Getting your template from SharePoint", 0);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/trust-guidance#sharepoint");
    }
@@ -47,7 +47,7 @@ public class TrustTemplateGuidanceIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/trust-guidance");
 
-      await NavigateAsync("Updating your template in the trust area in KIM");
+      await NavigateAsync("Updating your template in the trust area in KIM", 0);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/trust-guidance#trust");
    }
@@ -59,7 +59,7 @@ public class TrustTemplateGuidanceIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/trust-guidance");
 
-      await NavigateAsync("Updating your template in the sponsor area in KIM (if the trust has sponsor status)");
+      await NavigateAsync("Updating your template in the sponsor area in KIM (if the trust has sponsor status)", 0);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/trust-guidance#sponsor");
    }
@@ -71,7 +71,7 @@ public class TrustTemplateGuidanceIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/trust-guidance");
 
-      await NavigateAsync("Download your trust template from KIM");
+      await NavigateAsync("Download your trust template from KIM", 0);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/trust-guidance#download");
    }
@@ -83,7 +83,7 @@ public class TrustTemplateGuidanceIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/trust-guidance");
 
-      await NavigateAsync("Send your project template and trust template for review");
+      await NavigateAsync("Send your project template and trust template for review", 0);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/trust-guidance#send");
    }
