@@ -252,7 +252,7 @@ public class ApplicationFormIntegrationTests : BaseIntegrationTests
    [Theory]
    [InlineData("/school-application-form/{0}")]
    [InlineData("/school-application-form/school-application-tab/{0}")]
-   public async Task Should_Show_500Error_When_Application_Is_Not_Valid(string path)
+   public async Task Should_Show_404Error_When_Application_Is_Not_Found(string path)
    {
       _project = AddGetProject();
       AddGetApplication(app =>
