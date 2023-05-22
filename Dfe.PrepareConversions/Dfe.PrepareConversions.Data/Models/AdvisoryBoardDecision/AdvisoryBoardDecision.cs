@@ -59,7 +59,7 @@ public class AdvisoryBoardDecision
    {
       return this switch
       {
-         { Decision: AdvisoryBoardDecisions.Approved, ApprovedConditionsSet: true } => "APPROVED WITH CONDITIONS",
+         { Decision: AdvisoryBoardDecisions.Approved, ApprovedConditionsSet: true } => "Approved with Conditions",
          _ => Decision?.ToString()
       };
    }
