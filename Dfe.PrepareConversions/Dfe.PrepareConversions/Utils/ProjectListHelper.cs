@@ -46,9 +46,9 @@ namespace Dfe.PrepareConversions.Utils
             };
          }
 
-         return status switch
+         return status?.ToLowerInvariant() switch
          {
-            "APPROVED WITH CONDITIONS" => new ProjectStatus(status, green),
+            "approved with conditions" => new ProjectStatus("Approved with Conditions", green),
             _ => new ProjectStatus("PRE ADVISORY BOARD", yellow)
          };
       }
