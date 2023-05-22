@@ -62,7 +62,7 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
    {
       IHtmlCollection<IElement> anchors = Document.QuerySelectorAll("a");
       IHtmlAnchorElement link = (index == null
-            ? anchors.Single(a => a.TextContent.Contains(linkText))
+            ? anchors.Single(a => a.TextContent.Contains(linkText) && !a.Attributes.Any(a => a.Name == "data-test-anglesharp-hidden"))
             : anchors.Where(a => a.TextContent.Contains(linkText)).ElementAt(index.Value))
          as IHtmlAnchorElement;
 

@@ -35,7 +35,7 @@ public class TrustTemplateGuidanceIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/trust-guidance");
 
-      await NavigateAsync("Getting your template from Sharepoint");
+      await NavigateAsync("Getting your template from SharePoint");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/trust-guidance#sharepoint");
    }
