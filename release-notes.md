@@ -5,6 +5,10 @@
 * Telephone numbers for contact details on the school application form page have been removed inline with removing them from the data returned by the academisation API.
 * Fixed bug 129478 : Conversions approved with conditions filter now displays as 'Approved with Conditions'
 * Fixed bug 120010 : Navigation to links content is not working on 'Prepare you trust' page
+* Fixed bug 126187 : Added Notes not showing correct time (Time now being set to UK time regardless of server)
+* Irrelevant rationale for project field removed for the sponsored journey. (In favour of 'Rationale for the trust or Sponsor')
+* Sponsored journey pages for changing or adding addtional information have had sidebars updated with a link to upload their Annex B form (Excluding budget and legal section)
+* Integration tests now utilising most recent feature flag configeration
 
 ___
 ## 1.1.0 
@@ -23,6 +27,9 @@ ___
    * Key people and Form a MAT rationale can be viewed within the Form a MAT application.
 * Updated several page titles for better user experience and navigation.
 * Resolved an issue where project creation dates were displaying as 0001-01-01
+* Project listing page now states Project route: Voluntary/Form a MAT and Involuntary (Involuntary is due to change to Sponsored and won't appear in live until the feature is complete)
+* Status tags on Key Stage performance data
+   * Provisional, Revised and Final: This provides much needed context, allowing users to make any informed decisions with the knowledge of whether the data is still subject to change.
 
 
 ---
