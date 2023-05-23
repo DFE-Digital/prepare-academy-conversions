@@ -140,7 +140,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
       await _wizard.SubmitThroughTheWizard(request);
 
       Document.QuerySelector<IHtmlElement>("#decision")!.Text()
-         .Should().Be("APPROVED WITH CONDITIONS");
+         .Should().Be("Approved with Conditions");
 
       Document.QuerySelector<IHtmlElement>("#decision-made-by")!.Text()
          .Should().Be("Director General");

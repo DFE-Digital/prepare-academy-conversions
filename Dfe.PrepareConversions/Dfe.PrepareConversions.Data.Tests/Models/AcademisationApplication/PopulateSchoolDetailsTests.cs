@@ -17,14 +17,11 @@ public class PopulateSchoolDetailsTests
          SchoolName = "Old School Name",
          SchoolConversionContactHeadName = "Head Name",
          SchoolConversionContactHeadEmail = "head@email.com",
-         SchoolConversionContactHeadTel = "1234567890",
          SchoolConversionContactRole = "Role",
          SchoolConversionContactChairName = "Chair Name",
          SchoolConversionContactChairEmail = "chair@email.com",
-         SchoolConversionContactChairTel = "0987654321",
          SchoolConversionMainContactOtherName = "Other Name",
          SchoolConversionMainContactOtherEmail = "other@email.com",
-         SchoolConversionMainContactOtherTelephone = "1111111111",
          SchoolConversionApproverContactName = "Approver Name",
          SchoolConversionApproverContactEmail = "approver@email.com",
          SchoolConversionTargetDateSpecified = true,
@@ -44,14 +41,11 @@ public class PopulateSchoolDetailsTests
       Assert.Equal("Old School Name", academiesApplicationSchool.SchoolName);
       Assert.Equal("Head Name", academiesApplicationSchool.SchoolConversionContactHeadName);
       Assert.Equal("head@email.com", academiesApplicationSchool.SchoolConversionContactHeadEmail);
-      Assert.Equal("1234567890", academiesApplicationSchool.SchoolConversionContactHeadTel);
       Assert.Equal("Role", academiesApplicationSchool.SchoolConversionContactRole);
       Assert.Equal("Chair Name", academiesApplicationSchool.SchoolConversionContactChairName);
       Assert.Equal("chair@email.com", academiesApplicationSchool.SchoolConversionContactChairEmail);
-      Assert.Equal("0987654321", academiesApplicationSchool.SchoolConversionContactChairTel);
       Assert.Equal("Other Name", academiesApplicationSchool.SchoolConversionMainContactOtherName);
       Assert.Equal("other@email.com", academiesApplicationSchool.SchoolConversionMainContactOtherEmail);
-      Assert.Equal("1111111111", academiesApplicationSchool.SchoolConversionMainContactOtherTelephone);
       Assert.Equal("Approver Name", academiesApplicationSchool.SchoolConversionApproverContactName);
       Assert.Equal("approver@email.com", academiesApplicationSchool.SchoolConversionApproverContactEmail);
       Assert.True(academiesApplicationSchool.SchoolConversionTargetDateSpecified);

@@ -13,14 +13,11 @@ public class ApplyingSchool
    // contact details
    public string SchoolConversionContactHeadName { get; set; }
    public string SchoolConversionContactHeadEmail { get; set; }
-   public string SchoolConversionContactHeadTel { get; set; }
    public string SchoolConversionContactChairName { get; set; }
    public string SchoolConversionContactChairEmail { get; set; }
-   public string SchoolConversionContactChairTel { get; set; }
    public string SchoolConversionContactRole { get; set; } // "headteacher", "chair of governing body", "someone else"
    public string SchoolConversionMainContactOtherName { get; set; }
    public string SchoolConversionMainContactOtherEmail { get; set; }
-   public string SchoolConversionMainContactOtherTelephone { get; set; }
    public string SchoolConversionMainContactOtherRole { get; set; }
    public string SchoolConversionApproverContactName { get; set; }
 

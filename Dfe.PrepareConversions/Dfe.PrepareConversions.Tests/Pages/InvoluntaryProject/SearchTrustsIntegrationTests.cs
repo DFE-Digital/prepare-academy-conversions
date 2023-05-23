@@ -26,7 +26,7 @@ public class SearchTrustIntegrationTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Should_show_no_error()
+   public async Task Should_show_trust_not_found_error()
    {
       await OpenAndConfirmPathAsync("/start-new-project/trust-name");
       string trustName = "faketrustname";
@@ -37,6 +37,7 @@ public class SearchTrustIntegrationTests : BaseIntegrationTests
       Document.QuerySelector<IHtmlInputElement>("#SearchQuery")!.Value = trustName;
       await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]")!.SubmitAsync();
 
-      Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]").Should().BeNull();
+      Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
+         .Be("We could not find any trusts matching your search criteria");
    }
 }
