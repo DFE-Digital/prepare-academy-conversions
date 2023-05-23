@@ -43,7 +43,7 @@ public class NewNoteModel : BaseAcademyConversionProjectPageModel
       }
 
       ApiResponse<ProjectNote> response =
-         await _repository.AddProjectNote(id, new AddProjectNote { Subject = ProjectNoteSubject, Note = ProjectNoteBody, Author = NameOfUser, Date = DateTime.Now.ToUkDateTime()});
+         await _repository.AddProjectNote(id, new AddProjectNote { Subject = ProjectNoteSubject, Note = ProjectNoteBody, Author = NameOfUser, Date = DateTimeSource.UkTime.Invoke()});
 
       if (!response.Success)
       {

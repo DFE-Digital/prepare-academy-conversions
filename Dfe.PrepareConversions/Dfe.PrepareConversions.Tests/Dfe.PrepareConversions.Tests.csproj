@@ -21,6 +21,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="6.0.11" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Utilities" Version="17.6.36389" />
     <PackageReference Include="Moq" Version="4.18.4" />
     <PackageReference Include="WireMock.Net" Version="1.5.16" />
     <PackageReference Include="xunit" Version="2.4.2" />

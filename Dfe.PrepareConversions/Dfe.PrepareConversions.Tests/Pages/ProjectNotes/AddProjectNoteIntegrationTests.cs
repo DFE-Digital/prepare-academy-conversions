@@ -7,6 +7,7 @@ using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -40,8 +41,10 @@ public class AddProjectNoteIntegrationTests : BaseIntegrationTests
       string projectNotesPage = $"/project-notes/{project.Id}";
 
       DateTime expected = DateTime.Now.ToUkDateTime();
+      DateTimeSource.UkTime = () => expected;
 
       AddProjectNote projectNote = new() { Subject = _fixture.Create<string>(), Note = _fixture.Create<string>(), Author = string.Empty, Date = expected };
+      
       AddPostProjectNote(project.Id, projectNote);
 
       await OpenAndConfirmPathAsync(projectNotesPage);
@@ -57,6 +60,7 @@ public class AddProjectNoteIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#project-note-added")!.TextContent.Should().NotBeNull();
    }
 
+      
    [Fact]
    public async Task Should_not_add_note_when_both_subject_and_note_fields_are_null()
    {
