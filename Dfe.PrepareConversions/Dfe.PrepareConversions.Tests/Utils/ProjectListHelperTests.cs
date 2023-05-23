@@ -43,5 +43,15 @@ namespace Dfe.PrepareConversions.Tests.Utils
          var actual = ProjectListHelper.MapProjectStatus("Hello!");
          Assert.Equivalent(new ProjectStatus("PRE ADVISORY BOARD", yellow), actual);
       }
+
+      [Theory]
+      [InlineData("APPROVED WITH CONDITIONS", "Approved with Conditions", green)]
+      [InlineData("approved with conditions", "Approved with Conditions", green)]
+      [InlineData("Approved with Conditions", "Approved with Conditions", green)]
+      public void MapProjectString_ApprovedWithConditions_ReturnsCorrectValues(string inputStatus, string expectedStatus, string expectedColour)
+      {
+         var actual = ProjectListHelper.MapProjectStatus(inputStatus);
+         Assert.Equivalent(new ProjectStatus(expectedStatus, expectedColour), actual);
+      }
    }
 }

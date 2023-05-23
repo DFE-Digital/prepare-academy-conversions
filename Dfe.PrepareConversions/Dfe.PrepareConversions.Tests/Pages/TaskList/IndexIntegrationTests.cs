@@ -50,7 +50,7 @@ public class IndexIntegrationTests : BaseIntegrationTests, IAsyncLifetime
       await OpenAndConfirmPathAsync($"/task-list/{_project.Id}");
 
       DecisionElement.Text().Should()
-         .Be("APPROVED WITH CONDITIONS");
+         .Be("Approved with Conditions");
       DecisionMadeByElement.Text().Should()
          .Be("A different Regional Director");
       ConditionsSetElement.Text().Trim()

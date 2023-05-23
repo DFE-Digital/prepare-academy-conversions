@@ -29,14 +29,11 @@ public class AboutConversionSectionTests
       FormField[] expectedFieldsContactDetails = {
          new("Name of headteacher", application.SchoolConversionContactHeadName),
          new("Headteacher's email address", application.SchoolConversionContactHeadEmail),
-         new("Headteacher's phone number", application.SchoolConversionContactHeadTel),
          new("Name of the chair of the Governing Body", application.SchoolConversionContactChairName),
          new("Chair's email address", application.SchoolConversionContactChairEmail),
-         new("Chair's phone number", application.SchoolConversionContactChairTel),
          new("Who is the main contact for the conversion?", application.SchoolConversionContactRole),
          new("Main contact's name", application.SchoolConversionMainContactOtherName),
          new("Main contact's email address", application.SchoolConversionMainContactOtherEmail),
-         new("Main contact's phone number", application.SchoolConversionMainContactOtherTelephone),
          new("Main contact's role", application.SchoolConversionMainContactOtherRole),
          new("Approver's name", application.SchoolConversionApproverContactName),
          new("Approver's email address", application.SchoolConversionApproverContactEmail)
@@ -79,10 +76,8 @@ public class AboutConversionSectionTests
       FormField[] expectedFieldsContactDetails = {
          new("Name of headteacher", application.SchoolConversionContactHeadName),
          new("Headteacher's email address", application.SchoolConversionContactHeadEmail),
-         new("Headteacher's phone number", application.SchoolConversionContactHeadTel),
          new("Name of the chair of the Governing Body", application.SchoolConversionContactChairName),
          new("Chair's email address", application.SchoolConversionContactChairEmail),
-         new("Chair's phone number", application.SchoolConversionContactChairTel),
          new("Who is the main contact for the conversion?", application.SchoolConversionContactRole),
          new("Approver's name", application.SchoolConversionApproverContactName),
          new("Approver's email address", application.SchoolConversionApproverContactEmail)
@@ -125,10 +120,8 @@ public class AboutConversionSectionTests
       FormField[] expectedFieldsContactDetails = {
          new("Name of headteacher", application.SchoolConversionContactHeadName),
          new("Headteacher's email address", application.SchoolConversionContactHeadEmail),
-         new("Headteacher's phone number", application.SchoolConversionContactHeadTel),
          new("Name of the chair of the Governing Body", application.SchoolConversionContactChairName),
          new("Chair's email address", application.SchoolConversionContactChairEmail),
-         new("Chair's phone number", application.SchoolConversionContactChairTel),
          new("Who is the main contact for the conversion?", application.SchoolConversionContactRole),
          new("Approver's name", application.SchoolConversionApproverContactName),
          new("Approver's email address", application.SchoolConversionApproverContactEmail)

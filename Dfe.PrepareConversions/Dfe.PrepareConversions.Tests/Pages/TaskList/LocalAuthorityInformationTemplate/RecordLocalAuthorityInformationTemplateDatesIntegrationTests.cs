@@ -185,4 +185,60 @@ public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : Base
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/record-local-authority-information-template-dates");
       Document.QuerySelector(".govuk-error-summary")!.InnerHtml.Should().Contain("Date you sent the template must include a year");
    }
+
+   [Fact]
+   public async Task Should_show_error_when_part_of_date_fields_is_not_completed_and_localAuthorityInformationTemplateReturnedDate_should_be_maintained()
+   {
+      AcademyConversionProject project = AddGetProject();
+
+      UpdateAcademyConversionProject response = AddPatchProjectMany(project, composer =>
+         composer
+            .With(r => r.LocalAuthorityInformationTemplateSentDate, DateTime.Today)
+            .With(r => r.LocalAuthorityInformationTemplateReturnedDate, project.LocalAuthorityInformationTemplateReturnedDate)
+            .With(r => r.LocalAuthorityInformationTemplateComments, project.LocalAuthorityInformationTemplateComments)
+            .With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink));
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-day")!.Value = response.LocalAuthorityInformationTemplateSentDate?.Day.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-month")!.Value = response.LocalAuthorityInformationTemplateSentDate?.Month.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-year")!.Value = string.Empty;
+
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
+
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+      Document.QuerySelector(".govuk-error-summary")!.InnerHtml.Should().Contain("Date you sent the template must include a year");
+
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-day")!.Value.Should().Be(project.LocalAuthorityInformationTemplateReturnedDate?.Day.ToString()!);
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-month")!.Value.Should().Be(project.LocalAuthorityInformationTemplateReturnedDate?.Month.ToString()!);
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-year")!.Value.Should().Be(project.LocalAuthorityInformationTemplateReturnedDate?.Year.ToString()!); 
+   }
+
+   [Fact]
+   public async Task Should_show_error_when_part_of_date_fields_is_not_completed_and_localAuthorityInformationTemplateSentDate_should_be_maintained()
+   {
+      AcademyConversionProject project = AddGetProject();
+
+      UpdateAcademyConversionProject response = AddPatchProjectMany(project, composer =>
+         composer
+            .With(r => r.LocalAuthorityInformationTemplateSentDate, project.LocalAuthorityInformationTemplateSentDate)
+            .With(r => r.LocalAuthorityInformationTemplateReturnedDate, DateTime.Today)
+            .With(r => r.LocalAuthorityInformationTemplateComments, project.LocalAuthorityInformationTemplateComments)
+            .With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink));
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-day")!.Value = response.LocalAuthorityInformationTemplateReturnedDate?.Day.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-month")!.Value = response.LocalAuthorityInformationTemplateReturnedDate?.Month.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-year")!.Value = string.Empty;
+
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
+
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+      Document.QuerySelector(".govuk-error-summary")!.InnerHtml.Should().Contain("Date you want the template returned must include a year");
+
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-day")!.Value.Should().Be(project.LocalAuthorityInformationTemplateSentDate?.Day.ToString()!);
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-month")!.Value.Should().Be(project.LocalAuthorityInformationTemplateSentDate?.Month.ToString()!);
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-year")!.Value.Should().Be(project.LocalAuthorityInformationTemplateSentDate?.Year.ToString()!);
+   }
 }

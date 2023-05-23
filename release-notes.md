@@ -1,12 +1,16 @@
 ## 1.1.1
 * Error messages relating to date now formatted with sentence case
 * Error page tab title now displaying
+* Dates now maintained on validation error - RecordLocalAuthorityInformationTemplateDates
+* Telephone numbers for contact details on the school application form page have been removed inline with removing them from the data returned by the academisation API.
+* Fixed bug 129478 : Conversions approved with conditions filter now displays as 'Approved with Conditions'
+* Fixed bug 120010 : Navigation to links content is not working on 'Prepare you trust' page
 
 ___
 ## 1.1.0 
 * Flexible Advisory Board Dates: Users can now set advisory board dates in either the future or the past for better planning and tracking.
-* Project listing page now states Project route: Voluntary/Form a MAT and Involuntary (Involuntary is due to change to ‘Sponsored’ and won’t appear in live until the feature is complete)
-* Status tags on Key Stage performance data – Provisional, Revised and Final: This provides much needed context, allowing users to make any informed decisions with the knowledge of whether the data is still subject to change.
+* Project listing page now states Project route: Voluntary/Form a MAT and Involuntary (Involuntary is due to change to 'Sponsored' and won't appear in live until the feature is complete)
+* Status tags on Key Stage performance data - Provisional, Revised and Final: This provides much needed context, allowing users to make any informed decisions with the knowledge of whether the data is still subject to change.
 * New domains introduced:
    * https://www.prepare-conversions.education.gov.uk (Production)
    * https://dev.prepare-conversions.education.gov.uk/ (Development)
