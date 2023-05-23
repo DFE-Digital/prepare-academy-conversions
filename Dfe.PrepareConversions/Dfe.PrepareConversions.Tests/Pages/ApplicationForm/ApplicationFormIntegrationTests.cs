@@ -22,16 +22,17 @@ public class ApplicationFormIntegrationTests : BaseIntegrationTests
 
    private void AddProjectWithFullApplicationForm()
    {
-      const int id = 420;
+      const int applicationId = 420;
+      const int projectId = 421;
       _project = AddGetProject(project =>
       {
-         
-         project.ApplicationReferenceNumber = $"A2B_{id}";
+         project.Id = projectId;
+         project.ApplicationReferenceNumber = $"A2B_{applicationId}";
       });
 
-      AddGetApplication(app =>
+      var application = AddGetApplication(app =>
       {
-         app.ApplicationId = _project.Id;
+         app.ApplicationId = applicationId;
          app.ApplicationReference = _project.ApplicationReferenceNumber;
          app.ApplicationType = "JoinMat";
       });

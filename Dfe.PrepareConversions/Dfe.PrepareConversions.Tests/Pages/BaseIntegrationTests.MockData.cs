@@ -196,7 +196,7 @@ public abstract partial class BaseIntegrationTests
       postSetup?.Invoke(application);
 
       ApiV2Wrapper<AcademisationApplication> response = new() { Data = application };
-      _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetApplicationByReference, application), response);
+      _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetApplicationByReference, application.ApplicationReference), response);
       return application;
    }
 
