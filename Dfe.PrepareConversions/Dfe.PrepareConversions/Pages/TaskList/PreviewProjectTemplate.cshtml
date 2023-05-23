@@ -72,7 +72,10 @@
    </header>
    <div class="app-summary-card__body">
       <dl class="govuk-summary-list">
-         <govuk-summary-list-row name="rationale-for-project" key-width="@WidthOverride.OneQuarter" value-width="@WidthOverride.Full" label="Rationale for project" value="@Model.Project.RationaleForProject" asp-page="@Links.RationaleSection.RationaleForProject.Page" asp-route-id="@Model.Project.Id" hidden-text="project rationale"/>
+         @if (!Model.Project.IsSponsored)
+         {
+            <govuk-summary-list-row name="rationale-for-project" key-width="@WidthOverride.OneQuarter" value-width="@WidthOverride.Full" label="Rationale for project" value="@Model.Project.RationaleForProject" asp-page="@Links.RationaleSection.RationaleForProject.Page" asp-route-id="@Model.Project.Id" hidden-text="project rationale"/>
+         }
          <govuk-summary-list-row name="rationale-for-trust" key-width="@WidthOverride.OneQuarter" value-width="@WidthOverride.Full" label="Rationale for the trust or sponsor" value="@Model.Project.RationaleForTrust" asp-page="@Links.RationaleSection.RationaleForTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="sponsor rationale"/>
       </dl>
    </div>
@@ -93,22 +96,25 @@
    </div>
 </section>
 
-<h2 class="govuk-heading-s">Legal requirements</h2>
-<section class="app-summary-card govuk-!-margin-bottom-6">
-   <header class="app-summary-card__header">
-      <h2 class="app-summary-card__title">
-         Legal requirement details
-      </h2>
-   </header>
-   <div class="app-summary-card__body">
-      <dl class="govuk-summary-list">
-         <govuk-summary-list-row name="governing-body-resolution" label="Governing Body Resolution" asp-route-id="@Model.Project.Id" value="@Model.Project.GoverningBodyResolution.SplitPascalCase()" asp-page="@Links.LegalRequirements.GoverningBodyResolution.Page" hidden-text="governing-body-resolution"/>
-         <govuk-summary-list-row name="consultation" label="Consultation" asp-route-id="@Model.Project.Id" value="@Model.Project.Consultation.SplitPascalCase()" asp-page="@Links.LegalRequirements.Consultation.Page" hidden-text="consultation"/>
-         <govuk-summary-list-row name="diocesan-consent" label="Diocesan Consent" asp-route-id="@Model.Project.Id" value="@Model.Project.DiocesanConsent.SplitPascalCase()" asp-page="@Links.LegalRequirements.DiocesanConsent.Page" hidden-text="diocesan-consent"/>
-         <govuk-summary-list-row name="foundation-consent" label="Foundation Consent" asp-route-id="@Model.Project.Id" value="@Model.Project.FoundationConsent.SplitPascalCase()" asp-page="@Links.LegalRequirements.FoundationConsent.Page" hidden-text="foundation-consent"/>
-      </dl>
-   </div>
-</section>
+@if (!Model.Project.IsSponsored)
+{
+   <h2 class="govuk-heading-s">Legal requirements</h2>
+   <section class="app-summary-card govuk-!-margin-bottom-6">
+      <header class="app-summary-card__header">
+         <h2 class="app-summary-card__title">
+            Legal requirement details
+         </h2>
+      </header>
+      <div class="app-summary-card__body">
+         <dl class="govuk-summary-list">
+            <govuk-summary-list-row name="governing-body-resolution" label="Governing Body Resolution" asp-route-id="@Model.Project.Id" value="@Model.Project.GoverningBodyResolution.SplitPascalCase()" asp-page="@Links.LegalRequirements.GoverningBodyResolution.Page" hidden-text="governing-body-resolution"/>
+            <govuk-summary-list-row name="consultation" label="Consultation" asp-route-id="@Model.Project.Id" value="@Model.Project.Consultation.SplitPascalCase()" asp-page="@Links.LegalRequirements.Consultation.Page" hidden-text="consultation"/>
+            <govuk-summary-list-row name="diocesan-consent" label="Diocesan Consent" asp-route-id="@Model.Project.Id" value="@Model.Project.DiocesanConsent.SplitPascalCase()" asp-page="@Links.LegalRequirements.DiocesanConsent.Page" hidden-text="diocesan-consent"/>
+            <govuk-summary-list-row name="foundation-consent" label="Foundation Consent" asp-route-id="@Model.Project.Id" value="@Model.Project.FoundationConsent.SplitPascalCase()" asp-page="@Links.LegalRequirements.FoundationConsent.Page" hidden-text="foundation-consent"/>
+         </dl>
+      </div>
+   </section>
+}
 
 <h2 class="govuk-heading-s">School budget information</h2>
 <section class="app-summary-card govuk-!-margin-bottom-6">
