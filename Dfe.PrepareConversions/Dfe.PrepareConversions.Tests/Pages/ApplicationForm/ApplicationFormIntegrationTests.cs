@@ -1,11 +1,14 @@
 ﻿using AngleSharp.Dom;
 using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 using Dfe.PrepareConversions.Data.Models.Application;
 using FluentAssertions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Lease = Dfe.PrepareConversions.Data.Models.AcademisationApplication.Lease;
+using Loan = Dfe.PrepareConversions.Data.Models.AcademisationApplication.Loan;
 
 namespace Dfe.PrepareConversions.Tests.Pages.ApplicationForm;
 
@@ -19,11 +22,18 @@ public class ApplicationFormIntegrationTests : BaseIntegrationTests
 
    private void AddProjectWithFullApplicationForm()
    {
-      _project = AddGetProject();
-
-      AddGetApplication(app =>
+      const int applicationId = 420;
+      const int projectId = 421;
+      _project = AddGetProject(project =>
       {
-         app.ApplicationId = _project.ApplicationReferenceNumber;
+         project.Id = projectId;
+         project.ApplicationReferenceNumber = $"A2B_{applicationId}";
+      });
+
+      var application = AddGetApplication(app =>
+      {
+         app.ApplicationId = applicationId;
+         app.ApplicationReference = _project.ApplicationReferenceNumber;
          app.ApplicationType = "JoinMat";
       });
    }
@@ -116,10 +126,11 @@ public class ApplicationFormIntegrationTests : BaseIntegrationTests
       _project = AddGetProject();
       AddGetApplication(app =>
       {
-         app.ApplicationId = _project.ApplicationReferenceNumber;
+         app.ApplicationId = _project.Id;
+         app.ApplicationReference = _project.ApplicationReferenceNumber;
          app.ApplicationType = "JoinMat";
-         app.ApplyingSchools.First().SchoolLeases = new List<Lease>();
-         app.ApplyingSchools.First().SchoolLoans = new List<Loan>();
+         app.Schools.First().Leases = new List<Lease>();
+         app.Schools.First().Loans = new List<Loan>();
       });
 
       await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
@@ -226,7 +237,8 @@ public class ApplicationFormIntegrationTests : BaseIntegrationTests
       _project = AddGetProject();
       AddGetApplication(app =>
       {
-         app.ApplicationId = _project.ApplicationReferenceNumber;
+         app.ApplicationId = _project.Id;
+         app.ApplicationReference = _project.ApplicationReferenceNumber;
          app.ApplicationType = "FormMat";
       });
 
@@ -241,14 +253,15 @@ public class ApplicationFormIntegrationTests : BaseIntegrationTests
    [Theory]
    [InlineData("/school-application-form/{0}")]
    [InlineData("/school-application-form/school-application-tab/{0}")]
-   public async Task Should_Show_500Error_When_Application_Is_Not_Valid(string path)
+   public async Task Should_Show_404Error_When_Application_Is_Not_Found(string path)
    {
       _project = AddGetProject();
       AddGetApplication(app =>
       {
-         app.ApplicationId = _project.ApplicationReferenceNumber;
+         app.ApplicationId = _project.Id;
+         app.ApplicationReference = "Example";
          app.ApplicationType = "JoinMat";
-         app.ApplyingSchools = new List<ApplyingSchool>();
+         app.Schools = new List<School>();
       });
 
       await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
@@ -256,7 +269,7 @@ public class ApplicationFormIntegrationTests : BaseIntegrationTests
       IElement errorHeading = Document.QuerySelector("#error-heading");
       errorHeading.Should().NotBeNull();
 
-      errorHeading?.TextContent.Should().Contain("Internal server error");
+      errorHeading?.TextContent.Should().Contain("Page not found");
    }
 
    [Theory]

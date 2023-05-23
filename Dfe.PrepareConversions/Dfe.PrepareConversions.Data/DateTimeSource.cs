@@ -17,4 +17,9 @@ public static class DateTimeSource
    ///    Returns the value of <see cref="DateTime.UtcNow" /> unless overridden for testing.
    /// </summary>
    public static Func<DateTime> UtcNow { get; set; } = () => DateTime.UtcNow;
+
+   /// <summary>
+   ///    Returns the value of <see cref="DateTime.Now.ToUkDatetime()" /> unless overridden for testing.
+   /// </summary>
+   public static Func<DateTime> UkTime { get; set; } = () => TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "GMT Standard Time");
 }

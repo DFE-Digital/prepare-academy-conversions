@@ -1,12 +1,15 @@
 ﻿using AngleSharp.Dom;
 using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 using Dfe.PrepareConversions.Data.Models.Application;
 using FluentAssertions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Lease = Dfe.PrepareConversions.Data.Models.AcademisationApplication.Lease;
+using Loan = Dfe.PrepareConversions.Data.Models.AcademisationApplication.Loan;
 
 namespace Dfe.PrepareConversions.Tests.Pages.FormAMat;
 
@@ -25,8 +28,9 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
 
       AddGetApplication(app =>
       {
-         app.ApplicationId = _project.ApplicationReferenceNumber;
-         app.ApplyingSchools.FirstOrDefault()!.SchoolName = _project.SchoolName;
+         app.ApplicationId = _project.Id;
+         app.ApplicationReference = _project.ApplicationReferenceNumber;
+         app.Schools.FirstOrDefault()!.SchoolName = _project.SchoolName;
          app.ApplicationType = GlobalStrings.FormAMat;
       });
    }
@@ -106,11 +110,12 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       _project = AddGetProject();
       AddGetApplication(app =>
       {
-         app.ApplicationId = _project.ApplicationReferenceNumber;
+         app.ApplicationId = _project.Id;
+         app.ApplicationReference = _project.ApplicationReferenceNumber;
          app.ApplicationType = GlobalStrings.FormAMat;
-         app.ApplyingSchools.First().SchoolName = _project.SchoolName;
-         app.ApplyingSchools.First().SchoolLeases = new List<Lease>();
-         app.ApplyingSchools.First().SchoolLoans = new List<Loan>();
+         app.Schools.First().SchoolName = _project.SchoolName;
+         app.Schools.First().Leases = new List<Lease>();
+         app.Schools.First().Loans = new List<Loan>();
       });
 
       await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
@@ -216,9 +221,9 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       _project = AddGetProject();
       AddGetApplication(app =>
       {
-         app.ApplicationId = "999";
+         app.ApplicationId = 999;
          app.ApplicationType = GlobalStrings.FormAMat;
-         app.ApplyingSchools = new List<ApplyingSchool>();
+         app.Schools = new List<School>();
       });
 
       await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
