@@ -7,5 +7,5 @@ public class AddProjectNote
    public string Subject { get; set; }
    public string Note { get; set; }
    public string Author { get; set; }
-   public DateTime Date { get; set; } = DateTimeSource.UtcNow();
+   public DateTime Date { get; set; }
 }

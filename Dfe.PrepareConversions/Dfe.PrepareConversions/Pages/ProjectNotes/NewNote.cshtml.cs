@@ -1,8 +1,10 @@
 using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
+using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.ProjectNotes;
@@ -41,7 +43,7 @@ public class NewNoteModel : BaseAcademyConversionProjectPageModel
       }
 
       ApiResponse<ProjectNote> response =
-         await _repository.AddProjectNote(id, new AddProjectNote { Subject = ProjectNoteSubject, Note = ProjectNoteBody, Author = NameOfUser });
+         await _repository.AddProjectNote(id, new AddProjectNote { Subject = ProjectNoteSubject, Note = ProjectNoteBody, Author = NameOfUser, Date = DateTimeSource.UkTime.Invoke()});
 
       if (!response.Success)
       {

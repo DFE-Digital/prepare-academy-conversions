@@ -30,7 +30,7 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
 
       Mock<IFeatureManager> featureManager = new();
       featureManager.Setup(m => m.IsEnabledAsync("UseAcademisation")).ReturnsAsync(true);
-      featureManager.Setup(m => m.IsEnabledAsync("UseAcademisationApplication")).ReturnsAsync(false);
+      featureManager.Setup(m => m.IsEnabledAsync("UseAcademisationApplication")).ReturnsAsync(true);
       _pathFor = new PathFor(featureManager.Object);
 
       Context = CreateBrowsingContext(factory.CreateClient());
