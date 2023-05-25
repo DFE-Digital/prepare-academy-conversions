@@ -28,8 +28,10 @@ jobs:
         run: |
           docker-compose -f Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/docker-compose.yml up --exit-code-from cypress
 
-      # TODO report metrics through another system
-      # - uses: actions/upload-artifact@v1
-      #   with:
-      #     name: report
-      #     path: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/ZAP-Report.html
+      - name: Push report to blob storage
+        uses: azure/CLI@v1
+        id: azure
+        with:
+          azcliversion: 2.49.0
+          inlineScript: |
+            az storage azcopy blob upload -c ${{ secrets.OWASP_STORAGE_CONTAINER_NAME }} --account-name ${{ secrets.OWASP_STORAGE_ACCOUNT_NAME }} -s "reports/ZAP-Report.html" -d "Dfe.PrepareConversions/$(git log -1 '--format=format:%H')/ZAP-Report.html" --sas-token "${{ secrets.OWASP_BLOB_SAS_TOKEN }}"
