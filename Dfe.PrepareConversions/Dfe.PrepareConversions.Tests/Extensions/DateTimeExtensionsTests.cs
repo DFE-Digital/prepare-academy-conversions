@@ -41,4 +41,29 @@ public class DateTimeExtensionsTests
    {
       input.FirstOfMonth(monthsToAdd).Should().Be(expected);
    }
+   [Fact]
+   public void ToUkDateTime_ConvertsUtcTimeToUkTime()
+   {
+      // Arrange
+      DateTime utcDateTime = new DateTime(2023, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+      // Act
+      var ukDateTime = utcDateTime.ToUkDateTime();
+
+      // Assert
+      ukDateTime.Hour.Should().Be(0); // On this date, UK is on Greenwich Mean Time (GMT), which is equal to UTC.
+   }
+
+   [Fact]
+   public void ToUkDateTime_ConvertsUtcTimeToUkTime_BritishSummerTime()
+   {
+      // Arrange
+      DateTime utcDateTime = new DateTime(2023, 6, 1, 0, 0, 0, DateTimeKind.Utc);
+
+      // Act
+      var ukDateTime = utcDateTime.ToUkDateTime();
+
+      // Assert
+      ukDateTime.Hour.Should().Be(1); // On this date, UK is on British Summer Time (BST), which is UTC +1.
+   }
 }

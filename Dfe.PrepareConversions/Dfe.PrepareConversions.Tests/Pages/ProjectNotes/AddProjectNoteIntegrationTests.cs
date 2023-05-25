@@ -3,6 +3,7 @@ using AngleSharp.Html.Dom;
 using AutoFixture;
 using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System;
@@ -34,24 +35,23 @@ public class AddProjectNoteIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_add_new_note_and_redirect_to_project_notes()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
 
       string projectNotesPage = $"/project-notes/{project.Id}";
 
-      DateTime expected = DateTime.UtcNow;
-      DateTimeSource.UtcNow = () => expected;
+      DateTime expected = DateTime.Now.ToUkDateTime();
+      DateTimeSource.UkTime = () => expected;
 
       AddProjectNote projectNote = new() { Subject = _fixture.Create<string>(), Note = _fixture.Create<string>(), Author = string.Empty, Date = expected };
       AddPostProjectNote(project.Id, projectNote);
 
       await OpenAndConfirmPathAsync(projectNotesPage);
       await NavigateAsync("Add note");
-
+      
       Document.QuerySelector<IHtmlTextAreaElement>("#project-note-subject")!.Value = projectNote.Subject;
       Document.QuerySelector<IHtmlTextAreaElement>("#project-note-body")!.Value = projectNote.Note;
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
-
       Document.Url.Should().BeUrl(projectNotesPage);
 
       Document.QuerySelector("#project-note-added")!.TextContent.Should().NotBeNull();

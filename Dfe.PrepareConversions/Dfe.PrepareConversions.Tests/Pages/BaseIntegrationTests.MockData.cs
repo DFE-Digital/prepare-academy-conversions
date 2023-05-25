@@ -1,7 +1,7 @@
 ﻿using AutoFixture;
 using AutoFixture.Dsl;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data.Models.Application;
+using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.Data.Services;
@@ -36,7 +36,8 @@ public abstract partial class BaseIntegrationTests
 
       ApiV2Wrapper<IEnumerable<AcademyConversionProject>> response = new()
       {
-         Data = projects, Paging = new ApiV2PagingInfo { RecordCount = recordCount ?? projects.Count, Page = 0 }
+         Data = projects,
+         Paging = new ApiV2PagingInfo { RecordCount = recordCount ?? projects.Count, Page = 0 }
       };
 
       searchModel ??= new AcademyConversionSearchModel
@@ -57,7 +58,8 @@ public abstract partial class BaseIntegrationTests
    {
       ProjectFilterParameters filterParameters = new()
       {
-         Statuses = new List<string> { "Accepted", "Accepted with Conditions", "Deferred", "Declined" }, AssignedUsers = new List<string> { "Bob" }
+         Statuses = new List<string> { "Accepted", "Accepted with Conditions", "Deferred", "Declined" },
+         AssignedUsers = new List<string> { "Bob" }
       };
 
 
@@ -187,15 +189,14 @@ public abstract partial class BaseIntegrationTests
       return establishmentResponse;
    }
 
-   public Application AddGetApplication(Action<Application> postSetup = null)
+   public AcademisationApplication AddGetApplication(Action<AcademisationApplication> postSetup = null)
    {
       // create just 1 applying school as that's all we accept so far
-      _fixture.Customize<Application>(a => a.With(s => s.ApplyingSchools, () => new List<ApplyingSchool> { _fixture.Create<ApplyingSchool>() }));
-      Application application = _fixture.Create<Application>();
+      _fixture.Customize<AcademisationApplication>(a => a.With(s => s.Schools, () => new List<School> { _fixture.Create<School>() }));
+      AcademisationApplication application = _fixture.Create<AcademisationApplication>();
       postSetup?.Invoke(application);
 
-      ApiV2Wrapper<Application> response = new() { Data = application };
-      _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetApplicationByReference, application.ApplicationId), response);
+      _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetApplicationByReference, application.ApplicationReference), application);
       return application;
    }
 

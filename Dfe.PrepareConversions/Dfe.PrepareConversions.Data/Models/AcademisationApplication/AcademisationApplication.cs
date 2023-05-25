@@ -282,22 +282,16 @@ public class AcademisationApplication
          academisationApplicationSchool.SchoolConversionContactHeadName;
       academiesApplicationSchool.SchoolConversionContactHeadEmail =
          academisationApplicationSchool.SchoolConversionContactHeadEmail;
-      academiesApplicationSchool.SchoolConversionContactHeadTel =
-         academisationApplicationSchool.SchoolConversionContactHeadTel;
       academiesApplicationSchool.SchoolConversionContactRole =
          academisationApplicationSchool.SchoolConversionContactRole;
       academiesApplicationSchool.SchoolConversionContactChairName =
          academisationApplicationSchool.SchoolConversionContactChairName;
       academiesApplicationSchool.SchoolConversionContactChairEmail =
          academisationApplicationSchool.SchoolConversionContactChairEmail;
-      academiesApplicationSchool.SchoolConversionContactChairTel =
-         academisationApplicationSchool.SchoolConversionContactChairTel;
       academiesApplicationSchool.SchoolConversionMainContactOtherName =
          academisationApplicationSchool.SchoolConversionMainContactOtherName;
       academiesApplicationSchool.SchoolConversionMainContactOtherEmail =
          academisationApplicationSchool.SchoolConversionMainContactOtherEmail;
-      academiesApplicationSchool.SchoolConversionMainContactOtherTelephone =
-         academisationApplicationSchool.SchoolConversionMainContactOtherTelephone;
       academiesApplicationSchool.SchoolConversionApproverContactName =
          academisationApplicationSchool.SchoolConversionApproverContactName;
       academiesApplicationSchool.SchoolConversionApproverContactEmail =
