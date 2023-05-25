@@ -1,3 +1,8 @@
+## NEXT
+* User Story 120665 : Updated PreviewProjectTemplate to hide `Legal requirements` and `rationale-for-project` when project is an involuntary conversion
+
+
+---
 ## 1.1.1
 * Error messages relating to date now formatted with sentence case
 * Error page tab title now displaying
@@ -7,8 +12,8 @@
 * Fixed bug 120010 : Navigation to links content is not working on 'Prepare you trust' page
 * Fixed bug 126187 : Added Notes not showing correct time (Time now being set to UK time regardless of server)
 * Irrelevant rationale for project field removed for the sponsored journey. (In favour of 'Rationale for the trust or Sponsor')
-* Sponsored journey pages for changing or adding addtional information have had sidebars updated with a link to upload their Annex B form (Excluding budget and legal section)
-* Integration tests now utilising most recent feature flag configeration
+* Sponsored journey pages for changing or adding additional information have had sidebars updated with a link to upload their Annex B form (Excluding budget and legal section)
+* Integration tests now utilising most recent feature flag configuration
 
 ___
 ## 1.1.0 
