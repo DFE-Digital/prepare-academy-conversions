@@ -195,8 +195,8 @@ public abstract partial class BaseIntegrationTests
       AcademisationApplication application = _fixture.Create<AcademisationApplication>();
       postSetup?.Invoke(application);
 
-      ApiV2Wrapper<AcademisationApplication> response = new() { Data = application };
-      _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetApplicationByReference, application.ApplicationReference), response);
+      //ApiV2Wrapper<AcademisationApplication> response = new() { Data = application };
+      _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetApplicationByReference, application.ApplicationReference), application);
       return application;
    }
 
