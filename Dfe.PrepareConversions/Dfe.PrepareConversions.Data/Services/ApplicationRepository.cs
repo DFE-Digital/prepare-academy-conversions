@@ -31,9 +31,8 @@ public class ApplicationRepository
       {
          if (_useAcademisationApplication)
          {
-            ApiV2Wrapper<AcademisationApplication> academisationOuterResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<AcademisationApplication>>();
-            Application academisationResponse = AcademisationApplication.MapToApplication(academisationOuterResponse.Data, schoolName);
-            return new ApiResponse<Application>(response.StatusCode, academisationResponse);
+            AcademisationApplication academisationOuterResponse = await response.Content.ReadFromJsonAsync<AcademisationApplication>();
+            return new ApiResponse<Application>(response.StatusCode, AcademisationApplication.MapToApplication(academisationOuterResponse, schoolName));
          }
 
          ApiV2Wrapper<Application> outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<Application>>();

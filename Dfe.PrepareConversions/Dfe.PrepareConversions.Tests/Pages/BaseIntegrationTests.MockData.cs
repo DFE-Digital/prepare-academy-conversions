@@ -2,7 +2,6 @@
 using AutoFixture.Dsl;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
-using Dfe.PrepareConversions.Data.Models.Application;
 using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.Data.Services;
@@ -37,7 +36,8 @@ public abstract partial class BaseIntegrationTests
 
       ApiV2Wrapper<IEnumerable<AcademyConversionProject>> response = new()
       {
-         Data = projects, Paging = new ApiV2PagingInfo { RecordCount = recordCount ?? projects.Count, Page = 0 }
+         Data = projects,
+         Paging = new ApiV2PagingInfo { RecordCount = recordCount ?? projects.Count, Page = 0 }
       };
 
       searchModel ??= new AcademyConversionSearchModel
@@ -58,7 +58,8 @@ public abstract partial class BaseIntegrationTests
    {
       ProjectFilterParameters filterParameters = new()
       {
-         Statuses = new List<string> { "Accepted", "Accepted with Conditions", "Deferred", "Declined" }, AssignedUsers = new List<string> { "Bob" }
+         Statuses = new List<string> { "Accepted", "Accepted with Conditions", "Deferred", "Declined" },
+         AssignedUsers = new List<string> { "Bob" }
       };
 
 
@@ -195,8 +196,7 @@ public abstract partial class BaseIntegrationTests
       AcademisationApplication application = _fixture.Create<AcademisationApplication>();
       postSetup?.Invoke(application);
 
-      ApiV2Wrapper<AcademisationApplication> response = new() { Data = application };
-      _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetApplicationByReference, application.ApplicationReference), response);
+      _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetApplicationByReference, application.ApplicationReference), application);
       return application;
    }
 
