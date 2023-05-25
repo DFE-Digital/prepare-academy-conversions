@@ -10,7 +10,6 @@ module.exports = {
       const zaproxy = new ZapClient(zapOptions)
       try {
         const res = await zaproxy.core.numberOfAlerts()
-        // TODO Investigate HTML report currently causing ZAP to abort request
         await zaproxy.core.htmlreport()
         .then(
           resp => {

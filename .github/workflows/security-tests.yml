@@ -1,8 +1,9 @@
 name: Security scanner tests
 
 on:
+  workflow_dispatch:
   workflow_run:
-    workflows: ["Test, build, and deploy"]
+    workflows: ["Deploy to environment"]
     types:
       - completed
 
@@ -15,16 +16,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Prepare environment
-        run: |
-          echo "URL=${{ secrets.ENDPOINT }}" >> $GITHUB_ENV
-          echo "API_KEY=${{ secrets.CYPRESS_TEST_SECRET }}" >> $GITHUB_ENV
-          echo "HTTP_PROXY=http://zap:8080" >> $GITHUB_ENV
-          echo "NO_PROXY=*.google-analytics.com,*.googletagmanager.com,*.microsoftonline.com,*.gvt1.com" >> $GITHUB_ENV
-          echo "ZAP_API_KEY=${{ secrets.ZAP_API_KEY }}" >> $GITHUB_ENV
-          echo "DB_CONN=${{ secrets.DB_CONNECTION_STRING }} >> $GITHUB_ENV"
-
       - name: Run tests with scanner
+        env:
+          API_KEY: ${{ secrets.CYPRESS_TEST_SECRET }}
+          DB_CONN: ${{ secrets.DB_CONNECTION_STRING }}
+          HTTP_PROXY: http://zap:8080
+          NO_PROXY: "*.google-analytics.com,*.googletagmanager.com,*.microsoftonline.com,*.gvt1.com"
+          URL: ${{ secrets.AZURE_ENDPOINT }}
+          ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
         run: |
           docker-compose -f Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/docker-compose.yml up --exit-code-from cypress
 
