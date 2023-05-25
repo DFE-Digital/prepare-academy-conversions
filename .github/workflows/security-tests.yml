@@ -2,7 +2,7 @@ name: Security scanner tests
 
 on:
   workflow_run:
-    workflows: ["Test, build, and deploy"]
+    workflows: ["Deploy to environment"]
     types:
       - completed
 
