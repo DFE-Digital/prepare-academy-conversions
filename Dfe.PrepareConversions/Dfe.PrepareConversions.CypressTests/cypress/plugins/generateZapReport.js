@@ -10,14 +10,13 @@ module.exports = {
       const zaproxy = new ZapClient(zapOptions)
       try {
         const res = await zaproxy.core.numberOfAlerts()
-        // TODO Investigate HTML report currently causing ZAP to abort request
-        await zaproxy.core.mdreport()
+        await zaproxy.core.htmlreport()
         .then(
           resp => {
             if(!fs.existsSync('./reports')) {
               fs.mkdirSync('./reports')
             }
-            fs.writeFileSync('./reports/ZAP-Report.md', resp)
+            fs.writeFileSync('./reports/ZAP-Report.html', resp)
           },
           err => {
             console.log(`Error during report generation: ${err}`)

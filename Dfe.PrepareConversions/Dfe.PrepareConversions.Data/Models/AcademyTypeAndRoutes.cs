@@ -8,8 +8,8 @@ namespace Dfe.PrepareConversions.Data.Models
 {
    public static class AcademyTypeAndRoutes
    {
-      public static readonly string Voluntary = "Converter";
-      public static readonly string FormAMat = "Form a MAT";
-      public static readonly string Sponsored = "Sponsored";
+      public const string Voluntary = "Converter";
+      public const string FormAMat = "Form a MAT";
+      public const string Sponsored = "Sponsored";
    }
 }
