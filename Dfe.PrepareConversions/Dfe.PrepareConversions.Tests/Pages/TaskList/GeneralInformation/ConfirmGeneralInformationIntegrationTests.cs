@@ -61,6 +61,28 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
 
       Document.QuerySelector("#distance-to-trust-headquarters-additional-text")!.TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
    }
+   [Fact]
+   public async Task Should_display_annex_b_help_when_sponsored()
+   {
+      AcademyConversionProject project = AddGetProject(p => p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored);
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
+
+      await NavigateAsync("General information");
+      var test = Document.QuerySelector("[data-test=annex-b-help]").TextContent;
+      Document.QuerySelector("[data-test=annex-b-help]").TextContent.Should().Be("Some details have been taken from TRAMS. You can add more from the Annex B form.");
+   }
+   [Fact]
+   public async Task Should_display_change_on_pfi_scheme()
+   {
+      AcademyConversionProject project = AddGetProject(p => p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored);
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
+
+      await NavigateAsync("General information");
+
+      Document.QuerySelector("[data-test=change-part-of-pfi]")!.TextContent.Trim().Should().Be("Change");
+   }
 
    [Fact]
    public async Task Should_be_completed_and_checked_when_general_information_complete()

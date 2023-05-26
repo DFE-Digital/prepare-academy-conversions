@@ -111,6 +111,7 @@ public static class Links
       public static readonly LinkItem FinancialDeficit = AddLinkItem(page: "/TaskList/GeneralInformation/FinancialDeficit");
       public static readonly LinkItem DistanceFromTrustHeadquarters = AddLinkItem(page: "/TaskList/GeneralInformation/DistanceFromTrustHeadquarters");
       public static readonly LinkItem MPDetails = AddLinkItem(page: "/TaskList/GeneralInformation/MPDetails");
+      public static readonly LinkItem PartOfPfiScheme = AddLinkItem(page: "/TaskList/GeneralInformation/PartOfPfiScheme");
    }
 
    public static class RationaleSection
