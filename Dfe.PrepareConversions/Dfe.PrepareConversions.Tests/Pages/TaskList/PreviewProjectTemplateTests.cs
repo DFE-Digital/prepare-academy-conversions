@@ -1,5 +1,10 @@
-﻿using Dfe.PrepareConversions.Data.Models;
+﻿using AngleSharp.Dom;
+using Dfe.PrepareConversions.Data.Models;
 using FluentAssertions;
+using HandlebarsDotNet;
+using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -63,5 +68,26 @@ public class PreviewProjectTemplateTests : BaseIntegrationTests
       AcademyConversionProject project = AddGetProject(PostProjectSetup);
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
       Document.QuerySelector("#rationale-for-project").Should().NotBeNull();
+   }
+
+   [Fact]
+   public async Task Given_InvoluntaryConversion_And_No_AdvisoryBoardDate_When_Previewed_Then_ValidationError_Shown()
+   {
+      void PostProjectSetup(AcademyConversionProject project)
+      {
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored;
+         project.HeadTeacherBoardDate = null;
+      }
+
+      AcademyConversionProject project = AddGetProject(PostProjectSetup);
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
+      Document.QuerySelector("#error-summary-title").Should().NotBeNull();
+      Document.QuerySelector("#error-summary-title").Text().Trim().Should().Be("There is a problem");
+
+      string selector = "*[data-eltype='error-link']";
+      var errors = Document.QuerySelectorAll(selector);
+      errors.Length.Should().Be(1);
+      errors.First().TextContent.Should().Be("Set an Advisory Board date before you generate your project template");
+
    }
 }

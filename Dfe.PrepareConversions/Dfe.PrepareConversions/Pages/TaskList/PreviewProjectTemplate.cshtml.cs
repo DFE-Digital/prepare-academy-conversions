@@ -3,6 +3,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.ViewModels;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Threading.Tasks;
@@ -32,16 +33,8 @@ public class PreviewHtbTemplateModel : BaseAcademyConversionProjectPageModel
 
    public override async Task<IActionResult> OnGetAsync(int id)
    {
-      await SetProject(id);
-
-      ShowGenerateHtbTemplateError = (bool)(TempData["ShowGenerateHtbTemplateError"] ?? false);
-      if (ShowGenerateHtbTemplateError)
-      {
-         string returnPage = WebUtility.UrlEncode(Links.TaskList.PreviewHTBTemplate.Page);
-         // this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
-         _errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}&fragment=advisory-board-date",
-            "Set an Advisory board date before you generate your project template");
-      }
+      await this.SetProject(id);
+      this.ValidateProject(this.Project);
 
       KeyStagePerformance keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(Project.SchoolURN);
 
@@ -52,5 +45,20 @@ public class PreviewHtbTemplateModel : BaseAcademyConversionProjectPageModel
       TaskList.HasKeyStage5PerformanceTables = keyStagePerformance.HasKeyStage5PerformanceTables;
 
       return Page();
+   }
+
+   private void ValidateProject(ProjectViewModel project)
+   {
+      var hasAdvisoryBoardDate = project.HeadTeacherBoardDate is not null;
+      
+      if (!hasAdvisoryBoardDate)
+      {
+         string returnPage = WebUtility.UrlEncode(Links.TaskList.PreviewHTBTemplate.Page);
+         // this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
+         _errorService.AddError($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}&fragment=advisory-board-date",
+            "Set an Advisory Board date before you generate your project template");
+
+         this.ShowGenerateHtbTemplateError = true;
+      }
    }
 }
