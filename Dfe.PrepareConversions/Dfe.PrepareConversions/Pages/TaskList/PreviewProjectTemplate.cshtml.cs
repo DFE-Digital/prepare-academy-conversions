@@ -34,20 +34,37 @@ public class PreviewHtbTemplateModel : BaseAcademyConversionProjectPageModel
    public override async Task<IActionResult> OnGetAsync(int id)
    {
       await this.SetProject(id);
-      this.ValidateProject(this.Project);
-
-      KeyStagePerformance keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(Project.SchoolURN);
-
-      // 16 plus = 6, All-through = 7, Middle deemed primary = 3, Middle deemed secondary = 5, Not applicable = 0, Nursery = 1, Primary = 2, Secondary = 4
-      TaskList = TaskListViewModel.Build(Project);
-      TaskList.HasKeyStage2PerformanceTables = keyStagePerformance.HasKeyStage2PerformanceTables;
-      TaskList.HasKeyStage4PerformanceTables = keyStagePerformance.HasKeyStage4PerformanceTables;
-      TaskList.HasKeyStage5PerformanceTables = keyStagePerformance.HasKeyStage5PerformanceTables;
+      _ = this.ValidateProject(this.Project);
+      await SetKeyStagePerformancePageData(this.Project);
 
       return Page();
    }
 
-   private void ValidateProject(ProjectViewModel project)
+   private async Task SetKeyStagePerformancePageData(ProjectViewModel project)
+   {
+      KeyStagePerformance keyStagePerformance =
+         await _keyStagePerformanceService.GetKeyStagePerformance(project.SchoolURN);
+
+      // 16 plus = 6, All-through = 7, Middle deemed primary = 3, Middle deemed secondary = 5, Not applicable = 0, Nursery = 1, Primary = 2, Secondary = 4
+      TaskList = TaskListViewModel.Build(project);
+      TaskList.HasKeyStage2PerformanceTables = keyStagePerformance.HasKeyStage2PerformanceTables;
+      TaskList.HasKeyStage4PerformanceTables = keyStagePerformance.HasKeyStage4PerformanceTables;
+      TaskList.HasKeyStage5PerformanceTables = keyStagePerformance.HasKeyStage5PerformanceTables;
+   }
+
+   public override async Task<IActionResult> OnPostAsync(int id)
+   {
+      await this.SetProject(id);
+      if (!ValidateProject(this.Project))
+      {
+         await SetKeyStagePerformancePageData(this.Project);
+         return Page();
+      }
+
+      return RedirectToPage("DownloadProjectTemplate", new { Id = this.Project.Id });
+   }
+
+   private bool ValidateProject(ProjectViewModel project)
    {
       var hasAdvisoryBoardDate = project.HeadTeacherBoardDate is not null;
       
@@ -60,5 +77,7 @@ public class PreviewHtbTemplateModel : BaseAcademyConversionProjectPageModel
 
          this.ShowGenerateHtbTemplateError = true;
       }
+
+      return !this.ShowGenerateHtbTemplateError;
    }
 }

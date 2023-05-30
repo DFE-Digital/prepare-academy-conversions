@@ -46,7 +46,7 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
       GC.SuppressFinalize(this);
    }
 
-   private static string BuildRequestAddress(string path)
+   public static string BuildRequestAddress(string path)
    {
       return $"https://localhost{(path.StartsWith('/') ? path : $"/{path}")}";
    }
