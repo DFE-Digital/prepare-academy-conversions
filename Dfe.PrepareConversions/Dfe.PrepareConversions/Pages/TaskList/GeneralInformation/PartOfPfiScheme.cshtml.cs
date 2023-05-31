@@ -18,6 +18,7 @@ public class PartOfPfiModel : BaseAcademyConversionProjectPageModel
    {
       _errorService = errorService;
    }
+   public bool ShowError => _errorService.HasErrors();
 
    [BindProperty]
    public bool? YesChecked { get; set; }
@@ -44,12 +45,12 @@ public class PartOfPfiModel : BaseAcademyConversionProjectPageModel
 
       if (ModelState.IsValid)
       {
-         UpdateAcademyConversionProject updatedProject = new() { PartOfPfiScheme = YesChecked, PfiSchemeDetails = YesChecked is true ? PfiSchemeDetails : default };
+         UpdateAcademyConversionProject updatedProject = new() { PartOfPfiScheme = YesChecked.ToYesNoString(), PfiSchemeDetails = YesChecked is true ? PfiSchemeDetails : default };
 
          ApiResponse<AcademyConversionProject> apiResponse = await _repository.UpdateProject(id, updatedProject);
 
          if (apiResponse.Success)
-            return RedirectToPage(Links.GeneralInformationSection.PartOfPfiScheme.Page, new { id });
+            return RedirectToPage(Links.GeneralInformationSection.ConfirmGeneralInformation.Page, new { id });
       }
 
       _errorService.AddErrors(ModelState.Keys, ModelState);

@@ -12,17 +12,31 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.GeneralInformation;
 public class PartOfPfiSchemeIntegrationTests : BaseIntegrationTests
 {
    public PartOfPfiSchemeIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+   private IHtmlInputElement YesRadioButton => Document.QuerySelector<IHtmlInputElement>("[data-test=pfi-scheme-yes-input]");
+   private IHtmlInputElement NoRadioButton => Document.QuerySelector<IHtmlInputElement>("[data-test=pfi-scheme-no-input]");
+   private IHtmlHeadingElement PfiHeading => Document.QuerySelector<IHtmlHeadingElement>("[data-test=pfi-heading]");
+   private IHtmlLabelElement YesLabel => Document.QuerySelector<IHtmlLabelElement>("[data-test=pfi-scheme-yes-label]");
+   private IHtmlLabelElement NoLabel => Document.QuerySelector<IHtmlLabelElement>("[data-test=pfi-scheme-no-label]");
+   private IHtmlTextAreaElement PfiSchemeDetailsTextArea => Document.QuerySelector<IHtmlTextAreaElement>("[data-test=pfi-scheme-details-input]");
+   private IHtmlAnchorElement AnnexBLink => Document.QuerySelector<IHtmlAnchorElement>("[data-test=annex-b-link]");
+   
+   
 
    [Fact]
    public async Task Should_navigate_to_pfi_scheme_page_and_back()
    {
       AcademyConversionProject project = AddGetProject(r => r.PartOfPfiScheme = "yes");
 
+      await NavigateToPfiFromGeneralInfo(project);
+      await NavigateAsync("Back");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
+   }
+
+   private async Task NavigateToPfiFromGeneralInfo(AcademyConversionProject project)
+   {
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
       await NavigateAsync("Change", 3);
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/part-of-pfi-scheme");
-      await NavigateAsync("Back");
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
    }
 
    [Fact]
@@ -30,11 +44,9 @@ public class PartOfPfiSchemeIntegrationTests : BaseIntegrationTests
    {
       AcademyConversionProject project = AddGetProject(r => r.PartOfPfiScheme = "yes");
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
-      await NavigateAsync("Change", 3);
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/part-of-pfi-scheme");
+      await NavigateToPfiFromGeneralInfo(project);
 
-      Document.QuerySelector<IHtmlHeadingElement>("[data-test=pfi-heading]")!.TextContent.Trim().Should().Be("Is your school part of a PFI (Private Finance Initiative) scheme?");
+      PfiHeading.TextContent.Trim().Should().Be("Is your school part of a PFI (Private Finance Initiative) scheme?");
    }
 
    [Fact]
@@ -42,12 +54,10 @@ public class PartOfPfiSchemeIntegrationTests : BaseIntegrationTests
    {
       AcademyConversionProject project = AddGetProject(r => r.PartOfPfiScheme = "yes");
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
-      await NavigateAsync("Change", 3);
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/part-of-pfi-scheme");
+      await NavigateToPfiFromGeneralInfo(project);
 
-      Document.QuerySelector<IHtmlLabelElement>("[data-test=pfi-scheme-yes-label]")!.TextContent.Trim().Should().Be("Yes");
-      Document.QuerySelector<IHtmlLabelElement>("[data-test=pfi-scheme-no-label]")!.TextContent.Trim().Should().Be("No");
+      YesLabel.TextContent.Trim().Should().Be("Yes");
+      NoLabel.TextContent.Trim().Should().Be("No");
    }
 
    [Fact]
@@ -59,12 +69,42 @@ public class PartOfPfiSchemeIntegrationTests : BaseIntegrationTests
          r.PfiSchemeDetails = "Example Scheme";
       });
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
-      await NavigateAsync("Change", 3);
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/part-of-pfi-scheme");
+      await NavigateToPfiFromGeneralInfo(project);
 
-      Document.QuerySelector<IHtmlInputElement>("[data-test=pfi-scheme-yes-input]").Value.Trim().Should().Be("true");
-      Document.QuerySelector<IHtmlLabelElement>("[data-test=pfi-scheme-yes-label]").TextContent.Trim().Should().Be("Yes");
-      Document.QuerySelector<IHtmlTextAreaElement>("[data-test=pfi-scheme-details-input]").TextContent.Trim().Should().Be("Example Scheme");
+      YesRadioButton.Value.Trim().Should().Be("true");
+      YesLabel.TextContent.Trim().Should().Be("Yes");
+      PfiSchemeDetailsTextArea.TextContent.Trim().Should().Be("Example Scheme");
+   }
+   [Fact]
+   public async Task Should_have_annex_b_info_on_sidebar_when_sponsored()
+   {
+      AcademyConversionProject project = AddGetProject(r =>
+      {
+         r.PartOfPfiScheme = "yes";
+         r.PfiSchemeDetails = "Example Scheme";
+         r.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored;
+      });
+
+      await NavigateToPfiFromGeneralInfo(project);
+
+      AnnexBLink.Should().NotBeNull();
+   }
+
+   [Fact]
+   public async Task Should_save_new_value_when_submitted_and_redirect()
+   {
+      AcademyConversionProject project = AddGetProject(r =>
+      {
+         r.PartOfPfiScheme = "yes";
+         r.PfiSchemeDetails = "Example Scheme";
+      });
+
+      await NavigateToPfiFromGeneralInfo(project);
+
+      NoRadioButton.IsChecked = true;
+      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
+      Document.QuerySelector<IHtmlSpanElement>("#part-of-pfi").TextContent.Should().Be("No");
+
    }
 }

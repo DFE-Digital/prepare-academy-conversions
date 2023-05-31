@@ -28,7 +28,7 @@
             <li>
                <p class="govuk-body-s">
                   If you
-                  <a class="govuk-link" asp-page="@Links.AnnexB.Edit.Page" target="_blank" asp-route-return="@Links.TaskList.Index.Page" asp-route-backText="@Links.TaskList.Index.BackText" asp-route-id="@Model.Project.Id">
+                  <a class="govuk-link" data-test="annex-b-link" asp-page="@Links.AnnexB.Edit.Page" target="_blank" asp-route-return="@Links.TaskList.Index.Page" asp-route-backText="@Links.TaskList.Index.BackText" asp-route-id="@Model.Project.Id">
                      attach an Annex B form
                   </a> to this application, it will appear here for quick reference (opens in a new tab).
                </p>
