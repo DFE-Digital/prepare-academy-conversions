@@ -18,9 +18,13 @@ public class PartOfPfiSchemeIntegrationTests : BaseIntegrationTests
    private IHtmlLabelElement YesLabel => Document.QuerySelector<IHtmlLabelElement>("[data-test=pfi-scheme-yes-label]");
    private IHtmlLabelElement NoLabel => Document.QuerySelector<IHtmlLabelElement>("[data-test=pfi-scheme-no-label]");
    private IHtmlTextAreaElement PfiSchemeDetailsTextArea => Document.QuerySelector<IHtmlTextAreaElement>("[data-test=pfi-scheme-details-input]");
+   private IHtmlAnchorElement ErrorMessage => Document.QuerySelector<IHtmlAnchorElement>("#PfiSchemeDetails-error-link");
    private IHtmlAnchorElement AnnexBLink => Document.QuerySelector<IHtmlAnchorElement>("[data-test=annex-b-link]");
-   
-   
+   private IHtmlFormElement Form => Document.QuerySelector<IHtmlFormElement>("form");
+   private IHtmlSpanElement PartOfPfiSavedValue => Document.QuerySelector<IHtmlSpanElement>("#part-of-pfi");
+   private IHtmlButtonElement SaveAndContinueButton => Document.QuerySelector<IHtmlButtonElement>("#save-and-continue-button");
+
+
 
    [Fact]
    public async Task Should_navigate_to_pfi_scheme_page_and_back()
@@ -102,9 +106,10 @@ public class PartOfPfiSchemeIntegrationTests : BaseIntegrationTests
       await NavigateToPfiFromGeneralInfo(project);
 
       NoRadioButton.IsChecked = true;
-      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+      ExpectPatchProjectMatching(project, x => x.PartOfPfiScheme == "No");
+
+      await SaveAndContinueButton.SubmitAsync();
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
-      Document.QuerySelector<IHtmlSpanElement>("#part-of-pfi").TextContent.Should().Be("No");
 
    }
 }

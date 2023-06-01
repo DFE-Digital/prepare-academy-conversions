@@ -6,6 +6,7 @@ using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Pages;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.GeneralInformation;
@@ -46,7 +47,7 @@ public class PartOfPfiModel : BaseAcademyConversionProjectPageModel
       if (ModelState.IsValid)
       {
          UpdateAcademyConversionProject updatedProject = new() { PartOfPfiScheme = YesChecked.ToYesNoString(), PfiSchemeDetails = YesChecked is true ? PfiSchemeDetails : default };
-
+         if (updatedProject.PartOfPfiScheme.Equals("No")) updatedProject.PfiSchemeDetails = String.Empty;
          ApiResponse<AcademyConversionProject> apiResponse = await _repository.UpdateProject(id, updatedProject);
 
          if (apiResponse.Success)
