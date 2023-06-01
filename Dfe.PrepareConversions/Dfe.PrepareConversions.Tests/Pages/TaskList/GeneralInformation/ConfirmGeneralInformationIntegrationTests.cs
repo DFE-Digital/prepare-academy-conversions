@@ -114,7 +114,8 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
       AcademyConversionProject project = AddGetProject(project =>
       {
          project.PublishedAdmissionNumber = null;
-         project.PartOfPfiScheme = null;
+         project.PartOfPfiScheme = "No";
+         project.PfiSchemeDetails = null;
          project.ViabilityIssues = null;
          project.FinancialDeficit = null;
          project.DistanceFromSchoolToTrustHeadquarters = null;
@@ -145,7 +146,7 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#capacity")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#published-admission-number")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#percentage-free-school-meals")!.TextContent.Should().Be("Empty");
-      Document.QuerySelector("#part-of-pfi")!.TextContent.Should().Be("Empty");
+      Document.QuerySelector("#part-of-pfi")!.TextContent.Should().Be("No");
       Document.QuerySelector("#viability-issues")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#financial-deficit")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#diocesan-multi-academy-trust")!.TextContent.Should().Be("Empty");
