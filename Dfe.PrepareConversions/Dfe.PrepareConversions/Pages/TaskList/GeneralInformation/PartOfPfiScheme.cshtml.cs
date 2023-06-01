@@ -41,7 +41,7 @@ public class PartOfPfiModel : BaseAcademyConversionProjectPageModel
    {
       if (YesChecked is true && string.IsNullOrWhiteSpace(PfiSchemeDetails))
       {
-         ModelState.AddModelError(nameof(PfiSchemeDetails), "You must enter valid input.");
+         ModelState.AddModelError(nameof(PfiSchemeDetails), "You must enter the PFI scheme the school is part of");
       }
 
       if (ModelState.IsValid)
