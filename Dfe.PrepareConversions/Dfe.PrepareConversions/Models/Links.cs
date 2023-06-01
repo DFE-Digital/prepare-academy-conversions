@@ -17,7 +17,7 @@ public static class Links
 
    public static LinkItem ByPage(string page)
    {
-      return _links.FirstOrDefault(x => string.Equals(page, x.Page, StringComparison.InvariantCultureIgnoreCase));
+      return _links.Find(x => string.Equals(page, x.Page, StringComparison.InvariantCultureIgnoreCase));
    }
 
    public static class ApplicationForm
