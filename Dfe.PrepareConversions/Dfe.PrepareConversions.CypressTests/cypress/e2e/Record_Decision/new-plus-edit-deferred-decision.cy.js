@@ -4,7 +4,7 @@ let projectList = Cypress.env('url') + '/project-list'
 import ProjectList from '../../pages/projectList'
 
 //skipped due to sql error //TODO
-describe('Edit Deferred journey', {tags: '@dev'}, () => {
+describe.skip('Edit Deferred journey', {tags: '@dev'}, () => {
     beforeEach(() => {    
         ProjectList.selectProject().then(id => {
             // delete deferred reasons

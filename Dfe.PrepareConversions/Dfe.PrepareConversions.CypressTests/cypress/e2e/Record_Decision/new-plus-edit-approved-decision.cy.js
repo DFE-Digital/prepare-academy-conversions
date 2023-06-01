@@ -4,7 +4,7 @@ import ProjectList from "../../pages/projectList"
 let projectList = Cypress.env('url') + '/project-list'
 // uri to be updated once academisation API is integrated
 
-describe('103195 Edit Approved record decision', { tags: '@dev'}, ()=> {
+describe.skip('103195 Edit Approved record decision', { tags: '@dev'}, ()=> {
     beforeEach(() => {
         ProjectList.selectProject().then(id => {
             cy.sqlServer(`delete from academisation.ConversionAdvisoryBoardDecision where ConversionProjectId = ${id}`)

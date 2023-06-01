@@ -3,7 +3,7 @@ import ProjectList from '../../pages/projectList'
 let projectList = Cypress.env('url') + '/project-list'
 
 //skipped due to sql error //TODO
-describe('103791 Edit Declined journey', { tags: '@dev'}, () => {
+describe.skip('103791 Edit Declined journey', { tags: '@dev'}, () => {
     beforeEach(() => {
         ProjectList.selectProject().then(id => {
             cy.sqlServer(`

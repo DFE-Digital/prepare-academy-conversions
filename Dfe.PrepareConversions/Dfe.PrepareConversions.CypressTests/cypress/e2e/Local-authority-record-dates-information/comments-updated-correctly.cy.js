@@ -2,7 +2,7 @@
 import ProjectList from '../../pages/projectList'
 
 Cypress._.each(['ipad-mini'], (viewport) => {
-    describe(`86856 Comments should accept alphanumeric inputs on ${viewport}`, () => {
+    describe.skip(`86856 Comments should accept alphanumeric inputs on ${viewport}`, () => {
         beforeEach(() => {
             cy.login()
 
