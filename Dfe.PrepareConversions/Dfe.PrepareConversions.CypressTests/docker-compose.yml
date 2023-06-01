@@ -18,4 +18,4 @@ services:
       - NO_PROXY="${NO_PROXY}"
       - db=${DB_CONN}
     volumes:
-      - ./:/reports:rw
+      - ./reports:/reports:rw
