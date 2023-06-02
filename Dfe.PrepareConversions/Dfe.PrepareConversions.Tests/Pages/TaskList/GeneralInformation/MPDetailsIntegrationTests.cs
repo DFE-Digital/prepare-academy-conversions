@@ -76,7 +76,7 @@ public class MPDetailsIntegrationTests : BaseIntegrationTests
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
 
       // move to MP details page
-      await NavigateAsync("Change", 4);
+      await NavigateAsync("Change", 5);
 
       // check existing details are there
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/enter-MP-name-and-political-party");

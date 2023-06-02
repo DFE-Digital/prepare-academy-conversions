@@ -49,6 +49,8 @@ public class ProjectViewModel: ProjectTypeBase
       AnnexBFormReceived = project.AnnexBFormReceived;
       AnnexBFormUrl = project.AnnexBFormUrl;
 
+      PartOfPfiScheme = project.PartOfPfiScheme;
+      PfiSchemeDetails = project.PfiSchemeDetails;
       PublishedAdmissionNumber = project.PublishedAdmissionNumber;
       ViabilityIssues = project.ViabilityIssues;
       FinancialDeficit = project.FinancialDeficit;
@@ -146,6 +148,8 @@ public class ProjectViewModel: ProjectTypeBase
 
    //general info
    public string PublishedAdmissionNumber { get; set; }
+   public string PartOfPfiScheme { get; set; }
+   public string PfiSchemeDetails { get; set; }
    public string ViabilityIssues { get; set; }
    public string FinancialDeficit { get; set; }
    public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
