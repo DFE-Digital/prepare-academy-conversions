@@ -1,0 +1,43 @@
+@page "/task-list/{id:int}/confirm-general-information/part-of-pfi-scheme"
+@model Dfe.PrepareConversions.Pages.TaskList.GeneralInformation.PartOfPfiModel;
+@{
+    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Part of pfi Scheme";
+    Layout = "_QuestionLayout";
+    ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
+}
+
+@section BeforeMain
+    {
+    <govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation" />
+}
+
+
+<h1 class="govuk-heading-l" data-test="pfi-heading">Is your school part of a PFI (Private Finance Initiative) scheme?</h1>
+
+<div class="govuk-form-group">
+    <div class="govuk-radios" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+            <input asp-for="@Model.YesChecked" data-test="pfi-scheme-yes-input" class="govuk-radios__input" type="radio" value="true" aria-controls="conditional-partofpfischemeSaved" id="radio-yes" data-cy="select-radio-yes">
+            <label class="govuk-label govuk-radios__label" for="radio-yes" data-test="pfi-scheme-yes-label">
+                Yes
+            </label>
+        </div>
+
+        <div class="govuk-radios__conditional" id="conditional-partofpfischemeSaved" data-cy="select-sharepoint-section">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+                <label class="govuk-label">
+                    Which PFI scheme is the school part of?
+                </label>
+                <inline-error for="@nameof(Model.PfiSchemeDetails)" />
+                <textarea asp-for="@Model.PfiSchemeDetails" data-test="pfi-scheme-details-input" class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.Project.PfiSchemeDetails))" rows="5" aria-describedby="pfi-scheme-details-hint"></textarea>
+            </div>
+        </div>
+
+        <div class="govuk-radios__item">
+            <input asp-for="@Model.YesChecked" data-test="pfi-scheme-no-input" class="govuk-radios__input" type="radio" value="false" id="radio-no" data-cy="select-radio-no">
+            <label class="govuk-label govuk-radios__label" for="radio-no" data-test="pfi-scheme-no-label">
+                No
+            </label>
+        </div>
+    </div>
+</div>

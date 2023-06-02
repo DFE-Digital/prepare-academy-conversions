@@ -47,6 +47,7 @@ public class GeneralInformationViewComponent : ViewComponent
          PublishedAdmissionNumber = project.PublishedAdmissionNumber,
          PercentageFreeSchoolMeals = !string.IsNullOrEmpty(generalInformation.PercentageFreeSchoolMeals) ? $"{generalInformation.PercentageFreeSchoolMeals}%" : "",
          PartOfPfiScheme = project.PartOfPfiScheme,
+         PfiSchemeDetails = project.PfiSchemeDetails,
          ViabilityIssues = project.ViabilityIssues,
          FinancialDeficit = project.FinancialDeficit,
          IsSchoolLinkedToADiocese = generalInformation.IsSchoolLinkedToADiocese,
