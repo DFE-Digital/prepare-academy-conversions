@@ -85,7 +85,7 @@ public class PreviewProjectTemplateTests : BaseIntegrationTests
       Document.QuerySelector("#error-summary-title").Should().NotBeNull();
       Document.QuerySelector("#error-summary-title").Text().Trim().Should().Be("There is a problem");
 
-      string selector = "*[data-eltype='error-link']";
+      string selector = "*[data-element-type='error-link']";
       var errors = Document.QuerySelectorAll(selector);
       errors.Length.Should().Be(1);
       errors.First().TextContent.Should().Be("Set an Advisory Board date before you generate your project template");
@@ -108,7 +108,7 @@ public class PreviewProjectTemplateTests : BaseIntegrationTests
       Document.QuerySelector("#error-summary-title").Should().NotBeNull();
       Document.QuerySelector("#error-summary-title").Text().Trim().Should().Be("There is a problem");
 
-      string selector = "*[data-eltype='error-link']";
+      string selector = "*[data-element-type='error-link']";
       var errors = Document.QuerySelectorAll(selector);
       errors.Length.Should().Be(1);
       errors.First().TextContent.Should().Be("Set an Advisory Board date before you generate your project template");

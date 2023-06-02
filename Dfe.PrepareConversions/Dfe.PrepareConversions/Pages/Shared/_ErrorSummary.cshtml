@@ -17,15 +17,15 @@
                         <li>
                             @if (error.Key?.Contains("/advisory-board-date") ?? false)
                             {
-                                <a id="@($"{error.Key}-error-link")" href=@error.Key data-eltype="error-link" data-cy="error-message-@errorCount+=">@error.Message</a>
+                                <a id="@($"{error.Key}-error-link")" href=@error.Key data-element-type="error-link" data-cy="error-message-@errorCount+=">@error.Message</a>
                             }
                             else if (!string.IsNullOrWhiteSpace(error.Key))
                             {
-                                <a id="@($"{error.Key}-error-link")" href="#@error.Key" data-eltype="error-link" data-cy="error-message-@errorCount+=">@error.Message</a>
+                                <a id="@($"{error.Key}-error-link")" href="#@error.Key" data-element-type="error-link" data-cy="error-message-@errorCount+=">@error.Message</a>
                             }
                             else
                             {
-                                <a id="@(error.Key)" href="#@(error.Key)" data-eltype="error-link"  data-cy="error-message-@errorCount+=">@error.Message</a>
+                                <a id="@(error.Key)" href="#@(error.Key)" data-element-type="error-link" data-cy="error-message-@errorCount+=">@error.Message</a>
                             }
                         </li>
                     }
