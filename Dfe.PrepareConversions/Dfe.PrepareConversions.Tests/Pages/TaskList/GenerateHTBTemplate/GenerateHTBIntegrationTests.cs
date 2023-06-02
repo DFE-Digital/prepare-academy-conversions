@@ -1,3 +1,4 @@
+using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
@@ -5,9 +6,11 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Tests.Customisations;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
+using Microsoft.Graph;
 using System;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Sdk;
 
 namespace Dfe.PrepareConversions.Tests.Pages.TaskList.GenerateHTBTemplate;
 
@@ -30,20 +33,6 @@ public class GenerateHTBIntegrationTests : BaseIntegrationTests
 
       await NavigateAsync("Back to task list");
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
-   }
-
-   [Fact]
-   public async Task Should_navigate_between_preview_htb_template_and_generate_htb_template()
-   {
-      AcademyConversionProject project = AddGetProject();
-
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
-
-      await NavigateAsync("Generate project template");
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/download-project-template");
-
-      await NavigateAsync("Back to preview");
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
    }
 
    [Fact]

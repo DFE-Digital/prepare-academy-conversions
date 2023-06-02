@@ -40,6 +40,7 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
 
    protected IBrowsingContext Context { get; }
 
+
    public void Dispose()
    {
       _factory.Reset();
@@ -51,11 +52,12 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
       return $"https://localhost{(path.StartsWith('/') ? path : $"/{path}")}";
    }
 
-   protected async Task OpenAndConfirmPathAsync(string path, string expectedPath = null, string because = null)
+   protected async Task<IDocument> OpenAndConfirmPathAsync(string path, string expectedPath = null, string because = null)
    {
-      await Context.OpenAsync(BuildRequestAddress(path));
+      var resultDocument = await Context.OpenAsync(BuildRequestAddress(path));
 
       Document.Url.Should().Be(BuildRequestAddress(expectedPath ?? path), because ?? "navigation should be successful");
+      return resultDocument;
    }
 
    protected async Task NavigateAsync(string linkText, int? index = null)
@@ -70,12 +72,37 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
       await link.NavigateAsync();
    }
 
+   protected Task<IDocument> NavigateAsync(IDocument document, string linkText, int? index = null)
+   {
+      IHtmlCollection<IElement> anchors = document.QuerySelectorAll("a");
+      IHtmlAnchorElement link = (index == null
+            ? anchors.SingleOrDefault(a => a.TextContent.Contains(linkText))
+            : anchors.Where(a => a.TextContent.Contains(linkText)).ElementAt(index.Value))
+         as IHtmlAnchorElement;
+
+      if (index == null && link == null)
+      {
+         throw new NullReferenceException($"Sequence Contains no matching element. Could not find <a> element with text '{linkText}'");
+      }
+
+      Assert.NotNull(link);
+      return link.NavigateAsync();
+   }
+
    protected async Task NavigateDataTestAsync(string dataTest)
    {
       IHtmlAnchorElement anchors = Document.QuerySelectorAll($"[data-test='{dataTest}']").First() as IHtmlAnchorElement;
       Assert.NotNull(anchors);
 
       await anchors.NavigateAsync();
+   }
+
+   protected Task<IDocument> NavigateDataTestAsync(IDocument document, string dataTest)
+   {
+      IHtmlAnchorElement anchors = document.QuerySelectorAll($"[data-test='{dataTest}']").First() as IHtmlAnchorElement;
+      Assert.NotNull(anchors);
+
+      return anchors.NavigateAsync();
    }
 
    protected static (RadioButton, RadioButton) RandomRadioButtons(string id, params string[] values)
