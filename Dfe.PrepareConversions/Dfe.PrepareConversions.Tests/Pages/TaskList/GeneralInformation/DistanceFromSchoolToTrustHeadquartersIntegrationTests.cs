@@ -25,7 +25,7 @@ public class DistanceFromTrustHeadquartersIntegrationTests : BaseIntegrationTest
             .With(r => r.Urn, project.Urn));
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
-      await NavigateAsync("Change", 3);
+      await NavigateAsync("Change", 4);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/how-far-converting-school-from-trust");
       Document.QuerySelector<IHtmlInputElement>("#distance-to-trust-headquarters")!.Value.Should().Be(project.DistanceFromSchoolToTrustHeadquarters.ToSafeString());
