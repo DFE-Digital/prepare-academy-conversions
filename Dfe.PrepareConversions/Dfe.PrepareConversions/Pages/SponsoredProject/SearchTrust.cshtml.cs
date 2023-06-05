@@ -45,7 +45,7 @@ public class SearchTrustModel : PageModel
       TrustSummaryResponse trusts = await _trustsRepository.SearchTrusts(ukprn);
       if (trusts.Data.Any())
       {
-         TrustSummary trust = trusts.Data.First();
+         TrustSummary trust = trusts.Data[0];
          SearchQuery = $"{trust.GroupName} ({trust.Ukprn})";
       }
 
