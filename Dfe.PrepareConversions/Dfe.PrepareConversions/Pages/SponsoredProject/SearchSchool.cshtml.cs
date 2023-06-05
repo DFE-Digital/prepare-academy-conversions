@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareConversions.Pages.InvoluntaryProject;
+namespace Dfe.PrepareConversions.Pages.SponsoredProject;
 
 public class SearchSchoolModel : PageModel
 {
@@ -73,7 +73,7 @@ public class SearchSchoolModel : PageModel
          _errorService.AddErrors(ModelState.Keys, ModelState);
          return Page();
       }
-      redirect = string.IsNullOrEmpty(redirect) ? Links.InvoluntaryProject.SearchTrusts.Page : redirect;
+      redirect = string.IsNullOrEmpty(redirect) ? Links.SponsoredProject.SearchTrusts.Page : redirect;
 
       return RedirectToPage(redirect, new { urn = splitSearch[1], ukprn });
    }

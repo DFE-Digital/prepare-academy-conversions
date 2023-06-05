@@ -1,5 +1,5 @@
 using Dfe.PrepareConversions.Data.Models.Establishment;
-using Dfe.PrepareConversions.Data.Models.InvoluntaryProject;
+using Dfe.PrepareConversions.Data.Models.SponsoredProject;
 using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareConversions.Pages.InvoluntaryProject;
+namespace Dfe.PrepareConversions.Pages.SponsoredProject;
 
 public class SummaryModel : PageModel
 {
@@ -43,22 +43,22 @@ public class SummaryModel : PageModel
       EstablishmentResponse establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
       TrustDetail trust = await _trustRepository.GetTrustByUkprn(ukprn);
 
-      await _academyConversionProjectRepository.CreateInvoluntaryProject(MapToDto(establishment, trust));
+      await _academyConversionProjectRepository.CreateSponsoredProject(MapToDto(establishment, trust));
 
       return RedirectToPage(Links.ProjectList.Index.Page);
    }
 
-   private static CreateInvoluntaryProject MapToDto(EstablishmentResponse establishment, TrustDetail trust)
+   private static CreateSponsoredProject MapToDto(EstablishmentResponse establishment, TrustDetail trust)
    {
-      InvoluntaryProjectSchool createSchool = new(
+      SponsoredProjectSchool createSchool = new(
          establishment.EstablishmentName,
          establishment.Urn,
          establishment.ViewAcademyConversion?.Pfi != null && establishment.ViewAcademyConversion?.Pfi != "No");
 
-      InvoluntaryProjectTrust createTrust = new(
+      SponsoredProjectTrust createTrust = new(
          trust.GiasData.GroupName,
          trust.GiasData.GroupId);
 
-      return new CreateInvoluntaryProject(createSchool, createTrust);
+      return new CreateSponsoredProject(createSchool, createTrust);
    }
 }
