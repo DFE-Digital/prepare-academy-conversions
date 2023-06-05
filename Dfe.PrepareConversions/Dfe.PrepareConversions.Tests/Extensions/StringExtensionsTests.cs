@@ -101,9 +101,9 @@ public class StringExtensionsTests
    }
 
    [Fact]
-   public void Should_be_able_to_convert_involuntary_conversion_route_to_the_correct_description()
+   public void Should_be_able_to_convert_sponsored_conversion_route_to_the_correct_description()
    {
-      AcademyTypeAndRoutes.Sponsored.RouteDescription().Should().Be("Involuntary conversion");
+      AcademyTypeAndRoutes.Sponsored.RouteDescription().Should().Be("Sponsored conversion");
    }
 
    [Fact]

@@ -16,7 +16,7 @@ public class PreviewProjectTemplateTests : BaseIntegrationTests
    public PreviewProjectTemplateTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
 
    [Fact]
-   public async Task Given_InvoluntaryConversion_When_Previewed_Then_RationaleForProject_Is_Hidden()
+   public async Task Given_SponsoredConversion_When_Previewed_Then_RationaleForProject_Is_Hidden()
    {
       static void PostProjectSetup(AcademyConversionProject project)
       {
@@ -29,7 +29,7 @@ public class PreviewProjectTemplateTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Given_InvoluntaryConversion_When_Previewed_Then_LegalRequirements_Are_Hidden()
+   public async Task Given_SponsoredConversion_When_Previewed_Then_LegalRequirements_Are_Hidden()
    {
       static void PostProjectSetup(AcademyConversionProject project)
       {
@@ -44,7 +44,7 @@ public class PreviewProjectTemplateTests : BaseIntegrationTests
    [Theory]
    [InlineData(AcademyTypeAndRoutes.Voluntary)]
    [InlineData(AcademyTypeAndRoutes.FormAMat)]
-   public async Task Given_Not_InvoluntaryConversion_When_Previewed_Then_LegalRequirements_Are_Shown(string routeToConversion)
+   public async Task Given_Not_SponsoredConversion_When_Previewed_Then_LegalRequirements_Are_Shown(string routeToConversion)
    {
       void PostProjectSetup(AcademyConversionProject project)
       {
@@ -59,7 +59,7 @@ public class PreviewProjectTemplateTests : BaseIntegrationTests
    [Theory]
    [InlineData(AcademyTypeAndRoutes.Voluntary)]
    [InlineData(AcademyTypeAndRoutes.FormAMat)]
-   public async Task Given_Not_InvoluntaryConversion_When_Previewed_Then_RationaleForProject_Is_Shown(string routeToConversion)
+   public async Task Given_Not_SponsoredConversion_When_Previewed_Then_RationaleForProject_Is_Shown(string routeToConversion)
    {
       void PostProjectSetup(AcademyConversionProject project)
       {
@@ -72,7 +72,7 @@ public class PreviewProjectTemplateTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Given_InvoluntaryConversion_And_No_AdvisoryBoardDate_When_Previewed_Then_ValidationError_Shown()
+   public async Task Given_SponsoredConversion_And_No_AdvisoryBoardDate_When_Previewed_Then_ValidationError_Shown()
    {
       static void PostProjectSetup(AcademyConversionProject project)
       {
@@ -92,7 +92,7 @@ public class PreviewProjectTemplateTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Given_InvoluntaryConversion_And_No_AdvisoryBoardDate_When_GenerateTemplate_Clicked_Then_Page_Is_Redisplayed()
+   public async Task Given_SponsoredConversion_And_No_AdvisoryBoardDate_When_GenerateTemplate_Clicked_Then_Page_Is_Redisplayed()
    {
       static void PostProjectSetup(AcademyConversionProject project)
       {

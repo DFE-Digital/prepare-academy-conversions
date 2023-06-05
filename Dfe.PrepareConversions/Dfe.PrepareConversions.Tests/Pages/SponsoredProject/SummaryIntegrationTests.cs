@@ -9,7 +9,7 @@ using System.Globalization;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject;
+namespace Dfe.PrepareConversions.Tests.Pages.SponsoredProject;
 
 public class SummaryIntegrationTests : BaseIntegrationTests
 {
@@ -49,7 +49,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests
       await OpenAndConfirmPathAsync($"/start-new-project/check-school-trust-details?ukprn={ukprn}&urn={establishment.Urn}");
 
       _factory.AddGetWithJsonResponse(@"/v2/trusts/bulk*", trustDetail);
-      _factory.AddAnyPostWithJsonRequest("/legacy/project/involuntary-conversion-project", "");
+      _factory.AddAnyPostWithJsonRequest("/legacy/project/sponsored-conversion-project", "");
 
       await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]")!.SubmitAsync();
 

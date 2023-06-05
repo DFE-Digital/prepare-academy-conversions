@@ -1,7 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Data.Services;
-using Dfe.PrepareConversions.Pages.InvoluntaryProject;
+using Dfe.PrepareConversions.Pages.SponsoredProject;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.Tests.Customisations;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject;
+namespace Dfe.PrepareConversions.Tests.Pages.SponsoredProject;
 
 public class SearchSchoolModelUnitTests
 {
