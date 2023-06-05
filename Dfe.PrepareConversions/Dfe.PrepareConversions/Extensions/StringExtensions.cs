@@ -111,7 +111,7 @@ public static class StringExtensions
 
       return input.Squish() switch
       {
-         sponsored => "Involuntary conversion",
+         sponsored => "Sponsored conversion",
          converter => "Voluntary conversion",
          formamat => "Form a MAT",
          _ => input

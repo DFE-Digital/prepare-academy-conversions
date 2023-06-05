@@ -1,6 +1,6 @@
 ﻿@page "/start-new-project/trust-name"
 @using Dfe.PrepareConversions.Pages.Shared
-@model Dfe.PrepareConversions.Pages.InvoluntaryProject.SearchTrustModel
+@model Dfe.PrepareConversions.Pages.SponsoredProject.SearchTrustModel
 @{
    Layout = "_Layout";
    ViewBag.Title = (!ViewData.ModelState.IsValid ? "Error: " : "") + "Which trust is involved";
@@ -13,7 +13,7 @@
 
 @section BeforeMain
 {
-   <partial name="_BackLink" model="@(new BackLink(Links.InvoluntaryProject.SearchSchool.Page, routeParams))"/>
+   <partial name="_BackLink" model="@(new BackLink(Links.SponsoredProject.SearchSchool.Page, routeParams))"/>
    <partial name="_ErrorSummary"/>
 }
 
