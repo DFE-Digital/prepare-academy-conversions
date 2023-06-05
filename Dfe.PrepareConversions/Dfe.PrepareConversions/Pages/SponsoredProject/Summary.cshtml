@@ -1,7 +1,7 @@
 ﻿@page "/start-new-project/check-school-trust-details"
 @using Dfe.PrepareConversions.Pages.Shared
 @using System.Globalization
-@model Dfe.PrepareConversions.Pages.InvoluntaryProject.SummaryModel
+@model Dfe.PrepareConversions.Pages.SponsoredProject.SummaryModel
 @{
    Layout = "_Layout";
    ViewBag.Title = "Check school and trust details";
@@ -16,13 +16,13 @@
    {
       { "urn", Model.Establishment.Urn },
       { "ukprn", Model.Trust.Ukprn },
-      { "redirect", Links.InvoluntaryProject.Summary.Page }
+      { "redirect", Links.SponsoredProject.Summary.Page }
    };
 }
 
 @section BeforeMain
 {
-   <partial name="_BackLink" model="@(new BackLink(Links.InvoluntaryProject.SearchTrusts.Page, routeParams))"/>
+   <partial name="_BackLink" model="@(new BackLink(Links.SponsoredProject.SearchTrusts.Page, routeParams))"/>
 }
 
 <div class="govuk-grid-row">
@@ -50,7 +50,7 @@
                @Model.Establishment.EstablishmentName
             </dd>
             <dd class="govuk-summary-list__actions">
-               <a asp-page="@Links.InvoluntaryProject.SearchSchool.Page" class="govuk-link" data-cy="change-school"
+               <a asp-page="@Links.SponsoredProject.SearchSchool.Page" class="govuk-link" data-cy="change-school"
                   asp-all-route-data="@backLinkRouteParams">
                   Change<span class="govuk-visually-hidden">School name</span>
                </a>
@@ -155,7 +155,7 @@
                @Model.Trust.GroupName
             </dd>
             <dd class="govuk-summary-list__actions">
-               <a asp-page="@Links.InvoluntaryProject.SearchTrusts.Page" class="govuk-link" data-cy="change-trust"
+               <a asp-page="@Links.SponsoredProject.SearchTrusts.Page" class="govuk-link" data-cy="change-trust"
                   asp-all-route-data="@backLinkRouteParams">
                   Change<span class="govuk-visually-hidden">Trust name</span>
                </a>

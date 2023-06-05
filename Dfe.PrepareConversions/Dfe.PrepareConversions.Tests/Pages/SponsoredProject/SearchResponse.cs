@@ -1,4 +1,4 @@
-﻿namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject;
+﻿namespace Dfe.PrepareConversions.Tests.Pages.SponsoredProject;
 
 public class SearchResponse
 {
