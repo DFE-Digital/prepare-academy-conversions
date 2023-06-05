@@ -68,7 +68,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
 
       DocumentBuilder documentBuilder = DocumentBuilder.CreateFromTemplate(ms, document);
       AddSchoolAndTrustInfoAndProjectDates(documentBuilder, project);
-      AddGeneralInformation(documentBuilder, document, project);
+      AddGeneralInformation(documentBuilder, document);
       AddOfstedInformation(documentBuilder, document, project);
       AddKeyStage2Information(documentBuilder, document, project);
       AddKeyStage4Information(documentBuilder, document, project);
