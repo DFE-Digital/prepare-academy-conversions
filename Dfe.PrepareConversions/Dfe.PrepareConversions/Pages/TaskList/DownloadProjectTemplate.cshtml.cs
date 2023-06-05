@@ -86,7 +86,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
       AddLocalAuthorityAndSponsorDetails(documentBuilder, project);
    }
 
-   private static void AddGeneralInformation(DocumentBuilder builder, HtbTemplate document, AcademyConversionProject project)
+   private static void AddGeneralInformation(DocumentBuilder builder, HtbTemplate document)
    {
       builder.ReplacePlaceholderWithContent("GeneralInformation", build =>
       {
