@@ -4,6 +4,7 @@ using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.DocumentGeneration;
 using Dfe.PrepareConversions.DocumentGeneration.Elements;
+using Dfe.PrepareConversions.DocumentGeneration.Interfaces;
 using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Utils;
@@ -66,6 +67,8 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
       MemoryStream ms = CreateMemoryStream("htb-template");
 
       DocumentBuilder documentBuilder = DocumentBuilder.CreateFromTemplate(ms, document);
+      AddSchoolAndTrustInfoAndProjectDates(documentBuilder, project);
+      AddGeneralInformation(documentBuilder, document, project);
       AddOfstedInformation(documentBuilder, document, project);
       AddKeyStage2Information(documentBuilder, document, project);
       AddKeyStage4Information(documentBuilder, document, project);
@@ -73,6 +76,158 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
       byte[] documentByteArray = documentBuilder.Build();
 
       return File(documentByteArray, "application/vnd.ms-word.document", $"{document.SchoolName}-project-template-{DateTime.Today:dd-MM-yyyy}.docx");
+   }
+
+   private static void AddSchoolAndTrustInfoAndProjectDates(DocumentBuilder documentBuilder,
+      AcademyConversionProject project)
+   {
+      AddAcademyRouteInfo(documentBuilder, project);
+      AddAdvisoryBoardDetails(documentBuilder, project);
+      AddLocalAuthorityAndSponsorDetails(documentBuilder, project);
+   }
+
+   private static void AddGeneralInformation(DocumentBuilder builder, HtbTemplate document, AcademyConversionProject project)
+   {
+      builder.ReplacePlaceholderWithContent("GeneralInformation", build =>
+      {
+         build.AddHeading("General Information", HeadingLevel.One);
+         build.AddTable(new List<TextElement[]>
+         {
+            new[] { new TextElement { Value = "School type", Bold = true }, new TextElement { Value = document.SchoolType } },
+            new[] { new TextElement { Value = "School phase", Bold = true }, new TextElement { Value = document.SchoolPhase } },
+            new[] { new TextElement { Value = "Age range", Bold = true }, new TextElement { Value = document.AgeRange } },
+            new[] { new TextElement { Value = "Capacity", Bold = true }, new TextElement { Value = document.SchoolCapacity } },
+            new[] { new TextElement { Value = "Published admission number (PAN)", Bold = true }, new TextElement { Value = document.PublishedAdmissionNumber } },
+            new[] { new TextElement { Value = "Number on roll (NOR)", Bold = true }, new TextElement { Value = document.NumberOnRoll } },
+            new[] { new TextElement { Value = "Percentage of the school is full", Bold = true }, new TextElement { Value = document.PercentageSchoolFull } },
+            new[]
+            {
+               new TextElement { Value = "Percentage of free school meals at the school (%FSM)", Bold = true }, new TextElement { Value = document.PercentageFreeSchoolMeals }
+            },
+            new[] { new TextElement { Value = "Viability issues", Bold = true }, new TextElement { Value = document.ViabilityIssues } },
+            new[] { new TextElement { Value = "Financial deficit", Bold = true }, new TextElement { Value = document.FinancialDeficit } },
+            new[] { new TextElement { Value = "Private finance initiative (PFI) scheme", Bold = true }, new TextElement { Value = document.PartOfPfiScheme } },
+            new[] { new TextElement { Value = "Is the school linked to a diocese?", Bold = true }, new TextElement { Value = document.IsSchoolLinkedToADiocese } },
+            new[]
+            {
+               new TextElement { Value = "Distance from the converting school to the trust or other schools in the trust", Bold = true },
+               new TextElement { Value = $"{document.DistanceFromSchoolToTrustHeadquarters} {document.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}" }
+            },
+            new[] { new TextElement { Value = "Parliamentary constituency", Bold = true }, new TextElement { Value = document.ParliamentaryConstituency } },
+            new[] { new TextElement { Value = "MP name and political party", Bold = true }, new TextElement { Value = document.MPNameAndParty } }
+         });
+         build.AddParagraph("");
+      });
+   }
+
+   private static void AddLocalAuthorityAndSponsorDetails(DocumentBuilder builder, AcademyConversionProject project)
+   {
+      List<TextElement[]> localAuthorityAndSponsorDetails = new()
+      {
+         new[]
+         {
+            new TextElement { Value = "Local authority", Bold = true },
+            new TextElement { Value = project.LocalAuthority }
+         },
+         new[]
+         {
+            new TextElement { Value = "Sponsor name", Bold = true },
+            new TextElement { Value = project.SponsorName }
+         },
+         new[]
+         {
+            new TextElement { Value = "Sponsor reference number", Bold = true },
+            new TextElement { Value = project.SponsorReferenceNumber }
+         }
+      };
+
+      builder.ReplacePlaceholderWithContent("LocalAuthorityAndSponsorDetails", body => body.AddTable(localAuthorityAndSponsorDetails));
+   }
+   private static void AddAdvisoryBoardDetails(DocumentBuilder builder, AcademyConversionProject project)
+   {
+      List<TextElement[]> advisoryBoardDetails = new()
+      {
+         new[]
+         {
+            new TextElement { Value = "Date of Advisory Board", Bold = true },
+            new TextElement { Value = project.HeadTeacherBoardDate.ToDateString()}
+         },
+         new[]
+         {
+            new TextElement { Value = "Proposed academy opening date", Bold = true },
+            new TextElement { Value = project.OpeningDate.ToDateString() }
+         },
+         new[]
+         {
+            new TextElement { Value = "Previous Advisory Board", Bold = true },
+            new TextElement { Value = project.PreviousHeadTeacherBoardDate.ToDateString() }
+         }
+      };
+
+      builder.ReplacePlaceholderWithContent("AdvisoryBoardDetails", body => body.AddTable(advisoryBoardDetails));
+      builder.AddParagraph("");
+   }
+   private static void AddAcademyRouteInfo(DocumentBuilder builder, AcademyConversionProject project)
+   {
+      List<TextElement[]> academyRouteInfo = new();
+      switch (project.AcademyTypeAndRoute)
+      {
+         case AcademyTypeAndRoutes.Voluntary:
+            academyRouteInfo = VoluntaryRouteInfo(project);
+            break;
+         case AcademyTypeAndRoutes.Sponsored:
+            academyRouteInfo = SponsoredRouteInfo(project);
+            break;
+      }
+
+      builder.ReplacePlaceholderWithContent("AcademyRouteInfo", body => body.AddTable(academyRouteInfo));
+      builder.AddParagraph("");
+   }
+
+   private static List<TextElement[]> VoluntaryRouteInfo(AcademyConversionProject project)
+   {
+      List<TextElement[]> voluntaryRouteInfo = new()
+      {
+         new[]
+         {
+            new TextElement { Value = "Academy type and route", Bold = true },
+            new TextElement { Value = $"{project.AcademyTypeAndRoute} {project.ConversionSupportGrantChangeReason} {project.ConversionSupportGrantAmount.ToMoneyString(true)}" }
+         },
+         new[]
+         {
+            new TextElement { Value = "Recommendation", Bold = true },
+            new TextElement { Value = project.RecommendationForProject }
+         },
+         new[]
+         {
+            new TextElement { Value = "Is an academy order (AO) required?", Bold = true },
+            new TextElement { Value = project.AcademyOrderRequired }
+         },
+      };
+      return voluntaryRouteInfo;
+
+   }
+   private static List<TextElement[]> SponsoredRouteInfo(AcademyConversionProject project)
+   {
+      List<TextElement[]> sponsoredRouteInfo = new()
+      {
+         new[]
+         {
+            new TextElement { Value = "Academy type and route", Bold = true },
+            new TextElement { Value = $"{project.AcademyTypeAndRoute} {project.ConversionSupportGrantChangeReason} {project.ConversionSupportGrantAmount.ToMoneyString(true)}" }
+         },
+         new[]
+         {
+            new TextElement { Value = "Has the Schools Notification Mailbox (SNM) received a Form 7?", Bold = true },
+            new TextElement { Value = project.Form7Received }
+         },
+         new[]
+         {
+            new TextElement { Value = "Date directive academy order (DAO) pack sent", Bold = true },
+            new TextElement { Value = project.DaoPackSentDate.ToDateString() }
+         },
+      };
+      return sponsoredRouteInfo;
    }
 
    private static void AddOfstedInformation(DocumentBuilder builder, HtbTemplate document, AcademyConversionProject project)
