@@ -1,6 +1,6 @@
 ﻿using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data.Models.InvoluntaryProject;
+using Dfe.PrepareConversions.Data.Models.SponsoredProject;
 using Dfe.PrepareConversions.Data.Services;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
@@ -41,9 +41,9 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
       return project;
    }
 
-   public async Task CreateInvoluntaryProject(CreateInvoluntaryProject involuntaryProject)
+   public async Task CreateSponsoredProject(CreateSponsoredProject sponsoredProject)
    {
-      await _innerRepository.CreateInvoluntaryProject(involuntaryProject);
+      await _innerRepository.CreateSponsoredProject(sponsoredProject);
    }
 
    public async Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject)

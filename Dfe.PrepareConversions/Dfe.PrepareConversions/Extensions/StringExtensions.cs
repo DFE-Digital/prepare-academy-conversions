@@ -65,7 +65,21 @@ public static class StringExtensions
       return word.All(char.IsUpper);
    }
 
-
+   /// <summary>
+   /// Extension method that converts "Yes" and "No" strings to bool values.
+   /// "Yes" is converted to true and "No" is converted to false.
+   /// The comparison is case-insensitive.
+   /// If the input string does not match "Yes" or "No", an ArgumentException will be thrown.
+   /// </summary>
+   public static bool ToBool(this string str)
+   {
+      return str.ToLower() switch
+      {
+         "yes" => true,
+         "no" => false,
+         _ => throw new ArgumentException("The string must be either 'Yes' or 'No'.")
+      };
+   }
    public static string ToTitleCase(this string str)
    {
       TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
@@ -97,7 +111,7 @@ public static class StringExtensions
 
       return input.Squish() switch
       {
-         sponsored => "Involuntary conversion",
+         sponsored => "Sponsored conversion",
          converter => "Voluntary conversion",
          formamat => "Form a MAT",
          _ => input

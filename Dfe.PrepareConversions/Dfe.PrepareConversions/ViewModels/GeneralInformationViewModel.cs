@@ -12,6 +12,7 @@ public class GeneralInformationViewModel
    public string PublishedAdmissionNumber { get; set; }
    public string PercentageFreeSchoolMeals { get; set; }
    public string PartOfPfiScheme { get; set; }
+   public string PfiSchemeDetails { get; set; }
    public string ViabilityIssues { get; set; }
    public string FinancialDeficit { get; set; }
    public string IsSchoolLinkedToADiocese { get; set; }

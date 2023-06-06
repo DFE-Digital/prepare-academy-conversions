@@ -2,7 +2,7 @@
 using Dfe.PrepareConversions.Data.Exceptions;
 using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data.Models.InvoluntaryProject;
+using Dfe.PrepareConversions.Data.Models.SponsoredProject;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Data.Tests.AutoFixture;
@@ -95,27 +95,27 @@ public class AcademyConversionProjectRepositoryTests
    [AutoMoqData]
    public async Task GivenAValidProject_PostToApi([Frozen] Mock<IHttpClientService> httpService, AcademyConversionProjectRepository subject)
    {
-      httpService.Setup(m => m.Post<CreateInvoluntaryProject, string>(
-            It.IsAny<HttpClient>(), @"legacy/project/involuntary-conversion-project", It.IsAny<CreateInvoluntaryProject>()))
+      httpService.Setup(m => m.Post<CreateSponsoredProject, string>(
+            It.IsAny<HttpClient>(), @"legacy/project/sponsored-conversion-project", It.IsAny<CreateSponsoredProject>()))
          .ReturnsAsync(new ApiResponse<string>(HttpStatusCode.OK, string.Empty));
 
-      CreateInvoluntaryProject project = new(null, null);
-      await subject.CreateInvoluntaryProject(project);
+      CreateSponsoredProject project = new(null, null);
+      await subject.CreateSponsoredProject(project);
 
-      httpService.Verify(m => m.Post<CreateInvoluntaryProject, string>(
-         It.IsAny<HttpClient>(), @"legacy/project/involuntary-conversion-project", project), Times.Once);
+      httpService.Verify(m => m.Post<CreateSponsoredProject, string>(
+         It.IsAny<HttpClient>(), @"legacy/project/sponsored-conversion-project", project), Times.Once);
    }
 
    [Theory]
    [AutoMoqData]
    public async Task GivenAFailedResponse_ThrowAnException([Frozen] Mock<IHttpClientService> httpService, AcademyConversionProjectRepository subject)
    {
-      httpService.Setup(m => m.Post<CreateInvoluntaryProject, string>(
-            It.IsAny<HttpClient>(), @"legacy/project/involuntary-conversion-project", It.IsAny<CreateInvoluntaryProject>()))
+      httpService.Setup(m => m.Post<CreateSponsoredProject, string>(
+            It.IsAny<HttpClient>(), @"legacy/project/sponsored-conversion-project", It.IsAny<CreateSponsoredProject>()))
          .ReturnsAsync(new ApiResponse<string>(HttpStatusCode.InternalServerError, string.Empty));
 
-      CreateInvoluntaryProject project = new(null, null);
-      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => subject.CreateInvoluntaryProject(project));
+      CreateSponsoredProject project = new(null, null);
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => subject.CreateSponsoredProject(project));
 
       Assert.Equal("Request to Api failed | StatusCode - InternalServerError", exception.Message);
    }

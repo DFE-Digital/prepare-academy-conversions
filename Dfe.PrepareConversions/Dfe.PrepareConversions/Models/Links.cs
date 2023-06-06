@@ -17,7 +17,7 @@ public static class Links
 
    public static LinkItem ByPage(string page)
    {
-      return _links.FirstOrDefault(x => string.Equals(page, x.Page, StringComparison.InvariantCultureIgnoreCase));
+      return _links.Find(x => string.Equals(page, x.Page, StringComparison.InvariantCultureIgnoreCase));
    }
 
    public static class ApplicationForm
@@ -111,6 +111,7 @@ public static class Links
       public static readonly LinkItem FinancialDeficit = AddLinkItem(page: "/TaskList/GeneralInformation/FinancialDeficit");
       public static readonly LinkItem DistanceFromTrustHeadquarters = AddLinkItem(page: "/TaskList/GeneralInformation/DistanceFromTrustHeadquarters");
       public static readonly LinkItem MPDetails = AddLinkItem(page: "/TaskList/GeneralInformation/MPDetails");
+      public static readonly LinkItem PartOfPfiScheme = AddLinkItem(page: "/TaskList/GeneralInformation/PartOfPfiScheme");
    }
 
    public static class RationaleSection
@@ -188,11 +189,11 @@ public static class Links
       public static readonly LinkItem CookiePreferences = AddLinkItem(page: "/Public/CookiePreferences");
    }
 
-   public static class InvoluntaryProject
+   public static class SponsoredProject
    {
-      public static readonly LinkItem SearchSchool = AddLinkItem(page: "/InvoluntaryProject/SearchSchool");
-      public static readonly LinkItem SearchTrusts = AddLinkItem(page: "/InvoluntaryProject/SearchTrust");
-      public static readonly LinkItem Summary = AddLinkItem(page: "/InvoluntaryProject/Summary");
+      public static readonly LinkItem SearchSchool = AddLinkItem(page: "/SponsoredProject/SearchSchool");
+      public static readonly LinkItem SearchTrusts = AddLinkItem(page: "/SponsoredProject/SearchTrust");
+      public static readonly LinkItem Summary = AddLinkItem(page: "/SponsoredProject/Summary");
    }
 }
 

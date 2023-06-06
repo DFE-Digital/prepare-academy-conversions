@@ -44,41 +44,57 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    {
       AcademyConversionProject project = AddGetProject(p => p.HeadTeacherBoardDate = null);
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
-
-      await NavigateAsync("Generate project template");
+      var pageObject = new PreviewHtbTemplatePageModel();
+      var document = await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
+      document = await pageObject.NavigateToGenerateHtbTemplate(document, project.Id, expectFailure: true);
 
       // stays on same page with error
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
+      document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
 
-      Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-      Document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Set an Advisory board date");
+      document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+      document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Set an Advisory Board date");
 
-      await NavigateAsync("Set an Advisory board date before you generate your project template");
-      Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date");
+      document = await NavigateAsync(document, "Set an Advisory Board date before you generate your project template");
+      document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date");
 
-      await NavigateDataTestAsync("headteacher-board-date-back-link");
+      document = await NavigateDataTestAsync(document, "headteacher-board-date-back-link");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
+      document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
+   }
+
+   [Fact]
+   public async Task Should_navigate_between_preview_htb_template_and_generate_htb_template()
+   {
+      AcademyConversionProject project = AddGetProject();
+
+      var pageObject = new PreviewHtbTemplatePageModel();
+
+      var document = await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
+      document = await pageObject.NavigateToGenerateHtbTemplate(Document, project.Id);
+
+      document.Url.Should().BeUrl($"/task-list/{project.Id}/download-project-template");
+
+      document = await NavigateAsync(document, "Back to preview");
+      document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
    }
 
    [Fact]
    public async Task Should_display_error_summary_on_preview_htb_template_when_generate_button_clicked_if_no_htb_date_set()
    {
       AcademyConversionProject project = AddGetProject(p => p.HeadTeacherBoardDate = null);
+      
+      var pageObject = new PreviewHtbTemplatePageModel();
+      var document = await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
+      document = await pageObject.NavigateToGenerateHtbTemplate(document, project.Id, expectFailure: true);
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
+      document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Generate project template");
+      document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
+      document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Set an Advisory Board date");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
+      document = await NavigateAsync(document, "Set an Advisory Board date before you generate your project template");
 
-      Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-      Document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Set an Advisory board date");
-
-      await NavigateAsync("Set an Advisory board date before you generate your project template");
-
-      Document.Url.Should()
+      document.Url.Should()
          .BeUrl(
             $"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FPreviewProjectTemplate&fragment=advisory-board-date");
    }
@@ -803,5 +819,25 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       int? a = int.Parse(numberOfPupils);
       int? b = int.Parse(schoolCapacity);
       return a.AsPercentageOf(b);
+   }
+
+   private class PreviewHtbTemplatePageModel
+   {
+      public async Task<IDocument> NavigateToGenerateHtbTemplate(IDocument document, int projectId, bool expectFailure = false)
+      {
+         const string generateTemplateButtonName = "#generate-template-button";
+         const string generateTemplateButton = generateTemplateButtonName;
+         var button = document.QuerySelector<IHtmlButtonElement>(generateTemplateButton);
+
+         _ = button ?? throw new NullReferenceException($"did not find {generateTemplateButtonName}");
+
+         IHtmlFormElement form = (IHtmlFormElement)button.Parent ?? throw new NullReferenceException("Could not find form to submit generate template button click");
+         var resultDocument = await form.SubmitAsync();
+
+         string expectedPath = expectFailure ? $"/task-list/{projectId}/preview-project-template" : $"/task-list/{projectId}/download-project-template";
+         resultDocument.Url.Should().Be(BuildRequestAddress(expectedPath), "navigation to GenerateHtbTemplate should be successful");
+
+         return resultDocument;
+      }
    }
 }
