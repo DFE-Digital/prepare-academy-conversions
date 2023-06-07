@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject;
+namespace Dfe.PrepareConversions.Tests.Pages.SponsoredProject;
 
 public class SearchTrustIntegrationTests : BaseIntegrationTests
 {

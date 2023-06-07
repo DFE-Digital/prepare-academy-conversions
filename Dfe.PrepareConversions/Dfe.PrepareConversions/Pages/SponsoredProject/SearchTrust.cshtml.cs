@@ -9,7 +9,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareConversions.Pages.InvoluntaryProject;
+namespace Dfe.PrepareConversions.Pages.SponsoredProject;
 
 public class SearchTrustModel : PageModel
 {
@@ -45,7 +45,7 @@ public class SearchTrustModel : PageModel
       TrustSummaryResponse trusts = await _trustsRepository.SearchTrusts(ukprn);
       if (trusts.Data.Any())
       {
-         TrustSummary trust = trusts.Data.First();
+         TrustSummary trust = trusts.Data[0];
          SearchQuery = $"{trust.GroupName} ({trust.Ukprn})";
       }
 
@@ -91,7 +91,7 @@ public class SearchTrustModel : PageModel
       string ukprn = searchSplit[1];
 
       TrustSummaryResponse trust = await _trustsRepository.SearchTrusts(ukprn);
-      if (trust != null) return RedirectToPage(Links.InvoluntaryProject.Summary.Page, new { ukprn, urn });
+      if (trust != null) return RedirectToPage(Links.SponsoredProject.Summary.Page, new { ukprn, urn });
 
       return Page();
    }
