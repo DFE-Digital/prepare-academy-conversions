@@ -33,9 +33,11 @@
    <div class="govuk-grid-column-full">
       @foreach (BaseFormSection formSection in Model.Sections)
       {
-         <h2 id="@Model.GenerateId(formSection.Heading)" class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-36">@formSection.Heading</h2>
+         var sectionId = Model.GenerateId(formSection.Heading);
+
+         <h2 id="@(sectionId)" class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-36">@formSection.Heading</h2>
          <p class="govuk-body-s">
-            <a asp-page="@Links.SchoolApplicationForm.SchoolApplicationTab.Page" asp-route-id="@Model.Project.Id" target="application" id="@("application-form-link")-2">Open school application form in a new tab</a>
+                <a asp-page="@Links.SchoolApplicationForm.SchoolApplicationTab.Page" asp-route-id="@Model.Project.Id" target="application" id=" @($"{sectionId}-application-form-link")">Open school application form in a new tab</a>
          </p>
          @if (formSection.Fields.Any())
          {
