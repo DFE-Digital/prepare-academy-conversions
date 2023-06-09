@@ -11,7 +11,11 @@
       <p class="govuk-!-margin-top-3">
          <div data-cy="route">Route: @Model.Item.TypeAndRoute.RouteDescription()</div>
          <div id="@("application-to-join-trust-" + Model.Index)">Application to join a trust: @Model.Item.NameOfTrust</div>
-         <div id="@("local-authority-" + Model.Index)">Local authority: @Model.Item.LocalAuthority</div>
+
+         @if (@Model.Item.LocalAuthority.IsEmpty() is false)
+         {
+            <div id="@("local-authority-" + Model.Index)">Local authority: @Model.Item.LocalAuthority</div>
+         }
          <div id="@("delivery-officer-" + Model.Index)" class="do">
             Delivery officer:
             <span if="Model.Item.AssignedUserFullName.IsEmpty()" class="empty">Empty</span>
