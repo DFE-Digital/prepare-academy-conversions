@@ -67,7 +67,6 @@ public class ProjectViewModel: ProjectTypeBase
       RationaleSectionComplete = project.RationaleSectionComplete ?? false;
 
       RisksAndIssues = project.RisksAndIssues;
-      EqualitiesImpactAssessmentConsidered = project.EqualitiesImpactAssessmentConsidered;
       RisksAndIssuesSectionComplete = project.RisksAndIssuesSectionComplete ?? false;
 
       GoverningBodyResolution = project.GoverningBodyResolution;
@@ -167,7 +166,6 @@ public class ProjectViewModel: ProjectTypeBase
 
    // risk and issues
    public string RisksAndIssues { get; set; }
-   public string EqualitiesImpactAssessmentConsidered { get; set; }
    public bool RisksAndIssuesSectionComplete { get; set; }
 
    // legal requirements
