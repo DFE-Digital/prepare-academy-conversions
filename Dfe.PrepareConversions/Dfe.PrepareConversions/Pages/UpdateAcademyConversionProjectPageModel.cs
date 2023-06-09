@@ -43,10 +43,10 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
             "Set an Advisory board date before you generate your project template");
       }
 
-     // if (AcademyConversionProject.LocalAuthorityInformationTemplateSentDate > AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate)
-      //{
-        // _errorService.AddError("returnedDateBeforeSentDateError","The returned template date be must on or after sent date");
-      //}
+      if (AcademyConversionProject.LocalAuthorityInformationTemplateSentDate > AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate)
+      {
+         _errorService.AddError("returnedDateBeforeSentDateError","The returned template date be must on or after sent date");
+      }
 
       if (AcademyConversionProject.EndOfCurrentFinancialYear.HasValue &&
           AcademyConversionProject.EndOfNextFinancialYear.HasValue &&
