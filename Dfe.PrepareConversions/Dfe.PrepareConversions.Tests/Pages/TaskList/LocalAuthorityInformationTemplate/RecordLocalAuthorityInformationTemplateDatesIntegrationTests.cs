@@ -60,8 +60,8 @@ public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : Base
       });
       UpdateAcademyConversionProject request = AddPatchProjectMany(project, composer =>
          composer
-            .With(r => r.LocalAuthorityInformationTemplateSentDate,DateTime.Now)
-            .With(r => r.LocalAuthorityInformationTemplateReturnedDate,DateTime.Now)
+            .With(r => r.LocalAuthorityInformationTemplateSentDate)
+            .With(r => r.LocalAuthorityInformationTemplateReturnedDate)
             .With(r => r.LocalAuthorityInformationTemplateComments)
             .With(r => r.LocalAuthorityInformationTemplateLink)
             .With(r => r.Urn, project.Urn));
@@ -243,33 +243,33 @@ public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : Base
       Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-year")!.Value.Should().Be(project.LocalAuthorityInformationTemplateSentDate?.Year.ToString()!);
    }
 
-//     [Fact]
-//    public async Task Should_show_error_when_localAuthorityInformationTemplateReturnedDate_date_is_before_localAuthorityInformationTemplateSentDate()
-//    {
-//       AcademyConversionProject project = AddGetProject();
+    [Fact]
+   public async Task Should_show_error_when_localAuthorityInformationTemplateReturnedDate_date_is_before_localAuthorityInformationTemplateSentDate()
+   {
+      AcademyConversionProject project = AddGetProject();
 
-//       UpdateAcademyConversionProject response = AddPatchProjectMany(project, composer =>
-//          composer
-//             .With(r => r.LocalAuthorityInformationTemplateSentDate, project.LocalAuthorityInformationTemplateSentDate)
-//             .With(r => r.LocalAuthorityInformationTemplateSentDate, DateTime.Today)
-//             .With(r => r.LocalAuthorityInformationTemplateReturnedDate, DateTime.Today.AddDays(-1))
-//             .With(r => r.LocalAuthorityInformationTemplateComments, project.LocalAuthorityInformationTemplateComments)
-//             .With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink));
+      UpdateAcademyConversionProject response = AddPatchProjectMany(project, composer =>
+         composer
+            .With(r => r.LocalAuthorityInformationTemplateSentDate, project.LocalAuthorityInformationTemplateSentDate)
+            .With(r => r.LocalAuthorityInformationTemplateSentDate, DateTime.Today)
+            .With(r => r.LocalAuthorityInformationTemplateReturnedDate, DateTime.Today.AddDays(-1))
+            .With(r => r.LocalAuthorityInformationTemplateComments, project.LocalAuthorityInformationTemplateComments)
+            .With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink));
 
-//       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
 
-//       Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-day")!.Value = response.LocalAuthorityInformationTemplateReturnedDate?.Day.ToString()!;
-//       Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-month")!.Value = response.LocalAuthorityInformationTemplateReturnedDate?.Month.ToString()!;
-//       Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-year")!.Value = response.LocalAuthorityInformationTemplateReturnedDate?.Year.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-day")!.Value = response.LocalAuthorityInformationTemplateReturnedDate?.Day.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-month")!.Value = response.LocalAuthorityInformationTemplateReturnedDate?.Month.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-year")!.Value = response.LocalAuthorityInformationTemplateReturnedDate?.Year.ToString()!;
       
-//       Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-day")!.Value = response.LocalAuthorityInformationTemplateSentDate?.Day.ToString()!;
-//       Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-month")!.Value = response.LocalAuthorityInformationTemplateSentDate?.Month.ToString()!;
-//       Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-year")!.Value = response.LocalAuthorityInformationTemplateSentDate?.Year.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-day")!.Value = response.LocalAuthorityInformationTemplateSentDate?.Day.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-month")!.Value = response.LocalAuthorityInformationTemplateSentDate?.Month.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-year")!.Value = response.LocalAuthorityInformationTemplateSentDate?.Year.ToString()!;
 
-//       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
-//       Document.Url.Should().BeUrl($"/task-list/{project.Id}/record-local-authority-information-template-dates");
-//       Document.QuerySelector(".govuk-error-summary")!.InnerHtml.Should().Contain("The returned template date be must on or after sent date");
-//   }
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+      Document.QuerySelector(".govuk-error-summary").InnerHtml.Should().Contain("The returned template date be must on or after sent date");
+  }
 
    [Fact]
   public async Task Should_be_able_to_set_localAuthorityInformationTemplateReturnedDate_same_as_localAuthorityInformationTemplateSentDate()
