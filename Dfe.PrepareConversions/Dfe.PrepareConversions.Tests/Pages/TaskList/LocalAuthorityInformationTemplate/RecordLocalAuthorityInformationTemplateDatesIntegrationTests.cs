@@ -118,6 +118,24 @@ public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : Base
       AcademyConversionProject project = AddGetProject();
       AddPatchError(project.Id);
 
+       AddPatchProjectMany(project, composer =>
+         composer
+            .With(r => r.LocalAuthorityInformationTemplateSentDate, DateTime.Today)
+            .With(r => r.LocalAuthorityInformationTemplateReturnedDate,DateTime.Today)
+            .With(r => r.LocalAuthorityInformationTemplateComments, project.LocalAuthorityInformationTemplateComments)
+            .With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink)
+            .With(r => r.Urn, project.Urn));
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-day")!.Value = project.LocalAuthorityInformationTemplateReturnedDate?.Day.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-month")!.Value = project.LocalAuthorityInformationTemplateReturnedDate?.Month.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-year")!.Value = project.LocalAuthorityInformationTemplateReturnedDate?.Year.ToString()!;
+      
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-day")!.Value = project.LocalAuthorityInformationTemplateSentDate?.Day.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-month")!.Value = project.LocalAuthorityInformationTemplateSentDate?.Month.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-year")!.Value = project.LocalAuthorityInformationTemplateSentDate?.Year.ToString()!;
+      
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
