@@ -112,19 +112,6 @@ public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : Base
       Document.QuerySelector<IHtmlInputElement>("#la-info-template-sharepoint-link")!.Value.Should().Be(project.LocalAuthorityInformationTemplateLink);
    }
 
-   [Fact]
-   public async Task Should_show_error_summary_when_there_is_an_API_error()
-   {
-      AcademyConversionProject project = AddGetProject();
-      AddPatchError(project.Id);
-
-   
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
-
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
-
-      Document.QuerySelector(".govuk-error-summary")!.InnerHtml.Should().Contain("There is a system problem");
-   }
 
    [Fact]
    public async Task Should_navigate_back_to_confirmation_page_from_la_info_template()
@@ -297,6 +284,34 @@ public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : Base
 
        await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
        Document.QuerySelector(".govuk-error-summary")!.InnerHtml.Should().NotContain("The returned template date must on or after sent date");
+
+   }
+
+    [Fact]
+  public async Task Should_show_error_summary_when_there_is_an_API_error()
+   {
+      AcademyConversionProject project = AddGetProject();
+
+      AddPatchProjectMany(project, composer =>
+         composer
+            .With(r => r.LocalAuthorityInformationTemplateSentDate, DateTime.Today)
+            .With(r => r.LocalAuthorityInformationTemplateReturnedDate,DateTime.Today)
+            .With(r => r.LocalAuthorityInformationTemplateComments, project.LocalAuthorityInformationTemplateComments)
+            .With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink)
+            .With(r => r.Urn, project.Urn));
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-day")!.Value = project.LocalAuthorityInformationTemplateReturnedDate?.Day.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-month")!.Value = project.LocalAuthorityInformationTemplateReturnedDate?.Month.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-year")!.Value = project.LocalAuthorityInformationTemplateReturnedDate?.Year.ToString()!;
+      
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-day")!.Value = project.LocalAuthorityInformationTemplateSentDate?.Day.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-month")!.Value = project.LocalAuthorityInformationTemplateSentDate?.Month.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-year")!.Value = project.LocalAuthorityInformationTemplateSentDate?.Year.ToString()!;
+
+       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
+       Document.QuerySelector(".govuk-error-summary")!.InnerHtml.Should().Contain("There is a system problem");
 
    }
  }
