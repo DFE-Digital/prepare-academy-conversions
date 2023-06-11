@@ -156,9 +156,6 @@ public class HtbTemplate
    [DocumentText("RisksAndIssues")]
    public string RisksAndIssues { get; set; }
 
-   [DocumentText("EqualitiesImpactAssessmentConsidered")]
-   public string EqualitiesImpactAssessmentConsidered { get; set; }
-
    // legal requirements
    [DocumentText("GoverningBodyResolution")]
    public string GoverningBodyResolution { get; set; }
@@ -283,7 +280,6 @@ public class HtbTemplate
          RationaleForProject = project.RationaleForProject,
          RationaleForTrust = project.RationaleForTrust,
          RisksAndIssues = project.RisksAndIssues,
-         EqualitiesImpactAssessmentConsidered = project.EqualitiesImpactAssessmentConsidered,
          GoverningBodyResolution = project.GoverningBodyResolution.SplitPascalCase(),
          Consultation = project.Consultation.SplitPascalCase(),
          DiocesanConsent = project.DiocesanConsent.SplitPascalCase(),
