@@ -53,8 +53,9 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
       private static MemoryStream CreateMemoryStream(string template)
       {
          Assembly assembly = Assembly.GetExecutingAssembly();
-         string resourceName = assembly.GetManifestResourceNames()
-            .FirstOrDefault(n => n.Contains(template, StringComparison.OrdinalIgnoreCase));
+         string resourceName = Array.Find(assembly.GetManifestResourceNames(),
+            element => element.Contains(template,
+               StringComparison.OrdinalIgnoreCase));
          using Stream templateStream = assembly.GetManifestResourceStream(resourceName!);
          MemoryStream ms = new();
          templateStream!.CopyTo(ms);

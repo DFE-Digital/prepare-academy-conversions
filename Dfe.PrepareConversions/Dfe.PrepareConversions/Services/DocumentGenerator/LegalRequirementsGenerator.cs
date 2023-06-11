@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator
 {
-   public class LegalRequirementsGenerator
+   public static class LegalRequirementsGenerator
    {
       public static void AddLegalRequirements(IDocumentBuilder builder, HtbTemplate document)
       {

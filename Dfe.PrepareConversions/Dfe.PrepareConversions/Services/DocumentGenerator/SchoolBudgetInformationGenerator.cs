@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator
 {
-   public class SchoolBudgetInformationGenerator
+   public static class SchoolBudgetInformationGenerator
    {
       public static void AddSchoolBudgetInformation(IDocumentBuilder builder, HtbTemplate document)
       {

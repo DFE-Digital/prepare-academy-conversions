@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator
 {
-   public class SchoolAndTrustInformationAndProjectDatesGenerator
+   public static class SchoolAndTrustInformationAndProjectDatesGenerator
    {
       public static void AddSchoolAndTrustInfoAndProjectDates(DocumentBuilder documentBuilder,
          AcademyConversionProject project)

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator
 {
-   public class RisksAndIssuesGenerator
+   public static class RisksAndIssuesGenerator
    {
       public static void AddRisksAndIssues(IDocumentBuilder builder, HtbTemplate document)
       {

@@ -9,7 +9,7 @@ using static Dfe.PrepareConversions.Utils.KeyStageDataStatusHelper;
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator;
 
-public class KeyStage5Generator
+public static class KeyStage5Generator
 {
    public static void AddKeyStage5Information(DocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
    {

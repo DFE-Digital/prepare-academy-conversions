@@ -1,14 +1,11 @@
 using Dfe.PrepareConversions.DocumentGeneration.Elements;
 using Dfe.PrepareConversions.DocumentGeneration.Interfaces;
 using Dfe.PrepareConversions.Models;
-using Dfe.PrepareConversions.Utils;
-using DocumentFormat.OpenXml.Spreadsheet;
 using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator
 {
-   public class SchoolPupilForecastGenerator
+   public static class SchoolPupilForecastGenerator
    {
       public static void AddSchoolPupilForecast(IDocumentBuilder builder, HtbTemplate document)
       {

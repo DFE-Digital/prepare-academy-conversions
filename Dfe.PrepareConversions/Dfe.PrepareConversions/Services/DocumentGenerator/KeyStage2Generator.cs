@@ -11,7 +11,7 @@ using static Dfe.PrepareConversions.Services.DocumentGenerator.DocumentGenerator
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator;
 
-public class KeyStage2Generator
+public static class KeyStage2Generator
 {
    public static void AddKeyStage2Information(IDocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
    {

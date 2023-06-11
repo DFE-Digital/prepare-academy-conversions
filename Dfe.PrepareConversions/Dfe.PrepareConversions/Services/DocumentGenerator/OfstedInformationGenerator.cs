@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator
 {
-   public class OfstedInformationGenerator
+   public static class OfstedInformationGenerator
    {
       public static void AddOfstedInformation(DocumentBuilder builder, HtbTemplate document, AcademyConversionProject project)
       {

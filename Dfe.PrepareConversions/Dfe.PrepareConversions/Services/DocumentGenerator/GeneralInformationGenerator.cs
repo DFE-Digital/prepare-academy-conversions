@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator
 {
-   public class GeneralInformationGenerator
+   public static class GeneralInformationGenerator
    {
       public static void AddGeneralInformation(IDocumentBuilder builder, HtbTemplate document)
       {
