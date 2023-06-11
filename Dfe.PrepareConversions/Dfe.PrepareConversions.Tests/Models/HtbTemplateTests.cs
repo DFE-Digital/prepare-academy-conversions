@@ -55,7 +55,6 @@ public class HtbTemplateTests
          Assert.Equal(_project.RationaleForTrust, _template.RationaleForTrust);
 
          Assert.Equal(_project.RisksAndIssues, _template.RisksAndIssues);
-         Assert.Equal(_project.EqualitiesImpactAssessmentConsidered, _template.EqualitiesImpactAssessmentConsidered);
          Assert.Equal(_schoolPerformance, _template.SchoolPerformance);
 
          Assert.Equal(_project.GoverningBodyResolution.SplitPascalCase(), _template.GoverningBodyResolution);
