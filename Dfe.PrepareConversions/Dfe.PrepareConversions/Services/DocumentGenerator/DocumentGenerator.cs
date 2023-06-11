@@ -7,7 +7,6 @@ using Dfe.PrepareConversions.Models;
 using Microsoft.AspNetCore.Html;
 using System;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 
 // Document Section Generators

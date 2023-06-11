@@ -1,9 +1,7 @@
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.DocumentGeneration;
 using Dfe.PrepareConversions.DocumentGeneration.Elements;
-using Dfe.PrepareConversions.DocumentGeneration.Interfaces;
 using Dfe.PrepareConversions.Models;
-using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
 using System.Collections.Generic;
 using static Dfe.PrepareConversions.Utils.KeyStageDataStatusHelper;
