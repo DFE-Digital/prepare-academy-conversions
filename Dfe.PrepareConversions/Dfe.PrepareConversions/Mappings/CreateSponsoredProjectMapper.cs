@@ -5,7 +5,7 @@ using System;
 
 namespace Dfe.PrepareConversions.Mappings;
 
-public class CreateSponsoredProjectMapper
+public static class CreateSponsoredProjectMapper
 {
    public static CreateSponsoredProject MapToDto(EstablishmentResponse establishment, TrustDetail trust)
    {
