@@ -4,4 +4,4 @@ public record CreateSponsoredProject(SponsoredProjectSchool School, SponsoredPro
 
 public record SponsoredProjectTrust(string Name, string ReferenceNumber);
 
-public record SponsoredProjectSchool(string Name, string Urn, bool PartOfPfiScheme);
+public record SponsoredProjectSchool(string Name, string Urn, bool PartOfPfiScheme, string LocalAuthorityName, string Region);
