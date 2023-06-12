@@ -1,6 +1,8 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Tests.Customisations;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
@@ -15,7 +17,7 @@ public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : Base
 {
    public RecordLocalAuthorityInformationTemplateDatesIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
    {
-      _fixture.Customizations.Add(new RandomDateBuilder(DateTime.Today, DateTime.Now.AddSeconds(1)));
+      _fixture.Customizations.Add(new RandomDateBuilder(DateTime.Now.AddMonths(-24), DateTime.Now.AddMonths(6)));
    }
 
    [Fact]
@@ -51,19 +53,21 @@ public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : Base
    [Fact]
    public async Task Should_navigate_to_and_update_la_info_template()
    {
-      var testdate = DateTime.Today;
+      DateTime expected = DateTime.Now.ToUkDateTime().Date;
+      DateTimeSource.UkTime = () => expected;
+
       AcademyConversionProject project = AddGetProject(project =>
       {
-         project.LocalAuthorityInformationTemplateSentDate = testdate;
-         project.LocalAuthorityInformationTemplateReturnedDate = testdate.AddDays(1);
+         project.LocalAuthorityInformationTemplateSentDate = null;
+         project.LocalAuthorityInformationTemplateReturnedDate = null;
          project.LocalAuthorityInformationTemplateComments = null;
          project.LocalAuthorityInformationTemplateLink = null;
          project.LocalAuthorityInformationTemplateSectionComplete = false;
       });
       UpdateAcademyConversionProject request = AddPatchProjectMany(project, composer =>
          composer
-            .With(r => r.LocalAuthorityInformationTemplateSentDate)
-            .With(r => r.LocalAuthorityInformationTemplateReturnedDate)
+            .With(r => r.LocalAuthorityInformationTemplateSentDate, expected)
+            .With(r => r.LocalAuthorityInformationTemplateReturnedDate, expected)
             .With(r => r.LocalAuthorityInformationTemplateComments)
             .With(r => r.LocalAuthorityInformationTemplateLink)
             .With(r => r.Urn, project.Urn));
@@ -73,7 +77,7 @@ public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : Base
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/record-local-authority-information-template-dates");
 
-      
+
 
       Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-day")!.Value = request.LocalAuthorityInformationTemplateSentDate?.Day.ToString()!;
       Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-month")!.Value = request.LocalAuthorityInformationTemplateSentDate?.Month.ToString()!;
@@ -85,7 +89,7 @@ public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : Base
       Document.QuerySelector<IHtmlInputElement>("#la-info-template-sharepoint-link")!.Value = request.LocalAuthorityInformationTemplateLink;
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
-      
+
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
    }
 
@@ -294,11 +298,30 @@ public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : Base
     [Fact]
   public async Task Should_show_error_summary_when_there_is_an_API_error()
    {
+      DateTime expected = DateTime.Now.ToUkDateTime().Date;
+      DateTimeSource.UkTime = () => expected;
+
       AcademyConversionProject project = AddGetProject();
-      
       AddPatchError(project.Id);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");
+
+      UpdateAcademyConversionProject request = AddPatchProjectMany(project, composer =>
+       composer
+          .With(r => r.LocalAuthorityInformationTemplateSentDate, expected)
+          .With(r => r.LocalAuthorityInformationTemplateReturnedDate, expected)
+          .With(r => r.LocalAuthorityInformationTemplateComments)
+          .With(r => r.LocalAuthorityInformationTemplateLink)
+          .With(r => r.Urn, project.Urn));
+
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-day")!.Value = request.LocalAuthorityInformationTemplateReturnedDate?.Day.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-month")!.Value = request.LocalAuthorityInformationTemplateReturnedDate?.Month.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-returned-date-year")!.Value = request.LocalAuthorityInformationTemplateReturnedDate?.Year.ToString()!;
+
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-day")!.Value = request.LocalAuthorityInformationTemplateSentDate?.Day.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-month")!.Value = request.LocalAuthorityInformationTemplateSentDate?.Month.ToString()!;
+      Document.QuerySelector<IHtmlInputElement>("#la-info-template-sent-date-year")!.Value = request.LocalAuthorityInformationTemplateSentDate?.Year.ToString()!;
+
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
