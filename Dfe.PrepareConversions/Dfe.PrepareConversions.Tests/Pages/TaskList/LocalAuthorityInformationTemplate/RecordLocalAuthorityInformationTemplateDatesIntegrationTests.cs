@@ -67,7 +67,7 @@ public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : Base
       UpdateAcademyConversionProject request = AddPatchProjectMany(project, composer =>
          composer
             .With(r => r.LocalAuthorityInformationTemplateSentDate, expected)
-            .With(r => r.LocalAuthorityInformationTemplateReturnedDate, expected)
+            .With(r => r.LocalAuthorityInformationTemplateReturnedDate, expected.AddDays(1))
             .With(r => r.LocalAuthorityInformationTemplateComments)
             .With(r => r.LocalAuthorityInformationTemplateLink)
             .With(r => r.Urn, project.Urn));
@@ -309,7 +309,7 @@ public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : Base
       UpdateAcademyConversionProject request = AddPatchProjectMany(project, composer =>
        composer
           .With(r => r.LocalAuthorityInformationTemplateSentDate, expected)
-          .With(r => r.LocalAuthorityInformationTemplateReturnedDate, expected)
+          .With(r => r.LocalAuthorityInformationTemplateReturnedDate, expected.AddDays(1))
           .With(r => r.LocalAuthorityInformationTemplateComments)
           .With(r => r.LocalAuthorityInformationTemplateLink)
           .With(r => r.Urn, project.Urn));
