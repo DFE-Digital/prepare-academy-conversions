@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Razor.TagHelpers;
+﻿using Dfe.PrepareConversions.DocumentGeneration.Elements;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -118,5 +119,20 @@ public class KeyStageDataStatusHelper
       (StatusColour colour, string description) = StatusMap[Enum.Parse<StatusType>(statusType)];
       string colorString = colour.ToString().ToLowerInvariant();
       return $"<th scope='col' class='govuk-table__header'>Status<br><strong class='govuk-tag govuk-tag--{colorString}'>{description}</strong></th>";
+   }
+   public static TextElement[] KeyStage4Status()
+   {
+      return new[]
+      {
+         new TextElement("Status") { Bold = true },
+         new TextElement(DetermineKeyStageDataStatus(DateTime.Now, KeyStageDataStatusHelper.KeyStages.KS4)) { Bold = true },
+         new TextElement(DetermineKeyStageDataStatus(DateTime.Now.AddYears(-1), KeyStageDataStatusHelper.KeyStages.KS4)) { Bold = true },
+         new TextElement(DetermineKeyStageDataStatus(DateTime.Now.AddYears(-2), KeyStageDataStatusHelper.KeyStages.KS4)) { Bold = true }
+      };
+   }
+   public static string KeyStageHeaderStatus(KeyStageDataStatusHelper.KeyStages keyStage, int yearIndex)
+   {
+      string statusType = DetermineStatusType(yearIndex, DateTime.Now, keyStage);
+      return ("Status: " + statusType);
    }
 }
