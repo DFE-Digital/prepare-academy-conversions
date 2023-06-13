@@ -45,7 +45,7 @@ public class DocumentBuilder : IDocumentBuilder
    public void ReplacePlaceholderWithContent(string placeholderText, Action<DocumentBodyBuilder> action)
    {
       List<Paragraph> paragraphs = _body.Descendants<Paragraph>().ToList();
-      Paragraph placeholderElement = paragraphs.First(element => element.InnerText == $"[{placeholderText}]");
+      Paragraph placeholderElement = paragraphs.First(element => element.InnerText.Contains($"[{placeholderText}]"));
 
       DocumentBodyBuilder builder = new(Document, placeholderElement);
       action(builder);
