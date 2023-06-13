@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.InvoluntaryProject;
+namespace Dfe.PrepareConversions.Tests.Pages.SponsoredProject;
 
 public class SearchSchoolIntegrationTests : BaseIntegrationTests
 {
@@ -18,7 +18,7 @@ public class SearchSchoolIntegrationTests : BaseIntegrationTests
    public async Task Should_link_to_school_search()
    {
       await OpenAndConfirmPathAsync("/project-list");
-      await NavigateAsync("Start a new involuntary conversion project");
+      await NavigateAsync("Start a new sponsored conversion project");
 
       Document.QuerySelector<IHtmlElement>("h1")!.Text().Trim().Should()
          .Be("Which school is involved?");

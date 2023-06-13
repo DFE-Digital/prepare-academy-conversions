@@ -53,6 +53,7 @@ public class AcademyConversionProject
    //general info
    public string PublishedAdmissionNumber { get; set; }
    public string PartOfPfiScheme { get; set; }
+   public string PfiSchemeDetails { get; set; }
    public string ViabilityIssues { get; set; }
    public string FinancialDeficit { get; set; }
    public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }

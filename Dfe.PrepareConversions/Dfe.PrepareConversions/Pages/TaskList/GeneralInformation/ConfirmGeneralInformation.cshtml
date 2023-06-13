@@ -22,10 +22,7 @@
          Confirm general information
       </h1>
       <div class="govuk-body">
-         <p>
-            This information is pre-populated from TRAMS and the
-            <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
-         </p>
+         <p data-test="annex-b-help">Some details have been taken from TRAMS. You can add more from<a asp-page="@Links.AnnexB.Index.Page" asp-route-id="@Model.Project.Id"> the Annex B form</a>.</p>
       </div>
    </div>
    <div class="govuk-grid-column-full">

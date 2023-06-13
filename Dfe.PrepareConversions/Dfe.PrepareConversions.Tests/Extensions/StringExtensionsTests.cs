@@ -1,6 +1,7 @@
 ﻿using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Extensions;
 using FluentAssertions;
+using System;
 using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Extensions;
@@ -54,7 +55,44 @@ public class StringExtensionsTests
       result.Should().Be(expected);
    }
 
+   [Fact]
+   public void ToBool_Should_ReturnTrue_When_StringIsYes()
+   {
+      // Arrange
+      string yes = "Yes";
 
+      // Act
+      bool result = yes.ToBool();
+
+      // Assert
+      result.Should().BeTrue();
+   }
+
+   [Fact]
+   public void ToBool_Should_ReturnFalse_When_StringIsNo()
+   {
+      // Arrange
+      string no = "No";
+
+      // Act
+      bool result = no.ToBool();
+
+      // Assert
+      result.Should().BeFalse();
+   }
+
+   [Fact]
+   public void ToBool_Should_ThrowArgumentException_When_StringIsNotYesOrNo()
+   {
+      // Arrange
+      string notYesOrNo = "Maybe";
+
+      // Act
+      Action act = () => notYesOrNo.ToBool();
+
+      // Assert
+      act.Should().Throw<ArgumentException>().WithMessage("The string must be either 'Yes' or 'No'.");
+   }
 
    [Fact]
    public void Should_be_able_to_convert_voluntary_conversion_route_to_the_correct_description()
@@ -63,9 +101,9 @@ public class StringExtensionsTests
    }
 
    [Fact]
-   public void Should_be_able_to_convert_involuntary_conversion_route_to_the_correct_description()
+   public void Should_be_able_to_convert_sponsored_conversion_route_to_the_correct_description()
    {
-      AcademyTypeAndRoutes.Sponsored.RouteDescription().Should().Be("Involuntary conversion");
+      AcademyTypeAndRoutes.Sponsored.RouteDescription().Should().Be("Sponsored conversion");
    }
 
    [Fact]
