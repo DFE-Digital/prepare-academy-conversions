@@ -34,6 +34,7 @@ jobs:
           echo "checked_out_sha=${CHECKED_OUT_SHA}" >> $GITHUB_ENV
 
       - name: Azure login with SPN
+        if: '!cancelled()'
         uses: azure/login@v1
         with:
           creds: ${{ secrets.OWASP_AZ_CREDENTIALS }}
