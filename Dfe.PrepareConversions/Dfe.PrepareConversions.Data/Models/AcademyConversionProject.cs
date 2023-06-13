@@ -72,7 +72,6 @@ public class AcademyConversionProject
 
    // risk and issues
    public string RisksAndIssues { get; set; }
-   public string EqualitiesImpactAssessmentConsidered { get; set; }
    public bool? RisksAndIssuesSectionComplete { get; set; }
 
    // legal requirements
