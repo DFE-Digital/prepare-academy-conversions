@@ -3,6 +3,7 @@ using Dfe.PrepareConversions.Data.Models.SponsoredProject;
 using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
+using Dfe.PrepareConversions.Mappings;
 using Dfe.PrepareConversions.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -43,22 +44,8 @@ public class SummaryModel : PageModel
       EstablishmentResponse establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
       TrustDetail trust = await _trustRepository.GetTrustByUkprn(ukprn);
 
-      await _academyConversionProjectRepository.CreateSponsoredProject(MapToDto(establishment, trust));
+      await _academyConversionProjectRepository.CreateSponsoredProject(CreateSponsoredProjectMapper.MapToDto(establishment, trust));
 
       return RedirectToPage(Links.ProjectList.Index.Page);
-   }
-
-   private static CreateSponsoredProject MapToDto(EstablishmentResponse establishment, TrustDetail trust)
-   {
-      SponsoredProjectSchool createSchool = new(
-         establishment.EstablishmentName,
-         establishment.Urn,
-         establishment.ViewAcademyConversion?.Pfi != null && establishment.ViewAcademyConversion?.Pfi != "No");
-
-      SponsoredProjectTrust createTrust = new(
-         trust.GiasData.GroupName,
-         trust.GiasData.GroupId);
-
-      return new CreateSponsoredProject(createSchool, createTrust);
    }
 }

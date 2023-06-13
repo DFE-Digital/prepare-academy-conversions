@@ -5,6 +5,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Pages;
 using Dfe.PrepareConversions.Services;
+using Dfe.PrepareConversions.Tests.Customisations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
 using Moq;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
@@ -28,6 +30,7 @@ public class UpdateAcademyConversionProjectPageModelTests
    public UpdateAcademyConversionProjectPageModelTests()
    {
       Fixture fixture = new();
+      fixture.Customizations.Add(new RandomDateBuilder(DateTime.Today, DateTime.Now.AddSeconds(1)));
 
       _repository = new Mock<IAcademyConversionProjectRepository>();
       _errorService = new Mock<ErrorService>();

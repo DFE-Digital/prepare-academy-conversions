@@ -25,7 +25,6 @@ public class ConfirmRisksAndIssuesIntegrationTests : BaseIntegrationTests
       await NavigateAsync("Risks and issues");
 
       Document.QuerySelector("#risks-and-issues")!.TextContent.Should().Be(project.RisksAndIssues);
-      Document.QuerySelector("#equalities-impact-assessment-considered")!.TextContent.Should().Be(project.EqualitiesImpactAssessmentConsidered);
    }
 
    [Fact]

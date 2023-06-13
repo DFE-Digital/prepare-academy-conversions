@@ -26,6 +26,13 @@ public class EstablishmentResponse
    public AddressResponse Address { get; set; }
    public ViewAcademyConversion ViewAcademyConversion { get; set; }
    public string OpenDate { get; set; }
+   
+   public Region Gor { get; set; }
+
+   public class Region
+   {
+      public string Name { get; set; }
+   }
 }
 
 public class ViewAcademyConversion
