@@ -1,6 +1,9 @@
+using AngleSharp.Common;
 using Dfe.PrepareConversions.Data.Models.Application;
 using Dfe.PrepareConversions.Extensions;
+using DocumentFormat.OpenXml.Drawing;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Dfe.PrepareConversions.Models.ApplicationForm.Sections;
 
@@ -13,10 +16,8 @@ public class FinanceSection : BaseFormSection
          new FormSubSection("Previous financial year", GeneratePreviousFinancialYearFields("previous", application.PreviousFinancialYear)),
          new FormSubSection("Current financial year", GenerateFinancialYearFields("current", application.CurrentFinancialYear)),
          new FormSubSection("Next financial year", GenerateFinancialYearFields("next", application.NextFinancialYear)),
-         new FormSubSection("Loans", GenerateLoansFields(application.SchoolLoans)),
-         new FormSubSection("Financial leases", GenerateFinancialLeasesFields(application.SchoolLeases)),
          new FormSubSection("Financial investigations", GenerateFinancialInvestigationsFields(application))
-      };
+      }.Concat(GenerateLoansFields(application.SchoolLoans)).ToArray().Concat(GenerateFinancialLeasesFields(application.SchoolLeases)).ToArray();
    }
 
    private static IEnumerable<FormField> GeneratePreviousFinancialYearFields(string name, FinancialYear applicationFinancialYear)
@@ -70,47 +71,60 @@ public class FinanceSection : BaseFormSection
       return financialYearFields;
    }
 
-   private static IEnumerable<FormField> GenerateLoansFields(ICollection<Loan> applicationLoans)
+   private static IEnumerable<FormSubSection> GenerateLoansFields(ICollection<Loan> applicationLoans)
    {
       bool loansExist = applicationLoans?.Count > 0;
-      List<FormField> loansFields = new() { new("Are there any existing loans?", loansExist.ToYesNoString()) };
+      List<FormSubSection> loanSubSections = new();
 
       if (loansExist)
       {
-         foreach (Loan loan in applicationLoans)
-         {
-            loansFields.Add(new FormField("Total amount", loan.SchoolLoanAmount.ToMoneyString(true)));
-            loansFields.Add(new FormField("Purpose of the loan", loan.SchoolLoanPurpose));
-            loansFields.Add(new FormField("Loan provider", loan.SchoolLoanProvider));
-            loansFields.Add(new FormField("Interest rate", loan.SchoolLoanInterestRate));
-            loansFields.Add(new FormField("Schedule of repayment", loan.SchoolLoanSchedule));
-         }
+         int loanCounter = 1;
+         loanSubSections.AddRange(applicationLoans.Select(loan => new List<FormField>()
+            {
+               new("Total amount", loan.SchoolLoanAmount.ToMoneyString(true)),
+               new("Purpose of the loan", loan.SchoolLoanPurpose),
+               new("Loan provider", loan.SchoolLoanProvider),
+               new("Interest rate", loan.SchoolLoanInterestRate),
+               new("Schedule of repayment", loan.SchoolLoanSchedule)
+            })
+            .Select(loansFields => new FormSubSection($"Loan {loanCounter++}", loansFields)));
+      }
+      else
+      {
+         loanSubSections.Add(new FormSubSection("Loans", new List<FormField>() { new("Are there any existing loans?", "No") }));
       }
 
-      return loansFields;
+      return loanSubSections;
    }
 
-   private static IEnumerable<FormField> GenerateFinancialLeasesFields(ICollection<Lease> applicationLeases)
+   private static IEnumerable<FormSubSection> GenerateFinancialLeasesFields(ICollection<Lease> applicationLeases)
    {
       bool leasesExist = applicationLeases?.Count > 0;
-      List<FormField> leaseFields = new() { new("Are there any existing leases?", leasesExist.ToYesNoString()) };
+      List<FormSubSection> leaseSubSections = new();
 
       if (leasesExist)
       {
-         foreach (Lease lease in applicationLeases)
-         {
-            leaseFields.Add(new FormField("Details of the term of the finance lease agreement", lease.SchoolLeaseTerm));
-            leaseFields.Add(new FormField("Repayment value", lease.SchoolLeaseRepaymentValue.ToMoneyString(true)));
-            leaseFields.Add(new FormField("Interest rate chargeable", $"{lease.SchoolLeaseInterestRate}%"));
-            leaseFields.Add(new FormField("Value of payments made to date", lease.SchoolLeasePaymentToDate.ToMoneyString(true)));
-            leaseFields.Add(new FormField("What was the finance lease for?", lease.SchoolLeasePurpose));
-            leaseFields.Add(new FormField("Value of the assests at the start of the finance lease agreement", lease.SchoolLeaseValueOfAssets));
-            leaseFields.Add(new FormField("Who is responsible for the insurance, repair and maintenance of the assets covered?", lease.SchoolLeaseResponsibleForAssets));
-         }
+         int leaseCounter = 1;
+         leaseSubSections.AddRange(applicationLeases.Select(lease => new List<FormField>()
+            {
+               new("Details of the term of the finance lease agreement", lease.SchoolLeaseTerm),
+               new("Repayment value", lease.SchoolLeaseRepaymentValue.ToMoneyString(true)),
+               new("Interest rate chargeable", $"{lease.SchoolLeaseInterestRate}%"),
+               new("Value of payments made to date", lease.SchoolLeasePaymentToDate.ToMoneyString(true)),
+               new("What was the finance lease for?", lease.SchoolLeasePurpose),
+               new("Value of the assests at the start of the finance lease agreement", lease.SchoolLeaseValueOfAssets),
+               new("Who is responsible for the insurance, repair and maintenance of the assets covered?", lease.SchoolLeaseResponsibleForAssets)
+            })
+            .Select(leaseFields => new FormSubSection($"Lease {leaseCounter++}", leaseFields)));
+      }
+      else
+      {
+         leaseSubSections.Add(new FormSubSection("Leases", new List<FormField>() { new("Are there any existing leases?", "No") }));
       }
 
-      return leaseFields;
+      return leaseSubSections;
    }
+
 
    private static IEnumerable<FormField> GenerateFinancialInvestigationsFields(ApplyingSchool application)
    {
