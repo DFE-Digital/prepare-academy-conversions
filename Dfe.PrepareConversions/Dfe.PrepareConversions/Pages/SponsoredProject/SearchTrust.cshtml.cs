@@ -1,5 +1,6 @@
 using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
+using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
@@ -20,9 +21,12 @@ public class SearchTrustModel : PageModel
    private readonly ErrorService _errorService;
    private readonly ITrustsRepository _trustsRepository;
 
+   private readonly IGetEstablishment _getEstablishment;
 
-   public SearchTrustModel(ITrustsRepository trustsRepository, ErrorService errorService)
+
+   public SearchTrustModel(IGetEstablishment getEstablishment, ITrustsRepository trustsRepository, ErrorService errorService)
    {
+      _getEstablishment = getEstablishment;
       _trustsRepository = trustsRepository;
       _errorService = errorService;
       AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, string.Empty, SEARCH_ENDPOINT);
@@ -90,8 +94,8 @@ public class SearchTrustModel : PageModel
 
       string ukprn = searchSplit[1];
 
-      TrustSummaryResponse trust = await _trustsRepository.SearchTrusts(ukprn);
-      if (trust.Data.Count != 1)
+      var expectedEstablishment = await _getEstablishment.GetEstablishmentByUrn(ukprn);
+      if (expectedEstablishment.EstablishmentName == null)
       {
           ModelState.AddModelError(nameof(SearchQuery), "We could not find a trust matching your search criteria");
          _errorService.AddErrors(ModelState.Keys, ModelState);
