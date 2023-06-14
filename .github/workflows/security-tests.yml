@@ -46,4 +46,10 @@ jobs:
         with:
           azcliversion: 2.49.0
           inlineScript: |
-            az storage azcopy blob upload -c ${{ secrets.OWASP_STORAGE_CONTAINER_NAME }} --account-name ${{ secrets.OWASP_STORAGE_ACCOUNT_NAME }} -s "Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/reports/ZAP-Report.html" -d "Dfe.PrepareConversions/${{ env.checked_out_sha }}/ZAP-Report.html" --auth-mode login
+            az storage blob upload \
+              --container-name ${{ secrets.OWASP_STORAGE_CONTAINER_NAME }} \
+              --account-name ${{ secrets.OWASP_STORAGE_ACCOUNT_NAME }} \
+              --file "Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/reports/ZAP-Report.html" \
+              --name "Dfe.PrepareConversions/${{ env.checked_out_sha }}/ZAP-Report.html" \
+              --auth-mode login \
+              --overwrite
