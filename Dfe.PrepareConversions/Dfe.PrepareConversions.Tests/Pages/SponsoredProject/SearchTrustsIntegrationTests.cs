@@ -40,4 +40,20 @@ public class SearchTrustIntegrationTests : BaseIntegrationTests
       Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
          .Be("We could not find any trusts matching your search criteria");
    }
+
+   [Fact]
+   public async Task Should_show_trust_not_found_error_when_ukprn_incorrect()
+   {
+      await OpenAndConfirmPathAsync("/start-new-project/trust-name");
+      string trustName = "faketrustname(11111)";
+
+      _factory.AddGetWithJsonResponse("/establishments",
+         new List<EstablishmentResponse> { new() });
+
+      Document.QuerySelector<IHtmlInputElement>("#SearchQuery")!.Value = trustName;
+      await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]")!.SubmitAsync();
+
+      Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
+         .Be("We could not find a trust matching your search criteria");
+   }
 }

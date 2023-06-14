@@ -91,9 +91,14 @@ public class SearchTrustModel : PageModel
       string ukprn = searchSplit[1];
 
       TrustSummaryResponse trust = await _trustsRepository.SearchTrusts(ukprn);
-      if (trust != null) return RedirectToPage(Links.SponsoredProject.Summary.Page, new { ukprn, urn });
-
-      return Page();
+      if (trust.Data.Count != 1)
+      {
+          ModelState.AddModelError(nameof(SearchQuery), "We could not find a trust matching your search criteria");
+         _errorService.AddErrors(ModelState.Keys, ModelState);
+         return Page();
+      }
+      
+      return RedirectToPage(Links.SponsoredProject.Summary.Page, new { ukprn, urn });
    }
 
    private static string HighlightSearchMatch(string input, string toReplace, TrustSummary trust)

@@ -50,4 +50,21 @@ public class SearchSchoolIntegrationTests : BaseIntegrationTests
        Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
          .Be("We could not find any schools matching your search criteria");
    }
+
+   
+   [Fact]
+   public async Task Should_school_not_found_error_when_ukprn_is_incorrect()
+   {
+      await OpenAndConfirmPathAsync("/start-new-project/school-name");
+      string schoolName = "fakeschoolname(22222)";
+
+      _factory.AddGetWithJsonResponse("/establishments",
+         new List<EstablishmentResponse> { new() });
+
+      Document.QuerySelector<IHtmlInputElement>("#SearchQuery")!.Value = schoolName;
+      await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]")!.SubmitAsync();
+
+       Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
+         .Be("We could not find a school matching your search criteria");
+   }
 }

@@ -55,7 +55,7 @@ public class SearchSchoolModel : PageModel
       return new JsonResult(schools.Select(s => new { suggestion = HighlightSearchMatch($"{s.Name} ({s.Urn})", searchSplit[0].Trim(), s), value = $"{s.Name} ({s.Urn})" }));
    }
 
-   public IActionResult OnPost(string ukprn, string redirect)
+   public async Task<IActionResult> OnPost(string ukprn, string redirect)
    {
       AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
 
@@ -67,15 +67,28 @@ public class SearchSchoolModel : PageModel
       }
 
       string[] splitSearch = SplitOnBrackets(SearchQuery);
-      if (splitSearch.Length < 2)
+      if (splitSearch.Length < 2 )
       {
+         
          ModelState.AddModelError(nameof(SearchQuery), "We could not find any schools matching your search criteria");
          _errorService.AddErrors(ModelState.Keys, ModelState);
          return Page();
       }
+      
+      string expectedUkprn = splitSearch[1];
+
+      var expectedEstablishment = await _getEstablishment.GetEstablishmentByUrn(expectedUkprn);
+
+      if (expectedEstablishment.EstablishmentName == null)
+      {         
+         ModelState.AddModelError(nameof(SearchQuery), "We could not find a school matching your search criteria");
+         _errorService.AddErrors(ModelState.Keys, ModelState);
+         return Page();
+      }
+
       redirect = string.IsNullOrEmpty(redirect) ? Links.SponsoredProject.SearchTrusts.Page : redirect;
 
-      return RedirectToPage(redirect, new { urn = splitSearch[1], ukprn });
+      return RedirectToPage(redirect, new { urn = expectedUkprn, ukprn });
    }
 
    private static string HighlightSearchMatch(string input, string toReplace, EstablishmentSearchResponse school)
