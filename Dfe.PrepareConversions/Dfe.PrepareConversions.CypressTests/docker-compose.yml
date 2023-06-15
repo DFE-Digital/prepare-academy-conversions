@@ -16,6 +16,6 @@ services:
     environment:
       - HTTP_PROXY=${HTTP_PROXY}
       - NO_PROXY="${NO_PROXY}"
-      - db="${DB_CONN}""
+      - db=${DB_CONN}
     volumes:
-      - ./:/reports:rw
+      - ./reports:/reports:rw
