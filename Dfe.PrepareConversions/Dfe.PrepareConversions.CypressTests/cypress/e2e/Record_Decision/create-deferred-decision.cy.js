@@ -2,7 +2,7 @@
 import ProjectList from '../../pages/projectList'
 // uri to be updated once academisation API is integrated
 
-describe.skip('Create Deferred journey', { tags: '@dev'}, () => {
+describe('Create Deferred journey', { tags: '@dev'}, () => {
     beforeEach(() => {
         ProjectList.selectProject().then(id => {
             // delete decision

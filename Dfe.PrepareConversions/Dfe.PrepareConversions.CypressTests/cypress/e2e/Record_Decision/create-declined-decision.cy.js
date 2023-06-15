@@ -2,7 +2,7 @@
 import ProjectList from '../../pages/projectList'
 // uri to be updated once academisation API is integrated
 
-describe.skip('103791 Create Declined journey', { tags: '@dev'}, () => {
+describe('103791 Create Declined journey', { tags: '@dev'}, () => {
     beforeEach(() => {
         ProjectList.selectProject().then(id => {
             // delete decision

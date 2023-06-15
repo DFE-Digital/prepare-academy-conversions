@@ -2,7 +2,7 @@
 let APPLICATION_ID = 31;
 let URN_ID = null;
 let apiKey =  Cypress.env('academisationApiKey');
-describe.skip('Add Form-a-MAT application through API request and verify on the frontend', () => {
+describe('Add Form-a-MAT application through API request and verify on the frontend', () => {
 	beforeEach(() => {
 		cy.sqlServer(`UPDATE [academisation].[ConversionApplication]
 		SET [academisation].[ConversionApplication].ApplicationStatus = 'InProgress'

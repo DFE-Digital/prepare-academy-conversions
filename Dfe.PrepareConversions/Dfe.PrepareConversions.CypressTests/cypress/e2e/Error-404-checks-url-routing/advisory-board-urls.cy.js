@@ -3,7 +3,7 @@
 import ProjectList from '../../pages/projectList'
 
 Cypress._.each(['ipad-mini'], (viewport) => {
-    describe.skip(`86339 validate advisory board urls on ${viewport}`, () => {
+    describe(`86339 validate advisory board urls on ${viewport}`, () => {
         beforeEach(() => {
             ProjectList.selectProject().then(id => {
                 cy.sqlServer(`update

@@ -3,7 +3,7 @@
 // uri to be updated once academisation API is integrated
 import ProjectList from '../../pages/projectList'
 
-describe.skip('103787 Error handling', { tags: '@dev'}, () => {
+describe('103787 Error handling', { tags: '@dev'}, () => {
     beforeEach(() => {
         ProjectList.selectProject().then(id => {            
             cy.sqlServer(`DELETE FROM [academisation].[ConversionAdvisoryBoardDecision] WHERE ConversionProjectId = ${id}`)

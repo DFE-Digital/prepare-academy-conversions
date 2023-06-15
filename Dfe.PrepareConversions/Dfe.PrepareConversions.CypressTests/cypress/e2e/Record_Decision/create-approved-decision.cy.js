@@ -3,7 +3,7 @@
 // uri to be updated once academisation API is integrated
 import ProjectList from '../../pages/projectList'
 
-describe.skip('103195 Record new Approved decision', { tags: '@dev'}, () => {
+describe('103195 Record new Approved decision', { tags: '@dev'}, () => {
 
     beforeEach(() => {
         ProjectList.selectProject().then(id => {

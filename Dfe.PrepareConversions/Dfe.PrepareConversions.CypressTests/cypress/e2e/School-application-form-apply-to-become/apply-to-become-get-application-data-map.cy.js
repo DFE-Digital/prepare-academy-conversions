@@ -1,7 +1,7 @@
 /// <reference types ='Cypress'/>
 import {data} from "../../fixtures/cath121-body.json"
 
-describe.skip('91489): Apply-to-become GET data application types', () => {
+describe('91489): Apply-to-become GET data application types', () => {
 	let dataAppSch = data.applyingSchools[0]
 
 	beforeEach(() => {

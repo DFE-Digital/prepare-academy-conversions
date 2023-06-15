@@ -21,7 +21,7 @@ jobs:
           API_KEY: ${{ secrets.CYPRESS_TEST_SECRET }}
           DB_CONN: ${{ secrets.DB_CONNECTION_STRING }}
           HTTP_PROXY: http://zap:8080
-          NO_PROXY: "*.google-analytics.com,*.googletagmanager.com,*.microsoftonline.com,*.gvt1.com"
+          NO_PROXY: "google-analytics.com,googletagmanager.com,microsoftonline.com,gvt1.com"
           URL: ${{ secrets.AZURE_ENDPOINT }}
           ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
         run: |
