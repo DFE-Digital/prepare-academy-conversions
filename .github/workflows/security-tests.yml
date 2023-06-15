@@ -19,18 +19,37 @@ jobs:
       - name: Run tests with scanner
         env:
           API_KEY: ${{ secrets.CYPRESS_TEST_SECRET }}
-          db: ${{ secrets.DB_CONNECTION_STRING }}
+          DB_CONN: ${{ secrets.DB_CONNECTION_STRING }}
           HTTP_PROXY: http://zap:8080
-          NO_PROXY: "*.google-analytics.com,*.googletagmanager.com,*.microsoftonline.com,*.gvt1.com"
-          URL: "${{ secrets.ENDPOINT }}"
+          NO_PROXY: "google-analytics.com,googletagmanager.com,microsoftonline.com,gvt1.com"
+          URL: ${{ secrets.AZURE_ENDPOINT }}
           ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
         run: |
           docker-compose -f Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/docker-compose.yml up --exit-code-from cypress
 
+      - name: Get git sha
+        if: '!cancelled()'
+        run: |
+          CHECKED_OUT_SHA="$(git log -1 '--format=format:%H')"
+          echo "checked_out_sha=${CHECKED_OUT_SHA}" >> $GITHUB_ENV
+
+      - name: Azure login with SPN
+        if: '!cancelled()'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.OWASP_AZ_CREDENTIALS }}
+
       - name: Push report to blob storage
+        if: '!cancelled()'
         uses: azure/CLI@v1
         id: azure
         with:
           azcliversion: 2.49.0
           inlineScript: |
-            az storage azcopy blob upload -c ${{ secrets.OWASP_STORAGE_CONTAINER_NAME }} --account-name ${{ secrets.OWASP_STORAGE_ACCOUNT_NAME }} -s "reports/ZAP-Report.html" -d "Dfe.PrepareConversions/$(git log -1 '--format=format:%H')/ZAP-Report.html" --sas-token "${{ secrets.OWASP_BLOB_SAS_TOKEN }}"
+            az storage blob upload \
+              --container-name ${{ secrets.OWASP_STORAGE_CONTAINER_NAME }} \
+              --account-name ${{ secrets.OWASP_STORAGE_ACCOUNT_NAME }} \
+              --file "Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/reports/ZAP-Report.html" \
+              --name "Dfe.PrepareConversions/${{ env.checked_out_sha }}/ZAP-Report.html" \
+              --auth-mode login \
+              --overwrite
