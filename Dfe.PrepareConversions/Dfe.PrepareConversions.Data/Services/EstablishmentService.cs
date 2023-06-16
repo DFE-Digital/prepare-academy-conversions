@@ -29,7 +29,7 @@ public class EstablishmentService : IGetEstablishment
       HttpResponseMessage response = await _httpClient.GetAsync($"/establishment/urn/{urn}");
       if (!response.IsSuccessStatusCode)
       {
-         _logger.LogWarning("Unable to get establishment data for establishment with URN: {urn}", urn);
+         _logger.LogWarning("Unable to get establishment data for establishment with URN: {urn}. Response status code: {statusCode}", urn, response.StatusCode);
          return new EstablishmentResponse();
       }
 
