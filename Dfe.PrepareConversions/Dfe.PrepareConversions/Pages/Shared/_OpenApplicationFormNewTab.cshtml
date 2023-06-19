@@ -1,0 +1,12 @@
+﻿@using Dfe.PrepareConversions.Data.Models
+@if (ViewData["AcademyTypeAndRoute"] is not null)
+{
+   @if (ViewData["AcademyTypeAndRoute"].Equals(AcademyTypeAndRoutes.Voluntary) || ViewData["AcademyTypeAndRoute"].Equals(AcademyTypeAndRoutes.FormAMat))
+   {
+      <p>
+         This information comes from TRAMS and the
+         <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+         The table will go into your project template.
+      </p>
+   }
+}
