@@ -4,6 +4,7 @@
 @{
    Model.SuccessPage = Links.TaskList.Index.Page;
    ViewData["Title"] = "Confirm school and trust information and project dates";
+   ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
 }
 
 @section BeforeMain
@@ -23,10 +24,7 @@
          Confirm school and trust information and project dates
       </h1>
       <div class="govuk-body">
-         <p>
-            This information is pre-populated from TRAMS and the
-            <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
-         </p>
+         <partial name="Shared/_OpenApplicationFormNewTab"/>
       </div>
    </div>
    <div class="govuk-grid-column-full">
