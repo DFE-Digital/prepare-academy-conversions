@@ -17,7 +17,7 @@ public class FinanceSection : BaseFormSection
          new FormSubSection("Current financial year", GenerateFinancialYearFields("current", application.CurrentFinancialYear)),
          new FormSubSection("Next financial year", GenerateFinancialYearFields("next", application.NextFinancialYear)),
          new FormSubSection("Financial investigations", GenerateFinancialInvestigationsFields(application))
-      }.Concat(GenerateLoansFields(application.SchoolLoans)).ToArray().Concat(GenerateFinancialLeasesFields(application.SchoolLeases));
+      }.Concat(GenerateLoansFields(application.SchoolLoans)).Concat(GenerateFinancialLeasesFields(application.SchoolLeases));
    }
 
    private static IEnumerable<FormField> GeneratePreviousFinancialYearFields(string name, FinancialYear applicationFinancialYear)
