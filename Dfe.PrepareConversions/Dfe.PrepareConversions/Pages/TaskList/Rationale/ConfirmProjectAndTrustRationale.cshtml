@@ -4,6 +4,7 @@
 @{
     Model.SuccessPage = Links.TaskList.Index.Page;
     ViewData["Title"] = "Confirm project and trust rationale";
+    ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
     var kw = WidthOverride.OneQuarter;
     var vw = WidthOverride.Full;
 }
@@ -24,15 +25,7 @@
         <h1 class="govuk-heading-l">
             Confirm project and trust rationale
         </h1>
-        @if (@Model.Project.AcademyTypeAndRoute != AcademyTypeAndRoutes.Sponsored)
-        {
-            <div class="govuk-body">
-                <p>
-                    This information is pre-populated from the
-                    <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
-                </p>
-            </div>
-        }
+       <partial name="Shared/_OpenApplicationFormNewTab"/>
     </div>
     <div class="govuk-grid-column-full">
         <dl class="govuk-summary-list">
