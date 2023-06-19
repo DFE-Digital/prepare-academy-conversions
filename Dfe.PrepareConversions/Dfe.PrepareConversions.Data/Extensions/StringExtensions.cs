@@ -1,5 +1,4 @@
 ﻿namespace Dfe.PrepareConversions.Data.Extensions;
-
 public static class StringExtensions
 {
    public static string ToFirstUpper(this string input)

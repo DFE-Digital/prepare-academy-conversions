@@ -44,6 +44,8 @@ jobs:
       run: dotnet tool install --global dotnet-sonarscanner
     - name: Install dotnet reportgenerator
       run: dotnet tool install --global dotnet-reportgenerator-globaltool
+    - name: Add nuget package source
+      run: dotnet nuget add source --username USERNAME --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/DFE-Digital/index.json"
     - name: Restore dependencies
       run: dotnet restore Dfe.PrepareConversions/Dfe.PrepareConversions.sln
     - name: Build, Test and Analyze
