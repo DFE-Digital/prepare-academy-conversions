@@ -49,6 +49,7 @@ public class TaskListIndexTests : LegalRequirementsPageTestBase
          project.FoundationConsent = null;
          project.GoverningBodyResolution = null;
          project.LegalRequirementsSectionComplete = false;
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
       });
 
       await _wizard.OpenTaskList(Project.Id);
