@@ -78,7 +78,11 @@ public class TaskListIndexTests : LegalRequirementsPageTestBase
    [Fact]
    public async Task Should_report_completed_status_when_the_legal_requirements_are_marked_as_complete()
    {
-      Project = AddGetProject(project => project.LegalRequirementsSectionComplete = true);
+      Project = AddGetProject(project =>
+      {
+         project.LegalRequirementsSectionComplete = true;
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+      });
 
       await _wizard.OpenTaskList(Project.Id);
 
