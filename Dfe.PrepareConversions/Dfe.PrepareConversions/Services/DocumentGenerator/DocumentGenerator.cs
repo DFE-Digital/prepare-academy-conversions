@@ -37,7 +37,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          AddSchoolAndTrustInfoAndProjectDates(documentBuilder, project);
          AddGeneralInformation(documentBuilder, document);
          AddOfstedInformation(documentBuilder, document, project);
-         AddRationale(documentBuilder, document);
+         AddRationale(documentBuilder, document, project);
          AddRisksAndIssues(documentBuilder, document);
          AddLegalRequirements(documentBuilder, document);
          AddSchoolBudgetInformation(documentBuilder, document);
