@@ -1,5 +1,6 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.AcademyConversion;
 using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Tests.Pages.TaskList.LegalRequirements.Support;
@@ -29,7 +30,11 @@ public class TaskListIndexTests : LegalRequirementsPageTestBase
    [Fact]
    public async Task Should_have_a_link_that_points_to_the_legal_summary_page()
    {
-      Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
+      Project = AddGetProject(project =>
+      {
+         project.GeneralInformationSectionComplete = false;
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+      });
       await _wizard.OpenTaskList(Project.Id);
       LegalRequirementsLinkHref.Should().EndWith($"/task-list/{Project.Id}/legal-requirements");
    }
@@ -44,6 +49,7 @@ public class TaskListIndexTests : LegalRequirementsPageTestBase
          project.FoundationConsent = null;
          project.GoverningBodyResolution = null;
          project.LegalRequirementsSectionComplete = false;
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
       });
 
       await _wizard.OpenTaskList(Project.Id);
@@ -61,6 +67,7 @@ public class TaskListIndexTests : LegalRequirementsPageTestBase
          project.DiocesanConsent = null;
          project.FoundationConsent = null;
          project.LegalRequirementsSectionComplete = false;
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
       });
 
       await _wizard.OpenTaskList(Project.Id);
@@ -71,7 +78,11 @@ public class TaskListIndexTests : LegalRequirementsPageTestBase
    [Fact]
    public async Task Should_report_completed_status_when_the_legal_requirements_are_marked_as_complete()
    {
-      Project = AddGetProject(project => project.LegalRequirementsSectionComplete = true);
+      Project = AddGetProject(project =>
+      {
+         project.LegalRequirementsSectionComplete = true;
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+      });
 
       await _wizard.OpenTaskList(Project.Id);
 
