@@ -39,7 +39,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          AddOfstedInformation(documentBuilder, document, project);
          AddRationale(documentBuilder, document);
          AddRisksAndIssues(documentBuilder, document);
-         AddLegalRequirements(documentBuilder, document);
+         AddLegalRequirements(documentBuilder, document, project);
          AddSchoolBudgetInformation(documentBuilder, document);
          AddSchoolPupilForecast(documentBuilder, document);
          AddKeyStage2Information(documentBuilder, document, project);
