@@ -6,6 +6,7 @@
 * Loans and leases on application form now split into discrete packages when multiple are presented
 * Generated document for a given project has been refactored to be generated programatically. This enables a reduction in white-space, improves support for conditional elements based on Project ype (Voluntary/Sponsored etc) and allows for easier extension in the future.
 * User Story 121797 : Create generate project template for an involuntary conversion.
+* Fixed bug 132058 : Accessibility issues on New PFI Scheme Page
 
 ---
 ## 1.1.1
