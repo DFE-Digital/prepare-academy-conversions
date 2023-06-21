@@ -23,7 +23,7 @@ public class ProposedAcademyOpeningDateIntegrationTests : BaseIntegrationTests
       AcademyConversionProject project = AddGetProject(p => p.OpeningDate = DateTime.Parse(selected.Value));
       AddPatchConfiguredProject(project, x =>
       {
-         x.ProposedAcademyOpeningDate = DateTime.Parse(toSelect.Value);
+         x.OpeningDate = DateTime.Parse(toSelect.Value);
          x.Urn = project.Urn;
       });
 
@@ -42,7 +42,9 @@ public class ProposedAcademyOpeningDateIntegrationTests : BaseIntegrationTests
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");  
+
+      Document.QuerySelector("#proposed-academy-opening-date").TextContent.Should().Contain(selected.Value);
    }
 
    [Fact]
