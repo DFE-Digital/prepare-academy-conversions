@@ -3,6 +3,8 @@
 * User Story 120665 : Updated PreviewProjectTemplate to hide `Legal requirements` and `rationale-for-project` when project is an involuntary conversion
 * User Story 129594 : The Local Authority and Region for a school is now passed up to the Academisation Api during involuntary project creation. This avoids the delay in populating the two values within the Academisation Api as they're already known during the conversion process.
 * User Story 129560 : Hides the row for Local Authority on the project list if the value is null.
+* Loans and leases on application form now split into discrete packages when multiple are presented
+* Generated document for a given project has been refactored to be generated programatically. This enables a reduction in white-space, improves support for conditional elements based on Project ype (Voluntary/Sponsored etc) and allows for easier extension in the future.
 * User Story 121797 : Create generate project template for an involuntary conversion.
 
 ---
