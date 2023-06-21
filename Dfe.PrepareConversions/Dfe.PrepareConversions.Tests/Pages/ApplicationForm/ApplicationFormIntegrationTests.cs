@@ -108,14 +108,9 @@ public class ApplicationFormIntegrationTests : BaseIntegrationTests
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Previous financial year").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Current financial year").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Next financial year").Should().NotBeEmpty();
-      Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Loans").Should().NotBeEmpty();
-      Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Financial leases").Should().NotBeEmpty();
+      Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Loan 1").Should().NotBeEmpty();
+      Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Lease 1").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Financial investigations").Should().NotBeEmpty();
-
-      IEnumerable<IElement> anyLeases = Document.QuerySelectorAll(".govuk-summary-list__row").Where(contents => contents.InnerHtml.Contains("Are there any existing leases?"));
-      anyLeases.First().InnerHtml.Should().Contain("Yes");
-      IEnumerable<IElement> anyLoans = Document.QuerySelectorAll(".govuk-summary-list__row").Where(contents => contents.InnerHtml.Contains("Are there any existing loans?"));
-      anyLoans.First().InnerHtml.Should().Contain("Yes");
    }
 
    [Theory]
@@ -140,7 +135,7 @@ public class ApplicationFormIntegrationTests : BaseIntegrationTests
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Current financial year").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Next financial year").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Loans").Should().NotBeEmpty();
-      Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Financial leases").Should().NotBeEmpty();
+      Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Leases").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Financial investigations").Should().NotBeEmpty();
 
       IEnumerable<IElement> anyLeases = Document.QuerySelectorAll(".govuk-summary-list__row").Where(contents => contents.InnerHtml.Contains("Are there any existing leases?"));

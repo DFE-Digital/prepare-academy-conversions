@@ -38,7 +38,6 @@ public class FinanceSectionTests
       FinanceSection formSection = new(application);
 
       FormField[] expectedLoansFields = {
-         new("Are there any existing loans?", "Yes"),
          new("Total amount", loan.SchoolLoanAmount.ToMoneyString(true)),
          new("Purpose of the loan", loan.SchoolLoanPurpose),
          new("Loan provider", loan.SchoolLoanProvider),
@@ -47,7 +46,6 @@ public class FinanceSectionTests
       };
 
       FormField[] expectedFinancialLeasesFields = {
-         new("Are there any existing leases?", "Yes"),
          new("Details of the term of the finance lease agreement", lease.SchoolLeaseTerm),
          new("Repayment value", lease.SchoolLeaseRepaymentValue.ToMoneyString(true)),
          new("Interest rate chargeable", lease.SchoolLeaseInterestRate.ToPercentage()),
@@ -63,11 +61,11 @@ public class FinanceSectionTests
       subSections[0].Heading.Should().Be("Previous financial year");
       subSections[1].Heading.Should().Be("Current financial year");
       subSections[2].Heading.Should().Be("Next financial year");
-      subSections[3].Heading.Should().Be("Loans");
-      subSections[3].Fields.Should().BeEquivalentTo(expectedLoansFields);
-      subSections[4].Heading.Should().Be("Financial leases");
-      subSections[4].Fields.Should().BeEquivalentTo(expectedFinancialLeasesFields);
-      subSections[5].Heading.Should().Be("Financial investigations");
+      subSections[3].Heading.Should().Be("Financial investigations");
+      subSections[4].Heading.Should().Be("Loan 1");
+      subSections[4].Fields.Should().BeEquivalentTo(expectedLoansFields);
+      subSections[5].Heading.Should().Be("Lease 1");
+      subSections[5].Fields.Should().BeEquivalentTo(expectedFinancialLeasesFields);
    }
 
    [Fact]
@@ -122,12 +120,12 @@ public class FinanceSectionTests
       subSections[1].Fields.Should().BeEquivalentTo(expectedCurrentFinancialYearFields);
       subSections[2].Heading.Should().Be("Next financial year");
       subSections[2].Fields.Should().BeEquivalentTo(expectedNextFinancialYearFields);
-      subSections[3].Heading.Should().Be("Loans");
-      subSections[3].Fields.Should().BeEquivalentTo(expectedLoansFields);
-      subSections[4].Heading.Should().Be("Financial leases");
-      subSections[4].Fields.Should().BeEquivalentTo(expectedFinancialLeasesFields);
-      subSections[5].Heading.Should().Be("Financial investigations");
-      subSections[5].Fields.Should().BeEquivalentTo(expectedFinancialInvestigationsFields);
+      subSections[3].Heading.Should().Be("Financial investigations");
+      subSections[3].Fields.Should().BeEquivalentTo(expectedFinancialInvestigationsFields);
+      subSections[4].Heading.Should().Be("Loans");
+      subSections[4].Fields.Should().BeEquivalentTo(expectedLoansFields);
+      subSections[5].Heading.Should().Be("Leases");
+      subSections[5].Fields.Should().BeEquivalentTo(expectedFinancialLeasesFields);
    }
 
    [Fact]
@@ -194,11 +192,11 @@ public class FinanceSectionTests
       subSections[1].Fields.Should().BeEquivalentTo(expectedCurrentFinancialYearFields);
       subSections[2].Heading.Should().Be("Next financial year");
       subSections[2].Fields.Should().BeEquivalentTo(expectedNextFinancialYearFields);
-      subSections[3].Heading.Should().Be("Loans");
-      subSections[3].Fields.Should().BeEquivalentTo(expectedLoansFields);
-      subSections[4].Heading.Should().Be("Financial leases");
-      subSections[4].Fields.Should().BeEquivalentTo(expectedFinancialLeasesFields);
-      subSections[5].Heading.Should().Be("Financial investigations");
-      subSections[5].Fields.Should().BeEquivalentTo(expectedFinancialInvestigationsFields);
+      subSections[3].Heading.Should().Be("Financial investigations");
+      subSections[3].Fields.Should().BeEquivalentTo(expectedFinancialInvestigationsFields);
+      subSections[4].Heading.Should().Be("Loans");
+      subSections[4].Fields.Should().BeEquivalentTo(expectedLoansFields);
+      subSections[5].Heading.Should().Be("Leases");
+      subSections[5].Fields.Should().BeEquivalentTo(expectedFinancialLeasesFields);
    }
 }
