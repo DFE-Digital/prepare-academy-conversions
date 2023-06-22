@@ -119,6 +119,11 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          },
          new[]
          {
+            new TextElement { Value = "Date SNM received Form 7", Bold = true },
+            new TextElement { Value = project.Form7ReceivedDate.ToDateString() }
+         },
+         new[]
+         {
             new TextElement { Value = "Date directive academy order (DAO) pack sent", Bold = true },
             new TextElement { Value = project.DaoPackSentDate.ToDateString() }
          },

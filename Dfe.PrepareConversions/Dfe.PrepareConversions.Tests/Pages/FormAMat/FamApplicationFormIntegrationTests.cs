@@ -94,14 +94,10 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Previous financial year").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Current financial year").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Next financial year").Should().NotBeEmpty();
-      Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Loans").Should().NotBeEmpty();
-      Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Financial leases").Should().NotBeEmpty();
+      Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Loan 1").Should().NotBeEmpty();
+      Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Lease 1").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Financial investigations").Should().NotBeEmpty();
 
-      IElement anyLeases = Document.QuerySelector("[test-id='Finances_Financial_leases1_value']");
-      anyLeases.InnerHtml.Should().Contain("Yes");
-      IElement anyLoans = Document.QuerySelector("[test-id='Finances_Loans1_value']");
-      anyLoans.InnerHtml.Should().Contain("Yes");
    }
 
    [Fact]
@@ -125,10 +121,10 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Current financial year").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Next financial year").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Loans").Should().NotBeEmpty();
-      Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Financial leases").Should().NotBeEmpty();
+      Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Leases").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Financial investigations").Should().NotBeEmpty();
 
-      IElement anyLeases = Document.QuerySelector("[test-id='Finances_Financial_leases1_value']");
+      IElement anyLeases = Document.QuerySelector("[test-id='Finances_Leases1_value']");
       anyLeases.InnerHtml.Should().Contain("No");
       IElement anyLoans = Document.QuerySelector("[test-id='Finances_Loans1_value']");
       anyLoans.InnerHtml.Should().Contain("No");
