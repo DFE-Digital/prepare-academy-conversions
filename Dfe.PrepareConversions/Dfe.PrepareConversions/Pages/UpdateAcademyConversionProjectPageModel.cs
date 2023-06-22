@@ -113,7 +113,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          AcademyOrderRequired = AcademyConversionProject.AcademyOrderRequired,
          Form7Received = AcademyConversionProject.Form7Received,
          Form7ReceivedDate = AcademyConversionProject.Form7ReceivedDate == default(DateTime) ? null : AcademyConversionProject.Form7ReceivedDate,
-         OpeningDate = AcademyConversionProject.ProposedAcademyOpeningDate,
+         ProposedAcademyOpeningDate = AcademyConversionProject.ProposedAcademyOpeningDate,
          PreviousHeadTeacherBoardDateQuestion = AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion,
          PreviousHeadTeacherBoardDate =
             AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion == "No" ? default(DateTime) : AcademyConversionProject.PreviousHeadTeacherBoardDate,

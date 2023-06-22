@@ -26,7 +26,7 @@ public class UpdateAcademyConversionProject
    public string AcademyOrderRequired { get; set; }
    public string Form7Received { get; set; }
    public DateTime? Form7ReceivedDate { get; set; }
-   public DateTime? OpeningDate { get; set; }
+   public DateTime? ProposedAcademyOpeningDate { get; set; }
    public bool? SchoolAndTrustInformationSectionComplete { get; set; }
    public string PreviousHeadTeacherBoardDateQuestion { get; set; }
    public DateTime? PreviousHeadTeacherBoardDate { get; set; }

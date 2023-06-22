@@ -55,13 +55,13 @@
                 <h3 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-font-size-24">@subSection.Heading</h3>
                 <dl class="govuk-summary-list">
                     @{
-                        var index = 1;
+                        var index1 = 1;
                         foreach (FormField sectionField in subSection.Fields)
                         {
                             // generate test-id
-                            sectionField.Id = Model.GenerateId(formSection.Heading + "_" + subSection.Heading + index);
+                            sectionField.Id = Model.GenerateId(formSection.Heading + "_" + subSection.Heading + index1);
                             <partial name="_FamApplicationFormField" model="sectionField" />
-                            index++;
+                            index1++;
                         }
                     }
 
