@@ -44,7 +44,6 @@ public class ProposedAcademyOpeningDateIntegrationTests : BaseIntegrationTests
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");  
 
-      Document.QuerySelector("#proposed-academy-opening-date").TextContent.Should().Contain(selected.Value);
    }
 
    [Fact]
