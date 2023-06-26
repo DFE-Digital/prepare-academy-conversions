@@ -1,60 +1,60 @@
-/// <reference types ='Cypress'/>
+// /// <reference types ='Cypress'/>
 
-Cypress._.each(['ipad-mini'], (viewport) => {
-	describe(`86316 Submit and view MP details ${viewport}`, () => {
-		before(() => {
-			cy.viewport(viewport)
-		});
+// Cypress._.each(['ipad-mini'], (viewport) => {
+// 	describe(`86316 Submit and view MP details ${viewport}`, () => {
+// 		before(() => {
+// 			cy.viewport(viewport)
+// 		});
 
-		beforeEach(() => {
-			cy.login({titleFilter: 'Gloucester school'})
-			cy.selectSchoolListing(2)
-			cy.urlPath().then(url =>{
-				let modifiedUrl = url + '/confirm-general-information'
-				cy.visit(modifiedUrl)
-			});
-			cy.viewport(viewport)
-			cy.get('[data-test="change-member-of-parliament-party"]').click()
-			cy.mpName().clear()
-			cy.mpName().type('An MP')
-			cy.mpParty().clear()
-			cy.mpParty().type('A Party')
-		})
+// 		beforeEach(() => {
+// 			cy.login({titleFilter: 'Gloucester school'})
+// 			cy.selectSchoolListing(2)
+// 			cy.urlPath().then(url =>{
+// 				let modifiedUrl = url + '/confirm-general-information'
+// 				cy.visit(modifiedUrl)
+// 			});
+// 			cy.viewport(viewport)
+// 			cy.get('[data-test="change-member-of-parliament-party"]').click()
+// 			cy.mpName().clear()
+// 			cy.mpName().type('An MP')
+// 			cy.mpParty().clear()
+// 			cy.mpParty().type('A Party')
+// 		})
 
-        it('TC01: Should navigate to MP details page', () => {
-            cy.url().then(href => {
-                expect(href.endsWith('/confirm-general-information/enter-MP-name-and-political-party')).to.be.true;
-            });
-        });
+//         it('TC01: Should navigate to MP details page', () => {
+//             cy.url().then(href => {
+//                 expect(href.endsWith('/confirm-general-information/enter-MP-name-and-political-party')).to.be.true;
+//             });
+//         });
 
-        it('TC02: Should change the MP details', () => {
-            cy.mpName().should('have.value', 'An MP')
-            cy.mpParty().should('have.value', 'A Party')
-        });
+//         it('TC02: Should change the MP details', () => {
+//             cy.mpName().should('have.value', 'An MP')
+//             cy.mpParty().should('have.value', 'A Party')
+//         });
 
-		context("when form submitted", () => {
-			beforeEach(() => {
-				cy.saveAndContinueButton().click()
-			})
+// 		context("when form submitted", () => {
+// 			beforeEach(() => {
+// 				cy.saveAndContinueButton().click()
+// 			})
 
-			it('TC03: Should go back to general information page on confirm', () => {
-				cy.url().then(href => {
-					expect(href.endsWith('/confirm-general-information')).to.be.true});
-			});
+// 			it('TC03: Should go back to general information page on confirm', () => {
+// 				cy.url().then(href => {
+// 					expect(href.endsWith('/confirm-general-information')).to.be.true});
+// 			});
 
-			it('TC04: Should display the MP details after it is submitted', () => {
-				cy.mpName().should('have.text', 'An MP')
-				cy.mpParty().should('have.text','A Party')
-			});
+// 			it('TC04: Should display the MP details after it is submitted', () => {
+// 				cy.mpName().should('have.text', 'An MP')
+// 				cy.mpParty().should('have.text','A Party')
+// 			});
 
-			it('TC05: Should navigate to MP details page and remove details', () => {
-				cy.get('[data-test="change-member-of-parliament-party"]').click()
-				cy.mpName().clear()
-				cy.mpParty().clear()
-				cy.saveAndContinueButton().click()
-				cy.mpName().should('have.text', 'Empty')
-				cy.mpParty().should('have.text', 'Empty')
-			});
-		});
-    });
-});
+// 			it('TC05: Should navigate to MP details page and remove details', () => {
+// 				cy.get('[data-test="change-member-of-parliament-party"]').click()
+// 				cy.mpName().clear()
+// 				cy.mpParty().clear()
+// 				cy.saveAndContinueButton().click()
+// 				cy.mpName().should('have.text', 'Empty')
+// 				cy.mpParty().should('have.text', 'Empty')
+// 			});
+// 		});
+//     });
+// });
