@@ -10,7 +10,7 @@ COPY ./Dfe.PrepareConversions/ ./Dfe.PrepareConversions/
 # and https://render.com/docs/docker-secrets
 
 WORKDIR /build/Dfe.PrepareConversions
-RUN --mount=type=secret,id=github_token && dotnet nuget add source --username USERNAME --password ${{ github_token }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/DFE-Digital/index.json"
+RUN --mount=type=secret,id=github_token dotnet nuget add source --username USERNAME --password ${{ github_token }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/DFE-Digital/index.json"
 RUN dotnet restore Dfe.PrepareConversions.sln
 RUN dotnet build -c Release Dfe.PrepareConversions.sln --no-restore
 RUN dotnet publish Dfe.PrepareConversions -c Release -o /app --no-restore
