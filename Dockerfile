@@ -10,8 +10,7 @@ COPY ./Dfe.PrepareConversions/ ./Dfe.PrepareConversions/
 # and https://render.com/docs/docker-secrets
 
 WORKDIR /build/Dfe.PrepareConversions
-RUN --mount=type=secret,id=github_token \
-  cat /run/secrets/github_token
+RUN --mount=type=secret,id=github_token cat /run/secrets/github_token
 
 RUN dotnet nuget add source --username USERNAME --password ${{ secrets.GITHUB_TOKEN }} --name github "https://nuget.pkg.github.com/DFE-Digital/index.json"
 RUN dotnet restore Dfe.PrepareConversions.sln
