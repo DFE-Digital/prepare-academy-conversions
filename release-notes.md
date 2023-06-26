@@ -1,4 +1,5 @@
 ## NEXT
+* Bugfix 132060 : the opening date will be populated with the ProposedAcadamenyOpeningDate value
 * The term 'Involuntary Conversion' has been replaced with 'Sponsored Conversion'. This includes all Api endpoints. Note this requires a new release of the academies api with corresponding changes.
 * User Story 120665 : Updated PreviewProjectTemplate to hide `Legal requirements` and `rationale-for-project` when project is an involuntary conversion
 * User Story 129594 : The Local Authority and Region for a school is now passed up to the Academisation Api during involuntary project creation. This avoids the delay in populating the two values within the Academisation Api as they're already known during the conversion process.
