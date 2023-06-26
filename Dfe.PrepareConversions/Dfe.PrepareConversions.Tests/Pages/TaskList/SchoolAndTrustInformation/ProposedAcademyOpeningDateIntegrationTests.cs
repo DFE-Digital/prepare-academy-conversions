@@ -20,7 +20,7 @@ public class ProposedAcademyOpeningDateIntegrationTests : BaseIntegrationTests
    {
       string[] dates = Enumerable.Range(1, 12).Select(i => DateTime.Today.FirstOfMonth(i).ToDateString(true)).ToArray();
       (RadioButton selected, RadioButton toSelect) = RandomRadioButtons("proposed-academy-opening-date", dates);
-      AcademyConversionProject project = AddGetProject(p => p.OpeningDate = DateTime.Parse(selected.Value));
+      AcademyConversionProject project = AddGetProject(p => p.ProposedAcademyOpeningDate = DateTime.Parse(selected.Value));
       AddPatchConfiguredProject(project, x =>
       {
          x.ProposedAcademyOpeningDate = DateTime.Parse(toSelect.Value);
@@ -42,7 +42,8 @@ public class ProposedAcademyOpeningDateIntegrationTests : BaseIntegrationTests
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");  
+
    }
 
    [Fact]
