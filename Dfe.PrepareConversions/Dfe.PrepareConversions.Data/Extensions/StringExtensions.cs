@@ -1,9 +1,11 @@
 ﻿namespace Dfe.PrepareConversions.Data.Extensions;
+
+using Academisation.ExtensionMethods;
+
 public static class StringExtensions
 {
    public static string ToFirstUpper(this string input)
    {
-      string lowered = input.ToLower();
-      return $"{char.ToUpper(lowered[0])}{lowered[1..]}";
+      return Academisation.ExtensionMethods.StringExtensions.ToFirstUpper(input);
    }
 }
