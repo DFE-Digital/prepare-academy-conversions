@@ -57,9 +57,7 @@
                 </li>
             <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a class="govuk-link" asp-page="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-and-trust-information-status">
-                            Conversion Details
-                        </a>
+                        <a class="govuk-link" asp-page="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-and-trust-information-status">Conversion Details</a>
                     </span>
                     <strong class="govuk-tag @Model.TaskList.SchoolAndTrustInformationTaskListStatus.CssClass app-task-list__tag" id="school-and-trust-information-status">
                         @Model.TaskList.SchoolAndTrustInformationTaskListStatus.Status
