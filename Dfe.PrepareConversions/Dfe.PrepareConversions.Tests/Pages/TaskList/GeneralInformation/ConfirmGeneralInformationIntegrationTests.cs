@@ -25,7 +25,7 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#general-information-status")!.TextContent.Trim().Should().Be("In Progress");
       Document.QuerySelector("#general-information-status")!.ClassName.Should().Contain("blue");
 
-      await NavigateAsync("General information");
+      await NavigateAsync("School overview");
 
       Document.QuerySelector("#school-phase")!.TextContent.Should().Be(establishment.PhaseOfEducation.Name);
       Document.QuerySelector("#age-range")!.TextContent.Should().Be($"{establishment.StatutoryLowAge} to {establishment.StatutoryHighAge}");
@@ -57,7 +57,7 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      await NavigateAsync("General information");
+      await NavigateAsync("School overview");
 
       Document.QuerySelector("#distance-to-trust-headquarters-additional-text")!.TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
    }
@@ -68,7 +68,7 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      await NavigateAsync("General information");
+      await NavigateAsync("School overview");
       var test = Document.QuerySelector("[data-test=annex-b-help]").TextContent;
       Document.QuerySelector("[data-test=annex-b-help]").TextContent.Should().Be("Some details have been taken from TRAMS. You can add more from the Annex B form.");
    }
@@ -79,7 +79,7 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      await NavigateAsync("General information");
+      await NavigateAsync("School overview");
 
       Document.QuerySelector("[data-test=change-part-of-pfi]")!.TextContent.Trim().Should().Be("Change");
    }
@@ -99,7 +99,7 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
 
       Document.QuerySelector("#general-information-status")!.TextContent.Trim().Should().Be("Completed");
 
-      await NavigateAsync("General information");
+      await NavigateAsync("School overview");
 
       Document.QuerySelector<IHtmlInputElement>("#general-information-complete")!.IsChecked.Should().BeTrue();
 
@@ -136,7 +136,7 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#general-information-status")!.TextContent.Trim().Should().Be("Not Started");
       Document.QuerySelector("#general-information-status")!.ClassName.Should().Contain("grey");
 
-      await NavigateAsync("General information");
+      await NavigateAsync("School overview");
 
       Document.QuerySelector("#school-phase")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#age-range")!.TextContent.Should().Be("Empty");
@@ -182,7 +182,7 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
       AddGetEstablishmentResponse(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-      await NavigateAsync("General information");
+      await NavigateAsync("School overview");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
 
