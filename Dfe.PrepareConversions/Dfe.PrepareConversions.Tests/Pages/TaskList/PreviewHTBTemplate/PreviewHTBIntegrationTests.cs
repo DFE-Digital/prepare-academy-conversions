@@ -559,7 +559,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Contain(project.AcademyTypeAndRoute);
       Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Contain(project.ConversionSupportGrantAmount?.ToMoneyString());
       Document.QuerySelector("#academy-type-and-route-additional-text")!.TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
-      Document.QuerySelector("#proposed-academy-opening-date")!.TextContent.Should().Be(project.OpeningDate.ToDateString(true));
+      Document.QuerySelector("#proposed-academy-opening-date")!.TextContent.Should().Be(project.ProposedAcademyOpeningDate.ToDateString(true));
    }
 
    [Fact]

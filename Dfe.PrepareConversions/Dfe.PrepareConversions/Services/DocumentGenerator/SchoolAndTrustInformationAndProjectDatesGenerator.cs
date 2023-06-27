@@ -51,7 +51,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          new[]
          {
             new TextElement { Value = "Proposed academy opening date", Bold = true },
-            new TextElement { Value = project.OpeningDate.ToDateString() }
+            new TextElement { Value = project.ProposedAcademyOpeningDate.ToDateString() }
          },
          new[]
          {

@@ -29,7 +29,7 @@
                     Which PFI scheme is the school part of?
                 </label>
                 <inline-error for="@nameof(Model.PfiSchemeDetails)" />
-                <textarea asp-for="@Model.PfiSchemeDetails" data-test="pfi-scheme-details-input" class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.Project.PfiSchemeDetails))" rows="5" aria-describedby="conditional-partofpfischemeSaved"></textarea>
+                    <textarea asp-for="@Model.PfiSchemeDetails" data-test="pfi-scheme-details-input" class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.Project.PfiSchemeDetails))" rows="5" aria-describedby="conditional-partofpfischemeSaved" aria-label="text-area-for-pfi-scheme"></textarea>
             </div>
         </div>
 
