@@ -37,7 +37,7 @@ public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : Base
       Document.QuerySelector("#la-info-template-status")!.TextContent.Trim().Should().Be("Not Started");
       Document.QuerySelector("#la-info-template-status")!.ClassName.Should().Contain("grey");
 
-      await NavigateAsync("Record dates for the LA information template");
+      await NavigateAsync("LA information template sent date");
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
       await NavigateAsync("Change", 0);
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/record-local-authority-information-template-dates");

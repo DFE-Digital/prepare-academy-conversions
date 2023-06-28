@@ -66,14 +66,13 @@
           </ul>
         </div>
 
-        <h3 class="app-task-list__section govuk-!-margin-top-8">Local authority (LA) information template</h3>
+        <h3 class="app-task-list__section govuk-!-margin-top-8">Say when the LA information template was sent</h3>
        <div class="app-task-list">
           <ul class="app-task-list__items govuk-!-padding-left-0">
              <li class="app-task-list__item">
                 <span class="app-task-list__task-name">
                    <a class="govuk-link" asp-page="@Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" aria-describedby="la-info-template-status">
-                         Record dates for the LA information template
-                      </a>
+                        LA information template sent date</a>
                 </span>
                 <strong class="govuk-tag @Model.TaskList.LocalAuthorityInformationTemplateTaskListStatus.CssClass app-task-list__tag" id="la-info-template-status">@Model.TaskList.LocalAuthorityInformationTemplateTaskListStatus.Status</strong>
              </li>
