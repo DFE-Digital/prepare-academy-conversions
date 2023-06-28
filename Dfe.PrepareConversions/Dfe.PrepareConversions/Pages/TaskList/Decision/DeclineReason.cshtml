@@ -1,5 +1,6 @@
 ﻿@page "/task-list/{id:int}/decision/declined-reason"
 @using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
+@using Dfe.Academisation.ExtensionMethods
 @model Dfe.PrepareConversions.Pages.TaskList.Decision.DeclineReasonModel
 @{
    ViewData["Title"] = $"Why project was {Model.DecisionText}";

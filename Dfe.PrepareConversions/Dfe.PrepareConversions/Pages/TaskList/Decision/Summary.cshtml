@@ -1,6 +1,7 @@
 ﻿@page "/task-list/{id:int}/decision/summary"
 @using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
 @using Dfe.PrepareConversions.Configuration
+@using Dfe.Academisation.ExtensionMethods
 @model Dfe.PrepareConversions.Pages.TaskList.Decision.SummaryModel
 @{
    ViewData["Title"] = $"Check your {Model.DecisionText} answers";

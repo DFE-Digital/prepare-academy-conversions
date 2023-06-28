@@ -1,5 +1,6 @@
 ﻿@page "/task-list/{id:int}/decision/who-decided"
 @using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
+@using Dfe.Academisation.ExtensionMethods
 @model Dfe.PrepareConversions.Pages.TaskList.Decision.WhoDecidedModel
 @{
    ViewData["Title"] = $"Who made the {Model.DecisionText} decision";

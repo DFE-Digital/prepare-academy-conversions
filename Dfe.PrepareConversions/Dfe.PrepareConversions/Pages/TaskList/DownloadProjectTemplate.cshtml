@@ -1,6 +1,7 @@
 ﻿@page "/task-list/{id:int}/download-project-template/{handler?}"
 @inject IConfiguration Configuration
 @using Microsoft.Extensions.Configuration
+@using Dfe.PrepareConversions.TagHelpers
 @model Dfe.PrepareConversions.Pages.TaskList.DownloadProjectTemplate
 @{
    ViewData["Title"] = "Download project template";
