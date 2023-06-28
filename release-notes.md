@@ -1,5 +1,6 @@
 ## NEXT
- *User Story 132314 : New 'school information' section added to task list.
+ User Story 132317 : Renaming of LA info template sent date section and link in task list.
+ * User Story 132314 : New 'school information' section added to task list.
  * Fixed Bug 132060 : The 'proposed academy opening date' field will be populated with the 'ProposedAcademyOpeningDate' value to match changes made in the academisation API. On creation of projects the proposed opening date will no longer be populated with a six month arbitrary date.  
 * The term 'Involuntary Conversion' has been replaced with 'Sponsored Conversion'. This includes all Api endpoints. Note this requires a new release of the academies api with corresponding changes.
 * User Story 120665 : Updated PreviewProjectTemplate to hide `Legal requirements` and `rationale-for-project` when project is an involuntary conversion
