@@ -1,120 +1,64 @@
-﻿using Dfe.PrepareConversions.Configuration;
+﻿namespace Dfe.PrepareConversions.Extensions;
 using System;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-
-namespace Dfe.PrepareConversions.Extensions;
+using Dfe.Academisation.ExtensionMethods;
 
 public static class StringExtensions
 {
-   public static string SplitPascalCase<T>(this T source)
-   {
-      return source == null ? string.Empty : Regex.Replace(source.ToString() ?? string.Empty, "[A-Z]", " $0", RegexOptions.None, TimeSpan.FromSeconds(1)).Trim();
-   }
+   public static string SplitPascalCase<T>(this T @string) => Dfe.Academisation.ExtensionMethods.StringExtensions.SplitPascalCase(@string);
 
    /// <summary>
-   /// Converts a string to sentence case, ignoring acronyms.
+   ///    Converts a string to sentence case, ignoring acronyms.
    /// </summary>
-   /// <param name="input">The string to convert.</param>
+   /// <param name="string">The string to convert.</param>
    /// <returns>A string</returns>
-   public static string ToSentenceCase(this string input)
-   {
-      if (string.IsNullOrEmpty(input)) return input;
+   public static string ToSentenceCase(this string @string) => Dfe.Academisation.ExtensionMethods.StringExtensions.ToSentenceCase(@string);
 
-      string[] words = input.Split(' ');
-      bool firstNonAcronymCapitalized = false;
-
-      for (int i = 0; i < words.Length; i++)
-      {
-         // Not an acronym
-         if (IsAcronym(words[i]) is false)
-         {
-            words[i] = words[i].ToLowerInvariant();
-
-            if (firstNonAcronymCapitalized is false)
-            {
-               words[i] = char.ToUpperInvariant(words[i][0]) + words[i].Substring(1);
-               firstNonAcronymCapitalized = true;
-            }
-         }
-      }
-
-      return string.Join(' ', words);
-   }
-
-   public static bool IsAcronym(string word)
-   {
-      if (string.IsNullOrEmpty(word) || word.Length < 2)
-      {
-         return false;
-      }
-
-      return char.IsUpper(word[0]) && char.IsUpper(word[^1]);
-   }
+   public static bool IsAcronym(string @string) => Dfe.Academisation.ExtensionMethods.StringExtensions.IsAcronym(@string);
 
 
    /// <summary>
-   ///  Checks a string to see if it contains exclusively capital letters
+   ///    Checks a string to see if it contains exclusively capital letters
    /// </summary>
-   /// <param name="word">The string to check.</param>
+   /// <param name="string">The string to check.</param>
    /// <returns>A string</returns>
-   public static bool IsAllCaps(string word)
-   {
-      if (string.IsNullOrEmpty(word)) return false;
-      return word.All(char.IsUpper);
-   }
+   public static bool IsAllCaps(string @string) => Dfe.Academisation.ExtensionMethods.StringExtensions.IsAllCaps(@string);
 
    /// <summary>
-   /// Extension method that converts "Yes" and "No" strings to bool values.
-   /// "Yes" is converted to true and "No" is converted to false.
-   /// The comparison is case-insensitive.
-   /// If the input string does not match "Yes" or "No", an ArgumentException will be thrown.
+   ///    Extension method that converts "Yes" and "No" strings to bool values.
+   ///    "Yes" is converted to true and "No" is converted to false.
+   ///    The comparison is case-insensitive.
+   ///    If the @string string does not match "Yes" or "No", an ArgumentException will be thrown.
    /// </summary>
-   public static bool ToBool(this string str)
-   {
-      return str.ToLower() switch
-      {
-         "yes" => true,
-         "no" => false,
-         _ => throw new ArgumentException("The string must be either 'Yes' or 'No'.")
-      };
-   }
-   public static string ToTitleCase(this string str)
-   {
-      TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
-      return textInfo.ToTitleCase(str);
-   }
+   public static bool ToBool(this string @string) => Dfe.Academisation.ExtensionMethods.StringExtensions.ToBool(@string);
 
-   public static bool IsEmpty(this string input)
-   {
-      return string.IsNullOrWhiteSpace(input);
-   }
+   public static string ToTitleCase(this string @string) => Dfe.Academisation.ExtensionMethods.StringExtensions.ToTitleCase(@string);
 
-   public static bool IsPresent(this string input)
-   {
-      return input.IsEmpty() is false;
-   }
+   public static bool IsEmpty(this string @string) => Dfe.Academisation.ExtensionMethods.StringExtensions.IsEmpty(@string);
 
-   private static string Squish(this string input)
-   {
-      return input.Replace(" ", "").ToLowerInvariant();
-   }
+   public static bool IsPresent(this string @string) => Dfe.Academisation.ExtensionMethods.StringExtensions.IsPresent(@string);
 
-   public static string RouteDescription(this string input)
+   private static string Squish(this string @string) => Dfe.Academisation.ExtensionMethods.StringExtensions.Squish(@string);
+
+   public static string RouteDescription(this string @string)
    {
       const string converter = nameof(converter);
       const string sponsored = nameof(sponsored);
       const string formamat = nameof(formamat);
 
-      if (string.IsNullOrWhiteSpace(input)) return string.Empty;
+      if (string.IsNullOrWhiteSpace(@string))
+      {
+         return string.Empty;
+      }
 
-      return input.Squish() switch
+      return Dfe.Academisation.ExtensionMethods.StringExtensions.Squish(@string) switch
       {
          sponsored => "Sponsored conversion",
          converter => "Voluntary conversion",
          formamat => "Form a MAT",
-         _ => input
+         _ => @string,
       };
    }
 }
