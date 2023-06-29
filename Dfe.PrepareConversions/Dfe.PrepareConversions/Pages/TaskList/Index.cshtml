@@ -81,50 +81,17 @@
 
        <template-guidance is-sponsored="@Model.Project.IsSponsored" project-id="@Model.Project.Id"></template-guidance>
 
-       <h3 class="app-task-list__section govuk-!-margin-top-8">Create project template</h3>
+       <h3 class="app-task-list__section govuk-!-margin-top-8">Performance data</h3>
         <div class="app-task-list" aria-label="list of tasks">
             <ul class="app-task-list__items govuk-!-padding-left-0">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
                         <a class="govuk-link" asp-page="@Links.SchoolPerformance.ConfirmSchoolPerformance.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-performance-status">
-                            School performance (Ofsted information)
+                            Ofsted information
                         </a>
                     </span>
                     <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="school-performance-status">Reference only</strong>
                 </li>
-                <li class="app-task-list__item">
-                    <span class="app-task-list__task-name">
-                        <a class="govuk-link" asp-page="@Links.RationaleSection.ConfirmProjectAndTrustRationale.Page" asp-route-id="@Model.Project.Id" aria-describedby="rationale-status">
-                            Rationale
-                        </a>
-                    </span>
-                    <strong class="govuk-tag @Model.TaskList.RationaleTaskListStatus.CssClass app-task-list__tag" id="rationale-status">
-                        @Model.TaskList.RationaleTaskListStatus.Status
-                    </strong>
-                </li>
-               <li class="app-task-list__item">
-                  <span class="app-task-list__task-name">
-                     <a class="govuk-link" asp-page="@Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page" asp-route-id="@Model.Project.Id" aria-describedby="risks-and-issues">
-                        Risks and issues
-                     </a>
-                  </span>
-                  <strong class="govuk-tag @Model.TaskList.RisksAndIssuesTaskListStatus.CssClass app-task-list__tag" id="risks-and-issues-status">
-                     @Model.TaskList.RisksAndIssuesTaskListStatus.Status
-                  </strong>
-               </li>
-               @if (Model.Project.AcademyTypeAndRoute is not AcademyTypeAndRoutes.Sponsored)
-               {
-                  <li class="app-task-list__item">
-                     <span class="app-task-list__task-name">
-                        <a class="govuk-link" asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Project.Id" aria-describedby="legal-requirements" data-cy="select-tasklist-links-legalrequirementlinks">
-                           Legal requirements
-                        </a>
-                     </span>
-                     <strong class="govuk-tag @Model.TaskList.LegalRequirementsTaskListStatus.CssClass app-task-list__tag" id="legal-status" data-cy="select-tasklist-legalrequirements-status">
-                        @Model.TaskList.LegalRequirementsTaskListStatus.Status
-                     </strong>
-                  </li>
-               }
                 @if (Model.TaskList.HasKeyStage2PerformanceTables)
                 {
                     <li class="app-task-list__item">
@@ -159,6 +126,46 @@
                     </li>
                 }
 
+            </ul>
+        </div>
+
+       <h3 class="app-task-list__section govuk-!-margin-top-8">Create project template</h3>
+        <div class="app-task-list" aria-label="list of tasks">
+            <ul class="app-task-list__items govuk-!-padding-left-0">
+
+                <li class="app-task-list__item">
+                    <span class="app-task-list__task-name">
+                        <a class="govuk-link" asp-page="@Links.RationaleSection.ConfirmProjectAndTrustRationale.Page" asp-route-id="@Model.Project.Id" aria-describedby="rationale-status">
+                            Rationale
+                        </a>
+                    </span>
+                    <strong class="govuk-tag @Model.TaskList.RationaleTaskListStatus.CssClass app-task-list__tag" id="rationale-status">
+                        @Model.TaskList.RationaleTaskListStatus.Status
+                    </strong>
+                </li>
+               <li class="app-task-list__item">
+                  <span class="app-task-list__task-name">
+                     <a class="govuk-link" asp-page="@Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page" asp-route-id="@Model.Project.Id" aria-describedby="risks-and-issues">
+                        Risks and issues
+                     </a>
+                  </span>
+                  <strong class="govuk-tag @Model.TaskList.RisksAndIssuesTaskListStatus.CssClass app-task-list__tag" id="risks-and-issues-status">
+                     @Model.TaskList.RisksAndIssuesTaskListStatus.Status
+                  </strong>
+               </li>
+               @if (Model.Project.AcademyTypeAndRoute is not AcademyTypeAndRoutes.Sponsored)
+               {
+                  <li class="app-task-list__item">
+                     <span class="app-task-list__task-name">
+                        <a class="govuk-link" asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Project.Id" aria-describedby="legal-requirements" data-cy="select-tasklist-links-legalrequirementlinks">
+                           Legal requirements
+                        </a>
+                     </span>
+                     <strong class="govuk-tag @Model.TaskList.LegalRequirementsTaskListStatus.CssClass app-task-list__tag" id="legal-status" data-cy="select-tasklist-legalrequirements-status">
+                        @Model.TaskList.LegalRequirementsTaskListStatus.Status
+                     </strong>
+                  </li>
+               }
             </ul>
         </div>
 
