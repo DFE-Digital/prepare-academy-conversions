@@ -139,8 +139,6 @@ public class Startup
 
    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
    {
-      logger.LogInformation("Feature Flag - Use Academisation API: {usingAcademisationApi}", IsFeatureEnabled(FeatureFlags.UseAcademisation));
-
       if (env.IsDevelopment())
       {
          app.UseDeveloperExceptionPage();
