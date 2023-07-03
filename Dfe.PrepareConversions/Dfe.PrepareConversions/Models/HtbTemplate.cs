@@ -2,6 +2,7 @@
 using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.DocumentGeneration;
 using Dfe.PrepareConversions.Extensions;
+using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.ViewModels;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,6 @@
-﻿using Dfe.PrepareConversions.Data.Extensions;
-using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
+﻿using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 using Dfe.PrepareConversions.Data.Models.Application;
-using Dfe.PrepareConversions.Extensions;
+using Dfe.Academisation.ExtensionMethods;
 using System.Collections.Generic;
 using System.Linq;
 

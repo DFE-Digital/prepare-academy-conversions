@@ -1,8 +1,10 @@
-﻿using Dfe.PrepareConversions.Data.Models;
+﻿using Dfe.Academisation.ExtensionMethods;
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Extensions;
 using FluentAssertions;
 using System;
 using Xunit;
+using StringExtensions = Dfe.Academisation.ExtensionMethods.StringExtensions;
 
 namespace Dfe.PrepareConversions.Tests.Extensions;
 
@@ -123,5 +125,14 @@ public class StringExtensionsTests
    {
       "CoN  vEr  TeR".RouteDescription().Should().Be("Voluntary conversion");
       "FORMaMAT".RouteDescription().Should().Be("Form a MAT");
+   }
+
+   [Theory]
+   [InlineData(default(string))]
+   [InlineData(" ")]
+   [InlineData("")]
+   public void RouteDescription_Should_Return_EmptyString_When_Passed_NullOrWhitespace(string input)
+   {
+      input.RouteDescription().Should().Be(string.Empty);
    }
 }
