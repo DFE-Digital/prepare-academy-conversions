@@ -1,6 +1,7 @@
 ## 2.0.0
 
-* User Story 132316 : New 'Performance data' section added to task list.
+
+* User Story 132744 : Renaming of school information pages in task list
 * User Story 132317 : Renaming of LA info template sent date section and link in task list.
 * User Story 132314 : New 'school information' section added to task list.
 * Fixed Bug 132060 : The 'proposed academy opening date' field will be populated with the 'ProposedAcademyOpeningDate' value to match changes made in the academisation API. On creation of projects the proposed opening date will no longer be populated with a six month arbitrary date.  

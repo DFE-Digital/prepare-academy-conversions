@@ -25,7 +25,7 @@ public class DistanceFromTrustHeadquartersIntegrationTests : BaseIntegrationTest
             .With(r => r.DistanceFromSchoolToTrustHeadquartersAdditionalInformation)
             .With(r => r.Urn, project.Urn));
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-overview");
       await NavigateAsync("Change", 4);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/how-far-converting-school-from-trust");
@@ -39,7 +39,7 @@ public class DistanceFromTrustHeadquartersIntegrationTests : BaseIntegrationTest
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-overview");
    }
 
    [Fact]
@@ -63,7 +63,7 @@ public class DistanceFromTrustHeadquartersIntegrationTests : BaseIntegrationTest
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/how-far-converting-school-from-trust");
       await NavigateAsync("Back");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-overview");
    }
 
    [Fact]
