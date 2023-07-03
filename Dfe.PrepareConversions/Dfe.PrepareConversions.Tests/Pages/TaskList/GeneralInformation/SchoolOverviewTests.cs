@@ -10,12 +10,12 @@ using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Pages.TaskList.GeneralInformation;
 
-public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
+public class SchoolOverviewIntegrationTests : BaseIntegrationTests
 {
-   public ConfirmGeneralInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+   public SchoolOverviewIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
 
    [Fact]
-   public async Task Should_be_in_progress_and_display_general_information()
+   public async Task Should_be_in_progress_and_display_school_overview()
    {
       AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
       EstablishmentResponse establishment = AddGetEstablishmentResponse(project.Urn.ToString());
@@ -109,7 +109,7 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Should_be_not_started_and_display_empty_when_general_information_not_prepopulated()
+   public async Task Should_be_not_started_and_display_empty_when_school_overview_not_prepopulated()
    {
       AcademyConversionProject project = AddGetProject(project =>
       {
@@ -168,7 +168,7 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
       AddGetEstablishmentResponse(project.Urn.ToString());
       AddPatchError(project.Id);
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-overview");
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
@@ -184,7 +184,7 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("School overview");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-overview");
 
       await NavigateAsync("Back to task list");
 

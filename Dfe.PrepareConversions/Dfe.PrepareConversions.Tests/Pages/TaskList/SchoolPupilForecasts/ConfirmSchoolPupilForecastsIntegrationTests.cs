@@ -100,7 +100,7 @@ public class ConfirmSchoolPupilForecastsIntegrationTests : BaseIntegrationTests
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Pupil forecasts");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-pupil-forecasts");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/pupil-forecasts");
 
       await Document.QuerySelector<IHtmlFormElement>("form")?.SubmitAsync()!;
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
@@ -115,7 +115,7 @@ public class ConfirmSchoolPupilForecastsIntegrationTests : BaseIntegrationTests
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Pupil forecasts");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-pupil-forecasts");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/pupil-forecasts");
 
       await NavigateAsync("Back to task list");
 

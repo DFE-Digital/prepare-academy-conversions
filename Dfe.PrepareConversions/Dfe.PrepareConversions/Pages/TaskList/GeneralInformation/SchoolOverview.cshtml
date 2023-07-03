@@ -1,4 +1,4 @@
-@page "/task-list/{id:int}/confirm-general-information"
+@page "/task-list/{id:int}/school-overview"
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
    Model.SuccessPage = Links.TaskList.Index.Page;
@@ -19,7 +19,7 @@
    <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l">@Model.Project.SchoolName</span>
       <h1 class="govuk-heading-l">
-         Confirm general information
+         School Overview
       </h1>
       <div class="govuk-body">
          <p data-test="annex-b-help">Some details have been taken from TRAMS. You can add more from<a asp-page="@Links.AnnexB.Index.Page" asp-route-id="@Model.Project.Id"> the Annex B form</a>.</p>

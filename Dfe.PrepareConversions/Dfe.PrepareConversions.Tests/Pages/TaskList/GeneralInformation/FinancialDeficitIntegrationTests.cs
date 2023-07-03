@@ -24,7 +24,7 @@ public class FinancialDeficitIntegrationTests : BaseIntegrationTests
          x.Urn = project.Urn;
       });
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-overview");
       await NavigateAsync("Change", 2);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/financial-deficit");
@@ -39,7 +39,7 @@ public class FinancialDeficitIntegrationTests : BaseIntegrationTests
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-overview");
    }
 
    [Fact]
@@ -63,6 +63,6 @@ public class FinancialDeficitIntegrationTests : BaseIntegrationTests
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/financial-deficit");
       await NavigateAsync("Back");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-overview");
    }
 }

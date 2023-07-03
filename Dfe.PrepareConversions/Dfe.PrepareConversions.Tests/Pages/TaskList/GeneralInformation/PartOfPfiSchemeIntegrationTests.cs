@@ -33,12 +33,12 @@ public class PartOfPfiSchemeIntegrationTests : BaseIntegrationTests
 
       await NavigateToPfiFromGeneralInfo(project);
       await NavigateAsync("Back");
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-overview");
    }
 
    private async Task NavigateToPfiFromGeneralInfo(AcademyConversionProject project)
    {
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-overview");
       await NavigateAsync("Change", 3);
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/part-of-pfi-scheme");
    }
@@ -109,7 +109,7 @@ public class PartOfPfiSchemeIntegrationTests : BaseIntegrationTests
       ExpectPatchProjectMatching(project, x => x.PartOfPfiScheme == "No");
 
       await SaveAndContinueButton.SubmitAsync();
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-overview");
 
    }
 }
