@@ -36,7 +36,11 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
 
       ApiResponse<AcademyConversionProject> project = await _innerRepository.GetProjectById(id);
 
-      _httpContext.Items.Add(id, project);
+      // only cache if object isn't null.
+      if (project != null)
+      {
+         _httpContext.Items.Add(id, project);
+      }
 
       return project;
    }
