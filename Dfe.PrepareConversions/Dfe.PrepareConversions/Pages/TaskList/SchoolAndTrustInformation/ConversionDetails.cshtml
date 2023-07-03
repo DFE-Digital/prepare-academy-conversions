@@ -1,9 +1,10 @@
-@page "/task-list/{id:int}/confirm-general-information"
+@page "/task-list/{id:int}/conversion-details"
 @using Dfe.PrepareConversions.TagHelpers
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
    Model.SuccessPage = Links.TaskList.Index.Page;
-   ViewData["Title"] = "Confirm general information";
+   ViewData["Title"] = "Confirm school and trust information and project dates";
+   ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
 }
 
 @section BeforeMain
@@ -20,18 +21,18 @@
    <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l">@Model.Project.SchoolName</span>
       <h1 class="govuk-heading-l">
-         Confirm general information
+         Conversion Details
       </h1>
       <div class="govuk-body">
-         <p data-test="annex-b-help">Some details have been taken from TRAMS. You can add more from<a asp-page="@Links.AnnexB.Index.Page" asp-route-id="@Model.Project.Id"> the Annex B form</a>.</p>
+         <partial name="Shared/_OpenApplicationFormNewTab"/>
       </div>
    </div>
    <div class="govuk-grid-column-full">
-      @await Component.InvokeAsync("GeneralInformation")
+      @await Component.InvokeAsync("SchoolAndTrustInformation")
       <form method="post">
-         <govuk-checkbox-input name="general-information-complete" asp-for="Project.GeneralInformationSectionComplete" label="Mark this section as complete, you can still make changes later"/>
+         <govuk-checkbox-input name="school-and-trust-information-complete" asp-for="Project.SchoolAndTrustInformationSectionComplete" label="Mark this section as complete, you can still make changes later"/>
 
-         <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
+         <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton">
             Confirm and continue
          </button>
       </form>
