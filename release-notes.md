@@ -1,5 +1,5 @@
 ## 2.0.0
-
+* User Story 132744 : Page name changes of new 'school information' section of tasklist.
 * User Story 132316 : New 'Performance data' section added to task list.
 * User Story 132317 : Renaming of LA info template sent date section and link in task list.
 * User Story 132314 : New 'school information' section added to task list.
