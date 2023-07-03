@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Extensions;
