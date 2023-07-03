@@ -1,10 +1,8 @@
-using AngleSharp.Common;
 using Dfe.PrepareConversions.Data.Models.Application;
 using Dfe.PrepareConversions.Extensions;
-using DocumentFormat.OpenXml.Drawing;
 using System.Collections.Generic;
 using System.Linq;
-
+using Dfe.Academisation.ExtensionMethods;
 namespace Dfe.PrepareConversions.Models.ApplicationForm.Sections;
 
 public class FinanceSection : BaseFormSection
