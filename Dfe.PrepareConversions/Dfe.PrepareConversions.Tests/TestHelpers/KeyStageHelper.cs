@@ -1,4 +1,5 @@
 ﻿using AngleSharp.Dom;
+using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.Extensions;
 using FluentAssertions;

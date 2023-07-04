@@ -1,6 +1,7 @@
 using Dfe.PrepareConversions.Data.Models.Application;
 using Dfe.PrepareConversions.Extensions;
 using System.Collections.Generic;
+using Dfe.Academisation.ExtensionMethods;
 
 namespace Dfe.PrepareConversions.Models.ApplicationForm.Sections;
 
