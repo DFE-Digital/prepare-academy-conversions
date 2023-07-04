@@ -169,7 +169,7 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
       AddGetEstablishmentResponse(project.Urn.ToString());
       AddPatchError(project.Id);
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-overview");
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
@@ -185,7 +185,7 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("School overview");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-overview");
 
       await NavigateAsync("Back to task list");
 

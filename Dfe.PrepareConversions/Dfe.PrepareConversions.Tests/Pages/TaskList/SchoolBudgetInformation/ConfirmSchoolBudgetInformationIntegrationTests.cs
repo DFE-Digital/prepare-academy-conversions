@@ -187,7 +187,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
       AcademyConversionProject project = AddGetProject();
       AddPatchError(project.Id);
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/budget");
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
@@ -202,7 +202,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Budget");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/budget");
 
       await NavigateAsync("Back to task list");
 

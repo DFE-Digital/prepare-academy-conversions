@@ -77,7 +77,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
       Document.QuerySelector(".govuk-error-summary").Should().NotBe(null);
    }
 
@@ -165,7 +165,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       AcademyConversionProject project = AddGetProject();
       AddPatchError(project.Id);
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
@@ -205,7 +205,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Conversion Details");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
 
       await NavigateAsync("Back to task list");
 
@@ -219,7 +219,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Conversion Details");
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
 
       ElementsWithText("dt", "Date directive academy order (DAO) pack sent").Should().NotBeEmpty();
    }
@@ -233,7 +233,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
          project.DaoPackSentDate = null;
       });
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
 
       Document.QuerySelector("span#dao-pack-sent-date")!.TextContent
          .Should().Be("Empty");
@@ -250,7 +250,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
          project.DaoPackSentDate = yesterday;
       });
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
 
       Document.QuerySelector("span#dao-pack-sent-date")!.TextContent
          .Should().Be(yesterday.ToString("d MMMM yyyy"));
@@ -263,7 +263,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Conversion Details");
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
 
       ElementsWithText("dt", "Date directive academy order (DAO) pack sent").Should().BeEmpty();
    }
@@ -275,7 +275,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Conversion Details");
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
 
       await Document.QuerySelectorAll<IHtmlAnchorElement>("a[data-test^=\"change-dao-pack-sent-date\"]")
          .First().NavigateAsync();
