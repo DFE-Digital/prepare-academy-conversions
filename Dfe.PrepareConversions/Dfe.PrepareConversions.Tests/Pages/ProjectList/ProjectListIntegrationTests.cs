@@ -1,5 +1,6 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Tests.Extensions;

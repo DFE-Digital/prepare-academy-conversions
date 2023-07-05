@@ -1,4 +1,5 @@
-﻿using Dfe.PrepareConversions.Data.Exceptions;
+﻿using Azure;
+using Dfe.PrepareConversions.Data.Exceptions;
 using Dfe.PrepareConversions.Data.Extensions;
 using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models;
@@ -62,7 +63,7 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
          return new ApiResponse<AcademyConversionProject>(response.StatusCode, null);
       }
 
-      AcademyConversionProject project = await response.Content.ReadFromJsonAsync<AcademyConversionProject>();
+      AcademyConversionProject project = await ReadFromJsonAndThrowIfNull<AcademyConversionProject>(response.Content);
       return new ApiResponse<AcademyConversionProject>(response.StatusCode, project);
    }
 
@@ -160,5 +161,15 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       {
          searchModel.ApplicationReferences = applicationReferences;
       }
+   }
+
+   private async Task<T> ReadFromJsonAndThrowIfNull<T>(HttpContent content)
+   {
+      T responseObj = await content.ReadFromJsonAsync<T>();
+      if (responseObj == null)
+      {
+         throw new ApiResponseException("The response body after deserialization resulted in [null]");
+      }
+      return responseObj;
    }
 }

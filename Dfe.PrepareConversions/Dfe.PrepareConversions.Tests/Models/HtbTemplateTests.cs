@@ -1,4 +1,5 @@
 using AutoFixture;
+using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.Extensions;
