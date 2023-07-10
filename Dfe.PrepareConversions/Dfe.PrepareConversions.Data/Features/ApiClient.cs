@@ -1,4 +1,5 @@
 ﻿using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Data.Services;
 using Microsoft.FeatureManagement;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,19 +12,19 @@ namespace Dfe.PrepareConversions.Data.Features;
 
 public class ApiClient : IApiClient
 {
-   private readonly IHttpClientFactory _httpClientFactory;
+   private readonly IDfeHttpClientFactory _httpClientFactory;
    private readonly PathFor _pathFor;
    private readonly bool _useAcademisationApplication;
 
-   public ApiClient(IHttpClientFactory httpClientFactory, IFeatureManager features, PathFor pathFor)
+   public ApiClient(IDfeHttpClientFactory httpClientFactory, IFeatureManager features, PathFor pathFor)
    {
       _pathFor = pathFor;
       _useAcademisationApplication = features.IsEnabledAsync(FeatureFlags.UseAcademisationApplication).Result;
       _httpClientFactory = httpClientFactory;
    }
 
-   private HttpClient TramsClient => _httpClientFactory.CreateClient("TramsClient");
-   private HttpClient AcademisationClient => _httpClientFactory.CreateClient("AcademisationClient");
+   private HttpClient TramsClient => _httpClientFactory.CreateTramsClient();
+   private HttpClient AcademisationClient => _httpClientFactory.CreateAcademisationClient();
    private HttpClient ActiveApplicationClient => _useAcademisationApplication ? AcademisationClient : TramsClient;
 
    public async Task<HttpResponseMessage> GetAllProjectsAsync(AcademyConversionSearchModel searchModel)

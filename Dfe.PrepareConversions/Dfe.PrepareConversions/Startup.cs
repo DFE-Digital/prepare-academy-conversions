@@ -1,3 +1,4 @@
+using Dfe.Academisation.CorrelationIdMiddleware;
 using Dfe.PrepareConversions.Authorization;
 using Dfe.PrepareConversions.Configuration;
 using Dfe.PrepareConversions.Data.Features;
@@ -101,14 +102,15 @@ public class Startup
       services.AddScoped<IApiClient, ApiClient>();
       services.AddSingleton<PathFor>();
 
-      services.AddHttpClient("TramsClient", (_, client) =>
+      services.AddHttpClient("TramsClient", (sp, client) =>
       {
          TramsApiOptions tramsApiOptions = GetTypedConfigurationFor<TramsApiOptions>();
          client.BaseAddress = new Uri(tramsApiOptions.Endpoint);
          client.DefaultRequestHeaders.Add("ApiKey", tramsApiOptions.ApiKey);
+
       });
 
-      services.AddHttpClient("AcademisationClient", (_, client) =>
+      services.AddHttpClient("AcademisationClient", (sp, client) =>
       {
          AcademisationApiOptions apiOptions = GetTypedConfigurationFor<AcademisationApiOptions>();
          client.BaseAddress = new Uri(apiOptions.BaseUrl);
@@ -135,6 +137,8 @@ public class Startup
       services.AddScoped<IUserRepository, UserRepository>();
       services.AddScoped<IGraphClientFactory, GraphClientFactory>();
       services.AddScoped<IGraphUserService, GraphUserService>();
+      services.AddScoped<IDfeHttpClientFactory, DfeHttpClientFactory>();
+      services.AddScoped<ICorrelationContext, CorrelationContext>();
    }
 
    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
@@ -174,6 +178,7 @@ public class Startup
       app.UseSession();
       app.UseAuthentication();
       app.UseAuthorization();
+      app.UseMiddleware<CorrelationIdMiddleware>();
 
       app.UseEndpoints(endpoints =>
       {
