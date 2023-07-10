@@ -718,7 +718,9 @@ Cypress.Commands.add('callAcademisationApi',
             method: method,
             url: `${Cypress.env('academisationApiUrl')}/${url}`,			
             headers: {
-                'x-api-key': Cypress.env('academisationApiKey')
+                'x-api-key': Cypress.env('academisationApiKey'),
+                'x-api-cypress-endpoints-key': Cypress.env('cypressApiKey'),
+                'Content-Type' : 'application/json'
             },
             failOnStatusCode: failOnStatusCode,
             response: []
