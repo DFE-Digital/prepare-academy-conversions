@@ -17,12 +17,12 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
 {
    private readonly IReadOnlyDictionary<string, string> _aliasedStatuses = new Dictionary<string, string> { { "converter pre-ao (c)", "Pre advisory board" } };
    private readonly IApiClient _apiClient;
-   private readonly IHttpClientFactory _httpClientFactory;
+   private readonly IDfeHttpClientFactory _httpClientFactory;
    private readonly IHttpClientService _httpClientService;
    private readonly IReadOnlyDictionary<string, string> _invertedAliasedStatuses;
 
    public AcademyConversionProjectRepository(IApiClient apiClient,
-                                             IHttpClientFactory httpClientFactory = null,
+                                             IDfeHttpClientFactory httpClientFactory = null,
                                              IHttpClientService httpClientService = null)
    {
       _apiClient = apiClient;
@@ -85,7 +85,7 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
 
    public async Task CreateSponsoredProject(CreateSponsoredProject sponsoredProject)
    {
-      HttpClient httpClient = _httpClientFactory.CreateClient("AcademisationClient");
+      HttpClient httpClient = _httpClientFactory.CreateAcademisationClient();
 
       ApiResponse<string> result = await _httpClientService.Post<CreateSponsoredProject, string>(
          httpClient,
