@@ -185,11 +185,6 @@ public class Startup
          endpoints.MapRazorPages();
          endpoints.MapControllerRoute("default", "{controller}/{action}/");
       });
-
-      bool IsFeatureEnabled(string flag)
-      {
-         return (app.ApplicationServices.GetService(typeof(IFeatureManager)) as IFeatureManager)?.IsEnabledAsync(flag).Result ?? false;
-      }
    }
 
    /// <summary>
