@@ -143,8 +143,6 @@ public class Startup
 
    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
    {
-      logger.LogInformation("Feature Flag - Use Academisation API: {usingAcademisationApi}", IsFeatureEnabled(FeatureFlags.UseAcademisation));
-
       if (env.IsDevelopment())
       {
          app.UseDeveloperExceptionPage();
@@ -192,11 +190,6 @@ public class Startup
          endpoints.MapRazorPages();
          endpoints.MapControllerRoute("default", "{controller}/{action}/");
       });
-
-      bool IsFeatureEnabled(string flag)
-      {
-         return (app.ApplicationServices.GetService(typeof(IFeatureManager)) as IFeatureManager)?.IsEnabledAsync(flag).Result ?? false;
-      }
    }
 
    /// <summary>

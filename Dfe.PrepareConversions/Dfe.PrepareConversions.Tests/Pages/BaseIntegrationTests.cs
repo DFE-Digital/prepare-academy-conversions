@@ -29,7 +29,6 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
       _fixture = new Fixture();
 
       Mock<IFeatureManager> featureManager = new();
-      featureManager.Setup(m => m.IsEnabledAsync("UseAcademisation")).ReturnsAsync(true);
       featureManager.Setup(m => m.IsEnabledAsync("UseAcademisationApplication")).ReturnsAsync(true);
       _pathFor = new PathFor(featureManager.Object);
 
