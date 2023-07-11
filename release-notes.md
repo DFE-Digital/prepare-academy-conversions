@@ -1,5 +1,8 @@
 ## NEXT
- * Fixed Bug 132060 : The 'proposed academy opening date' field will be populated with the 'ProposedAcademyOpeningDate' value to match changes made in the academisation API. On creation of projects the proposed opening date will no longer be populated with a six month arbitrary date.  
+* Removed the 'UseAcademisation' feature flag and defaulted the behaviour to use the Academies Api
+
+## 1.2.0
+* Fixed Bug 132060 : The 'proposed academy opening date' field will be populated with the 'ProposedAcademyOpeningDate' value to match changes made in the academisation API. On creation of projects the proposed opening date will no longer be populated with a six month arbitrary date.  
 * The term 'Involuntary Conversion' has been replaced with 'Sponsored Conversion'. This includes all Api endpoints. Note this requires a new release of the academies api with corresponding changes.
 * User Story 120665 : Updated PreviewProjectTemplate to hide `Legal requirements` and `rationale-for-project` when project is an involuntary conversion
 * User Story 129594 : The Local Authority and Region for a school is now passed up to the Academisation Api during involuntary project creation. This avoids the delay in populating the two values within the Academisation Api as they're already known during the conversion process.
