@@ -1,9 +1,6 @@
 ﻿using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Microsoft.FeatureManagement;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -14,7 +11,6 @@ public class ApiClient : IApiClient
 {
    private readonly IDfeHttpClientFactory _httpClientFactory;
    private readonly PathFor _pathFor;
-   private readonly bool _useAcademisation;
    private readonly bool _useAcademisationApplication;
 
    public ApiClient(IDfeHttpClientFactory httpClientFactory, IFeatureManager features, PathFor pathFor)
@@ -22,48 +18,32 @@ public class ApiClient : IApiClient
       _pathFor = pathFor;
       _useAcademisationApplication = features.IsEnabledAsync(FeatureFlags.UseAcademisationApplication).Result;
       _httpClientFactory = httpClientFactory;
-      _useAcademisation = features.IsEnabledAsync(FeatureFlags.UseAcademisation).Result;
    }
 
    private HttpClient TramsClient => _httpClientFactory.CreateTramsClient();
    private HttpClient AcademisationClient => _httpClientFactory.CreateAcademisationClient();
-   private HttpClient ActiveClient => _useAcademisation ? AcademisationClient : TramsClient;
    private HttpClient ActiveApplicationClient => _useAcademisationApplication ? AcademisationClient : TramsClient;
 
    public async Task<HttpResponseMessage> GetAllProjectsAsync(AcademyConversionSearchModel searchModel)
    {
-      return await ActiveClient.PostAsync(_pathFor.GetAllProjects, JsonContent.Create(searchModel));
+      return await AcademisationClient.PostAsync(PathFor.GetAllProjects, JsonContent.Create(searchModel));
    }
 
 
    public async Task<HttpResponseMessage> GetProjectByIdAsync(int id)
    {
-      Task<HttpResponseMessage> getProjectResponse = ActiveClient.GetAsync(string.Format(_pathFor.GetProjectById, id));
-      Task<HttpResponseMessage> getProjectNotesResponse =
-         _useAcademisation ? Task.FromResult(new HttpResponseMessage()) : TramsClient.GetAsync(string.Format(PathFor.GetProjectNotes, id));
-
-      await Task.WhenAll(getProjectResponse, getProjectNotesResponse);
-
-      if (_useAcademisation) return getProjectResponse.Result;
-      if (getProjectResponse.Result.IsSuccessStatusCode is false) return getProjectResponse.Result;
-
-      AcademyConversionProject project = await getProjectResponse.Result.Content.ReadFromJsonAsync<AcademyConversionProject>();
-      if (project is null) return new HttpResponseMessage(HttpStatusCode.NotFound);
-
-      if (getProjectNotesResponse.Result.IsSuccessStatusCode)
-         project.Notes = (await getProjectNotesResponse.Result.Content.ReadFromJsonAsync<IEnumerable<ProjectNote>>())?.ToList();
-
-      return new HttpResponseMessage(HttpStatusCode.OK) { Content = JsonContent.Create(project) };
+      HttpResponseMessage getProjectResponse = await AcademisationClient.GetAsync(string.Format(PathFor.GetProjectById, id));
+      return getProjectResponse;
    }
 
    public async Task<HttpResponseMessage> UpdateProjectAsync(int id, UpdateAcademyConversionProject updateProject)
    {
-      return await ActiveClient.PatchAsync(string.Format(_pathFor.UpdateProject, id), JsonContent.Create(updateProject));
+      return await AcademisationClient.PatchAsync(string.Format(PathFor.UpdateProject, id), JsonContent.Create(updateProject));
    }
 
    public async Task<HttpResponseMessage> GetFilterParametersAsync()
    {
-      return await ActiveClient.GetAsync(_pathFor.GetFilterParameters);
+      return await AcademisationClient.GetAsync(PathFor.GetFilterParameters);
    }
 
    public async Task<HttpResponseMessage> GetApplicationByReferenceAsync(string id)
@@ -73,6 +53,6 @@ public class ApiClient : IApiClient
 
    public async Task<HttpResponseMessage> AddProjectNote(int id, AddProjectNote projectNote)
    {
-      return await ActiveClient.PostAsync(string.Format(_pathFor.AddProjectNote, id), JsonContent.Create(projectNote));
+      return await AcademisationClient.PostAsync(string.Format(PathFor.AddProjectNote, id), JsonContent.Create(projectNote));
    }
 }

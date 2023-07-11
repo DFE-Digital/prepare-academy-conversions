@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using AutoFixture.Dsl;
+using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 using Dfe.PrepareConversions.Data.Models.Establishment;
@@ -50,7 +51,7 @@ public abstract partial class BaseIntegrationTests
          RegionQueryString = Array.Empty<string>()
       };
 
-      _factory.AddPostWithJsonRequest(_pathFor.GetAllProjects, searchModel, response);
+      _factory.AddPostWithJsonRequest(PathFor.GetAllProjects, searchModel, response);
       return projects;
    }
 
@@ -63,7 +64,7 @@ public abstract partial class BaseIntegrationTests
       };
 
 
-      _factory.AddGetWithJsonResponse(_pathFor.GetFilterParameters, filterParameters);
+      _factory.AddGetWithJsonResponse(PathFor.GetFilterParameters, filterParameters);
 
       return filterParameters;
    }
@@ -77,7 +78,7 @@ public abstract partial class BaseIntegrationTests
 
       postSetup?.Invoke(project);
 
-      _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetProjectById, project.Id), project);
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetProjectById, project.Id), project);
 
       return project;
    }
@@ -111,7 +112,7 @@ public abstract partial class BaseIntegrationTests
          .With(propertyThatWillChange, expectedNewValue)
          .Create();
 
-      _factory.AddPatchWithJsonRequest(string.Format(_pathFor.UpdateProject, project.Id), request, project);
+      _factory.AddPatchWithJsonRequest(string.Format(PathFor.UpdateProject, project.Id), request, project);
       return request;
    }
 
@@ -124,14 +125,14 @@ public abstract partial class BaseIntegrationTests
 
       configure?.Invoke(request);
 
-      _factory.AddPatchWithJsonRequest(string.Format(_pathFor.UpdateProject, project.Id), request, project);
+      _factory.AddPatchWithJsonRequest(string.Format(PathFor.UpdateProject, project.Id), request, project);
       return request;
    }
 
    protected void ExpectPatchProjectMatching(AcademyConversionProject project, Func<UpdateAcademyConversionProject, bool> matcher)
    {
       _factory.AddApiCallWithBodyDelegate(
-         string.Format(_pathFor.UpdateProject, project.Id),
+         string.Format(PathFor.UpdateProject, project.Id),
          x => x?.BodyAsString != null && matcher(JsonConvert.DeserializeObject<UpdateAcademyConversionProject>(x.BodyAsString)),
          project,
          HttpMethod.Patch
@@ -141,7 +142,7 @@ public abstract partial class BaseIntegrationTests
    public ProjectNote AddPostProjectNote(int id, AddProjectNote request)
    {
       ProjectNote response = new() { Subject = request.Subject, Note = request.Note, Author = request.Author, Date = request.Date };
-      _factory.AddPostWithJsonRequest(string.Format(_pathFor.AddProjectNote, id), request, response);
+      _factory.AddPostWithJsonRequest(string.Format(PathFor.AddProjectNote, id), request, response);
       return response;
    }
 
@@ -156,13 +157,13 @@ public abstract partial class BaseIntegrationTests
       UpdateAcademyConversionProject request = postProcess(composer)
          .Create();
 
-      _factory.AddPatchWithJsonRequest(string.Format(_pathFor.UpdateProject, project.Id), request, project);
+      _factory.AddPatchWithJsonRequest(string.Format(PathFor.UpdateProject, project.Id), request, project);
       return request;
    }
 
    public void AddPatchError(int id)
    {
-      _factory.AddErrorResponse(string.Format(_pathFor.UpdateProject, id), "patch");
+      _factory.AddErrorResponse(string.Format(PathFor.UpdateProject, id), "patch");
    }
 
    public void AddProjectNotePostError(int id)

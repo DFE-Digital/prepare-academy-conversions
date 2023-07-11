@@ -4,11 +4,7 @@ using Dfe.PrepareConversions.Data.Tests.TestDoubles;
 using Moq;
 using RichardSzalay.MockHttp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Dfe.PrepareConversions.Data.Tests.Services;
