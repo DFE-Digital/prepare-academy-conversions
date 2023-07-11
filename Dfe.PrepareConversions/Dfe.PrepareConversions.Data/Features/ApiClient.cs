@@ -26,24 +26,24 @@ public class ApiClient : IApiClient
 
    public async Task<HttpResponseMessage> GetAllProjectsAsync(AcademyConversionSearchModel searchModel)
    {
-      return await AcademisationClient.PostAsync(_pathFor.GetAllProjects, JsonContent.Create(searchModel));
+      return await AcademisationClient.PostAsync(PathFor.GetAllProjects, JsonContent.Create(searchModel));
    }
 
 
    public async Task<HttpResponseMessage> GetProjectByIdAsync(int id)
    {
-      HttpResponseMessage getProjectResponse = await AcademisationClient.GetAsync(string.Format(_pathFor.GetProjectById, id));
+      HttpResponseMessage getProjectResponse = await AcademisationClient.GetAsync(string.Format(PathFor.GetProjectById, id));
       return getProjectResponse;
    }
 
    public async Task<HttpResponseMessage> UpdateProjectAsync(int id, UpdateAcademyConversionProject updateProject)
    {
-      return await AcademisationClient.PatchAsync(string.Format(_pathFor.UpdateProject, id), JsonContent.Create(updateProject));
+      return await AcademisationClient.PatchAsync(string.Format(PathFor.UpdateProject, id), JsonContent.Create(updateProject));
    }
 
    public async Task<HttpResponseMessage> GetFilterParametersAsync()
    {
-      return await AcademisationClient.GetAsync(_pathFor.GetFilterParameters);
+      return await AcademisationClient.GetAsync(PathFor.GetFilterParameters);
    }
 
    public async Task<HttpResponseMessage> GetApplicationByReferenceAsync(string id)
@@ -53,6 +53,6 @@ public class ApiClient : IApiClient
 
    public async Task<HttpResponseMessage> AddProjectNote(int id, AddProjectNote projectNote)
    {
-      return await AcademisationClient.PostAsync(string.Format(_pathFor.AddProjectNote, id), JsonContent.Create(projectNote));
+      return await AcademisationClient.PostAsync(string.Format(PathFor.AddProjectNote, id), JsonContent.Create(projectNote));
    }
 }
