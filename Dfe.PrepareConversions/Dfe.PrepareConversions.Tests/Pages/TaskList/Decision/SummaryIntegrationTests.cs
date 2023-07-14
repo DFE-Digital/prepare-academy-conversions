@@ -49,7 +49,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
 
       await OpenAndConfirmPathAsync($"/task-list/{_project.Id}/decision/summary", $"/task-list/{_project.Id}");
 
-      PageSubHeading.Should().Be("Task list");
+      PageSubHeading.Should().Be("Prepare a project document");
    }
 
    [Fact]

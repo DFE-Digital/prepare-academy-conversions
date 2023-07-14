@@ -38,7 +38,7 @@ public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTest
             .With(r => r.CapitalCarryForwardAtEndMarchNextYear)
             .With(r => r.Urn, project.Urn));
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/budget");
       await NavigateDataTestAsync("change-financial-year");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
@@ -56,7 +56,7 @@ public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTest
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/budget");
    }
 
    [Fact]
@@ -82,7 +82,7 @@ public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTest
             .With(r => r.CapitalCarryForwardAtEndMarchNextYear, -1024.95M)
             .With(r => r.Urn, project.Urn));
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/budget");
       await NavigateDataTestAsync("change-financial-year");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
@@ -99,7 +99,7 @@ public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTest
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/budget");
    }
 
    [Fact]
@@ -124,7 +124,7 @@ public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTest
             .With(r => r.CapitalCarryForwardAtEndMarchCurrentYear)
             .With(r => r.CapitalCarryForwardAtEndMarchNextYear));
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/budget");
       await NavigateDataTestAsync("change-financial-year");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
@@ -164,7 +164,7 @@ public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTest
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
       await NavigateAsync("Back");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/budget");
    }
 
    [Fact]
@@ -195,7 +195,7 @@ public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTest
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/budget");
    }
 
    [Fact]

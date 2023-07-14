@@ -42,7 +42,7 @@ public class DaoPackSentDateIntegrationTests : BaseIntegrationTests
 
       await ClickCommonSubmitButtonAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
    }
 
    [Fact]
@@ -62,7 +62,7 @@ public class DaoPackSentDateIntegrationTests : BaseIntegrationTests
 
       await ClickCommonSubmitButtonAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
    }
 
    [Fact]

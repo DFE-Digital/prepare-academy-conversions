@@ -25,7 +25,7 @@ public class AdditionalInformationIntegrationTests : BaseIntegrationTests
          x.Urn = project.Urn;
       });
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-pupil-forecasts");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/pupil-forecasts");
       await NavigateAsync("Change", 0);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information#additional-information");
@@ -35,7 +35,7 @@ public class AdditionalInformationIntegrationTests : BaseIntegrationTests
       textArea!.Value = request.SchoolPupilForecastsAdditionalInformation;
       await Document.QuerySelector<IHtmlFormElement>("form")?.SubmitAsync()!;
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-pupil-forecasts");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/pupil-forecasts");
    }
 
    [Fact]
@@ -62,6 +62,6 @@ public class AdditionalInformationIntegrationTests : BaseIntegrationTests
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information");
       await NavigateAsync("Back");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-pupil-forecasts");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/pupil-forecasts");
    }
 }

@@ -73,7 +73,7 @@ public class MPDetailsIntegrationTests : BaseIntegrationTests
             .With(r => r.Urn, project.Urn));
 
       // open General Information page
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-overview");
 
       // move to MP details page
       await NavigateAsync("Change", 5);
@@ -89,6 +89,6 @@ public class MPDetailsIntegrationTests : BaseIntegrationTests
 
       // move back to General Information page
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-overview");
    }
 }

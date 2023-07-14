@@ -25,7 +25,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
       Document.QuerySelector("#school-budget-information-status")!.TextContent.Trim().Should().Be("In Progress");
       Document.QuerySelector("#school-budget-information-status")!.ClassName.Should().Contain("blue");
 
-      await NavigateAsync("School budget information");
+      await NavigateAsync("Budget");
 
       Document.QuerySelector("#financial-year")!.TextContent.Should().Be(project.EndOfCurrentFinancialYear?.ToDateString());
       Document.QuerySelector("#finance-year-current")!.TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true));
@@ -55,7 +55,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
       Document.QuerySelector("#school-budget-information-status")!.TextContent.Trim().Should().Be("In Progress");
       Document.QuerySelector("#school-budget-information-status")!.ClassName.Should().Contain("blue");
 
-      await NavigateAsync("School budget information");
+      await NavigateAsync("Budget");
 
       Document.QuerySelector("#financial-year")!.TextContent.Should().Be(project.EndOfCurrentFinancialYear?.ToDateString());
       Document.QuerySelector("#finance-year-current")!.TextContent.Should().Be(project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true));
@@ -82,7 +82,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      await NavigateAsync("School budget information");
+      await NavigateAsync("Budget");
 
       Document.QuerySelector("#finance-year-current")!.ClassName.Should().Contain("negative-value");
       Document.QuerySelector("#finance-year-following")!.ClassName.Should().Contain("negative-value");
@@ -106,7 +106,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      await NavigateAsync("School budget information");
+      await NavigateAsync("Budget");
 
       Document.QuerySelector("#finance-year-current")!.ClassName.Should().NotContain("negative-value");
       Document.QuerySelector("#finance-year-following")!.ClassName.Should().NotContain("negative-value");
@@ -131,7 +131,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
 
       Document.QuerySelector("#school-budget-information-status")!.TextContent.Trim().Should().Be("Completed");
 
-      await NavigateAsync("School budget information");
+      await NavigateAsync("Budget");
 
       Document.QuerySelector<IHtmlInputElement>("#school-budget-information-complete")!.IsChecked.Should().BeTrue();
 
@@ -165,7 +165,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
       Document.QuerySelector("#school-budget-information-status")!.TextContent.Trim().Should().Be("Not Started");
       Document.QuerySelector("#school-budget-information-status")!.ClassName.Should().Contain("grey");
 
-      await NavigateAsync("School budget information");
+      await NavigateAsync("Budget");
 
       Document.QuerySelector("#financial-year")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#next-financial-year")!.TextContent.Should().Be("Empty");
@@ -187,7 +187,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
       AcademyConversionProject project = AddGetProject();
       AddPatchError(project.Id);
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/budget");
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
@@ -200,9 +200,9 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
       AcademyConversionProject project = AddGetProject();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-      await NavigateAsync("School budget information");
+      await NavigateAsync("Budget");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/budget");
 
       await NavigateAsync("Back to task list");
 
