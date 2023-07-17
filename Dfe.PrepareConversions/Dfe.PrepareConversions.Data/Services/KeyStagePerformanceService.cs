@@ -11,9 +11,9 @@ public class KeyStagePerformanceService
    private readonly HttpClient _httpClient;
    private readonly ILogger<KeyStagePerformanceService> _logger;
 
-   public KeyStagePerformanceService(IHttpClientFactory httpClientFactory, ILogger<KeyStagePerformanceService> logger)
+   public KeyStagePerformanceService(IDfeHttpClientFactory httpClientFactory, ILogger<KeyStagePerformanceService> logger)
    {
-      _httpClient = httpClientFactory.CreateClient("TramsClient");
+      _httpClient = httpClientFactory.CreateTramsClient();
       _logger = logger;
    }
 

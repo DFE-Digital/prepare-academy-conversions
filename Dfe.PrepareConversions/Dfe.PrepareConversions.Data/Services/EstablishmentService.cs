@@ -15,11 +15,11 @@ public class EstablishmentService : IGetEstablishment
    private readonly IHttpClientService _httpClientService;
    private readonly ILogger<EstablishmentService> _logger;
 
-   public EstablishmentService(IHttpClientFactory httpClientFactory,
+   public EstablishmentService(IDfeHttpClientFactory httpClientFactory,
                                ILogger<EstablishmentService> logger,
                                IHttpClientService httpClientService)
    {
-      _httpClient = httpClientFactory.CreateClient("TramsClient");
+      _httpClient = httpClientFactory.CreateTramsClient();
       _logger = logger;
       _httpClientService = httpClientService;
    }
