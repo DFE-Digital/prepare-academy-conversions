@@ -175,6 +175,12 @@ variable "cdn_frontdoor_host_redirects" {
   type        = list(map(string))
 }
 
+variable "cdn_frontdoor_health_probe_protocol" {
+  description = "Use Http or Https"
+  type        = string
+  default     = "Https"
+}
+
 variable "container_apps_allow_ips_inbound" {
   description = "Restricts access to the Container Apps by creating a network security group rule that only allow inbound traffic from the provided list of IPs"
   type        = list(string)
