@@ -5,7 +5,7 @@
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-2" data-cy="select-heading">
          @Model.SchoolName
       </h1>
-      <p class="govuk-body govuk-!-margin-bottom-8">
+      <p class="govuk-body govuk-!-margin-bottom-5">
          Delivery officer:
 
          @if (Model.AssignedUser == null || string.IsNullOrWhiteSpace(Model?.AssignedUser.FullName))
@@ -19,9 +19,12 @@
 
          <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.ProjectAssignment.Index.Page" asp-route-id="@Model.Id">Change</a>
       </p>
+        <p class="govuk-!-margin-top-0  govuk-!-margin-bottom-8">
+            <strong class="govuk-tag govuk-tag--@Model.ProjectStatusColour" id="project-status-@Model.Id">@Model.ProjectStatus</strong>
+        </p>
    </div>
 
-   @await Component.InvokeAsync("RecordDecisionPreview", new { id = int.Parse(Model?.Id ?? string.Empty) })
+   
 
    <div class="govuk-grid-column-full">
       <partial name="_SubMenu" model="@Model"/>

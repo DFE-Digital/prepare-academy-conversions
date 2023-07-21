@@ -1,0 +1,17 @@
+﻿@page "/task-list/{id:int}/record-a-decision"
+@model Dfe.PrepareConversions.Pages.TaskList.Decision.IndexModel
+
+@{
+    ViewData["Title"] = "Record a decision";
+}
+
+@section BeforeMain
+    {
+    <a asp-page="@Links.ProjectList.Index.Page" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
+}
+
+    <partial name="_ProjectHeader" model="@Model.Project" />
+
+    <div class="govuk-grid-row">
+       @await Component.InvokeAsync("RecordDecisionPreview", new { id = int.Parse(Model?.Project.Id ?? string.Empty) })
+    </div>
