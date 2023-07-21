@@ -29,7 +29,7 @@ public class TaskListViewModel
          RisksAndIssuesTaskListStatus = TaskListItemViewModel.GetRisksAndIssuesTaskListStatus(project),
          LegalRequirementsTaskListStatus = TaskListItemViewModel.GetLegalRequirementsTaskListStatus(project),
          SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.GetSchoolBudgetInformationTaskListStatus(project),
-         ProjectStatus = project.ProjectStatus,
+         ProjectStatus = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Value,
          ProjectStatusColour = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Colour,
       };
    }
