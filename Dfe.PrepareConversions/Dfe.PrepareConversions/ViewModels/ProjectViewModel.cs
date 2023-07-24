@@ -1,6 +1,7 @@
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Extensions;
+using Dfe.PrepareConversions.Utils;
 using System;
 using System.Collections.Generic;
 
@@ -11,6 +12,8 @@ public class ProjectViewModel: ProjectTypeBase
    public ProjectViewModel(AcademyConversionProject project)
    {
       Id = project.Id.ToString();
+      ProjectStatus = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Value;
+      ProjectStatusColour = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Colour;
       ApplicationReferenceNumber = project.ApplicationReferenceNumber;
       SchoolName = project.SchoolName;
       SchoolURN = project.Urn.ToString();
@@ -105,6 +108,8 @@ public class ProjectViewModel: ProjectTypeBase
    }
 
    public string Id { get; }
+   public string ProjectStatus { get; }
+   public string ProjectStatusColour { get; }
    public string ApplicationReferenceNumber { get; set; }
    public string SchoolName { get; }
    public string SchoolURN { get; }
