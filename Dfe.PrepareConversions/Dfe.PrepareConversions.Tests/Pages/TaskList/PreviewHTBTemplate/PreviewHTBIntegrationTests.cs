@@ -33,7 +33,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      await NavigateAsync("Preview project template");
+      await NavigateAsync("Preview project document");
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
 
       await NavigateAsync("Back to task list");

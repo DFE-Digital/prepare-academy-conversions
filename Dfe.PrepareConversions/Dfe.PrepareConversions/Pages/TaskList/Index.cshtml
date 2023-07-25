@@ -173,12 +173,12 @@
         </div>
 
         <h2 class="govuk-heading-l">
-            Preview or generate project template
+           Create your project document
         </h2>
-        <p class="govuk-body">Preview your template before you generate it into a Word document, or you can generate the document without previewing it.</p>
+        <p class="govuk-body">Project documents are in Microsoft Word format. You can make changes to documents after you create them.</p>
         <div class="govuk-button-group">
-            <a asp-page="@Links.TaskList.PreviewHTBTemplate.Page" id="preview-project-template-button" asp-route-id="@Model.Project.Id" class="govuk-button govuk-!-margin-bottom-2" role="button">Preview project template</a>
-            <a asp-page="@Links.TaskList.GenerateHTBTemplate.Page" id="generate-project-template-button" asp-route-id="@Model.Project.Id" asp-route-return="@Links.TaskList.Index.Page" asp-route-backText="@Links.TaskList.Index.BackText" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-2" role="button">Generate project template</a>
+            <a asp-page="@Links.TaskList.PreviewHTBTemplate.Page" id="preview-project-template-button" asp-route-id="@Model.Project.Id" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-2" role="button">Preview project document</a>
+            <a asp-page="@Links.TaskList.GenerateHTBTemplate.Page" id="generate-project-template-button" asp-route-id="@Model.Project.Id" asp-route-return="@Links.TaskList.Index.Page" asp-route-backText="@Links.TaskList.Index.BackText" class="govuk-button govuk-!-margin-bottom-2" role="button">Create project document</a>
         </div>
     </div>
 </div>
