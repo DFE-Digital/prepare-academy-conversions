@@ -8,6 +8,7 @@
 * Fixed Bug 133919 : Styling on rationale page fixed to reflect other pages
 * User Story 134597 : Added Route to top of task list for voluntary and sponsored journeys
 * User Story 134936 : Updated wording of delivery officer to Project owner
+* User Story 133831 : Added Application insights 
 
 ---
 
