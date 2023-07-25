@@ -55,6 +55,7 @@ public class Startup
    public void ConfigureServices(IServiceCollection services)
    {
       services.AddFeatureManagement();
+      services.AddApplicationInsightsTelemetry();
       services.AddHealthChecks();
       services
          .AddRazorPages(options =>
