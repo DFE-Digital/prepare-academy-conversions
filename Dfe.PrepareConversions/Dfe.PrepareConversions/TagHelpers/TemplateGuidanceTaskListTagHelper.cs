@@ -7,12 +7,14 @@ namespace Dfe.PrepareConversions.TagHelpers
    {
       public string ProjectId { get; set; }
       public bool IsSponsored { get; set; }
+      public string Title = "Create a trust template";
+      public string LinkText = "Prepare your template";
 
       public override void Process(TagHelperContext context, TagHelperOutput output)
       {
          output.Content.SetHtmlContent(IsSponsored
-            ? GetHtmlContent("Sponsor template guidance", $"{ProjectId}/sponsor-guidance", "Prepare your sponsor template")
-            : GetHtmlContent("Trust template guidance", $"{ProjectId}/trust-guidance", "Prepare your trust template"));
+            ? GetHtmlContent(Title, $"{ProjectId}/sponsor-guidance", LinkText)
+            : GetHtmlContent(Title, $"{ProjectId}/trust-guidance", LinkText));
       }
 
       private static string GetHtmlContent(string title, string urlSlug, string linkText)
@@ -26,8 +28,7 @@ namespace Dfe.PrepareConversions.TagHelpers
                                 <a class='govuk-link' href='{urlSlug}' aria-describedby='trust-template-status'>
                                     {linkText}
                                 </a>
-                            </span>
-                            <strong class='govuk-tag govuk-tag--grey app-task-list__tag' id='trust-template-status'>Reference only</strong>
+                            </span>                           
                         </li>
                     </ul>
                 </div>";
