@@ -6,6 +6,12 @@
 * User Story 132314 : New 'school information' section added to task list.
 * User Story 132744 : Add School information - rename pages
 * Fixed Bug 133919 : Styling on rationale page fixed to reflect other pages
+* User Story 134597 : Added Route to top of task list for voluntary and sponsored journeys
+* User Story 134936 : Updated wording of delivery officer to Project owner
+* User Story 133831 : Added Application insights 
+* User Story 135435 : Updated School Overview page hint text to be relevant to the route 
+* User Story 135121 : Added Project Notes to the Form a MAT journey
+
 
 ---
 

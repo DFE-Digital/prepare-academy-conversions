@@ -69,6 +69,18 @@ variable "enable_event_hub" {
   type        = bool
 }
 
+variable "enable_logstash_consumer" {
+  description = "Create an Event Hub consumer group for Logstash"
+  type        = bool
+  default     = false
+}
+
+variable "eventhub_export_log_analytics_table_names" {
+  description = "List of Log Analytics table names that you want to export to Event Hub. See https://learn.microsoft.com/en-gb/azure/azure-monitor/logs/logs-data-export?tabs=portal#supported-tables for a list of supported tables"
+  type        = list(string)
+  default     = []
+}
+
 variable "enable_cdn_frontdoor" {
   description = "Enable Azure CDN Front Door. This will use the Container Apps endpoint as the origin."
   type        = bool
@@ -159,6 +171,12 @@ variable "dns_zone_domain_name" {
   type        = string
 }
 
+variable "cdn_frontdoor_forwarding_protocol" {
+  description = "Azure CDN Front Door forwarding protocol"
+  type        = string
+  default     = "HttpsOnly"
+}
+
 variable "cdn_frontdoor_custom_domains" {
   description = "Azure CDN Front Door custom domains. If they are within the DNS zone (optionally created), the Validation TXT records and ALIAS/CNAME records will be created"
   type        = list(string)
@@ -167,6 +185,18 @@ variable "cdn_frontdoor_custom_domains" {
 variable "cdn_frontdoor_host_redirects" {
   description = "CDN FrontDoor host redirects `[{ \"from\" = \"example.com\", \"to\" = \"www.example.com\" }]`"
   type        = list(map(string))
+}
+
+variable "cdn_frontdoor_health_probe_protocol" {
+  description = "Use Http or Https"
+  type        = string
+  default     = "Https"
+}
+
+variable "container_apps_allow_ips_inbound" {
+  description = "Restricts access to the Container Apps by creating a network security group rule that only allow inbound traffic from the provided list of IPs"
+  type        = list(string)
+  default     = []
 }
 
 variable "dns_ns_records" {
