@@ -7,14 +7,14 @@ namespace Dfe.PrepareConversions.TagHelpers
    {
       public string ProjectId { get; set; }
       public bool IsSponsored { get; set; }
-      public string Title = "Create a trust template";
-      public string LinkText = "Prepare your template";
+      private string _title = "Create a trust template";
+      private string _linkText = "Prepare your template";
 
       public override void Process(TagHelperContext context, TagHelperOutput output)
       {
          output.Content.SetHtmlContent(IsSponsored
-            ? GetHtmlContent(Title, $"{ProjectId}/sponsor-guidance", LinkText)
-            : GetHtmlContent(Title, $"{ProjectId}/trust-guidance", LinkText));
+            ? GetHtmlContent(_title, $"{ProjectId}/sponsor-guidance", _linkText)
+            : GetHtmlContent(_title, $"{ProjectId}/trust-guidance", _linkText));
       }
 
       private static string GetHtmlContent(string title, string urlSlug, string linkText)
