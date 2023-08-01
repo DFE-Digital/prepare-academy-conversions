@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using Dfe.Academisation.CorrelationIdMiddleware;
 using Dfe.PrepareConversions.Data.Exceptions;
 using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Data.Services;
@@ -27,7 +28,7 @@ public class EstablishmentServiceTests
       MockHttpMessageHandler mockHandler,
       string searchString)
    {
-      EstablishmentService sut = new(new MockHttpClientFactory(mockHandler), logger.Object, httpService.Object);
+      EstablishmentService sut = new(new DfeHttpClientFactory(new MockHttpClientFactory(mockHandler), new CorrelationContext()), logger.Object, httpService.Object);
       httpService.Setup(m => m.Get<IEnumerable<EstablishmentSearchResponse>>(It.IsAny<HttpClient>(), It.IsAny<string>()))
          .ReturnsAsync(new ApiResponse<IEnumerable<EstablishmentSearchResponse>>(HttpStatusCode.OK, expectedResponse));
 
@@ -46,7 +47,7 @@ public class EstablishmentServiceTests
       int urn)
    {
       // Arrange
-      EstablishmentService sut = new(new MockHttpClientFactory(mockHandler), logger.Object, httpService.Object);
+      EstablishmentService sut = new(new DfeHttpClientFactory(new MockHttpClientFactory(mockHandler), new CorrelationContext()), logger.Object, httpService.Object);
       httpService.Setup(m => m.Get<IEnumerable<EstablishmentSearchResponse>>(It.IsAny<HttpClient>(), It.IsAny<string>()))
          .ReturnsAsync(new ApiResponse<IEnumerable<EstablishmentSearchResponse>>(HttpStatusCode.OK, expectedResponse));
 
@@ -68,7 +69,7 @@ public class EstablishmentServiceTests
       string name)
    {
       // Arrange
-      EstablishmentService sut = new(new MockHttpClientFactory(mockHandler), logger.Object, httpService.Object);
+      EstablishmentService sut = new(new DfeHttpClientFactory(new MockHttpClientFactory(mockHandler), new CorrelationContext()), logger.Object, httpService.Object);
       httpService.Setup(m => m.Get<IEnumerable<EstablishmentSearchResponse>>(It.IsAny<HttpClient>(), It.IsAny<string>()))
          .ReturnsAsync(new ApiResponse<IEnumerable<EstablishmentSearchResponse>>(HttpStatusCode.OK, expectedResponse));
 
@@ -90,7 +91,7 @@ public class EstablishmentServiceTests
       string name)
    {
       // Arrange
-      EstablishmentService sut = new(new MockHttpClientFactory(mockHandler), logger.Object, httpService.Object);
+      EstablishmentService sut = new(new DfeHttpClientFactory(new MockHttpClientFactory(mockHandler), new CorrelationContext()), logger.Object, httpService.Object);
       httpService.Setup(m => m.Get<IEnumerable<EstablishmentSearchResponse>>(It.IsAny<HttpClient>(), It.IsAny<string>()))
          .ReturnsAsync(new ApiResponse<IEnumerable<EstablishmentSearchResponse>>(HttpStatusCode.InternalServerError, expectedResponse));
 

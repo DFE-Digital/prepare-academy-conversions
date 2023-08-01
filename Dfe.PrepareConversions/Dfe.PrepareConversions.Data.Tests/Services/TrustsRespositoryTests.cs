@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using Dfe.Academisation.CorrelationIdMiddleware;
 using Dfe.PrepareConversions.Data.Exceptions;
 using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services;
@@ -25,7 +26,7 @@ public class TrustsRespositoryTests
       string name)
    {
       // Arrange
-      TrustsRepository sut = new(new MockHttpClientFactory(mockHandler), httpService.Object);
+      TrustsRepository sut = new(new DfeHttpClientFactory(new MockHttpClientFactory(mockHandler), new CorrelationContext()), httpService.Object);
       httpService.Setup(m => m.Get<TrustSummaryResponse>(It.IsAny<HttpClient>(), It.IsAny<string>()))
          .ReturnsAsync(new ApiResponse<TrustSummaryResponse>(HttpStatusCode.OK, expectedResponse));
 
@@ -45,7 +46,7 @@ public class TrustsRespositoryTests
       string name)
    {
       // Arrange
-      TrustsRepository sut = new(new MockHttpClientFactory(mockHandler), httpService.Object);
+      TrustsRepository sut = new(new DfeHttpClientFactory(new MockHttpClientFactory(mockHandler), new CorrelationContext()), httpService.Object);
       httpService.Setup(m => m.Get<TrustSummaryResponse>(It.IsAny<HttpClient>(), It.IsAny<string>()))
          .ReturnsAsync(new ApiResponse<TrustSummaryResponse>(HttpStatusCode.InternalServerError, expectedResponse));
 
