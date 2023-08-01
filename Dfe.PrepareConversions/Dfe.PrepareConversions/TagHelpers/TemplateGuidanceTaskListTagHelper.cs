@@ -7,8 +7,8 @@ namespace Dfe.PrepareConversions.TagHelpers
    {
       public string ProjectId { get; set; }
       public bool IsSponsored { get; set; }
-      private string _title = "Create a trust template";
-      private string _linkText = "Prepare your template";
+      private readonly string _title = "Create a trust template";
+      private readonly string _linkText = "Prepare your template";
 
       public override void Process(TagHelperContext context, TagHelperOutput output)
       {
