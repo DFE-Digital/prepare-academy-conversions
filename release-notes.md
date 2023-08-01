@@ -9,6 +9,9 @@
 * User Story 134597 : Added Route to top of task list for voluntary and sponsored journeys
 * User Story 134936 : Updated wording of delivery officer to Project owner
 * User Story 133831 : Added Application insights 
+* User Story 135435 : Updated School Overview page hint text to be relevant to the route 
+* User Story 135121 : Added Project Notes to the Form a MAT journey
+
 
 ---
 
