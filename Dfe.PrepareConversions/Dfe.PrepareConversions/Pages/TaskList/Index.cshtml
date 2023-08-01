@@ -56,7 +56,6 @@
                       Pupil forecasts
                    </a>
                 </span>
-                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="school-pupil-forecasts-status">Reference only</strong>
              </li>
              <li class="app-task-list__item">
                 <span class="app-task-list__task-name">
@@ -123,9 +122,13 @@
                 </li>
             </ul>
         </div>
+        
+        <h3 class="app-task-list__section govuk-!-margin-top-0">Performance data</h3>
 
-        <h3 class="app-task-list__section govuk-!-margin-top-8">Performance data</h3>
-        <div class="app-task-list" aria-label="list of tasks">
+        <div class="govuk-inset-text">
+          This information will be added to your project document automatically.
+        </div>
+       <div class="app-task-list" aria-label="list of tasks">
             <ul class="app-task-list__items govuk-!-padding-left-0">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
@@ -133,7 +136,6 @@
                             Ofsted information
                         </a>
                     </span>
-                    <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="school-performance-status">Reference only</strong>
                 </li>
                 @if (Model.TaskList.HasKeyStage2PerformanceTables)
                 {
@@ -143,7 +145,6 @@
                                 Key stage 2 performance tables
                             </a>
                         </span>
-                        <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="key-stage-2-performance-tables-status">Reference only</strong>
                     </li>
                 }
                 @if (Model.TaskList.HasKeyStage4PerformanceTables)
@@ -154,7 +155,6 @@
                                 Key stage 4 performance tables
                             </a>
                         </span>
-                        <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="key-stage-4-performance-tables-status">Reference only</strong>
                     </li>
                 }
                 @if (Model.TaskList.HasKeyStage5PerformanceTables)
@@ -165,11 +165,11 @@
                                 Key stage 5 performance tables
                             </a>
                         </span>
-                        <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="key-stage-5-performance-tables-status">Reference only</strong>
                     </li>
                 }
 
             </ul>
+
         </div>
 
         <h2 class="govuk-heading-l">

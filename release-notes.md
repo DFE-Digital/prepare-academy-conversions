@@ -11,6 +11,10 @@
 * User Story 133831 : Added Application insights 
 * User Story 135435 : Updated School Overview page hint text to be relevant to the route 
 * User Story 135121 : Added Project Notes to the Form a MAT journey
+* Updated the bottom of the preview document page to reflect changes to task list regarding 'Generate template'
+* Moved reference data on the task list to it's own dedicated section
+* 'Prepare your template' wording updated and moved up in the task list
+* Updated Preview Document page to reflect the ordering in the task list and the hew headings
 
 
 ---
