@@ -13,10 +13,10 @@ public class TrustsRepository : ITrustsRepository
    private readonly IHttpClientService _httpClientService;
 
    public TrustsRepository(
-      IHttpClientFactory httpClientFactory,
+      IDfeHttpClientFactory httpClientFactory,
       IHttpClientService httpClientService)
    {
-      _httpClient = httpClientFactory.CreateClient("TramsClient");
+      _httpClient = httpClientFactory.CreateTramsClient();
       _httpClientService = httpClientService;
    }
 
