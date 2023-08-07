@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using Dfe.Academisation.CorrelationIdMiddleware;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Data.Services;
@@ -30,7 +31,7 @@ public class SchoolPerformanceServiceTests
       _testLogger = TestLoggerFactory.Create();
       _schoolPerformanceService = new SchoolPerformanceService(
          new EstablishmentService(
-            new MockHttpClientFactory(_mockHandler),
+            new DfeHttpClientFactory(new MockHttpClientFactory(_mockHandler), new CorrelationContext()),
             _testLogger.CreateLogger<EstablishmentService>(),
             Mock.Of<IHttpClientService>()
          )

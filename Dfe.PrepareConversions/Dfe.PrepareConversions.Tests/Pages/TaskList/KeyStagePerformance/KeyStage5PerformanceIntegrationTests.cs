@@ -24,9 +24,6 @@ public class KeyStage5PerformanceIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      Document.QuerySelector("#key-stage-5-performance-tables-status")!.TextContent.Trim().Should().Be("Reference only");
-      Document.QuerySelector("#key-stage-5-performance-tables-status")!.ClassName.Should().Contain("grey");
-
       await NavigateAsync("Key stage 5 performance tables");
 
       Document.QuerySelector("#additional-information")!.TextContent.Should().Be(project.KeyStage5PerformanceAdditionalInformation);

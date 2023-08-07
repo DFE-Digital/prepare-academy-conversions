@@ -11,9 +11,9 @@ public class AcademyConversionAdvisoryBoardDecisionRepository : IAcademyConversi
    private readonly HttpClient _httpClient;
    private readonly IHttpClientService _httpClientHelper;
 
-   public AcademyConversionAdvisoryBoardDecisionRepository(IHttpClientFactory httpClientFactory, IHttpClientService httpClientHelper)
+   public AcademyConversionAdvisoryBoardDecisionRepository(IDfeHttpClientFactory httpClientFactory, IHttpClientService httpClientHelper)
    {
-      _httpClient = httpClientFactory.CreateClient("AcademisationClient");
+      _httpClient = httpClientFactory.CreateAcademisationClient();
       _httpClientHelper = httpClientHelper;
    }
 

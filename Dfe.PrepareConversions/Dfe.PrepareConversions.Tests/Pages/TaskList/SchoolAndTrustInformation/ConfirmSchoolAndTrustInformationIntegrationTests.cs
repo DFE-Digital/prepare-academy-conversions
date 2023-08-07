@@ -26,7 +26,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       Document.QuerySelector("#school-and-trust-information-status")!.TextContent.Trim().Should().Be("In Progress");
       Document.QuerySelector("#school-and-trust-information-status")!.ClassName.Should().Contain("blue");
 
-      await NavigateAsync("Conversion Details");
+      await NavigateAsync("Conversion details");
 
       Document.QuerySelector("#project-recommendation")!.TextContent.Should().Be(project.RecommendationForProject);
       Document.QuerySelector("#author")!.TextContent.Should().Be(project.Author);
@@ -53,7 +53,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       AcademyConversionProject project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = "No");
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-      await NavigateAsync("Conversion Details");
+      await NavigateAsync("Conversion details");
 
       Document.QuerySelector("#previous-advisory-board")!.TextContent.Should().Be("No");
    }
@@ -71,7 +71,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      await NavigateAsync("Conversion Details");
+      await NavigateAsync("Conversion details");
 
       Document.QuerySelector<IHtmlInputElement>("#school-and-trust-information-complete")!.DoClick();
 
@@ -95,7 +95,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
 
       Document.QuerySelector("#school-and-trust-information-status")!.TextContent.Trim().Should().Be("Completed");
 
-      await NavigateAsync("Conversion Details");
+      await NavigateAsync("Conversion details");
 
       Document.QuerySelector<IHtmlInputElement>("#school-and-trust-information-complete")!.IsChecked.Should().BeTrue();
 
@@ -135,7 +135,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       Document.QuerySelector("#school-and-trust-information-status")!.TextContent.Trim().Should().Be("Not Started");
       Document.QuerySelector("#school-and-trust-information-status")!.ClassName.Should().Contain("grey");
 
-      await NavigateAsync("Conversion Details");
+      await NavigateAsync("Conversion details");
 
       Document.QuerySelector("#project-recommendation")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#author")!.TextContent.Should().Be("Empty");
@@ -187,7 +187,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      await NavigateAsync("Conversion Details");
+      await NavigateAsync("Conversion details");
       await NavigateAsync("Change", 2);
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
@@ -203,7 +203,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       AcademyConversionProject project = AddGetProject();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-      await NavigateAsync("Conversion Details");
+      await NavigateAsync("Conversion details");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
 
@@ -218,7 +218,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       AcademyConversionProject project = AddGetProject(project => project.ApplicationReceivedDate = null);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-      await NavigateAsync("Conversion Details");
+      await NavigateAsync("Conversion details");
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
 
       ElementsWithText("dt", "Date directive academy order (DAO) pack sent").Should().NotBeEmpty();
@@ -262,7 +262,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       AcademyConversionProject project = AddGetProject(project => project.ApplicationReceivedDate = DateTime.Today);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-      await NavigateAsync("Conversion Details");
+      await NavigateAsync("Conversion details");
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
 
       ElementsWithText("dt", "Date directive academy order (DAO) pack sent").Should().BeEmpty();
@@ -274,7 +274,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       AcademyConversionProject project = AddGetProject(project => project.ApplicationReceivedDate = null);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-      await NavigateAsync("Conversion Details");
+      await NavigateAsync("Conversion details");
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
 
       await Document.QuerySelectorAll<IHtmlAnchorElement>("a[data-test^=\"change-dao-pack-sent-date\"]")

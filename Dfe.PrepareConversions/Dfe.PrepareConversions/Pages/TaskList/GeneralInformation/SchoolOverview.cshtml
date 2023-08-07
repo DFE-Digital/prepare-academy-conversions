@@ -1,9 +1,11 @@
 @page "/task-list/{id:int}/school-overview"
 @using Dfe.PrepareConversions.TagHelpers
+@using Dfe.PrepareConversions.Data.Models
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
    Model.SuccessPage = Links.TaskList.Index.Page;
    ViewData["Title"] = "Confirm general information";
+   ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
 }
 
 @section BeforeMain
@@ -22,9 +24,23 @@
       <h1 class="govuk-heading-l">
          School overview
       </h1>
-      <div class="govuk-body">
-         <p data-test="annex-b-help">Some details have been taken from TRAMS. You can add more from<a asp-page="@Links.AnnexB.Index.Page" asp-route-id="@Model.Project.Id"> the Annex B form</a>.</p>
-      </div>
+        @if (ViewData["AcademyTypeAndRoute"] is AcademyTypeAndRoutes.Sponsored)
+        {
+           <div class="govuk-body">
+              <p data-test="annex-b-help">Some details have been taken from TRAMS. You can add more from<a asp-page="@Links.AnnexB.Index.Page" asp-route-id="@Model.Project.Id"> the Annex B form</a>.</p>
+           </div>
+        }
+        else
+        {
+           <div class="govuk-body">
+              This information comes from TRAMS and the
+              <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+           </div>
+            <p class="govuk-body-s">TRAMS last updated on: 23 March 2021</p>
+
+            <br>
+        }
+         
    </div>
    <div class="govuk-grid-column-full">
       @await Component.InvokeAsync("GeneralInformation")
