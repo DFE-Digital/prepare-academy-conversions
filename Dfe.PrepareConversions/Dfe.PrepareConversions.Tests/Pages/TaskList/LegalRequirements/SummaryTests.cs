@@ -24,7 +24,7 @@ public class SummaryTests : LegalRequirementsPageTestBase
    [Fact]
    public async Task Back_link_to_point_to_the_task_list_page()
    {
-      Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
+      Project = AddGetProject(project => project.SchoolOverviewSectionComplete = false);
       await Wizard.OpenSummary(Project.Id);
       BackLinkHref.Should().EndWith($"/task-list/{Project.Id}");
    }
@@ -32,7 +32,7 @@ public class SummaryTests : LegalRequirementsPageTestBase
    [Fact]
    public async Task Should_display_the_correct_school_name()
    {
-      Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
+      Project = AddGetProject(project => project.SchoolOverviewSectionComplete = false);
       await Wizard.OpenSummary(Project.Id);
       SchoolName.Should().Be(Project.SchoolName);
    }
@@ -40,7 +40,7 @@ public class SummaryTests : LegalRequirementsPageTestBase
    [Fact]
    public async Task Should_show_governing_body_resolution_as_empty_if_not_set()
    {
-      Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
+      Project = AddGetProject(project => project.SchoolOverviewSectionComplete = false);
       await Wizard.OpenSummary(Project.Id);
       GoverningBodyStatus.Should().Be("Empty");
    }
@@ -48,7 +48,7 @@ public class SummaryTests : LegalRequirementsPageTestBase
    [Fact]
    public async Task Should_show_consultation_as_empty_if_not_set()
    {
-      Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
+      Project = AddGetProject(project => project.SchoolOverviewSectionComplete = false);
       await Wizard.OpenSummary(Project.Id);
       ConsultationStatus.Should().Be("Empty");
    }
@@ -56,7 +56,7 @@ public class SummaryTests : LegalRequirementsPageTestBase
    [Fact]
    public async Task Should_show_diocesan_consent_as_empty_if_not_set()
    {
-      Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
+      Project = AddGetProject(project => project.SchoolOverviewSectionComplete = false);
       await Wizard.OpenSummary(Project.Id);
       DiocesanConsent.Should().Be("Empty");
    }
@@ -64,7 +64,7 @@ public class SummaryTests : LegalRequirementsPageTestBase
    [Fact]
    public async Task Should_show_foundation_consent_as_empty_if_not_set()
    {
-      Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
+      Project = AddGetProject(project => project.SchoolOverviewSectionComplete = false);
       await Wizard.OpenSummary(Project.Id);
       FoundationConsent.Should().Be("Empty");
    }

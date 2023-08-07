@@ -33,7 +33,7 @@ public class TaskListIndexTests : LegalRequirementsPageTestBase
    {
       Project = AddGetProject(project =>
       {
-         project.GeneralInformationSectionComplete = false;
+         project.SchoolOverviewSectionComplete = false;
          project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
       });
       await _wizard.OpenTaskList(Project.Id);

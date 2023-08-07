@@ -101,7 +101,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Should_display_general_information_section()
+   public async Task Should_display_school_overview_section()
    {
       AcademyConversionProject project = AddGetProject();
       EstablishmentResponse establishment = AddGetEstablishmentResponse(project.Urn.ToString());
@@ -140,21 +140,21 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Should_navigate_to_general_information_pan_page_and_back()
+   public async Task Should_navigate_to_school_overview_pan_page_and_back()
    {
       AcademyConversionProject project = AddGetProject();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
       await NavigateDataTestAsync("change-published-admission-number");
-      Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
+      Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-overview/published-admission-number");
 
       await NavigateAsync("Back");
       Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
    }
 
    [Fact]
-   public async Task Should_update_general_information_pan_and_navigate_back_to_preview()
+   public async Task Should_update_school_overview_pan_and_navigate_back_to_preview()
    {
       AcademyConversionProject project = AddGetProject();
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
@@ -166,7 +166,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
       await NavigateDataTestAsync("change-published-admission-number");
-      Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
+      Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-overview/published-admission-number");
 
       Document.QuerySelector<IHtmlInputElement>("#published-admission-number")!.Value.Should().Be(project.PublishedAdmissionNumber);
       Document.QuerySelector<IHtmlInputElement>("#published-admission-number")!.Value = request.PublishedAdmissionNumber;

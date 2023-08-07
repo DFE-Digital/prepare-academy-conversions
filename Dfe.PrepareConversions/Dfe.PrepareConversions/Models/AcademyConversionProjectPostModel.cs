@@ -103,7 +103,7 @@ public class AcademyConversionProjectPostModel
    
    public string ConversionSupportGrantChangeReason { get; set; }
 
-   //general info
+   // School Overview
 
    [BindProperty(Name = "published-admission-number")]
    [DisplayFormat(ConvertEmptyStringToNull = false)]
@@ -136,9 +136,9 @@ public class AcademyConversionProjectPostModel
    [DisplayFormat(ConvertEmptyStringToNull = false)]
    public string MemberOfParliamentParty { get; set; }
 
-   [BindProperty(Name = "general-information-complete")]
+   [BindProperty(Name = "school-overview-complete")]
    [ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
-   public bool? GeneralInformationSectionComplete { get; set; }
+   public bool? SchoolOverviewSectionComplete { get; set; }
 
    //school performance ofsted information
    [BindProperty(Name = "school-performance-additional-information")]

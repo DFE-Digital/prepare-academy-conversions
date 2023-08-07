@@ -7,7 +7,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
 {
    public static class SchoolOverviewGenerator
    {
-      public static void AddGeneralInformation(IDocumentBuilder builder, HtbTemplate document)
+      public static void AddSchoolOverview(IDocumentBuilder builder, HtbTemplate document)
       {
          builder.ReplacePlaceholderWithContent("SchoolOverview", build =>
          {

@@ -19,5 +19,5 @@ public class SchoolOverview
    public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string ParliamentaryConstituency { get; set; }
-   public bool? GeneralInformationSectionComplete { get; set; }
+   public bool? SchoolOverviewSectionComplete { get; set; }
 }

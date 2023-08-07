@@ -79,7 +79,7 @@ public class HtbTemplate
    [DocumentText("ProposedAcademyOpeningDate")]
    public string ProposedAcademyOpeningDate { get; set; }
 
-   //general info
+   // School Overview
    [DocumentText("SchoolPhase")]
    public string SchoolPhase { get; set; }
 

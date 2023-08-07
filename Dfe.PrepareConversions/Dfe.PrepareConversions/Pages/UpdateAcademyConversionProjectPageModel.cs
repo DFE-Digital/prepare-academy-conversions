@@ -126,7 +126,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          DistanceFromSchoolToTrustHeadquartersAdditionalInformation = AcademyConversionProject.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
          MemberOfParliamentName = AcademyConversionProject.MemberOfParliamentName,
          MemberOfParliamentParty = AcademyConversionProject.MemberOfParliamentParty,
-         GeneralInformationSectionComplete = AcademyConversionProject.GeneralInformationSectionComplete,
+         SchoolOverviewSectionComplete = AcademyConversionProject.SchoolOverviewSectionComplete,
          SchoolPerformanceAdditionalInformation = AcademyConversionProject.SchoolPerformanceAdditionalInformation,
          RationaleForProject = AcademyConversionProject.RationaleForProject,
          RationaleForTrust = AcademyConversionProject.RationaleForTrust,

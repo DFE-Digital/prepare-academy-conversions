@@ -103,9 +103,9 @@ public static class Links
       public static readonly LinkItem DaoPackSent = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/DaoPackSentDate");
    }
 
-   public static class GeneralInformationSection
+   public static class SchoolOverviewSection
    {
-      public static readonly LinkItem ConfirmGeneralInformation = AddLinkItem(page: "/TaskList/SchoolOverview/SchoolOverview");
+      public static readonly LinkItem ConfirmSchoolOverview = AddLinkItem(page: "/TaskList/SchoolOverview/SchoolOverview");
       public static readonly LinkItem PublishedAdmissionNumber = AddLinkItem(page: "/TaskList/SchoolOverview/PublishedAdmissionNumber");
       public static readonly LinkItem ViabilityIssues = AddLinkItem(page: "/TaskList/SchoolOverview/ViabilityIssues");
       public static readonly LinkItem FinancialDeficit = AddLinkItem(page: "/TaskList/SchoolOverview/FinancialDeficit");

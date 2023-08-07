@@ -62,7 +62,7 @@ public class ProjectViewModel: ProjectTypeBase
       DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
       MPName = project.MemberOfParliamentName;
       MPParty = project.MemberOfParliamentParty;
-      SchoolOverviewSectionComplete = project.GeneralInformationSectionComplete ?? false;
+      SchoolOverviewSectionComplete = project.SchoolOverviewSectionComplete ?? false;
 
       SchoolPerformanceAdditionalInformation = project.SchoolPerformanceAdditionalInformation;
 
@@ -151,7 +151,7 @@ public class ProjectViewModel: ProjectTypeBase
    public bool? AnnexBFormReceived { get; set; }
    public string AnnexBFormUrl { get; set; }
 
-   //general info
+   // School Overview
    public string PublishedAdmissionNumber { get; set; }
    public string PartOfPfiScheme { get; set; }
    public string PfiSchemeDetails { get; set; }

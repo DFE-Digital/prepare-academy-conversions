@@ -82,7 +82,7 @@ public class HtbTemplateTests
       }
 
       [Fact]
-      public void ItBuildstheGeneralInformationSuccessfully()
+      public void ItBuildstheSchoolOverviewSuccessfully()
       {
          Assert.Equal(_template.SchoolPhase, _schoolOverview.SchoolPhase);
          Assert.Equal(_template.AgeRange, $"{_schoolOverview.AgeRangeLower} to {_schoolOverview.AgeRangeUpper}");
@@ -166,7 +166,7 @@ public class HtbTemplateTests
       }
 
       [Fact]
-      public void ItDealsWithNullValuesWhenPopulatingTheFieldsForTheGeneralInformation()
+      public void ItDealsWithNullValuesWhenPopulatingTheFieldsForTheSchoolOverview()
       {
          HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _schoolOverview, _keyStagePerformance);
 

@@ -35,7 +35,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
 
          DocumentBuilder documentBuilder = DocumentBuilder.CreateFromTemplate(ms, document);
          AddSchoolAndTrustInfoAndProjectDates(documentBuilder, project);
-         AddGeneralInformation(documentBuilder, document);
+         AddSchoolOverview(documentBuilder, document);
          AddOfstedInformation(documentBuilder, document, project);
          AddRationale(documentBuilder, document, project);
          AddRisksAndIssues(documentBuilder, document);

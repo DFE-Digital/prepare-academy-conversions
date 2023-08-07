@@ -18,7 +18,7 @@ public class WhoDecidedIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_display_selected_schoolname()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/who-decided");
 
@@ -30,7 +30,7 @@ public class WhoDecidedIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_persist_who_decided()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/who-decided");
 
@@ -47,7 +47,7 @@ public class WhoDecidedIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_go_back_to_record_decision()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/who-decided");
 
@@ -59,7 +59,7 @@ public class WhoDecidedIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_display_error_when_nothing_selected()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/who-decided");
 
@@ -73,7 +73,7 @@ public class WhoDecidedIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_redirect_to_decline_reasons_if_project_declined()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
 
       RecordDecisionWizard wizard = new(Context);
       await wizard.StartFor(project.Id);

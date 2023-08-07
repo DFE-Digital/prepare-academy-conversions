@@ -7,7 +7,7 @@ using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.TaskList.GeneralInformation;
+namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolOverview;
 
 public class PublishedAdmissionNumberIntegrationTests : BaseIntegrationTests
 {
@@ -27,7 +27,7 @@ public class PublishedAdmissionNumberIntegrationTests : BaseIntegrationTests
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-overview");
       await NavigateAsync("Change", 0);
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-overview/published-admission-number");
       Document.QuerySelector<IHtmlInputElement>("#published-admission-number")!.Value.Should().Be(project.PublishedAdmissionNumber);
 
       Document.QuerySelector<IHtmlInputElement>("#published-admission-number")!.Value = request.PublishedAdmissionNumber;
@@ -43,7 +43,7 @@ public class PublishedAdmissionNumberIntegrationTests : BaseIntegrationTests
       AcademyConversionProject project = AddGetProject();
       AddPatchError(project.Id);
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-overview/published-admission-number");
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
@@ -55,7 +55,7 @@ public class PublishedAdmissionNumberIntegrationTests : BaseIntegrationTests
    {
       AcademyConversionProject project = AddGetProject();
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-overview/published-admission-number");
       await NavigateAsync("Back");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-overview");

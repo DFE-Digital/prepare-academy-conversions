@@ -34,7 +34,7 @@ public class SchoolOverviewViewComponent : ViewComponent
       AcademyConversionProject project = response.Body;
       SchoolOverview schoolOverview = await _schoolOverviewService.GetSchoolOverviewByUrn(project.Urn.ToString());
 
-      GeneralInformationViewModel viewModel = new()
+      SchoolOverviewViewModel viewModel = new()
       {
          Id = project.Id.ToString(),
          SchoolPhase = schoolOverview.SchoolPhase,

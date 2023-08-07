@@ -9,22 +9,22 @@ using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.TaskList.GeneralInformation;
+namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolOverview;
 
-public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
+public class ConfirmSchoolOverviewIntegrationTests : BaseIntegrationTests
 {
-   public ConfirmGeneralInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+   public ConfirmSchoolOverviewIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
 
    [Fact]
-   public async Task Should_be_in_progress_and_display_general_information()
+   public async Task Should_be_in_progress_and_display_school_overview()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
       EstablishmentResponse establishment = AddGetEstablishmentResponse(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      Document.QuerySelector("#general-information-status")!.TextContent.Trim().Should().Be("In Progress");
-      Document.QuerySelector("#general-information-status")!.ClassName.Should().Contain("blue");
+      Document.QuerySelector("#school-overview-status")!.TextContent.Trim().Should().Be("In Progress");
+      Document.QuerySelector("#school-overview-status")!.ClassName.Should().Contain("blue");
 
       await NavigateAsync("School overview");
 
@@ -86,23 +86,23 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Should_be_completed_and_checked_when_general_information_complete()
+   public async Task Should_be_completed_and_checked_when_school_overview_complete()
    {
-      AcademyConversionProject project = AddGetProject(project => project.GeneralInformationSectionComplete = true);
+      AcademyConversionProject project = AddGetProject(project => project.SchoolOverviewSectionComplete = true);
       AddGetEstablishmentResponse(project.Urn.ToString());
       AddPatchConfiguredProject(project, x =>
       {
-         x.GeneralInformationSectionComplete = true;
+         x.SchoolOverviewSectionComplete = true;
          x.Urn = project.Urn;
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      Document.QuerySelector("#general-information-status")!.TextContent.Trim().Should().Be("Completed");
+      Document.QuerySelector("#school-overview-status")!.TextContent.Trim().Should().Be("Completed");
 
       await NavigateAsync("School overview");
 
-      Document.QuerySelector<IHtmlInputElement>("#general-information-complete")!.IsChecked.Should().BeTrue();
+      Document.QuerySelector<IHtmlInputElement>("#school-overview-complete")!.IsChecked.Should().BeTrue();
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
@@ -110,7 +110,7 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Should_be_not_started_and_display_empty_when_general_information_not_prepopulated()
+   public async Task Should_be_not_started_and_display_empty_when_school_overview_not_prepopulated()
    {
       AcademyConversionProject project = AddGetProject(project =>
       {
@@ -121,21 +121,21 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
          project.FinancialDeficit = null;
          project.DistanceFromSchoolToTrustHeadquarters = null;
          project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation = null;
-         project.GeneralInformationSectionComplete = false;
+         project.SchoolOverviewSectionComplete = false;
          project.MemberOfParliamentName = null;
          project.MemberOfParliamentParty = null;
       });
       AddGetEstablishmentResponse(project.Urn.ToString(), true);
       AddPatchConfiguredProject(project, x =>
       {
-         x.GeneralInformationSectionComplete = false;
+         x.SchoolOverviewSectionComplete = false;
          x.Urn = project.Urn;
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      Document.QuerySelector("#general-information-status")!.TextContent.Trim().Should().Be("Not Started");
-      Document.QuerySelector("#general-information-status")!.ClassName.Should().Contain("grey");
+      Document.QuerySelector("#school-overview-status")!.TextContent.Trim().Should().Be("Not Started");
+      Document.QuerySelector("#school-overview-status")!.ClassName.Should().Contain("grey");
 
       await NavigateAsync("School overview");
 
@@ -155,7 +155,7 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#parliamentary-constituency")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#member-of-parliament-name")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#member-of-parliament-party")!.TextContent.Should().Be("Empty");
-      Document.QuerySelector<IHtmlInputElement>("#general-information-complete")!.IsChecked.Should().BeFalse();
+      Document.QuerySelector<IHtmlInputElement>("#school-overview-complete")!.IsChecked.Should().BeFalse();
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
@@ -177,7 +177,7 @@ public class ConfirmGeneralInformationIntegrationTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Back_link_should_navigate_from_general_information_to_task_list()
+   public async Task Back_link_should_navigate_from_school_overview_to_task_list()
    {
       AcademyConversionProject project = AddGetProject();
       AddGetEstablishmentResponse(project.Urn.ToString());

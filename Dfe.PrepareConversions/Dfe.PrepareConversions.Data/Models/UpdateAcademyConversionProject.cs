@@ -34,7 +34,7 @@ public class UpdateAcademyConversionProject
    public string ConversionSupportGrantChangeReason { get; set; }
    public DateTime? DaoPackSentDate { get; set; }
 
-   //general info
+   // School Overview
    public string PublishedAdmissionNumber { get; set; }
    public string ViabilityIssues { get; set; }
    public string FinancialDeficit { get; set; }
@@ -45,7 +45,7 @@ public class UpdateAcademyConversionProject
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string MemberOfParliamentName { get; set; }
    public string MemberOfParliamentParty { get; set; }
-   public bool? GeneralInformationSectionComplete { get; set; }
+   public bool? SchoolOverviewSectionComplete { get; set; }
 
    // Annex B
    public bool? AnnexBFormReceived { get; set; }

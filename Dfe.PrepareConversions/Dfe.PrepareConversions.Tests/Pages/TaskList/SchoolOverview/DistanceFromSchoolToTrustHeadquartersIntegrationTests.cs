@@ -8,7 +8,7 @@ using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.TaskList.GeneralInformation;
+namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolOverview;
 
 public class DistanceFromTrustHeadquartersIntegrationTests : BaseIntegrationTests
 {
@@ -28,7 +28,7 @@ public class DistanceFromTrustHeadquartersIntegrationTests : BaseIntegrationTest
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-overview");
       await NavigateAsync("Change", 4);
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/how-far-converting-school-from-trust");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-overview/how-far-converting-school-from-trust");
       Document.QuerySelector<IHtmlInputElement>("#distance-to-trust-headquarters")!.Value.Should().Be(project.DistanceFromSchoolToTrustHeadquarters.ToSafeString());
       Document.QuerySelector<IHtmlTextAreaElement>("#distance-to-trust-headquarters-additional-information")!.TextContent.Should()
          .Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
@@ -48,7 +48,7 @@ public class DistanceFromTrustHeadquartersIntegrationTests : BaseIntegrationTest
       AcademyConversionProject project = AddGetProject();
       AddPatchError(project.Id);
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/how-far-converting-school-from-trust");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-overview/how-far-converting-school-from-trust");
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
@@ -60,7 +60,7 @@ public class DistanceFromTrustHeadquartersIntegrationTests : BaseIntegrationTest
    {
       AcademyConversionProject project = AddGetProject();
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/how-far-converting-school-from-trust");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-overview/how-far-converting-school-from-trust");
       await NavigateAsync("Back");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-overview");
@@ -71,13 +71,13 @@ public class DistanceFromTrustHeadquartersIntegrationTests : BaseIntegrationTest
    {
       AcademyConversionProject project = AddGetProject();
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/how-far-converting-school-from-trust");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-overview/how-far-converting-school-from-trust");
       string invalidEntry = "abc";
       Document.QuerySelector<IHtmlInputElement>("#distance-to-trust-headquarters")!.Value = invalidEntry;
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/how-far-converting-school-from-trust");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-overview/how-far-converting-school-from-trust");
 
       Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
       Document.QuerySelector(".govuk-error-summary")!.TextContent.Should()
@@ -93,7 +93,7 @@ public class DistanceFromTrustHeadquartersIntegrationTests : BaseIntegrationTest
    {
       AcademyConversionProject project = AddGetProject();
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/how-far-converting-school-from-trust");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-overview/how-far-converting-school-from-trust");
 
       Document.QuerySelector<IHtmlDivElement>("#distance-to-trust-headquarters-suffix")!.InnerHtml.Should().Be("miles");
    }

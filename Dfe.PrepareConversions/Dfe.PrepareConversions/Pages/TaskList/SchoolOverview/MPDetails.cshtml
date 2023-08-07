@@ -1,9 +1,9 @@
-﻿@page  "/task-list/{id:int}/confirm-general-information/enter-MP-name-and-political-party"
+﻿@page  "/task-list/{id:int}/confirm-school-overview/enter-MP-name-and-political-party"
 @using Dfe.PrepareConversions.TagHelpers
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
    Layout = "_QuestionLayout";
-   Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
+   Model.SuccessPage = Links.SchoolOverviewSection.ConfirmSchoolOverview.Page;
    ViewData["Title"] = "MP details";
    ViewData["ShowTheyWorkForYouLink"] = true;
    ViewData["SchoolName"] = Model.Project.SchoolName;
@@ -13,7 +13,7 @@
 
 @section BeforeMain
 {
-   <govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation"/>
+   <govuk-back-link link-item="@Links.SchoolOverviewSection.ConfirmSchoolOverview"/>
 }
 
 <div class="govuk-form-group">
