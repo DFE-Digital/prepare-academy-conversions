@@ -11,7 +11,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
       {
          builder.ReplacePlaceholderWithContent("SchoolOverview", build =>
          {
-            build.AddHeading("General Information", HeadingLevel.One);
+            build.AddHeading("School Overview", HeadingLevel.One);
             build.AddTable(new List<TextElement[]>
          {
             new[] { new TextElement { Value = "School type", Bold = true }, new TextElement { Value = document.SchoolType } },
