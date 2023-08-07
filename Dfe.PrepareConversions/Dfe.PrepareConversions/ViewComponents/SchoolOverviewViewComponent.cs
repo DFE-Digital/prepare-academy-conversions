@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.ViewComponents;
 
-public class GeneralInformationViewComponent : ViewComponent
+public class SchoolOverviewViewComponent : ViewComponent
 {
-   private readonly GeneralInformationService _generalInformationService;
+   private readonly SchoolOverviewService _schoolOverviewService;
    private readonly IAcademyConversionProjectRepository _repository;
 
-   public GeneralInformationViewComponent(GeneralInformationService generalInformationService, IAcademyConversionProjectRepository repository)
+   public SchoolOverviewViewComponent(SchoolOverviewService schoolOverviewService, IAcademyConversionProjectRepository repository)
    {
-      _generalInformationService = generalInformationService;
+      _schoolOverviewService = schoolOverviewService;
       _repository = repository;
    }
 
@@ -32,30 +32,30 @@ public class GeneralInformationViewComponent : ViewComponent
       }
 
       AcademyConversionProject project = response.Body;
-      GeneralInformation generalInformation = await _generalInformationService.GetGeneralInformationByUrn(project.Urn.ToString());
+      SchoolOverview schoolOverview = await _schoolOverviewService.GetSchoolOverviewByUrn(project.Urn.ToString());
 
-      GeneralInformationViewModel viewModel = new()
+      SchoolOverviewViewModel viewModel = new()
       {
          Id = project.Id.ToString(),
-         SchoolPhase = generalInformation.SchoolPhase,
-         AgeRange = !string.IsNullOrEmpty(generalInformation.AgeRangeLower) && !string.IsNullOrEmpty(generalInformation.AgeRangeUpper)
-            ? $"{generalInformation.AgeRangeLower} to {generalInformation.AgeRangeUpper}"
+         SchoolPhase = schoolOverview.SchoolPhase,
+         AgeRange = !string.IsNullOrEmpty(schoolOverview.AgeRangeLower) && !string.IsNullOrEmpty(schoolOverview.AgeRangeUpper)
+            ? $"{schoolOverview.AgeRangeLower} to {schoolOverview.AgeRangeUpper}"
             : "",
-         SchoolType = generalInformation.SchoolType,
-         NumberOnRoll = generalInformation.NumberOnRoll?.ToString(),
-         PercentageSchoolFull = generalInformation.NumberOnRoll.AsPercentageOf(generalInformation.SchoolCapacity),
-         SchoolCapacity = generalInformation.SchoolCapacity?.ToString(),
+         SchoolType = schoolOverview.SchoolType,
+         NumberOnRoll = schoolOverview.NumberOnRoll?.ToString(),
+         PercentageSchoolFull = schoolOverview.NumberOnRoll.AsPercentageOf(schoolOverview.SchoolCapacity),
+         SchoolCapacity = schoolOverview.SchoolCapacity?.ToString(),
          PublishedAdmissionNumber = project.PublishedAdmissionNumber,
-         PercentageFreeSchoolMeals = !string.IsNullOrEmpty(generalInformation.PercentageFreeSchoolMeals) ? $"{generalInformation.PercentageFreeSchoolMeals}%" : "",
+         PercentageFreeSchoolMeals = !string.IsNullOrEmpty(schoolOverview.PercentageFreeSchoolMeals) ? $"{schoolOverview.PercentageFreeSchoolMeals}%" : "",
          PartOfPfiScheme = project.PartOfPfiScheme,
          PfiSchemeDetails = project.PfiSchemeDetails,
          ViabilityIssues = project.ViabilityIssues,
          FinancialDeficit = project.FinancialDeficit,
-         IsSchoolLinkedToADiocese = generalInformation.IsSchoolLinkedToADiocese,
+         IsSchoolLinkedToADiocese = schoolOverview.IsSchoolLinkedToADiocese,
          DistanceFromSchoolToTrustHeadquarters =
             ViewData["Return"] == null ? project.DistanceFromSchoolToTrustHeadquarters.ToSafeString() : $"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()}",
          DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
-         ParliamentaryConstituency = generalInformation.ParliamentaryConstituency,
+         ParliamentaryConstituency = schoolOverview.ParliamentaryConstituency,
          MemberOfParliamentName = project.MemberOfParliamentName,
          MemberOfParliamentParty = project.MemberOfParliamentParty
       };

@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Data.Services;
 
-public class GeneralInformationService
+public class SchoolOverviewService
 {
    private readonly IGetEstablishment _getEstablishment;
 
-   public GeneralInformationService(IGetEstablishment getEstablishment)
+   public SchoolOverviewService(IGetEstablishment getEstablishment)
    {
       _getEstablishment = getEstablishment;
    }
 
-   public async Task<GeneralInformation> GetGeneralInformationByUrn(string urn)
+   public async Task<SchoolOverview> GetSchoolOverviewByUrn(string urn)
    {
       EstablishmentResponse establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
-      GeneralInformation generalInformation = new()
+      SchoolOverview schoolOverview = new()
       {
          SchoolPostcode = establishment.Address?.Postcode,
          SchoolPhase = establishment.PhaseOfEducation?.Name,
@@ -31,7 +31,7 @@ public class GeneralInformationService
          ParliamentaryConstituency = establishment.ParliamentaryConstituency?.Name
       };
 
-      return generalInformation;
+      return schoolOverview;
    }
 
    private static string IsPartOfADiocesanTrust(NameAndCodeResponse nameAndCode)
