@@ -1,6 +1,6 @@
 ﻿namespace Dfe.PrepareConversions.Data.Models;
 
-public class GeneralInformation
+public class SchoolOverview
 {
    public string SchoolPostcode { get; set; }
    public string SchoolPhase { get; set; }

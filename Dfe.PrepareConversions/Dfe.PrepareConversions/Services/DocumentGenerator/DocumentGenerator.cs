@@ -11,7 +11,7 @@ using System.Reflection;
 
 // Document Section Generators
 using static Dfe.PrepareConversions.Services.DocumentGenerator.SchoolAndTrustInformationAndProjectDatesGenerator;
-using static Dfe.PrepareConversions.Services.DocumentGenerator.GeneralInformationGenerator;
+using static Dfe.PrepareConversions.Services.DocumentGenerator.SchoolOverviewGenerator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.OfstedInformationGenerator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.KeyStage2Generator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.KeyStage4Generator;
@@ -27,10 +27,10 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
    public class DocumentGenerator
    {
       public HtbTemplate GenerateDocument(ApiResponse<AcademyConversionProject> response, SchoolPerformance schoolPerformance,
-     GeneralInformation generalInformation, KeyStagePerformance keyStagePerformance, AcademyConversionProject project,
+     SchoolOverview schoolOverview, KeyStagePerformance keyStagePerformance, AcademyConversionProject project,
      out byte[] documentByteArray)
       {
-         HtbTemplate document = HtbTemplate.Build(response.Body, schoolPerformance, generalInformation, keyStagePerformance);
+         HtbTemplate document = HtbTemplate.Build(response.Body, schoolPerformance, schoolOverview, keyStagePerformance);
          MemoryStream ms = CreateMemoryStream("htb-template");
 
          DocumentBuilder documentBuilder = DocumentBuilder.CreateFromTemplate(ms, document);

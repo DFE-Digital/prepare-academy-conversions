@@ -62,7 +62,7 @@ public class ProjectViewModel: ProjectTypeBase
       DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
       MPName = project.MemberOfParliamentName;
       MPParty = project.MemberOfParliamentParty;
-      GeneralInformationSectionComplete = project.GeneralInformationSectionComplete ?? false;
+      SchoolOverviewSectionComplete = project.GeneralInformationSectionComplete ?? false;
 
       SchoolPerformanceAdditionalInformation = project.SchoolPerformanceAdditionalInformation;
 
@@ -161,7 +161,7 @@ public class ProjectViewModel: ProjectTypeBase
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string MPName { get; set; }
    public string MPParty { get; set; }
-   public bool GeneralInformationSectionComplete { get; set; }
+   public bool SchoolOverviewSectionComplete { get; set; }
 
    //school performance ofsted information
    public string SchoolPerformanceAdditionalInformation { get; set; }

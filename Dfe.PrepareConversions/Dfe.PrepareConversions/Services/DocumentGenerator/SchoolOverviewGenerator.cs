@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator
 {
-   public static class GeneralInformationGenerator
+   public static class SchoolOverviewGenerator
    {
       public static void AddGeneralInformation(IDocumentBuilder builder, HtbTemplate document)
       {
-         builder.ReplacePlaceholderWithContent("GeneralInformation", build =>
+         builder.ReplacePlaceholderWithContent("SchoolOverview", build =>
          {
-            build.AddHeading("General Information", HeadingLevel.One);
+            build.AddHeading("School overview", HeadingLevel.One);
             build.AddTable(new List<TextElement[]>
          {
             new[] { new TextElement { Value = "School type", Bold = true }, new TextElement { Value = document.SchoolType } },

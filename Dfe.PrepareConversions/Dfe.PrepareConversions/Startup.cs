@@ -126,7 +126,7 @@ public class Startup
       services.AddScoped<IGetEstablishment, EstablishmentService>();
       services.Decorate<IGetEstablishment, GetEstablishmentItemCacheDecorator>();
       services.AddScoped<SchoolPerformanceService>();
-      services.AddScoped<GeneralInformationService>();
+      services.AddScoped<SchoolOverviewService>();
       services.AddScoped<KeyStagePerformanceService>();
       services.AddScoped<ITrustsRepository, TrustsRepository>();
       services.AddScoped<IAcademyConversionProjectRepository, AcademyConversionProjectRepository>();
