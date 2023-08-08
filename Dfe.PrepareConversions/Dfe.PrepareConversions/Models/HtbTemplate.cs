@@ -128,23 +128,8 @@ public class HtbTemplate
    [DocumentText("ParliamentaryConstituency")]
    public string ParliamentaryConstituency { get; set; }
 
-   public string MPName { get; set; }
-   public string MPParty { get; set; }
-
-   [DocumentText("MPNameAndParty")]
-   public string MPNameAndParty
-   {
-      get
-      {
-         string delimiter = string.Empty;
-         if (!string.IsNullOrEmpty(MPName) && !string.IsNullOrEmpty(MPParty))
-         {
-            delimiter = ", ";
-         }
-
-         return $"{MPName}{delimiter}{MPParty}";
-      }
-   }
+   [DocumentText("MemberOfParliamentNameAndParty")]
+   public string MemberOfParliamentNameAndParty { get; set; }
 
    // rationale
    [DocumentText("RationaleForProject")]
@@ -276,8 +261,7 @@ public class HtbTemplate
             : null,
          DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
          ParliamentaryConstituency = schoolOverview.ParliamentaryConstituency,
-         MPName = project.MemberOfParliamentName,
-         MPParty = project.MemberOfParliamentParty,
+         MemberOfParliamentNameAndParty = project.MemberOfParliamentNameAndParty,
          RationaleForProject = project.RationaleForProject,
          RationaleForTrust = project.RationaleForTrust,
          RisksAndIssues = project.RisksAndIssues,

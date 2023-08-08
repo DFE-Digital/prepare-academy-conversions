@@ -43,8 +43,7 @@ public class UpdateAcademyConversionProject
    public string PfiSchemeDetails { get; set; }
    public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
-   public string MemberOfParliamentName { get; set; }
-   public string MemberOfParliamentParty { get; set; }
+   public string MemberOfParliamentNameAndParty { get; set; }
    public bool? SchoolOverviewSectionComplete { get; set; }
 
    // Annex B

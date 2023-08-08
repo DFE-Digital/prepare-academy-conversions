@@ -56,8 +56,7 @@ public class SchoolOverviewViewComponent : ViewComponent
             ViewData["Return"] == null ? project.DistanceFromSchoolToTrustHeadquarters.ToSafeString() : $"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()}",
          DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
          ParliamentaryConstituency = schoolOverview.ParliamentaryConstituency,
-         MemberOfParliamentName = project.MemberOfParliamentName,
-         MemberOfParliamentParty = project.MemberOfParliamentParty
+         MemberOfParliamentNameAndParty = project.MemberOfParliamentNameAndParty,
       };
 
       return View(viewModel);

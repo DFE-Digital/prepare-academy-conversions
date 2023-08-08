@@ -20,8 +20,7 @@ public class MPDetailsIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-overview/enter-MP-name-and-political-party");
 
-      Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-name")!.Value.Should().Be(project.MemberOfParliamentName);
-      Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-party")!.Value.Should().Be(project.MemberOfParliamentParty);
+      Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-name-and-party")!.Value.Should().Be(project.MemberOfParliamentNameAndParty);
    }
 
    [Fact]
@@ -68,8 +67,7 @@ public class MPDetailsIntegrationTests : BaseIntegrationTests
       AddGetEstablishmentResponse(project.Urn.ToString());
       UpdateAcademyConversionProject request = AddPatchProjectMany(project, composer =>
          composer
-            .With(r => r.MemberOfParliamentName)
-            .With(r => r.MemberOfParliamentParty)
+            .With(r => r.MemberOfParliamentNameAndParty)
             .With(r => r.Urn, project.Urn));
 
       // open SchoolOverview page
@@ -80,12 +78,10 @@ public class MPDetailsIntegrationTests : BaseIntegrationTests
 
       // check existing details are there
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-overview/enter-MP-name-and-political-party");
-      Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-name")!.Value.Should().Be(project.MemberOfParliamentName);
-      Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-party")!.Value.Should().Be(project.MemberOfParliamentParty);
+      Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-name-and-party")!.Value.Should().Be(project.MemberOfParliamentNameAndParty);
 
       // change details
-      Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-name")!.Value = request.MemberOfParliamentName;
-      Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-party")!.Value = request.MemberOfParliamentParty;
+      Document.QuerySelector<IHtmlInputElement>("#member-of-parliament-name-and-party")!.Value = request.MemberOfParliamentNameAndParty;
 
       // move back to SchoolOverview page
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();

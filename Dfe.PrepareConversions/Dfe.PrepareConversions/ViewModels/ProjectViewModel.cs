@@ -60,8 +60,7 @@ public class ProjectViewModel: ProjectTypeBase
       FinancialDeficit = project.FinancialDeficit;
       DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters;
       DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
-      MPName = project.MemberOfParliamentName;
-      MPParty = project.MemberOfParliamentParty;
+      MemberOfParliamentNameAndParty = project.MemberOfParliamentNameAndParty;
       SchoolOverviewSectionComplete = project.SchoolOverviewSectionComplete ?? false;
 
       SchoolPerformanceAdditionalInformation = project.SchoolPerformanceAdditionalInformation;
@@ -159,8 +158,7 @@ public class ProjectViewModel: ProjectTypeBase
    public string FinancialDeficit { get; set; }
    public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
-   public string MPName { get; set; }
-   public string MPParty { get; set; }
+   public string MemberOfParliamentNameAndParty { get; set; }
    public bool SchoolOverviewSectionComplete { get; set; }
 
    //school performance ofsted information

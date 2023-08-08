@@ -45,8 +45,7 @@ public class ConfirmSchoolOverviewIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#distance-to-trust-headquarters")!.TextContent.Should().Be($"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles");
       Document.QuerySelector("#distance-to-trust-headquarters-additional-text")!.TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
       Document.QuerySelector("#parliamentary-constituency")!.TextContent.Should().Be(establishment.ParliamentaryConstituency.Name);
-      Document.QuerySelector("#member-of-parliament-name")!.TextContent.Should().Be(project.MemberOfParliamentName);
-      Document.QuerySelector("#member-of-parliament-party")!.TextContent.Should().Be(project.MemberOfParliamentParty);
+      Document.QuerySelector("#member-of-parliament-name-and-party")!.TextContent.Should().Be(project.MemberOfParliamentNameAndParty);
    }
 
    [Fact]
@@ -122,8 +121,7 @@ public class ConfirmSchoolOverviewIntegrationTests : BaseIntegrationTests
          project.DistanceFromSchoolToTrustHeadquarters = null;
          project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation = null;
          project.SchoolOverviewSectionComplete = false;
-         project.MemberOfParliamentName = null;
-         project.MemberOfParliamentParty = null;
+         project.MemberOfParliamentNameAndParty = null;
       });
       AddGetEstablishmentResponse(project.Urn.ToString(), true);
       AddPatchConfiguredProject(project, x =>
@@ -153,8 +151,7 @@ public class ConfirmSchoolOverviewIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#diocesan-multi-academy-trust")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#distance-to-trust-headquarters")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#parliamentary-constituency")!.TextContent.Should().Be("Empty");
-      Document.QuerySelector("#member-of-parliament-name")!.TextContent.Should().Be("Empty");
-      Document.QuerySelector("#member-of-parliament-party")!.TextContent.Should().Be("Empty");
+      Document.QuerySelector("#member-of-parliament-name-and-party")!.TextContent.Should().Be("Empty");
       Document.QuerySelector<IHtmlInputElement>("#school-overview-complete")!.IsChecked.Should().BeFalse();
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();

@@ -35,7 +35,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
                new TextElement { Value = $"{document.DistanceFromSchoolToTrustHeadquarters} {document.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}" }
             },
             new[] { new TextElement { Value = "Parliamentary constituency", Bold = true }, new TextElement { Value = document.ParliamentaryConstituency } },
-            new[] { new TextElement { Value = "MP name and political party", Bold = true }, new TextElement { Value = document.MPNameAndParty } }
+            new[] { new TextElement { Value = "MP name and political party", Bold = true }, new TextElement { Value = document.MemberOfParliamentNameAndParty } }
          });
          });
       }

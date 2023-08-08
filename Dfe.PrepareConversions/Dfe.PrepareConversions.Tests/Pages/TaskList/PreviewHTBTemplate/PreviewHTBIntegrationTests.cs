@@ -124,8 +124,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#distance-to-trust-headquarters")!.TextContent.Should().Be($"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles");
       Document.QuerySelector("#distance-to-trust-headquarters-additional-text")!.TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
       Document.QuerySelector("#parliamentary-constituency")!.TextContent.Should().Be(establishment.ParliamentaryConstituency.Name);
-      Document.QuerySelector("#member-of-parliament-name")!.TextContent.Should().Be(project.MemberOfParliamentName);
-      Document.QuerySelector("#member-of-parliament-party")!.TextContent.Should().Be(project.MemberOfParliamentParty);
+      Document.QuerySelector("#member-of-parliament-name-and-party")!.TextContent.Should().Be(project.MemberOfParliamentNameAndParty);
    }
 
    [Fact]

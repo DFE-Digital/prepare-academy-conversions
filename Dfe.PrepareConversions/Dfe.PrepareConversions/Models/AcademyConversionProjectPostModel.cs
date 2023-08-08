@@ -128,13 +128,9 @@ public class AcademyConversionProjectPostModel
    [DisplayFormat(ConvertEmptyStringToNull = false)]
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
 
-   [BindProperty(Name = "member-of-parliament-name")]
+   [BindProperty(Name = "member-of-parliament-name-and-party")]
    [DisplayFormat(ConvertEmptyStringToNull = false)]
-   public string MemberOfParliamentName { get; set; }
-
-   [BindProperty(Name = "member-of-parliament-party")]
-   [DisplayFormat(ConvertEmptyStringToNull = false)]
-   public string MemberOfParliamentParty { get; set; }
+   public string MemberOfParliamentNameAndParty { get; set; }
 
    [BindProperty(Name = "school-overview-complete")]
    [ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
