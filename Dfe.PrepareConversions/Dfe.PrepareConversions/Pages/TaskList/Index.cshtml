@@ -34,11 +34,11 @@
           <ul class="app-task-list__items govuk-!-padding-left-0">
              <li class="app-task-list__item">
                 <span class="app-task-list__task-name">
-                   <a class="govuk-link" asp-page="@Links.GeneralInformationSection.ConfirmGeneralInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="la-info-template-status">
+                   <a class="govuk-link" asp-page="@Links.SchoolOverviewSection.ConfirmSchoolOverview.Page" asp-route-id="@Model.Project.Id" aria-describedby="la-info-template-status">
                       School overview
                    </a>
                 </span>
-                <strong class="govuk-tag @Model.TaskList.GeneralInformationTaskListStatus.CssClass app-task-list__tag" id="general-information-status"> @Model.TaskList.GeneralInformationTaskListStatus.Status</strong>
+                <strong class="govuk-tag @Model.TaskList.SchoolOverviewTaskListStatus.CssClass app-task-list__tag" id="school-overview-status"> @Model.TaskList.SchoolOverviewTaskListStatus.Status</strong>
              </li>
              <li class="app-task-list__item">
                 <span class="app-task-list__task-name">

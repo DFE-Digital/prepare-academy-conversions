@@ -79,7 +79,7 @@ public class HtbTemplate
    [DocumentText("ProposedAcademyOpeningDate")]
    public string ProposedAcademyOpeningDate { get; set; }
 
-   //general info
+   // School Overview
    [DocumentText("SchoolPhase")]
    public string SchoolPhase { get; set; }
 
@@ -128,23 +128,8 @@ public class HtbTemplate
    [DocumentText("ParliamentaryConstituency")]
    public string ParliamentaryConstituency { get; set; }
 
-   public string MPName { get; set; }
-   public string MPParty { get; set; }
-
-   [DocumentText("MPNameAndParty")]
-   public string MPNameAndParty
-   {
-      get
-      {
-         string delimiter = string.Empty;
-         if (!string.IsNullOrEmpty(MPName) && !string.IsNullOrEmpty(MPParty))
-         {
-            delimiter = ", ";
-         }
-
-         return $"{MPName}{delimiter}{MPParty}";
-      }
-   }
+   [DocumentText("MemberOfParliamentNameAndParty")]
+   public string MemberOfParliamentNameAndParty { get; set; }
 
    // rationale
    [DocumentText("RationaleForProject")]
@@ -230,7 +215,7 @@ public class HtbTemplate
 
    public static HtbTemplate Build(AcademyConversionProject project,
                                    SchoolPerformance schoolPerformance,
-                                   GeneralInformation generalInformation,
+                                   SchoolOverview schoolOverview,
                                    KeyStagePerformance keyStagePerformance)
    {
       HtbTemplate htbTemplate = new()
@@ -257,27 +242,26 @@ public class HtbTemplate
          AcademyTypeRouteAndConversionGrant = $"{project.AcademyTypeAndRoute} - {project.ConversionSupportGrantAmount?.ToMoneyString(true)}",
          ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
          ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(),
-         SchoolPhase = generalInformation.SchoolPhase,
-         AgeRange = !string.IsNullOrEmpty(generalInformation.AgeRangeLower) && !string.IsNullOrEmpty(generalInformation.AgeRangeUpper)
-            ? $"{generalInformation.AgeRangeLower} to {generalInformation.AgeRangeUpper}"
+         SchoolPhase = schoolOverview.SchoolPhase,
+         AgeRange = !string.IsNullOrEmpty(schoolOverview.AgeRangeLower) && !string.IsNullOrEmpty(schoolOverview.AgeRangeUpper)
+            ? $"{schoolOverview.AgeRangeLower} to {schoolOverview.AgeRangeUpper}"
             : "",
-         SchoolType = generalInformation.SchoolType,
-         NumberOnRoll = generalInformation.NumberOnRoll?.ToString(),
-         PercentageSchoolFull = generalInformation.NumberOnRoll.AsPercentageOf(generalInformation.SchoolCapacity),
-         SchoolCapacity = generalInformation.SchoolCapacity?.ToString(),
+         SchoolType = schoolOverview.SchoolType,
+         NumberOnRoll = schoolOverview.NumberOnRoll?.ToString(),
+         PercentageSchoolFull = schoolOverview.NumberOnRoll.AsPercentageOf(schoolOverview.SchoolCapacity),
+         SchoolCapacity = schoolOverview.SchoolCapacity?.ToString(),
          PublishedAdmissionNumber = project.PublishedAdmissionNumber,
-         PercentageFreeSchoolMeals = !string.IsNullOrEmpty(generalInformation.PercentageFreeSchoolMeals) ? $"{generalInformation.PercentageFreeSchoolMeals}%" : "",
+         PercentageFreeSchoolMeals = !string.IsNullOrEmpty(schoolOverview.PercentageFreeSchoolMeals) ? $"{schoolOverview.PercentageFreeSchoolMeals}%" : "",
          PartOfPfiScheme = project.PartOfPfiScheme,
          ViabilityIssues = project.ViabilityIssues,
          FinancialDeficit = project.FinancialDeficit,
-         IsSchoolLinkedToADiocese = generalInformation.IsSchoolLinkedToADiocese,
+         IsSchoolLinkedToADiocese = schoolOverview.IsSchoolLinkedToADiocese,
          DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters != null
             ? $"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles"
             : null,
          DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
-         ParliamentaryConstituency = generalInformation.ParliamentaryConstituency,
-         MPName = project.MemberOfParliamentName,
-         MPParty = project.MemberOfParliamentParty,
+         ParliamentaryConstituency = schoolOverview.ParliamentaryConstituency,
+         MemberOfParliamentNameAndParty = project.MemberOfParliamentNameAndParty,
          RationaleForProject = project.RationaleForProject,
          RationaleForTrust = project.RationaleForTrust,
          RisksAndIssues = project.RisksAndIssues,

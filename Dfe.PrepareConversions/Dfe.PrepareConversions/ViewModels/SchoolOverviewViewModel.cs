@@ -1,6 +1,6 @@
 ﻿namespace Dfe.PrepareConversions.ViewModels;
 
-public class GeneralInformationViewModel
+public class SchoolOverviewViewModel
 {
    public string Id { get; set; }
    public string SchoolPhase { get; set; }
@@ -20,7 +20,6 @@ public class GeneralInformationViewModel
    public string DistanceFromSchoolToTrustHeadquarters { get; set; }
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string ParliamentaryConstituency { get; set; }
-   public string MemberOfParliamentName { get; set; }
-   public string MemberOfParliamentParty { get; set; }
-   public bool? GeneralInformationSectionComplete { get; set; }
+   public string MemberOfParliamentNameAndParty { get; set; }
+   public bool? SchoolOverviewSectionComplete { get; set; }
 }

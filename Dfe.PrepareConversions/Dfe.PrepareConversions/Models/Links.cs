@@ -103,15 +103,15 @@ public static class Links
       public static readonly LinkItem DaoPackSent = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/DaoPackSentDate");
    }
 
-   public static class GeneralInformationSection
+   public static class SchoolOverviewSection
    {
-      public static readonly LinkItem ConfirmGeneralInformation = AddLinkItem(page: "/TaskList/GeneralInformation/SchoolOverview");
-      public static readonly LinkItem PublishedAdmissionNumber = AddLinkItem(page: "/TaskList/GeneralInformation/PublishedAdmissionNumber");
-      public static readonly LinkItem ViabilityIssues = AddLinkItem(page: "/TaskList/GeneralInformation/ViabilityIssues");
-      public static readonly LinkItem FinancialDeficit = AddLinkItem(page: "/TaskList/GeneralInformation/FinancialDeficit");
-      public static readonly LinkItem DistanceFromTrustHeadquarters = AddLinkItem(page: "/TaskList/GeneralInformation/DistanceFromTrustHeadquarters");
-      public static readonly LinkItem MPDetails = AddLinkItem(page: "/TaskList/GeneralInformation/MPDetails");
-      public static readonly LinkItem PartOfPfiScheme = AddLinkItem(page: "/TaskList/GeneralInformation/PartOfPfiScheme");
+      public static readonly LinkItem ConfirmSchoolOverview = AddLinkItem(page: "/TaskList/SchoolOverview/SchoolOverview");
+      public static readonly LinkItem PublishedAdmissionNumber = AddLinkItem(page: "/TaskList/SchoolOverview/PublishedAdmissionNumber");
+      public static readonly LinkItem ViabilityIssues = AddLinkItem(page: "/TaskList/SchoolOverview/ViabilityIssues");
+      public static readonly LinkItem FinancialDeficit = AddLinkItem(page: "/TaskList/SchoolOverview/FinancialDeficit");
+      public static readonly LinkItem DistanceFromTrustHeadquarters = AddLinkItem(page: "/TaskList/SchoolOverview/DistanceFromTrustHeadquarters");
+      public static readonly LinkItem MPDetails = AddLinkItem(page: "/TaskList/SchoolOverview/MPDetails");
+      public static readonly LinkItem PartOfPfiScheme = AddLinkItem(page: "/TaskList/SchoolOverview/PartOfPfiScheme");
    }
 
    public static class RationaleSection

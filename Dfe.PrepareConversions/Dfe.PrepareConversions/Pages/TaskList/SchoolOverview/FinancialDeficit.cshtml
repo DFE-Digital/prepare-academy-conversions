@@ -1,9 +1,9 @@
-﻿@page "/task-list/{id:int}/confirm-general-information/financial-deficit"
+﻿@page "/task-list/{id:int}/confirm-school-overview/financial-deficit"
 @using Dfe.PrepareConversions.TagHelpers
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
    Layout = "_QuestionLayout";
-   Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
+   Model.SuccessPage = Links.SchoolOverviewSection.ConfirmSchoolOverview.Page;
    ViewData["Title"] = "Financial deficit";
    ViewData["SchoolName"] = Model.Project.SchoolName;
    ViewData["ProjectId"] = Model.Project.Id;
@@ -13,7 +13,7 @@
 
 @section BeforeMain
 {
-   <govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation"/>
+   <govuk-back-link link-item="@Links.SchoolOverviewSection.ConfirmSchoolOverview"/>
 }
 
 <govuk-radios-input heading-label="true" label="Is there a financial deficit at the school in its current financial year?" name="financial-deficit" asp-for="Project.FinancialDeficit" values="@values" labels="@values"/>
