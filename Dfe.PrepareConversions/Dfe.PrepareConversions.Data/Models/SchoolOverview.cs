@@ -1,6 +1,6 @@
 ﻿namespace Dfe.PrepareConversions.Data.Models;
 
-public class GeneralInformation
+public class SchoolOverview
 {
    public string SchoolPostcode { get; set; }
    public string SchoolPhase { get; set; }
@@ -19,5 +19,5 @@ public class GeneralInformation
    public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string ParliamentaryConstituency { get; set; }
-   public bool? GeneralInformationSectionComplete { get; set; }
+   public bool? SchoolOverviewSectionComplete { get; set; }
 }

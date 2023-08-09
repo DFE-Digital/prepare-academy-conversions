@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareConversions.Pages.TaskList.GeneralInformation;
+namespace Dfe.PrepareConversions.Pages.TaskList.SchoolOverview;
 
 public class PartOfPfiModel : BaseAcademyConversionProjectPageModel
 {
@@ -52,7 +52,7 @@ public class PartOfPfiModel : BaseAcademyConversionProjectPageModel
          ApiResponse<AcademyConversionProject> apiResponse = await _repository.UpdateProject(id, updatedProject);
 
          if (apiResponse.Success)
-            return RedirectToPage(Links.GeneralInformationSection.ConfirmGeneralInformation.Page, new { id });
+            return RedirectToPage(Links.SchoolOverviewSection.ConfirmSchoolOverview.Page, new { id });
       }
 
       _errorService.AddErrors(ModelState.Keys, ModelState);

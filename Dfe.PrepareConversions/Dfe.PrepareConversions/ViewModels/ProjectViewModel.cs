@@ -60,9 +60,8 @@ public class ProjectViewModel: ProjectTypeBase
       FinancialDeficit = project.FinancialDeficit;
       DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters;
       DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
-      MPName = project.MemberOfParliamentName;
-      MPParty = project.MemberOfParliamentParty;
-      GeneralInformationSectionComplete = project.GeneralInformationSectionComplete ?? false;
+      MemberOfParliamentNameAndParty = project.MemberOfParliamentNameAndParty;
+      SchoolOverviewSectionComplete = project.SchoolOverviewSectionComplete ?? false;
 
       SchoolPerformanceAdditionalInformation = project.SchoolPerformanceAdditionalInformation;
 
@@ -151,7 +150,7 @@ public class ProjectViewModel: ProjectTypeBase
    public bool? AnnexBFormReceived { get; set; }
    public string AnnexBFormUrl { get; set; }
 
-   //general info
+   // School Overview
    public string PublishedAdmissionNumber { get; set; }
    public string PartOfPfiScheme { get; set; }
    public string PfiSchemeDetails { get; set; }
@@ -159,9 +158,8 @@ public class ProjectViewModel: ProjectTypeBase
    public string FinancialDeficit { get; set; }
    public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
-   public string MPName { get; set; }
-   public string MPParty { get; set; }
-   public bool GeneralInformationSectionComplete { get; set; }
+   public string MemberOfParliamentNameAndParty { get; set; }
+   public bool SchoolOverviewSectionComplete { get; set; }
 
    //school performance ofsted information
    public string SchoolPerformanceAdditionalInformation { get; set; }

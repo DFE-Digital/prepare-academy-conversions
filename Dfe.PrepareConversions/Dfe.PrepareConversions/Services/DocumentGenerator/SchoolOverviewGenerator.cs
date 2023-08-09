@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator
 {
-   public static class GeneralInformationGenerator
+   public static class SchoolOverviewGenerator
    {
-      public static void AddGeneralInformation(IDocumentBuilder builder, HtbTemplate document)
+      public static void AddSchoolOverview(IDocumentBuilder builder, HtbTemplate document)
       {
-         builder.ReplacePlaceholderWithContent("GeneralInformation", build =>
+         builder.ReplacePlaceholderWithContent("SchoolOverview", build =>
          {
-            build.AddHeading("General Information", HeadingLevel.One);
+            build.AddHeading("School overview", HeadingLevel.One);
             build.AddTable(new List<TextElement[]>
          {
             new[] { new TextElement { Value = "School type", Bold = true }, new TextElement { Value = document.SchoolType } },
@@ -35,7 +35,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
                new TextElement { Value = $"{document.DistanceFromSchoolToTrustHeadquarters} {document.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}" }
             },
             new[] { new TextElement { Value = "Parliamentary constituency", Bold = true }, new TextElement { Value = document.ParliamentaryConstituency } },
-            new[] { new TextElement { Value = "MP name and political party", Bold = true }, new TextElement { Value = document.MPNameAndParty } }
+            new[] { new TextElement { Value = "MP name and political party", Bold = true }, new TextElement { Value = document.MemberOfParliamentNameAndParty } }
          });
          });
       }

@@ -1,9 +1,9 @@
-﻿@page "/task-list/{id:int}/confirm-general-information/published-admission-number"
+﻿@page "/task-list/{id:int}/confirm-school-overview/published-admission-number"
 @using Dfe.PrepareConversions.TagHelpers
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
    Layout = "_QuestionLayout";
-   Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
+   Model.SuccessPage = Links.SchoolOverviewSection.ConfirmSchoolOverview.Page;
    ViewData["Title"] = "Update the school's published admission number (PAN)";
    ViewData["SchoolName"] = Model.Project.SchoolName;
    ViewData["ProjectId"] = Model.Project.Id;
@@ -12,7 +12,7 @@
 
 @section BeforeMain
 {
-   <govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation"/>
+   <govuk-back-link link-item="@Links.SchoolOverviewSection.ConfirmSchoolOverview"/>
 }
 
 <govuk-text-input heading-label="true" label="Update the school's published admission number (PAN) if it's not correct" name="published-admission-number" asp-for="Project.PublishedAdmissionNumber" width="5" hint="For example, 30"/>

@@ -17,7 +17,7 @@ public class RecordDecisionIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_display_selected_schoolname()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
@@ -29,7 +29,7 @@ public class RecordDecisionIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_persist_selected_decision()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
       _factory.AddGetWithJsonResponse($"/conversion-project/advisory-board-decision/{project.Id}",
          new AdvisoryBoardDecision { Decision = AdvisoryBoardDecisions.Approved });
 
@@ -48,7 +48,7 @@ public class RecordDecisionIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_redirect_on_successful_submission()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
@@ -61,7 +61,7 @@ public class RecordDecisionIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_display_error_when_nothing_selected()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
@@ -75,7 +75,7 @@ public class RecordDecisionIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_go_back_to_task_list()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 

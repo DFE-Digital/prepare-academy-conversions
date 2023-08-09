@@ -23,7 +23,7 @@ public class AnyConditionsIntegrationTests : BaseIntegrationTests, IAsyncLifetim
 
    public async Task InitializeAsync()
    {
-      _project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
+      _project = AddGetProject(project => project.SchoolOverviewSectionComplete = false);
       _wizard = new RecordDecisionWizard(Context);
 
       await _wizard.StartFor(_project.Id);

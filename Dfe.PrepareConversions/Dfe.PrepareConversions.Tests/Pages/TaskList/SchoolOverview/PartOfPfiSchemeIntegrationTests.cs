@@ -7,7 +7,7 @@ using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.TaskList.GeneralInformation;
+namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolOverview;
 
 public class PartOfPfiSchemeIntegrationTests : BaseIntegrationTests
 {
@@ -31,16 +31,16 @@ public class PartOfPfiSchemeIntegrationTests : BaseIntegrationTests
    {
       AcademyConversionProject project = AddGetProject(r => r.PartOfPfiScheme = "yes");
 
-      await NavigateToPfiFromGeneralInfo(project);
+      await NavigateToPfiFromSchoolOverview(project);
       await NavigateAsync("Back");
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-overview");
    }
 
-   private async Task NavigateToPfiFromGeneralInfo(AcademyConversionProject project)
+   private async Task NavigateToPfiFromSchoolOverview(AcademyConversionProject project)
    {
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-overview");
       await NavigateAsync("Change", 3);
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/part-of-pfi-scheme");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-overview/part-of-pfi-scheme");
    }
 
    [Fact]
@@ -48,7 +48,7 @@ public class PartOfPfiSchemeIntegrationTests : BaseIntegrationTests
    {
       AcademyConversionProject project = AddGetProject(r => r.PartOfPfiScheme = "yes");
 
-      await NavigateToPfiFromGeneralInfo(project);
+      await NavigateToPfiFromSchoolOverview(project);
 
       PfiHeading.TextContent.Trim().Should().Be("Is your school part of a PFI (Private Finance Initiative) scheme?");
    }
@@ -58,7 +58,7 @@ public class PartOfPfiSchemeIntegrationTests : BaseIntegrationTests
    {
       AcademyConversionProject project = AddGetProject(r => r.PartOfPfiScheme = "yes");
 
-      await NavigateToPfiFromGeneralInfo(project);
+      await NavigateToPfiFromSchoolOverview(project);
 
       YesLabel.TextContent.Trim().Should().Be("Yes");
       NoLabel.TextContent.Trim().Should().Be("No");
@@ -73,7 +73,7 @@ public class PartOfPfiSchemeIntegrationTests : BaseIntegrationTests
          r.PfiSchemeDetails = "Example Scheme";
       });
 
-      await NavigateToPfiFromGeneralInfo(project);
+      await NavigateToPfiFromSchoolOverview(project);
 
       YesRadioButton.Value.Trim().Should().Be("true");
       YesLabel.TextContent.Trim().Should().Be("Yes");
@@ -89,7 +89,7 @@ public class PartOfPfiSchemeIntegrationTests : BaseIntegrationTests
          r.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored;
       });
 
-      await NavigateToPfiFromGeneralInfo(project);
+      await NavigateToPfiFromSchoolOverview(project);
 
       AnnexBLink.Should().NotBeNull();
    }
@@ -103,7 +103,7 @@ public class PartOfPfiSchemeIntegrationTests : BaseIntegrationTests
          r.PfiSchemeDetails = "Example Scheme";
       });
 
-      await NavigateToPfiFromGeneralInfo(project);
+      await NavigateToPfiFromSchoolOverview(project);
 
       NoRadioButton.IsChecked = true;
       ExpectPatchProjectMatching(project, x => x.PartOfPfiScheme == "No");
