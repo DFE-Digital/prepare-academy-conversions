@@ -1,4 +1,5 @@
 ﻿@page "/project-notes/{id:int}"
+@using Dfe.PrepareConversions.Data.Models
 @model Dfe.PrepareConversions.Pages.ProjectNotes.IndexModel
 @{
    ViewData["Title"] = "Project Notes";
@@ -25,7 +26,14 @@
    </div>
 }
 
-<partial name="_ProjectHeader" model="Model.Project"/>
+@if (@Model.Project.AcademyTypeAndRoute.ToUpper() == AcademyTypeAndRoutes.FormAMat.RouteDescription().ToUpper())
+{
+   <partial name="Shared/_FormAMatProjectHeader" model="Model.Project" />
+}
+else
+{
+   <partial name="Shared/_ProjectHeader" model="Model.Project" />
+}
 
 <div class="govuk-grid-column-two-thirds-full">
    <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">Project notes</h2>
