@@ -13,19 +13,19 @@
    <tbody class="govuk-table__body">
    @await Component.InvokeAsync("SchoolPupilForecastsCurrentYear")
    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Projected pupil numbers on roll in the year the academy opens (year 1)</th>
+            <th scope="row" class="govuk-table__header">Projected pupil numbers on roll (year 1)</th>
       <td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearOneProjectedCapacity</td>
       <td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearOneProjectedPupilNumbers</td>
       <td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearOneProjectedPupilNumbers.AsPercentageOf(Model.YearOneProjectedCapacity)</td>
    </tr>
    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Projected pupil numbers on roll in the following year after the academy has opened (year 2)</th>
+            <th scope="row" class="govuk-table__header">Projected pupil numbers on roll (year 2)</th>
       <td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearTwoProjectedCapacity</td>
       <td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearTwoProjectedPupilNumbers</td>
       <td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearTwoProjectedPupilNumbers.AsPercentageOf(Model.YearTwoProjectedCapacity)</td>
    </tr>
    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Projected pupil numbers on roll in the following year (year 3)</th>
+      <th scope="row" class="govuk-table__header">Projected pupil numbers on roll (year 3)</th>
       <td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearThreeProjectedCapacity</td>
       <td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearThreeProjectedPupilNumbers</td>
       <td class="govuk-table__cell govuk-table__cell--numeric">@Model.YearThreeProjectedPupilNumbers.AsPercentageOf(Model.YearThreeProjectedCapacity)</td>

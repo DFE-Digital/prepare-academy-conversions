@@ -37,7 +37,7 @@ public class FoundationConsentTests : LegalRequirementsPageTestBase
       await Wizard.OpenFoundationConsent(Project.Id);
       await NavigateAsync("Back");
 
-      PageHeading.Should().BeEquivalentTo("Confirm legal requirements");
+      PageHeading.Should().BeEquivalentTo("Legal requirements");
    }
 
    [Fact]
@@ -77,7 +77,7 @@ public class FoundationConsentTests : LegalRequirementsPageTestBase
       YesOption.IsChecked = true;
       await SaveAndContinueButton.SubmitAsync();
 
-      PageHeading.Should().BeEquivalentTo("Confirm legal requirements");
+      PageHeading.Should().BeEquivalentTo("Legal requirements");
    }
 
    [Fact]
@@ -98,7 +98,7 @@ public class FoundationConsentTests : LegalRequirementsPageTestBase
       await Wizard.OpenFoundationConsent(Project.Id);
       await SaveAndContinueButton.SubmitAsync();
 
-      PageHeading.Should().BeEquivalentTo("Confirm legal requirements");
+      PageHeading.Should().BeEquivalentTo("Legal requirements");
    }
 
    [Fact]

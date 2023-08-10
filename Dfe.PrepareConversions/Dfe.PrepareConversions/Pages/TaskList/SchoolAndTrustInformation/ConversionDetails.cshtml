@@ -1,5 +1,6 @@
 @page "/task-list/{id:int}/conversion-details"
 @using Dfe.PrepareConversions.TagHelpers
+@using Dfe.PrepareConversions.Data.Models
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
    Model.SuccessPage = Links.TaskList.Index.Page;
@@ -25,6 +26,12 @@
       </h1>
       <div class="govuk-body">
          <partial name="Shared/_OpenApplicationFormNewTab"/>
+            @if (ViewData["AcademyTypeAndRoute"].Equals(AcademyTypeAndRoutes.Sponsored))
+         {
+            <div class="govuk-body">
+               <p data-test="annex-b-help">Some details have been taken from TRAMS. You can add more from<a asp-page="@Links.AnnexB.Index.Page" asp-route-id="@Model.Project.Id"> the Annex B form</a>.</p>
+            </div>
+         }
       </div>
    </div>
    <div class="govuk-grid-column-full">
