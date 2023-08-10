@@ -37,7 +37,7 @@ public class ConsultationTests : LegalRequirementsPageTestBase
       await Wizard.OpenConsultation(Project.Id);
       await NavigateAsync("Back");
 
-      PageHeading.Should().BeEquivalentTo("Confirm legal requirements");
+      PageHeading.Should().BeEquivalentTo("Legal requirements");
    }
 
    [Fact]
@@ -79,7 +79,7 @@ public class ConsultationTests : LegalRequirementsPageTestBase
       YesOption.IsChecked = true;
       await SaveAndContinueButton.SubmitAsync();
 
-      PageHeading.Should().BeEquivalentTo("Confirm legal requirements");
+      PageHeading.Should().BeEquivalentTo("Legal requirements");
    }
 
    [Fact]
@@ -100,7 +100,7 @@ public class ConsultationTests : LegalRequirementsPageTestBase
       await Wizard.OpenConsultation(Project.Id);
       await SaveAndContinueButton.SubmitAsync();
 
-      PageHeading.Should().Be("Confirm legal requirements");
+      PageHeading.Should().Be("Legal requirements");
    }
 
    [Fact]

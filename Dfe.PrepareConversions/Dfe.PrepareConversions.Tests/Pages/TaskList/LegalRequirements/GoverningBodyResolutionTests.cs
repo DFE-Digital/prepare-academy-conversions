@@ -37,7 +37,7 @@ public class GoverningBodyResolutionTests : LegalRequirementsPageTestBase
       await Wizard.OpenGoverningBodyResolution(Project.Id);
       await NavigateAsync("Back");
 
-      PageHeading.Should().Be("Confirm legal requirements");
+      PageHeading.Should().Be("Legal requirements");
    }
 
    [Fact]
@@ -78,7 +78,7 @@ public class GoverningBodyResolutionTests : LegalRequirementsPageTestBase
       YesOption.IsChecked = true;
       await SaveAndContinueButton.SubmitAsync();
 
-      PageHeading.Should().Be("Confirm legal requirements");
+      PageHeading.Should().Be("Legal requirements");
    }
 
    [Fact]
@@ -99,7 +99,7 @@ public class GoverningBodyResolutionTests : LegalRequirementsPageTestBase
       await Wizard.OpenGoverningBodyResolution(Project.Id);
       await SaveAndContinueButton.SubmitAsync();
 
-      PageHeading.Should().Be("Confirm legal requirements");
+      PageHeading.Should().Be("Legal requirements");
    }
 
    [Fact]

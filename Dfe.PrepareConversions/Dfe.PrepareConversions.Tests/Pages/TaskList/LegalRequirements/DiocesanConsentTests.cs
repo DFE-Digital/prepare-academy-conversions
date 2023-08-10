@@ -36,8 +36,7 @@ public class DiocesanConsentTests : LegalRequirementsPageTestBase
       Project = AddGetProject(project => project.DiocesanConsent = nameof(ThreeOptions.NotApplicable));
       await Wizard.OpenDiocesanConsent(Project.Id);
       await NavigateAsync("Back");
-
-      PageHeading.Should().BeEquivalentTo("Confirm legal requirements");
+      PageHeading.Should().BeEquivalentTo("Legal requirements");
    }
 
    [Fact]
@@ -79,7 +78,7 @@ public class DiocesanConsentTests : LegalRequirementsPageTestBase
       NotApplicableOption.IsChecked = true;
       await SaveAndContinueButton.SubmitAsync();
 
-      PageHeading.Should().BeEquivalentTo("Confirm legal requirements");
+      PageHeading.Should().BeEquivalentTo("Legal requirements");
    }
 
    [Fact]
@@ -100,7 +99,7 @@ public class DiocesanConsentTests : LegalRequirementsPageTestBase
       await Wizard.OpenDiocesanConsent(Project.Id);
       await SaveAndContinueButton.SubmitAsync();
 
-      PageHeading.Should().BeEquivalentTo("Confirm legal requirements");
+      PageHeading.Should().BeEquivalentTo("Legal requirements");
    }
 
    [Fact]

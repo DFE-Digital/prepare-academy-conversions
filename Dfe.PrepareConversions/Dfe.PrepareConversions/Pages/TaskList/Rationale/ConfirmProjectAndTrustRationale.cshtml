@@ -26,9 +26,15 @@
         <h1 class="govuk-heading-l">
             Confirm project and trust rationale
         </h1>
-       <div class="govuk-body">
-          <partial name="Shared/_OpenApplicationFormNewTab"/>
-       </div>
+        <div class="govuk-body">
+            @if (ViewData["AcademyTypeAndRoute"].Equals(AcademyTypeAndRoutes.Voluntary) || ViewData["AcademyTypeAndRoute"].Equals(AcademyTypeAndRoutes.FormAMat))
+            {
+                <p>
+                    This information comes from the
+                    <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+                </p>
+            }
+        </div>
     </div>
     <div class="govuk-grid-column-full">
         <dl class="govuk-summary-list">
