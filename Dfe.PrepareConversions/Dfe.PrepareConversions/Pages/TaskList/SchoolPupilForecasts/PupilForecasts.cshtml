@@ -23,13 +23,13 @@
             @if (ViewData["AcademyTypeAndRoute"]!.Equals(AcademyTypeAndRoutes.Sponsored))
             {
                <p>
-                    This information is taken from GIAS (Get Information About Schools) and will go into your project document. You can add more from<a asp-page="@Links.AnnexB.Index.Page" asp-route-id="@Model.Project.Id"> the Annex B form</a>.
+                    This information comes from GIAS (Get Information About Schools) and will go into your project document. You can add more from<a asp-page="@Links.AnnexB.Index.Page" asp-route-id="@Model.Project.Id"> the Annex B form</a>.
                </p>
             }
             else
             {
                <p>
-                  This comes from GIAS (Get Information about Schools) and the
+                  This information comes from GIAS (Get Information about Schools) and the
                   <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>. The table will go into your project document.
                </p>
             }
