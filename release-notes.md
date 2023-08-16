@@ -1,5 +1,21 @@
 ## NEXT
 * Removed the 'UseAcademisation' feature flag and defaulted the behaviour to use the Academies Api
+* User Story 132744 : Renaming of school information pages in task list.
+* User Story 132316 : New 'Performance data' section added to task list.
+* User Story 132317 : Renaming of LA info template sent date section and link in task list.
+* User Story 132314 : New 'school information' section added to task list.
+* User Story 132744 : Add School information - rename pages
+* Fixed Bug 133919 : Styling on rationale page fixed to reflect other pages
+* User Story 134597 : Added Route to top of task list for voluntary and sponsored journeys
+* User Story 134936 : Updated wording of delivery officer to Project owner
+* User Story 133831 : Added Application insights 
+* User Story 135435 : Updated School Overview page hint text to be relevant to the route 
+* User Story 135121 : Added Project Notes to the Form a MAT journey
+* Updated the bottom of the preview document page to reflect changes to task list regarding 'Generate template'
+* Moved reference data on the task list to it's own dedicated section
+* 'Prepare your template' wording updated and moved up in the task list
+* Updated Preview Document page to reflect the ordering in the task list and the hew headings
+
 
 ---
 

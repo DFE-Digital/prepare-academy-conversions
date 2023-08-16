@@ -1,6 +1,7 @@
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Extensions;
+using Dfe.PrepareConversions.Utils;
 using System;
 using System.Collections.Generic;
 
@@ -11,6 +12,8 @@ public class ProjectViewModel: ProjectTypeBase
    public ProjectViewModel(AcademyConversionProject project)
    {
       Id = project.Id.ToString();
+      ProjectStatus = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Value;
+      ProjectStatusColour = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Colour;
       ApplicationReferenceNumber = project.ApplicationReferenceNumber;
       SchoolName = project.SchoolName;
       SchoolURN = project.Urn.ToString();
@@ -57,9 +60,8 @@ public class ProjectViewModel: ProjectTypeBase
       FinancialDeficit = project.FinancialDeficit;
       DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters;
       DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
-      MPName = project.MemberOfParliamentName;
-      MPParty = project.MemberOfParliamentParty;
-      GeneralInformationSectionComplete = project.GeneralInformationSectionComplete ?? false;
+      MemberOfParliamentNameAndParty = project.MemberOfParliamentNameAndParty;
+      SchoolOverviewSectionComplete = project.SchoolOverviewSectionComplete ?? false;
 
       SchoolPerformanceAdditionalInformation = project.SchoolPerformanceAdditionalInformation;
 
@@ -105,6 +107,8 @@ public class ProjectViewModel: ProjectTypeBase
    }
 
    public string Id { get; }
+   public string ProjectStatus { get; }
+   public string ProjectStatusColour { get; }
    public string ApplicationReferenceNumber { get; set; }
    public string SchoolName { get; }
    public string SchoolURN { get; }
@@ -146,7 +150,7 @@ public class ProjectViewModel: ProjectTypeBase
    public bool? AnnexBFormReceived { get; set; }
    public string AnnexBFormUrl { get; set; }
 
-   //general info
+   // School Overview
    public string PublishedAdmissionNumber { get; set; }
    public string PartOfPfiScheme { get; set; }
    public string PfiSchemeDetails { get; set; }
@@ -154,9 +158,8 @@ public class ProjectViewModel: ProjectTypeBase
    public string FinancialDeficit { get; set; }
    public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
-   public string MPName { get; set; }
-   public string MPParty { get; set; }
-   public bool GeneralInformationSectionComplete { get; set; }
+   public string MemberOfParliamentNameAndParty { get; set; }
+   public bool SchoolOverviewSectionComplete { get; set; }
 
    //school performance ofsted information
    public string SchoolPerformanceAdditionalInformation { get; set; }

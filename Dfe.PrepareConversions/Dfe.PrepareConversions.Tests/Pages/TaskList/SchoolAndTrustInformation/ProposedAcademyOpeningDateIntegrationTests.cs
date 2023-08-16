@@ -28,7 +28,7 @@ public class ProposedAcademyOpeningDateIntegrationTests : BaseIntegrationTests
          x.Urn = project.Urn;
       });
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
       await NavigateDataTestAsync("change-proposed-academy-opening-date");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-academy-opening-date");
@@ -43,7 +43,7 @@ public class ProposedAcademyOpeningDateIntegrationTests : BaseIntegrationTests
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");  
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");  
 
    }
 
@@ -68,6 +68,6 @@ public class ProposedAcademyOpeningDateIntegrationTests : BaseIntegrationTests
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-academy-opening-date");
       await NavigateAsync("Back");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
    }
 }

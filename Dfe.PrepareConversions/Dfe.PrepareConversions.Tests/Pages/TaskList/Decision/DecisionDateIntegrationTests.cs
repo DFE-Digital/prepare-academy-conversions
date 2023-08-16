@@ -25,7 +25,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_display_selected_school_name()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
 
       await ProgressToDecisionDateStep(project);
 
@@ -40,7 +40,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
       string expectedDay = "1";
       string expectedMonth = "1";
       string expectedYear = "2022";
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
 
       await ProgressToDecisionDateStep(project);
 
@@ -64,7 +64,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_not_redirect_if_future_date()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
       DateTime tomorrow = DateTime.UtcNow.AddDays(1);
 
       await ProgressToDecisionDateStep(project);
@@ -81,7 +81,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_not_redirect_if_no_date_set()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
 
       await ProgressToDecisionDateStep(project);
 
@@ -97,7 +97,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_redirect_onSubmit()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
       AdvisoryBoardDecision request = new()
@@ -118,7 +118,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_go_back_to_any_conditions_for_the_accepted_journey()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
 
       await ProgressToDecisionDateStep(project);
 
@@ -132,7 +132,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_go_back_to_declined_reasons_for_the_declined_journey()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
 
       RecordDecisionWizard wizard = new(Context);
 
@@ -151,7 +151,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_display_the_correct_journey_in_the_required_message_when_date_is_not_specified()
    {
-      AcademyConversionProject project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
 
       RecordDecisionWizard wizard = new(Context);
 

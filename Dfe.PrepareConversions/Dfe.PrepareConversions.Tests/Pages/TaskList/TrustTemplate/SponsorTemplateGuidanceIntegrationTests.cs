@@ -23,7 +23,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.TrustTemplate
          });
 
          await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-         await NavigateAsync("Prepare your sponsor template");
+         await NavigateAsync("Prepare your template");
 
          Document.Url.Should().BeUrl($"/task-list/{project.Id}/sponsor-guidance");
 

@@ -73,9 +73,9 @@ public sealed class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
       return InProgress;
    }
 
-   public static TaskListItemViewModel GetGeneralInformationTaskListStatus(ProjectViewModel project)
+   public static TaskListItemViewModel GetSchoolOverviewTaskListStatus(ProjectViewModel project)
    {
-      if (project.GeneralInformationSectionComplete)
+      if (project.SchoolOverviewSectionComplete)
       {
          return Completed;
       }

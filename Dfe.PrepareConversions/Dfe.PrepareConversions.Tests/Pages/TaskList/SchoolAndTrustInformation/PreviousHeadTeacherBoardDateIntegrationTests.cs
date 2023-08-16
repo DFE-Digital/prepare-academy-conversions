@@ -39,7 +39,7 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
          x.Urn = project.Urn;
       });
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
       await NavigateAsync("Change", 5);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
@@ -64,7 +64,7 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
    }
 
    [Fact]
@@ -77,7 +77,7 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
          x.Urn = project.Urn;
       });
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
       await NavigateAsync("Change", 5);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
@@ -87,7 +87,7 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
    }
 
    [Fact]
@@ -99,7 +99,7 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
          .With(r => r.PreviousHeadTeacherBoardDate, default(DateTime))
          .With(r => r.Urn, project.Urn));
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
       await NavigateAsync("Change", 5);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
@@ -112,7 +112,7 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
    }
 
    [Fact]
@@ -127,7 +127,7 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
 
       await NavigateAsync("Back");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
    }
 
    [Fact]

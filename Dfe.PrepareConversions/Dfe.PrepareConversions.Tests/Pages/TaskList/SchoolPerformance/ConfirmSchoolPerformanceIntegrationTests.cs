@@ -23,7 +23,7 @@ public class ConfirmSchoolPerformanceIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#school-performance-status")?.TextContent.Trim().Should().Be("Reference only");
       Document.QuerySelector("#school-performance-status")?.ClassName.Should().Contain("grey");
 
-      await NavigateAsync("School performance (Ofsted information)");
+      await NavigateAsync("Ofsted information");
 
       Document.QuerySelector("#additional-information")?.TextContent.Should().Be(project.SchoolPerformanceAdditionalInformation);
 
@@ -42,7 +42,7 @@ public class ConfirmSchoolPerformanceIntegrationTests : BaseIntegrationTests
       AcademyConversionProject project = AddGetProject();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-      await NavigateAsync("School performance (Ofsted information)");
+      await NavigateAsync("Ofsted information");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-performance-ofsted-information");
 
@@ -58,7 +58,7 @@ public class ConfirmSchoolPerformanceIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      await NavigateAsync("School performance (Ofsted information)");
+      await NavigateAsync("Ofsted information");
 
       Document.QuerySelector("#ofsted-full-inspection-date")?.TextContent.Should().Be("No data");
       Document.QuerySelector("#overall-effectiveness")?.TextContent.Should().Be("Last full inspection: No data");

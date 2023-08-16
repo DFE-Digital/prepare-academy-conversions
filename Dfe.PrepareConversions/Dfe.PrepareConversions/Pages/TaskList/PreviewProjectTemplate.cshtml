@@ -24,76 +24,68 @@
    <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-xl">@Model.Project.SchoolName</span>
       <h1 class="govuk-heading-xl">
-         Preview project template
+         Preview project document
       </h1>
    </div>
 </div>
 
-<h2 class="govuk-heading-s">School and trust information and project dates</h2>
+
+<h2 class="govuk-heading-s">School overview</h2>
 <section class="app-summary-card govuk-!-margin-bottom-6">
    <header class="app-summary-card__header">
       <h2 class="app-summary-card__title">
-         School and trust information and project date details
+         School overview details
+      </h2>
+   </header>
+   <div class="app-summary-card__body">
+      @await Component.InvokeAsync("SchoolOverview")
+   </div>
+</section>
+
+<h2 class="govuk-heading-s">Budget</h2>
+<section class="app-summary-card govuk-!-margin-bottom-6">
+    <header class="app-summary-card__header">
+        <h2 class="app-summary-card__title">
+            Budget details
+        </h2>
+    </header>
+    <div class="app-summary-card__body">
+        <dl class="govuk-summary-list">
+            <govuk-summary-list-row name="financial-year" label="End of current financial year" value="@Model.Project.EndOfCurrentFinancialYear.ToDateString()" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="End of current financial year" />
+            <govuk-summary-list-row name="finance-year-current" label="Forecasted revenue carry forward at the end of the current financial year" key-width="@WidthOverride.TwoThirds" value="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted revenue carry forward at the end of the current financial year" />
+            <govuk-summary-list-row name="finance-current-capital" label="Forecasted capital carry forward at the end of the current financial year" key-width="@WidthOverride.TwoThirds" value="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted capital carry forward at the end of the current financial year" />
+            <govuk-summary-list-row name="next-financial-year" label="End of next financial year" value="@Model.Project.EndOfNextFinancialYear.ToDateString()" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="End of next financial year" />
+            <govuk-summary-list-row name="finance-year-following" label="Forecasted revenue carry forward at the end of the next financial year" key-width="@WidthOverride.TwoThirds" value="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear?.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted revenue carry forward at the end of the next financial year" />
+            <govuk-summary-list-row name="finance-projected-capital" label="Forecasted capital carry forward at the end of the next financial year" key-width="@WidthOverride.TwoThirds" value="@Model.Project.CapitalCarryForwardAtEndMarchNextYear?.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted capital carry forward at the end of the next financial year" />
+            <govuk-summary-list-row name="school-budget-information-additional-information" label="Additional information" key-width="@WidthOverride.TwoThirds" value="@Model.Project.SchoolBudgetInformationAdditionalInformation" asp-page="@Links.SchoolBudgetInformationSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
+        </dl>
+    </div>
+</section>
+
+<h2 class="govuk-heading-s">Pupil forecasts</h2>
+<section class="app-summary-card govuk-!-margin-bottom-6">
+    <header class="app-summary-card__header">
+        <h2 class="app-summary-card__title">
+            Pupil forecasts details
+        </h2>
+    </header>
+    <div class="app-summary-card__body">
+        <partial name="~/Pages/TaskList/SchoolPupilForecasts/_SchoolPupilForecastsTable.cshtml" model="Model.Project" />
+        <dl class="govuk-summary-list">
+            <govuk-summary-list-row name="school-pupil-forecasts-additional-information" label="Additional information" value="@Model.Project.SchoolPupilForecastsAdditionalInformation" asp-page="@Links.SchoolPupilForecastsSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
+        </dl>
+    </div>
+</section>
+
+<h2 class="govuk-heading-s">Conversion details</h2>
+<section class="app-summary-card govuk-!-margin-bottom-6">
+   <header class="app-summary-card__header">
+      <h2 class="app-summary-card__title">
+         Conversion details
       </h2>
    </header>
    <div class="app-summary-card__body">
       @await Component.InvokeAsync("SchoolAndTrustInformation")
-   </div>
-</section>
-
-<h2 class="govuk-heading-s">General information</h2>
-<section class="app-summary-card govuk-!-margin-bottom-6">
-   <header class="app-summary-card__header">
-      <h2 class="app-summary-card__title">
-         General information details
-      </h2>
-   </header>
-   <div class="app-summary-card__body">
-      @await Component.InvokeAsync("GeneralInformation")
-   </div>
-</section>
-
-<h2 class="govuk-heading-s">School performance (Ofsted information)</h2>
-<section class="app-summary-card govuk-!-margin-bottom-6">
-   <header class="app-summary-card__header">
-      <h2 class="app-summary-card__title">
-         School performance (Ofsted information) details
-      </h2>
-   </header>
-   <div class="app-summary-card__body">
-      @await Component.InvokeAsync("SchoolPerformance", new { showAdditionalInformation = true, isPreview = true })
-   </div>
-</section>
-
-<h2 class="govuk-heading-s">Rationale</h2>
-<section class="app-summary-card govuk-!-margin-bottom-6">
-   <header class="app-summary-card__header">
-      <h2 class="app-summary-card__title">
-         Rationale details
-      </h2>
-   </header>
-   <div class="app-summary-card__body">
-      <dl class="govuk-summary-list">
-         @if (!Model.Project.IsSponsored)
-         {
-            <govuk-summary-list-row name="rationale-for-project" key-width="@WidthOverride.OneQuarter" value-width="@WidthOverride.Full" label="Rationale for project" value="@Model.Project.RationaleForProject" asp-page="@Links.RationaleSection.RationaleForProject.Page" asp-route-id="@Model.Project.Id" hidden-text="project rationale"/>
-         }
-         <govuk-summary-list-row name="rationale-for-trust" key-width="@WidthOverride.OneQuarter" value-width="@WidthOverride.Full" label="Rationale for the trust or sponsor" value="@Model.Project.RationaleForTrust" asp-page="@Links.RationaleSection.RationaleForTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="sponsor rationale"/>
-      </dl>
-   </div>
-</section>
-
-<h2 class="govuk-heading-s">Risks and issues</h2>
-<section class="app-summary-card govuk-!-margin-bottom-6">
-   <header class="app-summary-card__header">
-      <h2 class="app-summary-card__title">
-         Risks and issues details
-      </h2>
-   </header>
-   <div class="app-summary-card__body">
-      <dl class="govuk-summary-list">
-         <govuk-summary-list-row name="risks-and-issues" label="Risks and issues" value="@Model.Project.RisksAndIssues" asp-page="@Links.RisksAndIssuesSection.RisksAndIssues.Page" asp-route-id="@Model.Project.Id" hidden-text="risks and issues"/>
-      </dl>
    </div>
 </section>
 
@@ -117,39 +109,49 @@
    </section>
 }
 
-<h2 class="govuk-heading-s">School budget information</h2>
+<h2 class="govuk-heading-s">Rationale</h2>
+<section class="app-summary-card govuk-!-margin-bottom-6">
+    <header class="app-summary-card__header">
+        <h2 class="app-summary-card__title">
+            Rationale details
+        </h2>
+    </header>
+    <div class="app-summary-card__body">
+        <dl class="govuk-summary-list">
+            @if (!Model.Project.IsSponsored)
+            {
+                <govuk-summary-list-row name="rationale-for-project" key-width="@WidthOverride.OneQuarter" value-width="@WidthOverride.Full" label="Rationale for project" value="@Model.Project.RationaleForProject" asp-page="@Links.RationaleSection.RationaleForProject.Page" asp-route-id="@Model.Project.Id" hidden-text="project rationale" />
+            }
+            <govuk-summary-list-row name="rationale-for-trust" key-width="@WidthOverride.OneQuarter" value-width="@WidthOverride.Full" label="Rationale for the trust or sponsor" value="@Model.Project.RationaleForTrust" asp-page="@Links.RationaleSection.RationaleForTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="sponsor rationale" />
+        </dl>
+    </div>
+</section>
+
+<h2 class="govuk-heading-s">Risks and issues</h2>
 <section class="app-summary-card govuk-!-margin-bottom-6">
    <header class="app-summary-card__header">
       <h2 class="app-summary-card__title">
-         School budget information details
+         Risks and issues details
       </h2>
    </header>
    <div class="app-summary-card__body">
       <dl class="govuk-summary-list">
-         <govuk-summary-list-row name="financial-year" label="End of current financial year" value="@Model.Project.EndOfCurrentFinancialYear.ToDateString()" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="End of current financial year"/>
-         <govuk-summary-list-row name="finance-year-current" label="Forecasted revenue carry forward at the end of the current financial year" key-width="@WidthOverride.TwoThirds" value="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted revenue carry forward at the end of the current financial year"/>
-         <govuk-summary-list-row name="finance-current-capital" label="Forecasted capital carry forward at the end of the current financial year" key-width="@WidthOverride.TwoThirds" value="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted capital carry forward at the end of the current financial year"/>
-         <govuk-summary-list-row name="next-financial-year" label="End of next financial year" value="@Model.Project.EndOfNextFinancialYear.ToDateString()" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="End of next financial year"/>
-         <govuk-summary-list-row name="finance-year-following" label="Forecasted revenue carry forward at the end of the next financial year" key-width="@WidthOverride.TwoThirds" value="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear?.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted revenue carry forward at the end of the next financial year"/>
-         <govuk-summary-list-row name="finance-projected-capital" label="Forecasted capital carry forward at the end of the next financial year" key-width="@WidthOverride.TwoThirds" value="@Model.Project.CapitalCarryForwardAtEndMarchNextYear?.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted capital carry forward at the end of the next financial year"/>
-         <govuk-summary-list-row name="school-budget-information-additional-information" label="Additional information" key-width="@WidthOverride.TwoThirds" value="@Model.Project.SchoolBudgetInformationAdditionalInformation" asp-page="@Links.SchoolBudgetInformationSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information"/>
+         <govuk-summary-list-row name="risks-and-issues" label="Risks and issues" value="@Model.Project.RisksAndIssues" asp-page="@Links.RisksAndIssuesSection.RisksAndIssues.Page" asp-route-id="@Model.Project.Id" hidden-text="risks and issues"/>
       </dl>
    </div>
 </section>
 
-<h2 class="govuk-heading-s">School pupil forecasts</h2>
+
+<h2 class="govuk-heading-s">Ofsted information</h2>
 <section class="app-summary-card govuk-!-margin-bottom-6">
-   <header class="app-summary-card__header">
-      <h2 class="app-summary-card__title">
-         School pupil forecasts details
-      </h2>
-   </header>
-   <div class="app-summary-card__body">
-      <partial name="~/Pages/TaskList/SchoolPupilForecasts/_SchoolPupilForecastsTable.cshtml" model="Model.Project"/>
-      <dl class="govuk-summary-list">
-         <govuk-summary-list-row name="school-pupil-forecasts-additional-information" label="Additional information" value="@Model.Project.SchoolPupilForecastsAdditionalInformation" asp-page="@Links.SchoolPupilForecastsSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information"/>
-      </dl>
-   </div>
+    <header class="app-summary-card__header">
+        <h2 class="app-summary-card__title">
+            Ofsted information details
+        </h2>
+    </header>
+    <div class="app-summary-card__body">
+        @await Component.InvokeAsync("SchoolPerformance", new { showAdditionalInformation = true, isPreview = true })
+    </div>
 </section>
 
 @if (Model.TaskList.HasKeyStage2PerformanceTables)
@@ -204,13 +206,17 @@
          </dl>
       </div>
    </section>
-}
-<h2 class="govuk-heading-l">
-   Generate project template
-</h2>
-<p class="govuk-body">Generate the project template into a Word document and download it.</p>
+} 
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-two-thirds">
+   <h2 class="govuk-heading-l">
+      Create your project document
+   </h2>
+   <p class="govuk-body">Project documents are in Microsoft Word format. You can make changes to documents after you create them.</p>
 
 
-<form method="post">
-    <button class="govuk-button govuk-!-margin-bottom-2" name="generate-template-button" id="generate-template-button">Generate project template</button>
-</form>
+   <form method="post">
+      <button class="govuk-button govuk-!-margin-bottom-2" name="generate-template-button" id="generate-template-button">Create project document</button>
+   </form>
+</div>
+</div>

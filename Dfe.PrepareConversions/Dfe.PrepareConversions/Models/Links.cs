@@ -88,7 +88,7 @@ public static class Links
 
    public static class SchoolAndTrustInformationSection
    {
-      public static readonly LinkItem ConfirmSchoolAndTrustInformation = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/ConfirmSchoolAndTrustInformation");
+      public static readonly LinkItem ConfirmSchoolAndTrustInformation = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/ConversionDetails");
       public static readonly LinkItem ProjectRecommendation = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/ProjectRecommendation");
       public static readonly LinkItem Author = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Author");
       public static readonly LinkItem ClearedBy = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/ClearedBy");
@@ -103,15 +103,15 @@ public static class Links
       public static readonly LinkItem DaoPackSent = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/DaoPackSentDate");
    }
 
-   public static class GeneralInformationSection
+   public static class SchoolOverviewSection
    {
-      public static readonly LinkItem ConfirmGeneralInformation = AddLinkItem(page: "/TaskList/GeneralInformation/ConfirmGeneralInformation");
-      public static readonly LinkItem PublishedAdmissionNumber = AddLinkItem(page: "/TaskList/GeneralInformation/PublishedAdmissionNumber");
-      public static readonly LinkItem ViabilityIssues = AddLinkItem(page: "/TaskList/GeneralInformation/ViabilityIssues");
-      public static readonly LinkItem FinancialDeficit = AddLinkItem(page: "/TaskList/GeneralInformation/FinancialDeficit");
-      public static readonly LinkItem DistanceFromTrustHeadquarters = AddLinkItem(page: "/TaskList/GeneralInformation/DistanceFromTrustHeadquarters");
-      public static readonly LinkItem MPDetails = AddLinkItem(page: "/TaskList/GeneralInformation/MPDetails");
-      public static readonly LinkItem PartOfPfiScheme = AddLinkItem(page: "/TaskList/GeneralInformation/PartOfPfiScheme");
+      public static readonly LinkItem ConfirmSchoolOverview = AddLinkItem(page: "/TaskList/SchoolOverview/SchoolOverview");
+      public static readonly LinkItem PublishedAdmissionNumber = AddLinkItem(page: "/TaskList/SchoolOverview/PublishedAdmissionNumber");
+      public static readonly LinkItem ViabilityIssues = AddLinkItem(page: "/TaskList/SchoolOverview/ViabilityIssues");
+      public static readonly LinkItem FinancialDeficit = AddLinkItem(page: "/TaskList/SchoolOverview/FinancialDeficit");
+      public static readonly LinkItem DistanceFromTrustHeadquarters = AddLinkItem(page: "/TaskList/SchoolOverview/DistanceFromTrustHeadquarters");
+      public static readonly LinkItem MPDetails = AddLinkItem(page: "/TaskList/SchoolOverview/MPDetails");
+      public static readonly LinkItem PartOfPfiScheme = AddLinkItem(page: "/TaskList/SchoolOverview/PartOfPfiScheme");
    }
 
    public static class RationaleSection
@@ -138,14 +138,14 @@ public static class Links
 
    public static class SchoolBudgetInformationSection
    {
-      public static readonly LinkItem ConfirmSchoolBudgetInformation = AddLinkItem(page: "/TaskList/SchoolBudgetInformation/ConfirmSchoolBudgetInformation");
+      public static readonly LinkItem ConfirmSchoolBudgetInformation = AddLinkItem(page: "/TaskList/SchoolBudgetInformation/Budget");
       public static readonly LinkItem UpdateSchoolBudgetInformation = AddLinkItem(page: "/TaskList/SchoolBudgetInformation/UpdateSchoolBudgetInformation");
       public static readonly LinkItem AdditionalInformation = AddLinkItem(page: "/TaskList/SchoolBudgetInformation/AdditionalInformation");
    }
 
    public static class SchoolPupilForecastsSection
    {
-      public static readonly LinkItem ConfirmSchoolPupilForecasts = AddLinkItem(page: "/TaskList/SchoolPupilForecasts/ConfirmSchoolPupilForecasts");
+      public static readonly LinkItem ConfirmSchoolPupilForecasts = AddLinkItem(page: "/TaskList/SchoolPupilForecasts/PupilForecasts");
       public static readonly LinkItem AdditionalInformation = AddLinkItem(page: "/TaskList/SchoolPupilForecasts/AdditionalInformation");
    }
 
@@ -176,6 +176,8 @@ public static class Links
       public static readonly LinkItem DecisionDate = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DecisionDate");
       public static readonly LinkItem WhyDeferred = AddLinkItem(backText: "Back", page: "/TaskList/Decision/WhyDeferred");
       public static readonly LinkItem Summary = AddLinkItem(backText: "Back", page: "/TaskList/Decision/Summary");
+      public static readonly LinkItem SubMenuRecordADecision = AddLinkItem(backText: "Back", page: "/TaskList/Decision/RecordADecision");
+
    }
 
    public static class TrustTemplate

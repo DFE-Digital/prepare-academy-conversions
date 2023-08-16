@@ -29,7 +29,7 @@ public class ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests : Bas
       Document.QuerySelector("#la-info-template-status")!.TextContent.Trim().Should().Be("In Progress");
       Document.QuerySelector("#la-info-template-status")!.ClassName.Should().Contain("blue");
 
-      await NavigateAsync("Record dates for the LA information template", 0);
+      await NavigateAsync("LA information template sent date", 0);
 
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
       Document.QuerySelector("#la-info-template-sent-date")!.TextContent.Should().Be(project.LocalAuthorityInformationTemplateSentDate.ToDateString());
@@ -53,7 +53,7 @@ public class ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests : Bas
 
       Document.QuerySelector("#la-info-template-status")!.TextContent.Trim().Should().Be("Completed");
 
-      await NavigateAsync("Record dates for the LA information template", 0);
+      await NavigateAsync("LA information template sent date", 0);
 
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
       Document.QuerySelector<IHtmlInputElement>("#la-info-template-complete")!.IsChecked.Should().BeTrue();
@@ -82,7 +82,7 @@ public class ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests : Bas
       AcademyConversionProject project = AddGetProject();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-      await NavigateAsync("Record dates for the LA information template", 0);
+      await NavigateAsync("LA information template sent date", 0);
 
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
 

@@ -1,6 +1,6 @@
-@page "/task-list/{id:int}/confirm-general-information/part-of-pfi-scheme"
+@page "/task-list/{id:int}/confirm-school-overview/part-of-pfi-scheme"
 @using Dfe.PrepareConversions.TagHelpers
-@model Dfe.PrepareConversions.Pages.TaskList.GeneralInformation.PartOfPfiModel;
+@model Dfe.PrepareConversions.Pages.TaskList.SchoolOverview.PartOfPfiModel;
 @{
     ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Part of pfi Scheme";
     Layout = "_QuestionLayout";
@@ -9,7 +9,7 @@
 
 @section BeforeMain
     {
-    <govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation" />
+    <govuk-back-link link-item="@Links.SchoolOverviewSection.ConfirmSchoolOverview" />
 }
 
 

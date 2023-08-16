@@ -6,7 +6,7 @@ using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.TaskList.GeneralInformation;
+namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolOverview;
 
 public class ViabilityIssuesIntegrationTests : BaseIntegrationTests
 {
@@ -24,10 +24,10 @@ public class ViabilityIssuesIntegrationTests : BaseIntegrationTests
          x.Urn = project.Urn;
       });
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-overview");
       await NavigateAsync("Change", 1);
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information/viability-issues");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-overview/viability-issues");
       Document.QuerySelector<IHtmlInputElement>(toSelect.Id)!.IsChecked.Should().BeFalse();
       Document.QuerySelector<IHtmlInputElement>(selected.Id)!.IsChecked.Should().BeTrue();
 
@@ -39,7 +39,7 @@ public class ViabilityIssuesIntegrationTests : BaseIntegrationTests
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-overview");
    }
 
    [Fact]
@@ -48,7 +48,7 @@ public class ViabilityIssuesIntegrationTests : BaseIntegrationTests
       AcademyConversionProject project = AddGetProject();
       AddPatchError(project.Id);
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/viability-issues");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-overview/viability-issues");
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
@@ -60,9 +60,9 @@ public class ViabilityIssuesIntegrationTests : BaseIntegrationTests
    {
       AcademyConversionProject project = AddGetProject();
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-general-information/viability-issues");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-overview/viability-issues");
       await NavigateAsync("Back");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-general-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-overview");
    }
 }

@@ -25,7 +25,7 @@ public class AcademyTypeAndRouteIntegrationTests : BaseIntegrationTests
             .With(r => r.Urn, project.Urn)
       );
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
       await NavigateDataTestAsync("change-academy-type-and-route");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/route-and-grant");
@@ -37,6 +37,6 @@ public class AcademyTypeAndRouteIntegrationTests : BaseIntegrationTests
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
    }
 }

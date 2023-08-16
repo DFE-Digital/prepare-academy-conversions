@@ -35,7 +35,7 @@ public class ConfirmSchoolPupilForecastsIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#school-pupil-forecasts-status")?.TextContent.Trim().Should().Be("Reference only");
       Document.QuerySelector("#school-pupil-forecasts-status")?.ClassName.Should().Contain("grey");
 
-      await NavigateAsync("School pupil forecasts");
+      await NavigateAsync("Pupil forecasts");
 
       Document.QuerySelector("#additional-information")?.TextContent.Should().Be(project.SchoolPupilForecastsAdditionalInformation);
 
@@ -73,7 +73,7 @@ public class ConfirmSchoolPupilForecastsIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#school-pupil-forecasts-status")?.TextContent.Trim().Should().Be("Reference only");
       Document.QuerySelector("#school-pupil-forecasts-status")?.ClassName.Should().Contain("grey");
 
-      await NavigateAsync("School pupil forecasts");
+      await NavigateAsync("Pupil forecasts");
 
       Document.QuerySelector("#additional-information")?.TextContent.Should().Be(project.SchoolPupilForecastsAdditionalInformation);
 
@@ -99,9 +99,9 @@ public class ConfirmSchoolPupilForecastsIntegrationTests : BaseIntegrationTests
       AddGetEstablishmentResponse(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-      await NavigateAsync("School pupil forecasts");
+      await NavigateAsync("Pupil forecasts");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-pupil-forecasts");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/pupil-forecasts");
 
       await Document.QuerySelector<IHtmlFormElement>("form")?.SubmitAsync()!;
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
@@ -114,9 +114,9 @@ public class ConfirmSchoolPupilForecastsIntegrationTests : BaseIntegrationTests
       AddGetEstablishmentResponse(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-      await NavigateAsync("School pupil forecasts");
+      await NavigateAsync("Pupil forecasts");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-pupil-forecasts");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/pupil-forecasts");
 
       await NavigateAsync("Back to task list");
 

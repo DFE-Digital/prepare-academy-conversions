@@ -10,12 +10,12 @@ namespace Dfe.PrepareConversions.ViewComponents;
 
 public class SchoolPostcodeViewComponent : ViewComponent
 {
-   private readonly GeneralInformationService _generalInformationService;
+   private readonly SchoolOverviewService _schoolOverviewService;
    private readonly IAcademyConversionProjectRepository _repository;
 
-   public SchoolPostcodeViewComponent(GeneralInformationService generalInformationService, IAcademyConversionProjectRepository repository)
+   public SchoolPostcodeViewComponent(SchoolOverviewService schoolOverviewService, IAcademyConversionProjectRepository repository)
    {
-      _generalInformationService = generalInformationService;
+      _schoolOverviewService = schoolOverviewService;
       _repository = repository;
    }
 
@@ -30,9 +30,9 @@ public class SchoolPostcodeViewComponent : ViewComponent
       }
 
       AcademyConversionProject project = response.Body;
-      GeneralInformation generalInformation = await _generalInformationService.GetGeneralInformationByUrn(project.Urn.ToString());
+      SchoolOverview schoolOverview = await _schoolOverviewService.GetSchoolOverviewByUrn(project.Urn.ToString());
 
-      SchoolPostcodeViewModel viewModel = new() { SchoolPostcode = generalInformation.SchoolPostcode ?? "No data" };
+      SchoolPostcodeViewModel viewModel = new() { SchoolPostcode = schoolOverview.SchoolPostcode ?? "No data" };
 
       return View(viewModel);
    }

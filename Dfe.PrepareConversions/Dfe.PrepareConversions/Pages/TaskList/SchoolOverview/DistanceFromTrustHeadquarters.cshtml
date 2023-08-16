@@ -1,9 +1,9 @@
-﻿@page "/task-list/{id:int}/confirm-general-information/how-far-converting-school-from-trust"
+﻿@page "/task-list/{id:int}/confirm-school-overview/how-far-converting-school-from-trust"
 @using Dfe.PrepareConversions.TagHelpers
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
    Layout = "_QuestionLayout";
-   Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
+   Model.SuccessPage = Links.SchoolOverviewSection.ConfirmSchoolOverview.Page;
    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "How far is the converting school from the trust";
    ViewData["SchoolName"] = Model.Project.SchoolName;
    ViewData["ProjectId"] = Model.Project.Id;
@@ -12,7 +12,7 @@
 
 @section BeforeMain
 {
-   <govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation"/>
+   <govuk-back-link link-item="@Links.SchoolOverviewSection.ConfirmSchoolOverview"/>
 }
 
 <div class="govuk-form-group">
@@ -31,4 +31,4 @@
                       asp-for="Project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation"
                       rows="5"
                       label="Add any additional information if you need to"
-                      hint="This information will go into your project template under the general information section."/>
+                      hint="This information will go into your project template under the school overview section." />

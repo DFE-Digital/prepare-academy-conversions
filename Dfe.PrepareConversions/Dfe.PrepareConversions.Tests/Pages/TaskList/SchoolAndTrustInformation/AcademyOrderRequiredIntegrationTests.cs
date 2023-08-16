@@ -24,7 +24,7 @@ public class AcademyOrderRequiredIntegrationTests : BaseIntegrationTests
          x.ApplicationReceivedDate = null;
       });
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
       await NavigateAsync("Change", 1);
 
       Document.Url.Should().NotBe($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/academy-order-required");
@@ -40,7 +40,7 @@ public class AcademyOrderRequiredIntegrationTests : BaseIntegrationTests
          x.Urn = project.Urn;
       });
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
       await NavigateAsync("Change", 1);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/academy-order-required");
@@ -55,7 +55,7 @@ public class AcademyOrderRequiredIntegrationTests : BaseIntegrationTests
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
    }
 
    [Fact]
@@ -79,6 +79,6 @@ public class AcademyOrderRequiredIntegrationTests : BaseIntegrationTests
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/academy-order-required");
       await NavigateAsync("Back");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
    }
 }

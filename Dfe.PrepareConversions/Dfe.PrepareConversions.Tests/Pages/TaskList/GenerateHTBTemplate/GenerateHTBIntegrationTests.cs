@@ -28,7 +28,7 @@ public class GenerateHTBIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      await NavigateAsync("Generate project template");
+      await NavigateAsync("Create project document");
       Document.Url.Should().Contain($"/task-list/{project.Id}/download-project-template");
 
       await NavigateAsync("Back to task list");
@@ -42,7 +42,7 @@ public class GenerateHTBIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      await NavigateAsync("Generate project template");
+      await NavigateAsync("Create project document");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 
@@ -62,7 +62,7 @@ public class GenerateHTBIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      await NavigateAsync("Generate project template");
+      await NavigateAsync("Create project document");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 
@@ -88,7 +88,7 @@ public class GenerateHTBIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      await NavigateAsync("Generate project template");
+      await NavigateAsync("Create project document");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 

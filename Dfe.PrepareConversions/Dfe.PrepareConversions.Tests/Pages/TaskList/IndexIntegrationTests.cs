@@ -25,9 +25,9 @@ public class IndexIntegrationTests : BaseIntegrationTests, IAsyncLifetime
    [Fact]
    public async Task Should_redirect_to_record_decision()
    {
-      await OpenAndConfirmPathAsync($"/task-list/{_project.Id}");
+      await OpenAndConfirmPathAsync($"/task-list/{_project.Id}/record-a-decision");
 
-      await NavigateAsync("Record a decision");
+      await NavigateAsync("Record a decision", 1);
 
       Document.Url.Should().Contain($"/task-list/{_project.Id}/decision/record-decision");
    }
@@ -47,7 +47,7 @@ public class IndexIntegrationTests : BaseIntegrationTests, IAsyncLifetime
 
       _factory.AddGetWithJsonResponse($"/conversion-project/advisory-board-decision/{_project.Id}", response);
 
-      await OpenAndConfirmPathAsync($"/task-list/{_project.Id}");
+      await OpenAndConfirmPathAsync($"/task-list/{_project.Id}/record-a-decision");
 
       DecisionElement.Text().Should()
          .Be("Approved with Conditions");
@@ -65,7 +65,7 @@ public class IndexIntegrationTests : BaseIntegrationTests, IAsyncLifetime
 
    public Task InitializeAsync()
    {
-      _project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      _project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
       return Task.CompletedTask;
    }
 

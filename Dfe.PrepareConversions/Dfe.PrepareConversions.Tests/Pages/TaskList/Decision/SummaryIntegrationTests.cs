@@ -49,7 +49,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
 
       await OpenAndConfirmPathAsync($"/task-list/{_project.Id}/decision/summary", $"/task-list/{_project.Id}");
 
-      PageSubHeading.Should().Be("Task list");
+      PageSubHeading.Should().Be("Prepare a project document");
    }
 
    [Fact]
@@ -321,7 +321,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
 
    public Task InitializeAsync()
    {
-      _project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
+      _project = AddGetProject(project => project.SchoolOverviewSectionComplete = false);
       _wizard = new RecordDecisionWizard(Context);
       return Task.CompletedTask;
    }

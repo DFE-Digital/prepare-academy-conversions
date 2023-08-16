@@ -10,7 +10,7 @@
          <sub-menu-link class="moj-sub-navigation__link"
                         asp-page="@Links.TaskList.Index.Page"
                         asp-route-id="@id">
-            Task list
+            Project Details
          </sub-menu-link>
       </li>
 
@@ -29,7 +29,13 @@
             Annex B form
          </sub-menu-link>
       </li>
-
+        <li class="moj-sub-navigation__item">
+            <sub-menu-link class="moj-sub-navigation__link"
+                           asp-page="@Links.Decision.SubMenuRecordADecision.Page"
+                           asp-route-id="@id">
+                Record a decision
+            </sub-menu-link>
+        </li>
       <li class="moj-sub-navigation__item">
          <sub-menu-link class="moj-sub-navigation__link"
                         asp-page="@Links.ProjectNotes.Index.Page"

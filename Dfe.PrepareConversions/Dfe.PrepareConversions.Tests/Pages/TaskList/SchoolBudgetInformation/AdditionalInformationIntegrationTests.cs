@@ -23,7 +23,7 @@ public class AdditionalInformationIntegrationTests : BaseIntegrationTests
          x.Urn = project.Urn;
       });
 
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information");
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/budget");
       await NavigateAsync("Change", 6);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information/additional-information#additional-information");
@@ -33,7 +33,7 @@ public class AdditionalInformationIntegrationTests : BaseIntegrationTests
       textArea.Value = request.SchoolBudgetInformationAdditionalInformation;
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/budget");
    }
 
    [Fact]
@@ -57,6 +57,6 @@ public class AdditionalInformationIntegrationTests : BaseIntegrationTests
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information/additional-information");
       await NavigateAsync("Back");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-budget-information");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/budget");
    }
 }
