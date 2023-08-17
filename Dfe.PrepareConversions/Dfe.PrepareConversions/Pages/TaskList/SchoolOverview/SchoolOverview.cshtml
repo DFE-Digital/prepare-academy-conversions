@@ -4,7 +4,7 @@
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
    Model.SuccessPage = Links.TaskList.Index.Page;
-   ViewData["Title"] = "Confirm general information";
+    ViewData["Title"] = "Confirm school overview";
    ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
 }
 
@@ -36,16 +36,14 @@
               This information comes from TRAMS and the
               <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
            </div>
-            <p class="govuk-body-s">TRAMS last updated on: 23 March 2021</p>
-
-            <br>
+           <br>
         }
          
    </div>
    <div class="govuk-grid-column-full">
-      @await Component.InvokeAsync("GeneralInformation")
+      @await Component.InvokeAsync("SchoolOverview")
       <form method="post">
-         <govuk-checkbox-input name="general-information-complete" asp-for="Project.GeneralInformationSectionComplete" label="Mark this section as complete, you can still make changes later"/>
+         <govuk-checkbox-input name="school-overview-complete" asp-for="Project.SchoolOverviewSectionComplete" label="Mark this section as complete, you can still make changes later"/>
 
          <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
             Confirm and continue

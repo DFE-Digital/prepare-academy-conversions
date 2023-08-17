@@ -25,17 +25,17 @@ namespace Dfe.PrepareConversions.Pages.TaskList;
 
 public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
 {
-   private readonly GeneralInformationService _generalInformationService;
+   private readonly SchoolOverviewService _schoolOverviewService;
    private readonly KeyStagePerformanceService _keyStagePerformanceService;
    private readonly SchoolPerformanceService _schoolPerformanceService;
 
    public DownloadProjectTemplate(SchoolPerformanceService schoolPerformanceService,
-                                  GeneralInformationService generalInformationService,
+                                  SchoolOverviewService schoolOverviewService,
                                   IAcademyConversionProjectRepository repository,
                                   KeyStagePerformanceService keyStagePerformanceService) : base(repository)
    {
       _schoolPerformanceService = schoolPerformanceService;
-      _generalInformationService = generalInformationService;
+      _schoolOverviewService = schoolOverviewService;
       _keyStagePerformanceService = keyStagePerformanceService;
    }
 
@@ -61,11 +61,11 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
       AcademyConversionProject project = response.Body;
 
       SchoolPerformance schoolPerformance = await _schoolPerformanceService.GetSchoolPerformanceByUrn(project.Urn.ToString());
-      Data.Models.GeneralInformation generalInformation = await _generalInformationService.GetGeneralInformationByUrn(project.Urn.ToString());
+      Data.Models.SchoolOverview schoolOverview = await _schoolOverviewService.GetSchoolOverviewByUrn(project.Urn.ToString());
       KeyStagePerformance keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(project.Urn.ToString());
 
       var DocumentGenerator = new DocumentGenerator();
-      HtbTemplate document = DocumentGenerator.GenerateDocument(response, schoolPerformance, generalInformation, keyStagePerformance, project, out byte[] documentByteArray);
+      HtbTemplate document = DocumentGenerator.GenerateDocument(response, schoolPerformance, schoolOverview, keyStagePerformance, project, out byte[] documentByteArray);
 
       return File(documentByteArray, "application/vnd.ms-word.document", $"{document.SchoolName}-project-template-{DateTime.Today:dd-MM-yyyy}.docx");
    }

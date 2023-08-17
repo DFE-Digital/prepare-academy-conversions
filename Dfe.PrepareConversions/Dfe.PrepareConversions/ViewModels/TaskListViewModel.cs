@@ -7,7 +7,7 @@ public class TaskListViewModel
    public TaskListItemViewModel LocalAuthorityInformationTemplateTaskListStatus { get; set; }
    public bool LocalAuthorityInformationTemplateSectionNotStarted => LocalAuthorityInformationTemplateTaskListStatus.Equals(TaskListItemViewModel.NotStarted);
    public TaskListItemViewModel SchoolAndTrustInformationTaskListStatus { get; set; }
-   public TaskListItemViewModel GeneralInformationTaskListStatus { get; set; }
+   public TaskListItemViewModel SchoolOverviewTaskListStatus { get; set; }
    public TaskListItemViewModel RationaleTaskListStatus { get; set; }
    public TaskListItemViewModel RisksAndIssuesTaskListStatus { get; set; }
    public TaskListItemViewModel LegalRequirementsTaskListStatus { get; set; }
@@ -24,7 +24,7 @@ public class TaskListViewModel
       {
          LocalAuthorityInformationTemplateTaskListStatus = TaskListItemViewModel.GetLocalAuthorityInformationTemplateTaskListStatus(project),
          SchoolAndTrustInformationTaskListStatus = TaskListItemViewModel.GetSchoolAndTrustInformationTaskListStatus(project),
-         GeneralInformationTaskListStatus = TaskListItemViewModel.GetGeneralInformationTaskListStatus(project),
+         SchoolOverviewTaskListStatus = TaskListItemViewModel.GetSchoolOverviewTaskListStatus(project),
          RationaleTaskListStatus = TaskListItemViewModel.GetRationaleTaskListStatus(project),
          RisksAndIssuesTaskListStatus = TaskListItemViewModel.GetRisksAndIssuesTaskListStatus(project),
          LegalRequirementsTaskListStatus = TaskListItemViewModel.GetLegalRequirementsTaskListStatus(project),

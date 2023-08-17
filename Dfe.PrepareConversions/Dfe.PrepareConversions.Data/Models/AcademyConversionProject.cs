@@ -50,7 +50,7 @@ public class AcademyConversionProject
    public bool? AnnexBFormReceived { get; set; }
    public string AnnexBFormUrl { get; set; }
 
-   //general info
+   // School Overview
    public string PublishedAdmissionNumber { get; set; }
    public string PartOfPfiScheme { get; set; }
    public string PfiSchemeDetails { get; set; }
@@ -58,9 +58,8 @@ public class AcademyConversionProject
    public string FinancialDeficit { get; set; }
    public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
-   public string MemberOfParliamentName { get; set; }
-   public string MemberOfParliamentParty { get; set; }
-   public bool? GeneralInformationSectionComplete { get; set; }
+   public string MemberOfParliamentNameAndParty { get; set; }
+   public bool? SchoolOverviewSectionComplete { get; set; }
 
    //school performance ofsted information
    public string SchoolPerformanceAdditionalInformation { get; set; }

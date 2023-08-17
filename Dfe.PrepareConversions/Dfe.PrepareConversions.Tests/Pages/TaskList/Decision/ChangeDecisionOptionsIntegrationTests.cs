@@ -23,7 +23,7 @@ public class ChangeDecisionOptionsIntegrationTests : BaseIntegrationTests, IAsyn
 
    public Task InitializeAsync()
    {
-      _project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
+      _project = AddGetProject(project => project.SchoolOverviewSectionComplete = false);
       _wizard = new RecordDecisionWizard(Context);
       return Task.CompletedTask;
    }

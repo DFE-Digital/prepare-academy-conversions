@@ -109,6 +109,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
    {
       AcademyConversionProject project = AddGetProject(project =>
       {
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
          project.RecommendationForProject = null;
          project.Author = null;
          project.ClearedBy = null;
@@ -122,7 +123,6 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
          project.NameOfTrust = null;
          project.SponsorReferenceNumber = null;
          project.SponsorName = null;
-         project.AcademyTypeAndRoute = null;
          project.ConversionSupportGrantAmount = null;
          project.ConversionSupportGrantChangeReason = null;
          project.ProposedAcademyOpeningDate = null;
@@ -136,6 +136,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       Document.QuerySelector("#school-and-trust-information-status")!.ClassName.Should().Contain("grey");
 
       await NavigateAsync("Conversion details");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
 
       Document.QuerySelector("#project-recommendation")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#author")!.TextContent.Should().Be("Empty");
@@ -150,7 +151,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       Document.QuerySelector("#name-of-trust")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#sponsor-reference-number")!.TextContent.Should().Be("Not applicable");
       Document.QuerySelector("#sponsor-name")!.TextContent.Should().Be("Not applicable");
-      Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Be("Empty");
+      Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Contain("Converter");
       Document.QuerySelector("#proposed-academy-opening-date")!.TextContent.Should().Be("Empty");
       Document.QuerySelector<IHtmlInputElement>("#school-and-trust-information-complete")!.IsChecked.Should().BeFalse();
 

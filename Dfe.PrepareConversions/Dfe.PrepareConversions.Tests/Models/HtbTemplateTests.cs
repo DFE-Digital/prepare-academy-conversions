@@ -14,7 +14,7 @@ public class HtbTemplateTests
 {
    public class WholeTemplateTests
    {
-      private readonly GeneralInformation _generalInformation;
+      private readonly SchoolOverview _schoolOverview;
       private readonly AcademyConversionProject _project;
       private readonly SchoolPerformance _schoolPerformance;
       private readonly HtbTemplate _template;
@@ -24,10 +24,10 @@ public class HtbTemplateTests
          Fixture fixture = new();
          _project = fixture.Create<AcademyConversionProject>();
          _schoolPerformance = fixture.Create<SchoolPerformance>();
-         _generalInformation = fixture.Create<GeneralInformation>();
+         _schoolOverview = fixture.Create<SchoolOverview>();
          KeyStagePerformance keyStagePerformance = new() { KeyStage2 = fixture.CreateMany<KeyStage2PerformanceResponse>(3) };
 
-         _template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, keyStagePerformance);
+         _template = HtbTemplate.Build(_project, _schoolPerformance, _schoolOverview, keyStagePerformance);
       }
 
       [Fact]
@@ -82,26 +82,24 @@ public class HtbTemplateTests
       }
 
       [Fact]
-      public void ItBuildstheGeneralInformationSuccessfully()
+      public void ItBuildstheSchoolOverviewSuccessfully()
       {
-         Assert.Equal(_template.SchoolPhase, _generalInformation.SchoolPhase);
-         Assert.Equal(_template.AgeRange, $"{_generalInformation.AgeRangeLower} to {_generalInformation.AgeRangeUpper}");
-         Assert.Equal(_template.SchoolType, _generalInformation.SchoolType);
-         Assert.Equal(_template.NumberOnRoll, _generalInformation.NumberOnRoll?.ToString());
-         Assert.Equal(_template.PercentageSchoolFull, _generalInformation.NumberOnRoll.AsPercentageOf(_generalInformation.SchoolCapacity));
-         Assert.Equal(_template.SchoolCapacity, _generalInformation.SchoolCapacity?.ToString());
+         Assert.Equal(_template.SchoolPhase, _schoolOverview.SchoolPhase);
+         Assert.Equal(_template.AgeRange, $"{_schoolOverview.AgeRangeLower} to {_schoolOverview.AgeRangeUpper}");
+         Assert.Equal(_template.SchoolType, _schoolOverview.SchoolType);
+         Assert.Equal(_template.NumberOnRoll, _schoolOverview.NumberOnRoll?.ToString());
+         Assert.Equal(_template.PercentageSchoolFull, _schoolOverview.NumberOnRoll.AsPercentageOf(_schoolOverview.SchoolCapacity));
+         Assert.Equal(_template.SchoolCapacity, _schoolOverview.SchoolCapacity?.ToString());
          Assert.Equal(_template.PublishedAdmissionNumber, _project.PublishedAdmissionNumber);
-         Assert.Equal(_template.PercentageFreeSchoolMeals, $"{_generalInformation.PercentageFreeSchoolMeals}%");
+         Assert.Equal(_template.PercentageFreeSchoolMeals, $"{_schoolOverview.PercentageFreeSchoolMeals}%");
          Assert.Equal(_template.PartOfPfiScheme, _project.PartOfPfiScheme);
          Assert.Equal(_template.ViabilityIssues, _project.ViabilityIssues);
          Assert.Equal(_template.FinancialDeficit, _project.FinancialDeficit);
-         Assert.Equal(_template.IsSchoolLinkedToADiocese, _generalInformation.IsSchoolLinkedToADiocese);
+         Assert.Equal(_template.IsSchoolLinkedToADiocese, _schoolOverview.IsSchoolLinkedToADiocese);
          Assert.Equal(_template.DistanceFromSchoolToTrustHeadquarters, $"{_project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles");
          Assert.Equal(_template.DistanceFromSchoolToTrustHeadquartersAdditionalInformation, _project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
-         Assert.Equal(_template.ParliamentaryConstituency, _generalInformation.ParliamentaryConstituency);
-         Assert.Equal(_template.MPName, _project.MemberOfParliamentName);
-         Assert.Equal(_template.MPParty, _project.MemberOfParliamentParty);
-         Assert.Equal(_template.MPNameAndParty, $"{_template.MPName}, {_template.MPParty}");
+         Assert.Equal(_template.ParliamentaryConstituency, _schoolOverview.ParliamentaryConstituency);
+         Assert.Equal(_template.MemberOfParliamentNameAndParty, _project.MemberOfParliamentNameAndParty);
       }
 
       [Fact]
@@ -134,7 +132,7 @@ public class HtbTemplateTests
 
    public class NullValuesTests
    {
-      private readonly GeneralInformation _generalInformation;
+      private readonly SchoolOverview _schoolOverview;
       private readonly KeyStagePerformance _keyStagePerformance;
       private readonly AcademyConversionProject _project;
       private readonly SchoolPerformance _schoolPerformance;
@@ -143,14 +141,14 @@ public class HtbTemplateTests
       {
          _project = new AcademyConversionProject();
          _schoolPerformance = new SchoolPerformance();
-         _generalInformation = new GeneralInformation();
+         _schoolOverview = new SchoolOverview();
          _keyStagePerformance = new KeyStagePerformance();
       }
 
       [Fact]
       public void ItSubstitutesNullSponsorInfoWithMeaningfulWording()
       {
-         HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
+         HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _schoolOverview, _keyStagePerformance);
 
          Assert.Equal("Not applicable", template.SponsorName);
          Assert.Equal("Not applicable", template.SponsorReferenceNumber);
@@ -159,16 +157,16 @@ public class HtbTemplateTests
       [Fact]
       public void ItDealsWithNullValuesWhenPopulatingTheFieldsForTheFooter()
       {
-         HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
+         HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _schoolOverview, _keyStagePerformance);
 
          Assert.Equal("Author: ", template.Author);
          Assert.Equal("Cleared by: ", template.ClearedBy);
       }
 
       [Fact]
-      public void ItDealsWithNullValuesWhenPopulatingTheFieldsForTheGeneralInformation()
+      public void ItDealsWithNullValuesWhenPopulatingTheFieldsForTheSchoolOverview()
       {
-         HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
+         HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _schoolOverview, _keyStagePerformance);
 
          Assert.Null(template.SchoolPhase);
          Assert.Equal("", template.AgeRange);
@@ -185,89 +183,70 @@ public class HtbTemplateTests
          Assert.Null(template.DistanceFromSchoolToTrustHeadquarters);
          Assert.Null(template.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
          Assert.Null(template.ParliamentaryConstituency);
-         Assert.Null(template.MPName);
-         Assert.Null(template.MPParty);
-         Assert.Equal("", template.MPNameAndParty);
+         Assert.Null(template.MemberOfParliamentNameAndParty);
       }
 
-      [Fact]
-      public void ItDealsWithAbsentMPNameCorrectly()
+
+      public class KeyStagePerformanceTests
       {
-         _project.MemberOfParliamentParty = "a party";
-         HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
+         private readonly Fixture _fixture;
+         private readonly SchoolOverview _schoolOverview;
+         private readonly AcademyConversionProject _project;
+         private readonly SchoolPerformance _schoolPerformance;
 
-         Assert.Equal("a party", template.MPNameAndParty);
-      }
-
-      [Fact]
-      public void ItDealsWithAbsentPartyCorrectly()
-      {
-         _project.MemberOfParliamentName = "a MP";
-         HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, _keyStagePerformance);
-
-         Assert.Equal("a MP", template.MPNameAndParty);
-      }
-   }
-
-   public class KeyStagePerformanceTests
-   {
-      private readonly Fixture _fixture;
-      private readonly GeneralInformation _generalInformation;
-      private readonly AcademyConversionProject _project;
-      private readonly SchoolPerformance _schoolPerformance;
-
-      public KeyStagePerformanceTests()
-      {
-         _fixture = new Fixture();
-         _project = _fixture.Create<AcademyConversionProject>();
-         _schoolPerformance = _fixture.Create<SchoolPerformance>();
-         _generalInformation = _fixture.Create<GeneralInformation>();
-      }
-
-      [Fact]
-      public void GivenNoKeyStage2DataToDisplay_DoesNotPopulateKeyStage2Data()
-      {
-         KeyStagePerformance keyStagePerformance = new();
-         HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, keyStagePerformance);
-
-         Assert.Null(template.KeyStage2);
-      }
-
-      [Fact]
-      public void GivenNoKeyStage4DataToDisplay_DoesNotPopulateKeyStage4Data()
-      {
-         KeyStagePerformance keyStagePerformance = new();
-         HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, keyStagePerformance);
-
-         Assert.Null(template.KeyStage4);
-      }
-
-      [Fact]
-      public void GivenNoKeyStage5DataToDisplay_DoesNotPopulateKeyStage5Data()
-      {
-         KeyStagePerformance keyStagePerformance = new();
-         HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, keyStagePerformance);
-
-         Assert.Null(template.KeyStage5);
-      }
-
-      [Fact]
-      public void GivenKeyStageData_PopulatesKeyStageData()
-      {
-         KeyStagePerformance keyStagePerformance = new()
+         public KeyStagePerformanceTests()
          {
-            KeyStage2 = _fixture.CreateMany<KeyStage2PerformanceResponse>(4),
-            KeyStage4 = _fixture.CreateMany<KeyStage4PerformanceResponse>(3),
-            KeyStage5 = _fixture.CreateMany<KeyStage5PerformanceResponse>(2)
-         };
+            _fixture = new Fixture();
+            _project = _fixture.Create<AcademyConversionProject>();
+            _schoolPerformance = _fixture.Create<SchoolPerformance>();
+            _schoolOverview = _fixture.Create<SchoolOverview>();
+         }
 
-         HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _generalInformation, keyStagePerformance);
+         [Fact]
+         public void GivenNoKeyStage2DataToDisplay_DoesNotPopulateKeyStage2Data()
+         {
+            KeyStagePerformance keyStagePerformance = new();
+            HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _schoolOverview, keyStagePerformance);
 
-         Assert.NotNull(template.KeyStage2);
-         Assert.Equal(4, template.KeyStage2.Count());
-         Assert.NotNull(template.KeyStage4);
-         Assert.NotNull(template.KeyStage5);
-         Assert.Equal(2, template.KeyStage5.Count());
+            Assert.Null(template.KeyStage2);
+         }
+
+         [Fact]
+         public void GivenNoKeyStage4DataToDisplay_DoesNotPopulateKeyStage4Data()
+         {
+            KeyStagePerformance keyStagePerformance = new();
+            HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _schoolOverview, keyStagePerformance);
+
+            Assert.Null(template.KeyStage4);
+         }
+
+         [Fact]
+         public void GivenNoKeyStage5DataToDisplay_DoesNotPopulateKeyStage5Data()
+         {
+            KeyStagePerformance keyStagePerformance = new();
+            HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _schoolOverview, keyStagePerformance);
+
+            Assert.Null(template.KeyStage5);
+         }
+
+         [Fact]
+         public void GivenKeyStageData_PopulatesKeyStageData()
+         {
+            KeyStagePerformance keyStagePerformance = new()
+            {
+               KeyStage2 = _fixture.CreateMany<KeyStage2PerformanceResponse>(4),
+               KeyStage4 = _fixture.CreateMany<KeyStage4PerformanceResponse>(3),
+               KeyStage5 = _fixture.CreateMany<KeyStage5PerformanceResponse>(2)
+            };
+
+            HtbTemplate template = HtbTemplate.Build(_project, _schoolPerformance, _schoolOverview, keyStagePerformance);
+
+            Assert.NotNull(template.KeyStage2);
+            Assert.Equal(4, template.KeyStage2.Count());
+            Assert.NotNull(template.KeyStage4);
+            Assert.NotNull(template.KeyStage5);
+            Assert.Equal(2, template.KeyStage5.Count());
+         }
       }
    }
 }

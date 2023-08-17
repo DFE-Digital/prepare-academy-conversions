@@ -19,10 +19,23 @@
          Pupil forecasts
       </h1>
       <div class="govuk-body">
-         <partial name="Shared/_OpenApplicationFormNewTab"/>
-         <p>
-            You can add <a href="#additional-information">additional information</a> if you need to, this will also go into your project template.
-         </p>
+         
+            @if (ViewData["AcademyTypeAndRoute"]!.Equals(AcademyTypeAndRoutes.Sponsored))
+            {
+               <p>
+                    This information comes from GIAS (Get Information About Schools) and will go into your project document. You can add more from<a asp-page="@Links.AnnexB.Index.Page" asp-route-id="@Model.Project.Id"> the Annex B form</a>.
+               </p>
+            }
+            else
+            {
+               <p>
+                  This information comes from GIAS (Get Information about Schools) and the
+                  <a asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>. The table will go into your project document.
+               </p>
+            }
+            <p>
+               You can add <a href="#additional-information">additional information</a> if you need to, this will also go into your project document.
+            </p>
       </div>
    </div>
    <div class="govuk-grid-column-full">

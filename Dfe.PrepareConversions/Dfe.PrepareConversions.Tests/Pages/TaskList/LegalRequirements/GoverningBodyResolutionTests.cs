@@ -37,7 +37,7 @@ public class GoverningBodyResolutionTests : LegalRequirementsPageTestBase
       await Wizard.OpenGoverningBodyResolution(Project.Id);
       await NavigateAsync("Back");
 
-      PageHeading.Should().Be("Confirm legal requirements");
+      PageHeading.Should().Be("Legal requirements");
    }
 
    [Fact]
@@ -51,7 +51,7 @@ public class GoverningBodyResolutionTests : LegalRequirementsPageTestBase
    [Fact]
    public async Task Should_not_select_any_of_the_options_by_default()
    {
-      Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
+      Project = AddGetProject(project => project.SchoolOverviewSectionComplete = false);
       await Wizard.OpenGoverningBodyResolution(Project.Id);
       YesOption.IsChecked.Should().BeFalse();
       NoOption.IsChecked.Should().BeFalse();
@@ -78,7 +78,7 @@ public class GoverningBodyResolutionTests : LegalRequirementsPageTestBase
       YesOption.IsChecked = true;
       await SaveAndContinueButton.SubmitAsync();
 
-      PageHeading.Should().Be("Confirm legal requirements");
+      PageHeading.Should().Be("Legal requirements");
    }
 
    [Fact]
@@ -99,13 +99,13 @@ public class GoverningBodyResolutionTests : LegalRequirementsPageTestBase
       await Wizard.OpenGoverningBodyResolution(Project.Id);
       await SaveAndContinueButton.SubmitAsync();
 
-      PageHeading.Should().Be("Confirm legal requirements");
+      PageHeading.Should().Be("Legal requirements");
    }
 
    [Fact]
    public async Task Should_not_update_the_summary_status_if_an_option_was_not_selected()
    {
-      Project = AddGetProject(project => project.GeneralInformationSectionComplete = false);
+      Project = AddGetProject(project => project.SchoolOverviewSectionComplete = false);
       await Wizard.OpenGoverningBodyResolution(Project.Id);
       YesOption.IsChecked.Should().BeFalse();
       NoOption.IsChecked.Should().BeFalse();
