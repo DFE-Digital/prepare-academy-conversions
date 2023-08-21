@@ -29,7 +29,7 @@ public class WhyDeferredIntegrationTests : BaseIntegrationTests, IAsyncLifetime
 
    public async Task InitializeAsync()
    {
-      _project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      _project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
       _wizard = new RecordDecisionWizard(Context);
 
       await _wizard.StartFor(_project.Id);

@@ -23,6 +23,7 @@ using Microsoft.FeatureManagement;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using System;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -103,7 +104,7 @@ public class Startup
       services.AddScoped<IApiClient, ApiClient>();
       services.AddSingleton<PathFor>();
 
-      services.AddHttpClient("TramsClient", (sp, client) =>
+      services.AddHttpClient(DfeHttpClientFactory.TramsClientName, (sp, client) =>
       {
          TramsApiOptions tramsApiOptions = GetTypedConfigurationFor<TramsApiOptions>();
          client.BaseAddress = new Uri(tramsApiOptions.Endpoint);
@@ -111,7 +112,7 @@ public class Startup
 
       });
 
-      services.AddHttpClient("AcademisationClient", (sp, client) =>
+      services.AddHttpClient(DfeHttpClientFactory.AcademisationClientName, (sp, client) =>
       {
          AcademisationApiOptions apiOptions = GetTypedConfigurationFor<AcademisationApiOptions>();
          client.BaseAddress = new Uri(apiOptions.BaseUrl);
@@ -125,7 +126,7 @@ public class Startup
       services.AddScoped<IGetEstablishment, EstablishmentService>();
       services.Decorate<IGetEstablishment, GetEstablishmentItemCacheDecorator>();
       services.AddScoped<SchoolPerformanceService>();
-      services.AddScoped<GeneralInformationService>();
+      services.AddScoped<SchoolOverviewService>();
       services.AddScoped<KeyStagePerformanceService>();
       services.AddScoped<ITrustsRepository, TrustsRepository>();
       services.AddScoped<IAcademyConversionProjectRepository, AcademyConversionProjectRepository>();

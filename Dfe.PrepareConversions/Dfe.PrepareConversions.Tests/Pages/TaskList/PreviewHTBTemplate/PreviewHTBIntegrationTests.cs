@@ -101,7 +101,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Should_display_general_information_section()
+   public async Task Should_display_school_overview_section()
    {
       AcademyConversionProject project = AddGetProject();
       EstablishmentResponse establishment = AddGetEstablishmentResponse(project.Urn.ToString());
@@ -124,8 +124,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#distance-to-trust-headquarters")!.TextContent.Should().Be($"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles");
       Document.QuerySelector("#distance-to-trust-headquarters-additional-text")!.TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
       Document.QuerySelector("#parliamentary-constituency")!.TextContent.Should().Be(establishment.ParliamentaryConstituency.Name);
-      Document.QuerySelector("#member-of-parliament-name")!.TextContent.Should().Be(project.MemberOfParliamentName);
-      Document.QuerySelector("#member-of-parliament-party")!.TextContent.Should().Be(project.MemberOfParliamentParty);
+      Document.QuerySelector("#member-of-parliament-name-and-party")!.TextContent.Should().Be(project.MemberOfParliamentNameAndParty);
    }
 
    [Fact]
@@ -140,21 +139,21 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Should_navigate_to_general_information_pan_page_and_back()
+   public async Task Should_navigate_to_school_overview_pan_page_and_back()
    {
       AcademyConversionProject project = AddGetProject();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
       await NavigateDataTestAsync("change-published-admission-number");
-      Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
+      Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-overview/published-admission-number");
 
       await NavigateAsync("Back");
       Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
    }
 
    [Fact]
-   public async Task Should_update_general_information_pan_and_navigate_back_to_preview()
+   public async Task Should_update_school_overview_pan_and_navigate_back_to_preview()
    {
       AcademyConversionProject project = AddGetProject();
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
@@ -166,7 +165,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
       await NavigateDataTestAsync("change-published-admission-number");
-      Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-general-information/published-admission-number");
+      Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-overview/published-admission-number");
 
       Document.QuerySelector<IHtmlInputElement>("#published-admission-number")!.Value.Should().Be(project.PublishedAdmissionNumber);
       Document.QuerySelector<IHtmlInputElement>("#published-admission-number")!.Value = request.PublishedAdmissionNumber;
@@ -571,7 +570,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 0);
+      await NavigateAsync("Change", 14);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/project-recommendation");
 
       await NavigateAsync("Back");
@@ -592,7 +591,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 0);
+      await NavigateAsync("Change", 14);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/project-recommendation");
 
       Document.QuerySelector<IHtmlInputElement>(toSelect.Id)!.IsChecked.Should().BeFalse();
@@ -616,7 +615,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 5);
+      await NavigateAsync("Change", 19);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       await NavigateAsync("Back");
@@ -646,7 +645,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 5);
+      await NavigateAsync("Change", 19);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeFalse();
@@ -680,7 +679,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 5);
+      await NavigateAsync("Change", 19);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeFalse();
@@ -700,7 +699,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 5);
+      await NavigateAsync("Change", 19);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       await NavigateAsync("Back");
@@ -719,7 +718,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 5);
+      await NavigateAsync("Change", 19);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked = true;
@@ -751,7 +750,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 5);
+      await NavigateAsync("Change", 19);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeTrue();
@@ -793,7 +792,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 5);
+      await NavigateAsync("Change", 19);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeTrue();

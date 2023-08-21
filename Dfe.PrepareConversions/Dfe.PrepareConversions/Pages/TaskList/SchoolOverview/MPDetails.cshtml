@@ -1,9 +1,9 @@
-﻿@page  "/task-list/{id:int}/confirm-general-information/enter-MP-name-and-political-party"
+﻿@page  "/task-list/{id:int}/confirm-school-overview/enter-MP-name-and-political-party"
 @using Dfe.PrepareConversions.TagHelpers
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
    Layout = "_QuestionLayout";
-   Model.SuccessPage = Links.GeneralInformationSection.ConfirmGeneralInformation.Page;
+   Model.SuccessPage = Links.SchoolOverviewSection.ConfirmSchoolOverview.Page;
    ViewData["Title"] = "MP details";
    ViewData["ShowTheyWorkForYouLink"] = true;
    ViewData["SchoolName"] = Model.Project.SchoolName;
@@ -13,7 +13,7 @@
 
 @section BeforeMain
 {
-   <govuk-back-link link-item="@Links.GeneralInformationSection.ConfirmGeneralInformation"/>
+   <govuk-back-link link-item="@Links.SchoolOverviewSection.ConfirmSchoolOverview"/>
 }
 
 <div class="govuk-form-group">
@@ -24,12 +24,8 @@
    </h1>
    <p class="govuk-body-s">Use the school's postcode to find the name of the MP and their political party on <a href="https://www.theyworkforyou.com" target="blank" id="link-to-they-work-for-you-page">They Work For You (opens in a new tab)</a></p>
    @await Component.InvokeAsync("SchoolPostcode")
-   <label class="govuk-label govuk-label--m" for="member-of-parliament-name">
-      Enter the MP's name
+   <label class="govuk-label govuk-label--m" for="member-of-parliament-name-and-party">
+      Enter the MP's name and party
    </label>
-   <govuk-text-input name="member-of-parliament-name" id="member-of-parliament-name" asp-for="@Model.Project.MPName" width="20"/>
-   <label class="govuk-label govuk-label--m" for="member-of-parliament-party">
-      Enter the MP's political party
-   </label>
-   <govuk-text-input name="member-of-parliament-party" id="member-of-parliament-party" asp-for="@Model.Project.MPParty" width="20"/>
+   <govuk-text-input name="member-of-parliament-name-and-party" id="member-of-parliament-name-and-party" asp-for="@Model.Project.MemberOfParliamentNameAndParty" width="20"/>
 </div>

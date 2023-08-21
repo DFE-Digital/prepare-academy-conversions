@@ -30,59 +30,60 @@
 
 
         <h3 class="app-task-list__section govuk-!-margin-top-8">Add school information</h3>
-        <div class="app-task-list">
-            <ul class="app-task-list__items govuk-!-padding-left-0">
+       <div class="app-task-list">
+          <ul class="app-task-list__items govuk-!-padding-left-0">
+             <li class="app-task-list__item">
+                <span class="app-task-list__task-name">
+                   <a class="govuk-link" asp-page="@Links.SchoolOverviewSection.ConfirmSchoolOverview.Page" asp-route-id="@Model.Project.Id" aria-describedby="la-info-template-status">
+                      School overview
+                   </a>
+                </span>
+                <strong class="govuk-tag @Model.TaskList.SchoolOverviewTaskListStatus.CssClass app-task-list__tag" id="school-overview-status"> @Model.TaskList.SchoolOverviewTaskListStatus.Status</strong>
+             </li>
+             <li class="app-task-list__item">
+                <span class="app-task-list__task-name">
+                   <a class="govuk-link" asp-page="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="la-info-template-status">
+                      Budget
+                   </a>
+                </span>
+                <strong class="govuk-tag @Model.TaskList.SchoolBudgetInformationTaskListStatus.CssClass app-task-list__tag" id="school-budget-information-status">
+                   @Model.TaskList.SchoolBudgetInformationTaskListStatus.Status
+                </strong>
+             </li>
+             <li class="app-task-list__item">
+                <span class="app-task-list__task-name">
+                   <a class="govuk-link" asp-page="@Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-pupil-forecasts-status">
+                      Pupil forecasts
+                   </a>
+                </span>
+             </li>
+             <li class="app-task-list__item">
+                <span class="app-task-list__task-name">
+                   <a class="govuk-link" asp-page="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-and-trust-information-status">Conversion details</a>
+                </span>
+                <strong class="govuk-tag @Model.TaskList.SchoolAndTrustInformationTaskListStatus.CssClass app-task-list__tag" id="school-and-trust-information-status">
+                   @Model.TaskList.SchoolAndTrustInformationTaskListStatus.Status
+                </strong>
+             </li>
+             @if (Model.Project.AcademyTypeAndRoute is not AcademyTypeAndRoutes.Sponsored)
+             {
                 <li class="app-task-list__item">
-                    <span class="app-task-list__task-name">
-                        <a class="govuk-link" asp-page="@Links.GeneralInformationSection.ConfirmGeneralInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="la-info-template-status">
-                            School overview
-                        </a>
-                    </span>
-                    <strong class="govuk-tag @Model.TaskList.GeneralInformationTaskListStatus.CssClass app-task-list__tag" id="general-information-status"> @Model.TaskList.GeneralInformationTaskListStatus.Status</strong>
+                   <span class="app-task-list__task-name">
+                      <a class="govuk-link" asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Project.Id" aria-describedby="legal-requirements" data-cy="select-tasklist-links-legalrequirementlinks">
+                         Legal requirements
+                      </a>
+                   </span>
+                   <strong class="govuk-tag @Model.TaskList.LegalRequirementsTaskListStatus.CssClass app-task-list__tag" id="legal-status" data-cy="select-tasklist-legalrequirements-status">
+                      @Model.TaskList.LegalRequirementsTaskListStatus.Status
+                   </strong>
                 </li>
-                <li class="app-task-list__item">
-                    <span class="app-task-list__task-name">
-                        <a class="govuk-link" asp-page="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="la-info-template-status">
-                            Budget
-                        </a>
-                    </span>
-                    <strong class="govuk-tag @Model.TaskList.SchoolBudgetInformationTaskListStatus.CssClass app-task-list__tag" id="school-budget-information-status">
-                        @Model.TaskList.SchoolBudgetInformationTaskListStatus.Status
-                    </strong>
-                </li>
-                <li class="app-task-list__item">
-                    <span class="app-task-list__task-name">
-                        <a class="govuk-link" asp-page="@Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-pupil-forecasts-status">
-                            Pupil forecasts
-                        </a>
-                    </span>
-                    <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="school-pupil-forecasts-status">Reference only</strong>
-                </li>
-                <li class="app-task-list__item">
-                    <span class="app-task-list__task-name">
-                        <a class="govuk-link" asp-page="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-and-trust-information-status">Conversion Details</a>
-                    </span>
-                    <strong class="govuk-tag @Model.TaskList.SchoolAndTrustInformationTaskListStatus.CssClass app-task-list__tag" id="school-and-trust-information-status">
-                        @Model.TaskList.SchoolAndTrustInformationTaskListStatus.Status
-                    </strong>
-                </li>
-                @if (Model.Project.AcademyTypeAndRoute is not AcademyTypeAndRoutes.Sponsored)
-                {
-                    <li class="app-task-list__item">
-                        <span class="app-task-list__task-name">
-                            <a class="govuk-link" asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Project.Id" aria-describedby="legal-requirements" data-cy="select-tasklist-links-legalrequirementlinks">
-                                Legal requirements
-                            </a>
-                        </span>
-                        <strong class="govuk-tag @Model.TaskList.LegalRequirementsTaskListStatus.CssClass app-task-list__tag" id="legal-status" data-cy="select-tasklist-legalrequirements-status">
-                            @Model.TaskList.LegalRequirementsTaskListStatus.Status
-                        </strong>
-                    </li>
-                }
-            </ul>
-        </div>
+             }
+          </ul>
+       </div>
 
-        <h3 class="app-task-list__section govuk-!-margin-top-8">Give a case for academisation</h3>
+        <template-guidance is-sponsored="@Model.Project.IsSponsored" project-id="@Model.Project.Id"></template-guidance>
+
+       <h3 class="app-task-list__section govuk-!-margin-top-8">Give a case for academisation</h3>
         <div class="app-task-list">
             <ul class="app-task-list__items govuk-!-padding-left-0">
                 <li class="app-task-list__item">
@@ -108,9 +109,7 @@
             </ul>
         </div>
 
-        <template-guidance is-sponsored="@Model.Project.IsSponsored" project-id="@Model.Project.Id"></template-guidance>
-
-        <h3 class="app-task-list__section govuk-!-margin-top-8">Say when the LA information template was sent</h3>
+       <h3 class="app-task-list__section govuk-!-margin-top-8">Say when the LA information template was sent</h3>
         <div class="app-task-list">
             <ul class="app-task-list__items govuk-!-padding-left-0">
                 <li class="app-task-list__item">
@@ -123,9 +122,13 @@
                 </li>
             </ul>
         </div>
+        
+        <h3 class="app-task-list__section govuk-!-margin-top-0">Performance data</h3>
 
-        <h3 class="app-task-list__section govuk-!-margin-top-8">Performance data</h3>
-        <div class="app-task-list" aria-label="list of tasks">
+        <div class="govuk-inset-text">
+          This information will be added to your project document automatically.
+        </div>
+       <div class="app-task-list" aria-label="list of tasks">
             <ul class="app-task-list__items govuk-!-padding-left-0">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
@@ -133,7 +136,6 @@
                             Ofsted information
                         </a>
                     </span>
-                    <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="school-performance-status">Reference only</strong>
                 </li>
                 @if (Model.TaskList.HasKeyStage2PerformanceTables)
                 {
@@ -143,7 +145,6 @@
                                 Key stage 2 performance tables
                             </a>
                         </span>
-                        <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="key-stage-2-performance-tables-status">Reference only</strong>
                     </li>
                 }
                 @if (Model.TaskList.HasKeyStage4PerformanceTables)
@@ -154,7 +155,6 @@
                                 Key stage 4 performance tables
                             </a>
                         </span>
-                        <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="key-stage-4-performance-tables-status">Reference only</strong>
                     </li>
                 }
                 @if (Model.TaskList.HasKeyStage5PerformanceTables)
@@ -165,11 +165,11 @@
                                 Key stage 5 performance tables
                             </a>
                         </span>
-                        <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="key-stage-5-performance-tables-status">Reference only</strong>
                     </li>
                 }
 
             </ul>
+
         </div>
 
         <h2 class="govuk-heading-l">

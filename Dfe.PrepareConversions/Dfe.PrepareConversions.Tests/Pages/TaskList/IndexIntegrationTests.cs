@@ -65,7 +65,7 @@ public class IndexIntegrationTests : BaseIntegrationTests, IAsyncLifetime
 
    public Task InitializeAsync()
    {
-      _project = AddGetProject(p => p.GeneralInformationSectionComplete = false);
+      _project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
       return Task.CompletedTask;
    }
 

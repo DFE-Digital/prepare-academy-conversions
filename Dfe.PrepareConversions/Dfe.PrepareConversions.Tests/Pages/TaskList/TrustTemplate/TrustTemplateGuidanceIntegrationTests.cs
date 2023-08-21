@@ -19,7 +19,7 @@ public class TrustTemplateGuidanceIntegrationTests : BaseIntegrationTests
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-      await NavigateAsync("Prepare your trust template");
+      await NavigateAsync("Prepare your template");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/trust-guidance");
 
