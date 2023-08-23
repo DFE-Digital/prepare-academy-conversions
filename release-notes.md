@@ -1,4 +1,5 @@
 ## NEXT
+* User Story 137350 : Project details tab fixed
 * User Story 137527 : Back button labelling updated for consistency
 * Removed the 'UseAcademisation' feature flag and defaulted the behaviour to use the Academies Api
 * User Story 132744 : Renaming of school information pages in task list.
