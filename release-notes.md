@@ -1,4 +1,5 @@
 ## NEXT
+* User Story 137527 : Back button labelling updated for consistency
 * Removed the 'UseAcademisation' feature flag and defaulted the behaviour to use the Academies Api
 * User Story 132744 : Renaming of school information pages in task list.
 * User Story 132316 : New 'Performance data' section added to task list.
