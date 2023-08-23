@@ -113,5 +113,4 @@ public class ApplyingSchool
    public bool? DeclarationBodyAgree { get; set; }
    public bool? DeclarationIAmTheChairOrHeadteacher { get; set; }
    
-   //public string DeclarationSignedByName { get; set; }
 }
