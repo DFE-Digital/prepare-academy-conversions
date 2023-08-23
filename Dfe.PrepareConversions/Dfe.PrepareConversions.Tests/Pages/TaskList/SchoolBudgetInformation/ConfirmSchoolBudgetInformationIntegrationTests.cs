@@ -204,7 +204,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/budget");
 
-      await NavigateAsync("Back to task list");
+      await NavigateAsync("Back");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
    }

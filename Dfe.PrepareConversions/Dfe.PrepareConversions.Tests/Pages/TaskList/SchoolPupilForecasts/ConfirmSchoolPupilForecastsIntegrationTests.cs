@@ -118,7 +118,7 @@ public class ConfirmSchoolPupilForecastsIntegrationTests : BaseIntegrationTests
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/pupil-forecasts");
 
-      await NavigateAsync("Back to task list");
+      await NavigateAsync("Back");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
    }

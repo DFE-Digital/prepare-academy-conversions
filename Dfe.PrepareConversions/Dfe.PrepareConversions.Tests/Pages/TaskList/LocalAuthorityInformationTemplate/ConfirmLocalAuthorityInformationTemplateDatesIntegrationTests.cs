@@ -86,7 +86,7 @@ public class ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests : Bas
 
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
 
-      await NavigateAsync("Back to task list");
+      await NavigateAsync("Back");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
    }

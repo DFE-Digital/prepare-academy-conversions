@@ -79,7 +79,7 @@ public class RecordDecisionIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
-      await NavigateAsync("Back to task list");
+      await NavigateAsync("Back");
 
       Document.QuerySelector<IHtmlElement>("h1")!.Text().Trim().Should().Be(project.SchoolName);
       Document.Url.Should().EndWith($"/task-list/{project.Id}");

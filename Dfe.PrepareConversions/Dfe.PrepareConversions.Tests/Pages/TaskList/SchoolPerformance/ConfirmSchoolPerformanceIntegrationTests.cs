@@ -46,7 +46,7 @@ public class ConfirmSchoolPerformanceIntegrationTests : BaseIntegrationTests
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-performance-ofsted-information");
 
-      await NavigateAsync("Back to task list");
+      await NavigateAsync("Back");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
    }

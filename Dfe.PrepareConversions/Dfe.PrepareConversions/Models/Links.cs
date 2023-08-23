@@ -27,23 +27,23 @@ public static class Links
 
    public static class AnnexB
    {
-      public static readonly LinkItem Index = AddLinkItem(backText: "Back to task list", page: "/AnnexB/Index");
+      public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/AnnexB/Index");
       public static readonly LinkItem Edit = AddLinkItem(page: "/AnnexB/Edit");
    }
 
    public static class ProjectType
    {
-      public static readonly LinkItem Index = AddLinkItem(backText: "Back to project type", page: "/ProjectType/Index");
+      public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/ProjectType/Index");
    }
 
    public static class ProjectAssignment
    {
-      public static readonly LinkItem Index = AddLinkItem(backText: "Back to all conversion projects", page: "/ProjectAssignment/Index");
+      public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/ProjectAssignment/Index");
    }
 
    public static class ProjectList
    {
-      public static readonly LinkItem Index = AddLinkItem(backText: "Back to all conversion projects", page: "/ProjectList/Index");
+      public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/ProjectList/Index");
    }
 
    public static class ProjectNotes
@@ -54,14 +54,14 @@ public static class Links
 
    public static class TaskList
    {
-      public static readonly LinkItem Index = AddLinkItem(backText: "Back to task list", page: "/TaskList/Index");
-      public static readonly LinkItem PreviewHTBTemplate = AddLinkItem(backText: "Back to preview", page: "/TaskList/PreviewProjectTemplate");
+      public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/TaskList/Index");
+      public static readonly LinkItem PreviewHTBTemplate = AddLinkItem(backText: "Back", page: "/TaskList/PreviewProjectTemplate");
       public static readonly LinkItem GenerateHTBTemplate = AddLinkItem(page: "/TaskList/DownloadProjectTemplate");
    }
 
    public static class FormAMat
    {
-      public static readonly LinkItem Index = AddLinkItem(backText: "Back to project listing", page: "/FormAMat/Index");
+      public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/FormAMat/Index");
       public static readonly LinkItem OtherSchoolsInMat = AddLinkItem(backText: "Back to project listing", page: "/FormAMat/OtherSchoolsInMat");
    }
 

@@ -36,7 +36,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       await NavigateAsync("Preview project document");
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Back to task list");
+      await NavigateAsync("Back");
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
    }
 
@@ -75,7 +75,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       document.Url.Should().BeUrl($"/task-list/{project.Id}/download-project-template");
 
-      document = await NavigateAsync(document, "Back to preview");
+      document = await NavigateAsync(document, "Back");
       document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
    }
 

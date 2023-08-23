@@ -78,7 +78,7 @@ public class KeyStage5PerformanceIntegrationTests : BaseIntegrationTests
       await NavigateAsync("Key stage 5 performance tables");
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/key-stage-5-performance-tables");
 
-      await NavigateAsync("Back to task list");
+      await NavigateAsync("Back");
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
    }
 
