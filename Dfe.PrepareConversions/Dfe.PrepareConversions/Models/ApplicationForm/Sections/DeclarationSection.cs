@@ -16,8 +16,8 @@ public class DeclarationSection : BaseFormSection
    {
       return new[]
       {
-         new FormField("I agree with all of these statements, and believe that the facts stated in this application are true", application.DeclarationBodyAgree.ToYesNoString()),
-         //new FormField("Signed by", application.DeclarationSignedByName)
+         new FormField("I agree with all of these statements, and believe that the facts stated in this application are true", application.DeclarationBodyAgree.ToYesNoString())
+        
       };
    }
 }

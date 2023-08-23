@@ -63,7 +63,7 @@ public class AcademisationApplication
                                           School academisationApplicationSchool)
    {
       academiesApplicationSchool.DeclarationBodyAgree = academisationApplicationSchool.DeclarationBodyAgree;
-      //academiesApplicationSchool.DeclarationSignedByName = academisationApplicationSchool.DeclarationSignedByName;
+    
    }
 
    public static void PopulateConsultation(ApplyingSchool academiesApplicationSchool,
