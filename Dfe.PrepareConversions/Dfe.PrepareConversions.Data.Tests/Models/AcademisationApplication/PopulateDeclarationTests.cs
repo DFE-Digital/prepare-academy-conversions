@@ -11,7 +11,7 @@ public class PopulateDeclarationTests
    public void PopulateDeclaration_ShouldCopyValuesCorrectly()
    {
       // Arrange
-      School academisationApplicationSchool = new() { DeclarationBodyAgree = true, DeclarationSignedByName = "John Doe" };
+      School academisationApplicationSchool = new() { DeclarationBodyAgree = true };
 
       ApplyingSchool academiesApplicationSchool = new();
 
@@ -20,6 +20,6 @@ public class PopulateDeclarationTests
 
       // Assert
       Assert.True(academiesApplicationSchool.DeclarationBodyAgree);
-      Assert.Equal("John Doe", academiesApplicationSchool.DeclarationSignedByName);
+     
    }
 }

@@ -12,12 +12,12 @@ public class DeclarationSectionTests
    [Fact]
    public void Constructor_WithApplication_SetsFields()
    {
-      ApplyingSchool application = new() { DeclarationBodyAgree = true, DeclarationSignedByName = "Garth Brown" };
+      ApplyingSchool application = new() { DeclarationBodyAgree = true};
 
       DeclarationSection formSection = new(application);
 
       FormField[] expectedFields = {
-         new("I agree with all of these statements, and believe that the facts stated in this application are true", "Yes"), new("Signed by", "Garth Brown")
+         new("I agree with all of these statements, and believe that the facts stated in this application are true", "Yes")
       };
 
       formSection.Heading.Should().Be("Declaration");
