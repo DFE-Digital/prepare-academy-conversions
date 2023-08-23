@@ -22,7 +22,7 @@ public class ProjectNotesIntegrationTests : BaseIntegrationTests
 
       Document.Url.Should().BeUrl($"/project-notes/{project.Id}");
 
-      await NavigateAsync("Back to all conversion projects");
+      await NavigateAsync("Back");
 
       Document.Url.Should().BeUrl("/project-list");
    }

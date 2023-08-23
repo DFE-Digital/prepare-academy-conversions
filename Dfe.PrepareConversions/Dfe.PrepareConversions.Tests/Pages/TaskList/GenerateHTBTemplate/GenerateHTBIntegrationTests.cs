@@ -31,7 +31,7 @@ public class GenerateHTBIntegrationTests : BaseIntegrationTests
       await NavigateAsync("Create project document");
       Document.Url.Should().Contain($"/task-list/{project.Id}/download-project-template");
 
-      await NavigateAsync("Back to task list");
+      await NavigateAsync("Back");
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
    }
 

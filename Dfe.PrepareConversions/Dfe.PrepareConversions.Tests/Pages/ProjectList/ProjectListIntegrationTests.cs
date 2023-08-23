@@ -30,7 +30,7 @@ public class ProjectListIntegrationTests : BaseIntegrationTests
       await NavigateAsync(projects.First().SchoolName);
       Document.Url.Should().BeUrl($"/task-list/{firstProject.Id}");
 
-      await NavigateAsync("Back to all conversion projects");
+      await NavigateAsync("Back");
       Document.Url.Should().BeUrl("/project-list");
 
       for (int i = 0; i < 2; i++)
