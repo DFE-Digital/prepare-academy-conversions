@@ -15,7 +15,7 @@ public class LegalRequirementsTests
          LegalRequirementsSectionComplete = true,
          GoverningBodyResolution = "yes",
          Consultation = "no",
-         FoundationCcxzonsent = "notApplicable",
+         FoundationConsent = "notApplicable",
          DiocesanConsent = "notApplicable"
       };
 
