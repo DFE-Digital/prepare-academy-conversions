@@ -13,7 +13,7 @@
 <partial name="_ProjectHeader" model="Model.Project"/>
 
 <p class="govuk-body-s">
-   <a asp-page="@Links.SchoolApplicationForm.SchoolApplicationTab.Page" asp-route-id="@Model.Project.Id" target="application" id="@("application-form-link")">Open school application form in a new tab</a>
+   <a class="govuk-link" asp-page="@Links.SchoolApplicationForm.SchoolApplicationTab.Page" asp-route-id="@Model.Project.Id" target="application" id="@("application-form-link")">Open school application form in a new tab</a>
 </p>
 <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">School application form</h2>
 
@@ -37,7 +37,7 @@
 
          <h2 id="@(sectionId)" class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-36">@formSection.Heading</h2>
          <p class="govuk-body-s">
-                <a asp-page="@Links.SchoolApplicationForm.SchoolApplicationTab.Page" asp-route-id="@Model.Project.Id" target="application" id=" @($"{sectionId}-application-form-link")">Open school application form in a new tab</a>
+                <a class="govuk-link" asp-page="@Links.SchoolApplicationForm.SchoolApplicationTab.Page" asp-route-id="@Model.Project.Id" target="application" id=" @($"{sectionId}-application-form-link")">Open school application form in a new tab</a>
          </p>
          @if (formSection.Fields.Any())
          {
