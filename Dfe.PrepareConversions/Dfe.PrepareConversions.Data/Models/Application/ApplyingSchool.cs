@@ -112,5 +112,5 @@ public class ApplyingSchool
    // 2. The information in this application is true to the best of my kowledge (actual question)
    public bool? DeclarationBodyAgree { get; set; }
    public bool? DeclarationIAmTheChairOrHeadteacher { get; set; }
-   public string DeclarationSignedByName { get; set; }
+   
 }
