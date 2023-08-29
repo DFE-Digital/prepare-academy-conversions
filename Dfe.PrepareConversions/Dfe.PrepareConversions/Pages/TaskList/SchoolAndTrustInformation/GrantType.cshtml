@@ -1,0 +1,25 @@
+﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/grant-type"
+@using Dfe.PrepareConversions.TagHelpers
+@model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
+@{
+   Layout = "_QuestionLayout";
+   Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
+   ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Conversion support grant type";
+   ViewData["SchoolName"] = Model.Project.SchoolName;
+   ViewData["ProjectId"] = Model.Project.Id;
+   ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
+    var values = new[] { "Fast track", "Intermediate", "Full" };
+}
+
+@section BeforeMain
+{
+   <govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation"/>
+}
+
+<h1 class="govuk-label-wrapper govuk-!-margin-bottom-6">
+   <label class="govuk-label govuk-label--l" for="academy-order-required">
+        What kind of grant is the school applying for?
+   </label>
+</h1>
+<govuk-radios-input name="academy-order-required" id="academy-order-required" asp-for="Project.AcademyOrderRequired" values="@values" labels="@values"/>
+
