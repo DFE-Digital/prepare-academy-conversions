@@ -1,8 +1,15 @@
 ﻿@model DecimalInputViewModel
 @{
+   var showHint = !string.IsNullOrWhiteSpace(Model.Hint);
    var showError = !string.IsNullOrWhiteSpace(Model.ErrorMessage);
 }
 <div class="govuk-form-group @(showError ? "govuk-form-group--error" : "")">
+   @if (showHint)
+   {
+      <div id="@Model.Id-hint" class="govuk-hint">
+         @Model.Hint
+      </div>
+   }
    @if (showError)
    {
       <span id="@Model.Id-error" class="govuk-error-message">

@@ -18,6 +18,8 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
    {
       _errorService = errorService;
    }
+   [BindProperty]
+   public bool? YesChecked { get; set; }
 
    [BindProperty]
    public AcademyConversionProjectPostModel AcademyConversionProject { get; set; }

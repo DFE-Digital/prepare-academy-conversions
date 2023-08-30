@@ -3,7 +3,7 @@
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
    Layout = "_QuestionLayout";
-   Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
+   Model.SuccessPage = Links.SchoolAndTrustInformationSection.GrantDetails.Page;
    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Conversion support grant type";
    ViewData["SchoolName"] = Model.Project.SchoolName;
    ViewData["ProjectId"] = Model.Project.Id;
