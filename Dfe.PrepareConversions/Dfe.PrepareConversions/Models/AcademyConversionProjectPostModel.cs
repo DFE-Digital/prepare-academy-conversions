@@ -102,6 +102,15 @@ public class AcademyConversionProjectPostModel
    [DisplayFormat(ConvertEmptyStringToNull = false)]
    
    public string ConversionSupportGrantChangeReason { get; set; }
+   [BindProperty(Name = "conversion-support-grant-type")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+
+   public string ConversionSupportGrantType { get; set; }
+
+   [BindProperty(Name = "conversion-support-grant-environmental-improvement-grant")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+
+   public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
 
    // School Overview
 

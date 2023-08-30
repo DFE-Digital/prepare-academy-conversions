@@ -22,8 +22,8 @@ public class SchoolAndTrustInformationViewModel
    public string ProposedAcademyOpeningDate { get; set; }
    public string ConversionSupportGrantAmount { get; set; }
    public string ConversionSupportGrantChangeReason { get; set; }
-   public string ConversionSupportGrantType = "Fast Track";
-   public string ConversionSupportGrantEnvironmentalImprovementGrant = "Yes";
+   public string ConversionSupportGrantType { get; set; }
+   public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
    public string DaoPackSentDate { get; set; }
    public string Form7Received { get; set; }
    public string Form7ReceivedDate { get; set; }

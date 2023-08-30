@@ -44,6 +44,8 @@ public class AcademyConversionProject
    public bool? SchoolAndTrustInformationSectionComplete { get; set; }
    public decimal? ConversionSupportGrantAmount { get; set; }
    public string ConversionSupportGrantChangeReason { get; set; }
+   public string ConversionSupportGrantType { get; set; }
+   public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
    public DateTime? DaoPackSentDate { get; set; }
 
    // Annex B

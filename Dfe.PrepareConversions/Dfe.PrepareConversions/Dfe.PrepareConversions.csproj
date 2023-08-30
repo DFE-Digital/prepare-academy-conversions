@@ -49,7 +49,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Pages\TaskList\SchoolAndTrustInformation\Sponsored\" />
 	  <Folder Include="Validators\" />
 	  <Folder Include="wwwroot\src\images" />
 	</ItemGroup>
@@ -58,7 +57,7 @@
 	  <Content Update="appsettings.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
-	  <Content Update="Pages\TaskList\SchoolAndTrustInformation\GrantType.cshtml">
+	  <Content Update="Pages\TaskList\SchoolAndTrustInformation\Sponsored\GrantType.cshtml">
 	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 	  </Content>

@@ -48,6 +48,8 @@ public class ProjectViewModel: ProjectTypeBase
       SchoolAndTrustInformationSectionComplete = project.SchoolAndTrustInformationSectionComplete ?? false;
       ConversionSupportGrantAmount = project.ConversionSupportGrantAmount ?? 0;
       ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason;
+      ConversionSupportGrantType = project.ConversionSupportGrantType;
+      ConversionSupportGrantEnvironmentalImprovementGrant = project.ConversionSupportGrantEnvironmentalImprovementGrant;
       DaoPackSentDate = project.DaoPackSentDate;
 
       AnnexBFormReceived = project.AnnexBFormReceived;
@@ -144,6 +146,8 @@ public class ProjectViewModel: ProjectTypeBase
    public bool SchoolAndTrustInformationSectionComplete { get; set; }
    public decimal ConversionSupportGrantAmount { get; set; }
    public string ConversionSupportGrantChangeReason { get; set; }
+   public string ConversionSupportGrantType { get; set; }
+   public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
    public DateTime? DaoPackSentDate { get; set; }
 
    // Annex B
