@@ -3,6 +3,7 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
+using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -18,8 +19,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
    {
       _errorService = errorService;
    }
-   [BindProperty]
-   public bool? YesChecked { get; set; }
+   
 
    [BindProperty]
    public AcademyConversionProjectPostModel AcademyConversionProject { get; set; }
@@ -91,6 +91,16 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
    {
       Project.LocalAuthorityInformationTemplateSentDate = AcademyConversionProject.LocalAuthorityInformationTemplateSentDate;
       Project.LocalAuthorityInformationTemplateReturnedDate = AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate;
+   }
+   public static void CalculateGrantAmount(ProjectViewModel project)
+   {
+      project.ConversionSupportGrantAmount = project.ConversionSupportGrantType switch
+      {
+         SponsoredGrantType.FastTrack => 70000,
+         SponsoredGrantType.Full => 110000,
+         SponsoredGrantType.Intermediate => 90000,
+         _ => project.ConversionSupportGrantAmount
+      };
    }
 
    protected UpdateAcademyConversionProject Build()

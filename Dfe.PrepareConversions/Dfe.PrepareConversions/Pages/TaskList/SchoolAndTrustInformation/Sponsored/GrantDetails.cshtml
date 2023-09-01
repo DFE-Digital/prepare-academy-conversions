@@ -11,6 +11,7 @@
     ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
     var values = new[] { "Yes", "No" };
     var kw = WidthOverride.TwoThirds;
+    string defaultChecked = !string.IsNullOrEmpty(Model.Project.ConversionSupportGrantChangeReason) ? "checked" : "";
 
 }
 
@@ -20,72 +21,77 @@
 }
 
 <h1 class="govuk-label-wrapper govuk-!-margin-bottom-6">
-   <label class="govuk-label govuk-label--l" for="conversion-support-grant-environmental-improvement-grant">
-      Grant details
-   </label>
+    <label class="govuk-label govuk-label--l" for="conversion-support-grant-environmental-improvement-grant">
+        Grant details
+    </label>
 </h1>
 
 <div class="govuk-inset-text">
-   The amount shown below includes the £25,000 conversion grant element.
+    The amount shown below includes the £25,000 conversion grant element.
 </div>
 
 <dl class="govuk-summary-list">
-   <div class="govuk-summary-list__row">
-      <govuk-summary-list-row name="grant-funding-type" label="Grant type" key-width="@kw" value="@Model.Project.ConversionSupportGrantType" asp-route-id="Project.Id" asp-page="@Links.SchoolAndTrustInformationSection.GrantType.Page" hidden-text="grant funding type"/>
-      <govuk-summary-list-row name="grant-funding-amount" label="Default grant amount" key-width="@kw" value="@Model.Project.ConversionSupportGrantAmount.ToMoneyString(true)" asp-route-id="Project.Id" asp-page="@Links.SchoolAndTrustInformationSection.GrantType.Page" hidden-text="academy type and route"/>
-   </div>
+    <div class="govuk-summary-list__row">
+        <govuk-summary-list-row name="grant-funding-type" label="Grant type" key-width="@kw" value="@Model.Project.ConversionSupportGrantType" asp-route-id="Project.Id" asp-page="@Links.SchoolAndTrustInformationSection.GrantType.Page" hidden-text="grant funding type" />
+        <govuk-summary-list-row name="grant-funding-amount" label="Default grant amount" key-width="@kw" value="@Model.Project.ConversionSupportGrantAmount.ToMoneyString(true)" asp-route-id="Project.Id" asp-page="@Links.SchoolAndTrustInformationSection.GrantType.Page" hidden-text="academy type and route" />
+    </div>
 </dl>
 
 <div class="govuk-fieldset__legend govuk-fieldset__legend--m">
-  
-   <h1 class="govuk-fieldset__heading">
-      Is the school applying for the default grant amount shown above?
-   </h1>
-  
+
+    <h1 class="govuk-fieldset__heading">
+        Is the school applying for the default grant amount shown above?
+    </h1>
+
 </div>
 <div class="govuk-form-group">
-   <div class="govuk-radios" data-module="govuk-radios">
-      <div class="govuk-radios__item">
-         <input asp-for="@Model.YesChecked" class="govuk-radios__input" type="radio" value="true" aria-controls="conditional-defaultGrant" id="radio-yes" data-cy="select-radio-yes">
-         <label class="govuk-label govuk-radios__label" for="radio-yes">
-            Yes
-         </label>
-      </div>
+    <div class="govuk-radios" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+            <input name="yesNoRadio"
+                   class="govuk-radios__input"
+                   type="radio"
+                   value="true"
+                   aria-controls="conditional-defaultGrant"
+                   id="radio-yes"
+                   data-cy="select-radio-yes"
+            @defaultChecked>
+            <label class="govuk-label govuk-radios__label" for="radio-yes">
+                Yes
+            </label>
+        </div>
 
-      <div class="govuk-radios__conditional" id="conditional-defaultGrant" data-cy="select-sharepoint-section">
-         <div class="govuk-form-group">
-            <label class="govuk-label govuk-label--m" for="conversion-support-grant-amount">
+        <div class="govuk-radios__conditional" id="conditional-defaultGrant" data-cy="select-sharepoint-section">
+            <div class="govuk-form-group">
+                <label class="govuk-label govuk-label--m" for="conversion-support-grant-amount">
                     Change the grant if it needs to be less than the default amount shown above
-            </label>
+                </label>
 
-            <govuk-decimal-input
-               name="conversion-support-grant-amount" id="conversion-support-grant-amount"
-               asp-for="@Model.Project.ConversionSupportGrantAmount" width="20" isMonetary="true" hint="If the school has tried to convert before and was unsuccessful, it may have already spent some of its support grant, so you can decrease the amount for this project if you need to. For example, £60,000" />
+                <govuk-decimal-input name="conversion-support-grant-amount" id="conversion-support-grant-amount"
+                                     asp-for="@Model.Project.ConversionSupportGrantAmount" width="20" isMonetary="true" hint="If the school has tried to convert before and was unsuccessful, it may have already spent some of its support grant, so you can decrease the amount for this project if you need to. For example, £60,000" />
 
-            <label class="govuk-label govuk-label--m" for="conversion-support-grant-change-reason">
+                <label class="govuk-label govuk-label--m" for="conversion-support-grant-change-reason">
                     If you changed the amount of the grant, give a reason why
+                </label>
+
+                <govuk-textarea-input name="conversion-support-grant-change-reason" id="conversion-support-grant-change-reason"
+                                      rows="5" asp-for="@Model.Project.ConversionSupportGrantChangeReason" />
+            </div>
+        </div>
+
+        <div class="govuk-radios__item">
+            <input class="govuk-radios__input" type="radio" value="false" id="radio-no" data-cy="select-radio-no" @defaultChecked>
+            <label class="govuk-label govuk-radios__label" for="radio-no">
+                No
             </label>
-
-            <govuk-textarea-input
-               name="conversion-support-grant-change-reason" id="conversion-support-grant-change-reason"
-               rows="5" asp-for="@Model.Project.ConversionSupportGrantChangeReason"/>
-         </div>
-      </div>
-
-      <div class="govuk-radios__item">
-         <input asp-for="@Model.YesChecked" class="govuk-radios__input" type="radio" value="false" id="radio-no" data-cy="select-radio-no">
-         <label class="govuk-label govuk-radios__label" for="radio-no">
-            No
-         </label>
-      </div>
-   </div>
+        </div>
+    </div>
 </div>
 
 <div class="govuk-fieldset__legend govuk-fieldset__legend--m">
-  
-   <h1 class="govuk-fieldset__heading">
-      Is the school applying for an Environmental Improvement Grant (EIG)?
-   </h1>
-  
+
+    <h1 class="govuk-fieldset__heading">
+        Is the school applying for an Environmental Improvement Grant (EIG)?
+    </h1>
+
 </div>
 <govuk-radios-input name="conversion-support-grant-environmental-improvement-grant" id="conversion-support-grant-environmental-improvement-grant" asp-for="@Model.AcademyConversionProject.ConversionSupportGrantEnvironmentalImprovementGrant" values="@values" labels="@values" />
