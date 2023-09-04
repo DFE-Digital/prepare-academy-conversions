@@ -17,7 +17,7 @@ public class AcademyTypeAndRouteIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_and_update_conversion_support_grant_amount()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
       UpdateAcademyConversionProject request = AddPatchProjectMany(project, composer =>
          composer
             .With(r => r.ConversionSupportGrantAmount)
@@ -26,7 +26,7 @@ public class AcademyTypeAndRouteIntegrationTests : BaseIntegrationTests
       );
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
-      await NavigateDataTestAsync("change-academy-type-and-route");
+      await NavigateDataTestAsync("change-grant-funding-amount");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/route-and-grant");
       Document.QuerySelector<IHtmlInputElement>("#conversion-support-grant-amount")!.Value.Should().Be(project.ConversionSupportGrantAmount?.ToMoneyString());

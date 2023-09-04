@@ -42,8 +42,8 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       Document.QuerySelector("#sponsor-reference-number")!.TextContent.Should().Be(project.SponsorReferenceNumber);
       Document.QuerySelector("#sponsor-name")!.TextContent.Should().Be(project.SponsorName);
       Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Contain(project.AcademyTypeAndRoute);
-      Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Contain(project.ConversionSupportGrantAmount?.ToMoneyString(true));
-      Document.QuerySelector("#academy-type-and-route-additional-text")!.TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
+      Document.QuerySelector("#grant-funding-amount")!.TextContent.Should().Contain(project.ConversionSupportGrantAmount?.ToMoneyString(true));
+      Document.QuerySelector("#grant-funding-reason")!.TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
       Document.QuerySelector("#proposed-academy-opening-date")!.TextContent.Should().Be(project.ProposedAcademyOpeningDate.ToDateString(true));
    }
 
@@ -180,6 +180,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       {
          project.ConversionSupportGrantAmount = 2000m;
          project.ConversionSupportGrantChangeReason = null;
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
       });
       AddPatchProjectMany(project, composer =>
          composer

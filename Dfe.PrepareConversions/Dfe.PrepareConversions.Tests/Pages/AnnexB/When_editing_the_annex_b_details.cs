@@ -91,7 +91,7 @@ public class WhenEditingTheAnnexBDetails : BaseIntegrationTests
    [Fact]
    public async Task Should_return_to_the_summary_page_on_success()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored);
       ExpectPatchProjectMatching(project, x => x.AnnexBFormReceived == true &&
                                                x.AnnexBFormUrl.Equals(SHAREPOINT_URL));
 

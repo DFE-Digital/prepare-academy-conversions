@@ -112,6 +112,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          ConversionSupportGrantChangeReason = AcademyConversionProject.ConversionSupportGrantChangeReason,
          ConversionSupportGrantType = AcademyConversionProject.ConversionSupportGrantType,
          ConversionSupportGrantEnvironmentalImprovementGrant = AcademyConversionProject.ConversionSupportGrantEnvironmentalImprovementGrant,
+         ConversionSupportGrantAmountChanged = AcademyConversionProject.ConversionSupportGrantAmountChanged,
          ApplicationReceivedDate = AcademyConversionProject.ApplicationReceivedDate,
          AssignedDate = AcademyConversionProject.AssignedDate,
          HeadTeacherBoardDate = AcademyConversionProject.HeadTeacherBoardDate,

@@ -11,7 +11,6 @@
     ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
     var values = new[] { "Yes", "No" };
     var kw = WidthOverride.TwoThirds;
-    string defaultChecked = !string.IsNullOrEmpty(Model.Project.ConversionSupportGrantChangeReason) ? "checked" : "";
 
 }
 
@@ -21,7 +20,7 @@
 }
 
 <h1 class="govuk-label-wrapper govuk-!-margin-bottom-6">
-    <label class="govuk-label govuk-label--l" for="conversion-support-grant-environmental-improvement-grant">
+    <label class="govuk-label govuk-label--l">
         Grant details
     </label>
 </h1>
@@ -32,8 +31,8 @@
 
 <dl class="govuk-summary-list">
     <div class="govuk-summary-list__row">
-        <govuk-summary-list-row name="grant-funding-type" label="Grant type" key-width="@kw" value="@Model.Project.ConversionSupportGrantType" asp-route-id="Project.Id" asp-page="@Links.SchoolAndTrustInformationSection.GrantType.Page" hidden-text="grant funding type" />
-        <govuk-summary-list-row name="grant-funding-amount" label="Default grant amount" key-width="@kw" value="@Model.Project.ConversionSupportGrantAmount.ToMoneyString(true)" asp-route-id="Project.Id" asp-page="@Links.SchoolAndTrustInformationSection.GrantType.Page" hidden-text="academy type and route" />
+       <govuk-summary-list-row name="grant-funding-type" label="Grant type" key-width="@kw" value="@Model.Project.ConversionSupportGrantType" asp-route-id="@Model.Project.Id" asp-page="@Links.SchoolAndTrustInformationSection.GrantType.Page" hidden-text="grant funding type" />
+       <govuk-summary-list-row name="grant-funding-amount" label="Default grant amount" key-width="@kw" value="@Model.Project.ConversionSupportGrantAmount.ToMoneyString(true)" asp-route-id="Project.Id" hidden-text="grant funding amount" />
     </div>
 </dl>
 
@@ -47,14 +46,14 @@
 <div class="govuk-form-group">
     <div class="govuk-radios" data-module="govuk-radios">
         <div class="govuk-radios__item">
-            <input name="yesNoRadio"
+            <input name="conversion-support-grant-amount-changed"
                    class="govuk-radios__input"
+                   asp-for="@Model.Project.ConversionSupportGrantAmountChanged"
                    type="radio"
                    value="true"
                    aria-controls="conditional-defaultGrant"
                    id="radio-yes"
-                   data-cy="select-radio-yes"
-            @defaultChecked>
+                   data-cy="select-radio-yes">
             <label class="govuk-label govuk-radios__label" for="radio-yes">
                 Yes
             </label>
@@ -79,7 +78,7 @@
         </div>
 
         <div class="govuk-radios__item">
-            <input class="govuk-radios__input" type="radio" value="false" id="radio-no" data-cy="select-radio-no" @defaultChecked>
+            <input class="govuk-radios__input" asp-for="@Model.Project.ConversionSupportGrantAmountChanged" name="conversion-support-grant-amount-changed" type="radio" value="false" id="radio-no" data-cy="select-radio-no">
             <label class="govuk-label govuk-radios__label" for="radio-no">
                 No
             </label>
@@ -94,4 +93,16 @@
     </h1>
 
 </div>
-<govuk-radios-input name="conversion-support-grant-environmental-improvement-grant" id="conversion-support-grant-environmental-improvement-grant" asp-for="@Model.AcademyConversionProject.ConversionSupportGrantEnvironmentalImprovementGrant" values="@values" labels="@values" />
+<div class="govuk-radios govuk-!-margin-bottom-6" data-module="govuk-radios">
+    @foreach (var value in values)
+    {
+        <div class="govuk-radios__item">
+            <input class="govuk-radios__input" type="radio"
+                   id="@value"
+                   name="conversion-support-grant-environmental-improvement-grant"
+                   value="@value"
+            @(value == Model.Project.ConversionSupportGrantEnvironmentalImprovementGrant ? "checked" : "") />
+            <label class="govuk-label govuk-radios__label" for="@value">@value</label>
+        </div>
+    }
+</div>
