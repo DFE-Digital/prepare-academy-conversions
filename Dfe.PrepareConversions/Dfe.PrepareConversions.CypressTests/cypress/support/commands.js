@@ -586,16 +586,25 @@ Cypress.Commands.add('clearFilters', () => {
     cy.get('[data-cy="select-projectlist-filter-clear"]').click();
 })
 
-Cypress.Commands.add('excuteAccessibilityTests', (wcagStandards, continueOnFail, impactLevel) => {
-    cy.injectAxe();
-    cy.checkA11y(null, {
-        runOnly: {
-            type: 'tag',
-            values: wcagStandards
-        },
-        includedImpacts: impactLevel
-    }, null, continueOnFail);
-})
+Cypress.Commands.add("excuteAccessibilityTests", () => {
+    // FUNCTION COURTESY OF FAHAD DARWISH - NIMBLE APPROACH CONFLUENECE
+        const wcagStandards = ["wcag22aa", "wcag21aa"];
+        const impactLevel = ["critical", "minor", "moderate", "serious"];
+        const continueOnFail = false;
+        cy.injectAxe();
+        cy.checkA11y(
+            null,
+            {
+                runOnly: {
+                    type: "tag",
+                    values: wcagStandards,
+                },
+                includedImpacts: impactLevel,
+            },
+            null,
+            continueOnFail
+        );
+      });
 
 Cypress.Commands.add('createInvoluntaryProject', () => {
     cy.get('[role="button"]').should('contain.text', "Start a new involuntary conversion project")
