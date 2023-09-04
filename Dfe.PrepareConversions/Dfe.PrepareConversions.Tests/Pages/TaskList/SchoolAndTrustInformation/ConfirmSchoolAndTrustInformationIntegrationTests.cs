@@ -19,7 +19,11 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
    [Fact]
    public async Task Should_be_in_progress_and_display_school_and_trust_information()
    {
-      AcademyConversionProject project = AddGetProject(p => p.SchoolAndTrustInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p =>
+      {
+         p.SchoolAndTrustInformationSectionComplete = false;
+         p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+      });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 

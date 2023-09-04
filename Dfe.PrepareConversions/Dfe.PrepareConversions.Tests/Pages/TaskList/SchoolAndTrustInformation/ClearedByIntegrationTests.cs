@@ -16,7 +16,7 @@ public class ClearedByIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_and_update_cleared_by()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(p => p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
       {
          x.ClearedBy = _fixture.Create<string>();
