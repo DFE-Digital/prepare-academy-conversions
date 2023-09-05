@@ -112,7 +112,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          ConversionSupportGrantChangeReason = AcademyConversionProject.ConversionSupportGrantChangeReason,
          ConversionSupportGrantType = AcademyConversionProject.ConversionSupportGrantType,
          ConversionSupportGrantEnvironmentalImprovementGrant = AcademyConversionProject.ConversionSupportGrantEnvironmentalImprovementGrant,
-         ConversionSupportGrantAmountChanged = AcademyConversionProject.ConversionSupportGrantAmountChanged,
+         ConversionSupportGrantAmountChanged = ConversionSupportGrantAmountChanged(Project.AcademyTypeAndRoute),
          ApplicationReceivedDate = AcademyConversionProject.ApplicationReceivedDate,
          AssignedDate = AcademyConversionProject.AssignedDate,
          HeadTeacherBoardDate = AcademyConversionProject.HeadTeacherBoardDate,
@@ -166,6 +166,16 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          KeyStage5PerformanceAdditionalInformation = AcademyConversionProject.KeyStage5PerformanceAdditionalInformation,
          DaoPackSentDate = AcademyConversionProject.DaoPackSentDate == default(DateTime) ? null : AcademyConversionProject.DaoPackSentDate
       };
+   }
+
+   private bool ConversionSupportGrantAmountChanged(string academyRoute)
+   {
+      if (academyRoute == AcademyTypeAndRoutes.Sponsored)
+      {
+         return AcademyConversionProject.ConversionSupportGrantAmountChanged;
+      }
+
+      return false;
    }
 
    private (string, string) GetReturnPageAndFragment()
