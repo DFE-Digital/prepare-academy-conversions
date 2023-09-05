@@ -38,7 +38,11 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          }
       };
 
-         builder.ReplacePlaceholderWithContent("LocalAuthorityAndSponsorDetails", body => body.AddTable(localAuthorityAndSponsorDetails));
+         builder.ReplacePlaceholderWithContent("LocalAuthorityAndSponsorDetails", body =>
+         {
+            body.AddHeading("Conversion details", HeadingLevel.One);
+            body.AddTable(localAuthorityAndSponsorDetails);
+         });
       }
       private static void AddAdvisoryBoardDetails(IDocumentBuilder builder, AcademyConversionProject project)
       {
