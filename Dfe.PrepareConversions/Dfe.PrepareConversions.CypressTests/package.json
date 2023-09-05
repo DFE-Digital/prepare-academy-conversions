@@ -27,6 +27,7 @@
   "dependencies": {
     "axe-core": "^4.5.2",
     "cypress-sql-server": "^1.0.0",
+    "dotenv": "^16.3.1",
     "mochawesome": "^7.0.1",
     "zaproxy": "^2.0.0-rc.2"
   },
