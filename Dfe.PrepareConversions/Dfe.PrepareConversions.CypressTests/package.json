@@ -30,6 +30,7 @@
     "cypress-sql-server": "^1.0.0",
     "dotenv": "^16.3.1",
     "mochawesome": "^7.0.1",
+    "typescript": "^5.2.2",
     "zaproxy": "^2.0.0-rc.2"
   },
   "devDependencies": {

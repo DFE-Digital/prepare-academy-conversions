@@ -1,9 +1,9 @@
 /* eslint-env node */
 
-const { defineConfig } = require('cypress');
-const { generateZapReport } = require('./cypress/plugins/generateZapReport');
+import { defineConfig } from 'cypress'
+import { generateZapReport } from './cypress/plugins/generateZapReport'
 
-module.exports = defineConfig({
+export default defineConfig({
   video: false,
   retries: 2,
   e2e: {
