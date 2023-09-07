@@ -1,4 +1,4 @@
-class ProjectList {
+class projectList {
 
     selectProject() {
         cy.login({titleFilter: 'Gloucester school'});
@@ -26,4 +26,4 @@ class ProjectList {
     };
 };
 
-export default new ProjectList();
+export default new projectList();

@@ -3,7 +3,7 @@ var routeType = 'Voluntary conversion'
 var projectOwner = ''
 var projectStatus = 'Approved with Conditions'
 
-class VoluntaryProjectTaskList {
+class voluntaryProjectTaskList {
     
     static voluntaryProjectElementsVisible()
     {
@@ -17,9 +17,9 @@ class VoluntaryProjectTaskList {
 
         // Check Project Tabs Section of main Project Page
         cy.get('ul[class="moj-sub-navigation__list govuk-!-margin-top-6"]').should('have.length',5)
-        
+
 
     }
 }
 
-export default new VoluntaryProjectTaskList
+export default new voluntaryProjectTaskList
