@@ -40,7 +40,6 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
 
          builder.ReplacePlaceholderWithContent("LocalAuthorityAndSponsorDetails", body =>
          {
-            body.AddHeading("Conversion details", HeadingLevel.One);
             body.AddTable(localAuthorityAndSponsorDetails);
          });
       }
@@ -50,7 +49,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
       {
          new[]
          {
-            new TextElement { Value = "Date of Advisory Board", Bold = true },
+            new TextElement { Value = "Date of advisory board", Bold = true },
             new TextElement { Value = project.HeadTeacherBoardDate.ToDateString()}
          },
          new[]
@@ -60,7 +59,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          },
          new[]
          {
-            new TextElement { Value = "Previous Advisory Board", Bold = true },
+            new TextElement { Value = "Previous advisory board", Bold = true },
             new TextElement { Value = project.PreviousHeadTeacherBoardDate.ToDateString() }
          }
       };
@@ -81,7 +80,11 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
                break;
          }
 
-         builder.ReplacePlaceholderWithContent("AcademyRouteInfo", body => body.AddTable(academyRouteInfo));
+         builder.ReplacePlaceholderWithContent("AcademyRouteInfo", body =>
+         {
+            body.AddHeading("Conversion details", HeadingLevel.One);
+            body.AddTable(academyRouteInfo);
+         });
          
       }
 
@@ -92,7 +95,17 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          new[]
          {
             new TextElement { Value = "Academy type and route", Bold = true },
-            new TextElement { Value = $"{project.AcademyTypeAndRoute} {project.ConversionSupportGrantChangeReason} {project.ConversionSupportGrantAmount.ToMoneyString(true)}" }
+            new TextElement { Value = project.AcademyTypeAndRoute }
+         },
+         new[]
+         {
+            new TextElement { Value = "Grant funding amount", Bold = true },
+            new TextElement { Value = project.ConversionSupportGrantAmount.ToMoneyString(true) }
+         },
+         new[]
+         {
+            new TextElement { Value = "Grant funding reason", Bold = true },
+            new TextElement { Value = project.ConversionSupportGrantChangeReason }
          },
          new[]
          {
@@ -115,7 +128,27 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          new[]
          {
             new TextElement { Value = "Academy type and route", Bold = true },
-            new TextElement { Value = $"{project.AcademyTypeAndRoute} {project.ConversionSupportGrantChangeReason} {project.ConversionSupportGrantAmount.ToMoneyString(true)}" }
+            new TextElement { Value = project.AcademyTypeAndRoute}
+         },
+         new[]
+         {
+            new TextElement { Value = "Grant funding type", Bold = true },
+            new TextElement { Value = project.ConversionSupportGrantType }
+         },
+         new[]
+         {
+            new TextElement { Value = "Grant funding amount", Bold = true },
+            new TextElement { Value = project.ConversionSupportGrantAmount.ToMoneyString(true) }
+         },
+         new[]
+         {
+            new TextElement { Value = "Grant funding reason", Bold = true },
+            new TextElement { Value = project.ConversionSupportGrantChangeReason }
+         },
+         new[]
+         {
+            new TextElement { Value = "Is the school applying for an EIG (Environmental Improvement Grant)?", Bold = true },
+            new TextElement { Value = project.ConversionSupportGrantEnvironmentalImprovementGrant }
          },
          new[]
          {
