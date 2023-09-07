@@ -1,4 +1,4 @@
-export default class projectList {
+class projectList {
 
     selectProject() {
         cy.login({titleFilter: 'Gloucester school'});
@@ -25,3 +25,5 @@ export default class projectList {
         return '';
     };
 };
+
+export default new projectList();
