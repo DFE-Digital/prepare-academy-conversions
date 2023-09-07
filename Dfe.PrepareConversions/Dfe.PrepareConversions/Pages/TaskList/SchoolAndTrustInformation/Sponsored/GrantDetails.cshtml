@@ -1,6 +1,7 @@
 ﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/grant-details"
 @using Dfe.PrepareConversions.TagHelpers
 @using Dfe.Academisation.ExtensionMethods
+@using Dfe.PrepareConversions.Pages
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
     Layout = "_QuestionLayout";
@@ -32,7 +33,7 @@
 <dl class="govuk-summary-list">
     <div class="govuk-summary-list__row">
        <govuk-summary-list-row name="grant-funding-type" label="Grant type" key-width="@kw" value="@Model.Project.ConversionSupportGrantType" asp-route-id="@Model.Project.Id" asp-page="@Links.SchoolAndTrustInformationSection.GrantType.Page" hidden-text="grant funding type" />
-       <govuk-summary-list-row name="grant-funding-amount" label="Default grant amount" key-width="@kw" value="@Model.Project.ConversionSupportGrantAmount.ToMoneyString(true)" asp-route-id="Project.Id" hidden-text="grant funding amount" />
+        <govuk-summary-list-row name="grant-funding-amount" label="Default grant amount" key-width="@kw" value="@UpdateAcademyConversionProjectPageModel.CalculateGrantAmount(Model.Project.ConversionSupportGrantType).ToMoneyString(true)" asp-route-id="Project.Id" hidden-text="grant funding amount" />
     </div>
 </dl>
 

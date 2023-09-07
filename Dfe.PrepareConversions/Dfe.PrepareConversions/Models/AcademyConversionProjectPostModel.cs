@@ -113,7 +113,7 @@ public class AcademyConversionProjectPostModel
    public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
 
    [BindProperty(Name = "conversion-support-grant-amount-changed")]
-   public bool ConversionSupportGrantAmountChanged { get; set; }
+   public bool? ConversionSupportGrantAmountChanged { get; set; }
 
    // School Overview
 

@@ -92,14 +92,14 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
       Project.LocalAuthorityInformationTemplateSentDate = AcademyConversionProject.LocalAuthorityInformationTemplateSentDate;
       Project.LocalAuthorityInformationTemplateReturnedDate = AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate;
    }
-   public static void CalculateGrantAmount(ProjectViewModel project)
+   public static decimal? CalculateGrantAmount(string type)
    {
-      project.ConversionSupportGrantAmount = project.ConversionSupportGrantType switch
+      return type switch
       {
          SponsoredGrantType.FastTrack => 70000,
          SponsoredGrantType.Full => 110000,
          SponsoredGrantType.Intermediate => 90000,
-         _ => project.ConversionSupportGrantAmount
+         _ => 0
       };
    }
 
@@ -112,7 +112,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          ConversionSupportGrantChangeReason = AcademyConversionProject.ConversionSupportGrantChangeReason,
          ConversionSupportGrantType = AcademyConversionProject.ConversionSupportGrantType,
          ConversionSupportGrantEnvironmentalImprovementGrant = AcademyConversionProject.ConversionSupportGrantEnvironmentalImprovementGrant,
-         ConversionSupportGrantAmountChanged = ConversionSupportGrantAmountChanged(Project.AcademyTypeAndRoute),
+         ConversionSupportGrantAmountChanged = ConversionSupportGrantAmountChanged(Project?.AcademyTypeAndRoute ?? string.Empty),
          ApplicationReceivedDate = AcademyConversionProject.ApplicationReceivedDate,
          AssignedDate = AcademyConversionProject.AssignedDate,
          HeadTeacherBoardDate = AcademyConversionProject.HeadTeacherBoardDate,
@@ -168,14 +168,14 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
       };
    }
 
-   private bool ConversionSupportGrantAmountChanged(string academyRoute)
+   private bool? ConversionSupportGrantAmountChanged(string academyRoute)
    {
       if (academyRoute == AcademyTypeAndRoutes.Sponsored)
       {
          return AcademyConversionProject.ConversionSupportGrantAmountChanged;
       }
 
-      return false;
+      return null;
    }
 
    private (string, string) GetReturnPageAndFragment()
