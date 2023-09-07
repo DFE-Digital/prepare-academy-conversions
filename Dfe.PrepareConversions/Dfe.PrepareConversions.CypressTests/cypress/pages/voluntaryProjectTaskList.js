@@ -19,6 +19,9 @@ export default class voluntaryProjectTaskList {
         // Check Project Tabs Section of main Project Page
         cy.get('ul').eq(0).find('li').should('have.length',4)
 
+        // Check Project details is default tab selected
+        cy.get('a[aria-Current="page"]').contains('Project details')
+
 
     }
 }
