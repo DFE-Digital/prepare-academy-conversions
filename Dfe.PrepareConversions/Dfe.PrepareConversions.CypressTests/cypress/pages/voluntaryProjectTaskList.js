@@ -14,10 +14,10 @@ export default class voluntaryProjectTaskList {
         cy.get('p[class="govuk-body govuk-!-margin-bottom-5"]').contains('Project owner: ' + projectOwner)
         cy.get('.empty').contains('Empty')
         cy.get('a[class="govuk-link govuk-!-padding-left-50"]').contains('Change')
-        cy.get('#project-status-28470').contains(projectStatus)
+        cy.get('strong[class="govuk-tag govuk-tag--green"]').contains(projectStatus)
 
         // Check Project Tabs Section of main Project Page
-        cy.get('ul[class="moj-sub-navigation__list govuk-!-margin-top-6"]').should('have.length',5)
+        cy.get('ul').eq(0).find('li').should('have.length',4)
 
 
     }
