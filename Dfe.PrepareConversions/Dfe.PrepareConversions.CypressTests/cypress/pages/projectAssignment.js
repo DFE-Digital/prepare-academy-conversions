@@ -1,7 +1,5 @@
 /// <reference types ='Cypress'/>
 
-import paths from "../support/paths.js";
-
 export const selectors = {
     assignInput: '[id="delivery-officer"]',
     unassignLink: '[id="unassign-link"]',

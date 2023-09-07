@@ -1,8 +1,11 @@
 /// <reference types ='Cypress'/>
+
+export const path = 'project-list';
+
 class ProjectList {
 
     checkProjectListPage() {
-        cy.url().should('include', 'project-list');
+        cy.url().should('include', path);
     }
 
     getNthProject(n = 0){
@@ -17,7 +20,7 @@ class ProjectList {
 
     filterProjectList( titleFilter ) {
         const filterQuery = `?Title=${encodeURIComponent(titleFilter)}`;
-        cy.visit(`${Cypress.env('url')}/project-list${filterQuery}`)
+        cy.visit(`${Cypress.env('url')}/${path}${filterQuery}`)
     };
 
     selectFirstItem(){
