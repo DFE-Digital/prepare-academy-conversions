@@ -55,6 +55,8 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
          WasForm7Received = project.Form7Received is not null && project.Form7Received.Equals("Yes"),
          ConversionSupportGrantAmount = project.ConversionSupportGrantAmount?.ToMoneyString(true),
          ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
+         ConversionSupportGrantType = project.ConversionSupportGrantType,
+         ConversionSupportGrantEnvironmentalImprovementGrant = project.ConversionSupportGrantEnvironmentalImprovementGrant,
          ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(true),
          DaoPackSentDate = project.DaoPackSentDate.ToDateString()
       };

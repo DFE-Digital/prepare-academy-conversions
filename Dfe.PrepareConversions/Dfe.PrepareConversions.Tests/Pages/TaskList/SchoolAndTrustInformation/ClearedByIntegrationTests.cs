@@ -16,7 +16,7 @@ public class ClearedByIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_and_update_cleared_by()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(p => p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
       {
          x.ClearedBy = _fixture.Create<string>();
@@ -24,7 +24,7 @@ public class ClearedByIntegrationTests : BaseIntegrationTests
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
-      await NavigateAsync("Change", 7);
+      await NavigateAsync("Change", 8);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/clear-head-teacher-board-template");
 
