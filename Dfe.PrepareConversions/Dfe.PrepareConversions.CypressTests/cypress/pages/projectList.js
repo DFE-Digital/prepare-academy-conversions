@@ -23,5 +23,3 @@ export default new class projectList extends BasePage {
         return '';
     };
 };
-
-//export default new projectList();
