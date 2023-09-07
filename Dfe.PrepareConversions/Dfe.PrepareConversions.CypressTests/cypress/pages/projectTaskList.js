@@ -1,36 +1,34 @@
 /// <reference types ='Cypress'/>
 
-export const selectors = {
-    assignProjectButton: 'a[href*="project-assignment"]',
-    assignedUser: '[data-id="assigned-user"]',
-    notificationMessage: '[id="notification-message"]',
-    schoolOverviewLink: 'a[href*="/school-overview"]'
-}
+export default class ProjectTaskList {
 
-export const path = 'task-list';
+    static selectors = {
+        assignProjectButton: 'a[href*="project-assignment"]',
+        assignedUser: '[data-id="assigned-user"]',
+        notificationMessage: '[id="notification-message"]',
+        schoolOverviewLink: 'a[href*="/school-overview"]'
+    }
 
-class ProjectTaskList {
+    static path = 'task-list';
 
-    selectAssignProject() {
-        cy.checkPath(path);
-        cy.get(selectors.assignProjectButton).click();
+    static selectAssignProject() {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.assignProjectButton).click();
     };
 
-    getAssignedUser() {
-        cy.checkPath(path);
-        return cy.get(selectors.assignedUser);
+    static getAssignedUser() {
+        cy.checkPath(this.path);
+        return cy.get(this.selectors.assignedUser);
     }
 
-    getNotificationMessage() {
-        cy.checkPath(path);
-        return cy.get(selectors.notificationMessage);
+    static getNotificationMessage() {
+        cy.checkPath(this.path);
+        return cy.get(this.selectors.notificationMessage);
     }
 
-    selectSchoolOverview() {
-        cy.checkPath(path);
-        cy.get(selectors.schoolOverviewLink).click()
+    static selectSchoolOverview() {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.schoolOverviewLink).click()
     }
 
 };
-
-export default new ProjectTaskList();
