@@ -1,12 +1,13 @@
-var projectName = 'Voluntary Cypress Project'
-var routeType = 'Voluntary conversion'
-var projectOwner = ''
-var projectStatus = 'Approved with Conditions'
+export default class voluntaryProjectTaskList {
 
-class voluntaryProjectTaskList {
-    
+
     static voluntaryProjectElementsVisible()
     {
+        var projectName = 'Voluntary Cypress Project'
+        var routeType = 'Voluntary conversion'
+        var projectOwner = ''
+        var projectStatus = 'Approved with Conditions'
+
         // Check Header section of main Project Page
         cy.get('h1[data-cy]').contains(projectName)
         cy.get('p[class="govuk-body govuk-!-margin-bottom-1"]').contains('Route: ' + routeType)
@@ -22,4 +23,3 @@ class voluntaryProjectTaskList {
     }
 }
 
-export default new voluntaryProjectTaskList
