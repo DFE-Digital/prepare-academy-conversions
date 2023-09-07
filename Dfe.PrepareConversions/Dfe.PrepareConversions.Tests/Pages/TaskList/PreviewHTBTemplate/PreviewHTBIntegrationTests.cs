@@ -538,7 +538,11 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_display_school_and_trust_information_section()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(x =>
+      {
+         x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+         x.ConversionSupportGrantAmount = 10;
+      });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
       Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
@@ -557,8 +561,8 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#sponsor-reference-number")!.TextContent.Should().Be(project.SponsorReferenceNumber);
       Document.QuerySelector("#sponsor-name")!.TextContent.Should().Be(project.SponsorName);
       Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Contain(project.AcademyTypeAndRoute);
-      Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Contain(project.ConversionSupportGrantAmount?.ToMoneyString());
-      Document.QuerySelector("#academy-type-and-route-additional-text")!.TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
+      Document.QuerySelector("#grant-funding-amount")!.TextContent.Should().Contain(project.ConversionSupportGrantAmount?.ToMoneyString());
+      Document.QuerySelector("#grant-funding-reason")!.TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
       Document.QuerySelector("#proposed-academy-opening-date")!.TextContent.Should().Be(project.ProposedAcademyOpeningDate.ToDateString(true));
    }
 
@@ -610,12 +614,12 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_school_and_trust_prev_htb_page_and_back()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
       AddGetKeyStagePerformance(project.Urn.Value);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 19);
+      await NavigateAsync("Change", 20);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       await NavigateAsync("Back");
@@ -629,6 +633,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       {
          p.PreviousHeadTeacherBoardDateQuestion = null;
          p.PreviousHeadTeacherBoardDate = null;
+         p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
       });
 
       AddPatchConfiguredProject(project, x =>
@@ -645,7 +650,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 19);
+      await NavigateAsync("Change", 20);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeFalse();
@@ -679,7 +684,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 19);
+      await NavigateAsync("Change", 20);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeFalse();
@@ -695,11 +700,11 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_school_and_trust_prev_htb_question_page_and_back()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 19);
+      await NavigateAsync("Change", 20);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       await NavigateAsync("Back");
@@ -709,20 +714,21 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_school_and_trust_prev_htb_input_page_and_back()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
       AddPatchConfiguredProject(project, x =>
       {
+         x.ConversionSupportGrantAmountChanged = null;
          x.PreviousHeadTeacherBoardDateQuestion = "Yes";
          x.Urn = project.Urn;
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 19);
+      await NavigateAsync("Change", 20);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
-      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked = true;
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
+      Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked = true;
+      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board-date?");
 
       await NavigateAsync("Back");
@@ -735,7 +741,11 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_school_and_trust_prev_htb_input_page_and_back_to_question_and_submit_again()
    {
-      AcademyConversionProject project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = "Yes");
+      AcademyConversionProject project = AddGetProject(p =>
+      {
+         p.PreviousHeadTeacherBoardDateQuestion = "Yes";
+         p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+      });
       AddPatchConfiguredProject(project, x =>
       {
          x.PreviousHeadTeacherBoardDateQuestion = "Yes";
@@ -750,7 +760,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 19);
+      await NavigateAsync("Change", 20);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeTrue();
@@ -777,7 +787,10 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_school_and_trust_prev_htb_input_page_and_back_to_question_and_submit_to_input_and_back()
    {
-      AcademyConversionProject project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = "Yes");
+      AcademyConversionProject project = AddGetProject(p => {
+         p.PreviousHeadTeacherBoardDateQuestion = "Yes";
+         p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+      });
       AddPatchConfiguredProject(project, x =>
       {
          x.PreviousHeadTeacherBoardDateQuestion = "Yes";
@@ -792,7 +805,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 19);
+      await NavigateAsync("Change", 20);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeTrue();

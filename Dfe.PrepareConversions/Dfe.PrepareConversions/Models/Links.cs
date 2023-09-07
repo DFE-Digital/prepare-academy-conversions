@@ -99,7 +99,9 @@ public static class Links
       public static readonly LinkItem Form7Received = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Form7Received");
       public static readonly LinkItem Form7ReceivedDate = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Form7ReceivedDate");
       public static readonly LinkItem ProposedAcademyOpeningDate = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/ProposedAcademyOpeningDate");
-      public static readonly LinkItem RouteAndGrant = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/RouteAndGrant");
+      public static readonly LinkItem RouteAndGrant = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Voluntary/RouteAndGrant");
+      public static readonly LinkItem GrantDetails = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Sponsored/GrantDetails");
+      public static readonly LinkItem GrantType = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Sponsored/GrantType");
       public static readonly LinkItem DaoPackSent = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/DaoPackSentDate");
    }
 
