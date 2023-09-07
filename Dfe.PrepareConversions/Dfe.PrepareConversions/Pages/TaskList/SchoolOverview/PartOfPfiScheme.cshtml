@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Part of pfi Scheme";
     Layout = "_QuestionLayout";
+    ViewData["ProjectId"] = Model.Project.Id;
     ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
 }
 
