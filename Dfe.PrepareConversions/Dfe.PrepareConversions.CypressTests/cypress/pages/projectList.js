@@ -6,10 +6,6 @@ import BasePage from './BasePage'
 
 export default new class projectList extends BasePage {
 
-    selectProject() {
-        cy.login({titleFilter: 'Gloucester school'});
-        cy.get('[id="school-name-0"]').click();
-
     selectProject(projectName = 'Gloucester school') {
         this.filterProjectList(projectName);
         this.selectFirstItem();
