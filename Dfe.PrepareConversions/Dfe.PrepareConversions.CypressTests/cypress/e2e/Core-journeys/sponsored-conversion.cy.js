@@ -34,9 +34,18 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       //Viability issues
       schoolOverview.changeViabilityIssues(true);
       schoolOverview.getViabilityIssues().should('contain.text', 'Yes');
+      schoolOverview.changeViabilityIssues(false);
+      schoolOverview.getViabilityIssues().should('contain.text', 'No');
+
       //Financial deficit
-      
+      schoolOverview.changeFinancialDeficit(true);
+      schoolOverview.getViabilityIssues().should('contain.text', 'Yes');
+      schoolOverview.changeFinancialDeficit(false);
+      schoolOverview.getViabilityIssues().should('contain.text', 'No');
       //PFI + details
+      schoolOverview.changePFI(true, 'Description Test');
+      schoolOverview.getPFI().should('contain.text', 'Yes');
+      schoolOverview.getPFIDetails().should('contain.text', 'Description Test');
       //Distance plus details
       //MP
       
