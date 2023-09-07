@@ -1,4 +1,6 @@
-export default class voluntaryProjectTaskList {
+import BasePage from './BasePage'
+
+export default class voluntaryProjectTaskList extends BasePage {
 
 
     static voluntaryProjectElementsVisible()

@@ -1,4 +1,6 @@
-class projectList {
+import BasePage from './BasePage'
+
+export default new class projectList extends BasePage {
 
     selectProject() {
         cy.login({titleFilter: 'Gloucester school'});
@@ -26,4 +28,4 @@ class projectList {
     };
 };
 
-export default new projectList();
+//export default new projectList();
