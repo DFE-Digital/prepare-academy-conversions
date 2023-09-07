@@ -19,7 +19,11 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
    [Fact]
    public async Task Should_be_in_progress_and_display_school_and_trust_information()
    {
-      AcademyConversionProject project = AddGetProject(p => p.SchoolAndTrustInformationSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p =>
+      {
+         p.SchoolAndTrustInformationSectionComplete = false;
+         p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+      });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
@@ -42,8 +46,8 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       Document.QuerySelector("#sponsor-reference-number")!.TextContent.Should().Be(project.SponsorReferenceNumber);
       Document.QuerySelector("#sponsor-name")!.TextContent.Should().Be(project.SponsorName);
       Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Contain(project.AcademyTypeAndRoute);
-      Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Contain(project.ConversionSupportGrantAmount?.ToMoneyString(true));
-      Document.QuerySelector("#academy-type-and-route-additional-text")!.TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
+      Document.QuerySelector("#grant-funding-amount")!.TextContent.Should().Contain(project.ConversionSupportGrantAmount?.ToMoneyString(true));
+      Document.QuerySelector("#grant-funding-reason")!.TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
       Document.QuerySelector("#proposed-academy-opening-date")!.TextContent.Should().Be(project.ProposedAcademyOpeningDate.ToDateString(true));
    }
 
@@ -180,6 +184,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       {
          project.ConversionSupportGrantAmount = 2000m;
          project.ConversionSupportGrantChangeReason = null;
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
       });
       AddPatchProjectMany(project, composer =>
          composer

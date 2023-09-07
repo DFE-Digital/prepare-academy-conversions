@@ -3,6 +3,7 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
+using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -18,6 +19,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
    {
       _errorService = errorService;
    }
+   
 
    [BindProperty]
    public AcademyConversionProjectPostModel AcademyConversionProject { get; set; }
@@ -90,6 +92,16 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
       Project.LocalAuthorityInformationTemplateSentDate = AcademyConversionProject.LocalAuthorityInformationTemplateSentDate;
       Project.LocalAuthorityInformationTemplateReturnedDate = AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate;
    }
+   public static decimal? CalculateGrantAmount(string type)
+   {
+      return type switch
+      {
+         SponsoredGrantType.FastTrack => 70000,
+         SponsoredGrantType.Full => 110000,
+         SponsoredGrantType.Intermediate => 90000,
+         _ => 0
+      };
+   }
 
    protected UpdateAcademyConversionProject Build()
    {
@@ -98,6 +110,9 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          ProjectStatus = AcademyConversionProject.ProjectStatus,
          ConversionSupportGrantAmount = AcademyConversionProject.ConversionSupportGrantAmount,
          ConversionSupportGrantChangeReason = AcademyConversionProject.ConversionSupportGrantChangeReason,
+         ConversionSupportGrantType = AcademyConversionProject.ConversionSupportGrantType,
+         ConversionSupportGrantEnvironmentalImprovementGrant = AcademyConversionProject.ConversionSupportGrantEnvironmentalImprovementGrant,
+         ConversionSupportGrantAmountChanged = ConversionSupportGrantAmountChanged(Project?.AcademyTypeAndRoute ?? string.Empty),
          ApplicationReceivedDate = AcademyConversionProject.ApplicationReceivedDate,
          AssignedDate = AcademyConversionProject.AssignedDate,
          HeadTeacherBoardDate = AcademyConversionProject.HeadTeacherBoardDate,
@@ -151,6 +166,16 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          KeyStage5PerformanceAdditionalInformation = AcademyConversionProject.KeyStage5PerformanceAdditionalInformation,
          DaoPackSentDate = AcademyConversionProject.DaoPackSentDate == default(DateTime) ? null : AcademyConversionProject.DaoPackSentDate
       };
+   }
+
+   private bool? ConversionSupportGrantAmountChanged(string academyRoute)
+   {
+      if (academyRoute == AcademyTypeAndRoutes.Sponsored)
+      {
+         return AcademyConversionProject.ConversionSupportGrantAmountChanged;
+      }
+
+      return null;
    }
 
    private (string, string) GetReturnPageAndFragment()
