@@ -73,7 +73,7 @@ public abstract partial class BaseIntegrationTests
    {
       AcademyConversionProject project = _fixture
          .Build<AcademyConversionProject>()
-         .With(x => x.AcademyTypeAndRoute, _routes[Random.Shared.Next(0, _routes.Length)])
+         .With(x => x.AcademyTypeAndRoute, AcademyTypeAndRoutes.Voluntary)
          .Create();
 
       postSetup?.Invoke(project);

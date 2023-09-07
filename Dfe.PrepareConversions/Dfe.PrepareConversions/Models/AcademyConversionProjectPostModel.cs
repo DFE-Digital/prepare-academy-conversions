@@ -94,7 +94,7 @@ public class AcademyConversionProjectPostModel
 
    [ModelBinder(BinderType = typeof(MonetaryInputModelBinder))]
    [Display(Name = "Conversion support grant")]
-   [Range(typeof(decimal), "0", "25000", ErrorMessage = "Enter an amount that is £25,000 or less, for example £20,000")]
+   [Range(typeof(decimal), "0", "150000", ErrorMessage = "Enter an amount that is £150,000 or less, for example £25,000")]
    [BindProperty(Name = "conversion-support-grant-amount")]
    public decimal? ConversionSupportGrantAmount { get; set; }
 
@@ -102,6 +102,18 @@ public class AcademyConversionProjectPostModel
    [DisplayFormat(ConvertEmptyStringToNull = false)]
    
    public string ConversionSupportGrantChangeReason { get; set; }
+   [BindProperty(Name = "conversion-support-grant-type")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+
+   public string ConversionSupportGrantType { get; set; }
+
+   [BindProperty(Name = "conversion-support-grant-environmental-improvement-grant")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+
+   public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
+
+   [BindProperty(Name = "conversion-support-grant-amount-changed")]
+   public bool? ConversionSupportGrantAmountChanged { get; set; }
 
    // School Overview
 

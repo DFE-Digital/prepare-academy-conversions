@@ -32,6 +32,9 @@ public class UpdateAcademyConversionProject
    public DateTime? PreviousHeadTeacherBoardDate { get; set; }
    public decimal? ConversionSupportGrantAmount { get; set; }
    public string ConversionSupportGrantChangeReason { get; set; }
+   public string ConversionSupportGrantType { get; set; }
+   public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
+   public bool? ConversionSupportGrantAmountChanged { get; set; }
    public DateTime? DaoPackSentDate { get; set; }
 
    // School Overview

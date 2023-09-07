@@ -25,6 +25,7 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
       {
          p.PreviousHeadTeacherBoardDateQuestion = null;
          p.PreviousHeadTeacherBoardDate = null;
+         p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
       });
 
       AddPatchConfiguredProject(project, x =>
@@ -40,7 +41,7 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
-      await NavigateAsync("Change", 5);
+      await NavigateAsync("Change", 6);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
@@ -70,7 +71,11 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_confirm_page_when_user_does_not_select_value_for_question()
    {
-      AcademyConversionProject project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = null);
+      AcademyConversionProject project = AddGetProject(p =>
+      {
+         p.PreviousHeadTeacherBoardDateQuestion = null;
+         p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+      });
       AddPatchConfiguredProject(project, x =>
       {
          x.PreviousHeadTeacherBoardDateQuestion = null;
@@ -78,7 +83,7 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
-      await NavigateAsync("Change", 5);
+      await NavigateAsync("Change", 6);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
@@ -93,14 +98,18 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_update_previous_head_teacher_board_date_question_and_navigate_to_confirm_page_when_user_selects_no()
    {
-      AcademyConversionProject project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = null);
+      AcademyConversionProject project = AddGetProject(p =>
+      {
+         p.PreviousHeadTeacherBoardDateQuestion = null;
+         p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+      });
       AddPatchProjectMany(project, composer => composer
          .With(r => r.PreviousHeadTeacherBoardDateQuestion, "No")
          .With(r => r.PreviousHeadTeacherBoardDate, default(DateTime))
          .With(r => r.Urn, project.Urn));
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
-      await NavigateAsync("Change", 5);
+      await NavigateAsync("Change", 6);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
