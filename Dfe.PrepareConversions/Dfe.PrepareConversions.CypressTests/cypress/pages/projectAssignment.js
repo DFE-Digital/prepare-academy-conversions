@@ -10,19 +10,15 @@ export const path = 'project-assignment';
 
 class ProjectAssignment {
 
-    checkProjectAssignmentPage() {
-        cy.url().should('include', path);
-    }
-
     assignProject(deliveryOfficer) {
-        this.checkProjectAssignmentPage();
+        cy.checkPath(path);
         cy.get(selectors.assignInput).click()
         cy.get(selectors.assignInput).type(`${deliveryOfficer}{enter}`);
         cy.get(selectors.saveButton).click();
     };
 
     unassignProject() {
-        this.checkProjectAssignmentPage();
+        cy.checkPath(path)
         cy.get(selectors.unassignLink).click()
     };
 
