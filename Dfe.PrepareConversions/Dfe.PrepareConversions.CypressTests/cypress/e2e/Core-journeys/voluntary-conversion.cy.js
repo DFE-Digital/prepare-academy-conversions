@@ -8,7 +8,8 @@ describe('Voluntary conversion', { tags: ['@dev', '@stage'] }, () => {
    beforeEach(() => {
       cy.callAcademisationApi('POST', `cypress-data/add-voluntary-project.cy`, "{}")
          .then(() => {
-            projectList.selectVoluntaryProject()
+          //  projectList.selectVoluntaryProject()
+          projectList.selectProject(projectName)
          });
    })
 
