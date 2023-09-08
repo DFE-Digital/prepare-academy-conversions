@@ -14,7 +14,7 @@ export default class SchoolOverview {
         return cy.get('[id="published-admission-number"]');
     }
 
-    static changePanNumber(newPanNumber) {
+    static changePan(newPanNumber) {
         cy.checkPath(this.path);
         cy.get(this.selectors.panLink).click();
         cy.get(this.selectors.panInput).clear().type(newPanNumber);
@@ -76,5 +76,22 @@ export default class SchoolOverview {
             cy.NoRadioBtn().check();
         }
         cy.saveContinue().click();
+    }
+
+    static getDistance() {
+        cy.checkPath(this.path);
+        return cy.get('[id="distance-to-trust-headquarters"]');
+    }
+
+    static getDistanceDetails() {
+        cy.checkPath(this.path);
+        return cy.get('[id="distance-to-trust-headquarters-additional-text"]');
+    }
+
+    static changeDistance(distance, description = '') {
+        cy.checkPath(this.path);
+        cy.get('[data-test="change-distance-to-trust-headquarters"]').click();
+        cy.get('[id="distance-to-trust-headquarters"]').clear().type(distance);
+        cy.get('[id="distance-to-trust-headquarters-additional-information"]').clear().type(description);
     }
 };
