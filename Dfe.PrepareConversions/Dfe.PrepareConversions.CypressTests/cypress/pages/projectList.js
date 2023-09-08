@@ -43,8 +43,6 @@ export default new class projectList extends BasePage {
         return cy.url().then(url => this.getIdFromUrl(url));
     };
 
-    se
-
     getIdFromUrl(url) {
         const urlSplit = url.toString().split('/');
         for (let i = urlSplit.length - 1; i > 0; i--) {
