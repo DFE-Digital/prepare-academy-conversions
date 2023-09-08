@@ -8,12 +8,14 @@
     "cypress/assertion-before-screenshot": "error",
     "cypress/no-force": "error",
     "cypress/no-async-tests": "error",
-    "cypress/no-pause": "error"
+    "cypress/no-pause": "error",
+    "object-curly-spacing": "always"
   },
   "env": {
     "cypress/globals": true
   },
   "extends": [
-    "plugin:cypress/recommended"
+    "plugin:cypress/recommended",
+    "eslint:recommended"
   ]
 }
