@@ -5,14 +5,23 @@ import projectTaskList from "../../pages/projectTaskList";
 import projectAssignment from "../../pages/projectAssignment";
 import schoolOverview from "../../pages/schoolOverview";
 
-const projectName = 'Sponsored Cypress Project';
-const deliveryOfficer = 'Richika Dogra';
+
+const testData = {
+   projectName: 'Sponsored Cypress Project',
+   deliveryOfficer: 'Richika Dogra',
+   assignedOfficerMessage: 'Project is assigned',
+   pan: '98765',
+   pfiDescription: 'PFI Description',
+   distance: '15',
+   distanceDecription: 'Distance description',
+   mp: 'Important Politician, Indepentent',
+}
 
 describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
    beforeEach(() => {
       cy.callAcademisationApi('POST', `cypress-data/add-sponsored-project.cy`, "{}")
          .then(() => {
-            projectList.selectProject(projectName)
+            projectList.selectProject(testData.projectName)
          });
    })
 
@@ -22,21 +31,21 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       // -----------------------
 
       projectTaskList.selectAssignProject();
-      projectAssignment.assignProject(deliveryOfficer)
+      projectAssignment.assignProject(testData.deliveryOfficer)
       projectTaskList.getNotificationMessage().should('contain.text', 'Project is assigned');
-      projectTaskList.getAssignedUser().should('contain.text', deliveryOfficer);
-      projectList.filterProjectList(projectName);
-      projectList.getNthProjectDeliveryOfficer().should('contain.text', deliveryOfficer);
+      projectTaskList.getAssignedUser().should('contain.text', testData.deliveryOfficer);
+      projectList.filterProjectList(testData.projectName);
+      projectList.getNthProjectDeliveryOfficer().should('contain.text', testData.deliveryOfficer);
 
       // ---------------
       // School Overview
       // ---------------
 
-      projectList.selectProject(projectName);
+      projectList.selectProject(testData.projectName);
       projectTaskList.selectSchoolOverview();
       //PAN
-      schoolOverview.changePan('98765');
-      schoolOverview.getPan().should('contain.text', '98765');
+      schoolOverview.changePan(testData.pan);
+      schoolOverview.getPan().should('contain.text', testData.pan);
       //Viability issues
       schoolOverview.changeViabilityIssues(true);
       schoolOverview.getViabilityIssues().should('contain.text', 'Yes');
@@ -44,19 +53,23 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       schoolOverview.getViabilityIssues().should('contain.text', 'No');
       //Financial deficit
       schoolOverview.changeFinancialDeficit(true);
-      schoolOverview.getViabilityIssues().should('contain.text', 'Yes');
+      schoolOverview.getFinancialDeficit().should('contain.text', 'Yes');
       schoolOverview.changeFinancialDeficit(false);
-      schoolOverview.getViabilityIssues().should('contain.text', 'No');
+      schoolOverview.getFinancialDeficit().should('contain.text', 'No');
       //PFI + details
-      schoolOverview.changePFI(true, 'Description Test');
+      schoolOverview.changePFI(true, testData.pfiDescription);
       schoolOverview.getPFI().should('contain.text', 'Yes');
-      schoolOverview.getPFIDetails().should('contain.text', 'Description Test');
+      schoolOverview.getPFIDetails().should('contain.text', testData.pfiDescription);
       //Distance plus details
-      schoolOverview.changeDistance('15', 'Distance description');
-      schoolOverview.getDistance().should('contain.text', '15 miles');
-      schoolOverview.getDistanceDetails().should('contain.text', 'Distance description');
+      schoolOverview.changeDistance(testData.distance, testData.distanceDecription);
+      schoolOverview.getDistance().should('contain.text', testData.distance);
+      schoolOverview.getDistanceDetails().should('contain.text', testData.distanceDecription);
       //MP
-      
-      
+      schoolOverview.changeMP(testData.mp);
+      schoolOverview.getMP().should('contain.text', testData.mp);
+      //Complete
+      schoolOverview.markComplete();
+      cy.confirmContinueBtn().click();
+      projectTaskList.getSchoolOverviewStatus().should('contain.text', 'Completed')
    })
 })
