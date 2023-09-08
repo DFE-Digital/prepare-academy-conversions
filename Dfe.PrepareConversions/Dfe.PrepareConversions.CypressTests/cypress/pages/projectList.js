@@ -2,7 +2,9 @@
 
 export const path = 'project-list';
 
-class ProjectList {
+import BasePage from './BasePage'
+
+export default new class projectList extends BasePage {
 
     checkProjectListPage() {
         cy.url().should('include', path);
@@ -28,9 +30,16 @@ class ProjectList {
         this.getNthProject().click();
     }
 
-    selectProject(projectName = 'Gloucester school') {
+    selectProject(projectName = 'Gloucester School') {
         this.filterProjectList(projectName);
         this.selectFirstItem();
+        return cy.url().then(url => this.getIdFromUrl(url));
+    };
+
+    selectVoluntaryProject() {
+        cy.login({titleFilter: 'Voluntary Cypress Project'});
+        cy.get('[id="school-name-0"]').click();
+
         return cy.url().then(url => this.getIdFromUrl(url));
     };
 
@@ -45,5 +54,3 @@ class ProjectList {
         return '';
     };
 };
-
-export default new ProjectList();
