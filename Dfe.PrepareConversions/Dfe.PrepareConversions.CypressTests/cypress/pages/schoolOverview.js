@@ -1,6 +1,8 @@
 /// <reference types ='Cypress'/>
 
-export default class SchoolOverview {
+import BasePage from "./BasePage";
+
+export default class SchoolOverview extends BasePage {
 
     static selectors = {
         panValue: '[id="published-admission-number"]',

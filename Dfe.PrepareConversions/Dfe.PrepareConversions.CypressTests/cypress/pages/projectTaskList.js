@@ -1,6 +1,8 @@
 /// <reference types ='Cypress'/>
 
-export default class ProjectTaskList {
+import BasePage from "./BasePage";
+
+export default class ProjectTaskList extends BasePage {
 
     static selectors = {
         assignProjectButton: 'a[href*="project-assignment"]',

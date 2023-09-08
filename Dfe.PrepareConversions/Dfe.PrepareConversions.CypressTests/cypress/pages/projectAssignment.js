@@ -1,6 +1,8 @@
 /// <reference types ='Cypress'/>
 
-export default class ProjectAssignment {
+import BasePage from "./BasePage";
+
+export default class ProjectAssignment extends BasePage {
     static selectors = {
         assignInput: '[id="delivery-officer"]',
         unassignLink: '[id="unassign-link"]',
