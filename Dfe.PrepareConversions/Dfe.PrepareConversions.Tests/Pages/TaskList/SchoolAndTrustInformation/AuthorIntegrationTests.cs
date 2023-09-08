@@ -16,7 +16,7 @@ public class AuthorIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_and_update_author()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
       {
          x.Author = _fixture.Create<string>();
@@ -24,7 +24,7 @@ public class AuthorIntegrationTests : BaseIntegrationTests
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
-      await NavigateAsync("Change", 6);
+      await NavigateAsync("Change", 7);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/author");
       Document.QuerySelector<IHtmlInputElement>("#author")!.Value.Should().Be(project.Author);

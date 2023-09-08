@@ -45,6 +45,7 @@ public class DecimalInputTagHelper : InputTagHelperBase
          Id = Id,
          Name = Name,
          Label = Label,
+         Hint = Hint,
          Suffix = Suffix,
          Value = IsMonetary ? value?.ToMoneyString() : value.ToSafeString(),
          IsMonetary = IsMonetary

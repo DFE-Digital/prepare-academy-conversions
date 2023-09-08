@@ -11,7 +11,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
       {
          builder.ReplacePlaceholderWithContent("SchoolBudgetInformation", build =>
          {
-            build.AddHeading("School budget information", HeadingLevel.One);
+            build.AddHeading("Budget information", HeadingLevel.One);
             build.AddTable(new List<TextElement[]>
             {
                // Current financial year

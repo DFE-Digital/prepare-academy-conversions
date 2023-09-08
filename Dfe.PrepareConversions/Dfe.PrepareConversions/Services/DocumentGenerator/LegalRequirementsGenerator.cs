@@ -25,6 +25,12 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
                build.AddParagraph("");
             });
          }
+         else
+         {
+            builder.ReplacePlaceholderWithContent("LegalRequirements", build =>
+            {
+            });
+         }
       }
    }
 }

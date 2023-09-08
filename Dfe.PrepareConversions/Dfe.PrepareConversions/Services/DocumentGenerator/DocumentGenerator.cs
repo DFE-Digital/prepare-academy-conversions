@@ -34,8 +34,8 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          MemoryStream ms = CreateMemoryStream("htb-template");
 
          DocumentBuilder documentBuilder = DocumentBuilder.CreateFromTemplate(ms, document);
-         AddSchoolAndTrustInfoAndProjectDates(documentBuilder, project);
          AddSchoolOverview(documentBuilder, document);
+         AddSchoolAndTrustInfoAndProjectDates(documentBuilder, project);
          AddOfstedInformation(documentBuilder, document, project);
          AddRationale(documentBuilder, document, project);
          AddRisksAndIssues(documentBuilder, document);

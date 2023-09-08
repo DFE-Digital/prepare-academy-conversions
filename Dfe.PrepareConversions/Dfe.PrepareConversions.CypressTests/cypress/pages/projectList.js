@@ -1,6 +1,7 @@
 /// <reference types ='Cypress'/>
+import BasePage from './BasePage'
 
-export default class ProjectList {
+export default class projectList extends BasePage {
 
     static path = 'project-list';
 
@@ -31,6 +32,13 @@ export default class ProjectList {
     static selectProject(projectName = 'Gloucester school') {
         this.filterProjectList(projectName);
         this.selectFirstItem();
+        return cy.url().then(url => this.getIdFromUrl(url));
+    };
+
+    static selectVoluntaryProject() {
+        cy.login({titleFilter: 'Voluntary Cypress Project'});
+        cy.get('[id="school-name-0"]').click();
+
         return cy.url().then(url => this.getIdFromUrl(url));
     };
 
