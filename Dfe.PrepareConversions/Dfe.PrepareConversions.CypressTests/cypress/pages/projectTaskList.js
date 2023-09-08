@@ -6,7 +6,8 @@ export default class ProjectTaskList {
         assignProjectButton: 'a[href*="project-assignment"]',
         assignedUser: '[data-id="assigned-user"]',
         notificationMessage: '[id="notification-message"]',
-        schoolOverviewLink: 'a[href*="/school-overview"]'
+        schoolOverviewLink: 'a[href*="/school-overview"]',
+        schoolOverviewStatus: '[id="school-overview-status"]'
     }
 
     static path = 'task-list';
@@ -29,6 +30,11 @@ export default class ProjectTaskList {
     static selectSchoolOverview() {
         cy.checkPath(this.path);
         cy.get(this.selectors.schoolOverviewLink).click()
+    }
+
+    static getSchoolOverviewStatus() {
+        cy.checkPath(this.path);
+        return cy.get(this.selectors.schoolOverviewStatus);
     }
 
 };
