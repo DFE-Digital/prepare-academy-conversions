@@ -1,4 +1,7 @@
 ## NEXT
+
+* Sponsored Conversions inital MVP prepared
+* Sponsored grants now take into account the different tracks and school phase
 * User Story 136870 : hyperlink fixes 
 * User Story 137325 : Remove signed by field
 * User Story 137350 : Project details tab fixed

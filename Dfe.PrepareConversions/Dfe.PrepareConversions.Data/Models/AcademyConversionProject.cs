@@ -9,6 +9,7 @@ public class AcademyConversionProject
    public int? Urn { get; set; }
    public DateTime CreatedOn { get; set; }
    public string SchoolName { get; set; }
+   public string SchoolPhase { get; set; }
    public string LocalAuthority { get; set; }
    public string ApplicationReferenceNumber { get; set; }
    public string ProjectStatus { get; set; }
