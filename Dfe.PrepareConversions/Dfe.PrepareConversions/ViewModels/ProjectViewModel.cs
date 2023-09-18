@@ -20,7 +20,7 @@ public class ProjectViewModel: ProjectTypeBase
       LocalAuthority = project.LocalAuthority;
       ApplicationReceivedDate = project.ApplicationReceivedDate.ToDateString();
       AssignedDate = project.AssignedDate.ToDateString();
-      Phase = project.ProjectStatus;
+      SchoolPhase = project.SchoolPhase;
       HeadTeacherBoardDate = project.HeadTeacherBoardDate;
 
       LocalAuthorityInformationTemplateSentDate = project.LocalAuthorityInformationTemplateSentDate;
@@ -118,7 +118,7 @@ public class ProjectViewModel: ProjectTypeBase
    public string LocalAuthority { get; }
    public string ApplicationReceivedDate { get; }
    public string AssignedDate { get; }
-   public string Phase { get; }
+   public string SchoolPhase { get; }
    public DateTime? HeadTeacherBoardDate { get; set; }
 
    public DateTime? LocalAuthorityInformationTemplateSentDate { get; set; }

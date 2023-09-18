@@ -92,15 +92,30 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
       Project.LocalAuthorityInformationTemplateSentDate = AcademyConversionProject.LocalAuthorityInformationTemplateSentDate;
       Project.LocalAuthorityInformationTemplateReturnedDate = AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate;
    }
-   public static decimal? CalculateGrantAmount(string type)
+   public static decimal? CalculateGrantAmount(string type, string phase)
    {
-      return type switch
+      switch (phase.ToLower())
       {
-         SponsoredGrantType.FastTrack => 70000,
-         SponsoredGrantType.Full => 110000,
-         SponsoredGrantType.Intermediate => 90000,
-         _ => 0
-      };
+         case "primary":
+            return type switch
+            {
+               SponsoredGrantType.FastTrack => 70000,
+               SponsoredGrantType.Full => 110000,
+               SponsoredGrantType.Intermediate => 90000,
+               _ => 0
+            };
+         case "secondary":
+            return type switch
+            {
+               SponsoredGrantType.FastTrack => 80000,
+               SponsoredGrantType.Full => 150000,
+               SponsoredGrantType.Intermediate => 115000,
+               _ => 0
+            };
+      }
+
+      // Else return default £25k
+      return 25000;
    }
 
    protected UpdateAcademyConversionProject Build()
