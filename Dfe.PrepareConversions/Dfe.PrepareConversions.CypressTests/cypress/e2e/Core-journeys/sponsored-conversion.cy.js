@@ -4,6 +4,7 @@ import projectList from "../../pages/projectList";
 import projectTaskList from "../../pages/projectTaskList";
 import projectAssignment from "../../pages/projectAssignment";
 import schoolOverview from "../../pages/schoolOverview";
+import budget from "../../pages/budget";
 
 
 const testData = {
@@ -26,9 +27,9 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
    })
 
    it('TC01: Sponsored conversion journey ', () => {
-      // -----------------------
-      // Assign Delivery Officer
-      // -----------------------
+      // ---------------------------
+      // - Assign Delivery Officer -
+      // ---------------------------
 
       projectTaskList.selectAssignProject();
       projectAssignment.assignProject(testData.deliveryOfficer)
@@ -37,9 +38,9 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       projectList.filterProjectList(testData.projectName);
       projectList.getNthProjectDeliveryOfficer().should('contain.text', testData.deliveryOfficer);
 
-      // ---------------
-      // School Overview
-      // ---------------
+      // -------------------
+      // - School Overview -
+      // -------------------
 
       projectList.selectProject(testData.projectName);
       projectTaskList.selectSchoolOverview();
@@ -70,6 +71,13 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       //Complete
       schoolOverview.markComplete();
       cy.confirmContinueBtn().click();
-      projectTaskList.getSchoolOverviewStatus().should('contain.text', 'Completed')
+      projectTaskList.getSchoolOverviewStatus().should('contain.text', 'Completed');
+
+      // ----------
+      // - Budget -
+      // ----------
+
+      projectTaskList.selectBudget();
+      budget.updateBudgetInfomation();
    })
 })

@@ -9,7 +9,8 @@ export default class ProjectTaskList extends BasePage {
         assignedUser: '[data-id="assigned-user"]',
         notificationMessage: '[id="notification-message"]',
         schoolOverviewLink: 'a[href*="/school-overview"]',
-        schoolOverviewStatus: '[id="school-overview-status"]'
+        schoolOverviewStatus: '[id="school-overview-status"]',
+        budgetLink: 'a[href*="/budget"]'
     }
 
     static path = 'task-list';
@@ -37,6 +38,11 @@ export default class ProjectTaskList extends BasePage {
     static getSchoolOverviewStatus() {
         cy.checkPath(this.path);
         return cy.get(this.selectors.schoolOverviewStatus);
+    }
+
+    static selectBudget() {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.budgetLink).click()
     }
 
 };
