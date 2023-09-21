@@ -8,8 +8,7 @@
     "cypress/assertion-before-screenshot": "error",
     "cypress/no-force": "error",
     "cypress/no-async-tests": "error",
-    "cypress/no-pause": "error",
-    "object-curly-spacing": "always"
+    "cypress/no-pause": "error"
   },
   "env": {
     "cypress/globals": true
