@@ -6,6 +6,10 @@ import projectAssignment from "../../pages/projectAssignment";
 import schoolOverview from "../../pages/schoolOverview";
 import budget from "../../pages/budget";
 
+const currentYear = new Date();
+const nextYear = new Date();
+nextYear.setFullYear(new Date().getFullYear() + 1);
+
 
 const testData = {
    projectName: 'Sponsored Cypress Project',
@@ -16,6 +20,14 @@ const testData = {
    distance: '15',
    distanceDecription: 'Distance description',
    mp: 'Important Politician, Indepentent',
+   budget: {
+      endOfFinanicalYear: currentYear,
+      forecastedRevenueCurrentYear: 20,
+      forecastedCapitalCurrentYear: 10,
+      endOfNextFinancialYear: nextYear,
+      forecastedRevenueNextYear: 15,
+      forecastedCapitalNextYear: 12
+  }
 }
 
 describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
@@ -78,6 +90,18 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       // ----------
 
       projectTaskList.selectBudget();
-      budget.updateBudgetInfomation();
+      budget.updateBudgetInfomation(testData.budget);
+
+      budget.getCurrentFinancialYear().should('contain.text', testData.budget.endOfFinanicalYear.getDate());
+      budget.getCurrentFinancialYear().should('contain.text', testData.budget.endOfFinanicalYear.toLocaleString('default', { month: 'long' }));
+      budget.getCurrentFinancialYear().should('contain.text', testData.budget.endOfFinanicalYear.getFullYear());
+      budget.getCurrentRevenue().should('contain.text', `£${testData.budget.forecastedRevenueCurrentYear}`);
+      budget.getCurrentCapital().should('contain.text', `£${testData.budget.forecastedCapitalCurrentYear}`);
+
+      budget.getNextFinancialYear().should('contain.text', testData.budget.endOfNextFinancialYear.getDate());
+      budget.getNextFinancialYear().should('contain.text', testData.budget.endOfNextFinancialYear.toLocaleString('default', { month: 'long' }));
+      budget.getNextFinancialYear().should('contain.text', testData.budget.endOfNextFinancialYear.getFullYear());
+      budget.getNextRevenue().should('contain.text', `£${testData.budget.forecastedRevenueNextYear}`);
+      budget.getNextCapital().should('contain.text', `£${testData.budget.forecastedCapitalNextYear}`);
    })
 })
