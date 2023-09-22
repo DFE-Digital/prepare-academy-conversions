@@ -32,6 +32,8 @@ sqlServer.loadDBCommands();
 
 Cypress.Commands.add('urlPath', () => cy.location().then(location => `${location.origin}${location.pathname}`));
 
+Cypress.Commands.add('checkPath', (path) => cy.url().should("include", path));
+
 Cypress.Commands.add('login', ({ titleFilter } = {}) => {
     const filterQuery = titleFilter ? `?Title=${encodeURIComponent(titleFilter)}` : '';
     cy.visit(`${Cypress.env('url')}/project-list${filterQuery}`)
@@ -246,12 +248,12 @@ Cypress.Commands.add('changeDecision', () => {
 
 // Approved No Btn
 Cypress.Commands.add('NoRadioBtn', () => {
-    cy.get('[id="no-radio"]')
+    cy.get('[data-cy="select-radio-no" i]')
 })
 
 // Approved Yes Btn
 Cypress.Commands.add('YesRadioBtn', () => {
-    cy.get('[id="yes-radio"]')
+    cy.get('[data-cy="select-radio-yes" i]')
 })
 
 // Approved Changed Condition
@@ -588,23 +590,23 @@ Cypress.Commands.add('clearFilters', () => {
 
 Cypress.Commands.add("excuteAccessibilityTests", () => {
     // FUNCTION COURTESY OF FAHAD DARWISH - NIMBLE APPROACH CONFLUENECE
-        const wcagStandards = ["wcag22aa", "wcag21aa"];
-        const impactLevel = ["critical", "minor", "moderate", "serious"];
-        const continueOnFail = false;
-        cy.injectAxe();
-        cy.checkA11y(
-            null,
-            {
-                runOnly: {
-                    type: "tag",
-                    values: wcagStandards,
-                },
-                includedImpacts: impactLevel,
+    const wcagStandards = ["wcag22aa", "wcag21aa"];
+    const impactLevel = ["critical", "minor", "moderate", "serious"];
+    const continueOnFail = false;
+    cy.injectAxe();
+    cy.checkA11y(
+        null,
+        {
+            runOnly: {
+                type: "tag",
+                values: wcagStandards,
             },
-            null,
-            continueOnFail
-        );
-      });
+            includedImpacts: impactLevel,
+        },
+        null,
+        continueOnFail
+    );
+});
 
 Cypress.Commands.add('createInvoluntaryProject', () => {
     cy.get('[role="button"]').should('contain.text', "Start a new involuntary conversion project")
@@ -721,28 +723,28 @@ Cypress.Commands.add('schoolApplicationForm', () => {
 
 // Interceptors do not run for cy.request or cy.Api. Therefore use a command to make the request instead, an include the required headers etc.
 Cypress.Commands.add('callAcademisationApi',
-(method, url, body=null, failOnStatusCode=true) => {          
-    let requestDefinition =
+    (method, url, body = null, failOnStatusCode = true) => {
+        let requestDefinition =
         {
             method: method,
-            url: `${Cypress.env('academisationApiUrl')}/${url}`,			
+            url: `${Cypress.env('academisationApiUrl')}/${url}`,
             headers: {
                 'x-api-key': Cypress.env('academisationApiKey'),
                 'x-api-cypress-endpoints-key': Cypress.env('cypressApiKey'),
-                'Content-Type' : 'application/json'
+                'Content-Type': 'application/json'
             },
             failOnStatusCode: failOnStatusCode,
             response: []
         };
-    
-    // add body to a post/put/patch request, otherwise leave as not supplied
-    switch (method.toUpperCase()) {
-        case 'POST':
-        case 'PUT':
-        case 'PATCH':
-            requestDefinition.body = body;
-        break;
-    }
-    
-    return cy.request(requestDefinition);
-});
+
+        // add body to a post/put/patch request, otherwise leave as not supplied
+        switch (method.toUpperCase()) {
+            case 'POST':
+            case 'PUT':
+            case 'PATCH':
+                requestDefinition.body = body;
+                break;
+        }
+
+        return cy.request(requestDefinition);
+    });

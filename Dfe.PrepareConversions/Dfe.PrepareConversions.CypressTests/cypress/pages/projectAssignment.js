@@ -1,31 +1,26 @@
 /// <reference types ='Cypress'/>
 
-export const selectors = {
-    assignInput: '[id="delivery-officer"]',
-    unassignLink: '[id="unassign-link"]',
-    saveButton: '[class="govuk-button"]'
-};
+import BasePage from "./BasePage";
 
-export const path = 'project-assignment';
-
-class ProjectAssignment {
-
-    checkProjectAssignmentPage() {
-        cy.url().should('include', path);
-    }
-
-    assignProject(deliveryOfficer) {
-        this.checkProjectAssignmentPage();
-        cy.get(selectors.assignInput).click()
-        cy.get(selectors.assignInput).type(`${deliveryOfficer}{enter}`);
-        cy.get(selectors.saveButton).click();
+export default class ProjectAssignment extends BasePage {
+    static selectors = {
+        assignInput: '[id="delivery-officer"]',
+        unassignLink: '[id="unassign-link"]',
+        saveButton: '[class="govuk-button"]'
     };
 
-    unassignProject() {
-        this.checkProjectAssignmentPage();
-        cy.get(selectors.unassignLink).click()
+    static path = 'project-assignment';
+
+    static assignProject(deliveryOfficer) {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.assignInput).click()
+        cy.get(this.selectors.assignInput).type(`${deliveryOfficer}{enter}`);
+        cy.get(this.selectors.saveButton).click();
+    };
+
+    static unassignProject() {
+        cy.checkPath(this.path)
+        cy.get(this.selectors.unassignLink).click()
     };
 
 };
-
-export default new ProjectAssignment();

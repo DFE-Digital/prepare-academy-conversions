@@ -1,31 +1,42 @@
 /// <reference types ='Cypress'/>
 
-export const selectors = {
-    assignProjectButton: 'a[href*="project-assignment"]',
-    assignedUser: '[data-id="assigned-user"]',
-    notificationMessage: '[id="notification-message"]'
-}
+import BasePage from "./BasePage";
 
-export const path = 'task-list';
+export default class ProjectTaskList extends BasePage {
 
-class ProjectTaskList {
-
-    checkProjectPage() {
-        cy.url().should('include', path);
+    static selectors = {
+        assignProjectButton: 'a[href*="project-assignment"]',
+        assignedUser: '[data-id="assigned-user"]',
+        notificationMessage: '[id="notification-message"]',
+        schoolOverviewLink: 'a[href*="/school-overview"]',
+        schoolOverviewStatus: '[id="school-overview-status"]'
     }
 
-    selectAssignProject() {
-        cy.get(selectors.assignProjectButton).click();
+    static path = 'task-list';
+
+    static selectAssignProject() {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.assignProjectButton).click();
     };
 
-    getAssignedUser() {
-        return cy.get(selectors.assignedUser);
+    static getAssignedUser() {
+        cy.checkPath(this.path);
+        return cy.get(this.selectors.assignedUser);
     }
 
-    getNotificationMessage() {
-        return cy.get(selectors.notificationMessage);
+    static getNotificationMessage() {
+        cy.checkPath(this.path);
+        return cy.get(this.selectors.notificationMessage);
+    }
+
+    static selectSchoolOverview() {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.schoolOverviewLink).click()
+    }
+
+    static getSchoolOverviewStatus() {
+        cy.checkPath(this.path);
+        return cy.get(this.selectors.schoolOverviewStatus);
     }
 
 };
-
-export default new ProjectTaskList();
