@@ -11,7 +11,8 @@ export default class ProjectTaskList extends BasePage {
         schoolOverviewLink: 'a[href*="/school-overview"]',
         schoolOverviewStatus: '[id="school-overview-status"]',
         budgetLink: 'a[href*="/budget"]',
-        budgetStatus: '[id="school-budget-information-status"]'
+        budgetStatus: '[id="school-budget-information-status"]',
+        pupilForecastLink: 'a[href*="/pupil-forecast"]',
     }
 
     static path = 'task-list';
@@ -51,4 +52,8 @@ export default class ProjectTaskList extends BasePage {
         return cy.get(this.selectors.budgetStatus);
     }
 
+    static selectPupilForecast() {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.pupilForecastLink).click()
+    }
 };

@@ -66,8 +66,8 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       projectList.selectProject(testData.projectName);
       projectTaskList.selectSchoolOverview();
       //PAN
-      schoolOverview.changePan(testData.pan);
-      schoolOverview.getPan().should('contain.text', testData.pan);
+      schoolOverview.changePan(testData.schoolOverview.pan);
+      schoolOverview.getPan().should('contain.text', testData.schoolOverview.pan);
       //Viability issues
       schoolOverview.changeViabilityIssues(true);
       schoolOverview.getViabilityIssues().should('contain.text', 'Yes');

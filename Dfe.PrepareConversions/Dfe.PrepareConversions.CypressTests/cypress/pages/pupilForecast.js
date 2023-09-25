@@ -14,7 +14,7 @@ export default class PupilForecast extends BasePage {
     static enterAditionalInfomation(additionalInformation = 'Pupil Forecast additional infomation') {
         cy.checkPath(this.path);
         cy.get(this.selectors.changeAdditionalInfoLink).click();
-        cy.get(this.selectors.id = "additional-information").clear().type(`${deliveryOfficer}{enter}`);
+        cy.get(this.selectors.additionalInfo).clear().type(additionalInformation);
         cy.get(this.selectors.saveButton).click();
     };
 
