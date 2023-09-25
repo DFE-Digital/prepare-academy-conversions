@@ -103,5 +103,11 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       budget.getNextFinancialYear().should('contain.text', testData.budget.endOfNextFinancialYear.getFullYear());
       budget.getNextRevenue().should('contain.text', `£${testData.budget.forecastedRevenueNextYear}`);
       budget.getNextCapital().should('contain.text', `£${testData.budget.forecastedCapitalNextYear}`);
+
+      budget.markComplete();
+      cy.confirmContinueBtn().click();
+      projectTaskList.getSchoolOverviewStatus().should('contain.text', 'Completed');
+
+
    })
 })
