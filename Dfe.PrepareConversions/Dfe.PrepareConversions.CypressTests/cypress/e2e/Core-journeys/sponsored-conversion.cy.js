@@ -4,6 +4,11 @@ import projectList from "../../pages/projectList";
 import projectTaskList from "../../pages/projectTaskList";
 import projectAssignment from "../../pages/projectAssignment";
 import schoolOverview from "../../pages/schoolOverview";
+import budget from "../../pages/budget";
+
+const currentYear = new Date();
+const nextYear = new Date();
+nextYear.setFullYear(new Date().getFullYear() + 1);
 
 
 const testData = {
@@ -15,6 +20,14 @@ const testData = {
    distance: '15',
    distanceDecription: 'Distance description',
    mp: 'Important Politician, Indepentent',
+   budget: {
+      endOfFinanicalYear: currentYear,
+      forecastedRevenueCurrentYear: 20,
+      forecastedCapitalCurrentYear: 10,
+      endOfNextFinancialYear: nextYear,
+      forecastedRevenueNextYear: 15,
+      forecastedCapitalNextYear: 12
+  }
 }
 
 describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
@@ -26,9 +39,9 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
    })
 
    it('TC01: Sponsored conversion journey ', () => {
-      // -----------------------
-      // Assign Delivery Officer
-      // -----------------------
+      // ---------------------------
+      // - Assign Delivery Officer -
+      // ---------------------------
 
       projectTaskList.selectAssignProject();
       projectAssignment.assignProject(testData.deliveryOfficer)
@@ -37,9 +50,9 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       projectList.filterProjectList(testData.projectName);
       projectList.getNthProjectDeliveryOfficer().should('contain.text', testData.deliveryOfficer);
 
-      // ---------------
-      // School Overview
-      // ---------------
+      // -------------------
+      // - School Overview -
+      // -------------------
 
       projectList.selectProject(testData.projectName);
       projectTaskList.selectSchoolOverview();
@@ -70,6 +83,25 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       //Complete
       schoolOverview.markComplete();
       cy.confirmContinueBtn().click();
-      projectTaskList.getSchoolOverviewStatus().should('contain.text', 'Completed')
+      projectTaskList.getSchoolOverviewStatus().should('contain.text', 'Completed');
+
+      // ----------
+      // - Budget -
+      // ----------
+
+      projectTaskList.selectBudget();
+      budget.updateBudgetInfomation(testData.budget);
+
+      budget.getCurrentFinancialYear().should('contain.text', testData.budget.endOfFinanicalYear.getDate());
+      budget.getCurrentFinancialYear().should('contain.text', testData.budget.endOfFinanicalYear.toLocaleString('default', { month: 'long' }));
+      budget.getCurrentFinancialYear().should('contain.text', testData.budget.endOfFinanicalYear.getFullYear());
+      budget.getCurrentRevenue().should('contain.text', `£${testData.budget.forecastedRevenueCurrentYear}`);
+      budget.getCurrentCapital().should('contain.text', `£${testData.budget.forecastedCapitalCurrentYear}`);
+
+      budget.getNextFinancialYear().should('contain.text', testData.budget.endOfNextFinancialYear.getDate());
+      budget.getNextFinancialYear().should('contain.text', testData.budget.endOfNextFinancialYear.toLocaleString('default', { month: 'long' }));
+      budget.getNextFinancialYear().should('contain.text', testData.budget.endOfNextFinancialYear.getFullYear());
+      budget.getNextRevenue().should('contain.text', `£${testData.budget.forecastedRevenueNextYear}`);
+      budget.getNextCapital().should('contain.text', `£${testData.budget.forecastedCapitalNextYear}`);
    })
 })
