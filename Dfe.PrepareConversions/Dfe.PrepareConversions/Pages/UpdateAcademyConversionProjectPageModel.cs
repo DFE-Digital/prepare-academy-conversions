@@ -94,6 +94,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
    }
    public static decimal? CalculateGrantAmount(string type, string phase)
    {
+      if (phase is null) return 25000;
       switch (phase.ToLower())
       {
          case "primary":
@@ -102,7 +103,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
                SponsoredGrantType.FastTrack => 70000,
                SponsoredGrantType.Full => 110000,
                SponsoredGrantType.Intermediate => 90000,
-               _ => 0
+               _ => 25000
             };
          case "secondary":
             return type switch
@@ -110,12 +111,12 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
                SponsoredGrantType.FastTrack => 80000,
                SponsoredGrantType.Full => 150000,
                SponsoredGrantType.Intermediate => 115000,
-               _ => 0
+               _ => 25000
             };
       }
 
       // Else return default £25k
-      return 25000;
+         return 25000;
    }
 
    protected UpdateAcademyConversionProject Build()
