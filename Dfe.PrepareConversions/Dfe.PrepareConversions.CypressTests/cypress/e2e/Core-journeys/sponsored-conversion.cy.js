@@ -7,10 +7,11 @@ import schoolOverview from "../../pages/schoolOverview";
 import budget from "../../pages/budget";
 import ProjectTaskList from "../../pages/projectTaskList";
 import PupilForecast from "../../pages/pupilForecast";
+import ConversionDetails from "../../pages/conversionDetails";
 
-const currentYear = new Date();
-const nextYear = new Date();
-nextYear.setFullYear(new Date().getFullYear() + 1);
+const currentDate = new Date();
+const nextYearDate = new Date();
+nextYearDate.setFullYear(new Date().getFullYear() + 1);
 
 
 const testData = {
@@ -24,13 +25,13 @@ const testData = {
       pfiDescription: 'PFI Description',
       distance: '15',
       distanceDecription: 'Distance description',
-      mp: 'Important Politician, Indepentent',
+      mp: 'Important Politician, Independent',
    },
    budget: {
-      endOfFinanicalYear: currentYear,
+      endOfFinanicalYear: currentDate,
       forecastedRevenueCurrentYear: 20,
       forecastedCapitalCurrentYear: 10,
-      endOfNextFinancialYear: nextYear,
+      endOfNextFinancialYear: nextYearDate,
       forecastedRevenueNextYear: 15,
       forecastedCapitalNextYear: 12
    },
@@ -127,5 +128,49 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       PupilForecast.getAdditionalInfomation().should('contain.text', testData.pupilForecast.additionalInfomation);
       cy.confirmContinueBtn().click();
 
+      // ----------------------
+      // - Conversion Details -
+      // ----------------------
+
+      /* 
+      select the conversion details
+      form 7
+      date form 7  recieved
+      DAO date sent
+      Grant type
+      Grant ammount
+      EIG
+      Advisory date
+      Proposed opening date
+      Previous Advisory board
+      Author
+      Cleared by
+      Completed
+      */ 
+
+      projectTaskList.selectConversiontDetails();
+      ConversionDetails.setForm7Receivied('Yes');
+      ConversionDetails.getForm7Receivied().should('contain.text', 'Yes');
+      ConversionDetails.setForm7Date();
+      ConversionDetails.getForm7Date().should('contain.text', currentDate.getDate());
+      ConversionDetails.getForm7Date().should('contain.text', currentDate.toLocaleString('default', { month: 'long' }));
+      ConversionDetails.getForm7Date().should('contain.text', currentDate.getFullYear());
+      ConversionDetails.setDAODate();
+      ConversionDetails.getDAODate().should('contain.text', currentDate.getDate());
+      ConversionDetails.getDAODate().should('contain.text', currentDate.toLocaleString('default', { month: 'long' }));
+      ConversionDetails.getDAODate().should('contain.text', currentDate.getFullYear());
+      ConversionDetails.setFundingType('Full');
+      ConversionDetails.getFundingType().should('contain.text', 'Full');
+      ConversionDetails.setFundingAmount(false, 100000);
+      ConversionDetails.getFundingAmount().should('contain.text', '£100,000');
+      ConversionDetails.setFundingReason();
+      ConversionDetails.getFundingReason().should('contain.text', 'Funding Reason');
+      ConversionDetails.setEIG(true);
+      ConversionDetails.getEIG().should('contain.value', 'Yes');
+      ConversionDetails.setAdvisoryBoardDate();
+      ConversionDetails.getAdvisoryBoardDate().should('contain.text', currentDate.getDate());
+      ConversionDetails.getAdvisoryBoardDate().should('contain.text', currentDate.toLocaleString('default', { month: 'long' }));
+      ConversionDetails.getAdvisoryBoardDate().should('contain.text', currentDate.getFullYear());
+      ConversionDetails.setProposedAcademyOpening();
    })
 })
