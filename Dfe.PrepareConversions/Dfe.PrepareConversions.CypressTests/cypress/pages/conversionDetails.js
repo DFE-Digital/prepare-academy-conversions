@@ -115,9 +115,9 @@ export default class ConversionDetails extends BasePage {
         cy.get(this.selectors.saveButton).click();
     }
 
-    static getFundingType() {
+    static getFundingAmount() {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.fundingTypeValue);
+        return cy.get(this.selectors.fundingAmountValue);
     }
 
     static setFundingReason(reason = 'Funding Reason') {
