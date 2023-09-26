@@ -103,7 +103,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
                SponsoredGrantType.FastTrack => 70000,
                SponsoredGrantType.Full => 110000,
                SponsoredGrantType.Intermediate => 90000,
-               _ => 0
+               _ => 25000
             };
          case "secondary":
             return type switch
@@ -111,7 +111,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
                SponsoredGrantType.FastTrack => 80000,
                SponsoredGrantType.Full => 150000,
                SponsoredGrantType.Intermediate => 115000,
-               _ => 0
+               _ => 25000
             };
       }
 
