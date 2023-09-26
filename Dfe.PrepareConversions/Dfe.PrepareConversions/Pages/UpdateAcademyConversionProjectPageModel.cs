@@ -94,6 +94,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
    }
    public static decimal? CalculateGrantAmount(string type, string phase)
    {
+      if (phase is null) return 25000;
       switch (phase.ToLower())
       {
          case "primary":
@@ -115,7 +116,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
       }
 
       // Else return default £25k
-      return 25000;
+         return 25000;
    }
 
    protected UpdateAcademyConversionProject Build()
