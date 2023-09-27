@@ -80,10 +80,10 @@ Cypress.Commands.add('generateProjectTempBtn', () => {
 });
 
 Cypress.Commands.add('enterDate', (idSelector, day, month, year) => {
-    cy.get(`[id*="${idSelector}-day]`).should('be.visible');
-    cy.get(`[id*="${idSelector}-day]`).clear().type(day);
-    cy.get(`[id*="${idSelector}-month]`).clear().type(month);
-    cy.get(`[id*="${idSelector}-year]`).clear().type(year);
+    cy.get(`[id*="${idSelector}-day"]`).should('be.visible');
+    cy.get(`[id*="${idSelector}-day"]`).clear().type(day);
+    cy.get(`[id*="${idSelector}-month"]`).clear().type(month);
+    cy.get(`[id*="${idSelector}-year"]`).clear().type(year);
 })
 
 //--LA Info Page
