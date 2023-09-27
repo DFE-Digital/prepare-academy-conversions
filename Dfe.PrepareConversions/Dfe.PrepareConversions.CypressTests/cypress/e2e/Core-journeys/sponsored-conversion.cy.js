@@ -6,10 +6,15 @@ import projectAssignment from "../../pages/projectAssignment";
 import schoolOverview from "../../pages/schoolOverview";
 import budget from "../../pages/budget";
 import PupilForecast from "../../pages/pupilForecast";
+import ConversionDetails from "../../pages/conversionDetails";
 
-const currentYear = new Date();
-const nextYear = new Date();
-nextYear.setFullYear(new Date().getFullYear() + 1);
+const currentDate = new Date();
+const nextYearDate = new Date();
+nextYearDate.setFullYear(currentDate.getFullYear() + 1);
+const oneMonthAgoDate = new Date();
+oneMonthAgoDate.setMonth(currentDate.getMonth() - 1);
+const nextMonthDate = new Date();
+nextMonthDate.setMonth(currentDate.getMonth() + 1);
 
 
 const testData = {
@@ -23,18 +28,18 @@ const testData = {
       pfiDescription: 'PFI Description',
       distance: '15',
       distanceDecription: 'Distance description',
-      mp: 'Important Politician, Indepentent',
+      mp: 'Important Politician, Independent',
    },
    budget: {
-      endOfFinanicalYear: currentYear,
+      endOfFinanicalYear: currentDate,
       forecastedRevenueCurrentYear: 20,
       forecastedCapitalCurrentYear: 10,
-      endOfNextFinancialYear: nextYear,
+      endOfNextFinancialYear: nextYearDate,
       forecastedRevenueNextYear: 15,
       forecastedCapitalNextYear: 12
    },
    pupilForecast: {
-      additionalInfomation: 'Pupil Forecast Additional Infomation'
+      additionalInfomation: 'Pupil Forecast Additional Information'
    }
 }
 
@@ -126,5 +131,61 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       PupilForecast.getAdditionalInfomation().should('contain.text', testData.pupilForecast.additionalInfomation);
       cy.confirmContinueBtn().click();
 
+      // ----------------------
+      // - Conversion Details -
+      // ----------------------
+
+      projectTaskList.selectConversionDetails();
+
+      // Form 7
+      ConversionDetails.setForm7Receivied('Yes');
+      ConversionDetails.getForm7Receivied().should('contain.text', 'Yes');
+      ConversionDetails.setForm7Date(oneMonthAgoDate);
+      ConversionDetails.getForm7Date().should('contain.text', oneMonthAgoDate.getDate());
+      ConversionDetails.getForm7Date().should('contain.text', oneMonthAgoDate.toLocaleString('default', { month: 'long' }));
+      ConversionDetails.getForm7Date().should('contain.text', oneMonthAgoDate.getFullYear());
+
+      // DAO
+      ConversionDetails.setDAODate(oneMonthAgoDate);
+      ConversionDetails.getDAODate().should('contain.text', oneMonthAgoDate.getDate());
+      ConversionDetails.getDAODate().should('contain.text', oneMonthAgoDate.toLocaleString('default', { month: 'long' }));
+      ConversionDetails.getDAODate().should('contain.text', oneMonthAgoDate.getFullYear());
+
+      // Funding
+      ConversionDetails.setFundingType('Full');
+      ConversionDetails.getFundingType().should('contain.text', 'Full');
+      ConversionDetails.setFundingAmount(false, 100000);
+      ConversionDetails.getFundingAmount().should('contain.text', '£100,000');
+      ConversionDetails.setFundingReason();
+      ConversionDetails.getFundingReason().should('contain.text', 'Funding Reason');
+
+      //EIG
+      ConversionDetails.setEIG(true);
+      ConversionDetails.getEIG().should('contain.text', 'Yes');
+
+      // Dates
+      ConversionDetails.setAdvisoryBoardDate(nextMonthDate);
+      ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextMonthDate.getDate());
+      ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextMonthDate.toLocaleString('default', { month: 'long' }));
+      ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextMonthDate.getFullYear());
+      ConversionDetails.setProposedAcademyOpening(nextYearDate.toLocaleString('default', {month: '2-digit'}), nextYearDate.getFullYear());
+      ConversionDetails.getProposedAcademyOpening().should('contain.text', 1);
+      ConversionDetails.getProposedAcademyOpening().should('contain.text', nextYearDate.toLocaleString('default', { month: 'long' }));
+      ConversionDetails.getProposedAcademyOpening().should('contain.text', nextYearDate.getFullYear());
+      ConversionDetails.setPreviousAdvisoryBoardDate(true, oneMonthAgoDate);
+      ConversionDetails.getPreviousAdvisoryBoardDate().should('contain.text', oneMonthAgoDate.getDate());
+      ConversionDetails.getPreviousAdvisoryBoardDate().should('contain.text', oneMonthAgoDate.toLocaleString('default', { month: 'long' }));
+      ConversionDetails.getPreviousAdvisoryBoardDate().should('contain.text', oneMonthAgoDate.getFullYear());
+
+      // Author
+      ConversionDetails.setAuthor();
+      ConversionDetails.getAuthor().should('contain.text', 'Nicholas Warms');
+      ConversionDetails.setClearedBy();
+      ConversionDetails.getClearedBy().should('contain.text', 'Nicholas Warms');
+
+      // Complete
+      ConversionDetails.markComplete();
+      cy.confirmContinueBtn().click();
+      projectTaskList.getConversionDetailsStatus().should('contain.text', 'Completed');
    })
 })

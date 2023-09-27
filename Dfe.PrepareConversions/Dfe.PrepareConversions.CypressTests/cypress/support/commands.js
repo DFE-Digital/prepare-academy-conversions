@@ -79,6 +79,13 @@ Cypress.Commands.add('generateProjectTempBtn', () => {
     cy.get('[id="generate-project-template-button"]')
 });
 
+Cypress.Commands.add('enterDate', (idSelector, day, month, year) => {
+    cy.get(`[id*="${idSelector}-day"]`).should('be.visible');
+    cy.get(`[id*="${idSelector}-day"]`).clear().type(day);
+    cy.get(`[id*="${idSelector}-month"]`).clear().type(month);
+    cy.get(`[id*="${idSelector}-year"]`).clear().type(year);
+})
+
 //--LA Info Page
 
 // Submit Date 'Sent' (LA Info Page)
@@ -254,6 +261,11 @@ Cypress.Commands.add('NoRadioBtn', () => {
 // Approved Yes Btn
 Cypress.Commands.add('YesRadioBtn', () => {
     cy.get('[data-cy="select-radio-yes" i]')
+})
+
+// Any radio button
+Cypress.Commands.add('RadioBtn', (label) => {
+    cy.get(`[data-cy="select-radio-${label}" i]`)
 })
 
 // Approved Changed Condition
