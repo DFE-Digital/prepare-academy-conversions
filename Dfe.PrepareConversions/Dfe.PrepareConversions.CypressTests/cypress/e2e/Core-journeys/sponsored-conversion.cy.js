@@ -135,41 +135,35 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       // - Conversion Details -
       // ----------------------
 
-      /* 
-      select the conversion details
-      form 7
-      date form 7  recieved
-      DAO date sent
-      Grant type
-      Grant ammount
-      EIG
-      Advisory date
-      Proposed opening date
-      Previous Advisory board
-      Author
-      Cleared by
-      Completed
-      */
-
       projectTaskList.selectConversionDetails();
+
+      // Form 7
       ConversionDetails.setForm7Receivied('Yes');
       ConversionDetails.getForm7Receivied().should('contain.text', 'Yes');
       ConversionDetails.setForm7Date(oneMonthAgoDate);
       ConversionDetails.getForm7Date().should('contain.text', oneMonthAgoDate.getDate());
       ConversionDetails.getForm7Date().should('contain.text', oneMonthAgoDate.toLocaleString('default', { month: 'long' }));
       ConversionDetails.getForm7Date().should('contain.text', oneMonthAgoDate.getFullYear());
+
+      // DAO
       ConversionDetails.setDAODate(oneMonthAgoDate);
       ConversionDetails.getDAODate().should('contain.text', oneMonthAgoDate.getDate());
       ConversionDetails.getDAODate().should('contain.text', oneMonthAgoDate.toLocaleString('default', { month: 'long' }));
       ConversionDetails.getDAODate().should('contain.text', oneMonthAgoDate.getFullYear());
+
+      // Funding
       ConversionDetails.setFundingType('Full');
       ConversionDetails.getFundingType().should('contain.text', 'Full');
       ConversionDetails.setFundingAmount(false, 100000);
       ConversionDetails.getFundingAmount().should('contain.text', '£100,000');
       ConversionDetails.setFundingReason();
       ConversionDetails.getFundingReason().should('contain.text', 'Funding Reason');
+
+      //EIG
       ConversionDetails.setEIG(true);
       ConversionDetails.getEIG().should('contain.text', 'Yes');
+
+      // Dates
       ConversionDetails.setAdvisoryBoardDate(nextMonthDate);
       ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextMonthDate.getDate());
       ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextMonthDate.toLocaleString('default', { month: 'long' }));
@@ -182,10 +176,14 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       ConversionDetails.getPreviousAdvisoryBoardDate().should('contain.text', oneMonthAgoDate.getDate());
       ConversionDetails.getPreviousAdvisoryBoardDate().should('contain.text', oneMonthAgoDate.toLocaleString('default', { month: 'long' }));
       ConversionDetails.getPreviousAdvisoryBoardDate().should('contain.text', oneMonthAgoDate.getFullYear());
+
+      // Author
       ConversionDetails.setAuthor();
       ConversionDetails.getAuthor().should('contain.text', 'Nicholas Warms');
       ConversionDetails.setClearedBy();
       ConversionDetails.getClearedBy().should('contain.text', 'Nicholas Warms');
+
+      // Complete
       ConversionDetails.markComplete();
       cy.confirmContinueBtn().click();
       projectTaskList.getConversionDetailsStatus().should('contain.text', 'Completed');
