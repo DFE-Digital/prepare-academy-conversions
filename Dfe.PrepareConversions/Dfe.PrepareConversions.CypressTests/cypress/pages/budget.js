@@ -24,7 +24,8 @@ export default class Budget extends BasePage {
         nextFinancialYearRevenueValue: '[id="finance-year-following"]',
         nextFinancialYearCapitalInput: '[id="finance-projected-capital"]',
         nextFinancialYearCapitalValue: '[id="finance-projected-capital"]',
-        saveButton: '[class="govuk-button"]'
+        saveButton: '[class="govuk-button"]',
+        completeCheckbox: '[id="school-budget-information-complete"]'
     };
 
     static path = 'budget';
@@ -91,5 +92,15 @@ export default class Budget extends BasePage {
     static getNextCapital() {
         cy.checkPath(this.path);
         return cy.get(this.selectors.nextFinancialYearCapitalValue);
+    }
+
+    static markComplete() {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.completeCheckbox).check();
+    }
+
+    static markIncomplete() {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.completeCheckbox).uncheck();
     }
 };
