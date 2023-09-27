@@ -10,7 +10,11 @@ import ConversionDetails from "../../pages/conversionDetails";
 
 const currentDate = new Date();
 const nextYearDate = new Date();
-nextYearDate.setFullYear(new Date().getFullYear() + 1);
+nextYearDate.setFullYear(currentDate.getFullYear() + 1);
+const oneMonthAgoDate = new Date();
+oneMonthAgoDate.setMonth(currentDate.getMonth() - 1);
+const nextMonthDate = new Date();
+nextMonthDate.setMonth(currentDate.getMonth() + 1);
 
 
 const testData = {
@@ -35,7 +39,7 @@ const testData = {
       forecastedCapitalNextYear: 12
    },
    pupilForecast: {
-      additionalInfomation: 'Pupil Forecast Additional Infomation'
+      additionalInfomation: 'Pupil Forecast Additional Information'
    }
 }
 
@@ -147,17 +151,17 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       Completed
       */
 
-      projectTaskList.selectConversiontDetails();
+      projectTaskList.selectConversionDetails();
       ConversionDetails.setForm7Receivied('Yes');
       ConversionDetails.getForm7Receivied().should('contain.text', 'Yes');
-      ConversionDetails.setForm7Date();
-      ConversionDetails.getForm7Date().should('contain.text', currentDate.getDate());
-      ConversionDetails.getForm7Date().should('contain.text', currentDate.toLocaleString('default', { month: 'long' }));
-      ConversionDetails.getForm7Date().should('contain.text', currentDate.getFullYear());
-      ConversionDetails.setDAODate();
-      ConversionDetails.getDAODate().should('contain.text', currentDate.getDate());
-      ConversionDetails.getDAODate().should('contain.text', currentDate.toLocaleString('default', { month: 'long' }));
-      ConversionDetails.getDAODate().should('contain.text', currentDate.getFullYear());
+      ConversionDetails.setForm7Date(oneMonthAgoDate);
+      ConversionDetails.getForm7Date().should('contain.text', oneMonthAgoDate.getDate());
+      ConversionDetails.getForm7Date().should('contain.text', oneMonthAgoDate.toLocaleString('default', { month: 'long' }));
+      ConversionDetails.getForm7Date().should('contain.text', oneMonthAgoDate.getFullYear());
+      ConversionDetails.setDAODate(oneMonthAgoDate);
+      ConversionDetails.getDAODate().should('contain.text', oneMonthAgoDate.getDate());
+      ConversionDetails.getDAODate().should('contain.text', oneMonthAgoDate.toLocaleString('default', { month: 'long' }));
+      ConversionDetails.getDAODate().should('contain.text', oneMonthAgoDate.getFullYear());
       ConversionDetails.setFundingType('Full');
       ConversionDetails.getFundingType().should('contain.text', 'Full');
       ConversionDetails.setFundingAmount(false, 100000);
@@ -165,14 +169,25 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       ConversionDetails.setFundingReason();
       ConversionDetails.getFundingReason().should('contain.text', 'Funding Reason');
       ConversionDetails.setEIG(true);
-      ConversionDetails.getEIG().should('contain.value', 'Yes');
-      ConversionDetails.setAdvisoryBoardDate();
-      ConversionDetails.getAdvisoryBoardDate().should('contain.text', currentDate.getDate());
-      ConversionDetails.getAdvisoryBoardDate().should('contain.text', currentDate.toLocaleString('default', { month: 'long' }));
-      ConversionDetails.getAdvisoryBoardDate().should('contain.text', currentDate.getFullYear());
-      ConversionDetails.setProposedAcademyOpening(nextYearDate.getMonth() + 1, nextYearDate.getFullYear);
-      ConversionDetails.getAdvisoryBoardDate().should('contain.text', 1);
-      ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextYearDate.toLocaleString('default', { month: 'long' }));
-      ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextYearDate.getFullYear());
+      ConversionDetails.getEIG().should('contain.text', 'Yes');
+      ConversionDetails.setAdvisoryBoardDate(nextMonthDate);
+      ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextMonthDate.getDate());
+      ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextMonthDate.toLocaleString('default', { month: 'long' }));
+      ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextMonthDate.getFullYear());
+      ConversionDetails.setProposedAcademyOpening(nextYearDate.toLocaleString('default', {month: '2-digit'}), nextYearDate.getFullYear());
+      ConversionDetails.getProposedAcademyOpening().should('contain.text', 1);
+      ConversionDetails.getProposedAcademyOpening().should('contain.text', nextYearDate.toLocaleString('default', { month: 'long' }));
+      ConversionDetails.getProposedAcademyOpening().should('contain.text', nextYearDate.getFullYear());
+      ConversionDetails.setPreviousAdvisoryBoardDate(true, oneMonthAgoDate);
+      ConversionDetails.getPreviousAdvisoryBoardDate().should('contain.text', oneMonthAgoDate.getDate());
+      ConversionDetails.getPreviousAdvisoryBoardDate().should('contain.text', oneMonthAgoDate.toLocaleString('default', { month: 'long' }));
+      ConversionDetails.getPreviousAdvisoryBoardDate().should('contain.text', oneMonthAgoDate.getFullYear());
+      ConversionDetails.setAuthor();
+      ConversionDetails.getAuthor().should('contain.text', 'Nicholas Warms');
+      ConversionDetails.setClearedBy();
+      ConversionDetails.getClearedBy().should('contain.text', 'Nicholas Warms');
+      ConversionDetails.markComplete();
+      cy.confirmContinueBtn().click();
+      projectTaskList.getConversionDetailsStatus().should('contain.text', 'Completed');
    })
 })

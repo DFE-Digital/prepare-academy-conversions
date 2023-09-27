@@ -25,8 +25,8 @@ export default class ConversionDetails extends BasePage {
         fundingAmountReasonInput: '[id="conversion-support-grant-change-reason"]',
         fundingAmountReasonValue: '[id="grant-funding-reason"]',
         fundingAmountReasonLink: '[data-test="change-grant-funding-reason"]',
-        EIGLink: '[data-test="change-grant-funding-environmental-imporvement-grant"]',
-        EIGValue: '[id="grant-funding-environmental-imporvement-grant"]',
+        EIGLink: '[data-test="change-grant-funding-environmental-improvement-grant"]',
+        EIGValue: '[id="grant-funding-environmental-improvement-grant"]',
         EIGYesRadio: '[name="conversion-support-grant-environmental-improvement-grant"][data-cy="select-radio-yes" i]',
         EIGNoRadio: '[name="conversion-support-grant-environmental-improvement-grant"][data-cy="select-radio-no" i]',
         advisoryBoardDateLink: '[data-test="change-advisory-board-date"]',
@@ -107,9 +107,9 @@ export default class ConversionDetails extends BasePage {
         cy.checkPath(this.path);
         cy.get(this.selectors.fundingAmountLink).click();
         if (useDefaultAmount) {
-            cy.get(this.selectors.fundingAmountDefaultYesRadio);
+            cy.get(this.selectors.fundingAmountDefaultYesRadio).click();
         } else {
-            cy.get(this.selectors.fundingAmountDefaultNoRadio);
+            cy.get(this.selectors.fundingAmountDefaultNoRadio).click();
             cy.get(this.selectors.fundingAmountInput).clear().type(amount);
         }
         cy.get(this.selectors.saveButton).click();
@@ -129,13 +129,13 @@ export default class ConversionDetails extends BasePage {
 
     static getFundingReason() {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.fundingTypeValue);
+        return cy.get(this.selectors.fundingAmountReasonValue);
     }
 
-    static setEIG(value = true){
+    static setEIG(value = true) {
         cy.checkPath(this.path);
         cy.get(this.selectors.EIGLink).click();
-        if(value){
+        if (value) {
             cy.get(this.selectors.EIGYesRadio).check();
         } else {
             cy.get(this.selectors.EIGNoRadio).check();
@@ -143,7 +143,7 @@ export default class ConversionDetails extends BasePage {
         cy.get(this.selectors.saveButton).click();
     }
 
-    static getEIG(){
+    static getEIG() {
         cy.checkPath(this.path);
         return cy.get(this.selectors.EIGValue);
     }
@@ -162,45 +162,47 @@ export default class ConversionDetails extends BasePage {
         return cy.get(this.selectors.advisoryBoardDateValue);
     }
 
-    static setProposedAcademyOpening(month, year){
+    static setProposedAcademyOpening(month, year) {
         cy.checkPath(this.path);
         cy.get(this.selectors.proposedOpeningLink).click();
         cy.get(this.selectors.proposedOpeningRadioButton(month, year)).check()
         cy.get(this.selectors.saveButton).click();
     }
 
-    static getProposedAcademyOpening(){
+    static getProposedAcademyOpening() {
         cy.checkPath(this.path);
         return cy.get(this.selectors.proposedOpeningValue);
     }
 
     static setPreviousAdvisoryBoardDate(previousBoard = true, date = today) {
         cy.checkPath(this.path);
-        cy.get(this.selectors.advisoryBoardDateLink).click();
-        if(previousBoard){
-            cy.YesRadioBtn();
+        cy.get(this.selectors.previousAdvisoryBoardLink).click();
+        if (previousBoard) {
+            cy.YesRadioBtn().check();
             cy.get(this.selectors.saveButton).click();
             cy.enterDate(this.selectors.previousAdvisoryBoardDateInput, date.getDate(), date.getMonth() + 1, date.getFullYear());
 
+        } else {
+            cy.NoRadioBtn().check();
         }
         cy.get(this.selectors.saveButton).click();
     }
 
     static getPreviousAdvisoryBoardDate() {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.advisoryBoardDateValue);
+        return cy.get(this.selectors.previousAdvisoryBoardValue);
     }
 
     // People
 
-    static setAuthor(author = 'Nicholas Warms'){
+    static setAuthor(author = 'Nicholas Warms') {
         cy.checkPath(this.path);
         cy.get(this.selectors.authorLink).click();
         cy.get(this.selectors.authorInput).clear().type(author);
         cy.get(this.selectors.saveButton).click();
     }
 
-    static getAuthor(){
+    static getAuthor() {
         cy.checkPath(this.path);
         return cy.get(this.selectors.authorValue);
     }
