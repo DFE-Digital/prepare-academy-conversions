@@ -146,7 +146,7 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       Author
       Cleared by
       Completed
-      */ 
+      */
 
       projectTaskList.selectConversiontDetails();
       ConversionDetails.setForm7Receivied('Yes');
@@ -171,6 +171,9 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       ConversionDetails.getAdvisoryBoardDate().should('contain.text', currentDate.getDate());
       ConversionDetails.getAdvisoryBoardDate().should('contain.text', currentDate.toLocaleString('default', { month: 'long' }));
       ConversionDetails.getAdvisoryBoardDate().should('contain.text', currentDate.getFullYear());
-      ConversionDetails.setProposedAcademyOpening();
+      ConversionDetails.setProposedAcademyOpening(nextYearDate.getMonth() + 1, nextYearDate.getFullYear);
+      ConversionDetails.getAdvisoryBoardDate().should('contain.text', 1);
+      ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextYearDate.toLocaleString('default', { month: 'long' }));
+      ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextYearDate.getFullYear());
    })
 })
