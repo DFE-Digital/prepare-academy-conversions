@@ -7,6 +7,7 @@ import schoolOverview from "../../pages/schoolOverview";
 import budget from "../../pages/budget";
 import PupilForecast from "../../pages/pupilForecast";
 import ConversionDetails from "../../pages/conversionDetails";
+import Rationale from "../../pages/rationale";
 
 const currentDate = new Date();
 const nextYearDate = new Date();
@@ -40,7 +41,8 @@ const testData = {
    },
    pupilForecast: {
       additionalInfomation: 'Pupil Forecast Additional Information'
-   }
+   },
+   rationale: 'This is why this school should become an academy'
 }
 
 describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
@@ -187,5 +189,16 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       ConversionDetails.markComplete();
       cy.confirmContinueBtn().click();
       projectTaskList.getConversionDetailsStatus().should('contain.text', 'Completed');
+
+      // -------------
+      // - Rationale -
+      // -------------
+
+      projectTaskList.selectRationale();
+      Rationale.changeRationale(testData.rationale);
+      Rationale.getRationale().should('contain.text', testData.rationale);
+      Rationale.markComplete();
+      cy.confirmContinueBtn().click();
+      projectTaskList.getRationaleStatus().should('contain.text', 'Completed');
    })
 })
