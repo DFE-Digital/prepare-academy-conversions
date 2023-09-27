@@ -16,7 +16,9 @@ export default class ProjectTaskList extends BasePage {
         conversionDetailsLink: 'a[href*="/conversion-details"]',
         conversionDetailsStatus: '[id="school-and-trust-information-status"]',
         rationaleLink: 'a[href*="/confirm-project-trust-rationale"]',
-        rationaleStatus: '[id="rationale-status"]'
+        rationaleStatus: '[id="rationale-status"]',
+        riskAndIssuesLink: 'a[href*="/confirm-risks-issues"]',
+        riskAndIssuesStatus: '[id="risks-and-issues-status"]'
     }
 
     static path = 'task-list';
@@ -79,5 +81,15 @@ export default class ProjectTaskList extends BasePage {
     static getRationaleStatus() {
         cy.checkPath(this.path);
         return cy.get(this.selectors.rationaleStatus);
+    }
+
+    static selectRisksAndIssues() {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.riskAndIssuesLink).click();
+    }
+
+    static getRisksAndIssuesStatus() {
+        cy.checkPath(this.path);
+        return cy.get(this.selectors.riskAndIssuesStatus);
     }
 };
