@@ -94,4 +94,14 @@ export default class ProjectTaskList extends BasePage {
         cy.checkPath(this.path);
         return cy.get(this.selectors.riskAndIssuesStatus);
     }
+
+    static selectLA() {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.LALink).click();
+    }
+
+    static getLAStatus() {
+        cy.checkPath(this.path);
+        return cy.get(this.selectors.LAStatus);
+    }
 };
