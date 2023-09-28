@@ -18,7 +18,9 @@ export default class ProjectTaskList extends BasePage {
         rationaleLink: 'a[href*="/confirm-project-trust-rationale"]',
         rationaleStatus: '[id="rationale-status"]',
         riskAndIssuesLink: 'a[href*="/confirm-risks-issues"]',
-        riskAndIssuesStatus: '[id="risks-and-issues-status"]'
+        riskAndIssuesStatus: '[id="risks-and-issues-status"]',
+        LALink: 'a[href*="/confirm-local-authority-information-template-dates"]',
+        LAStatus: '[id="la-info-template-status"]'
     }
 
     static path = 'task-list';
