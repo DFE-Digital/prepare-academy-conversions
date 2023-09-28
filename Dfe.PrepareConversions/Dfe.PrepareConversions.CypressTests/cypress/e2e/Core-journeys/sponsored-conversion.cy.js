@@ -8,6 +8,7 @@ import budget from "../../pages/budget";
 import PupilForecast from "../../pages/pupilForecast";
 import ConversionDetails from "../../pages/conversionDetails";
 import Rationale from "../../pages/rationale";
+import RisksAndIssues from "../../pages/risksAndIssues";
 
 const currentDate = new Date();
 const nextYearDate = new Date();
@@ -42,7 +43,8 @@ const testData = {
    pupilForecast: {
       additionalInfomation: 'Pupil Forecast Additional Information'
    },
-   rationale: 'This is why this school should become an academy'
+   rationale: 'This is why this school should become an academy',
+   risksAndIssues: 'Here are the risks and issues for this conversion',
 }
 
 describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
@@ -200,5 +202,16 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       Rationale.markComplete();
       cy.confirmContinueBtn().click();
       projectTaskList.getRationaleStatus().should('contain.text', 'Completed');
+      
+      // --------------------
+      // - Risks and issues -
+      // --------------------
+
+      projectTaskList.selectRisksAndIssues();
+      RisksAndIssues.changeRisksAndIssues(testData.risksAndIssues);
+      RisksAndIssues.getRisksAndIssues().should('contain.text', testData.risksAndIssues);
+      RisksAndIssues.markComplete();
+      cy.confirmContinueBtn().click();
+      projectTaskList.getRisksAndIssuesStatus().should('contain.text', 'Completed');
    })
 })
