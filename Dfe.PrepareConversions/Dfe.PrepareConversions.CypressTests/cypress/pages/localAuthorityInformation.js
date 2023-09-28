@@ -17,15 +17,16 @@ export default class LocalAuthorityInfomation extends BasePage {
         sharepointLinkInput: '[id="la-info-template-sharepoint-link"]',
         sharepointLinkValue: '[id="la-info-template-sharepoint-link"]',
         saveButton: '[class="govuk-button"]',
-        completeCheckbox: '[id="rationale-complete"]'
+        completeCheckbox: '[id="la-info-template-complete"]'
     };
 
     static path = 'confirm-local-authority-information-template-dates';
 
-    static changeTemplateSentDate(date) {
+    static changeTemplateDates(sentDate, returnedDate) {
         cy.checkPath(this.path);
         cy.get(this.selectors.templateSentLink).click()
-        cy.enterDate(this.selectors.templateSentInput, date.getDate(), date.getMonth() + 1, date.getFullYear());
+        cy.enterDate(this.selectors.templateSentInput, sentDate.getDate(), sentDate.getMonth() + 1, sentDate.getFullYear());
+        cy.enterDate(this.selectors.templateReturnedInput, returnedDate.getDate(), returnedDate.getMonth() + 1, returnedDate.getFullYear());
         cy.get(this.selectors.saveButton).click();
     };
 
@@ -34,16 +35,9 @@ export default class LocalAuthorityInfomation extends BasePage {
         return cy.get(this.selectors.templateSentValue);
     };
 
-    static changeTemplateReturnedDate(date) {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.templateSentLink).click()
-        cy.enterDate(this.selectors.templateSentInput, date.getDate(), date.getMonth() + 1, date.getFullYear());
-        cy.get(this.selectors.saveButton).click();
-    };
-
     static getTemplateReturnedDate() {
         cy.checkPath(this.path)
-        return cy.get(this.selectors.templateSentValue);
+        return cy.get(this.selectors.templateReturnedValue);
     };
 
     static changeComments(comment) {
