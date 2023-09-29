@@ -13,7 +13,7 @@ import LocalAuthorityInfomation from "../../pages/localAuthorityInformation";
 import Performance from "../../pages/performance";
 
 
-describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
+describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
 
    const currentDate = new Date();
    const nextYearDate = new Date();
@@ -57,30 +57,25 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       performanceInfo: 'Additional Information',
       keyStages: [4, 5]
    }
-   
-   beforeEach(() => {
+
+   before(() => {
       cy.callAcademisationApi('POST', `cypress-data/add-sponsored-project.cy`, "{}")
-         .then(() => {
-            projectList.selectProject(testData.projectName)
-         });
    })
 
-   it('TC01: Sponsored conversion journey ', () => {
-      // ---------------------------
-      // - Assign Delivery Officer -
-      // ---------------------------
+   beforeEach(() => {
+      projectList.selectProject(testData.projectName)
+   })
 
+   it('TC01: Assign Project', () => {
       projectTaskList.selectAssignProject();
       projectAssignment.assignProject(testData.projectAssignment.deliveryOfficer)
       projectTaskList.getNotificationMessage().should('contain.text', testData.projectAssignment.assignedOfficerMessage);
       projectTaskList.getAssignedUser().should('contain.text', testData.projectAssignment.deliveryOfficer);
       projectList.filterProjectList(testData.projectName);
       projectList.getNthProjectDeliveryOfficer().should('contain.text', testData.projectAssignment.deliveryOfficer);
+   })
 
-      // -------------------
-      // - School Overview -
-      // -------------------
-
+   it('TC02: School Overview', () => {
       projectList.selectProject(testData.projectName);
       projectTaskList.selectSchoolOverview();
       //PAN
@@ -111,11 +106,9 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       schoolOverview.markComplete();
       cy.confirmContinueBtn().click();
       projectTaskList.getSchoolOverviewStatus().should('contain.text', testData.completedText);
+   })
 
-      // ----------
-      // - Budget -
-      // ----------
-
+   it('TC03: Budget ', () => {
       projectTaskList.selectBudget();
       budget.updateBudgetInfomation(testData.budget);
 
@@ -134,21 +127,16 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       budget.markComplete();
       cy.confirmContinueBtn().click();
       projectTaskList.getBudgetStatus().should('contain.text', testData.completedText);
+   });
 
-
-      // ------------------
-      // - Pupil Forecast -
-      // ------------------
-
+   it('TC04: Pupil Forecast ', () => {
       projectTaskList.selectPupilForecast();
       PupilForecast.enterAditionalInfomation(testData.pupilForecast.additionalInfomation);
       PupilForecast.getAdditionalInfomation().should('contain.text', testData.pupilForecast.additionalInfomation);
       cy.confirmContinueBtn().click();
+   });
 
-      // ----------------------
-      // - Conversion Details -
-      // ----------------------
-
+   it('TC05: Conversion Details ', () => {
       projectTaskList.selectConversionDetails();
 
       // Form 7
@@ -201,33 +189,27 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       ConversionDetails.markComplete();
       cy.confirmContinueBtn().click();
       projectTaskList.getConversionDetailsStatus().should('contain.text', testData.completedText);
+   });
 
-      // -------------
-      // - Rationale -
-      // -------------
-
+   it('TC06: Rationale ', () => {
       projectTaskList.selectRationale();
       Rationale.changeRationale(testData.rationale);
       Rationale.getRationale().should('contain.text', testData.rationale);
       Rationale.markComplete();
       cy.confirmContinueBtn().click();
       projectTaskList.getRationaleStatus().should('contain.text', testData.completedText);
+   });
 
-      // --------------------
-      // - Risks and issues -
-      // --------------------
-
+   it('TC07: Risks and issues ', () => {
       projectTaskList.selectRisksAndIssues();
       RisksAndIssues.changeRisksAndIssues(testData.risksAndIssues);
       RisksAndIssues.getRisksAndIssues().should('contain.text', testData.risksAndIssues);
       RisksAndIssues.markComplete();
       cy.confirmContinueBtn().click();
       projectTaskList.getRisksAndIssuesStatus().should('contain.text', testData.completedText);
+   });
 
-      // -------------------
-      // - Local Authority -
-      // -------------------
-
+   it('TC08: Local authority ', () => {
       projectTaskList.selectLA();
       LocalAuthorityInfomation.changeTemplateDates(oneMonthAgoDate, nextMonthDate);
       LocalAuthorityInfomation.getTemplateSentDate().should('contain.text', oneMonthAgoDate.getDate());
@@ -247,22 +229,20 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       cy.confirmContinueBtn().click();
       projectTaskList.getLAStatus().should('contain.text', testData.completedText);
 
+   });
 
-      // --------------------
-      // - Performance Info -
-      // --------------------
-
+   it('TC09: Performance Info ', () => {
       projectTaskList.selectOfsted();
       Performance.changeOfstedInfo(testData.performanceInfo);
       Performance.getOfstedInfo().should('contain.text', testData.performanceInfo);
       cy.confirmContinueBtn().click();
 
-      for(const keyStage of testData.keyStages){
+      for (const keyStage of testData.keyStages) {
          console.log(keyStage)
          projectTaskList.selectKeyStage(keyStage);
          Performance.changeKeyStageInfo(keyStage, testData.performanceInfo);
          Performance.getKeyStageInfo(keyStage).should('contain.text', testData.performanceInfo);
          cy.confirmContinueBtn().click();
       }
-   })
+   });
 })
