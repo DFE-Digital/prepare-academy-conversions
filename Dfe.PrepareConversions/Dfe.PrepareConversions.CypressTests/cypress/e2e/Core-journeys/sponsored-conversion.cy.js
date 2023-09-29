@@ -9,45 +9,52 @@ import PupilForecast from "../../pages/pupilForecast";
 import ConversionDetails from "../../pages/conversionDetails";
 import Rationale from "../../pages/rationale";
 import RisksAndIssues from "../../pages/risksAndIssues";
+import LocalAuthorityInfomation from "../../pages/localAuthorityInformation";
 
-const currentDate = new Date();
-const nextYearDate = new Date();
-nextYearDate.setFullYear(currentDate.getFullYear() + 1);
-const oneMonthAgoDate = new Date();
-oneMonthAgoDate.setMonth(currentDate.getMonth() - 1);
-const nextMonthDate = new Date();
-nextMonthDate.setMonth(currentDate.getMonth() + 1);
-
-
-const testData = {
-   projectName: 'Sponsored Cypress Project',
-   projectAssignment: {
-      deliveryOfficer: 'Richika Dogra',
-      assignedOfficerMessage: 'Project is assigned',
-   },
-   schoolOverview: {
-      pan: '98765',
-      pfiDescription: 'PFI Description',
-      distance: '15',
-      distanceDecription: 'Distance description',
-      mp: 'Important Politician, Independent',
-   },
-   budget: {
-      endOfFinanicalYear: currentDate,
-      forecastedRevenueCurrentYear: 20,
-      forecastedCapitalCurrentYear: 10,
-      endOfNextFinancialYear: nextYearDate,
-      forecastedRevenueNextYear: 15,
-      forecastedCapitalNextYear: 12
-   },
-   pupilForecast: {
-      additionalInfomation: 'Pupil Forecast Additional Information'
-   },
-   rationale: 'This is why this school should become an academy',
-   risksAndIssues: 'Here are the risks and issues for this conversion',
-}
 
 describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
+
+   const currentDate = new Date();
+   const nextYearDate = new Date();
+   nextYearDate.setFullYear(currentDate.getFullYear() + 1);
+   const oneMonthAgoDate = new Date();
+   oneMonthAgoDate.setMonth(currentDate.getMonth() - 1);
+   const nextMonthDate = new Date();
+   nextMonthDate.setMonth(currentDate.getMonth() + 1);
+
+   const testData = {
+      projectName: 'Sponsored Cypress Project',
+      completedText: 'Completed',
+      projectAssignment: {
+         deliveryOfficer: 'Richika Dogra',
+         assignedOfficerMessage: 'Project is assigned',
+      },
+      schoolOverview: {
+         pan: '98765',
+         pfiDescription: 'PFI Description',
+         distance: '15',
+         distanceDecription: 'Distance description',
+         mp: 'Important Politician, Independent',
+      },
+      budget: {
+         endOfFinanicalYear: currentDate,
+         forecastedRevenueCurrentYear: 20,
+         forecastedCapitalCurrentYear: 10,
+         endOfNextFinancialYear: nextYearDate,
+         forecastedRevenueNextYear: 15,
+         forecastedCapitalNextYear: 12
+      },
+      pupilForecast: {
+         additionalInfomation: 'Pupil Forecast Additional Information'
+      },
+      rationale: 'This is why this school should become an academy',
+      risksAndIssues: 'Here are the risks and issues for this conversion',
+      localAuthority: {
+         comment: 'Comment',
+         sharepointLink: 'https://sharepoint.com'
+      }
+   }
+   
    beforeEach(() => {
       cy.callAcademisationApi('POST', `cypress-data/add-sponsored-project.cy`, "{}")
          .then(() => {
@@ -100,7 +107,7 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       //Complete
       schoolOverview.markComplete();
       cy.confirmContinueBtn().click();
-      projectTaskList.getSchoolOverviewStatus().should('contain.text', 'Completed');
+      projectTaskList.getSchoolOverviewStatus().should('contain.text', testData.completedText);
 
       // ----------
       // - Budget -
@@ -123,7 +130,7 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
 
       budget.markComplete();
       cy.confirmContinueBtn().click();
-      projectTaskList.getBudgetStatus().should('contain.text', 'Completed');
+      projectTaskList.getBudgetStatus().should('contain.text', testData.completedText);
 
 
       // ------------------
@@ -172,7 +179,7 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextMonthDate.getDate());
       ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextMonthDate.toLocaleString('default', { month: 'long' }));
       ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextMonthDate.getFullYear());
-      ConversionDetails.setProposedAcademyOpening(nextYearDate.toLocaleString('default', {month: '2-digit'}), nextYearDate.getFullYear());
+      ConversionDetails.setProposedAcademyOpening(nextYearDate.toLocaleString('default', { month: '2-digit' }), nextYearDate.getFullYear());
       ConversionDetails.getProposedAcademyOpening().should('contain.text', 1);
       ConversionDetails.getProposedAcademyOpening().should('contain.text', nextYearDate.toLocaleString('default', { month: 'long' }));
       ConversionDetails.getProposedAcademyOpening().should('contain.text', nextYearDate.getFullYear());
@@ -190,7 +197,7 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       // Complete
       ConversionDetails.markComplete();
       cy.confirmContinueBtn().click();
-      projectTaskList.getConversionDetailsStatus().should('contain.text', 'Completed');
+      projectTaskList.getConversionDetailsStatus().should('contain.text', testData.completedText);
 
       // -------------
       // - Rationale -
@@ -201,8 +208,8 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       Rationale.getRationale().should('contain.text', testData.rationale);
       Rationale.markComplete();
       cy.confirmContinueBtn().click();
-      projectTaskList.getRationaleStatus().should('contain.text', 'Completed');
-      
+      projectTaskList.getRationaleStatus().should('contain.text', testData.completedText);
+
       // --------------------
       // - Risks and issues -
       // --------------------
@@ -212,6 +219,29 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       RisksAndIssues.getRisksAndIssues().should('contain.text', testData.risksAndIssues);
       RisksAndIssues.markComplete();
       cy.confirmContinueBtn().click();
-      projectTaskList.getRisksAndIssuesStatus().should('contain.text', 'Completed');
+      projectTaskList.getRisksAndIssuesStatus().should('contain.text', testData.completedText);
+
+      // -------------------
+      // - Local Authority -
+      // -------------------
+
+      projectTaskList.selectLA();
+      LocalAuthorityInfomation.changeTemplateDates(oneMonthAgoDate, nextMonthDate);
+      LocalAuthorityInfomation.getTemplateSentDate().should('contain.text', oneMonthAgoDate.getDate());
+      LocalAuthorityInfomation.getTemplateSentDate().should('contain.text', oneMonthAgoDate.toLocaleString('default', { month: 'long' }));
+      LocalAuthorityInfomation.getTemplateSentDate().should('contain.text', oneMonthAgoDate.getFullYear());
+      LocalAuthorityInfomation.getTemplateReturnedDate().should('contain.text', nextMonthDate.getDate());
+      LocalAuthorityInfomation.getTemplateReturnedDate().should('contain.text', nextMonthDate.toLocaleString('default', { month: 'long' }));
+      LocalAuthorityInfomation.getTemplateReturnedDate().should('contain.text', nextMonthDate.getFullYear());
+
+      LocalAuthorityInfomation.changeComments(testData.localAuthority.comment);
+      LocalAuthorityInfomation.getComments().should('contain.text', testData.localAuthority.comment);
+
+      LocalAuthorityInfomation.changeSharepointLink(testData.localAuthority.sharepointLink);
+      LocalAuthorityInfomation.getSharepointLink().should('contain.text', testData.localAuthority.sharepointLink);
+
+      LocalAuthorityInfomation.markComplete();
+      cy.confirmContinueBtn().click();
+      projectTaskList.getLAStatus().should('contain.text', testData.completedText);
    })
 })
