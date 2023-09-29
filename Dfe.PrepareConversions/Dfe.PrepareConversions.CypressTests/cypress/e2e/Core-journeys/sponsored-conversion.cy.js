@@ -10,6 +10,7 @@ import ConversionDetails from "../../pages/conversionDetails";
 import Rationale from "../../pages/rationale";
 import RisksAndIssues from "../../pages/risksAndIssues";
 import LocalAuthorityInfomation from "../../pages/localAuthorityInformation";
+import Performance from "../../pages/performance";
 
 
 describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
@@ -52,7 +53,9 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       localAuthority: {
          comment: 'Comment',
          sharepointLink: 'https://sharepoint.com'
-      }
+      },
+      performanceInfo: 'Additional Information',
+      keyStages: [4, 5]
    }
    
    beforeEach(() => {
@@ -243,5 +246,23 @@ describe('Sponsored conversion', { tags: ['@dev', '@stage'] }, () => {
       LocalAuthorityInfomation.markComplete();
       cy.confirmContinueBtn().click();
       projectTaskList.getLAStatus().should('contain.text', testData.completedText);
+
+
+      // --------------------
+      // - Performance Info -
+      // --------------------
+
+      projectTaskList.selectOfsted();
+      Performance.changeOfstedInfo(testData.performanceInfo);
+      Performance.getOfstedInfo().should('contain.text', testData.performanceInfo);
+      cy.confirmContinueBtn().click();
+
+      for(const keyStage of testData.keyStages){
+         console.log(keyStage)
+         projectTaskList.selectKeyStage(keyStage);
+         Performance.changeKeyStageInfo(keyStage, testData.performanceInfo);
+         Performance.getKeyStageInfo(keyStage).should('contain.text', testData.performanceInfo);
+         cy.confirmContinueBtn().click();
+      }
    })
 })

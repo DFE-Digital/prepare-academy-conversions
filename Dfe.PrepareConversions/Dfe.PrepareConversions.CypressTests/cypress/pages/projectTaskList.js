@@ -20,7 +20,9 @@ export default class ProjectTaskList extends BasePage {
         riskAndIssuesLink: 'a[href*="/confirm-risks-issues"]',
         riskAndIssuesStatus: '[id="risks-and-issues-status"]',
         LALink: 'a[href*="/confirm-local-authority-information-template-dates"]',
-        LAStatus: '[id="la-info-template-status"]'
+        LAStatus: '[id="la-info-template-status"]',
+        ofstedLink: 'a[href*="/school-performance-ofsted-information"]',
+        keyStageLink: (keyStageNumber) => `a[href*="/key-stage-${keyStageNumber}-performance-tables"]`
     }
 
     static path = 'task-list';
@@ -103,5 +105,15 @@ export default class ProjectTaskList extends BasePage {
     static getLAStatus() {
         cy.checkPath(this.path);
         return cy.get(this.selectors.LAStatus);
+    }
+
+    static selectOfsted(){
+        cy.checkPath(this.path);
+        cy.get(this.selectors.ofstedLink).click();
+    }
+
+    static selectKeyStage(keyStageNumber){
+        cy.checkPath(this.path);
+        cy.get(this.selectors.keyStageLink(keyStageNumber)).click();
     }
 };
