@@ -4,7 +4,7 @@ using System.Net.Http;
 
 namespace Dfe.PrepareConversions.Data.Tests.TestDoubles;
 
-internal class MockHttpClientFactory : IHttpClientFactory
+public class MockHttpClientFactory : IHttpClientFactory
 {
    private readonly MockHttpMessageHandler _mockHttpMessageHandler;
 
