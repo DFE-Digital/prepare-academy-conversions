@@ -44,18 +44,17 @@ namespace Dfe.PrepareConversions.Contracts.Tests
          pactBuilder
             .UponReceiving("A GET request for an Application by Reference")
             .Given("An application exists")
-               .WithRequest(HttpMethod.Get, "/application/999999/applicationReference")
-               //.WithHeader("x-api-key", "foobar")
-               .WithHeader("x-correlationid", mockCorrelationId.ToString())
-               .WithHeader("Accept", PactNet.Matchers.Match.Regex(".*", "application/json"))
-               //.WithHeader("Content-Type", "application/json; charset=utf-8")
+            .WithRequest(HttpMethod.Get, "/application/999999/applicationReference")
+            .WithHeader("Accept", "application/json")
+            .WithHeader("x-correlationId", PactNet.Matchers.Match.Regex(".*", mockCorrelationId.ToString()))
             .WillRespond()
-               .WithStatus(HttpStatusCode.OK)
-               .WithHeader("Content-Type", "application/json; charset=utf-8")
-               .WithJsonBody(new
-               {
-                  foo = "bar"
-               });
+            .WithStatus(HttpStatusCode.OK)
+            .WithHeader("Content-Type", "application/json; charset=utf-8")
+            .WithJsonBody(new
+            {
+               foo = "bar"
+            });
+
 
          await pactBuilder.VerifyAsync(async ctx =>
          {
@@ -63,7 +62,7 @@ namespace Dfe.PrepareConversions.Contracts.Tests
             sut.CreateAcademisationClient().BaseAddress = ctx.MockServerUri;
             var client = new ApiClient(sut, featureManager.Object, pathFor);
             var res = await client.GetApplicationByReferenceAsync("999999");
-            
+
             // Assert
             Assert.Equal(HttpStatusCode.OK, res.StatusCode);
          });
