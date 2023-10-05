@@ -88,7 +88,7 @@ namespace Dfe.PrepareConversions.Contracts.Tests
             // Act
             var client = new ApiClient(sut, featureManager.Object, pathFor);
             var res = await client.GetApplicationByReferenceAsync("999999");
-            
+
             // Assert
             Assert.Equal(HttpStatusCode.OK, res.StatusCode);
          });
