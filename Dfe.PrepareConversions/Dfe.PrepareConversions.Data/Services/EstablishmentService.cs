@@ -26,7 +26,7 @@ public class EstablishmentService : IGetEstablishment
 
    public async Task<EstablishmentResponse> GetEstablishmentByUrn(string urn)
    {
-      HttpResponseMessage response = await _httpClient.GetAsync($"/establishment/urn/{urn}");
+      HttpResponseMessage response = await _httpClient.GetAsync($"/v4/establishment/urn/{urn}");
       if (!response.IsSuccessStatusCode)
       {
          _logger.LogWarning("Unable to get establishment data for establishment with URN: {urn}", urn);
@@ -39,8 +39,8 @@ public class EstablishmentService : IGetEstablishment
    public async Task<IEnumerable<EstablishmentSearchResponse>> SearchEstablishments(string searchQuery)
    {
       string path = int.TryParse(searchQuery, out int urn)
-         ? $"establishments?urn={urn}"
-         : $"establishments?name={searchQuery}";
+         ? $"/v4/establishments?urn={urn}"
+         : $"/v4/establishments?name={searchQuery}";
 
       ApiResponse<IEnumerable<EstablishmentSearchResponse>> result = await _httpClientService.Get<IEnumerable<EstablishmentSearchResponse>>(_httpClient, path);
 

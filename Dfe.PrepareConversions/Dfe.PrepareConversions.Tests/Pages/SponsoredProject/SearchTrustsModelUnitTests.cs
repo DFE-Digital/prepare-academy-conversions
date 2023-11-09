@@ -30,9 +30,9 @@ public class SearchTrustModelUnitTests
       List<SearchResponse> json = ExtractType<List<SearchResponse>>(Assert.IsType<JsonResult>(result));
 
       // Assert
-      Assert.Equal($"{trusts.Data[0].GroupName.ToTitleCase()} ({trusts.Data[0].Ukprn})", json[0].value);
-      Assert.Equal($"{trusts.Data[1].GroupName.ToTitleCase()} ({trusts.Data[1].Ukprn})", json[1].value);
-      Assert.Equal($"{trusts.Data[2].GroupName.ToTitleCase()} ({trusts.Data[2].Ukprn})", json[2].value);
+      Assert.Equal($"{trusts.Data[0].Name.ToTitleCase()} ({trusts.Data[0].Ukprn})", json[0].value);
+      Assert.Equal($"{trusts.Data[1].Name.ToTitleCase()} ({trusts.Data[1].Ukprn})", json[1].value);
+      Assert.Equal($"{trusts.Data[2].Name.ToTitleCase()} ({trusts.Data[2].Ukprn})", json[2].value);
    }
 
    [Theory]
@@ -41,12 +41,12 @@ public class SearchTrustModelUnitTests
    {
       // Arrange
       SearchTrustModel sut = new(trustsRepository.Object, new ErrorService());
-      TrustSummary trust = new() { GroupName = "bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
+      TrustSummary trust = new() { Name = "bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
       trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
          new TrustSummaryResponse { Data = new List<TrustSummary> { trust } });
 
       // Act
-      IActionResult result = await sut.OnGetSearch(trust.GroupName);
+      IActionResult result = await sut.OnGetSearch(trust.Name);
       List<SearchResponse> json = ExtractType<List<SearchResponse>>(Assert.IsType<JsonResult>(result));
 
       // Assert
@@ -60,18 +60,18 @@ public class SearchTrustModelUnitTests
    {
       // Arrange
       SearchTrustModel sut = new(trustsRepository.Object, new ErrorService());
-      TrustSummary trust = new() { GroupName = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
+      TrustSummary trust = new() { Name = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
       trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
          new TrustSummaryResponse { Data = new List<TrustSummary> { trust } });
 
       // Act
-      IActionResult result = await sut.OnGetSearch($"{trust.GroupName} ({trust.Ukprn})");
+      IActionResult result = await sut.OnGetSearch($"{trust.Name} ({trust.Ukprn})");
       List<SearchResponse> json = ExtractType<List<SearchResponse>>(Assert.IsType<JsonResult>(result));
 
       // Assert
       Assert.Equal($"<strong>Bristol</strong> (100)<br />Companies House number: {trust.CompaniesHouseNumber}",
          SanatiseString(json[0].suggestion));
-      Assert.Equal($"{trust.GroupName} ({trust.Ukprn})", json[0].value);
+      Assert.Equal($"{trust.Name} ({trust.Ukprn})", json[0].value);
    }
 
    [Theory]
@@ -80,12 +80,12 @@ public class SearchTrustModelUnitTests
    {
       // Arrange
       SearchTrustModel sut = new(trustsRepository.Object, new ErrorService());
-      TrustSummary trust = new() { GroupName = string.Empty, Ukprn = string.Empty, CompaniesHouseNumber = string.Empty };
+      TrustSummary trust = new() { Name = string.Empty, Ukprn = string.Empty, CompaniesHouseNumber = string.Empty };
       trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
          new TrustSummaryResponse { Data = new List<TrustSummary> { trust } });
 
       // Act
-      IActionResult result = await sut.OnGetSearch(trust.GroupName);
+      IActionResult result = await sut.OnGetSearch(trust.Name);
       List<SearchResponse> json = ExtractType<List<SearchResponse>>(Assert.IsType<JsonResult>(result));
 
       // Assert
@@ -98,7 +98,7 @@ public class SearchTrustModelUnitTests
    {
       // Arrange
       SearchTrustModel sut = new(trustsRepository.Object, new ErrorService());
-      TrustSummary trust = new() { GroupName = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
+      TrustSummary trust = new() { Name = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
       trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
          new TrustSummaryResponse { Data = new List<TrustSummary> { trust } });
 
@@ -106,7 +106,7 @@ public class SearchTrustModelUnitTests
       await sut.OnGet(trust.Ukprn, string.Empty);
 
       // Assert
-      Assert.Equal($"{trust.GroupName} ({trust.Ukprn})", sut.SearchQuery);
+      Assert.Equal($"{trust.Name} ({trust.Ukprn})", sut.SearchQuery);
    }
 
    private static string SanatiseString(string input)

@@ -38,7 +38,7 @@ public class SearchSchoolModel : PageModel
       EstablishmentResponse establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
       if (!string.IsNullOrWhiteSpace(establishment.Urn))
       {
-         SearchQuery = $"{establishment.EstablishmentName} ({establishment.Urn})";
+         SearchQuery = $"{establishment.Name} ({establishment.Urn})";
       }
 
       AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
@@ -78,7 +78,7 @@ public class SearchSchoolModel : PageModel
 
       var expectedEstablishment = await _getEstablishment.GetEstablishmentByUrn(expectedUkprn);
 
-      if (expectedEstablishment.EstablishmentName == null)
+      if (expectedEstablishment.Name == null)
       {         
          ModelState.AddModelError(nameof(SearchQuery), "We could not find a school matching your search criteria");
          _errorService.AddErrors(ModelState.Keys, ModelState);

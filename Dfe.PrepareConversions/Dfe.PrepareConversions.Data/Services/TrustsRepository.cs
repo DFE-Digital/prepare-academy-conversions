@@ -1,6 +1,7 @@
 ﻿using Dfe.PrepareConversions.Data.Exceptions;
 using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ public class TrustsRepository : ITrustsRepository
 
    public async Task<TrustSummaryResponse> SearchTrusts(string searchQuery)
    {
-      string path = $"/v2/trusts?groupName={searchQuery}&ukPrn={searchQuery}&companiesHouseNumber={searchQuery}&page=1&count=1000000";
+      string path = $"/v4/trusts?groupName={searchQuery}&ukPrn={searchQuery}&companiesHouseNumber={searchQuery}&page=1&count=1000000";
 
       ApiResponse<TrustSummaryResponse> result = await _httpClientService.Get<TrustSummaryResponse>(_httpClient, path);
 
@@ -34,11 +35,8 @@ public class TrustsRepository : ITrustsRepository
    public async Task<TrustDetail> GetTrustByUkprn(string ukprn)
    {
       if (string.IsNullOrWhiteSpace(ukprn)) return default;
-
-      string path = $@"/v2/trusts/bulk?Ukprn={ukprn.Trim()}&Establishments=false";
-
-      ApiResponse<TrustDetailResponse> result = await _httpClientService.Get<TrustDetailResponse>(_httpClient, path);
-
-      return result.Body.Data.FirstOrDefault();
+      string path = $@"/v4/trusts/bulk?Ukprns={ukprn.Trim()}";
+      ApiResponse<List<TrustDetail>> result = await _httpClientService.Get<List<TrustDetail>>(_httpClient, path);
+      return result.Body.FirstOrDefault();
    }
 }

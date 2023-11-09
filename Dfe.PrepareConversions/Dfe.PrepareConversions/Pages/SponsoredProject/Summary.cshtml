@@ -48,7 +48,7 @@
                Name
             </dt>
             <dd class="govuk-summary-list__value" data-cy="school-name">
-               @Model.Establishment.EstablishmentName
+               @Model.Establishment.Name
             </dd>
             <dd class="govuk-summary-list__actions">
                <a asp-page="@Links.SponsoredProject.SearchSchool.Page" class="govuk-link" data-cy="change-school"
@@ -153,7 +153,7 @@
                Name
             </dt>
             <dd class="govuk-summary-list__value" data-cy="trust-name">
-               @Model.Trust.GroupName
+               @Model.Trust.Name
             </dd>
             <dd class="govuk-summary-list__actions">
                <a asp-page="@Links.SponsoredProject.SearchTrusts.Page" class="govuk-link" data-cy="change-trust"

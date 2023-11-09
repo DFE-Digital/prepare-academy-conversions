@@ -10,7 +10,7 @@ public class EstablishmentResponse
    public string LocalAuthorityCode { get; set; }
    public string LocalAuthorityName { get; set; }
    public string EstablishmentNumber { get; set; }
-   public string EstablishmentName { get; set; }
+   public string Name { get; set; }
    public NameAndCodeResponse EstablishmentType { get; set; }
    public NameAndCodeResponse PhaseOfEducation { get; set; }
    public NameAndCodeResponse ReligiousCharacter { get; set; }

@@ -10,7 +10,7 @@ public class TrustSummaryResponse
 public class TrustSummary
 {
    public string Ukprn { get; set; }
-   public string GroupName { get; set; }
+   public string Name { get; set; }
    public string CompaniesHouseNumber { get; set; }
    public string TrustType { get; set; }
    public TrustAddress TrustAddress { get; set; }

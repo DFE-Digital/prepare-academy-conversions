@@ -19,7 +19,7 @@ public class CreateSponsoredProjectMapperTests
 
       EstablishmentResponse establishment = new()
       {
-         EstablishmentName = fixture.Create<string>(),
+         Name = fixture.Create<string>(),
          Urn = Guid.NewGuid().ToString(),
          ViewAcademyConversion = new() { Pfi = "some-text" },
          LocalAuthorityName = fixture.Create<string>(),
@@ -27,15 +27,12 @@ public class CreateSponsoredProjectMapperTests
       };
 
       TrustDetail trust = new()
-      {
-         GiasData = new()
-         {
+      {        
             Ukprn = fixture.Create<string>(),
-            GroupId = fixture.Create<string>(),
-            GroupName = fixture.Create<string>(),
+            ReferenceNumber = fixture.Create<string>(),
+            Name = fixture.Create<string>(),
             GroupType = fixture.Create<string>(),
-            CompaniesHouseNumber = fixture.Create<int>()
-         }
+            CompaniesHouseNumber = fixture.Create<string>()         
       };
 
       // Act
@@ -64,7 +61,7 @@ public class CreateSponsoredProjectMapperTests
 
       EstablishmentResponse establishment = new()
       {
-         EstablishmentName = fixture.Create<string>(),
+         Name = fixture.Create<string>(),
          Urn = Guid.NewGuid().ToString(),
          ViewAcademyConversion = new() { Pfi = pfiScheme },
          LocalAuthorityName = fixture.Create<string>(),
@@ -72,15 +69,12 @@ public class CreateSponsoredProjectMapperTests
       };
 
       TrustDetail trust = new()
-      {
-         GiasData = new()
-         {
+      {         
             Ukprn = fixture.Create<string>(),
-            GroupId = fixture.Create<string>(),
-            GroupName = fixture.Create<string>(),
+            ReferenceNumber = fixture.Create<string>(),
+            Name = fixture.Create<string>(),
             GroupType = fixture.Create<string>(),
-            CompaniesHouseNumber = fixture.Create<int>()
-         }
+            CompaniesHouseNumber = fixture.Create<string>()         
       };
 
       // Act

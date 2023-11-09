@@ -46,7 +46,7 @@ public class SearchTrustModel : PageModel
       if (trusts.Data.Any())
       {
          TrustSummary trust = trusts.Data[0];
-         SearchQuery = $"{trust.GroupName} ({trust.Ukprn})";
+         SearchQuery = $"{trust.Name} ({trust.Ukprn})";
       }
 
       AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
@@ -63,10 +63,10 @@ public class SearchTrustModel : PageModel
       return new JsonResult(trusts.Data.Select(t =>
       {
          string displayUkprn = string.IsNullOrWhiteSpace(t.Ukprn) ? string.Empty : $"({t.Ukprn})";
-         string suggestion = $@"{t.GroupName.ToTitleCase()} {displayUkprn}
+         string suggestion = $@"{t.Name?.ToTitleCase() ?? ""} {displayUkprn}
 									<br />
-									Companies House number: {t.CompaniesHouseNumber}";
-         return new { suggestion = HighlightSearchMatch(suggestion, searchSplit[0].Trim(), t), value = $"{t.GroupName.ToTitleCase()} ({t.Ukprn})" };
+									Companies House number: {t.CompaniesHouseNumber ?? ""}";
+         return new { suggestion = HighlightSearchMatch(suggestion, searchSplit[0].Trim(), t), value = $"{t.Name?.ToTitleCase() ?? ""} ({t.Ukprn})" };
       }));
    }
 
@@ -105,7 +105,7 @@ public class SearchTrustModel : PageModel
    private static string HighlightSearchMatch(string input, string toReplace, TrustSummary trust)
    {
       if (trust == null ||
-          string.IsNullOrWhiteSpace(trust.GroupName))
+          string.IsNullOrWhiteSpace(trust.Name))
       {
          return string.Empty;
       }

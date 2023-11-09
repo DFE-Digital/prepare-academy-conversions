@@ -96,7 +96,7 @@ public class SearchSchoolModelUnitTests
       {
          TempData = new TempDataDictionary(Mock.Of<HttpContext>(), Mock.Of<ITempDataProvider>())
       };
-      EstablishmentResponse establishmentResponse = new() { EstablishmentName = "Bristol", Urn = "100" };
+      EstablishmentResponse establishmentResponse = new() { Name = "Bristol", Urn = "100" };
       getEstablishment.Setup(m => m.GetEstablishmentByUrn(It.IsAny<string>())).ReturnsAsync(establishmentResponse);
 
 
@@ -104,7 +104,7 @@ public class SearchSchoolModelUnitTests
       await sut.OnGet(establishmentResponse.Urn);
 
       // Assert
-      Assert.Equal($"{establishmentResponse.EstablishmentName} ({establishmentResponse.Urn})", sut.SearchQuery);
+      Assert.Equal($"{establishmentResponse.Name} ({establishmentResponse.Urn})", sut.SearchQuery);
    }
 
    private static T ExtractType<T>(JsonResult result)

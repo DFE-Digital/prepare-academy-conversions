@@ -13,15 +13,15 @@ public static class CreateSponsoredProjectMapper
                             && establishment.ViewAcademyConversion?.Pfi.Equals("No", StringComparison.InvariantCultureIgnoreCase) == false;
       
       SponsoredProjectSchool createSchool = new(
-         establishment.EstablishmentName,
+         establishment.Name,
          establishment.Urn,
          partOfPfiScheme,
          establishment.LocalAuthorityName,
          establishment.Gor.Name);
          
       SponsoredProjectTrust createTrust = new(
-         trust.GiasData.GroupName,
-         trust.GiasData.GroupId);
+         trust.Name,
+         trust.ReferenceNumber);
 
       return new CreateSponsoredProject(createSchool, createTrust);
    }
