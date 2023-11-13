@@ -5,6 +5,7 @@ using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Tests.Customisations;
 using FluentAssertions;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
 using Xunit;
@@ -23,8 +24,8 @@ public class SummaryIntegrationTests : BaseIntegrationTests
    {
       establishment.OfstedLastInspection = DateTime.Now.ToString("dd-mm-yyyy");
       string ukprn = trustSummaryResponse.Data[0].Ukprn;
-      _factory.AddGetWithJsonResponse($"/establishment/urn/{establishment.Urn}", establishment);
-      _factory.AddGetWithJsonResponse("/v2/trusts*", trustSummaryResponse);
+      _factory.AddGetWithJsonResponse($"/v4/establishment/urn/{establishment.Urn}", establishment);
+      _factory.AddGetWithJsonResponse("/v4/trusts*", trustSummaryResponse);
 
       await OpenAndConfirmPathAsync($"/start-new-project/check-school-trust-details?ukprn={ukprn}&urn={establishment.Urn}");
 
@@ -37,18 +38,18 @@ public class SummaryIntegrationTests : BaseIntegrationTests
    [Theory]
    [AutoMoqData]
    public async Task Should_submit_and_redirect_to_listing(EstablishmentResponse establishment,
-                                                           TrustSummaryResponse trustSummaryResponse,
+                                                           List<TrustSummary> trustSummaryResponse,
                                                            TrustDetail trustDetail)
    {
       establishment.OfstedLastInspection = DateTime.Now.ToString("dd-mm-yyyy");
       establishment.OpenDate = DateTime.Now.ToString(CultureInfo.InvariantCulture);
-      string ukprn = trustSummaryResponse.Data[0].Ukprn;
-      _factory.AddGetWithJsonResponse($"/establishment/urn/{establishment.Urn}", establishment);
-      _factory.AddGetWithJsonResponse("/v2/trusts*", trustSummaryResponse);
+      string ukprn = trustSummaryResponse[0].Ukprn;
+      _factory.AddGetWithJsonResponse($"/v4/establishment/urn/{establishment.Urn}", establishment);
+      _factory.AddGetWithJsonResponse("/v4/trusts*", trustSummaryResponse);
 
       await OpenAndConfirmPathAsync($"/start-new-project/check-school-trust-details?ukprn={ukprn}&urn={establishment.Urn}");
 
-      _factory.AddGetWithJsonResponse(@"/v2/trusts/bulk*", trustDetail);
+      _factory.AddGetWithJsonResponse(@$"/v4/trusts/bulk*", trustDetail);
       _factory.AddAnyPostWithJsonRequest("/legacy/project/sponsored-conversion-project", "");
 
       await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]")!.SubmitAsync();

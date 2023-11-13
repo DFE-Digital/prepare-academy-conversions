@@ -186,7 +186,7 @@ public abstract partial class BaseIntegrationTests
          establishmentResponse.SchoolCapacity = _fixture.Create<int>().ToString();
       }
 
-      _factory.AddGetWithJsonResponse($"/establishment/urn/{urn}", establishmentResponse);
+      _factory.AddGetWithJsonResponse($"/v4/establishment/urn/{urn}", establishmentResponse);
       return establishmentResponse;
    }
 

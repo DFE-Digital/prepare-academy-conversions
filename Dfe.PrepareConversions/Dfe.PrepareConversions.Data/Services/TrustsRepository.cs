@@ -23,19 +23,20 @@ public class TrustsRepository : ITrustsRepository
 
    public async Task<TrustSummaryResponse> SearchTrusts(string searchQuery)
    {
-      string path = $"/v4/trusts?groupName={searchQuery}&ukPrn={searchQuery}&companiesHouseNumber={searchQuery}&page=1&count=1000000";
+      string trustPath = $"/v4/trusts?groupName={searchQuery}&ukPrn={searchQuery}&companiesHouseNumber={searchQuery}&page=1&count=1000000";      
 
-      ApiResponse<TrustSummaryResponse> result = await _httpClientService.Get<TrustSummaryResponse>(_httpClient, path);
+      ApiResponse<TrustSummaryResponse> result = await _httpClientService.Get<TrustSummaryResponse>(_httpClient, trustPath);      
 
       if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
-
+      
       return result.Body;
    }
 
    public async Task<TrustDetail> GetTrustByUkprn(string ukprn)
    {
       if (string.IsNullOrWhiteSpace(ukprn)) return default;
-      string path = $@"/v4/trusts/bulk?Ukprns={ukprn.Trim()}";
+      string[] array = new string[] {ukprn.Trim()};
+      string path = $@"/v4/trusts/bulk?Ukprns={array[0]}";
       ApiResponse<List<TrustDetail>> result = await _httpClientService.Get<List<TrustDetail>>(_httpClient, path);
       return result.Body.FirstOrDefault();
    }

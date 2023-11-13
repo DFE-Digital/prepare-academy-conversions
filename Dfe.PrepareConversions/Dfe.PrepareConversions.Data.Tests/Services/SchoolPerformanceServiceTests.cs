@@ -45,7 +45,7 @@ public class SchoolPerformanceServiceTests
       establishmentMockData.MisEstablishment.InspectionEndDate = "15/01/2020";
       establishmentMockData.MisEstablishment.DateOfLatestSection8Inspection = "15/01/2020";
       _mockHandler
-         .Expect($"/establishment/urn/{project.Urn}")
+         .Expect($"/v4/establishment/urn/{project.Urn}")
          .Respond("application/json", JsonConvert.SerializeObject(establishmentMockData));
 
       SchoolPerformance schoolPerformance = await _schoolPerformanceService.GetSchoolPerformanceByUrn(project.Urn.ToString());
@@ -67,7 +67,7 @@ public class SchoolPerformanceServiceTests
    public async Task Should_log_warning_when_school_performance_not_found(AcademyConversionProject project)
    {
       _mockHandler
-         .Expect($"/establishment/urn/{project.Urn}")
+         .Expect($"/v4/establishment/urn/{project.Urn}")
          .Respond(HttpStatusCode.NotFound);
 
       await _schoolPerformanceService.GetSchoolPerformanceByUrn(project.Urn.ToString());
