@@ -22,7 +22,7 @@ public class EstablishmentResponse
    public string SchoolCapacity { get; set; }
    public CensusResponse Census { get; set; }
    public NameAndCodeDto ParliamentaryConstituency { get; set; }
-   public MisEstablishmentDto MISEstablishment { get; set; }
+   public MisEstablishmentResponse MISEstablishment { get; set; }
    public AddressResponse Address { get; set; }
    public ViewAcademyConversion ViewAcademyConversion { get; set; }
    public string OpenDate { get; set; }

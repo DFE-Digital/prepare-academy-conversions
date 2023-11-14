@@ -15,7 +15,7 @@ public class AcademisationApplication
    public string ApplicationReference { get; set; }
    public List<Contributor> Contributors { get; set; }
    public JoinTrustDetails JoinTrustDetails { get; set; }
-   public FormTrustDtos FormTrustDtos { get; set; }
+   public FormTrustDetails FormTrustDetails { get; set; }
 
    public List<School> Schools { get; set; }
 
@@ -23,7 +23,7 @@ public class AcademisationApplication
    {
       // Following the fields used by the front end
       Application.Application academiesApplication = PopulateOverview(academisationApplication, out School academisationApplicationSchool, out ApplyingSchool academiesApplicationSchool, schoolName);
-      if(academiesApplication.ApplicationType.Equals(GlobalStrings.FormAMat)) PopulateFormAMatTrustInformation(academiesApplication, academisationApplication);
+      if (academiesApplication.ApplicationType.Equals(GlobalStrings.FormAMat)) PopulateFormAMatTrustInformation(academiesApplication, academisationApplication);
       PopulateSchoolDetails(academiesApplicationSchool, academisationApplicationSchool);
       PopulateFurtherInformation(academiesApplicationSchool, academisationApplicationSchool);
       PopulateSchoolFinances(academiesApplicationSchool, academisationApplicationSchool);
@@ -41,21 +41,21 @@ public class AcademisationApplication
 
    private static void PopulateFormAMatTrustInformation(Application.Application academiesApplication, AcademisationApplication academisationApplication)
    {
-      academiesApplication.FormTrustOpeningDate = academisationApplication.FormTrustDtos.FormTrustOpeningDate;
-      academiesApplication.TrustApproverName = academisationApplication.FormTrustDtos.TrustApproverName;
-      academiesApplication.TrustApproverEmail = academisationApplication.FormTrustDtos.TrustApproverEmail;
-      academiesApplication.FormTrustReasonForming = academisationApplication.FormTrustDtos.FormTrustReasonForming;
-      academiesApplication.FormTrustReasonVision = academisationApplication.FormTrustDtos.FormTrustReasonVision;
-      academiesApplication.FormTrustReasonGeoAreas = academisationApplication.FormTrustDtos.FormTrustReasonGeoAreas;
-      academiesApplication.FormTrustReasonFreedom = academisationApplication.FormTrustDtos.FormTrustReasonFreedom;
-      academiesApplication.FormTrustReasonImproveTeaching = academisationApplication.FormTrustDtos.FormTrustReasonImproveTeaching;
-      academiesApplication.FormTrustGrowthPlansYesNo = academisationApplication.FormTrustDtos.FormTrustGrowthPlansYesNo;
-      academiesApplication.FormTrustPlanForGrowth = academisationApplication.FormTrustDtos.FormTrustPlanForGrowth;
-      academiesApplication.FormTrustPlansForNoGrowth = academisationApplication.FormTrustDtos.FormTrustPlansForNoGrowth;
-      academiesApplication.FormTrustImprovementSupport = academisationApplication.FormTrustDtos.FormTrustImprovementSupport;
-      academiesApplication.FormTrustImprovementStrategy = academisationApplication.FormTrustDtos.FormTrustImprovementStrategy;
-      academiesApplication.FormTrustImprovementApprovedSponsor = academisationApplication.FormTrustDtos.FormTrustImprovementApprovedSponsor;
-      academiesApplication.KeyPeople = academisationApplication.FormTrustDtos.KeyPeople;
+      academiesApplication.FormTrustOpeningDate = academisationApplication.FormTrustDetails.FormTrustOpeningDate;
+      academiesApplication.TrustApproverName = academisationApplication.FormTrustDetails.TrustApproverName;
+      academiesApplication.TrustApproverEmail = academisationApplication.FormTrustDetails.TrustApproverEmail;
+      academiesApplication.FormTrustReasonForming = academisationApplication.FormTrustDetails.FormTrustReasonForming;
+      academiesApplication.FormTrustReasonVision = academisationApplication.FormTrustDetails.FormTrustReasonVision;
+      academiesApplication.FormTrustReasonGeoAreas = academisationApplication.FormTrustDetails.FormTrustReasonGeoAreas;
+      academiesApplication.FormTrustReasonFreedom = academisationApplication.FormTrustDetails.FormTrustReasonFreedom;
+      academiesApplication.FormTrustReasonImproveTeaching = academisationApplication.FormTrustDetails.FormTrustReasonImproveTeaching;
+      academiesApplication.FormTrustGrowthPlansYesNo = academisationApplication.FormTrustDetails.FormTrustGrowthPlansYesNo;
+      academiesApplication.FormTrustPlanForGrowth = academisationApplication.FormTrustDetails.FormTrustPlanForGrowth;
+      academiesApplication.FormTrustPlansForNoGrowth = academisationApplication.FormTrustDetails.FormTrustPlansForNoGrowth;
+      academiesApplication.FormTrustImprovementSupport = academisationApplication.FormTrustDetails.FormTrustImprovementSupport;
+      academiesApplication.FormTrustImprovementStrategy = academisationApplication.FormTrustDetails.FormTrustImprovementStrategy;
+      academiesApplication.FormTrustImprovementApprovedSponsor = academisationApplication.FormTrustDetails.FormTrustImprovementApprovedSponsor;
+      academiesApplication.KeyPeople = academisationApplication.FormTrustDetails.KeyPeople;
 
    }
 
@@ -63,7 +63,7 @@ public class AcademisationApplication
                                           School academisationApplicationSchool)
    {
       academiesApplicationSchool.DeclarationBodyAgree = academisationApplicationSchool.DeclarationBodyAgree;
-    
+
    }
 
    public static void PopulateConsultation(ApplyingSchool academiesApplicationSchool,
@@ -92,7 +92,7 @@ public class AcademisationApplication
          academisationApplicationSchool.LandAndBuildings.FacilitiesSharedExplained;
       academiesApplicationSchool.SchoolBuildLandGrants = academisationApplicationSchool.LandAndBuildings.Grants;
       academiesApplicationSchool.SchoolBuildLandGrantsExplained =
-         academisationApplicationSchool.LandAndBuildings.GrantsAwardingBodies; 
+         academisationApplicationSchool.LandAndBuildings.GrantsAwardingBodies;
       academiesApplicationSchool.SchoolBuildLandPFIScheme =
          academisationApplicationSchool.LandAndBuildings.PartOfPfiScheme;
       academiesApplicationSchool.SchoolBuildLandPFISchemeType =
@@ -225,31 +225,31 @@ public class AcademisationApplication
       // Further Information
       academiesApplicationSchool.SchoolAdSchoolContributionToTrust =
          academisationApplicationSchool
-            .TrustBenefitDetails; 
-      academiesApplicationSchool.SchoolAdInspectedButReportNotPublished = !academisationApplicationSchool.OfstedInspectionDetails.IsNullOrEmpty(); 
+            .TrustBenefitDetails;
+      academiesApplicationSchool.SchoolAdInspectedButReportNotPublished = !academisationApplicationSchool.OfstedInspectionDetails.IsNullOrEmpty();
       academiesApplicationSchool.SchoolAdInspectedButReportNotPublishedExplain =
          academisationApplicationSchool.OfstedInspectionDetails;
       academiesApplicationSchool.SchoolOngoingSafeguardingInvestigations =
-         academisationApplicationSchool.Safeguarding; 
+         academisationApplicationSchool.Safeguarding;
       // Questions regarding the below are outstanding
       // academiesApplicationSchool.SchoolOngoingSafeguardingDetails = academisationApplicationSchool.SafeguardingDetails;
       academiesApplicationSchool.SchoolPartOfLaReorganizationPlan =
          !academisationApplicationSchool.LocalAuthorityReorganisationDetails
-            .IsNullOrEmpty(); 
+            .IsNullOrEmpty();
       academiesApplicationSchool.SchoolLaReorganizationDetails =
          academisationApplicationSchool.LocalAuthorityReorganisationDetails;
       academiesApplicationSchool.SchoolPartOfLaClosurePlan =
          !academisationApplicationSchool.LocalAuthorityClosurePlanDetails.IsNullOrEmpty();
       academiesApplicationSchool.SchoolLaClosurePlanDetails =
          academisationApplicationSchool
-            .LocalAuthorityClosurePlanDetails; 
+            .LocalAuthorityClosurePlanDetails;
       academiesApplicationSchool.SchoolFaithSchool =
          !academisationApplicationSchool.DioceseName
-            .IsNullOrEmpty(); 
+            .IsNullOrEmpty();
       academiesApplicationSchool.SchoolFaithSchoolDioceseName = academisationApplicationSchool.DioceseName;
       academiesApplicationSchool.SchoolIsPartOfFederation = academisationApplicationSchool.PartOfFederation;
       academiesApplicationSchool.SchoolIsSupportedByFoundation =
-         !academisationApplicationSchool.FoundationTrustOrBodyName.IsNullOrEmpty(); 
+         !academisationApplicationSchool.FoundationTrustOrBodyName.IsNullOrEmpty();
       academiesApplicationSchool.SchoolSupportedFoundationBodyName =
          academisationApplicationSchool.FoundationTrustOrBodyName;
       if (academisationApplicationSchool.ExemptionEndDate is not null)
@@ -268,9 +268,9 @@ public class AcademisationApplication
             _ => string.Empty
          };
       academiesApplicationSchool.SchoolAdditionalInformationAdded =
-         !academisationApplicationSchool.FurtherInformation.IsNullOrEmpty(); 
+         !academisationApplicationSchool.FurtherInformation.IsNullOrEmpty();
       academiesApplicationSchool.SchoolAdditionalInformation =
-         academisationApplicationSchool.FurtherInformation; 
+         academisationApplicationSchool.FurtherInformation;
    }
 
    public static void PopulateSchoolDetails(ApplyingSchool academiesApplicationSchool,
@@ -328,7 +328,7 @@ public class AcademisationApplication
       academiesApplication.TrustName = academisationApplication.ApplicationType switch
       {
          GlobalStrings.JoinAMat => academisationApplication.JoinTrustDetails.TrustName,
-         GlobalStrings.FormAMat => academisationApplication.FormTrustDtos.FormTrustProposedNameOfTrust,
+         GlobalStrings.FormAMat => academisationApplication.FormTrustDetails.FormTrustProposedNameOfTrust,
          _ => academiesApplication.TrustName
       };
 
@@ -355,8 +355,8 @@ public class AcademisationApplication
          academiesApplication.ChangesToLaGovernanceExplained =
             academisationApplication.JoinTrustDetails.ChangesToLaGovernanceExplained;
       }
-      
-      
+
+
       return academiesApplication;
    }
 }

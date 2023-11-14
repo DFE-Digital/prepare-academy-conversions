@@ -79,6 +79,6 @@ public class SchoolPerformanceServiceTests
 
    public class EstablishmentMockData
    {
-      public MisEstablishmentDto MisEstablishment { get; set; }
+      public MisEstablishmentResponse MisEstablishment { get; set; }
    }
 }
