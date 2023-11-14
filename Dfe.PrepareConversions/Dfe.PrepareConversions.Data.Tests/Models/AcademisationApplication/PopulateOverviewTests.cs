@@ -19,7 +19,7 @@ public class PopulateOverviewTests
          {
             ApplicationReference = "A12345",
             ApplicationType = GlobalStrings.JoinAMat,
-            JoinTrustDtos = new JoinTrustDtos
+            JoinTrustDetails = new JoinTrustDetails
             {
                TrustName = "Trust1",
                ChangesToTrust = "yes",

@@ -14,7 +14,7 @@ public class AcademisationApplication
    public string ApplicationStatus { get; set; }
    public string ApplicationReference { get; set; }
    public List<Contributor> Contributors { get; set; }
-   public JoinTrustDtos JoinTrustDtos { get; set; }
+   public JoinTrustDetails JoinTrustDetails { get; set; }
    public FormTrustDtos FormTrustDtos { get; set; }
 
    public List<School> Schools { get; set; }
@@ -327,7 +327,7 @@ public class AcademisationApplication
       academiesApplicationSchool!.SchoolLeases = new List<Application.Lease>();
       academiesApplication.TrustName = academisationApplication.ApplicationType switch
       {
-         GlobalStrings.JoinAMat => academisationApplication.JoinTrustDtos.TrustName,
+         GlobalStrings.JoinAMat => academisationApplication.JoinTrustDetails.TrustName,
          GlobalStrings.FormAMat => academisationApplication.FormTrustDtos.FormTrustProposedNameOfTrust,
          _ => academiesApplication.TrustName
       };
@@ -344,16 +344,16 @@ public class AcademisationApplication
 
       if (academiesApplication.ApplicationType.Equals(GlobalStrings.JoinAMat))
       {
-         academiesApplication.ChangesToTrust = academisationApplication.JoinTrustDtos.ChangesToTrust switch
+         academiesApplication.ChangesToTrust = academisationApplication.JoinTrustDetails.ChangesToTrust switch
          {
             "yes" => true,
             "no" => false,
             _ => academiesApplication.ChangesToTrust
          };
-         academiesApplication.ChangesToTrustExplained = academisationApplication.JoinTrustDtos.ChangesToTrustExplained;
-         academiesApplication.ChangesToLaGovernance = academisationApplication.JoinTrustDtos.ChangesToLaGovernance;
+         academiesApplication.ChangesToTrustExplained = academisationApplication.JoinTrustDetails.ChangesToTrustExplained;
+         academiesApplication.ChangesToLaGovernance = academisationApplication.JoinTrustDetails.ChangesToLaGovernance;
          academiesApplication.ChangesToLaGovernanceExplained =
-            academisationApplication.JoinTrustDtos.ChangesToLaGovernanceExplained;
+            academisationApplication.JoinTrustDetails.ChangesToLaGovernanceExplained;
       }
       
       
