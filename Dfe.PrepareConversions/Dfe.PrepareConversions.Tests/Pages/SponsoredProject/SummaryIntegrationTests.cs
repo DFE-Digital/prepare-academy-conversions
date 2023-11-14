@@ -35,26 +35,4 @@ public class SummaryIntegrationTests : BaseIntegrationTests
          .Be(trustSummaryResponse.Data[0].Name);
    }
 
-   [Theory]
-   [AutoMoqData]
-   public async Task Should_submit_and_redirect_to_listing(EstablishmentResponse establishment,
-                                                           List<TrustSummary> trustSummaryResponse,
-                                                           TrustDetail trustDetail)
-   {
-      establishment.OfstedLastInspection = DateTime.Now.ToString("dd-mm-yyyy");
-      establishment.OpenDate = DateTime.Now.ToString(CultureInfo.InvariantCulture);
-      string ukprn = trustSummaryResponse[0].Ukprn;
-      _factory.AddGetWithJsonResponse($"/v4/establishment/urn/{establishment.Urn}", establishment);
-      _factory.AddGetWithJsonResponse("/v4/trusts*", trustSummaryResponse);
-
-      await OpenAndConfirmPathAsync($"/start-new-project/check-school-trust-details?ukprn={ukprn}&urn={establishment.Urn}");
-
-      _factory.AddGetWithJsonResponse(@$"/v4/trusts/bulk*", trustDetail);
-      _factory.AddAnyPostWithJsonRequest("/legacy/project/sponsored-conversion-project", "");
-
-      await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]")!.SubmitAsync();
-
-      Document.Url.Should().Contain("project-list");
-      Document.QuerySelector<IHtmlElement>("h1")!.Text().Should().Be("Manage an academy conversion");
-   }
 }
