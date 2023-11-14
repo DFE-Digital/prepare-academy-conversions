@@ -1,5 +1,5 @@
-﻿using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data.Models.Establishment;
+﻿using Dfe.Academies.Contracts.V4.Establishments;
+using Dfe.PrepareConversions.Data.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -16,7 +16,7 @@ public class SchoolOverviewService
 
    public async Task<SchoolOverview> GetSchoolOverviewByUrn(string urn)
    {
-      EstablishmentResponse establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
+      EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
       SchoolOverview schoolOverview = new()
       {
          SchoolPostcode = establishment.Address?.Postcode,
@@ -34,7 +34,7 @@ public class SchoolOverviewService
       return schoolOverview;
    }
 
-   private static string IsPartOfADiocesanTrust(NameAndCodeResponse nameAndCode)
+   private static string IsPartOfADiocesanTrust(NameAndCodeDto nameAndCode)
    {
       if (nameAndCode == null)
       {

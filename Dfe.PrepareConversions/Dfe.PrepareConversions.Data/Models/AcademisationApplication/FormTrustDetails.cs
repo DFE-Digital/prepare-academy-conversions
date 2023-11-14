@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Data.Models.AcademisationApplication
 {
-   public class FormTrustDetails
+   public class FormTrustDtos
    {
       public DateTime? FormTrustOpeningDate { get; set; }
       public string? FormTrustProposedNameOfTrust { get; set; }

@@ -1,7 +1,7 @@
+using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
-using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -42,10 +42,10 @@ public class SearchTrustModel : PageModel
 
       if (string.IsNullOrWhiteSpace(ukprn)) return Page();
 
-      TrustSummaryResponse trusts = await _trustsRepository.SearchTrusts(ukprn);
+      TrustDtoResponse trusts = await _trustsRepository.SearchTrusts(ukprn);
       if (trusts.Data.Any())
       {
-         TrustSummary trust = trusts.Data[0];
+         TrustDto trust = trusts.Data[0];
          SearchQuery = $"{trust.Name} ({trust.Ukprn})";
       }
 
@@ -58,7 +58,7 @@ public class SearchTrustModel : PageModel
    {
       string[] searchSplit = SplitOnBrackets(searchQuery);
 
-      TrustSummaryResponse trusts = await _trustsRepository.SearchTrusts(searchSplit[0].Trim());
+      TrustDtoResponse trusts = await _trustsRepository.SearchTrusts(searchSplit[0].Trim());
 
       return new JsonResult(trusts.Data.Select(t =>
       {
@@ -90,11 +90,11 @@ public class SearchTrustModel : PageModel
 
       string ukprn = searchSplit[1];
 
-       TrustSummaryResponse trusts = await _trustsRepository.SearchTrusts(ukprn);
-      
+      TrustDtoResponse trusts = await _trustsRepository.SearchTrusts(ukprn);
+
       if (trusts.Data.Count != 1)
       {
-          ModelState.AddModelError(nameof(SearchQuery), "We could not find a trust matching your search criteria");
+         ModelState.AddModelError(nameof(SearchQuery), "We could not find a trust matching your search criteria");
          _errorService.AddErrors(ModelState.Keys, ModelState);
          return Page();
       }
@@ -102,7 +102,7 @@ public class SearchTrustModel : PageModel
       return RedirectToPage(Links.SponsoredProject.Summary.Page, new { ukprn, urn });
    }
 
-   private static string HighlightSearchMatch(string input, string toReplace, TrustSummary trust)
+   private static string HighlightSearchMatch(string input, string toReplace, TrustDto trust)
    {
       if (trust == null ||
           string.IsNullOrWhiteSpace(trust.Name))

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Dfe.PrepareConversions.Data.Models.Trust;
+﻿namespace Dfe.PrepareConversions.Data.Models.Trust;
 
 public class TrustDetail
 {

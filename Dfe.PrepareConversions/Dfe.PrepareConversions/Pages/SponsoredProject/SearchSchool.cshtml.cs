@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EstablishmentDto = Dfe.Academies.Contracts.V4.Establishments.EstablishmentDto;
 
 namespace Dfe.PrepareConversions.Pages.SponsoredProject;
 
@@ -26,8 +27,8 @@ public class SearchSchoolModel : PageModel
    }
 
    [BindProperty]
-   
-	public string SearchQuery { get; set; } = "";
+
+   public string SearchQuery { get; set; } = "";
 
    public AutoCompleteSearchModel AutoCompleteSearchModel { get; set; }
 
@@ -35,7 +36,7 @@ public class SearchSchoolModel : PageModel
    {
       ProjectListFilters.ClearFiltersFrom(TempData);
 
-      EstablishmentResponse establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
+      EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
       if (!string.IsNullOrWhiteSpace(establishment.Urn))
       {
          SearchQuery = $"{establishment.Name} ({establishment.Urn})";
@@ -79,7 +80,7 @@ public class SearchSchoolModel : PageModel
       var expectedEstablishment = await _getEstablishment.GetEstablishmentByUrn(expectedUkprn);
 
       if (expectedEstablishment.Name == null)
-      {         
+      {
          ModelState.AddModelError(nameof(SearchQuery), "We could not find a school matching your search criteria");
          _errorService.AddErrors(ModelState.Keys, ModelState);
          return Page();

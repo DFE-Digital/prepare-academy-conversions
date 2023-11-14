@@ -1,6 +1,6 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
-using Dfe.PrepareConversions.Data.Models.Establishment;
+using Dfe.Academies.Contracts.V4.Establishments;
 using FluentAssertions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -42,13 +42,13 @@ public class SearchSchoolIntegrationTests : BaseIntegrationTests
       string schoolName = "fakeschoolname";
 
       _factory.AddGetWithJsonResponse("/establishments",
-         new List<EstablishmentResponse> { new() });
+         new List<EstablishmentDto> { new() });
 
       Document.QuerySelector<IHtmlInputElement>("#SearchQuery")!.Value = schoolName;
       await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]")!.SubmitAsync();
 
-       Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
-         .Be("We could not find any schools matching your search criteria");
+      Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
+        .Be("We could not find any schools matching your search criteria");
    }
 
    [Fact]
@@ -58,12 +58,12 @@ public class SearchSchoolIntegrationTests : BaseIntegrationTests
       string schoolName = "fakeschoolname(22222)";
 
       _factory.AddGetWithJsonResponse("/establishments",
-         new List<EstablishmentResponse> { new() });
+         new List<EstablishmentDto> { new() });
 
       Document.QuerySelector<IHtmlInputElement>("#SearchQuery")!.Value = schoolName;
       await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]")!.SubmitAsync();
 
-       Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
-         .Be("We could not find a school matching your search criteria");
+      Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
+        .Be("We could not find a school matching your search criteria");
    }
 }

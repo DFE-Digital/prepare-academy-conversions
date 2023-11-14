@@ -14,8 +14,8 @@ public class AcademisationApplication
    public string ApplicationStatus { get; set; }
    public string ApplicationReference { get; set; }
    public List<Contributor> Contributors { get; set; }
-   public JoinTrustDetails JoinTrustDetails { get; set; }
-   public FormTrustDetails FormTrustDetails { get; set; }
+   public JoinTrustDtos JoinTrustDtos { get; set; }
+   public FormTrustDtos FormTrustDtos { get; set; }
 
    public List<School> Schools { get; set; }
 
@@ -41,21 +41,21 @@ public class AcademisationApplication
 
    private static void PopulateFormAMatTrustInformation(Application.Application academiesApplication, AcademisationApplication academisationApplication)
    {
-      academiesApplication.FormTrustOpeningDate = academisationApplication.FormTrustDetails.FormTrustOpeningDate;
-      academiesApplication.TrustApproverName = academisationApplication.FormTrustDetails.TrustApproverName;
-      academiesApplication.TrustApproverEmail = academisationApplication.FormTrustDetails.TrustApproverEmail;
-      academiesApplication.FormTrustReasonForming = academisationApplication.FormTrustDetails.FormTrustReasonForming;
-      academiesApplication.FormTrustReasonVision = academisationApplication.FormTrustDetails.FormTrustReasonVision;
-      academiesApplication.FormTrustReasonGeoAreas = academisationApplication.FormTrustDetails.FormTrustReasonGeoAreas;
-      academiesApplication.FormTrustReasonFreedom = academisationApplication.FormTrustDetails.FormTrustReasonFreedom;
-      academiesApplication.FormTrustReasonImproveTeaching = academisationApplication.FormTrustDetails.FormTrustReasonImproveTeaching;
-      academiesApplication.FormTrustGrowthPlansYesNo = academisationApplication.FormTrustDetails.FormTrustGrowthPlansYesNo;
-      academiesApplication.FormTrustPlanForGrowth = academisationApplication.FormTrustDetails.FormTrustPlanForGrowth;
-      academiesApplication.FormTrustPlansForNoGrowth = academisationApplication.FormTrustDetails.FormTrustPlansForNoGrowth;
-      academiesApplication.FormTrustImprovementSupport = academisationApplication.FormTrustDetails.FormTrustImprovementSupport;
-      academiesApplication.FormTrustImprovementStrategy = academisationApplication.FormTrustDetails.FormTrustImprovementStrategy;
-      academiesApplication.FormTrustImprovementApprovedSponsor = academisationApplication.FormTrustDetails.FormTrustImprovementApprovedSponsor;
-      academiesApplication.KeyPeople = academisationApplication.FormTrustDetails.KeyPeople;
+      academiesApplication.FormTrustOpeningDate = academisationApplication.FormTrustDtos.FormTrustOpeningDate;
+      academiesApplication.TrustApproverName = academisationApplication.FormTrustDtos.TrustApproverName;
+      academiesApplication.TrustApproverEmail = academisationApplication.FormTrustDtos.TrustApproverEmail;
+      academiesApplication.FormTrustReasonForming = academisationApplication.FormTrustDtos.FormTrustReasonForming;
+      academiesApplication.FormTrustReasonVision = academisationApplication.FormTrustDtos.FormTrustReasonVision;
+      academiesApplication.FormTrustReasonGeoAreas = academisationApplication.FormTrustDtos.FormTrustReasonGeoAreas;
+      academiesApplication.FormTrustReasonFreedom = academisationApplication.FormTrustDtos.FormTrustReasonFreedom;
+      academiesApplication.FormTrustReasonImproveTeaching = academisationApplication.FormTrustDtos.FormTrustReasonImproveTeaching;
+      academiesApplication.FormTrustGrowthPlansYesNo = academisationApplication.FormTrustDtos.FormTrustGrowthPlansYesNo;
+      academiesApplication.FormTrustPlanForGrowth = academisationApplication.FormTrustDtos.FormTrustPlanForGrowth;
+      academiesApplication.FormTrustPlansForNoGrowth = academisationApplication.FormTrustDtos.FormTrustPlansForNoGrowth;
+      academiesApplication.FormTrustImprovementSupport = academisationApplication.FormTrustDtos.FormTrustImprovementSupport;
+      academiesApplication.FormTrustImprovementStrategy = academisationApplication.FormTrustDtos.FormTrustImprovementStrategy;
+      academiesApplication.FormTrustImprovementApprovedSponsor = academisationApplication.FormTrustDtos.FormTrustImprovementApprovedSponsor;
+      academiesApplication.KeyPeople = academisationApplication.FormTrustDtos.KeyPeople;
 
    }
 
@@ -327,8 +327,8 @@ public class AcademisationApplication
       academiesApplicationSchool!.SchoolLeases = new List<Application.Lease>();
       academiesApplication.TrustName = academisationApplication.ApplicationType switch
       {
-         GlobalStrings.JoinAMat => academisationApplication.JoinTrustDetails.TrustName,
-         GlobalStrings.FormAMat => academisationApplication.FormTrustDetails.FormTrustProposedNameOfTrust,
+         GlobalStrings.JoinAMat => academisationApplication.JoinTrustDtos.TrustName,
+         GlobalStrings.FormAMat => academisationApplication.FormTrustDtos.FormTrustProposedNameOfTrust,
          _ => academiesApplication.TrustName
       };
 
@@ -344,16 +344,16 @@ public class AcademisationApplication
 
       if (academiesApplication.ApplicationType.Equals(GlobalStrings.JoinAMat))
       {
-         academiesApplication.ChangesToTrust = academisationApplication.JoinTrustDetails.ChangesToTrust switch
+         academiesApplication.ChangesToTrust = academisationApplication.JoinTrustDtos.ChangesToTrust switch
          {
             "yes" => true,
             "no" => false,
             _ => academiesApplication.ChangesToTrust
          };
-         academiesApplication.ChangesToTrustExplained = academisationApplication.JoinTrustDetails.ChangesToTrustExplained;
-         academiesApplication.ChangesToLaGovernance = academisationApplication.JoinTrustDetails.ChangesToLaGovernance;
+         academiesApplication.ChangesToTrustExplained = academisationApplication.JoinTrustDtos.ChangesToTrustExplained;
+         academiesApplication.ChangesToLaGovernance = academisationApplication.JoinTrustDtos.ChangesToLaGovernance;
          academiesApplication.ChangesToLaGovernanceExplained =
-            academisationApplication.JoinTrustDetails.ChangesToLaGovernanceExplained;
+            academisationApplication.JoinTrustDtos.ChangesToLaGovernanceExplained;
       }
       
       

@@ -1,9 +1,8 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data.Models.Establishment;
-using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
@@ -19,7 +18,7 @@ public class ConfirmSchoolOverviewIntegrationTests : BaseIntegrationTests
    public async Task Should_be_in_progress_and_display_school_overview()
    {
       AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
-      EstablishmentResponse establishment = AddGetEstablishmentResponse(project.Urn.ToString());
+      EstablishmentDto establishment = AddGetEstablishmentDto(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
@@ -88,7 +87,7 @@ public class ConfirmSchoolOverviewIntegrationTests : BaseIntegrationTests
    public async Task Should_be_completed_and_checked_when_school_overview_complete()
    {
       AcademyConversionProject project = AddGetProject(project => project.SchoolOverviewSectionComplete = true);
-      AddGetEstablishmentResponse(project.Urn.ToString());
+      AddGetEstablishmentDto(project.Urn.ToString());
       AddPatchConfiguredProject(project, x =>
       {
          x.SchoolOverviewSectionComplete = true;
@@ -123,7 +122,7 @@ public class ConfirmSchoolOverviewIntegrationTests : BaseIntegrationTests
          project.SchoolOverviewSectionComplete = false;
          project.MemberOfParliamentNameAndParty = null;
       });
-      AddGetEstablishmentResponse(project.Urn.ToString(), true);
+      AddGetEstablishmentDto(project.Urn.ToString(), true);
       AddPatchConfiguredProject(project, x =>
       {
          x.SchoolOverviewSectionComplete = false;
@@ -163,7 +162,7 @@ public class ConfirmSchoolOverviewIntegrationTests : BaseIntegrationTests
    public async Task Should_show_error_summary_when_there_is_an_API_error()
    {
       AcademyConversionProject project = AddGetProject();
-      AddGetEstablishmentResponse(project.Urn.ToString());
+      AddGetEstablishmentDto(project.Urn.ToString());
       AddPatchError(project.Id);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-overview");
@@ -177,7 +176,7 @@ public class ConfirmSchoolOverviewIntegrationTests : BaseIntegrationTests
    public async Task Back_link_should_navigate_from_school_overview_to_task_list()
    {
       AcademyConversionProject project = AddGetProject();
-      AddGetEstablishmentResponse(project.Urn.ToString());
+      AddGetEstablishmentDto(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("School overview");

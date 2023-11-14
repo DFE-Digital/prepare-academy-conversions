@@ -21,17 +21,17 @@ public class TrustsRespositoryTests
    [AutoMoqData]
    public async Task SearchTrusts_ReturnsTrusts(
       [Frozen] Mock<IHttpClientService> httpService,
-      TrustSummaryResponse expectedResponse,
+      TrustDtoResponse expectedResponse,
       MockHttpMessageHandler mockHandler,
       string name)
    {
       // Arrange
       TrustsRepository sut = new(new DfeHttpClientFactory(new MockHttpClientFactory(mockHandler), new CorrelationContext()), httpService.Object);
-      httpService.Setup(m => m.Get<TrustSummaryResponse>(It.IsAny<HttpClient>(), It.IsAny<string>()))
-         .ReturnsAsync(new ApiResponse<TrustSummaryResponse>(HttpStatusCode.OK, expectedResponse));
+      httpService.Setup(m => m.Get<TrustDtoResponse>(It.IsAny<HttpClient>(), It.IsAny<string>()))
+         .ReturnsAsync(new ApiResponse<TrustDtoResponse>(HttpStatusCode.OK, expectedResponse));
 
       // Act
-      TrustSummaryResponse results = await sut.SearchTrusts(name);
+      TrustDtoResponse results = await sut.SearchTrusts(name);
 
       // Assert
       Assert.Equivalent(expectedResponse, results);
@@ -41,14 +41,14 @@ public class TrustsRespositoryTests
    [AutoMoqData]
    public async Task Should_throw_exception(
       [Frozen] Mock<IHttpClientService> httpService,
-      TrustSummaryResponse expectedResponse,
+      TrustDtoResponse expectedResponse,
       MockHttpMessageHandler mockHandler,
       string name)
    {
       // Arrange
       TrustsRepository sut = new(new DfeHttpClientFactory(new MockHttpClientFactory(mockHandler), new CorrelationContext()), httpService.Object);
-      httpService.Setup(m => m.Get<TrustSummaryResponse>(It.IsAny<HttpClient>(), It.IsAny<string>()))
-         .ReturnsAsync(new ApiResponse<TrustSummaryResponse>(HttpStatusCode.InternalServerError, expectedResponse));
+      httpService.Setup(m => m.Get<TrustDtoResponse>(It.IsAny<HttpClient>(), It.IsAny<string>()))
+         .ReturnsAsync(new ApiResponse<TrustDtoResponse>(HttpStatusCode.InternalServerError, expectedResponse));
 
       // Act
       ApiResponseException ex = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SearchTrusts(name));

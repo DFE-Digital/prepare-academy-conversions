@@ -1,6 +1,6 @@
 ﻿namespace Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 
-public class JoinTrustDetails
+public class JoinTrustDtos
 {
    public int UKPRN { get; set; }
 

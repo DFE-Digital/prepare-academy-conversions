@@ -17,7 +17,7 @@ public class PublishedAdmissionNumberIntegrationTests : BaseIntegrationTests
    public async Task Should_navigate_to_and_update_published_admission_number()
    {
       AcademyConversionProject project = AddGetProject();
-      AddGetEstablishmentResponse(project.Urn.ToString());
+      AddGetEstablishmentDto(project.Urn.ToString());
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
       {
          x.PublishedAdmissionNumber = _fixture.Create<string>();

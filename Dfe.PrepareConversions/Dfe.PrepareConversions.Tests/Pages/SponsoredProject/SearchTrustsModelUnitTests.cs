@@ -1,8 +1,8 @@
 ﻿using AutoFixture.Xunit2;
+using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
-using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Pages.SponsoredProject;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.Tests.Customisations;
@@ -19,7 +19,7 @@ public class SearchTrustModelUnitTests
 {
    [Theory]
    [AutoMoqData]
-   public async Task OnGetSearch_ReturnsTrustNames([Frozen] Mock<ITrustsRepository> trustsRepository, TrustSummaryResponse trusts)
+   public async Task OnGetSearch_ReturnsTrustNames([Frozen] Mock<ITrustsRepository> trustsRepository, TrustDtoResponse trusts)
    {
       // Arrange
       SearchTrustModel sut = new(trustsRepository.Object, new ErrorService());
@@ -41,9 +41,9 @@ public class SearchTrustModelUnitTests
    {
       // Arrange
       SearchTrustModel sut = new(trustsRepository.Object, new ErrorService());
-      TrustSummary trust = new() { Name = "bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
+      TrustDto trust = new() { Name = "bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
       trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
-         new TrustSummaryResponse { Data = new List<TrustSummary> { trust } });
+         new TrustDtoResponse { Data = new List<TrustDto> { trust } });
 
       // Act
       IActionResult result = await sut.OnGetSearch(trust.Name);
@@ -60,9 +60,9 @@ public class SearchTrustModelUnitTests
    {
       // Arrange
       SearchTrustModel sut = new(trustsRepository.Object, new ErrorService());
-      TrustSummary trust = new() { Name = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
+      TrustDto trust = new() { Name = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
       trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
-         new TrustSummaryResponse { Data = new List<TrustSummary> { trust } });
+         new TrustDtoResponse { Data = new List<TrustDto> { trust } });
 
       // Act
       IActionResult result = await sut.OnGetSearch($"{trust.Name} ({trust.Ukprn})");
@@ -80,9 +80,9 @@ public class SearchTrustModelUnitTests
    {
       // Arrange
       SearchTrustModel sut = new(trustsRepository.Object, new ErrorService());
-      TrustSummary trust = new() { Name = string.Empty, Ukprn = string.Empty, CompaniesHouseNumber = string.Empty };
+      TrustDto trust = new() { Name = string.Empty, Ukprn = string.Empty, CompaniesHouseNumber = string.Empty };
       trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
-         new TrustSummaryResponse { Data = new List<TrustSummary> { trust } });
+         new TrustDtoResponse { Data = new List<TrustDto> { trust } });
 
       // Act
       IActionResult result = await sut.OnGetSearch(trust.Name);
@@ -98,9 +98,9 @@ public class SearchTrustModelUnitTests
    {
       // Arrange
       SearchTrustModel sut = new(trustsRepository.Object, new ErrorService());
-      TrustSummary trust = new() { Name = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
+      TrustDto trust = new() { Name = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
       trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
-         new TrustSummaryResponse { Data = new List<TrustSummary> { trust } });
+         new TrustDtoResponse { Data = new List<TrustDto> { trust } });
 
       // Act
       await sut.OnGet(trust.Ukprn, string.Empty);

@@ -1,6 +1,6 @@
 ﻿namespace Dfe.PrepareConversions.Data.Models.Establishment;
 
-public class MisEstablishmentResponse
+public class MisEstablishmentDto
 {
    public string DateOfLatestSection8Inspection { get; set; }
    public string InspectionEndDate { get; set; }

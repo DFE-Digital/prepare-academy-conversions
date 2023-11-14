@@ -1,7 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
+using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
@@ -27,7 +27,7 @@ public class MPDetailsIntegrationTests : BaseIntegrationTests
    public async Task Should_display_link_to_external_page()
    {
       AcademyConversionProject project = AddGetProject();
-      AddGetEstablishmentResponse(project.Urn.ToString());
+      AddGetEstablishmentDto(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-overview/enter-MP-name-and-political-party");
 
@@ -40,7 +40,7 @@ public class MPDetailsIntegrationTests : BaseIntegrationTests
    public async Task Should_display_school_postcode()
    {
       AcademyConversionProject project = AddGetProject();
-      EstablishmentResponse establishment = AddGetEstablishmentResponse(project.Urn.ToString());
+      EstablishmentDto establishment = AddGetEstablishmentDto(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-overview/enter-MP-name-and-political-party");
 
@@ -52,7 +52,7 @@ public class MPDetailsIntegrationTests : BaseIntegrationTests
    public async Task Should_display_message_when_school_postcode_not_available()
    {
       AcademyConversionProject project = AddGetProject();
-      AddGetEstablishmentResponse(project.Urn.ToString(), true);
+      AddGetEstablishmentDto(project.Urn.ToString(), true);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-overview/enter-MP-name-and-political-party");
 
@@ -64,7 +64,7 @@ public class MPDetailsIntegrationTests : BaseIntegrationTests
    public async Task Should_navigate_to_and_update_mp_name_and_party()
    {
       AcademyConversionProject project = AddGetProject();
-      AddGetEstablishmentResponse(project.Urn.ToString());
+      AddGetEstablishmentDto(project.Urn.ToString());
       UpdateAcademyConversionProject request = AddPatchProjectMany(project, composer =>
          composer
             .With(r => r.MemberOfParliamentNameAndParty)
