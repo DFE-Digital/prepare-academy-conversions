@@ -1,6 +1,6 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
-using Dfe.PrepareConversions.Data.Models.Establishment;
+using Dfe.Academies.Contracts.V4.Establishments;
 using FluentAssertions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -32,7 +32,7 @@ public class SearchTrustIntegrationTests : BaseIntegrationTests
       string trustName = "faketrustname";
 
       _factory.AddGetWithJsonResponse("/establishments",
-         new List<EstablishmentResponse> { new() });
+         new List<EstablishmentDto> { new() });
 
       Document.QuerySelector<IHtmlInputElement>("#SearchQuery")!.Value = trustName;
       await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]")!.SubmitAsync();

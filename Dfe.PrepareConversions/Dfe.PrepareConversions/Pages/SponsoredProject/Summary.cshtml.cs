@@ -1,5 +1,4 @@
-using Dfe.PrepareConversions.Data.Models.Establishment;
-using Dfe.PrepareConversions.Data.Models.SponsoredProject;
+using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
@@ -27,8 +26,8 @@ public class SummaryModel : PageModel
       _academyConversionProjectRepository = academyConversionProjectRepository;
    }
 
-   public EstablishmentResponse Establishment { get; set; }
-   public TrustSummary Trust { get; set; }
+   public Academies.Contracts.V4.Establishments.EstablishmentDto Establishment { get; set; }
+   public TrustDto Trust { get; set; }
 
 
    public async Task<IActionResult> OnGetAsync(string urn, string ukprn)
@@ -41,8 +40,8 @@ public class SummaryModel : PageModel
 
    public async Task<IActionResult> OnPostAsync(string urn, string ukprn)
    {
-      EstablishmentResponse establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
-      TrustDetail trust = await _trustRepository.GetTrustByUkprn(ukprn);
+      Academies.Contracts.V4.Establishments.EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
+      TrustDto trust = await _trustRepository.GetTrustByUkprn(ukprn);
 
       await _academyConversionProjectRepository.CreateSponsoredProject(CreateSponsoredProjectMapper.MapToDto(establishment, trust));
 

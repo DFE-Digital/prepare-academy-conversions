@@ -1,9 +1,9 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
+using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System.Threading.Tasks;
@@ -28,7 +28,7 @@ public class ConfirmSchoolPupilForecastsIntegrationTests : BaseIntegrationTests
          p.YearThreeProjectedCapacity = _fixture.Create<int>();
          p.YearThreeProjectedPupilNumbers = _fixture.Create<int>();
       });
-      EstablishmentResponse establishment = AddGetEstablishmentResponse(project.Urn.ToString());
+      EstablishmentDto establishment = AddGetEstablishmentDto(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
@@ -66,7 +66,7 @@ public class ConfirmSchoolPupilForecastsIntegrationTests : BaseIntegrationTests
          p.YearThreeProjectedCapacity = null;
          p.YearThreeProjectedPupilNumbers = null;
       });
-      AddGetEstablishmentResponse(project.Urn.ToString(), true);
+      AddGetEstablishmentDto(project.Urn.ToString(), true);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
@@ -96,7 +96,7 @@ public class ConfirmSchoolPupilForecastsIntegrationTests : BaseIntegrationTests
    public async Task Should_navigate_between_task_list_and_confirm_school_pupil_forecasts()
    {
       AcademyConversionProject project = AddGetProject();
-      AddGetEstablishmentResponse(project.Urn.ToString());
+      AddGetEstablishmentDto(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Pupil forecasts");
@@ -111,7 +111,7 @@ public class ConfirmSchoolPupilForecastsIntegrationTests : BaseIntegrationTests
    public async Task Back_link_should_navigate_from_confirm_school_pupil_forecasts_to_task_list()
    {
       AcademyConversionProject project = AddGetProject();
-      AddGetEstablishmentResponse(project.Urn.ToString());
+      AddGetEstablishmentDto(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Pupil forecasts");

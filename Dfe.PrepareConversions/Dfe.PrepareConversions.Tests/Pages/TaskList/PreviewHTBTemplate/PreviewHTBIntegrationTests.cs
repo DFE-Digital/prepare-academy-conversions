@@ -1,11 +1,10 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
+using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
-using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Tests.Customisations;
 using Dfe.PrepareConversions.Tests.Extensions;
 using Dfe.PrepareConversions.Tests.TestHelpers;
@@ -83,7 +82,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    public async Task Should_display_error_summary_on_preview_htb_template_when_generate_button_clicked_if_no_htb_date_set()
    {
       AcademyConversionProject project = AddGetProject(p => p.HeadTeacherBoardDate = null);
-      
+
       var pageObject = new PreviewHtbTemplatePageModel();
       var document = await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
       document = await pageObject.NavigateToGenerateHtbTemplate(document, project.Id, expectFailure: true);
@@ -104,7 +103,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    public async Task Should_display_school_overview_section()
    {
       AcademyConversionProject project = AddGetProject();
-      EstablishmentResponse establishment = AddGetEstablishmentResponse(project.Urn.ToString());
+      EstablishmentDto establishment = AddGetEstablishmentDto(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
       Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
@@ -258,7 +257,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    public async Task Should_display_school_pupil_forecasts_section()
    {
       AcademyConversionProject project = AddGetProject();
-      EstablishmentResponse establishment = AddGetEstablishmentResponse(project.Urn.ToString());
+      EstablishmentDto establishment = AddGetEstablishmentDto(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
       Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
@@ -787,7 +786,8 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_school_and_trust_prev_htb_input_page_and_back_to_question_and_submit_to_input_and_back()
    {
-      AcademyConversionProject project = AddGetProject(p => {
+      AcademyConversionProject project = AddGetProject(p =>
+      {
          p.PreviousHeadTeacherBoardDateQuestion = "Yes";
          p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
       });

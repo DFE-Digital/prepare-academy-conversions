@@ -6,6 +6,6 @@ namespace Dfe.PrepareConversions.Data.Services;
 
 public interface IGetEstablishment
 {
-   Task<EstablishmentResponse> GetEstablishmentByUrn(string urn);
+   Task<Academies.Contracts.V4.Establishments.EstablishmentDto> GetEstablishmentByUrn(string urn);
    Task<IEnumerable<EstablishmentSearchResponse>> SearchEstablishments(string searchQuery);
 }

@@ -1,9 +1,9 @@
 ﻿using AutoFixture;
 using AutoFixture.Dsl;
+using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
-using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Tests.Customisations;
@@ -171,23 +171,23 @@ public abstract partial class BaseIntegrationTests
       _factory.AddErrorResponse($"/project-notes/{id}", "post");
    }
 
-   public EstablishmentResponse AddGetEstablishmentResponse(string urn, bool empty = false)
+   public EstablishmentDto AddGetEstablishmentDto(string urn, bool empty = false)
    {
-      EstablishmentResponse establishmentResponse;
+      EstablishmentDto EstablishmentDto;
       if (empty)
       {
-         establishmentResponse = _fixture.Build<EstablishmentResponse>().OmitAutoProperties().Create();
+         EstablishmentDto = _fixture.Build<EstablishmentDto>().OmitAutoProperties().Create();
       }
       else
       {
          _fixture.Customizations.Add(new OfstedRatingSpecimenBuilder());
-         establishmentResponse = _fixture.Build<EstablishmentResponse>().Create();
-         establishmentResponse.Census.NumberOfPupils = _fixture.Create<int>().ToString();
-         establishmentResponse.SchoolCapacity = _fixture.Create<int>().ToString();
+         EstablishmentDto = _fixture.Build<EstablishmentDto>().Create();
+         EstablishmentDto.Census.NumberOfPupils = _fixture.Create<int>().ToString();
+         EstablishmentDto.SchoolCapacity = _fixture.Create<int>().ToString();
       }
 
-      _factory.AddGetWithJsonResponse($"/establishment/urn/{urn}", establishmentResponse);
-      return establishmentResponse;
+      _factory.AddGetWithJsonResponse($"/v4/establishment/urn/{urn}", EstablishmentDto);
+      return EstablishmentDto;
    }
 
    public AcademisationApplication AddGetApplication(Action<AcademisationApplication> postSetup = null)

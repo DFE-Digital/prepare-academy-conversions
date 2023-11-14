@@ -1,6 +1,8 @@
-﻿using Dfe.PrepareConversions.Data.Exceptions;
+﻿using Dfe.Academies.Contracts.V4.Trusts;
+using Dfe.PrepareConversions.Data.Exceptions;
 using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -20,25 +22,23 @@ public class TrustsRepository : ITrustsRepository
       _httpClientService = httpClientService;
    }
 
-   public async Task<TrustSummaryResponse> SearchTrusts(string searchQuery)
+   public async Task<TrustDtoResponse> SearchTrusts(string searchQuery)
    {
-      string path = $"/v2/trusts?groupName={searchQuery}&ukPrn={searchQuery}&companiesHouseNumber={searchQuery}&page=1&count=1000000";
+      string trustPath = $"/v4/trusts?groupName={searchQuery}&ukPrn={searchQuery}&companiesHouseNumber={searchQuery}&page=1&count=1000000";
 
-      ApiResponse<TrustSummaryResponse> result = await _httpClientService.Get<TrustSummaryResponse>(_httpClient, path);
+      ApiResponse<TrustDtoResponse> result = await _httpClientService.Get<TrustDtoResponse>(_httpClient, trustPath);
 
       if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
 
       return result.Body;
    }
 
-   public async Task<TrustDetail> GetTrustByUkprn(string ukprn)
+   public async Task<TrustDto> GetTrustByUkprn(string ukprn)
    {
       if (string.IsNullOrWhiteSpace(ukprn)) return default;
-
-      string path = $@"/v2/trusts/bulk?Ukprn={ukprn.Trim()}&Establishments=false";
-
-      ApiResponse<TrustDetailResponse> result = await _httpClientService.Get<TrustDetailResponse>(_httpClient, path);
-
-      return result.Body.Data.FirstOrDefault();
+      string[] array = new string[] { ukprn.Trim() };
+      string path = $@"/v4/trusts/bulk?Ukprns={array[0]}";
+      ApiResponse<List<TrustDto>> result = await _httpClientService.Get<List<TrustDto>>(_httpClient, path);
+      return result.Body.FirstOrDefault();
    }
 }

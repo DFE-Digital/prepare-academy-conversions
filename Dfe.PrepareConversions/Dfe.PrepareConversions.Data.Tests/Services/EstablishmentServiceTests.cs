@@ -56,7 +56,7 @@ public class EstablishmentServiceTests
 
       // Assert
       httpService.Verify(m => m.Get<IEnumerable<EstablishmentSearchResponse>>(
-         It.IsAny<HttpClient>(), $"establishments?urn={urn}"), Times.Once);
+         It.IsAny<HttpClient>(), $"/v4/establishments?urn={urn}"), Times.Once);
    }
 
    [Theory]
@@ -78,7 +78,7 @@ public class EstablishmentServiceTests
 
       // Assert
       httpService.Verify(m => m.Get<IEnumerable<EstablishmentSearchResponse>>(
-         It.IsAny<HttpClient>(), $"establishments?name={name}"), Times.Once);
+         It.IsAny<HttpClient>(), $"/v4/establishments?name={name}"), Times.Once);
    }
 
    [Theory]

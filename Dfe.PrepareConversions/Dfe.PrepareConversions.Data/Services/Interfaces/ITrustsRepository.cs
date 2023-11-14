@@ -1,11 +1,12 @@
-﻿using Dfe.PrepareConversions.Data.Models.Trust;
+﻿using Dfe.Academies.Contracts.V4.Trusts;
+using Dfe.PrepareConversions.Data.Models.Trust;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Data.Services.Interfaces;
 
 public interface ITrustsRepository
 {
-   Task<TrustSummaryResponse> SearchTrusts(string searchQuery);
+   Task<TrustDtoResponse> SearchTrusts(string searchQuery);
 
-   Task<TrustDetail> GetTrustByUkprn(string ukprn);
+   Task<TrustDto> GetTrustByUkprn(string ukprn);
 }

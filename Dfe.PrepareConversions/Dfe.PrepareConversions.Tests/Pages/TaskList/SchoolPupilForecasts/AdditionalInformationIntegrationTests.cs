@@ -17,7 +17,7 @@ public class AdditionalInformationIntegrationTests : BaseIntegrationTests
    public async Task Should_navigate_to_and_update_additional_information()
    {
       AcademyConversionProject project = AddGetProject();
-      AddGetEstablishmentResponse(project.Urn.ToString());
+      AddGetEstablishmentDto(project.Urn.ToString());
 
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
       {
@@ -42,7 +42,7 @@ public class AdditionalInformationIntegrationTests : BaseIntegrationTests
    public async Task Should_show_error_summary_when_there_is_an_API_error()
    {
       AcademyConversionProject project = AddGetProject();
-      AddGetEstablishmentResponse(project.Urn.ToString());
+      AddGetEstablishmentDto(project.Urn.ToString());
 
       AddPatchError(project.Id);
 
@@ -57,7 +57,7 @@ public class AdditionalInformationIntegrationTests : BaseIntegrationTests
    public async Task Should_navigate_back_to_confirm_school_pupil_forecasts()
    {
       AcademyConversionProject project = AddGetProject();
-      AddGetEstablishmentResponse(project.Urn.ToString());
+      AddGetEstablishmentDto(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-pupil-forecasts/additional-information");
       await NavigateAsync("Back");

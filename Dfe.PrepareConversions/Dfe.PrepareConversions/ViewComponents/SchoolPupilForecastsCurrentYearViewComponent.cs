@@ -1,7 +1,7 @@
-﻿using Dfe.Academisation.ExtensionMethods;
+﻿using Dfe.Academies.Contracts.V4.Establishments;
+using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +33,7 @@ public class SchoolPupilForecastsCurrentYearViewComponent : ViewComponent
       }
 
       AcademyConversionProject project = response.Body;
-      EstablishmentResponse establishment = await _establishmentService.GetEstablishmentByUrn(project.Urn.ToString());
+      EstablishmentDto establishment = await _establishmentService.GetEstablishmentByUrn(project.Urn.ToString());
 
       SchoolPupilForecastsCurrentYearViewModel viewModel = new()
       {

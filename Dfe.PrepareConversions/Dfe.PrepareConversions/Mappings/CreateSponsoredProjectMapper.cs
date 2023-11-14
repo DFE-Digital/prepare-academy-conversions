@@ -1,27 +1,27 @@
-﻿using Dfe.PrepareConversions.Data.Models.Establishment;
+﻿using Dfe.Academies.Contracts.V4.Establishments;
+using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.PrepareConversions.Data.Models.SponsoredProject;
-using Dfe.PrepareConversions.Data.Models.Trust;
 using System;
 
 namespace Dfe.PrepareConversions.Mappings;
 
 public static class CreateSponsoredProjectMapper
 {
-   public static CreateSponsoredProject MapToDto(EstablishmentResponse establishment, TrustDetail trust)
+   public static CreateSponsoredProject MapToDto(EstablishmentDto establishment, TrustDto trust)
    {
-      var partOfPfiScheme = !string.IsNullOrWhiteSpace(establishment.ViewAcademyConversion?.Pfi)
-                            && establishment.ViewAcademyConversion?.Pfi.Equals("No", StringComparison.InvariantCultureIgnoreCase) == false;
-      
+      var partOfPfiScheme = !string.IsNullOrWhiteSpace(establishment?.Pfi)
+                            && establishment?.Pfi.Equals("No", StringComparison.InvariantCultureIgnoreCase) == false;
+
       SponsoredProjectSchool createSchool = new(
-         establishment.EstablishmentName,
+         establishment.Name,
          establishment.Urn,
          partOfPfiScheme,
          establishment.LocalAuthorityName,
          establishment.Gor.Name);
-         
+
       SponsoredProjectTrust createTrust = new(
-         trust.GiasData.GroupName,
-         trust.GiasData.GroupId);
+         trust.Name,
+         trust.ReferenceNumber);
 
       return new CreateSponsoredProject(createSchool, createTrust);
    }
