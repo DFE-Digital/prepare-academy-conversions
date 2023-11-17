@@ -7,7 +7,34 @@ for details on configuring this project to bundle and minify static web assets. 
 @import "./css/summary-card.scss";
 @import "./css/task-list.scss";
 @import "./css/cookie-banner.scss";
+@import "node_modules/dfe-frontend-alpha/packages/dfefrontend";
 
+body,
+button,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+span,
+label,
+div,
+table,
+th,
+td,
+blockquote,
+li,
+dt,
+dd,
+tr,
+caption,
+.govuk-label,
+details {
+   font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+}
 .moj-sub-navigation__link {
 	font-weight: bold;
 }
