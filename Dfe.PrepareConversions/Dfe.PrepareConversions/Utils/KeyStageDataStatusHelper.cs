@@ -1,5 +1,4 @@
 ﻿using Dfe.PrepareConversions.DocumentGeneration.Elements;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -7,7 +6,7 @@ using System.Text;
 
 namespace Dfe.PrepareConversions.Utils;
 
-public class KeyStageDataStatusHelper 
+public class KeyStageDataStatusHelper
 {
    public enum StatusType
    {
@@ -77,15 +76,29 @@ public class KeyStageDataStatusHelper
    }
 
 
-   public static string KeyStage4DataRow()
+   public static string KeyStage4DataRow(string latestYear)
    {
+      DateTime latestYearWeHaveDataFor = ConvertToDateTime(latestYear);
       StringBuilder rowString = new("<tr class='govuk-table__row'>");
       rowString.Append("<th scope='row' class='govuk-table__header'>Status</th>");
-      rowString.Append(KeyStage4DataTag(DateTime.Now));
-      rowString.Append(KeyStage4DataTag(DateTime.Now.AddYears(-1)));
-      rowString.Append(KeyStage4DataTag(DateTime.Now.AddYears(-2)));
+      rowString.Append(KeyStage4DataTag(latestYearWeHaveDataFor));
+      rowString.Append(KeyStage4DataTag(latestYearWeHaveDataFor.AddYears(-1)));
+      rowString.Append(KeyStage4DataTag(latestYearWeHaveDataFor.AddYears(-2)));
       rowString.Append("</tr>");
       return rowString.ToString();
+   }
+   static DateTime ConvertToDateTime(string input)
+   {
+      string[] parts = input.Split(new string[] { " to " }, StringSplitOptions.None);
+
+      if (parts.Length == 2 && int.TryParse(parts[1], out int endYear))
+      {
+         return new DateTime(endYear, 8, 31); // Last day of Aug to mark end of academic year
+      }
+      else
+      {
+         throw new ArgumentException("Invalid input format.");
+      }
    }
    public static string KeyStageHeader(int yearIndex, KeyStages keyStage)
    {
