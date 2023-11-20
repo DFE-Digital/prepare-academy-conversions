@@ -49,11 +49,23 @@ public class KeyStageDataStatusHelper
 
    public static string DetermineKeyStageDataStatus(DateTime date, KeyStages keyStage)
    {
-      bool isItCurrentOrLastAcademicYear =
-         (date.Year == DateTime.Now.Year) ||
+      bool isItCurrentAcademicYear =
+         (date.Month < 9 && date.Year == DateTime.Now.Year) ||
+         (date.Month >= 9 && date.Year == DateTime.Now.Year - 1);
+
+      bool isItLastAcademicYear =
          (date.Month < 9 && date.Year == DateTime.Now.Year - 1) ||
          (date.Month >= 9 && date.Year == DateTime.Now.Year - 2);
-      StatusType statusType = isItCurrentOrLastAcademicYear ? DetermineStatusType(date, keyStage) : StatusType.Final;
+      StatusType statusType = StatusType.Final;
+      if (isItCurrentAcademicYear)
+      {
+         statusType = StatusType.Provisional;
+      }
+      if (isItLastAcademicYear)
+      {
+         statusType = DetermineStatusType(date, keyStage);
+      }
+
       return statusType.ToString();
    }
 
