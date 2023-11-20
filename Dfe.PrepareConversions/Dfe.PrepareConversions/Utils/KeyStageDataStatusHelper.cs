@@ -56,7 +56,9 @@ public class KeyStageDataStatusHelper
       bool isItLastAcademicYear =
          (date.Month < 9 && date.Year == DateTime.Now.Year - 1) ||
          (date.Month >= 9 && date.Year == DateTime.Now.Year - 2);
+
       StatusType statusType = StatusType.Final;
+
       if (isItCurrentAcademicYear)
       {
          statusType = StatusType.Provisional;
