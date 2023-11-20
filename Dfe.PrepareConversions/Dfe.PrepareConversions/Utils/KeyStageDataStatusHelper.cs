@@ -111,10 +111,8 @@ public class KeyStageDataStatusHelper
       {
          return new DateTime(endYear, 8, 31); // Last day of Aug to mark end of academic year
       }
-      else
-      {
-         throw new ArgumentException("Invalid input format.");
-      }
+      // Default to current year if the year isn't in the expected value
+      return DateTime.UtcNow;
    }
    public static string KeyStageHeader(int yearIndex, KeyStages keyStage)
    {
