@@ -50,7 +50,7 @@ public class KeyStageDataStatusHelper
    public static string DetermineKeyStageDataStatus(DateTime date, KeyStages keyStage)
    {
       bool isItCurrentOrLastAcademicYear =
-         (date.Month >= 9 && date.Year == DateTime.Now.Year) ||
+         (date.Year == DateTime.Now.Year) ||
          (date.Month < 9 && date.Year == DateTime.Now.Year - 1) ||
          (date.Month >= 9 && date.Year == DateTime.Now.Year - 2);
       StatusType statusType = isItCurrentOrLastAcademicYear ? DetermineStatusType(date, keyStage) : StatusType.Final;
