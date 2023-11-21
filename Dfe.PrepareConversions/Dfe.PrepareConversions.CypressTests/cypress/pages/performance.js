@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-import BasePage from "./BasePage";
+import BasePage from "./BasePage"
 
 export default class Performance extends BasePage {
     static selectors = {
@@ -11,33 +11,35 @@ export default class Performance extends BasePage {
         keyStageInput: '[id="additional-information"]',
         keyStageValue: '[id="additional-information"]',
         saveButton: '[class="govuk-button"]'
-    };
+    }
 
-    static ofstedPath = 'school-performance-ofsted-information';
-    static keyStagePath = (keyStageNumber) => `key-stage-${keyStageNumber}-performance-tables`;
+    static ofstedPath = 'school-performance-ofsted-information'
+    static keyStagePath = (keyStageNumber) => `key-stage-${keyStageNumber}-performance-tables`
 
     static changeOfstedInfo(additionalInfo) {
-        cy.checkPath(this.ofstedPath);
+        cy.checkPath(this.ofstedPath)
         cy.get(this.selectors.ofstedInfoLink).click()
-        cy.get(this.selectors.ofstedInfoInput).clear().type(additionalInfo);
-        cy.get(this.selectors.saveButton).click();
-    };
+        cy.get(this.selectors.ofstedInfoInput).clear()
+        cy.get(this.selectors.ofstedInfoInput).type(additionalInfo)
+        cy.get(this.selectors.saveButton).click()
+    }
 
     static getOfstedInfo() {
         cy.checkPath(this.ofstedPath)
-        return cy.get(this.selectors.ofstedInfoValue);
-    };
+        return cy.get(this.selectors.ofstedInfoValue)
+    }
 
     static changeKeyStageInfo(keyStageNumber, additionalInfo) {
-        cy.checkPath(this.keyStagePath(keyStageNumber));
+        cy.checkPath(this.keyStagePath(keyStageNumber))
         cy.get(this.selectors.keyStageLink(keyStageNumber)).click()
-        cy.get(this.selectors.keyStageInput).clear().type(additionalInfo);
-        cy.get(this.selectors.saveButton).click();
-    };
+        cy.get(this.selectors.keyStageInput).clear()
+        cy.get(this.selectors.keyStageInput).type(additionalInfo)
+        cy.get(this.selectors.saveButton).click()
+    }
 
     static getKeyStageInfo(keyStageNumber) {
         cy.checkPath(this.keyStagePath(keyStageNumber))
-        return cy.get(this.selectors.keyStageValue);
-    };
+        return cy.get(this.selectors.keyStageValue)
+    }
     
-};
+}
