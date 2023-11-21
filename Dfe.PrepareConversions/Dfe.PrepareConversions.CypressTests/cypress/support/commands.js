@@ -25,19 +25,19 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import 'cypress-localstorage-commands'
-import sqlServer from 'cypress-sql-server';
-sqlServer.loadDBCommands();
+import sqlServer from 'cypress-sql-server'
+sqlServer.loadDBCommands()
 
 //--Universal
 
-Cypress.Commands.add('urlPath', () => cy.location().then(location => `${location.origin}${location.pathname}`));
+Cypress.Commands.add('urlPath', () => cy.location().then(location => `${location.origin}${location.pathname}`))
 
-Cypress.Commands.add('checkPath', (path) => cy.url().should("include", path));
+Cypress.Commands.add('checkPath', (path) => cy.url().should("include", path))
 
 Cypress.Commands.add('login', ({ titleFilter } = {}) => {
-    const filterQuery = titleFilter ? `?Title=${encodeURIComponent(titleFilter)}` : '';
+    const filterQuery = titleFilter ? `?Title=${encodeURIComponent(titleFilter)}` : ''
     cy.visit(`${Cypress.env('url')}/project-list${filterQuery}`)
-});
+})
 
 // Preserving Session Data (Universal)
 Cypress.Commands.add('storeSessionData', () => {
@@ -52,38 +52,45 @@ Cypress.Commands.add('storeSessionData', () => {
             } else if (cookie.length > 1 && l > 1) {
                 str[l] = cookie[l].name
                 Cypress.Cookies.preserveOnce(str[l])
-            };
-        };
+            }
+        }
     })
-});
+})
 
 // School Listing Summary Page (Universal)
 Cypress.Commands.add('selectSchoolListing', (listing) => {
     cy.get('#school-name-' + listing).click()
     cy.get('*[href*="/confirm-school-trust-information-project-dates"]').should('be.visible')
     cy.saveLocalStorage()
-});
+})
 
 // Confirm and Continue Button (Universal)
 Cypress.Commands.add('confirmContinueBtn', () => {
     cy.get('[id="confirm-and-continue-button"]')
-});
+})
 
 // Preview Project Template Button (Universal)
 Cypress.Commands.add('previewProjectTempBtn', () => {
     cy.get('[id="preview-project-template-button"]')
-});
+})
 
 // Generate Project Template Button (Universal)
 Cypress.Commands.add('generateProjectTempBtn', () => {
     cy.get('[id="generate-project-template-button"]')
-});
+})
 
 Cypress.Commands.add('enterDate', (idSelector, day, month, year) => {
-    cy.get(`[id*="${idSelector}-day"]`).should('be.visible');
-    cy.get(`[id*="${idSelector}-day"]`).clear().type(day);
-    cy.get(`[id*="${idSelector}-month"]`).clear().type(month);
-    cy.get(`[id*="${idSelector}-year"]`).clear().type(year);
+    cy.get(`[id*="${idSelector}-day"]`).as('day')
+    cy.get(`[id*="${idSelector}-month"]`).as('month')
+    cy.get(`[id*="${idSelector}-year"]`).as('year')
+
+    cy.get(`@day`).should('be.visible')
+    cy.get(`@day`).clear()
+    cy.get(`@day`).type(day)
+    cy.get(`@month`).clear()
+    cy.get(`@month`).type(month)
+    cy.get(`@year`).clear()
+    cy.get(`@year`).type(year)
 })
 
 // No Radio Btn
@@ -103,7 +110,7 @@ Cypress.Commands.add('RadioBtn', (label) => {
 
 Cypress.Commands.add('clearFilters', () => {
     cy.get('[data-cy="select-projectlist-filter-clear"]').should('have.text', 'Clear filters')
-    cy.get('[data-cy="select-projectlist-filter-clear"]').click();
+    cy.get('[data-cy="select-projectlist-filter-clear"]').click()
 })
 
 Cypress.Commands.add('saveContinue', () => {
@@ -112,10 +119,10 @@ Cypress.Commands.add('saveContinue', () => {
 
 Cypress.Commands.add("excuteAccessibilityTests", () => {
     // FUNCTION COURTESY OF FAHAD DARWISH - NIMBLE APPROACH CONFLUENECE
-    const wcagStandards = ["wcag22aa", "wcag21aa"];
-    const impactLevel = ["critical", "minor", "moderate", "serious"];
-    const continueOnFail = false;
-    cy.injectAxe();
+    const wcagStandards = ["wcag22aa", "wcag21aa"]
+    const impactLevel = ["critical", "minor", "moderate", "serious"]
+    const continueOnFail = false
+    cy.injectAxe()
     cy.checkA11y(
         null,
         {
@@ -127,8 +134,8 @@ Cypress.Commands.add("excuteAccessibilityTests", () => {
         },
         null,
         continueOnFail
-    );
-});
+    )
+})
 
 
 // Interceptors do not run for cy.request or cy.Api. Therefore use a command to make the request instead, an include the required headers etc.
@@ -145,16 +152,16 @@ Cypress.Commands.add('callAcademisationApi',
             },
             failOnStatusCode: failOnStatusCode,
             response: []
-        };
+        }
 
         // add body to a post/put/patch request, otherwise leave as not supplied
         switch (method.toUpperCase()) {
             case 'POST':
             case 'PUT':
             case 'PATCH':
-                requestDefinition.body = body;
-                break;
+                requestDefinition.body = body
+                break
         }
 
-        return cy.request(requestDefinition);
-    });
+        return cy.request(requestDefinition)
+    })

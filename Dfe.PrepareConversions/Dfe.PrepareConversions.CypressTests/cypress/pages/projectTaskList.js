@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-import BasePage from "./BasePage";
+import BasePage from "./BasePage"
 
 export default class ProjectTaskList extends BasePage {
 
@@ -25,95 +25,95 @@ export default class ProjectTaskList extends BasePage {
         keyStageLink: (keyStageNumber) => `a[href*="/key-stage-${keyStageNumber}-performance-tables"]`
     }
 
-    static path = 'task-list';
+    static path = 'task-list'
 
     static selectAssignProject() {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.assignProjectButton).click();
-    };
+        cy.checkPath(this.path)
+        cy.get(this.selectors.assignProjectButton).click()
+    }
 
     static getAssignedUser() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.assignedUser);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.assignedUser)
     }
 
     static getNotificationMessage() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.notificationMessage);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.notificationMessage)
     }
 
     static selectSchoolOverview() {
-        cy.checkPath(this.path);
+        cy.checkPath(this.path)
         cy.get(this.selectors.schoolOverviewLink).click()
     }
 
     static getSchoolOverviewStatus() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.schoolOverviewStatus);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.schoolOverviewStatus)
     }
 
     static selectBudget() {
-        cy.checkPath(this.path);
+        cy.checkPath(this.path)
         cy.get(this.selectors.budgetLink).click()
     }
 
     static getBudgetStatus() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.budgetStatus);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.budgetStatus)
     }
 
     static selectPupilForecast() {
-        cy.checkPath(this.path);
+        cy.checkPath(this.path)
         cy.get(this.selectors.pupilForecastLink).click()
     }
 
     static selectConversionDetails() {
-        cy.checkPath(this.path);
+        cy.checkPath(this.path)
         cy.get(this.selectors.conversionDetailsLink).click()
     }
 
     static getConversionDetailsStatus() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.conversionDetailsStatus);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.conversionDetailsStatus)
     }
 
     static selectRationale() {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.rationaleLink).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.rationaleLink).click()
     }
 
     static getRationaleStatus() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.rationaleStatus);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.rationaleStatus)
     }
 
     static selectRisksAndIssues() {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.riskAndIssuesLink).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.riskAndIssuesLink).click()
     }
 
     static getRisksAndIssuesStatus() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.riskAndIssuesStatus);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.riskAndIssuesStatus)
     }
 
     static selectLA() {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.LALink).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.LALink).click()
     }
 
     static getLAStatus() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.LAStatus);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.LAStatus)
     }
 
     static selectOfsted(){
-        cy.checkPath(this.path);
-        cy.get(this.selectors.ofstedLink).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.ofstedLink).click()
     }
 
     static selectKeyStage(keyStageNumber){
-        cy.checkPath(this.path);
-        cy.get(this.selectors.keyStageLink(keyStageNumber)).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.keyStageLink(keyStageNumber)).click()
     }
-};
+}

@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-import BasePage from "./BasePage";
+import BasePage from "./BasePage"
 
 export default class LocalAuthorityInfomation extends BasePage {
     static selectors = {
@@ -18,59 +18,61 @@ export default class LocalAuthorityInfomation extends BasePage {
         sharepointLinkValue: '[id="la-info-template-sharepoint-link"]',
         saveButton: '[class="govuk-button"]',
         completeCheckbox: '[id="la-info-template-complete"]'
-    };
+    }
 
-    static path = 'confirm-local-authority-information-template-dates';
+    static path = 'confirm-local-authority-information-template-dates'
 
     static changeTemplateDates(sentDate, returnedDate) {
-        cy.checkPath(this.path);
+        cy.checkPath(this.path)
         cy.get(this.selectors.templateSentLink).click()
-        cy.enterDate(this.selectors.templateSentInput, sentDate.getDate(), sentDate.getMonth() + 1, sentDate.getFullYear());
-        cy.enterDate(this.selectors.templateReturnedInput, returnedDate.getDate(), returnedDate.getMonth() + 1, returnedDate.getFullYear());
-        cy.get(this.selectors.saveButton).click();
-    };
+        cy.enterDate(this.selectors.templateSentInput, sentDate.getDate(), sentDate.getMonth() + 1, sentDate.getFullYear())
+        cy.enterDate(this.selectors.templateReturnedInput, returnedDate.getDate(), returnedDate.getMonth() + 1, returnedDate.getFullYear())
+        cy.get(this.selectors.saveButton).click()
+    }
 
     static getTemplateSentDate() {
         cy.checkPath(this.path)
-        return cy.get(this.selectors.templateSentValue);
-    };
+        return cy.get(this.selectors.templateSentValue)
+    }
 
     static getTemplateReturnedDate() {
         cy.checkPath(this.path)
-        return cy.get(this.selectors.templateReturnedValue);
-    };
+        return cy.get(this.selectors.templateReturnedValue)
+    }
 
     static changeComments(comment) {
-        cy.checkPath(this.path);
+        cy.checkPath(this.path)
         cy.get(this.selectors.commentsLink).click()
-        cy.get(this.selectors.commentsInput).clear().type(comment);
-        cy.get(this.selectors.saveButton).click();
-    };
+        cy.get(this.selectors.commentsInput).clear()
+        cy.get(this.selectors.commentsInput).type(comment)
+        cy.get(this.selectors.saveButton).click()
+    }
 
     static getComments() {
         cy.checkPath(this.path)
-        return cy.get(this.selectors.commentsValue);
-    };
+        return cy.get(this.selectors.commentsValue)
+    }
 
     static changeSharepointLink(sharepointLink) {
-        cy.checkPath(this.path);
+        cy.checkPath(this.path)
         cy.get(this.selectors.sharepointLinkLink).click()
-        cy.get(this.selectors.sharepointLinkInput).clear().type(sharepointLink);
-        cy.get(this.selectors.saveButton).click();
-    };
+        cy.get(this.selectors.sharepointLinkInput).clear()
+        cy.get(this.selectors.sharepointLinkInput).type(sharepointLink)
+        cy.get(this.selectors.saveButton).click()
+    }
 
     static getSharepointLink() {
         cy.checkPath(this.path)
-        return cy.get(this.selectors.sharepointLinkValue);
-    };
+        return cy.get(this.selectors.sharepointLinkValue)
+    }
 
     static markComplete() {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).check();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.completeCheckbox).check()
     }
 
     static markIncomplete() {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).uncheck();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.completeCheckbox).uncheck()
     }
-};
+}
