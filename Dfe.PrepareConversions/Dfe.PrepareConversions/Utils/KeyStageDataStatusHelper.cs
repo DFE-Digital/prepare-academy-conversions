@@ -114,9 +114,10 @@ public class KeyStageDataStatusHelper
       // Default to current year if the year isn't in the expected value
       return DateTime.UtcNow;
    }
-   public static string KeyStageHeader(int yearIndex, KeyStages keyStage)
+   public static string KeyStageHeader(int yearIndex, KeyStages keyStage, string latestYear)
    {
-      return KeyStageHeader(yearIndex, DateTime.Now, keyStage);
+      DateTime latestYearWeHaveDataFor = ConvertToDateTime(latestYear);
+      return KeyStageHeader(yearIndex, latestYearWeHaveDataFor, keyStage);
    }
    public static string KeyStageHeader(int yearIndex, DateTime currentDate, KeyStages keyStage)
    {
