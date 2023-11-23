@@ -1,8 +1,8 @@
 /// <reference types ='Cypress'/>
 
-import BasePage from "./BasePage";
+import BasePage from "./BasePage"
 
-const today = new Date();
+const today = new Date()
 
 export default class ConversionDetails extends BasePage {
     static selectors = {
@@ -45,190 +45,194 @@ export default class ConversionDetails extends BasePage {
         clearedByValue: '[id="cleared-by"]',
         clearedByInput: '[id="cleared-by"]',
         completeCheckbox: '[id="school-and-trust-information-complete"]'
-    };
+    }
 
-    static path = 'conversion-details';
+    static path = 'conversion-details'
 
     static setForm7Receivied(status = 'Yes') {
-        cy.checkPath(this.path);
+        cy.checkPath(this.path)
         cy.get(this.selectors.form7ReceivedLink).click()
-        cy.RadioBtn(status).check();
-        cy.get(this.selectors.saveButton).click();
-    };
+        cy.RadioBtn(status).check()
+        cy.get(this.selectors.saveButton).click()
+    }
 
     static getForm7Receivied() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.form7ReveicedValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.form7ReveicedValue)
     }
 
     static setForm7Date(date = today) {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.form7DateLink).click();
-        cy.enterDate(this.selectors.form7DateInput, date.getDate(), date.getMonth() + 1, date.getFullYear());
-        cy.get(this.selectors.saveButton).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.form7DateLink).click()
+        cy.enterDate(this.selectors.form7DateInput, date.getDate(), date.getMonth() + 1, date.getFullYear())
+        cy.get(this.selectors.saveButton).click()
     }
 
     static getForm7Date() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.form7DateValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.form7DateValue)
     }
 
     // DAO
 
     static setDAODate(date = today) {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.DAOLink).click();
-        cy.enterDate(this.selectors.DAODateInput, date.getDate(), date.getMonth() + 1, date.getFullYear());
-        cy.get(this.selectors.saveButton).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.DAOLink).click()
+        cy.enterDate(this.selectors.DAODateInput, date.getDate(), date.getMonth() + 1, date.getFullYear())
+        cy.get(this.selectors.saveButton).click()
     }
 
     static getDAODate() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.DAOValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.DAOValue)
     }
 
     // Funding
 
     static setFundingType(type = 'Full') {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.fundingTypeLink).click();
-        cy.RadioBtn(type).check();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.fundingTypeLink).click()
+        cy.RadioBtn(type).check()
         //Save button twice to get back to the details page
-        cy.get(this.selectors.saveButton).click();
-        cy.get(this.selectors.saveButton).click();
+        cy.get(this.selectors.saveButton).click()
+        cy.get(this.selectors.saveButton).click()
     }
 
     static getFundingType() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.fundingTypeValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.fundingTypeValue)
     }
 
     static setFundingAmount(useDefaultAmount = false, amount = 20000) {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.fundingAmountLink).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.fundingAmountLink).click()
         if (useDefaultAmount) {
-            cy.get(this.selectors.fundingAmountDefaultYesRadio).click();
+            cy.get(this.selectors.fundingAmountDefaultYesRadio).click()
         } else {
-            cy.get(this.selectors.fundingAmountDefaultNoRadio).click();
-            cy.get(this.selectors.fundingAmountInput).clear().type(amount);
+            cy.get(this.selectors.fundingAmountDefaultNoRadio).click()
+            cy.get(this.selectors.fundingAmountInput).clear()
+            cy.get(this.selectors.fundingAmountInput).type(amount)
         }
-        cy.get(this.selectors.saveButton).click();
+        cy.get(this.selectors.saveButton).click()
     }
 
     static getFundingAmount() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.fundingAmountValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.fundingAmountValue)
     }
 
     static setFundingReason(reason = 'Funding Reason') {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.fundingAmountLink).click();
-        cy.get(this.selectors.fundingAmountReasonInput).clear().type(reason);
-        cy.get(this.selectors.saveButton).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.fundingAmountLink).click()
+        cy.get(this.selectors.fundingAmountReasonInput).clear()
+        cy.get(this.selectors.fundingAmountReasonInput).type(reason)
+        cy.get(this.selectors.saveButton).click()
     }
 
     static getFundingReason() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.fundingAmountReasonValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.fundingAmountReasonValue)
     }
 
     static setEIG(value = true) {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.EIGLink).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.EIGLink).click()
         if (value) {
-            cy.get(this.selectors.EIGYesRadio).check();
+            cy.get(this.selectors.EIGYesRadio).check()
         } else {
-            cy.get(this.selectors.EIGNoRadio).check();
+            cy.get(this.selectors.EIGNoRadio).check()
         }
-        cy.get(this.selectors.saveButton).click();
+        cy.get(this.selectors.saveButton).click()
     }
 
     static getEIG() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.EIGValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.EIGValue)
     }
 
     // Dates
 
     static setAdvisoryBoardDate(date = today) {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.advisoryBoardDateLink).click();
-        cy.enterDate(this.selectors.advisoryBoardDateInput, date.getDate(), date.getMonth() + 1, date.getFullYear());
-        cy.get(this.selectors.saveButton).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.advisoryBoardDateLink).click()
+        cy.enterDate(this.selectors.advisoryBoardDateInput, date.getDate(), date.getMonth() + 1, date.getFullYear())
+        cy.get(this.selectors.saveButton).click()
     }
 
     static getAdvisoryBoardDate() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.advisoryBoardDateValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.advisoryBoardDateValue)
     }
 
     static setProposedAcademyOpening(month, year) {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.proposedOpeningLink).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.proposedOpeningLink).click()
         cy.get(this.selectors.proposedOpeningRadioButton(month, year)).check()
-        cy.get(this.selectors.saveButton).click();
+        cy.get(this.selectors.saveButton).click()
     }
 
     static getProposedAcademyOpening() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.proposedOpeningValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.proposedOpeningValue)
     }
 
     static setPreviousAdvisoryBoardDate(previousBoard = true, date = today) {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.previousAdvisoryBoardLink).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.previousAdvisoryBoardLink).click()
         if (previousBoard) {
-            cy.YesRadioBtn().check();
-            cy.get(this.selectors.saveButton).click();
-            cy.enterDate(this.selectors.previousAdvisoryBoardDateInput, date.getDate(), date.getMonth() + 1, date.getFullYear());
+            cy.YesRadioBtn().check()
+            cy.get(this.selectors.saveButton).click()
+            cy.enterDate(this.selectors.previousAdvisoryBoardDateInput, date.getDate(), date.getMonth() + 1, date.getFullYear())
 
         } else {
-            cy.NoRadioBtn().check();
+            cy.NoRadioBtn().check()
         }
-        cy.get(this.selectors.saveButton).click();
+        cy.get(this.selectors.saveButton).click()
     }
 
     static getPreviousAdvisoryBoardDate() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.previousAdvisoryBoardValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.previousAdvisoryBoardValue)
     }
 
     // People
 
     static setAuthor(author = 'Nicholas Warms') {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.authorLink).click();
-        cy.get(this.selectors.authorInput).clear().type(author);
-        cy.get(this.selectors.saveButton).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.authorLink).click()
+        cy.get(this.selectors.authorInput).clear()
+        cy.get(this.selectors.authorInput).type(author)
+        cy.get(this.selectors.saveButton).click()
     }
 
     static getAuthor() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.authorValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.authorValue)
     }
 
     static setClearedBy(clearedBy = 'Nicholas Warms') {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.clearedByLink).click();
-        cy.get(this.selectors.clearedByInput).clear().type(clearedBy);
-        cy.get(this.selectors.saveButton).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.clearedByLink).click()
+        cy.get(this.selectors.clearedByInput).clear()
+        cy.get(this.selectors.clearedByInput).type(clearedBy)
+        cy.get(this.selectors.saveButton).click()
     }
 
     static getClearedBy() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.clearedByValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.clearedByValue)
     }
 
     // Complete
 
     static markComplete() {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).check();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.completeCheckbox).check()
     }
 
     static markIncomplete() {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).uncheck();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.completeCheckbox).uncheck()
     }
 
-};
+}

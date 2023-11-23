@@ -11,10 +11,14 @@
     "cypress/no-pause": "error"
   },
   "env": {
-    "cypress/globals": true
+    "cypress/globals": true,
+    "node": true
   },
   "extends": [
     "plugin:cypress/recommended",
     "eslint:recommended"
-  ]
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2022
+  }
 }
