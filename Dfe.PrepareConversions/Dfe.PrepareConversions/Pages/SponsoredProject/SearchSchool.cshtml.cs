@@ -15,7 +15,7 @@ namespace Dfe.PrepareConversions.Pages.SponsoredProject;
 
 public class SearchSchoolModel : PageModel
 {
-   private const string SEARCH_LABEL = "Search by name or URN (Unique Reference Number). Entering more characters will give quicker results. You should write URNs in full.";
+   private const string SEARCH_LABEL = "Enter school name or URN (Unique Reference Number).";
    private const string SEARCH_ENDPOINT = "/start-new-project/school-name?handler=Search&searchQuery=";
    private readonly ErrorService _errorService;
    private readonly IGetEstablishment _getEstablishment;

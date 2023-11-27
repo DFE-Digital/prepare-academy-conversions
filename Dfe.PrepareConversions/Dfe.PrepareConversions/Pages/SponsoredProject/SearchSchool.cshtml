@@ -3,9 +3,9 @@
 @model Dfe.PrepareConversions.Pages.SponsoredProject.SearchSchoolModel
 
 @{
-   Layout = "_Layout";
-   ViewBag.Title = (!ViewData.ModelState.IsValid ? "Error: " : "") + "Which school is involved";
-   var routeParams = new Dictionary<string, string>
+    Layout = "_Layout";
+    ViewBag.Title = (!ViewData.ModelState.IsValid ? "Error: " : "") + "Which school is involved";
+    var routeParams = new Dictionary<string, string>
    {
       { "urn", Request.Query["urn"] },
       { "ukprn", Request.Query["ukprn"] }
@@ -13,24 +13,24 @@
 }
 
 @section BeforeMain
-{
-   <partial name="_BackLink" model="@(new BackLink(Links.ProjectList.Index.Page, routeParams))"/>
-   <partial name="_ErrorSummary"/>
+    {
+    <partial name="_BackLink" model="@(new BackLink(Links.ProjectList.Index.Page, routeParams))" />
+    <partial name="_ErrorSummary" />
 }
 
 <div class="govuk-grid-row">
-   <div class="govuk-grid-column-two-thirds">
-      <form method="post" data-id="form">
-         <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
-            <h1 class="govuk-label-wrapper">
-               <label class="govuk-label govuk-label--xl" for="SearchQuery">
-                  Which school is involved?
-               </label>
-            </h1>
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post" data-id="form">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+                <h1 class="govuk-label-wrapper">
+                    <label class="govuk-label govuk-label--xl" for="SearchQuery">
+                        Which school is converting?
+                    </label>
+                </h1>
 
-            <partial name="_AutoComplete" model="@Model.AutoCompleteSearchModel"/>
-         </div>
-         <button class="govuk-button" type="submit" data-id="submit">Continue</button>
-      </form>
-   </div>
+                <partial name="_AutoComplete" model="@Model.AutoCompleteSearchModel" />
+            </div>
+            <button class="govuk-button" type="submit" data-id="submit">Continue</button>
+        </form>
+    </div>
 </div>
