@@ -18,7 +18,7 @@ public class DistanceFromTrustHeadquartersIntegrationTests : BaseIntegrationTest
    public async Task Should_navigate_to_and_update_distance_to_trust_headquarters()
    {
       AcademyConversionProject project = AddGetProject();
-      AddGetEstablishmentResponse(project.Urn.ToString());
+      AddGetEstablishmentDto(project.Urn.ToString());
       UpdateAcademyConversionProject request = AddPatchProjectMany(project, composer =>
          composer
             .With(r => r.DistanceFromSchoolToTrustHeadquarters)

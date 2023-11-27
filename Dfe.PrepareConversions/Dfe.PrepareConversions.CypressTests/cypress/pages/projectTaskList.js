@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-import BasePage from "./BasePage";
+import BasePage from "./BasePage"
 
 export default class ProjectTaskList extends BasePage {
 
@@ -10,39 +10,110 @@ export default class ProjectTaskList extends BasePage {
         notificationMessage: '[id="notification-message"]',
         schoolOverviewLink: 'a[href*="/school-overview"]',
         schoolOverviewStatus: '[id="school-overview-status"]',
-        budgetLink: 'a[href*="/budget"]'
+        budgetLink: 'a[href*="/budget"]',
+        budgetStatus: '[id="school-budget-information-status"]',
+        pupilForecastLink: 'a[href*="/pupil-forecast"]',
+        conversionDetailsLink: 'a[href*="/conversion-details"]',
+        conversionDetailsStatus: '[id="school-and-trust-information-status"]',
+        rationaleLink: 'a[href*="/confirm-project-trust-rationale"]',
+        rationaleStatus: '[id="rationale-status"]',
+        riskAndIssuesLink: 'a[href*="/confirm-risks-issues"]',
+        riskAndIssuesStatus: '[id="risks-and-issues-status"]',
+        LALink: 'a[href*="/confirm-local-authority-information-template-dates"]',
+        LAStatus: '[id="la-info-template-status"]',
+        ofstedLink: 'a[href*="/school-performance-ofsted-information"]',
+        keyStageLink: (keyStageNumber) => `a[href*="/key-stage-${keyStageNumber}-performance-tables"]`
     }
 
-    static path = 'task-list';
+    static path = 'task-list'
 
     static selectAssignProject() {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.assignProjectButton).click();
-    };
+        cy.checkPath(this.path)
+        cy.get(this.selectors.assignProjectButton).click()
+    }
 
     static getAssignedUser() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.assignedUser);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.assignedUser)
     }
 
     static getNotificationMessage() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.notificationMessage);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.notificationMessage)
     }
 
     static selectSchoolOverview() {
-        cy.checkPath(this.path);
+        cy.checkPath(this.path)
         cy.get(this.selectors.schoolOverviewLink).click()
     }
 
     static getSchoolOverviewStatus() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.schoolOverviewStatus);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.schoolOverviewStatus)
     }
 
     static selectBudget() {
-        cy.checkPath(this.path);
+        cy.checkPath(this.path)
         cy.get(this.selectors.budgetLink).click()
     }
 
-};
+    static getBudgetStatus() {
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.budgetStatus)
+    }
+
+    static selectPupilForecast() {
+        cy.checkPath(this.path)
+        cy.get(this.selectors.pupilForecastLink).click()
+    }
+
+    static selectConversionDetails() {
+        cy.checkPath(this.path)
+        cy.get(this.selectors.conversionDetailsLink).click()
+    }
+
+    static getConversionDetailsStatus() {
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.conversionDetailsStatus)
+    }
+
+    static selectRationale() {
+        cy.checkPath(this.path)
+        cy.get(this.selectors.rationaleLink).click()
+    }
+
+    static getRationaleStatus() {
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.rationaleStatus)
+    }
+
+    static selectRisksAndIssues() {
+        cy.checkPath(this.path)
+        cy.get(this.selectors.riskAndIssuesLink).click()
+    }
+
+    static getRisksAndIssuesStatus() {
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.riskAndIssuesStatus)
+    }
+
+    static selectLA() {
+        cy.checkPath(this.path)
+        cy.get(this.selectors.LALink).click()
+    }
+
+    static getLAStatus() {
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.LAStatus)
+    }
+
+    static selectOfsted(){
+        cy.checkPath(this.path)
+        cy.get(this.selectors.ofstedLink).click()
+    }
+
+    static selectKeyStage(keyStageNumber){
+        cy.checkPath(this.path)
+        cy.get(this.selectors.keyStageLink(keyStageNumber)).click()
+    }
+}

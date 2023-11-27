@@ -3,6 +3,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EstablishmentDto = Dfe.Academies.Contracts.V4.Establishments.EstablishmentDto;
 
 namespace Dfe.PrepareConversions.Services;
 
@@ -17,15 +18,15 @@ public class GetEstablishmentItemCacheDecorator : IGetEstablishment
       _httpContext = httpContextAccessor.HttpContext;
    }
 
-   public async Task<EstablishmentResponse> GetEstablishmentByUrn(string urn)
+   public async Task<EstablishmentDto> GetEstablishmentByUrn(string urn)
    {
       string key = $"establishment-{urn}";
-      if (_httpContext.Items.ContainsKey(key) && _httpContext.Items[key] is EstablishmentResponse cached)
+      if (_httpContext.Items.ContainsKey(key) && _httpContext.Items[key] is EstablishmentDto cached)
       {
          return cached;
       }
 
-      EstablishmentResponse establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
+      EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
 
       _httpContext.Items[key] = establishment;
 

@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
+using EstablishmentDto = Dfe.Academies.Contracts.V4.Establishments.EstablishmentDto;
 
 namespace Dfe.PrepareConversions.Tests.Pages.SponsoredProject;
 
@@ -96,15 +97,15 @@ public class SearchSchoolModelUnitTests
       {
          TempData = new TempDataDictionary(Mock.Of<HttpContext>(), Mock.Of<ITempDataProvider>())
       };
-      EstablishmentResponse establishmentResponse = new() { EstablishmentName = "Bristol", Urn = "100" };
-      getEstablishment.Setup(m => m.GetEstablishmentByUrn(It.IsAny<string>())).ReturnsAsync(establishmentResponse);
+      EstablishmentDto EstablishmentDto = new() { Name = "Bristol", Urn = "100" };
+      getEstablishment.Setup(m => m.GetEstablishmentByUrn(It.IsAny<string>())).ReturnsAsync(EstablishmentDto);
 
 
       // Act
-      await sut.OnGet(establishmentResponse.Urn);
+      await sut.OnGet(EstablishmentDto.Urn);
 
       // Assert
-      Assert.Equal($"{establishmentResponse.EstablishmentName} ({establishmentResponse.Urn})", sut.SearchQuery);
+      Assert.Equal($"{EstablishmentDto.Name} ({EstablishmentDto.Urn})", sut.SearchQuery);
    }
 
    private static T ExtractType<T>(JsonResult result)

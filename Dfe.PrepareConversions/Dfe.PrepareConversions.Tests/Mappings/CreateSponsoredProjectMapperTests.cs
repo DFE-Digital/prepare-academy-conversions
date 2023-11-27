@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
-using Dfe.PrepareConversions.Data.Models.Establishment;
-using Dfe.PrepareConversions.Data.Models.Trust;
+using Dfe.Academies.Contracts.V4.Establishments;
+using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.PrepareConversions.Mappings;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -17,25 +17,21 @@ public class CreateSponsoredProjectMapperTests
       // Arrange
       var fixture = new AutoFixture.Fixture();
 
-      EstablishmentResponse establishment = new()
+      EstablishmentDto establishment = new()
       {
-         EstablishmentName = fixture.Create<string>(),
+         Name = fixture.Create<string>(),
          Urn = Guid.NewGuid().ToString(),
-         ViewAcademyConversion = new() { Pfi = "some-text" },
+         Pfi = "some-text",
          LocalAuthorityName = fixture.Create<string>(),
-         Gor = new EstablishmentResponse.Region() { Name = fixture.Create<string>() }
+         Gor = new NameAndCodeDto { Name = fixture.Create<string>() }
       };
 
-      TrustDetail trust = new()
+      TrustDto trust = new()
       {
-         GiasData = new()
-         {
-            Ukprn = fixture.Create<string>(),
-            GroupId = fixture.Create<string>(),
-            GroupName = fixture.Create<string>(),
-            GroupType = fixture.Create<string>(),
-            CompaniesHouseNumber = fixture.Create<int>()
-         }
+         Ukprn = fixture.Create<string>(),
+         ReferenceNumber = fixture.Create<string>(),
+         Name = fixture.Create<string>(),
+         CompaniesHouseNumber = fixture.Create<string>()
       };
 
       // Act
@@ -46,8 +42,8 @@ public class CreateSponsoredProjectMapperTests
       result.School.Region.Should().BeEquivalentTo(establishment.Gor.Name);
       result.Trust.Should().NotBeNull().And.BeEquivalentTo(trust, cfg => cfg.ExcludingMissingMembers());
       result.School.Should().NotBeNull().And.BeEquivalentTo(establishment, cfg => cfg.ExcludingMissingMembers());
-      
-      
+
+
    }
 
    [Theory]
@@ -62,25 +58,21 @@ public class CreateSponsoredProjectMapperTests
       // Arrange
       var fixture = new AutoFixture.Fixture();
 
-      EstablishmentResponse establishment = new()
+      EstablishmentDto establishment = new()
       {
-         EstablishmentName = fixture.Create<string>(),
+         Name = fixture.Create<string>(),
          Urn = Guid.NewGuid().ToString(),
-         ViewAcademyConversion = new() { Pfi = pfiScheme },
+         Pfi = pfiScheme,
          LocalAuthorityName = fixture.Create<string>(),
-         Gor = new EstablishmentResponse.Region() { Name = fixture.Create<string>() }
+         Gor = new NameAndCodeDto() { Name = fixture.Create<string>() }
       };
 
-      TrustDetail trust = new()
+      TrustDto trust = new()
       {
-         GiasData = new()
-         {
-            Ukprn = fixture.Create<string>(),
-            GroupId = fixture.Create<string>(),
-            GroupName = fixture.Create<string>(),
-            GroupType = fixture.Create<string>(),
-            CompaniesHouseNumber = fixture.Create<int>()
-         }
+         Ukprn = fixture.Create<string>(),
+         ReferenceNumber = fixture.Create<string>(),
+         Name = fixture.Create<string>(),
+         CompaniesHouseNumber = fixture.Create<string>()
       };
 
       // Act

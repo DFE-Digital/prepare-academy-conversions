@@ -17,7 +17,7 @@ public class FinancialDeficitIntegrationTests : BaseIntegrationTests
    {
       (RadioButton selected, RadioButton toSelect) = RandomRadioButtons("financial-deficit", "Yes", "No");
       AcademyConversionProject project = AddGetProject(p => p.FinancialDeficit = selected.Value);
-      AddGetEstablishmentResponse(project.Urn.ToString());
+      AddGetEstablishmentDto(project.Urn.ToString());
       AddPatchConfiguredProject(project, x =>
       {
          x.FinancialDeficit = toSelect.Value;

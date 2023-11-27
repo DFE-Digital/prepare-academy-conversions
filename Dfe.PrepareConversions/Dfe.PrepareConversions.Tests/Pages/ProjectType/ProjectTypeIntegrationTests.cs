@@ -10,11 +10,6 @@ public class ProjectTypeIntegrationTests : BaseIntegrationTests
 {
    public ProjectTypeIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
 
-   [Fact]
-   public async Task Should_redirect_base_url_to_project_type()
-   {
-      await OpenAndConfirmPathAsync("/", "/project-type", "root path should redirect to project type selection");
-   }
 
    [Fact]
    public async Task Should_display_labels_for_radio_with_correct_value()

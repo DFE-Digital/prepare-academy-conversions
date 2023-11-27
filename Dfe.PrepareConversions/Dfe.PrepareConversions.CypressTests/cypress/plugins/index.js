@@ -17,23 +17,24 @@
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
-const sqlServer = require('cypress-sql-server');
+const sqlServer = require('cypress-sql-server')
 
+// eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
-  var dbConfig;
+  var dbConfig
   try {
-    dbConfig = JSON.parse(process.env.db);
+    dbConfig = JSON.parse(process.env.db)
   } catch (error) {
     console.log(
       `The db config is not set. Please set the 'db' environment variable in the following format e.g.
-       { "userName": "username", "password": "password", "server": "server", "options": { "database": "database", "rowCollectionOnRequestCompletion" : true }}`);
-       throw error;
+       { "userName": "username", "password": "password", "server": "server", "options": { "database": "database", "rowCollectionOnRequestCompletion" : true }}`)
+       throw error
   }
 
-  tasks = sqlServer.loadDBPlugin(dbConfig);
-  on('task', tasks); 
+  const tasks = sqlServer.loadDBPlugin(dbConfig)
+  on('task', tasks) 
 }
 // ***********************************************************
 

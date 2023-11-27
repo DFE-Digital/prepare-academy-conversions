@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Dfe.PrepareConversions.Models;
 
 public static class Links
 {
    private static readonly List<LinkItem> _links = new();
+   private static string _transfersUrl;
+   public static string TransfersUrl => _transfersUrl;
 
    private static LinkItem AddLinkItem(string page, string backText = "Back")
    {
@@ -14,7 +15,10 @@ public static class Links
       _links.Add(item);
       return item;
    }
-
+   public static void InitializeTransfersUrl(string transfersUrl)
+   {
+      _transfersUrl = transfersUrl;
+   }
    public static LinkItem ByPage(string page)
    {
       return _links.Find(x => string.Equals(page, x.Page, StringComparison.InvariantCultureIgnoreCase));
