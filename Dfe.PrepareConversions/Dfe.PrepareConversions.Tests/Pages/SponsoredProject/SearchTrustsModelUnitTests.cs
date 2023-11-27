@@ -1,8 +1,8 @@
 ﻿using AutoFixture.Xunit2;
+using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
-using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Pages.SponsoredProject;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.Tests.Customisations;
@@ -19,7 +19,7 @@ public class SearchTrustModelUnitTests
 {
    [Theory]
    [AutoMoqData]
-   public async Task OnGetSearch_ReturnsTrustNames([Frozen] Mock<ITrustsRepository> trustsRepository, TrustSummaryResponse trusts)
+   public async Task OnGetSearch_ReturnsTrustNames([Frozen] Mock<ITrustsRepository> trustsRepository, TrustDtoResponse trusts)
    {
       // Arrange
       SearchTrustModel sut = new(trustsRepository.Object, new ErrorService());
@@ -30,9 +30,9 @@ public class SearchTrustModelUnitTests
       List<SearchResponse> json = ExtractType<List<SearchResponse>>(Assert.IsType<JsonResult>(result));
 
       // Assert
-      Assert.Equal($"{trusts.Data[0].GroupName.ToTitleCase()} ({trusts.Data[0].Ukprn})", json[0].value);
-      Assert.Equal($"{trusts.Data[1].GroupName.ToTitleCase()} ({trusts.Data[1].Ukprn})", json[1].value);
-      Assert.Equal($"{trusts.Data[2].GroupName.ToTitleCase()} ({trusts.Data[2].Ukprn})", json[2].value);
+      Assert.Equal($"{trusts.Data[0].Name.ToTitleCase()} ({trusts.Data[0].Ukprn})", json[0].value);
+      Assert.Equal($"{trusts.Data[1].Name.ToTitleCase()} ({trusts.Data[1].Ukprn})", json[1].value);
+      Assert.Equal($"{trusts.Data[2].Name.ToTitleCase()} ({trusts.Data[2].Ukprn})", json[2].value);
    }
 
    [Theory]
@@ -41,12 +41,12 @@ public class SearchTrustModelUnitTests
    {
       // Arrange
       SearchTrustModel sut = new(trustsRepository.Object, new ErrorService());
-      TrustSummary trust = new() { GroupName = "bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
+      TrustDto trust = new() { Name = "bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
       trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
-         new TrustSummaryResponse { Data = new List<TrustSummary> { trust } });
+         new TrustDtoResponse { Data = new List<TrustDto> { trust } });
 
       // Act
-      IActionResult result = await sut.OnGetSearch(trust.GroupName);
+      IActionResult result = await sut.OnGetSearch(trust.Name);
       List<SearchResponse> json = ExtractType<List<SearchResponse>>(Assert.IsType<JsonResult>(result));
 
       // Assert
@@ -60,18 +60,18 @@ public class SearchTrustModelUnitTests
    {
       // Arrange
       SearchTrustModel sut = new(trustsRepository.Object, new ErrorService());
-      TrustSummary trust = new() { GroupName = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
+      TrustDto trust = new() { Name = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
       trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
-         new TrustSummaryResponse { Data = new List<TrustSummary> { trust } });
+         new TrustDtoResponse { Data = new List<TrustDto> { trust } });
 
       // Act
-      IActionResult result = await sut.OnGetSearch($"{trust.GroupName} ({trust.Ukprn})");
+      IActionResult result = await sut.OnGetSearch($"{trust.Name} ({trust.Ukprn})");
       List<SearchResponse> json = ExtractType<List<SearchResponse>>(Assert.IsType<JsonResult>(result));
 
       // Assert
       Assert.Equal($"<strong>Bristol</strong> (100)<br />Companies House number: {trust.CompaniesHouseNumber}",
          SanatiseString(json[0].suggestion));
-      Assert.Equal($"{trust.GroupName} ({trust.Ukprn})", json[0].value);
+      Assert.Equal($"{trust.Name} ({trust.Ukprn})", json[0].value);
    }
 
    [Theory]
@@ -80,12 +80,12 @@ public class SearchTrustModelUnitTests
    {
       // Arrange
       SearchTrustModel sut = new(trustsRepository.Object, new ErrorService());
-      TrustSummary trust = new() { GroupName = string.Empty, Ukprn = string.Empty, CompaniesHouseNumber = string.Empty };
+      TrustDto trust = new() { Name = string.Empty, Ukprn = string.Empty, CompaniesHouseNumber = string.Empty };
       trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
-         new TrustSummaryResponse { Data = new List<TrustSummary> { trust } });
+         new TrustDtoResponse { Data = new List<TrustDto> { trust } });
 
       // Act
-      IActionResult result = await sut.OnGetSearch(trust.GroupName);
+      IActionResult result = await sut.OnGetSearch(trust.Name);
       List<SearchResponse> json = ExtractType<List<SearchResponse>>(Assert.IsType<JsonResult>(result));
 
       // Assert
@@ -98,15 +98,15 @@ public class SearchTrustModelUnitTests
    {
       // Arrange
       SearchTrustModel sut = new(trustsRepository.Object, new ErrorService());
-      TrustSummary trust = new() { GroupName = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
+      TrustDto trust = new() { Name = "Bristol", Ukprn = "100", CompaniesHouseNumber = "100" };
       trustsRepository.Setup(m => m.SearchTrusts(It.IsAny<string>())).ReturnsAsync(
-         new TrustSummaryResponse { Data = new List<TrustSummary> { trust } });
+         new TrustDtoResponse { Data = new List<TrustDto> { trust } });
 
       // Act
       await sut.OnGet(trust.Ukprn, string.Empty);
 
       // Assert
-      Assert.Equal($"{trust.GroupName} ({trust.Ukprn})", sut.SearchQuery);
+      Assert.Equal($"{trust.Name} ({trust.Ukprn})", sut.SearchQuery);
    }
 
    private static string SanatiseString(string input)

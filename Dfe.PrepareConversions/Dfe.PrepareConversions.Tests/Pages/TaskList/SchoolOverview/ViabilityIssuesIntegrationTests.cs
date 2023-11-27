@@ -17,7 +17,7 @@ public class ViabilityIssuesIntegrationTests : BaseIntegrationTests
    {
       (RadioButton selected, RadioButton toSelect) = RandomRadioButtons("viability-issues", "Yes", "No");
       AcademyConversionProject project = AddGetProject(p => p.ViabilityIssues = selected.Value);
-      AddGetEstablishmentResponse(project.Urn.ToString());
+      AddGetEstablishmentDto(project.Urn.ToString());
       AddPatchConfiguredProject(project, x =>
       {
          x.ViabilityIssues = toSelect.Value;

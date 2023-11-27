@@ -1,5 +1,5 @@
-﻿using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data.Models.Establishment;
+﻿using Dfe.Academies.Contracts.V4.Establishments;
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
@@ -16,7 +16,7 @@ public class ConfirmSchoolPerformanceIntegrationTests : BaseIntegrationTests
    public async Task Should_be_reference_only_and_display_school_performance()
    {
       AcademyConversionProject project = AddGetProject();
-      EstablishmentResponse schoolPerformance = AddGetEstablishmentResponse(project.Urn.ToString());
+      EstablishmentDto schoolPerformance = AddGetEstablishmentDto(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 

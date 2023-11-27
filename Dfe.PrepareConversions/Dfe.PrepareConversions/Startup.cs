@@ -6,6 +6,7 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.AzureAd;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
+using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Security;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -23,7 +24,6 @@ using Microsoft.FeatureManagement;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using System;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -141,6 +141,11 @@ public class Startup
       services.AddScoped<IGraphUserService, GraphUserService>();
       services.AddScoped<IDfeHttpClientFactory, DfeHttpClientFactory>();
       services.AddScoped<ICorrelationContext, CorrelationContext>();
+
+      // Initialize the TransfersUrl
+      var serviceLinkOptions = Configuration.GetSection("ServiceLink").Get<ServiceLinkOptions>();
+      Links.InitializeTransfersUrl(serviceLinkOptions.TransfersUrl);
+
    }
 
    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
@@ -186,7 +191,7 @@ public class Startup
       {
          endpoints.MapGet("/", context =>
          {
-            context.Response.Redirect("project-type", false);
+            context.Response.Redirect("project-list", false);
             return Task.CompletedTask;
          });
          endpoints.MapRazorPages();

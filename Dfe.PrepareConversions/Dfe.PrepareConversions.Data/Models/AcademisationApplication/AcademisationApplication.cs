@@ -23,7 +23,7 @@ public class AcademisationApplication
    {
       // Following the fields used by the front end
       Application.Application academiesApplication = PopulateOverview(academisationApplication, out School academisationApplicationSchool, out ApplyingSchool academiesApplicationSchool, schoolName);
-      if(academiesApplication.ApplicationType.Equals(GlobalStrings.FormAMat)) PopulateFormAMatTrustInformation(academiesApplication, academisationApplication);
+      if (academiesApplication.ApplicationType.Equals(GlobalStrings.FormAMat)) PopulateFormAMatTrustInformation(academiesApplication, academisationApplication);
       PopulateSchoolDetails(academiesApplicationSchool, academisationApplicationSchool);
       PopulateFurtherInformation(academiesApplicationSchool, academisationApplicationSchool);
       PopulateSchoolFinances(academiesApplicationSchool, academisationApplicationSchool);
@@ -63,7 +63,7 @@ public class AcademisationApplication
                                           School academisationApplicationSchool)
    {
       academiesApplicationSchool.DeclarationBodyAgree = academisationApplicationSchool.DeclarationBodyAgree;
-    
+
    }
 
    public static void PopulateConsultation(ApplyingSchool academiesApplicationSchool,
@@ -92,7 +92,7 @@ public class AcademisationApplication
          academisationApplicationSchool.LandAndBuildings.FacilitiesSharedExplained;
       academiesApplicationSchool.SchoolBuildLandGrants = academisationApplicationSchool.LandAndBuildings.Grants;
       academiesApplicationSchool.SchoolBuildLandGrantsExplained =
-         academisationApplicationSchool.LandAndBuildings.GrantsAwardingBodies; 
+         academisationApplicationSchool.LandAndBuildings.GrantsAwardingBodies;
       academiesApplicationSchool.SchoolBuildLandPFIScheme =
          academisationApplicationSchool.LandAndBuildings.PartOfPfiScheme;
       academiesApplicationSchool.SchoolBuildLandPFISchemeType =
@@ -225,31 +225,31 @@ public class AcademisationApplication
       // Further Information
       academiesApplicationSchool.SchoolAdSchoolContributionToTrust =
          academisationApplicationSchool
-            .TrustBenefitDetails; 
-      academiesApplicationSchool.SchoolAdInspectedButReportNotPublished = !academisationApplicationSchool.OfstedInspectionDetails.IsNullOrEmpty(); 
+            .TrustBenefitDetails;
+      academiesApplicationSchool.SchoolAdInspectedButReportNotPublished = !academisationApplicationSchool.OfstedInspectionDetails.IsNullOrEmpty();
       academiesApplicationSchool.SchoolAdInspectedButReportNotPublishedExplain =
          academisationApplicationSchool.OfstedInspectionDetails;
       academiesApplicationSchool.SchoolOngoingSafeguardingInvestigations =
-         academisationApplicationSchool.Safeguarding; 
+         academisationApplicationSchool.Safeguarding;
       // Questions regarding the below are outstanding
       // academiesApplicationSchool.SchoolOngoingSafeguardingDetails = academisationApplicationSchool.SafeguardingDetails;
       academiesApplicationSchool.SchoolPartOfLaReorganizationPlan =
          !academisationApplicationSchool.LocalAuthorityReorganisationDetails
-            .IsNullOrEmpty(); 
+            .IsNullOrEmpty();
       academiesApplicationSchool.SchoolLaReorganizationDetails =
          academisationApplicationSchool.LocalAuthorityReorganisationDetails;
       academiesApplicationSchool.SchoolPartOfLaClosurePlan =
          !academisationApplicationSchool.LocalAuthorityClosurePlanDetails.IsNullOrEmpty();
       academiesApplicationSchool.SchoolLaClosurePlanDetails =
          academisationApplicationSchool
-            .LocalAuthorityClosurePlanDetails; 
+            .LocalAuthorityClosurePlanDetails;
       academiesApplicationSchool.SchoolFaithSchool =
          !academisationApplicationSchool.DioceseName
-            .IsNullOrEmpty(); 
+            .IsNullOrEmpty();
       academiesApplicationSchool.SchoolFaithSchoolDioceseName = academisationApplicationSchool.DioceseName;
       academiesApplicationSchool.SchoolIsPartOfFederation = academisationApplicationSchool.PartOfFederation;
       academiesApplicationSchool.SchoolIsSupportedByFoundation =
-         !academisationApplicationSchool.FoundationTrustOrBodyName.IsNullOrEmpty(); 
+         !academisationApplicationSchool.FoundationTrustOrBodyName.IsNullOrEmpty();
       academiesApplicationSchool.SchoolSupportedFoundationBodyName =
          academisationApplicationSchool.FoundationTrustOrBodyName;
       if (academisationApplicationSchool.ExemptionEndDate is not null)
@@ -268,9 +268,9 @@ public class AcademisationApplication
             _ => string.Empty
          };
       academiesApplicationSchool.SchoolAdditionalInformationAdded =
-         !academisationApplicationSchool.FurtherInformation.IsNullOrEmpty(); 
+         !academisationApplicationSchool.FurtherInformation.IsNullOrEmpty();
       academiesApplicationSchool.SchoolAdditionalInformation =
-         academisationApplicationSchool.FurtherInformation; 
+         academisationApplicationSchool.FurtherInformation;
    }
 
    public static void PopulateSchoolDetails(ApplyingSchool academiesApplicationSchool,
@@ -355,8 +355,8 @@ public class AcademisationApplication
          academiesApplication.ChangesToLaGovernanceExplained =
             academisationApplication.JoinTrustDetails.ChangesToLaGovernanceExplained;
       }
-      
-      
+
+
       return academiesApplication;
    }
 }

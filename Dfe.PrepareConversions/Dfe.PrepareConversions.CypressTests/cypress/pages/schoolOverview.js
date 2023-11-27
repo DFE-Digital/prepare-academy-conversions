@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-import BasePage from "./BasePage";
+import BasePage from "./BasePage"
 
 export default class SchoolOverview extends BasePage {
 
@@ -27,114 +27,119 @@ export default class SchoolOverview extends BasePage {
         completeCheckbox: '[name="school-overview-complete"]'
     }
 
-    static path = 'school-overview';
+    static path = 'school-overview'
 
     static getPan() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.panValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.panValue)
     }
 
     static changePan(newPanNumber) {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.panLink).click();
-        cy.get(this.selectors.panInput).clear().type(newPanNumber);
-        cy.saveContinue().click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.panLink).click()
+        cy.get(this.selectors.panInput).clear()
+        cy.get(this.selectors.panInput).type(newPanNumber)
+        cy.saveContinue().click()
     }
 
     static getViabilityIssues() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.viabilityIssuesValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.viabilityIssuesValue)
     }
 
     static changeViabilityIssues(viabilityIssues) {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.viabilityIssuesLink).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.viabilityIssuesLink).click()
         if (viabilityIssues) {
-            cy.YesRadioBtn().check();
+            cy.YesRadioBtn().check()
         }
         else {
-            cy.NoRadioBtn().check();
+            cy.NoRadioBtn().check()
         }
-        cy.saveContinue().click();
+        cy.saveContinue().click()
     }
 
     static getFinancialDeficit() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.financialDeficitValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.financialDeficitValue)
     }
 
     static changeFinancialDeficit(financialDeficit) {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.financialDeficitLink).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.financialDeficitLink).click()
         if (financialDeficit) {
-            cy.YesRadioBtn().check();
+            cy.YesRadioBtn().check()
         }
         else {
-            cy.NoRadioBtn().check();
+            cy.NoRadioBtn().check()
         }
-        cy.saveContinue().click();
+        cy.saveContinue().click()
     }
 
     static getPFI() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.pfiValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.pfiValue)
     }
 
     static getPFIDetails() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.pifDetails);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.pifDetails)
     }
 
     static changePFI(pfi, description = '') {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.pfiLink).click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.pfiLink).click()
         if (pfi) {
-            cy.YesRadioBtn().check();
-            cy.get(this.selectors.pfiDetailsInput).clear().type(description);
+            cy.YesRadioBtn().check()
+            cy.get(this.selectors.pfiDetailsInput).clear()
+            cy.get(this.selectors.pfiDetailsInput).type(description)
         }
         else {
-            cy.NoRadioBtn().check();
+            cy.NoRadioBtn().check()
         }
-        cy.saveContinue().click();
+        cy.saveContinue().click()
     }
 
     static getDistance() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.distanceValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.distanceValue)
     }
 
     static getDistanceDetails() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.distanceDetails);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.distanceDetails)
     }
 
     static changeDistance(distance, description = '') {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.distanceLink).click();
-        cy.get(this.selectors.distanceInput).clear().type(distance);
-        cy.get(this.selectors.distanceDetailsInput).clear().type(description);
+        cy.checkPath(this.path)
+        cy.get(this.selectors.distanceLink).click()
+        cy.get(this.selectors.distanceInput).clear()
+        cy.get(this.selectors.distanceInput).type(distance)
+        cy.get(this.selectors.distanceDetailsInput).clear()
+        cy.get(this.selectors.distanceDetailsInput).type(description)
         cy.saveContinue().click()
     }
 
     static getMP() {
-        cy.checkPath(this.path);
-        return cy.get(this.selectors.mpValue);
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.mpValue)
     }
 
     static changeMP(mp) {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.mpLink).click();
-        cy.get(this.selectors.mpInput).clear().type(mp);
-        cy.saveContinue().click();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.mpLink).click()
+        cy.get(this.selectors.mpInput).clear()
+        cy.get(this.selectors.mpInput).type(mp)
+        cy.saveContinue().click()
     }
 
     static markComplete() {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).check();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.completeCheckbox).check()
     }
 
     static markIncomplete() {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).uncheck();
+        cy.checkPath(this.path)
+        cy.get(this.selectors.completeCheckbox).uncheck()
     }
-};
+}

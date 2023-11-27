@@ -1,5 +1,6 @@
-﻿using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data.Models.Establishment;
+﻿using Dfe.Academies.Contracts.V4.Establishments;
+using Dfe.PrepareConversions.Data.Models;
+
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ public class SchoolPerformanceService
 
    public async Task<SchoolPerformance> GetSchoolPerformanceByUrn(string urn)
    {
-      EstablishmentResponse establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
+      EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
       SchoolPerformance schoolPerformance = new();
 
       if (establishment.MISEstablishment != null)
