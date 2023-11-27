@@ -1,5 +1,4 @@
 ﻿using Dfe.PrepareConversions.DocumentGeneration.Elements;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -7,7 +6,7 @@ using System.Text;
 
 namespace Dfe.PrepareConversions.Utils;
 
-public class KeyStageDataStatusHelper 
+public class KeyStageDataStatusHelper
 {
    public enum StatusType
    {
@@ -50,9 +49,25 @@ public class KeyStageDataStatusHelper
 
    public static string DetermineKeyStageDataStatus(DateTime date, KeyStages keyStage)
    {
-      bool isItCurrentAcademicYear = (date.Month < 9 && date.Year == DateTime.Now.Year) ||
-                                     (date.Month >= 9 && date.Year == DateTime.Now.Year - 1);
-      StatusType statusType = isItCurrentAcademicYear ? DetermineStatusType(date, keyStage) : StatusType.Final;
+      bool isItCurrentAcademicYear =
+         (date.Month < 9 && date.Year == DateTime.Now.Year) ||
+         (date.Month >= 9 && date.Year == DateTime.Now.Year - 1);
+
+      bool isItLastAcademicYear =
+         (date.Month < 9 && date.Year == DateTime.Now.Year - 1) ||
+         (date.Month >= 9 && date.Year == DateTime.Now.Year - 2);
+
+      StatusType statusType = StatusType.Final;
+
+      if (isItCurrentAcademicYear)
+      {
+         statusType = StatusType.Provisional;
+      }
+      if (isItLastAcademicYear)
+      {
+         statusType = DetermineStatusType(date, keyStage);
+      }
+
       return statusType.ToString();
    }
 
@@ -77,19 +92,32 @@ public class KeyStageDataStatusHelper
    }
 
 
-   public static string KeyStage4DataRow()
+   public static string KeyStage4DataRow(string latestYear)
    {
+      DateTime latestYearWeHaveDataFor = ConvertToDateTime(latestYear);
       StringBuilder rowString = new("<tr class='govuk-table__row'>");
       rowString.Append("<th scope='row' class='govuk-table__header'>Status</th>");
-      rowString.Append(KeyStage4DataTag(DateTime.Now));
-      rowString.Append(KeyStage4DataTag(DateTime.Now.AddYears(-1)));
-      rowString.Append(KeyStage4DataTag(DateTime.Now.AddYears(-2)));
+      rowString.Append(KeyStage4DataTag(latestYearWeHaveDataFor));
+      rowString.Append(KeyStage4DataTag(latestYearWeHaveDataFor.AddYears(-1)));
+      rowString.Append(KeyStage4DataTag(latestYearWeHaveDataFor.AddYears(-2)));
       rowString.Append("</tr>");
       return rowString.ToString();
    }
-   public static string KeyStageHeader(int yearIndex, KeyStages keyStage)
+   static DateTime ConvertToDateTime(string input)
    {
-      return KeyStageHeader(yearIndex, DateTime.Now, keyStage);
+      string[] parts = input.Split(new string[] { " to " }, StringSplitOptions.None);
+
+      if (parts.Length == 2 && int.TryParse(parts[1], out int endYear))
+      {
+         return new DateTime(endYear, 8, 31); // Last day of Aug to mark end of academic year
+      }
+      // Default to current year if the year isn't in the expected value
+      return DateTime.UtcNow;
+   }
+   public static string KeyStageHeader(int yearIndex, KeyStages keyStage, string latestYear)
+   {
+      DateTime latestYearWeHaveDataFor = ConvertToDateTime(latestYear);
+      return KeyStageHeader(yearIndex, latestYearWeHaveDataFor, keyStage);
    }
    public static string KeyStageHeader(int yearIndex, DateTime currentDate, KeyStages keyStage)
    {

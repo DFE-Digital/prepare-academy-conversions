@@ -8,11 +8,13 @@ namespace Dfe.PrepareConversions.TagHelpers
    {
       [HtmlAttributeName("key-stage")]
       public KeyStageDataStatusHelper.KeyStages KeyStage { get; set; }
+      [HtmlAttributeName("latest-year")]
+      public string LatestYear { get; set; }
 
       public override void Process(TagHelperContext context, TagHelperOutput output)
       {
          output.TagName = null;
-         string rowContent = KeyStageDataStatusHelper.KeyStage4DataRow();
+         string rowContent = KeyStageDataStatusHelper.KeyStage4DataRow(LatestYear);
          output.Content.SetHtmlContent(rowContent);
       }
    }
