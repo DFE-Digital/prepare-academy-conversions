@@ -35,7 +35,7 @@ public class CreateSponsoredProjectMapperTests
       };
 
       // Act
-      var result = CreateSponsoredProjectMapper.MapToDto(establishment, trust);
+      var result = CreateProjectMapper.MapToDto(establishment, trust);
 
       // Assert
       result.School.PartOfPfiScheme.Should().BeTrue();
@@ -76,7 +76,7 @@ public class CreateSponsoredProjectMapperTests
       };
 
       // Act
-      var result = CreateSponsoredProjectMapper.MapToDto(establishment, trust);
+      var result = CreateProjectMapper.MapToDto(establishment, trust);
 
       // Assert
       using (var scope = new AssertionScope())

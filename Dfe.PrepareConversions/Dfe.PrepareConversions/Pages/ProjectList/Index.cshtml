@@ -22,15 +22,11 @@
 
 <div class="govuk-grid-row">
    <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-xl" data-cy="select-heading">Manage an academy conversion</h1>
-
-      <feature name="ShowDirectedAcademyOrders">
-         <p class="govuk-body">Use this service to start a new sponsored conversion project or update an existing conversion project.</p>
+      <h1 class="govuk-heading-xl" data-cy="select-heading">Manage an academy conversion</h1>     
+         <p class="govuk-body">Use this service to start a new conversion project</p>
          <a asp-page="@Links.SponsoredProject.SearchSchool.Page" role="button" draggable="false" class="govuk-button" data-module="govuk-button">
             Start a new conversion
-         </a>
-      </feature>
-
+         </a>     
       <h2 class="govuk-heading-l" test-id="projectCount" data-cy="select-projectlist-filter-count">@(Model.TotalProjects) projects found</h2>
 
       <partial name="Shared/_ProjectListFilters" model="Model.Filters"/>
