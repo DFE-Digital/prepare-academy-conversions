@@ -15,7 +15,7 @@ namespace Dfe.PrepareConversions.Pages.SponsoredProject;
 public class SearchTrustModel : PageModel
 {
    private const string SEARCH_LABEL =
-      "Search by name, UKPRN or Companies House number. Entering more characters will give quicker results. You should write UKPRN or Companies House number in full.";
+      "Enter the name, UKPRN (UK Provider Reference Number) or Companies House number.";
 
    private const string SEARCH_ENDPOINT = "/start-new-project/trust-name?handler=Search&searchQuery=";
    private readonly ErrorService _errorService;
