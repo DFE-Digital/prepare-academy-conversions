@@ -1,0 +1,15 @@
+using Dfe.PrepareConversions.Data.Services;
+
+namespace Dfe.PrepareConversions.Pages.ExternalApplicationForm;
+
+public class IndexModel : BaseAcademyConversionProjectPageModel
+{
+   public IndexModel(IAcademyConversionProjectRepository repository) : base(repository)
+   {
+   }
+
+   public bool HasLink => string.IsNullOrWhiteSpace(Project.AnnexBFormUrl) is false;
+
+   public bool? AplicationFormSaved => Project.AnnexBFormReceived;
+   public string AnnexBLink => Project.AnnexBFormUrl;
+}
