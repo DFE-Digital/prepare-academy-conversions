@@ -7,7 +7,7 @@ namespace Dfe.PrepareConversions.Mappings;
 
 public static class CreateProjectMapper
 {
-   public static CreateNewProject MapToDto(EstablishmentDto establishment, TrustDto trust)
+   public static CreateNewProject MapToDto(EstablishmentDto establishment, TrustDto trust, string HasSchoolApplied)
    {
       var partOfPfiScheme = !string.IsNullOrWhiteSpace(establishment?.Pfi)
                             && establishment?.Pfi.Equals("No", StringComparison.InvariantCultureIgnoreCase) == false;
@@ -23,6 +23,6 @@ public static class CreateProjectMapper
          trust.Name,
          trust.ReferenceNumber);
 
-      return new CreateNewProject(createSchool, createTrust);
+      return new CreateNewProject(createSchool, createTrust, HasSchoolApplied);
    }
 }

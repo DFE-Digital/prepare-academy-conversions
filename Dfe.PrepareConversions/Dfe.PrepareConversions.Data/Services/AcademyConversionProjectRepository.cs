@@ -82,14 +82,14 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       return new ApiResponse<AcademyConversionProject>(updateResponse.StatusCode, project);
    }
 
-   public async Task CreateProject(CreateNewProject sponsoredProject)
+   public async Task CreateProject(CreateNewProject newProject)
    {
       HttpClient httpClient = _httpClientFactory.CreateAcademisationClient();
 
       ApiResponse<string> result = await _httpClientService.Post<CreateNewProject, string>(
          httpClient,
-         @"legacy/project/sponsored-conversion-project",
-         sponsoredProject);
+         @"legacy/project/new-conversion-project",
+         newProject);
 
       if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
