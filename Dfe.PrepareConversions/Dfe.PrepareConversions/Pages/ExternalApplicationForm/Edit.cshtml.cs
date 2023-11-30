@@ -42,7 +42,7 @@ public class EditModel : BaseAcademyConversionProjectPageModel
 
       if (ModelState.IsValid)
       {
-         UpdateAcademyConversionProject updatedProject = new() { ExternalApplicationFormUrlSaved = YesChecked, ExternalApplicationFormUrl = YesChecked is true ? ExternalApplicationFormUrl : default };
+         UpdateAcademyConversionProject updatedProject = new() { ExternalApplicationFormSaved = YesChecked, ExternalApplicationFormUrl = YesChecked is true ? ExternalApplicationFormUrl : default };
 
          ApiResponse<AcademyConversionProject> apiResponse = await _repository.UpdateProject(id, updatedProject);
 

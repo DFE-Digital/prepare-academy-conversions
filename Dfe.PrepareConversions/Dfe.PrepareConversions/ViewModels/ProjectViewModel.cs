@@ -156,6 +156,10 @@ public class ProjectViewModel: ProjectTypeBase
    public bool? AnnexBFormReceived { get; set; }
    public string AnnexBFormUrl { get; set; }
 
+   // External Application Form
+   public bool? ExternalApplicationFormSaved { get; set; }
+   public string ExternalApplicationFormUrl { get; set; }
+
    // School Overview
    public string PublishedAdmissionNumber { get; set; }
    public string PartOfPfiScheme { get; set; }
