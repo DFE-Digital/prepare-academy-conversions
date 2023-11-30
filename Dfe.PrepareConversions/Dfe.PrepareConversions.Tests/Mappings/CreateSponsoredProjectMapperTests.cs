@@ -34,8 +34,10 @@ public class CreateSponsoredProjectMapperTests
          CompaniesHouseNumber = fixture.Create<string>()
       };
 
+      string HasSchoolApplied = "no";
+
       // Act
-      var result = CreateProjectMapper.MapToDto(establishment, trust);
+      var result = CreateProjectMapper.MapToDto(establishment, trust, HasSchoolApplied);
 
       // Assert
       result.School.PartOfPfiScheme.Should().BeTrue();
@@ -74,9 +76,9 @@ public class CreateSponsoredProjectMapperTests
          Name = fixture.Create<string>(),
          CompaniesHouseNumber = fixture.Create<string>()
       };
-
+      string HasSchoolApplied = "no";
       // Act
-      var result = CreateProjectMapper.MapToDto(establishment, trust);
+      var result = CreateProjectMapper.MapToDto(establishment, trust, HasSchoolApplied);
 
       // Assert
       using (var scope = new AssertionScope())

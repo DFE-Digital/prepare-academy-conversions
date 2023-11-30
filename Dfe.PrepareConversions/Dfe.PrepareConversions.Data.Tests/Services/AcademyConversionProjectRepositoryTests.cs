@@ -96,14 +96,14 @@ public class AcademyConversionProjectRepositoryTests
    public async Task GivenAValidProject_PostToApi([Frozen] Mock<IHttpClientService> httpService, AcademyConversionProjectRepository subject)
    {
       httpService.Setup(m => m.Post<CreateNewProject, string>(
-            It.IsAny<HttpClient>(), @"legacy/project/sponsored-conversion-project", It.IsAny<CreateNewProject>()))
+            It.IsAny<HttpClient>(), @"legacy/project/new-conversion-project", It.IsAny<CreateNewProject>()))
          .ReturnsAsync(new ApiResponse<string>(HttpStatusCode.OK, string.Empty));
 
-      CreateNewProject project = new(null, null);
+      CreateNewProject project = new(null, null, null);
       await subject.CreateProject(project);
 
       httpService.Verify(m => m.Post<CreateNewProject, string>(
-         It.IsAny<HttpClient>(), @"legacy/project/sponsored-conversion-project", project), Times.Once);
+         It.IsAny<HttpClient>(), @"legacy/project/new-conversion-project", project), Times.Once);
    }
 
    [Theory]
@@ -111,10 +111,10 @@ public class AcademyConversionProjectRepositoryTests
    public async Task GivenAFailedResponse_ThrowAnException([Frozen] Mock<IHttpClientService> httpService, AcademyConversionProjectRepository subject)
    {
       httpService.Setup(m => m.Post<CreateNewProject, string>(
-            It.IsAny<HttpClient>(), @"legacy/project/sponsored-conversion-project", It.IsAny<CreateNewProject>()))
+            It.IsAny<HttpClient>(), @"legacy/project/new-conversion-project", It.IsAny<CreateNewProject>()))
          .ReturnsAsync(new ApiResponse<string>(HttpStatusCode.InternalServerError, string.Empty));
 
-      CreateNewProject project = new(null, null);
+      CreateNewProject project = new(null, null, null);
       ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => subject.CreateProject(project));
 
       Assert.Equal("Request to Api failed | StatusCode - InternalServerError", exception.Message);
