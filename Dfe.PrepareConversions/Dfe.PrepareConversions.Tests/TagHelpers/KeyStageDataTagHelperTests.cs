@@ -15,10 +15,10 @@ public class KeyStageDataTagHelperTests : BaseIntegrationTests
 
    [Theory]
    [InlineData(0, StatusType.Provisional, "YearIndex 0 would be the current year, thus, status is provisional based on the currentDate variables month")]
-   [InlineData(1, StatusType.Final, "YearIndex 1 would be a year ago, thus, status is Final")]
+   [InlineData(1, StatusType.Provisional, "YearIndex 1 would be a year ago, thus, status is Final")]
    [InlineData(2, StatusType.Final, "YearIndex 2 would be two years ago, thus, status is Final")]
    [InlineData(3, StatusType.Final, "Edge case: If greater than our expected (Likely due to extending the number of years served in the future)")]
-   [InlineData(-1, StatusType.Final, "Edge case: Default to Final")] 
+   [InlineData(-1, StatusType.Final, "Edge case: Default to Final")]
    public void KeyStageHeader_ReturnsExpectedStatusHeader(int yearIndex, StatusType expectedStatusType, string reason)
    {
       // Arrange
@@ -94,17 +94,17 @@ public class KeyStageDataTagHelperTests : BaseIntegrationTests
 
    public static IEnumerable<object[]> RevisedDates()
    {
-      yield return new object[] { new DateTime(DateTime.Now.Year, 1, 3) };
-      yield return new object[] { new DateTime(DateTime.Now.Year, 2, 11) };
-      yield return new object[] { new DateTime(DateTime.Now.Year, 3, 21) };
-      yield return new object[] { new DateTime(DateTime.Now.Year, 4, 14) };
+      yield return new object[] { new DateTime(DateTime.Now.Year - 1, 1, 3) };
+      yield return new object[] { new DateTime(DateTime.Now.Year - 1, 2, 11) };
+      yield return new object[] { new DateTime(DateTime.Now.Year - 1, 3, 21) };
+      yield return new object[] { new DateTime(DateTime.Now.Year - 1, 4, 14) };
    }
 
    public static IEnumerable<object[]> FinalDates()
    {
       yield return new object[] { new DateTime(DateTime.Now.Year - 2, 1, 3) };
       yield return new object[] { new DateTime(DateTime.Now.Year - 2, 2, 11) };
-      yield return new object[] { new DateTime(DateTime.Now.Year, 5, 21) };
-      yield return new object[] { new DateTime(DateTime.Now.Year, 6, 14) };
+      yield return new object[] { new DateTime(DateTime.Now.Year - 1, 5, 21) };
+      yield return new object[] { new DateTime(DateTime.Now.Year - 1, 6, 14) };
    }
 }
