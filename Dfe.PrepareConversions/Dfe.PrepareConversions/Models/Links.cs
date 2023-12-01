@@ -203,11 +203,12 @@ public static class Links
       public static readonly LinkItem CookiePreferences = AddLinkItem(page: "/Public/CookiePreferences");
    }
 
-   public static class SponsoredProject
+   public static class NewProject
    {
-      public static readonly LinkItem SearchSchool = AddLinkItem(page: "/SponsoredProject/SearchSchool");
-      public static readonly LinkItem SearchTrusts = AddLinkItem(page: "/SponsoredProject/SearchTrust");
-      public static readonly LinkItem Summary = AddLinkItem(page: "/SponsoredProject/Summary");
+      public static readonly LinkItem SearchSchool = AddLinkItem(page: "/NewProject/SearchSchool");
+      public static readonly LinkItem SchoolApply = AddLinkItem(page: "/NewProject/SchoolApply");
+      public static readonly LinkItem SearchTrusts = AddLinkItem(page: "/NewProject/SearchTrust");
+      public static readonly LinkItem Summary = AddLinkItem(page: "/NewProject/Summary");
    }
 }
 

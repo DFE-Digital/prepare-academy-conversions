@@ -86,7 +86,7 @@ public class SearchSchoolModel : PageModel
          return Page();
       }
 
-      redirect = string.IsNullOrEmpty(redirect) ? Links.SponsoredProject.SearchTrusts.Page : redirect;
+      redirect = string.IsNullOrEmpty(redirect) ? Links.NewProject.SchoolApply.Page : redirect;
 
       return RedirectToPage(redirect, new { urn = splitSearch[1], ukprn });
    }
