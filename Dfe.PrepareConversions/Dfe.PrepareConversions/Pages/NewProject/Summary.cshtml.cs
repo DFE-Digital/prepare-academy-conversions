@@ -1,5 +1,4 @@
 using Dfe.Academies.Contracts.V4.Trusts;
-using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Mappings;
@@ -28,22 +27,24 @@ public class SummaryModel : PageModel
 
    public Academies.Contracts.V4.Establishments.EstablishmentDto Establishment { get; set; }
    public TrustDto Trust { get; set; }
+   public string SchoolApplied { get; set; }
 
 
-   public async Task<IActionResult> OnGetAsync(string urn, string ukprn)
+   public async Task<IActionResult> OnGetAsync(string urn, string ukprn, string HasSchoolApplied)
    {
       Establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
       Trust = (await _trustRepository.SearchTrusts(ukprn)).Data.FirstOrDefault();
+      SchoolApplied = HasSchoolApplied;
 
       return Page();
    }
 
-   public async Task<IActionResult> OnPostAsync(string urn, string ukprn)
+   public async Task<IActionResult> OnPostAsync(string urn, string ukprn, string HasSchoolApplied)
    {
       Academies.Contracts.V4.Establishments.EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
       TrustDto trust = await _trustRepository.GetTrustByUkprn(ukprn);
 
-      await _academyConversionProjectRepository.CreateSponsoredProject(CreateSponsoredProjectMapper.MapToDto(establishment, trust));
+      await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, HasSchoolApplied));
 
       return RedirectToPage(Links.ProjectList.Index.Page);
    }
