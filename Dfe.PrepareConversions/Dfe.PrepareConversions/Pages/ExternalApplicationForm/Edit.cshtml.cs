@@ -37,17 +37,16 @@ public class EditModel : BaseAcademyConversionProjectPageModel
    {
       if (YesChecked is true && string.IsNullOrWhiteSpace(ExternalApplicationFormUrl))
       {
-         ModelState.AddModelError(nameof(ExternalApplicationFormUrl), "You must enter valid link for the achools application form");
+         ModelState.AddModelError(nameof(ExternalApplicationFormUrl), "You must enter valid link for the schools application form");
       }
 
       if (ModelState.IsValid)
       {
-         UpdateAcademyConversionProject updatedProject = new() { ExternalApplicationFormSaved = YesChecked, ExternalApplicationFormUrl = YesChecked is true ? ExternalApplicationFormUrl : default };
 
-         ApiResponse<AcademyConversionProject> apiResponse = await _repository.UpdateProject(id, updatedProject);
+         await _repository.SetProjectExternalApplicationForm(id, YesChecked.Value, YesChecked is true ? ExternalApplicationFormUrl : default);
 
-         if (apiResponse.Success)
-            return RedirectToPage(Links.ExternalApplicationForm.Index.Page, new { id });
+
+         return RedirectToPage(Links.ExternalApplicationForm.Index.Page, new { id });
       }
 
       _errorService.AddErrors(ModelState.Keys, ModelState);

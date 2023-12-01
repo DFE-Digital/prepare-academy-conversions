@@ -8,8 +8,8 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
    {
    }
 
-   public bool HasLink => string.IsNullOrWhiteSpace(Project.AnnexBFormUrl) is false;
+   public bool HasLink => string.IsNullOrWhiteSpace(Project.ExternalApplicationFormUrl) is false;
 
-   public bool? AplicationFormSaved => Project.AnnexBFormReceived;
-   public string AnnexBLink => Project.AnnexBFormUrl;
+   public bool? AplicationFormSaved => Project.ExternalApplicationFormSaved;
+   public string ApplicationFormLink => Project.ExternalApplicationFormUrl;
 }

@@ -19,6 +19,7 @@ public interface IAcademyConversionProjectRepository
 
    Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id);
    Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject);
+   Task SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl);
    Task CreateSponsoredProject(CreateSponsoredProject sponsoredProject);
    Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters();
    Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote addProjectNote);

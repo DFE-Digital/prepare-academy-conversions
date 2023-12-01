@@ -56,6 +56,9 @@ public class ProjectViewModel: ProjectTypeBase
       AnnexBFormReceived = project.AnnexBFormReceived;
       AnnexBFormUrl = project.AnnexBFormUrl;
 
+      ExternalApplicationFormSaved = project.ExternalApplicationFormSaved;
+      ExternalApplicationFormUrl = project.ExternalApplicationFormUrl;
+
       PartOfPfiScheme = project.PartOfPfiScheme;
       PfiSchemeDetails = project.PfiSchemeDetails;
       PublishedAdmissionNumber = project.PublishedAdmissionNumber;
@@ -220,4 +223,5 @@ public class ProjectViewModel: ProjectTypeBase
    public ICollection<ProjectNote> Notes { get; }
 
    protected override string TypeAndRouteValue => AcademyTypeAndRoute;
+   public override bool IsExternalSchoolApplication => string.IsNullOrEmpty(this.ApplicationReferenceNumber);
 }
