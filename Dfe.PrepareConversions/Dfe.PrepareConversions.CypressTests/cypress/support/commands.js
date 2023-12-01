@@ -25,8 +25,6 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import 'cypress-localstorage-commands'
-import sqlServer from 'cypress-sql-server'
-sqlServer.loadDBCommands()
 
 //--Universal
 
@@ -84,13 +82,21 @@ Cypress.Commands.add('enterDate', (idSelector, day, month, year) => {
     cy.get(`[id*="${idSelector}-month"]`).as('month')
     cy.get(`[id*="${idSelector}-year"]`).as('year')
 
-    cy.get(`@day`).should('be.visible')
-    cy.get(`@day`).clear()
-    cy.get(`@day`).type(day)
-    cy.get(`@month`).clear()
-    cy.get(`@month`).type(month)
-    cy.get(`@year`).clear()
-    cy.get(`@year`).type(year)
+    cy.get(`@day`).then((dayLoc) => {
+        dayLoc.should('be.visible')
+        dayLoc.clear()
+        dayLoc.type(day)
+    })
+    cy.get(`@month`).then((monthLoc) => {
+        monthLoc.should('be.visible')
+        monthLoc.clear()
+        monthLoc.type(month)
+    })
+    cy.get(`@year`).then((yearLoc) => {
+        yearLoc.should('be.visible')
+        yearLoc.clear()
+        yearLoc.type(year)
+    })
 })
 
 // No Radio Btn
@@ -118,7 +124,6 @@ Cypress.Commands.add('saveContinue', () => {
 })
 
 Cypress.Commands.add("excuteAccessibilityTests", () => {
-    // FUNCTION COURTESY OF FAHAD DARWISH - NIMBLE APPROACH CONFLUENECE
     const wcagStandards = ["wcag22aa", "wcag21aa"]
     const impactLevel = ["critical", "minor", "moderate", "serious"]
     const continueOnFail = false
