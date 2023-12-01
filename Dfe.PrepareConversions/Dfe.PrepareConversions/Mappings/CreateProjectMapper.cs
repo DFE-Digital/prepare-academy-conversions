@@ -9,8 +9,14 @@ public static class CreateProjectMapper
 {
    public static CreateNewProject MapToDto(EstablishmentDto establishment, TrustDto trust, string HasSchoolApplied)
    {
+      if (establishment == null)
+      {
+         throw new ArgumentNullException(nameof(establishment));
+      }
+
       var partOfPfiScheme = !string.IsNullOrWhiteSpace(establishment?.Pfi)
-                            && establishment?.Pfi.Equals("No", StringComparison.InvariantCultureIgnoreCase) == false;
+                      && !establishment.Pfi.Equals("No", StringComparison.InvariantCultureIgnoreCase);
+
 
       NewProjectSchool createSchool = new(
          establishment.Name,
