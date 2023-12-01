@@ -78,7 +78,7 @@ public class SearchTrustModel : PageModel
       AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
       if (string.IsNullOrWhiteSpace(SearchQuery))
       {
-         ModelState.AddModelError(nameof(SearchQuery), "Enter the Trust name, UKPRN or Companies House number");
+         ModelState.AddModelError(nameof(SearchQuery), "Enter a trust's name, UKPRN or Companies House number to continue");
          _errorService.AddErrors(ModelState.Keys, ModelState);
          return Page();
       }

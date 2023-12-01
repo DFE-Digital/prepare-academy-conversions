@@ -62,7 +62,7 @@ public class SearchSchoolModel : PageModel
 
       if (string.IsNullOrWhiteSpace(SearchQuery))
       {
-         ModelState.AddModelError(nameof(SearchQuery), "Enter the school name or URN");
+         ModelState.AddModelError(nameof(SearchQuery), "Enter a school name or URN to continue");
          _errorService.AddErrors(ModelState.Keys, ModelState);
          return Page();
       }

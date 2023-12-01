@@ -41,7 +41,7 @@ public class SchoolApplyModel : PageModel
 
       if (HasSchoolApplied.IsNullOrEmpty())
       {
-         _errorService.AddError("HasSchoolApplied", "Select yes if the school has applied for academy conversion");
+         _errorService.AddError("HasSchoolApplied", "Select an answer to continue");
          return Page();
       }
       redirect = string.IsNullOrEmpty(redirect) ? Links.NewProject.SearchTrusts.Page : redirect;
