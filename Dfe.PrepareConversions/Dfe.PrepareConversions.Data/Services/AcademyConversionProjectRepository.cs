@@ -2,7 +2,7 @@
 using Dfe.PrepareConversions.Data.Extensions;
 using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data.Models.SponsoredProject;
+using Dfe.PrepareConversions.Data.Models.NewProject;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,14 +82,14 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       return new ApiResponse<AcademyConversionProject>(updateResponse.StatusCode, project);
    }
 
-   public async Task CreateSponsoredProject(CreateSponsoredProject sponsoredProject)
+   public async Task CreateProject(CreateNewProject newProject)
    {
       HttpClient httpClient = _httpClientFactory.CreateAcademisationClient();
 
-      ApiResponse<string> result = await _httpClientService.Post<CreateSponsoredProject, string>(
+      ApiResponse<string> result = await _httpClientService.Post<CreateNewProject, string>(
          httpClient,
-         @"legacy/project/sponsored-conversion-project",
-         sponsoredProject);
+         @"legacy/project/new-conversion-project",
+         newProject);
 
       if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }

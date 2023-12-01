@@ -1,5 +1,5 @@
 ﻿using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data.Models.SponsoredProject;
+using Dfe.PrepareConversions.Data.Models.NewProject;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,7 +19,7 @@ public interface IAcademyConversionProjectRepository
 
    Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id);
    Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject);
-   Task CreateSponsoredProject(CreateSponsoredProject sponsoredProject);
+   Task CreateProject(CreateNewProject newProject);
    Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters();
    Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote addProjectNote);
 }
