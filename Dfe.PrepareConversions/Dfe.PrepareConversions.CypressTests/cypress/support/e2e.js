@@ -14,6 +14,11 @@
 // ***********************************************************
 
 import './commands'
+import registerCypressGrep from '@cypress/grep/src/support'
+
+registerCypressGrep()
+
+// ***********************************************************
 
 beforeEach(() => {
 	cy.intercept(
@@ -23,10 +28,6 @@ beforeEach(() => {
 		(req) => req.headers['AuthorizationRole'] = 'conversions.create'
 	)
 })
-// ***********************************************************
-
-//Cypress Grep module for filtering tests
-require('cypress-grep')()
 
 // ***********************************************************
 
