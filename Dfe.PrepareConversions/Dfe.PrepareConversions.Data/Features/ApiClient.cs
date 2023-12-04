@@ -59,9 +59,11 @@ public class ApiClient : IApiClient
 
    public async Task<HttpResponseMessage> SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl)
    {
-      dynamic payload = new ExpandoObject();
-      payload.externalApplicationFormSaved = externalApplicationFormSaved;
-      payload.externalApplicationFormUrl = externalApplicationFormUrl ?? string.Empty;
+      var payload = new
+      {
+         externalApplicationFormSaved = externalApplicationFormSaved,
+         externalApplicationFormUrl = externalApplicationFormUrl ?? string.Empty
+      };
 
       return await AcademisationClient.PutAsync(string.Format(PathFor.SetExternalApplicationForm, id), JsonContent.Create(payload));
    }
