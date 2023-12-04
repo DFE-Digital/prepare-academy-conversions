@@ -1,6 +1,7 @@
 ﻿using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Microsoft.FeatureManagement;
+using System.Dynamic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -54,5 +55,16 @@ public class ApiClient : IApiClient
    public async Task<HttpResponseMessage> AddProjectNote(int id, AddProjectNote projectNote)
    {
       return await AcademisationClient.PostAsync(string.Format(PathFor.AddProjectNote, id), JsonContent.Create(projectNote));
+   }
+
+   public async Task<HttpResponseMessage> SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl)
+   {
+      var payload = new
+      {
+         externalApplicationFormSaved = externalApplicationFormSaved,
+         externalApplicationFormUrl = externalApplicationFormUrl ?? string.Empty
+      };
+
+      return await AcademisationClient.PutAsync(string.Format(PathFor.SetExternalApplicationForm, id), JsonContent.Create(payload));
    }
 }
