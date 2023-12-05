@@ -9,4 +9,5 @@ public interface IPagination
    int PreviousPage { get; }
    int CurrentPage { get; }
    int NextPage { get; }
+   public int TotalPages { get; }
 }
