@@ -69,4 +69,9 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       return await _innerRepository.AddProjectNote(id, addProjectNote);
    }
+
+   public async Task SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl)
+   {
+      await _innerRepository.SetProjectExternalApplicationForm(id, externalApplicationFormSaved, externalApplicationFormUrl);
+   }
 }
