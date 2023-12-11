@@ -22,7 +22,6 @@
             var isCurrentPage = Model.CurrentPage == pageNumber;
             var markAsSelected = isCurrentPage ? "moj-pagination__item--active" : "";
 
-            var pageNumberLinkId = $"page-{pageNumber}";
             var ariaLabel = isCurrentPage ? $"Current page, page {pageNumber}" : $"Go to page {pageNumber}";
 
             if (pagesToDisplay.Contains(pageNumber))
@@ -51,7 +50,6 @@
 
         @if (Model.HasNextPage)
         {
-
             <li class="moj-pagination__item  moj-pagination__item--next">
                 <a class="moj-pagination__link" asp-page="/ProjectList/Index" asp-route-currentPage="@Model.NextPage" test-id="nextPage">Next<span class="govuk-visually-hidden"> set of pages</span></a>
             </li>
