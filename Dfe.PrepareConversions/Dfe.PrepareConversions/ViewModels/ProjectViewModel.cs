@@ -56,6 +56,9 @@ public class ProjectViewModel: ProjectTypeBase
       AnnexBFormReceived = project.AnnexBFormReceived;
       AnnexBFormUrl = project.AnnexBFormUrl;
 
+      ExternalApplicationFormSaved = project.ExternalApplicationFormSaved;
+      ExternalApplicationFormUrl = project.ExternalApplicationFormUrl;
+
       PartOfPfiScheme = project.PartOfPfiScheme;
       PfiSchemeDetails = project.PfiSchemeDetails;
       PublishedAdmissionNumber = project.PublishedAdmissionNumber;
@@ -156,6 +159,10 @@ public class ProjectViewModel: ProjectTypeBase
    public bool? AnnexBFormReceived { get; set; }
    public string AnnexBFormUrl { get; set; }
 
+   // External Application Form
+   public bool? ExternalApplicationFormSaved { get; set; }
+   public string ExternalApplicationFormUrl { get; set; }
+
    // School Overview
    public string PublishedAdmissionNumber { get; set; }
    public string PartOfPfiScheme { get; set; }
@@ -216,4 +223,5 @@ public class ProjectViewModel: ProjectTypeBase
    public ICollection<ProjectNote> Notes { get; }
 
    protected override string TypeAndRouteValue => AcademyTypeAndRoute;
+   public override bool IsExternalSchoolApplication => string.IsNullOrEmpty(this.ApplicationReferenceNumber);
 }

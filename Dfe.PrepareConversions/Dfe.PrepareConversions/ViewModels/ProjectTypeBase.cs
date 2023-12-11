@@ -6,6 +6,8 @@ namespace Dfe.PrepareConversions.ViewModels;
 public abstract class ProjectTypeBase
 {
    protected abstract string TypeAndRouteValue { get; }
+   public virtual bool IsExternalSchoolApplication { get; } = false;
+
 
    public bool IsSponsored => string.IsNullOrWhiteSpace(TypeAndRouteValue) is false &&
                               TypeAndRouteValue.Equals(AcademyTypeAndRoutes.Sponsored, StringComparison.InvariantCultureIgnoreCase);

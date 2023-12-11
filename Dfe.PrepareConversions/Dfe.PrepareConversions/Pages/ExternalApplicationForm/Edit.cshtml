@@ -1,0 +1,53 @@
+@page "/task-list/{id:int}/ExternalApplicationForm/edit"
+@using Dfe.PrepareConversions.TagHelpers
+@model Dfe.PrepareConversions.Pages.ExternalApplicationForm.EditModel
+@{
+   ViewData["Title"] = "Have you saved the School Application form";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.ExternalApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" class="govuk-back-link">@Links.ExternalApplicationForm.Index.BackText</a>
+   <partial name="_ErrorSummary"/>
+}
+
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-two-thirds">
+      <form method="post">
+         <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+         <h1 class="govuk-heading-l">Have you saved the school's completed Application form in SharePoint?</h1>
+         <div class="govuk-form-group">
+            <div class="govuk-radios" data-module="govuk-radios">
+               <div class="govuk-radios__item">
+                  <input asp-for="@Model.YesChecked" class="govuk-radios__input" type="radio" value="true" aria-controls="conditional-applicationsaved" id="radio-yes" data-cy="select-radio-yes">
+                  <label class="govuk-label govuk-radios__label" for="radio-yes">
+                     Yes
+                  </label>
+               </div>
+
+                    <div class="govuk-radios__conditional" id="conditional-applicationsaved" data-cy="select-sharepoint-section">
+                  <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+                     <label class="govuk-label" for="application-form-url">
+                        What is the link for the Application form?
+                     </label>
+
+                     <inline-error for="@nameof(Model.ExternalApplicationFormUrl)"/>
+                            <textarea asp-for="@Model.ExternalApplicationFormUrl" class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.ExternalApplicationFormUrl))" rows="5" aria-describedby="application-form-url-hint" data-cy="select-sharepoint-url" aria-label="text-area-for-application-form"></textarea>
+                  </div>
+               </div>
+
+               <div class="govuk-radios__item">
+                  <input asp-for="@Model.YesChecked" class="govuk-radios__input" type="radio" value="false" id="radio-no" data-cy="select-radio-no">
+                  <label class="govuk-label govuk-radios__label" for="radio-no">
+                     No
+                  </label>
+               </div>
+            </div>
+         </div>
+
+         <button class="govuk-button" data-module="govuk-button" data-cy="select-save-and-continue">
+            Save and continue
+         </button>
+      </form>
+   </div>
+</div>
