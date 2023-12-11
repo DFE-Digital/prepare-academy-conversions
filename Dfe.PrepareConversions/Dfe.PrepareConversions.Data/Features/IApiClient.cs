@@ -13,4 +13,6 @@ public interface IApiClient
    Task<HttpResponseMessage> GetFilterParametersAsync();
    Task<HttpResponseMessage> GetApplicationByReferenceAsync(string id);
    Task<HttpResponseMessage> AddProjectNote(int id, AddProjectNote projectNote);
+
+   Task<HttpResponseMessage> SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl);
 }
