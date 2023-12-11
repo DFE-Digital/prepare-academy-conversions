@@ -4,6 +4,7 @@ using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.NewProject;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -132,6 +133,36 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
          ? new ApiResponse<ProjectNote>(response.StatusCode, addProjectNote.ToProjectNote())
          : new ApiResponse<ProjectNote>(response.StatusCode, null);
    }
+   public async Task<ApiResponse<FileStreamResult>> DownloadProjectExport(
+     int page,
+     int count,
+     string titleFilter = "",
+     IEnumerable<string> statusFilters = default,
+     IEnumerable<string> deliveryOfficerFilter = default,
+     IEnumerable<string> regionsFilter = default,
+     IEnumerable<string> applicationReferences = default)
+   {
+      AcademyConversionSearchModel searchModel = new() { TitleFilter = titleFilter, Page = page, Count = count };
+
+      ProcessFilters(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter, applicationReferences);
+
+      HttpResponseMessage response = await _apiClient.DownloadProjectExport(searchModel);
+      if (!response.IsSuccessStatusCode)
+      {
+         // handle error, for example:
+         return new ApiResponse<FileStreamResult>(response.StatusCode, null);
+      }
+
+      // Assuming response.Content is of type HttpContent, you need to read it as a stream.
+      var stream = await response.Content.ReadAsStreamAsync();
+
+      // Now create FileStreamResult from the stream.
+      FileStreamResult fileStreamResult = new FileStreamResult(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+      // Return ApiResponse with FileStreamResult.
+      return new ApiResponse<FileStreamResult>(response.StatusCode, fileStreamResult);
+   }
+
 
    private void ProcessFilters(IEnumerable<string> statusFilters,
                                      IEnumerable<string> deliveryOfficerFilter,
