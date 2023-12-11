@@ -149,17 +149,12 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       HttpResponseMessage response = await _apiClient.DownloadProjectExport(searchModel);
       if (!response.IsSuccessStatusCode)
       {
-         // handle error, for example:
          return new ApiResponse<FileStreamResult>(response.StatusCode, null);
       }
 
-      // Assuming response.Content is of type HttpContent, you need to read it as a stream.
       var stream = await response.Content.ReadAsStreamAsync();
+      FileStreamResult fileStreamResult = new(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
-      // Now create FileStreamResult from the stream.
-      FileStreamResult fileStreamResult = new FileStreamResult(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-
-      // Return ApiResponse with FileStreamResult.
       return new ApiResponse<FileStreamResult>(response.StatusCode, fileStreamResult);
    }
 
