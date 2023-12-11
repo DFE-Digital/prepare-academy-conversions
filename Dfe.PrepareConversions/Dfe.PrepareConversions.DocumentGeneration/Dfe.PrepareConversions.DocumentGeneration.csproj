@@ -10,7 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Dfe.Academies.Contracts" Version="1.0.4" />
+      <PackageReference Include="Dfe.Academies.Contracts" Version="1.0.9" />
       <PackageReference Include="Open-XML-SDK" Version="2.9.1" />
     </ItemGroup>
 

@@ -53,6 +53,10 @@ public class UpdateAcademyConversionProject
    public bool? AnnexBFormReceived { get; set; }
    public string AnnexBFormUrl { get; set; }
 
+   // External Application Form
+   public bool? ExternalApplicationFormSaved { get; set; }
+   public string ExternalApplicationFormUrl { get; set; }
+
    //school performance ofsted information
    public string SchoolPerformanceAdditionalInformation { get; set; }
 
