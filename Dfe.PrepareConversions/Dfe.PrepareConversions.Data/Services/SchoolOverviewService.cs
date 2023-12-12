@@ -16,6 +16,7 @@ public class SchoolOverviewService
 
    public async Task<SchoolOverview> GetSchoolOverviewByUrn(string urn)
    {
+      // TODO: Technical Debt - enrich
       EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
       SchoolOverview schoolOverview = new()
       {
