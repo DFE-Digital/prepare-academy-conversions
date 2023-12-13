@@ -50,7 +50,8 @@
 
          <table class="govuk-table">
             <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Projects (@Model.ProjectCount)</caption>
-
+                <thead class="govuk-table__head">
+                </thead>
             <tbody class="govuk-table__body">
             @{
                <partial name="Shared/_ProjectListRows" model="Model.Projects" />
