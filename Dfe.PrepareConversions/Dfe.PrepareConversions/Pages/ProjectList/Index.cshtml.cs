@@ -8,6 +8,7 @@ using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -62,7 +63,18 @@ public class IndexModel : PaginatedPageModel
       }
       else
       {
-         return null;
+         var stream = new MemoryStream();
+         var writer = new StreamWriter(stream);
+         writer.Write("");
+         writer.Flush();
+         stream.Position = 0;
+
+         var fileStreamResult = new FileStreamResult(stream, "text/csv")
+         {
+            FileDownloadName = "empty.csv"
+         };
+
+         return fileStreamResult;
       }
    }
 
