@@ -77,5 +77,4 @@ public class IndexModel : PaginatedPageModel
          return fileStreamResult;
       }
    }
-
 }
