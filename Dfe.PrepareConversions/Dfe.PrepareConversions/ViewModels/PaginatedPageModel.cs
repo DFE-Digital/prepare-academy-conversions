@@ -18,4 +18,7 @@ public abstract class PaginatedPageModel : PageModel, IPagination
    public int StartingPage => CurrentPage > 5 ? CurrentPage - 5 : 1;
    public int PreviousPage => CurrentPage - 1;
    public int NextPage => CurrentPage + 1;
+   public int TotalPages => Paging.RecordCount % PageSize == 0
+    ? Paging.RecordCount / PageSize
+    : (Paging.RecordCount / PageSize) + 1;
 }

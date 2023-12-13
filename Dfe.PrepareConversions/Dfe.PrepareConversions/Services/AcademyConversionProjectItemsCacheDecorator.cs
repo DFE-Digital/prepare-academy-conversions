@@ -3,6 +3,7 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.NewProject;
 using Dfe.PrepareConversions.Data.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -26,7 +27,18 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       return await _innerRepository.GetAllProjects(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter, applicationReferences);
    }
-
+   public async Task<ApiResponse<FileStreamResult>> DownloadProjectExport(
+   int page,
+   int count,
+   string titleFilter = "",
+   IEnumerable<string> statusFilters = default,
+   IEnumerable<string> deliveryOfficerFilter = default,
+   IEnumerable<string> regionsFilter = default,
+   IEnumerable<string> applicationReferences = default
+)
+   {
+      return await _innerRepository.DownloadProjectExport(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter, applicationReferences);
+   }
    public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)
    {
       if (_httpContext.Items.ContainsKey(id) && _httpContext.Items[id] is ApiResponse<AcademyConversionProject> cached)
