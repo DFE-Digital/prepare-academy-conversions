@@ -51,24 +51,9 @@
          <table class="govuk-table">
             <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Projects (@Model.ProjectCount)</caption>
 
-            <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-               <th class="govuk-table__header app-!-width-three-fifths">Application information</th>
-               <th class="govuk-table__header govuk-!-text-align-right app-!-width-two-fifths prepare-text-align-right">Project status and dates</th>
-            </tr>
-            </thead>
-
             <tbody class="govuk-table__body">
             @{
-               var index = 0;
-               foreach (ProjectListViewModel project in Model.Projects)
-               {
-                  <partial if="project.IsSponsored" name="Shared/SponsoredProjectListRow" model="project.Row(index)"/>
-                  <partial if="project.IsVoluntary" name="Shared/VoluntaryProjectListRow" model="project.Row(index)"/>
-                  <partial if="project.IsFormAMat" name="Shared/FormAMatProjectListRow" model="project.Row(index)"/>
-
-                  index++;
-               }
+               <partial name="Shared/_ProjectListRows" model="Model.Projects" />
             }
             </tbody>
          </table>
