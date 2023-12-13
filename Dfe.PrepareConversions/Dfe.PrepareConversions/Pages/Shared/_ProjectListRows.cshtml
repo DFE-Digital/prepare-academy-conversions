@@ -23,7 +23,7 @@
                <div>
                   <span id="@("urn-" + projectRow.Index)"><strong>URN:</strong> @projectRow.Item.SchoolURN</span>
                </div>
-               @if (@projectRow.Item.LocalAuthority.IsEmpty() is false)
+               @if (!@projectRow.Item.LocalAuthority.IsEmpty())
                {
                   <div id="@("local-authority-" + projectRow.Index)">
                      <strong>Local authority:</strong> 
