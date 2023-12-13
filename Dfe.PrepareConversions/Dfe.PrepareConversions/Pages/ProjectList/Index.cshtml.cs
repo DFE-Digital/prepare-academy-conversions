@@ -51,4 +51,19 @@ public class IndexModel : PaginatedPageModel
          Filters.AvailableRegions = filterParametersResponse.Body.Regions;
       }
    }
+   public async Task<FileStreamResult> OnGetDownload()
+   {
+      Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
+      ApiResponse<FileStreamResult> response = await _repository.DownloadProjectExport(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions);
+
+      if (response.Success)
+      {
+         return response.Body;
+      }
+      else
+      {
+         return null;
+      }
+   }
+
 }
