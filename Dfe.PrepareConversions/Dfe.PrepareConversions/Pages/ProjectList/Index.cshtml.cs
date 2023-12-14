@@ -49,6 +49,8 @@ public class IndexModel : PaginatedPageModel
          Filters.AvailableStatuses = filterParametersResponse.Body.Statuses.ConvertAll(r => r.ToSentenceCase());
          Filters.AvailableDeliveryOfficers = filterParametersResponse.Body.AssignedUsers;
          Filters.AvailableRegions = filterParametersResponse.Body.Regions;
+         Filters.AvailableLocalAuthorities = filterParametersResponse.Body.LocalAuthorities;
+         Filters.AvailableAdvisoryBoardDates = filterParametersResponse.Body.AdvisoryBoardDates;
       }
    }
 }
