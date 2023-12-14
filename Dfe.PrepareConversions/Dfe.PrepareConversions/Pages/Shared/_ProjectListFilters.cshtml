@@ -141,10 +141,10 @@
                                             foreach (var localAuthority in Model.AvailableLocalAuthorities)
                                             {
                                                 <div class="govuk-checkboxes__item">
-                                                    <input class="govuk-checkboxes__input" id="filter-project-status-@localAuthority.Stub()"
-                                                           name="selectedStatuses" type="checkbox" value="@localAuthority" @(Model.SelectedStatuses.Contains(localAuthority) ? "checked" : null)
-                                                           data-cy="select-projectlist-filter-status-@localAuthority">
-                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-status-@localAuthority.Stub()">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-@localAuthority.Stub()"
+                                                           name="selectedLocalAuthorities" type="checkbox" value="@localAuthority" @(Model.SelectedLocalAuthorities.Contains(localAuthority) ? "checked" : null)
+                                                           data-cy="select-projectlist-filter-local-authority-@localAuthority">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-@localAuthority.Stub()">
                                                         @localAuthority
                                                     </label>
                                                 </div>
@@ -195,10 +195,10 @@
                                         foreach (var boardDates in Model.AvailableAdvisoryBoardDates)
                                         {
                                             <div class="govuk-checkboxes__item">
-                                                <input class="govuk-checkboxes__input" id="filter-project-status-@boardDates.Stub()"
-                                                       name="selectedStatuses" type="checkbox" value="@boardDates" @(Model.SelectedStatuses.Contains(boardDates) ? "checked" : null)
-                                                       data-cy="select-projectlist-filter-status-@boardDates">
-                                                <label class="govuk-label govuk-checkboxes__label" for="filter-project-status-@boardDates.Stub()">
+                                                <input class="govuk-checkboxes__input" id="filter-project-advisory-board-@boardDates.Stub()"
+                                                       name="selectedAdvisoryBoardDates" type="checkbox" value="@boardDates" @(Model.SelectedAdvisoryBoardDates.Contains(boardDates) ? "checked" : null)
+                                                       data-cy="select-projectlist-filter-advisory-board-@boardDates">
+                                                <label class="govuk-label govuk-checkboxes__label" for="filter-project-advisory-board-@boardDates.Stub()">
                                                     @boardDates
                                                 </label>
                                             </div>

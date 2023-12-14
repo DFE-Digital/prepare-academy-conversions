@@ -7,6 +7,7 @@ namespace Dfe.PrepareConversions.Data.Features;
 public interface IApiClient
 {
    Task<HttpResponseMessage> GetAllProjectsAsync(AcademyConversionSearchModel searchModel);
+   Task<HttpResponseMessage> GetAllProjectsV2Async(AcademyConversionSearchModelV2 searchModel);
    Task<HttpResponseMessage> GetProjectByIdAsync(int id);
    Task<HttpResponseMessage> UpdateProjectAsync(int id, UpdateAcademyConversionProject updateProject);
    Task<HttpResponseMessage> GetFilterParametersAsync();
