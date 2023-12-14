@@ -1,7 +1,243 @@
 ﻿@using Dfe.PrepareConversions.Utils
 @model Dfe.PrepareConversions.Models.ProjectList.ProjectListFilters
+<div class="moj-filter">
 
-<details class="govuk-details prepare-project-listing__filters-container" data-module="govuk-details" data-cy="select-projectlist-filter-options" @(Model.IsVisible ? "open" : null)>
+    <div class="moj-filter__header">
+
+        <div class="moj-filter__header-title">
+            <h2 class="govuk-heading-m">Filter</h2>
+        </div>
+
+        <div class="moj-filter__header-action">
+        </div>
+
+    </div>
+
+    <div class="moj-filter__content">
+
+        @*                 <div class="moj-filter__selected">
+
+        <div class="moj-filter__selected-heading">
+
+        <div class="moj-filter__heading-title">
+        <h2 class="govuk-heading-m">Selected filters</h2>
+        </div>
+
+        <div class="moj-filter__heading-action">
+        <p><a class="govuk-link govuk-link--no-visited-state" href="">Clear filters</a></p>
+        </div>
+
+        </div>
+
+        <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Type</h3>
+
+        <ul class="moj-filter-tags">
+
+        <li><a class="moj-filter__tag" href="/path/to/remove/this"><span class="govuk-visually-hidden">Remove this filter</span> Blue</a></li>
+
+        <li><a class="moj-filter__tag" href="/path/to/remove/this"><span class="govuk-visually-hidden">Remove this filter</span> Yellow</a></li>
+
+        </ul>
+
+        <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Status</h3>
+
+        <ul class="moj-filter-tags">
+
+        <li><a class="moj-filter__tag" href="/path/to/remove/this"><span class="govuk-visually-hidden">Remove this filter</span> Completed</a></li>
+
+        </ul>
+
+        </div> *@
+
+        <div class="moj-filter__options">
+            <form method="get" class="form">
+                <button class="govuk-button" data-module="govuk-button" data-test-id="submit-button">
+                    Apply filters
+                </button>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-label--m" for="projects">
+                        Search for projects
+                    </label>
+                    <span class="govuk-hint">You can search by school name, academy name, trust name, URN and UKPRN</span>
+                    <input id="Title" name="Title" asp-for="Title" type="text" class="govuk-input" aria-describedby="filter-project-title-hint"
+                           data-cy="select-projectlist-filter-title">
+
+                </div>
+
+                <div class="govuk-form-group">
+
+                    <fieldset class="govuk-fieldset">
+                        <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
+                            <div class="govuk-accordion__section">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+                                            Assigned to
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+                                    @{
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="filter-delivery-officer-not-assigned"
+                                                   name="selectedOfficers" type="checkbox" value="Not assigned" @(Model.SelectedOfficers.Contains("Not assigned") ? "checked" : null)
+                                                   data-cy="select-projectlist-filter-officer-not-assigned">
+                                            <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-not-assigned">
+                                                Not assigned
+                                            </label>
+                                        </div>
+                                        foreach (var officer in Model.AvailableDeliveryOfficers)
+                                        {
+                                            <div class="govuk-checkboxes__item">
+                                                <input class="govuk-checkboxes__input" id="filter-delivery-officer-@officer.Stub()"
+                                                       name="selectedOfficers" type="checkbox" value="@officer" @(Model.SelectedOfficers.Contains(officer) ? "checked" : null)
+                                                       data-cy="select-projectlist-filter-officer-@officer">
+                                                <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-@officer.Stub()">
+                                                    @officer
+                                                </label>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            <div class="govuk-accordion__section">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+                                            Region
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+                                    <div class="govuk-checkboxes govuk-checkboxes--small govuk-clearfix" data-module="govuk-checkboxes">
+                                        @{
+                                            foreach (var region in Model.AvailableRegions)
+                                            {
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-region-@region.Stub()"
+                                                           name="selectedregions" type="checkbox" value="@region" @(Model.SelectedRegions.Contains(region) ? "checked" : null)
+                                                           data-cy="select-projectlist-filter-region-@region">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-region-@region.Stub()">
+                                                        @region
+                                                    </label>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="govuk-accordion__section">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+                                            Local Authority
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+                                    <div class="govuk-checkboxes govuk-checkboxes--small govuk-clearfix" data-module="govuk-checkboxes">
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="type" name="type" type="checkbox" value="1" checked>
+                                            <label class="govuk-label govuk-checkboxes__label" for="type">
+                                                Blue (18)
+                                            </label>
+
+                                        </div>
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="type-2" name="type" type="checkbox" value="2" checked>
+                                            <label class="govuk-label govuk-checkboxes__label" for="type-2">
+                                                Yellow (5)
+                                            </label>
+
+                                        </div>
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="type-3" name="type" type="checkbox" value="3">
+                                            <label class="govuk-label govuk-checkboxes__label" for="type-3">
+                                                Red (2)
+                                            </label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="govuk-accordion__section">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+                                            Project status
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+                                    <div class="govuk-checkboxes govuk-checkboxes--small govuk-clearfix" data-module="govuk-checkboxes">
+                                        @{
+                                            foreach (var status in Model.AvailableStatuses)
+                                            {
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-status-@status.Stub()"
+                                                           name="selectedStatuses" type="checkbox" value="@status" @(Model.SelectedStatuses.Contains(status) ? "checked" : null)
+                                                           data-cy="select-projectlist-filter-status-@status">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-status-@status.Stub()">
+                                                        @status
+                                                    </label>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="govuk-accordion__section">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+                                            Advisory board date
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+                                    <div class="govuk-checkboxes govuk-checkboxes--small govuk-clearfix" data-module="govuk-checkboxes">
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="type" name="type" type="checkbox" value="1" checked>
+                                            <label class="govuk-label govuk-checkboxes__label" for="type">
+                                                Blue (18)
+                                            </label>
+
+                                        </div>
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="type-2" name="type" type="checkbox" value="2" checked>
+                                            <label class="govuk-label govuk-checkboxes__label" for="type-2">
+                                                Yellow (5)
+                                            </label>
+
+                                        </div>
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="type-3" name="type" type="checkbox" value="3">
+                                            <label class="govuk-label govuk-checkboxes__label" for="type-3">
+                                                Red (2)
+                                            </label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </fieldset>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+@* <details class="govuk-details prepare-project-listing__filters-container" data-module="govuk-details" data-cy="select-projectlist-filter-options" @(Model.IsVisible ? "open" : null)>
    <summary class="govuk-details__summary prepare-project-listing__fitlers-details-summary" data-cy="select-projectlist-filter-expand">
       <span class="govuk-details__summary-text govuk-button govuk-button--secondary prepare-project-listing__button--main">
          Filter projects
@@ -26,7 +262,7 @@
                          data-cy="select-projectlist-filter-title">
                </div>
             </div>
-            @*REGIONS*@
+
             <div class="govuk-grid-column-one-quarter">
                <div class="govuk-form-group">
                   <fieldset class="govuk-fieldset" aria-describedby="filter-project-status-hint">
@@ -58,7 +294,7 @@
                   </fieldset>
                </div>
             </div>
-            @*STATUS*@
+
             <div class="govuk-grid-column-one-quarter">
                <div class="govuk-form-group">
                   <fieldset class="govuk-fieldset" aria-describedby="filter-project-status-hint">
@@ -90,7 +326,7 @@
                   </fieldset>
                </div>
             </div>
-            @*DELIVERY OFFICERS*@
+
             <div class="govuk-grid-column-one-quarter">
                <div class="govuk-form-group">
                   <fieldset class="govuk-fieldset" aria-describedby="filter-delivery-officer-hint">
@@ -145,4 +381,4 @@
          </div>
       </form>
    </div>
-</details>
+</details> *@
