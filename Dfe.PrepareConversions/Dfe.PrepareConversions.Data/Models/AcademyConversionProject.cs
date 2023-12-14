@@ -49,6 +49,7 @@ public class AcademyConversionProject
    public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
    public bool? ConversionSupportGrantAmountChanged { get; set; }
    public DateTime? DaoPackSentDate { get; set; }
+   public string Region { get; set; }
 
    // Annex B
    public bool? AnnexBFormReceived { get; set; }
