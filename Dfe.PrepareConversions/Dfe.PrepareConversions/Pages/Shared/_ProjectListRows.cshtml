@@ -20,38 +20,38 @@
                      <a id="@("school-name-" + projectRow.Index)" class="govuk-link" asp-page="@link" asp-route-id="@projectRow.Item.Id">@projectRow.Item.SchoolName</a>
                   </strong>
                </div>
-               <div>
+                <div class="govuk-!-margin-top-1">
                   <span id="@("urn-" + projectRow.Index)"><strong>URN:</strong> @projectRow.Item.SchoolURN</span>
                </div>
                @if (!@projectRow.Item.LocalAuthority.IsEmpty())
                {
-                  <div id="@("local-authority-" + projectRow.Index)">
+                  <div id="@("local-authority-" + projectRow.Index)" class="govuk-!-margin-top-1">
                      <strong>Local authority:</strong> 
                      @projectRow.Item.LocalAuthority
                   </div>
                }
-               <div id="@("region-" + projectRow.Index)">
+               <div id="@("region-" + projectRow.Index)" class="govuk-!-margin-top-1">
                   <strong>Region:</strong> 
                   @projectRow.Item.Region
                </div>
-               <div id="@("incoming-trust-" + projectRow.Index)">
+               <div id="@("incoming-trust-" + projectRow.Index)" class="govuk-!-margin-top-1">
                   <strong>Incoming trust:</strong>
                     @projectRow.Item.NameOfTrust.ToTitleCase()
                </div>
-               <div id="@("advisory-board-date-" + projectRow.Index)">
+               <div id="@("advisory-board-date-" + projectRow.Index)" class="govuk-!-margin-top-1">
                   <strong>Advisory board date:</strong>
                      <span if="projectRow.Item.HeadTeacherBoardDate.IsEmpty()" class="empty">Unconfirmed</span>
                     <span if="projectRow.Item.HeadTeacherBoardDate.IsPresent()">@projectRow.Item.HeadTeacherBoardDate</span>
                </div>
                @if (!isFormAMat)
                {
-                  <div id="@("assigned-to-" + projectRow.Index)" class="do">
+                    <div id="@("assigned-to-" + projectRow.Index)" class="do govuk-!-margin-top-1">
                      <strong>Assigned to:</strong>
                      <span if="projectRow.Item.AssignedUserFullName.IsEmpty()" class="empty">Unassigned</span>
                      <strong if="projectRow.Item.AssignedUserFullName.IsPresent()">@projectRow.Item.AssignedUserFullName</strong>
                   </div>
                }
-               <div>
+                <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
                   <strong class="govuk-tag govuk-tag--@projectRow.Item.Status.Colour" id="project-status-@projectRow.Item.Id">@projectRow.Item.Status.Value</strong>
                </div>
             </td>
