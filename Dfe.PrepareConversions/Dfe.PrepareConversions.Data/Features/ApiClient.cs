@@ -69,7 +69,7 @@ public class ApiClient : IApiClient
 
       return await AcademisationClient.PutAsync(string.Format(PathFor.SetExternalApplicationForm, id), JsonContent.Create(payload));
    }
-   public async Task<HttpResponseMessage> SetSchoolOverview(int id, UpdateSchoolOverview updatedSchoolOverview)
+   public async Task<HttpResponseMessage> SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview)
    {
       return await AcademisationClient.PutAsync(string.Format(PathFor.SetSchoolOverview, id), JsonContent.Create(updatedSchoolOverview));
    }

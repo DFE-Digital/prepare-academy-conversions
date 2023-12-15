@@ -86,7 +86,7 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       await _innerRepository.SetProjectExternalApplicationForm(id, externalApplicationFormSaved, externalApplicationFormUrl);
    }
-   public async Task SetSchoolOverview(int id, UpdateSchoolOverview updatedSchoolOverview)
+   public async Task SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview)
    {
       await _innerRepository.SetSchoolOverview(id, updatedSchoolOverview);
    }

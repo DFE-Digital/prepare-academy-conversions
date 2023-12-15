@@ -1,6 +1,6 @@
 ﻿namespace Dfe.PrepareConversions.Data.Models
 {
-   public record UpdateSchoolOverview(
+   public record SetSchoolOverviewModel(
       string PublishedAdmissionNumber,
       string ViabilityIssues,
       string FinancialDeficit,

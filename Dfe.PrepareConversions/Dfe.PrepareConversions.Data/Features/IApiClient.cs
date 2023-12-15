@@ -15,5 +15,5 @@ public interface IApiClient
    Task<HttpResponseMessage> AddProjectNote(int id, AddProjectNote projectNote);
 
    Task<HttpResponseMessage> SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl);
-   Task<HttpResponseMessage> SetSchoolOverview(int id, UpdateSchoolOverview updatedSchoolOverview);
+   Task<HttpResponseMessage> SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview);
 }

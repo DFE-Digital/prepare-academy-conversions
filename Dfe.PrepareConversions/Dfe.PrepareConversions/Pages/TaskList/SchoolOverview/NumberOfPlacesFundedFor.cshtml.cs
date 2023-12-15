@@ -25,7 +25,6 @@ public class NumberOfPlacesFundedFor : BaseAcademyConversionProjectPageModel
    {
       await base.OnGetAsync(id);
 
-
       return Page();
    }
 
@@ -38,7 +37,7 @@ public class NumberOfPlacesFundedFor : BaseAcademyConversionProjectPageModel
 
       if (ModelState.IsValid)
       {
-         UpdateSchoolOverview updatedSchoolOverview = CreateUpdateSchoolOverview(Project);
+         SetSchoolOverviewModel updatedSchoolOverview = CreateUpdateSchoolOverview(Project);
 
          await _repository.SetSchoolOverview(id, updatedSchoolOverview);
 
@@ -48,9 +47,9 @@ public class NumberOfPlacesFundedFor : BaseAcademyConversionProjectPageModel
       _errorService.AddErrors(ModelState.Keys, ModelState);
       return await base.OnGetAsync(id);
    }
-   public static UpdateSchoolOverview CreateUpdateSchoolOverview(ProjectViewModel projectViewModel)
+   public static SetSchoolOverviewModel CreateUpdateSchoolOverview(ProjectViewModel projectViewModel)
    {
-      return new UpdateSchoolOverview(
+      return new SetSchoolOverviewModel(
           projectViewModel.PublishedAdmissionNumber,
           projectViewModel.ViabilityIssues,
           projectViewModel.FinancialDeficit,
