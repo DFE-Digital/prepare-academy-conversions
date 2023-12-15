@@ -10,6 +10,9 @@ public class SchoolOverviewViewModel
    public string PercentageSchoolFull { get; set; }
    public string SchoolCapacity { get; set; }
    public string PublishedAdmissionNumber { get; set; }
+   public string NumberOfPlacesFundedFor { get; set; }
+   public string NumberOfResidentialPlaces { get; set; }
+   public string NumberOfResidentialPlacesFundedFor { get; set; }
    public string PercentageFreeSchoolMeals { get; set; }
    public string PartOfPfiScheme { get; set; }
    public string PfiSchemeDetails { get; set; }

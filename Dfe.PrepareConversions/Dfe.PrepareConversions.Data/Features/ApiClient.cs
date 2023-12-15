@@ -1,7 +1,6 @@
 ﻿using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Microsoft.FeatureManagement;
-using System.Dynamic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -69,5 +68,9 @@ public class ApiClient : IApiClient
       };
 
       return await AcademisationClient.PutAsync(string.Format(PathFor.SetExternalApplicationForm, id), JsonContent.Create(payload));
+   }
+   public async Task<HttpResponseMessage> SetSchoolOverview(int id, UpdateSchoolOverview updatedSchoolOverview)
+   {
+      return await AcademisationClient.PutAsync(string.Format(PathFor.SetSchoolOverview, id), JsonContent.Create(updatedSchoolOverview));
    }
 }

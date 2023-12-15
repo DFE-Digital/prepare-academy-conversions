@@ -203,4 +203,9 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       HttpResponseMessage result = await _apiClient.SetProjectExternalApplicationForm(id, externalApplicationFormSaved, externalApplicationFormUrl);
       if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
+   public async Task SetSchoolOverview(int id, UpdateSchoolOverview updatedSchoolOverview)
+   {
+      HttpResponseMessage result = await _apiClient.SetSchoolOverview(id, updatedSchoolOverview);
+      if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+   }
 }

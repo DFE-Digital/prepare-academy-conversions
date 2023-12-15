@@ -18,4 +18,5 @@ public class PathFor
    public static string GetFilterParameters => "/legacy/projects/status";
    public static string AddProjectNote => "/legacy/project/{0}/notes";
    public static string SetExternalApplicationForm => "/conversion-project/{0}/setExternalApplicationForm";
+   public static string SetSchoolOverview => "/conversion-project/{0}/setSchoolOverview";
 }
