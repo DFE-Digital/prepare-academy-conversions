@@ -31,8 +31,9 @@
                   </div>
                }
                <div id="@("region-" + projectRow.Index)" class="govuk-!-margin-top-1">
-                  <strong>Region:</strong> 
-                  @projectRow.Item.Region
+                  <strong>Region:</strong>
+                    <span if="projectRow.Item.Region.IsEmpty()" class="empty">Empty</span>
+                    <strong if="projectRow.Item.Region.IsPresent()">@projectRow.Item.Region</strong>
                </div>
                <div id="@("incoming-trust-" + projectRow.Index)" class="govuk-!-margin-top-1">
                   <strong>Incoming trust:</strong>
