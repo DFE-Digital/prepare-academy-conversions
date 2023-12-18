@@ -36,7 +36,8 @@
                </div>
                <div id="@("incoming-trust-" + projectRow.Index)" class="govuk-!-margin-top-1">
                   <strong>Incoming trust:</strong>
-                    @projectRow.Item.NameOfTrust.ToTitleCase()
+                    <span if="projectRow.Item.NameOfTrust.IsEmpty()" class="empty">Empty</span>
+                    <strong if="projectRow.Item.NameOfTrust.IsPresent()">@projectRow.Item.NameOfTrust</strong>
                </div>
                <div id="@("advisory-board-date-" + projectRow.Index)" class="govuk-!-margin-top-1">
                   <strong>Advisory board date:</strong>
