@@ -31,24 +31,26 @@
                   </div>
                }
                <div id="@("region-" + projectRow.Index)" class="govuk-!-margin-top-1">
-                  <strong>Region:</strong> 
-                  @projectRow.Item.Region
+                     <strong>Region:</strong>
+                     <span if="projectRow.Item.Region.IsEmpty()" class="empty">Empty</span>
+                     <span if="projectRow.Item.Region.IsPresent()">@projectRow.Item.Region</span>
                </div>
                <div id="@("incoming-trust-" + projectRow.Index)" class="govuk-!-margin-top-1">
-                  <strong>Incoming trust:</strong>
-                    @projectRow.Item.NameOfTrust.ToTitleCase()
+                     <strong>Incoming trust:</strong>
+                     <span if="projectRow.Item.NameOfTrust.IsEmpty()" class="empty">Empty</span>
+                     <span if="projectRow.Item.NameOfTrust.IsPresent()">@projectRow.Item.NameOfTrust?.ToTitleCase()</span>
                </div>
                <div id="@("advisory-board-date-" + projectRow.Index)" class="govuk-!-margin-top-1">
-                  <strong>Advisory board date:</strong>
+                     <strong>Advisory board date:</strong>
                      <span if="projectRow.Item.HeadTeacherBoardDate.IsEmpty()" class="empty">Unconfirmed</span>
-                    <span if="projectRow.Item.HeadTeacherBoardDate.IsPresent()">@projectRow.Item.HeadTeacherBoardDate</span>
+                     <span if="projectRow.Item.HeadTeacherBoardDate.IsPresent()">@projectRow.Item.HeadTeacherBoardDate</span>
                </div>
                @if (!isFormAMat)
                {
                     <div id="@("assigned-to-" + projectRow.Index)" class="do govuk-!-margin-top-1">
                      <strong>Assigned to:</strong>
                      <span if="projectRow.Item.AssignedUserFullName.IsEmpty()" class="empty">Unassigned</span>
-                     <strong if="projectRow.Item.AssignedUserFullName.IsPresent()">@projectRow.Item.AssignedUserFullName</strong>
+                     <span if="projectRow.Item.AssignedUserFullName.IsPresent()">@projectRow.Item.AssignedUserFullName</span>
                   </div>
                }
                 <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
