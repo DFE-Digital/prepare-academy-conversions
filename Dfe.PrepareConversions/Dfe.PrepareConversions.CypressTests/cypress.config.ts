@@ -1,11 +1,12 @@
-/* eslint-env node */
+
 
 import { defineConfig } from 'cypress'
 import { generateZapReport } from './cypress/plugins/generateZapReport'
 
 export default defineConfig({
   video: false,
-  retries: 2,
+  retries: 0,
+  watchForFileChanges: false,
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.

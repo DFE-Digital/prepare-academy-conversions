@@ -13,7 +13,7 @@ import LocalAuthorityInfomation from "../../pages/localAuthorityInformation";
 import Performance from "../../pages/performance";
 
 
-describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
+describe('Sponsored conversion journey', () => {
 
    const currentDate = new Date();
    const nextYearDate = new Date();
@@ -72,7 +72,7 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
       projectTaskList.getNotificationMessage().should('contain.text', testData.projectAssignment.assignedOfficerMessage);
       projectTaskList.getAssignedUser().should('contain.text', testData.projectAssignment.deliveryOfficer);
       projectList.filterProjectList(testData.projectName);
-      projectList.getNthProjectDeliveryOfficer().should('contain.text', testData.projectAssignment.deliveryOfficer);
+      projectList.getNthProjectDeliveryOfficer(testData.projectAssignment.deliveryOfficer).should('contain.value', testData.projectAssignment.deliveryOfficer);
    })
 
    it('TC02: School Overview', () => {
