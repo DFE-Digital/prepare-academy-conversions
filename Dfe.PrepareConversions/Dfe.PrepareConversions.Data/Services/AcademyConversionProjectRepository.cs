@@ -142,9 +142,9 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
      IEnumerable<string> regionsFilter = default,
      IEnumerable<string> applicationReferences = default)
    {
-      AcademyConversionSearchModel searchModel = new() { TitleFilter = titleFilter, Page = page, Count = count };
+      AcademyConversionSearchModelV2 searchModel = new() { TitleFilter = titleFilter, Page = page, Count = count };
 
-      ProcessFilters(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter, applicationReferences);
+      ProcessFiltersV2(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter, applicationReferences);
 
       HttpResponseMessage response = await _apiClient.DownloadProjectExport(searchModel);
       if (!response.IsSuccessStatusCode)

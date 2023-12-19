@@ -29,7 +29,7 @@ public class ApiClient : IApiClient
    {
       return await AcademisationClient.PostAsync(PathFor.GetAllProjects, JsonContent.Create(searchModel));
    }
-   public async Task<HttpResponseMessage> DownloadProjectExport(AcademyConversionSearchModel searchModel)
+   public async Task<HttpResponseMessage> DownloadProjectExport(AcademyConversionSearchModelV2 searchModel)
    {
       return await AcademisationClient.PostAsync(PathFor.DownloadProjectExport, JsonContent.Create(searchModel));
    }
