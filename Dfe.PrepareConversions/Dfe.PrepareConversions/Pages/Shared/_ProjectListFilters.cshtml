@@ -34,14 +34,14 @@
                 <ul class="moj-filter-tags">
                     @{
                         foreach (var officer in Model.SelectedOfficers)
-                        {
+                                {
                             <li><a class="moj-filter__tag" href="/path/to/remove/this"><span class="govuk-visually-hidden">Remove this filter</span> @officer.Stub()</a></li>
                         }
                     }
 
                 </ul>
             }
-            @if (Model.SelectedOfficers.Length > 0)
+            @if (Model.SelectedRegions.Length > 0)
             {
                 <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Region</h3>
 
