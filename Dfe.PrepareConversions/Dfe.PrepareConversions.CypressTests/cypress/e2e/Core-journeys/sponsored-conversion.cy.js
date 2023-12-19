@@ -59,7 +59,7 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
    }
 
    before(() => {
-      cy.callAcademisationApi('POST', `cypress-data/add-sponsored-project.cy`, "{}")
+     // Do the spin up a project journey
    })
 
    beforeEach(() => {

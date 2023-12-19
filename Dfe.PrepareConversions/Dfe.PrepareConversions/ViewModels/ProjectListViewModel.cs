@@ -17,6 +17,7 @@ public class ProjectListViewModel: ProjectTypeBase
    public string AssignedUserFullName { get; init; }
    public DateTime? CreatedOn { get; init; }
    public string TypeAndRoute { get; init; }
+   public string Region { get; set; }
 
    public bool ShowHtbDate => string.IsNullOrWhiteSpace(HeadTeacherBoardDate) is false;
    public bool ShowProposedOpeningDate => string.IsNullOrWhiteSpace(ProposedAcademyOpeningDate) is false;

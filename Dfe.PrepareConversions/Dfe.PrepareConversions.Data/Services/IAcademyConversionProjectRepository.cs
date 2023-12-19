@@ -1,5 +1,6 @@
 ﻿using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.NewProject;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,6 +17,15 @@ public interface IAcademyConversionProjectRepository
       IEnumerable<string> regionsFilter = default,
       IEnumerable<string> applicationReferences = default
    );
+   Task<ApiResponse<FileStreamResult>> DownloadProjectExport(
+   int page,
+   int count,
+   string titleFilter = "",
+   IEnumerable<string> statusFilters = default,
+   IEnumerable<string> deliveryOfficerFilter = default,
+   IEnumerable<string> regionsFilter = default,
+   IEnumerable<string> applicationReferences = default
+);
 
    Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjectsV2(
    int page,
