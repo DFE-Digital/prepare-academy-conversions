@@ -480,3 +480,9 @@ backend.vars
 
 # sonar cloud
 /Dfe.PrepareConversions/.sonarlint
+
+# Cypress
+videos/
+screenshots/
+downloads/
+Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress.env.json
