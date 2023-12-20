@@ -1,13 +1,12 @@
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Utils;
 using System;
 using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.ViewModels;
 
-public class ProjectViewModel: ProjectTypeBase
+public class ProjectViewModel : ProjectTypeBase
 {
    public ProjectViewModel(AcademyConversionProject project)
    {
@@ -169,6 +168,7 @@ public class ProjectViewModel: ProjectTypeBase
    public string PfiSchemeDetails { get; set; }
    public string ViabilityIssues { get; set; }
    public string FinancialDeficit { get; set; }
+   public int NumberOfPlacesFundedFor { get; set; }
    public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string MemberOfParliamentNameAndParty { get; set; }

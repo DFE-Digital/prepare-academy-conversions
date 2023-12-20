@@ -71,6 +71,22 @@ public class ApiClient : IApiClient
    }
    public async Task<HttpResponseMessage> SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview)
    {
-      return await AcademisationClient.PutAsync(string.Format(PathFor.SetSchoolOverview, id), JsonContent.Create(updatedSchoolOverview));
+      var payload = new
+      {
+         id = updatedSchoolOverview.Id,
+         publishedAdmissionNumber = updatedSchoolOverview.PublishedAdmissionNumber ?? string.Empty,
+         viabilityIssues = updatedSchoolOverview.ViabilityIssues ?? string.Empty,
+         partOfPfiScheme = updatedSchoolOverview.PartOfPfiScheme ?? string.Empty,
+         financialDeficit = updatedSchoolOverview.FinancialDeficit ?? string.Empty,
+         numberOfPlacesFundedFor = updatedSchoolOverview.NumberOfPlacesFundedFor ?? 0,
+         pfiSchemeDetails = updatedSchoolOverview.PfiSchemeDetails ?? string.Empty,
+         distanceFromSchoolToTrustHeadquarters = updatedSchoolOverview.DistanceFromSchoolToTrustHeadquarters ?? 0,
+         distanceFromSchoolToTrustHeadquartersAdditionalInformation = updatedSchoolOverview.DistanceFromSchoolToTrustHeadquartersAdditionalInformation ?? string.Empty,
+         memberOfParliamentNameAndParty = updatedSchoolOverview.MemberOfParliamentNameAndParty ?? string.Empty
+      };
+
+      var formattedString = string.Format(PathFor.SetSchoolOverview, id);
+      return await AcademisationClient.PutAsync(formattedString, JsonContent.Create(payload));
    }
+
 }
