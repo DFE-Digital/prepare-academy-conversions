@@ -78,10 +78,11 @@ Cypress.Commands.add('generateProjectTempBtn', () => {
 })
 
 Cypress.Commands.add('enterDate', (idSelector, day, month, year) => {
-    cy.get(`[id*="${idSelector}-day"]`).as('day');
-    cy.get(`[id*="${idSelector}-month"]`).as('month');
-    cy.get(`[id*="${idSelector}-year"]`).as('year');
+    cy.get(`[id*="${idSelector}-day"]`).as('day')
+    cy.get(`[id*="${idSelector}-month"]`).as('month')
+    cy.get(`[id*="${idSelector}-year"]`).as('year')
 
+<<<<<<< HEAD
     // Day
     cy.get('@day').should('be.visible').invoke('val', '').type(day);
 
@@ -92,6 +93,25 @@ Cypress.Commands.add('enterDate', (idSelector, day, month, year) => {
     cy.get('@year').should('be.visible').invoke('val', '').type(year);
 });
 
+=======
+    cy.get(`@day`).then((dayLoc) => {
+        dayLoc.should('be.visible')
+        dayLoc.clear()
+        dayLoc.type(day)
+    })
+    cy.get(`@month`).then((monthLoc) => {
+        monthLoc.should('be.visible')
+        monthLoc.clear()
+        monthLoc.type(month)
+    })
+    cy.get(`@year`).then((yearLoc) => {
+        yearLoc.should('be.visible')
+        yearLoc.clear()
+        yearLoc.type(year)
+    })
+})
+
+>>>>>>> parent of 7239cca2 (refactored_cypress_tests)
 // No Radio Btn
 Cypress.Commands.add('NoRadioBtn', () => {
     cy.get('[data-cy="select-radio-no" i]')

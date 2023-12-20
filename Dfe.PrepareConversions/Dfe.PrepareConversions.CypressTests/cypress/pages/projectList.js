@@ -14,9 +14,9 @@ export default class projectList extends BasePage {
         return cy.get(`[id="school-name-${n}"]`)
     }
 
-    static getNthProjectDeliveryOfficer(deliveryOfficer ) {
+    static getNthProjectDeliveryOfficer(n = 0) {
         this.checkProjectListPage()
-        return cy.get(`[data-cy="select-projectlist-filter-officer-${deliveryOfficer}"]`)
+        return cy.get(`[id="delivery-officer-${n}"]`)
     }
 
     static filterProjectList(titleFilter) {
