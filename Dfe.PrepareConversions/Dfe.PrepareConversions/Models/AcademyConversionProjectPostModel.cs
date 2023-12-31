@@ -100,7 +100,7 @@ public class AcademyConversionProjectPostModel
 
    [BindProperty(Name = "conversion-support-grant-change-reason")]
    [DisplayFormat(ConvertEmptyStringToNull = false)]
-   
+
    public string ConversionSupportGrantChangeReason { get; set; }
    [BindProperty(Name = "conversion-support-grant-type")]
    [DisplayFormat(ConvertEmptyStringToNull = false)]
@@ -123,6 +123,8 @@ public class AcademyConversionProjectPostModel
 
    [BindProperty(Name = "viability-issues")]
    public string ViabilityIssues { get; set; }
+   [BindProperty(Name = "number-of-places-funded-for")]
+   public int? NumberOfPlacesFundedFor { get; set; }
 
    [BindProperty(Name = "financial-deficit")]
    public string FinancialDeficit { get; set; }

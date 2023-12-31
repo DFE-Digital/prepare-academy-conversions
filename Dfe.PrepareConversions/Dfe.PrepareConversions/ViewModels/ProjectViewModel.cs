@@ -62,6 +62,7 @@ public class ProjectViewModel : ProjectTypeBase
       PfiSchemeDetails = project.PfiSchemeDetails;
       PublishedAdmissionNumber = project.PublishedAdmissionNumber;
       ViabilityIssues = project.ViabilityIssues;
+      NumberOfPlacesFundedFor = project.NumberOfPlacesFundedFor;
       FinancialDeficit = project.FinancialDeficit;
       DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters;
       DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
@@ -168,7 +169,7 @@ public class ProjectViewModel : ProjectTypeBase
    public string PfiSchemeDetails { get; set; }
    public string ViabilityIssues { get; set; }
    public string FinancialDeficit { get; set; }
-   public int NumberOfPlacesFundedFor { get; set; }
+   public decimal? NumberOfPlacesFundedFor { get; set; }
    public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string MemberOfParliamentNameAndParty { get; set; }

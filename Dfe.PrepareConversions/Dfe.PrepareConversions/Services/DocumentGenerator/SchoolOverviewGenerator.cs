@@ -26,6 +26,8 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
                new TextElement { Value = "Percentage of free school meals at the school (%FSM)", Bold = true }, new TextElement { Value = document.PercentageFreeSchoolMeals }
             },
             new[] { new TextElement { Value = "Viability issues", Bold = true }, new TextElement { Value = document.ViabilityIssues } },
+            // TODO: Only if SEN
+            new[] { new TextElement { Value = "Number of places funded for", Bold = true }, new TextElement { Value = document.NumberOfPlacesFundedFor } },
             new[] { new TextElement { Value = "Financial deficit", Bold = true }, new TextElement { Value = document.FinancialDeficit } },
             new[] { new TextElement { Value = "Private finance initiative (PFI) scheme", Bold = true }, new TextElement { Value = document.PartOfPfiScheme } },
             new[] { new TextElement { Value = "Is the school linked to a diocese?", Bold = true }, new TextElement { Value = document.IsSchoolLinkedToADiocese } },

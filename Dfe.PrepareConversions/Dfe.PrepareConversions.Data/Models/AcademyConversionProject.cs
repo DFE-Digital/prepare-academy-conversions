@@ -63,6 +63,7 @@ public class AcademyConversionProject
    public string PartOfPfiScheme { get; set; }
    public string PfiSchemeDetails { get; set; }
    public string ViabilityIssues { get; set; }
+   public decimal? NumberOfPlacesFundedFor { get; set; }
    public string FinancialDeficit { get; set; }
    public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
@@ -119,5 +120,5 @@ public class AcademyConversionProject
 
    // notes
    public ICollection<ProjectNote> Notes { get; set; } = new List<ProjectNote>();
-   
+
 }

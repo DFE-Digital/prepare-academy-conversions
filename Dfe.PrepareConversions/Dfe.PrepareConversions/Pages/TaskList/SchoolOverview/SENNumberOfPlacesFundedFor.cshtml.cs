@@ -9,32 +9,32 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.SchoolOverview;
 
-public class NumberOfPlacesFundedFor : BaseAcademyConversionProjectPageModel
+public class SENNumberOfPlacesFundedFor : BaseAcademyConversionProjectPageModel
 {
    private readonly ErrorService _errorService;
 
-   public NumberOfPlacesFundedFor(IAcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
+   public SENNumberOfPlacesFundedFor(IAcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
    {
       _errorService = errorService;
    }
    public bool ShowError => _errorService.HasErrors();
 
-   [BindProperty]
-   public int NumberOfPlaces { get; set; }
+   [BindProperty(Name = "number-of-places-funded-for")]
+   public decimal? NumberOfPlacesFundedFor { get; set; }
 
    public override async Task<IActionResult> OnGetAsync(int id)
    {
       await base.OnGetAsync(id);
-
+      NumberOfPlacesFundedFor = Project.NumberOfPlacesFundedFor ?? null;
       return Page();
    }
 
    public override async Task<IActionResult> OnPostAsync(int id)
    {
       await base.OnGetAsync(id);
-      if (NumberOfPlaces.IsInvalid())
+      if (NumberOfPlacesFundedFor is null)
       {
-         ModelState.AddModelError(nameof(NumberOfPlaces), "You must enter the number of places funded for");
+         ModelState.AddModelError(nameof(NumberOfPlacesFundedFor), "You must enter the number of places funded for");
       }
 
 
@@ -42,7 +42,7 @@ public class NumberOfPlacesFundedFor : BaseAcademyConversionProjectPageModel
       {
          SetSchoolOverviewModel updatedSchoolOverview = CreateUpdateSchoolOverview(Project);
          updatedSchoolOverview.Id = id;
-         updatedSchoolOverview.NumberOfPlacesFundedFor = NumberOfPlaces;
+         updatedSchoolOverview.NumberOfPlacesFundedFor = NumberOfPlacesFundedFor;
          await _repository.SetSchoolOverview(id, updatedSchoolOverview);
 
          return RedirectToPage(Links.SchoolOverviewSection.ConfirmSchoolOverview.Page, new { id });

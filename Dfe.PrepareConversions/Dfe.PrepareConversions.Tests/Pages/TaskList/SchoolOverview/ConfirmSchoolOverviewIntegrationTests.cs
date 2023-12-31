@@ -37,6 +37,7 @@ public class ConfirmSchoolOverviewIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#percentage-free-school-meals")!.TextContent.Should().Be($"{establishment.Census.PercentageFsm}%");
       Document.QuerySelector("#part-of-pfi")!.TextContent.Should().Be(project.PartOfPfiScheme);
       Document.QuerySelector("#viability-issues")!.TextContent.Should().Be(project.ViabilityIssues);
+      Document.QuerySelector("#number-of-places-funded-for")!.TextContent.Should().Be(project.NumberOfPlacesFundedFor);
       Document.QuerySelector("#financial-deficit")!.TextContent.Should().Be(project.FinancialDeficit);
       Document.QuerySelector("#diocesan-multi-academy-trust")!.TextContent.Should().Be($"Yes, {establishment.Diocese.Name}");
 
@@ -115,6 +116,7 @@ public class ConfirmSchoolOverviewIntegrationTests : BaseIntegrationTests
          project.PublishedAdmissionNumber = null;
          project.PartOfPfiScheme = "No";
          project.PfiSchemeDetails = null;
+         project.NumberOfPlacesFundedFor = null;
          project.ViabilityIssues = null;
          project.FinancialDeficit = null;
          project.DistanceFromSchoolToTrustHeadquarters = null;

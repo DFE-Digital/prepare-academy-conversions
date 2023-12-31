@@ -78,7 +78,7 @@ public class ApiClient : IApiClient
          viabilityIssues = updatedSchoolOverview.ViabilityIssues ?? string.Empty,
          partOfPfiScheme = updatedSchoolOverview.PartOfPfiScheme ?? string.Empty,
          financialDeficit = updatedSchoolOverview.FinancialDeficit ?? string.Empty,
-         numberOfPlacesFundedFor = updatedSchoolOverview.NumberOfPlacesFundedFor ?? 0,
+         numberOfPlacesFundedFor = updatedSchoolOverview.NumberOfPlacesFundedFor ?? null,
          pfiSchemeDetails = updatedSchoolOverview.PfiSchemeDetails ?? string.Empty,
          distanceFromSchoolToTrustHeadquarters = updatedSchoolOverview.DistanceFromSchoolToTrustHeadquarters ?? 0,
          distanceFromSchoolToTrustHeadquartersAdditionalInformation = updatedSchoolOverview.DistanceFromSchoolToTrustHeadquartersAdditionalInformation ?? string.Empty,

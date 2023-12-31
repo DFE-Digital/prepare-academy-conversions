@@ -2,7 +2,6 @@
 using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
-using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -46,6 +45,7 @@ public class SchoolOverviewViewComponent : ViewComponent
          PercentageSchoolFull = schoolOverview.NumberOnRoll.AsPercentageOf(schoolOverview.SchoolCapacity),
          SchoolCapacity = schoolOverview.SchoolCapacity?.ToString(),
          PublishedAdmissionNumber = project.PublishedAdmissionNumber,
+         NumberOfPlacesFundedFor = project.NumberOfPlacesFundedFor,
          PercentageFreeSchoolMeals = !string.IsNullOrEmpty(schoolOverview.PercentageFreeSchoolMeals) ? $"{schoolOverview.PercentageFreeSchoolMeals}%" : "",
          PartOfPfiScheme = project.PartOfPfiScheme,
          PfiSchemeDetails = project.PfiSchemeDetails,

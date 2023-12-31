@@ -40,6 +40,7 @@ public class UpdateAcademyConversionProject
    // School Overview
    public string PublishedAdmissionNumber { get; set; }
    public string ViabilityIssues { get; set; }
+   public int? NumberOfPlacesFundedFor { get; set; }
    public string FinancialDeficit { get; set; }
    public bool? IsThisADiocesanTrust { get; set; }
    public string PartOfPfiScheme { get; set; }

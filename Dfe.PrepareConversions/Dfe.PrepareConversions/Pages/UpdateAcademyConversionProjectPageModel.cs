@@ -3,7 +3,6 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
-using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -19,7 +18,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
    {
       _errorService = errorService;
    }
-   
+
 
    [BindProperty]
    public AcademyConversionProjectPostModel AcademyConversionProject { get; set; }
@@ -49,7 +48,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate.HasValue &&
          AcademyConversionProject.LocalAuthorityInformationTemplateSentDate > AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate)
       {
-         _errorService.AddError("returnedDateBeforeSentDateError","The returned template date be must on or after sent date");
+         _errorService.AddError("returnedDateBeforeSentDateError", "The returned template date be must on or after sent date");
       }
 
       if (AcademyConversionProject.EndOfCurrentFinancialYear.HasValue &&
@@ -116,7 +115,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
       }
 
       // Else return default £25k
-         return 25000;
+      return 25000;
    }
 
    protected UpdateAcademyConversionProject Build()
@@ -151,6 +150,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          SchoolAndTrustInformationSectionComplete = AcademyConversionProject.SchoolAndTrustInformationSectionComplete,
          PublishedAdmissionNumber = AcademyConversionProject.PublishedAdmissionNumber,
          ViabilityIssues = AcademyConversionProject.ViabilityIssues,
+         NumberOfPlacesFundedFor = AcademyConversionProject.NumberOfPlacesFundedFor,
          FinancialDeficit = AcademyConversionProject.FinancialDeficit,
          IsThisADiocesanTrust = AcademyConversionProject.IsThisADiocesanTrust,
          DistanceFromSchoolToTrustHeadquarters = AcademyConversionProject.DistanceFromSchoolToTrustHeadquarters,
