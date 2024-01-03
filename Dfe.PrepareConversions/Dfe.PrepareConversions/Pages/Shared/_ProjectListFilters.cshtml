@@ -35,7 +35,7 @@
                     @{
                         foreach (var officer in Model.SelectedOfficers)
                                 {
-                            <li><a class="moj-filter__tag" href="/path/to/remove/this"><span class="govuk-visually-hidden">Remove this filter</span> @officer.Stub()</a></li>
+                            <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&selectedOfficers=@officer"><span class="govuk-visually-hidden">Remove this filter</span> @officer.Stub()</a></li>
                         }
                     }
 
@@ -49,7 +49,7 @@
                     @{
                         foreach (var region in Model.SelectedRegions)
                         {
-                            <li><a class="moj-filter__tag" href="/path/to/remove/this"><span class="govuk-visually-hidden">Remove this filter</span> @region.Stub()</a></li>
+                            <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedRegions=@region"><span class="govuk-visually-hidden">Remove this filter</span> @region.Stub()</a></li>
                         }
                     }
 
@@ -63,7 +63,7 @@
                     @{
                         foreach (var localAuthority in Model.SelectedLocalAuthorities)
                         {
-                            <li><a class="moj-filter__tag" href="/path/to/remove/this"><span class="govuk-visually-hidden">Remove this filter</span> @localAuthority.Stub()</a></li>
+                            <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedLocalAuthorities=@localAuthority"><span class="govuk-visually-hidden">Remove this filter</span> @localAuthority.Stub()</a></li>
                         }
                     }
 
@@ -77,7 +77,7 @@
                 @{
                     foreach (var status in Model.SelectedStatuses)
                     {
-                        <li><a class="moj-filter__tag" href="/path/to/remove/this"><span class="govuk-visually-hidden">Remove this filter</span> @status.Stub()</a></li>
+                            <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedStatuses=@status"><span class="govuk-visually-hidden">Remove this filter</span> @status.Stub()</a></li>
                     }
                 }
 
@@ -91,7 +91,7 @@
                     @{
                         foreach (var date in Model.SelectedAdvisoryBoardDates)
                         {
-                            <li><a class="moj-filter__tag" href="/path/to/remove/this"><span class="govuk-visually-hidden">Remove this filter</span> @date.Stub()</a></li>
+                            <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedAdvisoryBoardDates=@date"><span class="govuk-visually-hidden">Remove this filter</span> @date.Stub()</a></li>
                         }
                     }
 
