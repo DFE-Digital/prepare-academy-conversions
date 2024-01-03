@@ -28,6 +28,8 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
             new[] { new TextElement { Value = "Viability issues", Bold = true }, new TextElement { Value = document.ViabilityIssues } },
             // TODO: Only if SEN
             new[] { new TextElement { Value = "Number of places funded for", Bold = true }, new TextElement { Value = document.NumberOfPlacesFundedFor } },
+            new[] { new TextElement { Value = "Number of residential places", Bold = true }, new TextElement { Value = document.NumberOfResidentialPlaces } },
+            new[] { new TextElement { Value = "Number of funded residential places", Bold = true }, new TextElement { Value = document.NumberOfFundedResidentialPlaces } },
             new[] { new TextElement { Value = "Financial deficit", Bold = true }, new TextElement { Value = document.FinancialDeficit } },
             new[] { new TextElement { Value = "Private finance initiative (PFI) scheme", Bold = true }, new TextElement { Value = document.PartOfPfiScheme } },
             new[] { new TextElement { Value = "Is the school linked to a diocese?", Bold = true }, new TextElement { Value = document.IsSchoolLinkedToADiocese } },

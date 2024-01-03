@@ -9,32 +9,32 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.SchoolOverview;
 
-public class SENNumberOfPlacesFundedFor : BaseAcademyConversionProjectPageModel
+public class SENNumberOfResidentialPlaces : BaseAcademyConversionProjectPageModel
 {
    private readonly ErrorService _errorService;
 
-   public SENNumberOfPlacesFundedFor(IAcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
+   public SENNumberOfResidentialPlaces(IAcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
    {
       _errorService = errorService;
    }
    public bool ShowError => _errorService.HasErrors();
 
-   [BindProperty(Name = "number-of-places-funded-for")]
-   public decimal? NumberOfPlacesFundedFor { get; set; }
+   [BindProperty(Name = "number-of-residential-places")]
+   public decimal? NumberOfResidentialPlaces { get; set; }
 
    public override async Task<IActionResult> OnGetAsync(int id)
    {
       await base.OnGetAsync(id);
-      NumberOfPlacesFundedFor = Project.NumberOfPlacesFundedFor ?? null;
+      NumberOfResidentialPlaces = Project.NumberOfResidentialPlaces ?? null;
       return Page();
    }
 
    public override async Task<IActionResult> OnPostAsync(int id)
    {
       await base.OnGetAsync(id);
-      if (NumberOfPlacesFundedFor is null)
+      if (NumberOfResidentialPlaces is null)
       {
-         ModelState.AddModelError(nameof(NumberOfPlacesFundedFor), "You must enter the number of places funded for");
+         ModelState.AddModelError(nameof(NumberOfResidentialPlaces), "You must enter the number of places funded for");
       }
 
 
@@ -42,7 +42,7 @@ public class SENNumberOfPlacesFundedFor : BaseAcademyConversionProjectPageModel
       {
          SetSchoolOverviewModel updatedSchoolOverview = CreateUpdateSchoolOverview(Project);
          updatedSchoolOverview.Id = id;
-         updatedSchoolOverview.NumberOfPlacesFundedFor = NumberOfPlacesFundedFor;
+         updatedSchoolOverview.NumberOfResidentialPlaces = NumberOfResidentialPlaces;
          await _repository.SetSchoolOverview(id, updatedSchoolOverview);
 
          return RedirectToPage(Links.SchoolOverviewSection.ConfirmSchoolOverview.Page, new { id });

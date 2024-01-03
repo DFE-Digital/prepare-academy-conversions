@@ -121,6 +121,8 @@ public static class Links
       public static readonly LinkItem PublishedAdmissionNumber = AddLinkItem(page: "/TaskList/SchoolOverview/PublishedAdmissionNumber");
       public static readonly LinkItem ViabilityIssues = AddLinkItem(page: "/TaskList/SchoolOverview/ViabilityIssues");
       public static readonly LinkItem NumberOfPlacesFundedFor = AddLinkItem(page: "/TaskList/SchoolOverview/SENNumberOfPlacesFundedFor");
+      public static readonly LinkItem NumberOfResidentialPlaces = AddLinkItem(page: "/TaskList/SchoolOverview/SENNumberOfResidentialPlaces");
+      public static readonly LinkItem NumberOfFundedResidentialPlaces = AddLinkItem(page: "/TaskList/SchoolOverview/SENNumberOfFundedResidentialPlaces");
       public static readonly LinkItem FinancialDeficit = AddLinkItem(page: "/TaskList/SchoolOverview/FinancialDeficit");
       public static readonly LinkItem DistanceFromTrustHeadquarters = AddLinkItem(page: "/TaskList/SchoolOverview/DistanceFromTrustHeadquarters");
       public static readonly LinkItem MPDetails = AddLinkItem(page: "/TaskList/SchoolOverview/MPDetails");

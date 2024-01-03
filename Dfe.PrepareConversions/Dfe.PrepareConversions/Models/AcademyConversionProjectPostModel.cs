@@ -125,6 +125,10 @@ public class AcademyConversionProjectPostModel
    public string ViabilityIssues { get; set; }
    [BindProperty(Name = "number-of-places-funded-for")]
    public int? NumberOfPlacesFundedFor { get; set; }
+   [BindProperty(Name = "number-of-residential-places")]
+   public int? NumberOResidentialPlaces { get; set; }
+   [BindProperty(Name = "number-of-funded-residential-places")]
+   public int? NumberOfFundedResidentialPlaces { get; set; }
 
    [BindProperty(Name = "financial-deficit")]
    public string FinancialDeficit { get; set; }

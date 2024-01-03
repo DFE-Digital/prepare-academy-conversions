@@ -119,6 +119,8 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#part-of-pfi")!.TextContent.Should().Be(project.PartOfPfiScheme);
       Document.QuerySelector("#viability-issues")!.TextContent.Should().Be(project.ViabilityIssues);
       Document.QuerySelector("#number-of-places-funded-for")!.TextContent.Should().Be(project.NumberOfPlacesFundedFor);
+      Document.QuerySelector("#number-of-residential-places")!.TextContent.Should().Be(project.NumberOfResidentialPlaces);
+      Document.QuerySelector("#number-of-funded-residential-places")!.TextContent.Should().Be(project.NumberOfFundedResidentialPlaces);
       Document.QuerySelector("#financial-deficit")!.TextContent.Should().Be(project.FinancialDeficit);
       Document.QuerySelector("#diocesan-multi-academy-trust")!.TextContent.Should().Be($"Yes, {establishment.Diocese.Name}");
       Document.QuerySelector("#distance-to-trust-headquarters")!.TextContent.Should().Be($"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles");

@@ -11,8 +11,8 @@ public class SchoolOverviewViewModel
    public string SchoolCapacity { get; set; }
    public string PublishedAdmissionNumber { get; set; }
    public decimal? NumberOfPlacesFundedFor { get; set; }
-   public string NumberOfResidentialPlaces { get; set; }
-   public string NumberOfResidentialPlacesFundedFor { get; set; }
+   public decimal? NumberOfResidentialPlaces { get; set; }
+   public decimal? NumberOfFundedResidentialPlaces { get; set; }
    public string PercentageFreeSchoolMeals { get; set; }
    public string PartOfPfiScheme { get; set; }
    public string PfiSchemeDetails { get; set; }

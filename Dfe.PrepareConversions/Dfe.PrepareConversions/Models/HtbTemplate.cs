@@ -110,6 +110,10 @@ public class HtbTemplate
    public string ViabilityIssues { get; set; }
    [DocumentText("NumberOfPlacesFundedFor")]
    public string NumberOfPlacesFundedFor { get; set; }
+   [DocumentText("NumberOfResidentialPlaces")]
+   public string NumberOfResidentialPlaces { get; set; }
+   [DocumentText("NumberOfFundedResidentialPlaces")]
+   public string NumberOfFundedResidentialPlaces { get; set; }
 
    [DocumentText("FinancialDeficit")]
    public string FinancialDeficit { get; set; }
@@ -256,6 +260,8 @@ public class HtbTemplate
          PartOfPfiScheme = project.PartOfPfiScheme,
          ViabilityIssues = project.ViabilityIssues,
          NumberOfPlacesFundedFor = project.NumberOfPlacesFundedFor.ToStringOrDefault(),
+         NumberOfResidentialPlaces = project.NumberOfResidentialPlaces.ToStringOrDefault(),
+         NumberOfFundedResidentialPlaces = project.NumberOfFundedResidentialPlaces.ToStringOrDefault(),
          FinancialDeficit = project.FinancialDeficit,
          IsSchoolLinkedToADiocese = schoolOverview.IsSchoolLinkedToADiocese,
          DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters != null

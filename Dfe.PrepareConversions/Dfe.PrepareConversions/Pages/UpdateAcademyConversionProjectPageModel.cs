@@ -151,6 +151,8 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          PublishedAdmissionNumber = AcademyConversionProject.PublishedAdmissionNumber,
          ViabilityIssues = AcademyConversionProject.ViabilityIssues,
          NumberOfPlacesFundedFor = AcademyConversionProject.NumberOfPlacesFundedFor,
+         NumberOfResidentialPlaces = AcademyConversionProject.NumberOResidentialPlaces,
+         NumberOfFundedResidentialPlaces = AcademyConversionProject.NumberOfFundedResidentialPlaces,
          FinancialDeficit = AcademyConversionProject.FinancialDeficit,
          IsThisADiocesanTrust = AcademyConversionProject.IsThisADiocesanTrust,
          DistanceFromSchoolToTrustHeadquarters = AcademyConversionProject.DistanceFromSchoolToTrustHeadquarters,

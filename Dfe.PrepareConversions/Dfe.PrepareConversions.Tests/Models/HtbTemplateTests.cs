@@ -93,7 +93,9 @@ public class HtbTemplateTests
          Assert.Equal(_template.PercentageFreeSchoolMeals, $"{_schoolOverview.PercentageFreeSchoolMeals}%");
          Assert.Equal(_template.PartOfPfiScheme, _project.PartOfPfiScheme);
          Assert.Equal(_template.ViabilityIssues, _project.ViabilityIssues);
-         Assert.Equal(_template.NumberOfPlacesFundedFor, _project.NumberOfPlacesFundedFor);
+         Assert.Equal(_template.NumberOfPlacesFundedFor, _project.NumberOfPlacesFundedFor.ToString());
+         Assert.Equal(_template.NumberOfResidentialPlaces, _project.NumberOfResidentialPlaces.ToString());
+         Assert.Equal(_template.NumberOfFundedResidentialPlaces, _project.NumberOfFundedResidentialPlaces.ToString());
          Assert.Equal(_template.FinancialDeficit, _project.FinancialDeficit);
          Assert.Equal(_template.IsSchoolLinkedToADiocese, _schoolOverview.IsSchoolLinkedToADiocese);
          Assert.Equal(_template.DistanceFromSchoolToTrustHeadquarters, $"{_project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()} miles");
@@ -179,6 +181,8 @@ public class HtbTemplateTests
          Assert.Null(template.PartOfPfiScheme);
          Assert.Null(template.ViabilityIssues);
          Assert.Null(template.NumberOfPlacesFundedFor);
+         Assert.Null(template.NumberOfResidentialPlaces);
+         Assert.Null(template.NumberOfFundedResidentialPlaces);
          Assert.Null(template.FinancialDeficit);
          Assert.Null(template.IsSchoolLinkedToADiocese);
          Assert.Null(template.DistanceFromSchoolToTrustHeadquarters);

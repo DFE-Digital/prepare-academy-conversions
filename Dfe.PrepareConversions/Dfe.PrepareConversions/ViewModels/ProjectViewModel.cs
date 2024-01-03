@@ -63,6 +63,8 @@ public class ProjectViewModel : ProjectTypeBase
       PublishedAdmissionNumber = project.PublishedAdmissionNumber;
       ViabilityIssues = project.ViabilityIssues;
       NumberOfPlacesFundedFor = project.NumberOfPlacesFundedFor;
+      NumberOfResidentialPlaces = project.NumberOfResidentialPlaces;
+      NumberOfFundedResidentialPlaces = project.NumberOfFundedResidentialPlaces;
       FinancialDeficit = project.FinancialDeficit;
       DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters;
       DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
@@ -170,6 +172,8 @@ public class ProjectViewModel : ProjectTypeBase
    public string ViabilityIssues { get; set; }
    public string FinancialDeficit { get; set; }
    public decimal? NumberOfPlacesFundedFor { get; set; }
+   public decimal? NumberOfResidentialPlaces { get; set; }
+   public decimal? NumberOfFundedResidentialPlaces { get; set; }
    public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string MemberOfParliamentNameAndParty { get; set; }

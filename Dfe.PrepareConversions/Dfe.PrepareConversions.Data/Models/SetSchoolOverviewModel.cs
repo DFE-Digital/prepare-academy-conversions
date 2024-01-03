@@ -7,6 +7,8 @@
       public string ViabilityIssues { get; set; }
       public string FinancialDeficit { get; set; }
       public decimal? NumberOfPlacesFundedFor { get; set; }
+      public decimal? NumberOfResidentialPlaces { get; set; }
+      public decimal? NumberOfFundedResidentialPlaces { get; set; }
       public string PartOfPfiScheme { get; set; }
       public string PfiSchemeDetails { get; set; }
       public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
@@ -21,6 +23,8 @@
           string viabilityIssues,
           string financialDeficit,
           decimal? numberOfPlacesFundedFor,
+          decimal? numberOfResidentialPlaces,
+          decimal? numberOfFundedResidentialPlaces,
           string partOfPfiScheme,
           string pfiSchemeDetails,
           decimal? distanceFromSchoolToTrustHeadquarters,
@@ -32,6 +36,8 @@
          ViabilityIssues = viabilityIssues;
          FinancialDeficit = financialDeficit;
          NumberOfPlacesFundedFor = numberOfPlacesFundedFor;
+         NumberOfResidentialPlaces = numberOfResidentialPlaces;
+         NumberOfFundedResidentialPlaces = numberOfFundedResidentialPlaces;
          PartOfPfiScheme = partOfPfiScheme;
          PfiSchemeDetails = pfiSchemeDetails;
          DistanceFromSchoolToTrustHeadquarters = distanceFromSchoolToTrustHeadquarters;

@@ -46,6 +46,8 @@ public class SchoolOverviewViewComponent : ViewComponent
          SchoolCapacity = schoolOverview.SchoolCapacity?.ToString(),
          PublishedAdmissionNumber = project.PublishedAdmissionNumber,
          NumberOfPlacesFundedFor = project.NumberOfPlacesFundedFor,
+         NumberOfResidentialPlaces = project.NumberOfResidentialPlaces,
+         NumberOfFundedResidentialPlaces = project.NumberOfFundedResidentialPlaces,
          PercentageFreeSchoolMeals = !string.IsNullOrEmpty(schoolOverview.PercentageFreeSchoolMeals) ? $"{schoolOverview.PercentageFreeSchoolMeals}%" : "",
          PartOfPfiScheme = project.PartOfPfiScheme,
          PfiSchemeDetails = project.PfiSchemeDetails,
