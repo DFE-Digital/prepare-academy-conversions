@@ -37,9 +37,9 @@ public class ConfirmSchoolOverviewIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#percentage-free-school-meals")!.TextContent.Should().Be($"{establishment.Census.PercentageFsm}%");
       Document.QuerySelector("#part-of-pfi")!.TextContent.Should().Be(project.PartOfPfiScheme);
       Document.QuerySelector("#viability-issues")!.TextContent.Should().Be(project.ViabilityIssues);
-      Document.QuerySelector("#number-of-places-funded-for")!.TextContent.Should().Be(project.NumberOfPlacesFundedFor);
-      Document.QuerySelector("#number-of-residential-places")!.TextContent.Should().Be(project.NumberOfResidentialPlaces);
-      Document.QuerySelector("#number-of-funded-residential-places")!.TextContent.Should().Be(project.NumberOfFundedResidentialPlaces);
+      Document.QuerySelector("#number-of-places-funded-for")!.TextContent.Should().Be(project.NumberOfPlacesFundedFor.ToSafeString());
+      Document.QuerySelector("#number-of-residential-places")!.TextContent.Should().Be(project.NumberOfResidentialPlaces.ToSafeString());
+      Document.QuerySelector("#number-of-funded-residential-places")!.TextContent.Should().Be(project.NumberOfFundedResidentialPlaces.ToSafeString());
       Document.QuerySelector("#financial-deficit")!.TextContent.Should().Be(project.FinancialDeficit);
       Document.QuerySelector("#diocesan-multi-academy-trust")!.TextContent.Should().Be($"Yes, {establishment.Diocese.Name}");
 
