@@ -37,7 +37,7 @@ public class IndexModel : PaginatedPageModel
       Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
 
       ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response =
-         await _repository.GetAllProjects(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions);
+         await _repository.GetAllProjectsV2(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedAdvisoryBoardDates);
 
       Paging = response.Body?.Paging;
       Projects = response.Body?.Data.Select(ProjectListHelper.Build).ToList();
@@ -50,6 +50,8 @@ public class IndexModel : PaginatedPageModel
          Filters.AvailableStatuses = filterParametersResponse.Body.Statuses.ConvertAll(r => r.ToSentenceCase());
          Filters.AvailableDeliveryOfficers = filterParametersResponse.Body.AssignedUsers;
          Filters.AvailableRegions = filterParametersResponse.Body.Regions;
+         Filters.AvailableLocalAuthorities = filterParametersResponse.Body.LocalAuthorities;
+         Filters.AvailableAdvisoryBoardDates = filterParametersResponse.Body.AdvisoryBoardDates;
       }
    }
    public async Task<FileStreamResult> OnGetDownload()
