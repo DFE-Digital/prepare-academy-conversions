@@ -59,6 +59,7 @@ public class SchoolOverviewViewComponent : ViewComponent
          DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
          ParliamentaryConstituency = schoolOverview.ParliamentaryConstituency,
          MemberOfParliamentNameAndParty = project.MemberOfParliamentNameAndParty,
+         IsSpecial = schoolOverview.SchoolType.ToLower().Contains("special"),
       };
 
       return View(viewModel);

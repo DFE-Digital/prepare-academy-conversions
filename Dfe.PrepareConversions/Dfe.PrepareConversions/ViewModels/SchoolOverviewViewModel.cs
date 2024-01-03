@@ -25,4 +25,5 @@ public class SchoolOverviewViewModel
    public string ParliamentaryConstituency { get; set; }
    public string MemberOfParliamentNameAndParty { get; set; }
    public bool? SchoolOverviewSectionComplete { get; set; }
+   public bool IsSpecial { get; set; }
 }
