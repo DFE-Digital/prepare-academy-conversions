@@ -148,6 +148,8 @@ public class AcademyConversionProjectPostModel
    [ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
    public bool? SchoolOverviewSectionComplete { get; set; }
 
+   public string NumberOfPlacesSchoolHasFundingFor { get; set; }
+
    //school performance ofsted information
    [BindProperty(Name = "school-performance-additional-information")]
    [DisplayFormat(ConvertEmptyStringToNull = false)]

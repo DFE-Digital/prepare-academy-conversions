@@ -48,6 +48,8 @@ public class UpdateAcademyConversionProject
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string MemberOfParliamentNameAndParty { get; set; }
    public bool? SchoolOverviewSectionComplete { get; set; }
+   public string NumberOfPlacesSchoolHasFundingFor { get; set; }
+
 
    // Annex B
    public bool? AnnexBFormReceived { get; set; }

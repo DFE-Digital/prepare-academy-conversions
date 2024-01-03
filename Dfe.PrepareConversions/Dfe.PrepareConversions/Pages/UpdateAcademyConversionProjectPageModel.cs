@@ -180,7 +180,8 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          KeyStage2PerformanceAdditionalInformation = AcademyConversionProject.KeyStage2PerformanceAdditionalInformation,
          KeyStage4PerformanceAdditionalInformation = AcademyConversionProject.KeyStage4PerformanceAdditionalInformation,
          KeyStage5PerformanceAdditionalInformation = AcademyConversionProject.KeyStage5PerformanceAdditionalInformation,
-         DaoPackSentDate = AcademyConversionProject.DaoPackSentDate == default(DateTime) ? null : AcademyConversionProject.DaoPackSentDate
+         DaoPackSentDate = AcademyConversionProject.DaoPackSentDate == default(DateTime) ? null : AcademyConversionProject.DaoPackSentDate,
+         NumberOfPlacesSchoolHasFundingFor = AcademyConversionProject.NumberOfPlacesSchoolHasFundingFor
       };
    }
 

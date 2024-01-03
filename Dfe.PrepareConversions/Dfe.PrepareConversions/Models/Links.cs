@@ -124,6 +124,7 @@ public static class Links
       public static readonly LinkItem DistanceFromTrustHeadquarters = AddLinkItem(page: "/TaskList/SchoolOverview/DistanceFromTrustHeadquarters");
       public static readonly LinkItem MPDetails = AddLinkItem(page: "/TaskList/SchoolOverview/MPDetails");
       public static readonly LinkItem PartOfPfiScheme = AddLinkItem(page: "/TaskList/SchoolOverview/PartOfPfiScheme");
+      public static readonly LinkItem PlacesSchoolHasFundingForNumber = AddLinkItem(page: "/TaskList/SchoolOverview/PlacesSchoolHasFundingForNumber");
    }
 
    public static class RationaleSection

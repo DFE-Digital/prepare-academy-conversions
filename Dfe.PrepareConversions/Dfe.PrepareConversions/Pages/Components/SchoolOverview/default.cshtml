@@ -27,4 +27,5 @@
    <govuk-summary-list-row name="distance-to-trust-headquarters" label="Distance from the converting school to the trust or other schools in the trust" key-width="@kw" value="@distance" additional-text="@Model.DistanceFromSchoolToTrustHeadquartersAdditionalInformation" asp-page="@Links.SchoolOverviewSection.DistanceFromTrustHeadquarters.Page" asp-route-id="@Model.Id" hidden-text="distance to trust headquarters"/>
    <govuk-summary-list-row name="parliamentary-constituency" label="Parliamentary constituency" key-width="@kw" asp-for="ParliamentaryConstituency"/>
    <govuk-summary-list-row name="member-of-parliament-name-and-party" label="MP name and political party" asp-for="MemberOfParliamentNameAndParty" key-width="@kw" asp-page="@Links.SchoolOverviewSection.MPDetails.Page" asp-route-id="@Model.Id" hidden-text="MP name" />
+    <govuk-summary-list-row name="places-school-has-funding-for-number" label="Places school has funding for number" asp-for="PlacesSchoolHasFundingForNumber" key-width="@kw" asp-page="@Links.SchoolOverviewSection.PlacesSchoolHasFundingForNumber.Page" asp-route-id="@Model.Id" hidden-text="Places school has funding for" />
 </dl>
