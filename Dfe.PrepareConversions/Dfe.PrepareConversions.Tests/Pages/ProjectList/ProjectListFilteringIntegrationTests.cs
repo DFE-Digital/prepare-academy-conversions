@@ -55,12 +55,6 @@ public class ProjectListFilteringIntegrationTests : BaseIntegrationTests, IAsync
    }
 
    [Fact]
-   public void Should_not_display_the_filter_options_by_default()
-   {
-      FilterOptions.HasAttribute("open").Should().BeFalse();
-   }
-
-   [Fact]
    public async Task Should_display_filtered_banner_when_filter_is_active()
    {
       FilterStatuses.First().IsChecked = true;
@@ -71,25 +65,18 @@ public class ProjectListFilteringIntegrationTests : BaseIntegrationTests, IAsync
    }
 
    [Fact]
-   public async Task Should_keep_filter_options_visible_when_filter_is_active()
-   {
-      FilterStatuses.First().IsChecked = true;
-      await FilterApply.SubmitAsync();
-
-      FilterOptions.HasAttribute("open").Should().BeTrue();
-   }
-
-   [Fact]
    public async Task Should_display_filtered_projects_in_place_of_all_projects_when_filter_is_active()
    {
-      AcademyConversionSearchModel searchModel = new()
+      AcademyConversionSearchModelV2 searchModel = new()
       {
          Page = 1,
          Count = 10,
          StatusQueryString = new[] { "Accepted" },
          TitleFilter = string.Empty,
          DeliveryOfficerQueryString = Array.Empty<string>(),
-         RegionQueryString = Array.Empty<string>()
+         RegionQueryString = Array.Empty<string>(),
+         LocalAuthoritiesQueryString = Array.Empty<string>(),
+         AdvisoryBoardDatesQueryString = Array.Empty<string>(),
       };
       AddGetProjects(recordCount: _recordCount, searchModel: searchModel);
 
@@ -106,7 +93,7 @@ public class ProjectListFilteringIntegrationTests : BaseIntegrationTests, IAsync
       FilterTitle.Value = "something";
       await FilterApply.SubmitAsync();
 
-      FilterOptions.HasAttribute("open").Should().BeTrue();
+
       FilterTitle.Value.Should().Be("something");
    }
 

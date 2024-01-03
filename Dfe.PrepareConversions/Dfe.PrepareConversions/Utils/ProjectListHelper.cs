@@ -25,7 +25,8 @@ namespace Dfe.PrepareConversions.Utils
             Status = MapProjectStatus(academyConversionProject.ProjectStatus),
             AssignedUserFullName = academyConversionProject.AssignedUser?.FullName,
             CreatedOn = academyConversionProject.CreatedOn,
-            TypeAndRoute = academyConversionProject.AcademyTypeAndRoute
+            TypeAndRoute = academyConversionProject.AcademyTypeAndRoute,
+            Region = academyConversionProject.Region
          };
       }
 

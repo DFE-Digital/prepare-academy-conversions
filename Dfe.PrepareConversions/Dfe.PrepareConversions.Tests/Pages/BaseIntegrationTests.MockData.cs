@@ -22,7 +22,7 @@ public abstract partial class BaseIntegrationTests
 
    protected IEnumerable<AcademyConversionProject> AddGetProjects(Action<AcademyConversionProject> postSetup = null,
                                                                   int? recordCount = null,
-                                                                  AcademyConversionSearchModel searchModel = null)
+                                                                  AcademyConversionSearchModelV2 searchModel = null)
    {
       List<AcademyConversionProject> projects = _fixture
          .Build<AcademyConversionProject>()
@@ -41,17 +41,19 @@ public abstract partial class BaseIntegrationTests
          Paging = new ApiV2PagingInfo { RecordCount = recordCount ?? projects.Count, Page = 0 }
       };
 
-      searchModel ??= new AcademyConversionSearchModel
+      searchModel ??= new AcademyConversionSearchModelV2
       {
          Page = 1,
          Count = 10,
          TitleFilter = null,
          StatusQueryString = Array.Empty<string>(),
          DeliveryOfficerQueryString = Array.Empty<string>(),
-         RegionQueryString = Array.Empty<string>()
+         RegionQueryString = Array.Empty<string>(),
+         LocalAuthoritiesQueryString = Array.Empty<string>(),
+         AdvisoryBoardDatesQueryString = Array.Empty<string>()
       };
 
-      _factory.AddPostWithJsonRequest(PathFor.GetAllProjects, searchModel, response);
+      _factory.AddPostWithJsonRequest(PathFor.GetAllProjectsV2, searchModel, response);
       return projects;
    }
 

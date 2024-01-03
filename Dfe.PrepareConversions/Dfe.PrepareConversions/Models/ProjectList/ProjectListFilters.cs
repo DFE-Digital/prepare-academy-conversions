@@ -14,12 +14,17 @@ public class ProjectListFilters
    public const string FilterStatuses = nameof(FilterStatuses);
    public const string FilterOfficers = nameof(FilterOfficers);
    public const string FilterRegions = nameof(FilterRegions);
+   public const string FilterLocalAuthorities = nameof(FilterLocalAuthorities);
+   public const string FilterAdvisoryBoardDates = nameof(FilterAdvisoryBoardDates);
 
    private IDictionary<string, object?> _store = null!;
 
    public List<string> AvailableStatuses { get; set; } = new();
    public List<string> AvailableDeliveryOfficers { get; set; } = new();
    public List<string> AvailableRegions { get; set; } = new();
+
+   public List<string> AvailableLocalAuthorities { get; set; } = new();
+   public List<string> AvailableAdvisoryBoardDates { get; set; } = new();
 
    [BindProperty]
    public string? Title { get; set; }
@@ -33,10 +38,18 @@ public class ProjectListFilters
    [BindProperty]
    public string[] SelectedRegions { get; set; } = Array.Empty<string>();
 
+   [BindProperty]
+   public string[] SelectedLocalAuthorities { get; set; } = Array.Empty<string>();
+
+   [BindProperty]
+   public string[] SelectedAdvisoryBoardDates { get; set; } = Array.Empty<string>();
+
    public bool IsVisible => string.IsNullOrWhiteSpace(Title) is false ||
                             SelectedStatuses.Length > 0 ||
                             SelectedOfficers.Length > 0 ||
-                            SelectedRegions.Length > 0;
+                            SelectedRegions.Length > 0 ||
+                              SelectedLocalAuthorities.Length > 0 ||
+                              SelectedAdvisoryBoardDates.Length > 0;
 
    public ProjectListFilters PersistUsing(IDictionary<string, object?> store)
    {
@@ -46,6 +59,8 @@ public class ProjectListFilters
       SelectedStatuses = Get(FilterStatuses);
       SelectedOfficers = Get(FilterOfficers);
       SelectedRegions = Get(FilterRegions);
+      SelectedLocalAuthorities = Get(FilterLocalAuthorities);
+      SelectedAdvisoryBoardDates = Get(FilterAdvisoryBoardDates);
 
       return this;
    }
@@ -62,6 +77,8 @@ public class ProjectListFilters
          SelectedStatuses = Array.Empty<string>();
          SelectedOfficers = Array.Empty<string>();
          SelectedRegions = Array.Empty<string>();
+         SelectedLocalAuthorities = Array.Empty<string>();
+         SelectedAdvisoryBoardDates = Array.Empty<string>();
 
          return;
       }
@@ -69,7 +86,9 @@ public class ProjectListFilters
       bool activeFilterChanges = query.ContainsKey(nameof(Title)) ||
                                  query.ContainsKey(nameof(SelectedStatuses)) ||
                                  query.ContainsKey(nameof(SelectedOfficers)) ||
-                                 query.ContainsKey(nameof(SelectedRegions));
+                                 query.ContainsKey(nameof(SelectedRegions)) ||
+                                 query.ContainsKey(nameof(SelectedLocalAuthorities)) ||
+                                 query.ContainsKey(nameof(SelectedAdvisoryBoardDates));
 
       if (activeFilterChanges)
       {
@@ -77,6 +96,8 @@ public class ProjectListFilters
          SelectedStatuses = Cache(FilterStatuses, GetFromQuery(nameof(SelectedStatuses)));
          SelectedOfficers = Cache(FilterOfficers, GetFromQuery(nameof(SelectedOfficers)));
          SelectedRegions = Cache(FilterRegions, GetFromQuery(nameof(SelectedRegions)));
+         SelectedLocalAuthorities = Cache(FilterLocalAuthorities, GetFromQuery(nameof(SelectedLocalAuthorities)));
+         SelectedAdvisoryBoardDates = Cache(FilterAdvisoryBoardDates, GetFromQuery(nameof(SelectedAdvisoryBoardDates)));
       }
       else
       {
@@ -84,6 +105,8 @@ public class ProjectListFilters
          SelectedStatuses = Get(FilterStatuses, true);
          SelectedOfficers = Get(FilterOfficers, true);
          SelectedRegions = Get(FilterRegions, true);
+         SelectedLocalAuthorities = Get(FilterLocalAuthorities, true);
+         SelectedAdvisoryBoardDates = Get(FilterAdvisoryBoardDates, true);
       }
 
       string[] GetFromQuery(string key)
@@ -118,6 +141,8 @@ public class ProjectListFilters
       Cache(FilterStatuses, default);
       Cache(FilterOfficers, default);
       Cache(FilterRegions, default);
+      Cache(FilterLocalAuthorities, default);
+      Cache(FilterAdvisoryBoardDates, default);
    }
 
    /// <summary>
