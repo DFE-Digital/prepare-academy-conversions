@@ -83,6 +83,17 @@ public class ProjectListFilters
          return;
       }
 
+      if (query.ContainsKey("remove"))
+      {
+         SelectedStatuses = GetAndRemove(FilterStatuses, GetFromQuery(nameof(SelectedStatuses)), true);
+         SelectedOfficers = GetAndRemove(FilterOfficers, GetFromQuery(nameof(SelectedOfficers)), true);
+         SelectedRegions = GetAndRemove(FilterRegions, GetFromQuery(nameof(SelectedRegions)), true);
+         SelectedLocalAuthorities = GetAndRemove(FilterLocalAuthorities, GetFromQuery(nameof(SelectedLocalAuthorities)), true);
+         SelectedAdvisoryBoardDates = GetAndRemove(FilterAdvisoryBoardDates, GetFromQuery(nameof(SelectedAdvisoryBoardDates)), true);
+
+         return;
+      }
+
       bool activeFilterChanges = query.ContainsKey(nameof(Title)) ||
                                  query.ContainsKey(nameof(SelectedStatuses)) ||
                                  query.ContainsKey(nameof(SelectedOfficers)) ||
@@ -123,6 +134,22 @@ public class ProjectListFilters
       if (persist) Cache(key, value);
 
       return value ?? Array.Empty<string>();
+   }
+
+   private string[] GetAndRemove(string key, string[]? value, bool persist = false)
+   {
+      if (_store.ContainsKey(key) is false) return Array.Empty<string>();
+
+      string[]? currentValues = (string[]?)_store[key];
+
+      if (value is not null && value.Length > 0 && currentValues is not null)
+      {
+         currentValues = currentValues.Where(x => !value.Contains(x)).ToArray();
+      }
+
+      if (persist) Cache(key, currentValues);
+
+      return currentValues ?? Array.Empty<string>();
    }
 
    private string[] Cache(string key, string[]? value)
