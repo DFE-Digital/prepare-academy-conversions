@@ -22,7 +22,7 @@ public class KeyStageDataTagHelperTests : BaseIntegrationTests
    public void KeyStageHeader_ReturnsExpectedStatusHeader(int yearIndex, StatusType expectedStatusType, string reason)
    {
       // Arrange
-      DateTime currentDate = new(2022, 9, 17);
+      DateTime currentDate = new(DateTime.Now.Year -1, 9, 17);
       string expectedStatusHeader = GenerateStatusHeader(expectedStatusType.ToString());
 
       // Act
