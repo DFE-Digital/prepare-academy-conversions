@@ -62,6 +62,8 @@ public class Startup
          .AddRazorPages(options =>
          {
             options.Conventions.AuthorizeFolder("/");
+            options.Conventions.AllowAnonymousToPage("/Public/AccessibilityStatement");
+            options.Conventions.AllowAnonymousToPage("/Public/Maintenance");
          })
          .AddViewOptions(options =>
          {
