@@ -34,7 +34,7 @@ public class SENNumberOfResidentialPlaces : BaseAcademyConversionProjectPageMode
       await base.OnGetAsync(id);
       if (NumberOfResidentialPlaces is null)
       {
-         ModelState.AddModelError(nameof(NumberOfResidentialPlaces), "You must enter the number of places funded for");
+         _errorService.AddError(nameof(NumberOfResidentialPlaces), "Enter a number. No letters or special characters.");
       }
 
 
@@ -48,7 +48,6 @@ public class SENNumberOfResidentialPlaces : BaseAcademyConversionProjectPageMode
          return RedirectToPage(Links.SchoolOverviewSection.ConfirmSchoolOverview.Page, new { id });
       }
 
-      _errorService.AddErrors(ModelState.Keys, ModelState);
       return await base.OnGetAsync(id);
    }
    public static SetSchoolOverviewModel CreateUpdateSchoolOverview(ProjectViewModel projectViewModel)
