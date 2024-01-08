@@ -1,7 +1,6 @@
 ﻿using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Microsoft.FeatureManagement;
-using System.Dynamic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -70,6 +69,28 @@ public class ApiClient : IApiClient
 
       return await AcademisationClient.PutAsync(string.Format(PathFor.SetExternalApplicationForm, id), JsonContent.Create(payload));
    }
+   public async Task<HttpResponseMessage> SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview)
+   {
+      var payload = new
+      {
+         id = updatedSchoolOverview.Id,
+         publishedAdmissionNumber = updatedSchoolOverview.PublishedAdmissionNumber ?? string.Empty,
+         viabilityIssues = updatedSchoolOverview.ViabilityIssues ?? string.Empty,
+         partOfPfiScheme = updatedSchoolOverview.PartOfPfiScheme ?? string.Empty,
+         financialDeficit = updatedSchoolOverview.FinancialDeficit ?? string.Empty,
+         numberOfPlacesFundedFor = updatedSchoolOverview.NumberOfPlacesFundedFor ?? null,
+         numberOfResidentialPlaces = updatedSchoolOverview.NumberOfResidentialPlaces ?? null,
+         numberOfFundedResidentialPlaces = updatedSchoolOverview.NumberOfFundedResidentialPlaces ?? null,
+         pfiSchemeDetails = updatedSchoolOverview.PfiSchemeDetails ?? string.Empty,
+         distanceFromSchoolToTrustHeadquarters = updatedSchoolOverview.DistanceFromSchoolToTrustHeadquarters ?? 0,
+         distanceFromSchoolToTrustHeadquartersAdditionalInformation = updatedSchoolOverview.DistanceFromSchoolToTrustHeadquartersAdditionalInformation ?? string.Empty,
+         memberOfParliamentNameAndParty = updatedSchoolOverview.MemberOfParliamentNameAndParty ?? string.Empty
+      };
+
+      var formattedString = string.Format(PathFor.SetSchoolOverview, id);
+      return await AcademisationClient.PutAsync(formattedString, JsonContent.Create(payload));
+   }
+
 
    public async Task<HttpResponseMessage> GetAllProjectsV2Async(AcademyConversionSearchModelV2 searchModel)
    {
