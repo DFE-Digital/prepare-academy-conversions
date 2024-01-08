@@ -1,5 +1,10 @@
 ## NEXT
 
+* Ability to add Conversion projects within the application
+* SEN Specific additions to the school overview
+
+## 1.3.0
+
 * Sponsored Conversions inital MVP prepared
 * Sponsored grants now take into account the different tracks and school phase
 * User Story 136870 : hyperlink fixes 

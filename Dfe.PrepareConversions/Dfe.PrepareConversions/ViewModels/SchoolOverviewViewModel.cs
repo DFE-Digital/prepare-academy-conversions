@@ -10,6 +10,9 @@ public class SchoolOverviewViewModel
    public string PercentageSchoolFull { get; set; }
    public string SchoolCapacity { get; set; }
    public string PublishedAdmissionNumber { get; set; }
+   public decimal? NumberOfPlacesFundedFor { get; set; }
+   public decimal? NumberOfResidentialPlaces { get; set; }
+   public decimal? NumberOfFundedResidentialPlaces { get; set; }
    public string PercentageFreeSchoolMeals { get; set; }
    public string PartOfPfiScheme { get; set; }
    public string PfiSchemeDetails { get; set; }
@@ -22,4 +25,5 @@ public class SchoolOverviewViewModel
    public string ParliamentaryConstituency { get; set; }
    public string MemberOfParliamentNameAndParty { get; set; }
    public bool? SchoolOverviewSectionComplete { get; set; }
+   public bool IsSpecial { get; set; }
 }

@@ -115,6 +115,9 @@ public class ConfirmSchoolOverviewIntegrationTests : BaseIntegrationTests
          project.PublishedAdmissionNumber = null;
          project.PartOfPfiScheme = "No";
          project.PfiSchemeDetails = null;
+         project.NumberOfPlacesFundedFor = null;
+         project.NumberOfResidentialPlaces = null;
+         project.NumberOfFundedResidentialPlaces = null;
          project.ViabilityIssues = null;
          project.FinancialDeficit = null;
          project.DistanceFromSchoolToTrustHeadquarters = null;

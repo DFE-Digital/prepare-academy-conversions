@@ -1,0 +1,16 @@
+@page "/task-list/{id:int}/confirm-school-overview/number-of-places-funded-for"
+@using Dfe.PrepareConversions.TagHelpers
+@model Dfe.PrepareConversions.Pages.TaskList.SchoolOverview.SENNumberOfPlacesFundedFor
+@{
+    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Number of places funded for";
+    Layout = "_QuestionLayout";
+    ViewData["ProjectId"] = Model.Project.Id;
+    ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
+}
+
+@section BeforeMain
+    {
+    <govuk-back-link link-item="@Links.SchoolOverviewSection.ConfirmSchoolOverview" />
+}
+
+<govuk-text-input heading-label="true" label="How many places does the school have funding for?" name="number-of-places-funded-for" asp-for="@Model.NumberOfPlacesFundedFor" width="5" hint="For example, 100" />

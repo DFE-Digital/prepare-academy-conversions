@@ -91,4 +91,8 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       return await _innerRepository.GetAllProjectsV2(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter, localAuthoritiesFilter, advisoryBoardDatesFilter);
    }
+   public async Task SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview)
+   {
+      await _innerRepository.SetSchoolOverview(id, updatedSchoolOverview);
+   }
 }
