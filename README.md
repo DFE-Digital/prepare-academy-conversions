@@ -56,13 +56,13 @@ set db='{"server":"localhost", "userName":"sa", "password":"StrongPassword905", 
 
 The secret in the below command should match what was set in the `secrets.json` file.
 ```
-npm run cy:open -- --env url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
+npm run cy:open -- --env url="BASE_URL_OF_APP",cypressTestSecret="<SECRET HERE>"
 ```
 
 To execute the tests in headless mode, run the following (the output will log to the console):
 
 ```
-npm run cy:run -- --env url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
+npm run cy:run -- --env url="BASE_URL_OF_APP",cypressTestSecret="<SECRET HERE>"
 ```
 
 ### Loading users from Azure Active Directory

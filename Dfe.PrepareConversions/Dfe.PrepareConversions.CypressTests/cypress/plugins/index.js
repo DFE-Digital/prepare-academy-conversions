@@ -17,9 +17,19 @@
  * @type {Cypress.PluginConfig}
  */
 
+/// <reference types="cypress" />
+
+// Load the TypeScript plugin
+import * as webpackPreprocessor from '@cypress/webpack-preprocessor';
+
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
-  require('eslint/src/plugin')(config)
-}
+  on('file:preprocessor', webpackPreprocessor());
+
+  // Other configurations or plugins...
+
+  return config;
+};
+
