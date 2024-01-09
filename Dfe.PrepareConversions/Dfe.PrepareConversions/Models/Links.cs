@@ -112,6 +112,7 @@ public static class Links
       public static readonly LinkItem RouteAndGrant = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Voluntary/RouteAndGrant");
       public static readonly LinkItem GrantDetails = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Sponsored/GrantDetails");
       public static readonly LinkItem GrantType = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Sponsored/GrantType");
+      public static readonly LinkItem NumberOfSites = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Sponsored/NumberOfSites");
       public static readonly LinkItem DaoPackSent = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/DaoPackSentDate");
    }
 

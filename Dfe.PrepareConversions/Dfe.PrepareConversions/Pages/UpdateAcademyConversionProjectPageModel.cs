@@ -126,6 +126,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          ConversionSupportGrantAmount = AcademyConversionProject.ConversionSupportGrantAmount,
          ConversionSupportGrantChangeReason = AcademyConversionProject.ConversionSupportGrantChangeReason,
          ConversionSupportGrantType = AcademyConversionProject.ConversionSupportGrantType,
+         ConversionSupportGrantNumberOfSites = AcademyConversionProject.ConversionSupportNumberOfSites,
          ConversionSupportGrantEnvironmentalImprovementGrant = AcademyConversionProject.ConversionSupportGrantEnvironmentalImprovementGrant,
          ConversionSupportGrantAmountChanged = ConversionSupportGrantAmountChanged(Project?.AcademyTypeAndRoute ?? string.Empty),
          ApplicationReceivedDate = AcademyConversionProject.ApplicationReceivedDate,

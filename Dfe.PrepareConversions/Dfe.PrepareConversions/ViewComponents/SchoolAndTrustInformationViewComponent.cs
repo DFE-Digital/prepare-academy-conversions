@@ -57,6 +57,7 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
          ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
          ConversionSupportGrantType = project.ConversionSupportGrantType,
          ConversionSupportGrantEnvironmentalImprovementGrant = project.ConversionSupportGrantEnvironmentalImprovementGrant,
+         ConversionSupportNumberOfSites = project.ConversionSupportGrantNumberOfSites,
          ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(true),
          DaoPackSentDate = project.DaoPackSentDate.ToDateString()
       };

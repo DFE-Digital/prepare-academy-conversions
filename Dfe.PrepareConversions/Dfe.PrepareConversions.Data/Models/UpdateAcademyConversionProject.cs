@@ -35,6 +35,7 @@ public class UpdateAcademyConversionProject
    public string ConversionSupportGrantType { get; set; }
    public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
    public bool? ConversionSupportGrantAmountChanged { get; set; }
+   public string ConversionSupportGrantNumberOfSites { get; set; }
    public DateTime? DaoPackSentDate { get; set; }
 
    // School Overview

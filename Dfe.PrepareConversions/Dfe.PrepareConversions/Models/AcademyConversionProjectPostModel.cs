@@ -107,6 +107,11 @@ public class AcademyConversionProjectPostModel
 
    public string ConversionSupportGrantType { get; set; }
 
+   [BindProperty(Name = "conversion-support-number-of-sites")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+
+   public string ConversionSupportNumberOfSites { get; set; }
+
    [BindProperty(Name = "conversion-support-grant-environmental-improvement-grant")]
    [DisplayFormat(ConvertEmptyStringToNull = false)]
 

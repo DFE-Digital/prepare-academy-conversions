@@ -50,6 +50,7 @@ public class ProjectViewModel : ProjectTypeBase
       ConversionSupportGrantType = project.ConversionSupportGrantType;
       ConversionSupportGrantEnvironmentalImprovementGrant = project.ConversionSupportGrantEnvironmentalImprovementGrant;
       ConversionSupportGrantAmountChanged = project.ConversionSupportGrantAmountChanged;
+      NumberOfSites = project.ConversionSupportGrantNumberOfSites;
       DaoPackSentDate = project.DaoPackSentDate;
 
       AnnexBFormReceived = project.AnnexBFormReceived;
@@ -156,6 +157,7 @@ public class ProjectViewModel : ProjectTypeBase
    public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
    public bool? ConversionSupportGrantAmountChanged { get; set; }
    public DateTime? DaoPackSentDate { get; set; }
+   public string NumberOfSites { get; set; }
 
    // Annex B
    public bool? AnnexBFormReceived { get; set; }
