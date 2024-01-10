@@ -52,6 +52,9 @@ public class UpdateAcademyConversionProject
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string MemberOfParliamentNameAndParty { get; set; }
    public bool? SchoolOverviewSectionComplete { get; set; }
+   public bool? PupilsAttendingGroupPermanentlyExcluded { get; set; }
+   public bool? PupilsAttendingGroupMedicalAndHealthNeeds { get; set; }
+   public bool? PupilsAttendingGroupTeenageMums { get; set; }
 
    // Annex B
    public bool? AnnexBFormReceived { get; set; }

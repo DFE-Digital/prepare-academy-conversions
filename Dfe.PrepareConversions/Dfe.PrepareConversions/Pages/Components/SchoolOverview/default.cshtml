@@ -12,6 +12,7 @@
 
 <dl class="govuk-summary-list">
    <govuk-summary-list-row name="school-type" label="School type" key-width="@kw" asp-for="SchoolType"/>
+   <govuk-summary-list-row if="@Model.IsPRU" name="group-of-pupils" label="Which groups of pupils attend the school" key-width="@kw" asp-for="PupilsAttendingGroup" asp-page="@Links.SchoolOverviewSection.PupilsAttendingGroup.Page" asp-route-id="@Model.Id" />
    <govuk-summary-list-row name="school-phase" label="School phase" key-width="@kw" asp-for="SchoolPhase"/>
    <govuk-summary-list-row name="age-range" label="Age range" key-width="@kw" asp-for="AgeRange"/>
    <govuk-summary-list-row name="capacity" label="Capacity" key-width="@kw" asp-for="SchoolCapacity"/>

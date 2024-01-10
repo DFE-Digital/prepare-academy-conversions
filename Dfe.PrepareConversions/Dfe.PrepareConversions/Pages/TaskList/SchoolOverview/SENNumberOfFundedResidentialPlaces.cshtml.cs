@@ -63,7 +63,10 @@ public class SENNumberOfFundedResidentialPlaces : BaseAcademyConversionProjectPa
           projectViewModel.PfiSchemeDetails,
           projectViewModel.DistanceFromSchoolToTrustHeadquarters,
           projectViewModel.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
-          projectViewModel.MemberOfParliamentNameAndParty
+          projectViewModel.MemberOfParliamentNameAndParty,
+          projectViewModel.PupilsAttendingGroupPermanentlyExcluded,
+          projectViewModel.PupilsAttendingGroupMedicalAndHealthNeeds,
+          projectViewModel.PupilsAttendingGroupTeenageMums
       );
    }
 }

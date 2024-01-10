@@ -5,6 +5,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.ViewComponents;
@@ -60,8 +61,32 @@ public class SchoolOverviewViewComponent : ViewComponent
          ParliamentaryConstituency = schoolOverview.ParliamentaryConstituency,
          MemberOfParliamentNameAndParty = project.MemberOfParliamentNameAndParty,
          IsSpecial = schoolOverview?.SchoolType?.ToLower().Contains("special") ?? false,
+         IsPRU = schoolOverview?.SchoolType?.ToLower().Contains("pru") ?? false,
+         PupilsAttendingGroup = MapPupilsAttendingGroup(project)
       };
 
       return View(viewModel);
+   }
+
+   private static string MapPupilsAttendingGroup(AcademyConversionProject project)
+   {
+      var listOfAttendes = new List<string>();
+
+      if (project.PupilsAttendingGroupPermanentlyExcluded.HasValue && project.PupilsAttendingGroupPermanentlyExcluded.Value)
+      {
+         listOfAttendes.Add("Permanently Excluded");
+      }
+
+      if (project.PupilsAttendingGroupMedicalAndHealthNeeds.HasValue && project.PupilsAttendingGroupMedicalAndHealthNeeds.Value)
+      {
+         listOfAttendes.Add("Medical and Health Needs");
+      }
+
+      if (project.PupilsAttendingGroupTeenageMums.HasValue && project.PupilsAttendingGroupTeenageMums.Value)
+      {
+         listOfAttendes.Add("Teenage Mums");
+      }
+
+      return string.Join(", ", listOfAttendes);
    }
 }

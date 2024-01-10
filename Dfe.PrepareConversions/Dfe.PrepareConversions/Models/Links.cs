@@ -120,6 +120,7 @@ public static class Links
    {
       public static readonly LinkItem ConfirmSchoolOverview = AddLinkItem(page: "/TaskList/SchoolOverview/SchoolOverview");
       public static readonly LinkItem PublishedAdmissionNumber = AddLinkItem(page: "/TaskList/SchoolOverview/PublishedAdmissionNumber");
+      public static readonly LinkItem PupilsAttendingGroup = AddLinkItem(page: "/TaskList/SchoolOverview/PRUPupilsAttendingGroup");
       public static readonly LinkItem ViabilityIssues = AddLinkItem(page: "/TaskList/SchoolOverview/ViabilityIssues");
       public static readonly LinkItem NumberOfPlacesFundedFor = AddLinkItem(page: "/TaskList/SchoolOverview/SENNumberOfPlacesFundedFor");
       public static readonly LinkItem NumberOfResidentialPlaces = AddLinkItem(page: "/TaskList/SchoolOverview/SENNumberOfResidentialPlaces");

@@ -64,7 +64,10 @@ public class SENNumberOfResidentialPlaces : BaseAcademyConversionProjectPageMode
           projectViewModel.PfiSchemeDetails,
           projectViewModel.DistanceFromSchoolToTrustHeadquarters,
           projectViewModel.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
-          projectViewModel.MemberOfParliamentNameAndParty
+          projectViewModel.MemberOfParliamentNameAndParty,
+          projectViewModel.PupilsAttendingGroupPermanentlyExcluded,
+          projectViewModel.PupilsAttendingGroupMedicalAndHealthNeeds,
+          projectViewModel.PupilsAttendingGroupTeenageMums
       );
    }
 }

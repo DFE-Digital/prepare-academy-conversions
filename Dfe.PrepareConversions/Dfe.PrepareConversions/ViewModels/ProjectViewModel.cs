@@ -113,6 +113,10 @@ public class ProjectViewModel : ProjectTypeBase
       AssignedUser = project.AssignedUser;
 
       Notes = project.Notes;
+
+      PupilsAttendingGroupPermanentlyExcluded = project.PupilsAttendingGroupPermanentlyExcluded;
+      PupilsAttendingGroupMedicalAndHealthNeeds = project.PupilsAttendingGroupMedicalAndHealthNeeds;
+      PupilsAttendingGroupTeenageMums = project.PupilsAttendingGroupTeenageMums;
    }
 
    public string Id { get; }
@@ -180,6 +184,9 @@ public class ProjectViewModel : ProjectTypeBase
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string MemberOfParliamentNameAndParty { get; set; }
    public bool SchoolOverviewSectionComplete { get; set; }
+   public bool? PupilsAttendingGroupPermanentlyExcluded { get; set; }
+   public bool? PupilsAttendingGroupMedicalAndHealthNeeds { get; set; }
+   public bool? PupilsAttendingGroupTeenageMums { get; set; }
 
    //school performance ofsted information
    public string SchoolPerformanceAdditionalInformation { get; set; }
