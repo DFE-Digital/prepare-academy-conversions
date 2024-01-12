@@ -157,13 +157,13 @@ jobs:
 
       - name: Run cypress (staging)
         if: needs.set-env.outputs.environment == 'staging'
-        run: npm run cy:run -- --env url='${{ secrets.AZURE_ENDPOINT }}',grep='-dao',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}, academisationApiUrl=${{secrets.CYPRESS_ACADEMISATION_API_URL}}, academisationApiKey=${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}'
+        run: npm run cy:run -- --env url='${{ secrets.AZURE_ENDPOINT }}',grep='-dao',cypressTestSecret='${{ secrets.CYPRESS_TEST_SECRET }}, academisationApiUrl=${{secrets.CYPRESS_ACADEMISATION_API_URL}}, academisationApiKey=${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}'
         env:
           db: ${{ secrets.DB_CONNECTION_STRING }}
 
       - name: Run cypress (dev)
         if: needs.set-env.outputs.environment == 'dev'
-        run: npm run cy:run -- --env url='${{ secrets.AZURE_ENDPOINT }}',authorizationHeader='${{ secrets.CYPRESS_TEST_SECRET }}, academisationApiUrl=${{secrets.CYPRESS_ACADEMISATION_API_URL}}, academisationApiKey=${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}'
+        run: npm run cy:run -- --env url='${{ secrets.AZURE_ENDPOINT }}',cypressTestSecret='${{ secrets.CYPRESS_TEST_SECRET }}, academisationApiUrl=${{secrets.CYPRESS_ACADEMISATION_API_URL}}, academisationApiKey=${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}'
         env:
           db: ${{ secrets.DB_CONNECTION_STRING }}
 
@@ -173,3 +173,9 @@ jobs:
         with:
           name: screenshots-${{ needs.set-env.outputs.environment }}
           path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots
+          
+      - name: Report results
+        if: always()
+        run: npm run cy:notify -- --custom-text="Environment ${{ needs.set-env.outputs.environment }}, See more information https://github.com/DFE-Digital/prepare-academy-conversions/actions/runs/${{github.run_id}}"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
