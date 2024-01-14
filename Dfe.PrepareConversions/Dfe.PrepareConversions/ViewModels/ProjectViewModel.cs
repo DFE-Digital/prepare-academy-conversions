@@ -117,6 +117,11 @@ public class ProjectViewModel : ProjectTypeBase
       PupilsAttendingGroupPermanentlyExcluded = project.PupilsAttendingGroupPermanentlyExcluded;
       PupilsAttendingGroupMedicalAndHealthNeeds = project.PupilsAttendingGroupMedicalAndHealthNeeds;
       PupilsAttendingGroupTeenageMums = project.PupilsAttendingGroupTeenageMums;
+
+      NumberOfAlternativeProvisionPlaces = project.NumberOfAlternativeProvisionPlaces;
+      NumberOfMedicalPlaces = project.NumberOfMedicalPlaces;
+      NumberOfPost16Places = project.NumberOfPost16Places;
+      NumberOfSENUnitPlaces = project.NumberOfSENUnitPlaces;
    }
 
    public string Id { get; }
@@ -187,6 +192,10 @@ public class ProjectViewModel : ProjectTypeBase
    public bool? PupilsAttendingGroupPermanentlyExcluded { get; set; }
    public bool? PupilsAttendingGroupMedicalAndHealthNeeds { get; set; }
    public bool? PupilsAttendingGroupTeenageMums { get; set; }
+   public int? NumberOfAlternativeProvisionPlaces { get; set; }
+   public int? NumberOfMedicalPlaces { get; set; }
+   public int? NumberOfPost16Places { get; set; }
+   public int? NumberOfSENUnitPlaces { get; set; }
 
    //school performance ofsted information
    public string SchoolPerformanceAdditionalInformation { get; set; }

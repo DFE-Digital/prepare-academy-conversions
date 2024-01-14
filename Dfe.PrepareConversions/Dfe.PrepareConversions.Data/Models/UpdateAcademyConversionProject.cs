@@ -55,6 +55,10 @@ public class UpdateAcademyConversionProject
    public bool? PupilsAttendingGroupPermanentlyExcluded { get; set; }
    public bool? PupilsAttendingGroupMedicalAndHealthNeeds { get; set; }
    public bool? PupilsAttendingGroupTeenageMums { get; set; }
+   public string NumberOfAlternativeProvisionPlaces { get; set; }
+   public string NumberOfMedicalPlaces { get; set; }
+   public string NumberOfPost16Places { get; set; }
+   public string NumberOfSENUnitPlaces { get; set; }
 
    // Annex B
    public bool? AnnexBFormReceived { get; set; }

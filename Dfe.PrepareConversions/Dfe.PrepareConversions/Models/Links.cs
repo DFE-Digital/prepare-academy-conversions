@@ -129,6 +129,12 @@ public static class Links
       public static readonly LinkItem DistanceFromTrustHeadquarters = AddLinkItem(page: "/TaskList/SchoolOverview/DistanceFromTrustHeadquarters");
       public static readonly LinkItem MPDetails = AddLinkItem(page: "/TaskList/SchoolOverview/MPDetails");
       public static readonly LinkItem PartOfPfiScheme = AddLinkItem(page: "/TaskList/SchoolOverview/PartOfPfiScheme");
+
+      public static readonly LinkItem NumberOfAlternativeProvisionPlaces = AddLinkItem(page: "/TaskList/SchoolOverview/PRUNumberOfAlternativeProvisionPlaces");
+      public static readonly LinkItem NumberOfSENUnitPlaces = AddLinkItem(page: "/TaskList/SchoolOverview/SENUnitNumberOfPlaces");
+      public static readonly LinkItem NumberOfMedicalPlaces = AddLinkItem(page: "/TaskList/SchoolOverview/PRUNumberOfMedicalPlaces");
+      public static readonly LinkItem NumberOfPost16Places = AddLinkItem(page: "/TaskList/SchoolOverview/PRUNumberOfPost16Places");
+
    }
 
    public static class RationaleSection

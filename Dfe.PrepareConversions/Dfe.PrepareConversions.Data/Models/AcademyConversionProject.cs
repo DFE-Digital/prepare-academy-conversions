@@ -76,6 +76,10 @@ public class AcademyConversionProject
    public bool? PupilsAttendingGroupPermanentlyExcluded { get; set; }
    public bool? PupilsAttendingGroupMedicalAndHealthNeeds { get; set; }
    public bool? PupilsAttendingGroupTeenageMums { get; set; }
+   public int? NumberOfAlternativeProvisionPlaces { get; set; }
+   public int? NumberOfMedicalPlaces { get; set; }
+   public int? NumberOfPost16Places { get; set; }
+   public int? NumberOfSENUnitPlaces { get; set; }
 
    //school performance ofsted information
    public string SchoolPerformanceAdditionalInformation { get; set; }

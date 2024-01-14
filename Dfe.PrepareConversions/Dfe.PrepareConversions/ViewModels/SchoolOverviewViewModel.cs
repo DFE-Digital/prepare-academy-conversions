@@ -28,4 +28,8 @@ public class SchoolOverviewViewModel
    public string PupilsAttendingGroup { get; set; }
    public bool IsSpecial { get; set; }
    public bool IsPRU { get; set; }
+   public int? NumberOfAlternativeProvisionPlaces { get; set; }
+   public int? NumberOfMedicalPlaces { get; set; }
+   public int? NumberOfPost16Places { get; set; }
+   public int? NumberOfSENUnitPlaces { get; set; }
 }

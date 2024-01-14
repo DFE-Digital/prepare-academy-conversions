@@ -184,9 +184,13 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          KeyStage4PerformanceAdditionalInformation = AcademyConversionProject.KeyStage4PerformanceAdditionalInformation,
          KeyStage5PerformanceAdditionalInformation = AcademyConversionProject.KeyStage5PerformanceAdditionalInformation,
          DaoPackSentDate = AcademyConversionProject.DaoPackSentDate == default(DateTime) ? null : AcademyConversionProject.DaoPackSentDate,
-         PupilsAttendingGroupPermanentlyExcluded = AcademyConversionProject.PupilsAttendingGroupPermanentlyExcluded,
+         PupilsAttendingGroupPermanentlyExcluded = AcademyConversionProject.PupilsAttendingGroupPermanentlyExcluded, //TODO:EA Check if this is still needed seeing as you've moved stuff to SetSchoolOverview function
          PupilsAttendingGroupMedicalAndHealthNeeds = AcademyConversionProject.PupilsAttendingGroupMedicalAndHealthNeeds,
          PupilsAttendingGroupTeenageMums = AcademyConversionProject.PupilsAttendingGroupTeenageMums,
+         NumberOfAlternativeProvisionPlaces = AcademyConversionProject.NumberOfAlternativeProvisionPlaces,
+         NumberOfMedicalPlaces = AcademyConversionProject.NumberOfMedicalPlaces,
+         NumberOfSENUnitPlaces = AcademyConversionProject.NumberOfSENUnitPlaces,
+         NumberOfPost16Places = AcademyConversionProject.NumberOfPost16Places,
       };
    }
 

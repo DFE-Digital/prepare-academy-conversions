@@ -186,6 +186,22 @@ public class AcademyConversionProjectPostModel
    [ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
    public bool? RationaleSectionComplete { get; set; }
 
+   [BindProperty(Name = "number-of-alternative-provisions-places")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+   public string NumberOfAlternativeProvisionPlaces { get; set; }
+
+   [BindProperty(Name = "number-of-medical-places")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+   public string NumberOfMedicalPlaces { get; set; }
+
+   [BindProperty(Name = "number-of-post-16-places")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+   public string NumberOfPost16Places { get; set; }
+
+   [BindProperty(Name = "number-of-sen-unit-places")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+   public string NumberOfSENUnitPlaces { get; set; }
+
    // risk and issues
    [BindProperty(Name = "risks-and-issues")]
    [DisplayFormat(ConvertEmptyStringToNull = false)]

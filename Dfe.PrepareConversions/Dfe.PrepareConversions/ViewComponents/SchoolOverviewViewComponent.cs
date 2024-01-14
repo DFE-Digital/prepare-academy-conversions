@@ -61,13 +61,20 @@ public class SchoolOverviewViewComponent : ViewComponent
          ParliamentaryConstituency = schoolOverview.ParliamentaryConstituency,
          MemberOfParliamentNameAndParty = project.MemberOfParliamentNameAndParty,
          IsSpecial = schoolOverview?.SchoolType?.ToLower().Contains("special") ?? false,
-         IsPRU = schoolOverview?.SchoolType?.ToLower().Contains("pru") ?? false,
-         PupilsAttendingGroup = MapPupilsAttendingGroup(project)
+         //IsPRU = schoolOverview?.SchoolType?.ToLower().Contains("pru") ?? false,
+         IsPRU = true,
+         PupilsAttendingGroup = MapPupilsAttendingGroup(project),
+         NumberOfAlternativeProvisionPlaces = project.NumberOfAlternativeProvisionPlaces,
+         NumberOfMedicalPlaces = project.NumberOfMedicalPlaces,
+         NumberOfSENUnitPlaces = project.NumberOfSENUnitPlaces,
+         NumberOfPost16Places = project.NumberOfPost16Places,
       };
 
       return View(viewModel);
    }
 
+
+   //TODO:EA Check if there is somewhere better to put this
    private static string MapPupilsAttendingGroup(AcademyConversionProject project)
    {
       var listOfAttendes = new List<string>();

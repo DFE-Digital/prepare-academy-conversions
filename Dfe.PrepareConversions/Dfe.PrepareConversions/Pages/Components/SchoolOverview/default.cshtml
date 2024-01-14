@@ -32,3 +32,21 @@
    <govuk-summary-list-row name="parliamentary-constituency" label="Parliamentary constituency" key-width="@kw" asp-for="ParliamentaryConstituency"/>
    <govuk-summary-list-row name="member-of-parliament-name-and-party" label="MP name and political party" asp-for="MemberOfParliamentNameAndParty" key-width="@kw" asp-page="@Links.SchoolOverviewSection.MPDetails.Page" asp-route-id="@Model.Id" hidden-text="MP name" />
 </dl>
+
+@{
+    if (Model.IsPRU)
+    {
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+                Enter the number of pupils for each type of place
+            </h1>
+        </legend>
+
+        <dl class="govuk-summary-list">
+            <govuk-summary-list-row name="alternative-provision-number" label="Alternative provision" key-width="@kw" asp-for="NumberOfAlternativeProvisionPlaces" asp-page="@Links.SchoolOverviewSection.NumberOfAlternativeProvisionPlaces.Page" asp-route-id="@Model.Id" hidden-text="alternative provision" />
+            <govuk-summary-list-row name="sen-unit-number" label="SEN Unit" key-width="@kw" asp-for="NumberOfSENUnitPlaces" asp-page="@Links.SchoolOverviewSection.NumberOfSENUnitPlaces.Page" asp-route-id="@Model.Id" hidden-text="sen unit" />
+            <govuk-summary-list-row name="medical-number" label="Medical" key-width="@kw" asp-for="NumberOfMedicalPlaces" asp-page="@Links.SchoolOverviewSection.NumberOfMedicalPlaces.Page" asp-route-id="@Model.Id" hidden-text="medical" />
+            <govuk-summary-list-row name="post-16-number" label="Post-16" key-width="@kw" asp-for="NumberOfPost16Places" asp-page="@Links.SchoolOverviewSection.NumberOfPost16Places.Page" asp-route-id="@Model.Id" hidden-text="post 16" />
+        </dl>
+    }
+}

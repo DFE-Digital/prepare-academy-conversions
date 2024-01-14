@@ -1,0 +1,18 @@
+﻿@page "/task-list/{id:int}/confirm-school-overview/number-of-alternative-provisions-places"
+@using Dfe.PrepareConversions.TagHelpers
+@model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
+@{
+   Layout = "_QuestionLayout";
+   Model.SuccessPage = Links.SchoolOverviewSection.ConfirmSchoolOverview.Page;
+   ViewData["Title"] = "How many alternative provision places are there?";
+   ViewData["SchoolName"] = Model.Project.SchoolName;
+   ViewData["ProjectId"] = Model.Project.Id;
+   ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
+}
+
+@section BeforeMain
+{
+   <govuk-back-link link-item="@Links.SchoolOverviewSection.ConfirmSchoolOverview"/>
+}
+
+<govuk-text-input heading-label="true" label="How many alternative provision places are there?" name="number-of-alternative-provisions-places" asp-for="Project.NumberOfAlternativeProvisionPlaces" width="5" hint="For example, 100" />
