@@ -209,6 +209,7 @@ public static class Links
    public static class NewProject
    {
       public static readonly LinkItem SearchSchool = AddLinkItem(page: "/NewProject/SearchSchool");
+      public static readonly LinkItem NewConversionInformation = AddLinkItem(page: "/NewProject/NewConversionInformation");
       public static readonly LinkItem SchoolApply = AddLinkItem(page: "/NewProject/SchoolApply");
       public static readonly LinkItem SearchTrusts = AddLinkItem(page: "/NewProject/SearchTrust");
       public static readonly LinkItem Summary = AddLinkItem(page: "/NewProject/Summary");
