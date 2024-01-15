@@ -167,7 +167,16 @@
                         </span>
                     </li>
                 }
-
+                @if (Model.TaskList.HasAbsenceData)
+                {
+                    <li class="app-task-list__item">
+                        <span class="app-task-list__task-name">
+                            <a class="govuk-link" asp-page="@Links.KeyStagePerformanceSection.EducationalAttendance.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-absence-data">
+                                Educational Attendance
+                            </a>
+                        </span>
+                    </li>
+                }
             </ul>
 
         </div>

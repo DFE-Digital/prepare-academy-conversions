@@ -59,6 +59,7 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
          TaskList.HasKeyStage2PerformanceTables = keyStagePerformance.HasKeyStage2PerformanceTables;
          TaskList.HasKeyStage4PerformanceTables = keyStagePerformance.HasKeyStage4PerformanceTables;
          TaskList.HasKeyStage5PerformanceTables = keyStagePerformance.HasKeyStage5PerformanceTables;
+         TaskList.HasAbsenceData = keyStagePerformance.HasSchoolAbsenceData;
       }
 
       return Page();

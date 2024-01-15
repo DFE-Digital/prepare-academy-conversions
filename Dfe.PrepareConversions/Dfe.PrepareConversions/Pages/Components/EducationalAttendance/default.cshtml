@@ -1,0 +1,67 @@
+﻿@using Dfe.PrepareConversions.Utils
+@using Dfe.PrepareConversions.TagHelpers
+@model IEnumerable<EducationalAttendanceViewModel>
+<div>
+
+
+    <table class="govuk-table govuk-!-margin-bottom-9">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+            <h1 class="govuk-heading-m">Overall Absence</h1>
+            <p class="govuk-!-margin-top govuk-body">Percentage of mornings or afternoons recorded as an absence from school for any reason, across the full academic year.</p>
+        </caption>
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header"></th>
+                @foreach (var vm in Model)
+                {
+                    <th scope="col" class="govuk-table__header">@vm.Year</th>
+                }
+
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
+                @{
+                    var index = 0;
+
+                    @foreach (var vm in Model)
+                    {
+                        <td class="govuk-table__cell" id="@("percentage-overall-" + index)">@vm.OverallAbsence</td>
+                        index++;
+                    }
+                }
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="govuk-table govuk-!-margin-bottom-9">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+            <h1 class="govuk-heading-m">Persistent absence of 10% or more</h1>
+            <p class="govuk-!-margin-top govuk-body">The percentage of pupils missing 10% or more of the mornings or afternoons they could attend..</p>
+        </caption>
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header"></th>
+                @foreach (var vm in Model)
+                {
+                    <th scope="col" class="govuk-table__header">@vm.Year</th>
+                }
+
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
+                @{
+                    index = 0;
+                    @foreach (var vm in Model)
+                    {
+                        <td class="govuk-table__cell" id="@("percentage-overall-above-10" + index)">@vm.PersistentAbsence</td>
+                        index++;
+                    }
+                }
+            </tr>
+        </tbody>
+    </table>
+</div>
