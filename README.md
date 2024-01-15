@@ -34,48 +34,24 @@ Install cypress and dependencies:
 - Run 'npm install' from the Dfe.PrepareConversions.CypressTests directory
 
 ### Test execution
-You will need to set a secret in `secrets.json` in the following format to run the Cypress command against (you can use any value):
+
+To execute the tests locally and view the output, you will need to set environment variables. Create a new file named `cypress.env.json` in the project root with the following content:
 
 ```json
 {
-  "CypressTestSecret": "<SECRET HERE>"
+  "url": "BASE_URL_OF_APP",
+  "cypressTestSecret": "<SECRET HERE>",
+  "academisationApiUrl": "<SECRET HERE>",
+  "academisationApiKey": "<SECRET HERE>"
 }
-```
 
-To execute the tests locally and view the output:
+Please make sure to replace `<SECRET HERE>` with the actual secret values in the `cypress.env.json` file before running the tests.
 
-First set the database config as an environment variable -
-For bash -
-```
-export db='{"server":"localhost", "userName":"sa", "password":"StrongPassword905", "options": { "database": "sip" } }'
-```
-For windows -
-```
-set db='{"server":"localhost", "userName":"sa", "password":"StrongPassword905", "options": { "database": "sip" } }'
-```
+### Open the Cypress Test Runner for interactive testing
+npx cypress open
 
-The secret in the below command should match what was set in the `secrets.json` file.
-```
-npm run cy:open -- --env url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
-```
-
-To execute the tests in headless mode, run the following (the output will log to the console):
-
-```
-npm run cy:run -- --env url="BASE_URL_OF_APP",authorizationHeader="<SECRET HERE>"
-```
-
-### Loading users from Azure Active Directory
-You will need to set a secret in `secrets.json` in the following format to run the Cypress command against (you can use any value):
-
-```
-  "AzureAd": {
-    "ClientId": "<clientid>",
-    "ClientSecret": "<clientsecret>",
-    "TenantId": "<tenantid>",
-    "GroupId": "<activedirectory-groupid>"
-  }
-```
+### Run the Cypress tests in headless mode
+npx cypress run
 
 ### Useful tips
 
@@ -141,35 +117,6 @@ it('Has no detectable a11y violations on load (with custom parameters)', () => {
 })
 ```
 For more receipes: https://www.npmjs.com/package/cypress-axe
-
-
-##### Upgrading Cypress version
-EVERY 6 to 8 weeks, there is a significant update that will be rolled out with some changes.
-To see the cypress change longs navigate to this link: https://docs.cypress.io/guides/references/changelog#
-Here you can view the bug fixes, performance fixes and features etc. Latest version you will find at the top of the list with release date. You can jump to the specific version by clicking on the links on the right side under section on this page.
-
-## Update Cypress using NPM
--Close the cypress runner properly by clicking on Stop button then x button.
-
--Type below command. Here replace 12.2.0 with latest version
- `npm install --save-dev cypress@12.2.0`
-
--Check Cypress version is updated using below command
- `$ npx cypress --version`
-
- ##Update Cypress using package.json
- -Cose the cypress runner properly by clicking on Stop button then x button.
-
- -Navigate to your package.json.
-
- -Change the cypress version to the current updated version in package.json
-  `"cypress": "12.2.0"`
-
- -Type below command
-  `$ npx install cypress`
-
- -Check cypress version
-  `$ npx cypress --version`
 
 
 ##### Cypress Linting
