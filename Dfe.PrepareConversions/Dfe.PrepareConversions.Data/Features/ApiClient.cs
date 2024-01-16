@@ -96,4 +96,9 @@ public class ApiClient : IApiClient
    {
       return await AcademisationClient.PostAsync(PathFor.GetAllProjectsV2, JsonContent.Create(searchModel));
    }
+
+   public Task<HttpResponseMessage> SetPerformanceData(int id, SetPerformanceDataModel setPerformanceDataModel)
+   {
+      return await AcademisationClient.PutAsync(string.Format(PathFor.SetExternalApplicationForm, id), JsonContent.Create(setPerformanceDataModel));
+   }
 }

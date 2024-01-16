@@ -43,6 +43,7 @@ public interface IAcademyConversionProjectRepository
    Task CreateProject(CreateNewProject newProject);
    Task SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl);
    Task SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview);
+   Task SetPerformanceData(int id, SetPerformanceDataModel setPerformanceDataModel);
    Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters();
    Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote addProjectNote);
 }
