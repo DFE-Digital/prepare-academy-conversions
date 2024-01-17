@@ -16,6 +16,7 @@ public class ProjectViewModel : ProjectTypeBase
       ApplicationReferenceNumber = project.ApplicationReferenceNumber;
       SchoolName = project.SchoolName;
       SchoolURN = project.Urn.ToString();
+      SchoolType = project.SchoolType;
       LocalAuthority = project.LocalAuthority;
       ApplicationReceivedDate = project.ApplicationReceivedDate.ToDateString();
       AssignedDate = project.AssignedDate.ToDateString();
@@ -135,6 +136,7 @@ public class ProjectViewModel : ProjectTypeBase
    public string AssignedDate { get; }
    public string SchoolPhase { get; }
    public DateTime? HeadTeacherBoardDate { get; set; }
+   public string SchoolType { get; set; }
 
    public DateTime? LocalAuthorityInformationTemplateSentDate { get; set; }
    public DateTime? LocalAuthorityInformationTemplateReturnedDate { get; set; }
@@ -247,4 +249,5 @@ public class ProjectViewModel : ProjectTypeBase
 
    protected override string TypeAndRouteValue => AcademyTypeAndRoute;
    public override bool IsExternalSchoolApplication => string.IsNullOrEmpty(this.ApplicationReferenceNumber);
+   public bool IsPRU => SchoolType.ToLower().Equals("pupil referral unit");
 }

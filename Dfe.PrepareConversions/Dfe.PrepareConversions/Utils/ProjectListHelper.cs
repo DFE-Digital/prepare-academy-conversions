@@ -58,9 +58,11 @@ namespace Dfe.PrepareConversions.Utils
    
       public static string MapPerformanceDataHint(string schoolType)
       {
-         return schoolType switch
+         var sType = schoolType?.ToLower();
+
+         return sType switch
          {
-            "PRU" => $"Your document will automatically include some Ofsted inspection data. Educational performance data isn't published for pupil referral units.\r\n\r\nAsk the pupil referral unit to share their educational performance and absence data with you. You can add that to the document once you have created it.",
+            "pupil referral unit" => $"Your document will automatically include some Ofsted inspection data. Educational performance data isn't published for pupil referral units.\r\n\r\nAsk the pupil referral unit to share their educational performance and absence data with you. You can add that to the document once you have created it.",
             _ => "This information will be added to your project document automatically."
          };
       }

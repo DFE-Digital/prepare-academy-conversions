@@ -17,9 +17,4 @@ public abstract class ProjectTypeBase
 
    public bool IsFormAMat => string.IsNullOrWhiteSpace(TypeAndRouteValue) is false &&
                              TypeAndRouteValue.Equals(AcademyTypeAndRoutes.FormAMat, StringComparison.InvariantCultureIgnoreCase);
-
-   //public bool IsPRU => string.IsNullOrWhiteSpace(TypeAndRouteValue) is false &&
-   //                       TypeAndRouteValue.Equals(AcademyTypeAndRoutes.PRU, StringComparison.InvariantCultureIgnoreCase);
-
-   public bool IsPRU => true;
 }

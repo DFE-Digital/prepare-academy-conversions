@@ -159,15 +159,6 @@ public class AcademyConversionProjectPostModel
    [ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
    public bool? SchoolOverviewSectionComplete { get; set; }
 
-   [BindProperty(Name = "pupils-attending-group-permanently-excluded")]
-   public bool? PupilsAttendingGroupPermanentlyExcluded { get; set; }
-
-   [BindProperty(Name = "pupils-attending-group-medical-and-health-needs")]
-   public bool? PupilsAttendingGroupMedicalAndHealthNeeds { get; set; }
-
-   [BindProperty(Name = "pupils-attending-group-teenage-mums")]
-   public bool? PupilsAttendingGroupTeenageMums { get; set; }
-
    //school performance ofsted information
    [BindProperty(Name = "school-performance-additional-information")]
    [DisplayFormat(ConvertEmptyStringToNull = false)]

@@ -32,7 +32,7 @@ public class TaskListViewModel
          SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.GetSchoolBudgetInformationTaskListStatus(project),
          ProjectStatus = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Value,
          ProjectStatusColour = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Colour,
-         PerformanceDataHintText = ProjectListHelper.MapPerformanceDataHint("PRU") //TODO:EA find out what propert indicates the school is PRU
+         PerformanceDataHintText = ProjectListHelper.MapPerformanceDataHint(project.SchoolType)
       };
    }
 }

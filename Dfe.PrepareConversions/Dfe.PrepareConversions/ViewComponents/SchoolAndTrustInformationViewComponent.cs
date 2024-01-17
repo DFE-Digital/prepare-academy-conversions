@@ -44,6 +44,7 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
          PreviousHeadTeacherBoardLink = project.PreviousHeadTeacherBoardLink,
          SchoolName = project.SchoolName,
          SchoolUrn = project.Urn.ToString(),
+         SchoolType = project.SchoolType.ToString(),
          LocalAuthority = project.LocalAuthority,
          TrustReferenceNumber = project.TrustReferenceNumber,
          NameOfTrust = project.NameOfTrust,
