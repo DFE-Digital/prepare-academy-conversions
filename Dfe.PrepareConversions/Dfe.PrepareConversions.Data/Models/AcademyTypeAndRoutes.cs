@@ -11,6 +11,5 @@ namespace Dfe.PrepareConversions.Data.Models
       public const string Voluntary = "Converter";
       public const string FormAMat = "Form a MAT";
       public const string Sponsored = "Sponsored";
-      public const string PRU = "pru";
    }
 }
