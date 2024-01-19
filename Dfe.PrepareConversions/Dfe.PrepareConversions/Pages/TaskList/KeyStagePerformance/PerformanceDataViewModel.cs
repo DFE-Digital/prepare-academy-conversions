@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.KeyStagePerformance
 {
@@ -19,8 +20,22 @@ namespace Dfe.PrepareConversions.Pages.TaskList.KeyStagePerformance
          _errorService = errorService;
       }
 
-      [BindProperty]
-      public SetPerformanceDataModel Model { get; set; }
+      // key stage performance tables
+      [BindProperty(Name = "key-stage-2-additional-information")]
+      [DisplayFormat(ConvertEmptyStringToNull = false)]
+      public string KeyStage2PerformanceAdditionalInformation { get; set; }
+
+      [BindProperty(Name = "key-stage-4-additional-information")]
+      [DisplayFormat(ConvertEmptyStringToNull = false)]
+      public string KeyStage4PerformanceAdditionalInformation { get; set; }
+
+      [BindProperty(Name = "key-stage-5-additional-information")]
+      [DisplayFormat(ConvertEmptyStringToNull = false)]
+      public string KeyStage5PerformanceAdditionalInformation { get; set; }
+
+      [BindProperty(Name = "educational-attendance-additional-information")]
+      [DisplayFormat(ConvertEmptyStringToNull = false)]
+      public string EducationalAttendanceAdditionalInformation { get; set; }
 
       public bool ShowError => _errorService.HasErrors();
 
@@ -30,8 +45,22 @@ namespace Dfe.PrepareConversions.Pages.TaskList.KeyStagePerformance
          set => TempData["SuccessPage"] = value;
       }
 
+      public override async Task<IActionResult> OnGetAsync(int id)
+      {
+         await base.OnGetAsync(id);
+
+         KeyStage2PerformanceAdditionalInformation = Project.KeyStage2PerformanceAdditionalInformation;
+         KeyStage4PerformanceAdditionalInformation = Project.KeyStage4PerformanceAdditionalInformation;
+         KeyStage5PerformanceAdditionalInformation = Project.KeyStage5PerformanceAdditionalInformation;
+         EducationalAttendanceAdditionalInformation = Project.EducationalAttendanceAdditionalInformation;
+
+         return Page();
+      }
+
       public override async Task<IActionResult> OnPostAsync(int id)
       {
+         await SetProject(id);
+
          //if (YesChecked is true && string.IsNullOrWhiteSpace(ExternalApplicationFormUrl))
          //{
          //   ModelState.AddModelError(nameof(ExternalApplicationFormUrl), "You must enter valid link for the schools application form");
@@ -39,66 +68,47 @@ namespace Dfe.PrepareConversions.Pages.TaskList.KeyStagePerformance
 
          if (ModelState.IsValid)
          {
+            SetExistingValuesIfNotChanged();
 
-            await _repository.SetProjectExternalApplicationForm(id, YesChecked.Value, YesChecked is true ? ExternalApplicationFormUrl : default);
+            await _repository.SetPerformanceData(id, new SetPerformanceDataModel(id,
+                                                                                 KeyStage2PerformanceAdditionalInformation,
+                                                                                 KeyStage4PerformanceAdditionalInformation,
+                                                                                 KeyStage5PerformanceAdditionalInformation,
+                                                                                 EducationalAttendanceAdditionalInformation));
 
+            (string returnPage, string fragment) = GetReturnPageAndFragment();
+            if (!string.IsNullOrWhiteSpace(returnPage))
+            {
+               return RedirectToPage(returnPage, null, new { id }, fragment);
+            }
 
-            return RedirectToPage(Links.ExternalApplicationForm.Index.Page, new { id });
+            return RedirectToPage(SuccessPage, new { id });
          }
 
          _errorService.AddErrors(ModelState.Keys, ModelState);
          return await base.OnGetAsync(id);
+      }
 
-
-         bool schoolAndTrustInformationSectionComplete = AcademyConversionProject.SchoolAndTrustInformationSectionComplete != null &&
-                                                AcademyConversionProject.SchoolAndTrustInformationSectionComplete.Value;
-         if (schoolAndTrustInformationSectionComplete && !Project.HeadTeacherBoardDate.HasValue)
-         {
-            _errorService.AddError(
-               $"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FSchoolAndTrustInformation/ConfirmSchoolAndTrustInformation&fragment=advisory-board-date",
-               "Set an Advisory board date before you generate your project template");
+      private void SetExistingValuesIfNotChanged()
+      {
+         if (KeyStage2PerformanceAdditionalInformation is null) {
+            KeyStage2PerformanceAdditionalInformation = Project.KeyStage2PerformanceAdditionalInformation;
          }
 
-         if (AcademyConversionProject.LocalAuthorityInformationTemplateSentDate.HasValue &&
-            AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate.HasValue &&
-            AcademyConversionProject.LocalAuthorityInformationTemplateSentDate > AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate)
+         if (KeyStage4PerformanceAdditionalInformation is null)
          {
-            _errorService.AddError("returnedDateBeforeSentDateError", "The returned template date be must on or after sent date");
+            KeyStage4PerformanceAdditionalInformation = Project.KeyStage4PerformanceAdditionalInformation;
          }
 
-         if (AcademyConversionProject.EndOfCurrentFinancialYear.HasValue &&
-             AcademyConversionProject.EndOfNextFinancialYear.HasValue &&
-             AcademyConversionProject.EndOfCurrentFinancialYear != DateTime.MinValue &&
-             AcademyConversionProject.EndOfNextFinancialYear != DateTime.MinValue &&
-             AcademyConversionProject.EndOfCurrentFinancialYear.Value.AddYears(1).AddDays(-1) > AcademyConversionProject.EndOfNextFinancialYear)
+         if (KeyStage5PerformanceAdditionalInformation is null)
          {
-            _errorService.AddError(
-               $"/task-list/{id}/confirm-school-budget-information/update-school-budget-information?return=%2FTaskList%2FSchoolBudgetInformation/ConfirmSchoolBudgetInformation&fragment=financial-year",
-               "The next financial year cannot be before or within a year of the current financial year");
+            KeyStage5PerformanceAdditionalInformation = Project.KeyStage5PerformanceAdditionalInformation;
          }
 
-         _errorService.AddErrors(Request.Form.Keys, ModelState);
-         if (_errorService.HasErrors())
+         if (EducationalAttendanceAdditionalInformation is null)
          {
-            RePopDatePickerModelsAfterValidationFail();
-            return Page();
+            EducationalAttendanceAdditionalInformation = Project.EducationalAttendanceAdditionalInformation;
          }
-
-         ApiResponse<AcademyConversionProject> response = await _repository.UpdateProject(id, Build());
-
-         if (!response.Success)
-         {
-            _errorService.AddApiError();
-            return Page();
-         }
-
-         (string returnPage, string fragment) = GetReturnPageAndFragment();
-         if (!string.IsNullOrWhiteSpace(returnPage))
-         {
-            return RedirectToPage(returnPage, null, new { id }, fragment);
-         }
-
-         return RedirectToPage(SuccessPage, new { id });
       }
 
       private (string, string) GetReturnPageAndFragment()

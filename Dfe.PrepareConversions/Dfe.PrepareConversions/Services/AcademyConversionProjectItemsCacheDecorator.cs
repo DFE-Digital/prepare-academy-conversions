@@ -95,4 +95,9 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       await _innerRepository.SetSchoolOverview(id, updatedSchoolOverview);
    }
+
+   public async Task SetPerformanceData(int id, SetPerformanceDataModel setPerformanceDataModel)
+   {
+      await _innerRepository.SetPerformanceData(id, setPerformanceDataModel);
+   }
 }

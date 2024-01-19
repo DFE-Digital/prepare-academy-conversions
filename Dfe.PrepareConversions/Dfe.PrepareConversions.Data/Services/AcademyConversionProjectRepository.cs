@@ -239,9 +239,9 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
 
-   public async Task SetProjectExternalApplicationForm(int id, SetPerformanceDataModel setPerformanceDataModel)
+   public async Task SetPerformanceData(int id, SetPerformanceDataModel setPerformanceDataModel)
    {
-      HttpResponseMessage result = await _apiClient.SetProjectExternalApplicationForm(id, setPerformanceDataModel);
+      HttpResponseMessage result = await _apiClient.SetPerformanceData(id, setPerformanceDataModel);
       if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
    public async Task SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview)

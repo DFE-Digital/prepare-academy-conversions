@@ -51,7 +51,7 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
             "Set an Advisory board date before you generate your project template");
       }
 
-      KeyStagePerformance keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(Project?.SchoolURN);
+      Data.Models.KeyStagePerformance.KeyStagePerformance keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(Project?.SchoolURN);
       // 16 plus = 6, All-through = 7, Middle deemed primary = 3, Middle deemed secondary = 5, Not applicable = 0, Nursery = 1, Primary = 2, Secondary = 4
       if (Project != null) TaskList = TaskListViewModel.Build(Project);
       if (TaskList != null)

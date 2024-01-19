@@ -42,7 +42,7 @@ public class PreviewHtbTemplateModel : BaseAcademyConversionProjectPageModel
 
    private async Task SetKeyStagePerformancePageData(ProjectViewModel project)
    {
-      KeyStagePerformance keyStagePerformance =
+      Data.Models.KeyStagePerformance.KeyStagePerformance keyStagePerformance =
          await _keyStagePerformanceService.GetKeyStagePerformance(project.SchoolURN);
 
       // 16 plus = 6, All-through = 7, Middle deemed primary = 3, Middle deemed secondary = 5, Not applicable = 0, Nursery = 1, Primary = 2, Secondary = 4
