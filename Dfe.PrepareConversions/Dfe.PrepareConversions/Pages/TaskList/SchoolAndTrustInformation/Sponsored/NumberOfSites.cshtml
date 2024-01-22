@@ -1,0 +1,24 @@
+﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/number-of-sites"
+@using Dfe.PrepareConversions.TagHelpers
+@model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
+@{
+   Layout = "_QuestionLayout";
+   Model.SuccessPage = Links.SchoolAndTrustInformationSection.GrantDetails.Page;
+   ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Conversion support number of sites";
+   ViewData["SchoolName"] = Model.Project.SchoolName;
+   ViewData["ProjectId"] = Model.Project.Id;
+   ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
+    var values = new[] { "1", "2", "3", "4", "5 or more" };
+}
+
+@section BeforeMain
+{
+   <govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation"/>
+}
+
+<h1 class="govuk-label-wrapper govuk-!-margin-bottom-6">
+    <label class="govuk-label govuk-label--l" for="conversion-support-number-of-sites">
+        How many sites does the PRU have?
+   </label>
+</h1>
+<govuk-radios-input name="conversion-support-number-of-sites" id="conversion-support-number-of-sites" asp-for="Project.NumberOfSites" values="@values" labels="@values" />

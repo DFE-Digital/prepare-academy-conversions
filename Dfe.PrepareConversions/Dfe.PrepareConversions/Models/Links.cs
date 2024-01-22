@@ -112,6 +112,7 @@ public static class Links
       public static readonly LinkItem RouteAndGrant = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Voluntary/RouteAndGrant");
       public static readonly LinkItem GrantDetails = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Sponsored/GrantDetails");
       public static readonly LinkItem GrantType = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Sponsored/GrantType");
+      public static readonly LinkItem NumberOfSites = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Sponsored/NumberOfSites");
       public static readonly LinkItem DaoPackSent = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/DaoPackSentDate");
    }
 
@@ -119,6 +120,7 @@ public static class Links
    {
       public static readonly LinkItem ConfirmSchoolOverview = AddLinkItem(page: "/TaskList/SchoolOverview/SchoolOverview");
       public static readonly LinkItem PublishedAdmissionNumber = AddLinkItem(page: "/TaskList/SchoolOverview/PublishedAdmissionNumber");
+      public static readonly LinkItem PupilsAttendingGroup = AddLinkItem(page: "/TaskList/SchoolOverview/PRUPupilsAttendingGroup");
       public static readonly LinkItem ViabilityIssues = AddLinkItem(page: "/TaskList/SchoolOverview/ViabilityIssues");
       public static readonly LinkItem NumberOfPlacesFundedFor = AddLinkItem(page: "/TaskList/SchoolOverview/SENNumberOfPlacesFundedFor");
       public static readonly LinkItem NumberOfResidentialPlaces = AddLinkItem(page: "/TaskList/SchoolOverview/SENNumberOfResidentialPlaces");
@@ -127,6 +129,12 @@ public static class Links
       public static readonly LinkItem DistanceFromTrustHeadquarters = AddLinkItem(page: "/TaskList/SchoolOverview/DistanceFromTrustHeadquarters");
       public static readonly LinkItem MPDetails = AddLinkItem(page: "/TaskList/SchoolOverview/MPDetails");
       public static readonly LinkItem PartOfPfiScheme = AddLinkItem(page: "/TaskList/SchoolOverview/PartOfPfiScheme");
+
+      public static readonly LinkItem NumberOfAlternativeProvisionPlaces = AddLinkItem(page: "/TaskList/SchoolOverview/PRUNumberOfAlternativeProvisionPlaces");
+      public static readonly LinkItem NumberOfSENUnitPlaces = AddLinkItem(page: "/TaskList/SchoolOverview/SENUnitNumberOfPlaces");
+      public static readonly LinkItem NumberOfMedicalPlaces = AddLinkItem(page: "/TaskList/SchoolOverview/PRUNumberOfMedicalPlaces");
+      public static readonly LinkItem NumberOfPost16Places = AddLinkItem(page: "/TaskList/SchoolOverview/PRUNumberOfPost16Places");
+
    }
 
    public static class RationaleSection

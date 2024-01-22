@@ -84,7 +84,10 @@ public class ApiClient : IApiClient
          pfiSchemeDetails = updatedSchoolOverview.PfiSchemeDetails ?? string.Empty,
          distanceFromSchoolToTrustHeadquarters = updatedSchoolOverview.DistanceFromSchoolToTrustHeadquarters ?? 0,
          distanceFromSchoolToTrustHeadquartersAdditionalInformation = updatedSchoolOverview.DistanceFromSchoolToTrustHeadquartersAdditionalInformation ?? string.Empty,
-         memberOfParliamentNameAndParty = updatedSchoolOverview.MemberOfParliamentNameAndParty ?? string.Empty
+         memberOfParliamentNameAndParty = updatedSchoolOverview.MemberOfParliamentNameAndParty ?? string.Empty,
+         pupilsAttendingGroupPermanentlyExcluded = updatedSchoolOverview.PupilsAttendingGroupPermanentlyExcluded ?? null,
+         pupilsAttendingGroupMedicalAndHealthNeeds = updatedSchoolOverview.PupilsAttendingGroupMedicalAndHealthNeeds ?? null,
+         pupilsAttendingGroupTeenageMums = updatedSchoolOverview.PupilsAttendingGroupTeenageMums ?? null,
       };
 
       var formattedString = string.Format(PathFor.SetSchoolOverview, id);
