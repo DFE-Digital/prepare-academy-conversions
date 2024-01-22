@@ -3,17 +3,18 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
+using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.SchoolOverview;
 
-public class PRUPupilsAttendingGroup : BaseAcademyConversionProjectPageModel
+public class PruPupilsAttendingGroup : BaseAcademyConversionProjectPageModel
 {
    private readonly ErrorService _errorService;
 
-   public PRUPupilsAttendingGroup(IAcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
+   public PruPupilsAttendingGroup(IAcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
    {
       _errorService = errorService;
    }
@@ -40,7 +41,7 @@ public class PRUPupilsAttendingGroup : BaseAcademyConversionProjectPageModel
 
       if (ModelState.IsValid)
       {
-         SetSchoolOverviewModel updatedSchoolOverview = CreateUpdateSchoolOverview(Project);
+         SetSchoolOverviewModel updatedSchoolOverview = SchoolOverviewHelper.CreateUpdateSchoolOverview(Project);
          updatedSchoolOverview.Id = id;
          updatedSchoolOverview.PupilsAttendingGroupPermanentlyExcluded = PupilsAttendingGroupPermanentlyExcluded;
          updatedSchoolOverview.PupilsAttendingGroupMedicalAndHealthNeeds = PupilsAttendingGroupMedicalAndHealthNeeds;
@@ -50,27 +51,6 @@ public class PRUPupilsAttendingGroup : BaseAcademyConversionProjectPageModel
          return RedirectToPage(Links.SchoolOverviewSection.ConfirmSchoolOverview.Page, new { id });
       }
 
-
       return await base.OnGetAsync(id);
-   }
-   public static SetSchoolOverviewModel CreateUpdateSchoolOverview(ProjectViewModel projectViewModel)
-   {
-      return new SetSchoolOverviewModel(
-          projectViewModel.Id.ToInteger(0),
-          projectViewModel.PublishedAdmissionNumber,
-          projectViewModel.ViabilityIssues,
-          projectViewModel.FinancialDeficit,
-          projectViewModel.NumberOfPlacesFundedFor,
-          projectViewModel.NumberOfResidentialPlaces,
-          projectViewModel.NumberOfFundedResidentialPlaces,
-          projectViewModel.PartOfPfiScheme,
-          projectViewModel.PfiSchemeDetails,
-          projectViewModel.DistanceFromSchoolToTrustHeadquarters,
-          projectViewModel.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
-          projectViewModel.MemberOfParliamentNameAndParty,
-          projectViewModel.PupilsAttendingGroupPermanentlyExcluded,
-          projectViewModel.PupilsAttendingGroupMedicalAndHealthNeeds,
-          projectViewModel.PupilsAttendingGroupTeenageMums
-      );
    }
 }

@@ -3,6 +3,7 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
+using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -39,7 +40,7 @@ public class SENNumberOfFundedResidentialPlaces : BaseAcademyConversionProjectPa
 
       if (ModelState.IsValid)
       {
-         SetSchoolOverviewModel updatedSchoolOverview = CreateUpdateSchoolOverview(Project);
+         SetSchoolOverviewModel updatedSchoolOverview = SchoolOverviewHelper.CreateUpdateSchoolOverview(Project);
          updatedSchoolOverview.Id = id;
          updatedSchoolOverview.NumberOfFundedResidentialPlaces = NumberOfFundedResidentialPlaces;
          await _repository.SetSchoolOverview(id, updatedSchoolOverview);
@@ -48,25 +49,5 @@ public class SENNumberOfFundedResidentialPlaces : BaseAcademyConversionProjectPa
       }
 
       return await base.OnGetAsync(id);
-   }
-   public static SetSchoolOverviewModel CreateUpdateSchoolOverview(ProjectViewModel projectViewModel)
-   {
-      return new SetSchoolOverviewModel(
-          projectViewModel.Id.ToInteger(0),
-          projectViewModel.PublishedAdmissionNumber,
-          projectViewModel.ViabilityIssues,
-          projectViewModel.FinancialDeficit,
-          projectViewModel.NumberOfPlacesFundedFor,
-          projectViewModel.NumberOfResidentialPlaces,
-          projectViewModel.NumberOfFundedResidentialPlaces,
-          projectViewModel.PartOfPfiScheme,
-          projectViewModel.PfiSchemeDetails,
-          projectViewModel.DistanceFromSchoolToTrustHeadquarters,
-          projectViewModel.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
-          projectViewModel.MemberOfParliamentNameAndParty,
-          projectViewModel.PupilsAttendingGroupPermanentlyExcluded,
-          projectViewModel.PupilsAttendingGroupMedicalAndHealthNeeds,
-          projectViewModel.PupilsAttendingGroupTeenageMums
-      );
    }
 }

@@ -72,8 +72,6 @@ public class SchoolOverviewViewComponent : ViewComponent
       return View(viewModel);
    }
 
-
-   //TODO:EA Check if there is somewhere better to put this
    private static string MapPupilsAttendingGroup(AcademyConversionProject project)
    {
       var listOfAttendes = new List<string>();
