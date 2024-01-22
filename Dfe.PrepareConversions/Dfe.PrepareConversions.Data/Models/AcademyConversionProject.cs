@@ -10,6 +10,7 @@ public class AcademyConversionProject
    public DateTime CreatedOn { get; set; }
    public string SchoolName { get; set; }
    public string SchoolPhase { get; set; }
+   public string SchoolType { get; set; }
    public string LocalAuthority { get; set; }
    public string ApplicationReferenceNumber { get; set; }
    public string ProjectStatus { get; set; }

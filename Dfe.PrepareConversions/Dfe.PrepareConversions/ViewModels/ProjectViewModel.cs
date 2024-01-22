@@ -20,6 +20,7 @@ public class ProjectViewModel : ProjectTypeBase
       ApplicationReceivedDate = project.ApplicationReceivedDate.ToDateString();
       AssignedDate = project.AssignedDate.ToDateString();
       SchoolPhase = project.SchoolPhase;
+      SchoolType = project.SchoolType;
       HeadTeacherBoardDate = project.HeadTeacherBoardDate;
 
       LocalAuthorityInformationTemplateSentDate = project.LocalAuthorityInformationTemplateSentDate;
@@ -125,6 +126,10 @@ public class ProjectViewModel : ProjectTypeBase
    public string ApplicationReceivedDate { get; }
    public string AssignedDate { get; }
    public string SchoolPhase { get; }
+   public string SchoolType { get; }
+
+   public bool IsPRU { get { return SchoolType.ToLower() == "pupil referal unit"; } }
+   public bool IsSEN { get { return SchoolType.ToLower().Contains("special"); } }
    public DateTime? HeadTeacherBoardDate { get; set; }
 
    public DateTime? LocalAuthorityInformationTemplateSentDate { get; set; }

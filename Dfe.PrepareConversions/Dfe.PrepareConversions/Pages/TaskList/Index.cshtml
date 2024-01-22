@@ -167,7 +167,7 @@
                         </span>
                     </li>
                 }
-                @if (Model.TaskList.HasAbsenceData)
+                @if (Model.TaskList.HasAbsenceData && (Model.Project.IsPRU || Model.Project.IsSEN))
                 {
                     <li class="app-task-list__item">
                         <span class="app-task-list__task-name">

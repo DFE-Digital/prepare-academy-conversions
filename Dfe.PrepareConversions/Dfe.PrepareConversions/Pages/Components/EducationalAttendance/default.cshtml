@@ -2,7 +2,9 @@
 @using Dfe.PrepareConversions.TagHelpers
 @model IEnumerable<EducationalAttendanceViewModel>
 <div>
-
+    @{
+        var educationalAttendanceViewModels = Model.OrderByDescending(x => x.Year).ToList();
+    }
 
     <table class="govuk-table govuk-!-margin-bottom-9">
         <caption class="govuk-table__caption govuk-table__caption--m">
@@ -12,8 +14,11 @@
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header"></th>
-                @foreach (var vm in Model)
+
+                @for (int i = 0; i < 3; i++)
                 {
+                    var vm = educationalAttendanceViewModels[i];
+
                     <th scope="col" class="govuk-table__header">@vm.Year</th>
                 }
 
@@ -22,14 +27,10 @@
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
-                @{
-                    var index = 0;
-
-                    @foreach (var vm in Model)
-                    {
-                        <td class="govuk-table__cell" id="@("percentage-overall-" + index)">@vm.OverallAbsence</td>
-                        index++;
-                    }
+                @for (int i = 0; i < 3; i++)
+                {
+                    var vm = educationalAttendanceViewModels[i];
+                    <td class="govuk-table__cell" id="@("percentage-overall-" + i)">@vm.OverallAbsence</td>
                 }
             </tr>
         </tbody>
@@ -43,8 +44,10 @@
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header"></th>
-                @foreach (var vm in Model)
+                @for (int i = 0; i < 3; i++)
                 {
+                    var vm = educationalAttendanceViewModels[i];
+
                     <th scope="col" class="govuk-table__header">@vm.Year</th>
                 }
 
@@ -53,13 +56,10 @@
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
-                @{
-                    index = 0;
-                    @foreach (var vm in Model)
-                    {
-                        <td class="govuk-table__cell" id="@("percentage-overall-above-10" + index)">@vm.PersistentAbsence</td>
-                        index++;
-                    }
+                @for (int i = 0; i < 3; i++)
+                {
+                    var vm = educationalAttendanceViewModels[i];
+                    <td class="govuk-table__cell" id="@("percentage-overall-above-10" + i)">@vm.PersistentAbsence</td>
                 }
             </tr>
         </tbody>
