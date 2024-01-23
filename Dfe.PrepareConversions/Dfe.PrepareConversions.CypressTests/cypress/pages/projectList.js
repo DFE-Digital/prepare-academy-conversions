@@ -23,6 +23,22 @@ export default class projectList extends BasePage {
         const filterQuery = `?Title=${encodeURIComponent(titleFilter)}`
         cy.visit(`${Cypress.env('url')}/${this.path}${filterQuery}`)
     }
+    
+    static filterByRegion(region) {
+        this.filterProjectList({ region: region });
+    }
+
+    static filterByStatus(status) {
+        this.filterProjectList({ status: status });
+    }
+
+    static filterByAdvisoryBoardDate(advisoryBoardDate) {
+        this.filterProjectList({ advisoryBoardDate: advisoryBoardDate });
+    }
+
+    static filterByTitle(title) {
+        this.filterProjectList({ title: title });
+    }
 
     static selectFirstItem() {
         this.checkProjectListPage()
@@ -53,3 +69,4 @@ export default class projectList extends BasePage {
         return ''
     }
 }
+
