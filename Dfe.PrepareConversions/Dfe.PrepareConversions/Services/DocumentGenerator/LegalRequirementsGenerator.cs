@@ -17,7 +17,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
                build.AddHeading("Legal requirements", HeadingLevel.One);
                build.AddTable(new List<TextElement[]>
                {
-                  new[] { new TextElement { Value = "Governing body resolution", Bold = true }, new TextElement { Value = document.GoverningBodyResolution } },
+                  new[] { new TextElement { Value = "Management commitee resolution", Bold = true }, new TextElement { Value = document.GoverningBodyResolution } },
                   new[] { new TextElement { Value = "Consultation", Bold = true }, new TextElement { Value = document.Consultation } },
                   new[] { new TextElement { Value = "Diocesan consent", Bold = true }, new TextElement { Value = document.DiocesanConsent } },
                   new[] { new TextElement { Value = "Foundation consent", Bold = true }, new TextElement { Value = document.FoundationConsent } },

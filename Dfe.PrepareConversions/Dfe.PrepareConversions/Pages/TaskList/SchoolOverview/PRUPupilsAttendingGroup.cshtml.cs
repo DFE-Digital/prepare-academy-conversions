@@ -10,40 +10,42 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.SchoolOverview;
 
-public class SENNumberOfResidentialPlaces : BaseAcademyConversionProjectPageModel
+public class PruPupilsAttendingGroup : BaseAcademyConversionProjectPageModel
 {
    private readonly ErrorService _errorService;
 
-   public SENNumberOfResidentialPlaces(IAcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
+   public PruPupilsAttendingGroup(IAcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
    {
       _errorService = errorService;
    }
    public bool ShowError => _errorService.HasErrors();
 
-   [BindProperty(Name = "number-of-residential-places")]
-   public decimal? NumberOfResidentialPlaces { get; set; }
+   [BindProperty(Name = "permanently-excluded")]
+   public bool? PupilsAttendingGroupPermanentlyExcluded { get; set; }
+
+   [BindProperty(Name = "medical-and-health-needs")]
+   public bool? PupilsAttendingGroupMedicalAndHealthNeeds { get; set; }
+
+   [BindProperty(Name = "teenage-mums")]
+   public bool? PupilsAttendingGroupTeenageMums { get; set; }
 
    public override async Task<IActionResult> OnGetAsync(int id)
    {
       await base.OnGetAsync(id);
-      NumberOfResidentialPlaces = Project.NumberOfResidentialPlaces ?? null;
       return Page();
    }
 
    public override async Task<IActionResult> OnPostAsync(int id)
    {
       await base.OnGetAsync(id);
-      if (NumberOfResidentialPlaces is null)
-      {
-         _errorService.AddError(nameof(NumberOfResidentialPlaces), "Enter a number. No letters or special characters.");
-      }
-
 
       if (ModelState.IsValid)
       {
          SetSchoolOverviewModel updatedSchoolOverview = SchoolOverviewHelper.CreateUpdateSchoolOverview(Project);
          updatedSchoolOverview.Id = id;
-         updatedSchoolOverview.NumberOfResidentialPlaces = NumberOfResidentialPlaces;
+         updatedSchoolOverview.PupilsAttendingGroupPermanentlyExcluded = PupilsAttendingGroupPermanentlyExcluded;
+         updatedSchoolOverview.PupilsAttendingGroupMedicalAndHealthNeeds = PupilsAttendingGroupMedicalAndHealthNeeds;
+         updatedSchoolOverview.PupilsAttendingGroupTeenageMums = PupilsAttendingGroupTeenageMums;
          await _repository.SetSchoolOverview(id, updatedSchoolOverview);
 
          return RedirectToPage(Links.SchoolOverviewSection.ConfirmSchoolOverview.Page, new { id });

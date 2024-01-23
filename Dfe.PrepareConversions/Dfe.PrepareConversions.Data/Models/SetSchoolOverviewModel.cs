@@ -14,6 +14,9 @@
       public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
       public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
       public string MemberOfParliamentNameAndParty { get; set; }
+      public bool? PupilsAttendingGroupPermanentlyExcluded { get; set; }
+      public bool? PupilsAttendingGroupMedicalAndHealthNeeds { get; set; }
+      public bool? PupilsAttendingGroupTeenageMums { get; set; }
 
       public SetSchoolOverviewModel() { }
 
@@ -29,7 +32,10 @@
           string pfiSchemeDetails,
           decimal? distanceFromSchoolToTrustHeadquarters,
           string distanceFromSchoolToTrustHeadquartersAdditionalInformation,
-          string memberOfParliamentNameAndParty)
+          string memberOfParliamentNameAndParty,
+          bool? pupilsAttendingGroupPermanentlyExcluded,
+          bool? pupilsAttendingGroupMedicalAndHealthNeeds,
+          bool? pupilsAttendingGroupTeenageMums)
       {
          Id = id;
          PublishedAdmissionNumber = publishedAdmissionNumber;
@@ -43,6 +49,9 @@
          DistanceFromSchoolToTrustHeadquarters = distanceFromSchoolToTrustHeadquarters;
          DistanceFromSchoolToTrustHeadquartersAdditionalInformation = distanceFromSchoolToTrustHeadquartersAdditionalInformation;
          MemberOfParliamentNameAndParty = memberOfParliamentNameAndParty;
+         PupilsAttendingGroupPermanentlyExcluded = pupilsAttendingGroupPermanentlyExcluded;
+         PupilsAttendingGroupMedicalAndHealthNeeds = pupilsAttendingGroupMedicalAndHealthNeeds;
+         PupilsAttendingGroupTeenageMums = pupilsAttendingGroupTeenageMums;
       }
    }
 }

@@ -1,0 +1,28 @@
+@page "/task-list/{id:int}/confirm-school-overview/pupils-attending-group"
+@using Dfe.PrepareConversions.TagHelpers
+@model Dfe.PrepareConversions.Pages.TaskList.SchoolOverview.PruPupilsAttendingGroup
+@{
+    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Which groups of pupils attend the school?";
+    Layout = "_QuestionLayout";
+    ViewData["ProjectId"] = Model.Project.Id;
+    ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
+}
+
+@section BeforeMain
+{
+   <govuk-back-link link-item="@Links.SchoolOverviewSection.ConfirmSchoolOverview" />
+}
+
+<legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+    <h1 class="govuk-fieldset__heading">
+        Which groups of pupils attend the school?
+    </h1>
+</legend>
+
+<div id="pupil-hint" class="govuk-hint govuk-!-margin-top-6 govuk-!-margin-bottom-4">
+    Select all that apply.
+</div>
+
+<govuk-checkbox-input name="permanently-excluded" asp-for="Project.PupilsAttendingGroupPermanentlyExcluded" label="Permanently excluded" />
+<govuk-checkbox-input name="medical-and-health-needs" asp-for="Project.PupilsAttendingGroupMedicalAndHealthNeeds" label="Medical and health needs" />
+<govuk-checkbox-input name="teenage-mums" asp-for="Project.PupilsAttendingGroupTeenageMums" label="Teenage mums" />

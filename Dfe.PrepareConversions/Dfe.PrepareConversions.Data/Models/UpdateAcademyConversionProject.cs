@@ -35,6 +35,7 @@ public class UpdateAcademyConversionProject
    public string ConversionSupportGrantType { get; set; }
    public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
    public bool? ConversionSupportGrantAmountChanged { get; set; }
+   public string ConversionSupportGrantNumberOfSites { get; set; }
    public DateTime? DaoPackSentDate { get; set; }
 
    // School Overview
@@ -51,6 +52,10 @@ public class UpdateAcademyConversionProject
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string MemberOfParliamentNameAndParty { get; set; }
    public bool? SchoolOverviewSectionComplete { get; set; }
+   public string NumberOfAlternativeProvisionPlaces { get; set; }
+   public string NumberOfMedicalPlaces { get; set; }
+   public string NumberOfPost16Places { get; set; }
+   public string NumberOfSENUnitPlaces { get; set; }
 
    // Annex B
    public bool? AnnexBFormReceived { get; set; }

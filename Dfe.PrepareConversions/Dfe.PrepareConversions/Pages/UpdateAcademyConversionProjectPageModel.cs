@@ -91,9 +91,14 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
       Project.LocalAuthorityInformationTemplateSentDate = AcademyConversionProject.LocalAuthorityInformationTemplateSentDate;
       Project.LocalAuthorityInformationTemplateReturnedDate = AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate;
    }
-   public static decimal? CalculateGrantAmount(string type, string phase)
+   public static decimal? CalculateGrantAmount(string type, string phase, string numberOfSites = "1")
    {
-      if (phase is null) return 25000;
+      int defaultAmount = 25000;
+      int supplementAmount = CalculateGrantSupplement(numberOfSites);
+
+      defaultAmount += supplementAmount;
+
+      if (phase is null) return defaultAmount;
       switch (phase.ToLower())
       {
          case "primary":
@@ -115,7 +120,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
       }
 
       // Else return default £25k
-      return 25000;
+      return defaultAmount;
    }
 
    protected UpdateAcademyConversionProject Build()
@@ -126,6 +131,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          ConversionSupportGrantAmount = AcademyConversionProject.ConversionSupportGrantAmount,
          ConversionSupportGrantChangeReason = AcademyConversionProject.ConversionSupportGrantChangeReason,
          ConversionSupportGrantType = AcademyConversionProject.ConversionSupportGrantType,
+         ConversionSupportGrantNumberOfSites = AcademyConversionProject.ConversionSupportNumberOfSites,
          ConversionSupportGrantEnvironmentalImprovementGrant = AcademyConversionProject.ConversionSupportGrantEnvironmentalImprovementGrant,
          ConversionSupportGrantAmountChanged = ConversionSupportGrantAmountChanged(Project?.AcademyTypeAndRoute ?? string.Empty),
          ApplicationReceivedDate = AcademyConversionProject.ApplicationReceivedDate,
@@ -182,7 +188,11 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          KeyStage2PerformanceAdditionalInformation = AcademyConversionProject.KeyStage2PerformanceAdditionalInformation,
          KeyStage4PerformanceAdditionalInformation = AcademyConversionProject.KeyStage4PerformanceAdditionalInformation,
          KeyStage5PerformanceAdditionalInformation = AcademyConversionProject.KeyStage5PerformanceAdditionalInformation,
-         DaoPackSentDate = AcademyConversionProject.DaoPackSentDate == default(DateTime) ? null : AcademyConversionProject.DaoPackSentDate
+         DaoPackSentDate = AcademyConversionProject.DaoPackSentDate == default(DateTime) ? null : AcademyConversionProject.DaoPackSentDate,
+         NumberOfAlternativeProvisionPlaces = AcademyConversionProject.NumberOfAlternativeProvisionPlaces,
+         NumberOfMedicalPlaces = AcademyConversionProject.NumberOfMedicalPlaces,
+         NumberOfSENUnitPlaces = AcademyConversionProject.NumberOfSENUnitPlaces,
+         NumberOfPost16Places = AcademyConversionProject.NumberOfPost16Places,
       };
    }
 
@@ -194,6 +204,18 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
       }
 
       return null;
+   }
+
+   private static int CalculateGrantSupplement(string numberOfSites)
+   {
+      return numberOfSites switch
+      {
+         "2" => 5000,
+         "3" => 10000,
+         "4" => 10000,
+         "5 or more" => 20000,
+         _ => 0
+      };
    }
 
    private (string, string) GetReturnPageAndFragment()
