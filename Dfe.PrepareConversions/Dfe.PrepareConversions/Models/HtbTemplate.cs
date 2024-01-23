@@ -1,8 +1,7 @@
-﻿using Dfe.PrepareConversions.Data.Models;
+﻿using Dfe.Academisation.ExtensionMethods;
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.DocumentGeneration;
-using Dfe.PrepareConversions.Extensions;
-using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -109,6 +108,12 @@ public class HtbTemplate
 
    [DocumentText("ViabilityIssues")]
    public string ViabilityIssues { get; set; }
+   [DocumentText("NumberOfPlacesFundedFor")]
+   public string NumberOfPlacesFundedFor { get; set; }
+   [DocumentText("NumberOfResidentialPlaces")]
+   public string NumberOfResidentialPlaces { get; set; }
+   [DocumentText("NumberOfFundedResidentialPlaces")]
+   public string NumberOfFundedResidentialPlaces { get; set; }
 
    [DocumentText("FinancialDeficit")]
    public string FinancialDeficit { get; set; }
@@ -254,6 +259,9 @@ public class HtbTemplate
          PercentageFreeSchoolMeals = !string.IsNullOrEmpty(schoolOverview.PercentageFreeSchoolMeals) ? $"{schoolOverview.PercentageFreeSchoolMeals}%" : "",
          PartOfPfiScheme = project.PartOfPfiScheme,
          ViabilityIssues = project.ViabilityIssues,
+         NumberOfPlacesFundedFor = project.NumberOfPlacesFundedFor.ToStringOrDefault(),
+         NumberOfResidentialPlaces = project.NumberOfResidentialPlaces.ToStringOrDefault(),
+         NumberOfFundedResidentialPlaces = project.NumberOfFundedResidentialPlaces.ToStringOrDefault(),
          FinancialDeficit = project.FinancialDeficit,
          IsSchoolLinkedToADiocese = schoolOverview.IsSchoolLinkedToADiocese,
          DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters != null

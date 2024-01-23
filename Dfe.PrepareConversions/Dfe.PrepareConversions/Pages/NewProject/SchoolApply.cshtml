@@ -1,0 +1,55 @@
+﻿@page "/start-new-project/school-apply"
+@using Dfe.PrepareConversions.Pages.Shared
+@model Dfe.PrepareConversions.Pages.SponsoredProject.SchoolApplyModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Title = (!ViewData.ModelState.IsValid ? "Error: " : "") + "Which school is involved";
+    var routeParams = new Dictionary<string, string>
+   {
+      { "urn", Request.Query["urn"] },
+      { "ukprn", Request.Query["ukprn"] },
+      { "hasSchoolApplied", Request.Query["hasSchoolApplied"] }
+   };
+}
+
+@section BeforeMain
+    {
+    <partial name="_BackLink" model="@(new BackLink(Links.NewProject.SearchSchool.Page, routeParams))" />
+    <partial name="_ErrorSummary" />
+}
+
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+
+            <input hidden="" type="text" name="returnToSummary" value="no">
+            <input type="hidden" asp-for="Urn" />
+            <h1 class="govuk-heading-l" data-cy="select-heading">Did the school apply to convert?</h1>
+
+            <div class="govuk-form-group" @ModelState.GetErrorStyleClass()>
+                <div class="govuk-radios">
+                    <div class="govuk-radios__item">
+                        <input asp-for="HasSchoolApplied" class="govuk-radios__input" type="radio" value="Yes" id="DoneYes" data-cy="select-legal-input-yes">
+                        <label class="govuk-label govuk-radios__label" for="DoneYes">
+                            Yes
+                        </label>
+                    </div>
+
+                    <div class="govuk-radios__item">
+                        <input asp-for="HasSchoolApplied" class="govuk-radios__input" type="radio" value="No" id="DoneNo" data-cy="select-legal-input-no">
+                        <label class="govuk-label govuk-radios__label" for="DoneNo">
+                            No
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button class="govuk-button pt-3" data-module="govuk-button" data-cy="select-common-submitbutton">
+                Continue
+            </button>
+        </form>
+
+    </div>

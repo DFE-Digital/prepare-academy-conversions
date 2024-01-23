@@ -8,6 +8,7 @@ using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -36,7 +37,7 @@ public class IndexModel : PaginatedPageModel
       Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
 
       ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response =
-         await _repository.GetAllProjects(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions);
+         await _repository.GetAllProjectsV2(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedAdvisoryBoardDates);
 
       Paging = response.Body?.Paging;
       Projects = response.Body?.Data.Select(ProjectListHelper.Build).ToList();
@@ -49,6 +50,33 @@ public class IndexModel : PaginatedPageModel
          Filters.AvailableStatuses = filterParametersResponse.Body.Statuses.ConvertAll(r => r.ToSentenceCase());
          Filters.AvailableDeliveryOfficers = filterParametersResponse.Body.AssignedUsers;
          Filters.AvailableRegions = filterParametersResponse.Body.Regions;
+         Filters.AvailableLocalAuthorities = filterParametersResponse.Body.LocalAuthorities;
+         Filters.AvailableAdvisoryBoardDates = filterParametersResponse.Body.AdvisoryBoardDates;
+      }
+   }
+   public async Task<FileStreamResult> OnGetDownload()
+   {
+      Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
+      ApiResponse<FileStreamResult> response = await _repository.DownloadProjectExport(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions);
+
+      if (response.Success)
+      {
+         return response.Body;
+      }
+      else
+      {
+         var stream = new MemoryStream();
+         var writer = new StreamWriter(stream);
+         writer.Write("");
+         writer.Flush();
+         stream.Position = 0;
+
+         var fileStreamResult = new FileStreamResult(stream, "text/csv")
+         {
+            FileDownloadName = "empty.csv"
+         };
+
+         return fileStreamResult;
       }
    }
 }

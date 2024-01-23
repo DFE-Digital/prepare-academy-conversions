@@ -25,8 +25,6 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import 'cypress-localstorage-commands'
-import sqlServer from 'cypress-sql-server'
-sqlServer.loadDBCommands()
 
 //--Universal
 
@@ -80,18 +78,15 @@ Cypress.Commands.add('generateProjectTempBtn', () => {
 })
 
 Cypress.Commands.add('enterDate', (idSelector, day, month, year) => {
-    cy.get(`[id*="${idSelector}-day"]`).as('day')
-    cy.get(`[id*="${idSelector}-month"]`).as('month')
-    cy.get(`[id*="${idSelector}-year"]`).as('year')
+    cy.get(`[id*="${idSelector}-day"]`).as('day');
+    cy.get(`[id*="${idSelector}-month"]`).as('month');
+    cy.get(`[id*="${idSelector}-year"]`).as('year');
+  
+    cy.get('@day').should('be.visible').invoke('val', '').type(day);
+    cy.get('@month').should('be.visible').invoke('val', '').type(month);
+    cy.get('@year').should('be.visible').invoke('val', '').type(year);
+});
 
-    cy.get(`@day`).should('be.visible')
-    cy.get(`@day`).clear()
-    cy.get(`@day`).type(day)
-    cy.get(`@month`).clear()
-    cy.get(`@month`).type(month)
-    cy.get(`@year`).clear()
-    cy.get(`@year`).type(year)
-})
 
 // No Radio Btn
 Cypress.Commands.add('NoRadioBtn', () => {
@@ -118,7 +113,6 @@ Cypress.Commands.add('saveContinue', () => {
 })
 
 Cypress.Commands.add("excuteAccessibilityTests", () => {
-    // FUNCTION COURTESY OF FAHAD DARWISH - NIMBLE APPROACH CONFLUENECE
     const wcagStandards = ["wcag22aa", "wcag21aa"]
     const impactLevel = ["critical", "minor", "moderate", "serious"]
     const continueOnFail = false

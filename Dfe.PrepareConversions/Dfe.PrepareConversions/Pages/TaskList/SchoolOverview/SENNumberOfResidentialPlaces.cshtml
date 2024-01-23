@@ -1,0 +1,16 @@
+@page "/task-list/{id:int}/confirm-school-overview/number-of-residential-places"
+@using Dfe.PrepareConversions.TagHelpers
+@model Dfe.PrepareConversions.Pages.TaskList.SchoolOverview.SENNumberOfResidentialPlaces
+@{
+    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Number of residential places";
+    Layout = "_QuestionLayout";
+    ViewData["ProjectId"] = Model.Project.Id;
+    ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
+}
+
+@section BeforeMain
+    {
+    <govuk-back-link link-item="@Links.SchoolOverviewSection.ConfirmSchoolOverview" />
+}
+
+<govuk-text-input heading-label="true" label="What is the school's maximum capacity for residential places?" name="number-of-residential-places" asp-for="@Model.NumberOfResidentialPlaces" width="5" hint="For example, 100" />

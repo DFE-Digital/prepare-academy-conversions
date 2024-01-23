@@ -14,19 +14,20 @@
 // ***********************************************************
 
 import './commands'
+import registerCypressGrep from '@cypress/grep/src/support'
+
+registerCypressGrep()
+
+// ***********************************************************
 
 beforeEach(() => {
 	cy.intercept(
 		{ url: Cypress.env('url') + '/**', middleware: true },
 		//Add authorization to all Cypress requests
-		(req) => req.headers['Authorization'] = 'Bearer ' + Cypress.env('authorizationHeader'),
+		(req) => req.headers['Authorization'] = 'Bearer ' + Cypress.env('cypressTestSecret'),
 		(req) => req.headers['AuthorizationRole'] = 'conversions.create'
 	)
 })
-// ***********************************************************
-
-//Cypress Grep module for filtering tests
-require('cypress-grep')()
 
 // ***********************************************************
 

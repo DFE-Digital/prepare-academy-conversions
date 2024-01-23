@@ -22,4 +22,5 @@ export default defineConfig({
     },
     baseUrl: 'http://s184d01-acacdnendpoint-ata0dwfremepeff8.z01.azurefd.net/'
   },
+  userAgent: 'PrepareConversions/1.0 Cypress'
 })

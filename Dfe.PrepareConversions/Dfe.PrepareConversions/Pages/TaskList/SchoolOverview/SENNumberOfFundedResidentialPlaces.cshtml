@@ -1,0 +1,16 @@
+@page "/task-list/{id:int}/confirm-school-overview/number-of-funded-residential-places"
+@using Dfe.PrepareConversions.TagHelpers
+@model Dfe.PrepareConversions.Pages.TaskList.SchoolOverview.SENNumberOfFundedResidentialPlaces
+@{
+    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Number of funded residential places";
+    Layout = "_QuestionLayout";
+    ViewData["ProjectId"] = Model.Project.Id;
+    ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
+}
+
+@section BeforeMain
+    {
+    <govuk-back-link link-item="@Links.SchoolOverviewSection.ConfirmSchoolOverview" />
+}
+
+<govuk-text-input heading-label="true" label="How many residential places is the school funded for?" name="number-of-funded-residential-places" asp-for="@Model.NumberOfFundedResidentialPlaces" width="5" hint="For example, 100" />

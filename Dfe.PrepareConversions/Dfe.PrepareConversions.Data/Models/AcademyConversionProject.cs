@@ -10,6 +10,7 @@ public class AcademyConversionProject
    public DateTime CreatedOn { get; set; }
    public string SchoolName { get; set; }
    public string SchoolPhase { get; set; }
+   public string SchoolType { get; set; }
    public string LocalAuthority { get; set; }
    public string ApplicationReferenceNumber { get; set; }
    public string ProjectStatus { get; set; }
@@ -48,22 +49,38 @@ public class AcademyConversionProject
    public string ConversionSupportGrantType { get; set; }
    public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
    public bool? ConversionSupportGrantAmountChanged { get; set; }
+   public string ConversionSupportGrantNumberOfSites { get; set; }
    public DateTime? DaoPackSentDate { get; set; }
+   public string Region { get; set; }
 
    // Annex B
    public bool? AnnexBFormReceived { get; set; }
    public string AnnexBFormUrl { get; set; }
+
+   // External Application Form
+   public bool? ExternalApplicationFormSaved { get; set; }
+   public string? ExternalApplicationFormUrl { get; set; }
 
    // School Overview
    public string PublishedAdmissionNumber { get; set; }
    public string PartOfPfiScheme { get; set; }
    public string PfiSchemeDetails { get; set; }
    public string ViabilityIssues { get; set; }
+   public decimal? NumberOfPlacesFundedFor { get; set; }
+   public decimal? NumberOfResidentialPlaces { get; set; }
+   public decimal? NumberOfFundedResidentialPlaces { get; set; }
    public string FinancialDeficit { get; set; }
    public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string MemberOfParliamentNameAndParty { get; set; }
    public bool? SchoolOverviewSectionComplete { get; set; }
+   public bool? PupilsAttendingGroupPermanentlyExcluded { get; set; }
+   public bool? PupilsAttendingGroupMedicalAndHealthNeeds { get; set; }
+   public bool? PupilsAttendingGroupTeenageMums { get; set; }
+   public int? NumberOfAlternativeProvisionPlaces { get; set; }
+   public int? NumberOfMedicalPlaces { get; set; }
+   public int? NumberOfPost16Places { get; set; }
+   public int? NumberOfSENUnitPlaces { get; set; }
 
    //school performance ofsted information
    public string SchoolPerformanceAdditionalInformation { get; set; }
@@ -115,5 +132,5 @@ public class AcademyConversionProject
 
    // notes
    public ICollection<ProjectNote> Notes { get; set; } = new List<ProjectNote>();
-   
+
 }

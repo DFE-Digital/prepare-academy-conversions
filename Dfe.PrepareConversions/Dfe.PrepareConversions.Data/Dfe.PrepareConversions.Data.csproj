@@ -11,9 +11,10 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Azure.Identity" Version="1.8.2" />
-	  <PackageReference Include="Dfe.Academies.Contracts" Version="1.0.4" />
+	  <PackageReference Include="Dfe.Academies.Contracts" Version="1.0.9" />
 	  <PackageReference Include="Dfe.Academisation.CorrelationIdMiddleware" Version="2.0.2" />
 	  <PackageReference Include="Dfe.Academisation.ExtensionMethods" Version="2.0.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
 	  <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
 	  <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
 	  <PackageReference Include="Microsoft.FeatureManagement" Version="2.5.1" />

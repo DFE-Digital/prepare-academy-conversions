@@ -35,11 +35,15 @@ public class UpdateAcademyConversionProject
    public string ConversionSupportGrantType { get; set; }
    public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
    public bool? ConversionSupportGrantAmountChanged { get; set; }
+   public string ConversionSupportGrantNumberOfSites { get; set; }
    public DateTime? DaoPackSentDate { get; set; }
 
    // School Overview
    public string PublishedAdmissionNumber { get; set; }
    public string ViabilityIssues { get; set; }
+   public decimal? NumberOfPlacesFundedFor { get; set; }
+   public decimal? NumberOfResidentialPlaces { get; set; }
+   public decimal? NumberOfFundedResidentialPlaces { get; set; }
    public string FinancialDeficit { get; set; }
    public bool? IsThisADiocesanTrust { get; set; }
    public string PartOfPfiScheme { get; set; }
@@ -48,10 +52,18 @@ public class UpdateAcademyConversionProject
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string MemberOfParliamentNameAndParty { get; set; }
    public bool? SchoolOverviewSectionComplete { get; set; }
+   public string NumberOfAlternativeProvisionPlaces { get; set; }
+   public string NumberOfMedicalPlaces { get; set; }
+   public string NumberOfPost16Places { get; set; }
+   public string NumberOfSENUnitPlaces { get; set; }
 
    // Annex B
    public bool? AnnexBFormReceived { get; set; }
    public string AnnexBFormUrl { get; set; }
+
+   // External Application Form
+   public bool? ExternalApplicationFormSaved { get; set; }
+   public string ExternalApplicationFormUrl { get; set; }
 
    //school performance ofsted information
    public string SchoolPerformanceAdditionalInformation { get; set; }

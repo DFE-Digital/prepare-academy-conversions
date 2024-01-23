@@ -28,7 +28,10 @@ public class ApiClient : IApiClient
    {
       return await AcademisationClient.PostAsync(PathFor.GetAllProjects, JsonContent.Create(searchModel));
    }
-
+   public async Task<HttpResponseMessage> DownloadProjectExport(AcademyConversionSearchModelV2 searchModel)
+   {
+      return await AcademisationClient.PostAsync(PathFor.DownloadProjectExport, JsonContent.Create(searchModel));
+   }
 
    public async Task<HttpResponseMessage> GetProjectByIdAsync(int id)
    {
@@ -54,5 +57,46 @@ public class ApiClient : IApiClient
    public async Task<HttpResponseMessage> AddProjectNote(int id, AddProjectNote projectNote)
    {
       return await AcademisationClient.PostAsync(string.Format(PathFor.AddProjectNote, id), JsonContent.Create(projectNote));
+   }
+
+   public async Task<HttpResponseMessage> SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl)
+   {
+      var payload = new
+      {
+         externalApplicationFormSaved = externalApplicationFormSaved,
+         externalApplicationFormUrl = externalApplicationFormUrl ?? string.Empty
+      };
+
+      return await AcademisationClient.PutAsync(string.Format(PathFor.SetExternalApplicationForm, id), JsonContent.Create(payload));
+   }
+   public async Task<HttpResponseMessage> SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview)
+   {
+      var payload = new
+      {
+         id = updatedSchoolOverview.Id,
+         publishedAdmissionNumber = updatedSchoolOverview.PublishedAdmissionNumber ?? string.Empty,
+         viabilityIssues = updatedSchoolOverview.ViabilityIssues ?? string.Empty,
+         partOfPfiScheme = updatedSchoolOverview.PartOfPfiScheme ?? string.Empty,
+         financialDeficit = updatedSchoolOverview.FinancialDeficit ?? string.Empty,
+         numberOfPlacesFundedFor = updatedSchoolOverview.NumberOfPlacesFundedFor ?? null,
+         numberOfResidentialPlaces = updatedSchoolOverview.NumberOfResidentialPlaces ?? null,
+         numberOfFundedResidentialPlaces = updatedSchoolOverview.NumberOfFundedResidentialPlaces ?? null,
+         pfiSchemeDetails = updatedSchoolOverview.PfiSchemeDetails ?? string.Empty,
+         distanceFromSchoolToTrustHeadquarters = updatedSchoolOverview.DistanceFromSchoolToTrustHeadquarters ?? 0,
+         distanceFromSchoolToTrustHeadquartersAdditionalInformation = updatedSchoolOverview.DistanceFromSchoolToTrustHeadquartersAdditionalInformation ?? string.Empty,
+         memberOfParliamentNameAndParty = updatedSchoolOverview.MemberOfParliamentNameAndParty ?? string.Empty,
+         pupilsAttendingGroupPermanentlyExcluded = updatedSchoolOverview.PupilsAttendingGroupPermanentlyExcluded ?? null,
+         pupilsAttendingGroupMedicalAndHealthNeeds = updatedSchoolOverview.PupilsAttendingGroupMedicalAndHealthNeeds ?? null,
+         pupilsAttendingGroupTeenageMums = updatedSchoolOverview.PupilsAttendingGroupTeenageMums ?? null,
+      };
+
+      var formattedString = string.Format(PathFor.SetSchoolOverview, id);
+      return await AcademisationClient.PutAsync(formattedString, JsonContent.Create(payload));
+   }
+
+
+   public async Task<HttpResponseMessage> GetAllProjectsV2Async(AcademyConversionSearchModelV2 searchModel)
+   {
+      return await AcademisationClient.PostAsync(PathFor.GetAllProjectsV2, JsonContent.Create(searchModel));
    }
 }

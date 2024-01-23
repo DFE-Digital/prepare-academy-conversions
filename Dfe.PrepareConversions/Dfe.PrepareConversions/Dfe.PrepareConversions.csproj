@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<UserSecretsId>eae6d8bd-2a58-4ed4-99e2-a82f32b0ce47</UserSecretsId>
@@ -12,6 +12,13 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <NoWarn>0436</NoWarn>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Validators\**" />
+	  <Content Remove="Validators\**" />
+	  <EmbeddedResource Remove="Validators\**" />
+	  <None Remove="Validators\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 	  <None Remove="Resources\htb-template.docx" />
@@ -28,7 +35,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="AngleSharp" Version="1.0.1" />
-	  <PackageReference Include="Dfe.Academies.Contracts" Version="1.0.4" />
+	  <PackageReference Include="Dfe.Academies.Contracts" Version="1.0.9" />
 	  <PackageReference Include="Dfe.Academisation.CorrelationIdMiddleware" Version="2.0.2" />
 	  <PackageReference Include="Dfe.Academisation.ExtensionMethods" Version="2.0.0" />
 	  <PackageReference Include="DocumentFormat.OpenXml" Version="2.19.0" />
@@ -47,10 +54,6 @@
 
 	<ItemGroup>
 	  <EmbeddedResource Include="Resources\htb-template.docx" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Validators\" />
 	</ItemGroup>
 
 	<ItemGroup>

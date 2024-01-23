@@ -16,41 +16,20 @@
 /**
  * @type {Cypress.PluginConfig}
  */
-// eslint-disable-next-line no-unused-vars
-const sqlServer = require('cypress-sql-server')
+
+/// <reference types="cypress" />
+
+// Load the TypeScript plugin
+import * as webpackPreprocessor from '@cypress/webpack-preprocessor';
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
-  var dbConfig
-  try {
-    dbConfig = JSON.parse(process.env.db)
-  } catch (error) {
-    console.log(
-      `The db config is not set. Please set the 'db' environment variable in the following format e.g.
-       { "userName": "username", "password": "password", "server": "server", "options": { "database": "database", "rowCollectionOnRequestCompletion" : true }}`)
-       throw error
-  }
+  on('file:preprocessor', webpackPreprocessor());
 
-  const tasks = sqlServer.loadDBPlugin(dbConfig)
-  on('task', tasks) 
-}
-// ***********************************************************
+  // Other configurations or plugins...
 
-//***Cypress Grep module for filtering tests Any new tags should be added to the examples**
-/**
- * @example {{tags: '@dev'} : Development
- * @example {tags: '@stage'} : Staging
- * @example {tags: '@integration'} : Integration
- * @example {tags: ['@dev', '@stage']}
- */
-module.export = (on, config) => {
-  
-  require('cypress-grep/src/plugin')(config)
-}
-// ***********************************************************
+  return config;
+};
 
-module.export = (on, config) => {
-  require('eslint/src/plugin')(config)
-}

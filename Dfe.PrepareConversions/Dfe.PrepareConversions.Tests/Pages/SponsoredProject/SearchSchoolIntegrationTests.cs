@@ -18,10 +18,10 @@ public class SearchSchoolIntegrationTests : BaseIntegrationTests
    public async Task Should_link_to_school_search()
    {
       await OpenAndConfirmPathAsync("/project-list");
-      await NavigateAsync("Start a new sponsored conversion project");
+      await NavigateAsync("Create a new conversion");
 
       Document.QuerySelector<IHtmlElement>("h1")!.Text().Trim().Should()
-         .Be("Which school is involved?");
+         .Be("Create a new conversion");
    }
 
    [Fact]

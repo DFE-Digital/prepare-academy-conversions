@@ -100,12 +100,17 @@ public class AcademyConversionProjectPostModel
 
    [BindProperty(Name = "conversion-support-grant-change-reason")]
    [DisplayFormat(ConvertEmptyStringToNull = false)]
-   
+
    public string ConversionSupportGrantChangeReason { get; set; }
    [BindProperty(Name = "conversion-support-grant-type")]
    [DisplayFormat(ConvertEmptyStringToNull = false)]
 
    public string ConversionSupportGrantType { get; set; }
+
+   [BindProperty(Name = "conversion-support-number-of-sites")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+
+   public string ConversionSupportNumberOfSites { get; set; }
 
    [BindProperty(Name = "conversion-support-grant-environmental-improvement-grant")]
    [DisplayFormat(ConvertEmptyStringToNull = false)]
@@ -123,6 +128,12 @@ public class AcademyConversionProjectPostModel
 
    [BindProperty(Name = "viability-issues")]
    public string ViabilityIssues { get; set; }
+   [BindProperty(Name = "number-of-places-funded-for")]
+   public int? NumberOfPlacesFundedFor { get; set; }
+   [BindProperty(Name = "number-of-residential-places")]
+   public int? NumberOResidentialPlaces { get; set; }
+   [BindProperty(Name = "number-of-funded-residential-places")]
+   public int? NumberOfFundedResidentialPlaces { get; set; }
 
    [BindProperty(Name = "financial-deficit")]
    public string FinancialDeficit { get; set; }
@@ -165,6 +176,22 @@ public class AcademyConversionProjectPostModel
    [BindProperty(Name = "rationale-complete")]
    [ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
    public bool? RationaleSectionComplete { get; set; }
+
+   [BindProperty(Name = "number-of-alternative-provisions-places")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+   public string NumberOfAlternativeProvisionPlaces { get; set; }
+
+   [BindProperty(Name = "number-of-medical-places")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+   public string NumberOfMedicalPlaces { get; set; }
+
+   [BindProperty(Name = "number-of-post-16-places")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+   public string NumberOfPost16Places { get; set; }
+
+   [BindProperty(Name = "number-of-sen-unit-places")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+   public string NumberOfSENUnitPlaces { get; set; }
 
    // risk and issues
    [BindProperty(Name = "risks-and-issues")]

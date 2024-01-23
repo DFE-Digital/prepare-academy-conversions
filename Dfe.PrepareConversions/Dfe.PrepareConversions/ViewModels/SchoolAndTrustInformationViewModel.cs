@@ -12,6 +12,7 @@ public class SchoolAndTrustInformationViewModel
    public string PreviousHeadTeacherBoardDate { get; set; }
    public string PreviousHeadTeacherBoardLink { get; set; }
    public string SchoolName { get; set; }
+   public string SchoolType { get; set; }
    public string SchoolUrn { get; set; }
    public string LocalAuthority { get; set; }
    public string TrustReferenceNumber { get; set; }
@@ -21,6 +22,7 @@ public class SchoolAndTrustInformationViewModel
    public string AcademyTypeAndRoute { get; set; }
    public string ProposedAcademyOpeningDate { get; set; }
    public string ConversionSupportGrantAmount { get; set; }
+   public string ConversionSupportNumberOfSites { get; set; }
    public string ConversionSupportGrantChangeReason { get; set; }
    public string ConversionSupportGrantType { get; set; }
    public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
@@ -28,5 +30,6 @@ public class SchoolAndTrustInformationViewModel
    public string Form7Received { get; set; }
    public string Form7ReceivedDate { get; set; }
    public bool IsDao { get; set; }
+   public bool IsPRU => SchoolType.ToLower().Equals("pupil referral unit");
    public bool WasForm7Received { get; set; }
 }

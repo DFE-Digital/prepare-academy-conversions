@@ -1,8 +1,9 @@
 ﻿using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data.Models.SponsoredProject;
+using Dfe.PrepareConversions.Data.Models.NewProject;
 using Dfe.PrepareConversions.Data.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -26,7 +27,18 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       return await _innerRepository.GetAllProjects(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter, applicationReferences);
    }
-
+   public async Task<ApiResponse<FileStreamResult>> DownloadProjectExport(
+   int page,
+   int count,
+   string titleFilter = "",
+   IEnumerable<string> statusFilters = default,
+   IEnumerable<string> deliveryOfficerFilter = default,
+   IEnumerable<string> regionsFilter = default,
+   IEnumerable<string> applicationReferences = default
+)
+   {
+      return await _innerRepository.DownloadProjectExport(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter, applicationReferences);
+   }
    public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)
    {
       if (_httpContext.Items.ContainsKey(id) && _httpContext.Items[id] is ApiResponse<AcademyConversionProject> cached)
@@ -45,9 +57,9 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
       return project;
    }
 
-   public async Task CreateSponsoredProject(CreateSponsoredProject sponsoredProject)
+   public async Task CreateProject(CreateNewProject sponsoredProject)
    {
-      await _innerRepository.CreateSponsoredProject(sponsoredProject);
+      await _innerRepository.CreateProject(sponsoredProject);
    }
 
    public async Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject)
@@ -68,5 +80,19 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    public async Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote addProjectNote)
    {
       return await _innerRepository.AddProjectNote(id, addProjectNote);
+   }
+
+   public async Task SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl)
+   {
+      await _innerRepository.SetProjectExternalApplicationForm(id, externalApplicationFormSaved, externalApplicationFormUrl);
+   }
+
+   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjectsV2(int page, int count, string titleFilter = "", IEnumerable<string> statusFilters = null, IEnumerable<string> deliveryOfficerFilter = null, IEnumerable<string> regionsFilter = null, IEnumerable<string> localAuthoritiesFilter = null, IEnumerable<string> advisoryBoardDatesFilter = null)
+   {
+      return await _innerRepository.GetAllProjectsV2(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter, localAuthoritiesFilter, advisoryBoardDatesFilter);
+   }
+   public async Task SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview)
+   {
+      await _innerRepository.SetSchoolOverview(id, updatedSchoolOverview);
    }
 }

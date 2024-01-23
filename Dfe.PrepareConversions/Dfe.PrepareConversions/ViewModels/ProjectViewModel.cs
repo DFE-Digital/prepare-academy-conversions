@@ -1,13 +1,12 @@
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Utils;
 using System;
 using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.ViewModels;
 
-public class ProjectViewModel: ProjectTypeBase
+public class ProjectViewModel : ProjectTypeBase
 {
    public ProjectViewModel(AcademyConversionProject project)
    {
@@ -17,6 +16,7 @@ public class ProjectViewModel: ProjectTypeBase
       ApplicationReferenceNumber = project.ApplicationReferenceNumber;
       SchoolName = project.SchoolName;
       SchoolURN = project.Urn.ToString();
+      SchoolType = project.SchoolType;
       LocalAuthority = project.LocalAuthority;
       ApplicationReceivedDate = project.ApplicationReceivedDate.ToDateString();
       AssignedDate = project.AssignedDate.ToDateString();
@@ -51,15 +51,22 @@ public class ProjectViewModel: ProjectTypeBase
       ConversionSupportGrantType = project.ConversionSupportGrantType;
       ConversionSupportGrantEnvironmentalImprovementGrant = project.ConversionSupportGrantEnvironmentalImprovementGrant;
       ConversionSupportGrantAmountChanged = project.ConversionSupportGrantAmountChanged;
+      NumberOfSites = project.ConversionSupportGrantNumberOfSites;
       DaoPackSentDate = project.DaoPackSentDate;
 
       AnnexBFormReceived = project.AnnexBFormReceived;
       AnnexBFormUrl = project.AnnexBFormUrl;
 
+      ExternalApplicationFormSaved = project.ExternalApplicationFormSaved;
+      ExternalApplicationFormUrl = project.ExternalApplicationFormUrl;
+
       PartOfPfiScheme = project.PartOfPfiScheme;
       PfiSchemeDetails = project.PfiSchemeDetails;
       PublishedAdmissionNumber = project.PublishedAdmissionNumber;
       ViabilityIssues = project.ViabilityIssues;
+      NumberOfPlacesFundedFor = project.NumberOfPlacesFundedFor;
+      NumberOfResidentialPlaces = project.NumberOfResidentialPlaces;
+      NumberOfFundedResidentialPlaces = project.NumberOfFundedResidentialPlaces;
       FinancialDeficit = project.FinancialDeficit;
       DistanceFromSchoolToTrustHeadquarters = project.DistanceFromSchoolToTrustHeadquarters;
       DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
@@ -107,6 +114,15 @@ public class ProjectViewModel: ProjectTypeBase
       AssignedUser = project.AssignedUser;
 
       Notes = project.Notes;
+
+      PupilsAttendingGroupPermanentlyExcluded = project.PupilsAttendingGroupPermanentlyExcluded;
+      PupilsAttendingGroupMedicalAndHealthNeeds = project.PupilsAttendingGroupMedicalAndHealthNeeds;
+      PupilsAttendingGroupTeenageMums = project.PupilsAttendingGroupTeenageMums;
+
+      NumberOfAlternativeProvisionPlaces = project.NumberOfAlternativeProvisionPlaces;
+      NumberOfMedicalPlaces = project.NumberOfMedicalPlaces;
+      NumberOfPost16Places = project.NumberOfPost16Places;
+      NumberOfSENUnitPlaces = project.NumberOfSENUnitPlaces;
    }
 
    public string Id { get; }
@@ -120,6 +136,7 @@ public class ProjectViewModel: ProjectTypeBase
    public string AssignedDate { get; }
    public string SchoolPhase { get; }
    public DateTime? HeadTeacherBoardDate { get; set; }
+   public string SchoolType { get; set; }
 
    public DateTime? LocalAuthorityInformationTemplateSentDate { get; set; }
    public DateTime? LocalAuthorityInformationTemplateReturnedDate { get; set; }
@@ -151,10 +168,15 @@ public class ProjectViewModel: ProjectTypeBase
    public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
    public bool? ConversionSupportGrantAmountChanged { get; set; }
    public DateTime? DaoPackSentDate { get; set; }
+   public string NumberOfSites { get; set; }
 
    // Annex B
    public bool? AnnexBFormReceived { get; set; }
    public string AnnexBFormUrl { get; set; }
+
+   // External Application Form
+   public bool? ExternalApplicationFormSaved { get; set; }
+   public string ExternalApplicationFormUrl { get; set; }
 
    // School Overview
    public string PublishedAdmissionNumber { get; set; }
@@ -162,10 +184,20 @@ public class ProjectViewModel: ProjectTypeBase
    public string PfiSchemeDetails { get; set; }
    public string ViabilityIssues { get; set; }
    public string FinancialDeficit { get; set; }
+   public decimal? NumberOfPlacesFundedFor { get; set; }
+   public decimal? NumberOfResidentialPlaces { get; set; }
+   public decimal? NumberOfFundedResidentialPlaces { get; set; }
    public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string MemberOfParliamentNameAndParty { get; set; }
    public bool SchoolOverviewSectionComplete { get; set; }
+   public bool? PupilsAttendingGroupPermanentlyExcluded { get; set; }
+   public bool? PupilsAttendingGroupMedicalAndHealthNeeds { get; set; }
+   public bool? PupilsAttendingGroupTeenageMums { get; set; }
+   public int? NumberOfAlternativeProvisionPlaces { get; set; }
+   public int? NumberOfMedicalPlaces { get; set; }
+   public int? NumberOfPost16Places { get; set; }
+   public int? NumberOfSENUnitPlaces { get; set; }
 
    //school performance ofsted information
    public string SchoolPerformanceAdditionalInformation { get; set; }
@@ -216,4 +248,6 @@ public class ProjectViewModel: ProjectTypeBase
    public ICollection<ProjectNote> Notes { get; }
 
    protected override string TypeAndRouteValue => AcademyTypeAndRoute;
+   public override bool IsExternalSchoolApplication => string.IsNullOrEmpty(this.ApplicationReferenceNumber);
+   public bool IsPRU => SchoolType.ToLower().Equals("pupil referral unit");
 }

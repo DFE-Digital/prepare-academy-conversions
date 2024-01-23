@@ -69,7 +69,7 @@ jobs:
           ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
           ZAP_ADDRESS: ${{ env.ZAP_ADDRESS }}
           ZAP_PORT: ${{ env.ZAP_PORT }}
-        run: npm run cy:run -- --env url=$URL,authorizationHeader=$API_KEY
+        run: npm run cy:run -- --env url=$URL,cypressTestSecret=$API_KEY
 
       - name: Get git sha
         if: '!cancelled()'
