@@ -245,4 +245,6 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
          cy.confirmContinueBtn().click();
       }
    });
-})
+
+ 
+});
