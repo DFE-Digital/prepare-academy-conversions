@@ -6,6 +6,7 @@ using Dfe.PrepareConversions.ViewModels;
 using System;
 using DocumentFormat.OpenXml.Drawing;
 using AngleSharp.Text;
+using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Utils
 {
@@ -30,6 +31,28 @@ namespace Dfe.PrepareConversions.Utils
              projectViewModel.PupilsAttendingGroupMedicalAndHealthNeeds,
              projectViewModel.PupilsAttendingGroupTeenageMums
          );
+      }
+
+      public static string MapPupilsAttendingGroup(bool? pupilsAttendingGroupPermanentlyExcluded, bool? pupilsAttendingGroupMedicalAndHealthNeeds, bool? pupilsAttendingGroupTeenageMums)
+      {
+         var listOfAttendes = new List<string>();
+
+         if (pupilsAttendingGroupPermanentlyExcluded.HasValue && pupilsAttendingGroupPermanentlyExcluded.Value)
+         {
+            listOfAttendes.Add("Permanently Excluded");
+         }
+
+         if (pupilsAttendingGroupMedicalAndHealthNeeds.HasValue && pupilsAttendingGroupMedicalAndHealthNeeds.Value)
+         {
+            listOfAttendes.Add("Medical and Health Needs");
+         }
+
+         if (pupilsAttendingGroupTeenageMums.HasValue && pupilsAttendingGroupTeenageMums.Value)
+         {
+            listOfAttendes.Add("Teenage Mums");
+         }
+
+         return string.Join(", ", listOfAttendes);
       }
    }
 }

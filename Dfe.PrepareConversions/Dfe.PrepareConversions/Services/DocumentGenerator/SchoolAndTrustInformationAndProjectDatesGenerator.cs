@@ -118,6 +118,17 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
             new TextElement { Value = project.AcademyOrderRequired }
          },
       };
+
+         if (project.SchoolType.ToLower().Contains("pupil referral unit"))
+         {
+            voluntaryRouteInfo.Add(new[]
+            {
+               new TextElement { Value = "Number of sites", Bold = true },
+               new TextElement { Value = project.ConversionSupportGrantNumberOfSites}
+            }
+         );
+         }
+
          return voluntaryRouteInfo;
 
       }
@@ -166,6 +177,17 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
             new TextElement { Value = project.DaoPackSentDate.ToDateString() }
          },
       };
+
+         if (project.SchoolType.ToLower().Contains("pupil referral unit"))
+         {
+            sponsoredRouteInfo.Add(new[]
+            {
+               new TextElement { Value = "Number of sites", Bold = true },
+               new TextElement { Value = project.ConversionSupportGrantNumberOfSites} 
+            }
+         );
+         }
+
          return sponsoredRouteInfo;
       }
    }

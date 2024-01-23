@@ -2,6 +2,7 @@
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.DocumentGeneration;
+using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -135,6 +136,24 @@ public class HtbTemplate
 
    [DocumentText("MemberOfParliamentNameAndParty")]
    public string MemberOfParliamentNameAndParty { get; set; }
+
+   [DocumentText("PupilsAttendingGroup")]
+   public string PupilsAttendingGroup { get; set; }
+   
+   [DocumentText("NumberOfAlternativeProvisionPlaces")]
+   public string NumberOfAlternativeProvisionPlaces { get; set; }
+   
+   [DocumentText("NumberOfMedicalPlaces")]
+   public string NumberOfMedicalPlaces { get; set; }
+   
+   [DocumentText("NumberOfPost16Places")]
+   public string NumberOfPost16Places { get; set; }
+  
+   [DocumentText("NumberOfSENUnitPlaces")]
+   public string NumberOfSENUnitPlaces { get; set; }
+
+   [DocumentText("ConversionSupportGrantNumberOfSites")]
+   public string ConversionSupportGrantNumberOfSites { get; set; }
 
    // rationale
    [DocumentText("RationaleForProject")]
@@ -294,7 +313,13 @@ public class HtbTemplate
          YearThreeProjectedPupilNumbers = project.YearThreeProjectedPupilNumbers.ToString(),
          YearThreePercentageSchoolFull = project.YearThreeProjectedPupilNumbers.AsPercentageOf(project.YearThreeProjectedCapacity),
          SchoolPupilForecastsAdditionalInformation = project.SchoolPupilForecastsAdditionalInformation,
-         SchoolPerformance = schoolPerformance
+         SchoolPerformance = schoolPerformance,
+         PupilsAttendingGroup = SchoolOverviewHelper.MapPupilsAttendingGroup(project.PupilsAttendingGroupPermanentlyExcluded, project.PupilsAttendingGroupMedicalAndHealthNeeds, project.PupilsAttendingGroupTeenageMums),
+         ConversionSupportGrantNumberOfSites = project.ConversionSupportGrantNumberOfSites,
+         NumberOfAlternativeProvisionPlaces = project.NumberOfAlternativeProvisionPlaces?.ToString(),
+         NumberOfSENUnitPlaces = project.NumberOfSENUnitPlaces?.ToString(),
+         NumberOfMedicalPlaces = project.NumberOfMedicalPlaces?.ToString(),
+         NumberOfPost16Places = project.NumberOfPost16Places?.ToString()
       };
 
       if (keyStagePerformance.HasKeyStage2PerformanceTables)

@@ -2,6 +2,7 @@
 using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
+using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -62,7 +63,7 @@ public class SchoolOverviewViewComponent : ViewComponent
          MemberOfParliamentNameAndParty = project.MemberOfParliamentNameAndParty,
          IsSpecial = schoolOverview?.SchoolType?.ToLower().Contains("special") ?? false,
          IsPRU = schoolOverview?.SchoolType?.ToLower().Contains("pupil referral unit") ?? false,
-         PupilsAttendingGroup = MapPupilsAttendingGroup(project),
+         PupilsAttendingGroup = SchoolOverviewHelper.MapPupilsAttendingGroup(project.PupilsAttendingGroupPermanentlyExcluded, project.PupilsAttendingGroupMedicalAndHealthNeeds, project.PupilsAttendingGroupTeenageMums),
          NumberOfAlternativeProvisionPlaces = project.NumberOfAlternativeProvisionPlaces,
          NumberOfMedicalPlaces = project.NumberOfMedicalPlaces,
          NumberOfSENUnitPlaces = project.NumberOfSENUnitPlaces,
@@ -70,27 +71,5 @@ public class SchoolOverviewViewComponent : ViewComponent
       };
 
       return View(viewModel);
-   }
-
-   private static string MapPupilsAttendingGroup(AcademyConversionProject project)
-   {
-      var listOfAttendes = new List<string>();
-
-      if (project.PupilsAttendingGroupPermanentlyExcluded.HasValue && project.PupilsAttendingGroupPermanentlyExcluded.Value)
-      {
-         listOfAttendes.Add("Permanently Excluded");
-      }
-
-      if (project.PupilsAttendingGroupMedicalAndHealthNeeds.HasValue && project.PupilsAttendingGroupMedicalAndHealthNeeds.Value)
-      {
-         listOfAttendes.Add("Medical and Health Needs");
-      }
-
-      if (project.PupilsAttendingGroupTeenageMums.HasValue && project.PupilsAttendingGroupTeenageMums.Value)
-      {
-         listOfAttendes.Add("Teenage Mums");
-      }
-
-      return string.Join(", ", listOfAttendes);
    }
 }
