@@ -57,7 +57,7 @@ public class IndexModel : PaginatedPageModel
    public async Task<FileStreamResult> OnGetDownload()
    {
       Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
-      ApiResponse<FileStreamResult> response = await _repository.DownloadProjectExport(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions);
+      ApiResponse<FileStreamResult> response = await _repository.DownloadProjectExport(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedAdvisoryBoardDates);
 
       if (response.Success)
       {
