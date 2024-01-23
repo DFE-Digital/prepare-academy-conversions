@@ -34,10 +34,11 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    IEnumerable<string> statusFilters = default,
    IEnumerable<string> deliveryOfficerFilter = default,
    IEnumerable<string> regionsFilter = default,
-   IEnumerable<string> applicationReferences = default
+   IEnumerable<string> localAuthoritiesFilter = default,
+   IEnumerable<string> advisoryBoardDatesFilter = default
 )
    {
-      return await _innerRepository.DownloadProjectExport(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter, applicationReferences);
+      return await _innerRepository.DownloadProjectExport(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter, localAuthoritiesFilter, advisoryBoardDatesFilter);
    }
    public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)
    {

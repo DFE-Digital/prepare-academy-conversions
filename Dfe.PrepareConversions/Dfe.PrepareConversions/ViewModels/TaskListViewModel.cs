@@ -17,6 +17,7 @@ public class TaskListViewModel
    public bool HasKeyStage2PerformanceTables { get; set; }
    public bool HasKeyStage4PerformanceTables { get; set; }
    public bool HasKeyStage5PerformanceTables { get; set; }
+   public string PerformanceDataHintText { get; set; }
    public bool HasAbsenceData { get; set; }
 
    public static TaskListViewModel Build(ProjectViewModel project)
@@ -32,6 +33,7 @@ public class TaskListViewModel
          SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.GetSchoolBudgetInformationTaskListStatus(project),
          ProjectStatus = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Value,
          ProjectStatusColour = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Colour,
+         PerformanceDataHintText = ProjectListHelper.MapPerformanceDataHint(project.SchoolType)
       };
    }
 }

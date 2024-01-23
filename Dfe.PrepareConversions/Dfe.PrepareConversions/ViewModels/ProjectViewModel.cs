@@ -16,6 +16,7 @@ public class ProjectViewModel : ProjectTypeBase
       ApplicationReferenceNumber = project.ApplicationReferenceNumber;
       SchoolName = project.SchoolName;
       SchoolURN = project.Urn.ToString();
+      SchoolType = project.SchoolType;
       LocalAuthority = project.LocalAuthority;
       ApplicationReceivedDate = project.ApplicationReceivedDate.ToDateString();
       AssignedDate = project.AssignedDate.ToDateString();
@@ -51,6 +52,7 @@ public class ProjectViewModel : ProjectTypeBase
       ConversionSupportGrantType = project.ConversionSupportGrantType;
       ConversionSupportGrantEnvironmentalImprovementGrant = project.ConversionSupportGrantEnvironmentalImprovementGrant;
       ConversionSupportGrantAmountChanged = project.ConversionSupportGrantAmountChanged;
+      NumberOfSites = project.ConversionSupportGrantNumberOfSites;
       DaoPackSentDate = project.DaoPackSentDate;
 
       AnnexBFormReceived = project.AnnexBFormReceived;
@@ -114,6 +116,15 @@ public class ProjectViewModel : ProjectTypeBase
       AssignedUser = project.AssignedUser;
 
       Notes = project.Notes;
+
+      PupilsAttendingGroupPermanentlyExcluded = project.PupilsAttendingGroupPermanentlyExcluded;
+      PupilsAttendingGroupMedicalAndHealthNeeds = project.PupilsAttendingGroupMedicalAndHealthNeeds;
+      PupilsAttendingGroupTeenageMums = project.PupilsAttendingGroupTeenageMums;
+
+      NumberOfAlternativeProvisionPlaces = project.NumberOfAlternativeProvisionPlaces;
+      NumberOfMedicalPlaces = project.NumberOfMedicalPlaces;
+      NumberOfPost16Places = project.NumberOfPost16Places;
+      NumberOfSENUnitPlaces = project.NumberOfSENUnitPlaces;
    }
 
    public string Id { get; }
@@ -131,6 +142,7 @@ public class ProjectViewModel : ProjectTypeBase
    public bool IsPRU { get { return SchoolType.ToLower() == "pupil referal unit"; } }
    public bool IsSEN { get { return SchoolType.ToLower().Contains("special"); } }
    public DateTime? HeadTeacherBoardDate { get; set; }
+   public string SchoolType { get; set; }
 
    public DateTime? LocalAuthorityInformationTemplateSentDate { get; set; }
    public DateTime? LocalAuthorityInformationTemplateReturnedDate { get; set; }
@@ -162,6 +174,7 @@ public class ProjectViewModel : ProjectTypeBase
    public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
    public bool? ConversionSupportGrantAmountChanged { get; set; }
    public DateTime? DaoPackSentDate { get; set; }
+   public string NumberOfSites { get; set; }
 
    // Annex B
    public bool? AnnexBFormReceived { get; set; }
@@ -184,6 +197,13 @@ public class ProjectViewModel : ProjectTypeBase
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string MemberOfParliamentNameAndParty { get; set; }
    public bool SchoolOverviewSectionComplete { get; set; }
+   public bool? PupilsAttendingGroupPermanentlyExcluded { get; set; }
+   public bool? PupilsAttendingGroupMedicalAndHealthNeeds { get; set; }
+   public bool? PupilsAttendingGroupTeenageMums { get; set; }
+   public int? NumberOfAlternativeProvisionPlaces { get; set; }
+   public int? NumberOfMedicalPlaces { get; set; }
+   public int? NumberOfPost16Places { get; set; }
+   public int? NumberOfSENUnitPlaces { get; set; }
 
    //school performance ofsted information
    public string SchoolPerformanceAdditionalInformation { get; set; }
@@ -236,4 +256,5 @@ public class ProjectViewModel : ProjectTypeBase
 
    protected override string TypeAndRouteValue => AcademyTypeAndRoute;
    public override bool IsExternalSchoolApplication => string.IsNullOrEmpty(this.ApplicationReferenceNumber);
+   public bool IsPRU => SchoolType.ToLower().Equals("pupil referral unit");
 }

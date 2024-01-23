@@ -25,5 +25,11 @@ public class SchoolOverviewViewModel
    public string ParliamentaryConstituency { get; set; }
    public string MemberOfParliamentNameAndParty { get; set; }
    public bool? SchoolOverviewSectionComplete { get; set; }
+   public string PupilsAttendingGroup { get; set; }
    public bool IsSpecial { get; set; }
+   public bool IsPRU { get; set; }
+   public int? NumberOfAlternativeProvisionPlaces { get; set; }
+   public int? NumberOfMedicalPlaces { get; set; }
+   public int? NumberOfPost16Places { get; set; }
+   public int? NumberOfSENUnitPlaces { get; set; }
 }

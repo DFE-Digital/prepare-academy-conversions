@@ -12,13 +12,14 @@
 
 <dl class="govuk-summary-list">
    <govuk-summary-list-row name="school-type" label="School type" key-width="@kw" asp-for="SchoolType"/>
+   <govuk-summary-list-row if="@Model.IsPRU" name="group-of-pupils" label="Which groups of pupils attend the school" key-width="@kw" asp-for="PupilsAttendingGroup" asp-page="@Links.SchoolOverviewSection.PupilsAttendingGroup.Page" asp-route-id="@Model.Id" />
    <govuk-summary-list-row name="school-phase" label="School phase" key-width="@kw" asp-for="SchoolPhase"/>
    <govuk-summary-list-row name="age-range" label="Age range" key-width="@kw" asp-for="AgeRange"/>
    <govuk-summary-list-row name="capacity" label="Capacity" key-width="@kw" asp-for="SchoolCapacity"/>
    <govuk-summary-list-row name="published-admission-number" label="Published admission number (PAN)" key-width="@kw" asp-for="PublishedAdmissionNumber" asp-page="@Links.SchoolOverviewSection.PublishedAdmissionNumber.Page" asp-route-id="@Model.Id" hidden-text="published admission numbers"/>
    <govuk-summary-list-row name="number-on-roll" label="Number on roll (NOR)" key-width="@kw" asp-for="NumberOnRoll"/>
    <govuk-summary-list-row name="percentage-school-full" label="Percentage the school is full" key-width="@kw" asp-for="PercentageSchoolFull"/>
-    <govuk-summary-list-row if="@Model.IsSpecial" name="number-of-places-funded-for" label="Number of places the school is currently funded for" key-width="@kw" asp-for="NumberOfPlacesFundedFor" asp-page="@Links.SchoolOverviewSection.NumberOfPlacesFundedFor.Page" asp-route-id="@Model.Id" hidden-text="number of places funded for" />
+    <govuk-summary-list-row if="@Model.IsSpecial || Model.IsPRU" name="number-of-places-funded-for" label="Number of places the school is currently funded for" key-width="@kw" asp-for="NumberOfPlacesFundedFor" asp-page="@Links.SchoolOverviewSection.NumberOfPlacesFundedFor.Page" asp-route-id="@Model.Id" hidden-text="number of places funded for" />
     <govuk-summary-list-row if="@Model.IsSpecial" name="number-of-residential-places" label="Number of residential places" key-width="@kw" asp-for="NumberOfResidentialPlaces" asp-page="@Links.SchoolOverviewSection.NumberOfResidentialPlaces.Page" asp-route-id="@Model.Id" hidden-text="number of residential places" />
     <govuk-summary-list-row if="@Model.IsSpecial" name="number-of-residental-places-funded-for" label="Number of residential places the school is funded for" key-width="@kw" asp-for="NumberOfFundedResidentialPlaces" asp-page="@Links.SchoolOverviewSection.NumberOfFundedResidentialPlaces.Page" asp-route-id="@Model.Id" hidden-text="number of residential places funded for" />
    <govuk-summary-list-row name="percentage-free-school-meals" label="Percentage of free school meals at the school (%FSM)" key-width="@kw" asp-for="PercentageFreeSchoolMeals"/>
@@ -31,3 +32,21 @@
    <govuk-summary-list-row name="parliamentary-constituency" label="Parliamentary constituency" key-width="@kw" asp-for="ParliamentaryConstituency"/>
    <govuk-summary-list-row name="member-of-parliament-name-and-party" label="MP name and political party" asp-for="MemberOfParliamentNameAndParty" key-width="@kw" asp-page="@Links.SchoolOverviewSection.MPDetails.Page" asp-route-id="@Model.Id" hidden-text="MP name" />
 </dl>
+
+@{
+    if (Model.IsPRU)
+    {
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+                Enter the number of pupils for each type of place
+            </h1>
+        </legend>
+
+        <dl class="govuk-summary-list">
+            <govuk-summary-list-row name="alternative-provision-number" label="Alternative provision" key-width="@kw" asp-for="NumberOfAlternativeProvisionPlaces" asp-page="@Links.SchoolOverviewSection.NumberOfAlternativeProvisionPlaces.Page" asp-route-id="@Model.Id" hidden-text="alternative provision" />
+            <govuk-summary-list-row name="sen-unit-number" label="SEN Unit" key-width="@kw" asp-for="NumberOfSENUnitPlaces" asp-page="@Links.SchoolOverviewSection.NumberOfSENUnitPlaces.Page" asp-route-id="@Model.Id" hidden-text="sen unit" />
+            <govuk-summary-list-row name="medical-number" label="Medical" key-width="@kw" asp-for="NumberOfMedicalPlaces" asp-page="@Links.SchoolOverviewSection.NumberOfMedicalPlaces.Page" asp-route-id="@Model.Id" hidden-text="medical" />
+            <govuk-summary-list-row name="post-16-number" label="Post-16" key-width="@kw" asp-for="NumberOfPost16Places" asp-page="@Links.SchoolOverviewSection.NumberOfPost16Places.Page" asp-route-id="@Model.Id" hidden-text="post 16" />
+        </dl>
+    }
+}

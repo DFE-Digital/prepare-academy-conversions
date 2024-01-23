@@ -49,6 +49,7 @@ public class AcademyConversionProject
    public string ConversionSupportGrantType { get; set; }
    public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
    public bool? ConversionSupportGrantAmountChanged { get; set; }
+   public string ConversionSupportGrantNumberOfSites { get; set; }
    public DateTime? DaoPackSentDate { get; set; }
    public string Region { get; set; }
 
@@ -73,6 +74,13 @@ public class AcademyConversionProject
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
    public string MemberOfParliamentNameAndParty { get; set; }
    public bool? SchoolOverviewSectionComplete { get; set; }
+   public bool? PupilsAttendingGroupPermanentlyExcluded { get; set; }
+   public bool? PupilsAttendingGroupMedicalAndHealthNeeds { get; set; }
+   public bool? PupilsAttendingGroupTeenageMums { get; set; }
+   public int? NumberOfAlternativeProvisionPlaces { get; set; }
+   public int? NumberOfMedicalPlaces { get; set; }
+   public int? NumberOfPost16Places { get; set; }
+   public int? NumberOfSENUnitPlaces { get; set; }
 
    //school performance ofsted information
    public string SchoolPerformanceAdditionalInformation { get; set; }

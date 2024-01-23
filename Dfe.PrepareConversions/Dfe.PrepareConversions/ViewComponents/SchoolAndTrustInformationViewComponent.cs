@@ -44,6 +44,7 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
          PreviousHeadTeacherBoardLink = project.PreviousHeadTeacherBoardLink,
          SchoolName = project.SchoolName,
          SchoolUrn = project.Urn.ToString(),
+         SchoolType = project.SchoolType.ToString(),
          LocalAuthority = project.LocalAuthority,
          TrustReferenceNumber = project.TrustReferenceNumber,
          NameOfTrust = project.NameOfTrust,
@@ -57,6 +58,7 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
          ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
          ConversionSupportGrantType = project.ConversionSupportGrantType,
          ConversionSupportGrantEnvironmentalImprovementGrant = project.ConversionSupportGrantEnvironmentalImprovementGrant,
+         ConversionSupportNumberOfSites = project.ConversionSupportGrantNumberOfSites,
          ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(true),
          DaoPackSentDate = project.DaoPackSentDate.ToDateString()
       };
