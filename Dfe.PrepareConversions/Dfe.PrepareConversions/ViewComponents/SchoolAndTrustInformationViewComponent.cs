@@ -2,7 +2,6 @@
 using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
-using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -44,7 +43,7 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
          PreviousHeadTeacherBoardLink = project.PreviousHeadTeacherBoardLink,
          SchoolName = project.SchoolName,
          SchoolUrn = project.Urn.ToString(),
-         SchoolType = project.SchoolType.ToString(),
+         SchoolType = project?.SchoolType?.ToString(),
          LocalAuthority = project.LocalAuthority,
          TrustReferenceNumber = project.TrustReferenceNumber,
          NameOfTrust = project.NameOfTrust,
@@ -54,11 +53,11 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
          Form7Received = project.Form7Received,
          Form7ReceivedDate = project.Form7ReceivedDate.ToDateString(),
          WasForm7Received = project.Form7Received is not null && project.Form7Received.Equals("Yes"),
-         ConversionSupportGrantAmount = project.ConversionSupportGrantAmount?.ToMoneyString(true),
+         ConversionSupportGrantAmount = project?.ConversionSupportGrantAmount?.ToMoneyString(true),
          ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
          ConversionSupportGrantType = project.ConversionSupportGrantType,
          ConversionSupportGrantEnvironmentalImprovementGrant = project.ConversionSupportGrantEnvironmentalImprovementGrant,
-         ConversionSupportNumberOfSites = project.ConversionSupportGrantNumberOfSites,
+         ConversionSupportNumberOfSites = project?.ConversionSupportGrantNumberOfSites,
          ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(true),
          DaoPackSentDate = project.DaoPackSentDate.ToDateString()
       };

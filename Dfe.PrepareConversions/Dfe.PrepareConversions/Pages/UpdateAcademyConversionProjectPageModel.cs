@@ -91,13 +91,9 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
       Project.LocalAuthorityInformationTemplateSentDate = AcademyConversionProject.LocalAuthorityInformationTemplateSentDate;
       Project.LocalAuthorityInformationTemplateReturnedDate = AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate;
    }
-   public static decimal? CalculateGrantAmount(string type, string phase, string numberOfSites = "1")
+   public static decimal? CalculateGrantAmount(string type, string phase)
    {
       int defaultAmount = 25000;
-      int supplementAmount = CalculateGrantSupplement(numberOfSites);
-
-      defaultAmount += supplementAmount;
-
       if (phase is null) return defaultAmount;
       switch (phase.ToLower())
       {
@@ -107,7 +103,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
                SponsoredGrantType.FastTrack => 70000,
                SponsoredGrantType.Full => 110000,
                SponsoredGrantType.Intermediate => 90000,
-               _ => 25000
+               _ => defaultAmount
             };
          case "secondary":
             return type switch
@@ -115,12 +111,26 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
                SponsoredGrantType.FastTrack => 80000,
                SponsoredGrantType.Full => 150000,
                SponsoredGrantType.Intermediate => 115000,
-               _ => 25000
+               _ => defaultAmount
             };
       }
 
       // Else return default £25k
       return defaultAmount;
+   }
+
+   public static decimal? CalculatePRUGrantAmount(string type, string numberOfSites = "1")
+   {
+      int defaultAmount = 25000;
+      int supplementAmount = CalculateGrantSupplement(numberOfSites);
+
+      return type switch
+      {
+         SponsoredGrantType.FastTrack => 70000 + supplementAmount,
+         SponsoredGrantType.Full => 110000 + supplementAmount,
+         SponsoredGrantType.Intermediate => 90000 + supplementAmount,
+         _ => defaultAmount + supplementAmount
+      };
    }
 
    protected UpdateAcademyConversionProject Build()
@@ -198,7 +208,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
 
    private bool? ConversionSupportGrantAmountChanged(string academyRoute)
    {
-      if (academyRoute == AcademyTypeAndRoutes.Sponsored)
+      if (academyRoute == AcademyTypeAndRoutes.Sponsored || academyRoute == AcademyTypeAndRoutes.Voluntary)
       {
          return AcademyConversionProject.ConversionSupportGrantAmountChanged;
       }

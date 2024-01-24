@@ -1,6 +1,7 @@
 ﻿using Dfe.PrepareConversions.DocumentGeneration.Elements;
 using Dfe.PrepareConversions.DocumentGeneration.Interfaces;
 using Dfe.PrepareConversions.Models;
+using Dfe.PrepareConversions.Utils;
 using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator
@@ -27,6 +28,18 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
                   new TextElement { Value = document.PercentageFreeSchoolMeals }
                },
                new[] { new TextElement { Value = "Viability issues", Bold = true }, new TextElement { Value = document.ViabilityIssues } }});
+
+            if (document.SchoolType.ToLower().Contains("pupil referral unit"))
+            {
+               schoolOverviewTable.AddRange(new List<TextElement[]> {
+                  new[] { new TextElement { Value = "Which groups of pupils attend the school", Bold = true }, new TextElement { Value = document.PupilsAttendingGroup } },
+                  new[] { new TextElement { Value = "Number of places funded for", Bold = true }, new TextElement { Value = document.NumberOfPlacesFundedFor } },
+                  new[] { new TextElement { Value = "Alternative provision", Bold = true }, new TextElement { Value = document.NumberOfAlternativeProvisionPlaces } },
+                  new[] { new TextElement { Value = "SEN Unit", Bold = true }, new TextElement { Value = document.NumberOfSENUnitPlaces } },
+                  new[] { new TextElement { Value = "Medical", Bold = true }, new TextElement { Value = document.NumberOfMedicalPlaces } },
+                  new[] { new TextElement { Value = "Post-16", Bold = true }, new TextElement { Value = document.NumberOfPost16Places } },
+               });
+            }
 
             // Specific SEN fields
             if (document.SchoolType.ToLower().Contains("special"))
