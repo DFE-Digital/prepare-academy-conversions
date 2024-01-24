@@ -24,7 +24,8 @@ public interface IAcademyConversionProjectRepository
    IEnumerable<string> statusFilters = default,
    IEnumerable<string> deliveryOfficerFilter = default,
    IEnumerable<string> regionsFilter = default,
-   IEnumerable<string> applicationReferences = default
+   IEnumerable<string> localAuthoritiesFilter = default,
+   IEnumerable<string> advisoryBoardDatesFilter = default
 );
 
    Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjectsV2(
