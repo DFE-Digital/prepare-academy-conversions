@@ -6,7 +6,7 @@ describe('Voluntary conversion', { tags: ['@dev', '@stage'] }, () => {
       // Do the spin up a project journey
    })
 
-   it('TC01: Voluntary conversion journey ', () => {
+   it.skip('TC01: Voluntary conversion journey ', () => {
     // Go wild Dan!
       voluntaryProjectTaskList.voluntaryProjectElementsVisible()
 

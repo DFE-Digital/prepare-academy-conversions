@@ -78,26 +78,15 @@ Cypress.Commands.add('generateProjectTempBtn', () => {
 })
 
 Cypress.Commands.add('enterDate', (idSelector, day, month, year) => {
-    cy.get(`[id*="${idSelector}-day"]`).as('day')
-    cy.get(`[id*="${idSelector}-month"]`).as('month')
-    cy.get(`[id*="${idSelector}-year"]`).as('year')
+    cy.get(`[id*="${idSelector}-day"]`).as('day');
+    cy.get(`[id*="${idSelector}-month"]`).as('month');
+    cy.get(`[id*="${idSelector}-year"]`).as('year');
+  
+    cy.get('@day').should('be.visible').invoke('val', '').type(day);
+    cy.get('@month').should('be.visible').invoke('val', '').type(month);
+    cy.get('@year').should('be.visible').invoke('val', '').type(year);
+});
 
-    cy.get(`@day`).then((dayLoc) => {
-        dayLoc.should('be.visible')
-        dayLoc.clear()
-        dayLoc.type(day)
-    })
-    cy.get(`@month`).then((monthLoc) => {
-        monthLoc.should('be.visible')
-        monthLoc.clear()
-        monthLoc.type(month)
-    })
-    cy.get(`@year`).then((yearLoc) => {
-        yearLoc.should('be.visible')
-        yearLoc.clear()
-        yearLoc.type(year)
-    })
-})
 
 // No Radio Btn
 Cypress.Commands.add('NoRadioBtn', () => {
