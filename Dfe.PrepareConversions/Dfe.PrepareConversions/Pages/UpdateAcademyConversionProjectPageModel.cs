@@ -208,7 +208,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
 
    private bool? ConversionSupportGrantAmountChanged(string academyRoute)
    {
-      if (academyRoute == AcademyTypeAndRoutes.Sponsored)
+      if (academyRoute == AcademyTypeAndRoutes.Sponsored || academyRoute == AcademyTypeAndRoutes.Voluntary)
       {
          return AcademyConversionProject.ConversionSupportGrantAmountChanged;
       }
