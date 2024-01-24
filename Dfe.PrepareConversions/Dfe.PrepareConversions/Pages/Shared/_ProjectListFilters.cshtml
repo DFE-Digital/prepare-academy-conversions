@@ -22,8 +22,8 @@
                     <h2 class="govuk-heading-m">Selected filters</h2>
                 </div>
 
-                <div class="moj-filter__heading-action">
-                    <p><a class="govuk-link govuk-link--no-visited-state" href="@Url.RouteUrl(ViewContext.RouteData.Values)?clear">Clear filters</a></p>
+                <div class="moj-filter__heading-action" >
+					<p><a class="govuk-link govuk-link--no-visited-state" data-cy="clear-filter" href="@Url.RouteUrl(ViewContext.RouteData.Values)?clear">Clear filters</a></p>
                 </div>
 
             </div>
@@ -127,7 +127,7 @@
                                         </span>
                                     </h2>
                                 </div>
-                                <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+                                <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" >
                                     @{
                                         <div class="govuk-checkboxes__item">
                                             <input class="govuk-checkboxes__input" id="filter-delivery-officer-not-assigned"
@@ -154,7 +154,7 @@
                             <div class="govuk-accordion__section">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+										<span class="govuk-accordion__section-button" id="accordion-default-heading-1" data-cy="select-projectlist-filter-region">
                                             Region
                                         </span>
                                     </h2>
@@ -180,7 +180,7 @@
                             <div class="govuk-accordion__section">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+										<span class="govuk-accordion__section-button" id="accordion-default-heading-1" data-cy="select-projectlist-filter-local-authority">
                                             Local Authority
                                         </span>
                                     </h2>
@@ -207,7 +207,7 @@
                             <div class="govuk-accordion__section">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+										<span class="govuk-accordion__section-button" id="accordion-default-heading-1" data-cy="select-projectlist-filter-project-status">
                                             Project status
                                         </span>
                                     </h2>
@@ -235,7 +235,7 @@
                             <div class="govuk-accordion__section">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+										<span class="govuk-accordion__section-button" id="accordion-default-heading-1" data-cy="select-projectlist-filter-advisory-board-date">
                                             Advisory board date
                                         </span>
                                     </h2>
