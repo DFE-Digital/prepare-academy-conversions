@@ -134,17 +134,18 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
          : new ApiResponse<ProjectNote>(response.StatusCode, null);
    }
    public async Task<ApiResponse<FileStreamResult>> DownloadProjectExport(
-     int page,
-     int count,
-     string titleFilter = "",
-     IEnumerable<string> statusFilters = default,
-     IEnumerable<string> deliveryOfficerFilter = default,
-     IEnumerable<string> regionsFilter = default,
-     IEnumerable<string> applicationReferences = default)
+      int page,
+      int count,
+      string titleFilter = "",
+      IEnumerable<string> statusFilters = default,
+      IEnumerable<string> deliveryOfficerFilter = default,
+      IEnumerable<string> regionsFilter = default,
+      IEnumerable<string> localAuthoritiesFilter = default,
+      IEnumerable<string> advisoryBoardDatesFilter = default)
    {
       AcademyConversionSearchModelV2 searchModel = new() { TitleFilter = titleFilter, Page = page, Count = count };
 
-      ProcessFiltersV2(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter, applicationReferences);
+      ProcessFiltersV2(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter, localAuthoritiesFilter, advisoryBoardDatesFilter);
 
       HttpResponseMessage response = await _apiClient.DownloadProjectExport(searchModel);
       if (!response.IsSuccessStatusCode)
