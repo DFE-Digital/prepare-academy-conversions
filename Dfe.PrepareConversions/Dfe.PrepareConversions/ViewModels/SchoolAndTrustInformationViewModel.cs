@@ -31,5 +31,6 @@ public class SchoolAndTrustInformationViewModel
    public string Form7ReceivedDate { get; set; }
    public bool IsDao { get; set; }
    public bool IsPRU => SchoolType.ToLower().Equals("pupil referral unit");
+   public bool IsSEN => SchoolType.ToLower().Equals("special");
    public bool WasForm7Received { get; set; }
 }
