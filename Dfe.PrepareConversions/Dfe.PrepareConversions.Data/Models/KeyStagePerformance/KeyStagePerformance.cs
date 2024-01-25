@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Dfe.Academies.Contracts.V1.EducationalPerformance;
 
 namespace Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 
@@ -8,7 +9,9 @@ public class KeyStagePerformance
    public IEnumerable<KeyStage2PerformanceResponse> KeyStage2 { get; set; }
    public IEnumerable<KeyStage4PerformanceResponse> KeyStage4 { get; set; }
    public IEnumerable<KeyStage5PerformanceResponse> KeyStage5 { get; set; }
+   public IEnumerable<SchoolAbsenceDataDto> SchoolAbsenceData { get; set; }
 
+   public bool HasSchoolAbsenceData => SchoolAbsenceData?.Any() ?? false;
    public bool HasKeyStage2PerformanceTables => KeyStage2?.Any(HasKeyStage2Performance) ?? false;
    public bool HasKeyStage4PerformanceTables => KeyStage4?.Any(HasKeyStage4Performance) ?? false;
    public bool HasKeyStage5PerformanceTables => KeyStage5?.Any(HasKeyStage5Performance) ?? false;

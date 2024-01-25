@@ -18,6 +18,7 @@ public class TaskListViewModel
    public bool HasKeyStage4PerformanceTables { get; set; }
    public bool HasKeyStage5PerformanceTables { get; set; }
    public string PerformanceDataHintText { get; set; }
+   public bool HasAbsenceData { get; set; }
 
    public static TaskListViewModel Build(ProjectViewModel project)
    {

@@ -21,6 +21,7 @@ public class ProjectViewModel : ProjectTypeBase
       ApplicationReceivedDate = project.ApplicationReceivedDate.ToDateString();
       AssignedDate = project.AssignedDate.ToDateString();
       SchoolPhase = project.SchoolPhase;
+      SchoolType = project.SchoolType;
       HeadTeacherBoardDate = project.HeadTeacherBoardDate;
 
       LocalAuthorityInformationTemplateSentDate = project.LocalAuthorityInformationTemplateSentDate;
@@ -110,6 +111,7 @@ public class ProjectViewModel : ProjectTypeBase
       KeyStage2PerformanceAdditionalInformation = project.KeyStage2PerformanceAdditionalInformation;
       KeyStage4PerformanceAdditionalInformation = project.KeyStage4PerformanceAdditionalInformation;
       KeyStage5PerformanceAdditionalInformation = project.KeyStage5PerformanceAdditionalInformation;
+      EducationalAttendanceAdditionalInformation = project.EducationalAttendanceAdditionalInformation;
 
       AssignedUser = project.AssignedUser;
 
@@ -135,8 +137,11 @@ public class ProjectViewModel : ProjectTypeBase
    public string ApplicationReceivedDate { get; }
    public string AssignedDate { get; }
    public string SchoolPhase { get; }
+   public string SchoolType { get; }
+
+   public bool IsPRU { get { return SchoolType.ToLower() == "pupil referal unit"; } }
+   public bool IsSEN { get { return SchoolType.ToLower().Contains("special"); } }
    public DateTime? HeadTeacherBoardDate { get; set; }
-   public string SchoolType { get; set; }
 
    public DateTime? LocalAuthorityInformationTemplateSentDate { get; set; }
    public DateTime? LocalAuthorityInformationTemplateReturnedDate { get; set; }
@@ -242,6 +247,7 @@ public class ProjectViewModel : ProjectTypeBase
    public string KeyStage2PerformanceAdditionalInformation { get; set; }
    public string KeyStage4PerformanceAdditionalInformation { get; set; }
    public string KeyStage5PerformanceAdditionalInformation { get; set; }
+   public string EducationalAttendanceAdditionalInformation { get; set; }
 
    public User AssignedUser { get; set; }
 
@@ -249,5 +255,4 @@ public class ProjectViewModel : ProjectTypeBase
 
    protected override string TypeAndRouteValue => AcademyTypeAndRoute;
    public override bool IsExternalSchoolApplication => string.IsNullOrEmpty(this.ApplicationReferenceNumber);
-   public bool IsPRU => SchoolType.ToLower().Equals("pupil referral unit");
 }
