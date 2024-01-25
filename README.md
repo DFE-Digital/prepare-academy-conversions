@@ -50,8 +50,10 @@ Please make sure to replace `<SECRET HERE>` with the actual secret values in the
 ### Open the Cypress Test Runner for interactive testing
 npx cypress open
 
-### Run the Cypress tests in headless mode
-npx cypress run
+### Run the Cypress tests in headless or headed modes
+npm run cy:run - headless
+npm run cy:open - headed
+
 
 ### Useful tips
 
