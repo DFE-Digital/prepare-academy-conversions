@@ -480,4 +480,6 @@ backend.vars
 
 # sonar cloud
 /Dfe.PrepareConversions/.sonarlint
+## other files
 Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress.env.json
+Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/reports/mocha/
