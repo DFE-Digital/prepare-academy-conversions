@@ -4,6 +4,17 @@ import { defineConfig } from 'cypress'
 import { generateZapReport } from './cypress/plugins/generateZapReport'
 
 export default defineConfig({
+  reporter: 'cypress-multi-reporters',
+  reporterOptions: {
+    reporterEnabled: 'mochawesome',
+    mochawesomeReporterOptions: {
+      reportDir: 'cypress/reports/mocha',
+      quite: true,
+      overwrite: false,
+      html: false,
+      json: true,
+    }
+  },
   video: false,
   retries: 0,
   e2e: {
@@ -12,7 +23,7 @@ export default defineConfig({
     setupNodeEvents(on, config) {
 
       on('after:run', async () => {
-        if(process.env.ZAP) {
+        if (process.env.ZAP) {
           await generateZapReport()
         }
       })
