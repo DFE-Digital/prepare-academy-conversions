@@ -387,11 +387,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       AcademyConversionProject project = AddGetProject();
       AddGetKeyStagePerformance(project.Urn.Value);
 
-      UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
-      {
-         x.KeyStage2PerformanceAdditionalInformation = _fixture.Create<string>();
-         x.Urn = project.Urn;
-      });
+      SetPerformanceDataModel request = AddPutPerformanceData(project);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -450,11 +446,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       AcademyConversionProject project = AddGetProject();
       AddGetKeyStagePerformance(project.Urn.Value);
 
-      UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
-      {
-         x.KeyStage4PerformanceAdditionalInformation = _fixture.Create<string>();
-         x.Urn = project.Urn;
-      });
+      SetPerformanceDataModel request = AddPutPerformanceData(project);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -516,11 +508,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       AcademyConversionProject project = AddGetProject();
       AddGetKeyStagePerformance(project.Urn.Value);
 
-      UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
-      {
-         x.KeyStage5PerformanceAdditionalInformation = _fixture.Create<string>();
-         x.Urn = project.Urn;
-      });
+      SetPerformanceDataModel request = AddPutPerformanceData(project);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 

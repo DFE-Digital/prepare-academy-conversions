@@ -8,10 +8,12 @@ using Microsoft.Extensions.Primitives;
 using System;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Dfe.PrepareConversions.Data.Exceptions;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.KeyStagePerformance
 {
-   public class PerformanceDataViewModel: BaseAcademyConversionProjectPageModel
+   public class PerformanceDataViewModel : BaseAcademyConversionProjectPageModel
    {
       private readonly ErrorService _errorService;
 
@@ -61,37 +63,44 @@ namespace Dfe.PrepareConversions.Pages.TaskList.KeyStagePerformance
       {
          await SetProject(id);
 
-         //if (YesChecked is true && string.IsNullOrWhiteSpace(ExternalApplicationFormUrl))
-         //{
-         //   ModelState.AddModelError(nameof(ExternalApplicationFormUrl), "You must enter valid link for the schools application form");
-         //}
-
          if (ModelState.IsValid)
          {
             SetExistingValuesIfNotChanged();
 
-            await _repository.SetPerformanceData(id, new SetPerformanceDataModel(id,
+            try
+            {
+               await _repository.SetPerformanceData(id, new SetPerformanceDataModel(id,
                                                                                  KeyStage2PerformanceAdditionalInformation,
                                                                                  KeyStage4PerformanceAdditionalInformation,
                                                                                  KeyStage5PerformanceAdditionalInformation,
                                                                                  EducationalAttendanceAdditionalInformation));
 
-            (string returnPage, string fragment) = GetReturnPageAndFragment();
-            if (!string.IsNullOrWhiteSpace(returnPage))
+               (string returnPage, string fragment) = GetReturnPageAndFragment();
+               if (!string.IsNullOrWhiteSpace(returnPage))
+               {
+                  return RedirectToPage(returnPage, null, new { id }, fragment);
+               }
+
+               return RedirectToPage(SuccessPage, new { id });
+
+            }
+            catch (ApiResponseException ex)
             {
-               return RedirectToPage(returnPage, null, new { id }, fragment);
+
+               _errorService.AddApiError();
+               return Page();
             }
 
-            return RedirectToPage(SuccessPage, new { id });
          }
 
          _errorService.AddErrors(ModelState.Keys, ModelState);
-         return await base.OnGetAsync(id);
+         return Page();
       }
 
       private void SetExistingValuesIfNotChanged()
       {
-         if (KeyStage2PerformanceAdditionalInformation is null) {
+         if (KeyStage2PerformanceAdditionalInformation is null)
+         {
             KeyStage2PerformanceAdditionalInformation = Project.KeyStage2PerformanceAdditionalInformation;
          }
 

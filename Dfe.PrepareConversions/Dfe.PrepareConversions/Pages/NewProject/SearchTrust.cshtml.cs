@@ -121,6 +121,9 @@ public class SearchTrustModel : PageModel
 
    private static string[] SplitOnBrackets(string input)
    {
+      // return array containing one empty string if input string is null or empty
+      if (string.IsNullOrWhiteSpace(input)) return new string[1] { string.Empty };
+
       return input.Split(new[] { '(', ')' }, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
    }
 }
