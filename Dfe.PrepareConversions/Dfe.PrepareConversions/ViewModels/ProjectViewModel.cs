@@ -142,7 +142,6 @@ public class ProjectViewModel : ProjectTypeBase
    public bool IsPRU { get { return SchoolType.ToLower() == "pupil referal unit"; } }
    public bool IsSEN { get { return SchoolType.ToLower().Contains("special"); } }
    public DateTime? HeadTeacherBoardDate { get; set; }
-   public string SchoolType { get; set; }
 
    public DateTime? LocalAuthorityInformationTemplateSentDate { get; set; }
    public DateTime? LocalAuthorityInformationTemplateReturnedDate { get; set; }
@@ -256,5 +255,4 @@ public class ProjectViewModel : ProjectTypeBase
 
    protected override string TypeAndRouteValue => AcademyTypeAndRoute;
    public override bool IsExternalSchoolApplication => string.IsNullOrEmpty(this.ApplicationReferenceNumber);
-   public bool IsPRU => SchoolType.ToLower().Equals("pupil referral unit");
 }
