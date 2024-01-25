@@ -180,14 +180,13 @@ jobs:
             mkdir mochareports
             npm run generate:html:report    
 
-            - name: Upload report
-            if: always()
-            uses: actions/upload-artifact@v3
-            with:
-              name: reports-${{ needs.set-env.outputs.environment }}
-              path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: reports-${{ needs.set-env.outputs.environment }}
+          path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports
     
-
       - name: Report results
         if: always()
         run: npm run cy:notify -- --custom-text="Environment ${{ needs.set-env.outputs.environment }}, See more information https://github.com/DFE-Digital/prepare-academy-conversions/actions/runs/${{github.run_id}}"
