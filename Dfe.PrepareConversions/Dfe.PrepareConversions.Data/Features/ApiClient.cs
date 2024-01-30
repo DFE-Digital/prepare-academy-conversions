@@ -99,4 +99,10 @@ public class ApiClient : IApiClient
    {
       return await AcademisationClient.PostAsync(PathFor.GetAllProjectsV2, JsonContent.Create(searchModel));
    }
+
+   public async Task<HttpResponseMessage> GetMATProjectsAsync(AcademyConversionSearchModelV2 searchModel)
+   {
+      return await AcademisationClient.PostAsync(PathFor.GetMATProjects, JsonContent.Create(searchModel));
+   }
+
 }

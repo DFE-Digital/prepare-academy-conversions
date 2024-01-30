@@ -262,4 +262,23 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
 
       return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode, outerResponse);
    }
+
+   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetMATProjects(int page, int count, string titleFilter = "", IEnumerable<string> statusFilters = null, IEnumerable<string> deliveryOfficerFilter = null, IEnumerable<string> regionsFilter = null, IEnumerable<string> localAuthoritiesFilter = null, IEnumerable<string> advisoryBoardDatesFilter = null)
+   {
+      AcademyConversionSearchModelV2 searchModel = new() { TitleFilter = titleFilter, Page = page, Count = count };
+
+      ProcessFiltersV2(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter, localAuthoritiesFilter, advisoryBoardDatesFilter);
+
+      HttpResponseMessage response = await _apiClient.GetMATProjectsAsync(searchModel);
+      if (!response.IsSuccessStatusCode)
+      {
+         return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode,
+            new ApiV2Wrapper<IEnumerable<AcademyConversionProject>> { Data = Enumerable.Empty<AcademyConversionProject>() });
+      }
+
+      ApiV2Wrapper<IEnumerable<AcademyConversionProject>> outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>();
+
+      return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode, outerResponse);
+   }
+
 }

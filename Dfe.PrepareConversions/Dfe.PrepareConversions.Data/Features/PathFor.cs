@@ -21,4 +21,5 @@ public class PathFor
    public static string SetSchoolOverview => "/conversion-project/{0}/SetSchoolOverview";
 
    public static string GetAllProjectsV2 => "/conversion-project/projects";
+   public static string GetMATProjects => "/conversion-project/MATprojects";
 }
