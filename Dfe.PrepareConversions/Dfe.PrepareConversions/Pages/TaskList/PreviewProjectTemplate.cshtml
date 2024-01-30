@@ -207,6 +207,24 @@
       </div>
    </section>
 } 
+
+@if (Model.TaskList.HasAbsenceData && (Model.Project.IsSEN || Model.Project.IsPRU))
+{
+    <h2 class="govuk-heading-s" id="key-stage-5-performance-tables">Educational Attendance</h2>
+    <section class="app-summary-card govuk-!-margin-bottom-6">
+        <header class="app-summary-card__header">
+            <h2 class="app-summary-card__title">
+                Educational Attendance details
+            </h2>
+        </header>
+        <div class="app-summary-card__body">
+            @await Component.InvokeAsync("EducationalAttendance")
+            <dl class="govuk-summary-list">
+                <govuk-summary-list-row name="educational-attendance-information" label="Additional information" value="@Model.Project.EducationalAttendanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.EducationalAttendanceAdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
+            </dl>
+        </div>
+    </section>
+}
 <div class="govuk-grid-row">
 <div class="govuk-grid-column-two-thirds">
    <h2 class="govuk-heading-l">

@@ -126,6 +126,7 @@ public class AcademyConversionProject
    public string KeyStage2PerformanceAdditionalInformation { get; set; }
    public string KeyStage4PerformanceAdditionalInformation { get; set; }
    public string KeyStage5PerformanceAdditionalInformation { get; set; }
+   public string EducationalAttendanceAdditionalInformation { get; set; }
 
    // assigned user
    public User AssignedUser { get; set; }

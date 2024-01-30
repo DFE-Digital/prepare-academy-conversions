@@ -148,6 +148,22 @@ public abstract partial class BaseIntegrationTests
       return response;
    }
 
+   public SetPerformanceDataModel AddPutPerformanceData(AcademyConversionProject project)
+   {
+      SetPerformanceDataModel request = _fixture
+         .Build<SetPerformanceDataModel>()
+         .OmitAutoProperties()
+         .With(x => x.Id, project.Id)
+         .With(x => x.KeyStage2PerformanceAdditionalInformation, project.KeyStage2PerformanceAdditionalInformation)
+         .With(x => x.KeyStage4PerformanceAdditionalInformation, project.KeyStage4PerformanceAdditionalInformation)
+         .With(x => x.KeyStage5PerformanceAdditionalInformation, project.KeyStage5PerformanceAdditionalInformation)
+         .With(x => x.EducationalAttendanceAdditionalInformation, project.EducationalAttendanceAdditionalInformation)
+         .Create();
+
+      _factory.AddPutWithJsonRequest(string.Format(PathFor.SetPerformanceData, project.Id), request, project);
+      return request;
+   }
+
    public UpdateAcademyConversionProject AddPatchProjectMany(AcademyConversionProject project,
                                                              Func<IPostprocessComposer<UpdateAcademyConversionProject>, IPostprocessComposer<UpdateAcademyConversionProject>>
                                                                 postProcess)

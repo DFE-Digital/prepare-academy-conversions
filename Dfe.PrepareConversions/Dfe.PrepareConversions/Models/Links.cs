@@ -189,6 +189,12 @@ public static class Links
 
       public static readonly LinkItem KeyStage5PerformanceTablesAdditionalInformation =
          AddLinkItem(page: "/TaskList/KeyStagePerformance/KeyStage5PerformanceTablesAdditionalInformation");
+
+      public static readonly LinkItem EducationalAttendance =
+         AddLinkItem(page: "/TaskList/KeyStagePerformance/EducationalAttendance");
+
+      public static readonly LinkItem EducationalAttendanceAdditionalInformation =
+         AddLinkItem(page: "/TaskList/KeyStagePerformance/EducationalAttendanceAdditionalInformation");
    }
 
    public static class Decision

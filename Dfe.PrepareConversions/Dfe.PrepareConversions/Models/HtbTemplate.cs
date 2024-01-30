@@ -236,6 +236,7 @@ public class HtbTemplate
    public IEnumerable<KeyStage2PerformanceTableViewModel> KeyStage2 { get; set; }
    public KeyStage4PerformanceTableViewModel KeyStage4 { get; set; }
    public IEnumerable<KeyStage5PerformanceTableViewModel> KeyStage5 { get; set; }
+   public IEnumerable<EducationalAttendanceViewModel> EducationalAttendance { get; set; }
 
    public static HtbTemplate Build(AcademyConversionProject project,
                                    SchoolPerformance schoolPerformance,
@@ -335,6 +336,11 @@ public class HtbTemplate
       if (keyStagePerformance.HasKeyStage5PerformanceTables)
       {
          htbTemplate.KeyStage5 = keyStagePerformance.KeyStage5.Select(KeyStage5PerformanceTableViewModel.Build).OrderByDescending(ks => ks.Year);
+      }
+
+      if (keyStagePerformance.HasSchoolAbsenceData)
+      {
+         htbTemplate.EducationalAttendance = keyStagePerformance.SchoolAbsenceData.Select(EducationalAttendanceViewModel.Build).OrderByDescending(ks => ks.Year);
       }
 
       return htbTemplate;

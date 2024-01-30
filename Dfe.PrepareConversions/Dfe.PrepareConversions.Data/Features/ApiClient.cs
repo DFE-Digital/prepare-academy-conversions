@@ -100,6 +100,11 @@ public class ApiClient : IApiClient
       return await AcademisationClient.PostAsync(PathFor.GetAllProjectsV2, JsonContent.Create(searchModel));
    }
 
+   public async Task<HttpResponseMessage> SetPerformanceData(int id, SetPerformanceDataModel setPerformanceDataModel)
+   {
+      return await AcademisationClient.PutAsync(string.Format(PathFor.SetPerformanceData, id), JsonContent.Create(setPerformanceDataModel));
+   }
+
    public async Task<HttpResponseMessage> GetMATProjectsAsync(AcademyConversionSearchModelV2 searchModel)
    {
       return await AcademisationClient.PostAsync(PathFor.GetMATProjects, JsonContent.Create(searchModel));

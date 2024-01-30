@@ -30,7 +30,7 @@ public class KeyStagePerformanceService
 
       return new KeyStagePerformance
       {
-         KeyStage2 = keyStagePerformanceResponse.KeyStage2, KeyStage4 = keyStagePerformanceResponse.KeyStage4, KeyStage5 = keyStagePerformanceResponse.KeyStage5
+         KeyStage2 = keyStagePerformanceResponse.KeyStage2, KeyStage4 = keyStagePerformanceResponse.KeyStage4, KeyStage5 = keyStagePerformanceResponse.KeyStage5, SchoolAbsenceData = keyStagePerformanceResponse.absenceData
       };
    }
 }

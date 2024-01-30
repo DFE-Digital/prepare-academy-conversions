@@ -45,6 +45,11 @@
                      <span if="projectRow.Item.HeadTeacherBoardDate.IsEmpty()" class="empty">Unconfirmed</span>
                      <span if="projectRow.Item.HeadTeacherBoardDate.IsPresent()">@projectRow.Item.HeadTeacherBoardDate</span>
                </div>
+                <div id="@("type-and-route-" + projectRow.Index)" class="govuk-!-margin-top-1">
+                    <strong>Route:</strong>
+                    <span if="projectRow.Item.TypeAndRoute.IsEmpty()" class="empty">Unconfirmed</span>
+                    <span if="projectRow.Item.TypeAndRoute.IsPresent()">@projectRow.Item.TypeAndRoute.RouteDescription()</span>
+                </div>
                @if (!isFormAMat)
                {
                     <div id="@("assigned-to-" + projectRow.Index)" class="do govuk-!-margin-top-1">
