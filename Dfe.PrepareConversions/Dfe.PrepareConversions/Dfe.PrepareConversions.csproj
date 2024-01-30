@@ -35,7 +35,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="AngleSharp" Version="1.0.1" />
-	  <PackageReference Include="Dfe.Academies.Contracts" Version="1.0.9" />
+	  <PackageReference Include="Dfe.Academies.Contracts" Version="1.0.10" />
 	  <PackageReference Include="Dfe.Academisation.CorrelationIdMiddleware" Version="2.0.2" />
 	  <PackageReference Include="Dfe.Academisation.ExtensionMethods" Version="2.0.0" />
 	  <PackageReference Include="DocumentFormat.OpenXml" Version="2.19.0" />

@@ -62,7 +62,7 @@ public class DownloadProjectTemplate : BaseAcademyConversionProjectPageModel
 
       SchoolPerformance schoolPerformance = await _schoolPerformanceService.GetSchoolPerformanceByUrn(project.Urn.ToString());
       Data.Models.SchoolOverview schoolOverview = await _schoolOverviewService.GetSchoolOverviewByUrn(project.Urn.ToString());
-      KeyStagePerformance keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(project.Urn.ToString());
+      Data.Models.KeyStagePerformance.KeyStagePerformance keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(project.Urn.ToString());
 
       var DocumentGenerator = new DocumentGenerator();
       HtbTemplate document = DocumentGenerator.GenerateDocument(response, schoolPerformance, schoolOverview, keyStagePerformance, project, out byte[] documentByteArray);

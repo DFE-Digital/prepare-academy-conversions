@@ -18,11 +18,7 @@ public class KeyStage4PerformanceAdditionalInformationIntegrationTests : BaseInt
    {
       AcademyConversionProject project = AddGetProject();
       AddGetKeyStagePerformance(project.Urn.Value);
-      UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
-      {
-         x.KeyStage4PerformanceAdditionalInformation = _fixture.Create<string>();
-         x.Urn = project.Urn;
-      });
+      SetPerformanceDataModel request = AddPutPerformanceData(project);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/key-stage-4-performance-tables");
       await NavigateAsync("Change", 0);

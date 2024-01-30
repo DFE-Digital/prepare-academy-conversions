@@ -13,6 +13,7 @@ using System.Reflection;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.SchoolAndTrustInformationAndProjectDatesGenerator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.SchoolOverviewGenerator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.OfstedInformationGenerator;
+using static Dfe.PrepareConversions.Services.DocumentGenerator.EducationalAttendanceGenerator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.KeyStage2Generator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.KeyStage4Generator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.KeyStage5Generator;
@@ -45,6 +46,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          AddKeyStage2Information(documentBuilder, document, project);
          AddKeyStage4Information(documentBuilder, document, project);
          AddKeyStage5Information(documentBuilder, document, project);
+         AddEducationalAttendanceInformation(documentBuilder, document, project);
          documentByteArray = documentBuilder.Build();
          return document;
       }
