@@ -12,7 +12,7 @@
        ? string.Empty
        : "- Manage an academy conversion";
 
-    var isFormAMatPage = Context.Request.Path == "/form-a-mat/project-list" ? true : false;
+    var isFormAMatPage = Context.Request.Path.Value.Contains("/form-a-mat/") ? true : false;
 }
 
 <!DOCTYPE html>

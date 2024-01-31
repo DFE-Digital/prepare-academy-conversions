@@ -36,7 +36,7 @@ public class ProjectListModel : PaginatedPageModel
    {
       Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
 
-      ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response =
+      ApiResponse<ApiV2Wrapper<IEnumerable<FormAMATProject>>> response =
          await _repository.GetMATProjects(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedAdvisoryBoardDates);
 
       Paging = response.Body?.Paging;
