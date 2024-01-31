@@ -1,7 +1,7 @@
 @model ProjectViewModel
 <div class="govuk-grid-row">
    <div class="govuk-grid-column-full">
-      <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+@*       <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
          <div class="govuk-notification-banner__header">
             <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
                Important
@@ -12,16 +12,30 @@
                You cannot currently use this service to create project templates for Form a MAT applications. You should use KIM instead.
             </p>
          </div>
-      </div>
-      <span class="govuk-caption-xl">URN @Model.SchoolURN</span>
+      </div> *@
+      @* <span class="govuk-caption-xl">URN @Model.SchoolURN</span> *@
+        <span class="govuk-caption-xl">Application ref: @Model.ApplicationReferenceNumber</span>
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-2" data-cy="select-heading">
-         @Model.SchoolName
+         @Model.NameOfTrust
       </h1>
-      <p class="govuk-body govuk-!-margin-bottom-8">
-         Route: Form a MAT
-      </p>
-   </div>
+        <p class="govuk-body govuk-!-margin-bottom-5">
+            Assigned to (ToDo: this needs changing to be at form a mat level):
 
+            @if (Model.AssignedUser == null || string.IsNullOrWhiteSpace(Model?.AssignedUser.FullName))
+            {
+                <span data-id="assigned-user" class="empty">Empty</span>
+            }
+            else
+            {
+                <strong data-id="assigned-user">@Model.AssignedUser.FullName</strong>
+            }
+
+            <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.ProjectAssignment.Index.Page" asp-route-id="@Model.Id">Change</a>
+        </p>
+        <p class="govuk-!-margin-top-0  govuk-!-margin-bottom-8">
+            <strong class="govuk-tag govuk-tag--@Model.ProjectStatusColour" id="project-status-@Model.Id">@Model.ProjectStatus</strong>
+        </p>
+   </div>
    <div class="govuk-grid-column-full">
       <partial name="_FormAMatSubMenu" />
    </div>
