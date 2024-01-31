@@ -18,4 +18,5 @@ public interface IApiClient
    Task<HttpResponseMessage> SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl);
    Task<HttpResponseMessage> SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview);
    Task<HttpResponseMessage> SetPerformanceData(int id, SetPerformanceDataModel setPerformanceDataModel);
+   Task<HttpResponseMessage> GetMATProjectsAsync(AcademyConversionSearchModelV2 searchModel);
 }

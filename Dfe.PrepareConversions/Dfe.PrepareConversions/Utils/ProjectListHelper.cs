@@ -31,6 +31,27 @@ namespace Dfe.PrepareConversions.Utils
          };
       }
 
+      public static ProjectListViewModel Build(FormAMATProject formAMATProject)
+      {
+         return new ProjectListViewModel
+         {
+            Id = formAMATProject.Id.ToString(),
+            SchoolURN = formAMATProject.Urn.HasValue ? formAMATProject.Urn.ToString() : "",
+            SchoolName = formAMATProject.SchoolName,
+            LocalAuthority = formAMATProject.LocalAuthority,
+            NameOfTrust = formAMATProject.NameOfTrust,
+            ApplicationReceivedDate = formAMATProject.ApplicationReceivedDate.ToDateString(),
+            AssignedDate = formAMATProject.AssignedDate.ToDateString(),
+            HeadTeacherBoardDate = formAMATProject.HeadTeacherBoardDate.ToDateString(),
+            ProposedAcademyOpeningDate = formAMATProject.ProposedAcademyOpeningDate.ToDateString(),
+            Status = MapProjectStatus(formAMATProject.ProjectStatus),
+            AssignedUserFullName = formAMATProject.AssignedUser?.FullName,
+            CreatedOn = formAMATProject.CreatedOn,
+            TypeAndRoute = formAMATProject.AcademyTypeAndRoute,
+            Region = formAMATProject.Region
+         };
+      }
+
       public static ProjectStatus MapProjectStatus(string status)
       {
          const string green = nameof(green);
