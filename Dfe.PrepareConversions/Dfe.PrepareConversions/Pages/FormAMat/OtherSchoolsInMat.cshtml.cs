@@ -49,7 +49,7 @@ public class OtherSchoolsInMatModel : PaginatedPageModel
       Paging = response.Body?.Paging;
       Projects = response.Body?.Data.Select(ProjectListHelper.Build).ToList();
       var currentSchool = Project.SchoolURN;
-      Projects = Projects!.Where(x => x.SchoolURN != currentSchool);
+      //Projects = Projects!.Where(x => x.SchoolURN != currentSchool);
       TotalProjects = response.Body?.Paging?.RecordCount ?? 0;
 
       return Page();

@@ -1,0 +1,39 @@
+﻿﻿@using Dfe.Academisation.ExtensionMethods
+@using Dfe.PrepareConversions.TagHelpers
+@model ProjectListRowViewModel
+
+<tr class="govuk-table__row form-a-mat" data-cy="select-projectlist-filter-row">
+    <td class="govuk-table__cell">
+        <h2 class="govuk-caption-l govuk-!-margin-bottom-0 govuk-!-margin-top-1">
+            <strong>
+                <a id="@("school-name-" + Model.Index)" class="govuk-link" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Item.Id">@Model.Item.SchoolName</a>
+            </strong>
+            <span id="@("urn-" + Model.Index)">URN: @Model.Item.SchoolURN</span>
+        </h2>
+        <p class="govuk-!-margin-top-3">
+            <div data-cy="route">Route: @Model.Item.TypeAndRoute.RouteDescription()</div>
+            <div id="@("application-to-join-trust-" + Model.Index)">Application to join a trust: @Model.Item.NameOfTrust</div>
+            @if (@Model.Item.LocalAuthority.IsEmpty() is false)
+            {
+                <div id="@("local-authority-" + Model.Index)">Local authority: @Model.Item.LocalAuthority</div>
+            }
+        </p>
+    </td>
+    <td class="govuk-table__cell govuk-table__cell prepare-text-align-right">
+        <p class="govuk-!-margin-top-0">
+            <strong class="govuk-tag govuk-tag--@Model.Item.Status.Colour" id="project-status-@Model.Item.Id">@Model.Item.Status.Value</strong>
+        </p>
+        <p class="govuk-hint  govuk-!-margin-top-0">
+            <span id="application-received-date-@Model.Index">
+                Project created date: @Model.Item.CreatedOn.ToDateString()<br>
+            </span>
+            <span if="Model.Item.ShowHtbDate" id="@("Advisory-Board-date-" + Model.Index)">
+                @("Advisory board date: " + Model.Item.HeadTeacherBoardDate)<br>
+            </span>
+            <span if="Model.Item.ShowProposedOpeningDate" id="@("opening-date-" + Model.Index)">
+                Opening date:
+                <span if="Model.Item.ProposedAcademyOpeningDate.IsPresent()">@Model.Item.ProposedAcademyOpeningDate</span>
+            </span>
+        </p>
+    </td>
+</tr>
