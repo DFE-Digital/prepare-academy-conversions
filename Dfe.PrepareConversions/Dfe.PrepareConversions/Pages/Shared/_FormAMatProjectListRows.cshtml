@@ -1,0 +1,59 @@
+﻿@using Dfe.Academisation.ExtensionMethods
+@using Dfe.PrepareConversions.TagHelpers
+@model List<FormAMatProjectListViewModel>
+
+@{
+    var index = 0;
+
+    foreach (var project in Model)
+    {
+        var projectRow = project.Row(index);
+
+
+        var link = @Links.FormAMat.OtherSchoolsInMat.Page;
+
+        <tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+            <td class="govuk-table__cell">
+               <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                  <strong>
+                     <a id="@("trust-name-" + projectRow.Index)" class="govuk-link" asp-page="@link" asp-route-id="@projectRow.Item.FirstProjectId">@projectRow.Item.TrustName</a>
+                  </strong>
+               </div>
+                <div id="@("application-reference" + projectRow.Index)" class="govuk-!-margin-top-1">
+                    <strong>Application Reference:</strong>
+                    <span>@projectRow.Item.ApplciationReference</span>
+                </div>               
+                <div id="@("region-" + projectRow.Index)" class="govuk-!-margin-top-1">
+                    <strong>Region:</strong>
+                    <span if="projectRow.Item.Regions.IsEmpty()" class="empty">Empty</span>
+                    <span if="projectRow.Item.Regions.IsPresent()">@projectRow.Item.Regions</span>
+                </div>
+                <div id="@("local-authority" + projectRow.Index)" class="govuk-!-margin-top-1">
+                    <strong>Local authority:</strong>
+                    <span if="projectRow.Item.LocalAuthorities.IsEmpty()" class="empty">Unconfirmed</span>
+                    <span if="projectRow.Item.LocalAuthorities.IsPresent()">@projectRow.Item.LocalAuthorities</span>
+                </div>
+                <div class="govuk-!-margin-top-1">
+                    <span id="@("schools-" + projectRow.Index)"><strong>Schools included</strong> @projectRow.Item.SchoolNames</span>
+               </div>
+
+                <div id="@("advisory-board-date-" + projectRow.Index)" class="govuk-!-margin-top-1">
+                    <strong>Advisory board date:</strong>
+                    <span if="projectRow.Item.AdvisoryBoardDate.IsEmpty()" class="empty">Unconfirmed</span>
+                    <span if="projectRow.Item.AdvisoryBoardDate.IsPresent()">@projectRow.Item.AdvisoryBoardDate</span>
+                </div>
+                <div id="@("assigned-to-" + projectRow.Index)" class="do govuk-!-margin-top-1">
+                    <strong>Assigned to:</strong>
+                    <span if="projectRow.Item.AssignedTo.IsEmpty()" class="empty">Unassigned</span>
+                    <span if="projectRow.Item.AssignedTo.IsPresent()">@projectRow.Item.AssignedTo</span>
+                </div>
+                <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                    <strong class="govuk-tag govuk-tag--@projectRow.Item.Status.Colour" id="project-status-@projectRow.Item.Id">@projectRow.Item.Status.Value</strong>
+                </div>
+            </td>
+        </tr>
+
+        index++;
+    }
+}
+

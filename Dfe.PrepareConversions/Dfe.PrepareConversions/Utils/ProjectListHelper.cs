@@ -5,6 +5,9 @@ using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.ViewModels;
 using System;
 using DocumentFormat.OpenXml.Drawing;
+using System.Linq;
+using DocumentFormat.OpenXml.Math;
+using System.Globalization;
 
 namespace Dfe.PrepareConversions.Utils
 {
@@ -31,24 +34,23 @@ namespace Dfe.PrepareConversions.Utils
          };
       }
 
-      public static ProjectListViewModel Build(FormAMATProject formAMATProject)
+      public static FormAMatProjectListViewModel Build(FormAMatProject formAMATProject)
       {
-         return new ProjectListViewModel
+         // This 
+         var project = formAMATProject.Projects.First();
+
+         return new FormAMatProjectListViewModel
          {
-            Id = formAMATProject.Id.ToString(),
-            SchoolURN = formAMATProject.Urn.HasValue ? formAMATProject.Urn.ToString() : "",
-            SchoolName = formAMATProject.SchoolName,
-            LocalAuthority = formAMATProject.LocalAuthority,
-            NameOfTrust = formAMATProject.NameOfTrust,
-            ApplicationReceivedDate = formAMATProject.ApplicationReceivedDate.ToDateString(),
-            AssignedDate = formAMATProject.AssignedDate.ToDateString(),
-            HeadTeacherBoardDate = formAMATProject.HeadTeacherBoardDate.ToDateString(),
-            ProposedAcademyOpeningDate = formAMATProject.ProposedAcademyOpeningDate.ToDateString(),
-            Status = MapProjectStatus(formAMATProject.ProjectStatus),
-            AssignedUserFullName = formAMATProject.AssignedUser?.FullName,
-            CreatedOn = formAMATProject.CreatedOn,
-            TypeAndRoute = formAMATProject.AcademyTypeAndRoute,
-            Region = formAMATProject.Region
+            Id = formAMATProject.Id.ToString(),          
+            TrustName = formAMATProject.ProposedTrustName,
+            ApplciationReference = formAMATProject.ApplicationReference,
+            FirstProjectId = formAMATProject.Projects.First().Id,
+            AssignedTo = project.AssignedUser?.FullName,
+            LocalAuthorities = String.Join(", ", formAMATProject.Projects.Select(x => x.LocalAuthority).Distinct()),
+            AdvisoryBoardDate = project.HeadTeacherBoardDate.ToDateString(),
+            SchoolNames = String.Join(", ", formAMATProject.Projects.Select(x => x.SchoolName).Distinct()),
+            Regions = String.Join(", ", formAMATProject.Projects.Select(x => x.Region).Distinct()),
+            Status = MapProjectStatus(project.ProjectStatus)
          };
       }
 

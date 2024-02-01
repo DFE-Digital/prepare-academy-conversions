@@ -39,7 +39,7 @@ public interface IAcademyConversionProjectRepository
    IEnumerable<string> advisoryBoardDatesFilter = default
 );
 
-   Task<ApiResponse<ApiV2Wrapper<IEnumerable<FormAMATProject>>>> GetMATProjects(
+   Task<ApiResponse<ApiV2Wrapper<IEnumerable<FormAMatProject>>>> GetFormAMatProjects(
       int page,
       int count,
       string titleFilter = "",

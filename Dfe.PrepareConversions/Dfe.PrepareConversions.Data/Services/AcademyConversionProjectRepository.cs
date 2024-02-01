@@ -269,22 +269,22 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode, outerResponse);
    }
 
-   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<FormAMATProject>>>> GetMATProjects(int page, int count, string titleFilter = "", IEnumerable<string> statusFilters = null, IEnumerable<string> deliveryOfficerFilter = null, IEnumerable<string> regionsFilter = null, IEnumerable<string> localAuthoritiesFilter = null, IEnumerable<string> advisoryBoardDatesFilter = null)
+   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<FormAMatProject>>>> GetFormAMatProjects(int page, int count, string titleFilter = "", IEnumerable<string> statusFilters = null, IEnumerable<string> deliveryOfficerFilter = null, IEnumerable<string> regionsFilter = null, IEnumerable<string> localAuthoritiesFilter = null, IEnumerable<string> advisoryBoardDatesFilter = null)
    {
       AcademyConversionSearchModelV2 searchModel = new() { TitleFilter = titleFilter, Page = page, Count = count };
 
       ProcessFiltersV2(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter, localAuthoritiesFilter, advisoryBoardDatesFilter);
 
-      HttpResponseMessage response = await _apiClient.GetMATProjectsAsync(searchModel);
+      HttpResponseMessage response = await _apiClient.GetFormAMatProjectsAsync(searchModel);
       if (!response.IsSuccessStatusCode)
       {
-         return new ApiResponse<ApiV2Wrapper<IEnumerable<FormAMATProject>>>(response.StatusCode,
-            new ApiV2Wrapper<IEnumerable<FormAMATProject>> { Data = Enumerable.Empty<FormAMATProject>() });
+         return new ApiResponse<ApiV2Wrapper<IEnumerable<FormAMatProject>>>(response.StatusCode,
+            new ApiV2Wrapper<IEnumerable<FormAMatProject>> { Data = Enumerable.Empty<FormAMatProject>() });
       }
 
-      ApiV2Wrapper<IEnumerable<FormAMATProject>> outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<IEnumerable<FormAMATProject>>>();
+      ApiV2Wrapper<IEnumerable<FormAMatProject>> outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<IEnumerable<FormAMatProject>>>();
 
-      return new ApiResponse<ApiV2Wrapper<IEnumerable<FormAMATProject>>>(response.StatusCode, outerResponse);
+      return new ApiResponse<ApiV2Wrapper<IEnumerable<FormAMatProject>>>(response.StatusCode, outerResponse);
    }
 
 }

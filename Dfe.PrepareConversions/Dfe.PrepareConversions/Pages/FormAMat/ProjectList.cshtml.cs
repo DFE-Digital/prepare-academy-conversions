@@ -24,7 +24,7 @@ public class ProjectListModel : PaginatedPageModel
    }
    public IEnumerable<BaseFormSection> Sections { get; set; }
    protected override ApiV2PagingInfo Paging { get; set; }
-   public IEnumerable<ProjectListViewModel> Projects { get; set; }
+   public IEnumerable<FormAMatProjectListViewModel> Projects { get; set; }
    public int ProjectCount => Projects.Count();
 
    public int TotalProjects { get; set; }
@@ -36,8 +36,8 @@ public class ProjectListModel : PaginatedPageModel
    {
       Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
 
-      ApiResponse<ApiV2Wrapper<IEnumerable<FormAMATProject>>> response =
-         await _repository.GetMATProjects(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedAdvisoryBoardDates);
+      ApiResponse<ApiV2Wrapper<IEnumerable<FormAMatProject>>> response =
+         await _repository.GetFormAMatProjects(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedAdvisoryBoardDates);
 
       Paging = response.Body?.Paging;
       Projects = response.Body?.Data.Select(ProjectListHelper.Build).ToList();
