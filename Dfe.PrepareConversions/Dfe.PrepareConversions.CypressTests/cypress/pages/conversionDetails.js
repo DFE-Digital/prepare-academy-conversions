@@ -34,7 +34,7 @@ export default class ConversionDetails extends BasePage {
         advisoryBoardDateInput: 'head-teacher-board-date',
         proposedOpeningLink: '[data-test="change-proposed-academy-opening-date"]',
         proposedOpeningValue: '[id="proposed-academy-opening-date"]',
-        proposedOpeningRadioButton: (month, year) => `input[data-cy="select-radio-01/${month}/${year} 00:00:00"]`,
+        proposedOpeningRadioButton: (month, year) => `input[data-cy="select-radio-${month}/01/${year} 00:00:00"]`,
         previousAdvisoryBoardLink: '[data-test="change-previous-advisory-board"]',
         previousAdvisoryBoardValue: '[id="previous-advisory-board"]',
         previousAdvisoryBoardDateInput: 'previous-head-teacher-board-date',
