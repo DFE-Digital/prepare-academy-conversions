@@ -1,11 +1,14 @@
 ﻿@page "/task-list/{id:int}/trust-guidance"
 @using Dfe.PrepareConversions.TagHelpers
+@using Microsoft.Extensions.Configuration
 @model Dfe.PrepareConversions.Pages.BaseAcademyConversionProjectPageModel
+@inject IConfiguration Configuration
+
 @{
     ViewData["Title"] = "Prepare your trust template";
 }
 @section BeforeMain
-    {
+{
     <govuk-back-link link-item="@Links.TaskList.Index" />
 }
 <div class="govuk-grid-row">
@@ -19,15 +22,16 @@
         <ol class="govuk-list govuk-list--number">
             <li>Check if a trust template already exists in the trust SharePoint folder</li>
             <li>
-                <a>Download a new template (opens in new tab) </a>if one does not exist or it is more than 3 months since it was last updated
+                <a href="@Configuration["ApplicationLinks:SharePointTemplateUrl"]" target="_blank" class="govuk-link">Download a new template (opens in new tab)</a>
+                if one does not exist or it is more than 3 months since it was last updated
             </li>
             <li>
                 Enter or update the information in the trust template
             </li>
             <li>Save the completed trust template in the trust's SharePoint folder</li>
-            <li>Share the template with your team leader for approval</li>            
+            <li>Share the template with your team leader for approval</li>
         </ol>
-        <p class="govuk-body">Once approved, it is ready to take to the advisory board meeting.</p>       
+        <p class="govuk-body">Once approved, it is ready to take to the advisory board meeting.</p>
         <a href="/task-list/@Model.Project.Id" class="govuk-button" data-module="govuk-button">
             Return to task list
         </a>
