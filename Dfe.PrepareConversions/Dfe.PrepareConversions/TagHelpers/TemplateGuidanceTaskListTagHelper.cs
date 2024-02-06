@@ -12,9 +12,7 @@ namespace Dfe.PrepareConversions.TagHelpers
 
       public override void Process(TagHelperContext context, TagHelperOutput output)
       {
-         output.Content.SetHtmlContent(IsSponsored
-            ? GetHtmlContent(_title, $"{ProjectId}/sponsor-guidance", _linkText)
-            : GetHtmlContent(_title, $"{ProjectId}/trust-guidance", _linkText));
+         output.Content.SetHtmlContent(GetHtmlContent(_title, $"{ProjectId}/trust-guidance", _linkText));
       }
 
       private static string GetHtmlContent(string title, string urlSlug, string linkText)
@@ -35,3 +33,4 @@ namespace Dfe.PrepareConversions.TagHelpers
       }
    }
 }
+
