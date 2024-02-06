@@ -24,14 +24,14 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
    nextMonthDate.setMonth(currentDate.getMonth() + 1);
 
    const testData = {
-      projectName: 'Sponsored Cypress Project',
+      projectName: 'Deanshanger Primary School',
       completedText: 'Completed',
       projectAssignment: {
-         deliveryOfficer: 'Richika Dogra',
+         deliveryOfficer: 'Chris Sherlock',
          assignedOfficerMessage: 'Project is assigned',
       },
       schoolOverview: {
-         pan: '98765',
+         pan: '999',
          pfiDescription: 'PFI Description',
          distance: '15',
          distanceDecription: 'Distance description',
@@ -55,7 +55,7 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
          sharepointLink: 'https://sharepoint.com'
       },
       performanceInfo: 'Additional Information',
-      keyStages: [4, 5]
+      keyStages: [2]
    }
 
    before(() => {
