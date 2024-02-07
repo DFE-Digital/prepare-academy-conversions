@@ -8,7 +8,6 @@ using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -54,29 +53,5 @@ public class ProjectListModel : PaginatedPageModel
          Filters.AvailableAdvisoryBoardDates = filterParametersResponse.Body.AdvisoryBoardDates;
       }
    }
-   public async Task<FileStreamResult> OnGetDownload()
-   {
-      Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
-      ApiResponse<FileStreamResult> response = await _repository.DownloadProjectExport(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedAdvisoryBoardDates);
 
-      if (response.Success)
-      {
-         return response.Body;
-      }
-      else
-      {
-         var stream = new MemoryStream();
-         var writer = new StreamWriter(stream);
-         writer.Write("");
-         writer.Flush();
-         stream.Position = 0;
-
-         var fileStreamResult = new FileStreamResult(stream, "text/csv")
-         {
-            FileDownloadName = "empty.csv"
-         };
-
-         return fileStreamResult;
-      }
-   }
 }
