@@ -1,4 +1,3 @@
-using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Models.ProjectList;
@@ -25,6 +24,7 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
 
    public bool ShowGenerateHtbTemplateError { get; set; }
    public TaskListViewModel TaskList { get; set; }
+   public string ReturnLink { get; set; }
 
    public void SetErrorPage(string errorPage)
    {
@@ -36,6 +36,8 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
       ProjectListFilters.ClearFiltersFrom(TempData);
 
       IActionResult result = await SetProject(id);
+
+      ReturnLink = Request?.Headers["Referer"].ToString() ?? @Links.ProjectList.Index.Page;
 
       if ((result as StatusCodeResult)?.StatusCode == (int)HttpStatusCode.NotFound)
       {

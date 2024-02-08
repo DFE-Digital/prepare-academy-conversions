@@ -1,7 +1,7 @@
+using Dfe.PrepareConversions.Data;
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models.ProjectList;
-using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -49,7 +49,6 @@ public class OtherSchoolsInMatModel : PaginatedPageModel
       Paging = response.Body?.Paging;
       Projects = response.Body?.Data.Select(ProjectListHelper.Build).ToList();
       var currentSchool = Project.SchoolURN;
-      //Projects = Projects!.Where(x => x.SchoolURN != currentSchool);
       TotalProjects = response.Body?.Paging?.RecordCount ?? 0;
 
       return Page();
