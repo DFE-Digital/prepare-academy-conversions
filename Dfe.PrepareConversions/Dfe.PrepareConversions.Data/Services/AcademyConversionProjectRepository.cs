@@ -255,6 +255,11 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       HttpResponseMessage result = await _apiClient.SetAssignedUser(id, updatedAssignedUser);
       if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
+   public async Task SetFormAMatAssignedUser(int id, SetAssignedUserModel updatedAssignedUser)
+   {
+      HttpResponseMessage result = await _apiClient.SetFormAMatAssignedUser(id, updatedAssignedUser);
+      if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+   }
 
    public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjectsV2(int page, int count, string titleFilter = "", IEnumerable<string> statusFilters = null, IEnumerable<string> deliveryOfficerFilter = null, IEnumerable<string> regionsFilter = null, IEnumerable<string> localAuthoritiesFilter = null, IEnumerable<string> advisoryBoardDatesFilter = null)
    {

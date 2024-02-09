@@ -43,6 +43,27 @@ public class IndexModel : PageModel
 
    public async Task<IActionResult> OnPost(int id, string selectedName, bool unassignDeliveryOfficer, string deliveryOfficerInput)
    {
+      ApiResponse<AcademyConversionProject> projectResponse = await _academyConversionProjectRepository.GetProjectById(id);
+      // Form a MAT
+      if (projectResponse.Body.AcademyTypeAndRoute.ToLower().Equals(AcademyTypeAndRoutes.FormAMat.ToLower()))
+      {
+         if (unassignDeliveryOfficer)
+         {
+            await _academyConversionProjectRepository.SetFormAMatAssignedUser(id, new SetAssignedUserModel(id, Guid.Empty, string.Empty, string.Empty));
+            TempData.SetNotification(NotificationType.Success, "Done", "Project is unassigned");
+         }
+         else if (!string.IsNullOrEmpty(selectedName))
+         {
+            IEnumerable<User> deliveryOfficers = await _userRepository.GetAllUsers();
+
+            var assignedUser = deliveryOfficers.SingleOrDefault(u => u.FullName == selectedName);
+
+            await _academyConversionProjectRepository.SetFormAMatAssignedUser(id, new SetAssignedUserModel(id, new Guid(assignedUser.Id), assignedUser.FullName, assignedUser.EmailAddress));
+            TempData.SetNotification(NotificationType.Success, "Done", "Project is assigned");
+         }
+      }
+
+      // Traditional
       if (string.IsNullOrWhiteSpace(deliveryOfficerInput))
       {
          selectedName = string.Empty;

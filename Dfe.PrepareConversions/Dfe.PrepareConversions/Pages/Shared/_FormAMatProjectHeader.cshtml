@@ -6,7 +6,7 @@
             @Model.NameOfTrust
         </h1>
         <p class="govuk-body govuk-!-margin-bottom-5">
-            Assigned to (ToDo: this needs changing to be at form a mat level):
+            Assigned to:
 
             @if (Model.AssignedUser == null || string.IsNullOrWhiteSpace(Model?.AssignedUser.FullName))
             {

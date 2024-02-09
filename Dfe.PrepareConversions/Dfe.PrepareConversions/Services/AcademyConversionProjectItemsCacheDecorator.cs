@@ -100,6 +100,10 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       await _innerRepository.SetAssignedUser(id, updatedAssignedUser);
    }
+   public async Task SetFormAMatAssignedUser(int id, SetAssignedUserModel updatedAssignedUser)
+   {
+      await _innerRepository.SetFormAMatAssignedUser(id, updatedAssignedUser);
+   }
    public async Task SetPerformanceData(int id, SetPerformanceDataModel setPerformanceDataModel)
    {
       await _innerRepository.SetPerformanceData(id, setPerformanceDataModel);

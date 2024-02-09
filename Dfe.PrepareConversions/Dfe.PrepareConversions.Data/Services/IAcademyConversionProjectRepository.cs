@@ -55,6 +55,7 @@ public interface IAcademyConversionProjectRepository
    Task CreateProject(CreateNewProject newProject);
    Task SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl);
    Task SetAssignedUser(int id, SetAssignedUserModel updatedAssignedUser);
+   Task SetFormAMatAssignedUser(int id, SetAssignedUserModel updatedAssignedUser);
    Task SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview);
    Task SetPerformanceData(int id, SetPerformanceDataModel setPerformanceDataModel);
    Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters();
