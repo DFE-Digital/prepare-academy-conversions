@@ -50,17 +50,16 @@ public class IndexModel : PageModel
 
       if (unassignDeliveryOfficer)
       {
-         UpdateAcademyConversionProject updatedProject = new() { AssignedUser = new User(Guid.Empty.ToString(), string.Empty, string.Empty) };
-
-         await _academyConversionProjectRepository.UpdateProject(id, updatedProject);
+         await _academyConversionProjectRepository.SetAssignedUser(id, new SetAssignedUserModel(id, Guid.Empty, string.Empty, string.Empty));
          TempData.SetNotification(NotificationType.Success, "Done", "Project is unassigned");
       }
       else if (!string.IsNullOrEmpty(selectedName))
       {
          IEnumerable<User> deliveryOfficers = await _userRepository.GetAllUsers();
-         UpdateAcademyConversionProject updatedProject = new() { AssignedUser = deliveryOfficers.SingleOrDefault(u => u.FullName == selectedName) };
 
-         await _academyConversionProjectRepository.UpdateProject(id, updatedProject);
+         var assignedUser = deliveryOfficers.SingleOrDefault(u => u.FullName == selectedName);
+
+         await _academyConversionProjectRepository.SetAssignedUser(id, new SetAssignedUserModel(id, new Guid(assignedUser.Id), assignedUser.FullName, assignedUser.EmailAddress));
          TempData.SetNotification(NotificationType.Success, "Done", "Project is assigned");
       }
 

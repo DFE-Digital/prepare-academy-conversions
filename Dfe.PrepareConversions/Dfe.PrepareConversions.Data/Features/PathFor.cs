@@ -20,6 +20,7 @@ public class PathFor
    public static string SetExternalApplicationForm => "/conversion-project/{0}/setExternalApplicationForm";
    public static string SetPerformanceData => "/conversion-project/{0}/SetPerformanceData";
    public static string SetSchoolOverview => "/conversion-project/{0}/SetSchoolOverview";
+   public static string SetAssignedUser => "/conversion-project/{0}/SetAssignedUser";
 
    public static string GetAllProjectsV2 => "/conversion-project/projects";
    public static string GetFormAMatProjects => "/conversion-project/FormAMatProjects";

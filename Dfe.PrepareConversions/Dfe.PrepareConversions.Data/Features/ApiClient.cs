@@ -93,7 +93,19 @@ public class ApiClient : IApiClient
       var formattedString = string.Format(PathFor.SetSchoolOverview, id);
       return await AcademisationClient.PutAsync(formattedString, JsonContent.Create(payload));
    }
+   public async Task<HttpResponseMessage> SetAssignedUser(int id, SetAssignedUserModel updatedAssignedUser)
+   {
+      var payload = new
+      {
+         id = updatedAssignedUser.Id,
+         userId = updatedAssignedUser.UserId,
+         fullName = updatedAssignedUser.FullName,
+         emailAddress = updatedAssignedUser.EmailAddress
+      };
 
+      var formattedString = string.Format(PathFor.SetAssignedUser, id);
+      return await AcademisationClient.PutAsync(formattedString, JsonContent.Create(payload));
+   }
 
    public async Task<HttpResponseMessage> GetAllProjectsV2Async(AcademyConversionSearchModelV2 searchModel)
    {
