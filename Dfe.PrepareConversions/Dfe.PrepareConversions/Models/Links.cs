@@ -73,7 +73,7 @@ public static class Links
    public static class FormAMat
    {
       public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/FormAMat/Index");
-      public static readonly LinkItem OtherSchoolsInMat = AddLinkItem(backText: "Back to project listing", page: "/FormAMat/OtherSchoolsInMat");
+      public static readonly LinkItem OtherSchoolsInMat = AddLinkItem(backText: "Back to project listing", page: "/FormAMat/FormAMatParentIndex");
    }
 
    public static class SchoolPerformance

@@ -66,16 +66,16 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       AcademyConversionProject project = await ReadFromJsonAndThrowIfNull<AcademyConversionProject>(response.Content);
       return new ApiResponse<AcademyConversionProject>(response.StatusCode, project);
    }
-   public async Task<ApiResponse<AcademyConversionProject>> GetFormAMatProjectById(int id)
+   public async Task<ApiResponse<FormAMatProject>> GetFormAMatProjectById(int id)
    {
       HttpResponseMessage response = await _apiClient.GetFormAMatProjectById(id);
       if (!response.IsSuccessStatusCode)
       {
-         return new ApiResponse<AcademyConversionProject>(response.StatusCode, null);
+         return new ApiResponse<FormAMatProject>(response.StatusCode, null);
       }
 
-      AcademyConversionProject project = await ReadFromJsonAndThrowIfNull<AcademyConversionProject>(response.Content);
-      return new ApiResponse<AcademyConversionProject>(response.StatusCode, project);
+      FormAMatProject project = await ReadFromJsonAndThrowIfNull<FormAMatProject>(response.Content);
+      return new ApiResponse<FormAMatProject>(response.StatusCode, project);
    }
    public async Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject)
    {

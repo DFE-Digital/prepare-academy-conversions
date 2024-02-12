@@ -40,7 +40,7 @@ public class ApiClient : IApiClient
    }
    public async Task<HttpResponseMessage> GetFormAMatProjectById(int id)
    {
-      HttpResponseMessage getProjectResponse = await AcademisationClient.GetAsync(string.Format(PathFor.GetProjectById, id));
+      HttpResponseMessage getProjectResponse = await AcademisationClient.GetAsync(string.Format(PathFor.GetFormAMatProjectById, id));
       return getProjectResponse;
    }
    public async Task<HttpResponseMessage> UpdateProjectAsync(int id, UpdateAcademyConversionProject updateProject)
