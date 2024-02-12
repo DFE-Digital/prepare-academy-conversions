@@ -38,7 +38,11 @@ public class ApiClient : IApiClient
       HttpResponseMessage getProjectResponse = await AcademisationClient.GetAsync(string.Format(PathFor.GetProjectById, id));
       return getProjectResponse;
    }
-
+   public async Task<HttpResponseMessage> GetFormAMatProjectById(int id)
+   {
+      HttpResponseMessage getProjectResponse = await AcademisationClient.GetAsync(string.Format(PathFor.GetProjectById, id));
+      return getProjectResponse;
+   }
    public async Task<HttpResponseMessage> UpdateProjectAsync(int id, UpdateAcademyConversionProject updateProject)
    {
       return await AcademisationClient.PatchAsync(string.Format(PathFor.UpdateProject, id), JsonContent.Create(updateProject));

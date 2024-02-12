@@ -57,7 +57,11 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
 
       return project;
    }
-
+   public async Task<ApiResponse<AcademyConversionProject>> GetFormAMatProjectById(int id)
+   {
+      ApiResponse<AcademyConversionProject> project = await _innerRepository.GetFormAMatProjectById(id);
+      return project;
+   }
    public async Task CreateProject(CreateNewProject sponsoredProject)
    {
       await _innerRepository.CreateProject(sponsoredProject);

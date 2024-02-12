@@ -51,6 +51,7 @@ public interface IAcademyConversionProjectRepository
    );
 
    Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id);
+   Task<ApiResponse<AcademyConversionProject>> GetFormAMatProjectById(int id);
    Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject);
    Task CreateProject(CreateNewProject newProject);
    Task SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl);

@@ -35,7 +35,7 @@ public class OtherSchoolsInMatModel : PaginatedPageModel
    {
       ProjectListFilters.ClearFiltersFrom(TempData);
 
-      IActionResult result = await SetProject(id);
+      IActionResult result = await SetFormAMatProject(id);
 
       if ((result as StatusCodeResult)?.StatusCode == (int)HttpStatusCode.NotFound)
       {
@@ -53,9 +53,9 @@ public class OtherSchoolsInMatModel : PaginatedPageModel
 
       return Page();
    }
-   protected async Task<IActionResult> SetProject(int id)
+   protected async Task<IActionResult> SetFormAMatProject(int id)
    {
-      var project = await _repository.GetProjectById(id);
+      var project = await _repository.GetFormAMatProjectById(id);
       if (!project.Success)
       {
          // 404 logic
