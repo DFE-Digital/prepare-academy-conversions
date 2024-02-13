@@ -29,7 +29,7 @@
             Annex B form
          </sub-menu-link>
       </li>
-        <li if="@Model.IsVoluntary && Model.IsExternalSchoolApplication" class="moj-sub-navigation__item">
+        <li if="@Model.IsVoluntary && Model.IsExternalSchoolApplication || Model.IsFormAMat" class="moj-sub-navigation__item">
             <sub-menu-link class="moj-sub-navigation__link"
                            asp-page="@Links.ExternalApplicationForm.Index.Page"
                            asp-route-id="@id">
