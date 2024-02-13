@@ -1,13 +1,10 @@
 ﻿using Dfe.Academisation.ExtensionMethods;
-using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Extensions;
+using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.ViewModels;
 using System;
-using DocumentFormat.OpenXml.Drawing;
+using System.Collections.Generic;
 using System.Linq;
-using DocumentFormat.OpenXml.Math;
-using System.Globalization;
 
 namespace Dfe.PrepareConversions.Utils
 {
@@ -41,7 +38,7 @@ namespace Dfe.PrepareConversions.Utils
 
          return new FormAMatProjectListViewModel
          {
-            Id = formAMATProject.Id.ToString(),          
+            Id = formAMATProject.Id.ToString(),
             TrustName = formAMATProject.ProposedTrustName,
             ApplciationReference = formAMATProject.ApplicationReference,
             FirstProjectId = formAMATProject.Projects.First().Id,
@@ -50,10 +47,18 @@ namespace Dfe.PrepareConversions.Utils
             AdvisoryBoardDate = project.HeadTeacherBoardDate.ToDateString(),
             SchoolNames = String.Join(", ", formAMATProject.Projects.Select(x => x.SchoolName).Distinct()),
             Regions = String.Join(", ", formAMATProject.Projects.Select(x => x.Region).Distinct()),
-            Status = MapProjectStatus(project.ProjectStatus)
+            Status = GetFormAMatStatuses(formAMATProject.Projects)
          };
       }
-
+      public static List<ProjectStatus> GetFormAMatStatuses(ICollection<AcademyConversionProject> projects)
+      {
+         var statuses = new List<ProjectStatus>();
+         foreach (var project in projects)
+         {
+            statuses.Add(MapProjectStatus(project.ProjectStatus));
+         }
+         return statuses;
+      }
       public static ProjectStatus MapProjectStatus(string status)
       {
          const string green = nameof(green);
@@ -78,7 +83,7 @@ namespace Dfe.PrepareConversions.Utils
             _ => new ProjectStatus("PRE ADVISORY BOARD", yellow)
          };
       }
-   
+
       public static string MapPerformanceDataHint(string schoolType)
       {
          var sType = schoolType?.ToLower();

@@ -1,4 +1,6 @@
-﻿namespace Dfe.PrepareConversions.ViewModels;
+﻿using System.Collections.Generic;
+
+namespace Dfe.PrepareConversions.ViewModels;
 
 public class FormAMatProjectListViewModel
 {
@@ -16,5 +18,5 @@ public class FormAMatProjectListViewModel
    public string LocalAuthorities { get; internal set; }
    public string AdvisoryBoardDate { get; internal set; }
 
-   public ProjectStatus Status { get; init; }
+   public List<ProjectStatus> Status { get; init; }
 }
