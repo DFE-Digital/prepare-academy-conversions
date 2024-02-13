@@ -22,7 +22,7 @@ public class FormAMatParentIndex : PageModel
    }
 
    public List<ProjectListViewModel> Projects { get; set; }
-
+   public List<ProjectStatus> Statuses { get; set; }
 
    [BindProperty]
    public ProjectListFilters Filters { get; set; } = new();
@@ -31,6 +31,7 @@ public class FormAMatParentIndex : PageModel
    {
       IActionResult result = await SetFormAMatProject(id);
       Projects = Project.Projects.Select(AcademyConversionProject => ProjectListHelper.Build(AcademyConversionProject)).ToList();
+      Statuses = GetProjectStatuses();
       if ((result as StatusCodeResult)?.StatusCode == (int)HttpStatusCode.NotFound)
       {
          return NotFound();
@@ -50,5 +51,10 @@ public class FormAMatParentIndex : PageModel
 
       Project = new FormAMatProjectViewModel(FamProject.Body);
       return Page();
+   }
+
+   public List<ProjectStatus> GetProjectStatuses()
+   {
+      return Projects.Select(x => x.Status).ToList();
    }
 }

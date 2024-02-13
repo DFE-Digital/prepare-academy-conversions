@@ -49,6 +49,7 @@ public static class Links
    public static class ProjectAssignment
    {
       public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/ProjectAssignment/Index");
+      public static readonly LinkItem FormAMatProjectAssignment = AddLinkItem(backText: "Back", page: "/ProjectAssignment/FormAMatProjectAssignment");
    }
 
    public static class ProjectList

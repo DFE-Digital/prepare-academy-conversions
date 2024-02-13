@@ -28,10 +28,21 @@
                 <strong data-id="assigned-user">@Model.Project.AssignedUserFullName</strong>
             }
 
-            <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.ProjectAssignment.Index.Page" asp-route-id="@Model.Project.Id">Change</a>
+            <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.ProjectAssignment.FormAMatProjectAssignment.Page" asp-route-id="@Model.Project.Id">Change</a>
         </p>
         <p class="govuk-!-margin-top-0  govuk-!-margin-bottom-8">
-            @* <strong class="govuk-tag govuk-tag--@Model.ProjectStatusColour" id="project-status-@Model.Id">@Model.ProjectStatus</strong> *@
+            @{
+                var statusSummary = Model.Statuses
+                .GroupBy(status => new { status.Value, status.Colour })
+                .Select(group => new { Status = group.Key.Value, Colour = group.Key.Colour, Count = group.Count() })
+                .ToList();
+
+                foreach (var status in statusSummary)
+                {
+                    <strong class="govuk-tag govuk-tag--@status.Colour" id="summary-status-@Model.Project.Id">@status.Count @status.Status</strong>
+                }
+            }
+
         </p>
     </div>
     <div class="govuk-grid-column-full">
