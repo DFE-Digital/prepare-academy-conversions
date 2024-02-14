@@ -34,7 +34,7 @@ public class ProjectListModel : PaginatedPageModel
    public async Task OnGetAsync()
    {
       Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
-
+      this.PagePath = "/FormAMat/ProjectList";
       ApiResponse<ApiV2Wrapper<IEnumerable<FormAMatProject>>> response =
          await _repository.GetFormAMatProjects(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedAdvisoryBoardDates);
 

@@ -12,7 +12,7 @@ public abstract class PaginatedPageModel : PageModel, IPagination
 
    [BindProperty(SupportsGet = true)]
    public int CurrentPage { get; set; } = 1;
-
+   public string PagePath { get; set; } = "/ProjectList/Index";
    public bool HasPreviousPage => CurrentPage > 1;
    public bool HasNextPage => string.IsNullOrWhiteSpace(Paging?.NextPageUrl) is false;
    public int StartingPage => CurrentPage > 5 ? CurrentPage - 5 : 1;
