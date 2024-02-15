@@ -30,6 +30,17 @@
         <partial name="Shared/_ProjectListFilters" model="Model.Filters" />
     </div>
     <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-l" test-id="projectCount" data-cy="select-projectlist-filter-count">@(Model.TotalProjects) projects found</h2>
+
+        <div if="@Model.ProjectCount == 0">
+        <div class="govuk-heading-m govuk-!-margin-top-3">There are no matching results.</div>
+        <p class="govuk-body">Improve your results by:</p>
+        <ul class="govuk-list govuk-list--bullet govuk-body">
+        <li>double-checking your spelling</li>
+        <li>searching again with another school</li>
+        <li>removing some filters</li>
+        </ul>
+        </div> 
 
         <div if="@Model.ProjectCount > 0">
 

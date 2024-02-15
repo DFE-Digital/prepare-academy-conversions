@@ -37,6 +37,8 @@ public class FormAMatParentIndex : PageModel
          return NotFound();
       }
 
+      TempData["returnToFormAMatMenu"] = true;
+
       return Page();
    }
    protected async Task<IActionResult> SetFormAMatProject(int id)

@@ -74,7 +74,9 @@ public static class Links
    public static class FormAMat
    {
       public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/FormAMat/Index");
+      // not sure these are right probably need to look at this, they look the wrong way round
       public static readonly LinkItem OtherSchoolsInMat = AddLinkItem(backText: "Back to project listing", page: "/FormAMat/FormAMatParentIndex");
+      public static readonly LinkItem FormAMatProjectPage = AddLinkItem(backText: "Back to project listing", page: "/schools-in-this-mat");
    }
 
    public static class SchoolPerformance

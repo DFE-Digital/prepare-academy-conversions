@@ -11,6 +11,7 @@ public class ProjectViewModel : ProjectTypeBase
    public ProjectViewModel(AcademyConversionProject project)
    {
       Id = project.Id.ToString();
+      FormAMatProjectId = project.FormAMatProjectId;
       ProjectStatus = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Value;
       ProjectStatusColour = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Colour;
       ApplicationReferenceNumber = project.ApplicationReferenceNumber;
@@ -128,6 +129,7 @@ public class ProjectViewModel : ProjectTypeBase
    }
 
    public string Id { get; }
+   public int? FormAMatProjectId { get; }
    public string ProjectStatus { get; }
    public string ProjectStatusColour { get; }
    public string ApplicationReferenceNumber { get; set; }
@@ -254,5 +256,7 @@ public class ProjectViewModel : ProjectTypeBase
    public ICollection<ProjectNote> Notes { get; }
 
    protected override string TypeAndRouteValue => AcademyTypeAndRoute;
+
    public override bool IsExternalSchoolApplication => string.IsNullOrEmpty(this.ApplicationReferenceNumber);
+
 }
