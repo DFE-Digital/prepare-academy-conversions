@@ -75,9 +75,9 @@ public class SearchSchoolModel : PageModel
          return Page();
       }
 
-      string expectedUkprn = splitSearch[1];
+      string expectedUrn = splitSearch[splitSearch.Length - 1]; ;
 
-      var expectedEstablishment = await _getEstablishment.GetEstablishmentByUrn(expectedUkprn);
+      var expectedEstablishment = await _getEstablishment.GetEstablishmentByUrn(expectedUrn);
 
       if (expectedEstablishment.Name == null)
       {
@@ -88,7 +88,7 @@ public class SearchSchoolModel : PageModel
 
       redirect = string.IsNullOrEmpty(redirect) ? Links.NewProject.SchoolApply.Page : redirect;
 
-      return RedirectToPage(redirect, new { urn = splitSearch[1], ukprn });
+      return RedirectToPage(redirect, new { urn = expectedUrn, ukprn });
    }
 
    private static string HighlightSearchMatch(string input, string toReplace, EstablishmentSearchResponse school)
@@ -103,6 +103,9 @@ public class SearchSchoolModel : PageModel
 
    private static string[] SplitOnBrackets(string input)
    {
-      return input.Split(new[] { '(', ')' }, 3, StringSplitOptions.None);
+      // return array containing one empty string if input string is null or empty
+      if (string.IsNullOrWhiteSpace(input)) return new string[1] { string.Empty };
+
+      return input.Split(new[] { '(', ')' }, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
    }
 }
