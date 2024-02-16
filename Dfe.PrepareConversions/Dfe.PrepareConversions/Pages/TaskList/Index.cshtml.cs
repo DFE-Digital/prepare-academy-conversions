@@ -62,6 +62,7 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
       if (Project.IsFormAMat && returnToFormAMatMenu.HasValue && returnToFormAMatMenu.Value) {
          ReturnId = Project.FormAMatProjectId.ToString();
          ReturnPage = @Links.FormAMat.OtherSchoolsInMat.Page;
+         TempData["returnToFormAMatMenu"] = true;
       }   
 
       if ((result as StatusCodeResult)?.StatusCode == (int)HttpStatusCode.NotFound)

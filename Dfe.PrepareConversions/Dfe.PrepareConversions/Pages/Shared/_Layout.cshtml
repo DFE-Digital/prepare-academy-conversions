@@ -12,9 +12,7 @@
        ? string.Empty
        : "- Manage an academy conversion";
 
-    var returnToFormAMatMenu = TempData["returnToFormAMatMenu"] as bool?;
-    var isFormAMatPage = returnToFormAMatMenu.HasValue && returnToFormAMatMenu.Value && (Context.Request.Path.Value.Contains("/form-a-mat/")) || Context.Request.Path.Value.Contains("/form-a-mat/project-list") || Context.Request.Path.Value.Contains("/schools-in-this-mat/");
-    TempData.Keep();
+    var isFormAMatPage = Context.Request.Path.Value.Contains("/form-a-mat/project-list") || Context.Request.Path.Value.Contains("/schools-in-this-mat/");
 }
 
 <!DOCTYPE html>

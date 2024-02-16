@@ -24,6 +24,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.Decision
          {
             ReturnId = Project.FormAMatProjectId.ToString();
             ReturnPage = @Links.FormAMat.OtherSchoolsInMat.Page;
+            TempData["returnToFormAMatMenu"] = true;
          }
 
          return Page();

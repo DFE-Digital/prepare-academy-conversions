@@ -31,12 +31,14 @@ public class ProjectAssignmentIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_assign_a_project()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject();     
       await OpenAndConfirmPathAsync($"/project-assignment/{project.Id}");
       string fullName = "Bob 1";
+      AddSetAssignUser(project, fullName);
+
       Document.QuerySelector<IHtmlInputElement>("[id='delivery-officer-input']")!.Value = fullName;
       Document.QuerySelector<IHtmlOptionElement>($"[value='{fullName}']")!.IsSelected = true;
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();    
 
       Document.QuerySelector<IHtmlElement>("#notification-message")!.TextContent.Trim().Should()
          .Be("Project is assigned");
@@ -69,7 +71,7 @@ public class ProjectAssignmentIntegrationTests : BaseIntegrationTests
    {
       AcademyConversionProject project = AddGetProject();
       await OpenAndConfirmPathAsync($"/project-assignment/{project.Id}");
-
+      AddSetAssignUser(project, string.Empty);
       Document.QuerySelector<IHtmlInputElement>("#UnassignDeliveryOfficer")!.Value = "true";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 

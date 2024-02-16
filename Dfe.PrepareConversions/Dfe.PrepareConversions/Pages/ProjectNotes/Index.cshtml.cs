@@ -36,6 +36,7 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
       {
          ReturnId = Project.FormAMatProjectId.ToString();
          ReturnPage = @Links.FormAMat.OtherSchoolsInMat.Page;
+         TempData["returnToFormAMatMenu"] = true;
       }
 
       return Page();
