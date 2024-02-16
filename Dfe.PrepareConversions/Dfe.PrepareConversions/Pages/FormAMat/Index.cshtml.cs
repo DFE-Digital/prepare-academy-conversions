@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Dfe.PrepareConversions.Models;
 
 namespace Dfe.PrepareConversions.Pages.FormAMat;
 
@@ -19,6 +20,9 @@ public class FormAMatIndexModel : BaseAcademyConversionProjectPageModel
 {
    protected readonly ApplicationRepository _applicationRepository;
    public IEnumerable<BaseFormSection> Sections { get; set; }
+
+   public string ReturnPage { get; set; }
+   public string ReturnId { get; set; }
    public FormAMatIndexModel(IAcademyConversionProjectRepository repository, ApplicationRepository applicationRepository) : base(repository)
    {
       _applicationRepository = applicationRepository;
@@ -68,6 +72,16 @@ public class FormAMatIndexModel : BaseAcademyConversionProjectPageModel
          new ConsultationSection(currentSchool),
          new DeclarationSection(currentSchool)
       };
+
+      ReturnPage = @Links.ProjectList.Index.Page;
+      var returnToFormAMatMenu = TempData["returnToFormAMatMenu"] as bool?;
+
+      if (Project.IsFormAMat && returnToFormAMatMenu.HasValue && returnToFormAMatMenu.Value)
+      {
+         ReturnId = Project.FormAMatProjectId.ToString();
+         ReturnPage = @Links.FormAMat.OtherSchoolsInMat.Page;
+         TempData["returnToFormAMatMenu"] = true;
+      }
 
       return result;
    }

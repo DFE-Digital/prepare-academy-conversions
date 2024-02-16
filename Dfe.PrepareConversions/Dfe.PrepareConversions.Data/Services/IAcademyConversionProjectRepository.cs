@@ -39,7 +39,7 @@ public interface IAcademyConversionProjectRepository
    IEnumerable<string> advisoryBoardDatesFilter = default
 );
 
-   Task<ApiResponse<ApiV2Wrapper<IEnumerable<FormAMATProject>>>> GetMATProjects(
+   Task<ApiResponse<ApiV2Wrapper<IEnumerable<FormAMatProject>>>> GetFormAMatProjects(
       int page,
       int count,
       string titleFilter = "",
@@ -51,9 +51,12 @@ public interface IAcademyConversionProjectRepository
    );
 
    Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id);
+   Task<ApiResponse<FormAMatProject>> GetFormAMatProjectById(int id);
    Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject);
    Task CreateProject(CreateNewProject newProject);
    Task SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl);
+   Task SetAssignedUser(int id, SetAssignedUserModel updatedAssignedUser);
+   Task SetFormAMatAssignedUser(int id, SetAssignedUserModel updatedAssignedUser);
    Task SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview);
    Task SetPerformanceData(int id, SetPerformanceDataModel setPerformanceDataModel);
    Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters();

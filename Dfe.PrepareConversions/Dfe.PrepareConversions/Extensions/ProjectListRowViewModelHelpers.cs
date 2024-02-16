@@ -8,4 +8,9 @@ public static class ProjectListRowViewModelHelpers
    {
       return new ProjectListRowViewModel { Item = project, Index = index };
    }
+
+   public static FormAMatProjectListRowViewModel Row(this FormAMatProjectListViewModel project, int index)
+   {
+      return new FormAMatProjectListRowViewModel { Item = project, Index = index };
+   }
 }

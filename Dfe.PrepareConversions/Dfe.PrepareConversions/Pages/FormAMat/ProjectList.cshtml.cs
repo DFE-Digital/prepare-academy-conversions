@@ -8,7 +8,6 @@ using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,7 +23,7 @@ public class ProjectListModel : PaginatedPageModel
    }
    public IEnumerable<BaseFormSection> Sections { get; set; }
    protected override ApiV2PagingInfo Paging { get; set; }
-   public IEnumerable<ProjectListViewModel> Projects { get; set; }
+   public IEnumerable<FormAMatProjectListViewModel> Projects { get; set; }
    public int ProjectCount => Projects.Count();
 
    public int TotalProjects { get; set; }
@@ -35,9 +34,9 @@ public class ProjectListModel : PaginatedPageModel
    public async Task OnGetAsync()
    {
       Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
-
-      ApiResponse<ApiV2Wrapper<IEnumerable<FormAMATProject>>> response =
-         await _repository.GetMATProjects(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedAdvisoryBoardDates);
+      this.PagePath = "/FormAMat/ProjectList";
+      ApiResponse<ApiV2Wrapper<IEnumerable<FormAMatProject>>> response =
+         await _repository.GetFormAMatProjects(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedAdvisoryBoardDates);
 
       Paging = response.Body?.Paging;
       Projects = response.Body?.Data.Select(ProjectListHelper.Build).ToList();
@@ -54,29 +53,5 @@ public class ProjectListModel : PaginatedPageModel
          Filters.AvailableAdvisoryBoardDates = filterParametersResponse.Body.AdvisoryBoardDates;
       }
    }
-   public async Task<FileStreamResult> OnGetDownload()
-   {
-      Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
-      ApiResponse<FileStreamResult> response = await _repository.DownloadProjectExport(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedAdvisoryBoardDates);
 
-      if (response.Success)
-      {
-         return response.Body;
-      }
-      else
-      {
-         var stream = new MemoryStream();
-         var writer = new StreamWriter(stream);
-         writer.Write("");
-         writer.Flush();
-         stream.Position = 0;
-
-         var fileStreamResult = new FileStreamResult(stream, "text/csv")
-         {
-            FileDownloadName = "empty.csv"
-         };
-
-         return fileStreamResult;
-      }
-   }
 }

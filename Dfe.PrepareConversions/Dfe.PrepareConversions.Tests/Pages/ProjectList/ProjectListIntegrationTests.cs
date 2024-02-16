@@ -28,7 +28,7 @@ public class ProjectListIntegrationTests : BaseIntegrationTests
       AcademyConversionProject firstProject = AddGetProject(p => p.Id = projects.First().Id);
 
       await NavigateAsync(projects.First().SchoolName);
-      Document.Url.Should().BeUrl($"/task-list/{firstProject.Id}");
+      Document.Url.Should().BeUrl($"/task-list/{firstProject.Id}?returnToFormAMatMenu=False");
 
       await NavigateAsync("Back");
       Document.Url.Should().BeUrl("/project-list");

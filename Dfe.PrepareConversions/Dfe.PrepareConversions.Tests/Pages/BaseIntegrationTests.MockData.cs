@@ -163,6 +163,39 @@ public abstract partial class BaseIntegrationTests
       _factory.AddPutWithJsonRequest(string.Format(PathFor.SetPerformanceData, project.Id), request, project);
       return request;
    }
+   public SetAssignedUserModel AddSetAssignUser(AcademyConversionProject project, string fullName)
+   {
+      var deliveryOfficers = _factory.UserRepository.GetAllUsers().Result;
+      var assignedUser = deliveryOfficers.SingleOrDefault(u => u.FullName == fullName);
+      SetAssignedUserModel request;
+
+      if (assignedUser == null)
+      {
+         request = _fixture
+           .Build<SetAssignedUserModel>()
+           .OmitAutoProperties()
+           .With(x => x.Id, project.Id)
+           .With(x => x.UserId, Guid.Empty)
+           .With(x => x.FullName, string.Empty)
+           .With(x => x.EmailAddress, string.Empty)
+           .Create();
+      }
+      else
+      {
+         request = _fixture
+           .Build<SetAssignedUserModel>()
+           .OmitAutoProperties()
+           .With(x => x.Id, project.Id)
+           .With(x => x.UserId, Guid.Parse(assignedUser.Id))
+           .With(x => x.FullName, fullName)
+           .With(x => x.EmailAddress, assignedUser.EmailAddress)
+           .Create();
+      }
+
+      _factory.AddPutWithJsonRequest(string.Format(PathFor.SetAssignedUser, project.Id), request, project);
+      return request;
+   }
+
 
    public UpdateAcademyConversionProject AddPatchProjectMany(AcademyConversionProject project,
                                                              Func<IPostprocessComposer<UpdateAcademyConversionProject>, IPostprocessComposer<UpdateAcademyConversionProject>>

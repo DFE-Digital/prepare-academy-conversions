@@ -5,20 +5,21 @@
 
 <nav class="moj-sub-navigation" aria-label="Sub navigation">
    <ul class="moj-sub-navigation__list govuk-!-margin-top-6">
-      <li class="moj-sub-navigation__item">
+        <li class="moj-sub-navigation__item">
+            <sub-menu-link class="moj-sub-navigation__link"
+                           asp-page="@Links.FormAMat.OtherSchoolsInMat.Page"
+                           asp-route-id="@id">
+                Schools in this Trust
+            </sub-menu-link>
+        </li>
+        <li class="moj-sub-navigation__item">
          <sub-menu-link class="moj-sub-navigation__link"
                         asp-page="@Links.FormAMat.Index.Page"
                         asp-route-id="@id">
             School application form
          </sub-menu-link>
       </li>
-      <li class="moj-sub-navigation__item">
-         <sub-menu-link class="moj-sub-navigation__link"
-                        asp-page="@Links.FormAMat.OtherSchoolsInMat.Page"
-                        asp-route-id="@id">
-            Other schools in this MAT
-         </sub-menu-link>
-      </li>
+
         <li class="moj-sub-navigation__item">
             <sub-menu-link class="moj-sub-navigation__link"
                            asp-page="@Links.ProjectNotes.Index.Page"

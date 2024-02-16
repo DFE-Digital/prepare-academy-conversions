@@ -47,6 +47,8 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
 
    public ITestOutputHelper DebugOutput { get; set; }
 
+   public IUserRepository UserRepository { get; private set; }
+
    public IEnumerable<LogEntry> GetMockServerLogs(string path, HttpMethod verb = null)
    {
       IRequestBuilder requestBuilder = Request.Create().WithPath(path);
@@ -83,11 +85,13 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
       featureManager.Setup(m => m.IsEnabledAsync("UseAcademisationApplication")).ReturnsAsync(true);
       featureManager.Setup(m => m.IsEnabledAsync("ShowDirectedAcademyOrders")).ReturnsAsync(true);
 
+      UserRepository = new TestUserRepository();
+
       builder.ConfigureServices(services =>
       {
          services.AddAuthentication("Test");
          services.AddTransient<IAuthenticationSchemeProvider, MockSchemeProvider>();
-         services.AddTransient<IUserRepository, TestUserRepository>();
+         services.AddScoped(x => UserRepository);
          services.AddTransient(_ => featureManager.Object);
       });
    }

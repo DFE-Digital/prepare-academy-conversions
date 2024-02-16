@@ -14,13 +14,16 @@ public class PathFor
    public static string GetAllProjects => "/legacy/projects";
    public static string DownloadProjectExport => "/export/export-projects";
    public static string GetProjectById => "/legacy/project/{0}";
+   public static string GetFormAMatProjectById => "/conversion-project/formamatproject/{0}";
    public static string UpdateProject => "/legacy/project/{0}";
    public static string GetFilterParameters => "/legacy/projects/status";
    public static string AddProjectNote => "/legacy/project/{0}/notes";
    public static string SetExternalApplicationForm => "/conversion-project/{0}/setExternalApplicationForm";
    public static string SetPerformanceData => "/conversion-project/{0}/SetPerformanceData";
    public static string SetSchoolOverview => "/conversion-project/{0}/SetSchoolOverview";
+   public static string SetAssignedUser => "/conversion-project/{0}/SetAssignedUser";
+   public static string SetFormAMatAssignedUser => "/conversion-project/{0}/SetFormAMatAssignedUser";
 
    public static string GetAllProjectsV2 => "/conversion-project/projects";
-   public static string GetMATProjects => "/conversion-project/MATprojects";
+   public static string GetFormAMatProjects => "/conversion-project/FormAMatProjects";
 }
