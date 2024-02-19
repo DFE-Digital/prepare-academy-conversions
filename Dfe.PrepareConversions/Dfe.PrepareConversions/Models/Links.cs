@@ -204,6 +204,7 @@ public static class Links
       public static readonly LinkItem AnyConditions = AddLinkItem(backText: "Back", page: "/TaskList/Decision/AnyConditions");
       public static readonly LinkItem DecisionDate = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DecisionDate");
       public static readonly LinkItem WhyDeferred = AddLinkItem(backText: "Back", page: "/TaskList/Decision/WhyDeferred");
+      public static readonly LinkItem WhyWithdrawn = AddLinkItem(backText: "Back", page: "/TaskList/Decision/WhyWithdrawn");
       public static readonly LinkItem Summary = AddLinkItem(backText: "Back", page: "/TaskList/Decision/Summary");
       public static readonly LinkItem SubMenuRecordADecision = AddLinkItem(backText: "Back", page: "/TaskList/Decision/RecordADecision");
 

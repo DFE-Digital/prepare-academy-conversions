@@ -19,6 +19,8 @@ public class AdvisoryBoardDecision
    public string ApprovedConditionsDetails { get; set; }
    public List<AdvisoryBoardDeclinedReasonDetails> DeclinedReasons { get; set; }
    public List<AdvisoryBoardDeferredReasonDetails> DeferredReasons { get; set; }
+   public List<AdvisoryBoardWithdrawnReasonDetails> WithdrawnReasons { get; set; }
+
    public DateTime? AdvisoryBoardDecisionDate { get; set; }
    public DecisionMadeBy? DecisionMadeBy { get; set; }
 
@@ -34,6 +36,7 @@ public class AdvisoryBoardDecision
             {
                DeclinedReasons = new List<AdvisoryBoardDeclinedReasonDetails>();
                DeferredReasons = new List<AdvisoryBoardDeferredReasonDetails>();
+               WithdrawnReasons = new List<AdvisoryBoardWithdrawnReasonDetails>();
             }
 
             if (value == AdvisoryBoardDecisions.Declined)
@@ -41,6 +44,7 @@ public class AdvisoryBoardDecision
                ApprovedConditionsSet = null;
                ApprovedConditionsDetails = null;
                DeferredReasons = new List<AdvisoryBoardDeferredReasonDetails>();
+               WithdrawnReasons = new List<AdvisoryBoardWithdrawnReasonDetails>();
             }
 
             if (value == AdvisoryBoardDecisions.Deferred)
@@ -48,6 +52,15 @@ public class AdvisoryBoardDecision
                ApprovedConditionsSet = null;
                ApprovedConditionsDetails = null;
                DeclinedReasons = new List<AdvisoryBoardDeclinedReasonDetails>();
+               WithdrawnReasons = new List<AdvisoryBoardWithdrawnReasonDetails>();
+            }
+
+            if (value == AdvisoryBoardDecisions.Withdrawn)
+            {
+               ApprovedConditionsSet = null;
+               ApprovedConditionsDetails = null;
+               DeclinedReasons = new List<AdvisoryBoardDeclinedReasonDetails>();
+               DeferredReasons = new List<AdvisoryBoardDeferredReasonDetails>();
             }
          }
 
