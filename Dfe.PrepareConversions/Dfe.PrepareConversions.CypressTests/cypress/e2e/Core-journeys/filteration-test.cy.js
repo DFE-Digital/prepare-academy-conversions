@@ -13,39 +13,40 @@ describe('Filteration Tests', { tags: ['@dev', '@stage'] }, () => {
   nextMonthDate.setMonth(currentDate.getMonth() + 1);
 
   const testData = {
-    projectName: 'Sponsored Cypress Project',
+    projectName: 'Deanshanger Primary School',
     completedText: 'Completed',
     projectAssignment: {
-      deliveryOfficer: 'Richika Dogra',
-      assignedOfficerMessage: 'Project is assigned',
+       deliveryOfficer: 'Chris Sherlock',
+       assignedOfficerMessage: 'Project is assigned',
     },
     schoolOverview: {
-      pan: '98765',
-      pfiDescription: 'PFI Description',
-      distance: '15',
-      distanceDecription: 'Distance description',
-      mp: 'Important Politician, Independent',
+       pan: '999',
+       pfiDescription: 'PFI Description',
+       distance: '15',
+       distanceDecription: 'Distance description',
+       mp: 'Important Politician, Independent',
     },
     budget: {
-      endOfFinanicalYear: currentDate,
-      forecastedRevenueCurrentYear: 20,
-      forecastedCapitalCurrentYear: 10,
-      endOfNextFinancialYear: nextYearDate,
-      forecastedRevenueNextYear: 15,
-      forecastedCapitalNextYear: 12
+       endOfFinanicalYear: currentDate,
+       forecastedRevenueCurrentYear: 20,
+       forecastedCapitalCurrentYear: 10,
+       endOfNextFinancialYear: nextYearDate,
+       forecastedRevenueNextYear: 15,
+       forecastedCapitalNextYear: 12
     },
     pupilForecast: {
-      additionalInfomation: 'Pupil Forecast Additional Information'
+       additionalInfomation: 'Pupil Forecast Additional Information'
     },
     rationale: 'This is why this school should become an academy',
     risksAndIssues: 'Here are the risks and issues for this conversion',
     localAuthority: {
-      comment: 'Comment',
-      sharepointLink: 'https://sharepoint.com'
+       comment: 'Comment',
+       sharepointLink: 'https://sharepoint.com'
     },
     performanceInfo: 'Additional Information',
-    keyStages: [4, 5]
-  }
+    keyStages: [2]
+ }
+
 
   before(() => {
     

@@ -1,4 +1,4 @@
-﻿@model IPagination
+﻿@model PaginatedPageModel
 @{
     var pagesToDisplay = new List<int>() { 1, Model.CurrentPage, Model.TotalPages };
     if (Model.HasPreviousPage)
@@ -13,7 +13,7 @@
         @if (Model.HasPreviousPage)
         {
             <li class="moj-pagination__item  moj-pagination__item--prev">
-                <a class="moj-pagination__link" asp-page="/ProjectList/Index" asp-route-currentPage="@Model.PreviousPage" test-id="previousPage">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
+                <a class="moj-pagination__link" asp-page="@Model.PagePath" asp-route-currentPage="@Model.PreviousPage" test-id="previousPage">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
             </li>
         }
         @for (var pageIdx = 0; pageIdx < Model.TotalPages; pageIdx++)
@@ -34,7 +34,7 @@
                 }
 
                 <li class="moj-pagination__item @markAsSelected">
-                    <a id="@pageNumber" asp-page="/ProjectList/Index" asp-route-currentPage="@pageNumber" class="moj-pagination__link"
+                    <a id="@pageNumber" asp-page="@Model.PagePath" asp-route-currentPage="@pageNumber" class="moj-pagination__link"
                     aria-label="@ariaLabel">@pageNumber</a>
                 </li>
 
@@ -51,7 +51,7 @@
         @if (Model.HasNextPage)
         {
             <li class="moj-pagination__item  moj-pagination__item--next">
-                <a class="moj-pagination__link" asp-page="/ProjectList/Index" asp-route-currentPage="@Model.NextPage" test-id="nextPage">Next<span class="govuk-visually-hidden"> set of pages</span></a>
+                <a class="moj-pagination__link" asp-page="@Model.PagePath" asp-route-currentPage="@Model.NextPage" test-id="nextPage">Next<span class="govuk-visually-hidden"> set of pages</span></a>
             </li>
         }
     </ul>

@@ -57,7 +57,11 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
 
       return project;
    }
-
+   public async Task<ApiResponse<FormAMatProject>> GetFormAMatProjectById(int id)
+   {
+      ApiResponse<FormAMatProject> project = await _innerRepository.GetFormAMatProjectById(id);
+      return project;
+   }
    public async Task CreateProject(CreateNewProject sponsoredProject)
    {
       await _innerRepository.CreateProject(sponsoredProject);
@@ -96,9 +100,21 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       await _innerRepository.SetSchoolOverview(id, updatedSchoolOverview);
    }
-
+   public async Task SetAssignedUser(int id, SetAssignedUserModel updatedAssignedUser)
+   {
+      await _innerRepository.SetAssignedUser(id, updatedAssignedUser);
+   }
+   public async Task SetFormAMatAssignedUser(int id, SetAssignedUserModel updatedAssignedUser)
+   {
+      await _innerRepository.SetFormAMatAssignedUser(id, updatedAssignedUser);
+   }
    public async Task SetPerformanceData(int id, SetPerformanceDataModel setPerformanceDataModel)
    {
       await _innerRepository.SetPerformanceData(id, setPerformanceDataModel);
+   }
+
+   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<FormAMatProject>>>> GetFormAMatProjects(int page, int count, string titleFilter = "", IEnumerable<string> statusFilters = null, IEnumerable<string> deliveryOfficerFilter = null, IEnumerable<string> regionsFilter = null, IEnumerable<string> localAuthoritiesFilter = null, IEnumerable<string> advisoryBoardDatesFilter = null)
+   {
+      return await _innerRepository.GetFormAMatProjects(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter, localAuthoritiesFilter, advisoryBoardDatesFilter);
    }
 }

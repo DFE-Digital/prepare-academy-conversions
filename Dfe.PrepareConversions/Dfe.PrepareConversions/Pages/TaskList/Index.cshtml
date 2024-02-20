@@ -9,7 +9,10 @@
 
 @section BeforeMain
     {
-    <a asp-page="@Links.ProjectList.Index.Page" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
+    <a asp-page="@Model.ReturnPage" asp-route-Id="@Model.ReturnId" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
+    @* <a href="@Model.ReturnLink" class="govuk-back-link">@Links.ProjectList.Index.BackText</a> *@
+    
+
 }
 
 @if (Model.ShowGenerateHtbTemplateError)

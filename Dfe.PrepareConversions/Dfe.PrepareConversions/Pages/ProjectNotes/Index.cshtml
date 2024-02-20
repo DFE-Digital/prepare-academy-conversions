@@ -7,7 +7,7 @@
 
 @section BeforeMain
 {
-   <a asp-page="@Links.ProjectList.Index.Page" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
+   <a asp-page="@Model.ReturnPage" asp-route-id="@Model.ReturnId" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
 }
 
 @if (Model.NewNote)
@@ -26,14 +26,9 @@
    </div>
 }
 
-@if (@Model.Project.AcademyTypeAndRoute.ToUpper() == AcademyTypeAndRoutes.FormAMat.RouteDescription().ToUpper())
-{
-   <partial name="Shared/_FormAMatProjectHeader" model="Model.Project" />
-}
-else
-{
-   <partial name="Shared/_ProjectHeader" model="Model.Project" />
-}
+
+<partial name="Shared/_ProjectHeader" model="Model.Project" />
+
 
 <div class="govuk-grid-column-two-thirds-full">
    <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">Project notes</h2>

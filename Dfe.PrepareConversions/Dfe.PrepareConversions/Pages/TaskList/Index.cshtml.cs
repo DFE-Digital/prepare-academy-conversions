@@ -1,10 +1,11 @@
-using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Models.ProjectList;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -25,6 +26,8 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
 
    public bool ShowGenerateHtbTemplateError { get; set; }
    public TaskListViewModel TaskList { get; set; }
+   public string ReturnPage { get; set; }
+   public string ReturnId { get; set; }
 
    public void SetErrorPage(string errorPage)
    {
@@ -36,6 +39,31 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
       ProjectListFilters.ClearFiltersFrom(TempData);
 
       IActionResult result = await SetProject(id);
+
+      ReturnPage = @Links.ProjectList.Index.Page;
+
+      bool? returnToFormAMatQueryValue = null;
+
+      if (Request.Query.TryGetValue("returnToFormAMatMenu", out StringValues returnQuery)) {
+         returnToFormAMatQueryValue = bool.Parse(returnQuery[0]);
+      };
+
+      if (returnToFormAMatQueryValue.HasValue && returnToFormAMatQueryValue.Value) {
+         TempData["returnToFormAMatMenu"] = true;
+      }
+
+      if (returnToFormAMatQueryValue.HasValue && !returnToFormAMatQueryValue.Value)
+      {
+         TempData["returnToFormAMatMenu"] = false;
+      }
+
+      var returnToFormAMatMenu = TempData["returnToFormAMatMenu"] as bool?;
+
+      if (Project.IsFormAMat && returnToFormAMatMenu.HasValue && returnToFormAMatMenu.Value) {
+         ReturnId = Project.FormAMatProjectId.ToString();
+         ReturnPage = @Links.FormAMat.OtherSchoolsInMat.Page;
+         TempData["returnToFormAMatMenu"] = true;
+      }   
 
       if ((result as StatusCodeResult)?.StatusCode == (int)HttpStatusCode.NotFound)
       {

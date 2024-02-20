@@ -7,7 +7,7 @@
 
 @section BeforeMain
     {
-    <a asp-page="@Links.ProjectList.Index.Page" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
+    <a asp-page="@Model.ReturnPage" asp-route-id="@Model.ReturnId" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
 }
 
     <partial name="_ProjectHeader" model="@Model.Project" />

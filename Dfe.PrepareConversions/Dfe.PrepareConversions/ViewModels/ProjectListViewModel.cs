@@ -2,7 +2,7 @@
 
 namespace Dfe.PrepareConversions.ViewModels;
 
-public class ProjectListViewModel: ProjectTypeBase
+public class ProjectListViewModel : ProjectTypeBase
 {
    public string Id { get; init; }
    public string NameOfTrust { get; init; }
@@ -23,4 +23,6 @@ public class ProjectListViewModel: ProjectTypeBase
    public bool ShowProposedOpeningDate => string.IsNullOrWhiteSpace(ProposedAcademyOpeningDate) is false;
 
    protected override string TypeAndRouteValue => TypeAndRoute;
+
+
 }

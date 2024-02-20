@@ -49,11 +49,13 @@ public static class Links
    public static class ProjectAssignment
    {
       public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/ProjectAssignment/Index");
+      public static readonly LinkItem FormAMatProjectAssignment = AddLinkItem(backText: "Back", page: "/ProjectAssignment/FormAMatProjectAssignment");
    }
 
    public static class ProjectList
    {
       public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/ProjectList/Index");
+      public static readonly LinkItem FormAMat = AddLinkItem(backText: "Back", page: "/FormAMat/ProjectList");
    }
 
    public static class ProjectNotes
@@ -72,7 +74,9 @@ public static class Links
    public static class FormAMat
    {
       public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/FormAMat/Index");
-      public static readonly LinkItem OtherSchoolsInMat = AddLinkItem(backText: "Back to project listing", page: "/FormAMat/OtherSchoolsInMat");
+      // not sure these are right probably need to look at this, they look the wrong way round
+      public static readonly LinkItem OtherSchoolsInMat = AddLinkItem(backText: "Back to project listing", page: "/FormAMat/FormAMatParentIndex");
+      public static readonly LinkItem FormAMatProjectPage = AddLinkItem(backText: "Back to project listing", page: "/schools-in-this-mat");
    }
 
    public static class SchoolPerformance

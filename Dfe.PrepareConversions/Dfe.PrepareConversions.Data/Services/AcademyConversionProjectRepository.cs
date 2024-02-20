@@ -66,7 +66,17 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       AcademyConversionProject project = await ReadFromJsonAndThrowIfNull<AcademyConversionProject>(response.Content);
       return new ApiResponse<AcademyConversionProject>(response.StatusCode, project);
    }
+   public async Task<ApiResponse<FormAMatProject>> GetFormAMatProjectById(int id)
+   {
+      HttpResponseMessage response = await _apiClient.GetFormAMatProjectById(id);
+      if (!response.IsSuccessStatusCode)
+      {
+         return new ApiResponse<FormAMatProject>(response.StatusCode, null);
+      }
 
+      FormAMatProject project = await ReadFromJsonAndThrowIfNull<FormAMatProject>(response.Content);
+      return new ApiResponse<FormAMatProject>(response.StatusCode, project);
+   }
    public async Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject)
    {
       ApiResponse<AcademyConversionProject> projectResponse = await GetProjectById(id);
@@ -250,6 +260,16 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       HttpResponseMessage result = await _apiClient.SetSchoolOverview(id, updatedSchoolOverview);
       if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
+   public async Task SetAssignedUser(int id, SetAssignedUserModel updatedAssignedUser)
+   {
+      HttpResponseMessage result = await _apiClient.SetAssignedUser(id, updatedAssignedUser);
+      if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+   }
+   public async Task SetFormAMatAssignedUser(int id, SetAssignedUserModel updatedAssignedUser)
+   {
+      HttpResponseMessage result = await _apiClient.SetFormAMatAssignedUser(id, updatedAssignedUser);
+      if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+   }
 
    public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>> GetAllProjectsV2(int page, int count, string titleFilter = "", IEnumerable<string> statusFilters = null, IEnumerable<string> deliveryOfficerFilter = null, IEnumerable<string> regionsFilter = null, IEnumerable<string> localAuthoritiesFilter = null, IEnumerable<string> advisoryBoardDatesFilter = null)
    {
@@ -268,4 +288,23 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
 
       return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode, outerResponse);
    }
+
+   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<FormAMatProject>>>> GetFormAMatProjects(int page, int count, string titleFilter = "", IEnumerable<string> statusFilters = null, IEnumerable<string> deliveryOfficerFilter = null, IEnumerable<string> regionsFilter = null, IEnumerable<string> localAuthoritiesFilter = null, IEnumerable<string> advisoryBoardDatesFilter = null)
+   {
+      AcademyConversionSearchModelV2 searchModel = new() { TitleFilter = titleFilter, Page = page, Count = count };
+
+      ProcessFiltersV2(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter, localAuthoritiesFilter, advisoryBoardDatesFilter);
+
+      HttpResponseMessage response = await _apiClient.GetFormAMatProjectsAsync(searchModel);
+      if (!response.IsSuccessStatusCode)
+      {
+         return new ApiResponse<ApiV2Wrapper<IEnumerable<FormAMatProject>>>(response.StatusCode,
+            new ApiV2Wrapper<IEnumerable<FormAMatProject>> { Data = Enumerable.Empty<FormAMatProject>() });
+      }
+
+      ApiV2Wrapper<IEnumerable<FormAMatProject>> outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<IEnumerable<FormAMatProject>>>();
+
+      return new ApiResponse<ApiV2Wrapper<IEnumerable<FormAMatProject>>>(response.StatusCode, outerResponse);
+   }
+
 }
