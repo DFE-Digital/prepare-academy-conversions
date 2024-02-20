@@ -3,7 +3,6 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.DocumentGeneration;
 using Dfe.PrepareConversions.DocumentGeneration.Elements;
 using Dfe.PrepareConversions.DocumentGeneration.Interfaces;
-using Dfe.PrepareConversions.Extensions;
 using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator
@@ -65,7 +64,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
       };
 
          builder.ReplacePlaceholderWithContent("AdvisoryBoardDetails", body => body.AddTable(advisoryBoardDetails));
-         
+
       }
       private static void AddAcademyRouteInfo(IDocumentBuilder builder, AcademyConversionProject project)
       {
@@ -85,7 +84,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
             body.AddHeading("Conversion details", HeadingLevel.One);
             body.AddTable(academyRouteInfo);
          });
-         
+
       }
 
       private static List<TextElement[]> VoluntaryRouteInfo(AcademyConversionProject project)
@@ -111,11 +110,6 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          {
             new TextElement { Value = "Recommendation", Bold = true },
             new TextElement { Value = project.RecommendationForProject }
-         },
-         new[]
-         {
-            new TextElement { Value = "Is an academy order (AO) required?", Bold = true },
-            new TextElement { Value = project.AcademyOrderRequired }
          },
       };
 
@@ -183,7 +177,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
             sponsoredRouteInfo.Add(new[]
             {
                new TextElement { Value = "Number of sites", Bold = true },
-               new TextElement { Value = project.ConversionSupportGrantNumberOfSites} 
+               new TextElement { Value = project.ConversionSupportGrantNumberOfSites}
             }
          );
          }

@@ -537,7 +537,6 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#project-recommendation")!.TextContent.Should().Be(project.RecommendationForProject);
       Document.QuerySelector("#author")!.TextContent.Should().Be(project.Author);
       Document.QuerySelector("#cleared-by")!.TextContent.Should().Be(project.ClearedBy);
-      Document.QuerySelector("#academy-order-required")!.TextContent.Should().Be(project.AcademyOrderRequired);
       Document.QuerySelector("#advisory-board-date")!.TextContent.Should().Be(project.HeadTeacherBoardDate.ToDateString());
       Document.QuerySelector("#previous-advisory-board")!.TextContent.Should().Be(project.PreviousHeadTeacherBoardDate.ToDateString());
       Document.QuerySelector("#school-name")!.TextContent.Should().Be(project.SchoolName);

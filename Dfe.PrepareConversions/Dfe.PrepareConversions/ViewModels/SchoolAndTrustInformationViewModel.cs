@@ -7,7 +7,6 @@ public class SchoolAndTrustInformationViewModel
    public string Author { get; set; }
    public string Version { get; set; }
    public string ClearedBy { get; set; }
-   public string AcademyOrderRequired { get; set; }
    public string HeadTeacherBoardDate { get; set; }
    public string PreviousHeadTeacherBoardDate { get; set; }
    public string PreviousHeadTeacherBoardLink { get; set; }

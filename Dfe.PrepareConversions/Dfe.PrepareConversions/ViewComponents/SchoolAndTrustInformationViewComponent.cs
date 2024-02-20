@@ -37,7 +37,6 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
          RecommendationForProject = project.RecommendationForProject,
          Author = project.Author,
          ClearedBy = project.ClearedBy,
-         AcademyOrderRequired = project.AcademyOrderRequired,
          HeadTeacherBoardDate = project.HeadTeacherBoardDate.ToDateString(),
          PreviousHeadTeacherBoardDate = project.PreviousHeadTeacherBoardDateQuestion == "No" ? "No" : project.PreviousHeadTeacherBoardDate.ToDateString(),
          PreviousHeadTeacherBoardLink = project.PreviousHeadTeacherBoardLink,

@@ -35,7 +35,6 @@ public class ProjectViewModel : ProjectTypeBase
       Author = project.Author;
       Version = project.Version;
       ClearedBy = project.ClearedBy;
-      AcademyOrderRequired = project.AcademyOrderRequired;
       PreviousHeadTeacherBoardDateQuestion = project.PreviousHeadTeacherBoardDateQuestion;
       PreviousHeadTeacherBoardDate = project.PreviousHeadTeacherBoardDate;
       PreviousHeadTeacherBoardLink = project.PreviousHeadTeacherBoardLink;
@@ -156,7 +155,6 @@ public class ProjectViewModel : ProjectTypeBase
    public string Author { get; set; }
    public string Version { get; set; }
    public string ClearedBy { get; set; }
-   public string AcademyOrderRequired { get; set; }
    public string Form7Received { get; set; }
    public DateTime? Form7ReceivedDate { get; set; }
    public string PreviousHeadTeacherBoardDateQuestion { get; set; }

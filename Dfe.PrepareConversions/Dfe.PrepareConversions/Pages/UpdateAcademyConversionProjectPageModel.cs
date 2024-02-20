@@ -156,7 +156,6 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          RecommendationForProject = AcademyConversionProject.RecommendationForProject,
          Author = AcademyConversionProject.Author,
          ClearedBy = AcademyConversionProject.ClearedBy,
-         AcademyOrderRequired = AcademyConversionProject.AcademyOrderRequired,
          Form7Received = AcademyConversionProject.Form7Received,
          Form7ReceivedDate = AcademyConversionProject.Form7ReceivedDate == default(DateTime) ? null : AcademyConversionProject.Form7ReceivedDate,
          ProposedAcademyOpeningDate = AcademyConversionProject.ProposedAcademyOpeningDate,
