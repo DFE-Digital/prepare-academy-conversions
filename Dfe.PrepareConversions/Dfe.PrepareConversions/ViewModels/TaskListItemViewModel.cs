@@ -63,7 +63,6 @@ public sealed class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
       if (string.IsNullOrWhiteSpace(project.RecommendationForProject)
           && string.IsNullOrWhiteSpace(project.Author)
           && string.IsNullOrWhiteSpace(project.ClearedBy)
-          && string.IsNullOrWhiteSpace(project.AcademyOrderRequired)
           && !project.HeadTeacherBoardDate.HasValue
           && !project.PreviousHeadTeacherBoardDate.HasValue)
       {

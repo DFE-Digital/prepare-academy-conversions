@@ -7,7 +7,7 @@ public class AcademyConversionProject
 {
    public int Id { get; set; }
    public int? Urn { get; set; }
-   public int? FormAMatProjectId {  get; set; }
+   public int? FormAMatProjectId { get; set; }
    public DateTime CreatedOn { get; set; }
    public string SchoolName { get; set; }
    public string SchoolPhase { get; set; }
@@ -32,7 +32,6 @@ public class AcademyConversionProject
    public string Author { get; set; }
    public string Version { get; set; }
    public string ClearedBy { get; set; }
-   public string AcademyOrderRequired { get; set; }
    public string PreviousHeadTeacherBoardDateQuestion { get; set; }
    public DateTime? PreviousHeadTeacherBoardDate { get; set; }
    public string PreviousHeadTeacherBoardLink { get; set; }

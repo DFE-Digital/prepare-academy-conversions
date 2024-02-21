@@ -55,9 +55,6 @@ public class AcademyConversionProjectPostModel
    [DisplayFormat(ConvertEmptyStringToNull = false)]
    public string ClearedBy { get; set; }
 
-   [BindProperty(Name = "academy-order-required")]
-   public string AcademyOrderRequired { get; set; }
-
    [BindProperty(Name = "form-7-received")]
    [DisplayFormat(ConvertEmptyStringToNull = false)]
    public string Form7Received { get; set; }

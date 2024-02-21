@@ -537,7 +537,6 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#project-recommendation")!.TextContent.Should().Be(project.RecommendationForProject);
       Document.QuerySelector("#author")!.TextContent.Should().Be(project.Author);
       Document.QuerySelector("#cleared-by")!.TextContent.Should().Be(project.ClearedBy);
-      Document.QuerySelector("#academy-order-required")!.TextContent.Should().Be(project.AcademyOrderRequired);
       Document.QuerySelector("#advisory-board-date")!.TextContent.Should().Be(project.HeadTeacherBoardDate.ToDateString());
       Document.QuerySelector("#previous-advisory-board")!.TextContent.Should().Be(project.PreviousHeadTeacherBoardDate.ToDateString());
       Document.QuerySelector("#school-name")!.TextContent.Should().Be(project.SchoolName);
@@ -606,7 +605,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 20);
+      await NavigateAsync("Change", 19);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       await NavigateAsync("Back");
@@ -637,7 +636,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 20);
+      await NavigateAsync("Change", 19);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeFalse();
@@ -671,7 +670,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 20);
+      await NavigateAsync("Change", 19);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeFalse();
@@ -691,7 +690,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 20);
+      await NavigateAsync("Change", 19);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       await NavigateAsync("Back");
@@ -711,7 +710,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 20);
+      await NavigateAsync("Change", 19);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question").IsChecked = true;
@@ -747,7 +746,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 20);
+      await NavigateAsync("Change", 19);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeTrue();
@@ -793,7 +792,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 20);
+      await NavigateAsync("Change", 19);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
       Document.QuerySelector<IHtmlInputElement>("#previous-head-teacher-board-date-question")!.IsChecked.Should().BeTrue();

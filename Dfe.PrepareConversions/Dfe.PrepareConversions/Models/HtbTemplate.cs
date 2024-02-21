@@ -47,9 +47,6 @@ public class HtbTemplate
    [DocumentText("ClearedBy")]
    public string ClearedBy { get; set; }
 
-   [DocumentText("AcademyOrderRequired")]
-   public string AcademyOrderRequired { get; set; }
-
    [DocumentText("PreviousHeadTeacherBoardDate")]
    public string PreviousHeadTeacherBoardDate { get; set; }
 
@@ -139,16 +136,16 @@ public class HtbTemplate
 
    [DocumentText("PupilsAttendingGroup")]
    public string PupilsAttendingGroup { get; set; }
-   
+
    [DocumentText("NumberOfAlternativeProvisionPlaces")]
    public string NumberOfAlternativeProvisionPlaces { get; set; }
-   
+
    [DocumentText("NumberOfMedicalPlaces")]
    public string NumberOfMedicalPlaces { get; set; }
-   
+
    [DocumentText("NumberOfPost16Places")]
    public string NumberOfPost16Places { get; set; }
-  
+
    [DocumentText("NumberOfSENUnitPlaces")]
    public string NumberOfSENUnitPlaces { get; set; }
 
@@ -256,7 +253,6 @@ public class HtbTemplate
          Author = $"Author: {project.Author}",
          Version = $"Version: {DateTime.Today.ToDateString()}",
          ClearedBy = $"Cleared by: {project.ClearedBy}",
-         AcademyOrderRequired = project.AcademyOrderRequired,
          PreviousHeadTeacherBoardDate = project.PreviousHeadTeacherBoardDate.HasValue ? project.PreviousHeadTeacherBoardDate.ToDateString() : "No",
          PreviousHeadTeacherBoardLink = project.PreviousHeadTeacherBoardLink,
          TrustReferenceNumber = project.TrustReferenceNumber,
