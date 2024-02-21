@@ -41,7 +41,7 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
-      await NavigateAsync("Change", 6);
+      await NavigateAsync("Change", 5);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
@@ -83,7 +83,7 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
-      await NavigateAsync("Change", 6);
+      await NavigateAsync("Change", 5);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 
@@ -109,7 +109,7 @@ public class PreviousHeadTeacherBoardDateIntegrationTests : BaseIntegrationTests
          .With(r => r.Urn, project.Urn));
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
-      await NavigateAsync("Change", 6);
+      await NavigateAsync("Change", 5);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/previous-advisory-board");
 

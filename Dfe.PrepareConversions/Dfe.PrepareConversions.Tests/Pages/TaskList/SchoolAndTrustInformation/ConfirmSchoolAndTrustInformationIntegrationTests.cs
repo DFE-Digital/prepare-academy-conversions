@@ -142,7 +142,6 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       Document.QuerySelector("#project-recommendation")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#author")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#cleared-by")!.TextContent.Should().Be("Empty");
-      Document.QuerySelector("#academy-order-required")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#advisory-board-date")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#previous-advisory-board")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#school-name")!.TextContent.Should().Be("Empty");
@@ -191,7 +190,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
       await NavigateAsync("Conversion details");
-      await NavigateAsync("Change", 2);
+      await NavigateAsync("Change", 1);
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 

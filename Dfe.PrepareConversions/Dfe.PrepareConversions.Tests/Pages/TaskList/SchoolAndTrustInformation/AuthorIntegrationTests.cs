@@ -24,7 +24,7 @@ public class AuthorIntegrationTests : BaseIntegrationTests
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
-      await NavigateAsync("Change", 7);
+      await NavigateAsync("Change", 6);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/author");
       Document.QuerySelector<IHtmlInputElement>("#author")!.Value.Should().Be(project.Author);
