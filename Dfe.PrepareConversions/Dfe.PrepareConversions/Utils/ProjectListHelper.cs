@@ -65,6 +65,7 @@ namespace Dfe.PrepareConversions.Utils
          const string yellow = nameof(yellow);
          const string orange = nameof(orange);
          const string red = nameof(red);
+         const string purple = nameof(purple);
 
          if (Enum.TryParse(status, out AdvisoryBoardDecisions result))
          {
@@ -73,6 +74,7 @@ namespace Dfe.PrepareConversions.Utils
                AdvisoryBoardDecisions.Approved => new ProjectStatus(result.ToString().ToUpper(), green),
                AdvisoryBoardDecisions.Deferred => new ProjectStatus(result.ToString().ToUpper(), orange),
                AdvisoryBoardDecisions.Declined => new ProjectStatus(result.ToString().ToUpper(), red),
+               AdvisoryBoardDecisions.Withdrawn => new ProjectStatus(result.ToString().ToUpper(), purple),
                _ => new ProjectStatus(result.ToString().ToUpper(), yellow)
             };
          }
