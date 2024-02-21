@@ -11,6 +11,7 @@ public class AdvisoryBoardDecision
    {
       DeferredReasons = new List<AdvisoryBoardDeferredReasonDetails>();
       DeclinedReasons = new List<AdvisoryBoardDeclinedReasonDetails>();
+      WithdrawnReasons = new List<AdvisoryBoardWithdrawnReasonDetails>();
    }
 
    public int AdvisoryBoardDecisionId { get; set; }
