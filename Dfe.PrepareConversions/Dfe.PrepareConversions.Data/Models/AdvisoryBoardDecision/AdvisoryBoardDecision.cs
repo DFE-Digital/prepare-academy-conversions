@@ -24,6 +24,7 @@ public class AdvisoryBoardDecision
 
    public DateTime? AdvisoryBoardDecisionDate { get; set; }
    public DecisionMadeBy? DecisionMadeBy { get; set; }
+   public DateTime? AcademyOrderDate { get; set; }
 
 
    public AdvisoryBoardDecisions? Decision

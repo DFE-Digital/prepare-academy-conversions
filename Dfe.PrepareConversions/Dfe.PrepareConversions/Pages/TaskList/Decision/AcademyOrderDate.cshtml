@@ -1,0 +1,25 @@
+﻿@page "/task-list/{id:int}/decision/academy-order-date"
+@using Dfe.PrepareConversions.TagHelpers
+@model Dfe.PrepareConversions.Pages.TaskList.Decision.AcademyOrderDateModel
+@{
+    ViewData["Title"] = $"Date the academy order (AO) was sent";
+}
+
+@section BeforeMain
+{
+   <partial name="_BackLink" model="@Model.BackLinkModel"/>
+   <partial name="_ErrorSummary"/>
+}
+
+<span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
+<h1 class="govuk-heading-l">Date the academy order (AO) was sent</h1>
+
+<form method="post">
+   <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+        <govuk-date-input heading-label="true" name="academy-order-date" asp-for="@Model.AcademyOrderDate" hint="You can leave this blank and change it later if you need to" />
+   </div>
+
+   <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+      Continue
+   </button>
+</form>

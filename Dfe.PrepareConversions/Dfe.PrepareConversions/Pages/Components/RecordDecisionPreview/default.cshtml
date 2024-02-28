@@ -5,7 +5,7 @@
 
 @if (Model.Decision != null)
 {
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column">
         <dl class="govuk-summary-list">
 
             <div class="govuk-summary-list__row">
@@ -143,7 +143,31 @@
                     }
 
                 </dd>
+            </div>  
+            @if(Model.AcademyTypeAndRoute != "Sponsored"){
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Date academy order (AO) sent
+                </dt>
+                <dd class="govuk-summary-list__value" id="decision-date">
+
+                    @if (Model.Decision.AcademyOrderDate.HasValue)
+                    {
+                        <span>@Model.Decision.AcademyOrderDate.Value.ToString(Constants.DateTimeFormat)</span>
+                    }
+                    else
+                    {
+                        <span class="empty">Empty</span>
+                    }
+
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-ao-date-btn">
+                        Change<span class="govuk-visually-hidden"> Date academy order (AO) sent</span>
+                    </a>
+                </dd>
             </div>
+            }
         </dl>
 
         <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">

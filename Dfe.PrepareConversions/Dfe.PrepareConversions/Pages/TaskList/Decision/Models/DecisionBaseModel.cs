@@ -31,6 +31,7 @@ public abstract class DecisionBaseModel : PageModel
 
    public BackLinkModel BackLinkModel { get; set; }
    public string SchoolName { get; set; }
+   public string AcademyTypeAndRoute { get; set; }
    public int Id { get; set; }
 
    protected object LinkParameters =>
@@ -43,6 +44,7 @@ public abstract class DecisionBaseModel : PageModel
       Id = id;
       ApiResponse<AcademyConversionProject> project = await _repository.GetProjectById(id);
       SchoolName = project.Body.SchoolName;
+      AcademyTypeAndRoute = project.Body.AcademyTypeAndRoute;
    }
 
    public override async Task OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, PageHandlerExecutionDelegate next)
@@ -83,5 +85,24 @@ public abstract class DecisionBaseModel : PageModel
    protected void SetDecisionInSession(int id, AdvisoryBoardDecision decision)
    {
       _session.Set($"{DECISION_SESSION_KEY}_{id}", decision);
+   }
+   public bool IsVoluntaryAcademyType(string AcademyTypeAndRoute)
+   {
+      // Convert the input to lowercase for case-insensitive comparison
+      string lowerCaseType = AcademyTypeAndRoute.ToLower();
+
+      // Define an array of valid academy types and routes
+      string[] validTypes = { "converter", "form a mat" };
+
+      // Check if the lowerCaseType is in the array of validTypes
+      foreach (string validType in validTypes)
+      {
+         if (lowerCaseType == validType)
+         {
+            return true; // Match found = Voluntary
+         }
+      }
+
+      return false; // No match found = Sponsored
    }
 }

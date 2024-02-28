@@ -190,7 +190,34 @@
          </a>
       </dd>
    </div>
+   @* AO Date *@
+    @if (Model.IsVoluntaryAcademyType(Model.AcademyTypeAndRoute))
+   {
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Date academy order (AO) sent
+        </dt>
+        <dd class="govuk-summary-list__value" id="date-ao-sent">
+
+            @if (Model.Decision.AcademyOrderDate.HasValue)
+            {
+                <span>@Model.Decision.AcademyOrderDate.Value.ToString(Constants.DateTimeFormat)</span>
+            }
+            else
+            {
+                <span class="empty">Empty</span>
+            }
+
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-ao-date-btn">
+                Change<span class="govuk-visually-hidden"> Date academy order (AO) sent</span>
+            </a>
+        </dd>
+    </div>
+    }
 </dl>
+
 
 <form method="post">
    <button class="govuk-button" data-module="govuk-button" id="submit-btn">
