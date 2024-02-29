@@ -13,7 +13,7 @@ public class DateValidationService
       _messages = messages ?? new DefaultDateValidationMessageProvider();
    }
 
-   public (bool, string) Validate(string dayInput, string monthInput, string yearInput, string displayName)
+   public (bool, string) Validate(string dayInput, string monthInput, string yearInput, string displayName, bool allowEmptyDate = false)
    {
       List<string> missingParts = new();
 
@@ -21,7 +21,7 @@ public class DateValidationService
       if (string.IsNullOrWhiteSpace(monthInput)) missingParts.Add("month");
       if (string.IsNullOrWhiteSpace(yearInput)) missingParts.Add("year");
 
-      if (missingParts.Count == 3)
+      if (allowEmptyDate && missingParts.Count == 3)
       {
          return (false, _messages.AllMissing(displayName));
       }

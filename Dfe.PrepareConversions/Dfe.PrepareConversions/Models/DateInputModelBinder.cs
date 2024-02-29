@@ -26,15 +26,7 @@ public class DateInputModelBinder : IModelBinder
       {
          if (modelType == typeof(DateTime?))
          {
-            if (IsEmptyDate(dayValueProviderResult, monthValueProviderResult, yearValueProviderResult))
-            {
-               DateTime date = default;
-               bindingContext.Result = ModelBindingResult.Success(date);
-            }
-            else
-            {
-               bindingContext.Result = ModelBindingResult.Success(null);
-            }
+            bindingContext.Result = ModelBindingResult.Success(null);
          }
          else
          {

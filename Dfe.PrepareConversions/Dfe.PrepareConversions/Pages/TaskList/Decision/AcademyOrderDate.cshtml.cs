@@ -26,8 +26,7 @@ public class AcademyOrderDateModel : DecisionBaseModel, IDateValidationMessagePr
 
    [BindProperty(Name = "academy-order-date", BinderType = typeof(DateInputModelBinder))]
    [DateValidation(DateRangeValidationService.DateRange.PastOrToday)]
-   [Display(Name = "decision")]
-   [Required]
+   [Display(Name = "academy-order-date")]
    public DateTime? AcademyOrderDate { get; set; }
 
    public string DecisionText { get; set; }
