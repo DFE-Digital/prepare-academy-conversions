@@ -321,7 +321,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
 
    public Task InitializeAsync()
    {
-      _project = AddGetProject(project => project.SchoolOverviewSectionComplete = false);
+      _project = AddGetProject(project => { project.SchoolOverviewSectionComplete = false; project.AcademyTypeAndRoute = "Sponsored"; });
       _wizard = new RecordDecisionWizard(Context);
       return Task.CompletedTask;
    }

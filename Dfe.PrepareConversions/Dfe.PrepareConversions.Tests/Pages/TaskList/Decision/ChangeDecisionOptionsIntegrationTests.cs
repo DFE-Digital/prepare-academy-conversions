@@ -23,7 +23,11 @@ public class ChangeDecisionOptionsIntegrationTests : BaseIntegrationTests, IAsyn
 
    public Task InitializeAsync()
    {
-      _project = AddGetProject(project => project.SchoolOverviewSectionComplete = false);
+      _project = AddGetProject(project =>
+      {
+         project.SchoolOverviewSectionComplete = false;
+         project.AcademyTypeAndRoute = "Sponsored";
+      });
       _wizard = new RecordDecisionWizard(Context);
       return Task.CompletedTask;
    }
@@ -38,7 +42,10 @@ public class ChangeDecisionOptionsIntegrationTests : BaseIntegrationTests, IAsyn
    {
       AdvisoryBoardDecision decision = new()
       {
-         Decision = AdvisoryBoardDecisions.Approved, AdvisoryBoardDecisionDate = DateTime.Today, ApprovedConditionsSet = false, DecisionMadeBy = DecisionMadeBy.DirectorGeneral
+         Decision = AdvisoryBoardDecisions.Approved,
+         AdvisoryBoardDecisionDate = DateTime.Today,
+         ApprovedConditionsSet = false,
+         DecisionMadeBy = DecisionMadeBy.DirectorGeneral
       };
 
       await _wizard.StartFor(_project.Id);
@@ -59,7 +66,10 @@ public class ChangeDecisionOptionsIntegrationTests : BaseIntegrationTests, IAsyn
    {
       AdvisoryBoardDecision decision = new()
       {
-         Decision = AdvisoryBoardDecisions.Approved, DecisionMadeBy = DecisionMadeBy.DirectorGeneral, ApprovedConditionsSet = false, AdvisoryBoardDecisionDate = DateTime.Today
+         Decision = AdvisoryBoardDecisions.Approved,
+         DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
+         ApprovedConditionsSet = false,
+         AdvisoryBoardDecisionDate = DateTime.Today
       };
 
       await _wizard.StartFor(_project.Id);
@@ -79,7 +89,10 @@ public class ChangeDecisionOptionsIntegrationTests : BaseIntegrationTests, IAsyn
    {
       AdvisoryBoardDecision decision = new()
       {
-         Decision = AdvisoryBoardDecisions.Approved, DecisionMadeBy = DecisionMadeBy.DirectorGeneral, ApprovedConditionsSet = false, AdvisoryBoardDecisionDate = DateTime.Today
+         Decision = AdvisoryBoardDecisions.Approved,
+         DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
+         ApprovedConditionsSet = false,
+         AdvisoryBoardDecisionDate = DateTime.Today
       };
 
       await _wizard.StartFor(_project.Id);

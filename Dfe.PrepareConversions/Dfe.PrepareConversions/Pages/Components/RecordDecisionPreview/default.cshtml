@@ -5,9 +5,7 @@
 
 @if (Model.Decision != null)
 {
-    <div class="govuk-grid-column-two-thirds">
         <dl class="govuk-summary-list">
-
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Decision
@@ -22,7 +20,7 @@
                             AdvisoryBoardDecisions.Deferred => "govuk-tag--orange",
                             AdvisoryBoardDecisions.Withdrawn => "govuk-tag--purple",
                             _ => "govuk-tag--red"
-                        };
+                        };   
                     }
                     @if (string.IsNullOrEmpty(decisionName))
                     {
@@ -34,8 +32,8 @@
                     }
 
                 </dd>
-
-            </div>
+            <dd class="govuk-summary-list__actions"></dd>
+        </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Who made this decision
@@ -52,7 +50,8 @@
                     }
 
                 </dd>
-            </div>
+            <dd class="govuk-summary-list__actions"></dd>
+        </div>
 
             @if (Model.Decision.Decision == AdvisoryBoardDecisions.Declined)
             {
@@ -68,7 +67,8 @@
                             <div class="govuk-!-margin-bottom-2">@reason.Details</div>
                         }
                     </dd>
-                </div>
+                <dd class="govuk-summary-list__actions"></dd>
+            </div>
             }
 
 
@@ -86,7 +86,8 @@
                             <div class="govuk-!-margin-bottom-2">@reason.Details</div>
                         }
                     </dd>
-                </div>
+                <dd class="govuk-summary-list__actions"></dd>
+            </div>
             }
 
             @if (Model.Decision.Decision == AdvisoryBoardDecisions.Withdrawn)
@@ -103,7 +104,8 @@
                             <div class="govuk-!-margin-bottom-2">@reason.Details</div>
                         }
                     </dd>
-                </div>
+                <dd class="govuk-summary-list__actions"></dd>
+            </div>
             }
 
             @if (Model.Decision.Decision == AdvisoryBoardDecisions.Approved)
@@ -125,7 +127,8 @@
                             <span>No</span>
                         }
                     </dd>
-                </div>
+                <dd class="govuk-summary-list__actions"></dd>
+            </div>
             }
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
@@ -143,7 +146,32 @@
                     }
 
                 </dd>
+            <dd class="govuk-summary-list__actions"></dd>            
             </div>
+            @if (Model.AcademyTypeAndRoute != "Sponsored")
+            {
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Date academy order (AO) sent
+                    </dt>
+                    <dd class="govuk-summary-list__value" id="academy-order-date">
+
+                        @if (Model.Decision.AcademyOrderDate.HasValue)
+                        {
+                            <span>@Model.Decision.AcademyOrderDate.Value.ToString(Constants.DateTimeFormat)</span>
+                        }
+                        else
+                        {
+                            <span class="empty">Empty</span>
+                        }                       
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-ao-date-btn">
+                            Change<span class="govuk-visually-hidden"> Date academy order (AO) sent</span>
+                        </a>
+                    </dd>
+                </div>
+            }
         </dl>
 
         <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
@@ -152,8 +180,6 @@
         <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link" role="button">
             Change your decision
         </a>
-
-    </div>
 }
 else
 {
