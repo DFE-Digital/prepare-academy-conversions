@@ -2,7 +2,6 @@
 using AngleSharp.Html.Dom;
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System;
@@ -170,11 +169,15 @@ public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTest
    [Fact]
    public async Task Should_set_decimal_fields_to_default_decimal_in_update_request_when_cleared()
    {
-      AcademyConversionProject project = AddGetProject();
+      AcademyConversionProject project = AddGetProject(p =>
+      {
+         p.EndOfCurrentFinancialYear = new DateTime(DateTime.Now.Year, 3, 30);
+         p.EndOfNextFinancialYear = new DateTime(DateTime.Now.Year + 1, 3, 30);
+      });
       AddPatchProjectMany(project, composer =>
          composer
-            .With(r => r.EndOfCurrentFinancialYear, default(DateTime))
-            .With(r => r.EndOfNextFinancialYear, default(DateTime))
+            .With(r => r.EndOfCurrentFinancialYear, new DateTime(DateTime.Now.Year, 3, 30))
+            .With(r => r.EndOfNextFinancialYear, new DateTime(DateTime.Now.Year + 1, 3, 30))
             .With(r => r.RevenueCarryForwardAtEndMarchCurrentYear, default(decimal))
             .With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear, default(decimal))
             .With(r => r.CapitalCarryForwardAtEndMarchCurrentYear, default(decimal))
@@ -182,12 +185,6 @@ public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTest
             .With(r => r.Urn, project.Urn));
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");
-      Document.QuerySelector<IHtmlInputElement>("#financial-year-day")!.Value = string.Empty;
-      Document.QuerySelector<IHtmlInputElement>("#financial-year-month")!.Value = string.Empty;
-      Document.QuerySelector<IHtmlInputElement>("#financial-year-year")!.Value = string.Empty;
-      Document.QuerySelector<IHtmlInputElement>("#next-financial-year-day")!.Value = string.Empty;
-      Document.QuerySelector<IHtmlInputElement>("#next-financial-year-month")!.Value = string.Empty;
-      Document.QuerySelector<IHtmlInputElement>("#next-financial-year-year")!.Value = string.Empty;
       Document.QuerySelector<IHtmlInputElement>("#finance-year-current")!.Value = string.Empty;
       Document.QuerySelector<IHtmlInputElement>("#finance-year-following")!.Value = string.Empty;
       Document.QuerySelector<IHtmlInputElement>("#finance-current-capital")!.Value = string.Empty;

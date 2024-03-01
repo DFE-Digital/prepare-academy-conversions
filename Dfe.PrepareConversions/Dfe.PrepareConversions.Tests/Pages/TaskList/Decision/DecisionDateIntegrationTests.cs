@@ -97,7 +97,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_redirect_onSubmit()
    {
-      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => { p.SchoolOverviewSectionComplete = false; p.AcademyTypeAndRoute = "Sponsored"; });
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
 
       AdvisoryBoardDecision request = new()
@@ -151,7 +151,11 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_display_the_correct_journey_in_the_required_message_when_date_is_not_specified()
    {
-      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p =>
+      {
+         p.SchoolOverviewSectionComplete = false;
+         p.AcademyTypeAndRoute = "Sponsored";
+      });
 
       RecordDecisionWizard wizard = new(Context);
 
