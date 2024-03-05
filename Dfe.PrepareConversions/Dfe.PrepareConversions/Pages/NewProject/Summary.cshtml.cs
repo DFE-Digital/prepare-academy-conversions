@@ -26,25 +26,32 @@ public class SummaryModel : PageModel
    }
 
    public Academies.Contracts.V4.Establishments.EstablishmentDto Establishment { get; set; }
-   public TrustDto Trust { get; set; }
-   public string SchoolApplied { get; set; }
+   public TrustDto Trust { get; set; } = null;
+   public string HasSchoolApplied { get; set; }
+   public string HasPreferredTrust { get; set; }
 
 
-   public async Task<IActionResult> OnGetAsync(string urn, string ukprn, string HasSchoolApplied)
+   public async Task<IActionResult> OnGetAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust)
    {
       Establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
-      Trust = (await _trustRepository.SearchTrusts(ukprn)).Data.FirstOrDefault();
-      SchoolApplied = HasSchoolApplied;
+      if (!string.IsNullOrEmpty(ukprn))
+      {
+         Trust = (await _trustRepository.SearchTrusts(ukprn)).Data.FirstOrDefault();
+      }
+      
+      HasSchoolApplied = hasSchoolApplied;
+      HasPreferredTrust = hasPreferredTrust;
 
       return Page();
    }
 
-   public async Task<IActionResult> OnPostAsync(string urn, string ukprn, string HasSchoolApplied)
+   public async Task<IActionResult> OnPostAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust)
    {
       Academies.Contracts.V4.Establishments.EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
+
       TrustDto trust = await _trustRepository.GetTrustByUkprn(ukprn);
 
-      await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, HasSchoolApplied));
+      await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust));
 
       return RedirectToPage(Links.ProjectList.Index.Page);
    }
