@@ -35,9 +35,10 @@ public class CreateSponsoredProjectMapperTests
       };
 
       string HasSchoolApplied = "no";
+      string HasPreferredTrust = "yes";
 
       // Act
-      var result = CreateProjectMapper.MapToDto(establishment, trust, HasSchoolApplied);
+      var result = CreateProjectMapper.MapToDto(establishment, trust, HasSchoolApplied, HasPreferredTrust);
 
       // Assert
       result.School.PartOfPfiScheme.Should().BeTrue();
@@ -77,8 +78,9 @@ public class CreateSponsoredProjectMapperTests
          CompaniesHouseNumber = fixture.Create<string>()
       };
       string HasSchoolApplied = "no";
+      string HasPreferredTrust = "no";
       // Act
-      var result = CreateProjectMapper.MapToDto(establishment, trust, HasSchoolApplied);
+      var result = CreateProjectMapper.MapToDto(establishment, trust, HasSchoolApplied, HasPreferredTrust);
 
       // Assert
       using (var scope = new AssertionScope())

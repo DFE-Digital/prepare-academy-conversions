@@ -103,7 +103,7 @@ public class SearchTrustModelUnitTests
          new TrustDtoResponse { Data = new List<TrustDto> { trust } });
 
       // Act
-      await sut.OnGet(trust.Ukprn, string.Empty, string.Empty);
+      await sut.OnGet(trust.Ukprn, string.Empty, string.Empty, string.Empty);
 
       // Assert
       Assert.Equal($"{trust.Name} ({trust.Ukprn})", sut.SearchQuery);
