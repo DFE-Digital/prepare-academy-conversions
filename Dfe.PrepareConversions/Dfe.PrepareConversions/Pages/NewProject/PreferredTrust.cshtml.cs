@@ -10,25 +10,29 @@ using EstablishmentDto = Dfe.Academies.Contracts.V4.Establishments.Establishment
 
 namespace Dfe.PrepareConversions.Pages.SponsoredProject;
 
-public class SchoolApplyModel : PageModel
+public class PreferredTrustModel : PageModel
 {
    private readonly ErrorService _errorService;
    private readonly IGetEstablishment _getEstablishment;
 
-   public SchoolApplyModel(IGetEstablishment getEstablishment, ErrorService errorService)
+   public PreferredTrustModel(IGetEstablishment getEstablishment, ErrorService errorService)
    {
       _getEstablishment = getEstablishment;
       _errorService = errorService;
    }
    [BindProperty]
+   public string HasPreferredTrust { get; set; }
+
+   [BindProperty]
    public string HasSchoolApplied { get; set; }
 
    public string Urn { get; set; }
 
-   public async Task<IActionResult> OnGet(string urn, string hasSchoolApplied)
+   public async Task<IActionResult> OnGet(string urn, string hasSchoolApplied, string isPreferredTrust)
    {
       ProjectListFilters.ClearFiltersFrom(TempData);
-      HasSchoolApplied = hasSchoolApplied ?? "yes"; // Default to Yes if not used backlink to access
+      HasSchoolApplied = hasSchoolApplied;
+      HasPreferredTrust = isPreferredTrust ?? "yes"; // Default to Yes if not used backlink to access
 
       EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
       Urn = establishment.Urn;
@@ -36,18 +40,19 @@ public class SchoolApplyModel : PageModel
       return Page();
    }
 
-   public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect)
+   public async Task<IActionResult> OnPost(string urn, string redirect)
    {
 
-      if (HasSchoolApplied.IsNullOrEmpty())
+      if (HasPreferredTrust.IsNullOrEmpty())
       {
-         _errorService.AddError("HasSchoolApplied", "Select yes if the school has applied for academy conversion");
+         _errorService.AddError("IsPreferredTrust", "Select yes if there is a preferred trust");
          return Page();
       }
-      var nextPage = HasSchoolApplied.ToLower().Equals("yes") ? Links.NewProject.SearchTrusts.Page : Links.NewProject.PreferredTrust.Page;
+
+      var nextPage = HasPreferredTrust.ToLower().Equals("yes") ? Links.NewProject.SearchTrusts.Page : Links.NewProject.Summary.Page;
 
       redirect = string.IsNullOrEmpty(redirect) ? nextPage : redirect;
 
-      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied });
+      return RedirectToPage(redirect, new { urn, HasSchoolApplied, HasPreferredTrust });
    }
 }

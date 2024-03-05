@@ -1,6 +1,6 @@
 ﻿namespace Dfe.PrepareConversions.Data.Models.NewProject;
 
-public record CreateNewProject(NewProjectSchool School, NewProjectTrust Trust, string HasSchoolApplied);
+public record CreateNewProject(NewProjectSchool School, NewProjectTrust Trust, string HasSchoolApplied, string HasPreferredTrust);
 
 public record NewProjectTrust(string Name, string ReferenceNumber);
 

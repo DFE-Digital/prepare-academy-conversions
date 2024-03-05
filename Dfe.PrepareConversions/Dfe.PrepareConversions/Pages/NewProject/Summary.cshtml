@@ -10,22 +10,24 @@
     var routeParams = new Dictionary<string, string>
    {
       { "urn", Model.Establishment.Urn },
-      { "hasSchoolApplied", Model.SchoolApplied },
-      { "ukprn", Model.Trust.Ukprn },
+      { "hasSchoolApplied", Model.HasSchoolApplied },
+      { "ukprn", Model.Trust?.Ukprn },
    };
 
     var backLinkRouteParams = new Dictionary<string, string>
    {
       { "urn", Model.Establishment.Urn },
-      { "ukprn", Model.Trust.Ukprn },
-      { "hasSchoolApplied", Model.SchoolApplied },
+      { "ukprn", Model.Trust?.Ukprn },
+      { "hasSchoolApplied", Model.HasSchoolApplied },
       { "redirect", Links.NewProject.Summary.Page }
    };
+
+    var backLink = Model.HasSchoolApplied.ToLower().Equals("yes") || Model.HasPreferredTrust.ToLower().Equals("yes") ? Links.NewProject.SearchTrusts.Page : Links.NewProject.PreferredTrust.Page;
 }
 
 @section BeforeMain
     {
-    <partial name="_BackLink" model="@(new BackLink(Links.NewProject.SearchTrusts.Page, routeParams))" />
+    <partial name="_BackLink" model="@(new BackLink(backLink, routeParams))" />
 }
 
 <div class="govuk-grid-row">
@@ -152,7 +154,7 @@
                     Did the school apply to convert?
                 </dt>
                 <dd class="govuk-summary-list__value" data-cy="school-apply">
-                    @Model.SchoolApplied
+                    @Model.HasSchoolApplied
                 </dd>
                 <dd class="govuk-summary-list__actions">
                     <a asp-page="@Links.NewProject.SchoolApply.Page" class="govuk-link" data-cy="change-school-apply"
@@ -162,60 +164,63 @@
                 </dd>
             </div>
     </div>
-    <div class="govuk-grid-column-two-thirds">
+    @if (Model.Trust != null)
+    {
+        <div class="govuk-grid-column-two-thirds">
 
-        <h2 class="govuk-heading-m">
-            Incoming trust
-        </h2>
-    </div>
+            <h2 class="govuk-heading-m">
+                Incoming trust
+            </h2>
+        </div>
 
-    <div class="govuk-grid-column-full">
+        <div class="govuk-grid-column-full">
 
-        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
 
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Name
-                </dt>
-                <dd class="govuk-summary-list__value" data-cy="trust-name">
-                    @Model.Trust.Name
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                    <a asp-page="@Links.NewProject.SearchTrusts.Page" class="govuk-link" data-cy="change-trust"
-                       asp-all-route-data="@backLinkRouteParams">
-                        Change<span class="govuk-visually-hidden">Trust name</span>
-                    </a>
-                </dd>
-            </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Name
+                    </dt>
+                    <dd class="govuk-summary-list__value" data-cy="trust-name">
+                        @Model.Trust.Name
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a asp-page="@Links.NewProject.SearchTrusts.Page" class="govuk-link" data-cy="change-trust"
+                        asp-all-route-data="@backLinkRouteParams">
+                            Change<span class="govuk-visually-hidden">Trust name</span>
+                        </a>
+                    </dd>
+                </div>
 
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    UKPRN
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    @Model.Trust.Ukprn
-                </dd>
-                <dd class="govuk-summary-list__value"></dd>
-            </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        UKPRN
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Model.Trust.Ukprn
+                    </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                </div>
 
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Companies House Number
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    @Model.Trust.CompaniesHouseNumber
-                </dd>
-                <dd class="govuk-summary-list__value"></dd>
-            </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Companies House Number
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Model.Trust.CompaniesHouseNumber
+                    </dd>
+                    <dd class="govuk-summary-list__value"></dd>
+                </div>
 
-        </dl>
+            </dl>
 
-    </div>
+        </div>
+    }
 
     <div class="govuk-grid-column-two-thirds">
         <form method="post">
             <input type="hidden" value="@Model.Establishment.Urn" />
-            <input type="hidden" value="@Model.Trust.Ukprn" />
+            <input type="hidden" value="@Model.Trust?.Ukprn" />
             <button class="govuk-button" type="submit" data-id="submit">Continue</button>
         </form>
     </div>

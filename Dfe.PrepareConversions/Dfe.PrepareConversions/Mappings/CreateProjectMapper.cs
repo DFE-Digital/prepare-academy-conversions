@@ -7,7 +7,7 @@ namespace Dfe.PrepareConversions.Mappings;
 
 public static class CreateProjectMapper
 {
-   public static CreateNewProject MapToDto(EstablishmentDto establishment, TrustDto trust, string HasSchoolApplied)
+   public static CreateNewProject MapToDto(EstablishmentDto establishment, TrustDto trust, string HasSchoolApplied, string HasPreferredTrust)
    {
       if (establishment == null)
       {
@@ -25,10 +25,14 @@ public static class CreateProjectMapper
          establishment.LocalAuthorityName,
          establishment.Gor.Name);
 
-      NewProjectTrust createTrust = new(
-         trust.Name,
-         trust.ReferenceNumber);
+      NewProjectTrust createTrust = null;
+      if (trust != null)
+      {
+         createTrust = new(
+            trust.Name,
+            trust.ReferenceNumber);
+      }
 
-      return new CreateNewProject(createSchool, createTrust, HasSchoolApplied);
+      return new CreateNewProject(createSchool, createTrust, HasSchoolApplied, HasPreferredTrust);
    }
 }

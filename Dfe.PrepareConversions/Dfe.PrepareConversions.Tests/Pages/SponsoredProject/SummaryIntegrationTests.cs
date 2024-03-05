@@ -25,7 +25,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests
       _factory.AddGetWithJsonResponse($"/v4/establishment/urn/{establishment.Urn}", establishment);
       _factory.AddGetWithJsonResponse("/v4/trusts*", TrustDtoResponse);
 
-      await OpenAndConfirmPathAsync($"/start-new-project/check-school-trust-details?ukprn={ukprn}&urn={establishment.Urn}");
+      await OpenAndConfirmPathAsync($"/start-new-project/check-school-trust-details?ukprn={ukprn}&urn={establishment.Urn}&hasSchoolApplied=true&hasPreferredTrust=yes");
 
       Document.QuerySelector<IHtmlElement>("[data-cy=school-name]")!.Text().Trim().Should()
          .Be(establishment.Name);

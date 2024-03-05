@@ -8,13 +8,16 @@
    {
       { "urn", Request.Query["urn"] },
       { "ukprn", Request.Query["ukprn"] },
-      { "hasSchoolApplied", Request.Query["hasSchoolApplied"] }
+      { "hasSchoolApplied", Request.Query["hasSchoolApplied"] },
+      { "hasPreferredTrust", Request.Query["hasPreferredTrust"] }
    };
+
+    var backLink = Model.HasSchoolApplied.ToLower().Equals("yes") ? Links.NewProject.SchoolApply.Page : Links.NewProject.PreferredTrust.Page ;
 }
 
 @section BeforeMain
-    {
-    <partial name="_BackLink" model="@(new BackLink(Links.NewProject.SchoolApply.Page, routeParams))" />
+{
+    <partial name="_BackLink" model="@(new BackLink(backLink, routeParams))" />
     <partial name="_ErrorSummary" />
 }
 
@@ -22,6 +25,7 @@
     <div class="govuk-grid-column-two-thirds">
         <form method="post" data-id="form">
             <input type="hidden" asp-for="HasSchoolApplied" />
+            <input type="hidden" asp-for="HasPreferredTrust" />
             <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
                 <h1 class="govuk-label-wrapper">
                     <label class="govuk-label govuk-label--xl" for="SearchQuery">

@@ -32,16 +32,19 @@ public class SearchTrustModel : PageModel
    public string SearchQuery { get; set; } = "";
    [BindProperty]
    public string HasSchoolApplied { get; set; }
+   [BindProperty]
+   public string HasPreferredTrust { get; set; }
 
    public string Urn { get; set; }
    public string Ukprn { get; set; }
    public AutoCompleteSearchModel AutoCompleteSearchModel { get; set; }
 
-   public async Task<IActionResult> OnGet(string ukprn, string urn, string hasSchoolApplied)
+   public async Task<IActionResult> OnGet(string ukprn, string urn, string hasSchoolApplied, string hasPreferredTrust)
    {
       Urn = urn;
       Ukprn = ukprn;
       HasSchoolApplied = string.IsNullOrEmpty(hasSchoolApplied) ? "yes" : hasSchoolApplied;
+      HasPreferredTrust = string.IsNullOrEmpty(hasPreferredTrust) ? "yes" : hasPreferredTrust;
 
       if (string.IsNullOrWhiteSpace(ukprn)) return Page();
 
@@ -102,7 +105,7 @@ public class SearchTrustModel : PageModel
          return Page();
       }
 
-      return RedirectToPage(Links.NewProject.Summary.Page, new { ukprn, urn, HasSchoolApplied });
+      return RedirectToPage(Links.NewProject.Summary.Page, new { ukprn, urn, HasSchoolApplied, HasPreferredTrust });
    }
 
    private static string HighlightSearchMatch(string input, string toReplace, TrustDto trust)
