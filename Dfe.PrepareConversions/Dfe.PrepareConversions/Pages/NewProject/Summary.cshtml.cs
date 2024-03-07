@@ -29,29 +29,49 @@ public class SummaryModel : PageModel
    public TrustDto Trust { get; set; } = null;
    public string HasSchoolApplied { get; set; }
    public string HasPreferredTrust { get; set; }
+   public string ProposedTrustName { get; set; }
+   public string IsFormAMat { get; set; }
 
 
-   public async Task<IActionResult> OnGetAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust)
+   public async Task<IActionResult> OnGetAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat)
    {
       Establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
       if (!string.IsNullOrEmpty(ukprn))
       {
          Trust = (await _trustRepository.SearchTrusts(ukprn)).Data.FirstOrDefault();
       }
-      
+
       HasSchoolApplied = hasSchoolApplied;
       HasPreferredTrust = hasPreferredTrust;
+      // Default to no as it's most common
+      IsFormAMat = isFormAMat ?? "no";
+      ProposedTrustName = proposedTrustName ?? null;
 
       return Page();
    }
 
-   public async Task<IActionResult> OnPostAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust)
+   public async Task<IActionResult> OnPostAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName)
    {
       Academies.Contracts.V4.Establishments.EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
 
-      TrustDto trust = await _trustRepository.GetTrustByUkprn(ukprn);
+      TrustDto trust = new TrustDto();
+      if (ukprn != null)
+      {
+         trust = await _trustRepository.GetTrustByUkprn(ukprn);
+      }
+      if (proposedTrustName != null)
+      {
+         trust.Name = proposedTrustName;
+      }
+      if (proposedTrustName != null)
+      {
+         await _academyConversionProjectRepository.CreateFormAMatProject(CreateProjectMapper.MapFormAMatToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust));
+      }
+      else
+      {
+         await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust));
+      }
 
-      await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust));
 
       return RedirectToPage(Links.ProjectList.Index.Page);
    }

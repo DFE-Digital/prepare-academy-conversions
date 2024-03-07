@@ -7,6 +7,11 @@ namespace Dfe.PrepareConversions.Mappings;
 
 public static class CreateProjectMapper
 {
+   public static CreateNewFormAMatProject MapFormAMatToDto(EstablishmentDto establishment, TrustDto trust, string HasSchoolApplied, string HasPreferredTrust)
+   {
+      var conversion = MapToDto(establishment, trust, HasSchoolApplied, HasPreferredTrust);
+      return new CreateNewFormAMatProject(conversion);
+   }
    public static CreateNewProject MapToDto(EstablishmentDto establishment, TrustDto trust, string HasSchoolApplied, string HasPreferredTrust)
    {
       if (establishment == null)

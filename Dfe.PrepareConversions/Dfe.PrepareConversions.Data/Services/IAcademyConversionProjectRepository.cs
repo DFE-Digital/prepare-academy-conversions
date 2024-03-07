@@ -54,6 +54,7 @@ public interface IAcademyConversionProjectRepository
    Task<ApiResponse<FormAMatProject>> GetFormAMatProjectById(int id);
    Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject);
    Task CreateProject(CreateNewProject newProject);
+   Task CreateFormAMatProject(CreateNewFormAMatProject newProject);
    Task SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl);
    Task SetAssignedUser(int id, SetAssignedUserModel updatedAssignedUser);
    Task SetFormAMatAssignedUser(int id, SetAssignedUserModel updatedAssignedUser);

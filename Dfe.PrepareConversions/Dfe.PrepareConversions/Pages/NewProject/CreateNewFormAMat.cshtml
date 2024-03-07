@@ -1,0 +1,55 @@
+﻿@page "/start-new-project/create-new-form-a-mat"
+@using Dfe.PrepareConversions.Pages.Shared
+@model Dfe.PrepareConversions.Pages.SponsoredProject.CreateNewFormAMatModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Title = (!ViewData.ModelState.IsValid ? "Error: " : "") + "Is this conversion part of the formation of a new trust?";
+    var routeParams = new Dictionary<string, string>
+   {
+      { "urn", Request.Query["urn"] },
+      { "ukprn", Request.Query["ukprn"] },
+      { "hasSchoolApplied", Request.Query["hasSchoolApplied"] },
+      { "isFormAMat" , Request.Query["isFormAMat"]},
+      { "proposedTrustName" , Request.Query["ProposedTrustName"]},
+   };
+}
+
+@section BeforeMain
+{
+    <partial name="_BackLink" model="@(new BackLink(Links.NewProject.IsThisFormAMat.Page, routeParams))" />
+    <partial name="_ErrorSummary" />
+}
+
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+
+            <input hidden="" type="text" name="returnToSummary" value="no">
+            <input type="hidden" asp-for="Urn" />
+            <input type="hidden" asp-for="HasSchoolApplied" />
+            <input type="hidden" asp-for="IsFormAMat" />
+            
+            
+            <div class="govuk-form-group" @ModelState.GetErrorStyleClass()>
+                <h1 class="govuk-label-wrapper">
+                    <label class="govuk-label govuk-label--l" >
+                        Create a new form a MAT project
+                    </label>
+                </h1>    
+                <p class="govuk-body">Enter the proposed name of the new MAT.</p>
+                <p class="govuk-body">This will create a new form a MAT project and attach this conversion to that project.</p>
+                <label class="govuk-label govuk-label--m" for="proposed-trust-name">
+                    Name of the new trust
+                </label>
+                <govuk-text-input hint="You can change this later on if necessary." name="proposed-trust-name" id="proposed-trust-name" asp-for="ProposedTrustName" />
+            </div>
+
+            <button class="govuk-button pt-3" data-module="govuk-button" data-cy="select-common-submitbutton">
+                Continue
+            </button>
+        </form>
+
+    </div>

@@ -233,6 +233,7 @@ public static class Links
       public static readonly LinkItem SearchTrusts = AddLinkItem(page: "/NewProject/SearchTrust");
       public static readonly LinkItem PreferredTrust = AddLinkItem(page: "/NewProject/PreferredTrust");
       public static readonly LinkItem IsThisFormAMat = AddLinkItem(page: "/NewProject/IsThisFormAMat");
+      public static readonly LinkItem CreateNewFormAMat = AddLinkItem(page: "/NewProject/CreateNewFormAMat");
       public static readonly LinkItem Summary = AddLinkItem(page: "/NewProject/Summary");
    }
 }
