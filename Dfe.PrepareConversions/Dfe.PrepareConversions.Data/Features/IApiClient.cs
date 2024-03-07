@@ -21,5 +21,6 @@ public interface IApiClient
    Task<HttpResponseMessage> SetAssignedUser(int id, SetAssignedUserModel updatedAssignedUser);
    Task<HttpResponseMessage> SetFormAMatAssignedUser(int id, SetAssignedUserModel updatedAssignedUser);
    Task<HttpResponseMessage> SetPerformanceData(int id, SetPerformanceDataModel setPerformanceDataModel);
+   Task<HttpResponseMessage> SetIncomingTrust(int id, SetIncomingTrustDataModel setIncomingTrustDataModel);
    Task<HttpResponseMessage> GetFormAMatProjectsAsync(AcademyConversionSearchModelV2 searchModel);
 }
