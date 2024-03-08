@@ -1,0 +1,37 @@
+﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/update-trust"
+@using Dfe.PrepareConversions.Pages.Shared
+@model Dfe.PrepareConversions.Pages.TaskList.SchoolAndTrustInformation.UpdateTrustModel
+@{
+    Layout = "_Layout";
+    ViewBag.Title = (!ViewData.ModelState.IsValid ? "Error: " : "") + "Which trust is involved";
+    Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
+    var routeParams = new Dictionary<string, string>
+   {
+      { "urn", Request.Query["urn"] },
+      { "ukprn", Request.Query["ukprn"] }
+   };
+}
+
+@section BeforeMain
+{
+    <govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation" />
+    <partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post" data-id="form">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+                <h1 class="govuk-label-wrapper">
+                    <label class="govuk-label govuk-label--xl" for="SearchQuery">
+                        Which trust is involved?
+                    </label>
+                </h1>
+
+                <partial name="NewProject/_AutoComplete" model="@Model.AutoCompleteSearchModel" />
+
+            </div>
+            <button class="govuk-button" type="submit" data-id="submit">Save and continue</button>
+        </form>
+    </div>
+</div>

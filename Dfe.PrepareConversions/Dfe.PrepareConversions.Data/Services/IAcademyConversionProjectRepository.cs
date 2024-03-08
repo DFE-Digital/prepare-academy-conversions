@@ -60,6 +60,7 @@ public interface IAcademyConversionProjectRepository
    Task SetFormAMatAssignedUser(int id, SetAssignedUserModel updatedAssignedUser);
    Task SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview);
    Task SetPerformanceData(int id, SetPerformanceDataModel setPerformanceDataModel);
+   Task SetIncomingTrust(int id, SetIncomingTrustDataModel setIncomingTrustDataModel);
    Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters();
    Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote addProjectNote);
 }

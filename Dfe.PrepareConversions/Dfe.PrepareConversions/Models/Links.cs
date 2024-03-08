@@ -104,6 +104,7 @@ public static class Links
    {
       public static readonly LinkItem ConfirmSchoolAndTrustInformation = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/ConversionDetails");
       public static readonly LinkItem ProjectRecommendation = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/ProjectRecommendation");
+      public static readonly LinkItem UpdateTrust = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/UpdateTrust");
       public static readonly LinkItem Author = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Author");
       public static readonly LinkItem ClearedBy = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/ClearedBy");
       public static readonly LinkItem HeadTeacherBoardDate = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/AdvisoryBoardDate");

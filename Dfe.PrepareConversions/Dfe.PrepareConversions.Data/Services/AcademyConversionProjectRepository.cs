@@ -318,4 +318,9 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       return new ApiResponse<ApiV2Wrapper<IEnumerable<FormAMatProject>>>(response.StatusCode, outerResponse);
    }
 
+   public async Task SetIncomingTrust(int id, SetIncomingTrustDataModel setIncomingTrustDataModel)
+   {
+      HttpResponseMessage result = await _apiClient.SetIncomingTrust(id, setIncomingTrustDataModel);
+      if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+   }
 }
