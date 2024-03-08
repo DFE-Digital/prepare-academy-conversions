@@ -117,4 +117,9 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       return await _innerRepository.GetFormAMatProjects(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter, localAuthoritiesFilter, advisoryBoardDatesFilter);
    }
+
+   public async Task SetIncomingTrust(int id, SetIncomingTrustDataModel setIncomingTrustDataModel)
+   {
+      await _innerRepository.SetIncomingTrust(id, setIncomingTrustDataModel);
+   }
 }

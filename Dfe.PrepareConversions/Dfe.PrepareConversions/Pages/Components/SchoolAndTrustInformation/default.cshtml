@@ -1,4 +1,5 @@
-﻿@using Dfe.PrepareConversions.TagHelpers
+﻿@using Dfe.PrepareConversions.Data.Models
+@using Dfe.PrepareConversions.TagHelpers
 @model SchoolAndTrustInformationViewModel
 @{
     var kw = WidthOverride.TwoThirds;
@@ -9,7 +10,9 @@
 <dl class="govuk-summary-list">
     <govuk-summary-list-row name="school-name" label="School name" key-width="@kw" asp-for="SchoolName" />
     <govuk-summary-list-row name="unique-reference-number" label="Unique reference number (URN)" key-width="@kw" asp-for="SchoolUrn" />
-    <govuk-summary-list-row name="name-of-trust" label="Trust name" key-width="@kw" asp-for="NameOfTrust" />
+
+    <govuk-summary-list-row if="@Model.AcademyTypeAndRoute.Equals(AcademyTypeAndRoutes.Sponsored)" name="name-of-trust" label="Trust name" key-width="@kw" asp-for="NameOfTrust" asp-page="@Links.SchoolAndTrustInformationSection.UpdateTrust.Page" asp-route-id="@Model.Id" hidden-text="update trust" />
+    <govuk-summary-list-row if="!@Model.AcademyTypeAndRoute.Equals(AcademyTypeAndRoutes.Sponsored)" name="name-of-trust" label="Trust name" key-width="@kw" asp-for="NameOfTrust" />
     <govuk-summary-list-row name="trust-reference-number" label="Trust reference number" key-width="@kw" asp-for="TrustReferenceNumber" />
     <govuk-summary-list-row if="@Model.IsDao is false" name="project-recommendation" label="Recommendation" key-width="@kw" value="@Model.RecommendationForProject" asp-page="@Links.SchoolAndTrustInformationSection.ProjectRecommendation.Page" asp-route-id="@Model.Id" hidden-text="recommendation" />
     <govuk-summary-list-row if="@Model.IsDao" name="form-7-received" label="Has the Schools Notification Mailbox (SNM) received a Form 7?" key-width="@kw" value="@Model.Form7Received" asp-route-id="@Model.Id" asp-page="@Links.SchoolAndTrustInformationSection.Form7Received.Page" hidden-text="form 7 received" />

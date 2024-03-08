@@ -133,6 +133,11 @@ public class ApiClient : IApiClient
       return await AcademisationClient.PutAsync(string.Format(PathFor.SetPerformanceData, id), JsonContent.Create(setPerformanceDataModel));
    }
 
+   public async Task<HttpResponseMessage> SetIncomingTrust(int id, SetIncomingTrustDataModel setIncomingTrustDataModel)
+   {
+      return await AcademisationClient.PutAsync(string.Format(PathFor.SetIncomingTrust, id), JsonContent.Create(setIncomingTrustDataModel));
+   }
+
    public async Task<HttpResponseMessage> GetFormAMatProjectsAsync(AcademyConversionSearchModelV2 searchModel)
    {
       return await AcademisationClient.PostAsync(PathFor.GetFormAMatProjects, JsonContent.Create(searchModel));
