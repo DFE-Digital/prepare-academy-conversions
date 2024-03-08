@@ -40,7 +40,7 @@ namespace Dfe.PrepareConversions.Utils
          {
             Id = formAMATProject.Id.ToString(),
             TrustName = formAMATProject.ProposedTrustName,
-            ApplciationReference = formAMATProject.ApplicationReference,
+            ApplciationReference = formAMATProject?.ApplicationReference ?? string.Empty,
             FirstProjectId = formAMATProject.Projects.First().Id,
             AssignedTo = project.AssignedUser?.FullName,
             LocalAuthorities = String.Join(", ", formAMATProject.Projects.Select(x => x.LocalAuthority).Distinct()),

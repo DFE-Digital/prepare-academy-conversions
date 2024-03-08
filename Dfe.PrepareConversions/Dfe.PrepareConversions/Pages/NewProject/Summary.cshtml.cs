@@ -75,4 +75,15 @@ public class SummaryModel : PageModel
 
       return RedirectToPage(Links.ProjectList.Index.Page);
    }
+   public static string DetermineBackLink(bool hasSchoolApplied, bool hasPreferredTrust, bool hasProposedTrustName)
+   {
+      return hasProposedTrustName switch
+      {
+         true => Links.NewProject.CreateNewFormAMat.Page,
+         _ when hasSchoolApplied => Links.NewProject.SearchTrusts.Page,
+         _ when hasPreferredTrust => Links.NewProject.PreferredTrust.Page,
+         _ => Links.NewProject.SearchTrusts.Page,
+      };
+   }
+
 }

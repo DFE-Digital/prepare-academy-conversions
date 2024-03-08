@@ -12,12 +12,13 @@ public class FormAMatProjectViewModel
       ApplciationReference = project.ApplicationReference;
       AssignedUserFullName = project.AssignedUser.FullName;
       Projects = project.Projects;
-      //Status = project.;
+      ReferenceNumber = project.ReferenceNumber;
    }
 
    public string Id { get; init; }
    public string TrustName { get; init; }
    public string ApplciationReference { get; init; }
+   public string ReferenceNumber { get; init; }
 
    public string AssignedUserFullName { get; init; }
    public string Regions { get; set; }

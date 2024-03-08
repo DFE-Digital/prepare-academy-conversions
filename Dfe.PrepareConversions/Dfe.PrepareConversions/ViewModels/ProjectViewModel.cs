@@ -140,8 +140,8 @@ public class ProjectViewModel : ProjectTypeBase
    public string SchoolPhase { get; }
    public string SchoolType { get; }
 
-   public bool IsPRU { get { return SchoolType.ToLower() == "pupil referal unit"; } }
-   public bool IsSEN { get { return SchoolType.ToLower().Contains("special"); } }
+   public bool IsPRU { get { return SchoolType?.ToLower() == "pupil referal unit"; } }
+   public bool IsSEN { get { return SchoolType?.ToLower().Contains("special") ?? false; } }
    public DateTime? HeadTeacherBoardDate { get; set; }
 
    public DateTime? LocalAuthorityInformationTemplateSentDate { get; set; }

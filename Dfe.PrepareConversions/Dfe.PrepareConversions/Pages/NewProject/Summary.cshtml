@@ -2,6 +2,7 @@
 @using Dfe.PrepareConversions.Pages.Shared
 @using System.Globalization
 @using Dfe.Academisation.ExtensionMethods
+@using Dfe.PrepareConversions.Pages.SponsoredProject
 @model Dfe.PrepareConversions.Pages.SponsoredProject.SummaryModel
 @{
     Layout = "_Layout";
@@ -22,7 +23,7 @@
       { "redirect", Links.NewProject.Summary.Page }
    };
 
-    var backLink = Model.HasSchoolApplied.ToLower().Equals("yes") || Model.HasPreferredTrust.ToLower().Equals("yes") ? Links.NewProject.SearchTrusts.Page : Links.NewProject.PreferredTrust.Page;
+    var backLink = SummaryModel.DetermineBackLink(Model.HasSchoolApplied?.ToLower().Equals("yes") ?? false, Model.HasPreferredTrust?.ToLower().Equals("yes") ?? false, Model.ProposedTrustName is not null);
 }
 
 @section BeforeMain
