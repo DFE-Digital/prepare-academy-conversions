@@ -19,10 +19,13 @@
                         <a id="@("trust-name-" + projectRow.Index)" class="govuk-link" asp-page="@link" asp-route-id="@projectRow.Item.Id">@projectRow.Item.TrustName</a>
                     </strong>
                 </div>
-                <div id="@("application-reference" + projectRow.Index)" class="govuk-!-margin-top-1">
-                    <strong>Application Reference:</strong>
-                    <span>@projectRow.Item.ApplciationReference</span>
-                </div>
+                @if (projectRow.Item.ApplciationReference is not null)
+                {
+                    <div id="@("application-reference" + projectRow.Index)" class="govuk-!-margin-top-1">
+                        <strong>Application Reference:</strong>
+                        <span>@projectRow.Item.ApplciationReference</span>
+                    </div>
+                }                
                 <div id="@("region-" + projectRow.Index)" class="govuk-!-margin-top-1">
                     <strong>Region:</strong>
                     <span if="projectRow.Item.Regions.IsEmpty()" class="empty">Empty</span>
