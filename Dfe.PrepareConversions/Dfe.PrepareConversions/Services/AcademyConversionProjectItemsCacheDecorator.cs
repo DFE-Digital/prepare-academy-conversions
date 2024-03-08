@@ -66,6 +66,10 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       await _innerRepository.CreateProject(sponsoredProject);
    }
+   public async Task CreateFormAMatProject(CreateNewFormAMatProject sponsoredProject)
+   {
+      await _innerRepository.CreateFormAMatProject(sponsoredProject);
+   }
 
    public async Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject)
    {

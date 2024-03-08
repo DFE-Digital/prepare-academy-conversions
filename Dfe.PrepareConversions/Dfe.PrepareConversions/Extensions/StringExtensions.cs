@@ -23,4 +23,5 @@ public static class StringExtensions
          _ => @string,
       };
    }
+
 }

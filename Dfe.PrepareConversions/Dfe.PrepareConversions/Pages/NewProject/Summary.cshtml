@@ -2,6 +2,7 @@
 @using Dfe.PrepareConversions.Pages.Shared
 @using System.Globalization
 @using Dfe.Academisation.ExtensionMethods
+@using Dfe.PrepareConversions.Pages.SponsoredProject
 @model Dfe.PrepareConversions.Pages.SponsoredProject.SummaryModel
 @{
     Layout = "_Layout";
@@ -22,11 +23,11 @@
       { "redirect", Links.NewProject.Summary.Page }
    };
 
-    var backLink = Model.HasSchoolApplied.ToLower().Equals("yes") || Model.HasPreferredTrust.ToLower().Equals("yes") ? Links.NewProject.SearchTrusts.Page : Links.NewProject.PreferredTrust.Page;
+    var backLink = SummaryModel.DetermineBackLink(Model.HasSchoolApplied?.ToLower().Equals("yes") ?? false, Model.HasPreferredTrust?.ToLower().Equals("yes") ?? false, Model.ProposedTrustName is not null);
 }
 
 @section BeforeMain
-    {
+{
     <partial name="_BackLink" model="@(new BackLink(backLink, routeParams))" />
 }
 
@@ -162,8 +163,46 @@
                         Change<span class="govuk-visually-hidden">Trust name</span>
                     </a>
                 </dd>
+                </div>
+                @* Is this conversion part of a FAM? *@
+                <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Is this conversion part of the formation of a new trust?
+                </dt>
+                <dd class="govuk-summary-list__value" data-cy="school-apply">
+                    @Model.IsFormAMat.ToSentenceCase()
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    
+                </dd>
             </div>
     </div>
+    @if (Model.ProposedTrustName != null)
+    {
+        <div class="govuk-grid-column-two-thirds">
+
+            <h2 class="govuk-heading-m">
+                Incoming trust
+            </h2>
+        </div>
+
+        <div class="govuk-grid-column-full">
+
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Name
+                    </dt>
+                    <dd class="govuk-summary-list__value" data-cy="trust-name">
+                        @Model.ProposedTrustName
+                    </dd>
+                    <dd class="govuk-summary-list__actions">                        
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    }
     @if (Model.Trust != null)
     {
         <div class="govuk-grid-column-two-thirds">
@@ -186,7 +225,7 @@
                     </dd>
                     <dd class="govuk-summary-list__actions">
                         <a asp-page="@Links.NewProject.SearchTrusts.Page" class="govuk-link" data-cy="change-trust"
-                        asp-all-route-data="@backLinkRouteParams">
+                           asp-all-route-data="@backLinkRouteParams">
                             Change<span class="govuk-visually-hidden">Trust name</span>
                         </a>
                     </dd>

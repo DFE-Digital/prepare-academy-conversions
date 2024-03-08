@@ -104,6 +104,17 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
 
       if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
+   public async Task CreateFormAMatProject(CreateNewFormAMatProject newProject)
+   {
+      HttpClient httpClient = _httpClientFactory.CreateAcademisationClient();
+
+      ApiResponse<string> result = await _httpClientService.Post<CreateNewFormAMatProject, string>(
+         httpClient,
+         @"conversion-project/FormAMatProject",
+         newProject);
+
+      if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+   }
 
    public async Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
    {

@@ -10,25 +10,31 @@ using EstablishmentDto = Dfe.Academies.Contracts.V4.Establishments.Establishment
 
 namespace Dfe.PrepareConversions.Pages.SponsoredProject;
 
-public class SchoolApplyModel : PageModel
+public class CreateNewFormAMatModel : PageModel
 {
    private readonly ErrorService _errorService;
    private readonly IGetEstablishment _getEstablishment;
 
-   public SchoolApplyModel(IGetEstablishment getEstablishment, ErrorService errorService)
+   public CreateNewFormAMatModel(IGetEstablishment getEstablishment, ErrorService errorService)
    {
       _getEstablishment = getEstablishment;
       _errorService = errorService;
    }
    [BindProperty]
+   public string IsFormAMat { get; set; }
+   [BindProperty]
    public string HasSchoolApplied { get; set; }
+   [BindProperty(Name = "proposed-trust-name")]
+   public string ProposedTrustName { get; set; }
 
    public string Urn { get; set; }
 
-   public async Task<IActionResult> OnGet(string urn, string hasSchoolApplied)
+   public async Task<IActionResult> OnGet(string urn, string isFormAMat, string hasSchoolApplied, string proposedTrustName)
    {
       ProjectListFilters.ClearFiltersFrom(TempData);
-      HasSchoolApplied = hasSchoolApplied ?? "yes"; // Default to Yes if not used backlink to access
+      HasSchoolApplied = hasSchoolApplied;
+      IsFormAMat = isFormAMat ?? "yes"; // Default to Yes if not used backlink to access
+      ProposedTrustName = proposedTrustName ?? null;
 
       EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
       Urn = establishment.Urn;
@@ -39,16 +45,16 @@ public class SchoolApplyModel : PageModel
    public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect)
    {
 
-      if (HasSchoolApplied.IsNullOrEmpty())
+      if (ProposedTrustName.IsNullOrEmpty() || ProposedTrustName.Length <= 2)
       {
-         _errorService.AddError("HasSchoolApplied", "Select yes if the school has applied for academy conversion");
+         _errorService.AddError("ProposedTrustName", "Please enter a proposed trust name with more than three characters");
          return Page();
       }
-      //var nextPage = HasSchoolApplied.ToLower().Equals("yes") ? Links.NewProject.SearchTrusts.Page : Links.NewProject.PreferredTrust.Page; 
-      var nextPage = Links.NewProject.IsThisFormAMat.Page;
+      var nextPage = Links.NewProject.Summary.Page;
+
 
       redirect = string.IsNullOrEmpty(redirect) ? nextPage : redirect;
 
-      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied });
+      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied, IsFormAMat, ProposedTrustName });
    }
 }
