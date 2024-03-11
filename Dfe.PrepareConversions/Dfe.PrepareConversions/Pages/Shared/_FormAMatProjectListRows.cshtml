@@ -19,7 +19,7 @@
                         <a id="@("trust-name-" + projectRow.Index)" class="govuk-link" asp-page="@link" asp-route-id="@projectRow.Item.Id">@projectRow.Item.TrustName</a>
                     </strong>
                 </div>
-                @if (projectRow.Item.ApplciationReference is not null)
+                @if (projectRow.Item.ApplciationReference is not null || projectRow.Item.ApplciationReference != string.Empty)
                 {
                     <div id="@("application-reference" + projectRow.Index)" class="govuk-!-margin-top-1">
                         <strong>Application Reference:</strong>
