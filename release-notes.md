@@ -1,5 +1,37 @@
 ## NEXT
 
+* Changed Feedback Banner: The feedback banner has been updated to better capture user insights and improve engagement.
+* Accessibility Adjustments: Removed phone numbers from the Accessibility section.
+* Updated Project Filters: Filters on Conversions now include Ministry of Justice component (MoJ) and Trust search.
+* Content Replacement in Trust Template: Replaced all content in the trust template with new guidance, removing references to KIM.
+* Bug Fixes:
+    * Resolved a bug with School Search.
+    * Fixed a pagination issue.
+    * Addressed a bug with clearing filters, ensuring filters reset correctly for new searches.
+* Added New Start a Conversion Journeys:
+    * Enabled creation of Special Educational Needs (SEN) Projects.
+    * Enabled creation of Pupil Referral Unit (PRU) projects.
+    * Allowed any Conversion project to be initiated without an application form, broadening the scope for project initiation.
+* New Task Lists:
+    * Introduced a new task list specifically for PRU schools.
+    * Introduced a new task list for SEN schools, tailored to the unique requirements of SEN conversions.
+* Grant Amount Logic: Implemented logic for calculating grant amounts for SEN and PRU conversions.
+* New Tab for Form a MAT Projects: Added a dedicated tab for Form a Multi-Academy Trust (MAT) projects, improving organization and accessibility of these projects.
+* Data Export Functionality: Facilitated the export of data into spreadsheets for reporting purposes.
+* Project Enhancements:
+    * Made Read Only Form a MAT projects editable using the voluntary tasklist.
+    * Projects showing in the new Form a MAT tab for better visibility and organization.
+    * Grouped Form a MAT projects within the Application by the proposed trust.
+    * Displayed conversion type on the Project.
+* Record Decision Enhancements:
+    * Added a Withdrawn Status to accurately record a decision when a project is withdrawn.
+    * Introduced AO (Advisory Officer) date to record decisions, enhancing decision tracking.
+    * Added DAO (Designated Advisory Officer) and AO date to the Export spreadsheet.
+* Ability to add Conversion projects within the application.
+* SEN Specific additions to the school overview.
+
+## 1.4.0
+
 * Ability to add Conversion projects within the application
 * SEN Specific additions to the school overview
 
