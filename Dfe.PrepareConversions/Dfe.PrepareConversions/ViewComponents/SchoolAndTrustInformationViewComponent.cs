@@ -33,7 +33,7 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
       SchoolAndTrustInformationViewModel viewModel = new()
       {
          Id = project.Id.ToString(),
-         IsDao = project.ApplicationReceivedDate is null,
+         IsDao = project.AcademyTypeAndRoute is AcademyTypeAndRoutes.Sponsored,
          RecommendationForProject = project.RecommendationForProject,
          Author = project.Author,
          ClearedBy = project.ClearedBy,
