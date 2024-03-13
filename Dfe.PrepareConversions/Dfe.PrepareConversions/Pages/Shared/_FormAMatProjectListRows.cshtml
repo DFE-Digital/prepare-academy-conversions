@@ -19,7 +19,7 @@
                         <a id="@("trust-name-" + projectRow.Index)" class="govuk-link" asp-page="@link" asp-route-id="@projectRow.Item.Id">@projectRow.Item.TrustName</a>
                     </strong>
                 </div>
-                @if (projectRow.Item.ApplciationReference is not null || projectRow.Item.ApplciationReference != string.Empty)
+                @if (projectRow.Item.ApplciationReference is not null && projectRow.Item.ApplciationReference != string.Empty)
                 {
                     <div id="@("application-reference" + projectRow.Index)" class="govuk-!-margin-top-1">
                         <strong>Application Reference:</strong>
@@ -37,7 +37,7 @@
                     <span if="projectRow.Item.LocalAuthorities.IsPresent()">@projectRow.Item.LocalAuthorities</span>
                 </div>
                 <div class="govuk-!-margin-top-1">
-                    <span id="@("schools-" + projectRow.Index)"><strong>Schools included</strong> @projectRow.Item.SchoolNames</span>
+                    <span id="@("schools-" + projectRow.Index)"><strong>Schools included:</strong> @projectRow.Item.SchoolNames</span>
                 </div>
                 <div id="@("assigned-to-" + projectRow.Index)" class="do govuk-!-margin-top-1">
                     <strong>Assigned to:</strong>
