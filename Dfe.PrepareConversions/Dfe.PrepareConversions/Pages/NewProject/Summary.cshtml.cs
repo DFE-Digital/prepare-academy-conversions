@@ -75,15 +75,30 @@ public class SummaryModel : PageModel
 
       return RedirectToPage(Links.ProjectList.Index.Page);
    }
+   /// <summary>
+   /// Determines the appropriate back link based on the application's current state in the New conversion journey.
+   /// </summary>
+   /// <param name="hasSchoolApplied">Indicates whether the school is voluntary or sponsored.</param>
+   /// <param name="hasPreferredTrust">Indicates whether there is a preferred trust for the sponsored conversion.</param>
+   /// <param name="hasProposedTrustName">Indicates whether a proposed trust name has been provided (Only happens in the creation of a FAM journey currently).</param>
+   /// <returns>A string representing the URL to which the user should be directed.</returns>
    public static string DetermineBackLink(bool hasSchoolApplied, bool hasPreferredTrust, bool hasProposedTrustName)
    {
-      return hasProposedTrustName switch
+      // If a proposed trust name has been provided it means it's the new FAM route, return the link to create a new form for a MAT.
+      if (hasProposedTrustName)
       {
-         true => Links.NewProject.CreateNewFormAMat.Page,
-         _ when hasSchoolApplied => Links.NewProject.SearchTrusts.Page,
-         _ when hasPreferredTrust => Links.NewProject.PreferredTrust.Page,
-         _ => Links.NewProject.SearchTrusts.Page,
-      };
-   }
+         return Links.NewProject.CreateNewFormAMat.Page;
+      }
+      // If the school has applied or a preferred trust has been specified, return the search trusts page as both will need to search trust.
+      else if (hasSchoolApplied || hasPreferredTrust)
+      {
+         return Links.NewProject.SearchTrusts.Page;
+      }
+      // If it's not of the above cases it suggests that it is a sponsored conversion without a preferred trust
+      else
+      {
+         return Links.NewProject.PreferredTrust.Page;
+      }
 
+   }
 }
