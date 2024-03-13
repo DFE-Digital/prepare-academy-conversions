@@ -15,7 +15,11 @@ public class Form7ReceivedIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_and_update_form_7_received()
    {
-      AcademyConversionProject project = AddGetProject(p => p.ApplicationReceivedDate = null);
+      AcademyConversionProject project = AddGetProject(p =>
+      {
+         p.ApplicationReceivedDate = null;
+         p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored;
+      });
       AddPatchConfiguredProject(project, x =>
       {
          x.Form7Received = "Yes";
@@ -23,7 +27,7 @@ public class Form7ReceivedIntegrationTests : BaseIntegrationTests
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
-      await NavigateAsync("Change", 0);
+      await NavigateAsync("Change", 1);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received");
       // Do the input boxes on the page default to none selected when coming from an empty value
@@ -48,7 +52,7 @@ public class Form7ReceivedIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_show_error_summary_when_there_is_an_API_error()
    {
-      AcademyConversionProject project = AddGetProject(p => p.ApplicationReceivedDate = null);
+      AcademyConversionProject project = AddGetProject(p => { p.ApplicationReceivedDate = null; p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored; });
       AddPatchConfiguredProject(project, x =>
       {
          x.Form7Received = "Yes";
@@ -56,7 +60,7 @@ public class Form7ReceivedIntegrationTests : BaseIntegrationTests
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
-      await NavigateAsync("Change", 0);
+      await NavigateAsync("Change", 1);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/form-7-received");
       // Do the input boxes on the page default to none selected when coming from an empty value
