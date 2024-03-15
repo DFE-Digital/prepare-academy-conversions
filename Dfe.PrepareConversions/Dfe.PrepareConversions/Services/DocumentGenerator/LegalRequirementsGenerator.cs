@@ -16,12 +16,12 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
             {
                build.AddHeading("Legal requirements", HeadingLevel.One);
                build.AddTable(new List<TextElement[]>
-               {
-                  new[] { new TextElement { Value = "Management commitee resolution", Bold = true }, new TextElement { Value = document.GoverningBodyResolution } },
-                  new[] { new TextElement { Value = "Consultation", Bold = true }, new TextElement { Value = document.Consultation } },
-                  new[] { new TextElement { Value = "Diocesan consent", Bold = true }, new TextElement { Value = document.DiocesanConsent } },
-                  new[] { new TextElement { Value = "Foundation consent", Bold = true }, new TextElement { Value = document.FoundationConsent } },
-               });
+                    {
+                        DocumentGeneratorStringSanitiser.CreateTextElements("Management committee resolution", document.GoverningBodyResolution ?? "N/A"),
+                        DocumentGeneratorStringSanitiser.CreateTextElements("Consultation", document.Consultation ?? "N/A"),
+                        DocumentGeneratorStringSanitiser.CreateTextElements("Diocesan consent", document.DiocesanConsent ?? "N/A"),
+                        DocumentGeneratorStringSanitiser.CreateTextElements("Foundation consent", document.FoundationConsent ?? "N/A"),
+                    });
                build.AddParagraph("");
             });
          }
@@ -29,6 +29,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          {
             builder.ReplacePlaceholderWithContent("LegalRequirements", build =>
             {
+               // If the academy route is sponsored, no legal requirements are displayed
             });
          }
       }
