@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.FormAMat;
@@ -26,7 +27,7 @@ public class ProjectListModel : PaginatedPageModel
    protected override ApiV2PagingInfo Paging { get; set; }
    public IEnumerable<FormAMatProjectListViewModel> Projects { get; set; }
    public int ProjectCount => Projects.Count();
-
+   protected string NameOfUser => User?.FindFirstValue("name") ?? string.Empty;
    public int TotalProjects { get; set; }
 
    [BindProperty]
