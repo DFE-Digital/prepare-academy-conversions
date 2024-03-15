@@ -9,177 +9,91 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
 {
    public static class SchoolAndTrustInformationAndProjectDatesGenerator
    {
-      public static void AddSchoolAndTrustInfoAndProjectDates(DocumentBuilder documentBuilder,
-         AcademyConversionProject project)
+      public static void AddSchoolAndTrustInfoAndProjectDates(DocumentBuilder documentBuilder, AcademyConversionProject project)
       {
          AddAcademyRouteInfo(documentBuilder, project);
          AddAdvisoryBoardDetails(documentBuilder, project);
          AddLocalAuthorityAndSponsorDetails(documentBuilder, project);
       }
+
       private static void AddLocalAuthorityAndSponsorDetails(IDocumentBuilder builder, AcademyConversionProject project)
       {
          List<TextElement[]> localAuthorityAndSponsorDetails = new()
-      {
-         new[]
-         {
-            new TextElement { Value = "Local authority", Bold = true },
-            new TextElement { Value = project.LocalAuthority }
-         },
-         new[]
-         {
-            new TextElement { Value = "Sponsor name", Bold = true },
-            new TextElement { Value = project.SponsorName }
-         },
-         new[]
-         {
-            new TextElement { Value = "Sponsor reference number", Bold = true },
-            new TextElement { Value = project.SponsorReferenceNumber }
-         }
-      };
+            {
+                DocumentGeneratorStringSanitiser.CreateTextElements("Local authority", project.LocalAuthority),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Sponsor name", project.SponsorName),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Sponsor reference number", project.SponsorReferenceNumber)
+            };
 
          builder.ReplacePlaceholderWithContent("LocalAuthorityAndSponsorDetails", body =>
          {
             body.AddTable(localAuthorityAndSponsorDetails);
          });
       }
+
       private static void AddAdvisoryBoardDetails(IDocumentBuilder builder, AcademyConversionProject project)
       {
          List<TextElement[]> advisoryBoardDetails = new()
-      {
-         new[]
-         {
-            new TextElement { Value = "Date of advisory board", Bold = true },
-            new TextElement { Value = project.HeadTeacherBoardDate.ToDateString()}
-         },
-         new[]
-         {
-            new TextElement { Value = "Proposed academy opening date", Bold = true },
-            new TextElement { Value = project.ProposedAcademyOpeningDate.ToDateString() }
-         },
-         new[]
-         {
-            new TextElement { Value = "Previous advisory board", Bold = true },
-            new TextElement { Value = project.PreviousHeadTeacherBoardDate.ToDateString() }
-         }
-      };
+            {
+                DocumentGeneratorStringSanitiser.CreateTextElements("Date of advisory board", project.HeadTeacherBoardDate.ToDateString()),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Proposed academy opening date", project.ProposedAcademyOpeningDate.ToDateString()),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Previous advisory board", project.PreviousHeadTeacherBoardDate.ToDateString())
+            };
 
          builder.ReplacePlaceholderWithContent("AdvisoryBoardDetails", body => body.AddTable(advisoryBoardDetails));
-
       }
+
       private static void AddAcademyRouteInfo(IDocumentBuilder builder, AcademyConversionProject project)
       {
-         List<TextElement[]> academyRouteInfo = new();
-         switch (project.AcademyTypeAndRoute)
+         List<TextElement[]> academyRouteInfo = project.AcademyTypeAndRoute switch
          {
-            case AcademyTypeAndRoutes.Voluntary:
-               academyRouteInfo = VoluntaryRouteInfo(project);
-               break;
-            case AcademyTypeAndRoutes.Sponsored:
-               academyRouteInfo = SponsoredRouteInfo(project);
-               break;
-         }
+            AcademyTypeAndRoutes.Voluntary => VoluntaryRouteInfo(project),
+            AcademyTypeAndRoutes.Sponsored => SponsoredRouteInfo(project),
+            _ => new List<TextElement[]>()
+         };
 
          builder.ReplacePlaceholderWithContent("AcademyRouteInfo", body =>
          {
             body.AddHeading("Conversion details", HeadingLevel.One);
             body.AddTable(academyRouteInfo);
          });
-
       }
 
       private static List<TextElement[]> VoluntaryRouteInfo(AcademyConversionProject project)
       {
-         List<TextElement[]> voluntaryRouteInfo = new()
-      {
-         new[]
-         {
-            new TextElement { Value = "Academy type and route", Bold = true },
-            new TextElement { Value = project.AcademyTypeAndRoute }
-         },
-         new[]
-         {
-            new TextElement { Value = "Grant funding amount", Bold = true },
-            new TextElement { Value = project.ConversionSupportGrantAmount.ToMoneyString(true) }
-         },
-         new[]
-         {
-            new TextElement { Value = "Grant funding reason", Bold = true },
-            new TextElement { Value = project.ConversionSupportGrantChangeReason }
-         },
-         new[]
-         {
-            new TextElement { Value = "Recommendation", Bold = true },
-            new TextElement { Value = project.RecommendationForProject }
-         },
-      };
+         var voluntaryRouteInfo = new List<TextElement[]>
+            {
+                DocumentGeneratorStringSanitiser.CreateTextElements("Academy type and route", project.AcademyTypeAndRoute),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding amount", project.ConversionSupportGrantAmount.ToMoneyString(true)),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding reason", project.ConversionSupportGrantChangeReason),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Recommendation", project.RecommendationForProject)
+            };
 
          if (project.SchoolType.ToLower().Contains("pupil referral unit"))
          {
-            voluntaryRouteInfo.Add(new[]
-            {
-               new TextElement { Value = "Number of sites", Bold = true },
-               new TextElement { Value = project.ConversionSupportGrantNumberOfSites}
-            }
-         );
+            voluntaryRouteInfo.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Number of sites", project.ConversionSupportGrantNumberOfSites.ToString()));
          }
 
          return voluntaryRouteInfo;
-
       }
+
       private static List<TextElement[]> SponsoredRouteInfo(AcademyConversionProject project)
       {
-         List<TextElement[]> sponsoredRouteInfo = new()
-      {
-         new[]
-         {
-            new TextElement { Value = "Academy type and route", Bold = true },
-            new TextElement { Value = project.AcademyTypeAndRoute}
-         },
-         new[]
-         {
-            new TextElement { Value = "Grant funding type", Bold = true },
-            new TextElement { Value = project.ConversionSupportGrantType }
-         },
-         new[]
-         {
-            new TextElement { Value = "Grant funding amount", Bold = true },
-            new TextElement { Value = project.ConversionSupportGrantAmount.ToMoneyString(true) }
-         },
-         new[]
-         {
-            new TextElement { Value = "Grant funding reason", Bold = true },
-            new TextElement { Value = project.ConversionSupportGrantChangeReason }
-         },
-         new[]
-         {
-            new TextElement { Value = "Is the school applying for an EIG (Environmental Improvement Grant)?", Bold = true },
-            new TextElement { Value = project.ConversionSupportGrantEnvironmentalImprovementGrant }
-         },
-         new[]
-         {
-            new TextElement { Value = "Has the Schools Notification Mailbox (SNM) received a Form 7?", Bold = true },
-            new TextElement { Value = project.Form7Received }
-         },
-         new[]
-         {
-            new TextElement { Value = "Date SNM received Form 7", Bold = true },
-            new TextElement { Value = project.Form7ReceivedDate.ToDateString() }
-         },
-         new[]
-         {
-            new TextElement { Value = "Date directive academy order (DAO) pack sent", Bold = true },
-            new TextElement { Value = project.DaoPackSentDate.ToDateString() }
-         },
-      };
+         var sponsoredRouteInfo = new List<TextElement[]>
+            {
+                DocumentGeneratorStringSanitiser.CreateTextElements("Academy type and route", project.AcademyTypeAndRoute),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding type", project.ConversionSupportGrantType),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding amount", project.ConversionSupportGrantAmount.ToMoneyString(true)),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding reason", project.ConversionSupportGrantChangeReason),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Is the school applying for an EIG (Environmental Improvement Grant)?", project.ConversionSupportGrantEnvironmentalImprovementGrant),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Has the Schools Notification Mailbox (SNM) received a Form 7?", project.Form7Received),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Date SNM received Form 7", project.Form7ReceivedDate.ToDateString()),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Date directive academy order (DAO) pack sent", project.DaoPackSentDate.ToDateString())
+            };
 
          if (project.SchoolType.ToLower().Contains("pupil referral unit"))
          {
-            sponsoredRouteInfo.Add(new[]
-            {
-               new TextElement { Value = "Number of sites", Bold = true },
-               new TextElement { Value = project.ConversionSupportGrantNumberOfSites}
-            }
-         );
+            sponsoredRouteInfo.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Number of sites", project.ConversionSupportGrantNumberOfSites.ToString()));
          }
 
          return sponsoredRouteInfo;

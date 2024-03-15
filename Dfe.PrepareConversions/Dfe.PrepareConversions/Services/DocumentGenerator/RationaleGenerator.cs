@@ -4,29 +4,30 @@ using Dfe.PrepareConversions.DocumentGeneration.Interfaces;
 using Dfe.PrepareConversions.Models;
 using System.Collections.Generic;
 
-namespace Dfe.PrepareConversions.Services.DocumentGenerator;
-
-public static class RationaleGenerator
+namespace Dfe.PrepareConversions.Services.DocumentGenerator
 {
-   public static void AddRationale(IDocumentBuilder builder, HtbTemplate document, AcademyConversionProject project)
+   public static class RationaleGenerator
    {
-      builder.ReplacePlaceholderWithContent("Rationale", build =>
+      public static void AddRationale(IDocumentBuilder builder, HtbTemplate document, AcademyConversionProject project)
       {
-         build.AddHeading("Rationale", HeadingLevel.One);
-         if (project.AcademyTypeAndRoute.Equals(AcademyTypeAndRoutes.Sponsored) is false)
+         builder.ReplacePlaceholderWithContent("Rationale", build =>
          {
-            build.AddHeading("Rationale for the project", HeadingLevel.Two);
-            build.AddTable(new List<TextElement[]>
+            build.AddHeading("Rationale", HeadingLevel.One);
+            if (!project.AcademyTypeAndRoute.Equals(AcademyTypeAndRoutes.Sponsored))
             {
-               new[] { new TextElement { Value = document.RationaleForProject ?? "N/A" } }
-            });
-         }
-         
-         build.AddHeading("Rationale for the trust or sponsor", HeadingLevel.Two);
-         build.AddTable(new List<TextElement[]>
-         {
-            new[] { new TextElement { Value = document.RationaleForTrust ?? "N/A" } }
+               build.AddHeading("Rationale for the project", HeadingLevel.Two);
+               build.AddTable(new List<TextElement[]>
+                    {
+                        DocumentGeneratorStringSanitiser.CreateSingleTextElement(document.RationaleForProject ?? "N/A")
+                    });
+            }
+
+            build.AddHeading("Rationale for the trust or sponsor", HeadingLevel.Two);
+            build.AddTable(new List<TextElement[]>
+                {
+                    DocumentGeneratorStringSanitiser.CreateSingleTextElement(document.RationaleForTrust ?? "N/A")
+                });
          });
-      });
+      }
    }
 }

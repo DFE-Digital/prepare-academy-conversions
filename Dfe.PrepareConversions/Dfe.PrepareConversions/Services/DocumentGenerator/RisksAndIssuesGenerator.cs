@@ -13,9 +13,9 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          {
             build.AddHeading("Risks and issues", HeadingLevel.One);
             build.AddTable(new List<TextElement[]>
-            {
-               new[] { new TextElement { Value = document.RisksAndIssues ?? "N/A" } }
-            });
+                {
+                    DocumentGeneratorStringSanitiser.CreateSingleTextElement(document.RisksAndIssues ?? "N/A")
+                });
          });
       }
    }
