@@ -51,7 +51,7 @@ public class IndexModel : PaginatedPageModel
       if (filterParametersResponse.Success)
       {
          Filters.AvailableStatuses = filterParametersResponse.Body.Statuses.ConvertAll(r => r.ToSentenceCase());
-         Filters.AvailableDeliveryOfficers = filterParametersResponse.Body.AssignedUsers.OrderByDescending(o => o.Equals(ConvertToFirstLast(NameOfUser), StringComparison.OrdinalIgnoreCase))
+         Filters.AvailableDeliveryOfficers = filterParametersResponse.Body.AssignedUsers.OrderByDescending(o => o.Equals(ProjectListHelper.ConvertToFirstLast(NameOfUser), StringComparison.OrdinalIgnoreCase))
             .ThenBy(o => o)
             .ToList();
          Filters.AvailableRegions = filterParametersResponse.Body.Regions;
@@ -84,17 +84,5 @@ public class IndexModel : PaginatedPageModel
          return fileStreamResult;
       }
    }
-   // Convert from "LASTNAME, Firstname" to "Firstname Lastname"
-   public static string ConvertToFirstLast(string name)
-   {
-      if (string.IsNullOrEmpty(name)) return string.Empty;
 
-      var parts = name.Split(',');
-      if (parts.Length == 2)
-      {
-         return $"{parts[1].Trim()} {parts[0].Trim()}";
-      }
-
-      return name;
-   }
 }

@@ -49,7 +49,7 @@ public class ProjectListModel : PaginatedPageModel
       if (filterParametersResponse.Success)
       {
          Filters.AvailableStatuses = filterParametersResponse.Body.Statuses.ConvertAll(r => r.ToSentenceCase());
-         Filters.AvailableDeliveryOfficers = filterParametersResponse.Body.AssignedUsers.OrderByDescending(o => o.Equals(ConvertToFirstLast(NameOfUser), StringComparison.OrdinalIgnoreCase))
+         Filters.AvailableDeliveryOfficers = filterParametersResponse.Body.AssignedUsers.OrderByDescending(o => o.Equals(ProjectListHelper.ConvertToFirstLast(NameOfUser), StringComparison.OrdinalIgnoreCase))
             .ThenBy(o => o)
             .ToList();
          Filters.AvailableRegions = filterParametersResponse.Body.Regions;
