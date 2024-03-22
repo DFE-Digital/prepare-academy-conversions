@@ -7,9 +7,11 @@ using Dfe.PrepareConversions.Models.ProjectList;
 using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.ProjectList;
@@ -26,6 +28,7 @@ public class IndexModel : PaginatedPageModel
    protected override ApiV2PagingInfo Paging { get; set; }
    public IEnumerable<ProjectListViewModel> Projects { get; set; }
    public int ProjectCount => Projects.Count();
+   protected string NameOfUser => User?.FindFirstValue("name") ?? string.Empty;
 
    public int TotalProjects { get; set; }
 
@@ -48,7 +51,9 @@ public class IndexModel : PaginatedPageModel
       if (filterParametersResponse.Success)
       {
          Filters.AvailableStatuses = filterParametersResponse.Body.Statuses.ConvertAll(r => r.ToSentenceCase());
-         Filters.AvailableDeliveryOfficers = filterParametersResponse.Body.AssignedUsers;
+         Filters.AvailableDeliveryOfficers = filterParametersResponse.Body.AssignedUsers.OrderByDescending(o => o.Equals(ProjectListHelper.ConvertToFirstLast(NameOfUser), StringComparison.OrdinalIgnoreCase))
+            .ThenBy(o => o)
+            .ToList();
          Filters.AvailableRegions = filterParametersResponse.Body.Regions;
          Filters.AvailableLocalAuthorities = filterParametersResponse.Body.LocalAuthorities;
          Filters.AvailableAdvisoryBoardDates = filterParametersResponse.Body.AdvisoryBoardDates;
@@ -79,4 +84,5 @@ public class IndexModel : PaginatedPageModel
          return fileStreamResult;
       }
    }
+
 }
