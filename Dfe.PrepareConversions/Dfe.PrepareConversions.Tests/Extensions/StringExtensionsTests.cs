@@ -117,7 +117,7 @@ public class StringExtensionsTests
    [Fact]
    public void Should_convert_sponsored_form_a_mat_route_to_the_correct_description()
    {
-      AcademyTypeAndRoutes.Voluntary.RouteDescription(true).Should().Be("Form a MAT Sponsored conversion");
+      AcademyTypeAndRoutes.Sponsored.RouteDescription(true).Should().Be("Form a MAT Sponsored conversion");
    }
 
    [Fact]
