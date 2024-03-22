@@ -8,19 +8,18 @@ using Microsoft.AspNetCore.Html;
 using System;
 using System.IO;
 using System.Reflection;
-
-// Document Section Generators
-using static Dfe.PrepareConversions.Services.DocumentGenerator.SchoolAndTrustInformationAndProjectDatesGenerator;
-using static Dfe.PrepareConversions.Services.DocumentGenerator.SchoolOverviewGenerator;
-using static Dfe.PrepareConversions.Services.DocumentGenerator.OfstedInformationGenerator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.EducationalAttendanceGenerator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.KeyStage2Generator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.KeyStage4Generator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.KeyStage5Generator;
+using static Dfe.PrepareConversions.Services.DocumentGenerator.LegalRequirementsGenerator;
+using static Dfe.PrepareConversions.Services.DocumentGenerator.OfstedInformationGenerator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.RationaleGenerator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.RisksAndIssuesGenerator;
-using static Dfe.PrepareConversions.Services.DocumentGenerator.LegalRequirementsGenerator;
+// Document Section Generators
+using static Dfe.PrepareConversions.Services.DocumentGenerator.SchoolAndTrustInformationAndProjectDatesGenerator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.SchoolBudgetInformationGenerator;
+using static Dfe.PrepareConversions.Services.DocumentGenerator.SchoolOverviewGenerator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.SchoolPupilForecastGenerator;
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator

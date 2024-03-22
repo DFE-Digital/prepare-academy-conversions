@@ -217,7 +217,11 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
    [Fact]
    public async Task Should_display_the_dao_pack_sent_date_row_if_the_project_is_a_directed_academy_order()
    {
-      AcademyConversionProject project = AddGetProject(project => project.ApplicationReceivedDate = null);
+      AcademyConversionProject project = AddGetProject(project =>
+      {
+         project.ApplicationReceivedDate = null;
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored;
+      });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Conversion details");
@@ -232,6 +236,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       AcademyConversionProject project = AddGetProject(project =>
       {
          project.ApplicationReceivedDate = null;
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored;
          project.DaoPackSentDate = null;
       });
 
@@ -249,6 +254,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       AcademyConversionProject project = AddGetProject(project =>
       {
          project.ApplicationReceivedDate = null;
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored;
          project.DaoPackSentDate = yesterday;
       });
 
@@ -273,7 +279,13 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
    [Fact]
    public async Task Should_navigate_to_dao_pack_sent_date_edit_screen_when_the_change_link_is_clicked()
    {
-      AcademyConversionProject project = AddGetProject(project => project.ApplicationReceivedDate = null);
+      AcademyConversionProject project = AddGetProject(project =>
+      {
+         project.ApplicationReceivedDate = null;
+         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored;
+      }
+      );
+
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Conversion details");

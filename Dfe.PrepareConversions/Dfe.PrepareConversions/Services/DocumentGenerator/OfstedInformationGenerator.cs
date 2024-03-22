@@ -14,32 +14,21 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          SchoolPerformance schoolPerformance = document.SchoolPerformance;
 
          List<TextElement[]> ofstedInformation = new()
-      {
-         new[] { new TextElement { Value = "School name", Bold = true }, new TextElement { Value = project.SchoolName } },
-         new[]
-         {
-            new TextElement { Value = "Latest full inspection date", Bold = true },
-            new TextElement { Value = schoolPerformance.InspectionEndDate?.ToString("d MMMM yyyy") ?? "No data" }
-         },
-         new[] { new TextElement { Value = "Overall effectiveness", Bold = true }, new TextElement { Value = schoolPerformance.OverallEffectiveness.DisplayOfstedRating() } },
-         new[] { new TextElement { Value = "Quality of education", Bold = true }, new TextElement { Value = schoolPerformance.QualityOfEducation.DisplayOfstedRating() } },
-         new[] { new TextElement { Value = "Behaviour and attitudes", Bold = true }, new TextElement { Value = schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating() } },
-         new[] { new TextElement { Value = "Personal development", Bold = true }, new TextElement { Value = schoolPerformance.PersonalDevelopment.DisplayOfstedRating() } },
-         new[]
-         {
-            new TextElement { Value = "Effectiveness of leadership and management", Bold = true },
-            new TextElement { Value = schoolPerformance.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating() }
-         }
-      };
+            {
+                DocumentGeneratorStringSanitiser.CreateTextElements("School name", project.SchoolName),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Latest full inspection date", schoolPerformance.InspectionEndDate?.ToString("d MMMM yyyy") ?? "No data"),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Overall effectiveness", schoolPerformance.OverallEffectiveness.DisplayOfstedRating()),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Quality of education", schoolPerformance.QualityOfEducation.DisplayOfstedRating()),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Behaviour and attitudes", schoolPerformance.BehaviourAndAttitudes.DisplayOfstedRating()),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Personal development", schoolPerformance.PersonalDevelopment.DisplayOfstedRating()),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Effectiveness of leadership and management", schoolPerformance.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating())
+            };
 
          PopulateIfLatestInspectionIsSection8(schoolPerformance, ofstedInformation);
          PopulateIfEarlyYearsProvision(schoolPerformance, ofstedInformation);
          PopulateIfSixthFormProvision(schoolPerformance, ofstedInformation);
 
-         ofstedInformation.Add(new[]
-         {
-         new TextElement { Value = "Additional information", Bold = true }, new TextElement { Value = project.SchoolPerformanceAdditionalInformation }
-      });
+         ofstedInformation.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Additional information", project.SchoolPerformanceAdditionalInformation));
 
          builder.ReplacePlaceholderWithContent("SchoolPerformanceData", build =>
          {
@@ -53,11 +42,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
       {
          if (schoolPerformance.SixthFormProvision.DisplayOfstedRating().HasData())
          {
-            ofstedInformation.Add(new[]
-            {
-               new TextElement { Value = "Sixth form provision", Bold = true },
-               new TextElement { Value = schoolPerformance.SixthFormProvision.DisplayOfstedRating() }
-            });
+            ofstedInformation.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Sixth form provision", schoolPerformance.SixthFormProvision.DisplayOfstedRating()));
          }
       }
 
@@ -65,11 +50,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
       {
          if (schoolPerformance.EarlyYearsProvision.DisplayOfstedRating().HasData())
          {
-            ofstedInformation.Add(new[]
-            {
-               new TextElement { Value = "Early years provision", Bold = true },
-               new TextElement { Value = schoolPerformance.EarlyYearsProvision.DisplayOfstedRating() }
-            });
+            ofstedInformation.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Early years provision", schoolPerformance.EarlyYearsProvision.DisplayOfstedRating()));
          }
       }
 
@@ -77,12 +58,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
       {
          if (schoolPerformance.LatestInspectionIsSection8)
          {
-            ofstedInformation.Insert(1,
-               new[]
-               {
-                  new TextElement { Value = "Latest short inspection date", Bold = true },
-                  new TextElement { Value = schoolPerformance.DateOfLatestSection8Inspection?.ToString("d MMMM yyyy") }
-               });
+            ofstedInformation.Insert(1, DocumentGeneratorStringSanitiser.CreateTextElements("Latest short inspection date", schoolPerformance.DateOfLatestSection8Inspection?.ToString("d MMMM yyyy") ?? "No data"));
          }
       }
    }
