@@ -9,10 +9,10 @@ public static class CreateProjectMapper
 {
    public static CreateNewFormAMatProject MapFormAMatToDto(EstablishmentDto establishment, TrustDto trust, string HasSchoolApplied, string HasPreferredTrust)
    {
-      var conversion = MapToDto(establishment, trust, HasSchoolApplied, HasPreferredTrust);
+      var conversion = MapToDto(establishment, trust, HasSchoolApplied, HasPreferredTrust, true);
       return new CreateNewFormAMatProject(conversion);
    }
-   public static CreateNewProject MapToDto(EstablishmentDto establishment, TrustDto trust, string HasSchoolApplied, string HasPreferredTrust)
+   public static CreateNewProject MapToDto(EstablishmentDto establishment, TrustDto trust, string HasSchoolApplied, string HasPreferredTrust, bool isFormAMat = false)
    {
       if (establishment == null)
       {
@@ -38,6 +38,6 @@ public static class CreateProjectMapper
             trust.ReferenceNumber);
       }
 
-      return new CreateNewProject(createSchool, createTrust, HasSchoolApplied, HasPreferredTrust);
+      return new CreateNewProject(createSchool, createTrust, HasSchoolApplied, HasPreferredTrust, isFormAMat);
    }
 }
