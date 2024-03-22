@@ -32,7 +32,7 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
       ReturnPage = @Links.ProjectList.Index.Page;
       var returnToFormAMatMenu = TempData["returnToFormAMatMenu"] as bool?;
 
-      if (Project.IsFormAMat && returnToFormAMatMenu.HasValue && returnToFormAMatMenu.Value)
+      if (Project.IsFormAMat.HasValue && Project.IsFormAMat.Value && returnToFormAMatMenu.HasValue && returnToFormAMatMenu.Value)
       {
          ReturnId = Project.FormAMatProjectId.ToString();
          ReturnPage = @Links.FormAMat.OtherSchoolsInMat.Page;

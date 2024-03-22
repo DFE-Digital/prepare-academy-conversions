@@ -11,7 +11,7 @@
             <span id="@("urn-" + Model.Index)">URN: @Model.Item.SchoolURN</span>
         </h2>
         <p class="govuk-!-margin-top-3">
-            <div data-cy="route">Route: @Model.Item.TypeAndRoute.RouteDescription()</div>
+            <div data-cy="route">Route: @Model.Item.TypeAndRoute.RouteDescription(true)</div>
             <div id="@("application-to-join-trust-" + Model.Index)">Application to join a trust: @Model.Item.NameOfTrust</div>
             @if (@Model.Item.LocalAuthority.IsEmpty() is false)
             {

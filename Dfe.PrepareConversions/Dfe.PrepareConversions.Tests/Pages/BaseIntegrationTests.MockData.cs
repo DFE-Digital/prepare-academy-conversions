@@ -18,7 +18,7 @@ namespace Dfe.PrepareConversions.Tests.Pages;
 
 public abstract partial class BaseIntegrationTests
 {
-   private readonly string[] _routes = { AcademyTypeAndRoutes.Voluntary, AcademyTypeAndRoutes.Sponsored, AcademyTypeAndRoutes.FormAMat };
+   private readonly string[] _routes = { AcademyTypeAndRoutes.Voluntary, AcademyTypeAndRoutes.Sponsored };
 
    protected IEnumerable<AcademyConversionProject> AddGetProjects(Action<AcademyConversionProject> postSetup = null,
                                                                   int? recordCount = null,

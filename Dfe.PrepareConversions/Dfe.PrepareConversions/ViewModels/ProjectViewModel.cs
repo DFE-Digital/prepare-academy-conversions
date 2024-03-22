@@ -12,6 +12,7 @@ public class ProjectViewModel : ProjectTypeBase
    {
       Id = project.Id.ToString();
       FormAMatProjectId = project.FormAMatProjectId;
+      IsFormAMat = project.IsFormAMat;
       ProjectStatus = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Value;
       ProjectStatusColour = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Colour;
       ApplicationReferenceNumber = project.ApplicationReferenceNumber;
@@ -129,6 +130,7 @@ public class ProjectViewModel : ProjectTypeBase
 
    public string Id { get; }
    public int? FormAMatProjectId { get; }
+   public bool? IsFormAMat { get; }
    public string ProjectStatus { get; }
    public string ProjectStatusColour { get; }
    public string ApplicationReferenceNumber { get; set; }

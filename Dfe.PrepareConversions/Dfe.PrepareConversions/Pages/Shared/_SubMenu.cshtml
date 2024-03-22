@@ -21,7 +21,7 @@
             School application form
          </sub-menu-link>
       </li>
-        <li if="@Model.IsFormAMat" class="moj-sub-navigation__item">
+        <li if="@Model.IsFormAMat.HasValue && Model.IsFormAMat.Value;" class="moj-sub-navigation__item">
             <sub-menu-link class="moj-sub-navigation__link"
                            asp-page="@Links.FormAMat.Index.Page"
                            asp-route-id="@id">

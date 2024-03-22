@@ -9,7 +9,7 @@
     {
         var projectRow = project.Row(index);
 
-        var isFormAMat = project.IsFormAMat;
+        var isFormAMat = project.IsFormAMat.HasValue && project.IsFormAMat.Value;
         var matTypeClass = isFormAMat ? "form-a-mat" : "join-a-mat";        
         var link = @Links.TaskList.Index.Page;
 
@@ -48,7 +48,7 @@
                 <div id="@("type-and-route-" + projectRow.Index)" class="govuk-!-margin-top-1">
                     <strong>Route:</strong>
                     <span if="projectRow.Item.TypeAndRoute.IsEmpty()" class="empty">Unconfirmed</span>
-                    <span if="projectRow.Item.TypeAndRoute.IsPresent()">@projectRow.Item.TypeAndRoute.RouteDescription()</span>
+                    <span if="projectRow.Item.TypeAndRoute.IsPresent()">@projectRow.Item.TypeAndRoute.RouteDescription(project.IsFormAMat)</span>
                 </div>
                @if (!isFormAMat)
                {

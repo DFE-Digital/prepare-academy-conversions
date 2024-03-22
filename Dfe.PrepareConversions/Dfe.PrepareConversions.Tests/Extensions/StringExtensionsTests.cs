@@ -99,32 +99,37 @@ public class StringExtensionsTests
    [Fact]
    public void Should_be_able_to_convert_voluntary_conversion_route_to_the_correct_description()
    {
-      AcademyTypeAndRoutes.Voluntary.RouteDescription().Should().Be("Voluntary conversion");
+      AcademyTypeAndRoutes.Voluntary.RouteDescription(false).Should().Be("Voluntary conversion");
    }
 
    [Fact]
    public void Should_be_able_to_convert_sponsored_conversion_route_to_the_correct_description()
    {
-      AcademyTypeAndRoutes.Sponsored.RouteDescription().Should().Be("Sponsored conversion");
+      AcademyTypeAndRoutes.Sponsored.RouteDescription(false).Should().Be("Sponsored conversion");
    }
 
    [Fact]
-   public void Should_convert_form_a_mat_route_to_the_correct_description()
+   public void Should_convert_voluntary_form_a_mat_route_to_the_correct_description()
    {
-      AcademyTypeAndRoutes.FormAMat.RouteDescription().Should().Be("Form a MAT");
+      AcademyTypeAndRoutes.Voluntary.RouteDescription(true).Should().Be("Form a MAT Voluntary conversion");
+   }
+
+   [Fact]
+   public void Should_convert_sponsored_form_a_mat_route_to_the_correct_description()
+   {
+      AcademyTypeAndRoutes.Voluntary.RouteDescription(true).Should().Be("Form a MAT Sponsored conversion");
    }
 
    [Fact]
    public void Should_pass_through_unrecognised_routes_unchanged()
    {
-      "This is unknown".RouteDescription().Should().Be("This is unknown");
+      "This is unknown".RouteDescription(null).Should().Be("This is unknown");
    }
 
    [Fact]
    public void Should_ignore_capitalisation_and_spaces_in_routes()
    {
-      "CoN  vEr  TeR".RouteDescription().Should().Be("Voluntary conversion");
-      "FORMaMAT".RouteDescription().Should().Be("Form a MAT");
+      "CoN  vEr  TeR".RouteDescription(null).Should().Be("Voluntary conversion");
    }
 
    [Theory]
@@ -133,6 +138,6 @@ public class StringExtensionsTests
    [InlineData("")]
    public void RouteDescription_Should_Return_EmptyString_When_Passed_NullOrWhitespace(string input)
    {
-      input.RouteDescription().Should().Be(string.Empty);
+      input.RouteDescription(null).Should().Be(string.Empty);
    }
 }
