@@ -99,7 +99,7 @@ public class AcademyConversionProjectRepositoryTests
             It.IsAny<HttpClient>(), @"legacy/project/new-conversion-project", It.IsAny<CreateNewProject>()))
          .ReturnsAsync(new ApiResponse<string>(HttpStatusCode.OK, string.Empty));
 
-      CreateNewProject project = new(null, null, null, null);
+      CreateNewProject project = new(null, null, null, null, false);
       await subject.CreateProject(project);
 
       httpService.Verify(m => m.Post<CreateNewProject, string>(
@@ -114,7 +114,7 @@ public class AcademyConversionProjectRepositoryTests
             It.IsAny<HttpClient>(), @"legacy/project/new-conversion-project", It.IsAny<CreateNewProject>()))
          .ReturnsAsync(new ApiResponse<string>(HttpStatusCode.InternalServerError, string.Empty));
 
-      CreateNewProject project = new(null, null, null, null);
+      CreateNewProject project = new(null, null, null, null, false);
       ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => subject.CreateProject(project));
 
       Assert.Equal("Request to Api failed | StatusCode - InternalServerError", exception.Message);
