@@ -16,11 +16,11 @@
 	  <PackageReference Include="Dfe.Academisation.ExtensionMethods" Version="2.0.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
 	  <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
-	  <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
 	  <PackageReference Include="Microsoft.FeatureManagement" Version="2.5.1" />
 	  <PackageReference Include="Microsoft.Graph" Version="4.53.0" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-	  <PackageReference Include="System.Net.Http.Json" Version="7.0.0" />
+	  <PackageReference Include="System.Net.Http.Json" Version="7.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
