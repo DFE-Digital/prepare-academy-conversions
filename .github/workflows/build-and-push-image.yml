@@ -56,7 +56,7 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Azure Container Registry login
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.AZURE_ACR_CLIENTID }}
           password: ${{ secrets.AZURE_ACR_SECRET }}
@@ -116,12 +116,12 @@ jobs:
     environment: ${{ needs.set-env.outputs.environment }}
     steps:
       - name: Azure login with ACA credentials
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_ACA_CREDENTIALS }}
 
       - name: Update Azure Container Apps Revision
-        uses: azure/CLI@v1
+        uses: azure/CLI@v2
         id: azure
         with:
           azcliversion: 2.45.0
