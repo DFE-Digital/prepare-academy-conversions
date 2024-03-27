@@ -20,7 +20,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.Decision
          ReturnPage = @Links.ProjectList.Index.Page;
          var returnToFormAMatMenu = TempData["returnToFormAMatMenu"] as bool?;
 
-         if (Project.IsFormAMat.HasValue && Project.IsFormAMat.Value && returnToFormAMatMenu.HasValue && returnToFormAMatMenu.Value)
+         if (Project.IsFormAMat && returnToFormAMatMenu.HasValue && returnToFormAMatMenu.Value)
          {
             ReturnId = Project.FormAMatProjectId.ToString();
             ReturnPage = @Links.FormAMat.OtherSchoolsInMat.Page;

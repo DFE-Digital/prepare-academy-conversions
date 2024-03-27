@@ -9,7 +9,7 @@
     {
         var projectRow = project.Row(index);
 
-        var isFormAMat = project.IsFormAMat.HasValue && project.IsFormAMat.Value;
+        var isFormAMat = project.IsFormAMat;
         var matTypeClass = isFormAMat ? "form-a-mat" : "join-a-mat";        
         var link = @Links.TaskList.Index.Page;
 

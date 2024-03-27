@@ -7,7 +7,7 @@ public abstract class ProjectTypeBase
 {
    protected abstract string TypeAndRouteValue { get; }
 
-   public bool? IsFormAMat { get; init; }
+   public bool IsFormAMat { get; init; }
 
    public virtual bool IsExternalSchoolApplication { get; } = false;
 
