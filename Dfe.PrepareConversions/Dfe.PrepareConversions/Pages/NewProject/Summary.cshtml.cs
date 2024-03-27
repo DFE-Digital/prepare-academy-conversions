@@ -63,7 +63,7 @@ public class SummaryModel : PageModel
       return Page();
    }
 
-   public async Task<IActionResult> OnPostAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string applicationReference)
+   public async Task<IActionResult> OnPostAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat, string applicationReference)
    {
       Academies.Contracts.V4.Establishments.EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
 
@@ -72,25 +72,26 @@ public class SummaryModel : PageModel
       {
          trust = await _trustRepository.GetTrustByUkprn(ukprn);
       }
+
       if (proposedTrustName != null)
       {
          trust.Name = proposedTrustName;
-      }
-      if (proposedTrustName != null)
-      {
          await _academyConversionProjectRepository.CreateFormAMatProject(CreateProjectMapper.MapFormAMatToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust));
+      }
+      
+      if(isFormAMat.ToLower() == "yes" && proposedTrustName == null)
+      {
+         var createdProject = (await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust)));
+         var formAMatProject = (await _academyConversionProjectRepository.SearchFormAMatProjects(applicationReference));
+
+         int projectId = createdProject.Body.Id;
+         var formAMatProjectID = formAMatProject.Body.First().Id;
+
+         await _academyConversionProjectRepository.SetFormAMatProjectReference(projectId, new SetFormAMatProjectReference(projectId, formAMatProjectID));
       }
       else
       {
          await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust));
-         
-         var results = await _academyConversionProjectRepository.SearchFormAMatProjects(applicationReference);
-         var formAMatProjectID = results.Body.First().Id;
-
-         //TODO:EA : get the actual project ID that was just created
-         int projectId = 1;
-
-         await _academyConversionProjectRepository.SetFormAMatProjectReference(projectId, new SetFormAMatProjectReference(projectId, formAMatProjectID));
       }
 
 
