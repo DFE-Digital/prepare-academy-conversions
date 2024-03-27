@@ -27,4 +27,7 @@ public class PathFor
 
    public static string GetAllProjectsV2 => "/conversion-project/projects";
    public static string GetFormAMatProjects => "/conversion-project/FormAMatProjects";
+   public static string SearchFormAMatProjects => "/conversion-project/search-formamatprojects";
+   public static string SetFormAMatProjectReference => "/conversion-project/{0}/SetFormAMatProjectReference";
+
 }

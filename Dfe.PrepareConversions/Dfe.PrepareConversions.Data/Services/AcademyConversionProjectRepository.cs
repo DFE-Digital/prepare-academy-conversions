@@ -323,4 +323,23 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       HttpResponseMessage result = await _apiClient.SetIncomingTrust(id, setIncomingTrustDataModel);
       if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
+
+   public async Task<ApiResponse<IEnumerable<FormAMatProject>>> SearchFormAMatProjects(string searchTerm)
+   {
+      HttpResponseMessage response = await _apiClient.SearchFormAMatProjects(searchTerm);
+      if (!response.IsSuccessStatusCode)
+      {
+         return new ApiResponse<IEnumerable<FormAMatProject>>(response.StatusCode, Enumerable.Empty<FormAMatProject>());
+      }
+
+      IEnumerable<FormAMatProject> outerResponse = await response.Content.ReadFromJsonAsync<IEnumerable<FormAMatProject>>();
+
+      return new ApiResponse<IEnumerable<FormAMatProject>>(response.StatusCode, outerResponse);
+   }
+
+   public async Task SetFormAMatProjectReference(int id, SetFormAMatProjectReference setFormAMatProjectReference)
+   {
+      HttpResponseMessage result = await _apiClient.SetFormAMatProjectReference(id, setFormAMatProjectReference);
+      if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+   }
 }

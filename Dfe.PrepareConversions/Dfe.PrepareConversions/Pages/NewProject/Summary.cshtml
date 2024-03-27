@@ -166,16 +166,29 @@
                 </div>
                 @* Is this conversion part of a FAM? *@
                 <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Is this conversion part of the formation of a new trust?
-                </dt>
-                <dd class="govuk-summary-list__value" data-cy="school-apply">
-                    @Model.IsFormAMat.ToSentenceCase()
-                </dd>
-                <dd class="govuk-summary-list__actions">
+                   <dt class="govuk-summary-list__key">
+                       Is this conversion part of the formation of a new trust?
+                   </dt>
+                   <dd class="govuk-summary-list__value" data-cy="school-apply">
+                       @Model.IsFormAMat.ToSentenceCase()
+                   </dd>
+                   <dd class="govuk-summary-list__actions">
                     
-                </dd>
-            </div>
+                   </dd>
+               </div>
+
+               @* Is the project already in prepare? *@
+               <div class="govuk-summary-list__row">
+                   <dt class="govuk-summary-list__key">
+                       Is the form a MAT/SAT project already in Prepare?
+                   </dt>
+                   <dd class="govuk-summary-list__value" data-cy="school-apply">
+                     @Model.IsProjectInPrepare.ToSentenceCase()
+                   </dd>
+                   <dd class="govuk-summary-list__actions">
+
+                   </dd>
+               </div>
     </div>
     @if (Model.ProposedTrustName != null)
     {
@@ -200,6 +213,19 @@
                     <dd class="govuk-summary-list__actions">                        
                     </dd>
                 </div>
+                @if (Model.ApplicationReference != null)
+                {
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Application Reference
+                        </dt>
+                        <dd class="govuk-summary-list__value" data-cy="trust-name">
+                            @Model.ApplicationReference
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                        </dd>
+                    </div>
+                }
             </dl>
         </div>
     }

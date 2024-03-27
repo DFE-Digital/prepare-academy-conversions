@@ -63,4 +63,6 @@ public interface IAcademyConversionProjectRepository
    Task SetIncomingTrust(int id, SetIncomingTrustDataModel setIncomingTrustDataModel);
    Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters();
    Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote addProjectNote);
+   Task<ApiResponse<IEnumerable<FormAMatProject>>> SearchFormAMatProjects(string searchTerm);
+   Task SetFormAMatProjectReference(int id, SetFormAMatProjectReference setFormAMatProjectReference);
 }

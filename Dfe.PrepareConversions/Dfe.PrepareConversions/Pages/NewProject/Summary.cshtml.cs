@@ -1,8 +1,10 @@
 using Dfe.Academies.Contracts.V4.Trusts;
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Mappings;
 using Dfe.PrepareConversions.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq;
@@ -31,9 +33,12 @@ public class SummaryModel : PageModel
    public string HasPreferredTrust { get; set; }
    public string ProposedTrustName { get; set; }
    public string IsFormAMat { get; set; }
+   public string IsProjectInPrepare { get; set; }
+   public string IsProjectAlreadyInPrepare { get; set; }
+   public string ApplicationReference { get; set; }
 
 
-   public async Task<IActionResult> OnGetAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat)
+   public async Task<IActionResult> OnGetAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat, string isProjectInPrepare, string applicationReference)
    {
       Establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
       if (!string.IsNullOrEmpty(ukprn))
@@ -45,12 +50,20 @@ public class SummaryModel : PageModel
       HasPreferredTrust = hasPreferredTrust;
       // Default to no as it's most common
       IsFormAMat = isFormAMat ?? "no";
+      IsProjectInPrepare = isProjectInPrepare ?? "no";
       ProposedTrustName = proposedTrustName ?? null;
+      ApplicationReference = applicationReference ?? null;
+
+      if (ApplicationReference != null)
+      {
+         var results = await _academyConversionProjectRepository.SearchFormAMatProjects(ApplicationReference);
+         ProposedTrustName = results.Body.First().ProposedTrustName;
+      }
 
       return Page();
    }
 
-   public async Task<IActionResult> OnPostAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName)
+   public async Task<IActionResult> OnPostAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string applicationReference)
    {
       Academies.Contracts.V4.Establishments.EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
 
@@ -70,6 +83,14 @@ public class SummaryModel : PageModel
       else
       {
          await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust));
+         
+         var results = await _academyConversionProjectRepository.SearchFormAMatProjects(applicationReference);
+         var formAMatProjectID = results.Body.First().Id;
+
+         //TODO:EA : get the actual project ID that was just created
+         int projectId = 1;
+
+         await _academyConversionProjectRepository.SetFormAMatProjectReference(projectId, new SetFormAMatProjectReference(projectId, formAMatProjectID));
       }
 
 

@@ -2,6 +2,7 @@
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.NewProject;
 using Dfe.PrepareConversions.Data.Services;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -125,5 +126,15 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    public async Task SetIncomingTrust(int id, SetIncomingTrustDataModel setIncomingTrustDataModel)
    {
       await _innerRepository.SetIncomingTrust(id, setIncomingTrustDataModel);
+   }
+
+   public async Task<ApiResponse<IEnumerable<FormAMatProject>>> SearchFormAMatProjects(string searchTerm)
+   {
+      return await _innerRepository.SearchFormAMatProjects(searchTerm);
+   }
+
+   public async Task SetFormAMatProjectReference(int id, SetFormAMatProjectReference setFormAMatProjectReference)
+   {
+      await _innerRepository.SetFormAMatProjectReference(id, setFormAMatProjectReference);
    }
 }

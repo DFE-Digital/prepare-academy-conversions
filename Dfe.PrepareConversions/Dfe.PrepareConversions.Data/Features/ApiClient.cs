@@ -1,6 +1,8 @@
-﻿using Dfe.PrepareConversions.Data.Models;
+﻿using Dfe.PrepareConversions.Data.Extensions;
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Microsoft.FeatureManagement;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -143,4 +145,18 @@ public class ApiClient : IApiClient
       return await AcademisationClient.PostAsync(PathFor.GetFormAMatProjects, JsonContent.Create(searchModel));
    }
 
+   public async Task<HttpResponseMessage> SearchFormAMatProjects(string searchTerm)
+   {
+      var queryParameters = new Dictionary<string, string>
+      {
+         { "searchTerm", searchTerm },
+      };
+
+      return await ActiveApplicationClient.GetAsync($"{PathFor.SearchFormAMatProjects}{queryParameters.ToQueryString()}");
+   }
+
+   public async Task<HttpResponseMessage> SetFormAMatProjectReference(int id, SetFormAMatProjectReference setFormAMatProjectReference)
+   {
+      return await AcademisationClient.PutAsync(string.Format(PathFor.SetFormAMatProjectReference, id), JsonContent.Create(setFormAMatProjectReference));
+   }
 }
