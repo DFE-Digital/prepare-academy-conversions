@@ -40,16 +40,6 @@ public class ProjectListViewModelTests
    }
 
    [Fact]
-   public void Should_be_considered_a_form_a_mat_project_if_the_route_is_form_a_met()
-   {
-      new ProjectListViewModel { TypeAndRoute = AcademyTypeAndRoutes.FormAMat }
-         .IsFormAMat.Should().BeTrue();
-
-      new ProjectListViewModel { TypeAndRoute = "Anything else" }
-         .IsFormAMat.Should().BeFalse();
-   }
-
-   [Fact]
    public void Should_be_considered_a_voluntary_conversion_if_the_project_is_neither_sponsored_nor_form_a_mat()
    {
       new ProjectListViewModel { TypeAndRoute = AcademyTypeAndRoutes.Voluntary, ApplicationReceivedDate = DateTime.Today.ToString(CultureInfo.InvariantCulture) }

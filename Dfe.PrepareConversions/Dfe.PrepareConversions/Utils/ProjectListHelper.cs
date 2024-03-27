@@ -15,6 +15,7 @@ namespace Dfe.PrepareConversions.Utils
          return new ProjectListViewModel
          {
             Id = academyConversionProject.Id.ToString(),
+            IsFormAMat = academyConversionProject.IsFormAMat.HasValue && academyConversionProject.IsFormAMat.Value,
             SchoolURN = academyConversionProject.Urn.HasValue ? academyConversionProject.Urn.ToString() : "",
             SchoolName = academyConversionProject.SchoolName,
             LocalAuthority = academyConversionProject.LocalAuthority,
@@ -30,7 +31,19 @@ namespace Dfe.PrepareConversions.Utils
             Region = academyConversionProject.Region
          };
       }
+      // Convert from "LASTNAME, Firstname" to "Firstname Lastname"
+      public static string ConvertToFirstLast(string name)
+      {
+         if (string.IsNullOrEmpty(name)) return string.Empty;
 
+         var parts = name.Split(',');
+         if (parts.Length == 2)
+         {
+            return $"{parts[1].Trim()} {parts[0].Trim()}";
+         }
+
+         return name;
+      }
       public static FormAMatProjectListViewModel Build(FormAMatProject formAMATProject)
       {
          // This 

@@ -189,6 +189,22 @@
 
                    </dd>
                </div>
+            </div>
+          
+            @if (Model.HasSchoolApplied.ToLower().Equals("no") && Model.IsFormAMat.ToLower().Equals("no"))
+            {
+                <div class="govuk-summary-list__row" vis>
+                    <dt class="govuk-summary-list__key">
+                        Is there a preferred trust for this school?
+                    </dt>
+                    <dd class="govuk-summary-list__value" data-cy="school-apply">
+                        @Model.HasPreferredTrust
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                    </dd>
+                </div>
+            }
+
     </div>
     @if (Model.ProposedTrustName != null)
     {
@@ -210,7 +226,7 @@
                     <dd class="govuk-summary-list__value" data-cy="trust-name">
                         @Model.ProposedTrustName
                     </dd>
-                    <dd class="govuk-summary-list__actions">                        
+                    <dd class="govuk-summary-list__actions">
                     </dd>
                 </div>
                 @if (Model.ApplicationReference != null)

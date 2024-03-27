@@ -43,7 +43,6 @@ public class PreviewProjectTemplateTests : BaseIntegrationTests
 
    [Theory]
    [InlineData(AcademyTypeAndRoutes.Voluntary)]
-   [InlineData(AcademyTypeAndRoutes.FormAMat)]
    public async Task Given_Not_SponsoredConversion_When_Previewed_Then_LegalRequirements_Are_Shown(string routeToConversion)
    {
       void PostProjectSetup(AcademyConversionProject project)
@@ -58,7 +57,6 @@ public class PreviewProjectTemplateTests : BaseIntegrationTests
 
    [Theory]
    [InlineData(AcademyTypeAndRoutes.Voluntary)]
-   [InlineData(AcademyTypeAndRoutes.FormAMat)]
    public async Task Given_Not_SponsoredConversion_When_Previewed_Then_RationaleForProject_Is_Shown(string routeToConversion)
    {
       void PostProjectSetup(AcademyConversionProject project)
