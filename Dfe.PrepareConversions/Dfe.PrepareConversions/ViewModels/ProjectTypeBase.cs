@@ -6,6 +6,9 @@ namespace Dfe.PrepareConversions.ViewModels;
 public abstract class ProjectTypeBase
 {
    protected abstract string TypeAndRouteValue { get; }
+
+   public bool IsFormAMat { get; init; }
+
    public virtual bool IsExternalSchoolApplication { get; } = false;
 
 
@@ -14,7 +17,4 @@ public abstract class ProjectTypeBase
 
    public bool IsVoluntary => string.IsNullOrWhiteSpace(TypeAndRouteValue) is false &&
                               TypeAndRouteValue.Equals(AcademyTypeAndRoutes.Voluntary, StringComparison.InvariantCultureIgnoreCase);
-
-   public bool IsFormAMat => string.IsNullOrWhiteSpace(TypeAndRouteValue) is false &&
-                             TypeAndRouteValue.Equals(AcademyTypeAndRoutes.FormAMat, StringComparison.InvariantCultureIgnoreCase);
 }

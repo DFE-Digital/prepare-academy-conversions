@@ -15,6 +15,7 @@ namespace Dfe.PrepareConversions.Utils
          return new ProjectListViewModel
          {
             Id = academyConversionProject.Id.ToString(),
+            IsFormAMat = academyConversionProject.IsFormAMat.HasValue && academyConversionProject.IsFormAMat.Value,
             SchoolURN = academyConversionProject.Urn.HasValue ? academyConversionProject.Urn.ToString() : "",
             SchoolName = academyConversionProject.SchoolName,
             LocalAuthority = academyConversionProject.LocalAuthority,

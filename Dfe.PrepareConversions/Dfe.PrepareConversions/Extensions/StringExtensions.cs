@@ -4,22 +4,21 @@ using Dfe.Academisation.ExtensionMethods;
 
 public static class StringExtensions
 {
-   public static string RouteDescription(this string @string)
+   public static string RouteDescription(this string @string, bool? isFormAMat)
    {
       const string converter = nameof(converter);
       const string sponsored = nameof(sponsored);
-      const string formamat = nameof(formamat);
 
       if (string.IsNullOrWhiteSpace(@string))
       {
          return string.Empty;
       }
+      var stringPrefix = isFormAMat.HasValue && isFormAMat.Value ? "Form a MAT " : string.Empty;
 
       return @string.SquishToLower() switch
       {
-         sponsored => "Sponsored conversion",
-         converter => "Voluntary conversion",
-         formamat => "Form a MAT",
+         sponsored => stringPrefix + "Sponsored conversion",
+         converter => stringPrefix + "Voluntary conversion",
          _ => @string,
       };
    }
