@@ -78,11 +78,13 @@ public class SummaryModel : PageModel
          trust.Name = proposedTrustName;
          await _academyConversionProjectRepository.CreateFormAMatProject(CreateProjectMapper.MapFormAMatToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust));
       }
-      
-      if(isFormAMat.ToLower() == "yes" && proposedTrustName == null)
+
+      bool _isFormAMAT = isFormAMat.ToLower().Equals("yes");
+
+      if (_isFormAMAT && proposedTrustName == null)
       {
-         var createdProject = (await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust)));
-         var formAMatProject = (await _academyConversionProjectRepository.SearchFormAMatProjects(applicationReference));
+         var createdProject = await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust, _isFormAMAT));
+         var formAMatProject = await _academyConversionProjectRepository.SearchFormAMatProjects(applicationReference);
 
          int projectId = createdProject.Body.Id;
          var formAMatProjectID = formAMatProject.Body.First().Id;
