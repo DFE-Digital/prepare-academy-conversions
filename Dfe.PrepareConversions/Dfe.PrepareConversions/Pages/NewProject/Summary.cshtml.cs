@@ -4,7 +4,6 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Mappings;
 using Dfe.PrepareConversions.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq;
@@ -83,7 +82,7 @@ public class SummaryModel : PageModel
 
       if (_isFormAMAT && proposedTrustName == null)
       {
-         var createdProject = await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust, _isFormAMAT));
+         var createdProject = await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust, true));
          var formAMatProject = await _academyConversionProjectRepository.SearchFormAMatProjects(applicationReference);
 
          int projectId = createdProject.Body.Id;
