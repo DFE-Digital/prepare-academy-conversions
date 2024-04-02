@@ -100,7 +100,7 @@
       </header>
       <div class="app-summary-card__body">
          <dl class="govuk-summary-list">
-            <govuk-summary-list-row name="governing-body-resolution" label="Management Commitee Resolution" asp-route-id="@Model.Project.Id" value="@Model.Project.GoverningBodyResolution.SplitPascalCase()" asp-page="@Links.LegalRequirements.GoverningBodyResolution.Page" hidden-text="governing-body-resolution"/>
+                <govuk-summary-list-row name="governing-body-resolution" label="Management Committee Resolution" asp-route-id="@Model.Project.Id" value="@Model.Project.GoverningBodyResolution.SplitPascalCase()" asp-page="@Links.LegalRequirements.GoverningBodyResolution.Page" hidden-text="governing-body-resolution" />
             <govuk-summary-list-row name="consultation" label="Consultation" asp-route-id="@Model.Project.Id" value="@Model.Project.Consultation.SplitPascalCase()" asp-page="@Links.LegalRequirements.Consultation.Page" hidden-text="consultation"/>
             <govuk-summary-list-row name="diocesan-consent" label="Diocesan Consent" asp-route-id="@Model.Project.Id" value="@Model.Project.DiocesanConsent.SplitPascalCase()" asp-page="@Links.LegalRequirements.DiocesanConsent.Page" hidden-text="diocesan-consent"/>
             <govuk-summary-list-row name="foundation-consent" label="Foundation Consent" asp-route-id="@Model.Project.Id" value="@Model.Project.FoundationConsent.SplitPascalCase()" asp-page="@Links.LegalRequirements.FoundationConsent.Page" hidden-text="foundation-consent"/>
