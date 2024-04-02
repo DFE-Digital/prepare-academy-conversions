@@ -102,7 +102,7 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
          @"legacy/project/new-conversion-project",
          newProject);
 
-      if (!result.Success) 
+      if (result.Success is false) 
       {
          throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
       }
