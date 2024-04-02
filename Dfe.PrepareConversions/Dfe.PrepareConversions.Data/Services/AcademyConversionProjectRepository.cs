@@ -93,16 +93,22 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       return new ApiResponse<AcademyConversionProject>(updateResponse.StatusCode, project);
    }
 
-   public async Task CreateProject(CreateNewProject newProject)
+   public async Task<ApiResponse<AcademyConversionProject>> CreateProject(CreateNewProject newProject)
    {
       HttpClient httpClient = _httpClientFactory.CreateAcademisationClient();
 
-      ApiResponse<string> result = await _httpClientService.Post<CreateNewProject, string>(
+      ApiResponse<AcademyConversionProject> result = await _httpClientService.Post<CreateNewProject, AcademyConversionProject>(
          httpClient,
          @"legacy/project/new-conversion-project",
          newProject);
 
-      if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      if (result.Success is false) 
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+
+      return new ApiResponse<AcademyConversionProject>(result.StatusCode, result.Body);
+
    }
    public async Task CreateFormAMatProject(CreateNewFormAMatProject newProject)
    {
@@ -321,6 +327,25 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
    public async Task SetIncomingTrust(int id, SetIncomingTrustDataModel setIncomingTrustDataModel)
    {
       HttpResponseMessage result = await _apiClient.SetIncomingTrust(id, setIncomingTrustDataModel);
+      if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+   }
+
+   public async Task<ApiResponse<IEnumerable<FormAMatProject>>> SearchFormAMatProjects(string searchTerm)
+   {
+      HttpResponseMessage response = await _apiClient.SearchFormAMatProjects(searchTerm);
+      if (!response.IsSuccessStatusCode)
+      {
+         return new ApiResponse<IEnumerable<FormAMatProject>>(response.StatusCode, Enumerable.Empty<FormAMatProject>());
+      }
+
+      IEnumerable<FormAMatProject> outerResponse = await response.Content.ReadFromJsonAsync<IEnumerable<FormAMatProject>>();
+
+      return new ApiResponse<IEnumerable<FormAMatProject>>(response.StatusCode, outerResponse);
+   }
+
+   public async Task SetFormAMatProjectReference(int id, SetFormAMatProjectReference setFormAMatProjectReference)
+   {
+      HttpResponseMessage result = await _apiClient.SetFormAMatProjectReference(id, setFormAMatProjectReference);
       if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
 }

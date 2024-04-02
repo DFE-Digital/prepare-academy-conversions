@@ -53,7 +53,7 @@ public interface IAcademyConversionProjectRepository
    Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id);
    Task<ApiResponse<FormAMatProject>> GetFormAMatProjectById(int id);
    Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject);
-   Task CreateProject(CreateNewProject newProject);
+   Task<ApiResponse<AcademyConversionProject>> CreateProject(CreateNewProject newProject);
    Task CreateFormAMatProject(CreateNewFormAMatProject newProject);
    Task SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl);
    Task SetAssignedUser(int id, SetAssignedUserModel updatedAssignedUser);
@@ -63,4 +63,6 @@ public interface IAcademyConversionProjectRepository
    Task SetIncomingTrust(int id, SetIncomingTrustDataModel setIncomingTrustDataModel);
    Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters();
    Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote addProjectNote);
+   Task<ApiResponse<IEnumerable<FormAMatProject>>> SearchFormAMatProjects(string searchTerm);
+   Task SetFormAMatProjectReference(int id, SetFormAMatProjectReference setFormAMatProjectReference);
 }
