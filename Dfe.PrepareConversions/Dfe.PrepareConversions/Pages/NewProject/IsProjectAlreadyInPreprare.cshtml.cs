@@ -10,12 +10,12 @@ using EstablishmentDto = Dfe.Academies.Contracts.V4.Establishments.Establishment
 
 namespace Dfe.PrepareConversions.Pages.SponsoredProject;
 
-public class IsThisFormAMatModel : PageModel
+public class IsProjectAlreadyInPreprareModel : PageModel
 {
    private readonly ErrorService _errorService;
    private readonly IGetEstablishment _getEstablishment;
 
-   public IsThisFormAMatModel(IGetEstablishment getEstablishment, ErrorService errorService)
+   public IsProjectAlreadyInPreprareModel(IGetEstablishment getEstablishment, ErrorService errorService)
    {
       _getEstablishment = getEstablishment;
       _errorService = errorService;
@@ -25,13 +25,17 @@ public class IsThisFormAMatModel : PageModel
    [BindProperty]
    public string HasSchoolApplied { get; set; }
 
+   [BindProperty]
+   public string IsProjectInPrepare { get; set; }
+
    public string Urn { get; set; }
 
-   public async Task<IActionResult> OnGet(string urn, string isFormAMat, string hasSchoolApplied)
+   public async Task<IActionResult> OnGet(string urn, string isFormAMat, string hasSchoolApplied, string isProjectInPrepare)
    {
       ProjectListFilters.ClearFiltersFrom(TempData);
       HasSchoolApplied = hasSchoolApplied;
-      IsFormAMat = isFormAMat ?? "yes"; // Default to Yes if not used backlink to access
+      IsFormAMat = isFormAMat;
+      IsProjectInPrepare = isProjectInPrepare ?? "yes"; // Default to Yes if not used backlink to access
 
       EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
       Urn = establishment.Urn;
@@ -42,24 +46,24 @@ public class IsThisFormAMatModel : PageModel
    public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect)
    {
 
-      if (IsFormAMat.IsNullOrEmpty())
+      if (IsProjectInPrepare.IsNullOrEmpty())
       {
-         _errorService.AddError("IsFormAMat", "Select yes if the conversion is part of the formation of a new trust");
+         _errorService.AddError("Does project exists", "Select yes if the project already exists in Prepare");
          return Page();
       }
       string nextPage = null;
-      if (IsFormAMat.ToLower() == "yes")
+      if (IsProjectInPrepare.ToLower() == "yes")
       {
-         nextPage = Links.NewProject.IsProjectAlreadyInPrepare.Page;
+         nextPage = Links.NewProject.LinkFormAMatProject.Page;
       }
       else
       {
-         nextPage = HasSchoolApplied.ToLower().Equals("yes") ? Links.NewProject.SearchTrusts.Page : Links.NewProject.PreferredTrust.Page;
+         nextPage = Links.NewProject.CreateNewFormAMat.Page;
       }
 
 
       redirect = string.IsNullOrEmpty(redirect) ? nextPage : redirect;
 
-      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied, IsFormAMat });
+      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied, IsFormAMat, IsProjectInPrepare });
    }
 }

@@ -23,4 +23,6 @@ public interface IApiClient
    Task<HttpResponseMessage> SetPerformanceData(int id, SetPerformanceDataModel setPerformanceDataModel);
    Task<HttpResponseMessage> SetIncomingTrust(int id, SetIncomingTrustDataModel setIncomingTrustDataModel);
    Task<HttpResponseMessage> GetFormAMatProjectsAsync(AcademyConversionSearchModelV2 searchModel);
+   Task<HttpResponseMessage> SearchFormAMatProjects(string searchTerm);
+   Task<HttpResponseMessage> SetFormAMatProjectReference(int id, SetFormAMatProjectReference setFormAMatProjectReference);
 }

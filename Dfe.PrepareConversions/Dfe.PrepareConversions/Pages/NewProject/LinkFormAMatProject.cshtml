@@ -1,0 +1,53 @@
+﻿@page "/start-new-project/link-project"
+@using Dfe.PrepareConversions.Pages.Shared
+@model Dfe.PrepareConversions.Pages.SponsoredProject.LinkFormAMatProject
+
+@{
+    Layout = "_Layout";
+    ViewBag.Title = (!ViewData.ModelState.IsValid ? "Error: " : "") + "Is this conversion part of the formation of a new trust?";
+    var routeParams = new Dictionary<string, string>
+   {
+      { "urn", Request.Query["urn"] },
+      { "ukprn", Request.Query["ukprn"] },
+      { "hasSchoolApplied", Request.Query["hasSchoolApplied"] },
+      { "isFormAMat" , Request.Query["isFormAMat"]},
+      { "isProjectInPrepare" , Request.Query["isProjectInPrepare"]},
+      { "proposedTrustName" , Request.Query["ProposedTrustName"]},
+   };
+}
+
+@section BeforeMain
+{
+    <partial name="_BackLink" model="@(new BackLink(Links.NewProject.IsThisFormAMat.Page, routeParams))" />
+    <partial name="_ErrorSummary" />
+}
+
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+
+            <input hidden="" type="text" name="returnToSummary" value="no">
+            <input type="hidden" asp-for="Urn" />
+            <input type="hidden" asp-for="HasSchoolApplied" />
+            <input type="hidden" asp-for="IsFormAMat" />
+            <input type="hidden" asp-for="IsProjectInPrepare" />
+            
+            
+            <div class="govuk-form-group" @ModelState.GetErrorStyleClass()>
+                <h1 class="govuk-label-wrapper">
+                    <label class="govuk-label govuk-label--l" >
+                        Which MAT/SAT project do you want to link this conversion to?
+                    </label>
+                </h1>    
+                <p class="govuk-body">Enter the trust name, application reference or FAM reference of the existing form a MAT/SAT project</p>
+                <govuk-text-input name="application-reference" id="application-reference" asp-for="ApplicationReference" />
+            </div>
+
+            <button class="govuk-button pt-3" data-module="govuk-button" data-cy="select-common-submitbutton">
+                Continue
+            </button>
+        </form>
+
+    </div>

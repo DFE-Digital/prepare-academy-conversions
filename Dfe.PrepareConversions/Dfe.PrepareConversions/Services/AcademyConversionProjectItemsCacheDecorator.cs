@@ -2,6 +2,7 @@
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.NewProject;
 using Dfe.PrepareConversions.Data.Services;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -62,9 +63,10 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
       ApiResponse<FormAMatProject> project = await _innerRepository.GetFormAMatProjectById(id);
       return project;
    }
-   public async Task CreateProject(CreateNewProject sponsoredProject)
+   public async Task<ApiResponse<AcademyConversionProject>> CreateProject(CreateNewProject sponsoredProject)
    {
-      await _innerRepository.CreateProject(sponsoredProject);
+      ApiResponse<AcademyConversionProject> project = await _innerRepository.CreateProject(sponsoredProject);
+      return project;
    }
    public async Task CreateFormAMatProject(CreateNewFormAMatProject sponsoredProject)
    {
@@ -125,5 +127,15 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    public async Task SetIncomingTrust(int id, SetIncomingTrustDataModel setIncomingTrustDataModel)
    {
       await _innerRepository.SetIncomingTrust(id, setIncomingTrustDataModel);
+   }
+
+   public async Task<ApiResponse<IEnumerable<FormAMatProject>>> SearchFormAMatProjects(string searchTerm)
+   {
+      return await _innerRepository.SearchFormAMatProjects(searchTerm);
+   }
+
+   public async Task SetFormAMatProjectReference(int id, SetFormAMatProjectReference setFormAMatProjectReference)
+   {
+      await _innerRepository.SetFormAMatProjectReference(id, setFormAMatProjectReference);
    }
 }
