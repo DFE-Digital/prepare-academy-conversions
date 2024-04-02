@@ -7,6 +7,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.AzureAd;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Models;
+using Dfe.PrepareConversions.Routing;
 using Dfe.PrepareConversions.Security;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -68,6 +69,10 @@ public class Startup
          .AddViewOptions(options =>
          {
             options.HtmlHelperOptions.ClientValidationEnabled = false;
+         }).AddMvcOptions(options =>
+         {
+            options.MaxModelValidationErrors = 50;
+            options.Filters.Add(new MaintenancePageFilter(Configuration));
          });
 
       services.AddControllersWithViews()
