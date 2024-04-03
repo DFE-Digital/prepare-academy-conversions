@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<CodeAnalysisRuleSet>..\.sonarlint\dfe-digital_a2b-internalcsharp.ruleset</CodeAnalysisRuleSet>
 	</PropertyGroup>
 
@@ -10,16 +10,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Azure.Identity" Version="1.8.2" />
+	  <PackageReference Include="Azure.Identity" Version="1.10.4" />
 	  <PackageReference Include="Dfe.Academies.Contracts" Version="1.0.10" />
 	  <PackageReference Include="Dfe.Academisation.CorrelationIdMiddleware" Version="2.0.2" />
 	  <PackageReference Include="Dfe.Academisation.ExtensionMethods" Version="2.0.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-	  <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
-	  <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
-	  <PackageReference Include="Microsoft.FeatureManagement" Version="2.5.1" />
-	  <PackageReference Include="Microsoft.Graph" Version="4.53.0" />
-	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+	  <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
+	  <PackageReference Include="Microsoft.FeatureManagement" Version="3.2.0" />
+	  <PackageReference Include="Microsoft.Graph" Version="4.54.0" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	  <PackageReference Include="System.Net.Http.Json" Version="7.0.0" />
 	</ItemGroup>
 
