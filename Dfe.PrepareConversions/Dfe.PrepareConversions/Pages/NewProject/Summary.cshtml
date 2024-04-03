@@ -13,6 +13,7 @@
       { "urn", Model.Establishment.Urn },
       { "hasSchoolApplied", Model.HasSchoolApplied },
       { "ukprn", Model.Trust?.Ukprn },
+      { "isFormAMat", Model.IsFormAMat}
    };
 
     var backLinkRouteParams = new Dictionary<string, string>
@@ -20,7 +21,8 @@
       { "urn", Model.Establishment.Urn },
       { "ukprn", Model.Trust?.Ukprn },
       { "hasSchoolApplied", Model.HasSchoolApplied },
-      { "redirect", Links.NewProject.Summary.Page }
+      { "redirect", Links.NewProject.Summary.Page },
+      { "isFormAMat", Model.IsFormAMat}
    };
 
     var backLink = SummaryModel.DetermineBackLink(Model.HasSchoolApplied?.ToLower().Equals("yes") ?? false, Model.HasPreferredTrust?.ToLower().Equals("yes") ?? false, Model.ProposedTrustName is not null);

@@ -41,8 +41,7 @@
                         Which MAT/SAT project do you want to link this conversion to?
                     </label>
                 </h1>    
-                <p class="govuk-body">Enter the trust name, application reference or FAM reference of the existing form a MAT/SAT project</p>
-                <govuk-text-input name="application-reference" id="application-reference" asp-for="ApplicationReference" />
+                <partial name="_AutoComplete" model="@Model.AutoCompleteSearchModel" />
             </div>
 
             <button class="govuk-button pt-3" data-module="govuk-button" data-cy="select-common-submitbutton">
