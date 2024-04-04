@@ -30,6 +30,7 @@ locals {
   cdn_frontdoor_custom_domains                 = var.cdn_frontdoor_custom_domains
   cdn_frontdoor_host_redirects                 = var.cdn_frontdoor_host_redirects
   cdn_frontdoor_health_probe_protocol          = var.cdn_frontdoor_health_probe_protocol
+  enable_cdn_frontdoor_health_probe            = var.enable_cdn_frontdoor_health_probe
   key_vault_access_ipv4                        = var.key_vault_access_ipv4
   tfvars_filename                              = var.tfvars_filename
   enable_monitoring                            = var.enable_monitoring
