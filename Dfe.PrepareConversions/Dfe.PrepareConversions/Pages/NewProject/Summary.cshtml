@@ -261,7 +261,7 @@
         </div>
     }
 
-    @if (Model.ApplicationReference != null)
+    @if (Model.IsFormAMat != null)
     {
         <div class="govuk-grid-column-two-thirds">
 
@@ -283,9 +283,27 @@
                     </dd>
                     <dd class="govuk-summary-list__value"></dd>
                 </div>
-
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
+                @if (Model.FamReference != null)
+                {
+                    <div class="govuk-summary-list__row" isv>
+                        <dt class="govuk-summary-list__key">
+                        FAM Reference
+                    </dt>
+                    <dd class="govuk-summary-list__value" data-cy="a2b-reference">
+                        @Model.FamReference
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a asp-page="@Links.NewProject.LinkFormAMatProject.Page" class="govuk-link" data-cy="change-fam-reference"
+                           asp-all-route-data="@backLinkRouteParams">
+                            Change<span class="govuk-visually-hidden">FAM reference</span>
+                        </a>
+                    </dd>
+                </div>
+                }
+                @if (Model.ApplicationReference != null)
+                {
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
                         A2B Reference
                     </dt>
                     <dd class="govuk-summary-list__value" data-cy="a2b-reference">
@@ -298,6 +316,7 @@
                         </a>
                     </dd>
                 </div>
+                }
 
             </dl>
 

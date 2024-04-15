@@ -12,7 +12,8 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-        @if (Model.Project.ApplciationReference != null || Model.Project.ApplciationReference != string.Empty)
+        <span class="govuk-caption-xl">Form a MAT ref: @Model.Project.ReferenceNumber</span>
+        @if (!string.IsNullOrEmpty(Model.Project.ApplciationReference))
         {
             <span class="govuk-caption-xl">Application ref: @Model.Project.ApplciationReference</span>
         }        

@@ -35,9 +35,10 @@ public class SummaryModel : PageModel
    public string IsProjectInPrepare { get; set; }
    public string IsProjectAlreadyInPrepare { get; set; }
    public string ApplicationReference { get; set; }
+   public string FamReference { get; set; }
 
 
-   public async Task<IActionResult> OnGetAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat, string isProjectInPrepare, string applicationReference)
+   public async Task<IActionResult> OnGetAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat, string isProjectInPrepare, string famReference)
    {
       Establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
       if (!string.IsNullOrEmpty(ukprn))
@@ -51,18 +52,22 @@ public class SummaryModel : PageModel
       IsFormAMat = isFormAMat ?? "no";
       IsProjectInPrepare = isProjectInPrepare ?? "no";
       ProposedTrustName = proposedTrustName ?? null;
-      ApplicationReference = applicationReference ?? null;
+      FamReference = famReference ?? null;
+      ApplicationReference = null;
 
-      if (ApplicationReference != null)
+      if (FamReference != null)
       {
-         var results = await _academyConversionProjectRepository.SearchFormAMatProjects(ApplicationReference);
-         ProposedTrustName = results.Body.First().ProposedTrustName;
+         var results = await _academyConversionProjectRepository.SearchFormAMatProjects(FamReference);
+         var famProject = results.Body.First();
+
+         ProposedTrustName = famProject.ProposedTrustName;
+         ApplicationReference = string.IsNullOrEmpty(famProject.ApplicationReference) ? null : famProject.ApplicationReference;
       }
 
       return Page();
    }
 
-   public async Task<IActionResult> OnPostAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat, string applicationReference)
+   public async Task<IActionResult> OnPostAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat, string famReference)
    {
       Academies.Contracts.V4.Establishments.EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
 
@@ -83,7 +88,7 @@ public class SummaryModel : PageModel
       if (_isFormAMAT && proposedTrustName == null)
       {
          var createdProject = await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust, true));
-         var formAMatProject = await _academyConversionProjectRepository.SearchFormAMatProjects(applicationReference);
+         var formAMatProject = await _academyConversionProjectRepository.SearchFormAMatProjects(famReference);
 
          int projectId = createdProject.Body.Id;
          var formAMatProjectID = formAMatProject.Body.First().Id;

@@ -61,11 +61,11 @@ public class LinkFormAMatProject : PageModel
 
    public async Task<IActionResult> OnGetSearch(string searchQuery)
    {
-      string[] searchSplit = SplitOnBrackets(searchQuery);
+     string[] searchSplit = SplitOnBrackets(searchQuery);
 
       IEnumerable<FormAMatProject> projects = (await _repository.SearchFormAMatProjects(searchQuery)).Body;
 
-      return new JsonResult(projects.Select(s => new { suggestion = HighlightSearchMatch($"{s.ProposedTrustName} ({DeduceReferenceNumber(s)})", searchSplit[0].Trim(), s), value = $"{DeduceReferenceNumber(s)}" }));
+      return new JsonResult(projects.Select(s => new { suggestion = HighlightSearchMatch($"{s.ProposedTrustName} ({s.ReferenceNumber}){IncludeA2BReferenceNumberIfAvailable(s)}", searchSplit[0].Trim(), s), value = $"{s.ProposedTrustName} ({s.ReferenceNumber}){IncludeA2BReferenceNumberIfAvailable(s)}" }));
    }
 
    public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect)
@@ -77,14 +77,15 @@ public class LinkFormAMatProject : PageModel
          _errorService.AddError("Application Reference", "Please enter a application reference with more than three characters");
          return Page();
       }
-
-      var applicationReference = SearchQuery;
+      string[] splitSearch = SplitOnBrackets(SearchQuery);
+      // Fam reference should always be second in array
+      var FamReference = splitSearch[1];
 
       var nextPage = Links.NewProject.Summary.Page;
 
       redirect = string.IsNullOrEmpty(redirect) ? nextPage : redirect;
 
-      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied, IsFormAMat, IsProjectInPrepare, applicationReference });
+      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied, IsFormAMat, IsProjectInPrepare, FamReference });
    }
 
    private static string HighlightSearchMatch(string input, string toReplace, FormAMatProject project)
@@ -105,8 +106,8 @@ public class LinkFormAMatProject : PageModel
       return input.Split(new[] { '(', ')' }, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
    }
 
-   private static string DeduceReferenceNumber(FormAMatProject project)
+   private static string IncludeA2BReferenceNumberIfAvailable(FormAMatProject project)
    {
-      return !string.IsNullOrEmpty(project.ReferenceNumber) ? project.ReferenceNumber : project.ApplicationReference;
+      return !string.IsNullOrEmpty(project.ApplicationReference) ? $"({project.ApplicationReference})" : string.Empty;
    }
 }
