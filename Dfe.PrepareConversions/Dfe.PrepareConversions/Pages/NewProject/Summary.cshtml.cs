@@ -78,7 +78,7 @@ public class SummaryModel : PageModel
          await _academyConversionProjectRepository.CreateFormAMatProject(CreateProjectMapper.MapFormAMatToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust));
       }
 
-      bool _isFormAMAT = isFormAMat.ToLower().Equals("yes");
+      bool _isFormAMAT = !string.IsNullOrEmpty(isFormAMat) && isFormAMat.ToLower().Equals("yes");
 
       if (_isFormAMAT && proposedTrustName == null)
       {
