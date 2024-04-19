@@ -1,5 +1,5 @@
 module "azure_container_apps_hosting" {
-  source = "github.com/DFE-Digital/terraform-azurerm-container-apps-hosting?ref=v1.5.1"
+  source = "github.com/DFE-Digital/terraform-azurerm-container-apps-hosting?ref=v1.6.1"
 
   environment    = local.environment
   project_name   = local.project_name
@@ -9,6 +9,8 @@ module "azure_container_apps_hosting" {
   virtual_network_address_space = local.virtual_network_address_space
 
   enable_container_registry             = local.enable_container_registry
+  image_name                            = local.image_name
+  registry_server                       = local.registry_server
   registry_admin_enabled                = local.registry_admin_enabled
   registry_use_managed_identity         = local.registry_use_managed_identity
   registry_managed_identity_assign_role = local.registry_managed_identity_assign_role
@@ -23,7 +25,6 @@ module "azure_container_apps_hosting" {
   enable_logstash_consumer                  = local.enable_logstash_consumer
   eventhub_export_log_analytics_table_names = local.eventhub_export_log_analytics_table_names
 
-  image_name                             = local.image_name
   container_command                      = local.container_command
   container_secret_environment_variables = local.container_secret_environment_variables
   container_max_replicas                 = local.container_max_replicas
