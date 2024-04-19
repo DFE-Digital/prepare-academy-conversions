@@ -5,10 +5,11 @@ locals {
   tags                                         = var.tags
   virtual_network_address_space                = var.virtual_network_address_space
   enable_container_registry                    = var.enable_container_registry
+  image_name                                   = var.image_name
+  registry_server                              = var.registry_server
   registry_admin_enabled                       = var.registry_admin_enabled
   registry_use_managed_identity                = var.registry_use_managed_identity
   registry_managed_identity_assign_role        = var.registry_managed_identity_assign_role
-  image_name                                   = var.image_name
   container_command                            = var.container_command
   container_secret_environment_variables       = var.container_secret_environment_variables
   container_max_replicas                       = var.container_max_replicas
