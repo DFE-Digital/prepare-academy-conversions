@@ -1,27 +1,9 @@
-//document.addEventListener('DOMContentLoaded', function () {
-//   const searchInput = document.getElementById('search-officer');
-//   const officers = document.querySelectorAll('.officer-checkbox');
-
-//   console.log("Officers found: ", officers.length); // Check how many officers are found
-
-//   searchInput.addEventListener('keyup', function (e) {
-//      const searchValue = e.target.value.toLowerCase();
-//      console.log("Searching for: ", searchValue); // See what is being typed
-
-//      officers.forEach(function (item) {
-//         const officerName = item.textContent.toLowerCase();
-//         console.log("Checking officer: ", officerName); // Check each officer's name
-
-//         if (officerName.includes(searchValue)) {
-//            item.style.display = '';
-//         } else {
-//            item.style.display = 'none';
-//         }
-//      });
-//   });
-//});
+// Remove 'no-js' class indicating JavaScript is active
+document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/, '');
 
 document.addEventListener('DOMContentLoaded', function () {
+   // If this method is called JS is enabled, thus boxes should be shown
+   showFilters();
    setupFilters();
 
    function setupFilters() {
@@ -38,6 +20,15 @@ document.addEventListener('DOMContentLoaded', function () {
          }
       });
    }
+   function showFilters() {
+      // Select all input elements with the 'govuk-!-display-none' class
+      const inputs = document.querySelectorAll('input.govuk-\\!-display-none');
+
+      // Iterate over each input and remove the 'govuk-!-display-none' class to display them
+      inputs.forEach(function (input) {
+         input.classList.remove('govuk-!-display-none');
+      });
+   }
 
    function filterItems(items, searchValue) {
       items.forEach(function (item) {
@@ -50,6 +41,3 @@ document.addEventListener('DOMContentLoaded', function () {
       });
    }
 });
-
-
-
