@@ -130,14 +130,24 @@
                                 <div class="govuk-accordion__section-content" aria-labelledby="accordion-officers-heading">
                                     <input type="text" class="govuk-input govuk-!-display-none govuk-!-margin-bottom-2" id="filter-searches" placeholder="Type to filter officers...">
                                     <div class="govuk-checkboxes">
-                                        @foreach (var officer in Model.AvailableDeliveryOfficers)
-                                        {
+                                        @{
                                             <div class="govuk-checkboxes__item">
-                                                <input class="govuk-checkboxes__input" id="filter-delivery-officer-@officer.Stub()" name="selectedOfficers" type="checkbox" value="@officer">
-                                                <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-@officer.Stub()">
-                                                    @officer
+                                                <input class="govuk-checkboxes__input" id="filter-delivery-officer-not-assigned"
+                                                       name="selectedOfficers" type="checkbox" value="Not assigned" @(Model.SelectedOfficers.Contains("Not assigned") ? "checked" : null)
+                                                       data-cy="select-projectlist-filter-officer-not-assigned">
+                                                <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-not-assigned">
+                                                    Not assigned
                                                 </label>
                                             </div>
+                                            foreach (var officer in Model.AvailableDeliveryOfficers)
+                                            {
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-@officer.Stub()" name="selectedOfficers" type="checkbox" value="@officer" data-cy="select-projectlist-filter-officer-@officer">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-@officer.Stub()">
+                                                        @officer
+                                                    </label>
+                                                </div>
+                                            }
                                         }
                                     </div>
                                 </div>
@@ -145,7 +155,7 @@
                             <div class="govuk-accordion__section">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-regions-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-regions-heading" data-cy="select-projectlist-filter-region">
                                             Region
                                         </span>
                                     </h2>
@@ -156,7 +166,7 @@
                                         @foreach (var region in Model.AvailableRegions)
                                         {
                                             <div class="govuk-checkboxes__item">
-                                                <input class="govuk-checkboxes__input" id="filter-project-region-@region.Stub()" name="selectedRegions" type="checkbox" value="@region">
+                                                <input class="govuk-checkboxes__input" id="filter-project-region-@region.Stub()" name="selectedRegions" type="checkbox" value="@region" data-cy="select-projectlist-filter-region-@region">
                                                 <label class="govuk-label govuk-checkboxes__label" for="filter-project-region-@region.Stub()">
                                                     @region
                                                 </label>
@@ -168,7 +178,7 @@
                             <div class="govuk-accordion__section">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-local-authorities-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-local-authorities-heading" data-cy="select-projectlist-filter-local-authority">
                                             Local Authority
                                         </span>
                                     </h2>
@@ -179,7 +189,7 @@
                                         @foreach (var localAuthority in Model.AvailableLocalAuthorities)
                                         {
                                             <div class="govuk-checkboxes__item">
-                                                <input class="govuk-checkboxes__input" id="filter-project-local-authority-@localAuthority.Stub()" name="selectedLocalAuthorities" type="checkbox" value="@localAuthority">
+                                                <input class="govuk-checkboxes__input" id="filter-project-local-authority-@localAuthority.Stub()" name="selectedLocalAuthorities" type="checkbox" value="@localAuthority" data-cy="select-projectlist-filter-local-authority-@localAuthority">
                                                 <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-@localAuthority.Stub()">
                                                     @localAuthority
                                                 </label>
@@ -191,7 +201,7 @@
                             <div class="govuk-accordion__section">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-project-statuses-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-project-statuses-heading" data-cy="select-projectlist-filter-project-status">
                                             Project Status
                                         </span>
                                     </h2>
@@ -202,7 +212,7 @@
                                         @foreach (var status in Model.AvailableStatuses)
                                         {
                                             <div class="govuk-checkboxes__item">
-                                                <input class="govuk-checkboxes__input" id="filter-project-status-@status.Stub()" name="selectedStatuses" type="checkbox" value="@status">
+                                                <input class="govuk-checkboxes__input" id="filter-project-status-@status.Stub()" name="selectedStatuses" type="checkbox" value="@status" data-cy="select-projectlist-filter-status-@status" />
                                                 <label class="govuk-label govuk-checkboxes__label" for="filter-project-status-@status.Stub()">
                                                     @status
                                                 </label>
@@ -219,13 +229,13 @@
                                         </span>
                                     </h2>
                                 </div>
-                                <div class="govuk-accordion__section-content" aria-labelledby="accordion-advisory-board-dates-heading">                                   
-                                    <input type="text" class="govuk-input govuk-!-display-none govuk-!-margin-bottom-2" id="filter-searches" placeholder="Type to filter advisory board dates...">                                   
+                                <div class="govuk-accordion__section-content" aria-labelledby="accordion-advisory-board-dates-heading">
+                                    <input type="text" class="govuk-input govuk-!-display-none govuk-!-margin-bottom-2" id="filter-searches" placeholder="Type to filter advisory board dates...">
                                     <div class="govuk-checkboxes">
                                         @foreach (var boardDate in Model.AvailableAdvisoryBoardDates)
                                         {
                                             <div class="govuk-checkboxes__item">
-                                                <input class="govuk-checkboxes__input" id="filter-project-advisory-board-@boardDate.Stub()" name="selectedAdvisoryBoardDates" type="checkbox" value="@boardDate">
+                                                <input class="govuk-checkboxes__input" id="filter-project-advisory-board-@boardDate.Stub()" name="selectedAdvisoryBoardDates" type="checkbox" value="@boardDate" data-cy="select-projectlist-filter-advisory-board-@boardDate">
                                                 <label class="govuk-label govuk-checkboxes__label" for="filter-project-advisory-board-@boardDate.Stub()">
                                                     @boardDate
                                                 </label>
