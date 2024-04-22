@@ -25,6 +25,7 @@ RUN npm run build
 # Stage 3 - Final
 ARG ASPNET_IMAGE_TAG
 FROM "mcr.microsoft.com/dotnet/aspnet:${ASPNET_IMAGE_TAG}" AS final
+LABEL org.opencontainers.image.source=https://github.com/DFE-Digital/prepare-academy-conversions
 COPY --from=build /app /app
 
 WORKDIR /app
