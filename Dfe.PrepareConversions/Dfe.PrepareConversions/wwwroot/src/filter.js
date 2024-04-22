@@ -1,6 +1,3 @@
-// Remove 'no-js' class indicating JavaScript is active
-document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/, '');
-
 document.addEventListener('DOMContentLoaded', function () {
    // If this method is called JS is enabled, thus boxes should be shown
    showFilters();
