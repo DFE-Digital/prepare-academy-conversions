@@ -40,7 +40,8 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
          return NotFound();
       }
 
-      if (applicationResponse.Body.ApplicationType is not ("JoinMat" or "joinAMat"))
+      // MAT = Multi academy trust
+      if (applicationResponse.Body.ApplicationType.ToUpper().Contains("MAT") is false)
       {
          return StatusCode(501);
       }
