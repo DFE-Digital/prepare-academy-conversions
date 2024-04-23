@@ -59,10 +59,11 @@ describe('Filteration Tests', { tags: ['@dev', '@stage'] }, () => {
   it('Should filter projects by region', () => {
       // Visit the home page or the initial project list page
       cy.visit(`${Cypress.env('url')}/`); 
+      cy.excuteAccessibilityTests();
     // Check if the Region accordion section is not expanded
     cy.get('[data-cy="select-projectlist-filter-region"]').should('have.attr', 'aria-expanded', 'false').then(($accordion) => {
       const isAccordionExpanded = $accordion.attr('aria-expanded') === 'true';
-
+      cy.excuteAccessibilityTests();
       // If the accordion is not expanded, click to expand it
       if (!isAccordionExpanded) {
         cy.get('[data-cy="select-projectlist-filter-region"]').click();
@@ -72,7 +73,7 @@ describe('Filteration Tests', { tags: ['@dev', '@stage'] }, () => {
       cy.get('#filter-project-region-east-of-england').check();
       cy.get('#filter-project-region-london').check();
       cy.get('#filter-project-region-north-east').check();
-
+      cy.excuteAccessibilityTests();
       // Apply the selections
       cy.get('[data-cy="select-projectlist-filter-apply"]').click();
 

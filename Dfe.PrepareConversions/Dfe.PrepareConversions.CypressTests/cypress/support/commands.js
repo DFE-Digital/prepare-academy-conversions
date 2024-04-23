@@ -26,6 +26,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import 'cypress-localstorage-commands'
 
+
 //--Universal
 
 Cypress.Commands.add('urlPath', () => cy.location().then(location => `${location.origin}${location.pathname}`))
@@ -113,23 +114,27 @@ Cypress.Commands.add('saveContinue', () => {
 })
 
 Cypress.Commands.add("excuteAccessibilityTests", () => {
-    const wcagStandards = ["wcag22aa", "wcag21aa"]
-    const impactLevel = ["critical", "minor", "moderate", "serious"]
-    const continueOnFail = false
-    cy.injectAxe()
-    cy.checkA11y(
-        null,
-        {
-            runOnly: {
-                type: "tag",
-                values: wcagStandards,
-            },
-            includedImpacts: impactLevel,
-        },
-        null,
-        continueOnFail
-    )
-})
+    cy.log("Executing the command");
+    const continueOnFail = false;
+    cy.log("Inject Axe");
+    cy.injectAxe();
+
+    cy.log("Checking accessibility");
+	cy.checkA11y(
+		undefined,
+		{
+			// These will be fixed one by one
+			rules: {
+				region: { enabled: true },
+				"color-contrast": { enabled: true }, // decisions
+			},
+		},
+		undefined,
+		continueOnFail
+	);
+
+	cy.log("Command finished");
+});
 
 
 // Interceptors do not run for cy.request or cy.Api. Therefore use a command to make the request instead, an include the required headers etc.
