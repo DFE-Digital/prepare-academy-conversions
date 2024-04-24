@@ -40,6 +40,7 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
          return NotFound();
       }
 
+      // This page should only show for join a mat application forms
       if (applicationResponse.Body.ApplicationType is not ("JoinMat" or "joinAMat"))
       {
          return StatusCode(501);
