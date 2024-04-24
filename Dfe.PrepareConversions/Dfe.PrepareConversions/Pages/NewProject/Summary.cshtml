@@ -261,7 +261,7 @@
         </div>
     }
 
-    @if (Model.IsFormAMat != null)
+    @if (Model.IsFormAMat.ToLower().Equals("yes"))
     {
         <div class="govuk-grid-column-two-thirds">
 
