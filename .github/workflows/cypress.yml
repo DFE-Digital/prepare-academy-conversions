@@ -54,9 +54,3 @@ jobs:
         with:
           name: reports-dev
           path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports
-
-      - name: Report results
-        if: always()
-        run: npm run cy:notify -- --custom-text="Environment dev, See more information https://github.com/DFE-Digital/prepare-academy-conversions/actions/runs/${{github.run_id}}"
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
