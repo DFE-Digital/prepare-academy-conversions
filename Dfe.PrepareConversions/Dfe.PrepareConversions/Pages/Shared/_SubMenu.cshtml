@@ -20,7 +20,16 @@
                 School application form
             </sub-menu-link>
         </li>
-        <li if="@Model.IsFormAMat" class="moj-sub-navigation__item">
+
+        <li if="@Model.IsVoluntary && Model.IsExternalSchoolApplication" class="moj-sub-navigation__item">
+            <sub-menu-link class="moj-sub-navigation__link"
+                           asp-page="@Links.ExternalApplicationForm.Index.Page"
+                           asp-route-id="@id">
+                School application form
+            </sub-menu-link>
+        </li>
+
+        <li if="@Model.IsFormAMat && !Model.IsExternalSchoolApplication" class="moj-sub-navigation__item">
             <sub-menu-link class="moj-sub-navigation__link"
                            asp-page="@Links.FormAMat.Index.Page"
                            asp-route-id="@id">
@@ -36,13 +45,6 @@
             </sub-menu-link>
         </li>
 
-        <li if="@Model.IsVoluntary && Model.IsExternalSchoolApplication" class="moj-sub-navigation__item">
-            <sub-menu-link class="moj-sub-navigation__link"
-                           asp-page="@Links.ExternalApplicationForm.Index.Page"
-                           asp-route-id="@id">
-                School application form
-            </sub-menu-link>
-        </li>
         <li class="moj-sub-navigation__item">
             <sub-menu-link class="moj-sub-navigation__link"
                            asp-page="@Links.Decision.SubMenuRecordADecision.Page"
@@ -50,6 +52,7 @@
                 Record a decision
             </sub-menu-link>
         </li>
+
         <li class="moj-sub-navigation__item">
             <sub-menu-link class="moj-sub-navigation__link"
                            asp-page="@Links.ProjectNotes.Index.Page"
