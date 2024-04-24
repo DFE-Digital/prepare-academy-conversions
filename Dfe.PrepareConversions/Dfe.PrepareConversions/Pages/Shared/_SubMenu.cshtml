@@ -3,25 +3,24 @@
 @{
     var id = ViewContext.RouteData.Values["id"];
 }
-
 <nav class="moj-sub-navigation" aria-label="Sub navigation">
-   <ul class="moj-sub-navigation__list govuk-!-margin-top-6">
-      <li class="moj-sub-navigation__item">
-         <sub-menu-link class="moj-sub-navigation__link"
-                        asp-page="@Links.TaskList.Index.Page"
-                        asp-route-id="@id">
-            Project details
-         </sub-menu-link>
-      </li>
+    <ul class="moj-sub-navigation__list govuk-!-margin-top-6">
+        <li class="moj-sub-navigation__item">
+            <sub-menu-link class="moj-sub-navigation__link"
+                           asp-page="@Links.TaskList.Index.Page"
+                           asp-route-id="@id">
+                Project details
+            </sub-menu-link>
+        </li>
 
-        <li if="@Model.IsVoluntary && !Model.IsExternalSchoolApplication" class="moj-sub-navigation__item">
-         <sub-menu-link class="moj-sub-navigation__link"
-                        asp-page="@Links.ApplicationForm.Index.Page"
-                        asp-route-id="@id">
-            School application form
-         </sub-menu-link>
-      </li>
-        <li if="@Model.IsFormAMat;" class="moj-sub-navigation__item">
+        <li if="@Model.IsVoluntary && !Model.IsExternalSchoolApplication && !Model.IsFormAMat" class="moj-sub-navigation__item">
+            <sub-menu-link class="moj-sub-navigation__link"
+                           asp-page="@Links.ApplicationForm.Index.Page"
+                           asp-route-id="@id">
+                School application form
+            </sub-menu-link>
+        </li>
+        <li if="@Model.IsFormAMat" class="moj-sub-navigation__item">
             <sub-menu-link class="moj-sub-navigation__link"
                            asp-page="@Links.FormAMat.Index.Page"
                            asp-route-id="@id">
@@ -30,12 +29,13 @@
         </li>
 
         <li if="@Model.IsSponsored" class="moj-sub-navigation__item">
-         <sub-menu-link class="moj-sub-navigation__link"
-                        asp-page="@Links.AnnexB.Index.Page"
-                        asp-route-id="@id">
-            Annex B form
-         </sub-menu-link>
-      </li>
+            <sub-menu-link class="moj-sub-navigation__link"
+                           asp-page="@Links.AnnexB.Index.Page"
+                           asp-route-id="@id">
+                Annex B form
+            </sub-menu-link>
+        </li>
+
         <li if="@Model.IsVoluntary && Model.IsExternalSchoolApplication" class="moj-sub-navigation__item">
             <sub-menu-link class="moj-sub-navigation__link"
                            asp-page="@Links.ExternalApplicationForm.Index.Page"
@@ -50,12 +50,12 @@
                 Record a decision
             </sub-menu-link>
         </li>
-      <li class="moj-sub-navigation__item">
-         <sub-menu-link class="moj-sub-navigation__link"
-                        asp-page="@Links.ProjectNotes.Index.Page"
-                        asp-route-id="@id">
-            Project notes
-         </sub-menu-link>
-      </li>
-   </ul>
+        <li class="moj-sub-navigation__item">
+            <sub-menu-link class="moj-sub-navigation__link"
+                           asp-page="@Links.ProjectNotes.Index.Page"
+                           asp-route-id="@id">
+                Project notes
+            </sub-menu-link>
+        </li>
+    </ul>
 </nav>

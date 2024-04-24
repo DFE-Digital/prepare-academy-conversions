@@ -40,8 +40,8 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
          return NotFound();
       }
 
-      // MAT = Multi academy trust
-      if (applicationResponse.Body.ApplicationType.ToUpper().Contains("MAT") is false)
+      // This page should only show for join a mat application forms
+      if (applicationResponse.Body.ApplicationType is not ("JoinMat" or "joinAMat"))
       {
          return StatusCode(501);
       }
