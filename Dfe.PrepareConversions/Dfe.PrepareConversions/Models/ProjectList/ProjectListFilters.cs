@@ -18,7 +18,6 @@ public class ProjectListFilters
    public const string FilterAdvisoryBoardDates = nameof(FilterAdvisoryBoardDates);
 
    private IDictionary<string, object?> _store = null!;
-
    public List<string> AvailableStatuses { get; set; } = new();
    public List<string> AvailableDeliveryOfficers { get; set; } = new();
    public List<string> AvailableRegions { get; set; } = new();

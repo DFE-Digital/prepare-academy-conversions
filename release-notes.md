@@ -1,5 +1,8 @@
 ## NEXT
 
+* Added ability to filter filters (Example being; to refine delivery officer list)
+## 1.5.0
+
 * Changed Feedback Banner: The feedback banner has been updated to better capture user insights and improve engagement.
 * Accessibility Adjustments: Removed phone numbers from the Accessibility section.
 * Updated Project Filters: Filters on Conversions now include Ministry of Justice component (MoJ) and Trust search.

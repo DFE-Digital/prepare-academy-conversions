@@ -12,10 +12,10 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-        <span class="govuk-caption-xl">Form a MAT ref: @Model.Project.ReferenceNumber</span>
+        <span class="govuk-caption-xl">Form a MAT reference number: @Model.Project.ReferenceNumber</span>
         @if (!string.IsNullOrEmpty(Model.Project.ApplciationReference))
         {
-            <span class="govuk-caption-xl">Application ref: @Model.Project.ApplciationReference</span>
+            <span class="govuk-caption-xl">Application reference number: @Model.Project.ApplciationReference</span>
         }        
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-2" data-cy="select-heading">
             @Model.Project.TrustName
