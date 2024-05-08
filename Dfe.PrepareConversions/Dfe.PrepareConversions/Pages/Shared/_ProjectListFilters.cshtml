@@ -142,7 +142,8 @@
                                             foreach (var officer in Model.AvailableDeliveryOfficers)
                                             {
                                                 <div class="govuk-checkboxes__item">
-                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-@officer.Stub()" name="selectedOfficers" type="checkbox" value="@officer" data-cy="select-projectlist-filter-officer-@officer">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-@officer.Stub()" name="selectedOfficers" type="checkbox" value="@officer" data-cy="select-projectlist-filter-officer-@officer"
+                                                    @(Model.SelectedOfficers.Contains(officer) ? "checked" : null) />
                                                     <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-@officer.Stub()">
                                                         @officer
                                                     </label>
@@ -166,7 +167,8 @@
                                         @foreach (var region in Model.AvailableRegions)
                                         {
                                             <div class="govuk-checkboxes__item">
-                                                <input class="govuk-checkboxes__input" id="filter-project-region-@region.Stub()" name="selectedRegions" type="checkbox" value="@region" data-cy="select-projectlist-filter-region-@region">
+                                                <input class="govuk-checkboxes__input" id="filter-project-region-@region.Stub()" name="selectedRegions" type="checkbox" value="@region" data-cy="select-projectlist-filter-region-@region"
+                                                @(Model.SelectedRegions.Contains(region) ? "checked" : null) />
                                                 <label class="govuk-label govuk-checkboxes__label" for="filter-project-region-@region.Stub()">
                                                     @region
                                                 </label>
@@ -189,7 +191,8 @@
                                         @foreach (var localAuthority in Model.AvailableLocalAuthorities)
                                         {
                                             <div class="govuk-checkboxes__item">
-                                                <input class="govuk-checkboxes__input" id="filter-project-local-authority-@localAuthority.Stub()" name="selectedLocalAuthorities" type="checkbox" value="@localAuthority" data-cy="select-projectlist-filter-local-authority-@localAuthority">
+                                                <input class="govuk-checkboxes__input" id="filter-project-local-authority-@localAuthority.Stub()" name="selectedLocalAuthorities" type="checkbox" value="@localAuthority" data-cy="select-projectlist-filter-local-authority-@localAuthority"
+                                                @(Model.SelectedLocalAuthorities.Contains(localAuthority) ? "checked" : null) />
                                                 <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-@localAuthority.Stub()">
                                                     @localAuthority
                                                 </label>
@@ -212,7 +215,8 @@
                                         @foreach (var status in Model.AvailableStatuses)
                                         {
                                             <div class="govuk-checkboxes__item">
-                                                <input class="govuk-checkboxes__input" id="filter-project-status-@status.Stub()" name="selectedStatuses" type="checkbox" value="@status" data-cy="select-projectlist-filter-status-@status" />
+                                                <input class="govuk-checkboxes__input" id="filter-project-status-@status.Stub()" name="selectedStatuses" type="checkbox" value="@status" data-cy="select-projectlist-filter-status-@status"
+                                                @(Model.SelectedStatuses.Contains(status) ? "checked" : null) />
                                                 <label class="govuk-label govuk-checkboxes__label" for="filter-project-status-@status.Stub()">
                                                     @status
                                                 </label>
@@ -235,7 +239,8 @@
                                         @foreach (var boardDate in Model.AvailableAdvisoryBoardDates)
                                         {
                                             <div class="govuk-checkboxes__item">
-                                                <input class="govuk-checkboxes__input" id="filter-project-advisory-board-@boardDate.Stub()" name="selectedAdvisoryBoardDates" type="checkbox" value="@boardDate" data-cy="select-projectlist-filter-advisory-board-@boardDate">
+                                                <input class="govuk-checkboxes__input" id="filter-project-advisory-board-@boardDate.Stub()" name="selectedAdvisoryBoardDates" type="checkbox" value="@boardDate" data-cy="select-projectlist-filter-advisory-board-@boardDate"
+                                                @(Model.SelectedAdvisoryBoardDates.Contains(boardDate) ? "checked" : null) />
                                                 <label class="govuk-label govuk-checkboxes__label" for="filter-project-advisory-board-@boardDate.Stub()">
                                                     @boardDate
                                                 </label>
