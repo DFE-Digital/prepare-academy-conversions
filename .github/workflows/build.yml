@@ -3,9 +3,17 @@ name: Pull request checks
 on:
   push:
     branches: [ main ]
+    paths:
+    - 'Dfe.PrepareConversions.*'
+    - '!Dfe.PrepareConversions.Dfe.PrepareConversions.CypressTests'
+    - '*.csproj'
   pull_request:
     branches: [ main ]
     types: [opened, synchronize, reopened]
+    paths:
+    - 'Dfe.PrepareConversions.*'
+    - '!Dfe.PrepareConversions.Dfe.PrepareConversions.CypressTests'
+    - '*.csproj'
 
 env:
   JAVA_VERSION: '17'
