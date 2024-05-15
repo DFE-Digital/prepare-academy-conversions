@@ -68,5 +68,23 @@ export default class projectList extends BasePage {
 
         return ''
     }
+
+    static verifyCorrectHeaders() {
+        // Verify that the correct headers are present on the page
+        cy.get('h1').should('contain', 'conversion projects'); // Example header verification
+        cy.get('.govuk-table__header').should('contain', 'School Name'); // Example header verification
+        // Add more header verifications as needed
+      }
+    
+      static verifyApplicationToJoin(route) {
+        // Verify that the application to join for the specified route is displayed correctly
+        cy.contains('.govuk-link', 'Apply to join').click(); // Click on the application link
+        cy.url().should('include', 'application-form'); // Verify that the URL contains 'application-form'
+        cy.get('#type-and-route').should('contain', route); // Verify that the route is displayed correctly
+        // Add more verifications for the application form content as needed
+      }
+
+      
 }
+
 

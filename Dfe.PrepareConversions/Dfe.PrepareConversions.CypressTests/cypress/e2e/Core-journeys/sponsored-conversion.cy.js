@@ -59,7 +59,7 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
    }
 
    before(() => {
-     // Do the spin up a project journey
+      // Do the spin up a project journey
    })
 
    beforeEach(() => {
@@ -245,6 +245,5 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
          cy.confirmContinueBtn().click();
       }
    });
-
- 
+  
 });
