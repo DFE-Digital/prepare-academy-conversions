@@ -53,6 +53,25 @@
             <dd class="govuk-summary-list__actions"></dd>
         </div>
 
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Decision maker's name
+            </dt>
+            <dd class="govuk-summary-list__value">
+
+                @if (Model.Decision != null && Model.Decision.DecisionMakerName != null)
+                {
+                    <div id="decision-made-by">@Model.Decision.DecisionMakerName</div>
+                }
+                else
+                {
+                    <span class="empty">Empty</span>
+                }
+
+            </dd>
+            <dd class="govuk-summary-list__actions"></dd>
+        </div>
+
             @if (Model.Decision.Decision == AdvisoryBoardDecisions.Declined)
             {
                 <div class="govuk-summary-list__row">
