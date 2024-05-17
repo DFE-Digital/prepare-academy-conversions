@@ -96,6 +96,10 @@ export default class ProjectTaskList extends BasePage {
         cy.checkPath(this.path)
         return cy.get(this.selectors.riskAndIssuesStatus)
     }
+    
+    static getHomePage() {
+        cy.visit(`${Cypress.env('url')}`)
+    }
 
     static selectLA() {
         cy.checkPath(this.path)

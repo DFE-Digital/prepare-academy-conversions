@@ -14,7 +14,7 @@
         </li>
 
         <li if="@Model.IsVoluntary && !Model.IsExternalSchoolApplication && !Model.IsFormAMat" class="moj-sub-navigation__item">
-            <sub-menu-link class="moj-sub-navigation__link"
+            <sub-menu-link class="moj-sub-navigation__link" data-cy= "school_application_form"
                            asp-page="@Links.ApplicationForm.Index.Page"
                            asp-route-id="@id">
                 School application form
@@ -29,7 +29,7 @@
             </sub-menu-link>
         </li>
 
-        <li if="@Model.IsFormAMat && !Model.IsExternalSchoolApplication" class="moj-sub-navigation__item">
+        <li if="@Model.IsFormAMat && !Model.IsExternalSchoolApplication" class="moj-sub-navigation__item" data-cy="school_application_form_formamat">
             <sub-menu-link class="moj-sub-navigation__link"
                            asp-page="@Links.FormAMat.Index.Page"
                            asp-route-id="@id">
