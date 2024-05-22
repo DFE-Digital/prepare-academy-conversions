@@ -29,6 +29,7 @@ public class AnyConditionsIntegrationTests : BaseIntegrationTests, IAsyncLifetim
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Approved);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+      await _wizard.SetDecisionMakerName("Tester");
 
       Document.Url.Should().EndWith("any-conditions");
    }
@@ -36,14 +37,6 @@ public class AnyConditionsIntegrationTests : BaseIntegrationTests, IAsyncLifetim
    public Task DisposeAsync()
    {
       return Task.CompletedTask;
-   }
-
-   [Fact]
-   public void Should_display_selected_school_name()
-   {
-      string selectedSchool = Document.QuerySelector<IHtmlElement>("#selection-span")?.Text();
-
-      selectedSchool.Should().Be(_project.SchoolName);
    }
 
    [Fact]

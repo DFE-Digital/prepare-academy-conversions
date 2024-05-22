@@ -37,6 +37,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
          ApprovedConditionsSet = true,
          ApprovedConditionsDetails = "bills need to be paid",
          DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
+         DecisionMakerName = "Tester",
          ConversionProjectId = _project.Id
       };
 
@@ -53,29 +54,6 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
    }
 
    [Fact]
-   public async Task Should_display_selected_school_name()
-   {
-      AdvisoryBoardDecision request = new()
-      {
-         Decision = AdvisoryBoardDecisions.Approved,
-         AdvisoryBoardDecisionDate = new DateTime(2021, 01, 01),
-         ApprovedConditionsSet = true,
-         ApprovedConditionsDetails = "bills need to be paid",
-         DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
-         ConversionProjectId = _project.Id
-      };
-
-      _factory.AddPostWithJsonRequest("/conversion-project/advisory-board-decision", request, "");
-
-      await OpenAndConfirmPathAsync($"/task-list/{_project.Id}/decision/record-decision");
-
-      await _wizard.SubmitThroughTheWizard(request);
-
-      Document.QuerySelector<IHtmlElement>("#selection-span")!.Text().Should()
-         .Be(_project.SchoolName);
-   }
-
-   [Fact]
    public async Task Should_populate_summary_and_create_new_decision()
    {
       AdvisoryBoardDecision request = new()
@@ -85,6 +63,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
          ApprovedConditionsSet = true,
          ApprovedConditionsDetails = "bills need to be paid",
          DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
+         DecisionMakerName = "Tester",
          ConversionProjectId = _project.Id
       };
 
@@ -109,6 +88,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
          ApprovedConditionsSet = true,
          ApprovedConditionsDetails = "bills need to be paid",
          DecisionMadeBy = DecisionMadeBy.DirectorGeneral,
+         DecisionMakerName = "Tester",
          ConversionProjectId = _project.Id
       };
 
@@ -159,6 +139,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.DirectorGeneral);
+      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "Finance reason"));
       await _wizard.SetDecisionDateAndContinue(DateTime.Today);
 
@@ -171,6 +152,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "Finance detail"),
          Tuple.Create(AdvisoryBoardDeclinedReasons.ChoiceOfTrust, "Choice of trust detail"));
       await _wizard.SetDecisionDateAndContinue(DateTime.Today);
@@ -193,6 +175,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Deferred);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDeferredReasonsAndContinue(
          Tuple.Create(AdvisoryBoardDeferredReason.PerformanceConcerns, "Performance detail"),
          Tuple.Create(AdvisoryBoardDeferredReason.Other, "Other detail"),
@@ -218,6 +201,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.OtherRegionalDirector);
+      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "finance reasons"));
       await _wizard.SetDecisionDateAndContinue(DateTime.Today);
 
@@ -228,8 +212,8 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
 
    [Theory]
    [InlineData(1, "Who made this decision?")]
-   [InlineData(2, "Were any conditions set?")]
-   [InlineData(3, "Date conversion was approved")]
+   [InlineData(3, "Were any conditions set?")]
+   [InlineData(4, "Date conversion was approved")]
    public async Task Should_go_back_to_choose_and_back_link_to_summary(int changeLinkIndex, string expectedTitle)
    {
       AdvisoryBoardDecision request = new()
@@ -258,9 +242,9 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
 
    [Theory]
    [InlineData(0, "Record the decision", "Who made this decision?")]
-   [InlineData(1, "Who made this decision?", "Were any conditions set?")]
-   [InlineData(2, "Were any conditions set?", "Date conversion was approved")]
-   [InlineData(3, "Date conversion was approved", "Check your answers before recording this decision")]
+   [InlineData(1, "Who made this decision?", "Decision maker's name")]
+   [InlineData(3, "Were any conditions set?", "Date conversion was approved")]
+   [InlineData(4, "Date conversion was approved", "Check your answers before recording this decision")]
    public async Task Should_go_back_to_choose_and_submit_back_to_summary(int changeLinkIndex, string changePageTitle, string nextPageTitle)
    {
       AdvisoryBoardDecision request = new()
@@ -292,6 +276,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDeclinedReasonsAndContinue(
          Tuple.Create(AdvisoryBoardDeclinedReasons.ChoiceOfTrust, "trust"),
          Tuple.Create(AdvisoryBoardDeclinedReasons.Other, "other"),

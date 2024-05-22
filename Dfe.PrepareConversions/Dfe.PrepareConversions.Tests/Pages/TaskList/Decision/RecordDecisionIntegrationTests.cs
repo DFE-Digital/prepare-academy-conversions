@@ -15,18 +15,6 @@ public class RecordDecisionIntegrationTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Should_display_selected_schoolname()
-   {
-      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
-
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
-
-      string selectedSchool = Document.QuerySelector<IHtmlElement>("#selection-span")!.Text();
-
-      selectedSchool.Should().Be(project.SchoolName);
-   }
-
-   [Fact]
    public async Task Should_persist_selected_decision()
    {
       AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);

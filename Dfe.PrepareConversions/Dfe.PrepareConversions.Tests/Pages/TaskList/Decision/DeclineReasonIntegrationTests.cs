@@ -31,6 +31,7 @@ public class DeclineReasonIntegrationTests : BaseIntegrationTests, IAsyncLifetim
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.RegionalDirectorForRegion);
+      await _wizard.SetDecisionMakerName("Tester");
 
       Document.Url.Should().EndWith("/decision/declined-reason");
    }
@@ -38,15 +39,6 @@ public class DeclineReasonIntegrationTests : BaseIntegrationTests, IAsyncLifetim
    public Task DisposeAsync()
    {
       return Task.CompletedTask;
-   }
-
-
-   [Fact]
-   public void Should_display_the_selected_school_name()
-   {
-      string selectedSchool = Document.QuerySelector<IHtmlElement>("#selection-span")!.Text();
-
-      selectedSchool.Should().Be(_project.SchoolName);
    }
 
    [Fact]

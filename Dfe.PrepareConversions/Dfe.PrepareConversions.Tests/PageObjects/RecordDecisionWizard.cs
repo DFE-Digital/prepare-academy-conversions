@@ -29,6 +29,7 @@ public class RecordDecisionWizard
    {
       await SetDecisionToAndContinue(request.Decision.GetValueOrDefault());
       await SetDecisionByAndContinue(request.DecisionMadeBy.GetValueOrDefault());
+      await SetDecisionMakerName("Tester");
       await SetIsConditionalAndContinue(request.ApprovedConditionsSet.GetValueOrDefault(), request.ApprovedConditionsDetails);
       await SetDecisionDateAndContinue(request.AdvisoryBoardDecisionDate.GetValueOrDefault(DateTime.MinValue));
    }
@@ -59,6 +60,12 @@ public class RecordDecisionWizard
    public async Task SetDecisionByAndContinue(DecisionMadeBy by)
    {
       Document.QuerySelector<IHtmlInputElement>($"#{by.ToString().ToLowerInvariant()}-radio")!.IsChecked = true;
+      await ClickSubmitButton();
+   }
+
+   public async Task SetDecisionMakerName(string by)
+   {
+      Document.QuerySelector<IHtmlInputElement>($"#decision-maker-name")!.Value = by;
       await ClickSubmitButton();
    }
 

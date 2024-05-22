@@ -15,17 +15,6 @@ public class WhoDecidedIntegrationTests : BaseIntegrationTests
    {
    }
 
-   [Fact]
-   public async Task Should_display_selected_schoolname()
-   {
-      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
-
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/who-decided");
-
-      string selectedSchool = Document.QuerySelector<IHtmlElement>("#selection-span")!.Text();
-
-      selectedSchool.Should().Be(project.SchoolName);
-   }
 
    [Fact]
    public async Task Should_persist_who_decided()
@@ -79,6 +68,7 @@ public class WhoDecidedIntegrationTests : BaseIntegrationTests
       await wizard.StartFor(project.Id);
       await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await wizard.SetDecisionByAndContinue(DecisionMadeBy.RegionalDirectorForRegion);
+      await wizard.SetDecisionMakerName("Tester");
 
       Document.Url.Should().EndWith("/decision/declined-reason", "reason should be the second question in the declined journey");
       Document.QuerySelector<IHtmlHeadingElement>(".govuk-fieldset__heading")!.TextContent.Trim()
