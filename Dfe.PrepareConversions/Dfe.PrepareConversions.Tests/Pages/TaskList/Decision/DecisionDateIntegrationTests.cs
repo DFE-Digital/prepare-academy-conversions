@@ -23,18 +23,6 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
    private IHtmlInputElement YearPart => Document.QuerySelector<IHtmlInputElement>("#decision-date-year");
 
    [Fact]
-   public async Task Should_display_selected_school_name()
-   {
-      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
-
-      await ProgressToDecisionDateStep(project);
-
-      string selectedSchool = Document.QuerySelector<IHtmlElement>("#selection-span")!.Text();
-
-      selectedSchool.Should().Be(project.SchoolName);
-   }
-
-   [Fact]
    public async Task Should_persist_approval_date()
    {
       string expectedDay = "1";
@@ -139,6 +127,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
       await wizard.StartFor(project.Id);
       await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+      await wizard.SetDecisionMakerName("Tester");
       await wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "Finance reasons"));
 
       PageHeading.Should().Be("Date conversion was declined");
@@ -162,6 +151,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
       await wizard.StartFor(project.Id);
       await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+      await wizard.SetDecisionMakerName("Tester");
       await wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Performance, "performance reasons"));
 
       PageHeading.Should().Be("Date conversion was declined");
@@ -185,6 +175,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
       await wizard.StartFor(project.Id);
       await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Approved);
       await wizard.SetDecisionByAndContinue(DecisionMadeBy.OtherRegionalDirector);
+      await wizard.SetDecisionMakerName("Tester");
       await wizard.SetIsConditionalAndContinue(false, "Something");
    }
 }

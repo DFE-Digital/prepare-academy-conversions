@@ -35,16 +35,9 @@ public class WhyDeferredIntegrationTests : BaseIntegrationTests, IAsyncLifetime
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Deferred);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.RegionalDirectorForRegion);
+      await _wizard.SetDecisionMakerName("Tester");
 
       Document.Url.Should().EndWith("/decision/why-deferred");
-   }
-
-   [Fact]
-   public void Should_display_the_selected_school_name()
-   {
-      string selectedSchool = Document.QuerySelector<IHtmlElement>("#selection-span")!.Text();
-
-      selectedSchool.Should().Be(_project.SchoolName);
    }
 
    [Fact]
