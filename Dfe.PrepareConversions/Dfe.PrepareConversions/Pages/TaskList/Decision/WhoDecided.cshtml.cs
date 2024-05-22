@@ -54,10 +54,17 @@ public class WhoDecidedModel : DecisionBaseModel
 
       AdvisoryBoardDecision decision = GetDecisionFromSession(id) ?? new AdvisoryBoardDecision();
       decision.DecisionMadeBy = DecisionMadeBy;
+      decision.DecisionMakerName = decision.DecisionMadeBy == Data.Models.AdvisoryBoardDecision.DecisionMadeBy.None ? null : decision.DecisionMakerName;
 
       SetDecisionInSession(id, decision);
 
-      return decision.Decision switch
+      return DetermineRedirectPage(decision);
+   }
+
+
+   private IActionResult DetermineRedirectPage(AdvisoryBoardDecision decision)
+   {
+      var pageToReturnTo = decision.Decision switch
       {
          AdvisoryBoardDecisions.Approved => RedirectToPage(Links.Decision.AnyConditions.Page, LinkParameters),
          AdvisoryBoardDecisions.Declined => RedirectToPage(Links.Decision.DeclineReason.Page, LinkParameters),
@@ -65,5 +72,7 @@ public class WhoDecidedModel : DecisionBaseModel
          AdvisoryBoardDecisions.Withdrawn => RedirectToPage(Links.Decision.WhyWithdrawn.Page, LinkParameters),
          _ => RedirectToPage(Links.Decision.AnyConditions.Page, LinkParameters)
       };
+
+      return decision.DecisionMadeBy == Data.Models.AdvisoryBoardDecision.DecisionMadeBy.None ? pageToReturnTo : RedirectToPage(Links.Decision.DecisionMaker.Page, LinkParameters);
    }
 }
