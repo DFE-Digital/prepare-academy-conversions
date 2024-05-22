@@ -191,7 +191,7 @@
 
                 </dd>
             </div>
-   
+
             @if (Model.HasSchoolApplied.ToLower().Equals("no") && Model.IsFormAMat.ToLower().Equals("no"))
             {
                 <div class="govuk-summary-list__row" vis>
@@ -206,7 +206,7 @@
                 </div>
             }
         </dl>
-      </div>
+    </div>
 
     @if (Model.Trust != null)
     {
@@ -287,35 +287,35 @@
                 {
                     <div class="govuk-summary-list__row" isv>
                         <dt class="govuk-summary-list__key">
-                        FAM Reference
-                    </dt>
-                    <dd class="govuk-summary-list__value" data-cy="a2b-reference">
-                        @Model.FamReference
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <a asp-page="@Links.NewProject.LinkFormAMatProject.Page" class="govuk-link" data-cy="change-fam-reference"
-                           asp-all-route-data="@backLinkRouteParams">
-                            Change<span class="govuk-visually-hidden">FAM reference</span>
-                        </a>
-                    </dd>
-                </div>
+                            FAM Reference
+                        </dt>
+                        <dd class="govuk-summary-list__value" data-cy="a2b-reference">
+                            @Model.FamReference
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                            <a asp-page="@Links.NewProject.LinkFormAMatProject.Page" class="govuk-link" data-cy="change-fam-reference"
+                               asp-all-route-data="@backLinkRouteParams">
+                                Change<span class="govuk-visually-hidden">FAM reference</span>
+                            </a>
+                        </dd>
+                    </div>
                 }
                 @if (Model.ApplicationReference != null)
                 {
                     <div class="govuk-summary-list__row">
                         <dt class="govuk-summary-list__key">
-                        A2B Reference
-                    </dt>
-                    <dd class="govuk-summary-list__value" data-cy="a2b-reference">
-                        @Model.ApplicationReference
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <a asp-page="@Links.NewProject.LinkFormAMatProject.Page" class="govuk-link" data-cy="change-a2b-reference"
-                           asp-all-route-data="@backLinkRouteParams">
-                            Change<span class="govuk-visually-hidden">A2B reference</span>
-                        </a>
-                    </dd>
-                </div>
+                            A2B Reference
+                        </dt>
+                        <dd class="govuk-summary-list__value" data-cy="a2b-reference">
+                            @Model.ApplicationReference
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                            <a asp-page="@Links.NewProject.LinkFormAMatProject.Page" class="govuk-link" data-cy="change-a2b-reference"
+                               asp-all-route-data="@backLinkRouteParams">
+                                Change<span class="govuk-visually-hidden">A2B reference</span>
+                            </a>
+                        </dd>
+                    </div>
                 }
 
             </dl>
@@ -325,13 +325,14 @@
 
 
 
-   </div>
 
-<div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-9">
+
+    <div class="govuk-grid-column-two-thirds">
         <form method="post">
             <input type="hidden" value="@Model.Establishment.Urn" />
             <input type="hidden" value="@Model.Trust?.Ukprn" />
             <button class="govuk-button" type="submit" data-id="submit">Continue</button>
         </form>
+
     </div>
 </div>
