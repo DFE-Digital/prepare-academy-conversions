@@ -36,7 +36,7 @@ public class SchoolApplyModel : PageModel
       return Page();
    }
 
-   public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect)
+   public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect, string hasPreferredTrust, string proposedTrustName, string isFormAMat, string isProjectInPrepare, string famReference)
    {
 
       if (HasSchoolApplied.IsNullOrEmpty())
@@ -49,6 +49,6 @@ public class SchoolApplyModel : PageModel
 
       redirect = string.IsNullOrEmpty(redirect) ? nextPage : redirect;
 
-      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied });
+      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied, hasPreferredTrust, proposedTrustName, isFormAMat, isProjectInPrepare, famReference });
    }
 }

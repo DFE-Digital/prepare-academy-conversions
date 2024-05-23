@@ -40,7 +40,7 @@ public class PreferredTrustModel : PageModel
       return Page();
    }
 
-   public async Task<IActionResult> OnPost(string urn, string redirect)
+   public async Task<IActionResult> OnPost(string urn, string redirect, string proposedTrustName, string isFormAMat, string isProjectInPrepare, string famReference)
    {
 
       if (HasPreferredTrust.IsNullOrEmpty())
@@ -53,6 +53,6 @@ public class PreferredTrustModel : PageModel
 
       redirect = string.IsNullOrEmpty(redirect) ? nextPage : redirect;
 
-      return RedirectToPage(redirect, new { urn, HasSchoolApplied, HasPreferredTrust });
+      return RedirectToPage(redirect, new { urn, HasSchoolApplied, HasPreferredTrust, proposedTrustName, isFormAMat, isProjectInPrepare, famReference });
    }
 }
