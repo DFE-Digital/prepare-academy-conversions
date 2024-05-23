@@ -56,7 +56,6 @@ public class SearchSchoolModel : PageModel
       return new JsonResult(schools.Select(s => new { suggestion = HighlightSearchMatch($"{s.Name} ({s.Urn})", searchSplit[0].Trim(), s), value = $"{s.Name} ({s.Urn})" }));
    }
 
-   //string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat, string isProjectInPrepare, string famReference
    public async Task<IActionResult> OnPost(string ukprn, string redirect, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat, string isProjectInPrepare, string famReference)
    {
       AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
