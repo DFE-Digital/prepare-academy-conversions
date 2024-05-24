@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.InkML;
 using System;
 using System.Collections.Generic;
 
@@ -9,6 +10,9 @@ public static class Links
    private static string _transfersUrl;
    public static string TransfersUrl => _transfersUrl;
 
+   private static bool _isProjectDocumentsEnabled;
+   public static bool IsProjectDocumentsEnabled => _isProjectDocumentsEnabled;
+
    private static LinkItem AddLinkItem(string page, string backText = "Back")
    {
       LinkItem item = new() { Page = page, BackText = backText };
@@ -18,6 +22,10 @@ public static class Links
    public static void InitializeTransfersUrl(string transfersUrl)
    {
       _transfersUrl = transfersUrl;
+   }
+
+   public static void InializeProjectDocumentsEnabled(bool isProjectDocumentsEnabled) {
+      _isProjectDocumentsEnabled = isProjectDocumentsEnabled;
    }
    public static LinkItem ByPage(string page)
    {
@@ -62,6 +70,11 @@ public static class Links
    {
       public static readonly LinkItem Index = AddLinkItem(page: "/ProjectNotes/Index");
       public static readonly LinkItem NewNote = AddLinkItem(page: "/ProjectNotes/NewNote");
+   }
+
+   public static class ProjectDocuments
+   {
+      public static readonly LinkItem Index = AddLinkItem(page: "/ProjectDocuments/Index");
    }
 
    public static class TaskList

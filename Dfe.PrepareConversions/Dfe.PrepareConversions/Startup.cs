@@ -10,6 +10,7 @@ using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Routing;
 using Dfe.PrepareConversions.Security;
 using Dfe.PrepareConversions.Services;
+using Dfe.PrepareConversions.Services.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -21,6 +22,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
@@ -148,11 +150,20 @@ public class Startup
       services.AddScoped<IGraphUserService, GraphUserService>();
       services.AddScoped<IDfeHttpClientFactory, DfeHttpClientFactory>();
       services.AddScoped<ICorrelationContext, CorrelationContext>();
+      services.AddSingleton<IAadAuthorisationHelper, AadAuthorisationHelper>();
+
+      services.Configure<SharePointApiOptions>(Configuration.GetSection("Sharepoint"));
+      var sharepointOptions = Configuration.GetSection("Sharepoint").Get<SharePointApiOptions>();
+      services.AddHttpClient<IFileService, FileService>(client =>
+      {
+         client.BaseAddress = new Uri(sharepointOptions.ApiUrl);
+      });
+      Links.InializeProjectDocumentsEnabled(sharepointOptions.Enabled);
 
       // Initialize the TransfersUrl
       var serviceLinkOptions = Configuration.GetSection("ServiceLink").Get<ServiceLinkOptions>();
       Links.InitializeTransfersUrl(serviceLinkOptions.TransfersUrl);
-
+      
    }
 
    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
