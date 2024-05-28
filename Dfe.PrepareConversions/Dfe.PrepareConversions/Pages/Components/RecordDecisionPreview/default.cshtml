@@ -61,7 +61,7 @@
 
                 @if (Model.Decision != null && Model.Decision.DecisionMakerName != null)
                 {
-                    <div id="decision-made-by">@Model.Decision.DecisionMakerName</div>
+                    <div id="decision-maker-name">@Model.Decision.DecisionMakerName</div>
                 }
                 else
                 {
@@ -208,7 +208,7 @@ else
             You have not recorded the decision for this project. You can record the decision once it has been made.
         </p>
 
-        <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link">
+        <a class="govuk-button" data-cy="record_decision_btn" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link">
             Record a decision
         </a>
     </div>

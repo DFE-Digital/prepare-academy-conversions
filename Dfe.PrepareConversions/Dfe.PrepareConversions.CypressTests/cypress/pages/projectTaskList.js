@@ -22,7 +22,11 @@ export default class ProjectTaskList extends BasePage {
         LALink: 'a[href*="/confirm-local-authority-information-template-dates"]',
         LAStatus: '[id="la-info-template-status"]',
         ofstedLink: 'a[href*="/school-performance-ofsted-information"]',
-        keyStageLink: (keyStageNumber) => `a[href*="/key-stage-${keyStageNumber}-performance-tables"]`
+        keyStageLink: (keyStageNumber) => `a[href*="/key-stage-${keyStageNumber}-performance-tables"]`,
+        createNewConversionButton: '[data-cy="create_new_conversion_btn"]',
+        recordDecisionButton: '[data-cy="record_decision_btn"]',
+        schoolName: '[data-cy="school-name"]',
+        urn: '[data-cy="urn"]'
     }
 
     static path = 'task-list'
@@ -72,6 +76,10 @@ export default class ProjectTaskList extends BasePage {
         cy.get(this.selectors.conversionDetailsLink).click()
     }
 
+    static getHomePage() {
+        cy.visit(`${Cypress.env('url')}`)
+    }
+
     static getConversionDetailsStatus() {
         cy.checkPath(this.path)
         return cy.get(this.selectors.conversionDetailsStatus)
@@ -107,13 +115,31 @@ export default class ProjectTaskList extends BasePage {
         return cy.get(this.selectors.LAStatus)
     }
 
-    static selectOfsted(){
+    static selectOfsted() {
         cy.checkPath(this.path)
         cy.get(this.selectors.ofstedLink).click()
     }
 
-    static selectKeyStage(keyStageNumber){
+    static selectKeyStage(keyStageNumber) {
         cy.checkPath(this.path)
         cy.get(this.selectors.keyStageLink(keyStageNumber)).click()
     }
+
+    static getCreateNewConversion() {
+        cy.get(this.selectors.createNewConversionButton).click();
+        return this;
+    }
+
+    static selectRecordDecision() {
+        cy.get(this.selectors.recordDecisionButton).click();
+        return this;
+    }
+
+    static verifyProjectDetails(urn, schoolName) {
+        cy.get(this.selectors.schoolName).should('contain', schoolName);
+        cy.get(this.selectors.urn).should('contain', urn);
+        return this;
+    }
 }
+
+
