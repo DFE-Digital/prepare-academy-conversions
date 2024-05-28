@@ -1,5 +1,5 @@
 import projectTaskList from "../../pages/projectTaskList";
-import { decisionPage } from '../../pages/DecisionPage';
+import { decisionPage } from '../../pages/decisionPage';
 import { Logger } from '../../support/logger'
 
 
