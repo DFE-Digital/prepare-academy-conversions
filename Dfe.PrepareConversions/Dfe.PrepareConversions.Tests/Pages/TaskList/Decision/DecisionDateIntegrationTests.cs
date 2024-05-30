@@ -110,7 +110,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
 
       await ProgressToDecisionDateStep(project);
 
-      PageHeading.Should().Be("Date conversion was approved");
+      PageHeading.Should().Be("Date of decision");
 
       await NavigateAsync("Back");
 
@@ -130,7 +130,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
       await wizard.SetDecisionMakerName("Tester");
       await wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "Finance reasons"));
 
-      PageHeading.Should().Be("Date conversion was declined");
+      PageHeading.Should().Be("Date of decision");
 
       await NavigateAsync("Back");
 
@@ -154,7 +154,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
       await wizard.SetDecisionMakerName("Tester");
       await wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Performance, "performance reasons"));
 
-      PageHeading.Should().Be("Date conversion was declined");
+      PageHeading.Should().Be("Date of decision");
 
       DayPart.Value = default!;
       MonthPart.Value = default!;
@@ -162,7 +162,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
 
       await wizard.ClickSubmitButton();
 
-      PageHeading.Should().Be("Date conversion was declined");
+      PageHeading.Should().Be("Date of decision");
 
       ErrorSummary.Should().NotBeNull();
       ErrorSummary.TextContent.Should().Contain("Enter the date when the conversion was declined");
