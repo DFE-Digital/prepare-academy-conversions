@@ -213,7 +213,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
    [Theory]
    [InlineData(1, "Who made this decision?")]
    [InlineData(3, "Were any conditions set?")]
-   [InlineData(4, "Date conversion was approved")]
+   [InlineData(4, "Date of decision")]
    public async Task Should_go_back_to_choose_and_back_link_to_summary(int changeLinkIndex, string expectedTitle)
    {
       AdvisoryBoardDecision request = new()
@@ -243,8 +243,8 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
    [Theory]
    [InlineData(0, "Record the decision", "Who made this decision?")]
    [InlineData(1, "Who made this decision?", "Decision maker's name")]
-   [InlineData(3, "Were any conditions set?", "Date conversion was approved")]
-   [InlineData(4, "Date conversion was approved", "Check your answers before recording this decision")]
+   [InlineData(3, "Were any conditions set?", "Date of decision")]
+   [InlineData(4, "Date of decision", "Check your answers before recording this decision")]
    public async Task Should_go_back_to_choose_and_submit_back_to_summary(int changeLinkIndex, string changePageTitle, string nextPageTitle)
    {
       AdvisoryBoardDecision request = new()
