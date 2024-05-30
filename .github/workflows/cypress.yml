@@ -54,12 +54,13 @@ jobs:
         run: npm install
 
       - name: Run cypress (dev)
+        if: inputs.environment == 'dev'
         run: npm run cy:run -- --env url='${{ secrets.AZURE_ENDPOINT }}',cypressTestSecret='${{ secrets.CYPRESS_TEST_SECRET }}, academisationApiUrl=${{secrets.CYPRESS_ACADEMISATION_API_URL}}, academisationApiKey=${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}'
         env:
           db: ${{ secrets.DB_CONNECTION_STRING }}
 
       - name: Run cypress (staging)
-        if: needs.set-env.outputs.environment == 'staging'
+        if: inputs.environment == 'staging'
         run: npm run cy:run -- --env url='${{ secrets.AZURE_ENDPOINT }}',grep='-dao',cypressTestSecret='${{ secrets.CYPRESS_TEST_SECRET }}, academisationApiUrl=${{secrets.CYPRESS_ACADEMISATION_API_URL}}, academisationApiKey=${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}'
         env:
           db: ${{ secrets.DB_CONNECTION_STRING }}
