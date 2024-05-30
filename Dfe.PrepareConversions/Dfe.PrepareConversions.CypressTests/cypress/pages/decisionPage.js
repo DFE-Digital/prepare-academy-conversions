@@ -43,17 +43,17 @@ export class DecisionPage {
         return this;
     }
 
-    makeDecisionApproved() {
-        cy.get('#approved-radio').click();
+    makeDecision(decision) {
+        cy.get(`#${decision}-radio`).click();
         cy.get('#submit-btn').click();
         return this;
     }
 
-    makeGrade6Decision() {
-        cy.get('#grade6-radio').click();
+    decsionMaker(grade) {
+        cy.get(`#${grade}-radio`).click();
         cy.get('#submit-btn').click();
         return this;
-    }
+      }
 
     enterDecisionMakerName(name) {
         cy.get('#decision-maker-name').type(name);

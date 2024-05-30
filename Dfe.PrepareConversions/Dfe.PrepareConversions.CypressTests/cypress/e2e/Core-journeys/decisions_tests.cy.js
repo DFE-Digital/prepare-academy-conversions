@@ -4,7 +4,7 @@ import { Logger } from '../../support/logger'
 
 
 
-describe('Conversion Project Tests', () => {
+describe('Decisions Tests', () => {
     beforeEach(() => {
         Logger.log("Visit the homepage before each test");
         projectTaskList.getHomePage();
@@ -46,8 +46,8 @@ describe('Conversion Project Tests', () => {
         decisionPage.clickRecordDecision();
 
         Logger.log("Record the decision with the necessary details");
-        decisionPage.makeDecisionApproved()
-            .makeGrade6Decision()
+        decisionPage.makeDecision("approved")
+            .decsionMaker("grade6")
             .enterDecisionMakerName('Fahad Darwish')
             .selectNoConditions()
             .enterDecisionDate('12', '12', '2023')
