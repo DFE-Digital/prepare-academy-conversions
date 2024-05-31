@@ -103,7 +103,7 @@ public class Startup
 
       if (Directory.Exists(dpTargetPath)) {
          // If a Key Vault Key URI is defined, expect to encrypt the keys.xml
-         string? kvProtectionKeyUri = Configuration.GetValue<string>("DataProtection:KeyVaultKey");
+         string kvProtectionKeyUri = Configuration.GetValue<string>("DataProtection:KeyVaultKey");
 
          // Setup basic Data Protection and persist keys.xml to local file system
          var dp = services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(dpTargetPath));
