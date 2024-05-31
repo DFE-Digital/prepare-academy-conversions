@@ -1,7 +1,30 @@
-name: Run Cypress Accessibility checks
+name: Run Cypress tests
 
 on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+    secrets:
+      AZURE_ENDPOINT:
+        required: true
+      CYPRESS_TEST_SECRET:
+        required: true
+      CYPRESS_ACADEMISATION_API_URL:
+        required: true
+      CYPRESS_ACADEMISATION_API_KEY:
+        required: true
+      DB_CONNECTION_STRING:
+        required: true
+      SLACK_WEBHOOK_URL:
+        required: true
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run tests against'
+        required: true
+        type: environment
 
 concurrency:
   group: ${{ github.workflow }}
@@ -13,7 +36,7 @@ jobs:
   cypress-tests:
     name: Run Cypress Tests
     runs-on: ubuntu-latest
-    environment: dev
+    environment: ${{ inputs.environment }}
     defaults:
       run:
         working-directory: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
@@ -31,7 +54,14 @@ jobs:
         run: npm install
 
       - name: Run cypress (dev)
+        if: inputs.environment == 'dev'
         run: npm run cy:run -- --env url='${{ secrets.AZURE_ENDPOINT }}',cypressTestSecret='${{ secrets.CYPRESS_TEST_SECRET }}, academisationApiUrl=${{secrets.CYPRESS_ACADEMISATION_API_URL}}, academisationApiKey=${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}'
+        env:
+          db: ${{ secrets.DB_CONNECTION_STRING }}
+
+      - name: Run cypress (staging)
+        if: inputs.environment == 'staging'
+        run: npm run cy:run -- --env url='${{ secrets.AZURE_ENDPOINT }}',grep='-dao',cypressTestSecret='${{ secrets.CYPRESS_TEST_SECRET }}, academisationApiUrl=${{secrets.CYPRESS_ACADEMISATION_API_URL}}, academisationApiKey=${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}'
         env:
           db: ${{ secrets.DB_CONNECTION_STRING }}
 
