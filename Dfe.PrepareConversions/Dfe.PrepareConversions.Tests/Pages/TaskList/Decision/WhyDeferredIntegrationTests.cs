@@ -70,7 +70,7 @@ public class WhyDeferredIntegrationTests : BaseIntegrationTests, IAsyncLifetime
       await _wizard.SetDeferredReasonsAndContinue(Tuple.Create(AdvisoryBoardDeferredReason.Other, "other reasons"));
 
       Document.QuerySelector<IHtmlElement>("h1")!.Text().Should()
-         .Be("Date conversion was deferred");
+         .Be("Date of decision");
    }
 
    [Fact]
