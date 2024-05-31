@@ -297,3 +297,8 @@ variable "dns_mx_records" {
   )
   default = {}
 }
+
+variable "enable_container_app_file_share" {
+  description = "Create an Azure Storage Account and File Share to be mounted to the Container Apps"
+  type        = bool
+}
