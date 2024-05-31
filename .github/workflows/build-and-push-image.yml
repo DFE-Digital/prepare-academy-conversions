@@ -55,7 +55,6 @@ jobs:
     name: Tag and release
     needs: [ set-env, deploy-image ]
     runs-on: ubuntu-22.04
-    if: needs.set-env.outputs.environment == 'production'
     steps:
       - uses: actions/checkout@v4
         with:
