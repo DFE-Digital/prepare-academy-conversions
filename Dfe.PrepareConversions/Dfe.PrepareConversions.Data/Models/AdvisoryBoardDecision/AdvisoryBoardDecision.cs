@@ -21,6 +21,7 @@ public class AdvisoryBoardDecision
    public List<AdvisoryBoardDeclinedReasonDetails> DeclinedReasons { get; set; }
    public List<AdvisoryBoardDeferredReasonDetails> DeferredReasons { get; set; }
    public List<AdvisoryBoardWithdrawnReasonDetails> WithdrawnReasons { get; set; }
+   public List<AdvisoryBoardDAORevokedReasonDetails> DAORevokedReasons { get; set; }
 
    public DateTime? AdvisoryBoardDecisionDate { get; set; }
    public DecisionMadeBy? DecisionMadeBy { get; set; }

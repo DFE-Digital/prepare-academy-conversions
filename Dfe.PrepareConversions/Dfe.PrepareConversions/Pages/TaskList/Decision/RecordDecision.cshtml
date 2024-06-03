@@ -2,43 +2,51 @@
 @using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
 @model Dfe.PrepareConversions.Pages.TaskList.Decision.RecordDecisionModel
 @{
-   ViewData["Title"] = "Record the decision";
+    ViewData["Title"] = "Record the decision";
 }
 
 @section BeforeMain
 {
-   <partial name="_BackLink" model="@Model.BackLinkModel"/>
-   <partial name="_ErrorSummary"/>
+    <partial name="_BackLink" model="@Model.BackLinkModel" />
+    <partial name="_ErrorSummary" />
 }
 
 <span id="selection-span" class="govuk-caption-l">Record the decision</span>
 <h1 class="govuk-heading-l">Record the decision</h1>
 
 <form method="post">
-   <div class="govuk-form-group">
-      <fieldset class="govuk-fieldset">
-         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-         </legend>
-         <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios" id="AdvisoryBoardDecision">
+    <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            </legend>
+            <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios" id="AdvisoryBoardDecision">
 
-            @foreach (var decisionOption in Enum.GetValues(typeof(AdvisoryBoardDecisions)))
-            {
-               var id = $"{decisionOption.ToString()?.ToLower()}-radio";
+                @foreach (var decisionOption in Enum.GetValues(typeof(AdvisoryBoardDecisions)))
+                {
+                    var decision = (AdvisoryBoardDecisions)decisionOption;
 
-               <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" type="radio" asp-for="@Model.AdvisoryBoardDecision"
-                         title="@decisionOption.ToString()?.ToLower()" value="@decisionOption" id="@id"/>
-                  <label class="govuk-label govuk-radios__label" for="@id">
-                     @decisionOption
-                  </label>
-               </div>
-            }
-         </div>
-      </fieldset>
-   </div>
+                    if (decision == AdvisoryBoardDecisions.DAORevoked && Model.AcademyTypeAndRoute.ToLower() != "sponsored")
+                    {
+                        continue;
+                    }
 
-   <button class="govuk-button" data-module="govuk-button" id="submit-btn">
-      Continue
-   </button>
+                    var id = $"{decision.ToString().ToLower()}-radio";
+                    var title = decision == AdvisoryBoardDecisions.DAORevoked ? "DAO (Directive Academy Order) revoked" : decision.ToString();
+
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" type="radio" asp-for="@Model.AdvisoryBoardDecision"
+                               title="@title.ToLower()" value="@decision" id="@id" />
+                        <label class="govuk-label govuk-radios__label" for="@id">
+                            @title
+                        </label>
+                    </div>
+                }
+            </div>
+        </fieldset>
+    </div>
+
+    <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+        Continue
+    </button>
 
 </form>
