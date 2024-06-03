@@ -31,6 +31,7 @@
                AdvisoryBoardDecisions.Approved => "govuk-tag--green",
                AdvisoryBoardDecisions.Deferred => "govuk-tag--orange",
                AdvisoryBoardDecisions.Withdrawn => "govuk-tag--purple",
+               AdvisoryBoardDecisions.DAORevoked => "govuk-tag--red",
                _ => "govuk-tag--red"
                };
          }
@@ -161,7 +162,28 @@
             </dd>
         </div>
     }
+    @if (Model.Decision.Decision == AdvisoryBoardDecisions.DAORevoked)
+    {
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Why was the DAO Revoked?
+            </dt>
+            <dd class="govuk-summary-list__value" id="daorevoked-reasons">
 
+                @foreach (AdvisoryBoardDAORevokedReasonDetails reason in Model.Decision.DAORevokedReasons)
+                {
+                    <div>@reason.Reason.ToDescription():</div>
+                    <div class="govuk-!-margin-bottom-2">@reason.Details</div>
+                }
+
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" asp-page="@Links.Decision.WhyDAORevoked.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-daorevoked-btn">
+                    Change<span class="govuk-visually-hidden">daorevoked-reason</span>
+                </a>
+            </dd>
+        </div>
+    }
    @if (Model.Decision.Decision == AdvisoryBoardDecisions.Approved)
    {
       var conditionsSet = Model.Decision.ApprovedConditionsSet.GetValueOrDefault();

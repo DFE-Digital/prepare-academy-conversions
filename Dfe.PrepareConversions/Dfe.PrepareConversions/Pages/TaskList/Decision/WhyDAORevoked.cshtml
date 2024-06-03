@@ -1,0 +1,64 @@
+﻿@page "/task-list/{id:int}/decision/why-DAORevoked"
+@using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
+@using Dfe.Academisation.ExtensionMethods
+@using Dfe.PrepareConversions.Extensions
+@model Dfe.PrepareConversions.Pages.TaskList.Decision.WhyDAORevokedModel
+@{
+   ViewData["Title"] = $"Why project was {Model.DecisionText}";
+   Layout = "_Layout";
+}
+
+@section BeforeMain
+{
+   <partial name="_BackLink" model="@Model.BackLinkModel"/> 
+   <partial name="_ErrorSummary"/>
+}
+
+<span id="selection-span" class="govuk-caption-l">Record the decision</span>
+<h1 class="govuk-heading-l">Why was the DAO revoked?</h1>
+
+<form method="post">
+   <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset">
+         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+         </legend>
+         <div class="govuk-checkboxes @ModelState.GetErrorStyleClass()" data-module="govuk-checkboxes" id="WasReasonGiven">
+
+            <input type="hidden" asp-for="@Model.WasReasonGiven"/>
+
+            @{
+                    CheckBoxAndLabel(AdvisoryBoardDAORevokedReason.SchoolClosedOrClosing, Model.SchoolClosedOrClosingIsChecked, Model.SchoolClosedOrClosingDetails);
+                    CheckBoxAndLabel(AdvisoryBoardDAORevokedReason.SchoolRatedGoodOrOutstanding, Model.SchoolRatedGoodOrOutstandingIsChecked, Model.SchoolRatedGoodOrOutstandingDetails);
+                    CheckBoxAndLabel(AdvisoryBoardDAORevokedReason.SafeguardingConcernsAddressed, Model.SafeguardingConcernsAddressedIsChecked, Model.SafeguardingConcernsAddressedDetails);              
+            }
+         </div>
+      </fieldset>
+   </div>
+
+   <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+      Continue
+   </button>
+</form>
+
+@{
+   void CheckBoxAndLabel(AdvisoryBoardDAORevokedReason daoRevokedReason, bool isChecked, string details)
+   {
+        <div class="govuk-checkboxes__item" id="@(daoRevokedReason)Details">
+         <input class="govuk-checkboxes__input" id="@daoRevokedReason.ToString().ToLower()-checkbox" name="@(daoRevokedReason)IsChecked" type="checkbox"
+                data-aria-controls="conditional-@daoRevokedReason" value="true" @(isChecked ? "checked" : "")>
+         <label class="govuk-label govuk-checkboxes__label" for="@daoRevokedReason.ToString().ToLower()-checkbox">
+            @daoRevokedReason.ToDescription()
+         </label>
+      </div>
+      <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-@daoRevokedReason">
+         <div class="govuk-form-group">
+            <label class="govuk-label" for="@daoRevokedReason.ToString().ToLower()-txtarea">
+               Give reasons
+            </label>
+            <textarea class="govuk-textarea govuk-!-width-three-quarters" id="@daoRevokedReason.ToString().ToLower()-txtarea" 
+                                name="@(daoRevokedReason)Details" rows="5" aria-describedby="more-detail-hint">@details</textarea>
+         </div>
+
+      </div>
+   }
+}
