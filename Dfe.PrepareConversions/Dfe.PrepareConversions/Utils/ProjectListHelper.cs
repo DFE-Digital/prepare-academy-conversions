@@ -79,7 +79,7 @@ namespace Dfe.PrepareConversions.Utils
          const string orange = nameof(orange);
          const string red = nameof(red);
          const string purple = nameof(purple);
-
+         if (status.Equals("DAO Revoked")) status = "DAORevoked";
          if (Enum.TryParse(status, out AdvisoryBoardDecisions result))
          {
             return result switch
