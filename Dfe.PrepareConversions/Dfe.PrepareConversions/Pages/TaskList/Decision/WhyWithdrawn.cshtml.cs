@@ -13,13 +13,13 @@ namespace Dfe.PrepareConversions.Pages.TaskList.Decision;
 
 public class WhyWithdrawnModel : DecisionBaseModel
 {
-    private readonly ErrorService _errorService;
+   private readonly ErrorService _errorService;
 
-    public WhyWithdrawnModel(IAcademyConversionProjectRepository repository,
-                           ISession session,
-                           ErrorService errorService
-       )
-      : base(repository, session)
+   public WhyWithdrawnModel(IAcademyConversionProjectRepository repository,
+                          ISession session,
+                          ErrorService errorService
+      )
+     : base(repository, session)
    {
       _errorService = errorService;
    }
@@ -68,41 +68,41 @@ public class WhyWithdrawnModel : DecisionBaseModel
 
    public IActionResult OnPost(int id)
    {
-        AdvisoryBoardDecision decision = GetDecisionFromSession(id);
+      AdvisoryBoardDecision decision = GetDecisionFromSession(id);
 
-        decision.WithdrawnReasons.Clear();
-        decision.WithdrawnReasons
-           .AddReasonIfValid(AdditionalInformationNeededIsChecked, AdvisoryBoardWithdrawnReason.AdditionalInformationNeeded, AdditionalInformationNeededDetails, ModelState)
-           .AddReasonIfValid(AwaitingNextOfstedReportIsChecked, AdvisoryBoardWithdrawnReason.AwaitingNextOfstedReport, AwaitingNextOfstedReportDetails, ModelState)
-           .AddReasonIfValid(PerformanceConcernsIsChecked, AdvisoryBoardWithdrawnReason.PerformanceConcerns, PerformanceConcernsDetails, ModelState)
-           .AddReasonIfValid(OtherIsChecked, AdvisoryBoardWithdrawnReason.Other, OtherDetails, ModelState);
+      decision.WithdrawnReasons.Clear();
+      decision.WithdrawnReasons
+         .AddReasonIfValid(AdditionalInformationNeededIsChecked, AdvisoryBoardWithdrawnReason.AdditionalInformationNeeded, AdditionalInformationNeededDetails, ModelState)
+         .AddReasonIfValid(AwaitingNextOfstedReportIsChecked, AdvisoryBoardWithdrawnReason.AwaitingNextOfstedReport, AwaitingNextOfstedReportDetails, ModelState)
+         .AddReasonIfValid(PerformanceConcernsIsChecked, AdvisoryBoardWithdrawnReason.PerformanceConcerns, PerformanceConcernsDetails, ModelState)
+         .AddReasonIfValid(OtherIsChecked, AdvisoryBoardWithdrawnReason.Other, OtherDetails, ModelState);
 
-        SetDecisionInSession(id, decision);
+      SetDecisionInSession(id, decision);
 
-        if (!WasReasonGiven) ModelState.AddModelError("WasReasonGiven", "Select at least one reason");
+      if (!WasReasonGiven) ModelState.AddModelError("WasReasonGiven", "Select at least one reason");
 
-        _errorService.AddErrors(ModelState.Keys, ModelState);
-        if (_errorService.HasErrors()) return OnGet(id);
+      _errorService.AddErrors(ModelState.Keys, ModelState);
+      if (_errorService.HasErrors()) return OnGet(id);
 
-        return RedirectToPage(Links.Decision.DecisionDate.Page, LinkParameters);
+      return RedirectToPage(Links.Decision.DecisionDate.Page, LinkParameters);
    }
 
    private void SetReasonsModel(List<AdvisoryBoardWithdrawnReasonDetails> reasons)
    {
-        AdvisoryBoardWithdrawnReasonDetails additionalInfo = reasons.GetReason(AdvisoryBoardWithdrawnReason.AdditionalInformationNeeded);
-        AdditionalInformationNeededIsChecked = additionalInfo != null;
-        AdditionalInformationNeededDetails = additionalInfo?.Details;
+      AdvisoryBoardWithdrawnReasonDetails additionalInfo = reasons.GetReason(AdvisoryBoardWithdrawnReason.AdditionalInformationNeeded);
+      AdditionalInformationNeededIsChecked = additionalInfo != null;
+      AdditionalInformationNeededDetails = additionalInfo?.Details;
 
-        AdvisoryBoardWithdrawnReasonDetails ofsted = reasons.GetReason(AdvisoryBoardWithdrawnReason.AwaitingNextOfstedReport);
-        AwaitingNextOfstedReportIsChecked = ofsted != null;
-        AwaitingNextOfstedReportDetails = ofsted?.Details;
+      AdvisoryBoardWithdrawnReasonDetails ofsted = reasons.GetReason(AdvisoryBoardWithdrawnReason.AwaitingNextOfstedReport);
+      AwaitingNextOfstedReportIsChecked = ofsted != null;
+      AwaitingNextOfstedReportDetails = ofsted?.Details;
 
-        AdvisoryBoardWithdrawnReasonDetails perf = reasons.GetReason(AdvisoryBoardWithdrawnReason.PerformanceConcerns);
-        PerformanceConcernsIsChecked = perf != null;
-        PerformanceConcernsDetails = perf?.Details;
+      AdvisoryBoardWithdrawnReasonDetails perf = reasons.GetReason(AdvisoryBoardWithdrawnReason.PerformanceConcerns);
+      PerformanceConcernsIsChecked = perf != null;
+      PerformanceConcernsDetails = perf?.Details;
 
-        AdvisoryBoardWithdrawnReasonDetails other = reasons.GetReason(AdvisoryBoardWithdrawnReason.Other);
-        OtherIsChecked = other != null;
-        OtherDetails = other?.Details;
-    }
+      AdvisoryBoardWithdrawnReasonDetails other = reasons.GetReason(AdvisoryBoardWithdrawnReason.Other);
+      OtherIsChecked = other != null;
+      OtherDetails = other?.Details;
+   }
 }

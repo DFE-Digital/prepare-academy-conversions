@@ -149,6 +149,24 @@
                 <dd class="govuk-summary-list__actions"></dd>
             </div>
             }
+        @if (Model.Decision.Decision == AdvisoryBoardDecisions.DAORevoked)
+        {
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Why was the DAO revoked?
+                </dt>
+                <dd class="govuk-summary-list__value" id="dao-revoked-reasons">
+
+                    @foreach (AdvisoryBoardDAORevokedReasonDetails reason in Model.Decision.DAORevokedReasons)
+                    {
+                        <div>@reason.Reason.ToDescription():</div>
+                        <div class="govuk-!-margin-bottom-2">@reason.Details</div>
+                    }
+                </dd>
+                <dd class="govuk-summary-list__actions"></dd>
+            </div>
+        }
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Date of decision

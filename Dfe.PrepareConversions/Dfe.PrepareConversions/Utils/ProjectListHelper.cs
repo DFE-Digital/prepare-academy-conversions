@@ -79,7 +79,7 @@ namespace Dfe.PrepareConversions.Utils
          const string orange = nameof(orange);
          const string red = nameof(red);
          const string purple = nameof(purple);
-
+         if (status.Equals("DAO Revoked")) status = "DAORevoked";
          if (Enum.TryParse(status, out AdvisoryBoardDecisions result))
          {
             return result switch
@@ -87,6 +87,7 @@ namespace Dfe.PrepareConversions.Utils
                AdvisoryBoardDecisions.Approved => new ProjectStatus(result.ToString().ToUpper(), green),
                AdvisoryBoardDecisions.Deferred => new ProjectStatus(result.ToString().ToUpper(), orange),
                AdvisoryBoardDecisions.Declined => new ProjectStatus(result.ToString().ToUpper(), red),
+               AdvisoryBoardDecisions.DAORevoked => new ProjectStatus("DAO Revoked", red),
                AdvisoryBoardDecisions.Withdrawn => new ProjectStatus(result.ToString().ToUpper(), purple),
                _ => new ProjectStatus(result.ToString().ToUpper(), yellow)
             };
@@ -95,6 +96,7 @@ namespace Dfe.PrepareConversions.Utils
          return status?.ToLowerInvariant() switch
          {
             "approved with conditions" => new ProjectStatus("Approved with Conditions", green),
+            "daorevoked" => new ProjectStatus("DAO Revoked", red),
             _ => new ProjectStatus("PRE ADVISORY BOARD", yellow)
          };
       }

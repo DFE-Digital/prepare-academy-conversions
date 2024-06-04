@@ -1,6 +1,9 @@
 ## NEXT
 
 * Added ability to filter filters (Example being; to refine delivery officer list)
+* Added ability to have 'DAO Revoked' decision recorded against a Sponsored conversion project
+
+
 ## 1.5.0
 
 * Changed Feedback Banner: The feedback banner has been updated to better capture user insights and improve engagement.
