@@ -39,7 +39,7 @@ public class IsThisFormAMatModel : PageModel
       return Page();
    }
 
-   public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect)
+   public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect, string hasPreferredTrust, string proposedTrustName, string isProjectInPrepare, string famReference)
    {
 
       if (IsFormAMat.IsNullOrEmpty())
@@ -60,6 +60,6 @@ public class IsThisFormAMatModel : PageModel
 
       redirect = string.IsNullOrEmpty(redirect) ? nextPage : redirect;
 
-      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied, IsFormAMat });
+      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied, IsFormAMat, hasPreferredTrust, proposedTrustName, isProjectInPrepare, famReference });
    }
 }

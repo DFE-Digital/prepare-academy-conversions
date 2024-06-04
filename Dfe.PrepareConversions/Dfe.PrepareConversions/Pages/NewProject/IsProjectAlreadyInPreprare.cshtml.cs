@@ -43,7 +43,7 @@ public class IsProjectAlreadyInPreprareModel : PageModel
       return Page();
    }
 
-   public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect)
+   public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect, string hasPreferredTrust, string proposedTrustName, string famReference)
    {
 
       if (IsProjectInPrepare.IsNullOrEmpty())
@@ -64,6 +64,6 @@ public class IsProjectAlreadyInPreprareModel : PageModel
 
       redirect = string.IsNullOrEmpty(redirect) ? nextPage : redirect;
 
-      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied, IsFormAMat, IsProjectInPrepare });
+      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied, IsFormAMat, IsProjectInPrepare, hasPreferredTrust, proposedTrustName, famReference });
    }
 }

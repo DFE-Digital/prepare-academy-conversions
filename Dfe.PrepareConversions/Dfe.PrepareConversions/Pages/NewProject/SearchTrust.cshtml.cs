@@ -76,7 +76,7 @@ public class SearchTrustModel : PageModel
       }));
    }
 
-   public async Task<IActionResult> OnPost(string urn)
+   public async Task<IActionResult> OnPost(string urn, string proposedTrustName, string isFormAMat, string isProjectInPrepare, string famReference)
    {
       AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
       if (string.IsNullOrWhiteSpace(SearchQuery))
@@ -105,7 +105,7 @@ public class SearchTrustModel : PageModel
          return Page();
       }
 
-      return RedirectToPage(Links.NewProject.Summary.Page, new { ukprn, urn, HasSchoolApplied, HasPreferredTrust });
+      return RedirectToPage(Links.NewProject.Summary.Page, new { ukprn, urn, HasSchoolApplied, HasPreferredTrust, proposedTrustName, isFormAMat, isProjectInPrepare, famReference });
    }
 
    private static string HighlightSearchMatch(string input, string toReplace, TrustDto trust)
