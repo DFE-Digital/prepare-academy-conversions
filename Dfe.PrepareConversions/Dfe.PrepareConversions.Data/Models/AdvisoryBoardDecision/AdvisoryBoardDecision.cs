@@ -89,6 +89,7 @@ namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
          return this switch
          {
             { Decision: AdvisoryBoardDecisions.Approved, ApprovedConditionsSet: true } => "Approved with Conditions",
+            { Decision: AdvisoryBoardDecisions.DAORevoked } => "DAO Revoked",
             _ => Decision?.ToString()
          };
       }
