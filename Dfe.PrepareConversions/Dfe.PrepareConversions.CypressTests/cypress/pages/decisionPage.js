@@ -53,7 +53,7 @@ export class DecisionPage {
         cy.get(`#${grade}-radio`).click();
         cy.get('#submit-btn').click();
         return this;
-      }
+    }
 
     enterDecisionMakerName(name) {
         cy.get('#decision-maker-name').type(name);
@@ -131,10 +131,25 @@ export class DecisionPage {
         cy.get('#decision-date-year').clear();
         cy.get('#decision-date-year').type('2023');
         cy.get('#submit-btn').click();
-
         this.verifyDecisionDetailsAfterChanging('Declined', 'Director General', '12 November 2023');
+        cy.get('#submit-btn').click();
+        return this;
+    }
+    changeDecisionDAODetails() {
+        cy.get('[data-cy="record_decision_menu"]').click();
+        cy.get('#record-decision-link').click();
+        cy.get('#daorevoked-radio').click();
+        cy.get('#submit-btn').click();
+        cy.get('#submit-btn').click();
+        cy.get('#submit-btn').click();
+        cy.get('#schoolclosedorclosing-checkbox').click();
+        cy.get('#schoolclosedorclosing-txtarea').type('Cypress Test Fahad - Reason school is closing');
+        cy.get('#submit-btn').click();
+        cy.get('#submit-btn').click();
+        this.verifyDecisionDetailsAfterChanging('DAO', 'Director General', '12 November 2023');
         return this;
     }
 }
+
 
 export const decisionPage = new DecisionPage();

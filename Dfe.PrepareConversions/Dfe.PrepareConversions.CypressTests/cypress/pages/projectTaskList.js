@@ -125,7 +125,7 @@ export default class ProjectTaskList extends BasePage {
         cy.get(this.selectors.keyStageLink(keyStageNumber)).click()
     }
 
-    static getCreateNewConversion() {
+    static clickCreateNewConversionBtn() {
         cy.get(this.selectors.createNewConversionButton).click();
         return this;
     }
