@@ -1,6 +1,5 @@
 ﻿@page "/project-documents/{id:int}"
 @using Dfe.PrepareConversions.Data.Models
-@using Dfe.PrepareConversions.Services.Helpers
 @model Dfe.PrepareConversions.Pages.ProjectDocuments.IndexModel
 @{
     ViewData["Title"] = "Project documents";
@@ -15,25 +14,9 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form asp-page-handler="GetFile" method="get">
-     
-        
-        <partial name="Shared/_FilesPartial" model='new FilesViewModel {
-	      Urn = Model.Project.SchoolURN,
-	      EntityId = Model.Project.SharePointId.Value,
-	      ApplicationReference = Model.Project.ApplicationReferenceNumber,
-	      FilePrefixSection = FileUploadConstants.ResolutionConsentfilePrefixFieldName,
-          SectionName = "Resolution Consent",
-	      FileNames = Model.ResolutionConsentFileNames
-      }' />
-        </form>
-              <partial name="Shared/_FilesPartial" model='new FilesViewModel {
-	      Urn = Model.Project.SchoolURN,
-	      EntityId = Model.Project.SharePointId.Value,
-	      ApplicationReference = Model.Project.ApplicationReferenceNumber,
-	      FilePrefixSection = FileUploadConstants.DioceseFilePrefixFieldName,
-          SectionName = "Diocese",
-	      FileNames = Model.DioceseFileNames
-      }' />
+
+        Application level documents folder <a href="@Model.ApplicationLevelDocumentsFolder" target="_blank">here</a><br />
+        School level documents folder <a href="@Model.SchoolLevelDocumentsFolder" target="_blank">here</a>
     </div>
+
 </div>

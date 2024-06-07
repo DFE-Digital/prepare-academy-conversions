@@ -2,7 +2,6 @@ using AngleSharp.Io.Dom;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
-using Dfe.PrepareConversions.Services.Helpers;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
@@ -12,63 +11,38 @@ using System.Linq;
 using System.Net.Http;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using static System.Net.WebRequestMethods;
 
 namespace Dfe.PrepareConversions.Pages.ProjectDocuments;
 
 public class IndexModel : BaseAcademyConversionProjectPageModel
 {
-   private readonly IFileService _fileService;
+   private readonly IConfiguration _configuration;
 
    public string ReturnPage { get; set; }
    public string ReturnId { get; set; }
 
-   public IndexModel(IAcademyConversionProjectRepository repository, IFileService fileService) : base(repository)
+   public IndexModel(IAcademyConversionProjectRepository repository, IConfiguration configuration) : base(repository)
    {
-      _fileService = fileService;
+      _configuration = configuration;
    }
 
    [BindProperty]
-   public List<string> DioceseFileNames { get; set; }
+   public string ApplicationLevelDocumentsFolder { get; set; }
    [BindProperty]
-   public List<string> ResolutionConsentFileNames { get; private set; }
+   public string SchoolLevelDocumentsFolder { get; private set; }
 
    public override async Task<IActionResult> OnGetAsync(int id)
    {
       await base.OnGetAsync(id);
+      var rootSharePointFolder = _configuration["Sharepoint:Url"];
 
-      DioceseFileNames = await _fileService.GetFiles(FileUploadConstants.TopLevelSchoolFolderName, Project.SharePointId.ToString(), Project.ApplicationReferenceNumber, FileUploadConstants.DioceseFilePrefixFieldName);
-      //TempDataHelper.StoreSerialisedValue($"{EntityId}-dioceseFiles", TempData, DioceseFileNames);
-      //FoundationConsentFileNames = await _fileUploadService.GetFiles(FileUploadConstants.TopLevelSchoolFolderName, EntityId.ToString(), ApplicationReference, FileUploadConstants.FoundationConsentFilePrefixFieldName);
+      //https://educationgovuk.sharepoint.com/sites/sip-dev/sip_application/Forms/AllItems.aspx?id=%2Fsites%2Fsip%2Ddev%2Fsip%5Fapplication%2FA2B%5F0027%5F63B137B6D21DEB11A813000D3A38AA47
 
-      ResolutionConsentFileNames = await _fileService.GetFiles(FileUploadConstants.TopLevelSchoolFolderName, Project.SharePointId.ToString(), Project.ApplicationReferenceNumber, FileUploadConstants.ResolutionConsentfilePrefixFieldName);
+      ApplicationLevelDocumentsFolder = $"{rootSharePointFolder}sip_application/{Project.ApplicationReferenceNumber}_{Project.ApplicationSharePointId.Value.ToString("N").ToUpper()}";
+      SchoolLevelDocumentsFolder = $"{rootSharePointFolder}sip_applyingschools/{Project.ApplicationReferenceNumber}_{Project.SchoolSharePointId.Value.ToString("N").ToUpper()}";
 
       return Page();
-   }
-
-   public async Task<HttpResponseMessage> GetFile(string entityName, string recordId, string recordName, string fieldName, string fileName)
-   {
-      //if (String.IsNullOrEmpty(id))
-      //   return Request.CreateResponse(HttpStatusCode.BadRequest);
-
-      var file  = await _fileService.DownloadFile(entityName, recordId, recordName, fieldName, fileName);
-
-      HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-
-      response.Content = new StreamContent(GenerateStreamFromString(file));
-      response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
-      response.Content.Headers.ContentDisposition.FileName = fileName;
-      //response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
-
-      return response;
-   }
-
-   public static Stream GenerateStreamFromString(string s)
-   {
-      var stream = new MemoryStream();
-      var writer = new StreamWriter(stream);
-      writer.Write(s);
-      writer.Flush();
-      stream.Position = 0;
-      return stream;
    }
 }
