@@ -4,6 +4,7 @@ using Dfe.PrepareConversions.Models.ProjectList;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 using System.Linq;
 using System.Net;
@@ -14,14 +15,16 @@ namespace Dfe.PrepareConversions.Pages.TaskList;
 public class IndexModel : BaseAcademyConversionProjectPageModel
 {
    private readonly ErrorService _errorService;
+   private readonly IConfiguration _configuration;
    private readonly KeyStagePerformanceService _keyStagePerformanceService;
 
    public IndexModel(KeyStagePerformanceService keyStagePerformanceService,
                      IAcademyConversionProjectRepository repository,
-                     ErrorService errorService) : base(repository)
+                     ErrorService errorService, IConfiguration configuration) : base(repository)
    {
       _keyStagePerformanceService = keyStagePerformanceService;
       _errorService = errorService;
+      _configuration = configuration;
    }
 
    public bool ShowGenerateHtbTemplateError { get; set; }

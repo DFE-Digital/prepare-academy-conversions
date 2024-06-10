@@ -12,6 +12,8 @@ public class ProjectViewModel : ProjectTypeBase
    {
       Id = project.Id.ToString();
       FormAMatProjectId = project.FormAMatProjectId;
+      ApplicationSharePointId = project.ApplicationSharePointId;
+      SchoolSharePointId = project.SchoolSharePointId;
       IsFormAMat = project.IsFormAMat.HasValue && project.IsFormAMat.Value;
       ProjectStatus = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Value;
       ProjectStatusColour = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Colour;
@@ -130,6 +132,8 @@ public class ProjectViewModel : ProjectTypeBase
 
    public string Id { get; }
    public int? FormAMatProjectId { get; }
+   public Guid? SchoolSharePointId { get; }
+   public Guid? ApplicationSharePointId { get; }
    public string ProjectStatus { get; }
    public string ProjectStatusColour { get; }
    public string ApplicationReferenceNumber { get; set; }
