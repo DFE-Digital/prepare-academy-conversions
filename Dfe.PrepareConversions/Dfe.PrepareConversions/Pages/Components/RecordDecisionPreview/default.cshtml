@@ -61,7 +61,7 @@
 
                 @if (Model.Decision != null && Model.Decision.DecisionMakerName != null)
                 {
-                    <div id="decision-made-by">@Model.Decision.DecisionMakerName</div>
+                    <div id="decision-maker-name">@Model.Decision.DecisionMakerName</div>
                 }
                 else
                 {
@@ -149,6 +149,24 @@
                 <dd class="govuk-summary-list__actions"></dd>
             </div>
             }
+        @if (Model.Decision.Decision == AdvisoryBoardDecisions.DAORevoked)
+        {
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Why was the DAO revoked?
+                </dt>
+                <dd class="govuk-summary-list__value" id="dao-revoked-reasons">
+
+                    @foreach (AdvisoryBoardDAORevokedReasonDetails reason in Model.Decision.DAORevokedReasons)
+                    {
+                        <div>@reason.Reason.ToDescription():</div>
+                        <div class="govuk-!-margin-bottom-2">@reason.Details</div>
+                    }
+                </dd>
+                <dd class="govuk-summary-list__actions"></dd>
+            </div>
+        }
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Date of decision
@@ -208,7 +226,7 @@ else
             You have not recorded the decision for this project. You can record the decision once it has been made.
         </p>
 
-        <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link">
+        <a class="govuk-button" data-cy="record_decision_btn" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link">
             Record a decision
         </a>
     </div>

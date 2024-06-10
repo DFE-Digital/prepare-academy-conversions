@@ -28,6 +28,13 @@ export default defineConfig({
         }
       })
 
+      on('task', {
+        log(message) {
+          console.log(message);
+          return null;
+        },
+      });
+
       require('./cypress/plugins/index.js')(on, config)
       return config;
     },

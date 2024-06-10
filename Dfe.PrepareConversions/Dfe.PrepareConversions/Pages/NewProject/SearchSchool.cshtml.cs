@@ -56,7 +56,7 @@ public class SearchSchoolModel : PageModel
       return new JsonResult(schools.Select(s => new { suggestion = HighlightSearchMatch($"{s.Name} ({s.Urn})", searchSplit[0].Trim(), s), value = $"{s.Name} ({s.Urn})" }));
    }
 
-   public async Task<IActionResult> OnPost(string ukprn, string redirect)
+   public async Task<IActionResult> OnPost(string ukprn, string redirect, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat, string isProjectInPrepare, string famReference)
    {
       AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
 
@@ -88,7 +88,7 @@ public class SearchSchoolModel : PageModel
 
       redirect = string.IsNullOrEmpty(redirect) ? Links.NewProject.SchoolApply.Page : redirect;
 
-      return RedirectToPage(redirect, new { urn = expectedUrn, ukprn });
+      return RedirectToPage(redirect, new { urn = expectedUrn, ukprn, hasSchoolApplied, hasPreferredTrust, proposedTrustName, isFormAMat, isProjectInPrepare, famReference });
    }
 
    private static string HighlightSearchMatch(string input, string toReplace, EstablishmentSearchResponse school)

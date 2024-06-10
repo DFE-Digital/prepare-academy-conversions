@@ -70,7 +70,7 @@ public class DeclineReasonIntegrationTests : BaseIntegrationTests, IAsyncLifetim
    {
       await _wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Other, "other reasons"));
 
-      PageHeading.Should().Be("Date conversion was declined");
+      PageHeading.Should().Be("Date of decision");
    }
 
    [Fact]

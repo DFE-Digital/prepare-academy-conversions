@@ -68,7 +68,7 @@ public class LinkFormAMatProject : PageModel
       return new JsonResult(projects.Select(s => new { suggestion = HighlightSearchMatch($"{s.ProposedTrustName} ({s.ReferenceNumber}){IncludeA2BReferenceNumberIfAvailable(s)}", searchSplit[0].Trim(), s), value = $"{s.ProposedTrustName} ({s.ReferenceNumber}){IncludeA2BReferenceNumberIfAvailable(s)}" }));
    }
 
-   public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect)
+   public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect, string hasPreferredTrust, string proposedTrustName)
    {
       AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
 
@@ -85,7 +85,7 @@ public class LinkFormAMatProject : PageModel
 
       redirect = string.IsNullOrEmpty(redirect) ? nextPage : redirect;
 
-      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied, IsFormAMat, IsProjectInPrepare, FamReference });
+      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied, IsFormAMat, IsProjectInPrepare, FamReference, hasPreferredTrust, proposedTrustName });
    }
 
    private static string HighlightSearchMatch(string input, string toReplace, FormAMatProject project)
