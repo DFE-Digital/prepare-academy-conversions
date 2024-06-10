@@ -1,0 +1,24 @@
+﻿@page "/application-documents/{id:int}"
+@using Dfe.PrepareConversions.Data.Models
+@model Dfe.PrepareConversions.Pages.ApplicationDocuments.IndexModel
+@{
+    ViewData["Title"] = "Application documents";
+}
+
+@section BeforeMain
+{
+    <a asp-page="@Model.ReturnPage" asp-route-id="@Model.ReturnId" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
+}
+
+<partial name="Shared/_ProjectHeader" model="Model.Project" />
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <p class="govuk-body">
+            Application level documents folder <a href="@Model.ApplicationLevelDocumentsFolder" class="govuk-link" rel="noreferrer noopener" target="_blank">here</a>
+        </p><p class="govuk-body">
+            School level documents folder <a href="@Model.SchoolLevelDocumentsFolder" class="govuk-link" rel="noreferrer noopener" target="_blank">here</a>
+        </p>
+    </div>
+
+</div>

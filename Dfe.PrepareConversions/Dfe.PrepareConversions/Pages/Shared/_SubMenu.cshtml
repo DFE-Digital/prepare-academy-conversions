@@ -36,7 +36,13 @@
                 School application form
             </sub-menu-link>
         </li>
-
+        <li if="@Links.IsApplicationDocumentsEnabled && !Model.IsExternalSchoolApplication" class="moj-sub-navigation__item">
+            <sub-menu-link class="moj-sub-navigation__link"
+                           asp-page="@Links.ApplicationDocuments.Index.Page"
+                           asp-route-id="@id">
+                Application documents
+            </sub-menu-link>
+        </li>
         <li if="@Model.IsSponsored" class="moj-sub-navigation__item">
             <sub-menu-link class="moj-sub-navigation__link"
                            asp-page="@Links.AnnexB.Index.Page"
@@ -60,12 +66,6 @@
                 Project notes
             </sub-menu-link>
         </li>
-        <li if="@Links.IsProjectDocumentsEnabled" class="moj-sub-navigation__item">
-            <sub-menu-link class="moj-sub-navigation__link"
-                           asp-page="@Links.ProjectDocuments.Index.Page"
-                           asp-route-id="@id">
-                Project documents
-            </sub-menu-link>
-        </li>
+
     </ul>
 </nav>

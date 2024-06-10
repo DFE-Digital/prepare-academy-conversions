@@ -10,8 +10,8 @@ public static class Links
    private static string _transfersUrl;
    public static string TransfersUrl => _transfersUrl;
 
-   private static bool _isProjectDocumentsEnabled;
-   public static bool IsProjectDocumentsEnabled => _isProjectDocumentsEnabled;
+   private static bool _isApplicationDocumentsEnabled;
+   public static bool IsApplicationDocumentsEnabled => _isApplicationDocumentsEnabled;
 
    private static LinkItem AddLinkItem(string page, string backText = "Back")
    {
@@ -24,8 +24,8 @@ public static class Links
       _transfersUrl = transfersUrl;
    }
 
-   public static void InializeProjectDocumentsEnabled(bool isProjectDocumentsEnabled) {
-      _isProjectDocumentsEnabled = isProjectDocumentsEnabled;
+   public static void InializeProjectDocumentsEnabled(bool isApplicationDocumentsEnabled) {
+      _isApplicationDocumentsEnabled = isApplicationDocumentsEnabled;
    }
    public static LinkItem ByPage(string page)
    {
@@ -72,9 +72,9 @@ public static class Links
       public static readonly LinkItem NewNote = AddLinkItem(page: "/ProjectNotes/NewNote");
    }
 
-   public static class ProjectDocuments
+   public static class ApplicationDocuments
    {
-      public static readonly LinkItem Index = AddLinkItem(page: "/ProjectDocuments/Index");
+      public static readonly LinkItem Index = AddLinkItem(page: "/ApplicationDocuments/Index");
    }
 
    public static class TaskList
