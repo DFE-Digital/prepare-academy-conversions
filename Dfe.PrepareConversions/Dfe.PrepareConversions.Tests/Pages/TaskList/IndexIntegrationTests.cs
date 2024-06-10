@@ -27,7 +27,7 @@ public class IndexIntegrationTests : BaseIntegrationTests, IAsyncLifetime
    {
       await OpenAndConfirmPathAsync($"/task-list/{_project.Id}/record-a-decision");
 
-      await NavigateAsync("Record a decision", 1);
+      await NavigateAsync("Record a decision", 0);
 
       Document.Url.Should().Contain($"/task-list/{_project.Id}/decision/record-decision");
    }
