@@ -21,26 +21,42 @@
             </legend>
             <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios" id="AdvisoryBoardDecision">
 
-                @foreach (var decisionOption in Enum.GetValues(typeof(AdvisoryBoardDecisions)))
-                {
-                    var decision = (AdvisoryBoardDecisions)decisionOption;
-
-                    if (decision == AdvisoryBoardDecisions.DAORevoked && Model.AcademyTypeAndRoute.ToLower() != "sponsored")
+                @* Define the custom order using a dictionary *@
+                @{ var customOrder = new Dictionary<AdvisoryBoardDecisions, int>
                     {
-                        continue;
-                    }
+                    { AdvisoryBoardDecisions.Approved, 1 },
+                    { AdvisoryBoardDecisions.Declined, 2 },
+                    { AdvisoryBoardDecisions.Deferred, 3 },
+                    { AdvisoryBoardDecisions.DAORevoked, 4 },
+                    { AdvisoryBoardDecisions.Withdrawn, 5 }
+                    };
 
-                    var id = $"{decision.ToString().ToLower()}-radio";
-                    var title = decision == AdvisoryBoardDecisions.DAORevoked ? "DAO (Directive Academy Order) revoked" : decision.ToString();
+                    @* Get the enum values and sort them based on the custom order *@
+                    var sortedDecisions = Enum.GetValues(typeof(AdvisoryBoardDecisions))
+                    .Cast<AdvisoryBoardDecisions>
+                        ()
+                        .OrderBy(decision => customOrder[decision]);
+                        }
 
-                    <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" type="radio" asp-for="@Model.AdvisoryBoardDecision"
-                               title="@title.ToLower()" value="@decision" id="@id" />
-                        <label class="govuk-label govuk-radios__label" for="@id">
-                            @title
-                        </label>
-                    </div>
-                }
+                        @* Iterate through the sorted list *@
+                        @foreach (var decision in sortedDecisions)
+                        {
+                            if (decision == AdvisoryBoardDecisions.DAORevoked && Model.AcademyTypeAndRoute.ToLower() != "sponsored")
+                            {
+                                continue;
+                            }
+
+                            var id = $"{decision.ToString().ToLower()}-radio";
+                            var title = decision == AdvisoryBoardDecisions.DAORevoked ? "DAO (Directive Academy Order) revoked" : decision.ToString();
+
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" type="radio" asp-for="@Model.AdvisoryBoardDecision"
+                                       title="@title.ToLower()" value="@decision" id="@id" />
+                                <label class="govuk-label govuk-radios__label" for="@id">
+                                    @title
+                                </label>
+                            </div>
+                        }
             </div>
         </fieldset>
     </div>
