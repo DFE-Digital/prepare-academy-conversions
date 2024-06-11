@@ -26,16 +26,22 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
    [BindProperty]
    public string ApplicationLevelDocumentsFolder { get; set; }
    [BindProperty]
-   public string SchoolLevelDocumentsFolder { get; private set; }
+   public string SchoolLevelDocumentsFolder { get; set; }
 
    public override async Task<IActionResult> OnGetAsync(int id)
    {
       await base.OnGetAsync(id);
       var rootSharePointFolder = _configuration["Sharepoint:Url"];
 
-      ApplicationLevelDocumentsFolder = $"{rootSharePointFolder}sip_application/{Project.ApplicationReferenceNumber}_{Project.ApplicationSharePointId.Value.ToString("N").ToUpper()}";
-      SchoolLevelDocumentsFolder = $"{rootSharePointFolder}sip_applyingschools/{Project.ApplicationReferenceNumber}_{Project.SchoolSharePointId.Value.ToString("N").ToUpper()}";
+      if (Project.ApplicationSharePointId.HasValue)
+      {
+         ApplicationLevelDocumentsFolder = $"{rootSharePointFolder}sip_application/{Project.ApplicationReferenceNumber}_{Project.ApplicationSharePointId.Value.ToString("N").ToUpper()}";
+      }
 
+      if (Project.SchoolSharePointId.HasValue)
+      {
+         SchoolLevelDocumentsFolder = $"{rootSharePointFolder}sip_applyingschools/{Project.ApplicationReferenceNumber}_{Project.SchoolSharePointId.Value.ToString("N").ToUpper()}";
+      }
       return Page();
    }
 }

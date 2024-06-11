@@ -1,5 +1,6 @@
 ﻿@page "/application-documents/{id:int}"
 @using Dfe.PrepareConversions.Data.Models
+@using Dfe.PrepareConversions.TagHelpers
 @model Dfe.PrepareConversions.Pages.ApplicationDocuments.IndexModel
 @{
     ViewData["Title"] = "Application documents";
@@ -14,10 +15,17 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <p class="govuk-body">
+        <p class="govuk-body" if="@Model.Project.ApplicationSharePointId.HasValue">
             Application level documents folder <a href="@Model.ApplicationLevelDocumentsFolder" class="govuk-link" rel="noreferrer noopener" target="_blank">here</a>
-        </p><p class="govuk-body">
+        </p>
+        <p class="govuk-body" if="!@Model.Project.ApplicationSharePointId.HasValue">
+            Application level documents are unavailable
+        </p>
+        <p class="govuk-body" if="@Model.Project.SchoolSharePointId.HasValue">
             School level documents folder <a href="@Model.SchoolLevelDocumentsFolder" class="govuk-link" rel="noreferrer noopener" target="_blank">here</a>
+        </p>
+        <p class="govuk-body" if="!@Model.Project.SchoolSharePointId.HasValue">
+            School level documents are unavailable
         </p>
     </div>
 
