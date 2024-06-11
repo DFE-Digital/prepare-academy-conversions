@@ -1,5 +1,6 @@
 ﻿@using Microsoft.Extensions.Configuration
 @using NetEscapades.AspNetCore.SecurityHeaders.TagHelpers
+@using System.Security.Claims;
 @inject IConfiguration Configuration
 
 @{
@@ -15,6 +16,8 @@
     var isFormAMatPage = Context.Request.Path.Value.Contains("/form-a-mat/project-list") || Context.Request.Path.Value.Contains("/schools-in-this-mat/");
 
     var notificationBannerMessage = Configuration["notificationBannerMessage"] ?? string.Empty;
+
+    var authenticatedUserId = User.Identity is not null && User.Identity.IsAuthenticated ? User.FindFirst(ClaimTypes.Email)?.Value ?? "Unknown" : "Anonymous";
 }
 
 <!DOCTYPE html>
