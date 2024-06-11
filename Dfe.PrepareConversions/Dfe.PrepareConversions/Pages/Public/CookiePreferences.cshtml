@@ -37,6 +37,10 @@
          There is a separate <a href="@Model.TransfersCookiesUrl">cookies page for the transfers part of this service.</a>
       </p>
 
+      <h2 class="govuk-heading-m">Analytics cookies (optional)</h2>
+
+      <h3 class="govuk-heading-s">Google Analytics</h3>
+
       <p class="govuk-body">
          With your permission, we use Google Analytics to collect data about how you use the service. This information helps us improve our service.
          These cookies do not collect your name or address, they do collect a unique user identifier
@@ -50,19 +54,32 @@
          <li>what you click on while you’re visiting the site</li>
       </ul>
       <p class="govuk-body">Google is not allowed to share our analytics data with anyone.</p>
+
+      <h3 class="govuk-heading-s">Azure Application Insights</h3>
+
+      <p class="govuk-body">We use Azure Application Insights software to collect information about how you use this website. We do this to help make sure the site is meeting the needs of its users and to help us make improvements.</p>
+      <p class="govuk-body">Azure Application Insights stores information about:</p>
+      <ul class="govuk-list govuk-list--bullet">
+         <li>the pages you visit on this website</li>
+         <li>how long you spend on each page</li>
+         <li>how you got to the site</li>
+         <li>what you click on while you're visiting the site</li>
+      </ul>
+      <p class="govuk-body">We don't allow Microsoft to use or share our analytics data.</p>
+
       <form method="post">
          <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                   <h3 class="govuk-fieldset__heading">
-                     Do you accept Google Analytics cookies?
+                     Do you accept analytical cookies?
                   </h3>
                </legend>
                <div class="govuk-radios">
                   <div class="govuk-radios__item">
                      <input class="govuk-radios__input" id="cookie-consent-accept" name="consent" type="radio" value="true" checked="@Model.Consent">
                      <label class="govuk-label govuk-radios__label" for="cookie-consent-accept">
-                        Yes, opt in to Google Analytics cookies
+                        Yes, opt in to analytical cookies
                      </label>
                   </div>
                   <div class="govuk-radios__item">
@@ -76,6 +93,7 @@
          </div>
          <input type="submit" name="commit" value="Save changes" class="govuk-button" data-qa="submit" data-module="govuk-button" data-disable-with="Save changes">
       </form>
+
       <h2 class="govuk-heading-l">How we use cookies</h2>
       <h3 class="govuk-heading-m">Essential cookies</h3>
       <p class="govuk-body">
@@ -119,7 +137,10 @@
          </tr>
          </tbody>
       </table>
-      <h3 class="govuk-heading-m">Measuring website usage (Google Analytics)</h3>
+
+      <h2 class="govuk-heading-m">Analytical cookies</h2>
+
+      <h3 class="govuk-heading-s">Google Analytics</h3>
       <p class="govuk-body">Google Analytics sets the following cookies:</p>
       <table class="govuk-table" aria-label="Google analytics cookies">
          <thead class="govuk-table__header">
@@ -150,6 +171,35 @@
             <td class="govuk-table__cell">Distinguishes anonymous users</td>
             <td class="govuk-table__cell">1 minute</td>
          </tr>
+         </tbody>
+      </table>
+
+      <h3 class="govuk-heading-s">Application Insights</h3>
+      <p class="govuk-body">Azure Application Insights sets the following cookies:</p>
+      <table class="govuk-table" aria-label="App Insights cookies">
+         <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+               <th scope="col" class="govuk-table__header">Name</th>
+               <th scope="col" class="govuk-table__header">Purpose</th>
+               <th scope="col" class="govuk-table__header">Expires</th>
+            </tr>
+         </thead>
+         <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+               <td class="govuk-table__cell">ai_session</td>
+               <td class="govuk-table__cell">This helps us track activity happening over a single browser session</td>
+               <td class="govuk-table__cell">1 hour</td>
+            </tr>
+            <tr class="govuk-table__row">
+               <td class="govuk-table__cell">ai_user</td>
+               <td class="govuk-table__cell">This helps us to identify the number of distinct users accessing the site over time by tracking if you've visited before</td>
+               <td class="govuk-table__cell">1 year</td>
+            </tr>
+            <tr class="govuk-table__row">
+               <td class="govuk-table__cell">ai_authuser</td>
+               <td class="govuk-table__cell">This helps us to identify authenticated users and how they interact with the site</td>
+               <td class="govuk-table__cell">When you close your browser</td>
+            </tr>
          </tbody>
       </table>
    </div>
