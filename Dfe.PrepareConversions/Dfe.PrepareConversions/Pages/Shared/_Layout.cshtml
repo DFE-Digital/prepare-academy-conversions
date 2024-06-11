@@ -6,7 +6,7 @@
     var analyticsConsent = Context.Request.Cookies.ContainsKey(".ManageAnAcademyConversion.Consent")
                            && bool.Parse(Context.Request.Cookies[".ManageAnAcademyConversion.Consent"] ?? string.Empty);
 
-    var showAnalytics = Configuration["GoogleAnalytics:Enable"] == "Yes" && analyticsConsent;
+    var enableGoogleAnalytics = Configuration["GoogleAnalytics:Enable"] == "Yes" && analyticsConsent;
 
     var titleDescription = Context.Request.Path == "/project-type"
        ? string.Empty
@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="~/dist/site.css" />
     <link rel="stylesheet" href="~/dist/accessible-autocomplete.min.css" asp-add-nonce />
     <link rel="stylesheet" href="~/dist/dfefrontend-1.0.1.min.css" asp-add-nonce />
-    @if (showAnalytics)
+    @if (enableGoogleAnalytics)
     {
         <!-- Google Tag Manager -->
         <script asp-add-nonce>
