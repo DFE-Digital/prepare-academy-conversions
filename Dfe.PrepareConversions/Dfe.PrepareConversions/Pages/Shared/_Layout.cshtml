@@ -8,6 +8,7 @@
                            && bool.Parse(Context.Request.Cookies[".ManageAnAcademyConversion.Consent"] ?? string.Empty);
 
     var enableGoogleAnalytics = Configuration["GoogleAnalytics:Enable"] == "Yes" && analyticsConsent;
+    var enableAppInsightsAnalytics = Configuration["ApplicationInsights:EnableBrowserAnalytics"] == "Yes" && analyticsConsent;
 
     var titleDescription = Context.Request.Path == "/project-type"
        ? string.Empty
