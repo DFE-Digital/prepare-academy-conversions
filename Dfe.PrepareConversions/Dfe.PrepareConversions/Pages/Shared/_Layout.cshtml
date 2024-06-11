@@ -18,7 +18,7 @@
 
     var notificationBannerMessage = Configuration["notificationBannerMessage"] ?? string.Empty;
 
-    var authenticatedUserId = User.Identity is not null && User.Identity.IsAuthenticated ? User.FindFirst(ClaimTypes.Email)?.Value ?? "Unknown" : "Anonymous";
+    var authenticatedUserId = User.Identity is not null && User.Identity.IsAuthenticated ? User.Identity.Name ?? "Unknown" : "Anonymous";
 }
 
 <!DOCTYPE html>
