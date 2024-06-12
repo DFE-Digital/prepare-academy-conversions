@@ -8,6 +8,8 @@ public class AcademyConversionProject
    public int Id { get; set; }
    public int? Urn { get; set; }
    public int? FormAMatProjectId { get; set; }
+   public Guid? SchoolSharePointId { get; set; }
+   public Guid? ApplicationSharePointId { get; set; }
    public bool? IsFormAMat { get; set; }
    public DateTime CreatedOn { get; set; }
    public string SchoolName { get; set; }
