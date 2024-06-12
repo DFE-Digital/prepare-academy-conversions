@@ -142,11 +142,15 @@
             }
         </dd>
         <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.Decision.WhoDecided.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-who-btn">
-                Change<span class="govuk-visually-hidden">who made this decision</span>
-            </a>
+            @if (Model.Decision.Decision != AdvisoryBoardDecisions.DAORevoked)
+            {
+                <a class="govuk-link" asp-page="@Links.Decision.WhoDecided.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-who-btn">
+                    Change<span class="govuk-visually-hidden">who made this decision</span>
+                </a>
+            }
         </dd>
     </div>
+
 
     <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">

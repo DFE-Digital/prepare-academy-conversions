@@ -30,7 +30,11 @@ public class SummaryModel : DecisionBaseModel
    }
 
    public AdvisoryBoardDecision Decision { get; set; }
-   public string DecisionText => Decision.Decision.ToDescription().ToLowerInvariant();
+   public string DecisionText =>
+      Decision.Decision == AdvisoryBoardDecisions.DAORevoked
+      ? "DAO revoked"
+      : Decision.Decision.ToDescription().ToLowerInvariant();
+
 
    public IActionResult OnGet(int id)
    {
