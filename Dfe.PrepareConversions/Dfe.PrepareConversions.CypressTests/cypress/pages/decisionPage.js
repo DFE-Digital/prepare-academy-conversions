@@ -149,6 +149,13 @@ export class DecisionPage {
         this.verifyDecisionDetailsAfterChanging('DAO', 'Director General', '12 November 2023');
         return this;
     }
+    deleteProject(projectId) {
+        const deleteUrl = `http://s184d01-acacdnendpoint-ata0dwfremepeff8.z01.azurefd.net/conversion-project/${projectId}/Delete`;
+        cy.request('DELETE', deleteUrl).then((response) => {
+            expect(response.status).to.eq(200); // Verify the response status
+        });
+        return this;
+    }
 }
 
 

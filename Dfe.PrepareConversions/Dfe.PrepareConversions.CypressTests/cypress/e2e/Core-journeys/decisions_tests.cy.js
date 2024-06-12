@@ -3,6 +3,9 @@ import { decisionPage } from '../../pages/decisionPage';
 import { Logger } from '../../support/logger'
 
 describe('Decisions Tests', () => {
+
+  let projectId;
+
   beforeEach(() => {
     Logger.log("Visit the homepage before each test");
     projectTaskList.getHomePage();
@@ -37,6 +40,12 @@ describe('Decisions Tests', () => {
     Logger.log("Search for the created project then select first one on the list");
     decisionPage.clickOnFirstProject();
 
+     Logger.log("Capture the projectId dynamically from the URL");
+     cy.url().then((url) => {
+      projectId = url.match(/task-list\/(\d+)/)[1]; 
+      Logger.log(`Project ID: ${projectId}`);
+    });
+
     Logger.log("Click on record a decision menubar button");
     decisionPage.clickRecordDecisionMenu();
 
@@ -55,7 +64,11 @@ describe('Decisions Tests', () => {
     decisionPage.changeDecisionDetails();
 
     Logger.log("Change the current decision to DAO (Directive Academy Order) revoked and verify the changes");
-    decisionPage.changeDecisionDAODetails()
+    decisionPage.changeDecisionDAODetails();
+
+    Logger.log("Delete the project and verify that it was deleted successfully");
+    decisionPage.deleteProject(projectId);
+  
 
   });
 });
