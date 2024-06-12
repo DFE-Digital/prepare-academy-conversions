@@ -6,9 +6,6 @@ using Dfe.PrepareConversions.Pages.TaskList.Decision.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.Decision;
 
@@ -27,8 +24,6 @@ public class DAOBeforeYouStartModel : DecisionBaseModel
    public DecisionMadeBy? DecisionMadeBy { get; set; }
 
    public string DecisionText { get; set; }
-
-   public IEnumerable<DecisionMadeBy> DecisionMadeByOptions => Enum.GetValues(typeof(DecisionMadeBy)).Cast<DecisionMadeBy>();
 
    [BindProperty]
    public bool MinisterApproval { get; set; }
@@ -61,12 +56,11 @@ public class DAOBeforeYouStartModel : DecisionBaseModel
       decision.DecisionMadeBy = Data.Models.AdvisoryBoardDecision.DecisionMadeBy.Minister;
       decision.DecisionMakerName = decision.DecisionMadeBy == Data.Models.AdvisoryBoardDecision.DecisionMadeBy.None ? null : decision.DecisionMakerName;
 
-      // Use the bound properties to check the checkbox values
       if (MinisterApproval && LetterSent && LetterSaved)
       {
          // All checkboxes are checked, proceed with the decision
          SetDecisionInSession(id, decision);
-         return DetermineRedirectPage(decision);
+         return RedirectToPage(Links.Decision.WhyDAORevoked.Page, LinkParameters);
       }
       else
       {
@@ -74,20 +68,5 @@ public class DAOBeforeYouStartModel : DecisionBaseModel
          ShowBanner = true;
          return OnGet(id);
       }
-   }
-
-   private IActionResult DetermineRedirectPage(AdvisoryBoardDecision decision)
-   {
-      var pageToReturnTo = decision.Decision switch
-      {
-         AdvisoryBoardDecisions.Approved => RedirectToPage(Links.Decision.AnyConditions.Page, LinkParameters),
-         AdvisoryBoardDecisions.Declined => RedirectToPage(Links.Decision.DeclineReason.Page, LinkParameters),
-         AdvisoryBoardDecisions.Deferred => RedirectToPage(Links.Decision.WhyDeferred.Page, LinkParameters),
-         AdvisoryBoardDecisions.Withdrawn => RedirectToPage(Links.Decision.WhyWithdrawn.Page, LinkParameters),
-         AdvisoryBoardDecisions.DAORevoked => RedirectToPage(Links.Decision.WhyDAORevoked.Page, LinkParameters),
-         _ => RedirectToPage(Links.Decision.AnyConditions.Page, LinkParameters)
-      };
-
-      return decision.DecisionMadeBy == Data.Models.AdvisoryBoardDecision.DecisionMadeBy.None ? pageToReturnTo : RedirectToPage(Links.Decision.DecisionMaker.Page, LinkParameters);
    }
 }

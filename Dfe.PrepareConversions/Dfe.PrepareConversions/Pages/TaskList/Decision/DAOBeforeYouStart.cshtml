@@ -1,7 +1,9 @@
 ﻿@page "/task-list/{id:int}/decision/dao-before-you-start"
 @using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
 @using Dfe.Academisation.ExtensionMethods
+@using Microsoft.Extensions.Configuration
 @model Dfe.PrepareConversions.Pages.TaskList.Decision.DAOBeforeYouStartModel
+@inject IConfiguration Configuration
 @{
     ViewData["Title"] = $"DAO before you start";
 }
@@ -32,7 +34,7 @@
                 <li>you must have saved a copy of the letter in SharePoint</li>
             </ul>
             <p class="govuk-body">
-                You can <a href="link-to-task-list" class="govuk-link">go back to the task list</a> and continue working on this project, or <a href="link-to-project-list" class="govuk-link">choose another project from your project list</a>.
+                You can <a href="/task-list/@Model.Id" class="govuk-link">go back to the task list</a> and continue working on this project, or <a href="/project-list" class="govuk-link">choose another project from your project list</a>.
             </p>
         </div>
     </div>
@@ -47,7 +49,7 @@
 
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                        <h2 class="govuk-heading-m">Confirm a minister has approved this decision</h2>
+                        <h2 class="govuk-heading-m">A minister has approved this decision</h2>
                     </legend>
                     <div class="govuk-hint">
                         The revocation of a DAO (Directive Academy Order) must be signed off by a minister. It cannot proceed without ministerial approval.
@@ -64,14 +66,11 @@
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                        <h2 class="govuk-heading-m">Confirm you have sent the letter confirming the revocation decision</h2>
+                        <h2 class="govuk-heading-m">You have sent a letter confirming the revocation decision</h2>
                     </legend>
                     <div class="govuk-hint">
-                        You must write and send the letter to the school’s governing body to confirm the minister’s decision.
+                        You must write and send a letter to the school’s governing body to confirm the minister’s decision.
                     </div>
-                    <p class="govuk-body">
-                        Use the <a href="link-to-letter-templates" target="_blank" class="govuk-link">letter templates in the revocation guidance</a> to help you.
-                    </p>
                     <div class="govuk-checkboxes">
                         <div class="govuk-checkboxes__item">
                             <input class="govuk-checkboxes__input" id="LetterSent" name="LetterSent" type="checkbox" value="true" />
@@ -84,7 +83,7 @@
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                        <h2 class="govuk-heading-m">Confirm you have saved a copy of the letter</h2>
+                        <h2 class="govuk-heading-m">You have saved a copy of the letter</h2>
                     </legend>
                     <div class="govuk-hint">
                         You must save a copy of the letter in the school’s SharePoint folder.
@@ -99,7 +98,6 @@
             </div>
         </div>
     </div>
-
 
     <button class="govuk-button" data-module="govuk-button" id="submit-btn">
         Continue
