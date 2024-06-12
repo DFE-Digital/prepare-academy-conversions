@@ -50,7 +50,7 @@ public class WhyDAORevokedModel : DecisionBaseModel
 
    public IActionResult OnGet(int id)
    {
-      SetBackLinkModel(Links.Decision.WhoDecided, id);
+      SetBackLinkModel(Links.Decision.DAOBeforeYouStart, id);
 
       AdvisoryBoardDecision decision = GetDecisionFromSession(id);
       DecisionText = decision.Decision.ToDescription().ToLowerInvariant();

@@ -9,7 +9,7 @@
 
 @section BeforeMain
 {
-    <a asp-page="@Links.Decision.DecisionDate.Page" asp-route-id="@Model.Id" class="govuk-back-link">Back</a>
+    <partial name="_BackLink" model="@Model.BackLinkModel" />
 }
 
 <span id="selection-span" class="govuk-caption-l">Record the decision</span>

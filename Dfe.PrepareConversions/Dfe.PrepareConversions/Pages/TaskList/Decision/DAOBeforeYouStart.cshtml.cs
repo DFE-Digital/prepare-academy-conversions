@@ -37,7 +37,7 @@ public class DAOBeforeYouStartModel : DecisionBaseModel
 
    public IActionResult OnGet(int id)
    {
-      SetBackLinkModel(Links.Decision.RecordDecision, id);
+      SetBackLinkModel(Links.Decision.DAOPrecursor, id);
       AdvisoryBoardDecision decision = GetDecisionFromSession(id);
 
       DecisionText = decision == null ? string.Empty : decision.Decision.ToDescription().ToLowerInvariant();

@@ -5,6 +5,7 @@ using Dfe.PrepareConversions.Pages.TaskList.Decision.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.Decision
@@ -32,11 +33,22 @@ namespace Dfe.PrepareConversions.Pages.TaskList.Decision
          Decision = GetDecisionFromSession(id);
          DecisionMakerName = Decision.DecisionMakerName;
 
-         SetBackLinkModel(Links.Decision.WhoDecided, id);
+         SetBackLinkModel(GetPageForBackLink(id), id);
 
          return Page();
       }
-
+      public LinkItem GetPageForBackLink(int id)
+      {
+         return Decision switch
+         {
+            { Decision: AdvisoryBoardDecisions.Approved } => Links.Decision.AnyConditions,
+            { Decision: AdvisoryBoardDecisions.Declined } => Links.Decision.DeclineReason,
+            { Decision: AdvisoryBoardDecisions.Deferred } => Links.Decision.WhyDeferred,
+            { Decision: AdvisoryBoardDecisions.Withdrawn } => Links.Decision.WhyWithdrawn,
+            { Decision: AdvisoryBoardDecisions.DAORevoked } => Links.Decision.WhyDAORevoked,
+            _ => throw new Exception("Unexpected decision state")
+         };
+      }
       public IActionResult OnPost(int id)
       {
          if (!ModelState.IsValid)
