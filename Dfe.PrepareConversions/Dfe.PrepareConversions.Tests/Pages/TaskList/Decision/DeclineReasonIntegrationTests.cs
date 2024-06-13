@@ -31,7 +31,6 @@ public class DeclineReasonIntegrationTests : BaseIntegrationTests, IAsyncLifetim
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.RegionalDirectorForRegion);
-      await _wizard.SetDecisionMakerName("Tester");
 
       Document.Url.Should().EndWith("/decision/declined-reason");
    }
@@ -70,7 +69,7 @@ public class DeclineReasonIntegrationTests : BaseIntegrationTests, IAsyncLifetim
    {
       await _wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Other, "other reasons"));
 
-      PageHeading.Should().Be("Date of decision");
+      PageHeading.Should().Be("Decision maker's name");
    }
 
    [Fact]

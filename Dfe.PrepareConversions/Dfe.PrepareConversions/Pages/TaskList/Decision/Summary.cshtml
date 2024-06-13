@@ -101,13 +101,13 @@
                 @if (Model.Decision.Decision == AdvisoryBoardDecisions.Declined)
                 {
                     <a class="govuk-link" asp-page="@Links.Decision.DeclineReason.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-declined-btn">
-                        Change<span class="govuk-visually-hidden">rejected-reason</span>
+                        Change<span class="govuk-visually-hidden">declined-reason</span>
                     </a>
                 }
                 else if (Model.Decision.Decision == AdvisoryBoardDecisions.Deferred)
                 {
                     <a class="govuk-link" asp-page="@Links.Decision.WhyDeferred.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-deferred-btn">
-                        Change<span class="govuk-visually-hidden">rejected-reason</span>
+                        Change<span class="govuk-visually-hidden">deferred-reason</span>
                     </a>
                 }
                 else if (Model.Decision.Decision == AdvisoryBoardDecisions.Withdrawn)
