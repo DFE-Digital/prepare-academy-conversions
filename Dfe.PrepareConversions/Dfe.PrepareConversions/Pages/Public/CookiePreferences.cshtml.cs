@@ -94,10 +94,17 @@ public class CookiePreferences : PageModel
       {
          foreach (string cookie in Request.Cookies.Keys)
          {
+            // Google Analytics
             if (cookie.StartsWith("_ga") || cookie.Equals("_gid"))
             {
                _logger.LogInformation("Expiring Google analytics cookie: {cookie}", cookie);
                Response.Cookies.Append(cookie, string.Empty, new CookieOptions { Expires = DateTime.Now.AddDays(-1), Secure = true, SameSite = SameSiteMode.Lax, HttpOnly = true });
+            }
+            // App Insights
+            if (cookie.StartsWith("ai_"))
+            {
+               _logger.LogInformation("Expiring App insights cookie: {cookie}", cookie);
+               Response.Cookies.Append(cookie, string.Empty, new CookieOptions { Expires = DateTime.Now.AddYears(-1), Secure = true, SameSite = SameSiteMode.Lax, HttpOnly = true });
             }
          }
       }
