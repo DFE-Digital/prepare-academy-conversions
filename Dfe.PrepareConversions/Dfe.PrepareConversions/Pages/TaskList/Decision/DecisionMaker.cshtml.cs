@@ -5,59 +5,64 @@ using Dfe.PrepareConversions.Pages.TaskList.Decision.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Dfe.PrepareConversions.Pages.TaskList.Decision;
-
-public class DecisionMaker : DecisionBaseModel
+namespace Dfe.PrepareConversions.Pages.TaskList.Decision
 {
-   private readonly ErrorService _errorService;
-
-   public DecisionMaker(ErrorService errorService, IAcademyConversionProjectRepository repository, ISession session)
-     : base(repository, session)
+   public class DecisionMaker : DecisionBaseModel
    {
-      _errorService = errorService;
-   }
+      private readonly ErrorService _errorService;
 
-   [BindProperty(Name = "decision-maker-name")]
-   [Required]
-   public string DecisionMakerName { get; set; }
-
-
-   public AdvisoryBoardDecision Decision { get; set; }
-
-   public IActionResult OnGet(int id)
-   {
-
-      Decision = GetDecisionFromSession(id);
-      DecisionMakerName = Decision.DecisionMakerName;
-
-      SetBackLinkModel(Links.Decision.WhoDecided, id);
-
-      return Page();
-   }
-
-   public IActionResult OnPost(int id)
-   {
-      if (!ModelState.IsValid)
+      public DecisionMaker(ErrorService errorService, IAcademyConversionProjectRepository repository, ISession session)
+        : base(repository, session)
       {
-         _errorService.AddError("decision-maker-name", "Enter the decision maker's name");
-         return OnGet(id);
+         _errorService = errorService;
       }
 
-      AdvisoryBoardDecision decision = GetDecisionFromSession(id);
-      decision.DecisionMakerName = DecisionMakerName;
+      [BindProperty(Name = "decision-maker-name")]
+      [Required]
+      public string DecisionMakerName { get; set; }
 
-      SetDecisionInSession(id, decision);
+      public AdvisoryBoardDecision Decision { get; set; }
 
-      return decision.Decision switch
+      public bool IsDAORevoked => Decision?.Decision == AdvisoryBoardDecisions.DAORevoked;
+
+      public IActionResult OnGet(int id)
       {
-         AdvisoryBoardDecisions.Approved => RedirectToPage(Links.Decision.AnyConditions.Page, LinkParameters),
-         AdvisoryBoardDecisions.Declined => RedirectToPage(Links.Decision.DeclineReason.Page, LinkParameters),
-         AdvisoryBoardDecisions.Deferred => RedirectToPage(Links.Decision.WhyDeferred.Page, LinkParameters),
-         AdvisoryBoardDecisions.Withdrawn => RedirectToPage(Links.Decision.WhyWithdrawn.Page, LinkParameters),
-         AdvisoryBoardDecisions.DAORevoked => RedirectToPage(Links.Decision.WhyDAORevoked.Page, LinkParameters),
-         _ => RedirectToPage(Links.Decision.AnyConditions.Page, LinkParameters)
-      };
+         Decision = GetDecisionFromSession(id);
+         DecisionMakerName = Decision.DecisionMakerName;
+
+         SetBackLinkModel(GetPageForBackLink(id), id);
+
+         return Page();
+      }
+      public LinkItem GetPageForBackLink(int id)
+      {
+         return Decision switch
+         {
+            { Decision: AdvisoryBoardDecisions.Approved } => Links.Decision.AnyConditions,
+            { Decision: AdvisoryBoardDecisions.Declined } => Links.Decision.DeclineReason,
+            { Decision: AdvisoryBoardDecisions.Deferred } => Links.Decision.WhyDeferred,
+            { Decision: AdvisoryBoardDecisions.Withdrawn } => Links.Decision.WhyWithdrawn,
+            { Decision: AdvisoryBoardDecisions.DAORevoked } => Links.Decision.WhyDAORevoked,
+            _ => throw new Exception("Unexpected decision state")
+         };
+      }
+      public IActionResult OnPost(int id)
+      {
+         if (!ModelState.IsValid)
+         {
+            _errorService.AddError("decision-maker-name", "Enter the decision maker's name");
+            return OnGet(id);
+         }
+
+         AdvisoryBoardDecision decision = GetDecisionFromSession(id);
+         decision.DecisionMakerName = DecisionMakerName;
+
+         SetDecisionInSession(id, decision);
+
+         return RedirectToPage(Links.Decision.DecisionDate.Page, LinkParameters);
+      }
    }
 }

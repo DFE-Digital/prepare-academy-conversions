@@ -217,6 +217,8 @@ public static class Links
    {
       public static readonly LinkItem RecordDecision = AddLinkItem(backText: "Back", page: "/TaskList/Decision/RecordDecision");
       public static readonly LinkItem WhoDecided = AddLinkItem(backText: "Back", page: "/TaskList/Decision/WhoDecided");
+      public static readonly LinkItem DAOPrecursor = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DAOPrecursor");
+      public static readonly LinkItem DAOBeforeYouStart = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DAOBeforeYouStart");
       public static readonly LinkItem DeclineReason = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DeclineReason");
       public static readonly LinkItem AnyConditions = AddLinkItem(backText: "Back", page: "/TaskList/Decision/AnyConditions");
       public static readonly LinkItem DecisionDate = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DecisionDate");

@@ -29,7 +29,6 @@ public class AnyConditionsIntegrationTests : BaseIntegrationTests, IAsyncLifetim
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Approved);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
-      await _wizard.SetDecisionMakerName("Tester");
 
       Document.Url.Should().EndWith("any-conditions");
    }
@@ -60,7 +59,7 @@ public class AnyConditionsIntegrationTests : BaseIntegrationTests, IAsyncLifetim
    {
       await _wizard.SetIsConditionalAndContinue(true, "Reasons");
 
-      Document.Url.Should().EndWith("/decision/decision-date");
+      Document.Url.Should().EndWith("/decision/decision-maker");
    }
 
    [Fact]
@@ -68,7 +67,7 @@ public class AnyConditionsIntegrationTests : BaseIntegrationTests, IAsyncLifetim
    {
       await _wizard.SetIsConditionalAndContinue(false, default);
 
-      Document.Url.Should().EndWith("/decision/decision-date");
+      Document.Url.Should().EndWith("/decision/decision-maker");
    }
 
    [Fact]
