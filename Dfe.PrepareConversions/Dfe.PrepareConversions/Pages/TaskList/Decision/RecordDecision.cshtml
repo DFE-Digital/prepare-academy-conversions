@@ -20,8 +20,7 @@
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
             </legend>
             <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios" id="AdvisoryBoardDecision">
-
-                @* Define the custom order using a dictionary *@
+                
                 @{ var customOrder = new Dictionary<AdvisoryBoardDecisions, int>
                     {
                     { AdvisoryBoardDecisions.Approved, 1 },
@@ -31,14 +30,13 @@
                     { AdvisoryBoardDecisions.Withdrawn, 5 }
                     };
 
-                    @* Get the enum values and sort them based on the custom order *@
+                    @* Get the enum values and sort them based on the defined order based on Completes order*@
                     var sortedDecisions = Enum.GetValues(typeof(AdvisoryBoardDecisions))
                     .Cast<AdvisoryBoardDecisions>
                         ()
                         .OrderBy(decision => customOrder[decision]);
                         }
-
-                        @* Iterate through the sorted list *@
+                        
                         @foreach (var decision in sortedDecisions)
                         {
                             if (decision == AdvisoryBoardDecisions.DAORevoked && Model.AcademyTypeAndRoute.ToLower() != "sponsored")
