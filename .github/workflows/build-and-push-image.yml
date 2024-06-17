@@ -39,7 +39,7 @@ jobs:
   deploy-image:
     name: Deploy
     needs: [ set-env ]
-    uses: DFE-Digital/deploy-azure-container-apps-action/.github/workflows/build-push-deploy.yml@v2.1.0
+    uses: DFE-Digital/deploy-azure-container-apps-action/.github/workflows/build-push-deploy.yml@v2.2.0
     with:
       docker-image-name: 'a2bint-app'
       docker-build-file-name: './Dockerfile'
