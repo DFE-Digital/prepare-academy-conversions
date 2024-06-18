@@ -1,5 +1,6 @@
 ﻿using Dfe.PrepareConversions.Data.Extensions;
 using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
 using Dfe.PrepareConversions.Data.Services;
 using Microsoft.FeatureManagement;
 using System.Collections.Generic;
@@ -64,6 +65,12 @@ public class ApiClient : IApiClient
    {
       return await AcademisationClient.PostAsync(string.Format(PathFor.AddProjectNote, id), JsonContent.Create(projectNote));
    }
+
+   public async Task<HttpResponseMessage> AddSchoolImprovementPlan(int id, AddSchoolImprovementPlanCommand addSchoolImprovementPlanCommand)
+   {
+      return await AcademisationClient.PostAsync(string.Format(PathFor.AddSchoolImprovementPlan, id), JsonContent.Create(addSchoolImprovementPlanCommand));
+   }
+
 
    public async Task<HttpResponseMessage> SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl)
    {

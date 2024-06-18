@@ -1,0 +1,66 @@
+﻿@page "/improvement-plans/{id:int}"
+@using Dfe.PrepareConversions.Data.Models
+@model Dfe.PrepareConversions.Pages.ImprovementPlans.IndexModel
+@{
+   ViewData["Title"] = "School Improvement Plans";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Model.ReturnPage" asp-route-id="@Model.ReturnId" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
+}
+
+@* @if (Model.NewNote)
+{
+   <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+         <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+            Success
+         </h2>
+      </div>
+      <div class="govuk-notification-banner__content">
+         <h3 class="govuk-notification-banner__heading" id="project-note-added">
+            Note added
+         </h3>
+      </div>
+   </div>
+} *@
+
+
+<partial name="Shared/_ProjectHeader" model="Model.Project" />
+
+
+<div class="govuk-grid-column-two-thirds-full">
+   <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">Interim School Improvement Plans</h2>
+   <a asp-page="@Links.ImprovementPlans.WhoArrangedThePlan.Page" asp-route-id="@Model.Project.Id" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+      Add School Improvement Plan
+   </a>
+</div>
+
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-two-thirds">
+@*       <div class="app-notes">
+         @{ var index = 0; }
+         @foreach (ProjectNoteViewModel note in Model.ProjectNotes)
+         {
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+            <div class="app-notes__note">
+               <h2 class="govuk-heading-s govuk-!-margin-bottom-1" id="@("project-note-subject-" + index)">@note.Subject</h2>
+               <p class="govuk-!-margin-bottom-1 govuk-body-m" id="@("project-note-body-" + index)">@note.Note</p>
+               <p class="govuk-body-s" id="@("project-note-date-" + index)">
+                  @if (!string.IsNullOrEmpty(note.Author))
+                  {
+                     @(note.Author + ", " + note.Date)
+                  }
+                  else
+                  {
+                     @note.Date
+                  }
+               </p>
+            </div>
+            index++;
+         }
+         <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      </div> *@
+   </div>
+</div>

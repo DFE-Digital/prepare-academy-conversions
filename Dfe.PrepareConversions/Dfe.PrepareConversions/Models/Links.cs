@@ -43,6 +43,14 @@ public static class Links
       public static readonly LinkItem Edit = AddLinkItem(page: "/AnnexB/Edit");
    }
 
+   public static class ImprovementPlans
+   {
+      public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/ImprovementPlans/Index");
+      public static readonly LinkItem WhoArrangedThePlan = AddLinkItem(backText: "Back", page: "/ImprovementPlans/WhoArrangedThePlan");
+      public static readonly LinkItem WhoProvidedThePlan = AddLinkItem(backText: "Back", page: "/ImprovementPlans/WhoProvidedThePlan");
+      public static readonly LinkItem Summary = AddLinkItem(backText: "Back", page: "/ImprovementPlans/Summary");
+   }
+
    public static class ExternalApplicationForm
    {
       public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/ExternalApplicationForm/Index");
