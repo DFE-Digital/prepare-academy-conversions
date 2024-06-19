@@ -42,7 +42,7 @@ public class WhoProvidedThePlanModel : SchoolImprovementPlanBaseModel
 
       SetSchoolImprovementPlanInSession(id, improvementPlan);
 
-      if (string.IsNullOrWhiteSpace(PlanProvider)) ModelState.AddModelError("PlanProvider", "Please enter the provider of the plan");
+      if (string.IsNullOrWhiteSpace(PlanProvider)) ModelState.AddModelError("PlanProvider", "Please enter who is providing the plan");
 
       _errorService.AddErrors(ModelState.Keys, ModelState);
       if (_errorService.HasErrors()) return OnGet(id);
