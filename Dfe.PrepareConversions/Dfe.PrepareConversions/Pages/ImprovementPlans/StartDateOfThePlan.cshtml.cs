@@ -1,17 +1,19 @@
-using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 namespace Dfe.PrepareConversions.Pages.ImprovementPlans;
 
-public class WhoProvidedThePlanModel : SchoolImprovementPlanBaseModel
+public class StartDateOfThePlanModel : SchoolImprovementPlanBaseModel, IDateValidationMessageProvider
 {
    private readonly ErrorService _errorService;
 
-   public WhoProvidedThePlanModel(IAcademyConversionProjectRepository repository,
+   public StartDateOfThePlanModel(IAcademyConversionProjectRepository repository,
                            ISession session,
                            ErrorService errorService)
       : base(repository, session)
@@ -19,16 +21,18 @@ public class WhoProvidedThePlanModel : SchoolImprovementPlanBaseModel
       _errorService = errorService;
    }
 
-   [BindProperty]
-   public string PlanProvider { get; set; }
-
+   [BindProperty(Name = "plan-start-date", BinderType = typeof(DateInputModelBinder))]
+   [DateValidation(DateRangeValidationService.DateRange.PastOrFuture)]
+   [Display(Name = "StartDate")]
+   [Required]
+   public DateTime? PlanStartDate { get; set; }
 
    public IActionResult OnGet(int id)
    {
       SetBackLinkModel(Links.ImprovementPlans.WhoArrangedThePlan, id);
 
       SchoolImprovementPlan improvementPlan = GetSchoolImprovementPlanFromSession(id);
-   
+
       SetModel(improvementPlan);
 
       return Page();
@@ -38,20 +42,31 @@ public class WhoProvidedThePlanModel : SchoolImprovementPlanBaseModel
    {
       SchoolImprovementPlan improvementPlan = GetSchoolImprovementPlanFromSession(id);
 
-      improvementPlan.ProvidedBy = PlanProvider;
+      if (PlanStartDate.HasValue)
+      {
+         improvementPlan.StartDate = PlanStartDate.Value;
+      }
 
       SetSchoolImprovementPlanInSession(id, improvementPlan);
-
-      if (string.IsNullOrWhiteSpace(PlanProvider)) ModelState.AddModelError("PlanProvider", "Please enter who is providing the plan");
 
       _errorService.AddErrors(ModelState.Keys, ModelState);
       if (_errorService.HasErrors()) return OnGet(id);
 
-      return RedirectToPage(Links.ImprovementPlans.StartDateOfThePlan.Page, LinkParameters);
+      return RedirectToPage(Links.ImprovementPlans.Index.Page, LinkParameters);
    }
 
    private void SetModel(SchoolImprovementPlan schoolImprovementPlan)
    {
-      PlanProvider = schoolImprovementPlan.ProvidedBy;    
+      PlanStartDate = schoolImprovementPlan.StartDate;
+   }
+
+   string IDateValidationMessageProvider.SomeMissing(string displayName, IEnumerable<string> missingParts)
+   {
+      return $"Date must include a {string.Join(" and ", missingParts)}";
+   }
+
+   string IDateValidationMessageProvider.AllMissing(string displayName)
+   {
+      return $"Enter the start date of the plan";
    }
 }
