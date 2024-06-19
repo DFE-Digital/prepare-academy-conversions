@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.InkML;
 using System;
 using System.Collections.Generic;
 
@@ -9,6 +10,9 @@ public static class Links
    private static string _transfersUrl;
    public static string TransfersUrl => _transfersUrl;
 
+   private static bool _isApplicationDocumentsEnabled;
+   public static bool IsApplicationDocumentsEnabled => _isApplicationDocumentsEnabled;
+
    private static LinkItem AddLinkItem(string page, string backText = "Back")
    {
       LinkItem item = new() { Page = page, BackText = backText };
@@ -18,6 +22,10 @@ public static class Links
    public static void InitializeTransfersUrl(string transfersUrl)
    {
       _transfersUrl = transfersUrl;
+   }
+
+   public static void InializeProjectDocumentsEnabled(bool isApplicationDocumentsEnabled) {
+      _isApplicationDocumentsEnabled = isApplicationDocumentsEnabled;
    }
    public static LinkItem ByPage(string page)
    {
@@ -62,6 +70,11 @@ public static class Links
    {
       public static readonly LinkItem Index = AddLinkItem(page: "/ProjectNotes/Index");
       public static readonly LinkItem NewNote = AddLinkItem(page: "/ProjectNotes/NewNote");
+   }
+
+   public static class ApplicationDocuments
+   {
+      public static readonly LinkItem Index = AddLinkItem(page: "/ApplicationDocuments/Index");
    }
 
    public static class TaskList
@@ -204,6 +217,8 @@ public static class Links
    {
       public static readonly LinkItem RecordDecision = AddLinkItem(backText: "Back", page: "/TaskList/Decision/RecordDecision");
       public static readonly LinkItem WhoDecided = AddLinkItem(backText: "Back", page: "/TaskList/Decision/WhoDecided");
+      public static readonly LinkItem DAOPrecursor = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DAOPrecursor");
+      public static readonly LinkItem DAOBeforeYouStart = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DAOBeforeYouStart");
       public static readonly LinkItem DeclineReason = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DeclineReason");
       public static readonly LinkItem AnyConditions = AddLinkItem(backText: "Back", page: "/TaskList/Decision/AnyConditions");
       public static readonly LinkItem DecisionDate = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DecisionDate");

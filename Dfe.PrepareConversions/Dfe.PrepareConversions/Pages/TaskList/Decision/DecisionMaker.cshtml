@@ -3,29 +3,35 @@
 @using Dfe.PrepareConversions.TagHelpers
 @model Dfe.PrepareConversions.Pages.TaskList.Decision.DecisionMaker
 @{
-   ViewData["Title"] = $"Decision maker's name";
-   Layout = "_Layout";
+    ViewData["Title"] = Model.IsDAORevoked ? "Minister's name" : "Decision maker's name";
+    Layout = "_Layout";
 }
 
 @section BeforeMain
 {
-   <partial name="_BackLink" model="@Model.BackLinkModel"/> 
-   <partial name="_ErrorSummary"/>
+    <partial name="_BackLink" model="@Model.BackLinkModel" />
+    <partial name="_ErrorSummary" />
 }
 
 <span id="selection-span" class="govuk-caption-l">Record the decision</span>
-<h1 class="govuk-heading-l">Decision maker's name</h1>
+<h1 class="govuk-heading-l">@ViewData["Title"]</h1>
 
 <form method="post">
-   <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+    <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
         <label class="govuk-hint" for="decision-maker-name">
-            Enter the name of the person who made the decision
+            @if (Model.IsDAORevoked)
+            {
+                <text>Enter the name of the minister who made the decision</text>
+            }
+            else
+            {
+                <text>Enter the name of the person who made the decision</text>
+            }
         </label>
         <input class="govuk-input govuk-!-width-two-thirds" id="decision-maker-name" name="decision-maker-name" type="text" value="@Model.DecisionMakerName">
-   </div>
+    </div>
 
-
-   <button class="govuk-button" data-module="govuk-button" id="submit-btn">
-      Continue
-   </button>
+    <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+        Continue
+    </button>
 </form>

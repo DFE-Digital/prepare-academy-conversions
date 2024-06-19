@@ -47,18 +47,6 @@ public class DecisionDate : DecisionBaseModel, IDateValidationMessageProvider
       return $"Enter the date when the conversion was {decision.Decision.ToDescription().ToLowerInvariant()}";
    }
 
-   public LinkItem GetPageForBackLink(int id)
-   {
-      return Decision switch
-      {
-         { Decision: AdvisoryBoardDecisions.Approved } => Links.Decision.AnyConditions,
-         { Decision: AdvisoryBoardDecisions.Declined } => Links.Decision.DeclineReason,
-         { Decision: AdvisoryBoardDecisions.Deferred } => Links.Decision.WhyDeferred,
-         { Decision: AdvisoryBoardDecisions.Withdrawn } => Links.Decision.WhyWithdrawn,
-         { Decision: AdvisoryBoardDecisions.DAORevoked } => Links.Decision.WhyDAORevoked,
-         _ => throw new Exception("Unexpected decision state")
-      };
-   }
 
    public IActionResult OnGet(int id)
    {
@@ -69,7 +57,7 @@ public class DecisionDate : DecisionBaseModel, IDateValidationMessageProvider
       DecisionText = decision.Decision.ToString()?.ToLowerInvariant();
       DateOfDecision = Decision.AdvisoryBoardDecisionDate;
 
-      SetBackLinkModel(GetPageForBackLink(id), id);
+      SetBackLinkModel(Links.Decision.DecisionMaker, id);
 
       return Page();
    }

@@ -113,10 +113,10 @@ public class ChangeDecisionOptionsIntegrationTests : BaseIntegrationTests, IAsyn
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
-      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Other, "other"));
+      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDecisionDateAndContinue(DateTime.Today);
-      await NavigateAsync("Change", 3);
+      await NavigateAsync("Change", 1);
 
       PageHeading.Should().Be("Why was this project declined?");
       Document.Url.Should().Contain("obl=");
@@ -132,10 +132,10 @@ public class ChangeDecisionOptionsIntegrationTests : BaseIntegrationTests, IAsyn
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Deferred);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.DirectorGeneral);
-      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDeferredReasonsAndContinue(Tuple.Create(AdvisoryBoardDeferredReason.Other, "other"));
+      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDecisionDateAndContinue(DateTime.Today);
-      await NavigateAsync("Change", 3);
+      await NavigateAsync("Change", 1);
 
       PageHeading.Should().Be("Why was this project deferred?");
       Document.Url.Should().Contain("obl=");

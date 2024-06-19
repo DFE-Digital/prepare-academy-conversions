@@ -34,9 +34,105 @@
                 </dd>
             <dd class="govuk-summary-list__actions"></dd>
         </div>
+
+        @if (Model.Decision.Decision == AdvisoryBoardDecisions.Declined)
+        {
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Who made this decision
+                    Reasons
+                </dt>
+                <dd class="govuk-summary-list__value" id="decline-reasons">
+
+                    @foreach (AdvisoryBoardDeclinedReasonDetails reason in Model.Decision.DeclinedReasons)
+                    {
+                        <div>@reason.Reason.ToDescription():</div>
+                        <div class="govuk-!-margin-bottom-2">@reason.Details</div>
+                    }
+                </dd>
+                <dd class="govuk-summary-list__actions"></dd>
+            </div>
+        }
+
+
+        @if (Model.Decision.Decision == AdvisoryBoardDecisions.Deferred)
+        {
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Reasons
+                </dt>
+                <dd class="govuk-summary-list__value" id="deferred-reasons">
+
+                    @foreach (AdvisoryBoardDeferredReasonDetails reason in Model.Decision.DeferredReasons)
+                    {
+                        <div>@reason.Reason.ToDescription():</div>
+                        <div class="govuk-!-margin-bottom-2">@reason.Details</div>
+                    }
+                </dd>
+                <dd class="govuk-summary-list__actions"></dd>
+            </div>
+        }
+
+        @if (Model.Decision.Decision == AdvisoryBoardDecisions.Withdrawn)
+        {
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Reasons
+                </dt>
+                <dd class="govuk-summary-list__value" id="withdrawn-reasons">
+
+                    @foreach (AdvisoryBoardWithdrawnReasonDetails reason in Model.Decision.WithdrawnReasons)
+                    {
+                        <div>@reason.Reason.ToDescription():</div>
+                        <div class="govuk-!-margin-bottom-2">@reason.Details</div>
+                    }
+                </dd>
+                <dd class="govuk-summary-list__actions"></dd>
+            </div>
+        }
+
+        @if (Model.Decision.Decision == AdvisoryBoardDecisions.Approved)
+        {
+            var conditionsSet = Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value;
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Conditions
+                </dt>
+                <dd class="govuk-summary-list__value" id="condition-set">
+                    @if (conditionsSet)
+                    {
+                        <div>Yes:</div>
+                        <div>@Model.Decision.ApprovedConditionsDetails</div>
+                    }
+                    else
+                    {
+                        <span>No</span>
+                    }
+                </dd>
+                <dd class="govuk-summary-list__actions"></dd>
+            </div>
+        }
+        @if (Model.Decision.Decision == AdvisoryBoardDecisions.DAORevoked)
+        {
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Reasons
+                </dt>
+                <dd class="govuk-summary-list__value" id="dao-revoked-reasons">
+
+                    @foreach (AdvisoryBoardDAORevokedReasonDetails reason in Model.Decision.DAORevokedReasons)
+                    {
+                        <div>@reason.Reason.ToDescription():</div>
+                        <div class="govuk-!-margin-bottom-2">@reason.Details</div>
+                    }
+                </dd>
+                <dd class="govuk-summary-list__actions"></dd>
+            </div>
+        }
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Decision maker's role
                 </dt>
                 <dd class="govuk-summary-list__value">
 
@@ -72,101 +168,7 @@
             <dd class="govuk-summary-list__actions"></dd>
         </div>
 
-            @if (Model.Decision.Decision == AdvisoryBoardDecisions.Declined)
-            {
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Why was this project declined
-                    </dt>
-                    <dd class="govuk-summary-list__value" id="decline-reasons">
 
-                        @foreach (AdvisoryBoardDeclinedReasonDetails reason in Model.Decision.DeclinedReasons)
-                        {
-                            <div>@reason.Reason.ToDescription():</div>
-                            <div class="govuk-!-margin-bottom-2">@reason.Details</div>
-                        }
-                    </dd>
-                <dd class="govuk-summary-list__actions"></dd>
-            </div>
-            }
-
-
-            @if (Model.Decision.Decision == AdvisoryBoardDecisions.Deferred)
-            {
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Why was this project deferred
-                    </dt>
-                    <dd class="govuk-summary-list__value" id="deferred-reasons">
-
-                        @foreach (AdvisoryBoardDeferredReasonDetails reason in Model.Decision.DeferredReasons)
-                        {
-                            <div>@reason.Reason.ToDescription():</div>
-                            <div class="govuk-!-margin-bottom-2">@reason.Details</div>
-                        }
-                    </dd>
-                <dd class="govuk-summary-list__actions"></dd>
-            </div>
-            }
-
-            @if (Model.Decision.Decision == AdvisoryBoardDecisions.Withdrawn)
-            {
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Why was this project withdrawn
-                    </dt>
-                    <dd class="govuk-summary-list__value" id="withdrawn-reasons">
-
-                        @foreach (AdvisoryBoardWithdrawnReasonDetails reason in Model.Decision.WithdrawnReasons)
-                        {
-                            <div>@reason.Reason.ToDescription():</div>
-                            <div class="govuk-!-margin-bottom-2">@reason.Details</div>
-                        }
-                    </dd>
-                <dd class="govuk-summary-list__actions"></dd>
-            </div>
-            }
-
-            @if (Model.Decision.Decision == AdvisoryBoardDecisions.Approved)
-            {
-                var conditionsSet = Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value;
-
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Were any conditions set
-                    </dt>
-                    <dd class="govuk-summary-list__value" id="condition-set">
-                        @if (conditionsSet)
-                        {
-                            <div>Yes:</div>
-                            <div>@Model.Decision.ApprovedConditionsDetails</div>
-                        }
-                        else
-                        {
-                            <span>No</span>
-                        }
-                    </dd>
-                <dd class="govuk-summary-list__actions"></dd>
-            </div>
-            }
-        @if (Model.Decision.Decision == AdvisoryBoardDecisions.DAORevoked)
-        {
-
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Why was the DAO revoked?
-                </dt>
-                <dd class="govuk-summary-list__value" id="dao-revoked-reasons">
-
-                    @foreach (AdvisoryBoardDAORevokedReasonDetails reason in Model.Decision.DAORevokedReasons)
-                    {
-                        <div>@reason.Reason.ToDescription():</div>
-                        <div class="govuk-!-margin-bottom-2">@reason.Details</div>
-                    }
-                </dd>
-                <dd class="govuk-summary-list__actions"></dd>
-            </div>
-        }
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Date of decision

@@ -1,0 +1,105 @@
+﻿@page "/task-list/{id:int}/decision/dao-before-you-start"
+@using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
+@using Dfe.Academisation.ExtensionMethods
+@using Microsoft.Extensions.Configuration
+@model Dfe.PrepareConversions.Pages.TaskList.Decision.DAOBeforeYouStartModel
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = $"DAO before you start";
+}
+
+@section BeforeMain
+{
+    <partial name="_BackLink" model="@Model.BackLinkModel" />
+    <partial name="_ErrorSummary" />
+}
+@if (Model.ShowBanner)
+{
+    <div class="govuk-notification-banner govuk-notification-banner--important" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+        <div class="govuk-notification-banner__header">
+            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                Important
+            </h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+            <h3 class="govuk-notification-banner__heading">
+                You cannot record this decision yet
+            </h3>
+            <p class="govuk-body">
+                Before you can record the decision to revoke an Academy Order:
+            </p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>a minister must approve the decision</li>
+                <li>you must have sent the letter confirming the decision to the school</li>
+                <li>you must have saved a copy of the letter in SharePoint</li>
+            </ul>
+            <p class="govuk-body">
+                You can <a href="/task-list/@Model.Id" class="govuk-link">go back to the task list</a> and continue working on this project, or <a href="/project-list" class="govuk-link">choose another project from your project list</a>.
+            </p>
+        </div>
+    </div>
+}
+<span id="selection-span" class="govuk-caption-l">Revoke Directive Academy Order</span>
+<h1 class="govuk-heading-l">Before you start</h1>
+
+<form method="post">
+    <div class="govuk-form-group">
+        <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
+            <div class="govuk-form-group">
+
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h2 class="govuk-heading-m">A minister has approved this decision</h2>
+                    </legend>
+                    <div class="govuk-hint">
+                        The revocation of a DAO (Directive Academy Order) must be signed off by a minister. It cannot proceed without ministerial approval.
+                    </div>
+                    <div class="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="MinisterApproval" name="MinisterApproval" type="checkbox" value="true" />
+                            <label class="govuk-label govuk-checkboxes__label" for="MinisterApproval">I confirm a minister has approved this decision</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h2 class="govuk-heading-m">You have sent a letter confirming the revocation decision</h2>
+                    </legend>
+                    <div class="govuk-hint">
+                        You must write and send a letter to the school’s governing body to confirm the minister’s decision.
+                    </div>
+                    <div class="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="LetterSent" name="LetterSent" type="checkbox" value="true" />
+                            <label class="govuk-label govuk-checkboxes__label" for="LetterSent">I confirm I have sent the letter confirming the revocation decision</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h2 class="govuk-heading-m">You have saved a copy of the letter</h2>
+                    </legend>
+                    <div class="govuk-hint">
+                        You must save a copy of the letter in the school’s SharePoint folder.
+                    </div>
+                    <div class="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="LetterSaved" name="LetterSaved" type="checkbox" value="true" />
+                            <label class="govuk-label govuk-checkboxes__label" for="LetterSaved">I confirm I have saved a copy of the letter to the school’s SharePoint folder</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+        Continue
+    </button>
+</form>
