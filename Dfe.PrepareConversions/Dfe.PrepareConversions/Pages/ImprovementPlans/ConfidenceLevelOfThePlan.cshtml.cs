@@ -48,7 +48,7 @@ public class ConfidenceLevelOfThePlanModel : SchoolImprovementPlanBaseModel
       _errorService.AddErrors(ModelState.Keys, ModelState);
       if (_errorService.HasErrors()) return OnGet(id);
 
-      return RedirectToPage(Links.ImprovementPlans.CommetnsOnThePlan.Page, LinkParameters);
+      return RedirectToPage(Links.ImprovementPlans.CommentsOnThePlan.Page, LinkParameters);
    }
 
    private void SetModel(SchoolImprovementPlan schoolImprovementPlan)

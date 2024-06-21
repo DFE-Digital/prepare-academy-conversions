@@ -16,7 +16,7 @@ public interface IApiClient
    Task<HttpResponseMessage> GetFilterParametersAsync();
    Task<HttpResponseMessage> GetApplicationByReferenceAsync(string id);
    Task<HttpResponseMessage> AddProjectNote(int id, AddProjectNote projectNote);
-   Task<HttpResponseMessage> AddSchoolImprovementPlan(int id, AddSchoolImprovementPlanCommand addSchoolImprovementPlanCommand);
+   Task<HttpResponseMessage> AddSchoolImprovementPlan(int id, AddSchoolImprovementPlan addSchoolImprovementPlanCommand);
 
    Task<HttpResponseMessage> SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl);
    Task<HttpResponseMessage> SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview);

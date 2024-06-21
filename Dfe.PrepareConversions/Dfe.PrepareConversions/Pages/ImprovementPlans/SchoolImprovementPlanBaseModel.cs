@@ -7,6 +7,7 @@ using Dfe.PrepareConversions.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.ImprovementPlans;
@@ -32,6 +33,8 @@ public abstract class SchoolImprovementPlanBaseModel : PageModel
    public BackLinkModel BackLinkModel { get; set; }
    public string SchoolName { get; set; }
    public string AcademyTypeAndRoute { get; set; }
+   public DateTime? AdvisoryBoradDate { get; set; }
+   public DateTime? ConversionDate { get; set; }
    public int Id { get; set; }
 
    protected object LinkParameters =>
@@ -45,6 +48,8 @@ public abstract class SchoolImprovementPlanBaseModel : PageModel
       ApiResponse<AcademyConversionProject> project = await _repository.GetProjectById(id);
       SchoolName = project.Body.SchoolName;
       AcademyTypeAndRoute = project.Body.AcademyTypeAndRoute;
+      AdvisoryBoradDate = project.Body.HeadTeacherBoardDate;
+      ConversionDate = project.Body.ProposedAcademyOpeningDate;
    }
 
    public override async Task OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, PageHandlerExecutionDelegate next)

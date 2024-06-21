@@ -20,4 +20,6 @@ public class SchoolImprovementPlan {
    public DateTime? ExpectedEndDateOther { get; set; }
    public SchoolImprovementPlanConfidenceLevel? ConfidenceLevel { get; set; }
    public string PlanComments { get; set; }
+
+
 } 

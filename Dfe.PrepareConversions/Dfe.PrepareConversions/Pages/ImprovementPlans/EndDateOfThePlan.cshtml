@@ -1,4 +1,5 @@
 ﻿@page "/improvement-plans/{id:int}/end-date-of-the-plan"
+@using Dfe.PrepareConversions.Configuration
 @using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans
 @using Dfe.Academisation.ExtensionMethods
 @model Dfe.PrepareConversions.Pages.ImprovementPlans.EndDateOfThePlanModel
@@ -25,14 +26,14 @@
                 <div class="govuk-radios__item">
                     <input asp-for="ExpectedEndDate" class="govuk-radios__input" id="ToAdvisoryBoard-radio" type="radio" value="@SchoolImprovementPlanExpectedEndDate.ToAdvisoryBoard" data-aria-controls="conditional-ToAdvisoryBoard">
                     <label class="govuk-label govuk-radios__label" for="ToAdvisoryBoard-radio">
-                        To advisory board
+                        To advisory board <span if="@Model.AdvisoryBoradDate.HasValue">(@Model.AdvisoryBoradDate.Value.ToString(Constants.DateTimeFormat))</span>
                     </label>
                 </div>
                 
                 <div class="govuk-radios__item">
                     <input asp-for="ExpectedEndDate" class="govuk-radios__input" id="ToConversion-radio" type="radio" value="@SchoolImprovementPlanExpectedEndDate.ToConversion" data-aria-controls="conditional-ToConversion">
                     <label class="govuk-label govuk-radios__label" for="ToConversion-radio">
-                        To conversion
+                        To conversion <span if="@Model.ConversionDate.HasValue">(@Model.ConversionDate.Value.ToString(Constants.DateTimeFormat))</span>
                     </label>
                 </div>
 

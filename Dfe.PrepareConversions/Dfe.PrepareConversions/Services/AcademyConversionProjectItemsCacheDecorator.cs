@@ -1,6 +1,7 @@
 ﻿using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.NewProject;
+using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
 using Dfe.PrepareConversions.Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -90,6 +91,11 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    public async Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote addProjectNote)
    {
       return await _innerRepository.AddProjectNote(id, addProjectNote);
+   }
+
+   public async Task<ApiResponse<SchoolImprovementPlan>> AddSchoolImprovementPlan(int id, AddSchoolImprovementPlan addSchoolImprovementPlan)
+   {
+      return await _innerRepository.AddSchoolImprovementPlan(id, addSchoolImprovementPlan);
    }
 
    public async Task SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl)

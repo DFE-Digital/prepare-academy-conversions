@@ -66,7 +66,7 @@ public class ApiClient : IApiClient
       return await AcademisationClient.PostAsync(string.Format(PathFor.AddProjectNote, id), JsonContent.Create(projectNote));
    }
 
-   public async Task<HttpResponseMessage> AddSchoolImprovementPlan(int id, AddSchoolImprovementPlanCommand addSchoolImprovementPlanCommand)
+   public async Task<HttpResponseMessage> AddSchoolImprovementPlan(int id, AddSchoolImprovementPlan addSchoolImprovementPlanCommand)
    {
       return await AcademisationClient.PostAsync(string.Format(PathFor.AddSchoolImprovementPlan, id), JsonContent.Create(addSchoolImprovementPlanCommand));
    }

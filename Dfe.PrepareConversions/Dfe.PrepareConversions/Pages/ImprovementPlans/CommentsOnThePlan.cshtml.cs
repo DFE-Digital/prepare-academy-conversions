@@ -46,7 +46,7 @@ public class CommentsOnThePlanModel : SchoolImprovementPlanBaseModel
       _errorService.AddErrors(ModelState.Keys, ModelState);
       if (_errorService.HasErrors()) return OnGet(id);
 
-      return RedirectToPage(Links.ImprovementPlans.StartDateOfThePlan.Page, LinkParameters);
+      return RedirectToPage(Links.ImprovementPlans.Summary.Page, LinkParameters);
    }
 
    private void SetModel(SchoolImprovementPlan schoolImprovementPlan)
