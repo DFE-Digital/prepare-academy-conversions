@@ -1,0 +1,66 @@
+﻿@page "/improvement-plans/{id:int}/end-date-of-the-plan"
+@using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans
+@using Dfe.Academisation.ExtensionMethods
+@model Dfe.PrepareConversions.Pages.ImprovementPlans.EndDateOfThePlanModel
+@{
+    ViewData["Title"] = $"Improvement plan's expected end date";
+}
+
+@section BeforeMain
+{
+    <partial name="_BackLink" model="@Model.BackLinkModel" />
+    <partial name="_ErrorSummary" />
+}
+
+<span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
+<form method="post">
+    <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                <h1 class="govuk-fieldset__heading">
+                    What is the expected end date of the improvement plan?
+                </h1>
+            </legend>
+            <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                    <input asp-for="ExpectedEndDate" class="govuk-radios__input" id="ToAdvisoryBoard-radio" type="radio" value="@SchoolImprovementPlanExpectedEndDate.ToAdvisoryBoard" data-aria-controls="conditional-ToAdvisoryBoard">
+                    <label class="govuk-label govuk-radios__label" for="ToAdvisoryBoard-radio">
+                        To advisory board
+                    </label>
+                </div>
+                
+                <div class="govuk-radios__item">
+                    <input asp-for="ExpectedEndDate" class="govuk-radios__input" id="ToConversion-radio" type="radio" value="@SchoolImprovementPlanExpectedEndDate.ToConversion" data-aria-controls="conditional-ToConversion">
+                    <label class="govuk-label govuk-radios__label" for="ToConversion-radio">
+                        To conversion
+                    </label>
+                </div>
+
+                <div class="govuk-radios__item">
+                    <input asp-for="ExpectedEndDate" class="govuk-radios__input" id="Other-radio" type="radio" value="@SchoolImprovementPlanExpectedEndDate.Other" data-aria-controls="conditional-Other">
+                    <label class="govuk-label govuk-radios__label" for="Other-radio">
+                        Other
+                    </label>
+                </div>
+                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-Other">
+                    <div class="govuk-form-group">
+                        <govuk-date-input heading-label="true" name="plan-end-date-other" asp-for="@Model.PlanEndDateOther" hint="For example, 27 3 2021" />
+                    </div>
+                </div>
+
+                <div class="govuk-radios__item">
+                    <input asp-for="ExpectedEndDate" class="govuk-radios__input" id="Unknown-radio" type="radio" value="@SchoolImprovementPlanExpectedEndDate.Unknown" data-aria-controls="Unknown-contact">
+                    <label class="govuk-label govuk-radios__label" for="contact">
+                        I don't know
+                    </label>
+                </div>
+
+            </div>
+        </fieldset>
+    </div>
+
+    <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+        Continue
+    </button>
+
+</form>

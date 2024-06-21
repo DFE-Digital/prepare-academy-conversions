@@ -9,11 +9,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 namespace Dfe.PrepareConversions.Pages.ImprovementPlans;
 
-public class StartDateOfThePlanModel : SchoolImprovementPlanBaseModel, IDateValidationMessageProvider
+public class EndDateOfThePlanModel : SchoolImprovementPlanBaseModel, IDateValidationMessageProvider
 {
    private readonly ErrorService _errorService;
 
-   public StartDateOfThePlanModel(IAcademyConversionProjectRepository repository,
+   public EndDateOfThePlanModel(IAcademyConversionProjectRepository repository,
                            ISession session,
                            ErrorService errorService)
       : base(repository, session)
@@ -21,15 +21,20 @@ public class StartDateOfThePlanModel : SchoolImprovementPlanBaseModel, IDateVali
       _errorService = errorService;
    }
 
-   [BindProperty(Name = "plan-start-date", BinderType = typeof(DateInputModelBinder))]
+   [BindProperty(Name = "plan-end-date-other", BinderType = typeof(DateInputModelBinder))]
    [DateValidation(DateRangeValidationService.DateRange.PastOrFuture)]
-   [Display(Name = "StartDate")]
+   [Display(Name = "EndDateOther")]
    [Required]
-   public DateTime? PlanStartDate { get; set; }
+   public DateTime? PlanEndDateOther { get; set; }
+
+   [BindProperty]
+   [Required]
+   [Display(Name = "Expected end date")]
+   public SchoolImprovementPlanExpectedEndDate? ExpectedEndDate{ get; set; }
 
    public IActionResult OnGet(int id)
    {
-      SetBackLinkModel(Links.ImprovementPlans.WhoArrangedThePlan, id);
+      SetBackLinkModel(Links.ImprovementPlans.StartDateOfThePlan, id);
 
       SchoolImprovementPlan improvementPlan = GetSchoolImprovementPlanFromSession(id);
 
@@ -42,22 +47,29 @@ public class StartDateOfThePlanModel : SchoolImprovementPlanBaseModel, IDateVali
    {
       SchoolImprovementPlan improvementPlan = GetSchoolImprovementPlanFromSession(id);
 
-      if (PlanStartDate.HasValue)
+      if (PlanEndDateOther.HasValue)
       {
-         improvementPlan.StartDate = PlanStartDate.Value;
+         improvementPlan.ExpectedEndDateOther = PlanEndDateOther.Value;
       }
 
       SetSchoolImprovementPlanInSession(id, improvementPlan);
 
+      // Override the validation on the date helper as it is only required when selecting other
+      if (ExpectedEndDate is not SchoolImprovementPlanExpectedEndDate.Other)
+      {
+         this.ViewData.ModelState.Remove("plan-end-date-other");
+      }
+
       _errorService.AddErrors(ModelState.Keys, ModelState);
       if (_errorService.HasErrors()) return OnGet(id);
 
-      return RedirectToPage(Links.ImprovementPlans.EndDateOfThePlan.Page, LinkParameters);
+      return RedirectToPage(Links.ImprovementPlans.Index.Page, LinkParameters);
    }
 
    private void SetModel(SchoolImprovementPlan schoolImprovementPlan)
    {
-      PlanStartDate = schoolImprovementPlan.StartDate;
+      ExpectedEndDate = schoolImprovementPlan.ExpectedEndDate;
+      PlanEndDateOther = schoolImprovementPlan.ExpectedEndDateOther;
    }
 
    string IDateValidationMessageProvider.SomeMissing(string displayName, IEnumerable<string> missingParts)
@@ -67,6 +79,6 @@ public class StartDateOfThePlanModel : SchoolImprovementPlanBaseModel, IDateVali
 
    string IDateValidationMessageProvider.AllMissing(string displayName)
    {
-      return $"Enter the start date of the plan";
+      return $"Enter the expected end date of the plan";
    }
 }

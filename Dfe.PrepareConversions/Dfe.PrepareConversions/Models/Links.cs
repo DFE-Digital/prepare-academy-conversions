@@ -49,6 +49,7 @@ public static class Links
       public static readonly LinkItem WhoArrangedThePlan = AddLinkItem(backText: "Back", page: "/ImprovementPlans/WhoArrangedThePlan");
       public static readonly LinkItem WhoProvidedThePlan = AddLinkItem(backText: "Back", page: "/ImprovementPlans/WhoProvidedThePlan");
       public static readonly LinkItem StartDateOfThePlan = AddLinkItem(backText: "Back", page: "/ImprovementPlans/StartDateOfThePlan");
+      public static readonly LinkItem EndDateOfThePlan = AddLinkItem(backText: "Back", page: "/ImprovementPlans/EndDateOfThePlan");
       public static readonly LinkItem Summary = AddLinkItem(backText: "Back", page: "/ImprovementPlans/Summary");
    }
 
