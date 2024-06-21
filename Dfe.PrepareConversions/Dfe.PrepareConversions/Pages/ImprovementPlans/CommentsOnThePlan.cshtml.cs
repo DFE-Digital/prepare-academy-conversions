@@ -1,19 +1,17 @@
+using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 namespace Dfe.PrepareConversions.Pages.ImprovementPlans;
 
-public class ConfidenceLevelOfThePlanModel : SchoolImprovementPlanBaseModel
+public class CommentsOnThePlanModel : SchoolImprovementPlanBaseModel
 {
    private readonly ErrorService _errorService;
 
-   public ConfidenceLevelOfThePlanModel(IAcademyConversionProjectRepository repository,
+   public CommentsOnThePlanModel(IAcademyConversionProjectRepository repository,
                            ISession session,
                            ErrorService errorService)
       : base(repository, session)
@@ -22,16 +20,15 @@ public class ConfidenceLevelOfThePlanModel : SchoolImprovementPlanBaseModel
    }
 
    [BindProperty]
-   [Required]
-   [Display(Name = "Confidence Level")]
-   public SchoolImprovementPlanConfidenceLevel? ConfidenceLevel{ get; set; }
+   public string PlanComments { get; set; }
+
 
    public IActionResult OnGet(int id)
    {
-      SetBackLinkModel(Links.ImprovementPlans.EndDateOfThePlan, id);
+      SetBackLinkModel(Links.ImprovementPlans.ConfidenceLevelOfThePlan, id);
 
       SchoolImprovementPlan improvementPlan = GetSchoolImprovementPlanFromSession(id);
-
+   
       SetModel(improvementPlan);
 
       return Page();
@@ -41,18 +38,19 @@ public class ConfidenceLevelOfThePlanModel : SchoolImprovementPlanBaseModel
    {
       SchoolImprovementPlan improvementPlan = GetSchoolImprovementPlanFromSession(id);
 
-      improvementPlan.ConfidenceLevel = ConfidenceLevel;
+      improvementPlan.PlanComments = PlanComments;
 
       SetSchoolImprovementPlanInSession(id, improvementPlan);
+
 
       _errorService.AddErrors(ModelState.Keys, ModelState);
       if (_errorService.HasErrors()) return OnGet(id);
 
-      return RedirectToPage(Links.ImprovementPlans.CommetnsOnThePlan.Page, LinkParameters);
+      return RedirectToPage(Links.ImprovementPlans.StartDateOfThePlan.Page, LinkParameters);
    }
 
    private void SetModel(SchoolImprovementPlan schoolImprovementPlan)
    {
-      ConfidenceLevel = schoolImprovementPlan.ConfidenceLevel;
+      PlanComments = schoolImprovementPlan.PlanComments;    
    }
 }

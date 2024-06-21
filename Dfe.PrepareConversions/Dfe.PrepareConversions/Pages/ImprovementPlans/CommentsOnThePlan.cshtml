@@ -1,0 +1,29 @@
+﻿@page "/improvement-plans/{id:int}/comments-on-the-plan"
+@using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans
+@using Dfe.Academisation.ExtensionMethods
+@model Dfe.PrepareConversions.Pages.ImprovementPlans.CommentsOnThePlanModel
+@{
+    ViewData["Title"] = $"Comments on the interim school improvement plan";
+}
+
+@section BeforeMain
+{
+    <partial name="_BackLink" model="@Model.BackLinkModel" />
+    <partial name="_ErrorSummary" />
+}
+
+<span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
+<h1 class="govuk-heading-l">Comments on the interim school improvement plan</h1>
+
+<form method="post">
+    <div class="govuk-form-group">
+        <div id="waste-hint" class="govuk-hint">
+            Enter any other comments about this school improvement plan here.
+        </div>
+        <textarea class="govuk-textarea govuk-!-width-full" asp-for="PlanComments" rows="5"></textarea>
+    </div>
+
+    <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+        Continue
+    </button>
+</form>
