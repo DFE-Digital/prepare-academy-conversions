@@ -51,6 +51,7 @@ public class EndDateOfThePlanModel : SchoolImprovementPlanBaseModel, IDateValida
       {
          improvementPlan.ExpectedEndDateOther = PlanEndDateOther.Value;
       }
+      improvementPlan.ExpectedEndDate = ExpectedEndDate;
 
       SetSchoolImprovementPlanInSession(id, improvementPlan);
 
@@ -63,7 +64,7 @@ public class EndDateOfThePlanModel : SchoolImprovementPlanBaseModel, IDateValida
       _errorService.AddErrors(ModelState.Keys, ModelState);
       if (_errorService.HasErrors()) return OnGet(id);
 
-      return RedirectToPage(Links.ImprovementPlans.Index.Page, LinkParameters);
+      return RedirectToPage(Links.ImprovementPlans.ConfidenceLevelOfThePlan.Page, LinkParameters);
    }
 
    private void SetModel(SchoolImprovementPlan schoolImprovementPlan)
