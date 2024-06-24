@@ -137,4 +137,9 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       await _innerRepository.SetFormAMatProjectReference(id, setFormAMatProjectReference);
    }
+
+   public async Task SetProjectDates(int id, SetProjectDatesModel updatedProjectDates)
+   {
+      await _innerRepository.SetProjectDates(id, updatedProjectDates);
+   }
 }

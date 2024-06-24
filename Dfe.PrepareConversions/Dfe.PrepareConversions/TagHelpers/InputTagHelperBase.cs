@@ -24,6 +24,15 @@ public abstract class InputTagHelperBase : TagHelper
    [HtmlAttributeName("label")]
    public string Label { get; set; }
 
+   [HtmlAttributeName("sub-label")]
+   public string SubLabel { get; set; }
+
+   [HtmlAttributeName("previous-information")]
+   public string PreviousInformation { get; set; }
+
+   [HtmlAttributeName("additional-information")]
+   public string AdditionalInformation { get; set; }
+
    [HtmlAttributeName("suffix")]
    public string Suffix { get; set; }
 
