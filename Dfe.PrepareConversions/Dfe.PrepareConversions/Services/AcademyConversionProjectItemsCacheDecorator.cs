@@ -148,4 +148,9 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       return await _innerRepository.GetSchoolImprovementPlansForProject(id);
    }
+
+   public async Task UpdateSchoolImprovementPlan(int id, UpdateSchoolImprovementPlan updateSchoolImprovementPlan)
+   {
+      await _innerRepository.UpdateSchoolImprovementPlan(id, updateSchoolImprovementPlan);
+   }
 }

@@ -12,7 +12,6 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
-using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 
 namespace Dfe.PrepareConversions.Data.Services;
 
@@ -105,7 +104,7 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
          @"legacy/project/new-conversion-project",
          newProject);
 
-      if (result.Success is false) 
+      if (result.Success is false)
       {
          throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
       }
@@ -365,5 +364,15 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       HttpClient httpClient = _httpClientFactory.CreateAcademisationClient();
 
       return await _httpClientService.Get<IEnumerable<SchoolImprovementPlan>>(httpClient, string.Format(PathFor.GetSchoolImprovementPlans, id));
+   }
+
+   public async Task UpdateSchoolImprovementPlan(int id, UpdateSchoolImprovementPlan updateSchoolImprovementPlan)
+   {
+      HttpClient httpClient = _httpClientFactory.CreateAcademisationClient();
+
+      ApiResponse<SchoolImprovementPlan> result = await _httpClientService
+   .Put<UpdateSchoolImprovementPlan, SchoolImprovementPlan>(httpClient, string.Format(PathFor.GetSchoolImprovementPlans, id, updateSchoolImprovementPlan.Id), updateSchoolImprovementPlan);
+
+      if (!result.Success) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
 }

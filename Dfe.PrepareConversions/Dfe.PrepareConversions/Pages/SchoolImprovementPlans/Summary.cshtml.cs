@@ -14,15 +14,12 @@ namespace Dfe.PrepareConversions.Pages.ImprovementPlans;
 public class SummaryModel : SchoolImprovementPlanBaseModel
 {
    private readonly IAcademyConversionProjectRepository _academyConversionProjectRepository;
-   private readonly IAcademyConversionAdvisoryBoardDecisionRepository _advisoryBoardDecisionRepository;
 
    public SummaryModel(IAcademyConversionProjectRepository repository,
                        ISession session,
-                       IAcademyConversionAdvisoryBoardDecisionRepository advisoryBoardDecisionRepository,
                        IAcademyConversionProjectRepository academyConversionProjectRepository)
       : base(repository, session)
    {
-      _advisoryBoardDecisionRepository = advisoryBoardDecisionRepository;
       _academyConversionProjectRepository = academyConversionProjectRepository;
    }
 
@@ -59,6 +56,7 @@ public class SummaryModel : SchoolImprovementPlanBaseModel
          // update existing plan
          await _academyConversionProjectRepository.UpdateSchoolImprovementPlan(id, new UpdateSchoolImprovementPlan(
             plan.Id,
+            plan.ProjectId,
             plan.ArrangedBy,
             plan.ArrangedByOther,
             plan.ProvidedBy,

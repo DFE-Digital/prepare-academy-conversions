@@ -69,4 +69,5 @@ public interface IAcademyConversionProjectRepository
    Task SetFormAMatProjectReference(int id, SetFormAMatProjectReference setFormAMatProjectReference);
 
    Task<ApiResponse<IEnumerable<SchoolImprovementPlan>>> GetSchoolImprovementPlansForProject(int id);
+   Task UpdateSchoolImprovementPlan(int id, UpdateSchoolImprovementPlan updateSchoolImprovementPlan);
 }
