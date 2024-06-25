@@ -1,4 +1,4 @@
-﻿@page "/improvement-plans/{id:int}/summary"
+﻿@page "/school-improvement-plans/{id:int}/summary"
 @using Dfe.PrepareConversions.Configuration
 @using Dfe.Academisation.ExtensionMethods
 @using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans
@@ -37,7 +37,7 @@
             </div>
         </dd>
         <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.ImprovementPlans.WhoArrangedThePlan.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-arrange-btn">
+            <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.WhoArrangedThePlan.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-arrange-btn">
                 Change<span class="govuk-visually-hidden">who arranged the plan</span>
             </a>
         </dd>
@@ -53,7 +53,7 @@
             </div>
         </dd>
         <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.ImprovementPlans.WhoProvidedThePlan.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-provided-btn">
+            <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.WhoProvidedThePlan.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-provided-btn">
                 Change<span class="govuk-visually-hidden">who provided the plan</span>
             </a>
         </dd>
@@ -69,7 +69,7 @@
             </div>
         </dd>
         <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.ImprovementPlans.StartDateOfThePlan.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-start-btn">
+            <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.StartDateOfThePlan.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-start-btn">
                 Change<span class="govuk-visually-hidden">start date of the plan</span>
             </a>
         </dd>
@@ -105,7 +105,7 @@
             </div>
         </dd>
         <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.ImprovementPlans.EndDateOfThePlan.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-end-btn">
+            <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.EndDateOfThePlan.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-end-btn">
                 Change<span class="govuk-visually-hidden">end date of the plan</span>
             </a>
         </dd>
@@ -120,7 +120,7 @@
             </div>
         </dd>
         <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.ImprovementPlans.ConfidenceLevelOfThePlan.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-confidence-level-btn">
+            <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.ConfidenceLevelOfThePlan.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-confidence-level-btn">
                 Change<span class="govuk-visually-hidden">the confidence of the plan</span>
             </a>
         </dd>
@@ -135,7 +135,7 @@
                 @Model.ImprovementPlan.PlanComments
             </div>
         </dd>        <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.ImprovementPlans.CommentsOnThePlan.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-comments-btn">
+            <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.CommentsOnThePlan.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-comments-btn">
                 Change<span class="govuk-visually-hidden">the comments on the plan</span>
             </a>
         </dd>

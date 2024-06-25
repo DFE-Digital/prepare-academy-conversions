@@ -143,4 +143,9 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       await _innerRepository.SetFormAMatProjectReference(id, setFormAMatProjectReference);
    }
+
+   public async Task<ApiResponse<IEnumerable<SchoolImprovementPlan>>> GetSchoolImprovementPlansForProject(int id)
+   {
+      return await _innerRepository.GetSchoolImprovementPlansForProject(id);
+   }
 }

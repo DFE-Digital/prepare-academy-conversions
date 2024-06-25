@@ -11,6 +11,7 @@ public class SchoolImprovementPlan {
       ExpectedEndDateOther = null;
    }
 
+   public int Id { get; set; }
    public int ProjectId { get; set; }
    public List<SchoolImprovementPlanArranger> ArrangedBy { get; set; }
    public string ArrangedByOther { get; set; }
@@ -19,7 +20,7 @@ public class SchoolImprovementPlan {
    public SchoolImprovementPlanExpectedEndDate? ExpectedEndDate { get; set; }
    public DateTime? ExpectedEndDateOther { get; set; }
    public SchoolImprovementPlanConfidenceLevel? ConfidenceLevel { get; set; }
-   public string PlanComments { get; set; }
-
+   public string? PlanComments { get; set; }
+   public DateTime CreatedDate { get; set; }
 
 } 

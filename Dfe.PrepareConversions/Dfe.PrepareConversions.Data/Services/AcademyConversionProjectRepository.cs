@@ -12,6 +12,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
+using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 
 namespace Dfe.PrepareConversions.Data.Services;
 
@@ -357,5 +358,12 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
    {
       HttpResponseMessage result = await _apiClient.SetFormAMatProjectReference(id, setFormAMatProjectReference);
       if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+   }
+
+   public async Task<ApiResponse<IEnumerable<SchoolImprovementPlan>>> GetSchoolImprovementPlansForProject(int id)
+   {
+      HttpClient httpClient = _httpClientFactory.CreateAcademisationClient();
+
+      return await _httpClientService.Get<IEnumerable<SchoolImprovementPlan>>(httpClient, string.Format(PathFor.GetSchoolImprovementPlans, id));
    }
 }

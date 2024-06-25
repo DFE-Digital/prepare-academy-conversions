@@ -42,7 +42,7 @@ public class WhoArrangedThePlanModel : SchoolImprovementPlanBaseModel
 
    public IActionResult OnGet(int id)
    {
-      SetBackLinkModel(Links.ImprovementPlans.Index, id);
+      SetBackLinkModel(Links.SchoolImprovementPlans.Index, id);
 
       SchoolImprovementPlan improvementPlan = GetSchoolImprovementPlanFromSession(id);
    
@@ -91,7 +91,7 @@ public class WhoArrangedThePlanModel : SchoolImprovementPlanBaseModel
       _errorService.AddErrors(ModelState.Keys, ModelState);
       if (_errorService.HasErrors()) return OnGet(id);
 
-      return RedirectToPage(Links.ImprovementPlans.WhoProvidedThePlan.Page, LinkParameters);
+      return RedirectToPage(Links.SchoolImprovementPlans.WhoProvidedThePlan.Page, LinkParameters);
    }
 
    private void SetModel(SchoolImprovementPlan schoolImprovementPlan)

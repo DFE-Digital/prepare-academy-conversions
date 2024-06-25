@@ -6,6 +6,7 @@ using Microsoft.FeatureManagement;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Data.Features;
@@ -68,6 +69,7 @@ public class ApiClient : IApiClient
 
    public async Task<HttpResponseMessage> AddSchoolImprovementPlan(int id, AddSchoolImprovementPlan addSchoolImprovementPlanCommand)
    {
+      var test = JsonSerializer.Serialize(addSchoolImprovementPlanCommand);
       return await AcademisationClient.PostAsync(string.Format(PathFor.AddSchoolImprovementPlan, id), JsonContent.Create(addSchoolImprovementPlanCommand));
    }
 

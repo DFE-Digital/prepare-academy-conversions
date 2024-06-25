@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 namespace Dfe.PrepareConversions.Pages.ImprovementPlans;
 
-public class WhoProvidedThePlanModel : SchoolImprovementPlanBaseModel
+public class CommentsOnThePlanModel : SchoolImprovementPlanBaseModel
 {
    private readonly ErrorService _errorService;
 
-   public WhoProvidedThePlanModel(IAcademyConversionProjectRepository repository,
+   public CommentsOnThePlanModel(IAcademyConversionProjectRepository repository,
                            ISession session,
                            ErrorService errorService)
       : base(repository, session)
@@ -20,12 +20,12 @@ public class WhoProvidedThePlanModel : SchoolImprovementPlanBaseModel
    }
 
    [BindProperty]
-   public string PlanProvider { get; set; }
+   public string PlanComments { get; set; }
 
 
    public IActionResult OnGet(int id)
    {
-      SetBackLinkModel(Links.ImprovementPlans.WhoArrangedThePlan, id);
+      SetBackLinkModel(Links.SchoolImprovementPlans.ConfidenceLevelOfThePlan, id);
 
       SchoolImprovementPlan improvementPlan = GetSchoolImprovementPlanFromSession(id);
    
@@ -38,20 +38,19 @@ public class WhoProvidedThePlanModel : SchoolImprovementPlanBaseModel
    {
       SchoolImprovementPlan improvementPlan = GetSchoolImprovementPlanFromSession(id);
 
-      improvementPlan.ProvidedBy = PlanProvider;
+      improvementPlan.PlanComments = PlanComments;
 
       SetSchoolImprovementPlanInSession(id, improvementPlan);
 
-      if (string.IsNullOrWhiteSpace(PlanProvider)) ModelState.AddModelError("PlanProvider", "Please enter who is providing the plan");
 
       _errorService.AddErrors(ModelState.Keys, ModelState);
       if (_errorService.HasErrors()) return OnGet(id);
 
-      return RedirectToPage(Links.ImprovementPlans.StartDateOfThePlan.Page, LinkParameters);
+      return RedirectToPage(Links.SchoolImprovementPlans.Summary.Page, LinkParameters);
    }
 
    private void SetModel(SchoolImprovementPlan schoolImprovementPlan)
    {
-      PlanProvider = schoolImprovementPlan.ProvidedBy;    
+      PlanComments = schoolImprovementPlan.PlanComments;    
    }
 }

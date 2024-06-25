@@ -28,7 +28,7 @@ public class ConfidenceLevelOfThePlanModel : SchoolImprovementPlanBaseModel
 
    public IActionResult OnGet(int id)
    {
-      SetBackLinkModel(Links.ImprovementPlans.EndDateOfThePlan, id);
+      SetBackLinkModel(Links.SchoolImprovementPlans.EndDateOfThePlan, id);
 
       SchoolImprovementPlan improvementPlan = GetSchoolImprovementPlanFromSession(id);
 
@@ -48,7 +48,7 @@ public class ConfidenceLevelOfThePlanModel : SchoolImprovementPlanBaseModel
       _errorService.AddErrors(ModelState.Keys, ModelState);
       if (_errorService.HasErrors()) return OnGet(id);
 
-      return RedirectToPage(Links.ImprovementPlans.CommentsOnThePlan.Page, LinkParameters);
+      return RedirectToPage(Links.SchoolImprovementPlans.CommentsOnThePlan.Page, LinkParameters);
    }
 
    private void SetModel(SchoolImprovementPlan schoolImprovementPlan)

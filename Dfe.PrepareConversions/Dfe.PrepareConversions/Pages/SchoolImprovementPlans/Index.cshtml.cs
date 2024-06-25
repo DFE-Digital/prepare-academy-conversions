@@ -1,3 +1,4 @@
+using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.ViewModels;
@@ -18,16 +19,22 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
    {
    }
 
-   public IEnumerable<ProjectNoteViewModel> ProjectNotes =>
-      Project.Notes?.OrderByDescending(x => x.Date).Select(note => new ProjectNoteViewModel(note)) ?? Enumerable.Empty<ProjectNoteViewModel>();
-
-   public bool NewNote { get; set; }
+   //[BindProperty]
+   public IEnumerable<SchoolImprovementPlan> SchoolImprovementPlans { get; set; }
 
    public override async Task<IActionResult> OnGetAsync(int id)
    {
       await base.OnGetAsync(id);
 
-      NewNote = (bool)(TempData["newNote"] ?? false);
+      ////NewNote = (bool)(TempData["newNote"] ?? false);
+      // initialize plans
+      SchoolImprovementPlans = new List<SchoolImprovementPlan>();
+      var schoolImprovementPlansResponse = await _repository.GetSchoolImprovementPlansForProject(id).ConfigureAwait(false);
+
+      if (schoolImprovementPlansResponse.Success)
+      {
+         SchoolImprovementPlans = schoolImprovementPlansResponse.Body;
+      }
 
       ReturnPage = @Links.ProjectList.Index.Page;
       var returnToFormAMatMenu = TempData["returnToFormAMatMenu"] as bool?;
