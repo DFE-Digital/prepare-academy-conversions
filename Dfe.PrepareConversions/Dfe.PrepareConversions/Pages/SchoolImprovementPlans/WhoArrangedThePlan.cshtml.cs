@@ -6,7 +6,7 @@ using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Security.AccessControl;
+using System.Threading.Tasks;
 namespace Dfe.PrepareConversions.Pages.ImprovementPlans;
 
 public class WhoArrangedThePlanModel : SchoolImprovementPlanBaseModel
@@ -39,19 +39,19 @@ public class WhoArrangedThePlanModel : SchoolImprovementPlanBaseModel
    [BindProperty]
    public bool WasArrangerGiven => LocalAuthorityIsChecked || RegionalDirectorIsChecked || DioceseIsChecked || OtherIsChecked;
 
-
-   public IActionResult OnGet(int id)
+   public override async Task<IActionResult> OnGetAsync(int id, int? sipId = null)
    {
-      SetBackLinkModel(Links.SchoolImprovementPlans.Index, id);
+      // call base to set School Improvement Plan
+      await base.OnGetAsync(id, sipId);
 
-      SchoolImprovementPlan improvementPlan = GetSchoolImprovementPlanFromSession(id);
+      SetBackLinkModel(Links.SchoolImprovementPlans.Index, id);
    
-      SetModel(improvementPlan);
+      SetModel(SchoolImprovementPlan);
 
       return Page();
    }
 
-   public IActionResult OnPost(int id)
+   public async Task<IActionResult> OnPost(int id, int? sipId = null)
    {
       SchoolImprovementPlan improvementPlan = GetSchoolImprovementPlanFromSession(id);
 
@@ -89,7 +89,7 @@ public class WhoArrangedThePlanModel : SchoolImprovementPlanBaseModel
       if (!WasArrangerGiven) ModelState.AddModelError("WasArrangerGiven", "Select at least one arranger");
 
       _errorService.AddErrors(ModelState.Keys, ModelState);
-      if (_errorService.HasErrors()) return OnGet(id);
+      if (_errorService.HasErrors()) return await OnGetAsync(id, sipId);
 
       return RedirectToPage(Links.SchoolImprovementPlans.WhoProvidedThePlan.Page, LinkParameters);
    }

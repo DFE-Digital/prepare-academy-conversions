@@ -26,52 +26,63 @@ public class SummaryModel : SchoolImprovementPlanBaseModel
       _academyConversionProjectRepository = academyConversionProjectRepository;
    }
 
-   public SchoolImprovementPlan ImprovementPlan { get; set; }
-
-   public IActionResult OnGet(int id)
+   public override async Task<IActionResult> OnGetAsync(int id, int? sipId = null)
    {
-      ImprovementPlan = GetSchoolImprovementPlanFromSession(id);
+      // call base to set School Improvement Plan
+      await base.OnGetAsync(id, sipId);
 
-      if (ImprovementPlan == null) return RedirectToPage(Links.TaskList.Index.Page, LinkParameters);
+      if (SchoolImprovementPlan == null) return RedirectToPage(Links.TaskList.Index.Page, LinkParameters);
 
       return Page();
    }
 
-   public async Task<IActionResult> OnPostAsync(int id)
+   public async Task<IActionResult> OnPostAsync(int id, int? sipId = null)
    {
-      if (!ModelState.IsValid) return OnGet(id);
+      if (!ModelState.IsValid) return await OnGetAsync(id);
 
       SchoolImprovementPlan improvementPlan = GetSchoolImprovementPlanFromSession(id);
       improvementPlan.ProjectId = id;
 
-      await CreateOrUpdateSchoolImprovementPlan(id, improvementPlan);
+      await CreateOrUpdateSchoolImprovementPlan(id, improvementPlan, sipId);
 
       SetSchoolImprovementPlanInSession(id, null);
 
       TempData.SetNotification(NotificationType.Success, "Done", "Improvement plan saved");
 
-      return RedirectToPage(Links.TaskList.Index.Page, new { id });
+      return RedirectToPage(Links.SchoolImprovementPlans.Index.Page, new { id });
    }
 
-   private async Task CreateOrUpdateSchoolImprovementPlan(int id, SchoolImprovementPlan plan)
+   private async Task CreateOrUpdateSchoolImprovementPlan(int id, SchoolImprovementPlan plan, int? sipId = null)
    {
-      //ApiResponse<AdvisoryBoardDecision> savedDecision = await _advisoryBoardDecisionRepository.Get(id);
+      if (sipId.HasValue && sipId.Value == plan.Id)
+      {
+         // update existing plan
+         await _academyConversionProjectRepository.UpdateSchoolImprovementPlan(id, new UpdateSchoolImprovementPlan(
+            plan.Id,
+            plan.ArrangedBy,
+            plan.ArrangedByOther,
+            plan.ProvidedBy,
+            plan.StartDate.Value,
+            plan.ExpectedEndDate.Value,
+            plan.ExpectedEndDateOther,
+            plan.ConfidenceLevel.Value,
+            plan.PlanComments));
+      }
+      else
+      {
+         // create new plan
+         await _academyConversionProjectRepository.AddSchoolImprovementPlan(id, new AddSchoolImprovementPlan(
+            plan.ProjectId,
+            plan.ArrangedBy,
+            plan.ArrangedByOther,
+            plan.ProvidedBy,
+            plan.StartDate.Value,
+            plan.ExpectedEndDate.Value,
+            plan.ExpectedEndDateOther,
+            plan.ConfidenceLevel.Value,
+            plan.PlanComments));
+      }
 
-      //if (savedDecision.StatusCode == HttpStatusCode.NotFound)
-      //   await _advisoryBoardDecisionRepository.Create(schoolImprovementPlan);
-      //else
-      //   await _advisoryBoardDecisionRepository.Update(schoolImprovementPlan);
 
-      //await _academyConversionProjectRepository.UpdateProject(id, new UpdateAcademyConversionProject { ProjectStatus = schoolImprovementPlan.GetDecisionAsFriendlyName() });
-
-     await _academyConversionProjectRepository.AddSchoolImprovementPlan(id, new AddSchoolImprovementPlan(plan.ProjectId,
-         plan.ArrangedBy,
-         plan.ArrangedByOther,
-         plan.ProvidedBy,
-         plan.StartDate.Value,
-         plan.ExpectedEndDate.Value,
-         plan.ExpectedEndDateOther,
-         plan.ConfidenceLevel.Value,
-         plan.PlanComments));
    }
 }

@@ -1,9 +1,7 @@
 using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
-using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,7 +31,7 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
 
       if (schoolImprovementPlansResponse.Success)
       {
-         SchoolImprovementPlans = schoolImprovementPlansResponse.Body;
+         SchoolImprovementPlans = schoolImprovementPlansResponse.Body.OrderByDescending(x => x.CreatedDate);
       }
 
       ReturnPage = @Links.ProjectList.Index.Page;

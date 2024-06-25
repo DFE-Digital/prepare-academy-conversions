@@ -1,4 +1,4 @@
-﻿@page "/school-improvement-plans/{id:int}/summary"
+﻿@page "/school-improvement-plans/{id:int}/summary/{sipId:int?}"
 @using Dfe.PrepareConversions.Configuration
 @using Dfe.Academisation.ExtensionMethods
 @using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans
@@ -25,11 +25,11 @@
         </dt>
         <dd class="govuk-summary-list__value">
             <div id="arranged-by">
-                @Model.ImprovementPlan.ArrangedBy.Select(x => x.ToDescription()).Aggregate((partialPhrase, word) =>
+                @Model.SchoolImprovementPlan.ArrangedBy.Select(x => x.ToDescription()).Aggregate((partialPhrase, word) =>
                          {
                              if (SchoolImprovementPlanArranger.Other.ToDescription() == word)
                              {
-                                 return $"{partialPhrase}, {word} - {Model.ImprovementPlan.ArrangedByOther}";
+                                 return $"{partialPhrase}, {word} - {Model.SchoolImprovementPlan.ArrangedByOther}";
                              }
                              return $"{partialPhrase}, {word}";
                          })
@@ -49,7 +49,7 @@
         </dt>
         <dd class="govuk-summary-list__value">
             <div id="provided-by">
-               @Model.ImprovementPlan.ProvidedBy.ToDescription()
+                @Model.SchoolImprovementPlan.ProvidedBy.ToDescription()
             </div>
         </dd>
         <dd class="govuk-summary-list__actions">
@@ -65,7 +65,7 @@
         </dt>
         <dd class="govuk-summary-list__value">
             <div id="start-date">
-               @Model.ImprovementPlan.StartDate.Value.ToString(Constants.DateTimeFormat)
+                @Model.SchoolImprovementPlan.StartDate.Value.ToString(Constants.DateTimeFormat)
             </div>
         </dd>
         <dd class="govuk-summary-list__actions">
@@ -81,23 +81,23 @@
         </dt>
         <dd class="govuk-summary-list__value">
             <div id="end-date">               
-                @if (Model.ImprovementPlan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.Other)
+                @if (Model.SchoolImprovementPlan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.Other)
                 {
-                    @Model.ImprovementPlan.ExpectedEndDateOther.Value.ToString(Constants.DateTimeFormat)
+                    @Model.SchoolImprovementPlan.ExpectedEndDateOther.Value.ToString(Constants.DateTimeFormat)
                 }
 
-                @if (Model.ImprovementPlan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.ToAdvisoryBoard)
+                @if (Model.SchoolImprovementPlan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.ToAdvisoryBoard)
                 {
                     @Model.AdvisoryBoradDate.Value.ToString(Constants.DateTimeFormat)
                 }
 
 
-                @if (Model.ImprovementPlan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.ToConversion)
+                @if (Model.SchoolImprovementPlan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.ToConversion)
                 {
                     @Model.ConversionDate.Value.ToString(Constants.DateTimeFormat)
                 }
 
-                @if (Model.ImprovementPlan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.Unknown)
+                @if (Model.SchoolImprovementPlan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.Unknown)
                 {
                     @SchoolImprovementPlanExpectedEndDate.Unknown.ToDescription()
                 }
@@ -116,7 +116,7 @@
             Confidence Comments
         <dd class="govuk-summary-list__value">
             <div id="confidence-level">
-                @Model.ImprovementPlan.ConfidenceLevel.ToDescription()
+                    @Model.SchoolImprovementPlan.ConfidenceLevel.ToDescription()
             </div>
         </dd>
         <dd class="govuk-summary-list__actions">
@@ -132,7 +132,7 @@
         </dt>
         <dd class="govuk-summary-list__value">
             <div id="comments">
-                @Model.ImprovementPlan.PlanComments
+                @Model.SchoolImprovementPlan.PlanComments
             </div>
         </dd>        <dd class="govuk-summary-list__actions">
             <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.CommentsOnThePlan.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-comments-btn">
@@ -141,195 +141,6 @@
         </dd>
 
     </div>
-
-            @*
-    <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-    Decision maker's name
-    </dt>
-    <dd class="govuk-summary-list__value">
-
-    @if (Model.Decision.DecisionMakerName != null)
-    {
-    <div id="decision-maker-name">@Model.Decision.DecisionMakerName</div>
-    }
-    else
-    {
-    <span class="empty">Empty</span>
-    }
-    </dd>
-    <dd class="govuk-summary-list__actions">
-    <a class="govuk-link" asp-page="@Links.Decision.DecisionMaker.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="decision-maker-btn">
-    Change<span class="govuk-visually-hidden">decision maker's name</span>
-    </a>
-    </dd>
-    </div>
-
-    @if (Model.Decision.Decision == AdvisoryBoardDecisions.Declined)
-    {
-    <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-    Reasons
-    </dt>
-
-    <dd class="govuk-summary-list__value" id="decline-reasons">
-    @foreach (AdvisoryBoardDeclinedReasonDetails reason in Model.Decision.DeclinedReasons)
-    {
-    <div>@reason.Reason.ToDescription():</div>
-    <div class="govuk-!-margin-bottom-2">@reason.Details</div>
-    }
-    </dd>
-
-    <dd class="govuk-summary-list__actions">
-    <a class="govuk-link" asp-page="@Links.Decision.DeclineReason.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-declined-btn">
-    Change<span class="govuk-visually-hidden">rejected-reason</span>
-    </a>
-    </dd>
-    </div>
-    }
-
-    @if (Model.Decision.Decision == AdvisoryBoardDecisions.Deferred)
-    {
-    <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-    Why was this project deferred
-    </dt>
-    <dd class="govuk-summary-list__value" id="deferred-reasons">
-
-    @foreach (AdvisoryBoardDeferredReasonDetails reason in Model.Decision.DeferredReasons)
-    {
-    <div>@reason.Reason.ToDescription():</div>
-    <div class="govuk-!-margin-bottom-2">@reason.Details</div>
-    }
-
-    </dd>
-    <dd class="govuk-summary-list__actions">
-    <a class="govuk-link" asp-page="@Links.Decision.WhyDeferred.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-deferred-btn">
-    Change<span class="govuk-visually-hidden">rejected-reason</span>
-    </a>
-    </dd>
-    </div>
-    }
-
-    @if (Model.Decision.Decision == AdvisoryBoardDecisions.Withdrawn)
-    {
-    <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-    Why was this project withdrawn
-    </dt>
-    <dd class="govuk-summary-list__value" id="withdrawn-reasons">
-
-    @foreach (AdvisoryBoardWithdrawnReasonDetails reason in Model.Decision.WithdrawnReasons)
-    {
-    <div>@reason.Reason.ToDescription():</div>
-    <div class="govuk-!-margin-bottom-2">@reason.Details</div>
-    }
-
-    </dd>
-    <dd class="govuk-summary-list__actions">
-    <a class="govuk-link" asp-page="@Links.Decision.WhyWithdrawn.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-withdrawn-btn">
-    Change<span class="govuk-visually-hidden">withdrawn-reason</span>
-    </a>
-    </dd>
-    </div>
-    }
-    @if (Model.Decision.Decision == AdvisoryBoardDecisions.DAORevoked)
-    {
-    <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-    Why was the DAO Revoked?
-    </dt>
-    <dd class="govuk-summary-list__value" id="daorevoked-reasons">
-
-    @foreach (AdvisoryBoardDAORevokedReasonDetails reason in Model.Decision.DAORevokedReasons)
-    {
-    <div>@reason.Reason.ToDescription():</div>
-    <div class="govuk-!-margin-bottom-2">@reason.Details</div>
-    }
-
-    </dd>
-    <dd class="govuk-summary-list__actions">
-    <a class="govuk-link" asp-page="@Links.Decision.WhyDAORevoked.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-daorevoked-btn">
-    Change<span class="govuk-visually-hidden">daorevoked-reason</span>
-    </a>
-    </dd>
-    </div>
-    }
-    @if (Model.Decision.Decision == AdvisoryBoardDecisions.Approved)
-    {
-    var conditionsSet = Model.Decision.ApprovedConditionsSet.GetValueOrDefault();
-
-    <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-    Were any conditions set
-    </dt>
-    <dd class="govuk-summary-list__value" id="condition-set">
-    @if (conditionsSet)
-    {
-    <div class="govuk-!-margin-bottom-2">Yes:</div>
-    <div class="govuk-!-margin-bottom-2">@Model.Decision.ApprovedConditionsDetails</div>
-    }
-    else
-    {
-    <span>No</span>
-    }
-    </dd>
-    <dd class="govuk-summary-list__actions">
-    <a class="govuk-link" asp-page="@Links.Decision.AnyConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-conditions-set-btn">
-    Change<span class="govuk-visually-hidden">condition answer</span>
-    </a>
-    </dd>
-    </div>
-    }
-
-    <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-    Date of decision
-    </dt>
-    <dd class="govuk-summary-list__value" id="decision-date">
-
-    @if (Model.Decision.AdvisoryBoardDecisionDate.HasValue)
-    {
-    <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.ToString(Constants.DateTimeFormat)</span>
-    }
-    else
-    {
-    <span class="empty">Empty</span>
-    }
-
-    </dd>
-    <dd class="govuk-summary-list__actions">
-    <a class="govuk-link" asp-page="@Links.Decision.DecisionDate.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-date-btn">
-    Change<span class="govuk-visually-hidden">date of decision</span>
-    </a>
-    </dd>
-    </div>
-    @* AO Date
-    @if (Model.IsVoluntaryAcademyType(Model.AcademyTypeAndRoute))
-    {
-    <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
-    Date academy order (AO) sent
-    </dt>
-    <dd class="govuk-summary-list__value" id="date-ao-sent">
-
-    @if (Model.Decision.AcademyOrderDate.HasValue)
-    {
-    <span>@Model.Decision.AcademyOrderDate.Value.ToString(Constants.DateTimeFormat)</span>
-    }
-    else
-    {
-    <span class="empty">Empty</span>
-    }
-
-    </dd>
-    <dd class="govuk-summary-list__actions">
-    <a class="govuk-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-ao-date-btn">
-    Change<span class="govuk-visually-hidden"> Date academy order (AO) sent</span>
-    </a>
-    </dd>
-    </div>
-    }*@
 </dl>
 
 

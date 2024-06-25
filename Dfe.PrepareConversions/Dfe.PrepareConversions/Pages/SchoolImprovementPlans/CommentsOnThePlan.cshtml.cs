@@ -5,6 +5,7 @@ using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 namespace Dfe.PrepareConversions.Pages.ImprovementPlans;
 
 public class CommentsOnThePlanModel : SchoolImprovementPlanBaseModel
@@ -23,18 +24,19 @@ public class CommentsOnThePlanModel : SchoolImprovementPlanBaseModel
    public string PlanComments { get; set; }
 
 
-   public IActionResult OnGet(int id)
+   public override async Task<IActionResult> OnGetAsync(int id, int? sipId = null)
    {
-      SetBackLinkModel(Links.SchoolImprovementPlans.ConfidenceLevelOfThePlan, id);
+      // call base to set School Improvement Plan
+      await base.OnGetAsync(id, sipId);
 
-      SchoolImprovementPlan improvementPlan = GetSchoolImprovementPlanFromSession(id);
-   
-      SetModel(improvementPlan);
+      SetBackLinkModel(Links.SchoolImprovementPlans.ConfidenceLevelOfThePlan, id);
+ 
+      SetModel(SchoolImprovementPlan);
 
       return Page();
    }
 
-   public IActionResult OnPost(int id)
+   public async Task<IActionResult> OnPost(int id, int? sipId = null)
    {
       SchoolImprovementPlan improvementPlan = GetSchoolImprovementPlanFromSession(id);
 
@@ -44,7 +46,7 @@ public class CommentsOnThePlanModel : SchoolImprovementPlanBaseModel
 
 
       _errorService.AddErrors(ModelState.Keys, ModelState);
-      if (_errorService.HasErrors()) return OnGet(id);
+      if (_errorService.HasErrors()) return await OnGetAsync(id, sipId);
 
       return RedirectToPage(Links.SchoolImprovementPlans.Summary.Page, LinkParameters);
    }

@@ -31,17 +31,9 @@
 
 
 <partial name="Shared/_ProjectHeader" model="Model.Project" />
-
-
-<div class="govuk-grid-column-two-thirds-full">
-    <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">Interim School Improvement Plans</h2>
-    <a asp-page="@Links.SchoolImprovementPlans.WhoArrangedThePlan.Page" asp-route-id="@Model.Project.Id" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">
-        Add School Improvement Plan
-    </a>
-</div>
-
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">Interim School Improvement Plans</h2>
         @foreach (var plan in Model.SchoolImprovementPlans)
         {
             <div class="govuk-summary-card">
@@ -67,7 +59,9 @@
                                          })
                             </dd>
                             <dd class="govuk-summary-list__actions">
-                                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> arranger of the plan</span></a>
+                                <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.WhoArrangedThePlan.Page" asp-route-id="@Model.Project.Id" asp-route-sipId="@plan.Id" id="change-arranger-btn">
+                                    Change<span class="govuk-visually-hidden">arranger of the plan</span>
+                                </a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row">
@@ -78,7 +72,7 @@
                                 @plan.ProvidedBy
                             </dd>
                             <dd class="govuk-summary-list__actions">
-                                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> provider of the plan</span></a>
+                                <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.WhoProvidedThePlan.Page" asp-route-id="@Model.Project.Id" asp-route-sipId="@plan.Id">Change<span class="govuk-visually-hidden"> provider of the plan</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row">
@@ -89,7 +83,7 @@
                                 @plan.StartDate.Value.ToString(Constants.DateTimeFormat)
                             </dd>
                             <dd class="govuk-summary-list__actions">
-                                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> the start date of the plan</span></a>
+                                <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.StartDateOfThePlan.Page" asp-route-id="@Model.Project.Id" asp-route-sipId="@plan.Id">Change<span class="govuk-visually-hidden"> the start date of the plan</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row">
@@ -119,7 +113,7 @@
                                 }
                             </dd>
                             <dd class="govuk-summary-list__actions">
-                                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> the expectedend date of the plan</span></a>
+                                <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.EndDateOfThePlan.Page" asp-route-id="@Model.Project.Id" asp-route-sipId="@plan.Id">Change<span class="govuk-visually-hidden"> the expectedend date of the plan</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row">
@@ -130,7 +124,7 @@
                                 @plan.ConfidenceLevel.ToDescription()
                             </dd>
                             <dd class="govuk-summary-list__actions">
-                                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> the confidence level of the plan</span></a>
+                                <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.ConfidenceLevelOfThePlan.Page" asp-route-id="@Model.Project.Id" asp-route-sipId="@plan.Id">Change<span class="govuk-visually-hidden"> the confidence level of the plan</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row">
@@ -141,13 +135,15 @@
                                 @plan.PlanComments
                             </dd>
                             <dd class="govuk-summary-list__actions">
-                                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> the comments on the plan</span></a>
+                                <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.CommentsOnThePlan.Page" asp-route-id="@Model.Project.Id" asp-route-sipId="@plan.Id">Change<span class="govuk-visually-hidden"> the comments on the plan</span></a>
                             </dd>
                         </div>
                     </dl>
                 </div>
             </div>
         }
-
+        <a asp-page="@Links.SchoolImprovementPlans.WhoArrangedThePlan.Page" asp-route-id="@Model.Project.Id" role="button" draggable="false" class="govuk-button govuk-button" data-module="govuk-button">
+            Add School Improvement Plan
+        </a>
     </div>
 </div>
