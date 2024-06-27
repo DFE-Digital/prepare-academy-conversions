@@ -50,14 +50,11 @@
                     <span if="projectRow.Item.TypeAndRoute.IsEmpty()" class="empty">Unconfirmed</span>
                     <span if="projectRow.Item.TypeAndRoute.IsPresent()">@projectRow.Item.TypeAndRoute.RouteDescription(project.IsFormAMat)</span>
                 </div>
-               @if (!isFormAMat)
-               {
-                    <div id="@("assigned-to-" + projectRow.Index)" class="do govuk-!-margin-top-1">
-                     <strong>Assigned to:</strong>
-                     <span if="projectRow.Item.AssignedUserFullName.IsEmpty()" class="empty">Unassigned</span>
-                     <span if="projectRow.Item.AssignedUserFullName.IsPresent()">@projectRow.Item.AssignedUserFullName</span>
-                  </div>
-               }
+                <div id="@("assigned-to-" + projectRow.Index)" class="do govuk-!-margin-top-1">
+                    <strong>Assigned to:</strong>
+                    <span if="projectRow.Item.AssignedUserFullName.IsEmpty()" class="empty">Unassigned</span>
+                    <span if="projectRow.Item.AssignedUserFullName.IsPresent()">@projectRow.Item.AssignedUserFullName</span>
+                </div>
                 <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
                   <strong class="govuk-tag govuk-tag--@projectRow.Item.Status.Colour" id="project-status-@projectRow.Item.Id">@projectRow.Item.Status.Value</strong>
                </div>
