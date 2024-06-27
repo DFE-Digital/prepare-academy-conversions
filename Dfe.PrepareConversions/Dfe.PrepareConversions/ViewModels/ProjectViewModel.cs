@@ -128,6 +128,8 @@ public class ProjectViewModel : ProjectTypeBase
       NumberOfMedicalPlaces = project.NumberOfMedicalPlaces;
       NumberOfPost16Places = project.NumberOfPost16Places;
       NumberOfSENUnitPlaces = project.NumberOfSENUnitPlaces;
+
+      ProjectDatesSectionComplete = project.ProjectDatesSectionComplete;
    }
 
    public string Id { get; }
@@ -257,6 +259,8 @@ public class ProjectViewModel : ProjectTypeBase
    public User AssignedUser { get; set; }
 
    public ICollection<ProjectNote> Notes { get; }
+
+   public bool ProjectDatesSectionComplete { get; set; }
 
    protected override string TypeAndRouteValue => AcademyTypeAndRoute;
 

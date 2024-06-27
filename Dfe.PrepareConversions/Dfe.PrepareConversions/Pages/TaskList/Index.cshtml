@@ -31,6 +31,21 @@
         </p>
         <p class="govuk-body"> You can complete them in any order.</p>
 
+        <h3 class="app-task-list__section govuk-!-margin-top-8">Advisory board and conversion dates</h3>
+        <div class="app-task-list">
+            <ul class="app-task-list__items govuk-!-padding-left-0">
+                <li class="app-task-list__item">
+                    <span class="app-task-list__task-name">
+                        <a class="govuk-link" asp-page="@Links.ProjectDates.ConfirmProjectDates.Page" asp-route-id="@Model.Project.Id" aria-describedby="la-info-template-status">
+                            Confirm project dates
+                        </a>
+                    </span>
+                    <strong class="govuk-tag @Model.TaskList.ProjectDatesTaskListTaskListStatus.CssClass app-task-list__tag" id="project-dates-status"> @Model.TaskList.ProjectDatesTaskListTaskListStatus.Status</strong>
+                </li>
+             </ul>
+        </div>
+
+
 
         <h3 class="app-task-list__section govuk-!-margin-top-8">Add school information</h3>
        <div class="app-task-list">

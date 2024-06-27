@@ -1,4 +1,5 @@
-﻿using Dfe.PrepareConversions.Models;
+﻿using Dfe.Academisation.ExtensionMethods;
+using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Html;
@@ -42,8 +43,12 @@ public class DateInputTagHelper : InputTagHelperBase
          Id = Id,
          Name = Name,
          Label = Label,
+         SubLabel = SubLabel,
          HeadingLabel = HeadingLabel,
-         Hint = Hint
+         Hint = Hint,
+         PreviousInformation = PreviousInformation,
+         AdditionalInformation = AdditionalInformation,
+         DateString = date.ToDateString()
       };
 
       if (date.HasValue)

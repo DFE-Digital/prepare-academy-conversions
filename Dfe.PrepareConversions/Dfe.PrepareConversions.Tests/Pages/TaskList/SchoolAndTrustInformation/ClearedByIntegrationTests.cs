@@ -24,7 +24,7 @@ public class ClearedByIntegrationTests : BaseIntegrationTests
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
-      await NavigateAsync("Change", 7);
+      await NavigateAsync("Change", 5);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/clear-head-teacher-board-template");
 

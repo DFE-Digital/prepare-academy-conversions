@@ -34,8 +34,6 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       Document.QuerySelector("#project-recommendation")!.TextContent.Should().Be(project.RecommendationForProject);
       Document.QuerySelector("#author")!.TextContent.Should().Be(project.Author);
       Document.QuerySelector("#cleared-by")!.TextContent.Should().Be(project.ClearedBy);
-      Document.QuerySelector("#advisory-board-date")!.TextContent.Should().Be(project.HeadTeacherBoardDate.ToDateString());
-      Document.QuerySelector("#previous-advisory-board")!.TextContent.Should().Be(project.PreviousHeadTeacherBoardDate.ToDateString());
       Document.QuerySelector("#school-name")!.TextContent.Should().Be(project.SchoolName);
       Document.QuerySelector("#unique-reference-number")!.TextContent.Should().Be(project.Urn.ToString());
       Document.QuerySelector("#local-authority")!.TextContent.Should().Be(project.LocalAuthority);
@@ -47,17 +45,6 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       Document.QuerySelector("#grant-funding-amount")!.TextContent.Should().Contain(project.ConversionSupportGrantAmount?.ToMoneyString(true));
       Document.QuerySelector("#grant-funding-reason")!.TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
       Document.QuerySelector("#proposed-academy-opening-date")!.TextContent.Should().Be(project.ProposedAcademyOpeningDate.ToDateString(true));
-   }
-
-   [Fact]
-   public async Task Previous_head_teacher_board_date_should_be_no_when_question_field_set_to_no()
-   {
-      AcademyConversionProject project = AddGetProject(p => p.PreviousHeadTeacherBoardDateQuestion = "No");
-
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-      await NavigateAsync("Conversion details");
-
-      Document.QuerySelector("#previous-advisory-board")!.TextContent.Should().Be("No");
    }
 
    [Fact]
@@ -142,8 +129,6 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       Document.QuerySelector("#project-recommendation")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#author")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#cleared-by")!.TextContent.Should().Be("Empty");
-      Document.QuerySelector("#advisory-board-date")!.TextContent.Should().Be("Empty");
-      Document.QuerySelector("#previous-advisory-board")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#school-name")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#unique-reference-number")!.TextContent.Should().Be("Empty");
       Document.QuerySelector("#local-authority")!.TextContent.Should().Be("Empty");

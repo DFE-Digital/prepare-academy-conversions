@@ -159,4 +159,18 @@ public class ApiClient : IApiClient
    {
       return await AcademisationClient.PutAsync(string.Format(PathFor.SetFormAMatProjectReference, id), JsonContent.Create(setFormAMatProjectReference));
    }
+
+   public async Task<HttpResponseMessage> SetProjectDates(int id, SetProjectDatesModel updatedProjectDates)
+   {
+      var payload = new
+      {
+         id = updatedProjectDates.Id,
+         advisoryBoardDate = updatedProjectDates.AdvisoryBoardDate ?? null,
+         previousAdvisoryBoard = updatedProjectDates.PreviousAdvisoryBoard ?? null,
+         projectDatesSectionComplete = updatedProjectDates.ProjectDatesSectionComplete ?? null,
+      };
+
+      var formattedString = string.Format(PathFor.SetProjectDates, id);
+      return await AcademisationClient.PutAsync(formattedString, JsonContent.Create(payload));
+   }
 }

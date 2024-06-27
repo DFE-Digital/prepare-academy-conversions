@@ -349,4 +349,10 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       HttpResponseMessage result = await _apiClient.SetFormAMatProjectReference(id, setFormAMatProjectReference);
       if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
+
+   public async Task SetProjectDates(int id, SetProjectDatesModel updatedProjectDates)
+   {
+      HttpResponseMessage result = await _apiClient.SetProjectDates(id, updatedProjectDates);
+      if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+   }
 }

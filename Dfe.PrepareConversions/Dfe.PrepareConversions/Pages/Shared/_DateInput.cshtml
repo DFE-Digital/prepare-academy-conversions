@@ -22,6 +22,32 @@
             </legend>
          }
       }
+        @if (string.IsNullOrWhiteSpace(Model.PreviousInformation) is false)
+        {
+            <div class="govuk-body">
+                <p>
+                    @Model.PreviousInformation <b>@(Model.DateString)</b>
+                </p>
+            </div>
+        }
+
+        @if (string.IsNullOrWhiteSpace(Model.SubLabel) is false)
+        {
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                @Model.SubLabel
+            </legend>
+        }
+
+        @if (string.IsNullOrWhiteSpace(Model.AdditionalInformation) is false)
+        {
+            <div class="govuk-body">
+                <p>
+                    @Model.AdditionalInformation 
+                </p>
+            </div>
+        }
+
+
 
       <div id="@Model.Id-hint" class="govuk-hint">
          @Model.Hint
