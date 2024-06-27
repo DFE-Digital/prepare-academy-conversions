@@ -4,7 +4,6 @@ using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Models;
-using DocumentFormat.OpenXml.InkML;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -40,19 +39,29 @@ public abstract class SchoolImprovementPlanBaseModel : PageModel
    public DateTime? AdvisoryBoradDate { get; set; }
    public DateTime? ConversionDate { get; set; }
    public int Id { get; set; }
-   public int SipId { get; set; }
+   public int? SipId { get; set; }
 
 
    public SchoolImprovementPlan SchoolImprovementPlan { get; set; }
 
-   protected object LinkParameters =>
-      PropagateBackLinkOverride && Request.Query.ContainsKey("obl")
-         ? new { Id, SipId, obl = Request.Query["obl"] }
-         : new { Id, SipId};
+   protected object LinkParameters
+   {
+      get
+      {
+         if (PropagateBackLinkOverride && Request.Query.ContainsKey("obl"))
+         {
+            return SipId.HasValue ? new { Id, SipId, obl = Request.Query["obl"] } : new { Id, obl = Request.Query["obl"] };
+         }
+          
 
-   private async Task SetDefaults(int id)
+          return new { Id, SipId };
+      }
+   }
+
+   private async Task SetDefaults(int id, int? sipId = null)
    {
       Id = id;
+      SipId = sipId;
       ApiResponse<AcademyConversionProject> project = await _repository.GetProjectById(id);
       SchoolName = project.Body.SchoolName;
       AcademyTypeAndRoute = project.Body.AcademyTypeAndRoute;
@@ -62,9 +71,16 @@ public abstract class SchoolImprovementPlanBaseModel : PageModel
 
    public override async Task OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, PageHandlerExecutionDelegate next)
    {
+      int? sipId = null;
+
+      if (context.RouteData.Values.ContainsKey("sipid") &&
+         int.TryParse(context.RouteData.Values["sipid"] as string, out int routeSipId))
+         sipId = routeSipId;
+
       if (context.RouteData.Values.ContainsKey("id") &&
           int.TryParse(context.RouteData.Values["id"] as string, out int id))
-         await SetDefaults(id);
+         await SetDefaults(id, sipId);
+
 
       await next();
    }
@@ -120,7 +136,7 @@ public abstract class SchoolImprovementPlanBaseModel : PageModel
       if (improvementPlan.Id == 0 && sipId.HasValue)
       {
          ApiResponse<IEnumerable<SchoolImprovementPlan>> schoolImprovementPlansResponse = await _repository.GetSchoolImprovementPlansForProject(id).ConfigureAwait(false);
-         if(schoolImprovementPlansResponse.Success)
+         if (schoolImprovementPlansResponse.Success)
          {
             SchoolImprovementPlan = schoolImprovementPlansResponse.Body.SingleOrDefault(x => x.Id == sipId);
          }
@@ -129,6 +145,6 @@ public abstract class SchoolImprovementPlanBaseModel : PageModel
       else SchoolImprovementPlan = improvementPlan;
 
 
-      return Page(); 
+      return Page();
    }
 }
