@@ -2,6 +2,12 @@
 
 * Added ability to filter filters (Example being; to refine delivery officer list)
 * Added ability to have 'DAO Revoked' decision recorded against a Sponsored conversion project
+* Decision flow changed to ensure consistency with Complete
+* Content updated on decision flow to be more concise.
+* Introduction of New Decision for DAO Revoked:
+    * Introduces precursor to explain the process
+    * Adds a 'Before You Start' page to ensure user readiness and confirmation of prerequisites
+    * Enforces decision was made by Minister 
 
 
 ## 1.5.0

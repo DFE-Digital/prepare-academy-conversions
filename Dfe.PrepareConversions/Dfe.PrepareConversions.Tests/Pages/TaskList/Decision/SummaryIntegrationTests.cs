@@ -139,8 +139,8 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.DirectorGeneral);
-      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "Finance reason"));
+      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDecisionDateAndContinue(DateTime.Today);
 
       Document.QuerySelector("#decision")!.TextContent.Trim().Should().Be("Declined");
@@ -152,12 +152,12 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
-      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "Finance detail"),
-         Tuple.Create(AdvisoryBoardDeclinedReasons.ChoiceOfTrust, "Choice of trust detail"));
+      Tuple.Create(AdvisoryBoardDeclinedReasons.ChoiceOfTrust, "Choice of trust detail"));
+      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDecisionDateAndContinue(DateTime.Today);
 
-      string declineReasonSummary = Document.QuerySelector("#decline-reasons")!.TextContent;
+      string declineReasonSummary = Document.QuerySelector("#reasons")!.TextContent;
 
       declineReasonSummary.Should().Contain("Finance:", "finance reason was selected");
       declineReasonSummary.Should().Contain("Finance detail", "Finance reason detail was provided");
@@ -175,15 +175,15 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Deferred);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
-      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDeferredReasonsAndContinue(
          Tuple.Create(AdvisoryBoardDeferredReason.PerformanceConcerns, "Performance detail"),
          Tuple.Create(AdvisoryBoardDeferredReason.Other, "Other detail"),
          Tuple.Create(AdvisoryBoardDeferredReason.AdditionalInformationNeeded, "additional info"),
          Tuple.Create(AdvisoryBoardDeferredReason.AwaitingNextOfstedReport, "Ofsted"));
+      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDecisionDateAndContinue(DateTime.Today);
 
-      string declineReasonSummary = Document.QuerySelector("#deferred-reasons")!.TextContent;
+      string declineReasonSummary = Document.QuerySelector("#reasons")!.TextContent;
 
       declineReasonSummary.Should().Contain("Additional information needed:");
       declineReasonSummary.Should().Contain("additional info");
@@ -201,8 +201,8 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.OtherRegionalDirector);
-      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "finance reasons"));
+      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDecisionDateAndContinue(DateTime.Today);
 
       string summaryContent = Document.QuerySelector(".govuk-summary-list")!.TextContent;
@@ -242,8 +242,9 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
 
    [Theory]
    [InlineData(0, "Record the decision", "Who made this decision?")]
-   [InlineData(1, "Who made this decision?", "Decision maker's name")]
-   [InlineData(3, "Were any conditions set?", "Date of decision")]
+   [InlineData(1, "Who made this decision?", "Were any conditions set?")]
+   [InlineData(2, "Decision maker's name", "Date of decision")]
+   [InlineData(3, "Were any conditions set?", "Decision maker's name")]
    [InlineData(4, "Date of decision", "Check your answers before recording this decision")]
    public async Task Should_go_back_to_choose_and_submit_back_to_summary(int changeLinkIndex, string changePageTitle, string nextPageTitle)
    {
@@ -276,7 +277,6 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
-      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDeclinedReasonsAndContinue(
          Tuple.Create(AdvisoryBoardDeclinedReasons.ChoiceOfTrust, "trust"),
          Tuple.Create(AdvisoryBoardDeclinedReasons.Other, "other"),
@@ -284,11 +284,12 @@ public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
          Tuple.Create(AdvisoryBoardDeclinedReasons.Governance, "governance"),
          Tuple.Create(AdvisoryBoardDeclinedReasons.Performance, "performance")
       );
+      await _wizard.SetDecisionMakerName("Tester");
       await _wizard.SetDecisionDateAndContinue(DateTime.Today);
 
       PageHeading.Should().Be("Check your answers before recording this decision");
 
-      string reasonSummary = Document.QuerySelector<IHtmlElement>("#decline-reasons")!.TextContent;
+      string reasonSummary = Document.QuerySelector<IHtmlElement>("#reasons")!.TextContent;
 
       int financePosition = reasonSummary.IndexOf("Finance:", StringComparison.InvariantCultureIgnoreCase);
       int performancePosition = reasonSummary.IndexOf("Performance:", StringComparison.InvariantCultureIgnoreCase);

@@ -30,12 +30,23 @@ public class SummaryModel : DecisionBaseModel
    }
 
    public AdvisoryBoardDecision Decision { get; set; }
-   public string DecisionText => Decision.Decision.ToDescription().ToLowerInvariant();
+   public string DecisionText =>
+      Decision.Decision == AdvisoryBoardDecisions.DAORevoked
+      ? "DAO revoked"
+      : Decision.Decision.ToDescription().ToLowerInvariant();
+
 
    public IActionResult OnGet(int id)
    {
       Decision = GetDecisionFromSession(id);
-
+      if (AcademyTypeAndRoute == AcademyTypeAndRoutes.Voluntary)
+      {
+         SetBackLinkModel(Links.Decision.AcademyOrderDate, id);
+      }
+      else
+      {
+         SetBackLinkModel(Links.Decision.DecisionDate, id);
+      }
       if (Decision.Decision == null) return RedirectToPage(Links.TaskList.Index.Page, LinkParameters);
 
       return Page();

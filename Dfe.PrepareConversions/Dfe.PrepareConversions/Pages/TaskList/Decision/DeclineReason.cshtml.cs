@@ -1,7 +1,6 @@
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Services;
-using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Pages.TaskList.Decision.Models;
 using Dfe.PrepareConversions.Services;
@@ -77,7 +76,7 @@ public class DeclineReasonModel : DecisionBaseModel
 
       SetDecisionInSession(id, decision);
 
-      if (ModelState.IsValid) return RedirectToPage(Links.Decision.DecisionDate.Page, LinkParameters);
+      if (ModelState.IsValid) return RedirectToPage(Links.Decision.DecisionMaker.Page, LinkParameters);
 
       _errorService.AddErrors(ModelState.Keys, ModelState);
       return OnGet(id);

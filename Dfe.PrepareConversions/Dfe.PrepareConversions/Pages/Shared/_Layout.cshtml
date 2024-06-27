@@ -6,7 +6,8 @@
     var analyticsConsent = Context.Request.Cookies.ContainsKey(".ManageAnAcademyConversion.Consent")
                            && bool.Parse(Context.Request.Cookies[".ManageAnAcademyConversion.Consent"] ?? string.Empty);
 
-    var showAnalytics = Configuration["GoogleAnalytics:Enable"] == "Yes" && analyticsConsent;
+    var enableGoogleAnalytics = Configuration["GoogleAnalytics:Enable"] == "Yes" && analyticsConsent;
+    var enableAppInsightsAnalytics = Configuration["ApplicationInsights:EnableBrowserAnalytics"] == "Yes" && analyticsConsent;
 
     var titleDescription = Context.Request.Path == "/project-type"
        ? string.Empty
@@ -15,6 +16,8 @@
     var isFormAMatPage = Context.Request.Path.Value.Contains("/form-a-mat/project-list") || Context.Request.Path.Value.Contains("/schools-in-this-mat/");
 
     var notificationBannerMessage = Configuration["notificationBannerMessage"] ?? string.Empty;
+
+    var authenticatedUserId = User.Identity is not null && User.Identity.IsAuthenticated ? User.Identity.Name ?? "Unknown" : "Anonymous";
 }
 
 <!DOCTYPE html>
@@ -38,7 +41,7 @@
     <link rel="stylesheet" href="~/dist/site.css" />
     <link rel="stylesheet" href="~/dist/accessible-autocomplete.min.css" asp-add-nonce />
     <link rel="stylesheet" href="~/dist/dfefrontend-1.0.1.min.css" asp-add-nonce />
-    @if (showAnalytics)
+    @if (enableGoogleAnalytics)
     {
         <!-- Google Tag Manager -->
         <script asp-add-nonce>
@@ -49,23 +52,38 @@
                 }); var f = d.getElementsByTagName(s)[0],
                     j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
                         'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-            })(window, document, 'script', 'dataLayer', 'GTM-5H6G773');</script>
-        <!-- End Google Tag Manager -->
+            })(window, document, 'script', 'dataLayer', 'GTM-5H6G773');
+         </script>
+         <!-- End Google Tag Manager -->
     }
 
-    @if (analyticsConsent)
+    @if (enableAppInsightsAnalytics)
     {
-        <!-- Google Tag Manager (noscript) -->
-        <noscript asp-add-nonce>
-            <iframe title="GATagManager" src=https://www.googletagmanager.com/ns.html?id =GTM-5H6G773 height="0" width="0" style="display: none; visibility: hidden"></iframe>
-        </noscript>
-        <!-- End Google Tag Manager (noscript) -->
+      <!-- Application insights -->
+      <script type="text/javascript" integrity="sha384-g/ZkzetdQypWdY0NBZT5r2L3BR9/hURD8OBcd1rEaBpgX6QC7EaTL+o+mzWrBcXW" crossorigin="anonymous" src="https://js.monitor.azure.com/scripts/b/ext/ai.clck.2.8.18.min.js"></script>
+      <script type="text/javascript" asp-add-nonce>
+         window.appInsights = {
+            connectionString: '@Configuration["ApplicationInsights:ConnectionString"]',
+            authenticatedUserId: '@authenticatedUserId'
+         }
+      </script>
+      <script type="text/javascript" src="~/dist/application-insights.min.js" asp-add-nonce></script>
+      <!-- End Application insights -->
     }
 
     <script type="text/javascript" src="~/dist/accessible-autocomplete.min.js" asp-add-nonce></script>
 
 </head>
 <body class="govuk-template__body">
+
+   @if (enableGoogleAnalytics)
+   {
+      <!-- Google Tag Manager (noscript) -->
+      <noscript asp-add-nonce>
+         <iframe title="GATagManager" src="https://www.googletagmanager.com/ns.html?id=GTM-5H6G773" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+      </noscript>
+      <!-- End Google Tag Manager (noscript) -->
+   }
 
     <script asp-add-nonce>
         document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
