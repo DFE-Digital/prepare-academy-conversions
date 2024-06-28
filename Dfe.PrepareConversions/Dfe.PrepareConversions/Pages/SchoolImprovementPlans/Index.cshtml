@@ -90,13 +90,12 @@
 
                                     @if (plan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.ToAdvisoryBoard)
                                     {
-                                        @Model.Project.HeadTeacherBoardDate.Value.ToString(Constants.DateTimeFormat)
+                                        @(Model.Project.HeadTeacherBoardDate.HasValue ? Model.Project.HeadTeacherBoardDate.Value.ToString(Constants.DateTimeFormat) : $"{SchoolImprovementPlanExpectedEndDate.ToAdvisoryBoard.ToDescription()} - date not set")
                                     }
-
 
                                     @if (plan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.ToConversion)
                                     {
-                                        @Model.Project.ProposedAcademyOpeningDate.Value.ToString(Constants.DateTimeFormat)
+                                        @(Model.Project.ProposedAcademyOpeningDate.HasValue ? Model.Project.ProposedAcademyOpeningDate.Value.ToString(Constants.DateTimeFormat) : $"{SchoolImprovementPlanExpectedEndDate.ToConversion.ToDescription()} - date not set")
                                     }
 
                                     @if (plan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.Unknown)

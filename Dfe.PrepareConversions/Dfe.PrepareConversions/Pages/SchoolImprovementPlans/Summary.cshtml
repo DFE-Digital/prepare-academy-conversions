@@ -118,13 +118,13 @@
 
                 @if (Model.SchoolImprovementPlan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.ToAdvisoryBoard)
                 {
-                    @Model.AdvisoryBoradDate.Value.ToString(Constants.DateTimeFormat)
+                    @(Model.AdvisoryBoradDate.HasValue ? Model.AdvisoryBoradDate.Value.ToString(Constants.DateTimeFormat) : $"{SchoolImprovementPlanExpectedEndDate.ToAdvisoryBoard.ToDescription()} - date not set")
                 }
 
 
                 @if (Model.SchoolImprovementPlan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.ToConversion)
                 {
-                    @Model.ConversionDate.Value.ToString(Constants.DateTimeFormat)
+                    @(Model.ConversionDate.HasValue ? Model.ConversionDate.Value.ToString(Constants.DateTimeFormat) : $"{SchoolImprovementPlanExpectedEndDate.ToConversion.ToDescription()} - date not set")
                 }
 
                 @if (Model.SchoolImprovementPlan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.Unknown)
