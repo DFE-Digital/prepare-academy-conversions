@@ -1,0 +1,26 @@
+﻿@page "/school-improvement-plans/{id:int}/who-provided-the-plan/{sipId:int?}"
+@using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans
+@using Dfe.Academisation.ExtensionMethods
+@model Dfe.PrepareConversions.Pages.ImprovementPlans.WhoProvidedThePlanModel
+@{
+    ViewData["Title"] = $"Who is providing the school improvement plan";
+}
+
+@section BeforeMain
+{
+    <partial name="_BackLink" model="@Model.BackLinkModel" />
+    <partial name="_ErrorSummary" />
+}
+
+<span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
+<h1 class="govuk-heading-l">Who is providing the interim school improvement plan?</h1>
+
+<form method="post">
+    <div class="govuk-form-group">
+        <input asp-for="PlanProvider" type="text" class="govuk-input govuk-!-width-three-quarters">
+    </div>
+
+    <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+        Continue
+    </button>
+</form>

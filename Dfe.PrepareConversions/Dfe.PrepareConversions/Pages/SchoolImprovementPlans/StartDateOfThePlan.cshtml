@@ -1,0 +1,28 @@
+﻿@page "/school-improvement-plans/{id:int}/start-date-of-the-plan/{sipId:int?}"
+@using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans
+@using Dfe.Academisation.ExtensionMethods
+@model Dfe.PrepareConversions.Pages.ImprovementPlans.StartDateOfThePlanModel
+@{
+    ViewData["Title"] = $"Improvement plan's start date";
+}
+
+@section BeforeMain
+{
+    <partial name="_BackLink" model="@Model.BackLinkModel" />
+    <partial name="_ErrorSummary" />
+}
+
+<span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
+<h1 class="govuk-heading-l">Enter the improvement plan's start date?</h1>
+
+<form method="post">
+    <div class="govuk-form-group">
+        <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+            <govuk-date-input heading-label="true" name="plan-start-date" asp-for="@Model.PlanStartDate" hint="For example, 27 3 2021" />
+        </div>
+    </div>
+
+    <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+        Continue
+    </button>
+</form>

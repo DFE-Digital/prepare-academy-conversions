@@ -18,6 +18,9 @@ public class PathFor
    public static string UpdateProject => "/legacy/project/{0}";
    public static string GetFilterParameters => "/legacy/projects/status";
    public static string AddProjectNote => "/legacy/project/{0}/notes";
+   public static string AddSchoolImprovementPlan => "/conversion-project/{0}/school-improvement-plans";
+   public static string UpdateSchoolImprovementPlan => "/conversion-project/{0}/school-improvement-plans/{1}";
+   public static string GetSchoolImprovementPlans => "/conversion-project/{0}/school-improvement-plans";
    public static string SetExternalApplicationForm => "/conversion-project/{0}/setExternalApplicationForm";
    public static string SetPerformanceData => "/conversion-project/{0}/SetPerformanceData";
    public static string SetIncomingTrust => "/conversion-project/{0}/SetIncomingTrust";
