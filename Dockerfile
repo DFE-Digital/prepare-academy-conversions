@@ -1,6 +1,6 @@
 # Stage 1 - Restore and publish .NET layers
 ARG ASPNET_IMAGE_TAG=8.0-bookworm-slim
-ARG NODEJS_IMAGE_TAG=18.12-bullseye
+ARG NODEJS_IMAGE_TAG=18.20-bullseye
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS publish
 WORKDIR /build
 
