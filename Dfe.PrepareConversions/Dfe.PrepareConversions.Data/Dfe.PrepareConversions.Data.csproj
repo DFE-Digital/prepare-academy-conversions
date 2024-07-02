@@ -10,7 +10,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Azure.Identity" Version="1.11.3" />
+	  <PackageReference Include="Azure.Identity" Version="1.12.0" />
 	  <PackageReference Include="Dfe.Academies.Contracts" Version="1.0.10" />
 	  <PackageReference Include="Dfe.Academisation.CorrelationIdMiddleware" Version="2.0.2" />
 	  <PackageReference Include="Dfe.Academisation.ExtensionMethods" Version="2.0.0" />
