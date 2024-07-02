@@ -46,7 +46,7 @@
     "@cypress/webpack-preprocessor": "^6.0.1",
     "cypress": "^13.6.2",
     "cypress-axe": "^1.2.0",
-    "cypress-data-session": "^1.13.0",
+    "cypress-data-session": "^2.0.0",
     "cypress-localstorage-commands": "^1.6.1",
     "cypress-plugin-api": "^2.10.3",
     "cypress-slack-reporter": "^1.5.3",
