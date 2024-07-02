@@ -37,7 +37,7 @@
                                 <dt class="govuk-summary-list__key">
                                     Arranged by
                                 </dt>
-                                <dd class="govuk-summary-list__value">
+                                <dd class="govuk-summary-list__value" data-cy="arranged-by">
                                     @plan.ArrangedBy.Select(x => x.ToDescription()).Aggregate(string.Empty, (partialPhrase, word) =>
                                              {
                                                  var result = string.IsNullOrWhiteSpace(partialPhrase) ? word : $"{partialPhrase}, {word}";
@@ -60,7 +60,7 @@
                                 <dt class="govuk-summary-list__key">
                                     Provided by
                                 </dt>
-                                <dd class="govuk-summary-list__value">
+								<dd class="govuk-summary-list__value" data-cy="provided-by">
                                     @plan.ProvidedBy
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
@@ -71,18 +71,18 @@
                                 <dt class="govuk-summary-list__key">
                                     Start date
                                 </dt>
-                                <dd class="govuk-summary-list__value">
+								<dd class="govuk-summary-list__value" data-cy="start-date">
                                     @plan.StartDate.Value.ToString(Constants.DateTimeFormat)
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
                                     <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.StartDateOfThePlan.Page" asp-route-id="@Model.Project.Id" asp-route-sipId="@plan.Id">Change<span class="govuk-visually-hidden"> the start date of the plan</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row">
+							<div class="govuk-summary-list__row">
                                 <dt class="govuk-summary-list__key">
                                     Expected end date
                                 </dt>
-                                <dd class="govuk-summary-list__value">
+								<dd class="govuk-summary-list__value" data-cy="end-date">
                                     @if (plan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.Other)
                                     {
                                         @plan.ExpectedEndDateOther.Value.ToString(Constants.DateTimeFormat)
@@ -111,7 +111,7 @@
                                 <dt class="govuk-summary-list__key">
                                     Confidence level
                                 </dt>
-                                <dd class="govuk-summary-list__value">
+								<dd class="govuk-summary-list__value" data-cy="confidence-leve">
                                     @plan.ConfidenceLevel.ToDescription()
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
@@ -122,7 +122,7 @@
                                 <dt class="govuk-summary-list__key">
                                     Comments
                                 </dt>
-                                <dd class="govuk-summary-list__value">
+								<dd class="govuk-summary-list__value" data-cy="comments">
                                     @plan.PlanComments
                                 </dd>
                                 <dd class="govuk-summary-list__actions">
@@ -134,7 +134,7 @@
                 </div>
             }
         }
-        <a asp-page="@Links.SchoolImprovementPlans.WhoArrangedThePlan.Page" asp-route-id="@Model.Project.Id" role="button" draggable="false" class="govuk-button govuk-button" data-module="govuk-button">
+		<a asp-page="@Links.SchoolImprovementPlans.WhoArrangedThePlan.Page" asp-route-id="@Model.Project.Id" data-cy="add_school_improvement_plan" role="button" draggable="false" class="govuk-button govuk-button" data-module="govuk-button">
             Add school improvement plan
         </a>
     </div>

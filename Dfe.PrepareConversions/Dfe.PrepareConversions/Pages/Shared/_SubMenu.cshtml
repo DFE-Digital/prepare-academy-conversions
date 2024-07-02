@@ -66,7 +66,7 @@
                 Project notes
             </sub-menu-link>
         </li>
-        <li if="@Model.IsSponsored" class="moj-sub-navigation__item">
+		<li if="@Model.IsSponsored" class="moj-sub-navigation__item" data-cy="school_improvement_plans_menu">
             <sub-menu-link class="moj-sub-navigation__link"
                            asp-page="@Links.SchoolImprovementPlans.Index.Page"
                            asp-route-id="@id">
