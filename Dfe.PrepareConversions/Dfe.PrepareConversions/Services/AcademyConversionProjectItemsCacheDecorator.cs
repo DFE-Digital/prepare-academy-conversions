@@ -5,6 +5,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Services;
@@ -141,5 +142,10 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    public async Task SetProjectDates(int id, SetProjectDatesModel updatedProjectDates)
    {
       await _innerRepository.SetProjectDates(id, updatedProjectDates);
+   }
+
+   public async Task<ApiResponse<IEnumerable<OpeningDateHistoryDto>>> GetOpeningDateHistoryForConversionProject(int id)
+   {
+      return await _innerRepository.GetOpeningDateHistoryForConversionProject(id);
    }
 }

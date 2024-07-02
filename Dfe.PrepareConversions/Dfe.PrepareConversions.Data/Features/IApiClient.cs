@@ -26,4 +26,5 @@ public interface IApiClient
    Task<HttpResponseMessage> SearchFormAMatProjects(string searchTerm);
    Task<HttpResponseMessage> SetFormAMatProjectReference(int id, SetFormAMatProjectReference setFormAMatProjectReference);
    Task<HttpResponseMessage> SetProjectDates(int id, SetProjectDatesModel updatedProjectDates);
+   Task<HttpResponseMessage> GetOpeningDateHistoryForConversionProject(int id);
 }

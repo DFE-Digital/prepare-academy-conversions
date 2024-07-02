@@ -129,6 +129,7 @@ public class ProjectViewModel : ProjectTypeBase
       NumberOfPost16Places = project.NumberOfPost16Places;
       NumberOfSENUnitPlaces = project.NumberOfSENUnitPlaces;
 
+      ProposedConversionDate = project.ProposedConversionDate;
       ProjectDatesSectionComplete = project.ProjectDatesSectionComplete;
    }
 
@@ -261,6 +262,7 @@ public class ProjectViewModel : ProjectTypeBase
    public ICollection<ProjectNote> Notes { get; }
 
    public bool ProjectDatesSectionComplete { get; set; }
+   public DateTime? ProposedConversionDate { get; set; }
 
    protected override string TypeAndRouteValue => AcademyTypeAndRoute;
 

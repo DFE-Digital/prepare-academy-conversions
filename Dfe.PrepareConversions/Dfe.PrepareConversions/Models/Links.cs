@@ -258,6 +258,9 @@ public static class Links
       public static readonly LinkItem ConfirmProjectDates = AddLinkItem(page: "/TaskList/ProjectDates/ConfirmProjectDates");
       public static readonly LinkItem AdvisoryBoardDate = AddLinkItem(page: "/TaskList/ProjectDates/AdvisoryBoardDate");
       public static readonly LinkItem PreviousAdvisoryBoard = AddLinkItem(page: "/TaskList/ProjectDates/PreviousAdvisoryBoardDate");
+      public static readonly LinkItem PropsedConversionDate = AddLinkItem(page: "/TaskList/ProjectDates/ProposedConversionDate"); 
+      public static readonly LinkItem ReasonForConversionDateChange = AddLinkItem(page: "/TaskList/ProjectDates/ReasonForConversionDateChange"); 
+      public static readonly LinkItem ConversionDateHistory = AddLinkItem(page: "/TaskList/ProjectDates/ConversionDateHistory");
    }
 }
 

@@ -1,0 +1,99 @@
+@page "/task-list/{id:int}/reason-for-conversion-change"
+@using Dfe.PrepareConversions.Data.Models.AcademyConversion
+@using Dfe.PrepareConversions.TagHelpers
+@using Dfe.Academisation.ExtensionMethods
+@model Dfe.PrepareConversions.Pages.TaskList.ProjectDates.ReasonForConversionDateChangePageModel
+@{
+   Layout = "_QuestionLayout";
+   ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Proposed conversion date";
+   ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
+    var showError = Model.ShowError;
+}
+
+@section BeforeMain
+{
+    <govuk-back-link link-item="@Links.ProjectDates.ConfirmProjectDates" data-test="proposed-conversion-date-back-link" />
+}
+
+<div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" aria-describedby="changed-reasons-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+                Reason for date change
+            </h1>
+        </legend>
+
+        <div id="changed-reasons-hint" class="govuk-hint">
+            Select all that apply.
+        </div>
+
+        <div class="govuk-checkboxes @ModelState.GetErrorStyleClass()" data-module="govuk-checkboxes" id="ReasonForChange">
+            @if (Model.NewDateIsInThePast)
+            {
+                @foreach (var changeOption in Model.PastReasonForChangeOptions)
+                {
+                    <div class="govuk-checkboxes__item" id="Change-@(changeOption)-Reason">
+                        <input name="ChangedReasons"
+                               class="govuk-checkboxes__input"
+                               id="@Model.UI.IdFor("change-reasons", changeOption)"
+                               type="checkbox"
+                               value="@Model.UI.ValueFor(changeOption)"
+                               aria-controls="@Model.UI.IdFor("conditional-change-reasons", changeOption)"
+                               aria-expanded="false">
+                        <label class="govuk-label govuk-checkboxes__label"
+                               for="@Model.UI.IdFor("change-reasons", changeOption)">
+                            @changeOption.ToDescription()
+                        </label>
+                    </div>
+
+                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                         id="@Model.UI.IdFor("conditional-change-reasons", changeOption)">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="@Model.UI.IdFor("reason", changeOption)">
+                                Give reasons
+                            </label>
+
+                            <textarea name="@Model.UI.ReasonFieldFor(changeOption)"
+                                      class="govuk-textarea govuk-!-width-full"
+                                      id="@Model.UI.IdFor("reason", changeOption)"
+                                      rows="5"></textarea>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                @foreach (var changeOption in Model.FutureReasonForChangeOptions)
+                {
+                    <div class="govuk-checkboxes__item" id="Change-@(changeOption)-Reason">
+                        <input name="ChangedReasons"
+                               class="govuk-checkboxes__input"
+                               id="@Model.UI.IdFor("change-reasons", changeOption)"
+                               type="checkbox"
+                               value="@Model.UI.ValueFor(changeOption)"
+                               aria-controls="@Model.UI.IdFor("conditional-change-reasons", changeOption)"
+                               aria-expanded="false">
+                        <label class="govuk-label govuk-checkboxes__label"
+                               for="@Model.UI.IdFor("change-reasons", changeOption)">
+                            @changeOption.ToDescription()
+                        </label>
+                    </div>
+
+                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                         id="@Model.UI.IdFor("conditional-change-reasons", changeOption)">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="@Model.UI.IdFor("reason", changeOption)">
+                                Give reasons
+                            </label>
+
+                            <textarea name="@Model.UI.ReasonFieldFor(changeOption)"
+                                      class="govuk-textarea govuk-!-width-full"
+                                      id="@Model.UI.IdFor("reason", changeOption)"
+                                      rows="5"></textarea>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </fieldset>
+</div>

@@ -33,7 +33,7 @@ public class ConfirmProjectDatesModel : BaseAcademyConversionProjectPageModel
    {
       await SetProject(id);
 
-      var projectDatesModel = new SetProjectDatesModel(id, Project.HeadTeacherBoardDate, Project.PreviousHeadTeacherBoardDate, ProjectDatesSectionComplete);
+      var projectDatesModel = new SetProjectDatesModel(id, Project.HeadTeacherBoardDate, Project.PreviousHeadTeacherBoardDate, Project.ProposedConversionDate, ProjectDatesSectionComplete);
 
       await _repository.SetProjectDates(id, projectDatesModel);
 

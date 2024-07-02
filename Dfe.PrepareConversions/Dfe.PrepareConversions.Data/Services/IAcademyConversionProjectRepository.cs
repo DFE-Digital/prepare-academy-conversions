@@ -66,4 +66,5 @@ public interface IAcademyConversionProjectRepository
    Task<ApiResponse<IEnumerable<FormAMatProject>>> SearchFormAMatProjects(string searchTerm);
    Task SetFormAMatProjectReference(int id, SetFormAMatProjectReference setFormAMatProjectReference);
    Task SetProjectDates(int id, SetProjectDatesModel updatedProjectDates);
+   Task<ApiResponse<IEnumerable<OpeningDateHistoryDto>>> GetOpeningDateHistoryForConversionProject(int id);
 }

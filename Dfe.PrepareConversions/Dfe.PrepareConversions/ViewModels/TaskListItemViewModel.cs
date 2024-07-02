@@ -168,6 +168,7 @@ public sealed class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
       }
 
       if (!project.HeadTeacherBoardDate.HasValue
+          && !project.ProposedConversionDate.HasValue
           && !project.PreviousHeadTeacherBoardDate.HasValue)
       {
          return NotStarted;

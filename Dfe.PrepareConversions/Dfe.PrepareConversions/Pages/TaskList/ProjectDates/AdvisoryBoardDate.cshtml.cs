@@ -1,11 +1,7 @@
-using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
-using Dfe.PrepareConversions.Pages.TaskList.Decision.Models;
 using Dfe.PrepareConversions.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -61,7 +57,7 @@ public class AdvisoryBoardDateModel : BaseAcademyConversionProjectPageModel, IDa
          return await base.OnGetAsync(id);
       }
 
-      var projectDatesModel = new SetProjectDatesModel(id, AdvisoryBoardDate, Project.PreviousHeadTeacherBoardDate, Project.ProjectDatesSectionComplete);
+      var projectDatesModel = new SetProjectDatesModel(id, AdvisoryBoardDate, Project.PreviousHeadTeacherBoardDate, Project.ProposedConversionDate, Project.ProjectDatesSectionComplete);
 
       await _repository.SetProjectDates(id, projectDatesModel);
 

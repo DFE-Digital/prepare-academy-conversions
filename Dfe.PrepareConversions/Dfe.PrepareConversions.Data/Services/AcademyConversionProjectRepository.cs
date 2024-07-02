@@ -355,4 +355,17 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       HttpResponseMessage result = await _apiClient.SetProjectDates(id, updatedProjectDates);
       if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
+
+   public async Task<ApiResponse<IEnumerable<OpeningDateHistoryDto>>> GetOpeningDateHistoryForConversionProject(int id)
+   {
+      HttpResponseMessage response = await _apiClient.GetOpeningDateHistoryForConversionProject(id);
+      if (!response.IsSuccessStatusCode)
+      {
+         return new ApiResponse<IEnumerable<OpeningDateHistoryDto>>(response.StatusCode, null);
+      }
+
+      IEnumerable<OpeningDateHistoryDto> history = await ReadFromJsonAndThrowIfNull<IEnumerable<OpeningDateHistoryDto>>(response.Content);
+      return new ApiResponse<IEnumerable<OpeningDateHistoryDto>>(response.StatusCode, history);
+   }
+
 }

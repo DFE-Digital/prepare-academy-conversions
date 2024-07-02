@@ -1,0 +1,78 @@
+﻿@page "/task-list/{id:int}/conversion-date-history"
+@using Dfe.PrepareConversions.TagHelpers
+@using Dfe.Academisation.ExtensionMethods
+@model Dfe.PrepareConversions.Pages.TaskList.ProjectDates.ConversionDateHistoryPageModel;
+@{
+   ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Conversion date history";
+   // ViewData["ShowScheduleOfAdvisoryBoardMeetingsLink"] = true;
+   // ViewData["SchoolName"] = Model.Project.SchoolName;
+   // ViewData["ProjectId"] = Model.Project.Id;
+   // ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
+}
+
+@section BeforeMain
+{
+    @* <a asp-page="@Model.ReturnPage" asp-route-id="@Model.ReturnId" class="govuk-back-link">@Links.ProjectList.Index.BackText</a> *@
+}
+
+<partial name="Shared/_ProjectHeader" model="Model.Project" />
+
+
+<div class="govuk-grid-column-two-thirds-full">
+    <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">Current proposed conversion date</h2>
+@* 
+    <p class="govuk-body">
+        The current proposed conversion is <b>@Model.Project.ProposedConversionDate.ToDateString().</b>
+    </p> *@
+
+    @if (Model.History == null || !Model.History.Any())
+    {
+        <p class="govuk-body">The proposed conversion date has not been entered yet. When it has been it will be displayed here.</p>
+        <p class="govuk-body">Any future changes to the proposed conversion date will also be shown here.</p>
+    }
+    else
+    {
+        <p class="govuk-body">The current proposed conversion date is <strong>@Model.History.OrderByDescending(h => h.ChangedAt).FirstOrDefault()?.NewDate?.ToString("d MMMM yyyy")</strong>.</p>
+
+        <h3 class="govuk-heading-m">Conversion date changes</h3>
+        @foreach (var history in Model.History.OrderByDescending(h => h.ChangedAt))
+        {
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title">
+                        Changed on @history.ChangedAt.ToString("dd MMMM yyyy h:mmtt")
+                    </h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">Changed by</dt>
+                            <dd class="govuk-summary-list__value">@history.ChangedBy</dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">Date changed to</dt>
+                            <dd class="govuk-summary-list__value">@history.NewDate?.ToString("d MMMM yyyy")</dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">Date changed from</dt>
+                            <dd class="govuk-summary-list__value">@history.OldDate?.ToString("d MMMM yyyy")</dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+
+                            <dt class="govuk-summary-list__key">Reason for new date</dt>
+                            @foreach (var reason in history.ReasonsChanged)
+                            {
+                                <dd class="govuk-summary-list__value">
+                                    <strong>@reason.Heading</strong><br />
+                                    @reason.Details
+                                </dd>
+                            }
+
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        }
+    }
+
+</div>
