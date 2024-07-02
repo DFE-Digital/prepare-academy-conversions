@@ -76,6 +76,11 @@ describe('School Improvement Plan Tests', () => {
             schoolImprovementPage.verifyImprovementDetails("Local Authority", "Fahad-Cypress Test", "12 December 2023", "12 November 2024", "High", "This is a test comment");
             Logger.log("Verify the submitted interim school improvement plan details are saved correctly");
             schoolImprovementPage.verifyTheFinalImprovementDetails("Local Authority", "Fahad-Cypress Test", "12 December 2023", "12 November 2024", "High", "This is a test comment");
+            Logger.log("change the details");
+            schoolImprovementPage.changeImprovementDetails("Cypress Test Interim schoool plan","Test comment");
+            Logger.log("Verify the changed interim school improvement plan details are saved correctly");
+            schoolImprovementPage.verifyChangedImprovementDetails("Regional Director, Local Authority", "Cypress Test Interim schoool plan", "12 December 2023", "Unknown", "Medium", "Test comment");
+           
             Logger.log("Delete the project and verify that it was deleted successfully - Project ID: " + projectId);
             schoolImprovementPage.deleteProject(projectId);
         });
