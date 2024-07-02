@@ -27,31 +27,31 @@ public class ReasonForConversionDateChangePageModel : BaseAcademyConversionProje
 
    [BindProperty]
    public string ChangeSchoolReason { get; set; }
-   
+
    [BindProperty]
    public string ChangeLAReason { get; set; }
-   
+
    [BindProperty]
    public string ChangeDioceseReason { get; set; }
-   
+
    [BindProperty]
    public string ChangeTuPEReason { get; set; }
-   
+
    [BindProperty]
    public string ChangePensionsReason { get; set; }
-   
+
    [BindProperty]
    public string ChangeUnionReason { get; set; }
-   
+
    [BindProperty]
    public string ChangeNegativePressCoverageReason { get; set; }
-   
+
    [BindProperty]
    public string ChangeGovernanceReason { get; set; }
-   
+
    [BindProperty]
    public string ChangeNotAppliFinancecableReason { get; set; }
-   
+
    [BindProperty]
    public string ChangeFinanceReason { get; set; }
 
@@ -60,19 +60,19 @@ public class ReasonForConversionDateChangePageModel : BaseAcademyConversionProje
 
    [BindProperty]
    public string ChangeLandReason { get; set; }
-   
+
    [BindProperty]
    public string ChangeBuildingsReason { get; set; }
-   
+
    [BindProperty]
    public string ChangeLegalDocumentsReason { get; set; }
-   
+
    [BindProperty]
    public string ChangeCorrectingAnErrorReason { get; set; }
-   
+
    [BindProperty]
    public string ChangeVoluntaryDeferralReason { get; set; }
-   
+
    [BindProperty]
    public string ChangeInAFederationReason { get; set; }
 
@@ -81,7 +81,7 @@ public class ReasonForConversionDateChangePageModel : BaseAcademyConversionProje
 
    public UIHelpers UI => new(this);
 
-   public bool ShowError => _errorService.HasErrors();
+   public bool ShowError { get; set; }
    public string ErrorMessage => _errorService.GetErrors().ToList().Last().Message;
 
    public DateTime ConversionDate { get; set; }
@@ -119,7 +119,7 @@ public class ReasonForConversionDateChangePageModel : BaseAcademyConversionProje
 
       if (!ChangedReasons.Any())
       {
-         ModelState.AddModelError("ChangedReasonSet", "Select at least one reason");
+         _errorService.AddError("ChangedReasonSet", "Select at least one reason");
       }
 
       EnsureExplanationIsProvidedFor(ConversionDateReasonForChangeFuture.IncomingTrust, ChangeIncomingTrustReason);
@@ -144,6 +144,7 @@ public class ReasonForConversionDateChangePageModel : BaseAcademyConversionProje
 
       if (_errorService.HasErrors())
       {
+         ShowError = true;
          return await OnGetAsync(id);
       }
 
@@ -159,7 +160,7 @@ public class ReasonForConversionDateChangePageModel : BaseAcademyConversionProje
       string reasonName = reason.ToString();
 
       if (ChangedReasons.Contains(reasonName) && string.IsNullOrWhiteSpace(explanation))
-         ModelState.AddModelError(UI.ReasonFieldFor(reason), $"Enter a reason for selecting {reason.ToDescription()}");
+         _errorService.AddError(UI.ReasonFieldFor(reason), $"Enter a reason for selecting {reason.ToDescription()}");
    }
 
    private IEnumerable<ReasonChange> MapSelectedReasons()

@@ -4,36 +4,32 @@
 @model Dfe.PrepareConversions.Pages.TaskList.ProjectDates.ConversionDateHistoryPageModel;
 @{
    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Conversion date history";
-   // ViewData["ShowScheduleOfAdvisoryBoardMeetingsLink"] = true;
-   // ViewData["SchoolName"] = Model.Project.SchoolName;
-   // ViewData["ProjectId"] = Model.Project.Id;
-   // ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
+
 }
 
 @section BeforeMain
 {
-    @* <a asp-page="@Model.ReturnPage" asp-route-id="@Model.ReturnId" class="govuk-back-link">@Links.ProjectList.Index.BackText</a> *@
+    <govuk-back-link link-item="@Links.TaskList.Index" data-test="advisory-board-date-back-link" />
 }
 
 <partial name="Shared/_ProjectHeader" model="Model.Project" />
 
 
 <div class="govuk-grid-column-two-thirds-full">
-    <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">Current proposed conversion date</h2>
-@* 
-    <p class="govuk-body">
-        The current proposed conversion is <b>@Model.Project.ProposedConversionDate.ToDateString().</b>
-    </p> *@
 
-    @if (Model.History == null || !Model.History.Any())
+    @if (Model.Project.ProposedConversionDate.HasValue)
+    {
+        <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">Current proposed conversion date</h2>
+
+        <p class="govuk-body">The current proposed conversion date is <strong>@Model.Project.ProposedConversionDate.ToDateString()</strong>.</p>
+    }else
     {
         <p class="govuk-body">The proposed conversion date has not been entered yet. When it has been it will be displayed here.</p>
         <p class="govuk-body">Any future changes to the proposed conversion date will also be shown here.</p>
     }
-    else
-    {
-        <p class="govuk-body">The current proposed conversion date is <strong>@Model.History.OrderByDescending(h => h.ChangedAt).FirstOrDefault()?.NewDate?.ToString("d MMMM yyyy")</strong>.</p>
 
+    @if (Model.History != null && Model.History.Any())
+    {
         <h3 class="govuk-heading-m">Conversion date changes</h3>
         @foreach (var history in Model.History.OrderByDescending(h => h.ChangedAt))
         {

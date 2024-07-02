@@ -21,8 +21,6 @@ public class ProposedConversionDate : BaseAcademyConversionProjectPageModel
       _errorService = errorService;
    }
 
-   public DateTime? ConversionDate { get; set; }
-
    [BindProperty(Name = "proposed-conversion-month")]
    public string Month { get; set; }
 
@@ -61,6 +59,17 @@ public class ProposedConversionDate : BaseAcademyConversionProjectPageModel
       }
 
       var conversionDate = $"{Year}-{Month}-1";
+
+      if (!Project.ProposedConversionDate.HasValue)
+      {
+         var parsedConversionDate = DateTime.Parse(conversionDate);
+         var projectDatesModel = new SetProjectDatesModel(id, Project.HeadTeacherBoardDate, Project.PreviousHeadTeacherBoardDate, parsedConversionDate, Project.ProjectDatesSectionComplete);
+
+         await _repository.SetProjectDates(id, projectDatesModel);
+
+         return RedirectToPage(Links.ProjectDates.ConfirmProjectDates.Page, new { id });
+
+      }
 
       return RedirectToPage(Links.ProjectDates.ReasonForConversionDateChange.Page, new { id, conversionDate });
    }
@@ -101,7 +110,15 @@ public class ProposedConversionDate : BaseAcademyConversionProjectPageModel
 
       if (year < 2000 || year > 2050)
       {
-         _errorService.AddError("proposed-conversion-month", "Year must be between 2000 and 2050");
+         _errorService.AddError("proposed-conversion-year", "Year must be between 2000 and 2050");
+         return;
+      }
+
+      var existingConversionDate = Project.ProposedConversionDate;
+
+      if (existingConversionDate.HasValue && existingConversionDate.Value.Month == month && existingConversionDate.Value.Year == year)
+      {
+         _errorService.AddError("proposed-conversion-month", "New date cannot be the same as the current date");
          return;
       }
    }

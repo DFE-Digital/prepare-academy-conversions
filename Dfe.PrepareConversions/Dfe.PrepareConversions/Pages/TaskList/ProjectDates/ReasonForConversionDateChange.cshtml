@@ -7,7 +7,7 @@
    Layout = "_QuestionLayout";
    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Proposed conversion date";
    ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
-    var showError = Model.ShowError;
+   var showErrorClass = Model.ShowError ? "govuk-form-group--error" : "";
 }
 
 @section BeforeMain
@@ -15,7 +15,14 @@
     <govuk-back-link link-item="@Links.ProjectDates.ConfirmProjectDates" data-test="proposed-conversion-date-back-link" />
 }
 
-<div class="govuk-form-group">
+@if (@Model.ShowError)
+{
+    <span class="govuk-error-message">
+        <span class="govuk-visually-hidden">Error:</span> @Model.ErrorMessage
+    </span>
+}
+
+<div class="govuk-form-group @showErrorClass">
     <fieldset class="govuk-fieldset" aria-describedby="changed-reasons-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
             <h1 class="govuk-fieldset__heading">
@@ -27,7 +34,7 @@
             Select all that apply.
         </div>
 
-        <div class="govuk-checkboxes @ModelState.GetErrorStyleClass()" data-module="govuk-checkboxes" id="ReasonForChange">
+        <div class="govuk-checkboxes @showErrorClass" data-module="govuk-checkboxes" id="ReasonForChange">
             @if (Model.NewDateIsInThePast)
             {
                 @foreach (var changeOption in Model.PastReasonForChangeOptions)
@@ -50,13 +57,13 @@
                          id="@Model.UI.IdFor("conditional-change-reasons", changeOption)">
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="@Model.UI.IdFor("reason", changeOption)">
-                                Give reasons
+                                Enter details about the reason for change.
                             </label>
 
                             <textarea name="@Model.UI.ReasonFieldFor(changeOption)"
                                       class="govuk-textarea govuk-!-width-full"
                                       id="@Model.UI.IdFor("reason", changeOption)"
-                                      rows="5"></textarea>
+                                      rows="3"></textarea>
                         </div>
                     </div>
                 }
@@ -83,13 +90,13 @@
                          id="@Model.UI.IdFor("conditional-change-reasons", changeOption)">
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="@Model.UI.IdFor("reason", changeOption)">
-                                Give reasons
+                                Enter details about the reason for change.
                             </label>
 
                             <textarea name="@Model.UI.ReasonFieldFor(changeOption)"
                                       class="govuk-textarea govuk-!-width-full"
                                       id="@Model.UI.IdFor("reason", changeOption)"
-                                      rows="5"></textarea>
+                                      rows="3"></textarea>
                         </div>
                     </div>
                 }
