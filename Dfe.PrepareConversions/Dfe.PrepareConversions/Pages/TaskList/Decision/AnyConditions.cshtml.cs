@@ -55,7 +55,7 @@ public class AnyConditionsModel : DecisionBaseModel
 
          SetDecisionInSession(id, decision);
 
-         return RedirectToPage(Links.Decision.DecisionDate.Page, LinkParameters);
+         return RedirectToPage(Links.Decision.DecisionMaker.Page, LinkParameters);
       }
 
       _errorService.AddErrors(ModelState.Keys, ModelState);

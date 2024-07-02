@@ -114,7 +114,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
 
       await NavigateAsync("Back");
 
-      PageHeading.Should().Be("Were any conditions set?");
+      PageHeading.Should().Be("Decision maker's name");
    }
 
    [Fact]
@@ -127,14 +127,14 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
       await wizard.StartFor(project.Id);
       await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
-      await wizard.SetDecisionMakerName("Tester");
       await wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Finance, "Finance reasons"));
+      await wizard.SetDecisionMakerName("Tester");
 
       PageHeading.Should().Be("Date of decision");
 
       await NavigateAsync("Back");
 
-      PageHeading.Should().Be("Why was this project declined?");
+      PageHeading.Should().Be("Decision maker's name");
    }
 
    [Fact]
@@ -151,8 +151,8 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
       await wizard.StartFor(project.Id);
       await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
-      await wizard.SetDecisionMakerName("Tester");
       await wizard.SetDeclinedReasonsAndContinue(Tuple.Create(AdvisoryBoardDeclinedReasons.Performance, "performance reasons"));
+      await wizard.SetDecisionMakerName("Tester");
 
       PageHeading.Should().Be("Date of decision");
 
@@ -175,7 +175,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
       await wizard.StartFor(project.Id);
       await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Approved);
       await wizard.SetDecisionByAndContinue(DecisionMadeBy.OtherRegionalDirector);
-      await wizard.SetDecisionMakerName("Tester");
       await wizard.SetIsConditionalAndContinue(false, "Something");
+      await wizard.SetDecisionMakerName("Tester");
    }
 }

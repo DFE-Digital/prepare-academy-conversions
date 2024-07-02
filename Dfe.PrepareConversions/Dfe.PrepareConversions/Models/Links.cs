@@ -43,6 +43,18 @@ public static class Links
       public static readonly LinkItem Edit = AddLinkItem(page: "/AnnexB/Edit");
    }
 
+   public static class SchoolImprovementPlans
+   {
+      public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/SchoolImprovementPlans/Index");
+      public static readonly LinkItem WhoArrangedThePlan = AddLinkItem(backText: "Back", page: "/SchoolImprovementPlans/WhoArrangedThePlan");
+      public static readonly LinkItem WhoProvidedThePlan = AddLinkItem(backText: "Back", page: "/SchoolImprovementPlans/WhoProvidedThePlan");
+      public static readonly LinkItem StartDateOfThePlan = AddLinkItem(backText: "Back", page: "/SchoolImprovementPlans/StartDateOfThePlan");
+      public static readonly LinkItem EndDateOfThePlan = AddLinkItem(backText: "Back", page: "/SchoolImprovementPlans/EndDateOfThePlan");
+      public static readonly LinkItem CommentsOnThePlan = AddLinkItem(backText: "Back", page: "/SchoolImprovementPlans/CommentsOnThePlan");
+      public static readonly LinkItem ConfidenceLevelOfThePlan = AddLinkItem(backText: "Back", page: "/SchoolImprovementPlans/ConfidenceLevelOfThePlan");
+      public static readonly LinkItem Summary = AddLinkItem(backText: "Back", page: "/SchoolImprovementPlans/Summary");
+   }
+
    public static class ExternalApplicationForm
    {
       public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/ExternalApplicationForm/Index");
@@ -215,6 +227,8 @@ public static class Links
    {
       public static readonly LinkItem RecordDecision = AddLinkItem(backText: "Back", page: "/TaskList/Decision/RecordDecision");
       public static readonly LinkItem WhoDecided = AddLinkItem(backText: "Back", page: "/TaskList/Decision/WhoDecided");
+      public static readonly LinkItem DAOPrecursor = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DAOPrecursor");
+      public static readonly LinkItem DAOBeforeYouStart = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DAOBeforeYouStart");
       public static readonly LinkItem DeclineReason = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DeclineReason");
       public static readonly LinkItem AnyConditions = AddLinkItem(backText: "Back", page: "/TaskList/Decision/AnyConditions");
       public static readonly LinkItem DecisionDate = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DecisionDate");

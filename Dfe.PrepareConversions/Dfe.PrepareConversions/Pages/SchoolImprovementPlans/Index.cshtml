@@ -1,0 +1,141 @@
+﻿@page "/school-improvement-plans/{id:int}"
+@using Dfe.Academisation.ExtensionMethods
+@using Dfe.PrepareConversions.Configuration
+@using Dfe.PrepareConversions.Data.Models
+@using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans
+@model Dfe.PrepareConversions.Pages.ImprovementPlans.IndexModel
+@{
+    ViewData["Title"] = "School Improvement Plans";
+}
+
+@section BeforeMain
+{
+    <a asp-page="@Model.ReturnPage" asp-route-id="@Model.ReturnId" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
+}
+
+<partial name="Shared/_ProjectHeader" model="Model.Project" />
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column">
+        <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">Interim School Improvement Plans</h2>
+        @if (!Model.SchoolImprovementPlans.Any())
+        {
+           <p class="govuk-body">No school improvement plans have been added for this school yet.</p>
+        }
+        else
+        {
+            @foreach (var plan in Model.SchoolImprovementPlans)
+            {
+                <div class="govuk-summary-card">
+                    <div class="govuk-summary-card__title-wrapper">
+                        <h2 class="govuk-summary-card__title">
+                            Improvement plan created on @plan.CreatedDate.ToString(Constants.DateTimeFormat)
+                        </h2>
+                    </div>
+                    <div class="govuk-summary-card__content">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    Arranged by
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                    @plan.ArrangedBy.Select(x => x.ToDescription()).Aggregate(string.Empty, (partialPhrase, word) =>
+                                             {
+                                                 var result = string.IsNullOrWhiteSpace(partialPhrase) ? word : $"{partialPhrase}, {word}";
+
+                                                 if (SchoolImprovementPlanArranger.Other.ToDescription() == word)
+                                                 {
+                                                     result = $"{result} - {plan.ArrangedByOther}";
+                                                 }
+
+                                                 return result;
+                                             })
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.WhoArrangedThePlan.Page" asp-route-id="@Model.Project.Id" asp-route-sipId="@plan.Id" id="change-arranger-btn">
+                                        Change<span class="govuk-visually-hidden">arranger of the plan</span>
+                                    </a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    Provided by
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                    @plan.ProvidedBy
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.WhoProvidedThePlan.Page" asp-route-id="@Model.Project.Id" asp-route-sipId="@plan.Id">Change<span class="govuk-visually-hidden"> provider of the plan</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    Start date
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                    @plan.StartDate.Value.ToString(Constants.DateTimeFormat)
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.StartDateOfThePlan.Page" asp-route-id="@Model.Project.Id" asp-route-sipId="@plan.Id">Change<span class="govuk-visually-hidden"> the start date of the plan</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    Expected end date
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                    @if (plan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.Other)
+                                    {
+                                        @plan.ExpectedEndDateOther.Value.ToString(Constants.DateTimeFormat)
+                                    }
+
+                                    @if (plan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.ToAdvisoryBoard)
+                                    {
+                                        @(Model.Project.HeadTeacherBoardDate.HasValue ? Model.Project.HeadTeacherBoardDate.Value.ToString(Constants.DateTimeFormat) : $"{SchoolImprovementPlanExpectedEndDate.ToAdvisoryBoard.ToDescription()} - date not set")
+                                    }
+
+                                    @if (plan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.ToConversion)
+                                    {
+                                        @(Model.Project.ProposedAcademyOpeningDate.HasValue ? Model.Project.ProposedAcademyOpeningDate.Value.ToString(Constants.DateTimeFormat) : $"{SchoolImprovementPlanExpectedEndDate.ToConversion.ToDescription()} - date not set")
+                                    }
+
+                                    @if (plan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.Unknown)
+                                    {
+                                        @SchoolImprovementPlanExpectedEndDate.Unknown.ToDescription()
+                                    }
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.EndDateOfThePlan.Page" asp-route-id="@Model.Project.Id" asp-route-sipId="@plan.Id">Change<span class="govuk-visually-hidden"> the expectedend date of the plan</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    Confidence level
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                    @plan.ConfidenceLevel.ToDescription()
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.ConfidenceLevelOfThePlan.Page" asp-route-id="@Model.Project.Id" asp-route-sipId="@plan.Id">Change<span class="govuk-visually-hidden"> the confidence level of the plan</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    Comments
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                    @plan.PlanComments
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <a class="govuk-link" asp-page="@Links.SchoolImprovementPlans.CommentsOnThePlan.Page" asp-route-id="@Model.Project.Id" asp-route-sipId="@plan.Id">Change<span class="govuk-visually-hidden"> the comments on the plan</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+            }
+        }
+        <a asp-page="@Links.SchoolImprovementPlans.WhoArrangedThePlan.Page" asp-route-id="@Model.Project.Id" role="button" draggable="false" class="govuk-button govuk-button" data-module="govuk-button">
+            Add school improvement plan
+        </a>
+    </div>
+</div>

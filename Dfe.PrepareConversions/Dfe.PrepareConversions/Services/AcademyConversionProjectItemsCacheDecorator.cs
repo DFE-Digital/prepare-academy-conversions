@@ -1,6 +1,7 @@
 ﻿using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.NewProject;
+using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
 using Dfe.PrepareConversions.Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -93,6 +94,11 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
       return await _innerRepository.AddProjectNote(id, addProjectNote);
    }
 
+   public async Task<ApiResponse<SchoolImprovementPlan>> AddSchoolImprovementPlan(int id, AddSchoolImprovementPlan addSchoolImprovementPlan)
+   {
+      return await _innerRepository.AddSchoolImprovementPlan(id, addSchoolImprovementPlan);
+   }
+
    public async Task SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl)
    {
       await _innerRepository.SetProjectExternalApplicationForm(id, externalApplicationFormSaved, externalApplicationFormUrl);
@@ -137,6 +143,16 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    public async Task SetFormAMatProjectReference(int id, SetFormAMatProjectReference setFormAMatProjectReference)
    {
       await _innerRepository.SetFormAMatProjectReference(id, setFormAMatProjectReference);
+   }
+
+   public async Task<ApiResponse<IEnumerable<SchoolImprovementPlan>>> GetSchoolImprovementPlansForProject(int id)
+   {
+      return await _innerRepository.GetSchoolImprovementPlansForProject(id);
+   }
+
+   public async Task UpdateSchoolImprovementPlan(int id, UpdateSchoolImprovementPlan updateSchoolImprovementPlan)
+   {
+      await _innerRepository.UpdateSchoolImprovementPlan(id, updateSchoolImprovementPlan);
    }
 
    public async Task SetProjectDates(int id, SetProjectDatesModel updatedProjectDates)

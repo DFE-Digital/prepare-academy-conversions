@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
 
 namespace Dfe.PrepareConversions.Data.Services;
 
@@ -103,7 +104,7 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
          @"legacy/project/new-conversion-project",
          newProject);
 
-      if (result.Success is false) 
+      if (result.Success is false)
       {
          throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
       }
@@ -160,6 +161,14 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       return response.IsSuccessStatusCode
          ? new ApiResponse<ProjectNote>(response.StatusCode, addProjectNote.ToProjectNote())
          : new ApiResponse<ProjectNote>(response.StatusCode, null);
+   }
+   public async Task<ApiResponse<SchoolImprovementPlan>> AddSchoolImprovementPlan(int id, AddSchoolImprovementPlan addSchoolImprovementPlan)
+   {
+      HttpResponseMessage response = await _apiClient.AddSchoolImprovementPlan(id, addSchoolImprovementPlan);
+
+      return response.IsSuccessStatusCode
+         ? new ApiResponse<SchoolImprovementPlan>(response.StatusCode, addSchoolImprovementPlan.ToSchoolImprovementPlan())
+         : new ApiResponse<SchoolImprovementPlan>(response.StatusCode, null);
    }
    public async Task<ApiResponse<FileStreamResult>> DownloadProjectExport(
       int page,
@@ -348,6 +357,23 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
    {
       HttpResponseMessage result = await _apiClient.SetFormAMatProjectReference(id, setFormAMatProjectReference);
       if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+   }
+
+   public async Task<ApiResponse<IEnumerable<SchoolImprovementPlan>>> GetSchoolImprovementPlansForProject(int id)
+   {
+      HttpClient httpClient = _httpClientFactory.CreateAcademisationClient();
+
+      return await _httpClientService.Get<IEnumerable<SchoolImprovementPlan>>(httpClient, string.Format(PathFor.GetSchoolImprovementPlans, id));
+   }
+
+   public async Task UpdateSchoolImprovementPlan(int id, UpdateSchoolImprovementPlan updateSchoolImprovementPlan)
+   {
+      HttpClient httpClient = _httpClientFactory.CreateAcademisationClient();
+
+      ApiResponse<SchoolImprovementPlan> result = await _httpClientService
+   .Put<UpdateSchoolImprovementPlan, SchoolImprovementPlan>(httpClient, string.Format(PathFor.GetSchoolImprovementPlans, id, updateSchoolImprovementPlan.Id), updateSchoolImprovementPlan);
+
+      if (!result.Success) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
 
    public async Task SetProjectDates(int id, SetProjectDatesModel updatedProjectDates)

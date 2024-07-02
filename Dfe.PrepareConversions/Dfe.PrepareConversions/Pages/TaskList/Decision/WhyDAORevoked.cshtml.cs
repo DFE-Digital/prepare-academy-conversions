@@ -1,4 +1,3 @@
-using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Extensions;
@@ -46,15 +45,11 @@ public class WhyDAORevokedModel : DecisionBaseModel
    [BindProperty]
    public bool WasReasonGiven => SchoolClosedOrClosingIsChecked || SchoolRatedGoodOrOutstandingIsChecked || SafeguardingConcernsAddressedIsChecked;
 
-   public string DecisionText { get; set; }
-
    public IActionResult OnGet(int id)
    {
-      SetBackLinkModel(Links.Decision.WhoDecided, id);
+      SetBackLinkModel(Links.Decision.DAOBeforeYouStart, id);
 
       AdvisoryBoardDecision decision = GetDecisionFromSession(id);
-      DecisionText = decision.Decision.ToDescription().ToLowerInvariant();
-
       List<AdvisoryBoardDAORevokedReasonDetails> reasons = decision.DAORevokedReasons;
       SetReasonsModel(reasons);
 
@@ -78,7 +73,7 @@ public class WhyDAORevokedModel : DecisionBaseModel
       _errorService.AddErrors(ModelState.Keys, ModelState);
       if (_errorService.HasErrors()) return OnGet(id);
 
-      return RedirectToPage(Links.Decision.DecisionDate.Page, LinkParameters);
+      return RedirectToPage(Links.Decision.DecisionMaker.Page, LinkParameters);
    }
 
    private void SetReasonsModel(List<AdvisoryBoardDAORevokedReasonDetails> reasons)

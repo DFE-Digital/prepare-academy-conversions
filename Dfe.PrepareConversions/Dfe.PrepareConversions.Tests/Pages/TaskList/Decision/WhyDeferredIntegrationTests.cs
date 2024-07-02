@@ -35,7 +35,6 @@ public class WhyDeferredIntegrationTests : BaseIntegrationTests, IAsyncLifetime
       await _wizard.StartFor(_project.Id);
       await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Deferred);
       await _wizard.SetDecisionByAndContinue(DecisionMadeBy.RegionalDirectorForRegion);
-      await _wizard.SetDecisionMakerName("Tester");
 
       Document.Url.Should().EndWith("/decision/why-deferred");
    }
@@ -70,7 +69,7 @@ public class WhyDeferredIntegrationTests : BaseIntegrationTests, IAsyncLifetime
       await _wizard.SetDeferredReasonsAndContinue(Tuple.Create(AdvisoryBoardDeferredReason.Other, "other reasons"));
 
       Document.QuerySelector<IHtmlElement>("h1")!.Text().Should()
-         .Be("Date of decision");
+         .Be("Decision maker's name");
    }
 
    [Fact]

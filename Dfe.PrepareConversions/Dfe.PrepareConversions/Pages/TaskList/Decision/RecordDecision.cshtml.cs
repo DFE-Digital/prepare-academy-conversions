@@ -61,6 +61,7 @@ public class RecordDecisionModel : DecisionBaseModel
       decision.Decision = AdvisoryBoardDecision.Value;
       SetDecisionInSession(id, decision);
 
+      if (decision.Decision.Equals(AdvisoryBoardDecisions.DAORevoked)) { return RedirectToPage(Links.Decision.DAOPrecursor.Page, LinkParameters); }
       return RedirectToPage(Links.Decision.WhoDecided.Page, LinkParameters);
    }
 }

@@ -117,10 +117,11 @@ export class DecisionPage {
         cy.get('#submit-btn').click();
         cy.get('#directorgeneral-radio').click();
         cy.get('#submit-btn').click();
-        //decision maker name will stay as name Fahad Darwish then click continue
         cy.get('#submit-btn').click();
         cy.get('#declined-reasons-finance').click();
         cy.get('#reason-finance').type('Fahads Cypress Reason is Finance');
+        cy.get('#submit-btn').click();
+        //decision maker name will stay as name Fahad Darwish then click continue
         cy.get('#submit-btn').click();
 
         //change the date to 12th November 2023
@@ -142,12 +143,24 @@ export class DecisionPage {
         cy.get('#submit-btn').click();
         cy.get('#submit-btn').click();
         cy.get('#submit-btn').click();
+        cy.get('#MinisterApproval').click();
+        cy.get('#LetterSent').click();
+        cy.get('#LetterSaved').click();
+        cy.get('#submit-btn').click();
         cy.get('#schoolclosedorclosing-checkbox').click();
         cy.get('#schoolclosedorclosing-txtarea').type('Cypress Test Fahad - Reason school is closing');
         cy.get('#submit-btn').click();
+        cy.get('#decision-maker-name').clear();
+        cy.get('#decision-maker-name').type('Fahad Darwish');
         cy.get('#submit-btn').click();
-        this.verifyDecisionDetailsAfterChanging('DAO', 'Director General', '12 November 2023');
+        cy.get('#submit-btn').click();
+        this.verifyDecisionDetailsAfterChanging('DAO', 'Minister', '12 November 2023');
         return this;
+    }
+    deleteProject(projectId) {
+        cy.callAcademisationApi("DELETE", `/conversion-project/${projectId}/Delete`).then((response) => {
+            expect(response.status).to.eq(200);
+        });
     }
 }
 

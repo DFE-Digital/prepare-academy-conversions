@@ -39,11 +39,12 @@ jobs:
   deploy-image:
     name: Deploy
     needs: [ set-env ]
-    uses: DFE-Digital/deploy-azure-container-apps-action/.github/workflows/build-push-deploy.yml@v2.1.0
+    uses: DFE-Digital/deploy-azure-container-apps-action/.github/workflows/build-push-deploy.yml@v2.2.0
     with:
       docker-image-name: 'a2bint-app'
       docker-build-file-name: './Dockerfile'
       environment: ${{ needs.set-env.outputs.environment }}
+      annotate-release: ${{ needs.set-env.outputs.environment == 'dev' }}
     secrets:
       azure-acr-credentials: ${{ secrets.ACR_CREDENTIALS }}
       azure-acr-name: ${{ secrets.ACR_NAME }}

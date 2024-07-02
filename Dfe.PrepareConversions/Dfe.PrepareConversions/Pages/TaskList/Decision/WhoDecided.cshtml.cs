@@ -63,7 +63,7 @@ public class WhoDecidedModel : DecisionBaseModel
 
    private IActionResult DetermineRedirectPage(AdvisoryBoardDecision decision)
    {
-      var pageToReturnTo = decision.Decision switch
+      var page = decision.Decision switch
       {
          AdvisoryBoardDecisions.Approved => RedirectToPage(Links.Decision.AnyConditions.Page, LinkParameters),
          AdvisoryBoardDecisions.Declined => RedirectToPage(Links.Decision.DeclineReason.Page, LinkParameters),
@@ -73,6 +73,6 @@ public class WhoDecidedModel : DecisionBaseModel
          _ => RedirectToPage(Links.Decision.AnyConditions.Page, LinkParameters)
       };
 
-      return decision.DecisionMadeBy == Data.Models.AdvisoryBoardDecision.DecisionMadeBy.None ? pageToReturnTo : RedirectToPage(Links.Decision.DecisionMaker.Page, LinkParameters);
+      return page;
    }
 }

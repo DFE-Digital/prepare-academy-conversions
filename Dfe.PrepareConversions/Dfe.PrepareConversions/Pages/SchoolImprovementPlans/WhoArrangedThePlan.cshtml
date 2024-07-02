@@ -1,0 +1,67 @@
+﻿@page "/school-improvement-plans/{id:int}/who-arranged-the-plan/{sipId:int?}"
+@using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans
+@using Dfe.Academisation.ExtensionMethods
+@model Dfe.PrepareConversions.Pages.ImprovementPlans.WhoArrangedThePlanModel
+@{
+    ViewData["Title"] = $"Who arranged the school improvement plan";
+}
+
+@section BeforeMain
+{
+    <partial name="_BackLink" model="@Model.BackLinkModel" />
+    <partial name="_ErrorSummary" />
+}
+
+<span id="selection-span" class="govuk-caption-l">@Model.SchoolName</span>
+<h1 class="govuk-heading-l">Who arranged the school improvement plan?</h1>
+
+<form method="post">
+    <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            </legend>
+            <div id="waste-hint" class="govuk-hint">
+                Select all that apply.
+            </div>
+            <div class="govuk-checkboxes @ModelState.GetErrorStyleClass()" data-module="govuk-checkboxes" id="WasArrangerGiven">
+
+                <input type="hidden" asp-for="@Model.WasArrangerGiven" />
+
+                @{
+                    CheckBoxAndLabel(SchoolImprovementPlanArranger.LocalAuthority, Model.LocalAuthorityIsChecked);
+                    CheckBoxAndLabel(SchoolImprovementPlanArranger.RegionalDirector, Model.RegionalDirectorIsChecked);
+                    CheckBoxAndLabel(SchoolImprovementPlanArranger.Diocese, Model.DioceseIsChecked);
+                    CheckBoxAndLabel(SchoolImprovementPlanArranger.Other, Model.OtherIsChecked, true, Model.OtherDetails);
+                }
+
+            </div>
+        </fieldset>
+    </div>
+
+    <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+        Continue
+    </button>
+</form>
+
+@{
+    void CheckBoxAndLabel(SchoolImprovementPlanArranger arrangeBy, bool isChecked, bool isConditional = false, string details = null)
+    {
+        <div class="govuk-checkboxes__item" id="@(arrangeBy)Details">
+            <input class="govuk-checkboxes__input" id="@arrangeBy.ToString().ToLower()-checkbox" name="@(arrangeBy)IsChecked" type="checkbox"
+                   data-aria-controls="conditional-@arrangeBy" value="true" @(isChecked ? "checked" : "")>
+            <label class="govuk-label govuk-checkboxes__label" for="@arrangeBy.ToString().ToLower()-checkbox">
+                @arrangeBy.ToDescription()
+            </label>
+        </div>
+        @if (isConditional)
+        {
+            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-@arrangeBy">
+                <div class="govuk-form-group">
+                    <textarea class="govuk-textarea govuk-!-width-three-quarters" id="@arrangeBy.ToString().ToLower()-txtarea"
+                              name="@(arrangeBy)Details" rows="1" aria-describedby="more-detail-hint">@details</textarea>
+                </div>
+
+            </div>
+        }
+    }
+} 

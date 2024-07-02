@@ -68,7 +68,6 @@ public class WhoDecidedIntegrationTests : BaseIntegrationTests
       await wizard.StartFor(project.Id);
       await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.Declined);
       await wizard.SetDecisionByAndContinue(DecisionMadeBy.RegionalDirectorForRegion);
-      await wizard.SetDecisionMakerName("Tester");
 
       Document.Url.Should().EndWith("/decision/declined-reason", "reason should be the second question in the declined journey");
       Document.QuerySelector<IHtmlHeadingElement>(".govuk-fieldset__heading")!.TextContent.Trim()

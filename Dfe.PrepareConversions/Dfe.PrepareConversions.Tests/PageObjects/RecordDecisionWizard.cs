@@ -29,8 +29,8 @@ public class RecordDecisionWizard
    {
       await SetDecisionToAndContinue(request.Decision.GetValueOrDefault());
       await SetDecisionByAndContinue(request.DecisionMadeBy.GetValueOrDefault());
-      await SetDecisionMakerName("Tester");
       await SetIsConditionalAndContinue(request.ApprovedConditionsSet.GetValueOrDefault(), request.ApprovedConditionsDetails);
+      await SetDecisionMakerName("Tester");
       await SetDecisionDateAndContinue(request.AdvisoryBoardDecisionDate.GetValueOrDefault(DateTime.MinValue));
    }
 

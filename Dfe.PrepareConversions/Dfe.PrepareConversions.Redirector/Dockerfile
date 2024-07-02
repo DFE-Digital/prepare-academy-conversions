@@ -5,7 +5,7 @@ RUN dotnet restore "Dfe.PrepareConversions.Redirector/Dfe.PrepareConversions.Red
 COPY . .
 
 # Stage 2 - Build assets
-FROM node:18.12-bullseye as frontend
+FROM node:18.20-bullseye as frontend
 COPY --from=build /src /src
 WORKDIR /src/Dfe.PrepareConversions/wwwroot
 RUN npm install

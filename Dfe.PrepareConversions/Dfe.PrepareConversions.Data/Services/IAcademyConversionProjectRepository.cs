@@ -1,5 +1,6 @@
 ﻿using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.NewProject;
+using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -63,8 +64,12 @@ public interface IAcademyConversionProjectRepository
    Task SetIncomingTrust(int id, SetIncomingTrustDataModel setIncomingTrustDataModel);
    Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters();
    Task<ApiResponse<ProjectNote>> AddProjectNote(int id, AddProjectNote addProjectNote);
+   Task<ApiResponse<SchoolImprovementPlan>> AddSchoolImprovementPlan(int id, AddSchoolImprovementPlan addSchoolImprovementPlanCommand);
    Task<ApiResponse<IEnumerable<FormAMatProject>>> SearchFormAMatProjects(string searchTerm);
    Task SetFormAMatProjectReference(int id, SetFormAMatProjectReference setFormAMatProjectReference);
+
+   Task<ApiResponse<IEnumerable<SchoolImprovementPlan>>> GetSchoolImprovementPlansForProject(int id);
+   Task UpdateSchoolImprovementPlan(int id, UpdateSchoolImprovementPlan updateSchoolImprovementPlan);
    Task SetProjectDates(int id, SetProjectDatesModel updatedProjectDates);
    Task<ApiResponse<IEnumerable<OpeningDateHistoryDto>>> GetOpeningDateHistoryForConversionProject(int id);
 }
