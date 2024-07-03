@@ -137,4 +137,9 @@ public class AcademyConversionProject
    // notes
    public ICollection<ProjectNote> Notes { get; set; } = new List<ProjectNote>();
 
+   //Project Dates
+   public DateTime? ProposedConversionDate { get; set; }
+
+   public bool ProjectDatesSectionComplete { get; set; }
+
 }

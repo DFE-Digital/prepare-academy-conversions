@@ -70,4 +70,6 @@ public interface IAcademyConversionProjectRepository
 
    Task<ApiResponse<IEnumerable<SchoolImprovementPlan>>> GetSchoolImprovementPlansForProject(int id);
    Task UpdateSchoolImprovementPlan(int id, UpdateSchoolImprovementPlan updateSchoolImprovementPlan);
+   Task SetProjectDates(int id, SetProjectDatesModel updatedProjectDates);
+   Task<ApiResponse<IEnumerable<OpeningDateHistoryDto>>> GetOpeningDateHistoryForConversionProject(int id);
 }

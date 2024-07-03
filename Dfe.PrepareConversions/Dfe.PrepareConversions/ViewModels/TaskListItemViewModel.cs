@@ -160,6 +160,23 @@ public sealed class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
       return InProgress;
    }
 
+   public static TaskListItemViewModel GetProjectDatesTaskListStatus(ProjectViewModel project)
+   {
+      if (project.ProjectDatesSectionComplete)
+      {
+         return Completed;
+      }
+
+      if (!project.HeadTeacherBoardDate.HasValue
+          && !project.ProposedConversionDate.HasValue
+          && !project.PreviousHeadTeacherBoardDate.HasValue)
+      {
+         return NotStarted;
+      }
+
+      return InProgress;
+   }
+
    public override int GetHashCode()
    {
       return $"{Status} {CssClass}".GetHashCode();

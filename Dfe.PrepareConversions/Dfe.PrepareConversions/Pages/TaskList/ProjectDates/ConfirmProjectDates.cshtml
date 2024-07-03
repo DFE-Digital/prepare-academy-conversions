@@ -1,0 +1,37 @@
+﻿@page "/task-list/{id:int}/confirm-project-dates"
+@using Dfe.Academisation.ExtensionMethods
+@using Dfe.PrepareConversions.TagHelpers
+@model Dfe.PrepareConversions.Pages.TaskList.ProjectDates.ConfirmProjectDatesModel
+@{
+    ViewData["Title"] = "Confirm project dates";
+}
+
+@section BeforeMain
+{
+   <govuk-back-link link-item="@Links.TaskList.Index"/>
+}
+
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+      <h1 class="govuk-heading-l">
+            Confirm project dates
+      </h1>
+   </div>
+   <div class="govuk-grid-column-full">
+      <dl class="govuk-summary-list">
+         <govuk-summary-list-row name="advisory-board-date" label="Advisory board date" value="@Model.Project.HeadTeacherBoardDate.ToDateString()" asp-page="@Links.ProjectDates.AdvisoryBoardDate.Page" asp-route-id="@Model.Project.Id" hidden-text="Advisory board date" />
+            <govuk-summary-list-row name="previous-advisory-board" label="Previous advisory board" value="@Model.Project.PreviousHeadTeacherBoardDate.ToDateString()" asp-page="@Links.ProjectDates.PreviousAdvisoryBoard.Page" asp-route-id="@Model.Project.Id" hidden-text="Previous advisory board" />
+            <govuk-summary-list-row name="proposed-conversion-date" label="Proposed conversion date" value="@Model.Project.ProposedConversionDate.ToDateString()" asp-page="@Links.ProjectDates.PropsedConversionDate.Page" asp-route-id="@Model.Project.Id" hidden-text="Proposed conversion date" />
+      </dl>
+   </div>
+   <div class="govuk-grid-column-two-thirds">
+      <form method="post">
+         <govuk-checkbox-input name="project-dates-complete" asp-for="Project.ProjectDatesSectionComplete" label="Mark this section as complete, you can still make changes later" />
+
+         <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
+            Confirm and continue
+         </button>
+      </form>
+   </div>
+</div>

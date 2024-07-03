@@ -133,8 +133,6 @@ public static class Links
       public static readonly LinkItem Author = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Author");
       public static readonly LinkItem ClearedBy = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/ClearedBy");
       public static readonly LinkItem HeadTeacherBoardDate = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/AdvisoryBoardDate");
-      public static readonly LinkItem PreviousHeadTeacherBoardDateQuestion = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/PreviousAdvisoryBoard");
-      public static readonly LinkItem PreviousHeadTeacherBoardDate = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/PreviousAdvisoryBoardDate");
       public static readonly LinkItem Form7Received = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Form7Received");
       public static readonly LinkItem Form7ReceivedDate = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Form7ReceivedDate");
       public static readonly LinkItem ProposedAcademyOpeningDate = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/ProposedAcademyOpeningDate");
@@ -267,6 +265,16 @@ public static class Links
       public static readonly LinkItem LinkFormAMatProject = AddLinkItem(page: "/NewProject/LinkFormAMatProject");
       public static readonly LinkItem CreateNewFormAMat = AddLinkItem(page: "/NewProject/CreateNewFormAMat");
       public static readonly LinkItem Summary = AddLinkItem(page: "/NewProject/Summary");
+   }
+
+   public static class ProjectDates
+   {
+      public static readonly LinkItem ConfirmProjectDates = AddLinkItem(page: "/TaskList/ProjectDates/ConfirmProjectDates");
+      public static readonly LinkItem AdvisoryBoardDate = AddLinkItem(page: "/TaskList/ProjectDates/AdvisoryBoardDate");
+      public static readonly LinkItem PreviousAdvisoryBoard = AddLinkItem(page: "/TaskList/ProjectDates/PreviousAdvisoryBoardDate");
+      public static readonly LinkItem PropsedConversionDate = AddLinkItem(page: "/TaskList/ProjectDates/ProposedConversionDate"); 
+      public static readonly LinkItem ReasonForConversionDateChange = AddLinkItem(page: "/TaskList/ProjectDates/ReasonForConversionDateChange"); 
+      public static readonly LinkItem ConversionDateHistory = AddLinkItem(page: "/TaskList/ProjectDates/ConversionDateHistory");
    }
 }
 

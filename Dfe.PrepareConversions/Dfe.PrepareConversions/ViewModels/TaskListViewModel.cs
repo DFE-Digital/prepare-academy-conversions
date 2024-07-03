@@ -12,6 +12,10 @@ public class TaskListViewModel
    public TaskListItemViewModel RisksAndIssuesTaskListStatus { get; set; }
    public TaskListItemViewModel LegalRequirementsTaskListStatus { get; set; }
    public TaskListItemViewModel SchoolBudgetInformationTaskListStatus { get; set; }
+   public TaskListItemViewModel ProjectDatesTaskListTaskListStatus { get; set; }
+
+
+   
    public string ProjectStatus { get; set; }
    public string ProjectStatusColour { get; set; }
    public bool HasKeyStage2PerformanceTables { get; set; }
@@ -33,7 +37,8 @@ public class TaskListViewModel
          SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.GetSchoolBudgetInformationTaskListStatus(project),
          ProjectStatus = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Value,
          ProjectStatusColour = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Colour,
-         PerformanceDataHintText = ProjectListHelper.MapPerformanceDataHint(project.SchoolType)
+         PerformanceDataHintText = ProjectListHelper.MapPerformanceDataHint(project.SchoolType),
+         ProjectDatesTaskListTaskListStatus = TaskListItemViewModel.GetProjectDatesTaskListStatus(project)
       };
    }
 }
