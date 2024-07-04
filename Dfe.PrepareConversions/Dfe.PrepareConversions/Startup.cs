@@ -182,10 +182,7 @@ public class Startup
          app.UseHsts();
       }
 
-      app.UseSecurityHeaders(
-         SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment())
-            .AddXssProtectionDisabled()
-      );
+      app.UseSecurityHeaders(SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment()));
 
       app.UseCookiePolicy(new CookiePolicyOptions { Secure = CookieSecurePolicy.Always, HttpOnly = HttpOnlyPolicy.Always });
 

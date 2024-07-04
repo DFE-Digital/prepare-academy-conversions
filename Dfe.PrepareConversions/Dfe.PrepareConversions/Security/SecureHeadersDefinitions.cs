@@ -12,7 +12,6 @@ public static class SecurityHeadersDefinitions
    {
       HeaderPolicyCollection policy = new HeaderPolicyCollection()
          .AddFrameOptionsDeny()
-         .AddXssProtectionBlock()
          .AddContentTypeOptionsNoSniff()
          .AddReferrerPolicyStrictOriginWhenCrossOrigin()
          .RemoveServerHeader()
@@ -59,7 +58,8 @@ public static class SecurityHeadersDefinitions
             builder.AddPictureInPicture().None();
             builder.AddSyncXHR().None();
             builder.AddUsb().None();
-         });
+         })
+         .AddXssProtectionDisabled();
 
       return policy;
    }
