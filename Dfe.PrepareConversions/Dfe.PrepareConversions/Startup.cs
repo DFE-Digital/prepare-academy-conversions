@@ -158,7 +158,7 @@ public class Startup
       // Initialize the TransfersUrl
       var serviceLinkOptions = Configuration.GetSection("ServiceLink").Get<ServiceLinkOptions>();
       Links.InitializeTransfersUrl(serviceLinkOptions.TransfersUrl);
-      
+
    }
 
    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
@@ -170,7 +170,6 @@ public class Startup
       else
       {
          app.UseExceptionHandler("/Errors");
-         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
          app.UseHsts();
       }
 
