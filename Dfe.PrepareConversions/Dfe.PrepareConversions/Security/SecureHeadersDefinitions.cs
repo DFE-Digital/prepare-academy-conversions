@@ -43,7 +43,6 @@ public static class SecurityHeadersDefinitions
             builder.AddScriptSrc().From(ApplicationInsightsUri).UnsafeInline().WithNonce();
             builder.AddFrameAncestors().None();
          })
-         .RemoveServerHeader()
          .AddPermissionsPolicy(builder =>
          {
             builder.AddAccelerometer().None();
