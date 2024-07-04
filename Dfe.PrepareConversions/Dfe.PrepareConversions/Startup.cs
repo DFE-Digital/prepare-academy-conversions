@@ -79,6 +79,15 @@ public class Startup
       services.AddControllersWithViews()
          .AddMicrosoftIdentityUI();
 
+      // Enforce HTTPS in ASP.NET Core
+      // @link https://learn.microsoft.com/en-us/aspnet/core/security/enforcing-ssl?
+      services.AddHsts(options =>
+      {
+         options.Preload = true;
+         options.IncludeSubDomains = true;
+         options.MaxAge = TimeSpan.FromDays(365);
+      });
+
       services.AddScoped(sp => sp.GetService<IHttpContextAccessor>()?.HttpContext?.Session);
       services.AddSession(options =>
       {
