@@ -172,6 +172,15 @@ public class Startup
 
    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
    {
+      // Ensure we do not lose X-Forwarded-* Headers when behind a Proxy
+      var forwardOptions = new ForwardedHeadersOptions {
+         ForwardedHeaders = ForwardedHeaders.All,
+         RequireHeaderSymmetry = false
+      };
+      forwardOptions.KnownNetworks.Clear();
+      forwardOptions.KnownProxies.Clear();
+      app.UseForwardedHeaders(forwardOptions);
+
       if (env.IsDevelopment())
       {
          app.UseDeveloperExceptionPage();
@@ -179,10 +188,10 @@ public class Startup
       else
       {
          app.UseExceptionHandler("/Errors");
-         app.UseHsts();
       }
 
       app.UseSecurityHeaders(SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment()));
+      app.UseHsts();
 
       app.UseCookiePolicy(new CookiePolicyOptions { Secure = CookieSecurePolicy.Always, HttpOnly = HttpOnlyPolicy.Always });
 
@@ -190,12 +199,6 @@ public class Startup
 
       app.UseHttpsRedirection();
       app.UseHealthChecks("/health");
-
-      //For Azure AD redirect uri to remain https
-      ForwardedHeadersOptions forwardOptions = new() { ForwardedHeaders = ForwardedHeaders.All, RequireHeaderSymmetry = false };
-      forwardOptions.KnownNetworks.Clear();
-      forwardOptions.KnownProxies.Clear();
-      app.UseForwardedHeaders(forwardOptions);
 
       app.UseStaticFiles();
       app.UseRouting();
