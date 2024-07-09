@@ -12,7 +12,6 @@ public static class SecurityHeadersDefinitions
    {
       HeaderPolicyCollection policy = new HeaderPolicyCollection()
          .AddFrameOptionsDeny()
-         .AddXssProtectionBlock()
          .AddContentTypeOptionsNoSniff()
          .AddReferrerPolicyStrictOriginWhenCrossOrigin()
          .RemoveServerHeader()
@@ -43,7 +42,6 @@ public static class SecurityHeadersDefinitions
             builder.AddScriptSrc().From(ApplicationInsightsUri).UnsafeInline().WithNonce();
             builder.AddFrameAncestors().None();
          })
-         .RemoveServerHeader()
          .AddPermissionsPolicy(builder =>
          {
             builder.AddAccelerometer().None();
@@ -60,13 +58,8 @@ public static class SecurityHeadersDefinitions
             builder.AddPictureInPicture().None();
             builder.AddSyncXHR().None();
             builder.AddUsb().None();
-         });
-
-      if (!isDev)
-      {
-         // max age = one year in seconds
-         policy.AddStrictTransportSecurityMaxAgeIncludeSubDomains(maxAgeInSeconds: 60 * 60 * 24 * 365);
-      }
+         })
+         .AddXssProtectionDisabled();
 
       return policy;
    }
