@@ -5,33 +5,33 @@
 
 @if (Model.Decision != null)
 {
-        <dl class="govuk-summary-list">
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Decision
-                </dt>
-                <dd class="govuk-summary-list__value">
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Decision
+            </dt>
+            <dd class="govuk-summary-list__value">
 
-                    @{
-                        var decisionName = Model.Decision.GetDecisionAsFriendlyName();
-                        var decisionClass = Model.Decision.Decision switch
-                        {
-                            AdvisoryBoardDecisions.Approved => "govuk-tag--green",
-                            AdvisoryBoardDecisions.Deferred => "govuk-tag--orange",
-                            AdvisoryBoardDecisions.Withdrawn => "govuk-tag--purple",
-                            _ => "govuk-tag--red"
-                        };   
-                    }
-                    @if (string.IsNullOrEmpty(decisionName))
+                @{
+                    var decisionName = Model.Decision.GetDecisionAsFriendlyName();
+                    var decisionClass = Model.Decision.Decision switch
                     {
-                        <span class="empty">Empty</span>
-                    }
-                    else
-                    {
-                        <strong class="govuk-tag @decisionClass" id="decision">@decisionName</strong>
-                    }
+                        AdvisoryBoardDecisions.Approved => "govuk-tag--green",
+                        AdvisoryBoardDecisions.Deferred => "govuk-tag--orange",
+                        AdvisoryBoardDecisions.Withdrawn => "govuk-tag--purple",
+                        _ => "govuk-tag--red"
+                    };
+                }
+                @if (string.IsNullOrEmpty(decisionName))
+                {
+                    <span class="empty">Empty</span>
+                }
+                else
+                {
+                    <strong class="govuk-tag @decisionClass" id="decision">@decisionName</strong>
+                }
 
-                </dd>
+            </dd>
             <dd class="govuk-summary-list__actions"></dd>
         </div>
 
@@ -130,29 +130,40 @@
                 <dd class="govuk-summary-list__actions"></dd>
             </div>
         }
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Decision maker's role
-                </dt>
-                <dd class="govuk-summary-list__value">
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Decision maker's role
+            </dt>
+            <dd class="govuk-summary-list__value">
 
-                    @if (Model.Decision != null && Model.Decision.DecisionMadeBy != null)
-                    {
-                        <div id="decision-made-by">@Model.Decision.DecisionMadeBy.ToDescription()</div>
-                    }
-                    else
-                    {
-                        <span class="empty">Empty</span>
-                    }
+                @if (Model.Decision != null && Model.Decision.DecisionMadeBy != null)
+                {
+                    <div id="decision-made-by">@Model.Decision.DecisionMadeBy.ToDescription()</div>
+                }
+                else
+                {
+                    <span class="empty">Empty</span>
+                }
 
-                </dd>
+            </dd>
             <dd class="govuk-summary-list__actions"></dd>
         </div>
 
         <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-                Decision maker's name
-            </dt>
+
+            @if (Model.Decision.Decision == AdvisoryBoardDecisions.DAORevoked)
+            {
+                <dt class="govuk-summary-list__key">
+                    Minister's name
+                </dt>
+            }
+            else
+            {
+                <dt class="govuk-summary-list__key">
+                    Decision maker's name
+                </dt>
+            }
+
             <dd class="govuk-summary-list__value">
 
                 @if (Model.Decision != null && Model.Decision.DecisionMakerName != null)
@@ -169,56 +180,56 @@
         </div>
 
 
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Date of decision
+            </dt>
+            <dd class="govuk-summary-list__value" id="decision-date">
+
+                @if (Model.Decision.AdvisoryBoardDecisionDate.HasValue)
+                {
+                    <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.ToString(Constants.DateTimeFormat)</span>
+                }
+                else
+                {
+                    <span class="empty">Empty</span>
+                }
+
+            </dd>
+            <dd class="govuk-summary-list__actions"></dd>
+        </div>
+        @if (Model.AcademyTypeAndRoute != "Sponsored")
+        {
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                    Date of decision
+                    Date academy order (AO) sent
                 </dt>
-                <dd class="govuk-summary-list__value" id="decision-date">
+                <dd class="govuk-summary-list__value" id="academy-order-date">
 
-                    @if (Model.Decision.AdvisoryBoardDecisionDate.HasValue)
+                    @if (Model.Decision.AcademyOrderDate.HasValue)
                     {
-                        <span>@Model.Decision.AdvisoryBoardDecisionDate.Value.ToString(Constants.DateTimeFormat)</span>
+                        <span>@Model.Decision.AcademyOrderDate.Value.ToString(Constants.DateTimeFormat)</span>
                     }
                     else
                     {
                         <span class="empty">Empty</span>
                     }
-
                 </dd>
-            <dd class="govuk-summary-list__actions"></dd>            
+                <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-ao-date-btn">
+                        Change<span class="govuk-visually-hidden"> Date academy order (AO) sent</span>
+                    </a>
+                </dd>
             </div>
-            @if (Model.AcademyTypeAndRoute != "Sponsored")
-            {
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Date academy order (AO) sent
-                    </dt>
-                    <dd class="govuk-summary-list__value" id="academy-order-date">
+        }
+    </dl>
 
-                        @if (Model.Decision.AcademyOrderDate.HasValue)
-                        {
-                            <span>@Model.Decision.AcademyOrderDate.Value.ToString(Constants.DateTimeFormat)</span>
-                        }
-                        else
-                        {
-                            <span class="empty">Empty</span>
-                        }                       
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-ao-date-btn">
-                            Change<span class="govuk-visually-hidden"> Date academy order (AO) sent</span>
-                        </a>
-                    </dd>
-                </div>
-            }
-        </dl>
-
-        <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
-            You can click the button to change the recorded decision.
-        </p>
-        <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link" role="button">
-            Change your decision
-        </a>
+    <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
+        You can click the button to change the recorded decision.
+    </p>
+    <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link" role="button">
+        Change your decision
+    </a>
 }
 else
 {
