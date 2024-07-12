@@ -65,9 +65,6 @@ public class AcademyConversionProjectPostModel
    [Display(Name = "Form 7 Received Date")]
    public DateTime? Form7ReceivedDate { get; set; }
 
-   [BindProperty(Name = "proposed-academy-opening-date")]
-   public DateTime? ProposedAcademyOpeningDate { get; set; }
-
    [BindProperty(Name = "school-and-trust-information-complete")]
    [ModelBinder(BinderType = typeof(CheckboxInputModelBinder))]
    public bool? SchoolAndTrustInformationSectionComplete { get; set; }

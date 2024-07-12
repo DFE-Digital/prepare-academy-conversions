@@ -262,7 +262,7 @@ public class HtbTemplate
          SponsorName = project.SponsorName ?? "Not applicable",
          AcademyTypeRouteAndConversionGrant = $"{project.AcademyTypeAndRoute} - {project.ConversionSupportGrantAmount?.ToMoneyString(true)}",
          ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
-         ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(),
+         ProposedAcademyOpeningDate = project.ProposedConversionDate.ToDateString(),
          SchoolPhase = schoolOverview.SchoolPhase,
          AgeRange = !string.IsNullOrEmpty(schoolOverview.AgeRangeLower) && !string.IsNullOrEmpty(schoolOverview.AgeRangeUpper)
             ? $"{schoolOverview.AgeRangeLower} to {schoolOverview.AgeRangeUpper}"

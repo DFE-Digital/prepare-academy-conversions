@@ -21,6 +21,7 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
    public async Task<IViewComponentResult> InvokeAsync()
    {
       int id = int.Parse(ViewContext.RouteData.Values["id"]?.ToString() ?? string.Empty);
+      bool isPreview = bool.Parse(ViewData["IsPreview"]?.ToString());
 
       ApiResponse<AcademyConversionProject> response = await _repository.GetProjectById(id);
       if (!response.Success)
@@ -32,6 +33,7 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
 
       SchoolAndTrustInformationViewModel viewModel = new()
       {
+         IsPreview = isPreview,
          Id = project.Id.ToString(),
          IsDao = project.AcademyTypeAndRoute is AcademyTypeAndRoutes.Sponsored,
          RecommendationForProject = project.RecommendationForProject,
@@ -40,6 +42,7 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
          HeadTeacherBoardDate = project.HeadTeacherBoardDate.ToDateString(),
          PreviousHeadTeacherBoardDate = project.PreviousHeadTeacherBoardDateQuestion == "No" ? "No" : project.PreviousHeadTeacherBoardDate.ToDateString(),
          PreviousHeadTeacherBoardLink = project.PreviousHeadTeacherBoardLink,
+         ProposedAcademyOpeningDate = project.ProposedConversionDate.ToDateString(),
          SchoolName = project.SchoolName,
          SchoolUrn = project.Urn.ToString(),
          SchoolType = project?.SchoolType?.ToString(),
@@ -57,7 +60,6 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
          ConversionSupportGrantType = project.ConversionSupportGrantType,
          ConversionSupportGrantEnvironmentalImprovementGrant = project.ConversionSupportGrantEnvironmentalImprovementGrant,
          ConversionSupportNumberOfSites = project?.ConversionSupportGrantNumberOfSites,
-         ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate.ToDateString(true),
          DaoPackSentDate = project.DaoPackSentDate.ToDateString()
       };
 

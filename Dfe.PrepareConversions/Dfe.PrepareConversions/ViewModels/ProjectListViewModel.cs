@@ -12,7 +12,7 @@ public class ProjectListViewModel : ProjectTypeBase
    public string ApplicationReceivedDate { get; init; }
    public string AssignedDate { get; set; }
    public string HeadTeacherBoardDate { get; init; }
-   public string ProposedAcademyOpeningDate { get; init; }
+   public string ProposedConversionDate { get; init; }
    public ProjectStatus Status { get; init; }
    public string AssignedUserFullName { get; init; }
    public DateTime? CreatedOn { get; init; }
@@ -20,7 +20,7 @@ public class ProjectListViewModel : ProjectTypeBase
    public string Region { get; set; }
 
    public bool ShowHtbDate => string.IsNullOrWhiteSpace(HeadTeacherBoardDate) is false;
-   public bool ShowProposedOpeningDate => string.IsNullOrWhiteSpace(ProposedAcademyOpeningDate) is false;
+   public bool ShowProposedOpeningDate => string.IsNullOrWhiteSpace(ProposedConversionDate) is false;
 
    protected override string TypeAndRouteValue => TypeAndRoute;
 

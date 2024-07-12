@@ -32,4 +32,6 @@ public class SchoolAndTrustInformationViewModel
    public bool IsPRU => SchoolType?.ToLower().Equals("pupil referral unit") ?? false;
    public bool IsSEN => SchoolType?.ToLower().Contains("special") ?? false;
    public bool WasForm7Received { get; set; }
+
+   public bool IsPreview { get; set; }
 }

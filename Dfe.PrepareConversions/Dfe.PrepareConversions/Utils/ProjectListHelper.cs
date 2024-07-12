@@ -23,7 +23,7 @@ namespace Dfe.PrepareConversions.Utils
             ApplicationReceivedDate = academyConversionProject.ApplicationReceivedDate.ToDateString(),
             AssignedDate = academyConversionProject.AssignedDate.ToDateString(),
             HeadTeacherBoardDate = academyConversionProject.HeadTeacherBoardDate.ToDateString(),
-            ProposedAcademyOpeningDate = academyConversionProject.ProposedAcademyOpeningDate.ToDateString(),
+            ProposedConversionDate = academyConversionProject.ProposedConversionDate.ToDateString(),
             Status = MapProjectStatus(academyConversionProject.ProjectStatus),
             AssignedUserFullName = academyConversionProject.AssignedUser?.FullName,
             CreatedOn = academyConversionProject.CreatedOn,

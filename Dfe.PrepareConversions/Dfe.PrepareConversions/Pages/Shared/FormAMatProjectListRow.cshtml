@@ -32,7 +32,7 @@
             </span>
             <span if="Model.Item.ShowProposedOpeningDate" id="@("opening-date-" + Model.Index)">
                 Opening date:
-                <span if="Model.Item.ProposedAcademyOpeningDate.IsPresent()">@Model.Item.ProposedAcademyOpeningDate</span>
+                <span if="Model.Item.ProposedConversionDate.IsPresent()">@Model.Item.ProposedConversionDate</span>
             </span>
         </p>
     </td>
