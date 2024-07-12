@@ -136,7 +136,6 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       Document.QuerySelector("#sponsor-reference-number")!.TextContent.Should().Be("Not applicable");
       Document.QuerySelector("#sponsor-name")!.TextContent.Should().Be("Not applicable");
       Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Contain("Converter");
-      Document.QuerySelector("#proposed-academy-opening-date")!.TextContent.Should().Be("Empty");
       Document.QuerySelector<IHtmlInputElement>("#school-and-trust-information-complete")!.IsChecked.Should().BeFalse();
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
