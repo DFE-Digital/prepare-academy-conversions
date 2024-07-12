@@ -95,7 +95,7 @@
 
                                     @if (plan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.ToConversion)
                                     {
-                                        @(Model.Project.ProposedAcademyOpeningDate.HasValue ? Model.Project.ProposedAcademyOpeningDate.Value.ToString(Constants.DateTimeFormat) : $"{SchoolImprovementPlanExpectedEndDate.ToConversion.ToDescription()} - date not set")
+                                        @(Model.Project.ProposedConversionDate.HasValue ? Model.Project.ProposedConversionDate.Value.ToString(Constants.DateTimeFormat) : $"{SchoolImprovementPlanExpectedEndDate.ToConversion.ToDescription()} - date not set")
                                     }
 
                                     @if (plan.ExpectedEndDate.Value == SchoolImprovementPlanExpectedEndDate.Unknown)

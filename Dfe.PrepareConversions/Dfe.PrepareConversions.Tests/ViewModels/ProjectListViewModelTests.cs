@@ -22,10 +22,10 @@ public class ProjectListViewModelTests
    [Fact]
    public void Should_show_the_proposed_board_date_when_the_value_is_present()
    {
-      new ProjectListViewModel { ProposedAcademyOpeningDate = DateTime.Today.ToString(CultureInfo.InvariantCulture) }
+      new ProjectListViewModel { ProposedConversionDate = DateTime.Today.ToString(CultureInfo.InvariantCulture) }
          .ShowProposedOpeningDate.Should().BeTrue();
 
-      new ProjectListViewModel { ProposedAcademyOpeningDate = default }
+      new ProjectListViewModel { ProposedConversionDate = default }
          .ShowProposedOpeningDate.Should().BeFalse();
    }
 

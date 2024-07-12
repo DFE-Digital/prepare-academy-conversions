@@ -3,9 +3,10 @@
 @using Dfe.PrepareConversions.Data.Models
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
-   Model.SuccessPage = Links.TaskList.Index.Page;
-   ViewData["Title"] = "Confirm school and trust information and project dates";
-   ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
+    Model.SuccessPage = Links.TaskList.Index.Page;
+    ViewData["Title"] = "Confirm school and trust information and project dates";
+    ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
+    ViewData["IsPreview"] = false;
 }
 
 @section BeforeMain

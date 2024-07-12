@@ -158,7 +158,6 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          ClearedBy = AcademyConversionProject.ClearedBy,
          Form7Received = AcademyConversionProject.Form7Received,
          Form7ReceivedDate = AcademyConversionProject.Form7ReceivedDate == default(DateTime) ? null : AcademyConversionProject.Form7ReceivedDate,
-         ProposedAcademyOpeningDate = AcademyConversionProject.ProposedAcademyOpeningDate,
          PreviousHeadTeacherBoardDateQuestion = AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion,
          PreviousHeadTeacherBoardDate =
             AcademyConversionProject.PreviousHeadTeacherBoardDateQuestion == "No" ? default(DateTime) : AcademyConversionProject.PreviousHeadTeacherBoardDate,

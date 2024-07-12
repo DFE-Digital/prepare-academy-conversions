@@ -48,7 +48,6 @@ public class ProjectViewModel : ProjectTypeBase
       AcademyTypeAndRoute = project.AcademyTypeAndRoute;
       Form7Received = project.Form7Received;
       Form7ReceivedDate = project.Form7ReceivedDate;
-      ProposedAcademyOpeningDate = project.ProposedAcademyOpeningDate;
       SchoolAndTrustInformationSectionComplete = project.SchoolAndTrustInformationSectionComplete ?? false;
       ConversionSupportGrantAmount = project.ConversionSupportGrantAmount ?? 0;
       ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason;
@@ -173,7 +172,6 @@ public class ProjectViewModel : ProjectTypeBase
    public string SponsorReferenceNumber { get; set; }
    public string SponsorName { get; set; }
    public string AcademyTypeAndRoute { get; set; }
-   public DateTime? ProposedAcademyOpeningDate { get; set; }
    public bool SchoolAndTrustInformationSectionComplete { get; set; }
    public decimal ConversionSupportGrantAmount { get; set; }
    public string ConversionSupportGrantChangeReason { get; set; }

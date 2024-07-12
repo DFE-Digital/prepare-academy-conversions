@@ -42,7 +42,7 @@ public class ProjectListIntegrationTests : BaseIntegrationTests
          Document.QuerySelector($"#application-to-join-trust-{i}")?.TextContent.Should().Contain(project.NameOfTrust);
          Document.QuerySelector($"#local-authority-{i}")?.TextContent.Should().Contain(project.LocalAuthority);
          Document.QuerySelector($"#Advisory-Board-date-{i}")?.TextContent.Should().Contain(project.HeadTeacherBoardDate.ToDateString());
-         Document.QuerySelector($"#opening-date-{i}")?.TextContent.Should().Contain(project.ProposedAcademyOpeningDate.ToDateString());
+         Document.QuerySelector($"#opening-date-{i}")?.TextContent.Should().Contain(project.ProposedConversionDate.ToDateString());
          Document.QuerySelector($"#application-received-date-{i}")?.TextContent.Should().Contain(project.CreatedOn.ToDateString());
          Document.QuerySelector($"#delivery-officer-{i}")?.TextContent.Should().Contain(project.AssignedUser.FullName);
       }

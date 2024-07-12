@@ -44,7 +44,6 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Contain(project.AcademyTypeAndRoute);
       Document.QuerySelector("#grant-funding-amount")!.TextContent.Should().Contain(project.ConversionSupportGrantAmount?.ToMoneyString(true));
       Document.QuerySelector("#grant-funding-reason")!.TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
-      Document.QuerySelector("#proposed-academy-opening-date")!.TextContent.Should().Be(project.ProposedAcademyOpeningDate.ToDateString(true));
    }
 
    [Fact]
@@ -113,7 +112,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
          project.SponsorName = null;
          project.ConversionSupportGrantAmount = null;
          project.ConversionSupportGrantChangeReason = null;
-         project.ProposedAcademyOpeningDate = null;
+         project.ProposedConversionDate = null;
          project.SchoolAndTrustInformationSectionComplete = false;
       });
       AddPatchProject(project, r => r.SchoolAndTrustInformationSectionComplete, false);
@@ -137,7 +136,6 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
       Document.QuerySelector("#sponsor-reference-number")!.TextContent.Should().Be("Not applicable");
       Document.QuerySelector("#sponsor-name")!.TextContent.Should().Be("Not applicable");
       Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Contain("Converter");
-      Document.QuerySelector("#proposed-academy-opening-date")!.TextContent.Should().Be("Empty");
       Document.QuerySelector<IHtmlInputElement>("#school-and-trust-information-complete")!.IsChecked.Should().BeFalse();
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();

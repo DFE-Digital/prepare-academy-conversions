@@ -66,7 +66,7 @@ public abstract class SchoolImprovementPlanBaseModel : PageModel
       SchoolName = project.Body.SchoolName;
       AcademyTypeAndRoute = project.Body.AcademyTypeAndRoute;
       AdvisoryBoradDate = project.Body.HeadTeacherBoardDate;
-      ConversionDate = project.Body.ProposedAcademyOpeningDate;
+      ConversionDate = project.Body.ProposedConversionDate;
    }
 
    public override async Task OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, PageHandlerExecutionDelegate next)
