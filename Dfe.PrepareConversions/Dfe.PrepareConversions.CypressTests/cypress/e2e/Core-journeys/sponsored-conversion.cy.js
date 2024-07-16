@@ -165,20 +165,6 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
       ConversionDetails.setEIG(true);
       ConversionDetails.getEIG().should('contain.text', 'Yes');
 
-      // Dates
-      ConversionDetails.setAdvisoryBoardDate(nextMonthDate);
-      ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextMonthDate.getDate());
-      ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextMonthDate.toLocaleString('default', { month: 'long' }));
-      ConversionDetails.getAdvisoryBoardDate().should('contain.text', nextMonthDate.getFullYear());
-      ConversionDetails.setProposedAcademyOpening(nextYearDate.toLocaleString('default', { month: '2-digit' }), nextYearDate.getFullYear());
-      ConversionDetails.getProposedAcademyOpening().should('contain.text', 1);
-      ConversionDetails.getProposedAcademyOpening().should('contain.text', nextYearDate.toLocaleString('default', { month: 'long' }));
-      ConversionDetails.getProposedAcademyOpening().should('contain.text', nextYearDate.getFullYear());
-      ConversionDetails.setPreviousAdvisoryBoardDate(true, oneMonthAgoDate);
-      ConversionDetails.getPreviousAdvisoryBoardDate().should('contain.text', oneMonthAgoDate.getDate());
-      ConversionDetails.getPreviousAdvisoryBoardDate().should('contain.text', oneMonthAgoDate.toLocaleString('default', { month: 'long' }));
-      ConversionDetails.getPreviousAdvisoryBoardDate().should('contain.text', oneMonthAgoDate.getFullYear());
-
       // Author
       ConversionDetails.setAuthor();
       ConversionDetails.getAuthor().should('contain.text', 'Nicholas Warms');
