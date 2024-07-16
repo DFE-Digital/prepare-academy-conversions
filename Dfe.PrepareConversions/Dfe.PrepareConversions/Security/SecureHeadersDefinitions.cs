@@ -31,15 +31,18 @@ public static class SecurityHeadersDefinitions
          {
             builder.AddObjectSrc().None();
             builder.AddBlockAllMixedContent();
-            builder.AddImgSrc().Self().From("data:").From(GoogleAnalyticsUri)
+            builder.AddImgSrc().Self()
+               .From("data:")
+               .From(GoogleAnalyticsUri)
                .From(GoogleTagManagerUri);
             builder.AddFormAction().Self();
             builder.AddFormAction().OverHttps();
             builder.AddFontSrc().Self();
             builder.AddStyleSrc().Self();
             builder.AddBaseUri().Self();
-            builder.AddScriptSrc().From(GoogleTagManagerUri).UnsafeInline().WithNonce();
-            builder.AddScriptSrc().From(ApplicationInsightsUri).UnsafeInline().WithNonce();
+            builder.AddScriptSrc()
+               .From(GoogleTagManagerUri)
+               .From(ApplicationInsightsUri).UnsafeInline().WithNonce();
             builder.AddFrameAncestors().None();
          })
          .AddPermissionsPolicy(builder =>
