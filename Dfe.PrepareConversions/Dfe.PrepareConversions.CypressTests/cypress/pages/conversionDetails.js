@@ -150,32 +150,6 @@ export default class ConversionDetails extends BasePage {
         return cy.get(this.selectors.EIGValue)
     }
 
-    // Dates
-
-    static setAdvisoryBoardDate(date = today) {
-        cy.checkPath(this.path)
-        cy.get(this.selectors.advisoryBoardDateLink).click()
-        cy.enterDate(this.selectors.advisoryBoardDateInput, date.getDate(), date.getMonth() + 1, date.getFullYear())
-        cy.get(this.selectors.saveButton).click()
-    }
-
-    static getAdvisoryBoardDate() {
-        cy.checkPath(this.path)
-        return cy.get(this.selectors.advisoryBoardDateValue)
-    }
-
-    static setProposedAcademyOpening(month, year) {
-        cy.checkPath(this.path)
-        cy.get(this.selectors.proposedOpeningLink).click()
-        cy.get(this.selectors.proposedOpeningRadioButton(month, year)).check()
-        cy.get(this.selectors.saveButton).click()
-    }
-
-    static getProposedAcademyOpening() {
-        cy.checkPath(this.path)
-        return cy.get(this.selectors.proposedOpeningValue)
-    }
-
     static setPreviousAdvisoryBoardDate(previousBoard = true, date = today) {
         cy.checkPath(this.path)
         cy.get(this.selectors.previousAdvisoryBoardLink).click()
