@@ -1,7 +1,5 @@
 @page "/groups/project-list"
 @model Dfe.PrepareConversions.Pages.Groups.ProjectList
-@using Dfe.PrepareConversions.Pages.Shared
-
 
 @{
    ViewData["Title"] = "Groups";
@@ -12,10 +10,10 @@
       <h1 class="govuk-heading-xl" data-cy="select-heading">Groups</h1>
       <p class="govuk-body">Schools and academies joining an existing trust together.</p>
       <p class="govuk-body">Groups can include any type of conversion or transfer.</p>
-      <a asp-page="@Links.Groups.CreateANewGroup" role="button" draggable="false" class="govuk-button" data-module="govuk-button" data-cy="create_new_group">
+      <a asp-page="@Links.Groups.CreateANewGroup.Page"  draggable="false" class="govuk-button" data-module="govuk-button">
          Create a new group
       </a>
-       <div class="govuk-inset-text">
+      <div class="govuk-inset-text">
           There are no groups yet. Create groups to see them in this list.
           <br/>
           <br/>

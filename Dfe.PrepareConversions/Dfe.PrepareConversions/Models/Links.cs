@@ -279,7 +279,7 @@ public static class Links
    
    public static class Groups
    {
-      public static readonly LinkItem CreateANewGroup = AddLinkItem(page: "/Groups/CreateANewGroup");
+      public static readonly LinkItem CreateANewGroup = AddLinkItem(backText: "Back", page: "/Groups/CreateANewGroup");
    }
 }
 
