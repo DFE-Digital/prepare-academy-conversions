@@ -187,11 +187,11 @@
     <footer class="govuk-footer" role="contentinfo">
         <div class="govuk-width-container">
             <div class="govuk-footer__navigation">
-                <div class="govuk-footer__section govuk-grid-column-two-thirds">
+                <div class="govuk-footer__section govuk-grid-column-two-thirds" data-cy="get-support-section">
                     <h2 class="govuk-footer__heading govuk-heading-m">Get help</h2>
                     <ul class="govuk-footer__list govuk-footer__list--column-1">
                         <li class="govuk-footer__list-item">
-                            <a class="govuk-footer__link" href="mailto:@Configuration["SupportEmail"]?subject=Prepare%20conversions%20and%20transfers:%20support%20query">
+                            <a data-cy="get-support-email"  class="govuk-footer__link" href="mailto:@Configuration["SupportEmail"]?subject=Prepare%20conversions%20and%20transfers:%20support%20query">
                                 Email Service Support for help with using this system
                             </a>
                             <p>We aim to respond within 5 working days, or one working day for more urgent queries.</p>
@@ -207,7 +207,7 @@
                     <h2 class="govuk-footer__heading govuk-heading-m">Give feedback</h2>
                     <ul class="govuk-footer__list">
                         <li class="govuk-footer__list-item">
-                            <a class="govuk-footer__link" href="@Configuration["FeedbackLink"]" rel="noreferrer noopener" target="_blank">Give feedback (opens in a new tab)</a>
+                            <a class="govuk-footer__link" id="footer-feedback-link" href="@Configuration["FeedbackLink"]" rel="noreferrer noopener" target="_blank">Give feedback (opens in a new tab)</a>
                         </li>
                         <li class="govuk-footer__list-item">
                             <a class="govuk-footer__link" href="@Configuration["SuggestChangeLink"]" rel="noreferrer noopener" target="_blank">Suggest a change (opens in a new tab)</a>
@@ -221,7 +221,7 @@
                     <h2 class="govuk-visually-hidden">Support links</h2>
                     <ul class="govuk-footer__inline-list">
                         <li class="govuk-footer__inline-list-item">
-                            <a class="govuk-footer__link" asp-page="@Links.Public.Accessibility.Page">
+                            <a data-test="accessibility-statement"  class="govuk-footer__link" asp-page="@Links.Public.Accessibility.Page">
                                 Accessibility statement
                             </a>
                         </li>
