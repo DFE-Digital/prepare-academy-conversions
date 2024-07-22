@@ -35,8 +35,8 @@
         <div class="app-task-list">
             <ul class="app-task-list__items govuk-!-padding-left-0">
                 <li class="app-task-list__item">
-                    <span class="app-task-list__task-name">
-                        <a class="govuk-link" asp-page="@Links.ProjectDates.ConfirmProjectDates.Page" asp-route-id="@Model.Project.Id" aria-describedby="la-info-template-status">
+                    <span class="app-task-list__task-name" data-cy="task-name">
+                        <a class="govuk-link" asp-page="@Links.ProjectDates.ConfirmProjectDates.Page" asp-route-id="@Model.Project.Id" aria-describedby="la-info-template-status"  data-cy="confirm_project_dates">
                             Confirm project dates
                         </a>
                     </span>
