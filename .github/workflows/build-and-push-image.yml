@@ -44,7 +44,7 @@ jobs:
       docker-image-name: 'a2bint-app'
       docker-build-file-name: './Dockerfile'
       environment: ${{ needs.set-env.outputs.environment }}
-      annotate-release: ${{ needs.set-env.outputs.environment == 'dev' }}
+      annotate-release: true
     secrets:
       azure-acr-credentials: ${{ secrets.ACR_CREDENTIALS }}
       azure-acr-name: ${{ secrets.ACR_NAME }}
