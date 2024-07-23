@@ -193,39 +193,45 @@
             @RenderBody()
         </main>
     </div>
-    <footer class="govuk-footer " role="contentinfo">
-        <div class="dfe-width-container">
+
+    <footer class="govuk-footer" role="contentinfo">
+        <div class="govuk-width-container">
             <div class="govuk-footer__navigation">
-                <div class="govuk-footer__section govuk-grid-column-one-half" data-cy="get-support-section">
-                    <h2 class="govuk-footer__heading govuk-heading-m">Get support</h2>
-                    <ul class="govuk-footer__list govuk-footer__list--columns-1">
+                <div class="govuk-footer__section govuk-grid-column-two-thirds" data-cy="get-support-section">
+                    <h2 class="govuk-footer__heading govuk-heading-m">Get help</h2>
+                    <ul class="govuk-footer__list govuk-footer__list--column-1">
                         <li class="govuk-footer__list-item">
-                            Email
-                            <a class="govuk-footer__link" data-cy="get-support-email" href="mailto:@Configuration["SupportEmail"]?subject=Prepare%20conversions%20and%20transfers:%20support%20query">
-                                @Configuration["SupportEmail"]
+                            <a data-cy="get-support-email"  class="govuk-footer__link" href="mailto:@Configuration["SupportEmail"]?subject=Prepare%20conversions%20and%20transfers:%20support%20query">
+                                Email Service Support for help with using this system
                             </a>
-                    </ul>
-                </div>
-                <div class="govuk-footer__section govuk-grid-column-one-half">
-                    <h2 class="govuk-footer__heading govuk-heading-m">Give feedback</h2>
-                    <ul class="govuk-footer__list govuk-footer__list--columns-1">
+                            <p>We aim to respond within 5 working days, or one working day for more urgent queries.</p>
+                        </li>
                         <li class="govuk-footer__list-item">
-                            <a class="govuk-footer__link" rel="noopener" href="@Configuration["FeedbackLink"]" target="_blank" id="footer-feedback-link">
-                                Give feedback on Prepare conversions and transfers (opens in a new tab)
+                            <a class="govuk-footer__link" rel="noreferrer noopener" target="_blank" href="https://educationgovuk.sharepoint.com/sites/lvewp00299/SitePages/Prepare-Conversions-and-Transfers.aspx">
+                                How to use this system (opens in a new tab)
                             </a>
                         </li>
                     </ul>
                 </div>
+                <div class="govuk-footer__section govuk-grid-column-one-third">
+                    <h2 class="govuk-footer__heading govuk-heading-m">Give feedback</h2>
+                    <ul class="govuk-footer__list">
+                        <li class="govuk-footer__list-item">
+                            <a class="govuk-footer__link" id="footer-feedback-link" href="@Configuration["FeedbackLink"]" rel="noreferrer noopener" target="_blank">Give feedback (opens in a new tab)</a>
+                        </li>
+                        <li class="govuk-footer__list-item">
+                            <a class="govuk-footer__link" href="@Configuration["SuggestChangeLink"]" rel="noreferrer noopener" target="_blank">Suggest a change (opens in a new tab)</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="dfe-width-container">
+            <hr class="govuk-footer__section-break">
             <div class="govuk-footer__meta">
-                <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+                <div class="govuk-footer__meta-item govuk-footer__meta-item--grow dfe-footer__meta-item--grow">
                     <h2 class="govuk-visually-hidden">Support links</h2>
                     <ul class="govuk-footer__inline-list">
                         <li class="govuk-footer__inline-list-item">
-                            <a class="govuk-footer__link" asp-page="@Links.Public.Accessibility.Page"
-                               data-test="accessibility-statement">
+                            <a data-test="accessibility-statement"  class="govuk-footer__link" asp-page="@Links.Public.Accessibility.Page">
                                 Accessibility statement
                             </a>
                         </li>
