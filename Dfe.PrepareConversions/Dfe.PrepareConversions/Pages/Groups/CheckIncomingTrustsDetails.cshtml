@@ -1,0 +1,75 @@
+@page "/groups/check-incoming-trusts-details"
+@model Dfe.PrepareConversions.Pages.Groups.CheckIncomingTrustsDetailsModel
+
+@{
+   ViewData["Title"] = "Check the incoming trusts details";
+}
+
+<div class="govuk-grid-row" xmlns="http://www.w3.org/1999/html">
+   <div class="govuk-grid-column-full">
+      <span class="govuk-caption-l">Create a new group</span>
+      <h1 class="govuk-heading-xl" data-cy="select-heading">Check the incoming trust's details</h1>
+      <span class="govuk-caption-l">Make sure you have the correct trust.</span>
+      <br>
+      <h2 class="govuk-heading-l" data-cy="select-heading">Incoming trust</h2>
+      <dl class="govuk-summary-list">
+         <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+               Trust name
+            </dt>
+            <dd class="govuk-summary-list__value">
+               @Model.Trust.Name
+            </dd>
+            <dd class="govuk-summary-list__actions">
+               <a asp-page="@Links.Groups.WhichTrustWillTheGroupJoin.Page">Change<span class="govuk-visually-hidden"> name</span></a>
+            </dd>
+         </div>
+         <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+               UKPRN
+            </dt>
+            <dd class="govuk-summary-list__value">
+               @Model.Trust.Ukprn
+            </dd>
+            <dd class="govuk-summary-list__actions">
+               <a class="govuk-link"><span class="govuk-visually-hidden"></span></a>
+            </dd>
+         </div>
+         <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+               Companies house number
+            </dt>
+            <dd class="govuk-summary-list__value">
+               @Model.Trust.CompaniesHouseNumber
+            </dd>
+            <dd class="govuk-summary-list__actions">
+               <a class="govuk-link">
+                  <span class="govuk-visually-hidden"></span>
+               </a>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+               <a class="govuk-link">
+                  <span class="govuk-visually-hidden"></span>
+               </a>
+            </dd>
+         </div>
+         <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+               Address
+            </dt>
+            <dd class="govuk-summary-list__value">
+               @Model.Trust.Address.Street<br>@Model.Trust.Address.Town<br>@Model.Trust.Address.Postcode
+            </dd>
+            <dd class="govuk-summary-list__actions">
+               <a class="govuk-link">
+                  <span class="govuk-visually-hidden"></span>
+               </a>
+            </dd>
+         </div>
+      </dl>
+   <form method="post" data-id="form">
+      <input type="hidden" asp-for="Urn" value="@Model.Trust.Ukprn"/>
+        <button class="govuk-button" type="submit" data-id="submit">Continue</button>
+      </form>
+   </div>
+</div>

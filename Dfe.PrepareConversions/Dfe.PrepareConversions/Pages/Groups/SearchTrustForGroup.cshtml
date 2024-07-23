@@ -1,0 +1,19 @@
+@page "/groups/search-trust-for-group"
+@model Dfe.PrepareConversions.Pages.Groups.SearchTrustForGroupModel
+
+@{
+   ViewData["Title"] = "Which trust will the group join?";
+}
+
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-full">
+      <span class="govuk-caption-l">Create a new group</span>
+      <h1 class="govuk-heading-xl" data-cy="select-heading">Which trust will the group join</h1>
+      <form method="post" data-id="form">
+         <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+            <partial name="_AutoComplete" model="@Model.AutoCompleteSearchModel"/>
+         </div>
+         <button class="govuk-button" type="submit" data-id="submit">Continue</button>
+      </form>
+   </div>
+</div>

@@ -280,6 +280,9 @@ public static class Links
    public static class Groups
    {
       public static readonly LinkItem CreateANewGroup = AddLinkItem(backText: "Back", page: "/Groups/CreateANewGroup");
+      public static readonly LinkItem WhichTrustWillTheGroupJoin = AddLinkItem(page: "/Groups/SearchTrustForGroup");
+      public static readonly LinkItem CheckIncomingTrustsDetails = AddLinkItem(page: "/Groups/CheckIncomingTrustsDetails");
+      public static readonly LinkItem DoYouWantToAddConversions = AddLinkItem(page: "/Groups/DoYouWantToAddConversions");
    }
 }
 
