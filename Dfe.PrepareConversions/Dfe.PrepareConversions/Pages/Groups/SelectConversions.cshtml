@@ -1,0 +1,58 @@
+@page "/groups/select-conversions"
+@using Dfe.PrepareConversions.Data.Models
+@model Dfe.PrepareConversions.Pages.Groups.SelectConversionsModel
+
+
+@{
+   ViewData["Title"] = "Select conversions";
+}
+
+
+@section BeforeMain
+    {
+   
+    <partial name="_ErrorSummary" />
+}
+
+
+<div class="govuk-grid-row" xmlns="http://www.w3.org/1999/html">
+<div class="govuk-grid-column-two-thirds">
+   <span class="govuk-caption-l">Create a new group</span>
+   <h1 class="govuk-heading-xl" data-cy="select-heading">Select Conversion</h1>
+    
+     <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+        <div id="waste-hint" class="govuk-hint">
+           Select all that apply.
+        </div>
+        <div class="govuk-form-group" @ModelState.GetErrorStyleClass()>
+        <form method="post">
+           <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+              
+              @{
+                 int i = 0;
+                 foreach (AcademyConversionProject project in Model.ConversionProjects)
+                 {
+                    <div class="govuk-checkboxes__item" id="noconversionsselected">
+                       <input class="govuk-checkboxes__input" id="available-conversion-[@i]" name="selectedconversions" type="checkbox" value="@project.Urn">
+                       <label class="govuk-label govuk-checkboxes__label" for="available-conversion-[@i]">
+                          @project.SchoolName
+                       </label>
+                       <div class="govuk-hint govuk-checkboxes__hint">
+                          URN @project.Urn
+                       </div>
+                    </div>
+                    i++;
+                 }
+                 
+              }
+           </div>
+           <input type="hidden" asp-for="ReferenceNumber" value="@Model.ReferenceNumber"/>
+           <button class="govuk-button pt-3" data-module="govuk-button" data-cy="select-common-submitbutton">
+              Continue
+           </button>
+        </form>
+        </div>
+          </fieldset>
+</div>
+</div>
+

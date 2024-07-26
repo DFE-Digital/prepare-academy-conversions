@@ -16,6 +16,8 @@ public class PathFor
    public static string GetProjectById => "/legacy/project/{0}";
    public static string GetFormAMatProjectById => "/conversion-project/formamatproject/{0}";
    public static string UpdateProject => "/legacy/project/{0}";
+
+   public static string GetProjectsForGroup => "/conversion-project/projects-for-group/{0}";
    public static string GetFilterParameters => "/legacy/projects/status";
    public static string AddProjectNote => "/legacy/project/{0}/notes";
    public static string AddSchoolImprovementPlan => "/conversion-project/{0}/school-improvement-plans";

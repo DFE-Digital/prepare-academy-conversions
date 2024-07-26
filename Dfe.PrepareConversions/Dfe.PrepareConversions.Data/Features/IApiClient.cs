@@ -13,6 +13,7 @@ public interface IApiClient
    Task<HttpResponseMessage> GetProjectByIdAsync(int id);
    Task<HttpResponseMessage> GetFormAMatProjectById(int id);
    Task<HttpResponseMessage> UpdateProjectAsync(int id, UpdateAcademyConversionProject updateProject);
+   Task<HttpResponseMessage> GetProjectsForGroup(string id);
    Task<HttpResponseMessage> GetFilterParametersAsync();
    Task<HttpResponseMessage> GetApplicationByReferenceAsync(string id);
    Task<HttpResponseMessage> AddProjectNote(int id, AddProjectNote projectNote);

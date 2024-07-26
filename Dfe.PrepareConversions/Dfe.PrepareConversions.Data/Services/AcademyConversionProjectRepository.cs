@@ -98,6 +98,7 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
    public async Task<ApiResponse<AcademyConversionProject>> CreateProject(CreateNewProject newProject)
    {
       HttpClient httpClient = _httpClientFactory.CreateAcademisationClient();
+      
 
       ApiResponse<AcademyConversionProject> result = await _httpClientService.Post<CreateNewProject, AcademyConversionProject>(
          httpClient,
@@ -123,6 +124,21 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
 
       if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
+
+   public async Task<ApiResponse<IEnumerable<AcademyConversionProject>>> GetProjectsForGroup(string id)
+   {
+      HttpResponseMessage response = await _apiClient.GetProjectsForGroup(id);
+      
+      if (!response.IsSuccessStatusCode)
+      {
+         return new ApiResponse<IEnumerable<AcademyConversionProject>>(response.StatusCode, null);
+      }
+
+      IEnumerable<AcademyConversionProject> projects = await ReadFromJsonAndThrowIfNull<IEnumerable<AcademyConversionProject>>(response.Content);
+      return new ApiResponse<IEnumerable<AcademyConversionProject>>(response.StatusCode, projects);
+   }
+
+
 
    public async Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
    {

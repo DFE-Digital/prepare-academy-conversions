@@ -1,0 +1,78 @@
+@page "/groups/check-conversion-detailsx"
+@using Dfe.PrepareConversions.Data.Models
+@using Dfe.PrepareConversions.Utils
+@model Dfe.PrepareConversions.Pages.Groups.CheckConversionDetailsModel
+
+@section BeforeMain
+{
+   
+   <partial name="_ErrorSummary" />
+}
+
+
+<div class="govuk-grid-row" xmlns="http://www.w3.org/1999/html">
+   <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l">Create a new group</span>
+      <h1 class="govuk-heading-xl" data-cy="select-heading">Check conversion details</h1>
+      <p class="govuk-body">Check you have chosen the right conversion projects. If they are not correct, you can find and select projects again.</p>
+    @{
+       foreach (AcademyConversionProject project in Model.ConversionProjects)
+       { var projectStatus = ProjectListHelper.MapProjectStatus(@project.ProjectStatus);
+          
+             <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                   <h2 class="govuk-summary-card__title">
+                      @project.SchoolName
+                   </h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                   <dl class="govuk-summary-list">
+                      <div class="govuk-summary-list__row">
+                         <dt class="govuk-summary-list__key">
+                            School or academy name
+                         </dt>
+                         <dd class="govuk-summary-list__value">
+                            @project.SchoolName
+                         </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                         <dt class="govuk-summary-list__key">
+                            URN
+                         </dt>
+                         <dd class="govuk-summary-list__value">
+                            @project.Urn
+                         </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                         <dt class="govuk-summary-list__key">
+                            Project Status
+                         </dt>
+                         <dd class="govuk-summary-list__value">
+                            <strong class="govuk-tag govuk-tag--@projectStatus.Colour" id="project-status-@projectStatus.Colour">@projectStatus.Value</strong>
+                         </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                         <dt class="govuk-summary-list__key">
+                            Local Authority
+                         </dt>
+                         <dd class="govuk-summary-list__value">
+                            @project.LocalAuthority
+                         </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                         <dt class="govuk-summary-list__key">
+                            Region
+                         </dt>
+                         <dd class="govuk-summary-list__value">
+                            @project.Region
+                         </dd>
+                      </div>
+                   </dl>
+                </div>
+             </div>
+          }
+       
+    }
+      </div>
+     
+</div>

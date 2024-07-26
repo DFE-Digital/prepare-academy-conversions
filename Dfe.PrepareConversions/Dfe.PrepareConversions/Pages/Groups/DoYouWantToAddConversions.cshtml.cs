@@ -1,22 +1,54 @@
 using Dfe.PrepareConversions.Models;
+using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.Groups;
 
 public class DoYouWantToAddConversionsModel : PageModel
 {
-   public string Urn { get; set; }
    
-   public void OnGet(string urn)
+   
+   
+   [BindProperty]
+   public string ReferenceNumber { get; set; }
+
+   
+
+   [BindProperty]
+   public string AddConversion { get; set; }
+   
+   private readonly ErrorService _errorService;
+
+   public DoYouWantToAddConversionsModel(ErrorService errorService)
    {
-      Urn = urn.ToString();
+      _errorService = errorService;
+   }
+
+   public void OnGet(string referencenumber)
+   {
+      ReferenceNumber = referencenumber.ToString();
    }
 
 
-   public async Task<IActionResult> OnPost()
+   public async Task<IActionResult> OnPost(string referencenumber)
    {
-      return RedirectToPage(Links.Groups.CheckIncomingTrustsDetails.Page, new { Urn});
+      
+      if (AddConversion.IsNullOrEmpty())
+      {
+         ModelState.AddModelError("AddConversion", "Choose if any conversions need to be added to the group");
+         _errorService.AddErrors(ModelState.Keys, ModelState);
+         return Page();
+      }
+
+      if (AddConversion == "Yes")
+      {
+         return RedirectToPage(Links.Groups.SelectConversions.Page, new { referencenumber});
+      }
+      
+
+      return RedirectToPage(Links.Groups.CreateANewGroup.Page, new { referencenumber});
    }
 }

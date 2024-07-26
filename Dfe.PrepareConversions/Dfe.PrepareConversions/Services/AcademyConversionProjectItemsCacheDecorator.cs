@@ -84,6 +84,12 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
       return await _innerRepository.UpdateProject(id, updateProject);
    }
 
+   public async Task<ApiResponse<IEnumerable<AcademyConversionProject>>> GetProjectsForGroup(string id)
+   {
+      ApiResponse<IEnumerable<AcademyConversionProject>> projects = await _innerRepository.GetProjectsForGroup(id);
+      return projects;
+   }
+
    public async Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
    {
       return await _innerRepository.GetFilterParameters();

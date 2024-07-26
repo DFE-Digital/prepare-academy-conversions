@@ -1,4 +1,5 @@
 using Dfe.Academies.Contracts.V4.Trusts;
+using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -13,25 +14,42 @@ public class CheckIncomingTrustsDetailsModel : PageModel
    
    private readonly ITrustsRepository _trustRepository;
 
-   public string Urn { get; set; }
+   public string ReferenceNumber { get; set; }
+   
+   public bool HasConversions { get; set; }
 
    public TrustDto Trust { get; set; } = null;
+   
+   private readonly IAcademyConversionProjectRepository _academyConversionProjectRepository;
 
-   public CheckIncomingTrustsDetailsModel(ITrustsRepository trustRepository)
+   public CheckIncomingTrustsDetailsModel(ITrustsRepository trustRepository,IAcademyConversionProjectRepository academyConversionProjectRepository)
    {
       _trustRepository = trustRepository;
+      _academyConversionProjectRepository = academyConversionProjectRepository;
    }
    
-   public async Task OnGet(string urn, string ukprn)
+   public async Task OnGet(string ukprn)
    {
       if (!string.IsNullOrEmpty(ukprn))
       {
          Trust = (await _trustRepository.SearchTrusts(ukprn)).Data.FirstOrDefault();
       }
+      
+      var projects = await _academyConversionProjectRepository.GetProjectsForGroup(Trust.ReferenceNumber);
+
+      if (projects.Body.Count().Equals(0))
+      {
+         HasConversions = false;
+      }
+
+      else
+      {
+         HasConversions = true;
+      }
    }
    
-   public async Task<IActionResult> OnPost(string urn)
+   public async Task<IActionResult> OnPost(string referencenumber)
    {
-      return RedirectToPage(Links.Groups.DoYouWantToAddConversions.Page, new { urn});
+      return RedirectToPage(Links.Groups.DoYouWantToAddConversions.Page, new { referencenumber});
    }
 }

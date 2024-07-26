@@ -6,7 +6,7 @@
 }
 
 <div class="govuk-grid-row" xmlns="http://www.w3.org/1999/html">
-   <div class="govuk-grid-column-full">
+   <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l">Create a new group</span>
       <h1 class="govuk-heading-xl" data-cy="select-heading">Check the incoming trust's details</h1>
       <span class="govuk-caption-l">Make sure you have the correct trust.</span>
@@ -67,9 +67,16 @@
             </dd>
          </div>
       </dl>
-   <form method="post" data-id="form">
-      <input type="hidden" asp-for="Urn" value="@Model.Trust.Ukprn"/>
-        <button class="govuk-button" type="submit" data-id="submit">Continue</button>
-      </form>
+      @if (Model.HasConversions)
+      {
+         <form method="post" data-id="form">
+            <input type="hidden" asp-for="ReferenceNumber" value="@Model.Trust.ReferenceNumber"/>
+            <button class="govuk-button" type="submit" data-id="submit">Continue</button>
+         </form>
+      }
+      else
+      {
+          <p class="govuk-body">No conversions exist for this trust</p>
+      }
    </div>
 </div>
