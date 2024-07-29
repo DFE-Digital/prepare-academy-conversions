@@ -76,7 +76,7 @@ public static class Links
    {
       public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/ProjectList/Index");
       public static readonly LinkItem FormAMat = AddLinkItem(backText: "Back", page: "/FormAMat/ProjectList");
-      public static readonly LinkItem Groups = AddLinkItem(backText: "Back", page: "/Groups/ProjectList");
+      public static readonly LinkItem ProjectGroups = AddLinkItem(backText: "Back", page: "/Groups/ProjectList");
    }
 
    public static class ProjectNotes

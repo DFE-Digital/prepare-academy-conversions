@@ -17,7 +17,6 @@ public class CheckConversionDetailsModel : PageModel
    
    private ApiResponse<IEnumerable<AcademyConversionProject>> projects { get; set; }
    public string ReferenceNumber { get; set; }
-
    
    private readonly IAcademyConversionProjectRepository _academyConversionProjectRepository;
 

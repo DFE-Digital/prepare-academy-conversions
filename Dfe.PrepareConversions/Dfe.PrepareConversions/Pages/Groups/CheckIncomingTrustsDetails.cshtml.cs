@@ -35,17 +35,10 @@ public class CheckIncomingTrustsDetailsModel : PageModel
          Trust = (await _trustRepository.SearchTrusts(ukprn)).Data.FirstOrDefault();
       }
       
-      var projects = await _academyConversionProjectRepository.GetProjectsForGroup(Trust.ReferenceNumber);
+         var projects = await _academyConversionProjectRepository.GetProjectsForGroup(Trust.ReferenceNumber);
 
-      if (projects.Body.Count().Equals(0))
-      {
-         HasConversions = false;
-      }
 
-      else
-      {
-         HasConversions = true;
-      }
+      HasConversions = projects.Body.Count() == 0 ? false : true;
    }
    
    public async Task<IActionResult> OnPost(string referencenumber)
