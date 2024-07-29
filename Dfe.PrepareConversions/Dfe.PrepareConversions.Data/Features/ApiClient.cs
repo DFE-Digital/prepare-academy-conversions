@@ -1,5 +1,6 @@
 ﻿using Dfe.PrepareConversions.Data.Extensions;
 using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Data.Models.NewProject;
 using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
 using Dfe.PrepareConversions.Data.Services;
 using Microsoft.FeatureManagement;
@@ -196,5 +197,12 @@ public class ApiClient : IApiClient
    {
       HttpResponseMessage getHistoryResponse = await AcademisationClient.GetAsync(string.Format(PathFor.GetOpeningDateHistoryForConversionProject, id));
       return getHistoryResponse;
+   }
+   
+   public async Task<HttpResponseMessage> CreateNewProjectGroup(CreateProjectGroup createProjectGroup)
+   {
+      var test = JsonSerializer.Serialize(createProjectGroup);
+      
+      return await AcademisationClient.PostAsync(string.Format(PathFor.CreateNewProjectGroup), JsonContent.Create(createProjectGroup));
    }
 }

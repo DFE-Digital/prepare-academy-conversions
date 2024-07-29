@@ -21,9 +21,8 @@
    <h1 class="govuk-heading-xl" data-cy="select-heading">Select Conversion</h1>
     
      <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
-        <div id="waste-hint" class="govuk-hint">
-           Select all that apply.
-        </div>
+        <p class="govuk-body">The conversions you want to add must already be in prepare.</p>
+        <p class="govuk-body">Check with your line manager if the project you are looking for is not in this list.</p>
         <div class="govuk-form-group" @ModelState.GetErrorStyleClass()>
         <form method="post">
            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
@@ -48,7 +47,7 @@
            </div>
            <input type="hidden" asp-for="ReferenceNumber" value="@Model.ReferenceNumber"/>
            <button class="govuk-button pt-3" data-module="govuk-button" data-cy="select-common-submitbutton">
-              Continue
+              Confirm and continue 
            </button>
         </form>
         </div>

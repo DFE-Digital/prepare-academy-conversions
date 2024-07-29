@@ -1,6 +1,9 @@
 using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
+using Dfe.PrepareConversions.Data.Services.Interfaces;
+using Dfe.PrepareConversions.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +21,11 @@ public class CheckConversionDetailsModel : PageModel
    
    private readonly IAcademyConversionProjectRepository _academyConversionProjectRepository;
 
-   public CheckConversionDetailsModel(IAcademyConversionProjectRepository academyConversionProjectRepository)
+   private readonly IProjectGroupsRepository _projectGroupsRepository;
+   public CheckConversionDetailsModel(IAcademyConversionProjectRepository academyConversionProjectRepository, IProjectGroupsRepository projectGroupsRepository)
    {
       _academyConversionProjectRepository = academyConversionProjectRepository;
+      _projectGroupsRepository = projectGroupsRepository;
    }
    
    public async Task OnGet(string referencenumber, List<string> selectedconversions)
@@ -35,5 +40,16 @@ public class CheckConversionDetailsModel : PageModel
       {
          ConversionProjects.Add(project);
       }
+   }
+   
+   public async Task<IActionResult> OnPost(string referencenumber, List<string> selectedconversions)
+   {
+      var newGroup = new CreateProjectGroup(referencenumber,"emptyurn",selectedconversions.ConvertAll(int.Parse));
+
+      var newGroupResponse = _projectGroupsRepository.CreateNewProjectGroup(newGroup);
+
+      var newGroupConversions = newGroupResponse.Result.Body.Conversions;
+      
+      return RedirectToPage(Links.Groups.CreateANewGroup.Page, new { referencenumber});
    }
 }

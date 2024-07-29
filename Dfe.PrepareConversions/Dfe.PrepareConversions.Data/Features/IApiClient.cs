@@ -30,4 +30,6 @@ public interface IApiClient
    Task<HttpResponseMessage> SetFormAMatProjectReference(int id, SetFormAMatProjectReference setFormAMatProjectReference);
    Task<HttpResponseMessage> SetProjectDates(int id, SetProjectDatesModel updatedProjectDates);
    Task<HttpResponseMessage> GetOpeningDateHistoryForConversionProject(int id);
+   
+   Task<HttpResponseMessage> CreateNewProjectGroup(CreateProjectGroup createProjectGroup);
 }

@@ -36,4 +36,5 @@ public class PathFor
    public static string SetFormAMatProjectReference => "/conversion-project/{0}/SetFormAMatProjectReference";
    public static string SetProjectDates => "/conversion-project/{0}/SetProjectDates";
    public static string GetOpeningDateHistoryForConversionProject => "/conversion-project/{0}/conversion-date-history";
+   public static string CreateNewProjectGroup => "/project-group/create-project-group";
 }
