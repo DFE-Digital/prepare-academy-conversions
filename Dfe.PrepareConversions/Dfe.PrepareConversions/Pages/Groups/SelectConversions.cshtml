@@ -33,7 +33,7 @@
                  foreach (AcademyConversionProject project in Model.ConversionProjects)
                  {
                     <div class="govuk-checkboxes__item" id="noconversionsselected">
-                       <input class="govuk-checkboxes__input" id="available-conversion-[@i]" name="selectedconversions" type="checkbox" value="@project.Urn">
+                       <input class="govuk-checkboxes__input" id="available-conversion-[@i]" name="selectedconversions" type="checkbox" value="@project.Id">
                        <label class="govuk-label govuk-checkboxes__label" for="available-conversion-[@i]">
                           @project.SchoolName
                        </label>

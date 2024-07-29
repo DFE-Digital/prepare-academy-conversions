@@ -31,7 +31,7 @@ public class CheckConversionDetailsModel : PageModel
 
       ConversionProjects = new();
       
-      foreach (AcademyConversionProject project in projects.Body.Where((x => selectedconversions.Contains(x.Urn.ToString()))))
+      foreach (AcademyConversionProject project in projects.Body.Where((x => selectedconversions.Contains(x.Id.ToString()))))
       {
          ConversionProjects.Add(project);
       }

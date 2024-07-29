@@ -1,3 +1,4 @@
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,8 @@ public class DoYouWantToAddConversionsModel : PageModel
 
    public void OnGet(string referencenumber)
    {
-      ReferenceNumber = referencenumber.ToString();
+      ReferenceNumber = referencenumber;
+      AddConversion = AddConversion ?? "yes";
    }
 
 
