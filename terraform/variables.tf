@@ -149,6 +149,22 @@ variable "cdn_frontdoor_rate_limiting_duration_in_minutes" {
   default     = 5
 }
 
+variable "cdn_frontdoor_waf_custom_rules" {
+  description = "Map of all Custom rules you want to apply to the CDN WAF"
+  type = map(object({
+    priority : number,
+    action : string
+    match_conditions : map(object({
+      match_variable : string,
+      match_values : optional(list(string), []),
+      operator : optional(string, "Any"),
+      selector : optional(string, null),
+      negation_condition : optional(bool, false),
+    }))
+  }))
+  default = {}
+}
+
 variable "cdn_frontdoor_host_add_response_headers" {
   description = "List of response headers to add at the CDN Front Door `[{ \"Name\" = \"Strict-Transport-Security\", \"value\" = \"max-age=31536000\" }]`"
   type        = list(map(string))
