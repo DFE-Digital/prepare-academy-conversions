@@ -170,4 +170,9 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       return await _innerRepository.GetOpeningDateHistoryForConversionProject(id);
    }
+
+   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<ProjectGroup>>>> GetProjectGroups(int page, int count, string titleFilter = "", IEnumerable<string> statusFilters = null, IEnumerable<string> deliveryOfficerFilter = null, IEnumerable<string> regionsFilter = null, IEnumerable<string> localAuthoritiesFilter = null, IEnumerable<string> advisoryBoardDatesFilter = null)
+   {
+      return await _innerRepository.GetProjectGroups(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter, localAuthoritiesFilter, advisoryBoardDatesFilter);
+   }
 }

@@ -73,4 +73,16 @@ public interface IAcademyConversionProjectRepository
    Task UpdateSchoolImprovementPlan(int id, UpdateSchoolImprovementPlan updateSchoolImprovementPlan);
    Task SetProjectDates(int id, SetProjectDatesModel updatedProjectDates);
    Task<ApiResponse<IEnumerable<OpeningDateHistoryDto>>> GetOpeningDateHistoryForConversionProject(int id);
+
+   Task<ApiResponse<ApiV2Wrapper<IEnumerable<ProjectGroup>>>> GetProjectGroups(
+   int page,
+   int count,
+   string titleFilter = "",
+   IEnumerable<string> statusFilters = default,
+   IEnumerable<string> deliveryOfficerFilter = default,
+   IEnumerable<string> regionsFilter = default,
+   IEnumerable<string> localAuthoritiesFilter = default,
+   IEnumerable<string> advisoryBoardDatesFilter = default
+);
+
 }

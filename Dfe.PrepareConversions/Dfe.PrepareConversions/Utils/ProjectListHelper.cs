@@ -63,6 +63,26 @@ namespace Dfe.PrepareConversions.Utils
             Status = GetFormAMatStatuses(formAMATProject.Projects)
          };
       }
+
+      public static ProjectGroupListViewModel Build(ProjectGroup projectGroup)
+      {
+         // This 
+         var project = projectGroup.Projects.FirstOrDefault();
+
+         return new ProjectGroupListViewModel
+         {
+            Id = projectGroup.Id.ToString(),
+            TrustName = project?.NameOfTrust,
+            //FirstProjectId = project?.Id,
+            AssignedTo = project?.AssignedUser?.FullName,
+            LocalAuthorities = String.Join(", ", projectGroup.Projects.Select(x => x.LocalAuthority).Distinct()),
+            AdvisoryBoardDate = project?.HeadTeacherBoardDate.ToDateString(),
+            SchoolNames = String.Join(", ", projectGroup.Projects.Select(x => x.SchoolName).Distinct()),
+            Regions = String.Join(", ", projectGroup.Projects.Select(x => x.Region).Distinct()),
+            Status = GetFormAMatStatuses(projectGroup.Projects)
+         };
+      }
+
       public static List<ProjectStatus> GetFormAMatStatuses(ICollection<AcademyConversionProject> projects)
       {
          var statuses = new List<ProjectStatus>();

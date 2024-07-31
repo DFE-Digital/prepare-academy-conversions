@@ -47,7 +47,7 @@ public class CheckConversionDetailsModel : PageModel
 
       var newGroupResponse = _projectGroupsRepository.CreateNewProjectGroup(newGroup);
 
-      var newGroupConversions = newGroupResponse.Result.Body.Conversions;
+      //var newGroupConversions = newGroupResponse.Result.Body.Projects;
       
       return RedirectToPage(Links.Groups.CreateANewGroup.Page, new { referencenumber});
    }

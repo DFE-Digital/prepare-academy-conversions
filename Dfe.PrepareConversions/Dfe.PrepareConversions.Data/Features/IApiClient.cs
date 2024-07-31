@@ -32,4 +32,5 @@ public interface IApiClient
    Task<HttpResponseMessage> GetOpeningDateHistoryForConversionProject(int id);
    
    Task<HttpResponseMessage> CreateNewProjectGroup(CreateProjectGroup createProjectGroup);
+   Task<HttpResponseMessage> GetProjectGroupsAsync(AcademyConversionSearchModelV2 searchModel);
 }

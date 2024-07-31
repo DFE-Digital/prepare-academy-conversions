@@ -161,6 +161,11 @@ public class ApiClient : IApiClient
       return await AcademisationClient.PostAsync(PathFor.GetFormAMatProjects, JsonContent.Create(searchModel));
    }
 
+   public async Task<HttpResponseMessage> GetProjectGroupsAsync(AcademyConversionSearchModelV2 searchModel)
+   {
+      return await AcademisationClient.PostAsync(PathFor.GetProjectGroups, JsonContent.Create(searchModel));
+   }
+
    public async Task<HttpResponseMessage> SearchFormAMatProjects(string searchTerm)
    {
       var queryParameters = new Dictionary<string, string>
