@@ -9,5 +9,6 @@ public interface IProjectGroupsRepository
    Task<ApiResponse<ProjectGroup>> CreateNewProjectGroup(CreateProjectGroup createProjectGroup);
 
    Task<ApiResponse<IEnumerable<ProjectGroup>>> GetAllGroups();
+   Task<ApiResponse<ProjectGroup>> GetProjectGroupById(int id);
 
 }

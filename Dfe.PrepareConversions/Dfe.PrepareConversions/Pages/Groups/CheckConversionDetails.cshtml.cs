@@ -52,6 +52,6 @@ public class CheckConversionDetailsModel : PageModel
 
       //var newGroupConversions = newGroupResponse.Result.Body.Projects;
       
-      return RedirectToPage(Links.Groups.CreateANewGroup.Page, new { ukprn});
+      return RedirectToPage(Links.ProjectGroups.CreateANewGroup.Page, new { ukprn});
    }
 }

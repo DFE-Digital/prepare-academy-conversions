@@ -52,4 +52,20 @@ public class ProjectGroupsRepository : IProjectGroupsRepository
    {
       return null;
    }
+
+   public async Task<ApiResponse<ProjectGroup>> GetProjectGroupById(int id)
+   {
+      HttpClient httpClient = _httpClientFactory.CreateAcademisationClient();
+
+      ApiResponse<ProjectGroup> result = await _httpClientService.Get<ProjectGroup>(
+         httpClient,
+         $"/project-group/{id}");
+
+      if (result.Success is false)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+
+      return new ApiResponse<ProjectGroup>(result.StatusCode, result.Body);
+   }
 }

@@ -42,6 +42,6 @@ public class CheckIncomingTrustsDetailsModel : PageModel
    
    public async Task<IActionResult> OnPost(string ukprn)
    {
-      return RedirectToPage(Links.Groups.DoYouWantToAddConversions.Page, new { ukprn });
+      return RedirectToPage(Links.ProjectGroups.DoYouWantToAddConversions.Page, new { ukprn });
    }
 }

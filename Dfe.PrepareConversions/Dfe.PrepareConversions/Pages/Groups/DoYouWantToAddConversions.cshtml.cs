@@ -48,10 +48,10 @@ public class DoYouWantToAddConversionsModel : PageModel
 
       if (AddConversion == "Yes")
       {
-         return RedirectToPage(Links.Groups.SelectConversions.Page, new { ukprn });
+         return RedirectToPage(Links.ProjectGroups.SelectConversions.Page, new { ukprn });
       }
       
 
-      return RedirectToPage(Links.Groups.CreateANewGroup.Page, new { ukprn });
+      return RedirectToPage(Links.ProjectGroups.CreateANewGroup.Page, new { ukprn });
    }
 }

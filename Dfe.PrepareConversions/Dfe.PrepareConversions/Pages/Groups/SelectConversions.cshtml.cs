@@ -77,7 +77,7 @@ public class SelectConversionsModel : PageModel
          return Page();
       }
 
-      return RedirectToPage(Links.Groups.CheckConversionDetails.Page, new { ukprn, selectedconversions});
+      return RedirectToPage(Links.ProjectGroups.CheckConversionDetails.Page, new { ukprn, selectedconversions});
       
    }
 }

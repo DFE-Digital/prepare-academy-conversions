@@ -107,7 +107,7 @@ public class SearchTrustForGroupModel : PageModel
          return Page();
       }
       
-      return RedirectToPage(Links.Groups.CheckIncomingTrustsDetails.Page, new { ukprn});
+      return RedirectToPage(Links.ProjectGroups.CheckIncomingTrustsDetails.Page, new { ukprn});
    }
    
    private static string HighlightSearchMatch(string input, string toReplace, TrustDto trust)

@@ -277,7 +277,7 @@ public static class Links
       public static readonly LinkItem ConversionDateHistory = AddLinkItem(page: "/TaskList/ProjectDates/ConversionDateHistory");
    }
    
-   public static class Groups
+   public static class ProjectGroups
    {
       public static readonly LinkItem CreateANewGroup = AddLinkItem(backText: "Back", page: "/Groups/CreateANewGroup");
       public static readonly LinkItem WhichTrustWillTheGroupJoin = AddLinkItem(page: "/Groups/SearchTrustForGroup");
@@ -285,6 +285,7 @@ public static class Links
       public static readonly LinkItem DoYouWantToAddConversions = AddLinkItem(page: "/Groups/DoYouWantToAddConversions");
       public static readonly LinkItem SelectConversions = AddLinkItem(page: "/Groups/SelectConversions");
       public static readonly LinkItem CheckConversionDetails= AddLinkItem(page: "/Groups/CheckConversionDetails");
+      public static readonly LinkItem ProjectGroupIndex = AddLinkItem(page: "/Groups/ProjectGroupIndex");
    }
 }
 
