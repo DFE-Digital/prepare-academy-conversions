@@ -9,6 +9,9 @@ public class ProjectGroupListViewModel
    public int FirstProjectId { get; init; }
 
    public string TrustName { get; init; }
+   public string TrustUkprn { get; init; }
+   public string TrustReference { get; init; }
+   public string GroupReference { get; init; }
 
    public string SchoolNames { get; init; }
    public string AssignedUserFullName { get; init; }

@@ -1,6 +1,7 @@
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.IdentityModel.Tokens;
@@ -14,7 +15,7 @@ public class DoYouWantToAddConversionsModel : PageModel
    
    
    [BindProperty]
-   public string ReferenceNumber { get; set; }
+   public string Ukprn { get; set; }
 
    
 
@@ -28,14 +29,14 @@ public class DoYouWantToAddConversionsModel : PageModel
       _errorService = errorService;
    }
 
-   public void OnGet(string referencenumber)
+   public void OnGet(string ukprn)
    {
-      ReferenceNumber = referencenumber;
+      Ukprn = ukprn;
       AddConversion = AddConversion ?? "yes";
    }
 
 
-   public async Task<IActionResult> OnPost(string referencenumber)
+   public async Task<IActionResult> OnPost(string ukprn)
    {
       
       if (AddConversion.IsNullOrEmpty())
@@ -47,10 +48,10 @@ public class DoYouWantToAddConversionsModel : PageModel
 
       if (AddConversion == "Yes")
       {
-         return RedirectToPage(Links.Groups.SelectConversions.Page, new { referencenumber});
+         return RedirectToPage(Links.Groups.SelectConversions.Page, new { ukprn });
       }
       
 
-      return RedirectToPage(Links.Groups.CreateANewGroup.Page, new { referencenumber});
+      return RedirectToPage(Links.Groups.CreateANewGroup.Page, new { ukprn });
    }
 }

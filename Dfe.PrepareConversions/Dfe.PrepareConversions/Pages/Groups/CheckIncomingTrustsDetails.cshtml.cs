@@ -14,7 +14,7 @@ public class CheckIncomingTrustsDetailsModel : PageModel
    
    private readonly ITrustsRepository _trustRepository;
 
-   public string ReferenceNumber { get; set; }
+   public string Ukprn { get; set; }
    
    public bool HasConversions { get; set; }
 
@@ -32,17 +32,16 @@ public class CheckIncomingTrustsDetailsModel : PageModel
    {
       if (!string.IsNullOrEmpty(ukprn))
       {
-         Trust = (await _trustRepository.SearchTrusts(ukprn)).Data.FirstOrDefault();
+         Trust = await _trustRepository.GetTrustByUkprn(ukprn);
       }
       
-         var projects = await _academyConversionProjectRepository.GetProjectsForGroup(Trust.ReferenceNumber);
-
+      var projects = await _academyConversionProjectRepository.GetProjectsForGroup(Trust.ReferenceNumber);
 
       HasConversions = projects.Body.Count() == 0 ? false : true;
    }
    
-   public async Task<IActionResult> OnPost(string referencenumber)
+   public async Task<IActionResult> OnPost(string ukprn)
    {
-      return RedirectToPage(Links.Groups.DoYouWantToAddConversions.Page, new { referencenumber});
+      return RedirectToPage(Links.Groups.DoYouWantToAddConversions.Page, new { ukprn });
    }
 }

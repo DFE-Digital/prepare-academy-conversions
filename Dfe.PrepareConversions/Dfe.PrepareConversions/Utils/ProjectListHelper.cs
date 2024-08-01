@@ -72,7 +72,10 @@ namespace Dfe.PrepareConversions.Utils
          return new ProjectGroupListViewModel
          {
             Id = projectGroup.Id.ToString(),
-            TrustName = project?.NameOfTrust,
+            TrustName = projectGroup.TrustName,
+            TrustReference = projectGroup.TrustReferenceNumber,
+            TrustUkprn = projectGroup.TrustUkprn,
+            GroupReference = projectGroup.ReferenceNumber,
             //FirstProjectId = project?.Id,
             AssignedTo = project?.AssignedUser?.FullName,
             LocalAuthorities = String.Join(", ", projectGroup.Projects.Select(x => x.LocalAuthority).Distinct()),

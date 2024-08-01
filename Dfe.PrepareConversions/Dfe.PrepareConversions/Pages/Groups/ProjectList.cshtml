@@ -2,25 +2,17 @@
 @model Dfe.PrepareConversions.Pages.Groups.ProjectListModel
 
 @{
-   ViewData["Title"] = "Groups";
+    ViewData["Title"] = "Groups";
 }
 
-<div class="govuk-grid-row">
-   <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl" data-cy="select-heading">Groups</h1>
-      <p class="govuk-body">Schools and academies joining an existing trust together.</p>
-      <p class="govuk-body">Groups can include any type of conversion or transfer.</p>
-      <a asp-page="@Links.Groups.CreateANewGroup.Page"  draggable="false" class="govuk-button" data-module="govuk-button">
-         Create a new group
-      </a>
-      <div class="govuk-inset-text">
-          There are no groups yet. Create groups to see them in this list.
-          <br/>
-          <br/>
-          You will be able to edit groups once created.
-         </div>
-   </div>
-</div>
+@*           <div class="govuk-inset-text">
+    There are no groups yet. Create groups to see them in this list.
+    <br/>
+    <br/>
+    You will be able to edit groups once created.
+    </div>
+    </div>
+    </div>*@
 
 <div if="Model.Filters.IsVisible" class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
      data-cy="select-projectlist-filter-banner">
@@ -38,17 +30,27 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-        <h1 class="govuk-heading-xl" data-cy="select-heading">Form a MAT projects</h1>
-        <p class="govuk-body">Find and manage existing form a MAT projects</p>
+        <h1 class="govuk-heading-xl" data-cy="select-heading">Groups</h1>
+        <p class="govuk-body">Schools and academies joining an existing trust together.</p>
+        <p class="govuk-body">Groups can include any type of conversion or transfer.</p>
+        <a asp-page="@Links.Groups.CreateANewGroup.Page" draggable="false" class="govuk-button" data-module="govuk-button">
+            Create a new group
+        </a>
     </div>
-    <div class="govuk-grid-column-one-third">
+    <div class="govuk-inset-text" if="@Model.ProjectCount == 0 && !Model.Filters.IsVisible">
+        There are no groups yet. Create groups to see them in this list.
+        <br />
+        <br />
+        You will be able to edit groups once created.
+    </div>
 
+    <div class="govuk-grid-column-one-third">
         <partial name="Shared/_ProjectListFilters" model="Model.Filters" />
     </div>
     <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-heading-l" test-id="projectCount" data-cy="select-projectlist-filter-count">@(Model.TotalProjects) projects found</h2>
+        <h2 class="govuk-heading-l" test-id="projectCount" data-cy="select-projectlist-filter-count">@(Model.TotalProjects) project groups found</h2>
 
-        <div if="@Model.ProjectCount == 0">
+        <div if="@Model.ProjectCount == 0 && Model.Filters.IsVisible">
             <div class="govuk-heading-m govuk-!-margin-top-3">There are no matching results.</div>
             <p class="govuk-body">Improve your results by:</p>
             <ul class="govuk-list govuk-list--bullet govuk-body">
@@ -61,10 +63,10 @@
         <div if="@Model.ProjectCount > 0">
 
             <table class="govuk-table">
-                <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Projects (@Model.ProjectCount)</caption>
+                <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Project Groups (@Model.ProjectCount)</caption>
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
-                        <th class="govuk-table__header app-!-width-three-fifths">Application information</th>
+                        <th class="govuk-table__header app-!-width-three-fifths">Groups</th>
                     </tr>
                 </thead>
                 <tbody class="govuk-table__body">

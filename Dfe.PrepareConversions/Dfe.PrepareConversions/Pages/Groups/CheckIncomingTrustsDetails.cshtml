@@ -70,7 +70,7 @@
       @if (Model.HasConversions)
       {
          <form method="post" data-id="form">
-            <input type="hidden" asp-for="ReferenceNumber" value="@Model.Trust.ReferenceNumber"/>
+            <input type="hidden" asp-for="Ukprn" value="@Model.Trust.Ukprn"/>
             <button class="govuk-button" type="submit" data-id="submit">Continue</button>
          </form>
       }

@@ -18,7 +18,7 @@
        <span class="govuk-caption-l">Create a new group</span>
       <h1 class="govuk-heading-xl" data-cy="select-heading">Do you need to add any conversions to this group?</h1>
   <form method="post">
-            <input type="hidden" asp-for="ReferenceNumber" />
+            <input type="hidden" asp-for="Ukprn" />
             <div class="govuk-form-group" @ModelState.GetErrorStyleClass()>
                 <div class="govuk-radios">
                     <div class="govuk-radios__item" id="AddConversion">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            <input type="hidden" asp-for="ReferenceNumber" value="@Model.ReferenceNumber"/>
+            <input type="hidden" asp-for="Ukprn" value="@Model.Ukprn"/>
             <button class="govuk-button pt-3" data-module="govuk-button" data-cy="select-common-submitbutton">
                 Continue
             </button>
