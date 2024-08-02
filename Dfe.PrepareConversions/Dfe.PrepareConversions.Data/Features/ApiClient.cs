@@ -1,5 +1,6 @@
 ﻿using Dfe.PrepareConversions.Data.Extensions;
 using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Data.Models.NewProject;
 using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
 using Dfe.PrepareConversions.Data.Services;
 using Microsoft.FeatureManagement;
@@ -50,6 +51,12 @@ public class ApiClient : IApiClient
    public async Task<HttpResponseMessage> UpdateProjectAsync(int id, UpdateAcademyConversionProject updateProject)
    {
       return await AcademisationClient.PatchAsync(string.Format(PathFor.UpdateProject, id), JsonContent.Create(updateProject));
+   }
+
+   public async Task<HttpResponseMessage> GetProjectsForGroup(string id)
+   {
+      HttpResponseMessage getProjectResponse = await AcademisationClient.GetAsync(string.Format(PathFor.GetProjectsForGroup, id));
+      return getProjectResponse;
    }
 
    public async Task<HttpResponseMessage> GetFilterParametersAsync()
@@ -154,6 +161,11 @@ public class ApiClient : IApiClient
       return await AcademisationClient.PostAsync(PathFor.GetFormAMatProjects, JsonContent.Create(searchModel));
    }
 
+   public async Task<HttpResponseMessage> GetProjectGroupsAsync(AcademyConversionSearchModelV2 searchModel)
+   {
+      return await AcademisationClient.PostAsync(PathFor.GetProjectGroups, JsonContent.Create(searchModel));
+   }
+
    public async Task<HttpResponseMessage> SearchFormAMatProjects(string searchTerm)
    {
       var queryParameters = new Dictionary<string, string>
@@ -190,5 +202,12 @@ public class ApiClient : IApiClient
    {
       HttpResponseMessage getHistoryResponse = await AcademisationClient.GetAsync(string.Format(PathFor.GetOpeningDateHistoryForConversionProject, id));
       return getHistoryResponse;
+   }
+   
+   public async Task<HttpResponseMessage> CreateNewProjectGroup(CreateProjectGroup createProjectGroup)
+   {
+      var test = JsonSerializer.Serialize(createProjectGroup);
+      
+      return await AcademisationClient.PostAsync(string.Format(PathFor.CreateNewProjectGroup), JsonContent.Create(createProjectGroup));
    }
 }

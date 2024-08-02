@@ -1,0 +1,143 @@
+﻿@page "/groups/school-in-group{id:int}"
+@using Dfe.Academisation.ExtensionMethods
+@model Dfe.PrepareConversions.Pages.Groups.ProjectGroupIndex
+@{
+   ViewData["Title"] = "Schools in this Group";
+}
+
+@section BeforeMain
+{
+    <a asp-page="@Links.ProjectList.ProjectGroups.Page" class="govuk-back-link">@Links.ProjectList.ProjectGroups.BackText</a>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <span class="govuk-caption-xl">UKPRN: @Model.ProjectGroup.Ukprn</span>
+        <span class="govuk-caption-xl">Project group reference number: @Model.ProjectGroup.ReferenceNumber</span>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2" data-cy="select-heading">
+            @Model.ProjectGroup.TrustName
+        </h1>
+        <p class="govuk-body govuk-!-margin-bottom-5">
+            Number in group: @Model.Projects.Count()
+        </p>
+        <p class="govuk-body govuk-!-margin-bottom-5">
+            Assigned to:
+
+            @if (Model.ProjectGroup.AssignedUserFullName == null || string.IsNullOrWhiteSpace(Model?.ProjectGroup?.AssignedUserFullName))
+            {
+                <span data-id="assigned-user" class="empty">Empty</span>
+            }
+            else
+            {
+                <strong data-id="assigned-user">@Model.ProjectGroup.AssignedUserFullName</strong>
+            }
+
+            @* 
+               ToDo: add ability to assign group a user
+            <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.ProjectAssignment.FormAMatProjectAssignment.Page" asp-route-id="@Model.ProjectGroup.Id">Change</a> *@
+        </p>
+        <p class="govuk-!-margin-top-0  govuk-!-margin-bottom-8">
+            @{
+                var statusSummary = Model.Statuses
+                .GroupBy(status => new { status.Value, status.Colour })
+                .Select(group => new { Status = group.Key.Value, Colour = group.Key.Colour, Count = group.Count() })
+                .ToList();
+
+                foreach (var status in statusSummary)
+                {
+                    <strong class="govuk-tag govuk-tag--@status.Colour" id="summary-status-@Model.ProjectGroup.Id">@status.Count @status.Status</strong>
+                }
+            }
+
+        </p>
+    </div>
+    <div class="govuk-grid-column-full">
+        <nav class="moj-sub-navigation" aria-label="Sub navigation">
+            <ul class="moj-sub-navigation__list govuk-!-margin-top-6">
+                <li class="moj-sub-navigation__item">
+                    <sub-menu-link class="moj-sub-navigation__link"
+                                   asp-page="@Links.ProjectGroups.ProjectGroupIndex.Page"
+                                   asp-route-id="@Model.ProjectGroup.Id">
+                        Schools or academies in this group
+                    </sub-menu-link>
+                </li>              
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-full">
+      <table class="govuk-table" aria-describedby="Table of projects within the same Form a Mat application">
+            <thead class="govuk-table__head govuk-!-display-none">
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header app-!-width-three-fifths">Application information</th>
+                </tr>
+            </thead>
+         <tbody class="govuk-table__body">
+                @{
+                    var index = 0;
+
+                    foreach (var project in Model.Projects)
+                    {
+                        var projectRow = project.Row(index);
+
+                        var isFormAMat = project.IsFormAMat;
+                        var matTypeClass = isFormAMat ? "form-a-mat" : "join-a-mat";
+                        var link = @Links.TaskList.Index.Page;
+
+                        <tr class="govuk-table__row @matTypeClass" data-cy="select-projectlist-filter-row">
+                            <td class="govuk-table__cell">
+                                <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                                    <strong>
+                                        <a id="@("school-name-" + projectRow.Index)" class="govuk-link" asp-page="@link" asp-route-id="@projectRow.Item.Id" asp-route-returnToFormAMatMenu="True">@projectRow.Item.SchoolName</a>
+                                    </strong>
+                                </div>
+                                <div class="govuk-!-margin-top-1">
+                                    <span id="@("urn-" + projectRow.Index)"><strong>URN:</strong> @projectRow.Item.SchoolURN</span>
+                                </div>
+                                @if (!@projectRow.Item.LocalAuthority.IsEmpty())
+                                {
+                                    <div id="@("local-authority-" + projectRow.Index)" class="govuk-!-margin-top-1">
+                                        <strong>Local authority:</strong>
+                                        @projectRow.Item.LocalAuthority
+                                    </div>
+                                }
+                                <div id="@("region-" + projectRow.Index)" class="govuk-!-margin-top-1">
+                                    <strong>Region:</strong>
+                                    <span if="projectRow.Item.Region.IsEmpty()" class="empty">Empty</span>
+                                    <span if="projectRow.Item.Region.IsPresent()">@projectRow.Item.Region</span>
+                                </div>
+                                <div id="@("incoming-trust-" + projectRow.Index)" class="govuk-!-margin-top-1">
+                                    <strong>Incoming trust:</strong>
+                                    <span if="projectRow.Item.NameOfTrust.IsEmpty()" class="empty">Empty</span>
+                                    <span if="projectRow.Item.NameOfTrust.IsPresent()">@projectRow.Item.NameOfTrust?.ToTitleCase()</span>
+                                </div>
+                                <div id="@("advisory-board-date-" + projectRow.Index)" class="govuk-!-margin-top-1">
+                                    <strong>Advisory board date:</strong>
+                                    <span if="projectRow.Item.HeadTeacherBoardDate.IsEmpty()" class="empty">Unconfirmed</span>
+                                    <span if="projectRow.Item.HeadTeacherBoardDate.IsPresent()">@projectRow.Item.HeadTeacherBoardDate</span>
+                                </div>
+                                <div id="@("type-and-route-" + projectRow.Index)" class="govuk-!-margin-top-1">
+                                    <strong>Route:</strong>
+                                    <span if="projectRow.Item.TypeAndRoute.IsEmpty()" class="empty">Unconfirmed</span>
+                                    <span if="projectRow.Item.TypeAndRoute.IsPresent()">@projectRow.Item.TypeAndRoute.RouteDescription(project.IsFormAMat)</span>
+                                </div>
+                                 <div id="@("assigned-to-" + projectRow.Index)" class="do govuk-!-margin-top-1">
+                                       <strong>Assigned to:</strong>
+                                       <span if="projectRow.Item.AssignedUserFullName.IsEmpty()" class="empty">Unassigned</span>
+                                       <span if="projectRow.Item.AssignedUserFullName.IsPresent()">@projectRow.Item.AssignedUserFullName</span>
+                                 </div>
+                                <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                                    <strong class="govuk-tag govuk-tag--@projectRow.Item.Status.Colour" id="project-status-@projectRow.Item.Id">@projectRow.Item.Status.Value</strong>
+                                </div>
+                            </td>
+                        </tr>
+
+                        index++;
+                    }
+                }
+         </tbody>
+      </table>
+   </div>
+</div>

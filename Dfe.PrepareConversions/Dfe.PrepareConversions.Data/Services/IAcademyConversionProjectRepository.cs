@@ -55,6 +55,7 @@ public interface IAcademyConversionProjectRepository
    Task<ApiResponse<FormAMatProject>> GetFormAMatProjectById(int id);
    Task<ApiResponse<AcademyConversionProject>> UpdateProject(int id, UpdateAcademyConversionProject updateProject);
    Task<ApiResponse<AcademyConversionProject>> CreateProject(CreateNewProject newProject);
+   Task<ApiResponse<IEnumerable<AcademyConversionProject>>> GetProjectsForGroup(string id);
    Task CreateFormAMatProject(CreateNewFormAMatProject newProject);
    Task SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl);
    Task SetAssignedUser(int id, SetAssignedUserModel updatedAssignedUser);
@@ -72,4 +73,16 @@ public interface IAcademyConversionProjectRepository
    Task UpdateSchoolImprovementPlan(int id, UpdateSchoolImprovementPlan updateSchoolImprovementPlan);
    Task SetProjectDates(int id, SetProjectDatesModel updatedProjectDates);
    Task<ApiResponse<IEnumerable<OpeningDateHistoryDto>>> GetOpeningDateHistoryForConversionProject(int id);
+
+   Task<ApiResponse<ApiV2Wrapper<IEnumerable<ProjectGroup>>>> GetProjectGroups(
+   int page,
+   int count,
+   string titleFilter = "",
+   IEnumerable<string> statusFilters = default,
+   IEnumerable<string> deliveryOfficerFilter = default,
+   IEnumerable<string> regionsFilter = default,
+   IEnumerable<string> localAuthoritiesFilter = default,
+   IEnumerable<string> advisoryBoardDatesFilter = default
+);
+
 }

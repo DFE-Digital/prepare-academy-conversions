@@ -98,6 +98,7 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
    public async Task<ApiResponse<AcademyConversionProject>> CreateProject(CreateNewProject newProject)
    {
       HttpClient httpClient = _httpClientFactory.CreateAcademisationClient();
+      
 
       ApiResponse<AcademyConversionProject> result = await _httpClientService.Post<CreateNewProject, AcademyConversionProject>(
          httpClient,
@@ -123,6 +124,21 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
 
       if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
+
+   public async Task<ApiResponse<IEnumerable<AcademyConversionProject>>> GetProjectsForGroup(string id)
+   {
+      HttpResponseMessage response = await _apiClient.GetProjectsForGroup(id);
+      
+      if (!response.IsSuccessStatusCode)
+      {
+         return new ApiResponse<IEnumerable<AcademyConversionProject>>(response.StatusCode, null);
+      }
+
+      IEnumerable<AcademyConversionProject> projects = await ReadFromJsonAndThrowIfNull<IEnumerable<AcademyConversionProject>>(response.Content);
+      return new ApiResponse<IEnumerable<AcademyConversionProject>>(response.StatusCode, projects);
+   }
+
+
 
    public async Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
    {
@@ -332,6 +348,24 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       ApiV2Wrapper<IEnumerable<FormAMatProject>> outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<IEnumerable<FormAMatProject>>>();
 
       return new ApiResponse<ApiV2Wrapper<IEnumerable<FormAMatProject>>>(response.StatusCode, outerResponse);
+   }
+
+   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<ProjectGroup>>>> GetProjectGroups(int page, int count, string titleFilter = "", IEnumerable<string> statusFilters = null, IEnumerable<string> deliveryOfficerFilter = null, IEnumerable<string> regionsFilter = null, IEnumerable<string> localAuthoritiesFilter = null, IEnumerable<string> advisoryBoardDatesFilter = null)
+   {
+      AcademyConversionSearchModelV2 searchModel = new() { TitleFilter = titleFilter, Page = page, Count = count };
+
+      ProcessFiltersV2(statusFilters, deliveryOfficerFilter, searchModel, regionsFilter, localAuthoritiesFilter, advisoryBoardDatesFilter);
+
+      HttpResponseMessage response = await _apiClient.GetProjectGroupsAsync(searchModel);
+      if (!response.IsSuccessStatusCode)
+      {
+         return new ApiResponse<ApiV2Wrapper<IEnumerable<ProjectGroup>>>(response.StatusCode,
+            new ApiV2Wrapper<IEnumerable<ProjectGroup>> { Data = Enumerable.Empty<ProjectGroup>() });
+      }
+
+      ApiV2Wrapper<IEnumerable<ProjectGroup>> outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<IEnumerable<ProjectGroup>>>();
+
+      return new ApiResponse<ApiV2Wrapper<IEnumerable<ProjectGroup>>>(response.StatusCode, outerResponse);
    }
 
    public async Task SetIncomingTrust(int id, SetIncomingTrustDataModel setIncomingTrustDataModel)

@@ -1,0 +1,44 @@
+@page "/groups/do-you-want-to-add-conversions"
+@model Dfe.PrepareConversions.Pages.Groups.DoYouWantToAddConversionsModel
+
+@{
+   ViewData["Title"] = "Do you need to add any conversions to this group?";
+}
+
+
+@section BeforeMain
+    {
+   
+    <partial name="_ErrorSummary" />
+}
+
+
+<div class="govuk-grid-row" xmlns="http://www.w3.org/1999/html">
+   <div class="govuk-grid-column-two-thirds">
+       <span class="govuk-caption-l">Create a new group</span>
+      <h1 class="govuk-heading-xl" data-cy="select-heading">Do you need to add any conversions to this group?</h1>
+  <form method="post">
+            <input type="hidden" asp-for="Ukprn" />
+            <div class="govuk-form-group" @ModelState.GetErrorStyleClass()>
+                <div class="govuk-radios">
+                    <div class="govuk-radios__item" id="AddConversion">
+                        <input asp-for="AddConversion" class="govuk-radios__input" type="radio" value="Yes" id="ConversionsYes" data-cy="select-legal-input-yes">
+                        <label class="govuk-label govuk-radios__label" for="ConversionsYes">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="govuk-radios__item">
+                        <input asp-for="AddConversion" class="govuk-radios__input" type="radio" value="No" id="ConversionsNo" data-cy="select-legal-input-no">
+                        <label class="govuk-label govuk-radios__label" for="ConversionsNo">
+                            No
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" asp-for="Ukprn" value="@Model.Ukprn"/>
+            <button class="govuk-button pt-3" data-module="govuk-button" data-cy="select-common-submitbutton">
+                Continue
+            </button>
+        </form>   
+      </div>
+</div>

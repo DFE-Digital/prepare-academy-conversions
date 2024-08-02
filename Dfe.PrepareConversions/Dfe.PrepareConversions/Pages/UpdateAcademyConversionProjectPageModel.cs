@@ -115,7 +115,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
             };
       }
 
-      // Else return default £25k
+      // Else return default Â£25k
       return defaultAmount;
    }
 

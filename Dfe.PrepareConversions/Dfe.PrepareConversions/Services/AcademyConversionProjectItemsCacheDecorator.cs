@@ -84,6 +84,12 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
       return await _innerRepository.UpdateProject(id, updateProject);
    }
 
+   public async Task<ApiResponse<IEnumerable<AcademyConversionProject>>> GetProjectsForGroup(string id)
+   {
+      ApiResponse<IEnumerable<AcademyConversionProject>> projects = await _innerRepository.GetProjectsForGroup(id);
+      return projects;
+   }
+
    public async Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
    {
       return await _innerRepository.GetFilterParameters();
@@ -163,5 +169,10 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    public async Task<ApiResponse<IEnumerable<OpeningDateHistoryDto>>> GetOpeningDateHistoryForConversionProject(int id)
    {
       return await _innerRepository.GetOpeningDateHistoryForConversionProject(id);
+   }
+
+   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<ProjectGroup>>>> GetProjectGroups(int page, int count, string titleFilter = "", IEnumerable<string> statusFilters = null, IEnumerable<string> deliveryOfficerFilter = null, IEnumerable<string> regionsFilter = null, IEnumerable<string> localAuthoritiesFilter = null, IEnumerable<string> advisoryBoardDatesFilter = null)
+   {
+      return await _innerRepository.GetProjectGroups(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter, localAuthoritiesFilter, advisoryBoardDatesFilter);
    }
 }

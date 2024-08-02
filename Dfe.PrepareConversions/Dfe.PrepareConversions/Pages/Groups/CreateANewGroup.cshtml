@@ -1,0 +1,22 @@
+@page "/groups/create-a-new-group"
+@model Dfe.PrepareConversions.Pages.Groups.CreateANewGroup
+
+@{
+   ViewData["Title"] = "Create a new group";
+}
+
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl" data-cy="select-heading">Create a new group</h1>
+      <p class="govuk-body">Link schools and academies that will join an existing trust together.</p>
+      <h2 class="govuk-heading-l">Before you start</h2>
+      <p class="govuk-body">All conversion and transfer projects in a group must:</p>
+      <ul class="govuk-list govuk-list--bullet">
+         <li>exist in Prepare</li>
+         <li>have an incoming trust</li>
+      </ul>
+      <a asp-page="@Links.ProjectGroups.WhichTrustWillTheGroupJoin.Page"  draggable="false" class="govuk-button" data-module="govuk-button">
+         Create a group
+      </a>
+   </div>
+</div>

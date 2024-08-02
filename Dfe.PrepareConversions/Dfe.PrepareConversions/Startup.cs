@@ -146,6 +146,7 @@ public class Startup
       services.AddScoped<SchoolOverviewService>();
       services.AddScoped<KeyStagePerformanceService>();
       services.AddScoped<ITrustsRepository, TrustsRepository>();
+      services.AddScoped<IProjectGroupsRepository, ProjectGroupsRepository>();
       services.AddScoped<IAcademyConversionProjectRepository, AcademyConversionProjectRepository>();
       services.AddScoped<IAcademyConversionAdvisoryBoardDecisionRepository, AcademyConversionAdvisoryBoardDecisionRepository>();
       services.AddScoped<IHttpClientService, HttpClientService>();

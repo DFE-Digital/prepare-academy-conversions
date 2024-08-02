@@ -15,6 +15,8 @@
 
     var isFormAMatPage = Context.Request.Path.Value.Contains("/form-a-mat/project-list") || Context.Request.Path.Value.Contains("/schools-in-this-mat/");
 
+   var isGroupsPage = Context.Request.Path.Value.Contains("/groups");
+   
     var notificationBannerMessage = Configuration["notificationBannerMessage"] ?? string.Empty;
 
     var authenticatedUserId = User.Identity is not null && User.Identity.IsAuthenticated ? User.Identity.Name ?? "Unknown" : "Anonymous";
@@ -134,7 +136,7 @@
                     </button>
                 </p>
                 <ul class="dfe-header__navigation-list">
-                    <li class="dfe-header__navigation-item @(!isFormAMatPage ? "dfe-header__navigation-item--current": "")">
+                    <li class="dfe-header__navigation-item @(!isFormAMatPage && !isGroupsPage? "dfe-header__navigation-item--current": "")">
                         <a asp-page="@Links.ProjectList.Index.Page" class="dfe-header__navigation-link">
                             Conversions
                             <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
@@ -150,14 +152,22 @@
                             </svg>
                         </a>
                     </li>
-                    <li class="dfe-header__navigation-item @(isFormAMatPage ? "dfe-header__navigation-item--current": "")">
-                        <a asp-page="@Links.ProjectList.FormAMat.Page" class="dfe-header__navigation-link">
-                            Form a MAT
-                            <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
-                                <path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
-                            </svg>
-                        </a>
-                    </li>
+                   <li class="dfe-header__navigation-item @(isFormAMatPage? "dfe-header__navigation-item--current": "")">
+                      <a asp-page="@Links.ProjectList.FormAMat.Page" class="dfe-header__navigation-link">
+                         Form a MAT
+                         <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
+                            <path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
+                         </svg>
+                      </a>
+                   </li>
+                   <li class="dfe-header__navigation-item @(isGroupsPage ? "dfe-header__navigation-item--current" : "")">
+                      <a asp-page="@Links.ProjectList.ProjectGroups.Page" class="dfe-header__navigation-link">
+                         Groups
+                         <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
+                            <path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
+                         </svg>
+                      </a>
+                   </li>
                 </ul>
             </div>
         </nav>
