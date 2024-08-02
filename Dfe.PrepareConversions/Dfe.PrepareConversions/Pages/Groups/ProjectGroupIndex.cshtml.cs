@@ -25,10 +25,12 @@ public class ProjectGroupIndex : PageModel
 
    public List<ProjectListViewModel> Projects { get; set; }
    public List<ProjectStatus> Statuses { get; set; }
+   public bool IsNew { get; private set; }
 
-   public async Task<IActionResult> OnGetAsync(int id)
+   public async Task<IActionResult> OnGetAsync(int id, bool isNew = false)
    {
       IActionResult result = await SetProjectGroup(id);
+      IsNew = isNew;
       Projects = ProjectGroup.Projects.Select(AcademyConversionProject => ProjectListHelper.Build(AcademyConversionProject)).ToList();
       Statuses = GetProjectStatuses();
       if ((result as StatusCodeResult)?.StatusCode == (int)HttpStatusCode.NotFound)
@@ -43,7 +45,7 @@ public class ProjectGroupIndex : PageModel
    protected async Task<IActionResult> SetProjectGroup(int id)
    {
       var ProjectGroupResponse = await _repository.GetProjectGroupById(id);
-
+      
       if (!ProjectGroupResponse.Success)
       {
          // 404 logic
