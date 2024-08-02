@@ -19,7 +19,7 @@
 	},
 	"dependencies": {
 		"@microsoft/applicationinsights-web": "^3.2.2",
-		"@ministryofjustice/frontend": "^1.8.1",
+		"@ministryofjustice/frontend": "^2.0.0",
 		"accessible-autocomplete": "^2.0.4",
 		"dfe-frontend-alpha": "^1.0.1",
 		"govuk-frontend": "^4.7.0",
