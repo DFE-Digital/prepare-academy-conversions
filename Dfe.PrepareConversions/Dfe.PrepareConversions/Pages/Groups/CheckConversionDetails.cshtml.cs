@@ -49,9 +49,7 @@ public class CheckConversionDetailsModel : PageModel
       var newGroup = new CreateProjectGroup(trust.ReferenceNumber, trust.Ukprn, trust.Name, selectedconversions.ConvertAll(int.Parse));
 
       var newGroupResponse = _projectGroupsRepository.CreateNewProjectGroup(newGroup);
-
-      //var newGroupConversions = newGroupResponse.Result.Body.Projects;
       
-      return RedirectToPage(Links.ProjectGroups.CreateANewGroup.Page, new { ukprn});
+      return RedirectToPage(Links.ProjectGroups.ProjectGroupIndex.Page, new { newGroupResponse.Result.Body.Id, isNew = true });
    }
 }

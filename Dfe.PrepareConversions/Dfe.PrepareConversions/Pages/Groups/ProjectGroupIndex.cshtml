@@ -1,4 +1,4 @@
-﻿@page "/groups/school-in-group{id:int}"
+﻿@page "/groups/school-in-group/{id:int}"
 @using Dfe.Academisation.ExtensionMethods
 @model Dfe.PrepareConversions.Pages.Groups.ProjectGroupIndex
 @{
@@ -9,6 +9,19 @@
 {
     <a asp-page="@Links.ProjectList.ProjectGroups.Page" class="govuk-back-link">@Links.ProjectList.ProjectGroups.BackText</a>
 }
+<div if="Model.IsNew" class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+     data-cy="select-projectlist-filter-banner">
+    <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+            Success
+        </h2>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <h3 class="govuk-notification-banner__heading">
+            Project group created.
+        </h3>
+    </div>
+</div>
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
