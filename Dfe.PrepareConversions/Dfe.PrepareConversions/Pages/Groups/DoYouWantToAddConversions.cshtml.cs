@@ -1,23 +1,16 @@
-using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.IdentityModel.Tokens;
-using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.Groups;
 
 public class DoYouWantToAddConversionsModel : PageModel
 {
    
-   
-   
    [BindProperty]
    public string Ukprn { get; set; }
-
-   
 
    [BindProperty]
    public string AddConversion { get; set; }
@@ -36,9 +29,9 @@ public class DoYouWantToAddConversionsModel : PageModel
    }
 
 
-   public async Task<IActionResult> OnPost(string ukprn)
+   public IActionResult OnPost(string ukprn)
    {
-      
+
       if (AddConversion.IsNullOrEmpty())
       {
          ModelState.AddModelError("AddConversion", "Choose if any conversions need to be added to the group");
@@ -50,7 +43,7 @@ public class DoYouWantToAddConversionsModel : PageModel
       {
          return RedirectToPage(Links.ProjectGroups.SelectConversions.Page, new { ukprn });
       }
-      
+
 
       return RedirectToPage(Links.ProjectGroups.CreateANewGroup.Page, new { ukprn });
    }

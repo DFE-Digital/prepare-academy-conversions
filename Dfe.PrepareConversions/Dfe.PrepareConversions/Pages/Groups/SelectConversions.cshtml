@@ -1,30 +1,41 @@
 @page "/groups/select-conversions"
 @using Dfe.PrepareConversions.Data.Models
+@using Dfe.PrepareConversions.Pages.Shared
 @model Dfe.PrepareConversions.Pages.Groups.SelectConversionsModel
 
 
 @{
-   ViewData["Title"] = "Select conversions";
+    ViewData["Title"] = "Select conversions";
+    var routeParams = new Dictionary<string, string>
+   {
+      { Model.GroupId== null? "ukprn":"id", (Model.GroupId== null? Model.Ukprn : Model.GroupId.Value.ToString()) }
+   };
+    var routeName = (Model.GroupId == null ? Links.ProjectGroups.CheckIncomingTrustsDetails.Page : Links.ProjectGroups.ProjectGroupIndex.Page);
 }
 
-
 @section BeforeMain
-    {
-   
+{
+    <partial name="_BackLink" model="@(new BackLink(routeName, routeParams))" />
     <partial name="_ErrorSummary" />
 }
 
-
 <div class="govuk-grid-row" xmlns="http://www.w3.org/1999/html">
 <div class="govuk-grid-column-two-thirds">
-   <span class="govuk-caption-l">Create a new group</span>
-   <h1 class="govuk-heading-xl" data-cy="select-heading">Select Conversion</h1>
+        <span class="govuk-caption-l">@(Model.GroupId == null ? "Create a new group" : Model.GroupName)</span>
+   <h1 class="govuk-heading-xl" data-cy="select-heading">Select conversion</h1>
     
      <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
-        <p class="govuk-body">The conversions you want to add must already be in prepare.</p>
-        <p class="govuk-body">Check with your line manager if the project you are looking for is not in this list.</p>
-        <div class="govuk-form-group" @ModelState.GetErrorStyleClass()>
-        <form method="post">
+            @if (Model.ConversionProjects.Count == 0)
+            {
+                <p class="govuk-body">There are no more conversions you can add to this group right now.</p>
+                <p class="govuk-body">You can add other projects once they have been added to Prepare. </p>
+            } else
+            {
+                <p class="govuk-body">The conversions you want to add must already be in prepare.</p>
+                <p class="govuk-body">Check with your line manager if the project you are looking for is not in this list.</p>
+            }
+            <div class="govuk-form-group" @ModelState.GetErrorStyleClass()>
+            <form method="post">
            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
               
               @{
@@ -45,14 +56,19 @@
                  
               }
            </div>
-                    <input type="hidden" asp-for="Ukprn" value="@Model.Ukprn" />
-                    <input type="hidden" asp-for="ReferenceNumber" value="@Model.ReferenceNumber" />
-           <button class="govuk-button pt-3" data-module="govuk-button" data-cy="select-common-submitbutton">
-              Confirm and continue 
-           </button>
+               <input type="hidden" asp-for="Ukprn" value="@Model.Ukprn" />
+               <input type="hidden" asp-for="GroupId" value="@Model.GroupId" />
+               <input type="hidden" asp-for="GroupName" value="@Model.GroupName" />
+               <input type="hidden" asp-for="ReferenceNumber" value="@Model.ReferenceNumber" />
+               @if(Model.ConversionProjects.Count >0)
+               {
+                     <button class="govuk-button pt-3" data-module="govuk-button" data-cy="select-common-submitbutton">
+                        @(Model.GroupId != null ? "Continue" : "Confirm and continue")
+                     </button>
+               }
         </form>
         </div>
-          </fieldset>
+      </fieldset>
 </div>
 </div>
 
