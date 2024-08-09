@@ -107,12 +107,18 @@
 
                         <tr class="govuk-table__row @matTypeClass" data-cy="select-projectlist-filter-row">
                             <td class="govuk-table__cell">
-                                <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
-                                    <strong class="govuk-!-margin-right-2">
-                                        <a id="@("school-name-" + projectRow.Index)" class="govuk-link" asp-page="@link" asp-route-id="@projectRow.Item.Id" asp-route-returnToFormAMatMenu="True">@projectRow.Item.SchoolName</a>
-                                    </strong>
-                                    <a class="govuk-link govuk-!-text-align-right" asp-page="@Links.ProjectGroups.ConfirmToRemoveConversion.Page" asp-route-projectGroupId="@Model.Id" asp-route-id="@projectRow.Item.Id" asp-route-urn="@projectRow.Item.SchoolURN" asp-route-schoolName="@projectRow.Item.SchoolName">Remove</a>
-                                </div>
+                                <dl class="govuk-summary-list govuk-summary-list--no-border">
+                                    <div class="govuk-summary-list__row">
+                                        <dt class="govuk-summary-list__value"> 
+                                            <strong>
+                                                <a id="@("school-name-" + projectRow.Index)" class="govuk-link" asp-page="@link" asp-route-id="@projectRow.Item.Id" asp-route-returnToFormAMatMenu="True">@projectRow.Item.SchoolName</a>
+                                            </strong>
+                                       </dt>
+                                        <dd class="govuk-summary-list__value prepare-text-align-right">
+                                            <a class="govuk-link govuk-!-text-align-right" asp-page="@Links.ProjectGroups.ConfirmToRemoveConversion.Page" asp-route-projectGroupId="@Model.Id" asp-route-id="@projectRow.Item.Id" asp-route-urn="@projectRow.Item.SchoolURN" asp-route-schoolName="@projectRow.Item.SchoolName">Remove</a>
+                                        </dd>
+                                    </div>
+                                 </dl> 
                                 <div class="govuk-!-margin-top-1">
                                     <span id="@("urn-" + projectRow.Index)"><strong>URN:</strong> @projectRow.Item.SchoolURN</span>
                                 </div>
