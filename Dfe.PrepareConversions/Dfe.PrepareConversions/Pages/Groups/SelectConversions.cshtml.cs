@@ -34,21 +34,35 @@ public class SelectConversionsModel(IAcademyConversionProjectRepository academyC
          trust = await trustRepository.GetTrustByUkprn(ukprn);
       }
 
-      ReferenceNumber = trust.ReferenceNumber;
-
-      Projects = await academyConversionProjectRepository.GetProjectsForGroup(ReferenceNumber);
-
-      foreach (AcademyConversionProject project in Projects.Body)
+      if (trust is not null)
       {
-         ConversionProjects.Add(project);
+
+         ReferenceNumber = trust.ReferenceNumber;
+
+         Projects = await academyConversionProjectRepository.GetProjectsForGroup(ReferenceNumber);
+
+         foreach (AcademyConversionProject project in Projects.Body)
+         {
+            ConversionProjects.Add(project);
+         }
       }
 
+      await SetGroupInformation(id);
+
+   }
+
+   private async Task SetGroupInformation(int? id)
+   {
       if (id.HasValue)
       {
          var projectGroup = await projectGroupsRepository.GetProjectGroupById(id.Value);
-         var group = projectGroup.Body;
-         GroupId = id; 
-         GroupName = $"{group.TrustName} - {group.ReferenceNumber}";
+         GroupId = id;
+
+         if (projectGroup.Body != null)
+         {
+            var group = projectGroup.Body;
+            GroupName = $"{group.TrustName} - {group.ReferenceNumber}";
+         }
       }
    }
 

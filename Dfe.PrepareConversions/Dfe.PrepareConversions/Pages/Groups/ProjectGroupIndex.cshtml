@@ -61,10 +61,14 @@
             }
 
         </p>
-        <p class="govuk-body govuk-!-margin-bottom-5"> 
-                <a class="govuk-button govuk-button--secondary govuk-!-margin-right-2" asp-page="@Links.ProjectGroups.SelectConversions.Page" asp-route-ukprn="@Model.ProjectGroup.Ukprn" asp-route-id="@Model.Id"> Add conversion to group</a>
-            <a class="govuk-link govuk-!-align-self-end" asp-page="@Links.ProjectList.ProjectGroups.Page">View all groups</a>
-        </p>
+        <span class="govuk-body govuk-!-margin-bottom-5">
+            <span class="govuk-!-margin-right-2">
+                <a class="govuk-button govuk-button--secondary" asp-page="@Links.ProjectGroups.SelectConversions.Page" asp-route-ukprn="@Model.ProjectGroup.Ukprn" asp-route-id="@Model.Id"> Add conversion to group</a>
+           </span>
+            <span class=" govuk-!-margin-top-5">
+                <a class="govuk-link" asp-page="@Links.ProjectList.ProjectGroups.Page">View all groups</a>
+           </span>
+        </span>
     </div>
     <div class="govuk-grid-column-full">
         <nav class="moj-sub-navigation" aria-label="Sub navigation">
@@ -104,12 +108,10 @@
                         <tr class="govuk-table__row @matTypeClass" data-cy="select-projectlist-filter-row">
                             <td class="govuk-table__cell">
                                 <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
-                                    <strong class="govuk-!-margin-right-9">
+                                    <strong class="govuk-!-margin-right-2">
                                         <a id="@("school-name-" + projectRow.Index)" class="govuk-link" asp-page="@link" asp-route-id="@projectRow.Item.Id" asp-route-returnToFormAMatMenu="True">@projectRow.Item.SchoolName</a>
                                     </strong>
-                                    <span class="govuk-!-margin-left-9 ">
-                                        <a class="govuk-link" asp-page="@Links.ProjectGroups.ConfirmToRemoveConversion.Page" asp-route-projectGroupId="@Model.Id"  asp-route-id="@projectRow.Item.Id" asp-route-urn="@projectRow.Item.SchoolURN" asp-route-schoolName="@projectRow.Item.SchoolName">Remove</a>
-                                    </span>
+                                    <a class="govuk-link govuk-!-text-align-right" asp-page="@Links.ProjectGroups.ConfirmToRemoveConversion.Page" asp-route-projectGroupId="@Model.Id" asp-route-id="@projectRow.Item.Id" asp-route-urn="@projectRow.Item.SchoolURN" asp-route-schoolName="@projectRow.Item.SchoolName">Remove</a>
                                 </div>
                                 <div class="govuk-!-margin-top-1">
                                     <span id="@("urn-" + projectRow.Index)"><strong>URN:</strong> @projectRow.Item.SchoolURN</span>
