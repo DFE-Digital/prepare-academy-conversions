@@ -31,15 +31,15 @@
             <select name="SelectedName" class="autocomplete__menu govuk-select" id="delivery-officer">
                <option value=""></option>
                @{
-                  foreach (User deliveryOfficer in Model.DeliveryOfficers)
+                  foreach (var deliveryOfficer in Model.DeliveryOfficers.Select(x => x.FullName))
                   {
-                     if (Model.SelectedDeliveryOfficer == deliveryOfficer.FullName)
+                     if (Model.SelectedDeliveryOfficer == deliveryOfficer)
                      {
-                        <option value="@deliveryOfficer.FullName" selected>@deliveryOfficer.FullName</option>
+                        <option value="@deliveryOfficer" selected>@deliveryOfficer</option>
                      }
                      else
                      {
-                        <option value="@deliveryOfficer.FullName">@deliveryOfficer.FullName</option>
+                        <option value="@deliveryOfficer">@deliveryOfficer</option>
                      }
                   }
                }
