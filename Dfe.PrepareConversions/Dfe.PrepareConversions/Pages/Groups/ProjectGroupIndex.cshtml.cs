@@ -27,11 +27,14 @@ public class ProjectGroupIndex : PageModel
    public List<ProjectStatus> Statuses { get; set; }
    public bool IsNew { get; private set; }
 
+   public int Id { get; private set; }
+
    public async Task<IActionResult> OnGetAsync(int id, bool isNew = false)
    {
+      Id = id;
       IActionResult result = await SetProjectGroup(id);
       IsNew = isNew;
-      Projects = ProjectGroup.Projects.Select(AcademyConversionProject => ProjectListHelper.Build(AcademyConversionProject)).ToList();
+      Projects = ProjectGroup.Projects.Select(ProjectListHelper.Build).ToList();
       Statuses = GetProjectStatuses();
       if ((result as StatusCodeResult)?.StatusCode == (int)HttpStatusCode.NotFound)
       {

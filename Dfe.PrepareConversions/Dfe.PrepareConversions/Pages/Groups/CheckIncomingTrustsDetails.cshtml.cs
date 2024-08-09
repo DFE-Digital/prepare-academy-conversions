@@ -39,8 +39,8 @@ public class CheckIncomingTrustsDetailsModel : PageModel
 
       HasConversions = projects.Body.Count() == 0 ? false : true;
    }
-   
-   public async Task<IActionResult> OnPost(string ukprn)
+
+   public IActionResult OnPost(string ukprn)
    {
       return RedirectToPage(Links.ProjectGroups.SelectConversions.Page, new { ukprn });
    }

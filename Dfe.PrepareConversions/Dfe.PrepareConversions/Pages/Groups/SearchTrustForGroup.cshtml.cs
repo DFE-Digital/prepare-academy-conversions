@@ -1,16 +1,12 @@
 using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academisation.ExtensionMethods;
-using Dfe.PrepareConversions.Data;
-using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.Trust;
-using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,8 +28,6 @@ public class SearchTrustForGroupModel : PageModel
    private const string SEARCH_ENDPOINT = "/groups/search-trust-for-group?handler=Search&searchQuery=";
    private readonly ErrorService _errorService;
    private readonly ITrustsRepository _trustsRepository;
-   
-   
 
 
    public SearchTrustForGroupModel(ITrustsRepository trustsRepository, ErrorService errorService)

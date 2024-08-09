@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Graph;
+using System;
 using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Data.Models;
@@ -134,7 +135,7 @@ public class AcademyConversionProject
    public User AssignedUser { get; set; }
 
    // notes
-   public ICollection<ProjectNote> Notes { get; set; } = new List<ProjectNote>();
+   public ICollection<ProjectNote> Notes { get; set; } = [];
 
    //Project Dates
    public DateTime? ProposedConversionDate { get; set; }
