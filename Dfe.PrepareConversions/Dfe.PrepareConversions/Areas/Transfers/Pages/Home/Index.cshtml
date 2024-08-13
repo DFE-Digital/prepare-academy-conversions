@@ -54,7 +54,6 @@
 
     <div class="govuk-grid-column-one-third">
         <partial name="Shared/_ProjectListFilters" model="Model.Filters" />
-        @await Html.PartialAsync("Shared/_ProjectListFilters", Model.Filters)
     </div>
 
     <div class="govuk-grid-column-two-thirds">
@@ -86,7 +85,6 @@
                 </thead>
                 <tbody class="govuk-table__body">
                     <partial name="Shared/_ProjectListRows" model="Model.Projects" />
-                    @await Html.PartialAsync("Shared/_ProjectListRows", Model.Projects)
                 </tbody>
             </table>
 
