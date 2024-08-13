@@ -10,6 +10,7 @@ using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Routing;
 using Dfe.PrepareConversions.Security;
 using Dfe.PrepareConversions.Services;
+using Dfe.PrepareConversions.Utils;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -66,6 +67,7 @@ public class Startup
             options.Conventions.AuthorizeFolder("/");
             options.Conventions.AllowAnonymousToPage("/public/maintenance");
             options.Conventions.AllowAnonymousToPage("/public/accessibility");
+            options.Conventions.AddAreaPageRoute("Transfers", "/Index", "/transfers");
          })
          .AddViewOptions(options =>
          {
@@ -167,7 +169,11 @@ public class Startup
 
       // Initialize the TransfersUrl
       var serviceLinkOptions = Configuration.GetSection("ServiceLink").Get<ServiceLinkOptions>();
+
       Links.InitializeTransfersUrl(serviceLinkOptions.TransfersUrl);
+
+      // use this to section off the transfers specific dependencies
+      services.AddTransfersApplicationServices();
 
    }
 

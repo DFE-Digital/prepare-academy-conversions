@@ -31,6 +31,8 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Dfe.PrepareConversions.Data\Dfe.PrepareConversions.Data.csproj" />
 		<ProjectReference Include="..\Dfe.PrepareConversions.DocumentGeneration\Dfe.PrepareConversions.DocumentGeneration.csproj" />
+		<ProjectReference Include="..\Dfe.PrepareTransfers.Data.TRAMS\Dfe.PrepareTransfers.Data.TRAMS.csproj" />
+		<ProjectReference Include="..\Dfe.PrepareTransfers.Data\Dfe.PrepareTransfers.Data.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -72,5 +74,10 @@
 
 	<ItemGroup>
 	  <UpToDateCheckInput Remove="Pages\Shared\_Pagination.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Areas\Transfers\Pages\Home\Index.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Shared\_ProjectListRows.cshtml" />
 	</ItemGroup>
 </Project>

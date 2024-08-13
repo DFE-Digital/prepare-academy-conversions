@@ -15,7 +15,8 @@
 
     var isFormAMatPage = Context.Request.Path.Value.Contains("/form-a-mat/project-list") || Context.Request.Path.Value.Contains("/schools-in-this-mat/");
 
-   var isGroupsPage = Context.Request.Path.Value.Contains("/groups");
+    var isGroupsPage = Context.Request.Path.Value.Contains("/groups");
+    var isTransfersPage = Context.Request.Path.Value.Contains("/transfers");
    
     var notificationBannerMessage = Configuration["notificationBannerMessage"] ?? string.Empty;
 
@@ -136,7 +137,7 @@
                     </button>
                 </p>
                 <ul class="dfe-header__navigation-list">
-                    <li class="dfe-header__navigation-item @(!isFormAMatPage && !isGroupsPage? "dfe-header__navigation-item--current": "")">
+                    <li class="dfe-header__navigation-item @(!isFormAMatPage && !isGroupsPage && !isTransfersPage ? "dfe-header__navigation-item--current": "")">
                         <a asp-page="@Links.ProjectList.Index.Page" class="dfe-header__navigation-link">
                             Conversions
                             <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
@@ -144,7 +145,7 @@
                             </svg>
                         </a>
                     </li>
-                    <li class="dfe-header__navigation-item">
+                    <li class="dfe-header__navigation-item @(isTransfersPage? "dfe-header__navigation-item--current": "")">
                         <a class="dfe-header__navigation-link" href="@Links.TransfersUrl/home">
                             Transfers
                             <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
