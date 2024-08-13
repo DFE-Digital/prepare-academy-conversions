@@ -3,39 +3,32 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Models;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Dfe.PrepareConversions.Models.Links;
 
 namespace Dfe.PrepareConversions.Pages.Groups;
 
-public class CheckConversionDetailsModel : PageModel
+public class CheckConversionDetailsModel(IAcademyConversionProjectRepository academyConversionProjectRepository, IProjectGroupsRepository projectGroupsRepository, ITrustsRepository trustRepository) : PageModel
 {
-   public List<AcademyConversionProject> ConversionProjects { get; set; } = new();
+   public List<AcademyConversionProject> ConversionProjects { get; set; } = [];
    
    private ApiResponse<IEnumerable<AcademyConversionProject>> projects { get; set; }
    public string Ukprn { get; set; }
-   
-   private readonly IAcademyConversionProjectRepository _academyConversionProjectRepository;
 
-   private readonly IProjectGroupsRepository _projectGroupsRepository;
-   private readonly ITrustsRepository _trustRepository;
+   public int? GroupId { get; set; }
+   public string GroupName { get; set; }
 
-   public CheckConversionDetailsModel(IAcademyConversionProjectRepository academyConversionProjectRepository, IProjectGroupsRepository projectGroupsRepository, ITrustsRepository trustRepository)
-   {
-      _academyConversionProjectRepository = academyConversionProjectRepository;
-      _projectGroupsRepository = projectGroupsRepository;
-      _trustRepository = trustRepository;
-   }
-   
-   public async Task OnGet(string ukprn, List<string> selectedconversions)
+   public async Task OnGet(string ukprn, List<string> selectedconversions, int? groupId = null, string groupName = null)
    {
       Ukprn = ukprn;
-      var trust = await _trustRepository.GetTrustByUkprn(ukprn);
-      projects = await _academyConversionProjectRepository.GetProjectsForGroup(trust.ReferenceNumber);
+      GroupId = groupId;
+      GroupName = groupName;
+      var trust = await trustRepository.GetTrustByUkprn(ukprn);
+      projects = await academyConversionProjectRepository.GetProjectsForGroup(trust.ReferenceNumber);
       
       foreach (var project in projects.Body.Where((x => selectedconversions.Contains(x.Id.ToString()))))
       {
@@ -43,13 +36,20 @@ public class CheckConversionDetailsModel : PageModel
       }
    }
    
-   public async Task<IActionResult> OnPost(string ukprn, List<string> selectedconversions)
+   public async Task<IActionResult> OnPost(string ukprn, List<string> selectedconversions, int? groupId)
    {
-      var trust = await _trustRepository.GetTrustByUkprn(ukprn);
+      if (groupId != null)
+      {
+         var projectGroup = await projectGroupsRepository.GetProjectGroupById(groupId.Value);
+         selectedconversions.AddRange(projectGroup.Body.Projects.Select(x => x.Id.ToString()));
+         await projectGroupsRepository.SetProjectGroup(projectGroup.Body.ReferenceNumber, new SetProjectGroup(selectedconversions.ConvertAll(int.Parse)));
+         return RedirectToPage(ProjectGroups.ProjectGroupIndex.Page, new { id = groupId, isNew = false });
+      }
+      var trust = await trustRepository.GetTrustByUkprn(ukprn);
       var newGroup = new CreateProjectGroup(trust.ReferenceNumber, trust.Ukprn, trust.Name, selectedconversions.ConvertAll(int.Parse));
 
-      var newGroupResponse = _projectGroupsRepository.CreateNewProjectGroup(newGroup);
+      var newGroupResponse = projectGroupsRepository.CreateNewProjectGroup(newGroup);
       
-      return RedirectToPage(Links.ProjectGroups.ProjectGroupIndex.Page, new { newGroupResponse.Result.Body.Id, isNew = true });
+      return RedirectToPage(ProjectGroups.ProjectGroupIndex.Page, new { newGroupResponse.Result.Body.Id, isNew = true });
    }
 }

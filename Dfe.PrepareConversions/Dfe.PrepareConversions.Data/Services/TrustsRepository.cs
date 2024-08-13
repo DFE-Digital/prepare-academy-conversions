@@ -36,9 +36,9 @@ public class TrustsRepository : ITrustsRepository
    public async Task<TrustDto> GetTrustByUkprn(string ukprn)
    {
       if (string.IsNullOrWhiteSpace(ukprn)) return default;
-      string[] array = new string[] { ukprn.Trim() };
+      string[] array = [ukprn.Trim()];
       string path = $@"/v4/trusts/bulk?Ukprns={array[0]}";
       ApiResponse<List<TrustDto>> result = await _httpClientService.Get<List<TrustDto>>(_httpClient, path);
-      return result.Body.FirstOrDefault();
+      return result.Body?.FirstOrDefault();
    }
 }

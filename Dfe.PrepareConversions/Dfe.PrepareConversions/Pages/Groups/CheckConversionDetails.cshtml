@@ -1,18 +1,32 @@
 @page "/groups/check-conversion-detailsx"
 @using Dfe.PrepareConversions.Data.Models
+@using Dfe.PrepareConversions.Pages.Shared
 @using Dfe.PrepareConversions.Utils
 @model Dfe.PrepareConversions.Pages.Groups.CheckConversionDetailsModel
 
+@{
+   ViewData["Title"] = "Select conversions";
+   var routeParams = new Dictionary<string, string>
+   {
+      { "ukprn", Model.Ukprn }
+   };
+   
+   if(Model.GroupId != null)
+   {
+       routeParams.Add("id", Model.GroupId.ToString());
+   }
+}
+
 @section BeforeMain
 {
-   
+   <partial name="_BackLink" model="@(new BackLink(Links.ProjectGroups.SelectConversions.Page, routeParams))" />
    <partial name="_ErrorSummary" />
 }
 
 
 <div class="govuk-grid-row" xmlns="http://www.w3.org/1999/html">
    <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l">Create a new group</span>
+        <span class="govuk-caption-l">@(Model.GroupId == null ? "Create a new group" : Model.GroupName)</span>
       <h1 class="govuk-heading-xl" data-cy="select-heading">Check conversion details</h1>
       <p class="govuk-body">Check you have chosen the right conversion projects. If they are not correct, you can find and select projects again.</p>
       @{
@@ -76,6 +90,7 @@
       }
       <form method="post" data-id="form">
          <input type="hidden" asp-for="Ukprn" value="@Model.Ukprn"/>
+            <input type="hidden" asp-for="GroupId" value="@Model.GroupId" />
          <input type="hidden" asp-for="ConversionProjects" value="@Model.ConversionProjects"/>
          <button class="govuk-button" type="submit" data-id="submit">Confirm and continue</button>
       </form>

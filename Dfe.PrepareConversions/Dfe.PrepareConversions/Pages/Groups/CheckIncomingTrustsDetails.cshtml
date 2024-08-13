@@ -5,6 +5,11 @@
    ViewData["Title"] = "Check the incoming trusts details";
 }
 
+@section BeforeMain
+{
+    <a asp-page="@Links.ProjectGroups.WhichTrustWillTheGroupJoin.Page" class="govuk-back-link">@Links.ProjectList.ProjectGroups.BackText</a>
+}
+
 <div class="govuk-grid-row" xmlns="http://www.w3.org/1999/html">
    <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l">Create a new group</span>

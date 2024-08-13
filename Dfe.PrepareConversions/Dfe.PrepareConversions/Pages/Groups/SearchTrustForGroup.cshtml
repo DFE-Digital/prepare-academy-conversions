@@ -4,7 +4,10 @@
 @{
    ViewData["Title"] = "Which trust will the group join?";
 }
-
+@section BeforeMain
+{
+    <a asp-page="@Links.ProjectGroups.CreateANewGroup.Page" class="govuk-back-link">@Links.ProjectList.ProjectGroups.BackText</a>
+}
 <div class="govuk-grid-row">
    <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l">Create a new group</span>
