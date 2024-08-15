@@ -16,7 +16,7 @@
     var isFormAMatPage = Context.Request.Path.Value.Contains("/form-a-mat/project-list") || Context.Request.Path.Value.Contains("/schools-in-this-mat/");
 
     var isGroupsPage = Context.Request.Path.Value.Contains("/groups");
-    var isTransfersPage = Context.Request.Path.Value.Contains("/transfers");
+    var isTransfersPage = Context.Request.Path.Value.ToLower().Contains("/transfers");
    
     var notificationBannerMessage = Configuration["notificationBannerMessage"] ?? string.Empty;
 

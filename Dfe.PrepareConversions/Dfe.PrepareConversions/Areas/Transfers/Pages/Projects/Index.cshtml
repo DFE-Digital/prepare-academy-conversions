@@ -1,0 +1,195 @@
+﻿@page "transfers/project/{urn}"
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using NetEscapades.AspNetCore.SecurityHeaders.TagHelpers
+@using Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers.TagHelpers
+@model Dfe.PrepareTransfers.Web.Pages.Projects.Index
+
+@{
+    Layout = "_Layout";
+    ViewBag.Title = Model.IncomingTrustName;
+}
+
+@section BeforeMain
+{
+    <a class="govuk-back-link" asp-page="/Home/Index">Back</a>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <span class="govuk-caption-l">Project reference: @Model.ProjectReference</span>
+
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+            @Model.IncomingTrustName
+        </h1>
+
+        <p class="govuk-body govuk-!-margin-bottom-1">
+            Route: @if (Model.IsFormAMAT)
+            {
+                <span>Form a MAT</span>
+            } Transfer
+        </p>
+        <p class="govuk-body govuk-!-margin-bottom-5">
+            Delivery officer:
+
+            @if (Model.AssignedUser == null || string.IsNullOrWhiteSpace(Model?.AssignedUser.FullName))
+            {
+                <span data-id="assigned-user" class="empty">Empty</span>
+            }
+            else
+            {
+                <strong data-id="assigned-user">@Model.AssignedUser.FullName</strong>
+            }
+
+            <a class="govuk-link govuk-!-padding-left-50" asp-page="@Dfe.PrepareTransfers.Web.Models.Links.ProjectAssignment.Index.PageName" asp-route-urn="@Model.Urn">Change</a>
+        </p>
+        <p class="govuk-!-margin-top-0 govuk-!-margin-bottom-8">
+            @{
+                var decisionClass = Model.ProjectStatus switch
+                {
+                    "Approved" => "govuk-tag--green",
+                    "Deferred" => "govuk-tag--orange",
+                    "Withdrawn" => "govuk-tag--purple",
+                    _ => "govuk-tag--red"
+                };
+
+                if (string.IsNullOrEmpty(Model.ProjectStatus))
+                {
+                    <strong class="govuk-tag govuk-tag--yellow">
+                        PRE ADVISORY BOARD
+                    </strong>
+                }
+                else
+                {
+                    <strong class="@($"govuk-tag {decisionClass}")">
+                        @Model.ProjectStatus
+                    </strong>
+                }
+            }
+        </p>
+
+        <div class="govuk-grid-column-full">
+            <partial name="_SubMenu"  />
+        </div>
+
+        <h2 class="govuk-heading-l">
+            Prepare a project document
+        </h2>
+        <p class="govuk-body">
+            Complete the following sections to create a project document that will help you prepare for an advisory board meeting.
+        </p>
+        <p class="govuk-body">You can complete them in any order.</p>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <ol class="moj-task-list">
+            <li>
+                <h3 class="moj-task-list__section govuk-!-margin-top-8">
+                    Advisory board and transfer dates
+                </h3>
+                <ul class="moj-task-list__items govuk-!-padding-left-0 govuk-!-margin-bottom-6">
+                    <li class="moj-task-list__item">
+                        <span class="moj-task-list__task-name">
+                            <a class="govuk-link" aria-describedby="dates" asp-page="/Projects/TransferDates/Index" asp-route-urn="@Model.Urn" data-test="transfer-dates">Confirm project dates</a>
+                        </span><projectstatus id="dates" status="@Model.TransferDatesStatus"></projectstatus>
+                    </li>
+                </ul>
+
+                <h3 class="moj-task-list__section govuk-!-margin-top-8">
+                    Transfer details
+                </h3>
+                <ul class="moj-task-list__items govuk-!-padding-left-0 govuk-!-margin-bottom-6">
+                    <li class="moj-task-list__item">
+                        <span class="moj-task-list__task-name">
+                            <a class="govuk-link" aria-describedby="features" asp-page="/Projects/Features/Index" asp-route-urn="@Model.Urn" data-test="transfer-features">Features of the transfer</a>
+                        </span><projectstatus id="features" status="@Model.FeatureTransferStatus"></projectstatus>
+                    </li>                    
+                    <li class="moj-task-list__item">
+                        <span class="moj-task-list__task-name">
+                            <a class="govuk-link" aria-describedby="legal-requirements" asp-page="/Projects/LegalRequirements/Index" asp-route-urn="@Model.Urn" data-test="transfer-legal-requirements">Legal requirements</a>
+                        </span><projectstatus id="legal-requirements" status="@Model.LegalRequirementsStatus"></projectstatus>
+                    </li>
+                    <li class="moj-task-list__item">
+                        <span class="moj-task-list__task-name">
+                            <a class="govuk-link" aria-describedby="academyandtrustinformation" asp-page="/Projects/AcademyAndTrustInformation/Index" asp-route-urn="@Model.Urn" data-test="academy-trust-information">
+                                Trust information
+                            </a>
+                        </span><projectstatus id="academyandtrustinformation" , status="@Model.AcademyAndTrustInformationStatus"></projectstatus>
+                    </li>
+                </ul>
+
+                <h3 class="moj-task-list__section govuk-!-margin-top-8">
+                    Give a case for this transfer
+                </h3>
+                <ul class="moj-task-list__items govuk-!-padding-left-0 govuk-!-margin-bottom-6">
+                    <li class="moj-task-list__item">
+                        <span class="moj-task-list__task-name">
+                            <a class="govuk-link" aria-describedby="benefits" asp-page="/Projects/BenefitsAndRisks/Index" asp-route-urn="@Model.Urn" data-test="transfer-benefits">Benefits and risks</a>
+                        </span><projectstatus id="benefits" status="@Model.BenefitsAndOtherFactorsStatus"></projectstatus>
+                    </li>
+                    <li class="moj-task-list__item">
+                        <span class="moj-task-list__task-name">
+                            <a class="govuk-link" aria-describedby="rationale" asp-page="/Projects/Rationale/Index" asp-route-urn="@Model.Urn" data-test="transfer-rationale">Rationale</a>
+                        </span><projectstatus id="rationale" status="@Model.RationaleStatus"></projectstatus>
+                    </li>
+                </ul>
+            </li>
+            @if (Model.IsFormAMAT)
+            {
+                <li>
+                    <h3 class="moj-task-list__section govuk-!-margin-top-8">
+                        Create a trust template
+                    </h3>
+                    <ul class="moj-task-list__items govuk-!-padding-left-0 govuk-!-margin-bottom-6">
+                        <li class="moj-task-list__item">
+                            <span class="moj-task-list__task-name">
+                                <a class="govuk-link" aria-describedby="project-template" asp-page="/TaskList/TrustTemplate/Index" asp-route-urn="@Model.Urn" data-test="trust-template">Prepare your template</a>
+                            </span>
+                        </li>
+                    </ul>
+                </li>
+            }
+            <li>
+                <h3 class="moj-task-list__section govuk-!-margin-top-8">
+                    School data
+                </h3>
+                <div class="govuk-inset-text show-white-space">
+                    This information will be added to your project document automatically
+                </div>
+                <ul class="moj-task-list__items govuk-!-padding-left-0 govuk-!-margin-bottom-6">
+                    @for (int i = 0; i < Model.Academies.Count; i++)
+                    {
+                        <li class="moj-task-list__item">
+                            <span class="moj-task-list__task-name">
+                                <a data-test="sd-academy-@(i+1)" class="govuk-link" asp-page="/TaskList/SchoolData" asp-route-urn="@Model.Urn" asp-route-academyUkprn="@Model.Academies[i].Item1">@Model.Academies[i].Item2</a>
+                            </span>
+                        </li>
+                    }
+                </ul>
+            </li>
+        </ol>
+    </div>
+</div>
+<hr class="govuk-section-break govuk-section-break--m">
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-l">
+            Create your project document
+        </h2>
+        <p class="govuk-body govuk-!-margin-bottom-6">
+            Project documents are in Microsoft Word format. You can preview them first and make changes to them afterwards.
+        </p>
+        <div class="govuk-button-group">
+            <form asp-page="@Dfe.PrepareTransfers.Web.Models.Links.HeadteacherBoard.Preview.PageName" asp-route-urn="@Model.Urn" method="get">
+                <button class="govuk-button govuk-button--secondary" data-module="govuk-button" data-test="preview-htb">Preview project document</button>
+            </form>
+            <form asp-page="/TaskList/HtbDocument/Download" asp-route-urn="@Model.Urn" method="get">
+                <button class="govuk-button" data-module="govuk-button" data-test="generate-htb" data-google-analytics-project-generate>Create project document</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/dist/google-analytics-events.bundle.js" asp-add-nonce></script>
