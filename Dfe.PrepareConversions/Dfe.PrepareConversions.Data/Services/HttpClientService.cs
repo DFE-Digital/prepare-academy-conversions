@@ -42,6 +42,14 @@ public class HttpClientService : IHttpClientService
       return await HandleResponse<TResponse>(result);
    }
 
+   public async Task<ApiResponse<TResponse>> Delete<TResponse>(HttpClient httpClient, string path)
+     where TResponse : class
+   {
+      HttpResponseMessage result = await httpClient.DeleteAsync(path);
+
+      return await HandleResponse<TResponse>(result);
+   }
+
    private async Task<ApiResponse<TResponse>> HandleResponse<TResponse>(HttpResponseMessage result) where TResponse : class
    {
       if (!result.IsSuccessStatusCode) return await HandleUnsuccessfulRequest<TResponse>(result);

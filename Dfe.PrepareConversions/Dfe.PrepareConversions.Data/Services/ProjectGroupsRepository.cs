@@ -60,6 +60,20 @@ public class ProjectGroupsRepository : IProjectGroupsRepository
 
    }
 
+   public async Task DeleteProjectGroup(string referenceNumber)
+   {
+
+      HttpClient httpClient = _httpClientFactory.CreateAcademisationClient();
+
+
+      var result = await _httpClientService.Delete<string>(
+         httpClient,
+         @$"/project-group/{referenceNumber}");
+
+      if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+
+   }
+
    public async Task AssignProjectGroupUser(string referenceNumber, SetAssignedUserModel user)
    {
 
