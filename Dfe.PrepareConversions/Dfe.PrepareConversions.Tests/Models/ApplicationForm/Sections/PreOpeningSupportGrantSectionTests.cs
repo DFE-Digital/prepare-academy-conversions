@@ -18,7 +18,7 @@ public class PreOpeningSupportGrantSectionTests
 
       FormField[] expectedFields = { new("Do you want these funds paid to the school or the trust?", application.SchoolSupportGrantFundsPaidTo) };
 
-      formSection.Heading.Should().Be("Pre-opening support grant");
+      formSection.Heading.Should().Be("Conversion support grant");
       formSection.SubSections.First().Fields.Should().BeEquivalentTo(expectedFields);
    }
 }

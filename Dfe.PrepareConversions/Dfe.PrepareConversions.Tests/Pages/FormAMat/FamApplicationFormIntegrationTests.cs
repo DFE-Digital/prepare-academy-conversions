@@ -159,7 +159,7 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
 
-      Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Pre-opening support grant").Should().NotBeEmpty();
+      Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Conversion support grant").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
    }
    [Fact]
@@ -244,7 +244,7 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
          { "Finances", "#Finances" },
          { "Future pupil numbers", "#Future_pupil_numbers" },
          { "Land and buildings", "#Land_and_buildings" },
-         { "Pre-opening support grant", "#Pre-opening_support_grant" },
+         { "Conversion support grant", "#Conversion_support_grant" },
          { "Consultation", "#Consultation" },
          { "Declaration", "#Declaration" }
       };

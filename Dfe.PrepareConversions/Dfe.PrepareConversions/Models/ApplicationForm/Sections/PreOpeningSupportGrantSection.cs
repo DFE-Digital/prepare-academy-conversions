@@ -7,7 +7,7 @@ namespace Dfe.PrepareConversions.Models.ApplicationForm.Sections;
 
 public class PreOpeningSupportGrantSection : BaseFormSection
 {
-   public PreOpeningSupportGrantSection(ApplyingSchool application) : base("Pre-opening support grant")
+   public PreOpeningSupportGrantSection(ApplyingSchool application) : base("Conversion support grant")
    {
       SubSections = new[] { new FormSubSection("Details", GenerateDetailsFields(application)) };
    }
