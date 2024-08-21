@@ -7,14 +7,14 @@ using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Models.ApplicationForm.Sections;
 
-public class PreOpeningSupportGrantSectionTests
+public class ConversionSupportGrantSectionTests
 {
    [Fact]
    public static void Constructor_WithApplication_SetFields()
    {
       ApplyingSchool application = new() { SchoolSupportGrantFundsPaidTo = "School" };
 
-      PreOpeningSupportGrantSection formSection = new(application);
+      ConversionSupportGrantSection formSection = new(application);
 
       FormField[] expectedFields = { new("Do you want these funds paid to the school or the trust?", application.SchoolSupportGrantFundsPaidTo) };
 

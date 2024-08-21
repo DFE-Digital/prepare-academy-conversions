@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Models.ApplicationForm.Sections;
 
-public class PreOpeningSupportGrantSection : BaseFormSection
+public class ConversionSupportGrantSection : BaseFormSection
 {
-   public PreOpeningSupportGrantSection(ApplyingSchool application) : base("Conversion support grant")
+   public ConversionSupportGrantSection(ApplyingSchool application) : base("Conversion support grant")
    {
       SubSections = new[] { new FormSubSection("Details", GenerateDetailsFields(application)) };
    }
