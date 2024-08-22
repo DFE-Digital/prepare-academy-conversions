@@ -11,7 +11,7 @@ namespace Dfe.PrepareConversions.Services;
 public class ErrorService
 {
    private const string API_ERROR =
-      "There is a system problem and we could not save your changes. Contact <a href=\"mailto:sddservicessupport@education.gov.uk\">sddservicessupport@education.gov.uk</a> if this continues.";
+      "There is a system problem and we could not save your changes. Contact regionalservices.rg@education.gov.uk if this continues.";
 
    private readonly List<Error> _errors = new();
 
