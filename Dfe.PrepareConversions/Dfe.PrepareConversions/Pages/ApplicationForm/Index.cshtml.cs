@@ -61,7 +61,7 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
          new FinanceSection(application.ApplyingSchools.First()),
          new FuturePupilNumberSection(application.ApplyingSchools.First()),
          new LandAndBuildingsSection(application.ApplyingSchools.First()),
-         new PreOpeningSupportGrantSection(application.ApplyingSchools.First()),
+         new ConversionSupportGrantSection(application.ApplyingSchools.First()),
          new ConsultationSection(application.ApplyingSchools.First()),
          new DeclarationSection(application.ApplyingSchools.First())
       };
