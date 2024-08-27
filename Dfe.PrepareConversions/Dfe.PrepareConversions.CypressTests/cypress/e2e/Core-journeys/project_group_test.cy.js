@@ -74,7 +74,9 @@ describe('Group Creation Tests', () => {
 
     Logger.log("remove the school from the group");
     projectTaskList.removeSchoolFromGroup();
-    
+
+    Logger.log("delete the group");
+    projectTaskList.deleteGroup();
 
   });
 });

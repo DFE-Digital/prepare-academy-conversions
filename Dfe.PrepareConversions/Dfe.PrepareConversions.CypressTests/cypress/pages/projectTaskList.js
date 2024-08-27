@@ -189,4 +189,10 @@ export default class ProjectTaskList extends BasePage {
         cy.get('#remove-conversion-confirmation').click();
         return this;
     }
+
+    static deleteGroup() {
+        cy.get('[data-cy="tes"]').click();
+        cy.get('#delete-group-confirmation').click();
+        return this;
+    }
 }
