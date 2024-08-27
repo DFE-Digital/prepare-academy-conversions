@@ -1,0 +1,41 @@
+@page "/groups/confirm-to-delete-group"
+@model Dfe.PrepareConversions.Pages.Groups.ConfirmToDeleteGroupModel
+
+@{
+   ViewData["Title"] = "Confirm you want to remove this group";
+}
+
+@section BeforeMain
+{
+    <a asp-page="@Links.ProjectGroups.ProjectGroupIndex.Page" asp-route-id="@Model.Id" class="govuk-back-link">@Links.ProjectList.ProjectGroups.BackText</a>
+}
+
+<div class="govuk-grid-row" xmlns="http://www.w3.org/1999/html">
+   <div class="govuk-grid-column-two-thirds">
+       <strong class="govuk-caption-l">@Model.GroupName</strong>
+      <h1 class="govuk-heading-xl" data-cy="select-heading">Confirm you want to remove this group</h1>
+        <div>
+            <p class="govuk-body">If you delete it will no longer appear in Complete</p>
+        </div>
+  <form method="post">
+            <input type="hidden" asp-for="@Model.Id" />
+            <input type="hidden" asp-for="@Model.ReferenceNumber" /> 
+            <input type="hidden" asp-for="@Model.IsGroupDeleted" />
+            <span class="govuk-!-margin-right-2" >  
+                <button class="govuk-button pt-3" data-module="govuk-button" id="delete-group-confirmation">
+                Delete group
+               </button>
+            </span>
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                Cancel
+            </button>
+        </form>   
+      </div>
+</div>
+
+<script type="application/javascript" asp-add-nonce>
+    document.querySelector('#delete-group-confirmation').onclick = () =>{
+        document.querySelector('#IsGroupDeleted').value = true;
+        document.querySelector('form').submit();
+    };
+</script>

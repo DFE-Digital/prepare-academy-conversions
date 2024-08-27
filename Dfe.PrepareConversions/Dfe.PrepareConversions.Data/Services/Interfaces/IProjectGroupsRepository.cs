@@ -13,5 +13,6 @@ public interface IProjectGroupsRepository
    Task<ApiResponse<ProjectGroup>> GetProjectGroupByReference(string referenceNumber);
    Task SetProjectGroup(string referenceNumber, SetProjectGroup setProjectGroup);
    Task AssignProjectGroupUser(string referenceNumber, SetAssignedUserModel user);
+   Task DeleteProjectGroup(string referenceNumber);
 
 }
