@@ -183,4 +183,10 @@ export default class ProjectTaskList extends BasePage {
         cy.get(this.selectors.continueButton).click();
         return this;
     }
+
+    static removeSchoolFromGroup() {
+        cy.get('[data-cy="remove-link"] > .govuk-link').click();
+        cy.get('#remove-conversion-confirmation').click();
+        return this;
+    }
 }
