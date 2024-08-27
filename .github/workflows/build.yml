@@ -66,5 +66,5 @@ jobs:
         dotnet-sonarscanner begin /k:"DFE-Digital-prepare-conversions" /o:"dfe-digital" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.coverageReportPaths=CoverageReport/SonarQube.xml
         dotnet build Dfe.PrepareConversions/Dfe.PrepareConversions.sln --no-restore
         dotnet test Dfe.PrepareConversions/Dfe.PrepareConversions.sln --no-build --verbosity normal --collect:"XPlat Code Coverage"
-        reportgenerator -reports:./**/coverage.cobertura.xml -targetdir:./Dfe.PrepareConversions/CoverageReport -reporttypes:SonarQube
+        reportgenerator -reports:./**/coverage.cobertura.xml -targetdir:./CoverageReport -reporttypes:SonarQube
         dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
