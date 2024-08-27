@@ -1,5 +1,6 @@
 /// <reference types ='Cypress'/>
 
+
 import BasePage from "./BasePage"
 
 export default class ProjectTaskList extends BasePage {
@@ -26,10 +27,19 @@ export default class ProjectTaskList extends BasePage {
         createNewConversionButton: '[data-cy="create_new_conversion_btn"]',
         recordDecisionButton: '[data-cy="record_decision_btn"]',
         schoolName: '[data-cy="school-name"]',
-        urn: '[data-cy="urn"]'
-    }
+        urn: '[data-cy="urn"]',
+        groupsLink: '.dfe-header__navigation-link[href*="/groups/project-list"]', // Selector for Groups link in the navigation menu
+        createNewGroupButton: 'a.govuk-button[href*="/groups/create-a-new-group"]', // Selector for Create New Group button
+        createGroupButton: '[data-cy="create-group-btn"]', // Selector for Create Group button
+        urnField: '[data-cy="UKPRN"]',
+        continueButton: '[data-cy="submit-btn"]',
+        conversionSelection: '[id="available-conversion-\\[0\\]"]',
+        confirmandcontinue: '[data-cy="select-common-submitbutton"]'
+       
+       }
 
     static path = 'task-list'
+    static path1 = 'groups/project-list'
 
     static selectAssignProject() {
         cy.checkPath(this.path)
@@ -140,6 +150,37 @@ export default class ProjectTaskList extends BasePage {
         cy.get(this.selectors.urn).should('contain', urn);
         return this;
     }
+
+    static clickGroupsLink() {
+        cy.checkPath(this.path1);
+        cy.get(this.selectors.groupsLink).click();
+        return this;
+    }
+
+    static clickCreateNewGroupBtn() {
+        cy.get(this.selectors.createNewGroupButton).click();
+        return this;
+    }
+
+    static clickCreateGroupBtn() {
+        cy.get(this.selectors.createGroupButton).click();
+        return this;
+    }
+
+    static checkURNAndContinue(expectedURN) {
+        cy.get(this.selectors.urnField).should('contain', expectedURN);
+        cy.get(this.selectors.continueButton).click();
+        return this;
+    }
+
+    static selectConversion() {
+        cy.get(this.selectors.conversionSelection).click();
+        cy.get(this.selectors.confirmandcontinue).click();
+        return this;
+    }
+
+    static clickContinue() {
+        cy.get(this.selectors.continueButton).click();
+        return this;
+    }
 }
-
-
