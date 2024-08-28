@@ -34,55 +34,55 @@ export default class ProjectTaskList extends BasePage {
         urnField: '[data-cy="UKPRN"]',
         continueButton: '[data-cy="submit-btn"]',
         conversionSelection: '[id="available-conversion-\\[0\\]"]',
-        confirmandcontinue: '[data-cy="select-common-submitbutton"]'
+        confirmAndContinue: '[data-cy="select-common-submitbutton"]'
        
        }
 
-    static path = 'task-list'
-    static path1 = 'groups/project-list'
+       static taskListPath = 'task-list';
+       static groupsProjectListPath = 'groups/project-list';
 
     static selectAssignProject() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         cy.get(this.selectors.assignProjectButton).click()
     }
 
     static getAssignedUser() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         return cy.get(this.selectors.assignedUser)
     }
 
     static getNotificationMessage() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         return cy.get(this.selectors.notificationMessage)
     }
 
     static selectSchoolOverview() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         cy.get(this.selectors.schoolOverviewLink).click()
     }
 
     static getSchoolOverviewStatus() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         return cy.get(this.selectors.schoolOverviewStatus)
     }
 
     static selectBudget() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         cy.get(this.selectors.budgetLink).click()
     }
 
     static getBudgetStatus() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         return cy.get(this.selectors.budgetStatus)
     }
 
     static selectPupilForecast() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         cy.get(this.selectors.pupilForecastLink).click()
     }
 
     static selectConversionDetails() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         cy.get(this.selectors.conversionDetailsLink).click()
     }
 
@@ -91,47 +91,47 @@ export default class ProjectTaskList extends BasePage {
     }
 
     static getConversionDetailsStatus() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         return cy.get(this.selectors.conversionDetailsStatus)
     }
 
     static selectRationale() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.pataskListPathth)
         cy.get(this.selectors.rationaleLink).click()
     }
 
     static getRationaleStatus() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         return cy.get(this.selectors.rationaleStatus)
     }
 
     static selectRisksAndIssues() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         cy.get(this.selectors.riskAndIssuesLink).click()
     }
 
     static getRisksAndIssuesStatus() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         return cy.get(this.selectors.riskAndIssuesStatus)
     }
 
     static selectLA() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         cy.get(this.selectors.LALink).click()
     }
 
     static getLAStatus() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         return cy.get(this.selectors.LAStatus)
     }
 
     static selectOfsted() {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         cy.get(this.selectors.ofstedLink).click()
     }
 
     static selectKeyStage(keyStageNumber) {
-        cy.checkPath(this.path)
+        cy.checkPath(this.taskListPath)
         cy.get(this.selectors.keyStageLink(keyStageNumber)).click()
     }
 
@@ -152,7 +152,7 @@ export default class ProjectTaskList extends BasePage {
     }
 
     static clickGroupsLink() {
-        cy.checkPath(this.path1);
+        cy.checkPath(this.groupsProjectListPath);
         cy.get(this.selectors.groupsLink).click();
         return this;
     }
@@ -175,7 +175,7 @@ export default class ProjectTaskList extends BasePage {
 
     static selectConversion() {
         cy.get(this.selectors.conversionSelection).click();
-        cy.get(this.selectors.confirmandcontinue).click();
+        cy.get(this.selectors.confirmAndContinue).click();
         return this;
     }
 
@@ -191,7 +191,7 @@ export default class ProjectTaskList extends BasePage {
     }
 
     static deleteGroup() {
-        cy.get('[data-cy="tes"]').click();
+        cy.get('[data-cy="delete-btn"]').click();
         cy.get('#delete-group-confirmation').click();
         return this;
     }

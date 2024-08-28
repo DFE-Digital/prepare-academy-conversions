@@ -2,7 +2,7 @@ import projectTaskList from "../../pages/projectTaskList";
 import { decisionPage } from '../../pages/decisionPage';
 import { Logger } from '../../support/logger';
 
-describe('Decisions Tests', () => {
+describe('Groups Tests', () => {
 
   let projectId;
 
@@ -59,7 +59,7 @@ describe('Group Creation Tests', () => {
     Logger.log("Click on create a group");
     projectTaskList.clickCreateGroupBtn();
 
-    Logger.log("enerting which trust will the group join");
+    Logger.log("Entering the trust details for the group to join");
     cy.get('.autocomplete__wrapper > #SearchQuery').type('Greater Manchester Academies Trust (10058252)')
     cy.get('.autocomplete__wrapper > #SearchQuery').type('{enter}')
 
