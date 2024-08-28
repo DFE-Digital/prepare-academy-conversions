@@ -1,4 +1,5 @@
-﻿using Dfe.PrepareTransfers.Web.Models;
+﻿using Dfe.PrepareConversions.Areas.Transfers.Models;
+using Dfe.PrepareTransfers.Web.Models;
 
 namespace Dfe.PrepareTransfers.Web.Pages.Transfers
 {

@@ -1,6 +1,7 @@
+using Dfe.PrepareTransfers.Web.Pages.Transfers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dfe.PrepareTransfers.Web.Pages.Transfers
+namespace Dfe.PrepareConversions.Areas.Transfers.Pages.NewTransfer
 {
     public class TrustNameModel : TransfersPageModel
     {
