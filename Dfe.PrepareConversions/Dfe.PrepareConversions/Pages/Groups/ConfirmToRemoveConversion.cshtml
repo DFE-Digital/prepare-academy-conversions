@@ -1,0 +1,41 @@
+@page "/groups/confirm-to-remove-conversion"
+@model Dfe.PrepareConversions.Pages.Groups.ConfirmToRemoveConversionModel
+
+@{
+   ViewData["Title"] = "Confirm you want to remove this school or academy";
+}
+
+@section BeforeMain
+{
+    <a asp-page="@Links.ProjectGroups.ProjectGroupIndex.Page" asp-route-id="@Model.ProjectGroupId" class="govuk-back-link">@Links.ProjectList.ProjectGroups.BackText</a>
+}
+
+<div class="govuk-grid-row" xmlns="http://www.w3.org/1999/html">
+   <div class="govuk-grid-column-two-thirds">
+       <strong class="govuk-caption-l">@Model.SchoolName, URN @Model.Urn</strong>
+      <h1 class="govuk-heading-xl" data-cy="select-heading">Confirm you want to remove this school or academy</h1>
+        <div>
+            <p class="govuk-body">You can add it again later if you need to. </p>
+        </div>
+  <form method="post">
+            <input type="hidden" asp-for="@Model.Id" />
+            <input type="hidden" asp-for="@Model.ProjectGroupId" /> 
+            <input type="hidden" asp-for="@Model.IsConversionRemoved" />
+            <span class="govuk-!-margin-right-2" >  
+                <button class="govuk-button pt-3" data-module="govuk-button" id="remove-conversion-confirmation">
+                Remove project from group
+               </button>
+            </span>
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                Cancel
+            </button>
+        </form>   
+      </div>
+</div>
+
+<script type="application/javascript" asp-add-nonce>
+    document.querySelector('#remove-conversion-confirmation').onclick = () =>{
+        document.querySelector('#IsConversionRemoved').value = true;
+        document.querySelector('form').submit();
+    };
+</script>

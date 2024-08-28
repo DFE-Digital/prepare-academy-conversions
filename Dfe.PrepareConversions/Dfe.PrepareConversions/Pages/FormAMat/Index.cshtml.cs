@@ -68,7 +68,7 @@ public class FormAMatIndexModel : BaseAcademyConversionProjectPageModel
          new FinanceSection(currentSchool),
          new FuturePupilNumberSection(currentSchool),
          new LandAndBuildingsSection(currentSchool),
-         new PreOpeningSupportGrantSection(currentSchool),
+         new ConversionSupportGrantSection(currentSchool),
          new ConsultationSection(currentSchool),
          new DeclarationSection(currentSchool)
       };

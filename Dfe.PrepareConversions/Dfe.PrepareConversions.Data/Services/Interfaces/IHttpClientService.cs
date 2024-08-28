@@ -13,4 +13,7 @@ public interface IHttpClientService
 
    Task<ApiResponse<TResponse>> Get<TResponse>(HttpClient httpClient, string path)
       where TResponse : class;
+
+   Task<ApiResponse<TResponse>> Delete<TResponse>(HttpClient httpClient, string path)
+      where TResponse : class;
 }

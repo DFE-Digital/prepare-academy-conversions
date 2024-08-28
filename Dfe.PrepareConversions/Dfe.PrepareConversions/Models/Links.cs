@@ -283,6 +283,9 @@ public static class Links
       public static readonly LinkItem WhichTrustWillTheGroupJoin = AddLinkItem(page: "/Groups/SearchTrustForGroup");
       public static readonly LinkItem CheckIncomingTrustsDetails = AddLinkItem(page: "/Groups/CheckIncomingTrustsDetails");
       public static readonly LinkItem DoYouWantToAddConversions = AddLinkItem(page: "/Groups/DoYouWantToAddConversions");
+      public static readonly LinkItem ConfirmToRemoveConversion = AddLinkItem(page: "/Groups/ConfirmToRemoveConversion");
+      public static readonly LinkItem ConfirmToDeleteGroup = AddLinkItem(page: "/Groups/ConfirmToDeleteGroup");
+      public static readonly LinkItem ProjectGroupAssignment = AddLinkItem(page: "/Groups/ProjectGroupAssignment");
       public static readonly LinkItem SelectConversions = AddLinkItem(page: "/Groups/SelectConversions");
       public static readonly LinkItem CheckConversionDetails= AddLinkItem(page: "/Groups/CheckConversionDetails");
       public static readonly LinkItem ProjectGroupIndex = AddLinkItem(page: "/Groups/ProjectGroupIndex");

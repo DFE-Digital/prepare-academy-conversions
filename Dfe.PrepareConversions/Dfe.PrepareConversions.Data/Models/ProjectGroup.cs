@@ -14,3 +14,5 @@ public class ProjectGroup
 }
 
 public record CreateProjectGroup(string trustReferenceNumber, string trustUkprn, string trustName, List<int> conversionProjectIds);
+
+public record SetProjectGroup(List<int> conversionProjectIds);

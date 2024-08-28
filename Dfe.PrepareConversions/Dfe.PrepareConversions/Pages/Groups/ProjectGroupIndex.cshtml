@@ -45,11 +45,9 @@
                 <strong data-id="assigned-user">@Model.ProjectGroup.AssignedUserFullName</strong>
             }
 
-            @* 
-               ToDo: add ability to assign group a user
-            <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.ProjectAssignment.FormAMatProjectAssignment.Page" asp-route-id="@Model.ProjectGroup.Id">Change</a> *@
+            <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.ProjectGroups.ProjectGroupAssignment.Page" asp-route-id="@Model.ProjectGroup.Id">Change</a>
         </p>
-        <p class="govuk-!-margin-top-0  govuk-!-margin-bottom-8">
+        <p class="govuk-!-margin-top-0  govuk-!-margin-bottom-5">
             @{
                 var statusSummary = Model.Statuses
                 .GroupBy(status => new { status.Value, status.Colour })
@@ -63,6 +61,14 @@
             }
 
         </p>
+        <span class="govuk-body govuk-!-margin-bottom-5">
+            <span class="govuk-!-margin-right-2">
+                <a class="govuk-button govuk-button--secondary" asp-page="@Links.ProjectGroups.SelectConversions.Page" asp-route-ukprn="@Model.ProjectGroup.Ukprn" asp-route-id="@Model.Id"> Add conversion to group</a>
+           </span>
+            <span class=" govuk-!-margin-top-5">
+                <a class="govuk-link" asp-page="@Links.ProjectList.ProjectGroups.Page">View all groups</a>
+           </span>
+        </span>
     </div>
     <div class="govuk-grid-column-full">
         <nav class="moj-sub-navigation" aria-label="Sub navigation">
@@ -101,11 +107,18 @@
 
                         <tr class="govuk-table__row @matTypeClass" data-cy="select-projectlist-filter-row">
                             <td class="govuk-table__cell">
-                                <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
-                                    <strong>
-                                        <a id="@("school-name-" + projectRow.Index)" class="govuk-link" asp-page="@link" asp-route-id="@projectRow.Item.Id" asp-route-returnToFormAMatMenu="True">@projectRow.Item.SchoolName</a>
-                                    </strong>
-                                </div>
+                                <dl class="govuk-summary-list govuk-summary-list--no-border">
+                                    <div class="govuk-summary-list__row">
+                                        <dt class="govuk-summary-list__value"> 
+                                            <strong>
+                                                <a id="@("school-name-" + projectRow.Index)" class="govuk-link" asp-page="@link" asp-route-id="@projectRow.Item.Id" asp-route-returnToFormAMatMenu="True">@projectRow.Item.SchoolName</a>
+                                            </strong>
+                                       </dt>
+                                        <dd class="govuk-summary-list__value prepare-text-align-right">
+                                            <a class="govuk-link govuk-!-text-align-right" asp-page="@Links.ProjectGroups.ConfirmToRemoveConversion.Page" asp-route-projectGroupId="@Model.Id" asp-route-id="@projectRow.Item.Id" asp-route-urn="@projectRow.Item.SchoolURN" asp-route-schoolName="@projectRow.Item.SchoolName">Remove</a>
+                                        </dd>
+                                    </div>
+                                 </dl> 
                                 <div class="govuk-!-margin-top-1">
                                     <span id="@("urn-" + projectRow.Index)"><strong>URN:</strong> @projectRow.Item.SchoolURN</span>
                                 </div>
@@ -137,7 +150,7 @@
                                     <span if="projectRow.Item.TypeAndRoute.IsPresent()">@projectRow.Item.TypeAndRoute.RouteDescription(project.IsFormAMat)</span>
                                 </div>
                                  <div id="@("assigned-to-" + projectRow.Index)" class="do govuk-!-margin-top-1">
-                                       <strong>Assigned to:</strong>
+                                       <strong>Assigneds to:</strong>
                                        <span if="projectRow.Item.AssignedUserFullName.IsEmpty()" class="empty">Unassigned</span>
                                        <span if="projectRow.Item.AssignedUserFullName.IsPresent()">@projectRow.Item.AssignedUserFullName</span>
                                  </div>
@@ -149,6 +162,15 @@
 
                         index++;
                     }
+
+                   <div if="@Model.Projects.Count() == 0"> 
+                     <p>There are currently no schools or academies in this group</p>
+                     <span class="govuk-!-margin-right-2">
+                        <a class="govuk-link govuk-button pt-3" asp-page="@Links.ProjectGroups.ConfirmToDeleteGroup.Page"
+                               data-cy="tes" asp-route-id="@Model.Id" asp-route-urn="@Model.ProjectGroup.ReferenceNumber"
+                           asp-route-trustName="@Model.ProjectGroup.TrustName">Delete this group</a>
+                     </span>
+                   </div>
                 }
          </tbody>
       </table>

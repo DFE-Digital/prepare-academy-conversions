@@ -10,5 +10,9 @@ public interface IProjectGroupsRepository
 
    Task<ApiResponse<IEnumerable<ProjectGroup>>> GetAllGroups();
    Task<ApiResponse<ProjectGroup>> GetProjectGroupById(int id);
+   Task<ApiResponse<ProjectGroup>> GetProjectGroupByReference(string referenceNumber);
+   Task SetProjectGroup(string referenceNumber, SetProjectGroup setProjectGroup);
+   Task AssignProjectGroupUser(string referenceNumber, SetAssignedUserModel user);
+   Task DeleteProjectGroup(string referenceNumber);
 
 }
