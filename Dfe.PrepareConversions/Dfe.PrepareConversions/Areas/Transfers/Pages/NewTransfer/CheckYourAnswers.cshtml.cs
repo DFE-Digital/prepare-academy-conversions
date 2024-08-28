@@ -2,6 +2,7 @@ using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Data.Models.Projects;
 using Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers;
+using Dfe.PrepareTransfers.Web.Pages.Transfers;
 using Dfe.PrepareTransfers.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareTransfers.Web.Pages.Transfers
+namespace Dfe.PrepareConversions.Areas.Transfers.Pages.NewTransfer   
 {
     public class CheckYourAnswersModel : TransfersPageModel
     {
@@ -79,7 +80,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Transfers
             {
                 var urnCreated = HttpContext.Session.GetString(ProjectCreatedSessionKey);
                 return !string.IsNullOrWhiteSpace(urnCreated)
-                    ? RedirectToPage($"/Projects/{nameof(Projects.Index)}", new
+                    ? RedirectToPage($"/Projects/{nameof(Index)}", new
                     {
                         urn = urnCreated
                     })

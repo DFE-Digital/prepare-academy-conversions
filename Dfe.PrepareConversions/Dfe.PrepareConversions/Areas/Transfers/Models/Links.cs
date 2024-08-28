@@ -1,7 +1,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace Dfe.PrepareTransfers.Web.Models;
+namespace Dfe.PrepareConversions.Areas.Transfers.Models;
 
 public static class Links
 {

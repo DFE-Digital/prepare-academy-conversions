@@ -1,4 +1,6 @@
 using Dfe.Academisation.CorrelationIdMiddleware;
+using Dfe.PrepareConversions.Areas.Transfers.Services;
+using Dfe.PrepareConversions.Areas.Transfers.Services.Interfaces;
 using Dfe.PrepareConversions.Authorization;
 using Dfe.PrepareConversions.Configuration;
 using Dfe.PrepareConversions.Data.Features;
@@ -11,6 +13,8 @@ using Dfe.PrepareConversions.Routing;
 using Dfe.PrepareConversions.Security;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.Utils;
+using Dfe.PrepareTransfers.Web.BackgroundServices;
+using Dfe.PrepareTransfers.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -161,6 +165,8 @@ public class Startup
       services.AddScoped<IGraphUserService, GraphUserService>();
       services.AddScoped<IDfeHttpClientFactory, DfeHttpClientFactory>();
       services.AddScoped<ICorrelationContext, CorrelationContext>();
+      services.AddTransient<ITaskListService, TaskListService>();
+      services.AddSingleton<PerformanceDataChannel>();
 
       services.Configure<SharePointOptions>(Configuration.GetSection("Sharepoint"));
       var sharepointOptions = Configuration.GetSection("Sharepoint").Get<SharePointOptions>();

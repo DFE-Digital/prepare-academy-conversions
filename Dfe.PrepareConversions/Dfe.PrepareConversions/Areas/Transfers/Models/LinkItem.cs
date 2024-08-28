@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace Dfe.PrepareTransfers.Web.Models;
+namespace Dfe.PrepareConversions.Areas.Transfers.Models;
 
 public class LinkItem
 {
