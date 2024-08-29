@@ -1,3 +1,4 @@
+using Dfe.PrepareConversions.Areas.Transfers.Models.Forms;
 using Dfe.PrepareTransfers.Web.Models;
 using Dfe.PrepareTransfers.Web.Models.Forms;
 using Microsoft.AspNetCore.Mvc;
@@ -5,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Dfe.PrepareTransfers.Web.Pages.Transfers
+namespace Dfe.PrepareConversions.Areas.Transfers.Pages.NewTransfer
 {
     public class IsFormAMatModel : PageModel
     {
