@@ -1,6 +1,8 @@
 ﻿using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academisation.CorrelationIdMiddleware;
+using Dfe.PrepareConversions.Areas.Transfers.Services;
+using Dfe.PrepareConversions.Areas.Transfers.Services.Interfaces;
 using Dfe.PrepareConversions.Authorization;
 using Dfe.PrepareConversions.Data.Services.AzureAd;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
@@ -20,8 +22,6 @@ using Dfe.PrepareTransfers.Data.TRAMS.Mappers.Response;
 using Dfe.PrepareTransfers.Data.TRAMS.Models;
 using Dfe.PrepareTransfers.Data.TRAMS.Models.EducationPerformance;
 using Dfe.PrepareTransfers.Data.TRAMS.Mappers.Request;
-using Dfe.PrepareTransfers.Web.Services.Interfaces;
-using Dfe.PrepareTransfers.Web.Services;
 
 namespace Dfe.PrepareConversions.Utils
 {
