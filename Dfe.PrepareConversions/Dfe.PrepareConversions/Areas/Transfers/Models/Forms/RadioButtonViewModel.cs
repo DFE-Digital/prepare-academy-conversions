@@ -1,4 +1,4 @@
-namespace Dfe.PrepareConversions.Areas.Transfers.Models.Forms
+namespace Dfe.PrepareTransfers.Web.Models.Forms
 {
     public class RadioButtonViewModel
     {

@@ -1,0 +1,36 @@
+﻿@page "/transfers/project/{urn}/academy-and-trust-information"
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation.Index
+
+@{
+    ViewBag.Title = "Trust information";
+    Layout = "_Layout";
+}
+
+@section BeforeMain
+{
+    <a class="govuk-back-link" asp-page="/transfers/Projects/Index" asp-route-urn="@Model.Urn">Back</a>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <span class="govuk-caption-l">
+            Project reference: @Model.ProjectReference
+        </span>
+        <h1 class="govuk-heading-l">
+            Trust information
+        </h1>
+        <hr class="govuk-section-break govuk-section-break--l">
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <partial name="Shared/_AcademyAndTrustSummary" model="Model"></partial>
+        <form asp-page="/transfers/Projects/Index" asp-route-urn="@Model.Urn" method="get">
+            <button class="govuk-button govuk-!-margin-top-6" type="submit">
+                Confirm and continue
+            </button>
+        </form>
+    </div>
+</div>

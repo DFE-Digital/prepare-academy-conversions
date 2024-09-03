@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Models
+namespace Dfe.PrepareTransfers.Web.Models
 {
     public class MarkSectionCompletedViewModel
     {

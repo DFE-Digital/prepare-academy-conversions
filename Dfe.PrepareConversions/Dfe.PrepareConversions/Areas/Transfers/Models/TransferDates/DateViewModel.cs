@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Dfe.PrepareTransfers.Helpers;
-using Dfe.PrepareConversions.Areas.Transfers.Models.Forms;
+using Dfe.PrepareTransfers.Web.Models.Forms;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Models.TransferDates;
+namespace Dfe.PrepareTransfers.Web.Models.TransferDates;
 
 public class DateViewModel
 {

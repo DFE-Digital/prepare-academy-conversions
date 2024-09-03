@@ -1,8 +1,8 @@
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Web.Models;
-using Dfe.PrepareConversions.Areas.Transfers.Models;
-using Dfe.PrepareConversions.Areas.Transfers.Models.TransferDates;
-using Dfe.PrepareConversions.Areas.Transfers.Validators.TransferDates;
+using Dfe.PrepareTransfers.Web.Models;
+using Dfe.PrepareTransfers.Web.Models.TransferDates;
+using Dfe.PrepareTransfers.Web.Transfers.Validators.TransferDates;
 
 using FluentValidation;
 using FluentValidation.AspNetCore;

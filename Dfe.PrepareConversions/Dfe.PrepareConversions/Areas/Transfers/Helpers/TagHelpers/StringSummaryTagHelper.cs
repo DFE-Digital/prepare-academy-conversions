@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Helpers.TagHelpers
+namespace Dfe.PrepareTransfers.Web.Helpers.TagHelpers
 {
     [HtmlTargetElement("stringsummary")]
     public class StringSummaryTagHelper : TagHelper

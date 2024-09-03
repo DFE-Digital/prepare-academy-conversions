@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.ExtensionMethods;
+namespace Dfe.PrepareTransfers.ExtensionMethods;
 
 public static class AdvisoryBoardExtensions
 {

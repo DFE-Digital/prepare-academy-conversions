@@ -1,8 +1,8 @@
 using FluentValidation;
-using Dfe.PrepareConversions.Areas.Transfers.Models.Rationale;
+using Dfe.PrepareTransfers.Web.Models.Rationale;
 using Dfe.PrepareTransfers.Web.Models.Rationale;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Validators.Rationale
+namespace Dfe.PrepareTransfers.Web.Transfers.Validators.Rationale
 {
     public class RationaleProjectValidator : AbstractValidator<RationaleProjectViewModel>
     {

@@ -1,6 +1,6 @@
-﻿using Dfe.PrepareConversions.Areas.Transfers.Models;
-using Dfe.PrepareConversions.Areas.Transfers.Models.Features;
-using Dfe.PrepareConversions.Areas.Transfers.Models.Forms;
+﻿using Dfe.PrepareTransfers.Web.Models;
+using Dfe.PrepareTransfers.Web.Models.Features;
+using Dfe.PrepareTransfers.Web.Models.Forms;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +11,7 @@ using Dfe.PrepareTransfers.Web.Models.Forms;
 using Dfe.PrepareTransfers.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.Features
+namespace Dfe.PrepareTransfers.Web.Transfers.Pages.Projects.Features
 {
     public class Type : CommonPageModel
     {

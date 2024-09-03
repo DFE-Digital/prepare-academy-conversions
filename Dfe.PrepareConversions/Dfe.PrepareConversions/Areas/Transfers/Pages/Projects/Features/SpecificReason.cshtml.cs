@@ -1,5 +1,5 @@
-﻿using Dfe.PrepareConversions.Areas.Transfers.Models;
-using Dfe.PrepareConversions.Areas.Transfers.Models.Forms;
+﻿using Dfe.PrepareTransfers.Web.Models;
+using Dfe.PrepareTransfers.Web.Models.Forms;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,12 +8,12 @@ using Dfe.PrepareTransfers.Data.Models.Projects;
 using FluentValidation.AspNetCore;
 using Dfe.PrepareTransfers.Web.Models;
 using Dfe.PrepareTransfers.Web.Models.Forms;
-using Dfe.PrepareConversions.Areas.Transfers.Validators.Features;
+using Dfe.PrepareTransfers.Web.Transfers.Validators.Features;
 using Dfe.PrepareTransfers.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using Dfe.PrepareConversions.Areas.Transfers.Models.Benefits;
+using Dfe.PrepareTransfers.Web.Models.Benefits;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.Features
+namespace Dfe.PrepareTransfers.Web.Transfers.Pages.Projects.Features
 {
     public class SpecificReason : CommonPageModel
     {

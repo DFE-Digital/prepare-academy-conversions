@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using NetEscapades.AspNetCore.SecurityHeaders.TagHelpers
 @using Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers.TagHelpers
-@model Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.Index
+@model Dfe.PrepareTransfers.Web.Transfers.Pages.Projects.Index
 @{
     Layout = "_Layout";
     ViewBag.Title = Model.IncomingTrustName;
@@ -39,7 +39,7 @@
                 <strong data-id="assigned-user">@Model.AssignedUser.FullName</strong>
             }
 
-            <a class="govuk-link govuk-!-padding-left-50" asp-page="@Dfe.PrepareConversions.Areas.Transfers.Models.Links.ProjectAssignment.Index.PageName" asp-route-urn="@Model.Urn">Change</a>
+            <a class="govuk-link govuk-!-padding-left-50" asp-page="@Dfe.PrepareTransfers.Web.Models.Links.ProjectAssignment.Index.PageName" asp-route-urn="@Model.Urn">Change</a>
         </p>
         <p class="govuk-!-margin-top-0 govuk-!-margin-bottom-8">
             @{
@@ -180,7 +180,7 @@
             Project documents are in Microsoft Word format. You can preview them first and make changes to them afterwards.
         </p>
         <div class="govuk-button-group">
-            <form asp-page="@Dfe.PrepareConversions.Areas.Transfers.Models.Links.HeadteacherBoard.Preview.PageName" asp-route-urn="@Model.Urn" method="get">
+            <form asp-page="@Dfe.PrepareTransfers.Web.Models.Links.HeadteacherBoard.Preview.PageName" asp-route-urn="@Model.Urn" method="get">
                 <button class="govuk-button govuk-button--secondary" data-module="govuk-button" data-test="preview-htb">Preview project document</button>
             </form>
             <form asp-page="/TaskList/HtbDocument/Download" asp-route-urn="@Model.Urn" method="get">

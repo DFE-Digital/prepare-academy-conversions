@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.ExtensionMethods;
+namespace Dfe.PrepareTransfers.Web.ExtensionMethods;
 
 public static class ModelStateDictionaryExtensions
 {

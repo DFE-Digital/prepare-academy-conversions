@@ -1,6 +1,6 @@
 ﻿using Dfe.PrepareTransfers.Data.Models;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Models.LegalRequirements
+namespace Dfe.PrepareTransfers.Web.Models.LegalRequirements
 {
     public class DiocesanConsentViewModel : CommonLegalViewModel
     {

@@ -1,8 +1,8 @@
-﻿using Dfe.PrepareConversions.Areas.Transfers.Models.Forms;
+﻿using Dfe.PrepareTransfers.Web.Models.Forms;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Web.Models.Forms;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Models.LegalRequirements
+namespace Dfe.PrepareTransfers.Web.Models.LegalRequirements
 {
     public class LegalRequirementsViewModel : CommonViewModel
     {

@@ -1,8 +1,8 @@
 ﻿using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academisation.CorrelationIdMiddleware;
-using Dfe.PrepareConversions.Areas.Transfers.Services;
-using Dfe.PrepareConversions.Areas.Transfers.Services.Interfaces;
+using Dfe.PrepareTransfers.Web.Transfers.Services;
+using Dfe.PrepareTransfers.Web.Transfers.Services.Interfaces;
 using Dfe.PrepareConversions.Authorization;
 using Dfe.PrepareConversions.Data.Services.AzureAd;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
@@ -38,14 +38,14 @@ namespace Dfe.PrepareConversions.Utils
          services.AddTransient<IMapper<EstablishmentDto, Academy>, AcademiesEstablishmentMapper>();
          services.AddTransient<IMapper<TramsProjectSummary, ProjectSearchResult>, TramsProjectSummariesMapper>();
          services.AddTransient<IMapper<AcademisationProject, Project>, AcademisationProjectMapper>();
-         //services.AddTransient<IMapper<TramsEducationPerformance, EducationPerformance>, TramsEducationPerformanceMapper>();
+         services.AddTransient<IMapper<TramsEducationPerformance, EducationPerformance>, TramsEducationPerformanceMapper>();
          services.AddTransient<IMapper<Project, TramsProjectUpdate>, InternalProjectToUpdateMapper>();
          services.AddTransient<ITrusts, TramsTrustsRepository>();
          services.AddTransient<IAcademies, TramsEstablishmentRepository>();
-         //services.AddTransient<IEducationPerformance, TramsEducationPerformanceRepository>();
+         services.AddTransient<IEducationPerformance, TramsEducationPerformanceRepository>();
          services.AddTransient<IProjects, TramsProjectsRepository>();
          //services.AddTransient<ICreateProjectTemplate, CreateProjectTemplate>();
-         //services.AddTransient<IGetInformationForProject, GetInformationForProject>();
+         services.AddTransient<IGetInformationForProject, GetInformationForProject>();
          //services.AddTransient<IGetProjectTemplateModel, GetProjectTemplateModel>();
          //services.AddTransient<ITaskListService, TaskListService>();
 

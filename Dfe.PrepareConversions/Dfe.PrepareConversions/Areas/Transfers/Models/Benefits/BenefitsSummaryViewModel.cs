@@ -1,4 +1,4 @@
-using Dfe.PrepareConversions.Areas.Transfers.Models.Forms;
+using Dfe.PrepareTransfers.Web.Models.Forms;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -6,7 +6,7 @@ using Dfe.PrepareTransfers.Data.Models.Projects;
 using Dfe.PrepareTransfers.Web.Models.Forms;
 using Dfe.PrepareTransfers.Helpers;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Models.Benefits
+namespace Dfe.PrepareTransfers.Web.Models.Benefits
 {
     public class BenefitsSummaryViewModel : CommonViewModel
     {

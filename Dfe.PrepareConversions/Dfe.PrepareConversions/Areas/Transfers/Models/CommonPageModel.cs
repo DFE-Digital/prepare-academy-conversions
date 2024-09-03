@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Models
+namespace Dfe.PrepareTransfers.Web.Models
 {
     public abstract class CommonPageModel : PageModel
     {

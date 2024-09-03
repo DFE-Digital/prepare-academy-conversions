@@ -1,7 +1,7 @@
-using Dfe.PrepareConversions.Areas.Transfers.Models.Forms;
+using Dfe.PrepareTransfers.Web.Models.Forms;
 
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Models.Rationale
+namespace Dfe.PrepareTransfers.Web.Models.Rationale
 {
     public class RationaleTrustOrSponsorViewModel : CommonViewModel
     {

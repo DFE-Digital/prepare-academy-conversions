@@ -1,5 +1,5 @@
-﻿using Dfe.PrepareConversions.Areas.Transfers.Models;
-using Dfe.PrepareConversions.Areas.Transfers.Services.Interfaces;
+﻿using Dfe.PrepareTransfers.Web.Models;
+using Dfe.PrepareTransfers.Web.Transfers.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Web.BackgroundServices;
 using Dfe.PrepareTransfers.Web.Models;
-using Dfe.PrepareConversions.Areas.Transfers.Services.Interfaces;
+using Dfe.PrepareTransfers.Web.Transfers.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects
+namespace Dfe.PrepareTransfers.Web.Transfers.Pages.Projects
 {
     public class Index : CommonPageModel
     {

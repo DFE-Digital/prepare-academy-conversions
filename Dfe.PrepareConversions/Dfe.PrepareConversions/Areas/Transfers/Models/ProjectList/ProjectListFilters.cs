@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Models.ProjectList;
+namespace Dfe.PrepareTransfers.Web.Models.ProjectList;
 
 public class ProjectListFilters
 {

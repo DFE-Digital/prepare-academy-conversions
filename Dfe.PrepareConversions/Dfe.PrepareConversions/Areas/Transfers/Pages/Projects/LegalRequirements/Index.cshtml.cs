@@ -1,12 +1,12 @@
-using Dfe.PrepareConversions.Areas.Transfers.Models;
-using Dfe.PrepareConversions.Areas.Transfers.Models.LegalRequirements;
+using Dfe.PrepareTransfers.Web.Models;
+using Dfe.PrepareTransfers.Web.Models.LegalRequirements;
 using System.Threading.Tasks;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.LegalRequirements
+namespace Dfe.PrepareTransfers.Web.Transfers.Pages.Projects.LegalRequirements
 {
     public class Index : CommonPageModel
     {

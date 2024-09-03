@@ -1,8 +1,8 @@
-﻿using Dfe.PrepareConversions.Areas.Transfers.Models.Forms;
+﻿using Dfe.PrepareTransfers.Web.Models.Forms;
 using Dfe.PrepareTransfers.Data.Models.Projects;
 using Dfe.PrepareTransfers.Web.Models.Forms;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Models.AcademyAndTrustInformation
+namespace Dfe.PrepareTransfers.Web.Models.AcademyAndTrustInformation
 {
     public class RecommendationViewModel : CommonViewModel
     {

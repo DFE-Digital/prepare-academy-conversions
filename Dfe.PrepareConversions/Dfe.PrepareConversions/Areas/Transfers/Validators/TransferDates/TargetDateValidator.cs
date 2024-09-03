@@ -1,8 +1,8 @@
 using Dfe.PrepareTransfers.Helpers;
-using Dfe.PrepareConversions.Areas.Transfers.Models.TransferDates;
+using Dfe.PrepareTransfers.Web.Models.TransferDates;
 using FluentValidation;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Validators.TransferDates;
+namespace Dfe.PrepareTransfers.Web.Transfers.Validators.TransferDates;
 
 public class TargetDateValidator : AbstractValidator<TargetDateViewModel>
 {

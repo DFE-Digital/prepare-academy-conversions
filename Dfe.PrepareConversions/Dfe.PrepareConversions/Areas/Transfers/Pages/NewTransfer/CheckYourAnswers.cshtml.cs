@@ -1,4 +1,4 @@
-using Dfe.PrepareConversions.Areas.Transfers.Services.Interfaces;
+using Dfe.PrepareTransfers.Web.Transfers.Services.Interfaces;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Data.Models.Projects;
@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Pages.NewTransfer   
+namespace Dfe.PrepareTransfers.Web.Transfers.Pages.NewTransfer   
 {
     public class CheckYourAnswersModel : TransfersPageModel
     {
@@ -113,7 +113,7 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.NewTransfer
             HttpContext.Session.Remove(ProposedTrustNameSessionKey);
             HttpContext.Session.Remove(IsFormAMatSessionKey);
 
-            return RedirectToPage($"/Projects/{nameof(Projects.Index)}", new
+            return RedirectToPage($"/transfers/Projects/{nameof(Projects.Index)}", new
             {
                 urn = createResponse.Result.Urn
             });

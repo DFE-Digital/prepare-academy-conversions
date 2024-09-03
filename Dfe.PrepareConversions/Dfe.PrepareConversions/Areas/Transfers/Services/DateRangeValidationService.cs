@@ -1,6 +1,6 @@
 using System;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Services;
+namespace Dfe.PrepareTransfers.Web.Transfers.Services;
 
 public class DateRangeValidationService
 {

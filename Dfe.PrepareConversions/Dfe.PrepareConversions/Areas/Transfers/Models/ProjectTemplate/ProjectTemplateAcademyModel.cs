@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Dfe.PrepareTransfers.Data.Models.KeyStagePerformance;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Models.ProjectTemplate
+namespace Dfe.PrepareTransfers.Web.Models.ProjectTemplate
 {
     public class ProjectTemplateAcademyModel
     {

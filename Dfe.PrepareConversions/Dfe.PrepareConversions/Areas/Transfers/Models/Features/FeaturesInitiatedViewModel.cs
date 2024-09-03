@@ -1,6 +1,6 @@
 using Dfe.PrepareTransfers.Data.Models.Projects;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Models.Features
+namespace Dfe.PrepareTransfers.Web.Models.Features
 {
     public class FeaturesInitiatedViewModel
     {

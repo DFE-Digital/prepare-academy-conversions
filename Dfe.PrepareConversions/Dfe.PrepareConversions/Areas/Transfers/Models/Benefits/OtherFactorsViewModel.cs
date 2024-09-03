@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Models.Benefits
+namespace Dfe.PrepareTransfers.Web.Models.Benefits
 {
     public class OtherFactorsViewModel
     {

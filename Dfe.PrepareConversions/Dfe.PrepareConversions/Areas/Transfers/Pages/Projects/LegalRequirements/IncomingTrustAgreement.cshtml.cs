@@ -1,13 +1,13 @@
-using Dfe.PrepareConversions.Areas.Transfers.Models;
-using Dfe.PrepareConversions.Areas.Transfers.Models.Forms;
-using Dfe.PrepareConversions.Areas.Transfers.Models.LegalRequirements;
+using Dfe.PrepareTransfers.Web.Models;
+using Dfe.PrepareTransfers.Web.Models.LegalRequirements;
 using Dfe.PrepareTransfers.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dfe.PrepareTransfers.Data.TRAMS.ExtensionMethods;
+using Dfe.PrepareTransfers.Web.Models.Forms;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.LegalRequirements
+namespace Dfe.PrepareTransfers.Web.Transfers.Pages.Projects.LegalRequirements
 {
     public class IncomingTrustAgreementModel : CommonPageModel
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Services;
+namespace Dfe.PrepareTransfers.Web.Transfers.Services;
 
 public interface IDateValidationMessageProvider
 {

@@ -88,6 +88,10 @@
 
 	<ItemGroup>
 	  <None Include="Areas\Transfers\Pages\Home\Index.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\AcademyAndTrustInformation\IncomingTrustName.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\AcademyAndTrustInformation\Index.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\AcademyAndTrustInformation\Recommendation.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\AcademyAndTrustInformation\UpdateIncomingTrust.cshtml" />
 	  <None Include="Areas\Transfers\Pages\Shared\_ProjectListRows.cshtml" />
 	</ItemGroup>
 </Project>

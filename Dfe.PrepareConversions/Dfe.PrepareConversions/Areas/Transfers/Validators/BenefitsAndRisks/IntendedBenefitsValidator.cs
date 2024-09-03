@@ -1,9 +1,9 @@
-﻿using Dfe.PrepareConversions.Areas.Transfers.Models.Benefits;
+﻿using Dfe.PrepareTransfers.Web.Models.Benefits;
 using Dfe.PrepareTransfers.Data.Models.Projects;
 using FluentValidation;
-using Dfe.PrepareConversions.Areas.Transfers.Models.Benefits;
+using Dfe.PrepareTransfers.Web.Models.Benefits;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Validators.BenefitsAndRisks
+namespace Dfe.PrepareTransfers.Web.Transfers.Validators.BenefitsAndRisks
 {
     public class IntendedBenefitsValidator : AbstractValidator<IntendedBenefitsViewModel>
     {

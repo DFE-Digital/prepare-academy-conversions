@@ -1,8 +1,8 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Dfe.PrepareTransfers.Data.TRAMS.ExtensionMethods
 @using Dfe.PrepareTransfers.Data.Models
-@using Links = Dfe.PrepareConversions.Areas.Transfers.Links
-@model Dfe.PrepareConversions.Areas.Transfers.Models.LegalRequirements.LegalRequirementsViewModel
+@using Links = Dfe.PrepareTransfers.Web.Transfers.Links
+@model Dfe.PrepareTransfers.Web.Models.LegalRequirements.LegalRequirementsViewModel
 <dl class="govuk-summary-list">
 @{
         await LegalAction("Outgoing trust resolution", @Model.OutgoingTrustConsent, "outgoing-trust-consent", Links.LegalRequirements.OutgoingTrustConsent.Home.PageName);

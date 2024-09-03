@@ -1,6 +1,6 @@
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
-using Dfe.PrepareConversions.Areas.Transfers.Models;
+using Dfe.PrepareTransfers.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

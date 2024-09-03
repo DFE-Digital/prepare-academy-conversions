@@ -1,6 +1,6 @@
-using Dfe.PrepareConversions.Areas.Transfers.Models;
-using Dfe.PrepareConversions.Areas.Transfers.Models.Forms;
-using Dfe.PrepareConversions.Areas.Transfers.Models.LegalRequirements;
+using Dfe.PrepareTransfers.Web.Models;
+using Dfe.PrepareTransfers.Web.Models.Forms;
+using Dfe.PrepareTransfers.Web.Models.LegalRequirements;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Web.Models.Forms;
 using Dfe.PrepareTransfers.Web.Models;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Dfe.PrepareTransfers.Data.TRAMS.ExtensionMethods;
 
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.LegalRequirements
+namespace Dfe.PrepareTransfers.Web.Transfers.Pages.Projects.LegalRequirements
 {
     public class DiocesanConsentModel : CommonPageModel
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Dfe.PrepareTransfers.Data.Models.Projects;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Models.Benefits
+namespace Dfe.PrepareTransfers.Web.Models.Benefits
 {
     public class IntendedBenefitsViewModel
     {

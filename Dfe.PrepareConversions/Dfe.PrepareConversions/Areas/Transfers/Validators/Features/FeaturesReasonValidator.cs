@@ -1,8 +1,8 @@
-﻿using Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.Features;
+﻿using Dfe.PrepareTransfers.Web.Transfers.Pages.Projects.Features;
 using Dfe.PrepareTransfers.Data.Models.Projects;
 using FluentValidation;
 
-namespace Dfe.PrepareConversions.Areas.Transfers.Validators.Features
+namespace Dfe.PrepareTransfers.Web.Transfers.Validators.Features
 {
     public class FeaturesReasonValidator : AbstractValidator<Reason>
     {
