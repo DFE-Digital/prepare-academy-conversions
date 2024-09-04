@@ -14,7 +14,7 @@ namespace Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers.TagHelpers
             output.TagName = "span";
             if (string.IsNullOrEmpty(Value) && HasDate == null)
             {
-                output.Attributes.SetAttribute("class", "dfe-empty-tag");
+                output.Attributes.SetAttribute("class", "empty");
                 output.TagName = "span";
                 output.Content.SetContent("Empty");
             }

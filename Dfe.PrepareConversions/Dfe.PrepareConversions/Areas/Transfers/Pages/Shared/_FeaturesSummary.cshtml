@@ -11,7 +11,7 @@
                 <dd class="govuk-summary-list__value">
                     @if (Model.ReasonForTheTransfer == TransferFeatures.ReasonForTheTransferTypes.Empty)
                     {
-                        <span class="dfe-empty-tag">Empty</span>
+                        <span class="empty">Empty</span>
                     }
                     else
                     {
@@ -32,7 +32,7 @@
         <dd class="govuk-summary-list__value">
             @if (!Model.SpecificReasonForTheTransfer.Any())
             {
-                <span class="dfe-empty-tag">Empty</span>
+                <span class="empty">Empty</span>
             }
             else
             {
@@ -53,7 +53,7 @@
                 <dd class="govuk-summary-list__value">
                     @if (Model.TypeOfTransfer == TransferFeatures.TransferTypes.Empty)
                     {
-                        <span class="dfe-empty-tag">Empty</span>
+                        <span class="empty">Empty</span>
                     }
                     else if (Model.TypeOfTransfer == TransferFeatures.TransferTypes.Other)
                     {

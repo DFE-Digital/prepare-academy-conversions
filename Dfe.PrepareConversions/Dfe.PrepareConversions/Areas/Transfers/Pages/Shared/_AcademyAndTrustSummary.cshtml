@@ -11,7 +11,7 @@
         <dd class="govuk-summary-list__value">
             @if (Model.Recommendation == TransferAcademyAndTrustInformation.RecommendationResult.Empty)
             {
-                <span class="dfe-empty-tag">Empty</span>
+                <span class="empty">Empty</span>
             }
             else
             {
@@ -32,7 +32,7 @@
         <dd class="govuk-summary-list__value ">
             @if (string.IsNullOrEmpty(Model.Author))
             {
-                <span class="dfe-empty-tag">Empty</span>
+                <span class="empty">Empty</span>
             }
             else
             {
