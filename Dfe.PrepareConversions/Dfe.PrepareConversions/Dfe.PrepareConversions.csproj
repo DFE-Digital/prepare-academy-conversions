@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
-		<UserSecretsId>e215616b-382a-4438-ad25-e2fc1629c6e5</UserSecretsId>
+		<UserSecretsId>eae6d8bd-2a58-4ed4-99e2-a82f32b0ce47</UserSecretsId>
 		<CodeAnalysisRuleSet>..\.sonarlint\dfe-digital_a2b-internalcsharp.ruleset</CodeAnalysisRuleSet>
   	</PropertyGroup>
 
