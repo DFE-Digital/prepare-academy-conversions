@@ -266,4 +266,6 @@ public class ProjectViewModel : ProjectTypeBase
 
    public override bool IsExternalSchoolApplication => string.IsNullOrEmpty(this.ApplicationReferenceNumber);
 
+   public bool HasPermission { get; set; }
+
 }

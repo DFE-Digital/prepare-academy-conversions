@@ -5,7 +5,6 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.NewProject;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -55,6 +54,12 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       ApiV2Wrapper<IEnumerable<AcademyConversionProject>> outerResponse = await response.Content.ReadFromJsonAsync<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>();
 
       return new ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>>(response.StatusCode, outerResponse);
+   }
+
+   public async Task DeleteProjectAsync(int id)
+   {
+      var result = await _apiClient.DeleteConversionProject(id);
+      if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
 
    public async Task<ApiResponse<AcademyConversionProject>> GetProjectById(int id)

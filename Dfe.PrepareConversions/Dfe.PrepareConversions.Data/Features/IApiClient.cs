@@ -33,4 +33,5 @@ public interface IApiClient
    
    Task<HttpResponseMessage> CreateNewProjectGroup(CreateProjectGroup createProjectGroup);
    Task<HttpResponseMessage> GetProjectGroupsAsync(AcademyConversionSearchModelV2 searchModel);
+   Task<HttpResponseMessage> DeleteConversionProject(int id);
 }

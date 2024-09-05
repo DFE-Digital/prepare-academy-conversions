@@ -29,7 +29,7 @@ public class PathFor
    public static string SetSchoolOverview => "/conversion-project/{0}/SetSchoolOverview";
    public static string SetAssignedUser => "/conversion-project/{0}/SetAssignedUser";
    public static string SetFormAMatAssignedUser => "/conversion-project/{0}/SetFormAMatAssignedUser";
-
+   public static string DeleteConversionProject => "/conversion-project/{0}/delete";
    public static string GetAllProjectsV2 => "/conversion-project/projects";
    public static string GetFormAMatProjects => "/conversion-project/FormAMatProjects";
    public static string SearchFormAMatProjects => "/conversion-project/search-formamatprojects";
