@@ -1,9 +1,9 @@
-using Dfe.PrepareConversions.Services;
+using Dfe.PrepareTransfers.Web.Transfers.Services;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Services;
+namespace Dfe.PrepareTransfers.Services;
 
 public class DateValidationService
 {
