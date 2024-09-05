@@ -7,7 +7,7 @@ using Dfe.PrepareTransfers.Data.Models.Projects;
 using Dfe.PrepareTransfers.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Pages.Projects.Features
+namespace Dfe.PrepareTransfers.Web.Pages.Projects.Features
 {
     public class Index : CommonPageModel
     {

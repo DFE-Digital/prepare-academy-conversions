@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Dfe.PrepareTransfers.Data.Models;
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Services.Responses
+namespace Dfe.PrepareTransfers.Web.Services.Responses
 {
     public class GetInformationForProjectResponse
     {

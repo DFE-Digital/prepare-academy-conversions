@@ -1,5 +1,5 @@
-using Dfe.PrepareTransfers.Web.Transfers.Services.Interfaces;
-using Dfe.PrepareTransfers.Web.Transfers.Services.Responses;
+using Dfe.PrepareTransfers.Web.Services.Interfaces;
+using Dfe.PrepareTransfers.Web.Services.Responses;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Data.Models.KeyStagePerformance;
@@ -7,7 +7,7 @@ using Dfe.PrepareTransfers.Data.Models.Projects;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Services
+namespace Dfe.PrepareTransfers.Web.Services
 {
     public class GetInformationForProject : IGetInformationForProject
     {

@@ -1,7 +1,7 @@
-﻿using Dfe.PrepareTransfers.Web.Transfers.Pages.Projects;
+﻿using Dfe.PrepareTransfers.Web.Pages.Projects;
 
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Services.Interfaces
+namespace Dfe.PrepareTransfers.Web.Services.Interfaces
 {
     public interface ITaskListService
     {

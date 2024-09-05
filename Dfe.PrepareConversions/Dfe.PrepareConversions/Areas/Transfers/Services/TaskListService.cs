@@ -1,13 +1,13 @@
 ﻿using Dfe.Academisation.ExtensionMethods;
-using Dfe.PrepareTransfers.Web.Transfers.Services.Interfaces;
+using Dfe.PrepareTransfers.Web.Services.Interfaces;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Data.Models.Projects;
 using System;
 using System.Linq;
-using Index = Dfe.PrepareTransfers.Web.Transfers.Pages.Projects.Index;
+using Index = Dfe.PrepareTransfers.Web.Pages.Projects.Index;
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Services
+namespace Dfe.PrepareTransfers.Web.Services
 {
     public class TaskListService : ITaskListService
     {

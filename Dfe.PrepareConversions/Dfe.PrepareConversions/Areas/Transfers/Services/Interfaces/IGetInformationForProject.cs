@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Dfe.PrepareTransfers.Web.Transfers.Services.Responses;
+using Dfe.PrepareTransfers.Web.Services.Responses;
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Services.Interfaces
+namespace Dfe.PrepareTransfers.Web.Services.Interfaces
 {
     public interface IGetInformationForProject
     {

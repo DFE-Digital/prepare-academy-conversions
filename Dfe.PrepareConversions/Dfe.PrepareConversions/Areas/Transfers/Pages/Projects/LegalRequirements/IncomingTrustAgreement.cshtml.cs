@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Dfe.PrepareTransfers.Data.TRAMS.ExtensionMethods;
 using Dfe.PrepareTransfers.Web.Models.Forms;
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Pages.Projects.LegalRequirements
+namespace Dfe.PrepareTransfers.Web.Pages.Projects.LegalRequirements
 {
     public class IncomingTrustAgreementModel : CommonPageModel
     {

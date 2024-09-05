@@ -6,7 +6,7 @@ using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Pages.Projects.LegalRequirements
+namespace Dfe.PrepareTransfers.Web.Pages.Projects.LegalRequirements
 {
     public class Index : CommonPageModel
     {

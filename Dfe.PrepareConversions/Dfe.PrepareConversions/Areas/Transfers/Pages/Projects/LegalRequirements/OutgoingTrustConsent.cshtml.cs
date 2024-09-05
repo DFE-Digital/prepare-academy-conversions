@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Dfe.PrepareTransfers.Data.TRAMS.ExtensionMethods;
 
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Pages.Projects.LegalRequirements
+namespace Dfe.PrepareTransfers.Web.Pages.Projects.LegalRequirements
 {
     public class OutgoingTrustConsentModel : CommonPageModel
     {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Dfe.PrepareTransfers.Web.Models;
-using Dfe.PrepareTransfers.Web.Transfers.Services.Interfaces;
+using Dfe.PrepareTransfers.Web.Services.Interfaces;
 using Dfe.PrepareTransfers.Data.Models.Projects;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,9 +1,8 @@
-﻿using Dfe.PrepareTransfers.Web.Transfers.Services.Interfaces;
+﻿using Dfe.PrepareTransfers.Web.Services.Interfaces;
 using System;
 using Dfe.PrepareTransfers.Data.Models;
-using Dfe.PrepareTransfers.Web.Transfers.Services.Interfaces;
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Services
+namespace Dfe.PrepareTransfers.Web.Services
 {
     public class ReferenceNumberService : IReferenceNumberService
     {

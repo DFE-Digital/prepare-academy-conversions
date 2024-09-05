@@ -1,4 +1,4 @@
-using Dfe.PrepareTransfers.Web.Transfers.Services.Interfaces;
+using Dfe.PrepareTransfers.Web.Services.Interfaces;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Data.Models.Projects;
@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Pages.NewTransfer   
+namespace Dfe.PrepareTransfers.Web.Pages.NewTransfer   
 {
     public class CheckYourAnswersModel : TransfersPageModel
     {

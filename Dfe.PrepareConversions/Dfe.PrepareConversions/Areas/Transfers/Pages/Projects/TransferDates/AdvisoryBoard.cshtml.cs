@@ -1,6 +1,5 @@
 using Dfe.PrepareTransfers.Web.Models;
 using Dfe.PrepareTransfers.Data;
-using Dfe.PrepareTransfers.Web.Models;
 using Dfe.PrepareTransfers.Web.Models.TransferDates;
 using Dfe.PrepareTransfers.Web.Transfers.Validators.TransferDates;
 using FluentValidation;
@@ -8,7 +7,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Pages.Projects.TransferDates
+namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
 {
     public class AdvisoryBoard : CommonPageModel
     {

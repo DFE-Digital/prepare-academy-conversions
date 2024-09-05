@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Pages.NewTransfer
+namespace Dfe.PrepareTransfers.Web.Pages.NewTransfer
 {
     public class IsFormAMatModel : PageModel
     {

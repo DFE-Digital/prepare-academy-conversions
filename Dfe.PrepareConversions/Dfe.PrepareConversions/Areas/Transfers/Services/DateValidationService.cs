@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Services;
+namespace Dfe.PrepareTransfers.Web.Services;
 
 public class DateValidationService
 {

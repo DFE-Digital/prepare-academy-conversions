@@ -1,6 +1,6 @@
 ﻿using Dfe.PrepareTransfers.Data.Models;
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Services.Interfaces
+namespace Dfe.PrepareTransfers.Web.Services.Interfaces
 {
     public interface IReferenceNumberService
     {

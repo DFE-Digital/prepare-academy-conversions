@@ -1,16 +1,14 @@
 ﻿using Dfe.PrepareTransfers.Web.Models;
-using Dfe.PrepareTransfers.Web.Transfers.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Web.BackgroundServices;
-using Dfe.PrepareTransfers.Web.Models;
-using Dfe.PrepareTransfers.Web.Transfers.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Dfe.PrepareTransfers.Web.Services.Interfaces;
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Pages.Projects
+namespace Dfe.PrepareTransfers.Web.Pages.Projects
 {
     public class Index : CommonPageModel
     {

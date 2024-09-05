@@ -1,12 +1,11 @@
 using Dfe.PrepareTransfers.Web.Models;
 using Dfe.PrepareTransfers.Data;
-using Dfe.PrepareTransfers.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using dataModels = Dfe.PrepareTransfers.Data.Models;
 
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Pages.Projects.TransferDates
+namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
 {
     public class Index : CommonPageModel
     {

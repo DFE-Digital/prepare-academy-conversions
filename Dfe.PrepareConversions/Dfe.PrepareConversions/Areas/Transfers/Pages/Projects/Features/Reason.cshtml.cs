@@ -13,7 +13,7 @@ using Dfe.PrepareTransfers.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 
-namespace Dfe.PrepareTransfers.Web.Transfers.Pages.Projects.Features
+namespace Dfe.PrepareTransfers.Web.Pages.Projects.Features
 {
     public class Reason : CommonPageModel
     {

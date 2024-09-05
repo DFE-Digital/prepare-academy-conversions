@@ -1,4 +1,4 @@
-namespace Dfe.PrepareTransfers.Web.Transfers.Services.Responses
+namespace Dfe.PrepareTransfers.Web.Services.Responses
 
 {
     public class ServiceResponseError
