@@ -98,6 +98,14 @@ public class ParagraphBuilder : IParagraphBuilder, IElementBuilder<Paragraph>
       _runs.Add(run);
    }
 
+   public void AddPageBreak()
+   {
+      _parent.ParagraphProperties = new ParagraphProperties()
+      {
+         PageBreakBefore = new PageBreakBefore()
+      };
+   }
+
    public void Justify(ParagraphJustification paragraphJustification)
    {
       Justification justification = new();
