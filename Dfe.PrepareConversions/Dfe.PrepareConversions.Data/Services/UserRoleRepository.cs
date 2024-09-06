@@ -1,4 +1,5 @@
 ﻿using Dfe.PrepareConversions.Data.Exceptions;
+using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models.UserRole;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Dfe.PrepareConversions.Data.Services
 
          ApiResponse<RoleCapabilitiesModel> result = await httpClientService.Get<RoleCapabilitiesModel>(
             httpClient,
-            $"/user-role/{email}");
+            string.Format(PathFor.GetCapabilities, email));
 
          if (result.Success is false)
          {
