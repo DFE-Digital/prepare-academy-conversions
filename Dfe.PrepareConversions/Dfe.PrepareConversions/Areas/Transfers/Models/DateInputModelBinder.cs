@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using IDateValidationMessageProvider = Dfe.PrepareTransfers.Web.Transfers.Services.IDateValidationMessageProvider;
+using IDateValidationMessageProvider = Dfe.PrepareTransfers.Web.Services.IDateValidationMessageProvider;
 
 namespace Dfe.PrepareTransfers.Web.Models;
 

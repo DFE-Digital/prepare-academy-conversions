@@ -4,13 +4,12 @@ using Dfe.PrepareTransfers.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareTransfers.Web.Models;
 using Dfe.PrepareTransfers.Pages.TaskList.Decision.Models;
 using Dfe.PrepareTransfers.Services;
-using Dfe.PrepareTransfers.Web.Models;
-using Dfe.PrepareTransfers.Web.Transfers.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Dfe.PrepareTransfers.Web.Services;
 
 namespace Dfe.PrepareTransfers.Pages.TaskList.Decision;
 
@@ -27,7 +26,7 @@ public class DecisionDate : DecisionBaseModel, IDateValidationMessageProvider
     }
 
    [BindProperty(Name = "decision-date", BinderType = typeof(DateInputModelBinder))]
-   [DateValidation(DateRangeValidationService.DateRange.PastOrToday)]
+   [DateValidation(Dfe.PrepareTransfers.Services.DateRangeValidationService.DateRange.PastOrToday)]
    [Display(Name = "decision")]
    [Required]
    public DateTime? DateOfDecision { get; set; }
