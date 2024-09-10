@@ -13,17 +13,18 @@
     <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-xl">URN: @Model.SchoolUrn</span>
         <strong class="govuk-caption-xl">@Model.SchoolName</strong>
-        <h1 class="govuk-heading-xl" data-cy="select-heading">Confirm you want to remove this project</h1>
+        <h1 class="govuk-heading-xl " data-cy="select-heading">Confirm you want to delete this project</h1>
         <div>
-            <p class="govuk-body">If you delete this project it will no longer appear in Prepare.</p>
-            <p class="govuk-body">If this project is part of a group, deleting it will also result in its removal from the group, <br /> and any other voluntary converters in the group will lose eligibility for the conversion support grant.</p>
+            <p class="govuk-body">If you delete this project it will no longer appear in Prepare.<p>
+             <p>However it will remain in the database and can be recovered in the future if necessary.</p
         </div>
+
         <form method="post">
             <input type="hidden" asp-for="@Model.Id" />
             <input type="hidden" asp-for="@Model.IsProjectDeleted" />
             <span class="govuk-!-margin-right-2">
-                <button class="govuk-button pt-3" data-module="govuk-button" id="delete-project-confirmation">
-                    Delete Project
+                <button class="govuk-button govuk-button--warning" data-module="govuk-button" id="delete-project-confirmation">
+                    Delete project
                 </button>
             </span>
             <button class="govuk-button govuk-button--secondary" data-module="govuk-button">

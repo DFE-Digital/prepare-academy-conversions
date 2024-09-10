@@ -28,7 +28,7 @@
         @if (Model.HasPermission)
         { 
             <span class="govuk-body govuk-!-margin-bottom-3">
-                <a class="govuk-button govuk-button--secondary" asp-page="@Links.DeleteProject.ConfirmToDeleteProject.Page" asp-route-id="@Model.Id" asp-route-urn="@Model.SchoolURN" asp-route-title="@Model.SchoolName"> Delete Project</a>
+                <a class="govuk-button govuk-button--warning" asp-page="@Links.DeleteProject.ConfirmToDeleteProject.Page" asp-route-id="@Model.Id" asp-route-urn="@Model.SchoolURN" asp-route-title="@Model.SchoolName"> Delete project</a>
             </span> 
         }
     </div>
