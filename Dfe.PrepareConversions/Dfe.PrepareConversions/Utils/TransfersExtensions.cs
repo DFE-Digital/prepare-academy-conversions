@@ -12,6 +12,8 @@ using Dfe.PrepareTransfers.Data.TRAMS.Mappers.Response;
 using Dfe.PrepareTransfers.Data.TRAMS.Models;
 using Dfe.PrepareTransfers.Data.TRAMS.Models.EducationPerformance;
 using Dfe.PrepareTransfers.Data.TRAMS.Mappers.Request;
+using Dfe.PrepareTransfers.Data.Services.Interfaces;
+using Dfe.PrepareTransfers.Services;
 
 namespace Dfe.PrepareConversions.Utils
 {
@@ -20,8 +22,7 @@ namespace Dfe.PrepareConversions.Utils
       public static void AddTransfersApplicationServices(this IServiceCollection services)
       {
          services.AddScoped<IReferenceNumberService, ReferenceNumberService>();
-         //services.AddScoped<ErrorService>();
-
+         services.AddScoped<ErrorService>();
 
 
          services.AddTransient<IMapper<TrustDto, Trust>, TramsTrustMapper>();
@@ -43,7 +44,7 @@ namespace Dfe.PrepareConversions.Utils
          //services.AddTransient<IGraphClientFactory, GraphClientFactory>();
          //services.AddTransient<IGraphUserService, GraphUserService>();
 
-         //services.AddScoped<IAcademyTransfersAdvisoryBoardDecisionRepository, AcademyTransfersAdvisoryBoardDecisionRepository>();
+         services.AddScoped<IAcademyTransfersAdvisoryBoardDecisionRepository, AcademyTransfersAdvisoryBoardDecisionRepository>();
 
          //services.AddSingleton<PerformanceDataChannel>();
          services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
