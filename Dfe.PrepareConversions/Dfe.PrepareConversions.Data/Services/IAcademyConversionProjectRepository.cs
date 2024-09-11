@@ -85,4 +85,6 @@ public interface IAcademyConversionProjectRepository
    IEnumerable<string> advisoryBoardDatesFilter = default
 );
 
+   Task DeleteProjectAsync(int id);
+
 }

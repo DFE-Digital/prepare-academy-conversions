@@ -1,11 +1,18 @@
+using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
+using Dfe.PrepareConversions.Data.Models.UserRole;
 using Dfe.PrepareConversions.Data.Services;
+using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Models.ProjectList;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -17,14 +24,17 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
    private readonly ErrorService _errorService;
    private readonly IConfiguration _configuration;
    private readonly KeyStagePerformanceService _keyStagePerformanceService;
+   public const string SESSION_KEY = "RoleCapabilities"; 
+   protected readonly ISession _session;
 
    public IndexModel(KeyStagePerformanceService keyStagePerformanceService,
                      IAcademyConversionProjectRepository repository,
-                     ErrorService errorService, IConfiguration configuration) : base(repository)
+                     ErrorService errorService, IConfiguration configuration, ISession session) : base(repository)
    {
       _keyStagePerformanceService = keyStagePerformanceService;
       _errorService = errorService;
       _configuration = configuration;
+      _session = session;
    }
 
    public bool ShowGenerateHtbTemplateError { get; set; }
@@ -62,7 +72,7 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
 
       var returnToFormAMatMenu = TempData["returnToFormAMatMenu"] as bool?;
 
-      if (Project.IsFormAMat && returnToFormAMatMenu.HasValue && returnToFormAMatMenu.Value) {
+      if (Project != null && Project.IsFormAMat && returnToFormAMatMenu.HasValue && returnToFormAMatMenu.Value) {
          ReturnId = Project.FormAMatProjectId.ToString();
          ReturnPage = @Links.FormAMat.OtherSchoolsInMat.Page;
          TempData["returnToFormAMatMenu"] = true;
@@ -92,7 +102,13 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
          TaskList.HasKeyStage5PerformanceTables = keyStagePerformance.HasKeyStage5PerformanceTables;
          TaskList.HasAbsenceData = keyStagePerformance.HasSchoolAbsenceData;
       }
-
+      Project.HasPermission = HasCapability(RoleCapability.DeleteConversionProject);
       return Page();
+   }
+   private bool HasCapability(RoleCapability roleCapability)
+   {
+      var sessionData = _session.Get<string>($"{SESSION_KEY}_{HttpContext.User.Identity.Name}") ?? string.Empty;
+      return sessionData.IsNullOrEmpty() ? false :
+         sessionData.Split(",").Any(x => x.IndexOf(roleCapability.ToString(), StringComparison.OrdinalIgnoreCase) >= 0);
    }
 }

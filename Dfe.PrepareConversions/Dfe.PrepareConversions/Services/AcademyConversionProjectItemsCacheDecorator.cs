@@ -175,4 +175,9 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       return await _innerRepository.GetProjectGroups(page, count, titleFilter, statusFilters, deliveryOfficerFilter, regionsFilter, localAuthoritiesFilter, advisoryBoardDatesFilter);
    }
+
+   public async Task DeleteProjectAsync(int id)
+   {
+      await _innerRepository.DeleteProjectAsync(id);
+   }
 }

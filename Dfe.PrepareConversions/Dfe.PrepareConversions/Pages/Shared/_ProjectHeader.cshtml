@@ -22,10 +22,17 @@
 
          <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.ProjectAssignment.Index.Page" asp-route-id="@Model.Id">Change</a>
       </p>
-        <p class="govuk-!-margin-top-0  govuk-!-margin-bottom-8">
+        <p class="govuk-!-margin-top-0  govuk-!-margin-bottom-5">
             <strong class="govuk-tag govuk-tag--@Model.ProjectStatusColour" id="project-status-@Model.Id">@Model.ProjectStatus</strong>
         </p>
-   </div>
+        @if (Model.HasPermission)
+        { 
+            <span class="govuk-body govuk-!-margin-bottom-3">
+                <a class="govuk-button govuk-button--warning" asp-page="@Links.DeleteProject.ConfirmToDeleteProject.Page" asp-route-id="@Model.Id" asp-route-urn="@Model.SchoolURN" asp-route-title="@Model.SchoolName"> Delete project</a>
+            </span> 
+        }
+    </div>
+    
 
    <div class="govuk-grid-column-full">
       <partial name="_SubMenu" model="@Model"/>
