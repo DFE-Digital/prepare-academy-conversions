@@ -113,7 +113,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.NewTransfer
             HttpContext.Session.Remove(ProposedTrustNameSessionKey);
             HttpContext.Session.Remove(IsFormAMatSessionKey);
 
-            return RedirectToPage($"/transfers/Projects/{nameof(Projects.Index)}", new
+            return RedirectToPage($"/Projects/Index", new
             {
                 urn = createResponse.Result.Urn
             });
