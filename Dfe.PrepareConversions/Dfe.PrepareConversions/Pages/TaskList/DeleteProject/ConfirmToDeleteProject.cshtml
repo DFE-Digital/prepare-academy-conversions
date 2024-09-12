@@ -1,0 +1,42 @@
+﻿@page "/task-list/{id:int}/confirm-to-delete-project"
+@model Dfe.PrepareConversions.Pages.TaskList.DeleteProject.IndexModel
+@{
+    ViewData["Title"] = "Confirm you want to remove this project";
+}
+
+@section BeforeMain
+{
+    <a asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Id" class="govuk-back-link">@Links.TaskList.Index.BackText</a>
+}
+
+<div class="govuk-grid-row" xmlns="http://www.w3.org/1999/html">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-xl">URN: @Model.SchoolUrn</span>
+        <strong class="govuk-caption-xl">@Model.SchoolName</strong>
+        <h1 class="govuk-heading-xl " data-cy="select-heading">Confirm you want to delete this project</h1>
+        <div>
+            <p class="govuk-body">If you delete this project it will no longer appear in Prepare.<p>
+             <p>However it will remain in the database and can be recovered in the future if necessary.</p
+        </div>
+
+        <form method="post">
+            <input type="hidden" asp-for="@Model.Id" />
+            <input type="hidden" asp-for="@Model.IsProjectDeleted" />
+            <span class="govuk-!-margin-right-2">
+                <button class="govuk-button govuk-button--warning" data-module="govuk-button" id="delete-project-confirmation">
+                    Delete project
+                </button>
+            </span>
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                Cancel
+            </button>
+        </form>
+    </div>
+</div>
+
+<script type="application/javascript" asp-add-nonce>
+    document.querySelector('#delete-project-confirmation').onclick = () =>{
+        document.querySelector('#IsProjectDeleted').value = true;
+        document.querySelector('form').submit();
+    };
+</script>

@@ -8,6 +8,7 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.AzureAd;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
+using Dfe.PrepareConversions.Middleware;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Routing;
 using Dfe.PrepareConversions.Security;
@@ -25,7 +26,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
@@ -150,8 +150,9 @@ public class Startup
       services.AddScoped<SchoolPerformanceService>();
       services.AddScoped<SchoolOverviewService>();
       services.AddScoped<KeyStagePerformanceService>();
-      services.AddScoped<ITrustsRepository, TrustsRepository>();
+      services.AddScoped<ITrustsRepository, TrustsRepository>(); 
       services.AddScoped<IProjectGroupsRepository, ProjectGroupsRepository>();
+      services.AddScoped<IUserRoleRepository, UserRoleRepository>();
       services.AddScoped<IAcademyConversionProjectRepository, AcademyConversionProjectRepository>();
       services.AddScoped<IAcademyConversionAdvisoryBoardDecisionRepository, AcademyConversionAdvisoryBoardDecisionRepository>();
       services.AddScoped<IHttpClientService, HttpClientService>();
@@ -219,6 +220,7 @@ public class Startup
       app.UseAuthentication();
       app.UseAuthorization();
       app.UseMiddleware<CorrelationIdMiddleware>();
+      app.UseMiddleware<CapabilitiyMiddleware>();
 
       app.UseEndpoints(endpoints =>
       {
