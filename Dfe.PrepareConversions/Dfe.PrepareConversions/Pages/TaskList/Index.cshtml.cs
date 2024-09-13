@@ -102,13 +102,7 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
          TaskList.HasKeyStage5PerformanceTables = keyStagePerformance.HasKeyStage5PerformanceTables;
          TaskList.HasAbsenceData = keyStagePerformance.HasSchoolAbsenceData;
       }
-      Project.HasPermission = HasCapability(RoleCapability.DeleteConversionProject);
+      Project.HasPermission = _session.HasPermission($"{SESSION_KEY}_{HttpContext.User.Identity.Name}", RoleCapability.DeleteConversionProject);
       return Page();
-   }
-   private bool HasCapability(RoleCapability roleCapability)
-   {
-      var sessionData = _session.Get<string>($"{SESSION_KEY}_{HttpContext.User.Identity.Name}") ?? string.Empty;
-      return sessionData.IsNullOrEmpty() ? false :
-         sessionData.Split(",").Any(x => x.IndexOf(roleCapability.ToString(), StringComparison.OrdinalIgnoreCase) >= 0);
    }
 }

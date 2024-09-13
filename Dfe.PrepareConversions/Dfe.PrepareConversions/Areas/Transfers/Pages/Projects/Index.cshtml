@@ -41,7 +41,7 @@
 
             <a class="govuk-link govuk-!-padding-left-50" asp-page="@Dfe.PrepareTransfers.Web.Models.Links.ProjectAssignment.Index.PageName" asp-route-urn="@Model.Urn">Change</a>
         </p>
-        <p class="govuk-!-margin-top-0 govuk-!-margin-bottom-8">
+        <p class="govuk-!-margin-top-0 govuk-!-margin-bottom-5">
             @{
                 var decisionClass = Model.ProjectStatus switch
                 {
@@ -65,7 +65,12 @@
                 }
             }
         </p>
-
+        @if (Model.HasPermission)
+        {
+            <span class="govuk-body govuk-!-margin-bottom-3">
+                <a class="govuk-button govuk-button--warning" asp-page="@Dfe.PrepareTransfers.Web.Models.Links.DeleteProject.Index.PageName" asp-route-urn="@Model.Urn" asp-route-reference="@Model.ProjectReference" asp-route-title="@Model.IncomingTrustName">Delete project</a>
+            </span>
+        }
         <div class="govuk-grid-column-full">
             <partial name="_SubMenu"  />
         </div>

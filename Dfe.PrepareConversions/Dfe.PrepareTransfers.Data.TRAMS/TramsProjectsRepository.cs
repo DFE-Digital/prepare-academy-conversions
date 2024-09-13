@@ -20,8 +20,6 @@ namespace Dfe.PrepareTransfers.Data.TRAMS
       private readonly IAcademies _academies;
       private readonly IMapper<AcademisationProject, Project> _externalToInternalProjectMapper;
 
-
-
       private readonly IMapper<Project, TramsProjectUpdate> _internalToUpdateMapper;
       private readonly IMapper<TramsProjectSummary, ProjectSearchResult> _summaryToInternalProjectMapper;
       private readonly ITrusts _trusts;
@@ -458,6 +456,14 @@ namespace Dfe.PrepareTransfers.Data.TRAMS
             return null;
          }
          throw new TramsApiException(response);
+      }
+      public async Task DeleteProjectAsync(string urn)
+      {
+         var response = await AcademisationClient.DeleteAsync($"transfer-project/{urn}/delete");
+         if (!response.IsSuccessStatusCode)
+         {
+            throw new TramsApiException(response);
+         }
       }
    }
 }
