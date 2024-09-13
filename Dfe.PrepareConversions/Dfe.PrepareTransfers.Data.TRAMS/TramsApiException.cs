@@ -10,8 +10,8 @@ namespace Dfe.PrepareTransfers.Data.TRAMS
     {
         public HttpStatusCode StatusCode { get; }
 
-        public TramsApiException(HttpResponseMessage httpResponseMessage, string message = null) 
-            : base(message ?? $"API encountered an error-({httpResponseMessage.StatusCode})")
+      public TramsApiException(HttpResponseMessage httpResponseMessage, string message = null)
+          : base(message ?? $"API encountered an error-({httpResponseMessage.StatusCode})")
         {
             StatusCode = httpResponseMessage.StatusCode;
             base.Data.Add("Sentry:Tag:StatusCode", StatusCode);
