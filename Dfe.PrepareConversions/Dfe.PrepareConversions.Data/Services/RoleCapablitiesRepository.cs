@@ -2,20 +2,21 @@
 using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models.UserRole;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Data.Services
 {
-   public class UserRoleRepository(IDfeHttpClientFactory httpClientFactory,
-      IHttpClientService httpClientService) : IUserRoleRepository
+   public class RoleCapablitiesRepository(IDfeHttpClientFactory httpClientFactory,
+      IHttpClientService httpClientService) : IRoleCapablitiesRepository
    {
-      public async Task<ApiResponse<RoleCapabilitiesModel>> GetUserRoleCapabilities(string email)
+      public async Task<ApiResponse<RoleCapabilitiesModel>> GetRolesCapabilities(List<string> roles)
       {
          var httpClient = httpClientFactory.CreateAcademisationClient();
 
-         ApiResponse<RoleCapabilitiesModel> result = await httpClientService.Get<RoleCapabilitiesModel>(
+         var result = await httpClientService.Post<List<string>, RoleCapabilitiesModel>(
             httpClient,
-            string.Format(PathFor.GetCapabilities, email));
+             PathFor.GetRoleCapabilities, roles);
 
          if (result.Success is false)
          {

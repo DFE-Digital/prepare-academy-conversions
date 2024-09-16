@@ -34,7 +34,7 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
       _pathFor = new PathFor(featureManager.Object);
 
       Context = CreateBrowsingContext(factory.CreateClient());
-      GetRoleCapabilities("Name");
+      GetRoleCapabilities(["conversionRole", "transferRoles"]);
    }
 
    protected IDocument Document => Context.Active;

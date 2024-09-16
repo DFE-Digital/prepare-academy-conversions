@@ -149,7 +149,7 @@ public class Startup
       services.AddScoped<KeyStagePerformanceService>();
       services.AddScoped<ITrustsRepository, TrustsRepository>(); 
       services.AddScoped<IProjectGroupsRepository, ProjectGroupsRepository>();
-      services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+      services.AddScoped<IRoleCapablitiesRepository, RoleCapablitiesRepository>();
       services.AddScoped<IAcademyConversionProjectRepository, AcademyConversionProjectRepository>();
       services.AddScoped<IAcademyConversionAdvisoryBoardDecisionRepository, AcademyConversionAdvisoryBoardDecisionRepository>();
       services.AddScoped<IHttpClientService, HttpClientService>();
