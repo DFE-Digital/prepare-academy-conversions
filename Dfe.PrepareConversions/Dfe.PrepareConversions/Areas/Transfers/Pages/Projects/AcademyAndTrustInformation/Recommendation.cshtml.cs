@@ -63,7 +63,8 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation
 
             var projectResult = project.Result;
             projectResult.AcademyAndTrustInformation.Recommendation = vm.Recommendation;
-            projectResult.AcademyAndTrustInformation.Author = vm.Author;
+            projectResult.AcademyAndTrustInformation.Author = vm.Author ?? string.Empty;
+           
 
             await _projectRepository.UpdateGeneralInfomation(projectResult);
 
