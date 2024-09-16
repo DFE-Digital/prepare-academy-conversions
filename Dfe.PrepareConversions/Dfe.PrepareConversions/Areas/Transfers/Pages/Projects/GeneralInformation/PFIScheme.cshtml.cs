@@ -81,7 +81,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.GeneralInformation
                 return RedirectToPage(Links.HeadteacherBoard.Preview.PageName, new { Urn });
             }
 
-            return Redirect($"/project/{Urn}/general-information/{AcademyUkprn}#{FragmentEdit}");
+            return Redirect($"/transfers/project/{Urn}/general-information/{AcademyUkprn}#{FragmentEdit}");
         }
 
     }
