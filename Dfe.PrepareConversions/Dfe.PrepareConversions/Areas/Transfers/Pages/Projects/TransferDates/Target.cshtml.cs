@@ -75,9 +75,10 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
                 validationResult.AddToModelState(ModelState, nameof(TargetDateViewModel));
                 return Page();
             }
-            if (projectResult.Dates.Target is not null)
+            var newTargetDate = TargetDateViewModel.TargetDate.DateInputAsString();
+            if (projectResult.Dates.Target is not null && projectResult.Dates.Target != newTargetDate)
             {
-                return RedirectToPage("/Projects/TransferDates/Reason", new { Urn, TargetDate = TargetDateViewModel.TargetDate.DateInputAsString() });
+                return RedirectToPage("/Projects/TransferDates/Reason", new { Urn, TargetDate = TargetDateViewModel.TargetDate.DateInputAsString(), ReturnToPreview });
             }
             projectResult.Dates.Target = TargetDateViewModel.TargetDate.DateInputAsString();
 
