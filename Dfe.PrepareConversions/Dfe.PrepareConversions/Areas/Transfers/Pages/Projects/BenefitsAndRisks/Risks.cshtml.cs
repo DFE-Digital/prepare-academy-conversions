@@ -58,7 +58,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.BenefitsAndRisks
             }
 
             return RisksViewModel.RisksInvolved == true
-                ? RedirectToPage("/Projects/BenefitsAndRisks/OtherFactors", new {Urn})
+                ? RedirectToPage("/Projects/BenefitsAndRisks/OtherFactors", new {Urn, ReturnToPreview})
                 : RedirectToPage("/Projects/BenefitsAndRisks/Index", new {Urn});
         }
 

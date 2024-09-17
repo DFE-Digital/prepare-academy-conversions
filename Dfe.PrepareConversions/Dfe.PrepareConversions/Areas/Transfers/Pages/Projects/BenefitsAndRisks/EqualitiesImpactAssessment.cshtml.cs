@@ -45,7 +45,12 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.BenefitsAndRisks
             project.Result.Benefits.EqualitiesImpactAssessmentConsidered = EqualitiesImpactAssessmentViewModel.EqualitiesImpactAssessmentConsidered;
             await _projects.UpdateBenefits(project.Result);
 
-            return RedirectToPage("/Projects/BenefitsAndRisks/Index", new {Urn});
+         if (ReturnToPreview)
+         {
+            return RedirectToPage(Links.HeadteacherBoard.Preview.PageName, new { Urn });
+         }
+
+         return RedirectToPage("/Projects/BenefitsAndRisks/Index", new {Urn});
         }
 
         private IList<RadioButtonViewModel> GetRadioButtons(bool? valueSelected)
