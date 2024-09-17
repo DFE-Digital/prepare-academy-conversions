@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks; 
 
 namespace Dfe.PrepareConversions.Middleware
@@ -15,7 +17,7 @@ namespace Dfe.PrepareConversions.Middleware
       public const string SESSION_KEY = "RoleCapabilities"; 
       private readonly ILogger<CapabilitiyMiddleware> _logger = logger ?? throw new ArgumentNullException("logger");
 
-      public async Task Invoke(HttpContext httpContext, ICorrelationContext correlationContext, ISession session, IUserRoleRepository userRoleRepository)
+      public async Task Invoke(HttpContext httpContext, ICorrelationContext correlationContext, ISession session, IRoleCapablitiesRepository roleCapablitiesRepository)
       {
          if (httpContext.User.Identity.IsAuthenticated && !httpContext.User.Identity.Name.IsNullOrEmpty())
          {
@@ -23,8 +25,8 @@ namespace Dfe.PrepareConversions.Middleware
             if (session.Get<string>(sessionKey).IsNullOrEmpty())
             {
                SetCorrelationId(httpContext, correlationContext);
-
-               var roleCapabilitiesModel = await userRoleRepository.GetUserRoleCapabilities(httpContext.User.Identity.Name);
+               var roles = httpContext.User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x=> x.Value).ToList(); 
+               var roleCapabilitiesModel = await roleCapablitiesRepository.GetRolesCapabilities(roles);
                httpContext.Session.Set(sessionKey, string.Join(",", roleCapabilitiesModel.Body.Capabilities));
             }
          }
