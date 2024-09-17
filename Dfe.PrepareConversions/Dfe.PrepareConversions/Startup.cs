@@ -131,6 +131,7 @@ public class Startup
          TramsApiOptions tramsApiOptions = GetTypedConfigurationFor<TramsApiOptions>();
          client.BaseAddress = new Uri(tramsApiOptions.Endpoint);
          client.DefaultRequestHeaders.Add("ApiKey", tramsApiOptions.ApiKey);
+         client.DefaultRequestHeaders.Add("User-Agent", "PrepareConversions/1.0");
 
       });
 
@@ -139,6 +140,7 @@ public class Startup
          AcademisationApiOptions apiOptions = GetTypedConfigurationFor<AcademisationApiOptions>();
          client.BaseAddress = new Uri(apiOptions.BaseUrl);
          client.DefaultRequestHeaders.Add("x-api-key", apiOptions.ApiKey);
+         client.DefaultRequestHeaders.Add("User-Agent", "PrepareConversions/1.0");
       });
 
       services.Configure<ServiceLinkOptions>(GetConfigurationSectionFor<ServiceLinkOptions>());
@@ -152,7 +154,7 @@ public class Startup
       services.AddScoped<KeyStagePerformanceService>();
       services.AddScoped<ITrustsRepository, TrustsRepository>(); 
       services.AddScoped<IProjectGroupsRepository, ProjectGroupsRepository>();
-      services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+      services.AddScoped<IRoleCapablitiesRepository, RoleCapablitiesRepository>();
       services.AddScoped<IAcademyConversionProjectRepository, AcademyConversionProjectRepository>();
       services.AddScoped<IAcademyConversionAdvisoryBoardDecisionRepository, AcademyConversionAdvisoryBoardDecisionRepository>();
       services.AddScoped<IHttpClientService, HttpClientService>();

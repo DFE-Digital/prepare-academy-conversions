@@ -3,9 +3,9 @@ namespace Dfe.PrepareConversions.Data.Models.UserRole
 {
    public enum RoleCapability
    {
-      DeleteTransferProject,
-      DeleteGroupProject,
+      CreateConversionProject,
+      CreateTransferProject,
       DeleteConversionProject,
-      UserAdministrator
+      DeleteTransferProject
    }
 }

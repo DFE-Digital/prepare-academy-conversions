@@ -254,7 +254,7 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
 
       protected override Task<AuthenticateResult> HandleAuthenticateAsync()
       {
-         List<Claim> claims = new() { new(ClaimTypes.Name, "Name") };
+         List<Claim> claims = [new(ClaimTypes.Name, "Name"), new(ClaimTypes.Role, "conversionRole"), new(ClaimTypes.Role, "transferRoles")];
          ClaimsIdentity identity = new(claims, "Test");
          ClaimsPrincipal principal = new(identity);
          AuthenticationTicket ticket = new(principal, "Test");

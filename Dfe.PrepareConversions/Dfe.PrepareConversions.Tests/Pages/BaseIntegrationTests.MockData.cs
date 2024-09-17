@@ -119,13 +119,16 @@ public abstract partial class BaseIntegrationTests
       return request;
    }
 
-   public void GetRoleCapabilities(string name)
+   public void GetRoleCapabilities(List<string> roles)
    {
       var response = new RoleCapabilitiesModel
-      { 
-         Capabilities = [RoleCapability.DeleteConversionProject] 
+      {
+         Capabilities = [
+            RoleCapability.CreateConversionProject, 
+            RoleCapability.CreateTransferProject
+          ] 
       };
-      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetCapabilities, name), response); 
+      _factory.AddPostWithJsonRequest(PathFor.GetRoleCapabilities, roles, response); 
    }
 
    public UpdateAcademyConversionProject AddPatchConfiguredProject(AcademyConversionProject project, Action<UpdateAcademyConversionProject> configure = null)
