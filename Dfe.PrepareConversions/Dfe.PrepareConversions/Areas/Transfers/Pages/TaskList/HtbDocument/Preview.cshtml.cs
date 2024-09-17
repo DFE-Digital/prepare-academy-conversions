@@ -112,13 +112,16 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
 
             var previewPageAcademyModels = new List<PreviewPageAcademyModel>();
             foreach (var previewPageAcademyModel in response.OutgoingAcademies.Select(academy =>
-                 new PreviewPageAcademyModel
+                 new PreviewPageAcademyModel()
                  {
                      Academy = academy,
                      EducationPerformance = academy.EducationPerformance,
                      GeneralInformationViewModel =
                          new Pages.Projects.GeneralInformation.Index(_getInformationForProject)
                          {
+                             ReturnToPreview = true,
+                             Urn = project.Urn,
+                             AcademyUkprn = academy.Ukprn,
                              SchoolPhase = academy.GeneralInformation.SchoolPhase,
                              AgeRange = academy.GeneralInformation.AgeRange,
                              Capacity = academy.GeneralInformation.Capacity,
@@ -146,7 +149,6 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
                          AcademyUkprn = academy.Ukprn,
                          IsPreview = true,
                          Urn = response.Project.Urn,
-                         ReturnToPreview = true,
                          AdditionalInformationViewModel = new AdditionalInformationViewModel
                          {
                              AdditionalInformation = academy.PupilNumbers.AdditionalInformation,
@@ -163,6 +165,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
                              OutgoingAcademyUrn = project.OutgoingAcademyUrn,
                              AcademyUkprn = academy.Ukprn,
                              LatestOfstedJudgement = academy.LatestOfstedJudgement,
+                             ReturnToPreview = true,
                              AdditionalInformationViewModel = new AdditionalInformationViewModel
                              {
                                  AdditionalInformation = academy.LatestOfstedJudgement.AdditionalInformation,
