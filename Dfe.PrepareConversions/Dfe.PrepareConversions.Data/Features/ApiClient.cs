@@ -141,6 +141,12 @@ public class ApiClient : IApiClient
       var formattedString = string.Format(PathFor.SetFormAMatAssignedUser, id);
       return await AcademisationClient.PutAsync(formattedString, JsonContent.Create(payload));
    }
+   public async Task<HttpResponseMessage> DeleteConversionProject(int id)
+   {
+      var formattedString = string.Format(PathFor.DeleteConversionProject, id);
+      return await AcademisationClient.DeleteAsync(formattedString);
+   }
+
    public async Task<HttpResponseMessage> GetAllProjectsV2Async(AcademyConversionSearchModelV2 searchModel)
    {
       return await AcademisationClient.PostAsync(PathFor.GetAllProjectsV2, JsonContent.Create(searchModel));
