@@ -26,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.PrepareTransfers.Helper
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dfe.PrepareTransfers.Data.TRAMS", "Dfe.PrepareTransfers.Data.TRAMS\Dfe.PrepareTransfers.Data.TRAMS.csproj", "{D0F7A72E-B16A-43C8-BACC-EFDF1439CCDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dfe.PrepareTransfers.Data.TRAMS.Tests", "prepare-academy-transfers\Dfe.PrepareTransfers.Data.TRAMS.Tests\Dfe.PrepareTransfers.Data.TRAMS.Tests.csproj", "{3CC62499-D3D6-462F-8866-0E7A3C725FAB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dfe.PrepareTransfers.Data.TRAMS.Tests", "..\..\prepare-academy-transfers\Dfe.PrepareTransfers.Data.TRAMS.Tests\Dfe.PrepareTransfers.Data.TRAMS.Tests.csproj", "{3CC62499-D3D6-462F-8866-0E7A3C725FAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
