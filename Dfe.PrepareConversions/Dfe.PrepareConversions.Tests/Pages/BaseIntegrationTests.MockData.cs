@@ -5,6 +5,7 @@ using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
+using Dfe.PrepareConversions.Data.Models.UserRole;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Tests.Customisations;
 using Newtonsoft.Json;
@@ -116,6 +117,18 @@ public abstract partial class BaseIntegrationTests
 
       _factory.AddPatchWithJsonRequest(string.Format(PathFor.UpdateProject, project.Id), request, project);
       return request;
+   }
+
+   public void GetRoleCapabilities(List<string> roles)
+   {
+      var response = new RoleCapabilitiesModel
+      {
+         Capabilities = [
+            RoleCapability.CreateConversionProject, 
+            RoleCapability.CreateTransferProject
+          ] 
+      };
+      _factory.AddPostWithJsonRequest(PathFor.GetRoleCapabilities, roles, response); 
    }
 
    public UpdateAcademyConversionProject AddPatchConfiguredProject(AcademyConversionProject project, Action<UpdateAcademyConversionProject> configure = null)
