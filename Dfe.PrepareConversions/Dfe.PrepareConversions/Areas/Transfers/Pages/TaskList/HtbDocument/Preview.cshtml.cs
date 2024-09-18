@@ -128,14 +128,14 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
                              NumberOnRoll =
                                  $"{academy.GeneralInformation.NumberOnRoll} ({academy.GeneralInformation.PercentageFull})",
                              FreeSchoolMeals = academy.GeneralInformation.PercentageFsm,
-                             PublishedAdmissionNumber = academy.GeneralInformation.Pan,
-                             PrivateFinanceInitiative = academy.GeneralInformation.Pfi,
-                             ViabilityIssues = academy.GeneralInformation.ViabilityIssue,
-                             FinancialDeficit = academy.GeneralInformation.Deficit,
+                             PublishedAdmissionNumber = academy.PublishedAdmissionNumber,
+                             PrivateFinanceInitiative = $"{academy.PFIScheme} {(string.IsNullOrWhiteSpace(academy.PFISchemeDetails) ? string.Empty : $" - {academy.PFISchemeDetails}" )}",
+                             ViabilityIssues = academy.ViabilityIssues,
+                             FinancialDeficit = academy.FinancialDeficit,
                              SchoolType = academy.GeneralInformation.SchoolType,
                              DiocesePercent = academy.GeneralInformation.DiocesesPercent,
-                             DistanceFromAcademyToTrustHq = academy.GeneralInformation.DistanceToSponsorHq,
-                             MP = academy.GeneralInformation.MpAndParty
+                             DistanceFromAcademyToTrustHq = $"{academy.DistanceFromAcademyToTrustHq} Miles {(string.IsNullOrWhiteSpace(academy.DistanceFromAcademyToTrustHqDetails) ? string.Empty : $" - {academy.DistanceFromAcademyToTrustHqDetails}")}",
+                             MP = academy.MPNameAndParty
                          },
                      PupilNumbersViewModel = new PupilNumbers(_getInformationForProject, _projects)
                      {
