@@ -50,8 +50,12 @@ public static class Links
     {
         public static readonly LinkItem Index = Create("/Projects/Index", "Back");
     }
+   public static class DeleteProject
+   {
+      public static readonly LinkItem Index = Create(page: "/Projects/DeleteProject/Index");
+   }
 
-    public static class ProjectList
+   public static class ProjectList
     {
         public static readonly LinkItem Index = Create("/Home/Index");
     }

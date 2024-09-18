@@ -1,0 +1,41 @@
+﻿@page "/project/{urn}/confirm-to-delete-project"
+@using Links = Dfe.PrepareTransfers.Web.Models.Links
+@model Dfe.PrepareTransfers.Web.Pages.Projects.DeleteProject.IndexModel
+@{
+    ViewData["Title"] = "Confirm you want to remove this project";
+    Layout = "_Layout";
+}
+
+@section BeforeMain
+{
+    <a class="govuk-back-link" asp-page="@Links.Project.Index.PageName" asp-route-urn="@Model.Urn">Back</a>
+}
+
+<div class="govuk-grid-row" xmlns="http://www.w3.org/1999/html">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-xl">Project reference: @Model.ProjectReference</span>
+        <strong class="govuk-caption-xl">@Model.SchoolName</strong>
+        <h1 class="govuk-heading-xl" data-cy="select-heading">Confirm you want to remove this project</h1>
+        <div>
+            <p class="govuk-body">If you delete this project it will no longer appear in Prepare.</p>
+        </div>
+        <form method="post">
+            <input type="hidden" asp-for="@Model.IsProjectDeleted" />
+            <span class="govuk-!-margin-right-2">
+                <button class="govuk-button pt-3" data-module="govuk-button" id="delete-project-confirmation">
+                    Delete Project
+                </button>
+            </span>
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                Cancel
+            </button>
+        </form>
+    </div>
+</div>
+
+<script type="application/javascript" asp-add-nonce>
+    document.querySelector('#delete-project-confirmation').onclick = () =>{
+        document.querySelector('#IsProjectDeleted').value = true;
+        document.querySelector('form').submit();
+    };
+</script>

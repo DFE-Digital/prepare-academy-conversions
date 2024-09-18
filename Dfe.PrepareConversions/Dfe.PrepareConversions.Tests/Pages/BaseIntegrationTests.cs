@@ -5,6 +5,7 @@ using AngleSharp.Io;
 using AngleSharp.Io.Network;
 using AutoFixture;
 using Dfe.PrepareConversions.Data.Features;
+using DocumentFormat.OpenXml.Wordprocessing;
 using FluentAssertions;
 using Microsoft.FeatureManagement;
 using Moq;
@@ -33,6 +34,7 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
       _pathFor = new PathFor(featureManager.Object);
 
       Context = CreateBrowsingContext(factory.CreateClient());
+      GetRoleCapabilities(["conversionRole", "transferRoles"]);
    }
 
    protected IDocument Document => Context.Active;

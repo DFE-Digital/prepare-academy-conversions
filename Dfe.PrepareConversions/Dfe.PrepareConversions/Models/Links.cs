@@ -241,6 +241,10 @@ public static class Links
       public static readonly LinkItem AcademyOrderDate = AddLinkItem(backText: "Back", page: "/TaskList/Decision/AcademyOrderDate");
 
    }
+   public static class DeleteProject
+   {
+      public static readonly LinkItem ConfirmToDeleteProject = AddLinkItem(page: "/TaskList/DeleteProject/ConfirmToDeleteProject");
+   }
 
    public static class TrustTemplate
    {
