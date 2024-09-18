@@ -102,6 +102,7 @@
 	  <None Include="Areas\Transfers\Pages\Projects\GeneralInformation\PublishedAdmissionNumber.cshtml" />
 	  <None Include="Areas\Transfers\Pages\Projects\GeneralInformation\ViabilityIssues.cshtml" />
 	  <None Include="Areas\Transfers\Pages\Projects\LatestOfstedJudgement\Index.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\ProjectAssignment\Index.cshtml" />
 	  <None Include="Areas\Transfers\Pages\Shared\OfstedSummary\_PreviewSummary.cshtml" />
 	  <None Include="Areas\Transfers\Pages\Shared\OfstedSummary\_ProjectSummary.cshtml" />
 	  <None Include="Areas\Transfers\Pages\Shared\OfstedSummary\_SummaryRows.cshtml" />

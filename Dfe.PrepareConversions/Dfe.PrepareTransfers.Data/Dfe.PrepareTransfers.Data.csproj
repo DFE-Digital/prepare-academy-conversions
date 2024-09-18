@@ -12,6 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Dfe.PrepareConversions.Data\Dfe.PrepareConversions.Data.csproj" />
 		<ProjectReference Include="..\Dfe.PrepareTransfers.Helpers\Dfe.PrepareTransfers.Helpers.csproj" />
 	</ItemGroup>
 

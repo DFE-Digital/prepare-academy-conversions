@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Dfe.Academisation.ExtensionMethods;
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareTransfers.Data.Models.Projects;
-using Dfe.PrepareTransfers.Web.Models;
 
 namespace Dfe.PrepareTransfers.Data.Models
 {

@@ -10,8 +10,7 @@ using Dfe.PrepareTransfers.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Dfe.PrepareConversions.Data.Models.UserRole;
 using Dfe.PrepareConversions.Extensions;
-using Microsoft.IdentityModel.Tokens;
-using System.Linq;
+using Dfe.PrepareConversions.Data.Models;
 
 namespace Dfe.PrepareTransfers.Web.Pages.Projects
 {
