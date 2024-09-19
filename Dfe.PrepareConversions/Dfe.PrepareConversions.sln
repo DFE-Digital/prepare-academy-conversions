@@ -15,12 +15,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.PrepareConversions.Docu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.PrepareConversions.DocumentGeneration.Tests", "Dfe.PrepareConversions.DocumentGeneration.Tests\Dfe.PrepareConversions.DocumentGeneration.Tests.csproj", "{31CF8831-E5BD-4D54-8D10-110EDF81180E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.PrepareConversions.Redirector", "Dfe.PrepareConversions.Redirector\Dfe.PrepareConversions.Redirector.csproj", "{600F77EC-B7C5-49E0-9488-04ED4A5BC36F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AC81ED86-8D07-46AB-B0AF-A0363E182835}"
 	ProjectSection(SolutionItems) = preProject
 		..\release-notes.md = ..\release-notes.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.PrepareTransfers.Data", "Dfe.PrepareTransfers.Data\Dfe.PrepareTransfers.Data.csproj", "{88872A19-7EEB-4115-BFEA-FEDF7C1554A9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.PrepareTransfers.Helpers", "Dfe.PrepareTransfers.Helpers\Dfe.PrepareTransfers.Helpers.csproj", "{0559FF72-7E29-4CF3-9F17-A83985D20AB1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.PrepareTransfers.Data.TRAMS", "Dfe.PrepareTransfers.Data.TRAMS\Dfe.PrepareTransfers.Data.TRAMS.csproj", "{77D748AF-A6C5-4B3E-B2AB-5C9C68CBF91D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,10 +56,18 @@ Global
 		{31CF8831-E5BD-4D54-8D10-110EDF81180E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31CF8831-E5BD-4D54-8D10-110EDF81180E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31CF8831-E5BD-4D54-8D10-110EDF81180E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{600F77EC-B7C5-49E0-9488-04ED4A5BC36F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{600F77EC-B7C5-49E0-9488-04ED4A5BC36F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{600F77EC-B7C5-49E0-9488-04ED4A5BC36F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{600F77EC-B7C5-49E0-9488-04ED4A5BC36F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88872A19-7EEB-4115-BFEA-FEDF7C1554A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88872A19-7EEB-4115-BFEA-FEDF7C1554A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88872A19-7EEB-4115-BFEA-FEDF7C1554A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88872A19-7EEB-4115-BFEA-FEDF7C1554A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0559FF72-7E29-4CF3-9F17-A83985D20AB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0559FF72-7E29-4CF3-9F17-A83985D20AB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0559FF72-7E29-4CF3-9F17-A83985D20AB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0559FF72-7E29-4CF3-9F17-A83985D20AB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77D748AF-A6C5-4B3E-B2AB-5C9C68CBF91D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77D748AF-A6C5-4B3E-B2AB-5C9C68CBF91D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77D748AF-A6C5-4B3E-B2AB-5C9C68CBF91D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77D748AF-A6C5-4B3E-B2AB-5C9C68CBF91D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

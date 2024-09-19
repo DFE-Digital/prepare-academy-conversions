@@ -1,0 +1,65 @@
+﻿@page "/transfers/project/{urn}/general-information/{academyUkprn}/financial-deficit";
+
+@using Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers.TagHelpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Dfe.PrepareTransfers.Web.Pages.Projects.GeneralInformation.FinancialDeficitModel
+
+@{
+    ViewBag.Title = (!ViewData.ModelState.IsValid ? "Error: " : "") + "Financial Deficit";
+    Layout = "_Layout";
+
+    var formClasses = ViewData.ModelState.IsValid ? string.Empty : "govuk-form-group--error";
+}
+
+@section BeforeMain
+{
+    <backtopreview urn="@Model.Urn" return-to-preview="@Model.ReturnToPreview">
+        <a class="govuk-back-link"
+           asp-page="/Projects/GeneralInformation/Index"
+           asp-route-urn="@Model.Urn"
+           asp-route-academyUkprn="@Model.AcademyUkprn">Back</a>
+    </backtopreview>
+
+}
+
+<div asp-gds-validation-summary></div>
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <div class="govuk-form-group @formClasses">
+            <fieldset class="govuk-fieldset" aria-describedby="diocesan-consent-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                    <h1 class="govuk-fieldset__heading" data-test="header">
+                        <span class="govuk-caption-l">
+                            @Model.AcademyName
+                        </span>
+                        Is there a financial deficit at the academy in its current financial year?
+                    </h1>
+                    <form method="post">
+                    <div class="govuk-form-group">
+                        <div class="govuk-radios govuk-!-margin-top-4" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input asp-for="@Model.YesChecked" data-test="financial-defecit-yes-input" class="govuk-radios__input" type="radio" value="true" id="radio-yes" data-cy="select-radio-yes">
+                                <label class="govuk-label govuk-radios__label" for="radio-yes" data-test="financial-defecit-yes-label">
+                                    Yes
+                                </label>
+                            </div>
+
+                            <div class="govuk-radios__item">
+                                <input asp-for="@Model.YesChecked" data-test="financial-defecit-no-input" class="govuk-radios__input" type="radio" value="false" id="radio-no" data-cy="select-radio-no">
+                                <label class="govuk-label govuk-radios__label" for="radio-no" data-test="financial-defecit-no-label">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                        <button class="govuk-button govuk-!-margin-top-4" data-module="govuk-button" type="submit" data-test="submit-btn">
+                            Save and continue
+                        </button>
+                    </div>
+                    </form>
+        </div>
+    </div>
+    <partial name="_UsefulInformation" />
+</div>

@@ -294,6 +294,13 @@ public static class Links
       public static readonly LinkItem CheckConversionDetails= AddLinkItem(page: "/Groups/CheckConversionDetails");
       public static readonly LinkItem ProjectGroupIndex = AddLinkItem(page: "/Groups/ProjectGroupIndex");
    }
+   
+   public static class DiocesanConsent
+   {
+      public static readonly LinkItem Home = AddLinkItem(page: "/Projects/LegalRequirements/DiocesanConsent");
+   }
+   
+   
 }
 
 public class LinkItem

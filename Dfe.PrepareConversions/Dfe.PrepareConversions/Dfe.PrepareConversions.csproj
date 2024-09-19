@@ -22,6 +22,7 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\htb-template.docx" />
+	  <None Remove="Resources\transfers-htb-template.docx" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -31,6 +32,8 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Dfe.PrepareConversions.Data\Dfe.PrepareConversions.Data.csproj" />
 		<ProjectReference Include="..\Dfe.PrepareConversions.DocumentGeneration\Dfe.PrepareConversions.DocumentGeneration.csproj" />
+		<ProjectReference Include="..\Dfe.PrepareTransfers.Data.TRAMS\Dfe.PrepareTransfers.Data.TRAMS.csproj" />
+		<ProjectReference Include="..\Dfe.PrepareTransfers.Data\Dfe.PrepareTransfers.Data.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -39,6 +42,8 @@
 	  <PackageReference Include="Dfe.Academisation.CorrelationIdMiddleware" Version="2.0.2" />
 	  <PackageReference Include="Dfe.Academisation.ExtensionMethods" Version="2.0.0" />
 	  <PackageReference Include="DocumentFormat.OpenXml" Version="2.20.0" />
+	  <PackageReference Include="FluentValidation" Version="11.9.2" />
+	  <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
 	  <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
 	  <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="3.4.0" />
 	  <PackageReference Include="Microsoft.Identity.Web" Version="2.20.0" />
@@ -54,6 +59,7 @@
 
 	<ItemGroup>
 	  <EmbeddedResource Include="Resources\htb-template.docx" />
+	  <EmbeddedResource Include="Resources\transfers-htb-template.docx" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -80,5 +86,37 @@
 
 	<ItemGroup>
 	  <UpToDateCheckInput Remove="Pages\Shared\_Pagination.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Areas\Transfers\Pages\Home\Index.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\AcademyAndTrustInformation\IncomingTrustName.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\AcademyAndTrustInformation\Index.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\AcademyAndTrustInformation\Recommendation.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\AcademyAndTrustInformation\UpdateIncomingTrust.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\GeneralInformation\DistanceFromTrust.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\GeneralInformation\FinancialDeficit.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\GeneralInformation\Index.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\GeneralInformation\MPNameAndParty.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\GeneralInformation\PFIScheme.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\GeneralInformation\PublishedAdmissionNumber.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\GeneralInformation\ViabilityIssues.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\LatestOfstedJudgement\Index.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Projects\ProjectAssignment\Index.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Shared\OfstedSummary\_PreviewSummary.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Shared\OfstedSummary\_ProjectSummary.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Shared\OfstedSummary\_SummaryRows.cshtml" />
+	  <None Include="Areas\Transfers\Pages\Shared\_ProjectListRows.cshtml" />
+	  <None Include="Areas\Transfers\Pages\TaskList\HtbDocument\Download.cshtml" />
+	  <None Include="Areas\Transfers\Pages\TaskList\HtbDocument\KeyStage2PerformanceSummary.cshtml" />
+	  <None Include="Areas\Transfers\Pages\TaskList\HtbDocument\KeyStage4PerformanceSummary.cshtml" />
+	  <None Include="Areas\Transfers\Pages\TaskList\HtbDocument\KeyStage5PerformanceSummary.cshtml" />
+	  <None Include="Areas\Transfers\Pages\TaskList\HtbDocument\Preview.cshtml" />
+	  <None Include="Areas\Transfers\Pages\TaskList\KeyStage2Performance\KeyStage2Performance.cshtml" />
+	  <None Include="Areas\Transfers\Pages\TaskList\KeyStage2Performance\KeyStage2PerformanceTables.cshtml" />
+	  <None Include="Areas\Transfers\Pages\TaskList\KeyStage4Performance\KeyStage4Performance.cshtml" />
+	  <None Include="Areas\Transfers\Pages\TaskList\KeyStage4Performance\KeyStage4PerformanceTables.cshtml" />
+	  <None Include="Areas\Transfers\Pages\TaskList\KeyStage5Performance\KeyStage5Performance.cshtml" />
+	  <None Include="Areas\Transfers\Pages\TaskList\KeyStage5Performance\KeyStage5PerformanceTables.cshtml" />
 	</ItemGroup>
 </Project>

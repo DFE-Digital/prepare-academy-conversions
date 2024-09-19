@@ -1,0 +1,140 @@
+@page "/transfers/home"
+@using Dfe.PrepareTransfers.Data.Models
+@using Dfe.PrepareTransfers.Data.Models.Projects
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Dfe.PrepareTransfers.Web.Pages.Home.Index
+
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "_Layout";
+
+    var pagesToDisplay = new List<int>() { 1, Model.CurrentPage, Model.TotalPages };
+    if (Model.HasPreviousPage)
+        pagesToDisplay.Add(Model.PreviousPage);
+    if (Model.HasNextPage)
+        pagesToDisplay.Add(Model.NextPage);
+}
+
+@section BeforeMain
+{
+}
+
+@if (Model.Filters.IsVisible)
+{
+    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+        <div class="govuk-notification-banner__header">
+            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                Success
+            </h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+            <h3 class="govuk-notification-banner__heading">
+                Projects filtered.
+            </h3>
+        </div>
+    </div>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl" data-cy="select-heading">
+            Transfer projects
+        </h1>
+        <p class="govuk-body">
+            Find and manage existing transfer projects or create a new one.
+        </p>
+        <a asp-page="/NewTransfer/NewTransfersInformation" role="button" draggable="false"
+           class="govuk-button" data-module="govuk-button" data-test="create-transfer">
+            Create a new transfer
+        </a>
+    </div>
+</div>
+<div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-one-third">
+        <partial name="Shared/_ProjectListFilters" model="Model.Filters" />
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-27" data-cy="select-projectlist-filter-count">
+            @Model.TotalProjectCount projects found
+        </h2>
+
+        @if (Model.SearchCount == 0)
+        {
+            <div class="govuk-heading-m govuk-!-margin-top-3">There are no matching results.</div>
+            <p class="govuk-body">Improve your results by:</p>
+            <ul class="govuk-list govuk-list--bullet govuk-body">
+                <li>double-checking your spelling</li>
+                <li>searching again with another trust</li>
+                <li>removing some filters</li>
+            </ul>
+        }
+        else
+        {
+            <a class="govuk-button govuk-button--secondary" asp-page-handler="Download"> Download as a spreadsheet</a>
+
+            <table class="govuk-table">
+                <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">@Model.TotalProjectCount projects found</caption>
+
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header app-!-width-three-fifths">Application information</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <partial name="Shared/_ProjectListRows" model="Model.Projects" />
+                </tbody>
+            </table>
+
+            <nav class="moj-pagination" id="pagination-label" aria-label="pagination">
+                <p class="govuk-visually-hidden" aria-labelledby="pagination-label">Pagination navigation</p>
+                <ul class="moj-pagination__list">
+                    @if (Model.HasPreviousPage)
+                    {
+                        <li class="moj-pagination__item  moj-pagination__item--prev">
+                            <a class="moj-pagination__link" asp-page="/Home/Index" asp-route-currentPage="@Model.PreviousPage" asp-route-Title="@Model.Filters.Title">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
+                        </li>
+                    }
+                    @for (var pageIdx = 0; pageIdx < Model.TotalPages; pageIdx++)
+                    {
+                        var pageNumber = pageIdx + 1;
+                        var isCurrentPage = Model.CurrentPage == pageNumber;
+                        var markAsSelected = isCurrentPage ? "moj-pagination__item--active" : "";
+
+                        var ariaLabel = isCurrentPage ? $"Current page, page {pageNumber}" : $"Go to page {pageNumber}";
+
+                        if (pagesToDisplay.Contains(pageNumber))
+                        {
+                            if (Model.HasPreviousPage && Model.PreviousPage == pageNumber && ((Model.PreviousPage - 1) > 1))
+                            {
+                                <li class="moj-pagination__item" aria-hidden="true">
+                                    &ctdot;
+                                </li>
+                            }
+
+                            <li class="moj-pagination__item @markAsSelected">
+                                <a id="@pageNumber" asp-page="/Home/Index" asp-route-currentPage="@pageNumber" asp-route-Title="@Model.Filters.Title" class="moj-pagination__link" aria-label="@ariaLabel">@pageNumber</a>
+                            </li>
+
+                            if (Model.HasNextPage && Model.NextPage == pageNumber && ((Model.NextPage + 1) < Model.TotalPages))
+                            {
+                                <li class="moj-pagination__item" aria-hidden="true">
+                                    &ctdot;
+                                </li>
+                            }
+                        }
+                    }
+
+                    @if (Model.HasNextPage)
+                    {
+                        <li class="moj-pagination__item  moj-pagination__item--next">
+                            <a class="moj-pagination__link" asp-page="/Home/Index" asp-route-currentPage="@Model.NextPage" asp-route-Title="@Model.Filters.Title">Next<span class="govuk-visually-hidden"> set of pages</span></a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        }
+    </div>
+</div>

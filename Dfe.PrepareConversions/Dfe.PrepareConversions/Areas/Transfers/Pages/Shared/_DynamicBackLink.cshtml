@@ -1,0 +1,7 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Links = Dfe.PrepareTransfers.Web.Models.Links
+@model Dfe.PrepareTransfers.Web.Models.LinkItem
+
+@{ var link = (Links.FindByPageName(Context.Request.Query["bl"]) ?? Model).OverrideFrom(Context.Request.Query); }
+
+<a asp-page="@link.PageName" asp-route-urn="@link.Urn" class="govuk-back-link">@link.BackText</a>
