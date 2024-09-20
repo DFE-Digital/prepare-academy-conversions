@@ -10,4 +10,6 @@ public enum AdvisoryBoardDAORevokedReason
    SchoolRatedGoodOrOutstanding = 1,
    [Description("Safeguarding concerns addressed")]
    SafeguardingConcernsAddressed = 2,
+   [Description("Change to government policy")]
+   ChangeToGovernmentPolicy = 3,
 }
