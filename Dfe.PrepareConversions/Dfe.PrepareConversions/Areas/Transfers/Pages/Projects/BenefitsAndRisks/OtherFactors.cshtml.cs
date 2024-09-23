@@ -57,7 +57,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.BenefitsAndRisks
                 TransferBenefits.OtherFactor.FinanceAndDebtConcerns,
                 TransferBenefits.OtherFactor.OtherRisks
             };
-            return RedirectToPage(GetPage(available, projectResult.Benefits.OtherFactors), new {Urn});
+            return RedirectToPage(GetPage(available, projectResult.Benefits.OtherFactors), new {Urn, ReturnToPreview});
         }
 
         /// <summary>

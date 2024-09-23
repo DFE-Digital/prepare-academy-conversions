@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Dfe.PrepareConversions.Data.Models.UserRole;
+using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Linq;
 using System.Text.Json;
 
 namespace Dfe.PrepareConversions.Extensions;
@@ -14,5 +18,14 @@ public static class SessionExtensions
    {
       string value = session.GetString(key);
       return value == null ? default : JsonSerializer.Deserialize<T>(value);
+   }
+
+   public static bool HasPermission(this ISession session, string key, RoleCapability roleCapability)
+   {
+      var sessionData = session.Get<string>(key) ?? string.Empty;
+      return !sessionData.IsNullOrEmpty() && sessionData.Split(",").Any(x =>
+      {
+         return x.Contains(roleCapability.ToString(), StringComparison.OrdinalIgnoreCase);
+      });
    }
 }

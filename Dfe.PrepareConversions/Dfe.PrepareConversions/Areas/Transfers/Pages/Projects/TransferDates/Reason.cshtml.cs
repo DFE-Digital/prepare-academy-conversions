@@ -94,7 +94,12 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
 
             await _projectsRepository.UpdateDates(projectResult, reasonsChanged, User.Identity.Name ?? string.Empty);
 
-            return RedirectToPage("/Projects/TransferDates/Index", new { Urn });
+         if (ReturnToPreview)
+         {
+            return RedirectToPage(Links.HeadteacherBoard.Preview.PageName, new { Urn });
+         }
+
+         return RedirectToPage("/Projects/TransferDates/Index", new { Urn });
         }
 
 

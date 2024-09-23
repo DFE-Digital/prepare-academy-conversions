@@ -112,18 +112,18 @@ namespace Dfe.PrepareTransfers.Web.Services
                 academyModel.SchoolPhase = academy.GeneralInformation.SchoolPhase;
                 academyModel.AgeRange = academy.GeneralInformation.AgeRange;
                 academyModel.SchoolCapacity = academy.GeneralInformation.Capacity;
-                academyModel.PublishedAdmissionNumber = academy.GeneralInformation.Pan;
+                academyModel.PublishedAdmissionNumber = academy.PublishedAdmissionNumber;
                 academyModel.NumberOnRoll =
                     $"{academy.GeneralInformation.NumberOnRoll} ({academy.GeneralInformation.PercentageFull})";
                 academyModel.PercentageFreeSchoolMeals = academy.GeneralInformation.PercentageFsm;
                 academyModel.OverallEffectiveness = academy.LatestOfstedJudgement.OverallEffectiveness;
-                academyModel.ViabilityIssues = academy.GeneralInformation.ViabilityIssue;
-                academyModel.FinancialDeficit = academy.GeneralInformation.Deficit;
-                academyModel.Pfi = academy.GeneralInformation.Pfi;
+                academyModel.ViabilityIssues = academy.ViabilityIssues;
+                academyModel.FinancialDeficit = academy.FinancialDeficit;
+                academyModel.Pfi = $"{academy.PFIScheme} {(string.IsNullOrWhiteSpace(academy.PFISchemeDetails) ? string.Empty : $" - {academy.PFISchemeDetails}")}";
                 academyModel.PercentageGoodOrOutstandingInDiocesanTrust = academy.GeneralInformation.DiocesesPercent;
                 academyModel.DistanceFromTheAcademyToTheTrustHeadquarters =
-                    academy.GeneralInformation.DistanceToSponsorHq;
-                academyModel.MpAndParty = academy.GeneralInformation.MpAndParty;
+                    $"{academy.DistanceFromAcademyToTrustHq} Miles {(string.IsNullOrWhiteSpace(academy.DistanceFromAcademyToTrustHqDetails) ? string.Empty : $" - {academy.DistanceFromAcademyToTrustHqDetails}")}";
+                academyModel.MpAndParty = academy.MPNameAndParty;
                 academyModel.GirlsOnRoll = academy.PupilNumbers.GirlsOnRoll;
                 academyModel.BoysOnRoll = academy.PupilNumbers.BoysOnRoll;
                 academyModel.PupilsWithSen = academy.PupilNumbers.WithStatementOfSen;

@@ -1,5 +1,4 @@
 using Dfe.PrepareTransfers.Data.Models.Projects;
-using Dfe.PrepareTransfers.Web.Models;
 using System.Collections.Generic;
 
 namespace Dfe.PrepareTransfers.Data.Models
@@ -37,7 +36,7 @@ namespace Dfe.PrepareTransfers.Data.Models
         public string OutgoingAcademyUrn => TransferringAcademies[0].OutgoingAcademyUrn;
         public string IncomingTrustUkprn => TransferringAcademies[0].IncomingTrustUkprn;
         public string IncomingTrustName => TransferringAcademies[0].IncomingTrustNameInTitleCase;
-        public User AssignedUser { get; set; }
+        public PrepareConversions.Data.Models.User AssignedUser { get; set; }
         public bool? IsFormAMat { get; set; }
     }
 }

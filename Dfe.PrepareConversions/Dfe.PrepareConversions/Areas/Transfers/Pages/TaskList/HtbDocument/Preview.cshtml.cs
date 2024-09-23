@@ -112,27 +112,30 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
 
             var previewPageAcademyModels = new List<PreviewPageAcademyModel>();
             foreach (var previewPageAcademyModel in response.OutgoingAcademies.Select(academy =>
-                 new PreviewPageAcademyModel
+                 new PreviewPageAcademyModel()
                  {
                      Academy = academy,
                      EducationPerformance = academy.EducationPerformance,
                      GeneralInformationViewModel =
                          new Pages.Projects.GeneralInformation.Index(_getInformationForProject)
                          {
+                             ReturnToPreview = true,
+                             Urn = project.Urn,
+                             AcademyUkprn = academy.Ukprn,
                              SchoolPhase = academy.GeneralInformation.SchoolPhase,
                              AgeRange = academy.GeneralInformation.AgeRange,
                              Capacity = academy.GeneralInformation.Capacity,
                              NumberOnRoll =
                                  $"{academy.GeneralInformation.NumberOnRoll} ({academy.GeneralInformation.PercentageFull})",
                              FreeSchoolMeals = academy.GeneralInformation.PercentageFsm,
-                             PublishedAdmissionNumber = academy.GeneralInformation.Pan,
-                             PrivateFinanceInitiative = academy.GeneralInformation.Pfi,
-                             ViabilityIssues = academy.GeneralInformation.ViabilityIssue,
-                             FinancialDeficit = academy.GeneralInformation.Deficit,
+                             PublishedAdmissionNumber = academy.PublishedAdmissionNumber,
+                             PrivateFinanceInitiative = $"{academy.PFIScheme} {(string.IsNullOrWhiteSpace(academy.PFISchemeDetails) ? string.Empty : $" - {academy.PFISchemeDetails}" )}",
+                             ViabilityIssues = academy.ViabilityIssues,
+                             FinancialDeficit = academy.FinancialDeficit,
                              SchoolType = academy.GeneralInformation.SchoolType,
                              DiocesePercent = academy.GeneralInformation.DiocesesPercent,
-                             DistanceFromAcademyToTrustHq = academy.GeneralInformation.DistanceToSponsorHq,
-                             MP = academy.GeneralInformation.MpAndParty
+                             DistanceFromAcademyToTrustHq = $"{academy.DistanceFromAcademyToTrustHq} Miles {(string.IsNullOrWhiteSpace(academy.DistanceFromAcademyToTrustHqDetails) ? string.Empty : $" - {academy.DistanceFromAcademyToTrustHqDetails}")}",
+                             MP = academy.MPNameAndParty
                          },
                      PupilNumbersViewModel = new PupilNumbers(_getInformationForProject, _projects)
                      {
@@ -146,7 +149,6 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
                          AcademyUkprn = academy.Ukprn,
                          IsPreview = true,
                          Urn = response.Project.Urn,
-                         ReturnToPreview = true,
                          AdditionalInformationViewModel = new AdditionalInformationViewModel
                          {
                              AdditionalInformation = academy.PupilNumbers.AdditionalInformation,
@@ -163,6 +165,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
                              OutgoingAcademyUrn = project.OutgoingAcademyUrn,
                              AcademyUkprn = academy.Ukprn,
                              LatestOfstedJudgement = academy.LatestOfstedJudgement,
+                             ReturnToPreview = true,
                              AdditionalInformationViewModel = new AdditionalInformationViewModel
                              {
                                  AdditionalInformation = academy.LatestOfstedJudgement.AdditionalInformation,
