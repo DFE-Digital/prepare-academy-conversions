@@ -15,9 +15,8 @@ namespace Dfe.PrepareTransfers.Data.TRAMS
       private readonly IMapper<TramsEducationPerformance, EducationPerformance> _educationPerformanceMapper;
       private readonly IDistributedCache _distributedCache;
 
-      public TramsEducationPerformanceRepository(IDfeHttpClientFactory httpClientFactory, IMapper<TramsEducationPerformance, EducationPerformance> educationPerformanceMapper, IDistributedCache distributedCache)
-      {
-         _httpClientFactory = httpClientFactory; ;
+      public TramsEducationPerformanceRepository( IMapper<TramsEducationPerformance, EducationPerformance> educationPerformanceMapper, IDistributedCache distributedCache)
+      { 
          _educationPerformanceMapper = educationPerformanceMapper;
          _distributedCache = distributedCache;
       }

@@ -17,10 +17,10 @@ namespace Dfe.PrepareTransfers.Data.TRAMS
       private readonly IMapper<EstablishmentDto, Academy> _academyMapper;
       private readonly IDistributedCache _distributedCache;
 
-      public TramsEstablishmentRepository(IDfeHttpClientFactory httpClientFactory,
+      public TramsEstablishmentRepository(
           IMapper<EstablishmentDto, Academy> academyMapper, IDistributedCache distributedCache)
       {
-         _httpClientFactory = httpClientFactory;
+        
          _academyMapper = academyMapper;
          _distributedCache = distributedCache;
       }

@@ -1,0 +1,18 @@
+﻿using System.Net.Http;
+
+namespace Dfe.PrepareTransfers.Data.TRAMS;
+
+public interface IDfeHttpClientFactory : IHttpClientFactory
+{
+   /// <summary>
+   /// Creates an http client pointing to the trams/academies api, with correlation context headers configured
+   /// </summary>
+   /// <returns></returns>
+   HttpClient CreateTramsClient();
+
+   /// <summary>
+   /// Creates an http client pointing to the academisation api, with correlation context headers configured
+   /// </summary>
+   /// <returns></returns>
+   HttpClient CreateAcademisationClient();
+}

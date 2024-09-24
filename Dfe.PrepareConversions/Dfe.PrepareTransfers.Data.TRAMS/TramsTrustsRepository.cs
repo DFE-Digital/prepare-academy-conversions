@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Dfe.Academies.Contracts.V4;
 using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.PrepareConversions.Data.Services;
+using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareTransfers.Data.Models;
 using Newtonsoft.Json;
 
@@ -12,21 +13,21 @@ namespace Dfe.PrepareTransfers.Data.TRAMS
 {
     public class TramsTrustsRepository : ITrusts
     {
-        private readonly IMapper<TrustDto, Trust> _trustMapper;
+       private readonly IMapper<TrustDto, Trust> _trustMapper;
 
-        public TramsTrustsRepository(IDfeHttpClientFactory httpClientFactory,
-            IMapper<TrustDto, Trust> trustMapper
-            )
-        {
-         _httpClientFactory = httpClientFactory;
-         _trustMapper = trustMapper;
-        }
+       public TramsTrustsRepository(IDfeHttpClientFactory httpClientFactory,
+          IMapper<TrustDto, Trust> trustMapper
+       )
+       {
+          _httpClientFactory = httpClientFactory;
+          _trustMapper = trustMapper;
+       }
 
-      private readonly IDfeHttpClientFactory _httpClientFactory;
+       private readonly IDfeHttpClientFactory _httpClientFactory;
 
 
-      private HttpClient TramsClient => _httpClientFactory.CreateTramsClient();
-
+       private HttpClient TramsClient => _httpClientFactory.CreateTramsClient();
+        
       public async Task<List<Trust>> SearchTrusts(string searchQuery = "",
             string outgoingTrustId = "")
         {

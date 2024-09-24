@@ -17,7 +17,7 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Tests.Mappers.Response
         public TramsTrustMapperTests()
         {
             _establishmentMapper = new Mock<IMapper<TramsEstablishment, Academy>>();
-            _subject = new TramsTrustMapper(_establishmentMapper.Object);
+            _subject = new TramsTrustMapper();
         }
 
         [Fact]
