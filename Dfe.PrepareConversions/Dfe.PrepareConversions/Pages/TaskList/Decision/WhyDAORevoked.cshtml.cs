@@ -43,7 +43,13 @@ public class WhyDAORevokedModel : DecisionBaseModel
    public bool SafeguardingConcernsAddressedIsChecked { get; set; }
 
    [BindProperty]
-   public bool WasReasonGiven => SchoolClosedOrClosingIsChecked || SchoolRatedGoodOrOutstandingIsChecked || SafeguardingConcernsAddressedIsChecked;
+   public string ChangeToGovernmentPolicyDetails { get; set; }
+
+   [BindProperty]
+   public bool ChangeToGovernmentPolicyIsChecked { get; set; }
+
+   [BindProperty]
+   public bool WasReasonGiven => SchoolClosedOrClosingIsChecked || SchoolRatedGoodOrOutstandingIsChecked || SafeguardingConcernsAddressedIsChecked || ChangeToGovernmentPolicyIsChecked;
 
    public IActionResult OnGet(int id)
    {
@@ -64,7 +70,8 @@ public class WhyDAORevokedModel : DecisionBaseModel
       decision.DAORevokedReasons
          .AddReasonIfValid(SchoolClosedOrClosingIsChecked, AdvisoryBoardDAORevokedReason.SchoolClosedOrClosing, SchoolClosedOrClosingDetails, ModelState)
          .AddReasonIfValid(SafeguardingConcernsAddressedIsChecked, AdvisoryBoardDAORevokedReason.SafeguardingConcernsAddressed, SafeguardingConcernsAddressedDetails, ModelState)
-         .AddReasonIfValid(SchoolRatedGoodOrOutstandingIsChecked, AdvisoryBoardDAORevokedReason.SchoolRatedGoodOrOutstanding, SchoolRatedGoodOrOutstandingDetails, ModelState);
+         .AddReasonIfValid(SchoolRatedGoodOrOutstandingIsChecked, AdvisoryBoardDAORevokedReason.SchoolRatedGoodOrOutstanding, SchoolRatedGoodOrOutstandingDetails, ModelState)
+         .AddReasonIfValid(ChangeToGovernmentPolicyIsChecked , AdvisoryBoardDAORevokedReason.ChangeToGovernmentPolicy, ChangeToGovernmentPolicyDetails, ModelState);
 
       SetDecisionInSession(id, decision);
 
@@ -89,6 +96,10 @@ public class WhyDAORevokedModel : DecisionBaseModel
       AdvisoryBoardDAORevokedReasonDetails schoolRatedGoodOrOutstanding = reasons.GetReason(AdvisoryBoardDAORevokedReason.SchoolRatedGoodOrOutstanding);
       SchoolRatedGoodOrOutstandingIsChecked = schoolRatedGoodOrOutstanding != null;
       SchoolRatedGoodOrOutstandingDetails = schoolRatedGoodOrOutstanding?.Details;
+
+      AdvisoryBoardDAORevokedReasonDetails changeToGovernmentPolicy = reasons.GetReason(AdvisoryBoardDAORevokedReason.ChangeToGovernmentPolicy);
+      ChangeToGovernmentPolicyIsChecked = changeToGovernmentPolicy != null;
+      ChangeToGovernmentPolicyDetails = changeToGovernmentPolicy?.Details;
 
    }
 }
