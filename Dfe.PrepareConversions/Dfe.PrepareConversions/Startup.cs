@@ -1,6 +1,5 @@
 using Dfe.Academisation.CorrelationIdMiddleware;
-using Dfe.PrepareTransfers.Web.Services;
-using Dfe.PrepareTransfers.Web.Services.Interfaces;
+using Dfe.Prepare.Data;
 using Dfe.PrepareConversions.Authorization;
 using Dfe.PrepareConversions.Configuration;
 using Dfe.PrepareConversions.Data.Features;
@@ -167,8 +166,6 @@ public class Startup
       services.AddScoped<IGraphUserService, GraphUserService>();
       services.AddScoped<IDfeHttpClientFactory, DfeHttpClientFactory>();
       services.AddScoped<ICorrelationContext, CorrelationContext>();
-      services.AddTransient<ITaskListService, TaskListService>();
-      services.AddSingleton<PerformanceDataChannel>();
 
       services.Configure<SharePointOptions>(Configuration.GetSection("Sharepoint"));
       var sharepointOptions = Configuration.GetSection("Sharepoint").Get<SharePointOptions>();

@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace Dfe.PrepareTransfers.Data.TRAMS;
+namespace Dfe.Prepare.Data;
 
 public interface IDfeHttpClientFactory : IHttpClientFactory
 {

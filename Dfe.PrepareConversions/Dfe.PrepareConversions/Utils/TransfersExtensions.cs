@@ -38,7 +38,7 @@ namespace Dfe.PrepareConversions.Utils
          services.AddTransient<ICreateProjectTemplate, CreateProjectTemplate>();
          services.AddTransient<IGetInformationForProject, GetInformationForProject>();
          services.AddTransient<IGetProjectTemplateModel, GetProjectTemplateModel>();
-         //services.AddTransient<ITaskListService, TaskListService>();
+         services.AddTransient<ITaskListService, TaskListService>();
 
          //services.AddTransient<IUserRepository, UserRepository>();
          //services.AddTransient<IGraphClientFactory, GraphClientFactory>();

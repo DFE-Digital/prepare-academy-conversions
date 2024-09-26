@@ -16,6 +16,7 @@ using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
+using Dfe.Prepare.Data;
 
 namespace Dfe.PrepareConversions.Data.Tests.Services;
 
