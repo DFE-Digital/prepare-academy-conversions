@@ -44,7 +44,7 @@ public class DecisionDate : DecisionBaseModel, IDateValidationMessageProvider
       string idRaw = Request.RouteValues["id"] as string;
       int id = int.Parse(idRaw ?? string.Empty);
       AdvisoryBoardDecision decision = GetDecisionFromSession(id);
-      return $"Enter the date when the conversion was {decision.Decision.ToDescription().ToLowerInvariant()}";
+      return decision.Decision == AdvisoryBoardDecisions.DAORevoked ? "Enter the date the DAO was revoked" : $"Enter the date when the conversion was {decision.Decision.ToDescription().ToLowerInvariant()}";
    }
 
 
