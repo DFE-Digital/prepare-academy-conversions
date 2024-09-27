@@ -12,24 +12,16 @@ using Dfe.PrepareTransfers.Web.Models.ProjectTemplate;
 using Dfe.PrepareTransfers.Web.Services.Interfaces;
 using Dfe.PrepareTransfers.Web.Services.Responses;
 using Dfe.PrepareTransfers.Helpers;
-using DocumentFormat.OpenXml.EMMA;
 
 namespace Dfe.PrepareTransfers.Web.Services
 {
-    public class GetProjectTemplateModel : IGetProjectTemplateModel
+    public class GetProjectTemplateModel(IGetInformationForProject getInformationForProject) : IGetProjectTemplateModel
     {
-        private readonly IGetInformationForProject _getInformationForProject;
+      private static readonly string EmptyFieldMessage = "No data";
 
-        private static readonly string EmptyFieldMessage = "No data";
-
-        public GetProjectTemplateModel(IGetInformationForProject getInformationForProject)
+      public async Task<GetProjectTemplateModelResponse> Execute(string projectUrn)
         {
-            _getInformationForProject = getInformationForProject;
-        }
-
-        public async Task<GetProjectTemplateModelResponse> Execute(string projectUrn)
-        {
-            var informationForProjectResult = await _getInformationForProject.Execute(projectUrn);
+            var informationForProjectResult = await getInformationForProject.Execute(projectUrn);
             var project = informationForProjectResult.Project;
             var academies = informationForProjectResult.OutgoingAcademies;
             var projectTemplateModel = new ProjectTemplateModel

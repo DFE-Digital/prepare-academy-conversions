@@ -25,7 +25,7 @@
    <div class="govuk-grid-column-full">
       @await Component.InvokeAsync("KeyStage2PerformanceTables")
    </div>
-   <partial name="Shared/_AddtionalInformation"/>
+    @* <partial name="Shared/_AddtionalInformation"/>
    <div class="govuk-grid-column-full">
       <dl class="govuk-summary-list">
          <govuk-summary-list-row id="additional-information" name="key-stage-2-additional-information" label="Additional information" value="@Model.Project.KeyStage2PerformanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.KeyStage2PerformanceTablesAdditionalInformation.Page" asp-fragment="additional-information" asp-route-id="@Model.Project.Id" hidden-text="additional information"/>
@@ -33,5 +33,5 @@
       <form method="post">
          <button class="govuk-button" id="confirm-and-continue-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</button>
       </form>
-   </div>
+    </div> *@
 </div>

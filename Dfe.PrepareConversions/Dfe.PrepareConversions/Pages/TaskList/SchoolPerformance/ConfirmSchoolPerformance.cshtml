@@ -21,16 +21,4 @@
    <div class="govuk-grid-column-full">
       @await Component.InvokeAsync("SchoolPerformance", new { showAdditionalInformation = false, isPreview = false })
    </div>
-   <div class="govuk-grid-column-full">
-      <h2 class="govuk-heading-m">Add any additional information if you need to</h2>
-      <p class="govuk-body">This information will go into your project template under the school performance (Ofsted information) section.</p>
-   </div>
-   <div class="govuk-grid-column-full">
-      <dl class="govuk-summary-list">
-         <govuk-summary-list-row id="additional-information" name="school-performance-additional-information" label="Additional information" value="@Model.Project.SchoolPerformanceAdditionalInformation" asp-page="@Links.SchoolPerformance.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information"/>
-      </dl>
-      <form method="post">
-         <button class="govuk-button" id="confirm-and-continue-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</button>
-      </form>
-   </div>
 </div>

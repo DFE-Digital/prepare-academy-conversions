@@ -27,13 +27,4 @@
     <div class="govuk-grid-column-full">
         @await Component.InvokeAsync("EducationalAttendance")
     </div>
-    <partial name="Shared/_AddtionalInformation" />
-    <div class="govuk-grid-column-full">
-        <dl class="govuk-summary-list">
-            <govuk-summary-list-row id="additional-information" name="key-stage-2-additional-information" label="Additional information" value="@Model.Project.EducationalAttendanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.EducationalAttendanceAdditionalInformation.Page" asp-fragment="additional-information" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
-        </dl>
-        <form method="post">
-            <button class="govuk-button" id="confirm-and-continue-button" asp-page="@Links.TaskList.Index.Page" asp-route-id="@Model.Project.Id">Confirm and continue</button>
-        </form>
-    </div>
 </div>
