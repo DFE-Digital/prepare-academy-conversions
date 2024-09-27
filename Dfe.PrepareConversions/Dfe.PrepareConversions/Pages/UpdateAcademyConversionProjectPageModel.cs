@@ -37,12 +37,6 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
 
       bool schoolAndTrustInformationSectionComplete = AcademyConversionProject.SchoolAndTrustInformationSectionComplete != null &&
                                                       AcademyConversionProject.SchoolAndTrustInformationSectionComplete.Value;
-      if (schoolAndTrustInformationSectionComplete && !Project.HeadTeacherBoardDate.HasValue)
-      {
-         _errorService.AddError(
-            $"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FSchoolAndTrustInformation/ConfirmSchoolAndTrustInformation&fragment=advisory-board-date",
-            "Set an Advisory board date before you generate your project template");
-      }
 
       if (AcademyConversionProject.LocalAuthorityInformationTemplateSentDate.HasValue &&
          AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate.HasValue &&
