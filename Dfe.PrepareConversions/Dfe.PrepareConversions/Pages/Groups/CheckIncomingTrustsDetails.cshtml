@@ -33,7 +33,7 @@
             <dt class="govuk-summary-list__key">
                UKPRN
             </dt>
-            <dd class="govuk-summary-list__value">
+            <dd class="govuk-summary-list__value" data-cy="UKPRN">
                @Model.Trust.Ukprn
             </dd>
             <dd class="govuk-summary-list__actions">
@@ -76,7 +76,7 @@
       {
          <form method="post" data-id="form">
             <input type="hidden" asp-for="Ukprn" value="@Model.Trust.Ukprn"/>
-            <button class="govuk-button" type="submit" data-id="submit">Continue</button>
+            <button class="govuk-button" type="submit" data-id="submit" data-cy="submit-btn">Continue</button>
          </form>
       }
       else
