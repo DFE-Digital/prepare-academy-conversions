@@ -11,7 +11,7 @@
 @section BeforeMain
 {
     <backtopreview return-to-preview="@Model.ReturnToPreview" urn="@Model.Urn">
-          <a class="govuk-back-link" asp-page="/TaskList/SchoolData" asp-route-urn="@Model.Urn" asp-route-academyUkprn="@Model.AcademyUkprn">Back</a>
+        <a class="govuk-back-link" data-cy="key-stage-5-back-btn" asp-page="/TaskList/SchoolData" asp-route-urn="@Model.Urn" asp-route-academyUkprn="@Model.AcademyUkprn">Back</a>
     </backtopreview>
 }
 
@@ -24,7 +24,7 @@
             Key stage 5 performance tables
         </h1>
         <p class="govuk-body">
-            This information comes from Find and compare schools in England. You can add <a class="govuk-link" href="#additional-information">additional information</a> if you need to. These performance tables and additional information will go into your project template.
+            This information comes from Find and compare schools in England. It is for reference only. It will not appear in the project document.
         </p>
 		<p class="govuk-body">
 			<a href="https://www.compare-school-performance.service.gov.uk/school/@Model.OutgoingAcademyUrn" class="govuk-link" rel="noreferrer noopener" target="_blank">Source of data: Find and compare school performance (opens in new tab)</a>

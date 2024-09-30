@@ -132,7 +132,6 @@ public class HtbTemplateTests
       private readonly SchoolOverview _schoolOverview;
       private readonly KeyStagePerformance _keyStagePerformance;
       private readonly AcademyConversionProject _project;
-      private readonly SchoolPerformance _schoolPerformance;
 
       public NullValuesTests()
       {

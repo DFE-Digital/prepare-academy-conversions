@@ -4,42 +4,31 @@ import BasePage from "./BasePage"
 
 export default class Performance extends BasePage {
     static selectors = {
-        ofstedInfoLink: '[data-test="change-school-performance-additional-information"]',
-        ofstedInfoInput: '[id="additional-information"]',
-        ofstedInfoValue: '[id="additional-information"]',
-        keyStageLink: (keyStageNumber) => `[data-test="change-key-stage-${keyStageNumber}-additional-information"]`,
-        keyStageInput: '[id="additional-information"]',
-        keyStageValue: '[id="additional-information"]',
-        saveButton: '[class="govuk-button"]'
+        ofstedInfoText: 'This information comes from TRAMS. It is for reference only. It will not appear in the project document.',
+        keyStageText: 'This information comes from Find and compare schools in England. It is for reference only. It will not appear in the project document.',
+        ofstedInfoTextId: '.govuk-grid-column-two-thirds > .govuk-body', 
+        keyStageLinkText: 'Source of data: Find and compare school performance (opens in new tab)',  
+        keyStageLink: (urn) => `https://www.compare-school-performance.service.gov.uk/school/${urn}`,
+        keyStageTextId: '.govuk-grid-column-two-thirds > :nth-child(3)',
+        keyStageLinkTextId: ':nth-child(4) > .govuk-link',
     }
-
-    static ofstedPath = 'school-performance-ofsted-information'
     static keyStagePath = (keyStageNumber) => `key-stage-${keyStageNumber}-performance-tables`
 
-    static changeOfstedInfo(additionalInfo) {
-        cy.checkPath(this.ofstedPath)
-        cy.get(this.selectors.ofstedInfoLink).click()
-        cy.get(this.selectors.ofstedInfoInput).clear()
-        cy.get(this.selectors.ofstedInfoInput).type(additionalInfo)
-        cy.get(this.selectors.saveButton).click()
+    static verifyKeyStageScreenText(urn){
+        cy.get(this.selectors.keyStageTextId).should('contain.text', this.selectors.keyStageText);
+        cy.get(this.selectors.keyStageLinkTextId).should('have.text', this.selectors.keyStageLinkText);
+        cy.get(this.selectors.keyStageLinkTextId)
+            .should("contain.text", this.selectors.keyStageLinkText)
+            .should("have.attr", "href")
+            .and('include', this.selectors.keyStageLink(urn));
     }
 
-    static getOfstedInfo() {
-        cy.checkPath(this.ofstedPath)
-        return cy.get(this.selectors.ofstedInfoValue)
+    static verifyOfsteadScreenText(){
+        cy.get(this.selectors.ofstedInfoTextId).should('contain.text', this.selectors.ofstedInfoText); 
     }
 
-    static changeKeyStageInfo(keyStageNumber, additionalInfo) {
-        cy.checkPath(this.keyStagePath(keyStageNumber))
-        cy.get(this.selectors.keyStageLink(keyStageNumber)).click()
-        cy.get(this.selectors.keyStageInput).clear()
-        cy.get(this.selectors.keyStageInput).type(additionalInfo)
-        cy.get(this.selectors.saveButton).click()
+    static changeKeyStageInfo(keyStageNumber) {
+        cy.checkPath(this.keyStagePath(keyStageNumber));
+        cy.get(`[data-cy="key-stage-${keyStageNumber}-back-btn"]`).click();
     }
-
-    static getKeyStageInfo(keyStageNumber) {
-        cy.checkPath(this.keyStagePath(keyStageNumber))
-        return cy.get(this.selectors.keyStageValue)
-    }
-    
 }

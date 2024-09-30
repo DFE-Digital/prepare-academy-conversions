@@ -43,7 +43,7 @@ public static class EducationalAttendanceGenerator
 
             textElements.Add(new TextElement(vm.OverallAbsence) { Bold = true });
          }
-         table.Add(textElements.ToArray());
+         table.Add([.. textElements]);
          builder.AddTable(table);
 
          ///******************///

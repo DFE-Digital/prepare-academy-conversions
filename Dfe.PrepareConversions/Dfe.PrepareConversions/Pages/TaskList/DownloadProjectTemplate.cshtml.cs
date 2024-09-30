@@ -26,18 +26,17 @@ public class DownloadProjectTemplate(SchoolOverviewService schoolOverviewService
 
    public async Task<IActionResult> OnGetHtbTemplateAsync(int id)
    {
-      ApiResponse<AcademyConversionProject> response = await _repository.GetProjectById(id);
+      var response = await _repository.GetProjectById(id);
       if (response.Success is false)
       {
          return NotFound();
       }
 
-      AcademyConversionProject project = response.Body;
+      var project = response.Body;
 
       var schoolOverview = await schoolOverviewService.GetSchoolOverviewByUrn(project.Urn.ToString());
       var keyStagePerformance = await keyStagePerformanceService.GetKeyStagePerformance(project.Urn.ToString());
-      var DocumentGenerator = new DocumentGenerator();
-      HtbTemplate document = DocumentGenerator.GenerateDocument(response, schoolOverview, keyStagePerformance, project, out byte[] documentByteArray);
+      var document = DocumentGenerator.GenerateDocument(response, schoolOverview, keyStagePerformance, project, out byte[] documentByteArray);
 
       return File(documentByteArray, "application/vnd.ms-word.document", $"{document.SchoolName}-project-template-{DateTime.Today:dd-MM-yyyy}.docx");
    }

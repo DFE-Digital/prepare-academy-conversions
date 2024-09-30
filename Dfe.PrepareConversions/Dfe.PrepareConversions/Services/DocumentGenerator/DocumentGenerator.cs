@@ -2,9 +2,7 @@
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.DocumentGeneration;
-using Dfe.PrepareConversions.DocumentGeneration.Elements;
 using Dfe.PrepareConversions.Models;
-using Microsoft.AspNetCore.Html;
 using System;
 using System.IO;
 using System.Reflection;
@@ -22,7 +20,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
 {
    public class DocumentGenerator
    {
-      public HtbTemplate GenerateDocument(ApiResponse<AcademyConversionProject> response,
+      public static HtbTemplate GenerateDocument(ApiResponse<AcademyConversionProject> response,
      SchoolOverview schoolOverview, KeyStagePerformance keyStagePerformance, AcademyConversionProject project,
      out byte[] documentByteArray)
       {
@@ -52,11 +50,6 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          MemoryStream ms = new();
          templateStream!.CopyTo(ms);
          return ms;
-      }
-
-      public static TextElement HtmlStringToTextElement(HtmlString str)
-      {
-         return new TextElement(str.Value!.Replace("<br>", "\n"));
       }
    }
 }
