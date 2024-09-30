@@ -14,6 +14,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
+using Dfe.Prepare.Data;
 
 namespace Dfe.PrepareConversions.Data.Tests.Services;
 

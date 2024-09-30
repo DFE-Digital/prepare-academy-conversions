@@ -1,7 +1,7 @@
 ﻿using Dfe.Academisation.CorrelationIdMiddleware;
 using System.Net.Http;
 
-namespace Dfe.PrepareConversions.Data.Services;
+namespace Dfe.Prepare.Data;
 
 /// <summary>
 /// Creates an http client, with correlation context headers configured. You MUST register this as a scoped dependency

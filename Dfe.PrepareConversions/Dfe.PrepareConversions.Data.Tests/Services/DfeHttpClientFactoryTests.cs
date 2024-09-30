@@ -7,6 +7,7 @@ using RichardSzalay.MockHttp;
 using System;
 using System.Net.Http;
 using Xunit;
+using Dfe.Prepare.Data;
 
 namespace Dfe.PrepareConversions.Data.Tests.Services;
 public class DfeHttpClientFactoryTests

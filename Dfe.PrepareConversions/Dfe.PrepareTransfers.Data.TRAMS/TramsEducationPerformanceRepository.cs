@@ -2,11 +2,11 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareTransfers.Data.Models.KeyStagePerformance;
 using Dfe.PrepareTransfers.Data.TRAMS.Models.EducationPerformance;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
+using Dfe.Prepare.Data;
 
 namespace Dfe.PrepareTransfers.Data.TRAMS
 {
@@ -15,9 +15,8 @@ namespace Dfe.PrepareTransfers.Data.TRAMS
       private readonly IMapper<TramsEducationPerformance, EducationPerformance> _educationPerformanceMapper;
       private readonly IDistributedCache _distributedCache;
 
-      public TramsEducationPerformanceRepository(IDfeHttpClientFactory httpClientFactory, IMapper<TramsEducationPerformance, EducationPerformance> educationPerformanceMapper, IDistributedCache distributedCache)
-      {
-         _httpClientFactory = httpClientFactory; ;
+      public TramsEducationPerformanceRepository( IMapper<TramsEducationPerformance, EducationPerformance> educationPerformanceMapper, IDistributedCache distributedCache)
+      { 
          _educationPerformanceMapper = educationPerformanceMapper;
          _distributedCache = distributedCache;
       }

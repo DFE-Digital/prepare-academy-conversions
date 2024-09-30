@@ -23,4 +23,8 @@
 	  <PackageReference Include="System.Net.Http.Json" Version="7.0.1" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Dfe.Prepare.Data\Dfe.Prepare.Data.csproj" />
+	</ItemGroup>
+
 </Project>

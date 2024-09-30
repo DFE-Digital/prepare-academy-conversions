@@ -4,11 +4,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Dfe.Academies.Contracts.V4.Establishments;
-using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareTransfers.Data.Models;
-using Dfe.PrepareTransfers.Data.TRAMS.Models;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
+using Dfe.Prepare.Data;
 
 namespace Dfe.PrepareTransfers.Data.TRAMS
 {
@@ -17,10 +16,10 @@ namespace Dfe.PrepareTransfers.Data.TRAMS
       private readonly IMapper<EstablishmentDto, Academy> _academyMapper;
       private readonly IDistributedCache _distributedCache;
 
-      public TramsEstablishmentRepository(IDfeHttpClientFactory httpClientFactory,
+      public TramsEstablishmentRepository(
           IMapper<EstablishmentDto, Academy> academyMapper, IDistributedCache distributedCache)
       {
-         _httpClientFactory = httpClientFactory;
+        
          _academyMapper = academyMapper;
          _distributedCache = distributedCache;
       }

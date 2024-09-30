@@ -26,6 +26,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Dfe.Prepare.Data\Dfe.Prepare.Data.csproj" />
 	  <ProjectReference Include="..\Dfe.PrepareConversions.Data\Dfe.PrepareConversions.Data.csproj" />
 	</ItemGroup>
 

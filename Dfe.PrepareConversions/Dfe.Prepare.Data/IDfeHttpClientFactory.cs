@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace Dfe.PrepareConversions.Data.Services;
+namespace Dfe.Prepare.Data;
 
 public interface IDfeHttpClientFactory : IHttpClientFactory
 {
