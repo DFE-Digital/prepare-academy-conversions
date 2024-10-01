@@ -30,7 +30,10 @@ public class IndexModel : PageModel
    public IActionResult OnGet()
    {
       ProjectListFilters.ClearFiltersFrom(TempData);
-      return Page();
+
+      // this page is no longer required now transfers has been merged into this code base
+      // this redirect will push anyone that has book mark to this page back to the project list page
+      return RedirectToPage(Links.ProjectList.Index.Page);
    }
 
    public IActionResult OnPost()
