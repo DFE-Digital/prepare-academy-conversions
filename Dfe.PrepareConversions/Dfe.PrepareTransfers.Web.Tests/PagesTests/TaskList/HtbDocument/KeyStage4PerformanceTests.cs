@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using System.Linq;
-using Dfe.PrepareTransfers.Data.Models;
+using System.Threading.Tasks;
 using Dfe.PrepareTransfers.Data.Models.KeyStagePerformance;
-using Dfe.PrepareTransfers.Data.Models.Projects;
 using Dfe.PrepareTransfers.Web.Models;
 using Dfe.PrepareTransfers.Web.Models.Forms;
 using Dfe.PrepareTransfers.Web.Pages.TaskList.KeyStage4Performance;
@@ -21,7 +19,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.TaskList.HtbDocument
         {
             FoundInformationForProject.OutgoingAcademies.First().EducationPerformance = new EducationPerformance
             {
-                KeyStage4Performance = new List<KeyStage4>
+                KeyStage4Performance =
                 {
                     new KeyStage4
                     {
@@ -56,7 +54,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.TaskList.HtbDocument
         public class OnGetAsyncTests : KeyStage4PerformanceTests
         {
             [Fact]
-            public async void GivenUrn_FetchesProjectFromTheRepository()
+            public async Task GivenUrn_FetchesProjectFromTheRepository()
             {
                 await _subject.OnGetAsync();
 
@@ -64,7 +62,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.TaskList.HtbDocument
             }
 
             [Fact]
-            public async void GivenExistingProject_AssignsItToThePageModel()
+            public async Task GivenExistingProject_AssignsItToThePageModel()
             {
                 var response = await _subject.OnGetAsync();
 
@@ -77,19 +75,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.TaskList.HtbDocument
             }
 
             [Fact]
-            public async void GivenAdditionalInformation_UpdatesTheViewModel()
-            {
-                await _subject.OnGetAsync();
-
-                Assert.Equal(
-                    FoundInformationForProject.OutgoingAcademies.First(a => a.Ukprn == AcademyUkprn)
-                        .EducationPerformance.KeyStage4AdditionalInformation,
-                    _subject.AdditionalInformationViewModel.AdditionalInformation);
-                Assert.Equal(ProjectUrn0001, _subject.AdditionalInformationViewModel.Urn);
-            }
-
-            [Fact]
-            public async void GivenReturnToPreview_UpdatesTheViewModel()
+            public async Task GivenReturnToPreview_UpdatesTheViewModel()
             {
                 _subject.ReturnToPreview = true;
                 await _subject.OnGetAsync();
@@ -101,7 +87,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.TaskList.HtbDocument
         public class OnPostAsyncTests : KeyStage4PerformanceTests
         {
             [Fact]
-            public async void GivenUrn_FetchesProjectFromTheRepository()
+            public async Task GivenUrn_FetchesProjectFromTheRepository()
             {
                 await _subject.OnPostAsync();
 
@@ -109,32 +95,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.TaskList.HtbDocument
             }
 
             [Fact]
-            public async void GivenAdditionalInformation_UpdatesTheProjectModel()
-            {
-                const string additionalInfo = "some additional info";
-                _subject.AdditionalInformationViewModel.AdditionalInformation = additionalInfo;
-                var response = await _subject.OnPostAsync();
-
-                var redirectToPageResponse = Assert.IsType<RedirectToPageResult>(response);
-                Assert.Equal("KeyStage4Performance", redirectToPageResponse.PageName);
-                Assert.Null(redirectToPageResponse.PageHandler);
-                Assert.Equal(additionalInfo,
-                    FoundProjectFromRepo.TransferringAcademies.First(a => a.OutgoingAcademyUkprn == AcademyUkprn)
-                        .KeyStage4PerformanceAdditionalInformation);
-            }
-
-            [Fact]
-            public async void GivenAdditionalInformation_UpdatesTheProjectCorrectly()
-            {
-                const string additionalInfo = "some additional info";
-                _subject.AdditionalInformationViewModel.AdditionalInformation = additionalInfo;
-                await _subject.OnPostAsync();
-                ProjectRepository.Verify(r => r.UpdateAcademy(It.Is<string>(x => x == _subject.Urn), It.Is<TransferringAcademy>(academy => academy.OutgoingAcademyUkprn == _subject.AcademyUkprn && academy.KeyStage4PerformanceAdditionalInformation == additionalInfo)
-                ), Times.Once);
-            }
-
-            [Fact]
-            public async void GivenReturnToPreview_RedirectsToThePreviewPage()
+            public async Task GivenReturnToPreview_RedirectsToThePreviewPage()
             {
                 _subject.ReturnToPreview = true;
                 var response = await _subject.OnPostAsync();

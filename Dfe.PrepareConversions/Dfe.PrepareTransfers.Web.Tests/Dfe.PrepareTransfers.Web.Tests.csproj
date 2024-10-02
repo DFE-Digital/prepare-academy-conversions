@@ -24,7 +24,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Dfe.PrepareConversions\Dfe.PrepareConversions.csproj" />
-      <ProjectReference Include="..\Dfe.PrepareTransfers.Web\Dfe.PrepareTransfers.Web.csproj" />
     </ItemGroup>
 
 </Project>
