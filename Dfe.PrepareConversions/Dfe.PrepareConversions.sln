@@ -26,6 +26,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.PrepareTransfers.Helper
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.PrepareTransfers.Data.TRAMS", "Dfe.PrepareTransfers.Data.TRAMS\Dfe.PrepareTransfers.Data.TRAMS.csproj", "{77D748AF-A6C5-4B3E-B2AB-5C9C68CBF91D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dfe.PrepareTransfers.Web.Tests", "Dfe.PrepareTransfers.Web.Tests\Dfe.PrepareTransfers.Web.Tests.csproj", "{9A3DEDB7-AA5E-4A4E-AA77-33DBDADD0DD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{77D748AF-A6C5-4B3E-B2AB-5C9C68CBF91D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77D748AF-A6C5-4B3E-B2AB-5C9C68CBF91D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77D748AF-A6C5-4B3E-B2AB-5C9C68CBF91D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A3DEDB7-AA5E-4A4E-AA77-33DBDADD0DD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A3DEDB7-AA5E-4A4E-AA77-33DBDADD0DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A3DEDB7-AA5E-4A4E-AA77-33DBDADD0DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A3DEDB7-AA5E-4A4E-AA77-33DBDADD0DD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
