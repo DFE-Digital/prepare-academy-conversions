@@ -46,7 +46,6 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.KeyStage4Performance
         {
             var project = await _projectRepository.GetByUrn(Urn);
             var academy = project.Result.TransferringAcademies.First(a => a.OutgoingAcademyUkprn == AcademyUkprn);
-            academy.KeyStage4PerformanceAdditionalInformation = AdditionalInformationViewModel.AdditionalInformation;
             await _projectRepository.UpdateAcademy(project.Result.Urn, academy);
 
             if (ReturnToPreview)
@@ -69,15 +68,6 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.KeyStage4Performance
             EducationPerformance = academy.EducationPerformance;
             OutgoingAcademyUrn = academy.Urn;
             AcademyName = academy.Name;
-            AdditionalInformationViewModel = new AdditionalInformationViewModel
-            {
-                AdditionalInformation = academy.EducationPerformance.KeyStage4AdditionalInformation,
-                HintText =
-                    "This information will go into your project template under the key stage performance section.",
-                Urn = projectInformation.Project.Urn,
-                AddOrEditAdditionalInformation = AddOrEditAdditionalInformation,
-                ReturnToPreview = ReturnToPreview
-            };
         }
     }
 }

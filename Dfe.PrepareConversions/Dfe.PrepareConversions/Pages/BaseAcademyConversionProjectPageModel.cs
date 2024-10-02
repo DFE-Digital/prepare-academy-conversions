@@ -6,20 +6,14 @@ using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages;
 
-public class BaseAcademyConversionProjectPageModel : PageModel
+public class BaseAcademyConversionProjectPageModel(IAcademyConversionProjectRepository repository) : PageModel
 {
-   protected readonly IAcademyConversionProjectRepository _repository;
-
-   public BaseAcademyConversionProjectPageModel(IAcademyConversionProjectRepository repository)
-   {
-      _repository = repository;
-   }
+   protected readonly IAcademyConversionProjectRepository _repository = repository;
 
    public ProjectViewModel Project { get; set; }
 

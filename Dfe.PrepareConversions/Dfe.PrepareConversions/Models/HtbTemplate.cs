@@ -228,17 +228,9 @@ public class HtbTemplate
 
    [DocumentText("SchoolPupilForecastsAdditionalInformation")]
    public string SchoolPupilForecastsAdditionalInformation { get; set; }
-
-   public SchoolPerformance SchoolPerformance { get; set; }
-   public IEnumerable<KeyStage2PerformanceTableViewModel> KeyStage2 { get; set; }
-   public KeyStage4PerformanceTableViewModel KeyStage4 { get; set; }
-   public IEnumerable<KeyStage5PerformanceTableViewModel> KeyStage5 { get; set; }
    public IEnumerable<EducationalAttendanceViewModel> EducationalAttendance { get; set; }
-
    public static HtbTemplate Build(AcademyConversionProject project,
-                                   SchoolPerformance schoolPerformance,
-                                   SchoolOverview schoolOverview,
-                                   KeyStagePerformance keyStagePerformance)
+                                   SchoolOverview schoolOverview, KeyStagePerformance keyStagePerformance)
    {
       HtbTemplate htbTemplate = new()
       {
@@ -310,7 +302,6 @@ public class HtbTemplate
          YearThreeProjectedPupilNumbers = project.YearThreeProjectedPupilNumbers.ToString(),
          YearThreePercentageSchoolFull = project.YearThreeProjectedPupilNumbers.AsPercentageOf(project.YearThreeProjectedCapacity),
          SchoolPupilForecastsAdditionalInformation = project.SchoolPupilForecastsAdditionalInformation,
-         SchoolPerformance = schoolPerformance,
          PupilsAttendingGroup = SchoolOverviewHelper.MapPupilsAttendingGroup(project.PupilsAttendingGroupPermanentlyExcluded, project.PupilsAttendingGroupMedicalAndHealthNeeds, project.PupilsAttendingGroupTeenageMums),
          ConversionSupportGrantNumberOfSites = project.ConversionSupportGrantNumberOfSites,
          NumberOfAlternativeProvisionPlaces = project.NumberOfAlternativeProvisionPlaces?.ToString(),
@@ -319,26 +310,10 @@ public class HtbTemplate
          NumberOfPost16Places = project.NumberOfPost16Places?.ToString()
       };
 
-      if (keyStagePerformance.HasKeyStage2PerformanceTables)
-      {
-         htbTemplate.KeyStage2 = keyStagePerformance.KeyStage2.Select(KeyStage2PerformanceTableViewModel.Build).OrderByDescending(ks => ks.Year).ToList();
-      }
-
-      if (keyStagePerformance.HasKeyStage4PerformanceTables)
-      {
-         htbTemplate.KeyStage4 = KeyStage4PerformanceTableViewModel.Build(keyStagePerformance.KeyStage4);
-      }
-
-      if (keyStagePerformance.HasKeyStage5PerformanceTables)
-      {
-         htbTemplate.KeyStage5 = keyStagePerformance.KeyStage5.Select(KeyStage5PerformanceTableViewModel.Build).OrderByDescending(ks => ks.Year);
-      }
-
       if (keyStagePerformance.HasSchoolAbsenceData)
       {
          htbTemplate.EducationalAttendance = keyStagePerformance.SchoolAbsenceData.Select(EducationalAttendanceViewModel.Build).OrderByDescending(ks => ks.Year);
       }
-
       return htbTemplate;
    }
 }

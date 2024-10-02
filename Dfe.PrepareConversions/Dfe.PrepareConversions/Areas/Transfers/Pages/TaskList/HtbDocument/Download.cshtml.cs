@@ -8,58 +8,49 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
 {
-    public class Download : CommonPageModel
-    {
-        private readonly ICreateProjectTemplate _createProjectTemplate;
-        private readonly IGetInformationForProject _getInformationForProject;
+   public class Download(ICreateProjectTemplate createProjectTemplate,
+       IGetInformationForProject getInformationForProject) : CommonPageModel
+   {
+      public string FileName { get; private set; }
 
-        public Download(ICreateProjectTemplate createProjectTemplate,
-            IGetInformationForProject getInformationForProject)
-        {
-            _createProjectTemplate = createProjectTemplate;
-            _getInformationForProject = getInformationForProject;
-        }
+      public async Task<IActionResult> OnGetAsync()
+      {
+         var project = await GetProject();
+         ProjectReference = project.Reference;
+         FileName = GenerateFormattedFileName(project);
 
-        public string FileName { get; private set; }
+         return Page();
+      }
 
-        public async Task<IActionResult> OnGetAsync()
-        {
-            var project = await GetProject();
-            ProjectReference = project.Reference;
-            FileName = GenerateFormattedFileName(project);
+      public async Task<IActionResult> OnGetGenerateDocumentAsync()
+      {
+         var project = await GetProject();
+         FileName = GenerateFormattedFileName(project);
 
-            return Page();
-        }
+         var document = await createProjectTemplate.Execute(Urn);
 
-        public async Task<IActionResult> OnGetGenerateDocumentAsync()
-        {
-            var project = await GetProject();
-            FileName = GenerateFormattedFileName(project);
+         return File(document.Document.ToArray(),
+             "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+             $"{FileName}.docx");
+      }
 
-            var document = await _createProjectTemplate.Execute(Urn);
+      private async Task<Project> GetProject()
+      {
+         var projectInformation = await getInformationForProject.Execute(Urn);
+         return projectInformation.Project;
+      }
 
-            return File(document.Document.ToArray(),
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                $"{FileName}.docx");
-        }
+      private static string GenerateFormattedFileName(Project project)
+      {
+         var formattedOutgoingTrustName = FormatTrustName(project.OutgoingTrustName);
+         var formattedIncomingTrustName = FormatTrustName(project.IncomingTrustName);
 
-        private async Task<Project> GetProject()
-        {
-            var projectInformation = await _getInformationForProject.Execute(Urn);
-            return projectInformation.Project;
-        }
+         return $"{project.Reference}_{formattedOutgoingTrustName}_{formattedIncomingTrustName}_project-template";
+      }
 
-        private static string GenerateFormattedFileName(Project project)
-        {
-            var formattedOutgoingTrustName = FormatTrustName(project.OutgoingTrustName);
-            var formattedIncomingTrustName = FormatTrustName(project.IncomingTrustName);
-
-            return $"{project.Reference}_{formattedOutgoingTrustName}_{formattedIncomingTrustName}_project-template";
-        }
-
-        private static string FormatTrustName(string trustName)
-        {
-            return trustName.ToTitleCase().ToHyphenated().RemoveNonAlphanumericOrWhiteSpace();
-        }
-    }
+      private static string FormatTrustName(string trustName)
+      {
+         return trustName?.ToTitleCase().ToHyphenated().RemoveNonAlphanumericOrWhiteSpace();
+      }
+   }
 }

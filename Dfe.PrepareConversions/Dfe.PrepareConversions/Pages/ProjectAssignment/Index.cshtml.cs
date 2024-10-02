@@ -31,9 +31,9 @@ public class IndexModel : PageModel
 
    public async Task<IActionResult> OnGet(int id)
    {
-      ApiResponse<AcademyConversionProject> projectResponse = await _academyConversionProjectRepository.GetProjectById(id);
+      var projectResponse = await _academyConversionProjectRepository.GetProjectById(id);
       Id = id;
-      SchoolName = projectResponse.Body.SchoolName;
+      SchoolName = projectResponse.Body?.SchoolName;
       SelectedDeliveryOfficer = projectResponse.Body?.AssignedUser?.FullName;
 
       DeliveryOfficers = await _userRepository.GetAllUsers();

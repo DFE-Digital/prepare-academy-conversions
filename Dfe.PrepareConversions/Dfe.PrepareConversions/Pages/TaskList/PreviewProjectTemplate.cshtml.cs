@@ -3,7 +3,6 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.ViewModels;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Threading.Tasks;
@@ -33,36 +32,32 @@ public class PreviewHtbTemplateModel : BaseAcademyConversionProjectPageModel
 
    public override async Task<IActionResult> OnGetAsync(int id)
    {
-      await this.SetProject(id);
-      _ = this.ValidateProject(this.Project);
-      await SetKeyStagePerformancePageData(this.Project);
+      await SetProject(id);
+      _ = ValidateProject(Project);
+      await SetKeyStagePerformancePageData(Project);
 
       return Page();
    }
 
    private async Task SetKeyStagePerformancePageData(ProjectViewModel project)
    {
-      Data.Models.KeyStagePerformance.KeyStagePerformance keyStagePerformance =
-         await _keyStagePerformanceService.GetKeyStagePerformance(project.SchoolURN);
+      var keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(project.SchoolURN);
 
       // 16 plus = 6, All-through = 7, Middle deemed primary = 3, Middle deemed secondary = 5, Not applicable = 0, Nursery = 1, Primary = 2, Secondary = 4
       TaskList = TaskListViewModel.Build(project);
-      TaskList.HasKeyStage2PerformanceTables = keyStagePerformance.HasKeyStage2PerformanceTables;
-      TaskList.HasKeyStage4PerformanceTables = keyStagePerformance.HasKeyStage4PerformanceTables;
-      TaskList.HasKeyStage5PerformanceTables = keyStagePerformance.HasKeyStage5PerformanceTables;
       TaskList.HasAbsenceData = keyStagePerformance.HasSchoolAbsenceData;
    }
 
    public override async Task<IActionResult> OnPostAsync(int id)
    {
-      await this.SetProject(id);
-      if (!ValidateProject(this.Project))
+      await SetProject(id);
+      if (!ValidateProject(Project))
       {
-         await SetKeyStagePerformancePageData(this.Project);
+         await SetKeyStagePerformancePageData(Project);
          return Page();
       }
 
-      return RedirectToPage("DownloadProjectTemplate", new { Id = this.Project.Id });
+      return RedirectToPage("DownloadProjectTemplate", new { Id = Project.Id });
    }
 
    private bool ValidateProject(ProjectViewModel project)
@@ -76,9 +71,9 @@ public class PreviewHtbTemplateModel : BaseAcademyConversionProjectPageModel
          _errorService.AddError($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}&fragment=advisory-board-date",
             "Set an Advisory Board date before you generate your project template");
 
-         this.ShowGenerateHtbTemplateError = true;
+         ShowGenerateHtbTemplateError = true;
       }
 
-      return !this.ShowGenerateHtbTemplateError;
+      return !ShowGenerateHtbTemplateError;
    }
 }

@@ -12,27 +12,24 @@ using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Pages.TaskList.KeyStagePerformance;
 
-public class KeyStage2PerformanceIntegrationTests : BaseIntegrationTests
+public class KeyStage2PerformanceIntegrationTests(IntegrationTestingWebApplicationFactory factory) : BaseIntegrationTests(factory)
 {
-   public KeyStage2PerformanceIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
-
    [Fact]
    public async Task Should_be_reference_only_and_display_KS2_data()
    {
-      AcademyConversionProject project = AddGetProject();
-      List<KeyStage2PerformanceResponse> keyStage2Response = AddGetKeyStagePerformance(project.Urn.Value).KeyStage2.ToList();
+      var project = AddGetProject();
+      var keyStage2Response = AddGetKeyStagePerformance(project.Urn.Value).KeyStage2.ToList();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-
       await NavigateAsync("Key stage 2 performance tables");
 
-      Document.QuerySelector("#additional-information")!.TextContent.Should().Be(project.KeyStage2PerformanceAdditionalInformation);
+      Assert.Null(Document.QuerySelector("#additional-information"));
 
-      List<KeyStage2PerformanceResponse> keyStage2ResponseOrderedByYear = keyStage2Response.OrderByDescending(ks2 => ks2.Year).ToList();
+      var keyStage2ResponseOrderedByYear = keyStage2Response.OrderByDescending(ks2 => ks2.Year).ToList();
       for (int i = 0; i < 2; i++)
       {
-         KeyStage2PerformanceResponse response = keyStage2ResponseOrderedByYear.ElementAt(i);
+         var response = keyStage2ResponseOrderedByYear.ElementAt(i);
          Document.QuerySelector($"#percentage-meeting-expected-in-rwm-{i}")!.TextContent.Should().Be(response.PercentageMeetingExpectedStdInRWM.NotDisadvantaged);
          Document.QuerySelector($"#percentage-achieving-higher-in-rwm-{i}")!.TextContent.Should().Be(response.PercentageAchievingHigherStdInRWM.NotDisadvantaged);
          Document.QuerySelector($"#reading-progress-score-{i}")!.TextContent.Should().Be(response.ReadingProgressScore.NotDisadvantaged);
@@ -60,25 +57,9 @@ public class KeyStage2PerformanceIntegrationTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Should_navigate_between_task_list_and_KS2_performance()
-   {
-      AcademyConversionProject project = AddGetProject();
-      AddGetKeyStagePerformance(project.Urn.Value);
-
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-
-      await NavigateAsync("Key stage 2 performance tables");
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/key-stage-2-performance-tables");
-
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
-
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}");
-   }
-
-   [Fact]
    public async Task Back_link_should_navigate_from_KS2_performance_to_task_list()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
       AddGetKeyStagePerformance(project.Urn.Value);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");

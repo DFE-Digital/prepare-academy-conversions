@@ -2,7 +2,6 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.DocumentGeneration.Elements;
 using Dfe.PrepareConversions.DocumentGeneration.Interfaces;
 using Dfe.PrepareConversions.Models;
-using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator
 {
@@ -15,13 +14,13 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
             builder.ReplacePlaceholderWithContent("LegalRequirements", build =>
             {
                build.AddHeading("Legal requirements", HeadingLevel.One);
-               build.AddTable(new List<TextElement[]>
-                    {
+               build.AddTable(
+                    [
                         DocumentGeneratorStringSanitiser.CreateTextElements("Management committee resolution", document.GoverningBodyResolution ?? "N/A"),
                         DocumentGeneratorStringSanitiser.CreateTextElements("Consultation", document.Consultation ?? "N/A"),
                         DocumentGeneratorStringSanitiser.CreateTextElements("Diocesan consent", document.DiocesanConsent ?? "N/A"),
                         DocumentGeneratorStringSanitiser.CreateTextElements("Foundation consent", document.FoundationConsent ?? "N/A"),
-                    });
+                    ]);
                build.AddParagraph("");
             });
          }
