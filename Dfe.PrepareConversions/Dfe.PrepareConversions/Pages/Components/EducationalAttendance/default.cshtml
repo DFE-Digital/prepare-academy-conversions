@@ -15,8 +15,8 @@
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header"></th>
 
-                @for (int i = 0; i < 3; i++)
-                {
+                @for (int i = 0; i < educationalAttendanceViewModels.Count; i++)
+                { 
                     var vm = educationalAttendanceViewModels[i];
 
                     <th scope="col" class="govuk-table__header">@vm.Year</th>
@@ -27,7 +27,7 @@
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
-                @for (int i = 0; i < 3; i++)
+                @for (int i = 0; i < educationalAttendanceViewModels.Count; i++)
                 {
                     var vm = educationalAttendanceViewModels[i];
                     <td class="govuk-table__cell" id="@("percentage-overall-" + i)">@vm.OverallAbsence</td>
@@ -44,7 +44,7 @@
         <thead class="govuk-table__head">
             <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header"></th>
-                @for (int i = 0; i < 3; i++)
+                @for (int i = 0; i < educationalAttendanceViewModels.Count; i++)
                 {
                     var vm = educationalAttendanceViewModels[i];
 
@@ -56,7 +56,7 @@
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">@ViewData["SchoolName"]</th>
-                @for (int i = 0; i < 3; i++)
+                @for (int i = 0; i < educationalAttendanceViewModels.Count; i++)
                 {
                     var vm = educationalAttendanceViewModels[i];
                     <td class="govuk-table__cell" id="@("percentage-overall-above-10" + i)">@vm.PersistentAbsence</td>

@@ -2,18 +2,12 @@
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.DocumentGeneration;
-using Dfe.PrepareConversions.DocumentGeneration.Elements;
 using Dfe.PrepareConversions.Models;
-using Microsoft.AspNetCore.Html;
 using System;
 using System.IO;
 using System.Reflection;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.EducationalAttendanceGenerator;
-using static Dfe.PrepareConversions.Services.DocumentGenerator.KeyStage2Generator;
-using static Dfe.PrepareConversions.Services.DocumentGenerator.KeyStage4Generator;
-using static Dfe.PrepareConversions.Services.DocumentGenerator.KeyStage5Generator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.LegalRequirementsGenerator;
-using static Dfe.PrepareConversions.Services.DocumentGenerator.OfstedInformationGenerator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.RationaleGenerator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.RisksAndIssuesGenerator;
 // Document Section Generators
@@ -26,25 +20,21 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
 {
    public class DocumentGenerator
    {
-      public HtbTemplate GenerateDocument(ApiResponse<AcademyConversionProject> response, SchoolPerformance schoolPerformance,
+      public static HtbTemplate GenerateDocument(ApiResponse<AcademyConversionProject> response,
      SchoolOverview schoolOverview, KeyStagePerformance keyStagePerformance, AcademyConversionProject project,
      out byte[] documentByteArray)
       {
-         HtbTemplate document = HtbTemplate.Build(response.Body, schoolPerformance, schoolOverview, keyStagePerformance);
+         HtbTemplate document = HtbTemplate.Build(response.Body, schoolOverview, keyStagePerformance);
          MemoryStream ms = CreateMemoryStream("htb-template");
 
          DocumentBuilder documentBuilder = DocumentBuilder.CreateFromTemplate(ms, document);
          AddSchoolOverview(documentBuilder, document);
          AddSchoolAndTrustInfoAndProjectDates(documentBuilder, project);
-         AddOfstedInformation(documentBuilder, document, project);
          AddRationale(documentBuilder, document, project);
          AddRisksAndIssues(documentBuilder, document);
          AddLegalRequirements(documentBuilder, document, project);
          AddSchoolBudgetInformation(documentBuilder, document);
          AddSchoolPupilForecast(documentBuilder, document);
-         AddKeyStage2Information(documentBuilder, document, project);
-         AddKeyStage4Information(documentBuilder, document, project);
-         AddKeyStage5Information(documentBuilder, document, project);
          AddEducationalAttendanceInformation(documentBuilder, document, project);
          documentByteArray = documentBuilder.Build();
          return document;
@@ -60,11 +50,6 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          MemoryStream ms = new();
          templateStream!.CopyTo(ms);
          return ms;
-      }
-
-      public static TextElement HtmlStringToTextElement(HtmlString str)
-      {
-         return new TextElement(str.Value!.Replace("<br>", "\n"));
       }
    }
 }

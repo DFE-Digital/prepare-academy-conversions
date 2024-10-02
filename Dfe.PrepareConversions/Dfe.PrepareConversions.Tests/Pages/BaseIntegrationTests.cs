@@ -61,10 +61,17 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
       return resultDocument;
    }
 
+   protected void VerifyNullElement(string linkText)
+   {
+      var anchors = Document.QuerySelectorAll("a");
+      var linkElement = anchors.SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains(linkText));
+      Assert.Null(linkElement); 
+   }
+
    protected async Task NavigateAsync(string linkText, int? index = null)
    {
       IHtmlCollection<IElement> anchors = Document.QuerySelectorAll("a");
-      IHtmlAnchorElement link = (index == null
+      var link = (index == null
             ? anchors.Single(a => a.TextContent.Contains(linkText))
             : anchors.Where(a => a.TextContent.Contains(linkText)).ElementAt(index.Value))
          as IHtmlAnchorElement;
@@ -73,7 +80,7 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
       await link.NavigateAsync();
    }
 
-   protected Task<IDocument> NavigateAsync(IDocument document, string linkText, int? index = null)
+   protected static Task<IDocument> NavigateAsync(IDocument document, string linkText, int? index = null)
    {
       IHtmlCollection<IElement> anchors = document.QuerySelectorAll("a");
       IHtmlAnchorElement link = (index == null
@@ -98,12 +105,17 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
       await anchors.NavigateAsync();
    }
 
-   protected Task<IDocument> NavigateDataTestAsync(IDocument document, string dataTest)
+   protected static Task<IDocument> NavigateDataTestAsync(IDocument document, string dataTest)
    {
       IHtmlAnchorElement anchors = document.QuerySelectorAll($"[data-test='{dataTest}']").First() as IHtmlAnchorElement;
       Assert.NotNull(anchors);
 
       return anchors.NavigateAsync();
+   }
+   protected static void VerifyNullDataTest(IDocument document, string dataTest)
+   {
+      var anchor = document.QuerySelectorAll($"[data-test='{dataTest}']").FirstOrDefault();
+      Assert.Null(anchor);
    }
 
    protected static (RadioButton, RadioButton) RandomRadioButtons(string id, params string[] values)
