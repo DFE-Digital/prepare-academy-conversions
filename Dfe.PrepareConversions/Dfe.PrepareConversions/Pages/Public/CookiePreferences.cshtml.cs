@@ -12,7 +12,6 @@ namespace Dfe.PrepareConversions.Pages.Public;
 public class CookiePreferences(ILogger<CookiePreferences> logger, IOptions<ServiceLinkOptions> options) : PageModel
 {
    private readonly string[] CONSENT_COOKIE_NAMES = [".ManageAnAcademyConversion.Consent", ".ManageAnAcademyTransfer.Consent"];
-
    public bool? Consent { get; set; }
    public bool PreferencesSet { get; set; }
    public string ReturnPath { get; set; }
@@ -31,8 +30,7 @@ public class CookiePreferences(ILogger<CookiePreferences> logger, IOptions<Servi
 
       if (consent.HasValue)
       {
-         PreferencesSet = true;
-
+         PreferencesSet = true; 
          ApplyCookieConsent(consent);
 
          if (!string.IsNullOrEmpty(returnUrl))
