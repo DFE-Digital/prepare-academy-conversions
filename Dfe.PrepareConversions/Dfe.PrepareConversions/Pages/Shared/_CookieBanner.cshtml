@@ -1,26 +1,81 @@
 @{
-   var showBanner = !Context.Request.Cookies.ContainsKey(".ManageAnAcademyConversion.Consent");
+    var showBanner = !Context.Request.Cookies.ContainsKey(".ManageAnAcademyConversion.Consent") && !Context.Request.Cookies.ContainsKey(".ManageAnAcademyTransfer.Consent");
 }
 
 @if (showBanner)
 {
-   <div data-test="cookie-banner" class="app-cookie-banner" id="appCookieBanner" aria-label="cookie banner">
-      <div class="govuk-width-container">
-         <div class="app-cookie-banner__container" id="cookieActionsContainer">
-            <p class="govuk-body">
-               We use cookies to
-               <a class="govuk-link" data-test="cookie-banner-link-1" asp-page="@Links.Public.CookiePreferences.Page">collect information</a>
-               about how you use the <a class="govuk-link" asp-page="@Links.ProjectList.Index.Page" data-test="cookie-banner-conversion-link">conversions part of our service.</a>
-            </p>
-            <div>
-               <a role="button" draggable="false" data-test="cookie-banner-accept" class="govuk-button govuk-!-margin-bottom-2" asp-page="@Links.Public.CookiePreferences.Page" asp-route-consent="true" asp-route-returnUrl="@Context.Request.Path">
-                  Accept cookies for the conversions part of this service
-               </a>
-               <p class="inline-message govuk-body">
-                  or <a class="govuk-link" data-test="cookie-banner-link-2" asp-page="@Links.Public.CookiePreferences.Page" asp-route-returnUrl="@Context.Request.Path">set your cookie preferences</a>
-               </p>
+    <div data-test="cookie-banner" class="govuk-cookie-banner" data-nosnippet role="region" aria-label="Cookies on Prepare conversions and transfers service">
+        <div class="govuk-cookie-banner__message govuk-width-container" id="cookieBanner">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <h2 class="govuk-cookie-banner__heading govuk-heading-m">
+                        Cookies on Prepare conversions and transfers service
+                    </h2>
+                    <div class="govuk-cookie-banner__content" id="cookieActionsContainer">
+                        <p class="govuk-body">
+                            We use some essential cookies
+                            about how you use the <a class="govuk-link" asp-page="@Links.ProjectList.Index.Page" data-test="cookie-banner-conversion-link">conversions</a> and <a class="govuk-link" href="@Links.TransfersUrl/home">transfers</a> parts of our service.
+                        </p>
+                        <p class="govuk-body">We’d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+                    </div>
+                    <div class="govuk-button-group">
+                        <button type="button" class="govuk-button" data-module="govuk-button" id="acceptCookie">
+                            Accept analytics cookies
+                        </button>
+                        <button type="button" class="govuk-button" data-module="govuk-button" id="rejectCookie">
+                            Reject analytics cookies
+                        </button>
+                        <a class="govuk-link" data-test="cookie-banner-link-1" asp-page="@Links.Public.CookiePreferences.Page">View cookies</a>
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
+        </div>
+        <div class="govuk-cookie-banner__message govuk-width-container" role="alert" id="acceptCookieBanner" hidden>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <div class="govuk-cookie-banner__content">
+                        <p class="govuk-body">You’ve accepted analytics cookies. You can <a class="govuk-link" data-test="cookie-banner-link-2" asp-page="@Links.Public.CookiePreferences.Page" asp-route-returnUrl="@Context.Request.Path">change your cookie settings</a> at any time.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-button-group">
+                 <a role="button" draggable="false" data-test="cookie-banner-accept" class="govuk-button" asp-page="@Links.Public.CookiePreferences.Page" asp-route-consent="true" asp-route-returnUrl="@Context.Request.Path">
+                    Hide cookie message
+                </a>
+            </div>
+        </div>
+        <div class="govuk-cookie-banner__message govuk-width-container" role="alert" id="rejectCookieBanner" hidden>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <div class="govuk-cookie-banner__content">
+                        <p class="govuk-body">You’ve rejected analytics cookies. You can <a class="govuk-link" data-test="cookie-banner-link-2" asp-page="@Links.Public.CookiePreferences.Page" asp-route-returnUrl="@Context.Request.Path">change your cookie settings</a> at any time.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-button-group">
+                <a role="button" draggable="false" data-test="cookie-banner-accept" class="govuk-button" asp-page="@Links.Public.CookiePreferences.Page" asp-route-consent="false" asp-route-returnUrl="@Context.Request.Path">
+                    Hide cookie message
+                </a>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" asp-add-nonce>
+         document.querySelector('#acceptCookie').onclick = () =>{
+           var cookieBanner = document.getElementById("cookieBanner"); 
+           cookieBanner.style.display = "none"; 
+           var toggleDiv = document.getElementById("acceptCookieBanner");
+           if (toggleDiv.style.display === "none" || toggleDiv.style.display === "") {
+               toggleDiv.style.display = "block";
+           }
+        };
+
+        document.querySelector('#rejectCookie').onclick = () =>{
+            var cookieBanner = document.getElementById("cookieBanner");
+            cookieBanner.style.display = "none";
+            var toggleDiv = document.getElementById("rejectCookieBanner");
+            if (toggleDiv.style.display === "none" || toggleDiv.style.display === "") {
+                  toggleDiv.style.display = "block";
+            }
+        };
+    </script>
 }
