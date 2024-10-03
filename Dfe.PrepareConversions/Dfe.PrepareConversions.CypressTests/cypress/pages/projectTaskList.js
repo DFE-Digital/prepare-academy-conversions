@@ -27,13 +27,25 @@ export default class ProjectTaskList extends BasePage {
         recordDecisionButton: '[data-cy="record_decision_btn"]',
         schoolName: '[data-cy="school-name"]',
         urn: '[data-cy="urn"]',
-        urnId: '.govuk-caption-xl'
+        urnId: '.govuk-caption-xl',
+        acceptCookieBtn:'[data-test="cookie-banner-accept"]',
+        hideAcceptCookieBtn: '#acceptCookieBanner > .govuk-button-group'
     }
 
     static path = 'task-list'
 
+    static acceptCookieBtnClick() {
+        cy.checkPath(this.path)
+        cy.get(this.selectors.acceptCookieBtn).click()
+    }
+    static hideAcceptCookieBanner() {
+        cy.checkPath(this.path)
+        cy.get(this.selectors.hideAcceptCookieBtn).click()
+    }
     static selectAssignProject() {
         cy.checkPath(this.path)
+        this.acceptCookieBtnClick();
+        this.hideAcceptCookieBanner();
         cy.get(this.selectors.assignProjectButton).click()
     }
 
