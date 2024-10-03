@@ -24,7 +24,7 @@ export default class Budget extends BasePage {
         nextFinancialYearRevenueValue: '[id="finance-year-following"]',
         nextFinancialYearCapitalInput: '[id="finance-projected-capital"]',
         nextFinancialYearCapitalValue: '[id="finance-projected-capital"]',
-        saveButton: '[class="govuk-button"]',
+        saveButton: '[data-cy="select-common-submitbutton"]',
         completeCheckbox: '[id="school-budget-information-complete"]'
     }
 

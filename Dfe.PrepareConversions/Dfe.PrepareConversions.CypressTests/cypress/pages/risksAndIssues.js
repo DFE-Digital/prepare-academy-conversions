@@ -7,7 +7,7 @@ export default class RisksAndIssues extends BasePage {
         rationaleLink: '[data-test="change-risks-and-issues"]',
         rationaleInput: '[id="risks-and-issues"]',
         rationaleValue: '[id="risks-and-issues"]',
-        saveButton: '[class="govuk-button"]',
+        saveButton: '[data-cy="select-common-submitbutton"]',
         completeCheckbox: '[id="risks-and-issues-complete"]'
     }
 

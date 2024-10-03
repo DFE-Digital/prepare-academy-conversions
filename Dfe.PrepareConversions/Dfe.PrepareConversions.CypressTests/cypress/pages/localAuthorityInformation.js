@@ -16,7 +16,7 @@ export default class LocalAuthorityInfomation extends BasePage {
         sharepointLinkLink: '[data-test="change-la-info-template-sharepoint-link"]',
         sharepointLinkInput: '[id="la-info-template-sharepoint-link"]',
         sharepointLinkValue: '[id="la-info-template-sharepoint-link"]',
-        saveButton: '[class="govuk-button"]',
+        saveButton: '[data-cy="select-common-submitbutton"]',
         completeCheckbox: '[id="la-info-template-complete"]'
     }
 

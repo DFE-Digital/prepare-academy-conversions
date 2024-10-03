@@ -6,7 +6,7 @@ export default class PupilForecast extends BasePage {
     static selectors = {
         changeAdditionalInfoLink: '[data-test="change-school-pupil-forecasts-additional-information"]',
         additionalInfo: '[id="additional-information"]',
-        saveButton: '[class="govuk-button"]'
+        saveButton: '[data-cy="select-common-submitbutton"]'
     }
 
     static path = 'pupil-forecasts'

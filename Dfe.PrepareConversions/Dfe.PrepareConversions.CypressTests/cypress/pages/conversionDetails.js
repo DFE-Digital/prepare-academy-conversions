@@ -6,7 +6,7 @@ const today = new Date()
 
 export default class ConversionDetails extends BasePage {
     static selectors = {
-        saveButton: '[class="govuk-button"]',
+        saveButton: '[data-cy="select-common-submitbutton"]',
         form7ReceivedLink: '[data-test="change-form-7-received"]',
         form7ReveicedValue: '[id="form-7-received"]',
         form7DateLink: '[data-test="change-form-7-received-date"]',
