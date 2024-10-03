@@ -16,12 +16,9 @@ public class CookiePreferences(ILogger<CookiePreferences> logger, IOptions<Servi
    public bool PreferencesSet { get; set; }
    public string ReturnPath { get; set; }
 
-   public string TransfersCookiesUrl { get; set; }
-
    public ActionResult OnGet(bool? consent, string returnUrl)
    {
       ReturnPath = returnUrl;
-      TransfersCookiesUrl = $"{options.Value.TransfersUrl}/cookie-preferences?returnUrl=%2Fhome";
 
       if (Request.Cookies.ContainsKey(CONSENT_COOKIE_NAMES[0]) && Request.Cookies.ContainsKey(CONSENT_COOKIE_NAMES[1]))
       {

@@ -105,6 +105,22 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
       await anchors.NavigateAsync();
    }
 
+   protected void NavigateDataTestButton(string dataTest)
+   {
+      var buttons = Document.QuerySelectorAll($"[data-test='{dataTest}']").First() as IHtmlButtonElement;
+      Assert.NotNull(buttons);
+
+      buttons.DoClick();
+   }
+
+   protected IHtmlButtonElement GetDataTestButtonElement(string dataTest)
+   {
+      IHtmlButtonElement anchors = Document.QuerySelectorAll($"[data-test='{dataTest}']").FirstOrDefault() as IHtmlButtonElement;
+      Assert.NotNull(anchors);
+
+      return anchors;
+   }
+
    protected static Task<IDocument> NavigateDataTestAsync(IDocument document, string dataTest)
    {
       IHtmlAnchorElement anchors = document.QuerySelectorAll($"[data-test='{dataTest}']").First() as IHtmlAnchorElement;

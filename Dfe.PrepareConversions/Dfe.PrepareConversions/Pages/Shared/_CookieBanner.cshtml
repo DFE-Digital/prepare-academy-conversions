@@ -4,7 +4,7 @@
 
 @if (showBanner)
 {
-    <div data-test="cookie-banner" class="govuk-cookie-banner" data-nosnippet role="region" aria-label="Cookies on Prepare conversions and transfers">
+    <div data-test="cookie-banner" class="govuk-cookie-banner" data-nosnippet role="region" aria-label="Cookies on Prepare conversions and transfers" id="govCookieBanner">
         <div class="govuk-cookie-banner__message govuk-width-container" id="cookieBanner">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
@@ -18,10 +18,10 @@
                         <p class="govuk-body">We’d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
                     </div>
                     <div class="govuk-button-group">
-                        <button type="button" class="govuk-button" data-module="govuk-button" id="acceptCookie">
+                        <button type="button" class="govuk-button" data-test="cookie-banner-accept" data-module="govuk-button" id="acceptCookie">
                             Accept analytics cookies
                         </button>
-                        <button type="button" class="govuk-button" data-module="govuk-button" id="rejectCookie">
+                        <button type="button" class="govuk-button" data-test="cookie-banner-reject" data-module="govuk-button" id="rejectCookie">
                             Reject analytics cookies
                         </button>
                         <a class="govuk-link" data-test="cookie-banner-link-1" asp-page="@Links.Public.CookiePreferences.Page">View cookies</a>
@@ -38,9 +38,9 @@
                 </div>
             </div>
             <div class="govuk-button-group">
-                 <a role="button" draggable="false" data-test="cookie-banner-accept" class="govuk-button" asp-page="@Links.Public.CookiePreferences.Page" asp-route-consent="true" asp-route-returnUrl="@Context.Request.Path">
+                <button type="button" class="govuk-button" draggable="false" data-test="hide-cookie-banner-accept" data-module="govuk-button" id="acceptCookieBtn">
                     Hide cookie message
-                </a>
+                </button>
             </div>
         </div>
         <div class="govuk-cookie-banner__message govuk-width-container" role="alert" id="rejectCookieBanner" hidden>
@@ -52,29 +52,46 @@
                 </div>
             </div>
             <div class="govuk-button-group">
-                <a role="button" draggable="false" data-test="cookie-banner-accept" class="govuk-button" asp-page="@Links.Public.CookiePreferences.Page" asp-route-consent="false" asp-route-returnUrl="@Context.Request.Path">
+                <button type="button" class="govuk-button" draggable="false" data-test="hide-cookie-banner-accept" data-module="govuk-button" id="rejectCookieBtn">
                     Hide cookie message
-                </a>
+                </button>
             </div>
         </div>
     </div>
     <script type="text/javascript" asp-add-nonce>
-         document.querySelector('#acceptCookie').onclick = () =>{
-           var cookieBanner = document.getElementById("cookieBanner"); 
-           cookieBanner.style.display = "none"; 
-           var toggleDiv = document.getElementById("acceptCookieBanner");
-           if (toggleDiv.style.display === "none" || toggleDiv.style.display === "") {
-               toggleDiv.style.display = "block";
-           }
+        function getData(url) {
+            fetch(url)
+               .catch(error => {
+                  console.error('There was a problem with the fetch operation:', error);
+               });
+        }
+        function hideDiv(id) {
+            var cookieBanner = document.getElementById(id);
+            cookieBanner.style.display = "none";
+        }
+        function displayConfirmationNotification(id) {
+            var toggleDiv = document.getElementById(id);
+            if (toggleDiv.style.display === "none" || toggleDiv.style.display === "") {
+                toggleDiv.style.display = "block";
+            }
+        }
+        document.querySelector('#acceptCookie').onclick = () =>{ 
+            getData('@Links.Public.CookiePreferencesURL.Page' + '?consent=true&returnUrl=' + '@System.Web.HttpUtility.UrlEncode(Context.Request.Path)');
+            hideDiv("cookieBanner");
+            displayConfirmationNotification("acceptCookieBanner");
         };
 
         document.querySelector('#rejectCookie').onclick = () =>{
-            var cookieBanner = document.getElementById("cookieBanner");
-            cookieBanner.style.display = "none";
-            var toggleDiv = document.getElementById("rejectCookieBanner");
-            if (toggleDiv.style.display === "none" || toggleDiv.style.display === "") {
-                  toggleDiv.style.display = "block";
-            }
+            getData('@Links.Public.CookiePreferencesURL.Page' + '?consent=false&returnUrl=' + '@System.Web.HttpUtility.UrlEncode(Context.Request.Path)');
+            hideDiv("cookieBanner");
+            displayConfirmationNotification("rejectCookieBanner");
         };
+
+        document.querySelector('#acceptCookieBtn').onclick = () => {
+            hideDiv("govCookieBanner");
+        }
+        document.querySelector('#rejectCookieBtn').onclick = () => {
+            hideDiv("govCookieBanner");
+        }
     </script>
 }
