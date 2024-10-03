@@ -131,7 +131,7 @@ namespace Dfe.PrepareConversions.Utils
          return sType switch
          {
             "pupil referral unit" => $"Your document will automatically include some Ofsted inspection data. Educational performance data isn't published for pupil referral units.\r\n\r\nAsk the pupil referral unit to share their educational performance and absence data with you. You can add that to the document once you have created it.",
-            _ => "This information will be added to your project document automatically."
+            _ => "This information with not be added to your project document."
          };
       }
    }
