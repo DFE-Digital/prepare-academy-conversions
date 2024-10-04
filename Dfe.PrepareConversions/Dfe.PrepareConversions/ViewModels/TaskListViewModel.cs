@@ -24,7 +24,7 @@ public class TaskListViewModel
    public string PerformanceDataHintText { get; set; }
    public bool HasAbsenceData { get; set; }
 
-   public static TaskListViewModel Build(ProjectViewModel project)
+   public static TaskListViewModel Build(ProjectViewModel project, bool hasSchoolAbsenceData)
    {
       return new TaskListViewModel
       {
@@ -37,7 +37,7 @@ public class TaskListViewModel
          SchoolBudgetInformationTaskListStatus = TaskListItemViewModel.GetSchoolBudgetInformationTaskListStatus(project),
          ProjectStatus = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Value,
          ProjectStatusColour = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Colour,
-         PerformanceDataHintText = ProjectListHelper.MapPerformanceDataHint(project.SchoolType),
+         PerformanceDataHintText = ProjectListHelper.MapPerformanceDataHint(project.SchoolType, hasSchoolAbsenceData),
          ProjectDatesTaskListTaskListStatus = TaskListItemViewModel.GetProjectDatesTaskListStatus(project)
       };
    }
