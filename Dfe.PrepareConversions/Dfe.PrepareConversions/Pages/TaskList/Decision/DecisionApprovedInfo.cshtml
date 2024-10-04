@@ -1,0 +1,26 @@
+﻿@page "/task-list/{id:int}/decision/approved-info"
+@using Dfe.PrepareConversions.Extensions
+@using Dfe.PrepareConversions.TagHelpers
+@model Dfe.PrepareConversions.Pages.TaskList.Decision.DecisionMaker
+@{
+    ViewData["Title"] = "Approved decision information";
+    Layout = "_Layout";
+}
+
+@section BeforeMain
+{
+    <partial name="_BackLink" model="@Model.BackLinkModel" />
+    <partial name="_ErrorSummary" />
+}
+
+<span id="selection-span" class="govuk-caption-l">Record the decision</span>
+<h1 class="govuk-heading-l">@ViewData["Title"]</h1>
+
+<div class="govuk-panel govuk-panel--confirmation">
+    <h1 class="govuk-panel__title">
+        Decision recorded
+    </h1>
+    <div class="govuk-panel__body">
+        Your reference number<br><strong></strong>
+    </div>
+</div>
