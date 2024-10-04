@@ -44,7 +44,7 @@ public class PreviewHtbTemplateModel : BaseAcademyConversionProjectPageModel
       var keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(project.SchoolURN);
 
       // 16 plus = 6, All-through = 7, Middle deemed primary = 3, Middle deemed secondary = 5, Not applicable = 0, Nursery = 1, Primary = 2, Secondary = 4
-      TaskList = TaskListViewModel.Build(project);
+      TaskList = TaskListViewModel.Build(project, (keyStagePerformance.HasSchoolAbsenceData && (Project.IsPRU || Project.IsSEN)));
       TaskList.HasAbsenceData = keyStagePerformance.HasSchoolAbsenceData;
    }
 
