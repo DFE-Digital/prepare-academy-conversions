@@ -7,7 +7,7 @@ export default class Rationale extends BasePage {
         rationaleLink: '[data-test="change-rationale-for-trust"]',
         rationaleInput: '[id="trust-rationale"]',
         rationaleValue: '[id="rationale-for-trust"]',
-        saveButton: '[class="govuk-button"]',
+        saveButton: '[data-cy="select-common-submitbutton"]',
         completeCheckbox: '[id="rationale-complete"]'
     }
 

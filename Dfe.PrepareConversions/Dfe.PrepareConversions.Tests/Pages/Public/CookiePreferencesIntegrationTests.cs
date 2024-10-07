@@ -2,21 +2,18 @@ using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Data.Models;
 using FluentAssertions;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Pages.Public;
 
-public class CookiePreferencesIntegrationTests : BaseIntegrationTests
+public class CookiePreferencesIntegrationTests(IntegrationTestingWebApplicationFactory factory) : BaseIntegrationTests(factory)
 {
-   public CookiePreferencesIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
-   {
-   }
-
    [Fact]
    public async Task Should_navigate_to_the_cookie_preferences_from_the_link()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
       await NavigateDataTestAsync("cookie-preferences");
@@ -27,7 +24,7 @@ public class CookiePreferencesIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_the_cookie_preferences_from_the_first_link_in_the_banner()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
       await NavigateDataTestAsync("cookie-banner-link-1");
@@ -38,7 +35,7 @@ public class CookiePreferencesIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_the_cookie_preferences_from_the_second_link_in_the_banner()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
       await NavigateDataTestAsync("cookie-banner-link-2");
@@ -49,12 +46,15 @@ public class CookiePreferencesIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_redirect_to_current_page_when_accepting_cookies_from_banner()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
       string url = $"/task-list/{project.Id}";
       await OpenAndConfirmPathAsync(url);
 
-      await NavigateDataTestAsync("cookie-banner-accept");
+      var item = GetDataTestButtonElement("cookie-banner-accept");
+      item!.InnerHtml.Should().Contain("Accept analytics cookies");
 
+      NavigateDataTestButton("hide-cookie-banner-accept");
+      
       Document.Url.Should().Contain(url);
    }
 
@@ -74,7 +74,10 @@ public class CookiePreferencesIntegrationTests : BaseIntegrationTests
    {
       await OpenAndConfirmPathAsync("/public/cookie-preferences");
 
-      await NavigateDataTestAsync("cookie-banner-accept");
+      var item = GetDataTestButtonElement("cookie-banner-accept");
+      item!.InnerHtml.Should().Contain("Accept analytics cookies");
+
+      NavigateDataTestButton("hide-cookie-banner-accept");
 
       Document.Url.Should().Contain("/public/cookie-preferences");
    }
@@ -93,7 +96,7 @@ public class CookiePreferencesIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_show_success_message_when_preferences_set()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
       string url = $"/task-list/{project.Id}";
       await OpenAndConfirmPathAsync(url);
 
@@ -112,7 +115,7 @@ public class CookiePreferencesIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_back_to_correct_page_using_success_link()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
       string url = $"/task-list/{project.Id}";
       await OpenAndConfirmPathAsync(url);
 

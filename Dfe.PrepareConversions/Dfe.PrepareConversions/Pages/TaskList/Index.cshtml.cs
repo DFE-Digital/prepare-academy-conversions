@@ -1,4 +1,3 @@
-using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
 using Dfe.PrepareConversions.Data.Models.UserRole;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Extensions;
@@ -8,34 +7,18 @@ using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList;
 
-public class IndexModel : BaseAcademyConversionProjectPageModel
+public class IndexModel(KeyStagePerformanceService keyStagePerformanceService,
+                  IAcademyConversionProjectRepository repository,
+                  ErrorService errorService, ISession session) : BaseAcademyConversionProjectPageModel(repository)
 {
-   private readonly ErrorService _errorService;
-   private readonly IConfiguration _configuration;
-   private readonly KeyStagePerformanceService _keyStagePerformanceService;
    public const string SESSION_KEY = "RoleCapabilities"; 
-   protected readonly ISession _session;
-
-   public IndexModel(KeyStagePerformanceService keyStagePerformanceService,
-                     IAcademyConversionProjectRepository repository,
-                     ErrorService errorService, IConfiguration configuration, ISession session) : base(repository)
-   {
-      _keyStagePerformanceService = keyStagePerformanceService;
-      _errorService = errorService;
-      _configuration = configuration;
-      _session = session;
-   }
+   protected readonly ISession _session = session;
 
    public bool ShowGenerateHtbTemplateError { get; set; }
    public TaskListViewModel TaskList { get; set; }
@@ -78,7 +61,7 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
          TempData["returnToFormAMatMenu"] = true;
       }   
 
-      if ((result as StatusCodeResult)?.StatusCode == (int)HttpStatusCode.NotFound)
+      if (result is StatusCodeResult { StatusCode: (int)HttpStatusCode.NotFound })
       {
          return NotFound();
       }
@@ -88,13 +71,13 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
       {
          string returnPage = WebUtility.UrlEncode(Links.TaskList.Index.Page);
          // this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
-         _errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}",
+         errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}",
             "Set an Advisory board date before you generate your project template");
       }
 
-      Data.Models.KeyStagePerformance.KeyStagePerformance keyStagePerformance = await _keyStagePerformanceService.GetKeyStagePerformance(Project?.SchoolURN);
+      var keyStagePerformance = await keyStagePerformanceService.GetKeyStagePerformance(Project?.SchoolURN);
       // 16 plus = 6, All-through = 7, Middle deemed primary = 3, Middle deemed secondary = 5, Not applicable = 0, Nursery = 1, Primary = 2, Secondary = 4
-      if (Project != null) TaskList = TaskListViewModel.Build(Project);
+      if (Project != null) TaskList = TaskListViewModel.Build(Project, (keyStagePerformance.HasSchoolAbsenceData && (Project.IsPRU || Project.IsSEN)));
       if (TaskList != null)
       {
          TaskList.HasKeyStage2PerformanceTables = keyStagePerformance.HasKeyStage2PerformanceTables;

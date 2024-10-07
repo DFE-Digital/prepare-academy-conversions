@@ -26,13 +26,26 @@ export default class ProjectTaskList extends BasePage {
         createNewConversionButton: '[data-cy="create_new_conversion_btn"]',
         recordDecisionButton: '[data-cy="record_decision_btn"]',
         schoolName: '[data-cy="school-name"]',
-        urn: '[data-cy="urn"]'
+        urn: '[data-cy="urn"]',
+        urnId: '.govuk-caption-xl',
+        acceptCookieBtn:'[data-test="cookie-banner-accept"]',
+        hideAcceptCookieBtn: '#acceptCookieBanner > .govuk-button-group'
     }
 
     static path = 'task-list'
 
+    static acceptCookieBtnClick() {
+        cy.checkPath(this.path)
+        cy.get(this.selectors.acceptCookieBtn).click()
+    }
+    static hideAcceptCookieBanner() {
+        cy.checkPath(this.path)
+        cy.get(this.selectors.hideAcceptCookieBtn).click()
+    }
     static selectAssignProject() {
         cy.checkPath(this.path)
+        this.acceptCookieBtnClick();
+        this.hideAcceptCookieBanner();
         cy.get(this.selectors.assignProjectButton).click()
     }
 
@@ -118,6 +131,19 @@ export default class ProjectTaskList extends BasePage {
     static selectOfsted() {
         cy.checkPath(this.path)
         cy.get(this.selectors.ofstedLink).click()
+    }
+
+    static getProjectUrn() {
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.urnId)
+        .invoke('text')
+        .then((text) => {
+            return text.replace('URN: ', '').trim();
+        });
+    }
+
+    static clickOfStedINfoBackButton(){
+        cy.get('[data-cy="ofsted-info-back-btn"]').click();
     }
 
     static selectKeyStage(keyStageNumber) {

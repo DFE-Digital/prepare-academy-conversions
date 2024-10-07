@@ -142,73 +142,6 @@
    </div>
 </section>
 
-
-<h2 class="govuk-heading-s">Ofsted information</h2>
-<section class="app-summary-card govuk-!-margin-bottom-6">
-    <header class="app-summary-card__header">
-        <h2 class="app-summary-card__title">
-            Ofsted information details
-        </h2>
-    </header>
-    <div class="app-summary-card__body">
-        @await Component.InvokeAsync("SchoolPerformance", new { showAdditionalInformation = true, isPreview = true })
-    </div>
-</section>
-
-@if (Model.TaskList.HasKeyStage2PerformanceTables)
-{
-   <h2 class="govuk-heading-s" id="key-stage-2-performance-tables">Key stage 2 performance tables</h2>
-   <section class="app-summary-card govuk-!-margin-bottom-6">
-      <header class="app-summary-card__header">
-         <h2 class="app-summary-card__title">
-            Key stage 2 performance tables details
-         </h2>
-      </header>
-      <div class="app-summary-card__body">
-         @await Component.InvokeAsync("KeyStage2PerformanceTables")
-         <dl class="govuk-summary-list">
-            <govuk-summary-list-row name="key-stage-2-additional-information" label="Additional information" value="@Model.Project.KeyStage2PerformanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.KeyStage2PerformanceTablesAdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information"/>
-         </dl>
-      </div>
-   </section>
-}
-
-@if (Model.TaskList.HasKeyStage4PerformanceTables)
-{
-   <h2 class="govuk-heading-s" id="key-stage-4-performance-tables">Key stage 4 performance tables</h2>
-   <section class="app-summary-card govuk-!-margin-bottom-6">
-      <header class="app-summary-card__header">
-         <h2 class="app-summary-card__title">
-            Key stage 4 performance tables details
-         </h2>
-      </header>
-      <div class="app-summary-card__body">
-         @await Component.InvokeAsync("KeyStage4PerformanceTables")
-         <dl class="govuk-summary-list">
-            <govuk-summary-list-row name="key-stage-4-additional-information" label="Additional information" value="@Model.Project.KeyStage4PerformanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.KeyStage4PerformanceTablesAdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information"/>
-         </dl>
-      </div>
-   </section>
-}
-
-@if (Model.TaskList.HasKeyStage5PerformanceTables)
-{
-   <h2 class="govuk-heading-s" id="key-stage-5-performance-tables">Key stage 5 performance tables</h2>
-   <section class="app-summary-card govuk-!-margin-bottom-6">
-      <header class="app-summary-card__header">
-         <h2 class="app-summary-card__title">
-            Key stage 5 performance tables details
-         </h2>
-      </header>
-      <div class="app-summary-card__body">
-         @await Component.InvokeAsync("KeyStage5PerformanceTables")
-         <dl class="govuk-summary-list">
-            <govuk-summary-list-row name="key-stage-5-additional-information" label="Additional information" value="@Model.Project.KeyStage5PerformanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.KeyStage5PerformanceTablesAdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information"/>
-         </dl>
-      </div>
-   </section>
-} 
-
 @if (Model.TaskList.HasAbsenceData && (Model.Project.IsSEN || Model.Project.IsPRU))
 {
     <h2 class="govuk-heading-s" id="key-stage-5-performance-tables">Educational Attendance</h2>
@@ -220,9 +153,6 @@
         </header>
         <div class="app-summary-card__body">
             @await Component.InvokeAsync("EducationalAttendance")
-            <dl class="govuk-summary-list">
-                <govuk-summary-list-row name="educational-attendance-information" label="Additional information" value="@Model.Project.EducationalAttendanceAdditionalInformation" asp-page="@Links.KeyStagePerformanceSection.EducationalAttendanceAdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
-            </dl>
         </div>
     </section>
 }

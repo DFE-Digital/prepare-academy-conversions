@@ -7,9 +7,9 @@
     Layout = "_QuestionLayout";
     Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
     ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Conversion support grant details";
-    ViewData["SchoolName"] = Model.Project.SchoolName;
-    ViewData["ProjectId"] = Model.Project.Id;
-    ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
+    ViewData["SchoolName"] = Model.Project?.SchoolName;
+    ViewData["ProjectId"] = Model.Project?.Id;
+    ViewData["AcademyTypeAndRoute"] = Model.Project?.AcademyTypeAndRoute;
     var values = new[] { "Yes", "No" };
     var kw = WidthOverride.TwoThirds;
 

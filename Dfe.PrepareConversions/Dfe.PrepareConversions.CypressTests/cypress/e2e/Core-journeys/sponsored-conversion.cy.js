@@ -54,7 +54,6 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
          comment: 'Comment',
          sharepointLink: 'https://sharepoint.com'
       },
-      performanceInfo: 'Additional Information',
       keyStages: [2]
    }
 
@@ -219,18 +218,16 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
 
    it('TC09: Performance Info ', () => {
       projectTaskList.selectOfsted();
-      Performance.changeOfstedInfo(testData.performanceInfo);
-      Performance.getOfstedInfo().should('contain.text', testData.performanceInfo);
-      cy.confirmContinueBtn().click();
+      Performance.verifyOfsteadScreenText();
+      projectTaskList.clickOfStedINfoBackButton();
 
       for (const keyStage of testData.keyStages) {
          console.log(keyStage)
-         projectTaskList.selectKeyStage(keyStage);
-         Performance.changeKeyStageInfo(keyStage, testData.performanceInfo);
-         Performance.getKeyStageInfo(keyStage).should('contain.text', testData.performanceInfo);
-         cy.confirmContinueBtn().click();
+         projectTaskList.getProjectUrn().then((urn) => {
+            projectTaskList.selectKeyStage(keyStage);
+            Performance.verifyKeyStageScreenText(urn);
+            Performance.changeKeyStageInfo(keyStage);
+         });
       }
    });
-
- 
 });

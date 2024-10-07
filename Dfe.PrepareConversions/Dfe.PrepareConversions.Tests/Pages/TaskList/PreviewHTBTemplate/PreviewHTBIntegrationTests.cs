@@ -1,9 +1,9 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
-using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.Tests.Customisations;
 using Dfe.PrepareConversions.Tests.Extensions;
@@ -21,14 +21,12 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.PreviewHTBTemplate;
 public class PreviewHtbIntegrationTests : BaseIntegrationTests
 {
    public PreviewHtbIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
-   {
-      _fixture.Customizations.Add(new RandomDateBuilder(DateTime.Now.AddMonths(-2), DateTime.Now.AddDays(-1)));
-   }
+      => _fixture.Customizations.Add(new RandomDateBuilder(DateTime.Now.AddMonths(-2), DateTime.Now.AddDays(-1)));
 
    [Fact]
    public async Task Should_navigate_between_task_list_and_preview_htb_template()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
@@ -42,11 +40,11 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_from_error_summary_on_preview_to_headteacher_board_date_back_to_preview()
    {
-      AcademyConversionProject project = AddGetProject(p => p.HeadTeacherBoardDate = null);
+      var project = AddGetProject(p => p.HeadTeacherBoardDate = null);
 
       var pageObject = new PreviewHtbTemplatePageModel();
       var document = await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
-      document = await pageObject.NavigateToGenerateHtbTemplate(document, project.Id, expectFailure: true);
+      document = await PreviewHtbTemplatePageModel.NavigateToGenerateHtbTemplate(document, project.Id, expectFailure: true);
 
       // stays on same page with error
       document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
@@ -65,12 +63,12 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_between_preview_htb_template_and_generate_htb_template()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
 
       var pageObject = new PreviewHtbTemplatePageModel();
 
       var document = await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
-      document = await pageObject.NavigateToGenerateHtbTemplate(Document, project.Id);
+      document = await PreviewHtbTemplatePageModel.NavigateToGenerateHtbTemplate(Document, project.Id);
 
       document.Url.Should().BeUrl($"/task-list/{project.Id}/download-project-template");
 
@@ -81,11 +79,11 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_display_error_summary_on_preview_htb_template_when_generate_button_clicked_if_no_htb_date_set()
    {
-      AcademyConversionProject project = AddGetProject(p => p.HeadTeacherBoardDate = null);
+      var project = AddGetProject(p => p.HeadTeacherBoardDate = null);
 
       var pageObject = new PreviewHtbTemplatePageModel();
       var document = await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
-      document = await pageObject.NavigateToGenerateHtbTemplate(document, project.Id, expectFailure: true);
+      document = await PreviewHtbTemplatePageModel.NavigateToGenerateHtbTemplate(document, project.Id, expectFailure: true);
 
       document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
 
@@ -102,8 +100,8 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_display_school_overview_section()
    {
-      AcademyConversionProject project = AddGetProject();
-      EstablishmentDto establishment = AddGetEstablishmentDto(project.Urn.ToString());
+      var project = AddGetProject();
+      var establishment = AddGetEstablishmentDto(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
       Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
@@ -129,7 +127,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_display_distance_additional_information_given_no_distance()
    {
-      AcademyConversionProject project = AddGetProject(p => p.DistanceFromSchoolToTrustHeadquarters = null);
+      var project = AddGetProject(p => p.DistanceFromSchoolToTrustHeadquarters = null);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -140,7 +138,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_school_overview_pan_page_and_back()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -154,8 +152,8 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_update_school_overview_pan_and_navigate_back_to_preview()
    {
-      AcademyConversionProject project = AddGetProject();
-      UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
+      var project = AddGetProject();
+      var request = AddPatchConfiguredProject(project, x =>
       {
          x.PublishedAdmissionNumber = _fixture.Create<string>();
          x.Urn = project.Urn;
@@ -176,7 +174,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_display_school_budget_information()
    {
-      AcademyConversionProject project = AddGetProject(p => p.SchoolBudgetInformationSectionComplete = false);
+      var project = AddGetProject(p => p.SchoolBudgetInformationSectionComplete = false);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -192,7 +190,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_school_budget_update_page_and_back()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -206,8 +204,8 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_update_school_budget_fields_and_navigate_back_to_preview()
    {
-      AcademyConversionProject project = AddGetProject();
-      UpdateAcademyConversionProject request = AddPatchProjectMany(project, composer =>
+      var project = AddGetProject();
+      var request = AddPatchProjectMany(project, composer =>
          composer
             .With(r => r.EndOfCurrentFinancialYear, new DateTime(2022, 04, 01))
             .With(r => r.EndOfNextFinancialYear, new DateTime(2023, 04, 01))
@@ -241,7 +239,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_school_budget_additional_information_and_back()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
       AddGetKeyStagePerformance(project.Urn.Value);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
@@ -256,8 +254,8 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_display_school_pupil_forecasts_section()
    {
-      AcademyConversionProject project = AddGetProject();
-      EstablishmentDto establishment = AddGetEstablishmentDto(project.Urn.ToString());
+      var project = AddGetProject();
+      var establishment = AddGetEstablishmentDto(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
       Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
@@ -282,7 +280,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_school_pupil_forecasts_additional_information_and_back()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
@@ -296,8 +294,8 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_update_school_pupil_forecasts_additional_information_and_navigate_back_to_preview()
    {
-      AcademyConversionProject project = AddGetProject();
-      UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
+      var project = AddGetProject();
+      var request = AddPatchConfiguredProject(project, x =>
       {
          x.SchoolPupilForecastsAdditionalInformation = _fixture.Create<string>();
          x.Urn = project.Urn;
@@ -316,109 +314,57 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Should_display_KS2_section()
+   public async Task Should_not_display_KS2_section()
    {
-      AcademyConversionProject project = AddGetProject();
-      List<KeyStage2PerformanceResponse> keyStage2Response = AddGetKeyStagePerformance(project.Urn.Value).KeyStage2.ToList();
+      var project = AddGetProject();
+      _ = AddGetKeyStagePerformance(project.Urn.Value).KeyStage2.ToList();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
       Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 
-      Document.QuerySelector("#key-stage-2-additional-information")!.TextContent.Should().Be(project.KeyStage2PerformanceAdditionalInformation);
-
-      List<KeyStage2PerformanceResponse> keyStage2ResponseOrderedByYear = keyStage2Response.OrderByDescending(ks2 => ks2.Year).ToList();
-      for (int i = 0; i < 2; i++)
-      {
-         KeyStage2PerformanceResponse response = keyStage2ResponseOrderedByYear.ElementAt(i);
-         Document.QuerySelector($"#percentage-meeting-expected-in-rwm-{i}")!.TextContent.Should().Be(response.PercentageMeetingExpectedStdInRWM.NotDisadvantaged);
-         Document.QuerySelector($"#percentage-achieving-higher-in-rwm-{i}")!.TextContent.Should().Be(response.PercentageAchievingHigherStdInRWM.NotDisadvantaged);
-         Document.QuerySelector($"#reading-progress-score-{i}")!.TextContent.Should().Be(response.ReadingProgressScore.NotDisadvantaged);
-         Document.QuerySelector($"#writing-progress-score-{i}")!.TextContent.Should().Be(response.WritingProgressScore.NotDisadvantaged);
-         Document.QuerySelector($"#maths-progress-score-{i}")!.TextContent.Should().Be(response.MathsProgressScore.NotDisadvantaged);
-
-         Document.QuerySelector($"#la-percentage-meeting-expected-in-rwm-{i}")!.TextContent.Should()
-            .Be(response.LAAveragePercentageMeetingExpectedStdInRWM.NotDisadvantaged);
-         Document.QuerySelector($"#la-percentage-achieving-higher-in-rwm-{i}")!.TextContent.Should()
-            .Be(response.LAAveragePercentageAchievingHigherStdInRWM.NotDisadvantaged);
-         Document.QuerySelector($"#la-reading-progress-score-{i}")!.TextContent.Should().Be(response.LAAverageReadingProgressScore.NotDisadvantaged);
-         Document.QuerySelector($"#la-writing-progress-score-{i}")!.TextContent.Should().Be(response.LAAverageWritingProgressScore.NotDisadvantaged);
-         Document.QuerySelector($"#la-maths-progress-score-{i}")!.TextContent.Should().Be(response.LAAverageMathsProgressScore.NotDisadvantaged);
-
-         Document.QuerySelector($"#na-percentage-meeting-expected-in-rwm-{i}")!.TextContent.Trim().Should()
-            .Be(
-               $"{response.NationalAveragePercentageMeetingExpectedStdInRWM.NotDisadvantaged}(disadvantaged pupils: {response.NationalAveragePercentageMeetingExpectedStdInRWM.Disadvantaged})");
-         Document.QuerySelector($"#na-percentage-achieving-higher-in-rwm-{i}")!.TextContent.Should()
-            .Be(
-               $"{response.NationalAveragePercentageAchievingHigherStdInRWM.NotDisadvantaged}(disadvantaged pupils: {response.NationalAveragePercentageAchievingHigherStdInRWM.Disadvantaged})");
-         Document.QuerySelector($"#na-reading-progress-score-{i}")!.TextContent.Should().Be(response.NationalAverageReadingProgressScore.NotDisadvantaged);
-         Document.QuerySelector($"#na-writing-progress-score-{i}")!.TextContent.Should().Be(response.NationalAverageWritingProgressScore.NotDisadvantaged);
-         Document.QuerySelector($"#na-maths-progress-score-{i}")!.TextContent.Should().Be(response.NationalAverageMathsProgressScore.NotDisadvantaged);
-      }
+      VerifyNullElement("Key stage 5 performance tables");
    }
 
    [Fact]
    public async Task Should_not_display_KS2_performance_tables_on_preview_page_if_response_has_no_KS2_data()
    {
-      AcademyConversionProject project = AddGetProject();
-      AddGetKeyStagePerformance(project.Urn.Value, ks => ks.KeyStage2 = new List<KeyStage2PerformanceResponse>());
+      var project = AddGetProject();
+      AddGetKeyStagePerformance(project.Urn.Value, ks => ks.KeyStage2 = []);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
       Document.QuerySelector("#key-stage-2-performance-tables").Should().BeNull();
    }
 
    [Fact]
-   public async Task Should_navigate_to_KS2_additional_information_and_back()
+   public async Task Should_not_have_educational_performance_data_additional_information()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
       AddGetKeyStagePerformance(project.Urn.Value);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateDataTestAsync("change-key-stage-2-additional-information");
-      Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-2-performance-tables/additional-information");
-
-      await NavigateAsync("Back");
-      Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
+      VerifyNullDataTest(Document, "change-key-stage-2-additional-information");
+      VerifyNullDataTest(Document, "change-key-stage-4-additional-information");
+      VerifyNullDataTest(Document, "change-key-stage-5-additional-information");
+      VerifyNullDataTest(Document, "change-school-performance-additional-information");
    }
 
    [Fact]
-   public async Task Should_update_KS2_additional_information_and_navigate_back_to_preview()
+   public async Task Should_not_display_KS4_section()
    {
-      AcademyConversionProject project = AddGetProject();
-      AddGetKeyStagePerformance(project.Urn.Value);
-
-      SetPerformanceDataModel request = AddPutPerformanceData(project);
-
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
-
-      await NavigateDataTestAsync("change-key-stage-2-additional-information");
-      Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-2-performance-tables/additional-information");
-
-      Document.QuerySelector<IHtmlTextAreaElement>("#additional-information")!.Value.Should().Be(project.KeyStage2PerformanceAdditionalInformation);
-      Document.QuerySelector<IHtmlTextAreaElement>("#additional-information")!.Value = request.KeyStage2PerformanceAdditionalInformation;
-
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
-      Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
-   }
-
-   [Fact]
-   public async Task Should_display_KS4_section()
-   {
-      AcademyConversionProject project = AddGetProject();
-      List<KeyStage4PerformanceResponse> keyStage4Response = AddGetKeyStagePerformance(project.Urn.Value).KeyStage4.ToList();
+      var project = AddGetProject();
+      _ = AddGetKeyStagePerformance(project.Urn.Value).KeyStage4.ToList();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
       Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
 
-      Document.QuerySelector("#key-stage-4-additional-information")!.TextContent.Should().Be(project.KeyStage4PerformanceAdditionalInformation);
-
-      KeyStageHelper.AssertKS4DataIsDisplayed(keyStage4Response, Document);
+      VerifyNullElement("Key stage 4 performance tables");
    }
 
    [Fact]
    public async Task Should_not_display_KS4_performance_tables_on_preview_page_if_response_has_no_KS4_data()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
       AddGetKeyStagePerformance(project.Urn.Value, ks => ks.KeyStage4 = new List<KeyStage4PerformanceResponse>());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
@@ -426,106 +372,9 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Should_navigate_to_KS4_additional_information_and_back()
-   {
-      AcademyConversionProject project = AddGetProject();
-      AddGetKeyStagePerformance(project.Urn.Value);
-
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
-
-      await NavigateDataTestAsync("change-key-stage-4-additional-information");
-      Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-4-performance-tables/additional-information");
-
-      await NavigateAsync("Back");
-      Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
-   }
-
-   [Fact]
-   public async Task Should_update_KS4_additional_information_and_navigate_back_to_preview()
-   {
-      AcademyConversionProject project = AddGetProject();
-      AddGetKeyStagePerformance(project.Urn.Value);
-
-      SetPerformanceDataModel request = AddPutPerformanceData(project);
-
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
-
-      await NavigateDataTestAsync("change-key-stage-4-additional-information");
-      Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-4-performance-tables/additional-information");
-
-      Document.QuerySelector<IHtmlTextAreaElement>("#additional-information")!.Value.Should().Be(project.KeyStage4PerformanceAdditionalInformation);
-      Document.QuerySelector<IHtmlTextAreaElement>("#additional-information")!.Value = request.KeyStage4PerformanceAdditionalInformation;
-
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
-      Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
-   }
-
-   [Fact]
-   public async Task Should_display_KS5_section()
-   {
-      AcademyConversionProject project = AddGetProject();
-      List<KeyStage5PerformanceResponse> keyStage5Response = AddGetKeyStagePerformance(project.Urn.Value).KeyStage5.ToList();
-
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
-      Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
-
-      Document.QuerySelector("#key-stage-5-additional-information")!.TextContent.Should().Be(project.KeyStage5PerformanceAdditionalInformation);
-
-      List<KeyStage5PerformanceResponse> keyStage5ResponseOrderedByYear = keyStage5Response.OrderByDescending(ks5 => ks5.Year).ToList();
-      for (int i = 0; i < 2; i++)
-      {
-         KeyStage5PerformanceResponse response = keyStage5ResponseOrderedByYear.ElementAt(i);
-         Document.QuerySelector($"#academic-progress-{i}")!.TextContent.Should().Be(response.AcademicProgress.NotDisadvantaged);
-         Document.QuerySelector($"#academic-average-{i}")!.TextContent.Should().Contain(response.AcademicQualificationAverage.ToString());
-         Document.QuerySelector($"#applied-general-progress-{i}")!.TextContent.Should().Be(response.AppliedGeneralProgress.NotDisadvantaged);
-         Document.QuerySelector($"#applied-general-average-{i}")!.TextContent.Should().Contain(response.AppliedGeneralQualificationAverage.ToString());
-         Document.QuerySelector($"#na-academic-progress-{i}")!.TextContent.Should().Be("No data");
-         Document.QuerySelector($"#na-academic-average-{i}")!.TextContent.Should().Contain(response.NationalAcademicQualificationAverage.ToString());
-         Document.QuerySelector($"#na-applied-general-progress-{i}")!.TextContent.Should().Be("No data");
-         Document.QuerySelector($"#na-applied-general-average-{i}")!.TextContent.Should().Contain(response.NationalAppliedGeneralQualificationAverage.ToString());
-         i++;
-      }
-   }
-
-   [Fact]
-   public async Task Should_navigate_to_KS5_additional_information_and_back()
-   {
-      AcademyConversionProject project = AddGetProject();
-      AddGetKeyStagePerformance(project.Urn.Value);
-
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
-
-      await NavigateDataTestAsync("change-key-stage-5-additional-information");
-      Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-5-performance-tables/additional-information");
-
-      await NavigateAsync("Back");
-      Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
-   }
-
-   [Fact]
-   public async Task Should_update_KS5_additional_information_and_navigate_back_to_preview()
-   {
-      AcademyConversionProject project = AddGetProject();
-      AddGetKeyStagePerformance(project.Urn.Value);
-
-      SetPerformanceDataModel request = AddPutPerformanceData(project);
-
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
-
-      await NavigateDataTestAsync("change-key-stage-5-additional-information");
-      Document.Url.Should().Contain($"/task-list/{project.Id}/key-stage-5-performance-tables/additional-information");
-
-      Document.QuerySelector<IHtmlTextAreaElement>("#additional-information")!.Value.Should().Be(project.KeyStage5PerformanceAdditionalInformation);
-      Document.QuerySelector<IHtmlTextAreaElement>("#additional-information")!.Value = request.KeyStage5PerformanceAdditionalInformation;
-
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
-      Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
-   }
-
-   [Fact]
    public async Task Should_display_school_and_trust_information_section()
    {
-      AcademyConversionProject project = AddGetProject(x =>
+      var project = AddGetProject(x =>
       {
          x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
          x.ConversionSupportGrantAmount = 10;
@@ -552,7 +401,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_school_and_trust_recommendation_page_and_back()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
       AddGetKeyStagePerformance(project.Urn.Value);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
@@ -569,7 +418,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    {
       (RadioButton selected, RadioButton toSelect) = RandomRadioButtons("project-recommendation", "Approve", "Defer", "Decline");
 
-      AcademyConversionProject project = AddGetProject(p => p.RecommendationForProject = selected.Value);
+      var project = AddGetProject(p => p.RecommendationForProject = selected.Value);
       AddPatchConfiguredProject(project, x =>
       {
          x.RecommendationForProject = toSelect.Value;
@@ -603,7 +452,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
    private class PreviewHtbTemplatePageModel
    {
-      public async Task<IDocument> NavigateToGenerateHtbTemplate(IDocument document, int projectId, bool expectFailure = false)
+      public static async Task<IDocument> NavigateToGenerateHtbTemplate(IDocument document, int projectId, bool expectFailure = false)
       {
          const string generateTemplateButtonName = "#generate-template-button";
          const string generateTemplateButton = generateTemplateButtonName;

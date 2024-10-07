@@ -9,38 +9,25 @@ using System;
 
 namespace Dfe.PrepareConversions.Pages.Public;
 
-public class CookiePreferences : PageModel
+public class CookiePreferences(ILogger<CookiePreferences> logger, IOptions<ServiceLinkOptions> options) : PageModel
 {
-   private const string CONSENT_COOKIE_NAME = ".ManageAnAcademyConversion.Consent";
-   private readonly ILogger<CookiePreferences> _logger;
-   private readonly IOptions<ServiceLinkOptions> _options;
-
-   public CookiePreferences(ILogger<CookiePreferences> logger, IOptions<ServiceLinkOptions> options)
-   {
-      _logger = logger;
-      _options = options;
-   }
-
+   private readonly string[] CONSENT_COOKIE_NAMES = [".ManageAnAcademyConversion.Consent", ".ManageAnAcademyTransfer.Consent"];
    public bool? Consent { get; set; }
    public bool PreferencesSet { get; set; }
    public string ReturnPath { get; set; }
 
-   public string TransfersCookiesUrl { get; set; }
-
    public ActionResult OnGet(bool? consent, string returnUrl)
    {
       ReturnPath = returnUrl;
-      TransfersCookiesUrl = $"{_options.Value.TransfersUrl}/cookie-preferences?returnUrl=%2Fhome";
 
-      if (Request.Cookies.ContainsKey(CONSENT_COOKIE_NAME))
+      if (Request.Cookies.ContainsKey(CONSENT_COOKIE_NAMES[0]) && Request.Cookies.ContainsKey(CONSENT_COOKIE_NAMES[1]))
       {
-         Consent = bool.Parse(Request.Cookies[CONSENT_COOKIE_NAME] ?? string.Empty);
+         Consent = bool.Parse(Request.Cookies[CONSENT_COOKIE_NAMES[0]] ?? string.Empty) && bool.Parse(Request.Cookies[CONSENT_COOKIE_NAMES[1]] ?? string.Empty);
       }
 
       if (consent.HasValue)
       {
-         PreferencesSet = true;
-
+         PreferencesSet = true; 
          ApplyCookieConsent(consent);
 
          if (!string.IsNullOrEmpty(returnUrl))
@@ -58,9 +45,9 @@ public class CookiePreferences : PageModel
    {
       ReturnPath = returnUrl;
 
-      if (Request.Cookies.ContainsKey(CONSENT_COOKIE_NAME))
+      if (Request.Cookies.ContainsKey(CONSENT_COOKIE_NAMES[0]) && Request.Cookies.ContainsKey(CONSENT_COOKIE_NAMES[1]))
       {
-         Consent = bool.Parse(Request.Cookies[CONSENT_COOKIE_NAME] ?? string.Empty);
+         Consent = bool.Parse(Request.Cookies[CONSENT_COOKIE_NAMES[0]] ?? string.Empty) && bool.Parse(Request.Cookies[CONSENT_COOKIE_NAMES[1]] ?? string.Empty);
       }
 
       if (consent.HasValue)
@@ -68,8 +55,7 @@ public class CookiePreferences : PageModel
          Consent = consent;
          PreferencesSet = true;
 
-         CookieOptions cookieOptions = new() { Expires = DateTime.Today.AddMonths(6), Secure = true, HttpOnly = true };
-         Response.Cookies.Append(CONSENT_COOKIE_NAME, consent.Value.ToString(), cookieOptions);
+         AppendCookies(consent);
 
          if (consent.Value is false)
          {
@@ -82,12 +68,20 @@ public class CookiePreferences : PageModel
       return Page();
    }
 
+   private void AppendCookies(bool? consent)
+   {
+      foreach (var CONSENT_COOKIE_NAME in CONSENT_COOKIE_NAMES)
+      {
+         CookieOptions cookieOptions = new() { Expires = DateTime.Today.AddMonths(6), Secure = true, HttpOnly = true };
+         Response.Cookies.Append(CONSENT_COOKIE_NAME, consent.Value.ToString(), cookieOptions);
+      }
+   }
+
    private void ApplyCookieConsent(bool? consent)
    {
       if (consent.HasValue)
       {
-         CookieOptions cookieOptions = new() { Expires = DateTime.Today.AddMonths(6), Secure = true, HttpOnly = true };
-         Response.Cookies.Append(CONSENT_COOKIE_NAME, consent.Value.ToString(), cookieOptions);
+         AppendCookies(consent);
       }
 
       if (consent is false)
@@ -97,13 +91,13 @@ public class CookiePreferences : PageModel
             // Google Analytics
             if (cookie.StartsWith("_ga") || cookie.Equals("_gid"))
             {
-               _logger.LogInformation("Expiring Google analytics cookie: {cookie}", cookie);
+               logger.LogInformation("Expiring Google analytics cookie: {cookie}", cookie);
                Response.Cookies.Append(cookie, string.Empty, new CookieOptions { Expires = DateTime.Now.AddDays(-1), Secure = true, SameSite = SameSiteMode.Lax, HttpOnly = true });
             }
             // App Insights
             if (cookie.StartsWith("ai_"))
             {
-               _logger.LogInformation("Expiring App insights cookie: {cookie}", cookie);
+               logger.LogInformation("Expiring App insights cookie: {cookie}", cookie);
                Response.Cookies.Append(cookie, string.Empty, new CookieOptions { Expires = DateTime.Now.AddYears(-1), Secure = true, SameSite = SameSiteMode.Lax, HttpOnly = true });
             }
          }

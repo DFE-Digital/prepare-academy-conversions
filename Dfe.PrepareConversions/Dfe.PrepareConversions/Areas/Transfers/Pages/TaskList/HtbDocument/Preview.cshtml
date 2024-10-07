@@ -123,59 +123,6 @@
                     <partial name="Shared/_PupilNumbers" model="academy.PupilNumbersViewModel"></partial>
                 </div>
             </section>
-
-            <section class="app-summary-card govuk-!-margin-bottom-7">
-                <header class="app-summary-card__header">
-                    <h2 class="app-summary-card__title">
-                        Latest Ofsted judgement
-                    </h2>
-                </header>
-                <div class="app-summary-card__body">
-                    <partial name="~/Areas/Transfers/Pages/Shared/OfstedSummary/_PreviewSummary.cshtml" model="academy.LatestOfstedJudgementViewModel"></partial>
-                </div>
-            </section>
-
-            @if (PerformanceDataHelpers.HasKeyStage2PerformanceInformation(academy.EducationPerformance.KeyStage2Performance))
-            {
-                <section class="app-summary-card govuk-!-margin-bottom-7">
-                    <header class="app-summary-card__header">
-                        <h2 class="app-summary-card__title">
-                            Key stage 2 performance tables
-                        </h2>
-                    </header>
-                    <div class="app-summary-card__body">
-                        <partial name="KeyStage2PerformanceSummary" model="@academy.EducationPerformance"></partial>
-                    </div>
-                </section>
-            }
-
-            @if (PerformanceDataHelpers.HasKeyStage4PerformanceInformation(academy.EducationPerformance.KeyStage4Performance))
-            {
-                <section class="app-summary-card govuk-!-margin-bottom-7">
-                    <header class="app-summary-card__header">
-                        <h2 class="app-summary-card__title">
-                            Key stage 4 performance tables
-                        </h2>
-                    </header>
-                    <div class="app-summary-card__body">
-                        <partial name="KeyStage4PerformanceSummary" model="@academy.EducationPerformance"></partial>
-                    </div>
-                </section>
-            }
-
-            @if (PerformanceDataHelpers.HasKeyStage5PerformanceInformation(academy.EducationPerformance.KeyStage5Performance))
-            {
-                <section class="app-summary-card govuk-!-margin-bottom-7">
-                    <header class="app-summary-card__header">
-                        <h2 class="app-summary-card__title">
-                            Key stage 5 performance tables
-                        </h2>
-                    </header>
-                    <div class="app-summary-card__body">
-                        <partial name="KeyStage5PerformanceSummary" model="@academy.EducationPerformance"></partial>
-                    </div>
-                </section>
-            }
         }
     </div>
     

@@ -1,26 +1,97 @@
 @{
-   var showBanner = !Context.Request.Cookies.ContainsKey(".ManageAnAcademyConversion.Consent");
+    var showBanner = !Context.Request.Cookies.ContainsKey(".ManageAnAcademyConversion.Consent") && !Context.Request.Cookies.ContainsKey(".ManageAnAcademyTransfer.Consent");
 }
 
 @if (showBanner)
 {
-   <div data-test="cookie-banner" class="app-cookie-banner" id="appCookieBanner" aria-label="cookie banner">
-      <div class="govuk-width-container">
-         <div class="app-cookie-banner__container" id="cookieActionsContainer">
-            <p class="govuk-body">
-               We use cookies to
-               <a class="govuk-link" data-test="cookie-banner-link-1" asp-page="@Links.Public.CookiePreferences.Page">collect information</a>
-               about how you use the <a class="govuk-link" asp-page="@Links.ProjectList.Index.Page" data-test="cookie-banner-conversion-link">conversions part of our service.</a>
-            </p>
-            <div>
-               <a role="button" draggable="false" data-test="cookie-banner-accept" class="govuk-button govuk-!-margin-bottom-2" asp-page="@Links.Public.CookiePreferences.Page" asp-route-consent="true" asp-route-returnUrl="@Context.Request.Path">
-                  Accept cookies for the conversions part of this service
-               </a>
-               <p class="inline-message govuk-body">
-                  or <a class="govuk-link" data-test="cookie-banner-link-2" asp-page="@Links.Public.CookiePreferences.Page" asp-route-returnUrl="@Context.Request.Path">set your cookie preferences</a>
-               </p>
+    <div data-test="cookie-banner" class="govuk-cookie-banner" data-nosnippet role="region" aria-label="Cookies on Prepare conversions and transfers" id="govCookieBanner">
+        <div class="govuk-cookie-banner__message govuk-width-container" id="cookieBanner">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <h2 class="govuk-cookie-banner__heading govuk-heading-m">
+                        Cookies on Prepare conversions and transfers
+                    </h2>
+                    <div class="govuk-cookie-banner__content" id="cookieActionsContainer">
+                        <p class="govuk-body">
+                            We use some essential cookies to make Prepare conversions and transfers work.
+                        </p>
+                        <p class="govuk-body">We&#39;d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+                    </div>
+                    <div class="govuk-button-group">
+                        <button type="button" class="govuk-button" data-test="cookie-banner-accept" data-module="govuk-button" id="acceptCookie">
+                            Accept analytics cookies
+                        </button>
+                        <button type="button" class="govuk-button" data-test="cookie-banner-reject" data-module="govuk-button" id="rejectCookie">
+                            Reject analytics cookies
+                        </button>
+                        <a class="govuk-link" data-test="cookie-banner-link-1" asp-page="@Links.Public.CookiePreferences.Page">View cookies</a>
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
+        </div>
+        <div class="govuk-cookie-banner__message govuk-width-container" role="alert" id="acceptCookieBanner" hidden>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <div class="govuk-cookie-banner__content">
+                        <p class="govuk-body">You’ve accepted analytics cookies. You can <a class="govuk-link" data-test="cookie-banner-link-2" asp-page="@Links.Public.CookiePreferences.Page" asp-route-returnUrl="@Context.Request.Path">change your cookie settings</a> at any time.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-button-group">
+                <button type="button" class="govuk-button" draggable="false" data-module="govuk-button" data-test="hide-cookie-banner-accept" id="acceptCookieBtn">
+                    Hide cookie message
+                </button>
+            </div>
+        </div>
+        <div class="govuk-cookie-banner__message govuk-width-container" role="alert" id="rejectCookieBanner" hidden>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <div class="govuk-cookie-banner__content">
+                        <p class="govuk-body">You’ve rejected analytics cookies. You can <a class="govuk-link" data-test="cookie-banner-link-2" asp-page="@Links.Public.CookiePreferences.Page" asp-route-returnUrl="@Context.Request.Path">change your cookie settings</a> at any time.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-button-group">
+                <button type="button" class="govuk-button" draggable="false" data-test="hide-cookie-banner-reject" data-module="govuk-button" id="rejectCookieBtn">
+                    Hide cookie message
+                </button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" asp-add-nonce>
+        function getData(url) {
+            fetch(url)
+               .catch(error => {
+                  console.error('There was a problem with the fetch operation:', error);
+               });
+        }
+        function hideDiv(id) {
+            var cookieBanner = document.getElementById(id);
+            cookieBanner.style.display = "none";
+        }
+        function displayConfirmationNotification(id) {
+            var toggleDiv = document.getElementById(id);
+            if (toggleDiv.style.display === "none" || toggleDiv.style.display === "") {
+                toggleDiv.style.display = "block";
+            }
+        }
+        document.querySelector('#acceptCookie').onclick = () =>{ 
+            getData('@Links.Public.CookiePreferencesURL.Page' + '?consent=true&returnUrl=' + '@System.Web.HttpUtility.UrlEncode(Context.Request.Path)');
+            hideDiv("cookieBanner");
+            displayConfirmationNotification("acceptCookieBanner");
+        };
+
+        document.querySelector('#rejectCookie').onclick = () =>{
+            getData('@Links.Public.CookiePreferencesURL.Page' + '?consent=false&returnUrl=' + '@System.Web.HttpUtility.UrlEncode(Context.Request.Path)');
+            hideDiv("cookieBanner");
+            displayConfirmationNotification("rejectCookieBanner");
+        };
+
+        document.querySelector('#acceptCookieBtn').onclick = () => {
+            hideDiv("govCookieBanner");
+        }
+        document.querySelector('#rejectCookieBtn').onclick = () => {
+            hideDiv("govCookieBanner");
+        }
+    </script>
 }

@@ -1,5 +1,3 @@
-using AngleSharp.Dom;
-using AngleSharp.Html.Dom;
 using AutoFixture;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
@@ -13,33 +11,30 @@ using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Pages.TaskList.KeyStagePerformance;
 
-public class KeyStage4PerformanceIntegrationTests : BaseIntegrationTests
+public class KeyStage4PerformanceIntegrationTests(IntegrationTestingWebApplicationFactory factory) : BaseIntegrationTests(factory)
 {
-   public KeyStage4PerformanceIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
-
    [Fact]
    public async Task Should_be_reference_only_and_display_KS4_data()
    {
-      AcademyConversionProject project = AddGetProject();
-      List<KeyStage4PerformanceResponse> keyStage4Response = AddGetKeyStagePerformance(project.Urn.Value).KeyStage4.ToList();
+      var project = AddGetProject();
+      var keyStage4Response = AddGetKeyStagePerformance(project.Urn.Value).KeyStage4.ToList();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
       await NavigateAsync("Key stage 4 performance tables");
 
-      Document.QuerySelector("#additional-information")!.TextContent.Should().Be(project.KeyStage4PerformanceAdditionalInformation);
+      Assert.Null(Document.QuerySelector("#additional-information"));
 
       KeyStageHelper.AssertKS4DataIsDisplayed(keyStage4Response, Document);
 
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/key-stage-4-performance-tables");
    }
 
    [Fact]
    public async Task Should_handle_less_than_3_years_of_KS4_data()
    {
-      AcademyConversionProject project = AddGetProject();
-      IEnumerable<KeyStage4PerformanceResponse> ks4Response = _fixture.CreateMany<KeyStage4PerformanceResponse>(2);
+      var project = AddGetProject();
+      var ks4Response = _fixture.CreateMany<KeyStage4PerformanceResponse>(2);
 
       AddGetKeyStagePerformance(project.Urn.Value, ks => ks.KeyStage4 = ks4Response);
 
@@ -47,16 +42,15 @@ public class KeyStage4PerformanceIntegrationTests : BaseIntegrationTests
 
       await NavigateAsync("Key stage 4 performance tables");
 
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/key-stage-4-performance-tables");
    }
 
    [Fact]
    public async Task Should_handle_null_values()
    {
-      AcademyConversionProject project = AddGetProject();
-      List<KeyStage4PerformanceResponse> ks4Response = _fixture.CreateMany<KeyStage4PerformanceResponse>(3).ToList();
-      List<KeyStage4PerformanceResponse> ks4ResponseOrderedByYear = ks4Response.OrderByDescending(ks4 => ks4.Year).ToList();
+      var project = AddGetProject();
+      var ks4Response = _fixture.CreateMany<KeyStage4PerformanceResponse>(3).ToList();
+      var ks4ResponseOrderedByYear = ks4Response.OrderByDescending(ks4 => ks4.Year).ToList();
       ks4ResponseOrderedByYear.First().SipAttainment8score.Disadvantaged = null;
       ks4ResponseOrderedByYear.First().SipAttainment8scoremaths = null;
       ks4ResponseOrderedByYear.First().SipProgress8lowerconfidence = null;
@@ -74,21 +68,6 @@ public class KeyStage4PerformanceIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#attainment8-maths")!.TextContent.Should().Be("No data");
       Document.QuerySelector("#p8-ci")!.TextContent.Should().MatchRegex($"No data to {ks4ResponseOrderedByYear.ElementAt(0).SipProgress8upperconfidence}");
       Document.QuerySelector("#na-p8-ci")!.TextContent.Should().Be("No data");
-   }
-
-   [Fact]
-   public async Task Should_navigate_between_task_list_and_KS4_performance()
-   {
-      AcademyConversionProject project = AddGetProject();
-      AddGetKeyStagePerformance(project.Urn.Value);
-
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-
-      await NavigateAsync("Key stage 4 performance tables");
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/key-stage-4-performance-tables");
-
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}");
    }
 
    [Fact]

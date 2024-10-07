@@ -10,20 +10,16 @@ using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision;
 
-public class SummaryIntegrationTests : BaseIntegrationTests, IAsyncLifetime
+public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory factory) : BaseIntegrationTests(factory), IAsyncLifetime
 {
    private AcademyConversionProject _project;
    private RecordDecisionWizard _wizard;
-
-   public SummaryIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
-   {
-   }
 
    private IHtmlAnchorElement BackLink => Document.QuerySelector<IHtmlAnchorElement>("[data-cy='select-backlink']");
    private Uri BackLinkUri => new(BackLink?.Href!);
    private string BackLinkPath => string.IsNullOrWhiteSpace(BackLinkUri.Query) ? BackLinkUri.PathAndQuery : BackLinkUri.PathAndQuery.Replace(BackLinkUri.Query, string.Empty);
    private string PageHeading => Document.QuerySelector<IHtmlElement>("h1")?.Text().Trim();
-   private string PageSubHeading => Document.QuerySelector<IHtmlElement>("h2")?.Text().Trim();
+   private string PageSubHeading => Document.QuerySelector<IHtmlElement>("[data-test='prepare-project-doc']")?.Text().Trim();
    private string NotificationMessage => Document.QuerySelector<IHtmlElement>("#notification-message")?.Text().Trim();
    private string NotificationBannerTitle => Document.QuerySelector<IHtmlElement>("#govuk-notification-banner-title")!.Text().Trim();
 

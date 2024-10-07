@@ -1,27 +1,16 @@
 ﻿using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Services;
-using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
-using System;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Dfe.PrepareConversions.Data.Exceptions;
-using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.KeyStagePerformance
 {
-   public class PerformanceDataViewModel : BaseAcademyConversionProjectPageModel
+   public class PerformanceDataViewModel(IAcademyConversionProjectRepository repository, ErrorService errorService) : BaseAcademyConversionProjectPageModel(repository)
    {
-      private readonly ErrorService _errorService;
-
-      public PerformanceDataViewModel(IAcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
-      {
-         _errorService = errorService;
-      }
-
       // key stage performance tables
       [BindProperty(Name = "key-stage-2-additional-information")]
       [DisplayFormat(ConvertEmptyStringToNull = false)]
@@ -39,7 +28,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.KeyStagePerformance
       [DisplayFormat(ConvertEmptyStringToNull = false)]
       public string EducationalAttendanceAdditionalInformation { get; set; }
 
-      public bool ShowError => _errorService.HasErrors();
+      public bool ShowError => errorService.HasErrors();
 
       public string SuccessPage
       {
@@ -51,9 +40,6 @@ namespace Dfe.PrepareConversions.Pages.TaskList.KeyStagePerformance
       {
          await base.OnGetAsync(id);
 
-         KeyStage2PerformanceAdditionalInformation = Project.KeyStage2PerformanceAdditionalInformation;
-         KeyStage4PerformanceAdditionalInformation = Project.KeyStage4PerformanceAdditionalInformation;
-         KeyStage5PerformanceAdditionalInformation = Project.KeyStage5PerformanceAdditionalInformation;
          EducationalAttendanceAdditionalInformation = Project.EducationalAttendanceAdditionalInformation;
 
          return Page();
@@ -87,37 +73,25 @@ namespace Dfe.PrepareConversions.Pages.TaskList.KeyStagePerformance
             catch (ApiResponseException ex)
             {
 
-               _errorService.AddApiError();
+               errorService.AddApiError();
                return Page();
             }
 
          }
 
-         _errorService.AddErrors(ModelState.Keys, ModelState);
+         errorService.AddErrors(ModelState.Keys, ModelState);
          return Page();
       }
 
       private void SetExistingValuesIfNotChanged()
       {
-         if (KeyStage2PerformanceAdditionalInformation is null)
-         {
-            KeyStage2PerformanceAdditionalInformation = Project.KeyStage2PerformanceAdditionalInformation;
-         }
+         KeyStage2PerformanceAdditionalInformation ??= Project.KeyStage2PerformanceAdditionalInformation;
 
-         if (KeyStage4PerformanceAdditionalInformation is null)
-         {
-            KeyStage4PerformanceAdditionalInformation = Project.KeyStage4PerformanceAdditionalInformation;
-         }
+         KeyStage4PerformanceAdditionalInformation ??= Project.KeyStage4PerformanceAdditionalInformation;
 
-         if (KeyStage5PerformanceAdditionalInformation is null)
-         {
-            KeyStage5PerformanceAdditionalInformation = Project.KeyStage5PerformanceAdditionalInformation;
-         }
+         KeyStage5PerformanceAdditionalInformation ??= Project.KeyStage5PerformanceAdditionalInformation;
 
-         if (EducationalAttendanceAdditionalInformation is null)
-         {
-            EducationalAttendanceAdditionalInformation = Project.EducationalAttendanceAdditionalInformation;
-         }
+         EducationalAttendanceAdditionalInformation ??= Project.EducationalAttendanceAdditionalInformation;
       }
 
       private (string, string) GetReturnPageAndFragment()

@@ -4,7 +4,9 @@
 
 @{
     var analyticsConsent = Context.Request.Cookies.ContainsKey(".ManageAnAcademyConversion.Consent")
-                           && bool.Parse(Context.Request.Cookies[".ManageAnAcademyConversion.Consent"] ?? string.Empty);
+                           && Context.Request.Cookies.ContainsKey(".ManageAnAcademyTransfer.Consent")
+                           && bool.Parse(Context.Request.Cookies[".ManageAnAcademyConversion.Consent"] ?? string.Empty)
+                           && bool.Parse(Context.Request.Cookies[".ManageAnAcademyTransfer.Consent"] ?? string.Empty);
 
     var enableGoogleAnalytics = Configuration["GoogleAnalytics:Enable"] == "Yes" && analyticsConsent;
     var enableAppInsightsAnalytics = Configuration["ApplicationInsights:EnableBrowserAnalytics"] == "Yes" && analyticsConsent;
