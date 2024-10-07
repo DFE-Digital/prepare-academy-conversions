@@ -9,10 +9,8 @@ using System.Threading.Tasks;
 namespace Dfe.PrepareConversions.TagHelpers;
 
 [HtmlTargetElement("govuk-summary-list-row", TagStructure = TagStructure.WithoutEndTag)]
-public class SummaryListRowTagHelper : InputTagHelperBase
+public class SummaryListRowTagHelper(IHtmlHelper htmlHelper) : InputTagHelperBase(htmlHelper)
 {
-   public SummaryListRowTagHelper(IHtmlHelper htmlHelper) : base(htmlHelper) { }
-
    [HtmlAttributeName("value")]
    public string Value { get; set; }
 
@@ -43,6 +41,9 @@ public class SummaryListRowTagHelper : InputTagHelperBase
    [HtmlAttributeName("highlight-negative-value")]
    public bool HighlightNegativeValue { get; set; }
 
+   [HtmlAttributeName("asp-read-only")]
+   public bool IsReadOnly { get; set; }
+
    protected override async Task<IHtmlContent> RenderContentAsync()
    {
       string value1 = For == null ? Value : For.Model?.ToString();
@@ -62,7 +63,8 @@ public class SummaryListRowTagHelper : InputTagHelperBase
          KeyWidth = KeyWidth,
          ValueWidth = ValueWidth,
          Name = Name,
-         HighlightNegativeValue = HighlightNegativeValue
+         HighlightNegativeValue = HighlightNegativeValue,
+         IsReadOnly = IsReadOnly
       };
 
       return await _htmlHelper.PartialAsync("_SummaryListRow", model);

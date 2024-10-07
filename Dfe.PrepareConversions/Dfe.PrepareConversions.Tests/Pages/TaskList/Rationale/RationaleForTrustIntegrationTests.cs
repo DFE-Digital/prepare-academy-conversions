@@ -9,10 +9,8 @@ using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Rationale;
 
-public class RationaleForTrustIntegrationTests : BaseIntegrationTests
+public class RationaleForTrustIntegrationTests(IntegrationTestingWebApplicationFactory factory) : BaseIntegrationTests(factory)
 {
-   public RationaleForTrustIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
-
    [Fact]
    public async Task Should_navigate_to_and_update_rationale_for_trust()
    {
@@ -53,7 +51,7 @@ public class RationaleForTrustIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_back_to_rationale_from_rationale_for_trust()
    {
-      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
+      var project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale/trust-rationale");
       await NavigateAsync("Back");

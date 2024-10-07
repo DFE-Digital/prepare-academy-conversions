@@ -130,6 +130,7 @@ public class ProjectViewModel : ProjectTypeBase
 
       ProposedConversionDate = project.ProposedConversionDate;
       ProjectDatesSectionComplete = project.ProjectDatesSectionComplete;
+      IsReadOnly = project.IsReadOnly;
    }
 
    public string Id { get; }
@@ -267,5 +268,6 @@ public class ProjectViewModel : ProjectTypeBase
    public override bool IsExternalSchoolApplication => string.IsNullOrEmpty(this.ApplicationReferenceNumber);
 
    public bool HasPermission { get; set; }
+   public bool IsReadOnly { get; set; }
 
 }

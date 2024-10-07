@@ -34,7 +34,7 @@ public class BaseAcademyConversionProjectPageModel(IAcademyConversionProjectRepo
 
    protected async Task<IActionResult> SetProject(int id)
    {
-      ApiResponse<AcademyConversionProject> project = await _repository.GetProjectById(id);
+      var project = await _repository.GetProjectById(id);
       if (!project.Success)
       {
          // 404 logic

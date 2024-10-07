@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.LegalRequirements;
 
-public class LegalSummaryModel : LegalModelBase
+public class LegalSummaryModel(IAcademyConversionProjectRepository academyConversionProjectRepository) : LegalModelBase(academyConversionProjectRepository)
 {
-   public LegalSummaryModel(IAcademyConversionProjectRepository academyConversionProjectRepository) :
-      base(academyConversionProjectRepository)
-   {
-   }
-
    [BindProperty]
    public bool IsComplete { get; set; }
 
@@ -24,7 +19,7 @@ public class LegalSummaryModel : LegalModelBase
    public async Task<IActionResult> OnPostAsync(int id)
    {
       Requirements.IsComplete = IsComplete;
-      await AcademyConversionProjectRepository.UpdateProject(id, Requirements.CreateUpdateAcademyConversionProject());
+      await academyConversionProjectRepository.UpdateProject(id, Requirements.CreateUpdateAcademyConversionProject());
       return RedirectToPage(Links.TaskList.Index.Page, new { id });
    }
 }

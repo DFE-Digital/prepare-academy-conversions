@@ -98,9 +98,10 @@
              }
           </ul>
        </div>
-
-        <template-guidance is-sponsored="@Model.Project.IsSponsored" project-id="@Model.Project.Id"></template-guidance>
-
+       @if(!Model.Project.IsReadOnly)
+       {
+          <template-guidance is-sponsored="@Model.Project.IsSponsored" project-id="@Model.Project.Id"></template-guidance>
+       }
        <h3 class="app-task-list__section govuk-!-margin-top-8">Give a case for academisation</h3>
         <div class="app-task-list">
             <ul class="app-task-list__items govuk-!-padding-left-0">

@@ -52,13 +52,13 @@
     </header>
     <div class="app-summary-card__body">
         <dl class="govuk-summary-list">
-            <govuk-summary-list-row name="financial-year" label="End of current financial year" value="@Model.Project.EndOfCurrentFinancialYear.ToDateString()" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="End of current financial year" />
-            <govuk-summary-list-row name="finance-year-current" label="Forecasted revenue carry forward at the end of the current financial year" key-width="@WidthOverride.TwoThirds" value="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted revenue carry forward at the end of the current financial year" />
-            <govuk-summary-list-row name="finance-current-capital" label="Forecasted capital carry forward at the end of the current financial year" key-width="@WidthOverride.TwoThirds" value="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted capital carry forward at the end of the current financial year" />
-            <govuk-summary-list-row name="next-financial-year" label="End of next financial year" value="@Model.Project.EndOfNextFinancialYear.ToDateString()" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="End of next financial year" />
-            <govuk-summary-list-row name="finance-year-following" label="Forecasted revenue carry forward at the end of the next financial year" key-width="@WidthOverride.TwoThirds" value="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear?.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted revenue carry forward at the end of the next financial year" />
-            <govuk-summary-list-row name="finance-projected-capital" label="Forecasted capital carry forward at the end of the next financial year" key-width="@WidthOverride.TwoThirds" value="@Model.Project.CapitalCarryForwardAtEndMarchNextYear?.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted capital carry forward at the end of the next financial year" />
-            <govuk-summary-list-row name="school-budget-information-additional-information" label="Additional information" key-width="@WidthOverride.TwoThirds" value="@Model.Project.SchoolBudgetInformationAdditionalInformation" asp-page="@Links.SchoolBudgetInformationSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
+            <govuk-summary-list-row name="financial-year" label="End of current financial year" value="@Model.Project.EndOfCurrentFinancialYear.ToDateString()" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="End of current financial year" asp-read-only="@Model.Project.IsReadOnly"/>
+            <govuk-summary-list-row name="finance-year-current" label="Forecasted revenue carry forward at the end of the current financial year" key-width="@WidthOverride.TwoThirds" value="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted revenue carry forward at the end of the current financial year" asp-read-only="@Model.Project.IsReadOnly" />
+            <govuk-summary-list-row name="finance-current-capital" label="Forecasted capital carry forward at the end of the current financial year" key-width="@WidthOverride.TwoThirds" value="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted capital carry forward at the end of the current financial year" asp-read-only="@Model.Project.IsReadOnly" />
+            <govuk-summary-list-row name="next-financial-year" label="End of next financial year" value="@Model.Project.EndOfNextFinancialYear.ToDateString()" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="End of next financial year" asp-read-only="@Model.Project.IsReadOnly" />
+            <govuk-summary-list-row name="finance-year-following" label="Forecasted revenue carry forward at the end of the next financial year" key-width="@WidthOverride.TwoThirds" value="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear?.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted revenue carry forward at the end of the next financial year" asp-read-only="@Model.Project.IsReadOnly" />
+            <govuk-summary-list-row name="finance-projected-capital" label="Forecasted capital carry forward at the end of the next financial year" key-width="@WidthOverride.TwoThirds" value="@Model.Project.CapitalCarryForwardAtEndMarchNextYear?.ToMoneyString(true)" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted capital carry forward at the end of the next financial year" asp-read-only="@Model.Project.IsReadOnly" />
+            <govuk-summary-list-row name="school-budget-information-additional-information" label="Additional information" key-width="@WidthOverride.TwoThirds" value="@Model.Project.SchoolBudgetInformationAdditionalInformation" asp-page="@Links.SchoolBudgetInformationSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" asp-read-only="@Model.Project.IsReadOnly" />
         </dl>
     </div>
 </section>
@@ -73,7 +73,7 @@
     <div class="app-summary-card__body">
         <partial name="~/Pages/TaskList/SchoolPupilForecasts/_SchoolPupilForecastsTable.cshtml" model="Model.Project" />
         <dl class="govuk-summary-list">
-            <govuk-summary-list-row name="school-pupil-forecasts-additional-information" label="Additional information" value="@Model.Project.SchoolPupilForecastsAdditionalInformation" asp-page="@Links.SchoolPupilForecastsSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" />
+            <govuk-summary-list-row name="school-pupil-forecasts-additional-information" label="Additional information" value="@Model.Project.SchoolPupilForecastsAdditionalInformation" asp-page="@Links.SchoolPupilForecastsSection.AdditionalInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="additional information" asp-read-only="@Model.Project.IsReadOnly" />
         </dl>
     </div>
 </section>
@@ -101,10 +101,10 @@
       </header>
       <div class="app-summary-card__body">
          <dl class="govuk-summary-list">
-                <govuk-summary-list-row name="governing-body-resolution" label="Management Committee Resolution" asp-route-id="@Model.Project.Id" value="@Model.Project.GoverningBodyResolution.SplitPascalCase()" asp-page="@Links.LegalRequirements.GoverningBodyResolution.Page" hidden-text="governing-body-resolution" />
-            <govuk-summary-list-row name="consultation" label="Consultation" asp-route-id="@Model.Project.Id" value="@Model.Project.Consultation.SplitPascalCase()" asp-page="@Links.LegalRequirements.Consultation.Page" hidden-text="consultation"/>
-            <govuk-summary-list-row name="diocesan-consent" label="Diocesan Consent" asp-route-id="@Model.Project.Id" value="@Model.Project.DiocesanConsent.SplitPascalCase()" asp-page="@Links.LegalRequirements.DiocesanConsent.Page" hidden-text="diocesan-consent"/>
-            <govuk-summary-list-row name="foundation-consent" label="Foundation Consent" asp-route-id="@Model.Project.Id" value="@Model.Project.FoundationConsent.SplitPascalCase()" asp-page="@Links.LegalRequirements.FoundationConsent.Page" hidden-text="foundation-consent"/>
+                <govuk-summary-list-row name="governing-body-resolution" label="Management Committee Resolution" asp-route-id="@Model.Project.Id" value="@Model.Project.GoverningBodyResolution.SplitPascalCase()" asp-page="@Links.LegalRequirements.GoverningBodyResolution.Page" hidden-text="governing-body-resolution" asp-read-only="@Model.Project.IsReadOnly" />
+                <govuk-summary-list-row name="consultation" label="Consultation" asp-route-id="@Model.Project.Id" value="@Model.Project.Consultation.SplitPascalCase()" asp-page="@Links.LegalRequirements.Consultation.Page" hidden-text="consultation" asp-read-only="@Model.Project.IsReadOnly" />
+                <govuk-summary-list-row name="diocesan-consent" label="Diocesan Consent" asp-route-id="@Model.Project.Id" value="@Model.Project.DiocesanConsent.SplitPascalCase()" asp-page="@Links.LegalRequirements.DiocesanConsent.Page" hidden-text="diocesan-consent" asp-read-only="@Model.Project.IsReadOnly" />
+                <govuk-summary-list-row name="foundation-consent" label="Foundation Consent" asp-route-id="@Model.Project.Id" value="@Model.Project.FoundationConsent.SplitPascalCase()" asp-page="@Links.LegalRequirements.FoundationConsent.Page" hidden-text="foundation-consent" asp-read-only="@Model.Project.IsReadOnly" />
          </dl>
       </div>
    </section>
@@ -121,9 +121,9 @@
         <dl class="govuk-summary-list">
             @if (!Model.Project.IsSponsored)
             {
-                <govuk-summary-list-row name="rationale-for-project" key-width="@WidthOverride.OneQuarter" value-width="@WidthOverride.Full" label="Rationale for project" value="@Model.Project.RationaleForProject" asp-page="@Links.RationaleSection.RationaleForProject.Page" asp-route-id="@Model.Project.Id" hidden-text="project rationale" />
+                <govuk-summary-list-row name="rationale-for-project" key-width="@WidthOverride.OneQuarter" value-width="@WidthOverride.Full" label="Rationale for project" value="@Model.Project.RationaleForProject" asp-page="@Links.RationaleSection.RationaleForProject.Page" asp-route-id="@Model.Project.Id" hidden-text="project rationale" asp-read-only="@Model.Project.IsReadOnly" />
             }
-            <govuk-summary-list-row name="rationale-for-trust" key-width="@WidthOverride.OneQuarter" value-width="@WidthOverride.Full" label="Rationale for the trust or sponsor" value="@Model.Project.RationaleForTrust" asp-page="@Links.RationaleSection.RationaleForTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="sponsor rationale" />
+            <govuk-summary-list-row name="rationale-for-trust" key-width="@WidthOverride.OneQuarter" value-width="@WidthOverride.Full" label="Rationale for the trust or sponsor" value="@Model.Project.RationaleForTrust" asp-page="@Links.RationaleSection.RationaleForTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="sponsor rationale" asp-read-only="@Model.Project.IsReadOnly" />
         </dl>
     </div>
 </section>
@@ -137,7 +137,7 @@
    </header>
    <div class="app-summary-card__body">
       <dl class="govuk-summary-list">
-         <govuk-summary-list-row name="risks-and-issues" label="Risks and issues" value="@Model.Project.RisksAndIssues" asp-page="@Links.RisksAndIssuesSection.RisksAndIssues.Page" asp-route-id="@Model.Project.Id" hidden-text="risks and issues"/>
+            <govuk-summary-list-row name="risks-and-issues" label="Risks and issues" value="@Model.Project.RisksAndIssues" asp-page="@Links.RisksAndIssuesSection.RisksAndIssues.Page" asp-route-id="@Model.Project.Id" hidden-text="risks and issues" asp-read-only="@Model.Project.IsReadOnly" />
       </dl>
    </div>
 </section>

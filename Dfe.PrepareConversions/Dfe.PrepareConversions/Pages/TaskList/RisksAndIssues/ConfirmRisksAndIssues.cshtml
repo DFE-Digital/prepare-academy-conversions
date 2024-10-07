@@ -25,14 +25,17 @@
    </div>
    <div class="govuk-grid-column-full">
       <dl class="govuk-summary-list">
-         <govuk-summary-list-row name="risks-and-issues" label="Risks and issues" value="@Model.Project.RisksAndIssues" asp-page="@Links.RisksAndIssuesSection.RisksAndIssues.Page" asp-route-id="@Model.Project.Id" hidden-text="risks and issues"/>
+         <govuk-summary-list-row name="risks-and-issues" label="Risks and issues" value="@Model.Project.RisksAndIssues" asp-page="@Links.RisksAndIssuesSection.RisksAndIssues.Page" asp-route-id="@Model.Project.Id" hidden-text="risks and issues" asp-read-only="@Model.Project.IsReadOnly"/>
       </dl>
-      <form method="post">
-         <govuk-checkbox-input name="risks-and-issues-complete" asp-for="Project.RisksAndIssuesSectionComplete" label="Mark this section as complete, you can still make changes later"/>
+      @if(!Model.Project.IsReadOnly)
+      {
+         <form method="post">
+            <govuk-checkbox-input name="risks-and-issues-complete" asp-for="Project.RisksAndIssuesSectionComplete" label="Mark this section as complete, you can still make changes later"/>
 
-         <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
-            Confirm and continue
-         </button>
-      </form>
+            <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
+               Confirm and continue
+            </button>
+         </form>
+      }
    </div>
 </div>

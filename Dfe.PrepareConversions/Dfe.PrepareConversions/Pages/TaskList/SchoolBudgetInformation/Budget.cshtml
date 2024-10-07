@@ -28,12 +28,12 @@
    </div>
    <div class="govuk-grid-column-full">
       <dl class="govuk-summary-list">
-         <govuk-summary-list-row name="financial-year" label="End of current financial year" key-width="@kw" value="@Model.Project.EndOfCurrentFinancialYear.ToDateString()" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="End of current financial year"/>
-         <govuk-summary-list-row name="finance-year-current" label="Forecasted revenue carry forward at the end of the current financial year" key-width="@kw" value="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true)" highlight-negative-value="true" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted revenue carry forward at the end of the current financial year"/>
-         <govuk-summary-list-row name="finance-current-capital" label="Forecasted capital carry forward at the end of the current financial year" key-width="@kw" value="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true)" highlight-negative-value="true" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted capital carry forward at the end of the current financial year"/>
-         <govuk-summary-list-row name="next-financial-year" label="End of next financial year" key-width="@kw" value="@Model.Project.EndOfNextFinancialYear.ToDateString()" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="End of next financial year"/>
-         <govuk-summary-list-row name="finance-year-following" label="Forecasted revenue carry forward at the end of the next financial year" key-width="@kw" value="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear?.ToMoneyString(true)" highlight-negative-value="true" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted revenue carry forward at the end of the next financial year"/>
-         <govuk-summary-list-row name="finance-projected-capital" label="Forecasted capital carry forward at the end of the next financial year" key-width="@kw" value="@Model.Project.CapitalCarryForwardAtEndMarchNextYear?.ToMoneyString(true)" highlight-negative-value="true" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted capital carry forward at the end of the next financial year"/>
+            <govuk-summary-list-row name="financial-year" label="End of current financial year" key-width="@kw" value="@Model.Project.EndOfCurrentFinancialYear.ToDateString()" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="End of current financial year" asp-read-only="@Model.Project.IsReadOnly" />
+            <govuk-summary-list-row name="finance-year-current" label="Forecasted revenue carry forward at the end of the current financial year" key-width="@kw" value="@Model.Project.RevenueCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true)" highlight-negative-value="true" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted revenue carry forward at the end of the current financial year" asp-read-only="@Model.Project.IsReadOnly" />
+            <govuk-summary-list-row name="finance-current-capital" label="Forecasted capital carry forward at the end of the current financial year" key-width="@kw" value="@Model.Project.CapitalCarryForwardAtEndMarchCurrentYear?.ToMoneyString(true)" highlight-negative-value="true" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted capital carry forward at the end of the current financial year" asp-read-only="@Model.Project.IsReadOnly" />
+            <govuk-summary-list-row name="next-financial-year" label="End of next financial year" key-width="@kw" value="@Model.Project.EndOfNextFinancialYear.ToDateString()" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="End of next financial year" asp-read-only="@Model.Project.IsReadOnly" />
+            <govuk-summary-list-row name="finance-year-following" label="Forecasted revenue carry forward at the end of the next financial year" key-width="@kw" value="@Model.Project.ProjectedRevenueBalanceAtEndMarchNextYear?.ToMoneyString(true)" highlight-negative-value="true" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted revenue carry forward at the end of the next financial year" asp-read-only="@Model.Project.IsReadOnly" />
+            <govuk-summary-list-row name="finance-projected-capital" label="Forecasted capital carry forward at the end of the next financial year" key-width="@kw" value="@Model.Project.CapitalCarryForwardAtEndMarchNextYear?.ToMoneyString(true)" highlight-negative-value="true" asp-page="@Links.SchoolBudgetInformationSection.UpdateSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" hidden-text="Forecasted capital carry forward at the end of the next financial year" asp-read-only="@Model.Project.IsReadOnly" />
       </dl>
    </div>
    <div class="govuk-grid-column-two-thirds">
@@ -42,14 +42,16 @@
    </div>
    <div class="govuk-grid-column-full">
       <dl class="govuk-summary-list">
-         <govuk-summary-list-row id="additional-information" name="school-budget-information-additional-information" label="Additional information" value="@Model.Project.SchoolBudgetInformationAdditionalInformation" asp-page="@Links.SchoolBudgetInformationSection.AdditionalInformation.Page" asp-fragment="additional-information" asp-route-id="@Model.Project.Id" hidden-text="additional information"/>
+            <govuk-summary-list-row id="additional-information" name="school-budget-information-additional-information" label="Additional information" value="@Model.Project.SchoolBudgetInformationAdditionalInformation" asp-page="@Links.SchoolBudgetInformationSection.AdditionalInformation.Page" asp-fragment="additional-information" asp-route-id="@Model.Project.Id" hidden-text="additional information" asp-read-only="@Model.Project.IsReadOnly" />
       </dl>
-      <form method="post">
-         <govuk-checkbox-input name="school-budget-information-complete" asp-for="Project.SchoolBudgetInformationSectionComplete" label="Mark this section as complete, you can still make changes later"/>
-
-         <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
-            Confirm and continue
-         </button>
-      </form>
-   </div>
+       @if (!Model.Project.IsReadOnly)
+       {
+         <form method="post">
+            <govuk-checkbox-input name="school-budget-information-complete" asp-for="Project.SchoolBudgetInformationSectionComplete" label="Mark this section as complete, you can still make changes later" />
+            <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
+               Confirm and continue
+            </button>
+         </form>
+        }
+   </div> 
 </div>

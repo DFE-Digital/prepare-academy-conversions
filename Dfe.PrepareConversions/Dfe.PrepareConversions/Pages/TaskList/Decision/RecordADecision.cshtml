@@ -13,5 +13,5 @@
     <partial name="_ProjectHeader" model="@Model.Project" />
 
     <div class="govuk-grid-row">
-       @await Component.InvokeAsync("RecordDecisionPreview", new { id = int.Parse(Model?.Project.Id ?? string.Empty), AcademyTypeAndRoute = Model.Project.AcademyTypeAndRoute })
+       @await Component.InvokeAsync("RecordDecisionPreview", new { id = int.Parse(Model?.Project.Id ?? string.Empty), AcademyTypeAndRoute = Model.Project.AcademyTypeAndRoute, isReadOnly= Model.Project.IsReadOnly })
     </div>

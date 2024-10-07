@@ -40,16 +40,19 @@
         <dl class="govuk-summary-list">
             @if (@Model.Project.AcademyTypeAndRoute != AcademyTypeAndRoutes.Sponsored)
             {
-                <govuk-summary-list-row name="rationale-for-project" key-width="@kw" value-width="@vw" label="Rationale for project" value="@Model.Project.RationaleForProject" asp-page="@Links.RationaleSection.RationaleForProject.Page" asp-route-id="@Model.Project.Id" hidden-text="project rationale" />
+                <govuk-summary-list-row name="rationale-for-project" key-width="@kw" value-width="@vw" label="Rationale for project" value="@Model.Project.RationaleForProject" asp-page="@Links.RationaleSection.RationaleForProject.Page" asp-route-id="@Model.Project.Id" hidden-text="project rationale" asp-read-only="@Model.Project.IsReadOnly"/>
             }
-            <govuk-summary-list-row name="rationale-for-trust" key-width="@kw" value-width="@vw" label="Rationale for the trust or sponsor" value="@Model.Project.RationaleForTrust" asp-page="@Links.RationaleSection.RationaleForTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="sponsor rationale" />
+            <govuk-summary-list-row name="rationale-for-trust" key-width="@kw" value-width="@vw" label="Rationale for the trust or sponsor" value="@Model.Project.RationaleForTrust" asp-page="@Links.RationaleSection.RationaleForTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="sponsor rationale" asp-read-only="@Model.Project.IsReadOnly" />
         </dl>
-        <form method="post">
-            <govuk-checkbox-input name="rationale-complete" asp-for="Project.RationaleSectionComplete" label="Mark this section as complete, you can still make changes later" />
+        @if(!Model.Project.IsReadOnly)
+        {
+           <form method="post">
+               <govuk-checkbox-input name="rationale-complete" asp-for="Project.RationaleSectionComplete" label="Mark this section as complete, you can still make changes later" />
 
-            <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
-                Confirm and continue
-            </button>
-        </form>
+               <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
+                   Confirm and continue
+               </button>
+           </form>
+        }
     </div>
 </div>

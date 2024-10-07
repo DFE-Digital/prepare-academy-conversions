@@ -14,6 +14,7 @@ public static class UpdateAcademyConversionProjectExtensions
          FoundationConsent = project.FoundationConsent.ToString(),
          GoverningBodyResolution = project.GoverningBodyApproved.ToString(),
          LegalRequirementsSectionComplete = project.IsComplete
+         
       };
    }
 }

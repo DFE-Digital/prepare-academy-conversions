@@ -14,21 +14,11 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.Decision;
 
-public class SummaryModel : DecisionBaseModel
+public class SummaryModel(IAcademyConversionProjectRepository repository,
+                    ISession session,
+                    IAcademyConversionAdvisoryBoardDecisionRepository advisoryBoardDecisionRepository,
+                    IAcademyConversionProjectRepository academyConversionProjectRepository) : DecisionBaseModel(repository, session)
 {
-   private readonly IAcademyConversionProjectRepository _academyConversionProjectRepository;
-   private readonly IAcademyConversionAdvisoryBoardDecisionRepository _advisoryBoardDecisionRepository;
-
-   public SummaryModel(IAcademyConversionProjectRepository repository,
-                       ISession session,
-                       IAcademyConversionAdvisoryBoardDecisionRepository advisoryBoardDecisionRepository,
-                       IAcademyConversionProjectRepository academyConversionProjectRepository)
-      : base(repository, session)
-   {
-      _advisoryBoardDecisionRepository = advisoryBoardDecisionRepository;
-      _academyConversionProjectRepository = academyConversionProjectRepository;
-   }
-
    public AdvisoryBoardDecision Decision { get; set; }
    public string DecisionText =>
       Decision.Decision == AdvisoryBoardDecisions.DAORevoked
@@ -70,17 +60,17 @@ public class SummaryModel : DecisionBaseModel
 
    private async Task CreateOrUpdateDecision(int id, AdvisoryBoardDecision decision)
    {
-      ApiResponse<AdvisoryBoardDecision> savedDecision = await _advisoryBoardDecisionRepository.Get(id);
+      ApiResponse<AdvisoryBoardDecision> savedDecision = await advisoryBoardDecisionRepository.Get(id);
 
       if (savedDecision.StatusCode == HttpStatusCode.NotFound)
       {
-         await _advisoryBoardDecisionRepository.Create(decision);
+         await advisoryBoardDecisionRepository.Create(decision);
       }
       else
       {
-         await _advisoryBoardDecisionRepository.Update(decision);
+         await advisoryBoardDecisionRepository.Update(decision);
       }
 
-      await _academyConversionProjectRepository.UpdateProject(id, new UpdateAcademyConversionProject { ProjectStatus = decision.GetDecisionAsFriendlyName() });
+      await academyConversionProjectRepository.UpdateProject(id, new UpdateAcademyConversionProject { ProjectStatus = decision.GetDecisionAsFriendlyName() });
    }
 }
