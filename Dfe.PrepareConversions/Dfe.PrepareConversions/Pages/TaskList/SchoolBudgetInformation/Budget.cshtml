@@ -22,7 +22,28 @@
    <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l">@Model.Project.SchoolName</span>
       <h1 class="govuk-heading-l">Budget</h1>
-        <p class="govuk-body">This table will go into your project document.</p>
+        @if (Model.Project.IsReadOnly)
+        {
+            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                        Important
+                    </h2>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">
+                        Project approved
+                    </p>
+                    <p class="govuk-body">
+                        This project was approved and moved to Complete conversions transfers and changes on @Model.Project.ApplicationReceivedDate.
+                    </p>
+                    <p class="govuk-body">
+                        You cannot make changes to this project in Prepare.
+                    </p>
+                </div>
+            </div>
+        }
+      <p class="govuk-body">This table will go into your project document.</p>
       <p class="govuk-body-m">You can<a class="govuk-link" href="#additional-information"> add additional information</a> if you need to, this will also go into your project document.</p>
       <br>
    </div>

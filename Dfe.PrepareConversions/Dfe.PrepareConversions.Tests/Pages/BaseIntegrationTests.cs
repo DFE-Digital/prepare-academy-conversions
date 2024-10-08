@@ -61,6 +61,12 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
       return resultDocument;
    }
 
+   protected void VerifyElementDoesNotExist(string dataTest)
+   {
+      var anchors = Document.QuerySelectorAll($"[data-test='{dataTest}']").FirstOrDefault();
+      Assert.Null(anchors);
+   }
+
    protected void VerifyNullElement(string linkText)
    {
       var anchors = Document.QuerySelectorAll("a");

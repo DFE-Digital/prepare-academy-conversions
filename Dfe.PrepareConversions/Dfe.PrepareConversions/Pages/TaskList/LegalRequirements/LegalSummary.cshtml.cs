@@ -19,7 +19,7 @@ public class LegalSummaryModel(IAcademyConversionProjectRepository academyConver
    public async Task<IActionResult> OnPostAsync(int id)
    {
       Requirements.IsComplete = IsComplete;
-      await academyConversionProjectRepository.UpdateProject(id, Requirements.CreateUpdateAcademyConversionProject());
+      await AcademyConversionProjectRepository.UpdateProject(id, Requirements.CreateUpdateAcademyConversionProject());
       return RedirectToPage(Links.TaskList.Index.Page, new { id });
    }
 }

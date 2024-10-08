@@ -11,14 +11,12 @@ using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolAndTrustInformation;
 
-public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationTests
+public class ConfirmSchoolAndTrustInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory) : BaseIntegrationTests(factory)
 {
-   public ConfirmSchoolAndTrustInformationIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
-
    [Fact]
    public async Task Should_be_in_progress_and_display_school_and_trust_information()
    {
-      AcademyConversionProject project = AddGetProject(p =>
+      var project = AddGetProject(p =>
       {
          p.SchoolAndTrustInformationSectionComplete = false;
          p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
@@ -49,7 +47,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
    [Fact]
    public async Task Should_display_an_error_when_school_and_trust_information_is_marked_as_complete_without_advisory_board_date_set()
    {
-      AcademyConversionProject project = AddGetProject(project =>
+      var project = AddGetProject(project =>
       {
          project.SchoolAndTrustInformationSectionComplete = false;
          project.HeadTeacherBoardDate = null;
@@ -72,7 +70,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
    [Fact]
    public async Task Should_be_completed_and_checked_when_school_and_trust_information_complete()
    {
-      AcademyConversionProject project = AddGetProject(project => project.SchoolAndTrustInformationSectionComplete = true);
+      var project = AddGetProject(project => project.SchoolAndTrustInformationSectionComplete = true);
       AddPatchConfiguredProject(project, x =>
       {
          x.SchoolAndTrustInformationSectionComplete = true;
@@ -95,7 +93,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
    [Fact]
    public async Task Should_be_not_started_and_display_empty_when_school_and_trust_information_not_prepopulated()
    {
-      AcademyConversionProject project = AddGetProject(project =>
+      var project = AddGetProject(project =>
       {
          project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
          project.RecommendationForProject = null;
@@ -146,7 +144,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
    [Fact]
    public async Task Should_show_error_summary_when_there_is_an_API_error()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
       AddPatchError(project.Id);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/conversion-details");
@@ -159,7 +157,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
    [Fact]
    public async Task Should_show_error_summary_when_grant_amount_less_than_full_amount_and_no_reason_entered()
    {
-      AcademyConversionProject project = AddGetProject(project =>
+      var project = AddGetProject(project =>
       {
          project.ConversionSupportGrantAmount = 2000m;
          project.ConversionSupportGrantChangeReason = null;
@@ -185,7 +183,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
    [Fact]
    public async Task Should_navigate_between_task_list_and_school_and_trust_information()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Conversion details");
@@ -200,7 +198,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
    [Fact]
    public async Task Should_display_the_dao_pack_sent_date_row_if_the_project_is_a_directed_academy_order()
    {
-      AcademyConversionProject project = AddGetProject(project =>
+      var project = AddGetProject(project =>
       {
          project.ApplicationReceivedDate = null;
          project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored;
@@ -216,7 +214,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
    [Fact]
    public async Task Should_display_empty_for_the_dao_date_if_it_has_not_been_provided()
    {
-      AcademyConversionProject project = AddGetProject(project =>
+      var project = AddGetProject(project =>
       {
          project.ApplicationReceivedDate = null;
          project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored;
@@ -234,7 +232,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
    {
       DateTime yesterday = DateTime.Today.Subtract(TimeSpan.FromDays(1));
 
-      AcademyConversionProject project = AddGetProject(project =>
+      var project = AddGetProject(project =>
       {
          project.ApplicationReceivedDate = null;
          project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored;
@@ -250,7 +248,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
    [Fact]
    public async Task Should_not_display_the_dao_pack_sent_date_row_if_the_project_is_not_a_directed_academy_order()
    {
-      AcademyConversionProject project = AddGetProject(project => project.ApplicationReceivedDate = DateTime.Today);
+      var project = AddGetProject(project => project.ApplicationReceivedDate = DateTime.Today);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Conversion details");
@@ -262,7 +260,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
    [Fact]
    public async Task Should_navigate_to_dao_pack_sent_date_edit_screen_when_the_change_link_is_clicked()
    {
-      AcademyConversionProject project = AddGetProject(project =>
+      var project = AddGetProject(project =>
       {
          project.ApplicationReceivedDate = null;
          project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored;
@@ -278,5 +276,32 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests : BaseIntegrationT
          .First().NavigateAsync();
 
       Document.Url.Should().EndWith("/dao-pack-sent-date");
+   }
+
+   [Theory]
+   [InlineData("change-name-of-trust",
+      "change-form-7-received",
+      "change-dao-pack-sent-date",
+      "change-grant-funding-type",
+      "change-finance-year-following",
+      "change-grant-funding-amount",
+      "change-grant-funding-reason",
+      "change-grant-funding-environmental-improvement-grant",
+      "change-author",
+      "change-cleared-by")]
+   public async Task Should_not_have_change_link_if_project_read_only(params string[] elements)
+   {
+      var project = AddGetProject(isReadOnly: true);
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
+      await NavigateAsync("Conversion details");
+
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/conversion-details");
+      foreach (var element in elements)
+      {
+         VerifyElementDoesNotExist(element);
+      }
+      Document.QuerySelector("#school-and-trust-information-complete").Should().BeNull();
+      Document.QuerySelector("#confirm-and-continue-button").Should().BeNull();
    }
 }
