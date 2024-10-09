@@ -29,9 +29,20 @@
                     <p class="govuk-body">
                         This project was approved and moved to Complete conversions transfers and changes on.
                     </p>
-                    <p class="govuk-body">
-                        You cannot make changes to this project in Prepare.
-                    </p>
+                    @if (Model.IsVoluntary)
+                    {
+                        <p class="govuk-body">
+                            You can only <a class="govuk-link" data-test="change-ao-sent-date-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Id" id="change-ao-date-btn">
+                                enter or change the date the academy order was sent
+                            </a> to this school. All other information is locked.
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="govuk-body">
+                            You cannot make changes to this project in Prepare.
+                        </p>
+                    }
                 </div>
             </div>
         }

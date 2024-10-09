@@ -5,6 +5,7 @@ using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Pages.TaskList.Decision.Models;
 using Dfe.PrepareConversions.Services;
+using DocumentFormat.OpenXml.Vml.Spreadsheet;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -28,6 +29,9 @@ public class AcademyOrderDateModel(IAcademyConversionProjectRepository repositor
 
    public AdvisoryBoardDecision Decision { get; set; }
 
+   public bool IsReadOnly { get; set; }
+   public LinkItem BackLink { get;set; }
+
    string IDateValidationMessageProvider.SomeMissing(string displayName, IEnumerable<string> missingParts)
    {
       return $"Date must include a {string.Join(" and ", missingParts)}";
@@ -37,7 +41,7 @@ public class AcademyOrderDateModel(IAcademyConversionProjectRepository repositor
    {
       string idRaw = Request.RouteValues["id"] as string;
       int id = int.Parse(idRaw ?? string.Empty);
-      AdvisoryBoardDecision decision = GetDecisionFromSession(id);
+      var decision = GetDecisionFromSession(id);
       return $"Enter the date when the conversion was {decision.Decision.ToDescription().ToLowerInvariant()}";
    }
 
@@ -55,7 +59,8 @@ public class AcademyOrderDateModel(IAcademyConversionProjectRepository repositor
       Decision = decision;
       DecisionText = decision.Decision.ToString()?.ToLowerInvariant();
       AcademyOrderDate = Decision.AcademyOrderDate;
-
+      IsReadOnly = GetIsProjectReadOnly(id);
+      BackLink = new() { Page = Request.Headers["Referer"], BackText = "backText" };
       SetBackLinkModel(Links.Decision.DecisionDate, id);
 
       return Page();
