@@ -34,11 +34,11 @@ public class RecordDecisionModel : DecisionBaseModel
 
    public async Task<IActionResult> OnGet(int id)
    {
-      AdvisoryBoardDecision sessionDecision = GetDecisionFromSession(id);
+      var sessionDecision = GetDecisionFromSession(id);
 
       if (sessionDecision.Decision == null)
       {
-         ApiResponse<AdvisoryBoardDecision> savedDecision = await _decisionRepository.Get(id);
+         var savedDecision = await _decisionRepository.Get(id);
          SetDecisionInSession(id, savedDecision?.Body);
          AdvisoryBoardDecision = savedDecision?.Body?.Decision;
       }
@@ -53,11 +53,11 @@ public class RecordDecisionModel : DecisionBaseModel
    {
       if (!ModelState.IsValid)
       {
-         _errorService.AddErrors(new[] { "AdvisoryBoardDecision" }, ModelState);
+         _errorService.AddErrors(["AdvisoryBoardDecision"], ModelState);
          return await OnGet(id);
       }
 
-      AdvisoryBoardDecision decision = GetDecisionFromSession(id) ?? new AdvisoryBoardDecision();
+      var decision = GetDecisionFromSession(id) ?? new AdvisoryBoardDecision();
       decision.Decision = AdvisoryBoardDecision.Value;
       SetDecisionInSession(id, decision);
 
