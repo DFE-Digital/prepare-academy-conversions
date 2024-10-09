@@ -6,7 +6,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Models;
-using Dfe.PrepareConversions.Pages.TaskList.Decision.Models;
+using Dfe.PrepareConversions.Pages.TaskList.Decision.Models; 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -20,6 +20,7 @@ public class SummaryModel(IAcademyConversionProjectRepository repository,
                     IAcademyConversionProjectRepository academyConversionProjectRepository) : DecisionBaseModel(repository, session)
 {
    public AdvisoryBoardDecision Decision { get; set; }
+   public bool IsReadOnly { get; set; }
    public string DecisionText =>
       Decision.Decision == AdvisoryBoardDecisions.DAORevoked
       ? "DAO revoked"
@@ -29,6 +30,8 @@ public class SummaryModel(IAcademyConversionProjectRepository repository,
    public IActionResult OnGet(int id)
    {
       Decision = GetDecisionFromSession(id);
+      IsReadOnly = GetIsProjectReadOnly(id);
+       
       if (AcademyTypeAndRoute == AcademyTypeAndRoutes.Voluntary)
       {
          SetBackLinkModel(Links.Decision.AcademyOrderDate, id);
@@ -46,21 +49,23 @@ public class SummaryModel(IAcademyConversionProjectRepository repository,
    {
       if (!ModelState.IsValid) return OnGet(id);
 
-      AdvisoryBoardDecision decision = GetDecisionFromSession(id);
+      var decision = GetDecisionFromSession(id);
       decision.ConversionProjectId = id;
 
       await CreateOrUpdateDecision(id, decision);
 
-      SetDecisionInSession(id, null);
+      SetDecisionInSession(id, null); 
 
-      TempData.SetNotification(NotificationType.Success, "Done", "Decision recorded");
+      TempData.SetNotification(NotificationType.Success, "Done", GetIsProjectReadOnly(id) 
+         ? "Date academy order sent confirmed" 
+         : "Decision recorded");
 
       return RedirectToPage(Links.TaskList.Index.Page, new { id });
    }
 
    private async Task CreateOrUpdateDecision(int id, AdvisoryBoardDecision decision)
    {
-      ApiResponse<AdvisoryBoardDecision> savedDecision = await advisoryBoardDecisionRepository.Get(id);
+      var savedDecision = await advisoryBoardDecisionRepository.Get(id);
 
       if (savedDecision.StatusCode == HttpStatusCode.NotFound)
       {

@@ -205,27 +205,22 @@
                         }                       
                     </dd>
                     <dd class="govuk-summary-list__actions">
-                    @if (!Model.IsReadOnly)
-                    {
-                        <a class="govuk-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-ao-date-btn">
-                            Change<span class="govuk-visually-hidden"> Date academy order (AO) sent</span>
-                        </a>
-                    }
+                    <a class="govuk-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-ao-date-btn">
+                        Change<span class="govuk-visually-hidden"> Date academy order (AO) sent</span>
+                    </a>
                     </dd>
                 </div>
             }
         </dl>
-
     @if (!Model.IsReadOnly)
     {
         <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
-           You can click the button to change the recorded decision.
-       </p>
-
-        <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link" role="button">
-            Change your decision
-        </a>
-    }
+            You can click the button to change the recorded decision.
+        </p>
+    } 
+    <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link" role="button">
+        @(Model.IsReadOnly ? "Confirm date AO sent" : "Change your decision")
+    </a>
 }
 else
 {

@@ -13,7 +13,7 @@
 }
 
 <span id="selection-span" class="govuk-caption-l">Record the decision</span>
-<h1 class="govuk-heading-l">Check your answers before recording this decision</h1>
+<h1 class="govuk-heading-l">@(Model.IsReadOnly ? "Check your answers": "Check your answers before recording this decision")</h1>
 
 <dl class="govuk-summary-list">
 
@@ -46,9 +46,12 @@
 
         </dd>
         <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-decision-btn">
-                Change<span class="govuk-visually-hidden">decision</span>
-            </a>
+            @if (!Model.IsReadOnly)
+            {
+                <a class="govuk-link" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-decision-btn">
+                    Change<span class="govuk-visually-hidden">decision</span>
+                </a>
+            } 
         </dd>
     </div>
 
@@ -98,29 +101,32 @@
             </dd>
 
             <dd class="govuk-summary-list__actions">
-                @if (Model.Decision.Decision == AdvisoryBoardDecisions.Declined)
-                {
-                    <a class="govuk-link" asp-page="@Links.Decision.DeclineReason.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-declined-btn">
-                        Change<span class="govuk-visually-hidden">declined-reason</span>
-                    </a>
-                }
-                else if (Model.Decision.Decision == AdvisoryBoardDecisions.Deferred)
-                {
-                    <a class="govuk-link" asp-page="@Links.Decision.WhyDeferred.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-deferred-btn">
-                        Change<span class="govuk-visually-hidden">deferred-reason</span>
-                    </a>
-                }
-                else if (Model.Decision.Decision == AdvisoryBoardDecisions.Withdrawn)
-                {
-                    <a class="govuk-link" asp-page="@Links.Decision.WhyWithdrawn.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-withdrawn-btn">
-                        Change<span class="govuk-visually-hidden">withdrawn-reason</span>
-                    </a>
-                }
-                else if (Model.Decision.Decision == AdvisoryBoardDecisions.DAORevoked)
-                {
-                    <a class="govuk-link" asp-page="@Links.Decision.WhyDAORevoked.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-daorevoked-btn">
-                        Change<span class="govuk-visually-hidden">daorevoked-reason</span>
-                    </a>
+               @if(!Model.IsReadOnly)
+               {
+                   if (Model.Decision.Decision == AdvisoryBoardDecisions.Declined)
+                   {
+                        <a class="govuk-link" asp-page="@Links.Decision.DeclineReason.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-declined-btn">
+                           Change<span class="govuk-visually-hidden">declined-reason</span>
+                       </a>
+                   }
+                   else if (Model.Decision.Decision == AdvisoryBoardDecisions.Deferred)
+                   {
+                        <a class="govuk-link" asp-page="@Links.Decision.WhyDeferred.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-deferred-btn">
+                           Change<span class="govuk-visually-hidden">deferred-reason</span>
+                       </a>
+                   }
+                   else if (Model.Decision.Decision == AdvisoryBoardDecisions.Withdrawn)
+                   {
+                        <a class="govuk-link" asp-page="@Links.Decision.WhyWithdrawn.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-withdrawn-btn">
+                           Change<span class="govuk-visually-hidden">withdrawn-reason</span>
+                       </a>
+                   }
+                   else if (Model.Decision.Decision == AdvisoryBoardDecisions.DAORevoked)
+                   {
+                        <a class="govuk-link" asp-page="@Links.Decision.WhyDAORevoked.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-daorevoked-btn">
+                           Change<span class="govuk-visually-hidden">daorevoked-reason</span>
+                       </a>
+                   }
                 }
             </dd>
         </div>
@@ -142,11 +148,14 @@
             }
         </dd>
         <dd class="govuk-summary-list__actions">
-            @if (Model.Decision.Decision != AdvisoryBoardDecisions.DAORevoked)
+            @if (!Model.IsReadOnly)
             {
-                <a class="govuk-link" asp-page="@Links.Decision.WhoDecided.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-who-btn">
-                    Change<span class="govuk-visually-hidden">who made this decision</span>
-                </a>
+                @if (Model.Decision.Decision != AdvisoryBoardDecisions.DAORevoked)
+                {
+                    <a class="govuk-link" asp-page="@Links.Decision.WhoDecided.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-who-btn">
+                        Change<span class="govuk-visually-hidden">who made this decision</span>
+                    </a>
+                }
             }
         </dd>
     </div>
@@ -175,9 +184,12 @@
             }
         </dd>
         <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.Decision.DecisionMaker.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="decision-maker-btn">
-                Change<span class="govuk-visually-hidden">decision maker's name</span>
-            </a>
+           @if(!Model.IsReadOnly)
+           {
+                <a class="govuk-link" asp-page="@Links.Decision.DecisionMaker.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="decision-maker-btn">
+                     Change<span class="govuk-visually-hidden">decision maker's name</span>
+               </a>
+           }
         </dd>
     </div>
 
@@ -201,9 +213,12 @@
                 }
             </dd>
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" asp-page="@Links.Decision.AnyConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-conditions-set-btn">
-                    Change<span class="govuk-visually-hidden">condition answer</span>
-                </a>
+                @if (!Model.IsReadOnly)
+                {
+                    <a class="govuk-link" asp-page="@Links.Decision.AnyConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-conditions-set-btn">
+                           Change<span class="govuk-visually-hidden">condition answer</span>
+                   </a>
+                }
             </dd>
         </div>
     }
@@ -225,9 +240,12 @@
 
         </dd>
         <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.Decision.DecisionDate.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-date-btn">
+           @if(!Model.IsReadOnly)
+           {
+                <a class="govuk-link" asp-page="@Links.Decision.DecisionDate.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-date-btn">
                 Change<span class="govuk-visually-hidden">date of decision</span>
-            </a>
+               </a>
+           }
         </dd>
     </div>
     @* AO Date *@
@@ -260,6 +278,6 @@
 
 <form method="post">
     <button class="govuk-button" data-module="govuk-button" id="submit-btn">
-        Record this decision
+        @(Model.IsReadOnly ? "Date academy order sent confirmed" : "Record this decision")
     </button>
 </form>

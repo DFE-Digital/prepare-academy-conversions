@@ -1,6 +1,7 @@
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Services;
+using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Pages.TaskList.Decision.Models;
 using Dfe.PrepareConversions.Services;
@@ -9,21 +10,15 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.Decision;
 
-public class AcademyOrderDateModel : DecisionBaseModel, IDateValidationMessageProvider
+public class AcademyOrderDateModel(IAcademyConversionProjectRepository repository,
+                    ISession session,
+                    ErrorService errorService,
+                    IAcademyConversionAdvisoryBoardDecisionRepository decisionRepository) : DecisionBaseModel(repository, session), IDateValidationMessageProvider
 {
-   private readonly ErrorService _errorService;
-
-   public AcademyOrderDateModel(IAcademyConversionProjectRepository repository,
-                       ISession session,
-                       ErrorService errorService)
-      : base(repository, session)
-   {
-      _errorService = errorService;
-   }
-
    [BindProperty(Name = "academy-order-date", BinderType = typeof(DateInputModelBinder))]
    [DateValidation(DateRangeValidationService.DateRange.PastOrToday)]
    [Display(Name = "academy-order-date")]
@@ -47,10 +42,15 @@ public class AcademyOrderDateModel : DecisionBaseModel, IDateValidationMessagePr
    }
 
 
-   public IActionResult OnGet(int id)
+   public async Task<IActionResult> OnGetAsync(int id)
    {
-      AdvisoryBoardDecision decision = GetDecisionFromSession(id);
-      if (decision.Decision == null) return RedirectToPage(Links.TaskList.Index.Page, new { id });
+      var decision = GetDecisionFromSession(id);
+      if (decision.Decision == null)
+      {
+         decision = (await decisionRepository.Get(id)).Body;
+         SetDecisionInSession(id, decision);
+         if (decision.Decision == null) return RedirectToPage(Links.TaskList.Index.Page, new { id });
+      }
 
       Decision = decision;
       DecisionText = decision.Decision.ToString()?.ToLowerInvariant();
@@ -61,15 +61,15 @@ public class AcademyOrderDateModel : DecisionBaseModel, IDateValidationMessagePr
       return Page();
    }
 
-   public IActionResult OnPost(int id)
+   public async Task<IActionResult> OnPost(int id)
    {
-      AdvisoryBoardDecision decision = GetDecisionFromSession(id);
+      var decision = GetDecisionFromSession(id);
       decision.AcademyOrderDate = AcademyOrderDate;
 
       if (!ModelState.IsValid)
       {
-         _errorService.AddErrors(Request.Form.Keys, ModelState);
-         return OnGet(id);
+         errorService.AddErrors(Request.Form.Keys, ModelState);
+         return await OnGetAsync(id);
       }
 
       SetDecisionInSession(id, decision);
