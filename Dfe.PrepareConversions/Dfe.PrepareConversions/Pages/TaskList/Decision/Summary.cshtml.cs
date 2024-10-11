@@ -52,9 +52,18 @@ public class SummaryModel(IAcademyConversionProjectRepository repository,
       var decision = GetDecisionFromSession(id);
       decision.ConversionProjectId = id;
 
-      await CreateOrUpdateDecision(id, decision);
+      var savedDecisionResponse = await advisoryBoardDecisionRepository.Get(id);
+      AdvisoryBoardDecision existingDecision = null;
+
+      if (savedDecisionResponse.Success) { existingDecision = savedDecisionResponse.Body; }
+
+      await CreateOrUpdateDecision(id, existingDecision, decision);
 
       SetDecisionInSession(id, null); 
+
+      if (decision.Decision == AdvisoryBoardDecisions.Approved && (existingDecision is null || existingDecision.Decision != AdvisoryBoardDecisions.Approved)) {
+         return RedirectToPage(Links.Decision.ApprovedInfo.Page, new { id });
+      }
 
       TempData.SetNotification(NotificationType.Success, "Done", GetIsProjectReadOnly(id) 
          ? "Date academy order sent confirmed" 
@@ -63,19 +72,17 @@ public class SummaryModel(IAcademyConversionProjectRepository repository,
       return RedirectToPage(Links.TaskList.Index.Page, new { id });
    }
 
-   private async Task CreateOrUpdateDecision(int id, AdvisoryBoardDecision decision)
+   private async Task CreateOrUpdateDecision(int id, AdvisoryBoardDecision existingDecision, AdvisoryBoardDecision newDecision)
    {
-      var savedDecision = await advisoryBoardDecisionRepository.Get(id);
-
-      if (savedDecision.StatusCode == HttpStatusCode.NotFound)
+      if (existingDecision is null)
       {
-         await advisoryBoardDecisionRepository.Create(decision);
+         await advisoryBoardDecisionRepository.Create(newDecision);
       }
       else
       {
-         await advisoryBoardDecisionRepository.Update(decision);
+         await advisoryBoardDecisionRepository.Update(newDecision);
       }
 
-      await academyConversionProjectRepository.UpdateProject(id, new UpdateAcademyConversionProject { ProjectStatus = decision.GetDecisionAsFriendlyName() });
+      await academyConversionProjectRepository.UpdateProject(id, new UpdateAcademyConversionProject { ProjectStatus = newDecision.GetDecisionAsFriendlyName() });
    }
 }

@@ -33,22 +33,9 @@ namespace Dfe.PrepareConversions.Pages.TaskList.Decision
          if(savedDecision.Success)
          Decision = savedDecision.Body;
 
-         SetBackLinkModel(GetPageForBackLink(id), id);
+         SetBackLinkModel(Links.TaskList.Index, id);
 
          return Page();
-      }
-
-      public LinkItem GetPageForBackLink(int id)
-      {
-         return Decision switch
-         {
-            { Decision: AdvisoryBoardDecisions.Approved } => Links.Decision.AnyConditions,
-            { Decision: AdvisoryBoardDecisions.Declined } => Links.Decision.DeclineReason,
-            { Decision: AdvisoryBoardDecisions.Deferred } => Links.Decision.WhyDeferred,
-            { Decision: AdvisoryBoardDecisions.Withdrawn } => Links.Decision.WhyWithdrawn,
-            { Decision: AdvisoryBoardDecisions.DAORevoked } => Links.Decision.WhyDAORevoked,
-            _ => throw new Exception("Unexpected decision state")
-         };
       }
    }
 }

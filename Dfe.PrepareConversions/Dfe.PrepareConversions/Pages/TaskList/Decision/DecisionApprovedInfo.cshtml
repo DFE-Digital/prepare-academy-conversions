@@ -1,7 +1,7 @@
 ﻿@page "/task-list/{id:int}/decision/approved-info"
 @using Dfe.PrepareConversions.Extensions
 @using Dfe.PrepareConversions.TagHelpers
-@model Dfe.PrepareConversions.Pages.TaskList.Decision.DecisionMaker
+@model Dfe.PrepareConversions.Pages.TaskList.Decision.DecisionApprovedInfo
 @{
     ViewData["Title"] = "Approved decision information";
     Layout = "_Layout";
@@ -13,14 +13,27 @@
     <partial name="_ErrorSummary" />
 }
 
-<span id="selection-span" class="govuk-caption-l">Record the decision</span>
-<h1 class="govuk-heading-l">@ViewData["Title"]</h1>
-
 <div class="govuk-panel govuk-panel--confirmation">
     <h1 class="govuk-panel__title">
         Decision recorded
     </h1>
     <div class="govuk-panel__body">
-        Your reference number<br><strong></strong>
+        @Model.SchoolName<br><strong>Approved @(Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value ? "with conditions" : string.Empty)</strong>
     </div>
 </div>
+<p class="govuk-body">This project is now locked and you can cannot make changes to it.</p>
+<h1 class="govuk-heading-m">What happens next</h1>
+<p class="govuk-body">This project has been created in Complete conversions, transfers and changes.</p>
+<h1 class="govuk-heading-s">Add handover details</h1>
+<p class="govuk-body">You must add handover details to the project in complete before the project can continue.</p>
+<p class="govuk-body">You need to add:</p>
+<ul class="govuk-list govuk-list--bullet">
+    <li>which team will manage the project next</li>
+    <li>any handover comments</li>
+    <li>links to SharePoint folders</li>
+    <li>external contact details</li>
+</ul>
+<button class="govuk-button" data-module="govuk-button" id="submit-btn">
+    Open project in compelete
+</button>
+

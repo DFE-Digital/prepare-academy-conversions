@@ -239,6 +239,7 @@ public static class Links
       public static readonly LinkItem Summary = AddLinkItem(backText: "Back", page: "/TaskList/Decision/Summary");
       public static readonly LinkItem SubMenuRecordADecision = AddLinkItem(backText: "Back", page: "/TaskList/Decision/RecordADecision");
       public static readonly LinkItem AcademyOrderDate = AddLinkItem(backText: "Back", page: "/TaskList/Decision/AcademyOrderDate");
+      public static readonly LinkItem ApprovedInfo = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DecisionApprovedInfo");
 
    }
    public static class DeleteProject
