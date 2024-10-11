@@ -32,7 +32,7 @@
                     @if (Model.Project.IsVoluntary)
                     {
                         <p class="govuk-body">
-                            You can only <a class="govuk-link" data-test="change-ao-sent-date-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Project.Id" id="change-ao-date-btn">
+                            You can only <a class="govuk-link" data-test="change-ao-sent-date-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Project.Id" asp-route-returnUrl="@Links.KeyStagePerformanceSection.KeyStage5PerformanceTables.Page" id="change-ao-date-btn">
                                 enter or change the date the academy order was sent
                             </a> to this school. All other information is locked.
                         </p>
