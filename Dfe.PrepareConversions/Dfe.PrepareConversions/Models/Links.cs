@@ -6,14 +6,14 @@ namespace Dfe.PrepareConversions.Models;
 
 public static class Links
 {
-   private static readonly List<LinkItem> _links = new();
+   private static readonly List<LinkItem> _links = [];
    private static string _transfersUrl;
    public static string TransfersUrl => _transfersUrl;
 
    private static bool _isApplicationDocumentsEnabled;
    public static bool IsApplicationDocumentsEnabled => _isApplicationDocumentsEnabled;
 
-   private static LinkItem AddLinkItem(string page, string backText = "Back")
+   public static LinkItem AddLinkItem(string page, string backText = "Back")
    {
       LinkItem item = new() { Page = page, BackText = backText };
       _links.Add(item);

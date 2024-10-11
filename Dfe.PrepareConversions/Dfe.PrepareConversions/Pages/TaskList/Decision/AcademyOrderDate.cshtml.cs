@@ -30,7 +30,7 @@ public class AcademyOrderDateModel(IAcademyConversionProjectRepository repositor
    public AdvisoryBoardDecision Decision { get; set; }
 
    public bool IsReadOnly { get; set; }
-   public LinkItem BackLink { get;set; }
+   public string? ReturnUrl { get; set; }
 
    string IDateValidationMessageProvider.SomeMissing(string displayName, IEnumerable<string> missingParts)
    {
@@ -46,7 +46,7 @@ public class AcademyOrderDateModel(IAcademyConversionProjectRepository repositor
    }
 
 
-   public async Task<IActionResult> OnGetAsync(int id)
+   public async Task<IActionResult> OnGetAsync(int id, string? returnUrl = null)
    {
       var decision = GetDecisionFromSession(id);
       if (decision.Decision == null)
@@ -60,13 +60,13 @@ public class AcademyOrderDateModel(IAcademyConversionProjectRepository repositor
       DecisionText = decision.Decision.ToString()?.ToLowerInvariant();
       AcademyOrderDate = Decision.AcademyOrderDate;
       IsReadOnly = GetIsProjectReadOnly(id);
-      BackLink = new() { Page = Request.Headers["Referer"], BackText = "backText" };
-      SetBackLinkModel(Links.Decision.DecisionDate, id);
+      ReturnUrl = returnUrl;
+      SetBackLinkModel(IsReadOnly ? Links.AddLinkItem(returnUrl) : Links.Decision.DecisionDate, id);
 
       return Page();
    }
 
-   public async Task<IActionResult> OnPost(int id)
+   public async Task<IActionResult> OnPost(int id, string? returnUrl = null)
    {
       var decision = GetDecisionFromSession(id);
       decision.AcademyOrderDate = AcademyOrderDate;
@@ -74,7 +74,7 @@ public class AcademyOrderDateModel(IAcademyConversionProjectRepository repositor
       if (!ModelState.IsValid)
       {
          errorService.AddErrors(Request.Form.Keys, ModelState);
-         return await OnGetAsync(id);
+         return await OnGetAsync(id, returnUrl);
       }
 
       SetDecisionInSession(id, decision);
