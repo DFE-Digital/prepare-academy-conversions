@@ -19,7 +19,7 @@
 
     var isGroupsPage = Context.Request.Path.Value.Contains("/groups");
     var isTransfersPage = Context.Request.Path.Value.ToLower().Contains("/transfers");
-   
+
     var notificationBannerMessage = Configuration["notificationBannerMessage"] ?? string.Empty;
 
     var authenticatedUserId = User.Identity is not null && User.Identity.IsAuthenticated ? User.Identity.Name ?? "Unknown" : "Anonymous";
@@ -58,22 +58,22 @@
                     j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
                         'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
             })(window, document, 'script', 'dataLayer', 'GTM-5H6G773');
-         </script>
-         <!-- End Google Tag Manager -->
+        </script>
+        <!-- End Google Tag Manager -->
     }
 
     @if (enableAppInsightsAnalytics)
     {
-      <!-- Application insights -->
-      <script type="text/javascript" integrity="sha384-g/ZkzetdQypWdY0NBZT5r2L3BR9/hURD8OBcd1rEaBpgX6QC7EaTL+o+mzWrBcXW" crossorigin="anonymous" src="https://js.monitor.azure.com/scripts/b/ext/ai.clck.2.8.18.min.js"></script>
-      <script type="text/javascript" asp-add-nonce>
-         window.appInsights = {
-            connectionString: '@Configuration["ApplicationInsights:ConnectionString"]',
-            authenticatedUserId: '@authenticatedUserId'
-         }
-      </script>
-      <script type="text/javascript" src="~/dist/application-insights.min.js" asp-add-nonce></script>
-      <!-- End Application insights -->
+        <!-- Application insights -->
+        <script type="text/javascript" integrity="sha384-g/ZkzetdQypWdY0NBZT5r2L3BR9/hURD8OBcd1rEaBpgX6QC7EaTL+o+mzWrBcXW" crossorigin="anonymous" src="https://js.monitor.azure.com/scripts/b/ext/ai.clck.2.8.18.min.js"></script>
+        <script type="text/javascript" asp-add-nonce>
+            window.appInsights = {
+                connectionString: '@Configuration["ApplicationInsights:ConnectionString"]',
+                authenticatedUserId: '@authenticatedUserId'
+            }
+        </script>
+        <script type="text/javascript" src="~/dist/application-insights.min.js" asp-add-nonce></script>
+        <!-- End Application insights -->
     }
 
     <script type="text/javascript" src="~/dist/accessible-autocomplete.min.js" asp-add-nonce></script>
@@ -81,14 +81,14 @@
 </head>
 <body class="govuk-template__body">
 
-   @if (enableGoogleAnalytics)
-   {
-      <!-- Google Tag Manager (noscript) -->
-      <noscript asp-add-nonce>
-         <iframe title="GATagManager" src="https://www.googletagmanager.com/ns.html?id=GTM-5H6G773" height="0" width="0" style="display: none; visibility: hidden"></iframe>
-      </noscript>
-      <!-- End Google Tag Manager (noscript) -->
-   }
+    @if (enableGoogleAnalytics)
+    {
+        <!-- Google Tag Manager (noscript) -->
+        <noscript asp-add-nonce>
+            <iframe title="GATagManager" src="https://www.googletagmanager.com/ns.html?id=GTM-5H6G773" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <!-- End Google Tag Manager (noscript) -->
+    }
 
     <script asp-add-nonce>
         document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
@@ -155,22 +155,22 @@
                             </svg>
                         </a>
                     </li>
-                   <li class="dfe-header__navigation-item @(isFormAMatPage? "dfe-header__navigation-item--current": "")">
-                      <a asp-page="@Links.ProjectList.FormAMat.Page" class="dfe-header__navigation-link">
-                         Form a MAT
-                         <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
-                            <path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
-                         </svg>
-                      </a>
-                   </li>
-                   <li class="dfe-header__navigation-item @(isGroupsPage ? "dfe-header__navigation-item--current" : "")">
-                      <a asp-page="@Links.ProjectList.ProjectGroups.Page" class="dfe-header__navigation-link">
-                         Groups
-                         <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
-                            <path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
-                         </svg>
-                      </a>
-                   </li>
+                    <li class="dfe-header__navigation-item @(isFormAMatPage? "dfe-header__navigation-item--current": "")">
+                        <a asp-page="@Links.ProjectList.FormAMat.Page" class="dfe-header__navigation-link">
+                            Form a MAT
+                            <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
+                                <path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="dfe-header__navigation-item @(isGroupsPage ? "dfe-header__navigation-item--current" : "")">
+                        <a asp-page="@Links.ProjectList.ProjectGroups.Page" class="dfe-header__navigation-link">
+                            Groups
+                            <svg class="dfe-icon dfe-icon__chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34">
+                                <path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
+                            </svg>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -200,14 +200,13 @@
     <footer class="govuk-footer" role="contentinfo">
         <div class="govuk-width-container">
             <div class="govuk-footer__navigation">
-                <div class="govuk-footer__section govuk-grid-column-two-thirds" data-cy="get-support-section">
+                <div class="govuk-footer__section govuk-grid-column-one-half" data-cy="get-support-section">
                     <h2 class="govuk-footer__heading govuk-heading-m">Get help</h2>
                     <ul class="govuk-footer__list govuk-footer__list--column-1">
                         <li class="govuk-footer__list-item">
-                            <a data-cy="get-support-email"  class="govuk-footer__link" href="mailto:@Configuration["SupportEmail"]?subject=Prepare%20conversions%20and%20transfers:%20support%20query">
-                                Email Service Support for help with using this system
+                            <a class="govuk-footer__link" href="@Configuration["GetHelpLink"]" target="_blank">
+                                Get help with a Regions Group system (opens in a new tab)
                             </a>
-                            <p>We aim to respond within 5 working days, or one working day for more urgent queries.</p>
                         </li>
                         <li class="govuk-footer__list-item">
                             <a class="govuk-footer__link" rel="noreferrer noopener" target="_blank" href="https://educationgovuk.sharepoint.com/sites/lvewp00299/SitePages/Prepare-Conversions-and-Transfers.aspx">
@@ -216,14 +215,14 @@
                         </li>
                     </ul>
                 </div>
-                <div class="govuk-footer__section govuk-grid-column-one-third">
+                <div class="govuk-footer__section govuk-grid-column-one-half">
                     <h2 class="govuk-footer__heading govuk-heading-m">Give feedback</h2>
                     <ul class="govuk-footer__list">
                         <li class="govuk-footer__list-item">
-                            <a class="govuk-footer__link" id="footer-feedback-link" href="@Configuration["FeedbackLink"]" rel="noreferrer noopener" target="_blank">Give feedback (opens in a new tab)</a>
+                            <a class="govuk-footer__link" id="footer-feedback-link" href="@Configuration["FeedbackLink"]" rel="noreferrer noopener" target="_blank">Give feedback about a Regions Group system (opens in a new tab)</a>
                         </li>
                         <li class="govuk-footer__list-item">
-                            <a class="govuk-footer__link" href="@Configuration["SuggestChangeLink"]" rel="noreferrer noopener" target="_blank">Suggest a change (opens in a new tab)</a>
+                            <a class="govuk-footer__link" href="@Configuration["SuggestChangeLink"]" rel="noreferrer noopener" target="_blank">Suggest a change to a Regions Group system (opens in a new tab)</a>
                         </li>
                     </ul>
                 </div>
@@ -234,7 +233,7 @@
                     <h2 class="govuk-visually-hidden">Support links</h2>
                     <ul class="govuk-footer__inline-list">
                         <li class="govuk-footer__inline-list-item">
-                            <a data-test="accessibility-statement"  class="govuk-footer__link" asp-page="@Links.Public.Accessibility.Page">
+                            <a data-test="accessibility-statement" class="govuk-footer__link" asp-page="@Links.Public.Accessibility.Page">
                                 Accessibility statement
                             </a>
                         </li>
