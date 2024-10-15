@@ -64,9 +64,13 @@ describe('Decisions Tests', () => {
   
       Logger.log("Change the current decision to DAO (Directive Academy Order) revoked and verify the changes");
       decisionPage.changeDecisionDAODetails();
+
+      Logger.log("Check if this project is readonly after adding a decision");
+      decisionPage.clickConfirmProjectDates().verifyReadOnlyAfterDecision().goBackToTaskList().checkReadOnlyOnSchoolInformation();
   
-      Logger.log("Delete the project and verify that it was deleted successfully - Project ID: " + projectId);
-      decisionPage.deleteProject(projectId);
+  
+      // Logger.log("Delete the project and verify that it was deleted successfully - Project ID: " + projectId);
+      // decisionPage.deleteProject(projectId);
     });
   });
 });

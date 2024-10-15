@@ -155,6 +155,7 @@ export class DecisionPage {
         cy.get('#submit-btn').click();
         cy.get('#submit-btn').click();
         this.verifyDecisionDetailsAfterChanging('DAO', 'Minister', '12 November 2023');
+        cy.get('#submit-btn').click();
         return this;
     }
     deleteProject(projectId) {
@@ -162,6 +163,37 @@ export class DecisionPage {
             expect(response.status).to.eq(200);
         });
     }
+
+    clickConfirmProjectDates() {
+        cy.get('[data-cy="confirm_project_dates"]').click();
+        return this;    
+    }
+
+    // verifyReadOnlyAfterDecision() {
+    //     // Check advisory board and conversion dates to make sure the change option no longer exists
+    //     cy.get('[data-test="change-advisory-board-date"]').should('not.be.visible');
+    //     return this;
+    // }
+
+    goBackToTaskList() {
+        cy.get('[data-cy="back-link"]').click();
+        return this;
+    }
+
+    checkReadOnlyOnSchoolInformation() {
+        // Verify each section in "Add school information" to confirm no "Change" link is present
+        cy.get('[data-cy="task-name"] a').each((link) => {
+            cy.wrap(link).invoke('attr', 'href').then((href) => {
+                cy.visit(href);
+                // Ensure the change button is absent
+                cy.get('a').contains('Change').should('not.exist');
+                // Return to the task list after each check
+                cy.get('a.govuk-back-link').click();
+            });
+        });
+        return this;
+    }
+
 }
 
 
