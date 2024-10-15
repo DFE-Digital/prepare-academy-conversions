@@ -8,11 +8,8 @@
 }
 
 @section BeforeMain
-    {
-    <a asp-page="@Model.ReturnPage" asp-route-Id="@Model.ReturnId" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
-    @* <a href="@Model.ReturnLink" class="govuk-back-link">@Links.ProjectList.Index.BackText</a> *@
-    
-
+{
+   <a asp-page="@Model.ReturnPage" asp-route-Id="@Model.ReturnId" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
 }
 
 @if (Model.ShowGenerateHtbTemplateError)
@@ -197,14 +194,17 @@
             </ul>
 
         </div>
-
-        <h2 class="govuk-heading-l">
-           Create your project document
-        </h2>
-        <p class="govuk-body">Project documents are in Microsoft Word format. You can make changes to documents after you create them.</p>
-        <div class="govuk-button-group">
-            <a asp-page="@Links.TaskList.PreviewHTBTemplate.Page" id="preview-project-template-button" asp-route-id="@Model.Project.Id" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-2" role="button">Preview project document</a>
-            <a asp-page="@Links.TaskList.GenerateHTBTemplate.Page" id="generate-project-template-button" asp-route-id="@Model.Project.Id" asp-route-return="@Links.TaskList.Index.Page" asp-route-backText="@Links.TaskList.Index.BackText" class="govuk-button govuk-!-margin-bottom-2" role="button">Create project document</a>
-        </div> 
+        @if (!Model.Project.IsReadOnly)
+        {
+           <h2 class="govuk-heading-l">
+              Create your project document
+           </h2>
+       
+            <p class="govuk-body">Project documents are in Microsoft Word format. You can make changes to documents after you create them.</p>
+            <div class="govuk-button-group">
+                  <a asp-page="@Links.TaskList.PreviewHTBTemplate.Page" id="preview-project-template-button" asp-route-id="@Model.Project.Id" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-2" role="button">Preview project document</a>
+                  <a asp-page="@Links.TaskList.GenerateHTBTemplate.Page" id="generate-project-template-button" asp-route-id="@Model.Project.Id" asp-route-return="@Links.TaskList.Index.Page" asp-route-backText="@Links.TaskList.Index.BackText" class="govuk-button govuk-!-margin-bottom-2" role="button">Create project document</a>
+            </div>
+        } 
     </div>
 </div>

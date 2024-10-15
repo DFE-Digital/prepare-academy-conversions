@@ -22,6 +22,38 @@
       <h1 class="govuk-heading-l">
          Confirm risks and issues
       </h1>
+        @if (Model.Project.IsReadOnly)
+        {
+            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                        Important
+                    </h2>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">
+                        Project approved
+                    </p>
+                    <p class="govuk-body">
+                        This project was approved and moved to Complete conversions transfers and changes on @Model.Project.ApplicationReceivedDate.
+                    </p>
+                    @if (Model.Project.IsVoluntary)
+                    {
+                        <p class="govuk-body">
+                            You can only <a class="govuk-link" data-test="change-ao-sent-date-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Project.Id" asp-route-returnUrl="@Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page" id="change-ao-date-btn">
+                                enter or change the date the academy order was sent
+                            </a> to this school. All other information is locked.
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="govuk-body">
+                            You cannot make changes to this project in Prepare.
+                        </p>
+                    }
+                </div>
+            </div>
+        }
    </div>
    <div class="govuk-grid-column-full">
       <dl class="govuk-summary-list">

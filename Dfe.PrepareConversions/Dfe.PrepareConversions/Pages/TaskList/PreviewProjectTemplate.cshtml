@@ -156,16 +156,19 @@
         </div>
     </section>
 }
-<div class="govuk-grid-row">
-<div class="govuk-grid-column-two-thirds">
-   <h2 class="govuk-heading-l">
-      Create your project document
-   </h2>
-   <p class="govuk-body">Project documents are in Microsoft Word format. You can make changes to documents after you create them.</p>
+@if (!Model.Project.IsReadOnly)
+{
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h2 class="govuk-heading-l">
+                Create your project document
+            </h2>
+            <p class="govuk-body">Project documents are in Microsoft Word format. You can make changes to documents after you create them.</p>
 
 
-   <form method="post">
-      <button class="govuk-button govuk-!-margin-bottom-2" name="generate-template-button" id="generate-template-button">Create project document</button>
-   </form>
-</div>
-</div>
+            <form method="post">
+                <button class="govuk-button govuk-!-margin-bottom-2" name="generate-template-button" id="generate-template-button">Create project document</button>
+            </form>
+        </div>
+    </div>
+}

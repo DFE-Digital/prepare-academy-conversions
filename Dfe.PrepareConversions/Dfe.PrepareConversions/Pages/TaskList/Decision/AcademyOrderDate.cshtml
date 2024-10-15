@@ -7,14 +7,14 @@
 
 @section BeforeMain
 {
-   <partial name="_BackLink" model="@Model.BackLinkModel"/>
+   <partial name="_BackLink" model="@Model.BackLinkModel" />
    <partial name="_ErrorSummary"/>
 }
-
 <span id="selection-span" class="govuk-caption-l">Record the decision</span>
 <h1 class="govuk-heading-l">Date the academy order (AO) was sent</h1>
 
 <form method="post">
+    <input type="hidden" asp-for="@Model.ReturnUrl" />
    <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
         <govuk-date-input heading-label="true" name="academy-order-date" asp-for="@Model.AcademyOrderDate" hint="You can leave this blank and change it later if you need to" />
    </div>

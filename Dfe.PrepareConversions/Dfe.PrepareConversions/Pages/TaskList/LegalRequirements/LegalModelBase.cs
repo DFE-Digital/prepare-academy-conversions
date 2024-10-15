@@ -1,3 +1,4 @@
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.AcademyConversion;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Primitives;
+using System;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.LegalRequirements;
@@ -17,6 +19,7 @@ public class LegalModelBase(IAcademyConversionProjectRepository academyConversio
    public string SchoolName { get; private set; }
    public Data.Models.AcademyConversion.LegalRequirements Requirements { get; private set; }
    public bool IsReadOnly { get; set; }
+   public bool IsVoluntary { get; set; }
 
    public override async Task OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, PageHandlerExecutionDelegate next)
    {
@@ -37,8 +40,10 @@ public class LegalModelBase(IAcademyConversionProjectRepository academyConversio
          var project = await AcademyConversionProjectRepository.GetProjectById(Id);
          if (project.Success)
          {
-            Requirements = Data.Models.AcademyConversion.LegalRequirements.From(project.Body);
+            Requirements = Data.Models.AcademyConversion.LegalRequirements.From(project.Body); 
             IsReadOnly = project.Body.IsReadOnly;
+            IsVoluntary = string.IsNullOrWhiteSpace(project.Body.AcademyTypeAndRoute) is false &&
+                              project.Body.AcademyTypeAndRoute.Equals(AcademyTypeAndRoutes.Voluntary, StringComparison.InvariantCultureIgnoreCase);
          }
          else
          {
