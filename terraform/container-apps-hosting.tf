@@ -1,5 +1,5 @@
 module "azure_container_apps_hosting" {
-  source = "github.com/DFE-Digital/terraform-azurerm-container-apps-hosting?ref=v1.12.0"
+  source = "github.com/DFE-Digital/terraform-azurerm-container-apps-hosting?ref=v1.14.0"
 
   environment    = local.environment
   project_name   = local.project_name
@@ -29,6 +29,9 @@ module "azure_container_apps_hosting" {
   container_secret_environment_variables = local.container_secret_environment_variables
   container_max_replicas                 = local.container_max_replicas
   container_scale_http_concurrency       = local.container_scale_http_concurrency
+  enable_health_insights_api             = local.enable_health_insights_api
+  health_insights_api_cors_origins       = local.health_insights_api_cors_origins
+  health_insights_api_ipv4_allow_list    = local.health_insights_api_ipv4_allow_list
 
   enable_cdn_frontdoor                            = local.enable_cdn_frontdoor
   cdn_frontdoor_forwarding_protocol               = local.cdn_frontdoor_forwarding_protocol
