@@ -227,17 +227,45 @@
             @(Model.IsReadOnly ? "Confirm date AO sent" : "Change your decision")
         </a>
     }
-   
+
 }
 else
 {
-    <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">Record a decision</h2>
-        <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
-            You have not recorded the decision for this project. You can record the decision once it has been made.
-        </p>
-        <a class="govuk-button" data-cy="record_decision_btn" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link">
-            Record a decision
-        </a>
-    </div>
+   <div class="govuk-grid-column-two-thirds">
+      @if (!(Model.HasAdvisoryBoardDate && Model.HasAssignedOwner))
+      {
+         <div id="errorSummary" hidden>
+               <partial name="_ErrorSummary" />
+         </div>
+      }
+      <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
+            You have not recorded a decision for this project.
+      </p>
+      <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
+            You can record the decision only when the:
+            <ul class="govuk-list govuk-list--bullet">
+               <li>project has been assigned to somebody</li>
+               <li>advisory board date has been entered</li>
+               <li>decision has been made</li>
+            </ul>
+      </p>
+      @if ((Model.HasAdvisoryBoardDate && Model.HasAssignedOwner))
+      {
+         <a class="govuk-button" data-cy="record_decision_btn" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link">
+               Record a decision
+         </a>
+      }
+      else
+      {
+         <button type="button" class="govuk-button" data-test="record_decision_error_btn" data-module="govuk-button" id="record_decision_error_btn">
+               Record a decision
+         </button>
+         <script type="text/javascript" asp-add-nonce>
+               document.querySelector('#record_decision_error_btn').onclick = () => {
+                  var cookieBanner = document.getElementById("errorSummary");
+                  cookieBanner.style.display = "block";
+               };
+         </script>
+      }
+   </div>
 }

@@ -18,9 +18,8 @@
 
 @if (!Model.Project.HeadTeacherBoardDate.HasValue)
 {
-    <govuk-date-input heading-label="true" label="Advisory board date" name="advisory-board-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
+    <govuk-date-input heading-label="true" label="Advisory board date" details-body="if a decision was made about this project without an advisory board meeting, use the date that decision was made instead." details-heading="What to do if there was no advisory board meeting" name="advisory-board-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
 }else{
-
-    <govuk-date-input heading-label="true" label="Advisory board date" sub-label="Enter new advisory board date" previous-information="The current advisory board date is" additional-information="Make sure all stakeholders are aware of the change and the reason for it" name="advisory-board-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
+    <govuk-date-input heading-label="true" label="Advisory board date" details-body="if a decision was made about this project without an advisory board meeting, use the date that decision was made instead." details-heading="What to do if there was no advisory board meeting" sub-label="Enter new advisory board date" previous-information="The current advisory board date is" additional-information="Make sure all stakeholders are aware of the change and the reason for it" name="advisory-board-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
 }
 
