@@ -265,9 +265,8 @@ public class ProjectViewModel : ProjectTypeBase
 
    protected override string TypeAndRouteValue => AcademyTypeAndRoute;
 
-   public override bool IsExternalSchoolApplication => string.IsNullOrEmpty(this.ApplicationReferenceNumber);
+   public override bool IsExternalSchoolApplication => string.IsNullOrEmpty(ApplicationReferenceNumber);
 
    public bool HasPermission { get; set; }
    public bool IsReadOnly { get; set; }
-
 }
