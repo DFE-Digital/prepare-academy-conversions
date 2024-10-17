@@ -71,6 +71,7 @@ public class Startup
             options.Conventions.AllowAnonymousToPage("/public/maintenance");
             options.Conventions.AllowAnonymousToPage("/public/accessibility");
             options.Conventions.AddAreaPageRoute("Transfers", "/Index", "/transfers");
+            options.Conventions.AuthorizeAreaFolder("Transfers", "/");
          })
          .AddViewOptions(options =>
          {
