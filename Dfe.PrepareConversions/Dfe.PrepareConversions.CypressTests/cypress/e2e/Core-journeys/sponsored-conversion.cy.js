@@ -173,6 +173,7 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
       // Complete
       ConversionDetails.markComplete();
       cy.confirmContinueBtn().click();
+      
       projectTaskList.getConversionDetailsStatus().should('contain.text', testData.completedText);
    });
 
