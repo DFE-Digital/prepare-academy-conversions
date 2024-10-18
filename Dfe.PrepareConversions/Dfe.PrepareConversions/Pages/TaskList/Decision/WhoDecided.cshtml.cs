@@ -47,7 +47,7 @@ public class WhoDecidedModel : DecisionBaseModel
    {
       if (!ModelState.IsValid)
       {
-         _errorService.AddErrors(new[] { "DecisionMadeBy" }, ModelState);
+         _errorService.AddErrors(["DecisionMadeBy"], ModelState);
          return OnGet(id);
       }
 
