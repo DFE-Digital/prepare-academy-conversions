@@ -12,15 +12,8 @@ using System.Threading.Tasks;
 namespace Dfe.PrepareConversions.TagHelpers;
 
 [HtmlTargetElement("govuk-date-input", TagStructure = TagStructure.WithoutEndTag)]
-public class DateInputTagHelper : InputTagHelperBase
+public class DateInputTagHelper(IHtmlHelper htmlHelper, ErrorService errorService) : InputTagHelperBase(htmlHelper)
 {
-   private readonly ErrorService _errorService;
-
-   public DateInputTagHelper(IHtmlHelper htmlHelper, ErrorService errorService) : base(htmlHelper)
-   {
-      _errorService = errorService;
-   }
-
    public bool HeadingLabel { get; set; }
 
    protected override async Task<IHtmlContent> RenderContentAsync()
@@ -48,7 +41,9 @@ public class DateInputTagHelper : InputTagHelperBase
          Hint = Hint,
          PreviousInformation = PreviousInformation,
          AdditionalInformation = AdditionalInformation,
-         DateString = date.ToDateString()
+         DateString = date.ToDateString(),
+         DetailsHeading = DetailsHeading,
+         DetailsBody = DetailsBody
       };
 
       if (date.HasValue)
@@ -58,7 +53,7 @@ public class DateInputTagHelper : InputTagHelperBase
          model.Year = date.Value.Year.ToString();
       }
 
-      Error error = _errorService.GetError(Name);
+      Error error = errorService.GetError(Name);
       if (error is not null)
       {
          model.ErrorMessage = error.Message;

@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.LegalRequirements;
 
-public class LegalSummaryModel : LegalModelBase
+public class LegalSummaryModel(IAcademyConversionProjectRepository academyConversionProjectRepository) : LegalModelBase(academyConversionProjectRepository)
 {
-   public LegalSummaryModel(IAcademyConversionProjectRepository academyConversionProjectRepository) :
-      base(academyConversionProjectRepository)
-   {
-   }
-
    [BindProperty]
    public bool IsComplete { get; set; }
 

@@ -1,4 +1,3 @@
-using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.AcademyConversion;
 using Dfe.PrepareConversions.Data.Services;
@@ -7,22 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Primitives;
+using System;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.LegalRequirements;
 
-public class LegalModelBase : PageModel
+public class LegalModelBase(IAcademyConversionProjectRepository academyConversionProjectRepository) : PageModel
 {
-   protected readonly IAcademyConversionProjectRepository AcademyConversionProjectRepository;
-
-   public LegalModelBase(IAcademyConversionProjectRepository _academyConversionProjectRepository)
-   {
-      AcademyConversionProjectRepository = _academyConversionProjectRepository;
-   }
+   protected readonly IAcademyConversionProjectRepository AcademyConversionProjectRepository = academyConversionProjectRepository;
 
    public int Id { get; private set; }
    public string SchoolName { get; private set; }
    public Data.Models.AcademyConversion.LegalRequirements Requirements { get; private set; }
+   public bool IsReadOnly { get; set; }
+   public bool IsVoluntary { get; set; }
 
    public override async Task OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, PageHandlerExecutionDelegate next)
    {
@@ -30,7 +27,7 @@ public class LegalModelBase : PageModel
       {
          Id = (int)context.HandlerArguments[nameof(Id)];
 
-         ApiResponse<AcademyConversionProject> projectResponse = await AcademyConversionProjectRepository.GetProjectById(Id);
+         var projectResponse = await AcademyConversionProjectRepository.GetProjectById(Id);
          if (projectResponse.Success)
          {
             SchoolName = projectResponse.Body.SchoolName;
@@ -40,11 +37,13 @@ public class LegalModelBase : PageModel
             context.Result = NotFound();
          }
 
-         ApiResponse<AcademyConversionProject> project =
-            await AcademyConversionProjectRepository.GetProjectById(Id);
+         var project = await AcademyConversionProjectRepository.GetProjectById(Id);
          if (project.Success)
          {
-            Requirements = Data.Models.AcademyConversion.LegalRequirements.From(project.Body);
+            Requirements = Data.Models.AcademyConversion.LegalRequirements.From(project.Body); 
+            IsReadOnly = project.Body.IsReadOnly;
+            IsVoluntary = string.IsNullOrWhiteSpace(project.Body.AcademyTypeAndRoute) is false &&
+                              project.Body.AcademyTypeAndRoute.Equals(AcademyTypeAndRoutes.Voluntary, StringComparison.InvariantCultureIgnoreCase);
          }
          else
          {

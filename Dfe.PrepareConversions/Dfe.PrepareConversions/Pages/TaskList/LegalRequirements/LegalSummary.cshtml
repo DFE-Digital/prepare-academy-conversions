@@ -11,10 +11,43 @@
 }
 
 <div class="govuk-grid-row">
-   <div class="govuk-grid-column-full">
+    <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l" data-cy="select-schoolname">@Model.SchoolName</span>
       <h1 class="govuk-heading-l" data-cy="select-heading">Legal requirements</h1>
-
+        @if (Model.IsReadOnly)
+        {
+            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                        Important
+                    </h2>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">
+                        Project approved
+                    </p>
+                    <p class="govuk-body">
+                        This project was approved and moved to Complete conversions transfers and changes on.
+                    </p>
+                    @if (Model.IsVoluntary)
+                    {
+                        <p class="govuk-body">
+                            You can only <a class="govuk-link" data-test="change-ao-sent-date-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Id" asp-route-returnUrl="@Links.LegalRequirements.Summary.Page" id="change-ao-date-btn">
+                                enter or change the date the academy order was sent
+                            </a> to this school. All other information is locked.
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="govuk-body">
+                            You cannot make changes to this project in Prepare.
+                        </p>
+                    }
+                </div>
+            </div>
+        }
+   </div>
+    <div class="govuk-grid-column-full">
       <dl class="govuk-summary-list">
          <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
@@ -30,11 +63,14 @@
                   <span id="governing-body-approved" class="empty" data-cy="select-legal-summary-governingbody-status">Empty</span>
                }
             </dd>
-            <dd class="govuk-summary-list__actions">
-               <a asp-page="@Links.LegalRequirements.GoverningBodyResolution.Page" asp-route-id="@Model.Id" class="govuk-link" data-cy="select-legal-summary-governingbody-change">
-                        Change<span class="govuk-visually-hidden"> management committee resolution</span>
-               </a>
-            </dd>
+            @if (!Model.IsReadOnly)
+            {
+               <dd class="govuk-summary-list__actions">
+                  <a asp-page="@Links.LegalRequirements.GoverningBodyResolution.Page" asp-route-id="@Model.Id" class="govuk-link" data-cy="select-legal-summary-governingbody-change">
+                       Change<span class="govuk-visually-hidden"> management committee resolution</span>
+                  </a>
+               </dd>
+            }
          </div>
          <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
@@ -50,11 +86,14 @@
                   <span id="consultation" class="empty" data-cy="select-legal-summary-consultation-status">Empty</span>
                }
             </dd>
-            <dd class="govuk-summary-list__actions">
-               <a asp-page="@Links.LegalRequirements.Consultation.Page" asp-route-id="@Model.Id" class="govuk-link" data-cy="select-legal-summary-consultation-change">
-                  Change<span class="govuk-visually-hidden"> consultation</span>
-               </a>
-            </dd>
+            @if (!Model.IsReadOnly)
+            {
+               <dd class="govuk-summary-list__actions">
+                  <a asp-page="@Links.LegalRequirements.Consultation.Page" asp-route-id="@Model.Id" class="govuk-link" data-cy="select-legal-summary-consultation-change">
+                     Change<span class="govuk-visually-hidden"> consultation</span>
+                  </a>
+               </dd>
+            }
          </div>
          <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
@@ -70,11 +109,14 @@
                   <span id="diocesan-consent" class="empty" data-cy="select-legal-summary-diocesanconsent-status">Empty</span>
                }
             </dd>
-            <dd class="govuk-summary-list__actions">
-               <a asp-page="@Links.LegalRequirements.DiocesanConsent.Page" asp-route-id="@Model.Id" class="govuk-link" data-cy="select-legal-summary-diocesanconsent-change">
-                  Change<span class="govuk-visually-hidden"> diocesan consent</span>
-               </a>
-            </dd>
+            @if (!Model.IsReadOnly)
+            {
+               <dd class="govuk-summary-list__actions">
+                  <a asp-page="@Links.LegalRequirements.DiocesanConsent.Page" asp-route-id="@Model.Id" class="govuk-link" data-cy="select-legal-summary-diocesanconsent-change">
+                     Change<span class="govuk-visually-hidden"> diocesan consent</span>
+                  </a>
+               </dd>
+            }
          </div>
          <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
@@ -90,29 +132,34 @@
                   <span id="foundation-consent" class="empty" data-cy="select-legal-summary-foundationconsent-status">Empty</span>
                }
             </dd>
-            <dd class="govuk-summary-list__actions">
-               <a asp-page="@Links.LegalRequirements.FoundationConsent.Page" asp-route-id="@Model.Id" class="govuk-link" data-cy="select-legal-summary-foundationconsent-change">
-                  Change<span class="govuk-visually-hidden"> foundation consent</span>
-               </a>
-            </dd>
+            @if (!Model.IsReadOnly)
+            {
+               <dd class="govuk-summary-list__actions">
+                  <a asp-page="@Links.LegalRequirements.FoundationConsent.Page" asp-route-id="@Model.Id" class="govuk-link" data-cy="select-legal-summary-foundationconsent-change">
+                     Change<span class="govuk-visually-hidden"> foundation consent</span>
+                  </a>
+               </dd>
+            }
          </div>
       </dl>
-
-      <form method="post">
-         <div class="govuk-form-group">
-            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-               <div class="govuk-checkboxes__item">
-                  <input asp-for="@Model.IsComplete" class="govuk-checkboxes__input" type="checkbox" data-cy="select-legal-summary-iscomplete" id="legal-requirements-complete">
-                  <label asp-for="@Model.IsComplete" class="govuk-label govuk-checkboxes__label">
-                     Mark this section as complete, you can still make changes later
-                  </label>
+      @if (!Model.IsReadOnly)
+      {
+         <form method="post">
+               <div class="govuk-form-group">
+               <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                  <div class="govuk-checkboxes__item">
+                     <input asp-for="@Model.IsComplete" class="govuk-checkboxes__input" type="checkbox" data-cy="select-legal-summary-iscomplete" id="legal-requirements-complete">
+                     <label asp-for="@Model.IsComplete" class="govuk-label govuk-checkboxes__label">
+                        Mark this section as complete, you can still make changes later
+                     </label>
+                  </div>
                </div>
             </div>
-         </div>
 
-         <button class="govuk-button" data-module="govuk-button" data-cy="select-legal-summary-submitbutton">
-            Confirm and continue
-         </button>
-      </form>
+            <button class="govuk-button" data-module="govuk-button" data-cy="select-legal-summary-submitbutton">
+               Confirm and continue
+            </button>
+         </form>
+      }
    </div>
 </div>

@@ -18,4 +18,6 @@ public class DateInputViewModel
    public string PreviousInformation { get; set; }
    public string AdditionalInformation { get; set; }
    public string DateString { get; set; }
+   public string DetailsHeading { get; set; }
+   public string DetailsBody { get; set; }
 }

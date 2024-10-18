@@ -17,21 +17,56 @@
       <h1 class="govuk-heading-l">
             Confirm project dates
       </h1>
+        @if (Model.Project.IsReadOnly)
+        {
+            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                        Important
+                    </h2>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">
+                        Project approved
+                    </p>
+                    <p class="govuk-body">
+                        This project was approved and moved to Complete conversions transfers and changes on @Model.Project.ApplicationReceivedDate.
+                    </p>
+                    @if (Model.Project.IsVoluntary)
+                    {
+                        <p class="govuk-body">
+                            You can only <a class="govuk-link" data-test="change-ao-sent-date-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Project.Id" asp-route-returnUrl="@Links.ProjectDates.ConfirmProjectDates.Page" id="change-ao-date-btn">
+                                enter or change the date the academy order was sent
+                            </a> to this school. All other information is locked.
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="govuk-body">
+                            You cannot make changes to this project in Prepare.
+                        </p>
+                    }
+                </div>
+            </div>
+        }
    </div>
    <div class="govuk-grid-column-full">
       <dl class="govuk-summary-list">
-         <govuk-summary-list-row name="advisory-board-date" label="Advisory board date" value="@Model.Project.HeadTeacherBoardDate.ToDateString()" asp-page="@Links.ProjectDates.AdvisoryBoardDate.Page" asp-route-id="@Model.Project.Id" hidden-text="Advisory board date" />
-            <govuk-summary-list-row name="previous-advisory-board" label="Previous advisory board" value="@Model.Project.PreviousHeadTeacherBoardDate.ToDateString()" asp-page="@Links.ProjectDates.PreviousAdvisoryBoard.Page" asp-route-id="@Model.Project.Id" hidden-text="Previous advisory board" />
-            <govuk-summary-list-row name="proposed-conversion-date" label="Proposed conversion date" value="@Model.Project.ProposedConversionDate.ToDateString()" asp-page="@Links.ProjectDates.PropsedConversionDate.Page" asp-route-id="@Model.Project.Id" hidden-text="Proposed conversion date" />
+            <govuk-summary-list-row name="advisory-board-date" label="Advisory board date" value="@Model.Project.HeadTeacherBoardDate.ToDateString()" asp-page="@Links.ProjectDates.AdvisoryBoardDate.Page" asp-route-id="@Model.Project.Id" asp-read-only="@Model.Project.IsReadOnly" hidden-text="Advisory board date" />
+            <govuk-summary-list-row name="previous-advisory-board" label="Previous advisory board" value="@Model.Project.PreviousHeadTeacherBoardDate.ToDateString()" asp-page="@Links.ProjectDates.PreviousAdvisoryBoard.Page" asp-route-id="@Model.Project.Id" asp-read-only="@Model.Project.IsReadOnly" hidden-text="Previous advisory board" />
+            <govuk-summary-list-row name="proposed-conversion-date" label="Proposed conversion date" value="@Model.Project.ProposedConversionDate.ToDateString()" asp-page="@Links.ProjectDates.PropsedConversionDate.Page" asp-route-id="@Model.Project.Id" asp-read-only="@Model.Project.IsReadOnly" hidden-text="Proposed conversion date" />
       </dl>
    </div>
-   <div class="govuk-grid-column-two-thirds">
-      <form method="post">
-         <govuk-checkbox-input name="project-dates-complete" asp-for="Project.ProjectDatesSectionComplete" label="Mark this section as complete, you can still make changes later" />
+    @if (!Model.Project.IsReadOnly)
+    {
+        <div class="govuk-grid-column-two-thirds">
+            <form method="post">
+                <govuk-checkbox-input name="project-dates-complete" asp-for="Project.ProjectDatesSectionComplete" label="Mark this section as complete, you can still make changes later" />
 
-         <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
-            Confirm and continue
-         </button>
-      </form>
-   </div>
+                <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
+                    Confirm and continue
+                </button>
+            </form>
+        </div>
+    }
 </div>

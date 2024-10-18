@@ -5,34 +5,72 @@
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-2" data-cy="select-heading">
          @Model.SchoolName
       </h1>
-        <p class="govuk-body govuk-!-margin-bottom-1">
-            Route: @Model.AcademyTypeAndRoute.RouteDescription(@Model.IsFormAMat)
-        </p>
-      <p class="govuk-body govuk-!-margin-bottom-5">
-         Project owner:
 
-            @if (Model.AssignedUser == null || string.IsNullOrWhiteSpace(Model?.AssignedUser.FullName))
-            {
-                <span data-id="assigned-user" class="empty">Empty</span>
-            }
-            else
-            {
-                <strong data-id="assigned-user">@Model.AssignedUser.FullName</strong>
-            }
+</div>
+   @if (Model.IsReadOnly)
+   {
+      <div class="govuk-grid-column-two-thirds"> 
+         <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+               <div class="govuk-notification-banner__header">
+                  <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                     Important
+                  </h2>
+               </div>
+               <div class="govuk-notification-banner__content">
+                  <p class="govuk-notification-banner__heading">
+                     Project approved
+                  </p>
+                  <p class="govuk-body">
+                     This project was approved and moved to Complete conversions transfers and changes on @Model.ApplicationReceivedDate.
+                  </p>
+                    @if (Model.IsVoluntary)
+                    {
+                        <p class="govuk-body">
+                            You can only <a class="govuk-link" data-test="change-ao-sent-date-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Id" asp-route-returnUrl="@Links.TaskList.Index.Page" id="change-ao-date-btn">
+                                enter or change the date the academy order was sent
+                            </a> to this school. All other information is locked.
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="govuk-body">
+                            You cannot make changes to this project in Prepare.
+                        </p>
+                    }
+               </div>
+         </div>
+       </div>
+   }
+<div class="govuk-grid-column-full">
+   <p class="govuk-body govuk-!-margin-bottom-1">
+      Route: @Model.AcademyTypeAndRoute.RouteDescription(@Model.IsFormAMat)
+   </p>
+   <p class="govuk-body govuk-!-margin-bottom-5">
+      Project owner:
 
-         <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.ProjectAssignment.Index.Page" asp-route-id="@Model.Id">Change</a>
-      </p>
-        <p class="govuk-!-margin-top-0  govuk-!-margin-bottom-5">
-            <strong class="govuk-tag govuk-tag--@Model.ProjectStatusColour" id="project-status-@Model.Id">@Model.ProjectStatus</strong>
-        </p>
-        @if (Model.HasPermission)
-        { 
-            <span class="govuk-body govuk-!-margin-bottom-3">
-                <a class="govuk-button govuk-button--warning" asp-page="@Links.DeleteProject.ConfirmToDeleteProject.Page" asp-route-id="@Model.Id" asp-route-urn="@Model.SchoolURN" asp-route-title="@Model.SchoolName"> Delete project</a>
-            </span> 
-        }
-    </div>
-    
+         @if (Model.AssignedUser == null || string.IsNullOrWhiteSpace(Model?.AssignedUser.FullName))
+         {
+               <span data-id="assigned-user" class="empty">Empty</span>
+         }
+         else
+         {
+               <strong data-id="assigned-user">@Model.AssignedUser.FullName</strong>
+         }
+         @if (!Model.IsReadOnly)
+         {
+               <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.ProjectAssignment.Index.Page" asp-route-id="@Model.Id">Change</a>
+         } 
+   </p>
+   <p class="govuk-!-margin-top-0  govuk-!-margin-bottom-5">
+      <strong class="govuk-tag govuk-tag--@Model.ProjectStatusColour" id="project-status-@Model.Id">@Model.ProjectStatus</strong>
+   </p>
+   @if (Model.HasPermission && !Model.IsReadOnly)
+   { 
+      <span class="govuk-body govuk-!-margin-bottom-3">
+            <a class="govuk-button govuk-button--warning" asp-page="@Links.DeleteProject.ConfirmToDeleteProject.Page" asp-route-id="@Model.Id" asp-route-urn="@Model.SchoolURN" asp-route-title="@Model.SchoolName"> Delete project</a>
+      </span> 
+   }
+</div>
 
    <div class="govuk-grid-column-full">
       <partial name="_SubMenu" model="@Model"/>

@@ -60,7 +60,8 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
          ConversionSupportGrantType = project.ConversionSupportGrantType,
          ConversionSupportGrantEnvironmentalImprovementGrant = project.ConversionSupportGrantEnvironmentalImprovementGrant,
          ConversionSupportNumberOfSites = project?.ConversionSupportGrantNumberOfSites,
-         DaoPackSentDate = project.DaoPackSentDate.ToDateString()
+         DaoPackSentDate = project.DaoPackSentDate.ToDateString(),
+         IsReadOnly = project.IsReadOnly
       };
 
       return View(viewModel);

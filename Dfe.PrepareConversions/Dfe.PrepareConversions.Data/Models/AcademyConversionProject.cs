@@ -142,4 +142,6 @@ public class AcademyConversionProject
 
    public bool ProjectDatesSectionComplete { get; set; }
 
+   public bool IsReadOnly { get; set; }
+
 }

@@ -53,8 +53,8 @@ namespace Dfe.PrepareTransfers.Web.Tests.TestFixtures
                     OutgoingTrustConsent = ThreeOptions.NotApplicable,
                     
                 },
-                TransferringAcademies = new List<TransferringAcademy>
-                {
+                TransferringAcademies =
+                [
                     new TransferringAcademy
                     {
                         IncomingTrustName = "incoming trust name",
@@ -64,7 +64,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.TestFixtures
                         KeyStage5PerformanceAdditionalInformation = "ks5 additional info",
                         LatestOfstedReportAdditionalInformation = "ofsted additional info"
                     }
-                }
+                ]
             };
 
             var foundAcademy = new Academy

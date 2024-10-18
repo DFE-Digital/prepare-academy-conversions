@@ -1,5 +1,4 @@
-﻿using Dfe.PrepareConversions.Data;
-using Dfe.PrepareConversions.Data.Models;
+﻿using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Extensions;
@@ -11,23 +10,18 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.Decision.Models;
 
-public abstract class DecisionBaseModel : PageModel
+public abstract class DecisionBaseModel(IAcademyConversionProjectRepository repository, ISession session) : PageModel
 {
    public const string DECISION_SESSION_KEY = "Decision";
-   protected readonly IAcademyConversionProjectRepository _repository;
-   protected readonly ISession _session;
+   public const string PROJECT_READONLY_SESSION_KEY = "Project_iro";
+   protected readonly IAcademyConversionProjectRepository _repository = repository;
+   protected readonly ISession _session = session;
    protected AcademyConversionProject _project;
 
    /// <summary>
    ///    Whether the <c>obl</c> query parameter should be passed on to subsequent pages
    /// </summary>
    protected bool PropagateBackLinkOverride = true;
-
-   protected DecisionBaseModel(IAcademyConversionProjectRepository repository, ISession session)
-   {
-      _repository = repository;
-      _session = session;
-   }
 
    public BackLinkModel BackLinkModel { get; set; }
    public string SchoolName { get; set; }
@@ -42,7 +36,7 @@ public abstract class DecisionBaseModel : PageModel
    private async Task SetDefaults(int id)
    {
       Id = id;
-      ApiResponse<AcademyConversionProject> project = await _repository.GetProjectById(id);
+      var project = await _repository.GetProjectById(id);
       SchoolName = project.Body.SchoolName;
       AcademyTypeAndRoute = project.Body.AcademyTypeAndRoute;
    }
@@ -75,6 +69,12 @@ public abstract class DecisionBaseModel : PageModel
    protected AdvisoryBoardDecision GetDecisionFromSession(int id)
    {
       return _session.Get<AdvisoryBoardDecision>($"{DECISION_SESSION_KEY}_{id}") ?? new AdvisoryBoardDecision();
+   }
+
+   protected bool GetIsProjectReadOnly(int id)
+   {
+      _ = bool.TryParse(_session.GetString($"{PROJECT_READONLY_SESSION_KEY}_{id}"), out bool isReadOnly);
+      return isReadOnly;
    }
 
    /// <summary>

@@ -23,22 +23,57 @@
       <h1 class="govuk-heading-l">
             Record dates for the local authority information template
       </h1>
+        @if (Model.Project.IsReadOnly)
+        {
+            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                        Important
+                    </h2>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">
+                        Project approved
+                    </p>
+                    <p class="govuk-body">
+                        This project was approved and moved to Complete conversions transfers and changes on @Model.Project.ApplicationReceivedDate.
+                    </p>
+                    @if (Model.Project.IsVoluntary)
+                    {
+                        <p class="govuk-body">
+                            You can only <a class="govuk-link" data-test="change-ao-sent-date-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Project.Id" asp-route-returnUrl="@Links.LocalAuthorityInformationTemplateSection.ConfirmLocalAuthorityInformationTemplateDates.Page" id="change-ao-date-btn">
+                                enter or change the date the academy order was sent
+                            </a> to this school. All other information is locked.
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="govuk-body">
+                            You cannot make changes to this project in Prepare.
+                        </p>
+                    }
+                </div>
+            </div>
+        }
    </div>
    <div class="govuk-grid-column-full">
       <dl class="govuk-summary-list">
-         <govuk-summary-list-row name="la-info-template-sent-date" label="Date you sent the template" value="@Model.Project.LocalAuthorityInformationTemplateSentDate.ToDateString()" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" hidden-text="date LA proforma was sent to LA"/>
-         <govuk-summary-list-row name="la-info-template-returned-date" label="Date you want the template returned" value="@Model.Project.LocalAuthorityInformationTemplateReturnedDate.ToDateString()" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" hidden-text="date LA proforma was sent back from LA"/>
-         <govuk-summary-list-row name="la-info-template-comments" label="Comments (optional)" asp-for="Project.LocalAuthorityInformationTemplateComments" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" hidden-text="comments"/>
-         <govuk-summary-list-row name="la-info-template-sharepoint-link" label="Add a link to where you have stored the template in Sharepoint" asp-for="Project.LocalAuthorityInformationTemplateLink" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" hidden-text="sharepoint link"/>
+            <govuk-summary-list-row name="la-info-template-sent-date" label="Date you sent the template" value="@Model.Project.LocalAuthorityInformationTemplateSentDate.ToDateString()" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" hidden-text="date LA proforma was sent to LA" asp-read-only="@Model.Project.IsReadOnly" />
+            <govuk-summary-list-row name="la-info-template-returned-date" label="Date you want the template returned" value="@Model.Project.LocalAuthorityInformationTemplateReturnedDate.ToDateString()" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" hidden-text="date LA proforma was sent back from LA" asp-read-only="@Model.Project.IsReadOnly" />
+            <govuk-summary-list-row name="la-info-template-comments" label="Comments (optional)" asp-for="Project.LocalAuthorityInformationTemplateComments" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" hidden-text="comments" asp-read-only="@Model.Project.IsReadOnly" />
+            <govuk-summary-list-row name="la-info-template-sharepoint-link" label="Add a link to where you have stored the template in Sharepoint" asp-for="Project.LocalAuthorityInformationTemplateLink" asp-page="@Links.LocalAuthorityInformationTemplateSection.RecordLocalAuthorityInformationTemplateDates.Page" asp-route-id="@Model.Project.Id" hidden-text="sharepoint link" asp-read-only="@Model.Project.IsReadOnly" />
       </dl>
    </div>
    <div class="govuk-grid-column-two-thirds">
-      <form method="post">
-         <govuk-checkbox-input name="la-info-template-complete" asp-for="Project.LocalAuthorityInformationTemplateSectionComplete" label="Mark this section as complete, you can still make changes later"/>
+      @if(!Model.Project.IsReadOnly)
+      {
+         <form method="post">
+               <govuk-checkbox-input name="la-info-template-complete" asp-for="Project.LocalAuthorityInformationTemplateSectionComplete" label="Mark this section as complete, you can still make changes later" />
 
-         <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
-            Confirm and continue
-         </button>
-      </form>
+               <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button">
+                  Confirm and continue
+               </button>
+         </form>
+      }
    </div>
 </div>

@@ -8,14 +8,12 @@ using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Rationale;
 
-public class ConfirmProjectAndTrustRationaleIntegrationTests : BaseIntegrationTests
+public class ConfirmProjectAndTrustRationaleIntegrationTests(IntegrationTestingWebApplicationFactory factory) : BaseIntegrationTests(factory)
 {
-   public ConfirmProjectAndTrustRationaleIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
-
    [Fact]
    public async Task Should_remove_rationale_for_project_if_sponsored()
    {
-      AcademyConversionProject project = AddGetProject(p => p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored);
+      var project = AddGetProject(p => p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Rationale");
@@ -26,7 +24,7 @@ public class ConfirmProjectAndTrustRationaleIntegrationTests : BaseIntegrationTe
    [Fact]
    public async Task Should_be_in_progress_and_display_rationale_when_rationale_populated()
    {
-      AcademyConversionProject project = AddGetProject(project =>
+      var project = AddGetProject(project =>
       {
          project.RationaleSectionComplete = false;
          project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
@@ -47,7 +45,7 @@ public class ConfirmProjectAndTrustRationaleIntegrationTests : BaseIntegrationTe
    [Fact]
    public async Task Should_be_completed_and_checked_when_rationale_mark_as_complete_true()
    {
-      AcademyConversionProject project = AddGetProject(project =>
+      var project = AddGetProject(project =>
       {
          project.RationaleSectionComplete = true;
       });
@@ -73,7 +71,7 @@ public class ConfirmProjectAndTrustRationaleIntegrationTests : BaseIntegrationTe
    [Fact]
    public async Task Should_be_not_started_and_display_empty_when_rationale_not_prepopulated()
    {
-      AcademyConversionProject project = AddGetProject(project =>
+      var project = AddGetProject(project =>
       {
          project.RationaleForProject = null;
          project.RationaleForTrust = null;
@@ -106,7 +104,7 @@ public class ConfirmProjectAndTrustRationaleIntegrationTests : BaseIntegrationTe
    [Fact]
    public async Task Should_show_error_summary_when_there_is_an_API_error()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
       AddPatchError(project.Id);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-project-trust-rationale");
@@ -119,7 +117,7 @@ public class ConfirmProjectAndTrustRationaleIntegrationTests : BaseIntegrationTe
    [Fact]
    public async Task Should_navigate_between_task_list_and_rationale_summary()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Rationale");
@@ -129,5 +127,21 @@ public class ConfirmProjectAndTrustRationaleIntegrationTests : BaseIntegrationTe
       await NavigateAsync("Back");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+   }
+
+   [Fact]
+   public async Task Should_not_have_change_link_if_project_read_only()
+   {
+      var project = AddGetProject(isReadOnly: true);
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
+      await NavigateAsync("Rationale");
+
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-trust-rationale");
+
+      VerifyElementDoesNotExist("change-rationale-for-trust");
+      
+      Document.QuerySelector("#rationale-complete").Should().BeNull();
+      Document.QuerySelector("#confirm-and-continue-button").Should().BeNull();
    }
 }

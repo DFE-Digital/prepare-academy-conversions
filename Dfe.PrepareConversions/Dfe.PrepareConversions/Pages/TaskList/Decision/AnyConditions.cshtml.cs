@@ -9,18 +9,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.Decision;
 
-public class AnyConditionsModel : DecisionBaseModel
+public class AnyConditionsModel(IAcademyConversionProjectRepository repository,
+                          ISession session,
+                          ErrorService errorService) : DecisionBaseModel(repository, session)
 {
-   private readonly ErrorService _errorService;
-
-   public AnyConditionsModel(IAcademyConversionProjectRepository repository,
-                             ISession session,
-                             ErrorService errorService)
-      : base(repository, session)
-   {
-      _errorService = errorService;
-   }
-
    [BindProperty]
    [Required(ErrorMessage = "Select whether any conditions were set")]
    public bool? ApprovedConditionsSet { get; set; }
@@ -58,7 +50,7 @@ public class AnyConditionsModel : DecisionBaseModel
          return RedirectToPage(Links.Decision.DecisionMaker.Page, LinkParameters);
       }
 
-      _errorService.AddErrors(ModelState.Keys, ModelState);
+      errorService.AddErrors(ModelState.Keys, ModelState);
       return OnGet(id);
    }
 }
