@@ -42,29 +42,44 @@ describe('Decisions Tests', () => {
 
     Logger.log("Capture the projectId dynamically from the URL");
     cy.url().then((url) => {
-      projectId = url.match(/task-list\/(\d+)/)[1]; 
+      projectId = url.match(/task-list\/(\d+)/)[1];
       Logger.log(`Project ID: ${projectId}`);
     }).then(() => {
       Logger.log("Click on record a decision menubar button");
       decisionPage.clickRecordDecisionMenu();
-  
+
       Logger.log("Click on record a decision button");
       decisionPage.clickRecordDecision();
-  
+
+      Logger.log("Check error and add necessary details to record the decision");
+      decisionPage.checkErrorAndAddDetails('15', '10', '2024', 'Paul Lockwood');
+
+      Logger.log("Click on record a decision menubar button");
+      decisionPage.clickRecordDecisionMenu();
+
+      Logger.log("Click on record a decision button");
+      decisionPage.clickRecordDecisionWithoutError();
+
       Logger.log("Record the decision with the necessary details");
-      decisionPage.makeDecision("approved")
+      decisionPage.makeDecision("deferred")
         .decsionMaker("grade6")
-        .selectNoConditions()
+        .selectReasonWhyDeferred()
         .enterDecisionMakerName('Fahad Darwish')
         .enterDecisionDate('12', '12', '2023')
-        .verifyDecisionDetails('Approved', 'Grade 6', 'Fahad Darwish', 'No', '12 December 2023');
-  
+        .verifyDecisionDetails('Deferred', 'Grade 6', 'Fahad Darwish', '12 December 2023');
+
       Logger.log("Verify that decision was recorded successfully then change the decision details, verify the changes");
       decisionPage.changeDecisionDetails();
-  
+
       Logger.log("Change the current decision to DAO (Directive Academy Order) revoked and verify the changes");
       decisionPage.changeDecisionDAODetails();
-  
+
+      Logger.log("Change the current decision to Approved, verify the changes then check if the project is readonly");
+      decisionPage.changeDecisionApproved();
+
+      Logger.log("Check if this project is readonly after adding a decision");
+      decisionPage.clickToGoBackandCheckReadOnly();
+
       Logger.log("Delete the project and verify that it was deleted successfully - Project ID: " + projectId);
       decisionPage.deleteProject(projectId);
     });
