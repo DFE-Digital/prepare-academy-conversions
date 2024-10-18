@@ -1,4 +1,5 @@
 ﻿@page "/task-list/{id:int}/record-a-decision"
+@using Microsoft.IdentityModel.Tokens
 @model Dfe.PrepareConversions.Pages.TaskList.Decision.IndexModel
 
 @{
@@ -6,12 +7,11 @@
 }
 
 @section BeforeMain
-    {
-    <a asp-page="@Model.ReturnPage" asp-route-id="@Model.ReturnId" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
+{
+<a asp-page="@Model.ReturnPage" asp-route-id="@Model.ReturnId" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
 }
+<partial name="_ProjectHeader" model="@Model.Project" />
 
-    <partial name="_ProjectHeader" model="@Model.Project" />
-
-    <div class="govuk-grid-row">
-       @await Component.InvokeAsync("RecordDecisionPreview", new { id = int.Parse(Model?.Project.Id ?? string.Empty), AcademyTypeAndRoute = Model.Project.AcademyTypeAndRoute, isReadOnly= Model.Project.IsReadOnly })
-    </div>
+<div class="govuk-grid-row">
+    @await Component.InvokeAsync("RecordDecisionPreview", new { id = int.Parse(Model?.Project.Id ?? string.Empty), AcademyTypeAndRoute = Model.Project.AcademyTypeAndRoute, isReadOnly = Model.Project.IsReadOnly, hasAssignedOwner = (Model.Project.AssignedUser != null && Model.Project.AssignedUser.EmailAddress.Length > 0), hasAdvisoryBoardDate = Model.Project.HeadTeacherBoardDate.HasValue })
+</div>
