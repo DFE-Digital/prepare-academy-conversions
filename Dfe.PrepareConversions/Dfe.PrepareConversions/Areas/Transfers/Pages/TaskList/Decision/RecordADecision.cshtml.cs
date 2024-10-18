@@ -1,37 +1,44 @@
+using Dfe.PrepareConversions.Services;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareTransfers.Data.Services.Interfaces;
 using Dfe.PrepareTransfers.Web.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Dfe.PrepareTransfers.Web.Transfers;
+using Microsoft.AspNetCore.Mvc; 
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareTransfers.Web.Pages.Decision
 {
-    public class RecordADecision : CommonPageModel
+    public class RecordADecision(IAcademyTransfersAdvisoryBoardDecisionRepository decisionRepository, IProjects projectsRepository, ErrorService errorService) : CommonPageModel
     {
-        private readonly ILogger<RecordADecision> _logger;
-        private readonly IAcademyTransfersAdvisoryBoardDecisionRepository _decisionRepository;
-        private readonly IProjects _projectsRepository;
-
-        public Project Project { get; set; }
-        public AdvisoryBoardDecision Decision { get; set; }
-
-        public RecordADecision(IAcademyTransfersAdvisoryBoardDecisionRepository decisionRepository, IProjects projectsRepository, ILogger<RecordADecision> logger)
+      public Project Project { get; set; }
+      public AdvisoryBoardDecision Decision { get; set; }
+      public bool HasAdvisoryBoardDate { get; set; }
+      public bool HasProjectOwnerAssignment { get; set; }
+      public async Task<IActionResult> OnGetAsync()
         {
-            _decisionRepository = decisionRepository;
-            _projectsRepository = projectsRepository;
-            _logger = logger;
-        }
-
-        public async Task<IActionResult> OnGetAsync()
-        {
-            Project = (await _projectsRepository.GetByUrn(Urn)).Result;
-            Decision = (await _decisionRepository.Get(Project.Id)).Result;
-
+            Project = (await projectsRepository.GetByUrn(Urn)).Result;
+            Decision = (await decisionRepository.Get(Project.Id)).Result;
+            ValidateProject(Project.Id);
             return Page();
         }
+      private void ValidateProject(int id)
+      {
+         HasAdvisoryBoardDate = Project.Dates?.Htb != null;
+         HasProjectOwnerAssignment = Project.AssignedUser != null && Project.AssignedUser.EmailAddress.Length > 0;
 
-    }
+         if (!HasAdvisoryBoardDate)
+         {
+            errorService.AddError($"/transfers/project/{id}/transfer-dates/advisory-board-date?returns={Models.Links.Project.Index.PageName}",
+            "You must enter an advisory board date before you can record a decision.");
+         }
+         if (!HasProjectOwnerAssignment)
+         {
+            errorService.AddError($"/transfers/project-assignment/{id}",
+            "You must enter the name of the person who worked on this project before you can record a decision.");
+         }
+      }
+
+   }
 }
