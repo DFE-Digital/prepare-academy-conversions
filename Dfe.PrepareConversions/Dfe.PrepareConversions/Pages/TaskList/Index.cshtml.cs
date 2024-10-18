@@ -78,7 +78,7 @@ public class IndexModel(KeyStagePerformanceService keyStagePerformanceService,
 
       var keyStagePerformance = await keyStagePerformanceService.GetKeyStagePerformance(Project?.SchoolURN);
       // 16 plus = 6, All-through = 7, Middle deemed primary = 3, Middle deemed secondary = 5, Not applicable = 0, Nursery = 1, Primary = 2, Secondary = 4
-      if (Project != null) TaskList = TaskListViewModel.Build(Project);
+      if (Project != null) TaskList = TaskListViewModel.Build(Project, (keyStagePerformance.HasSchoolAbsenceData && (Project.IsPRU || Project.IsSEN)));
       if (TaskList != null)
       {
          TaskList.HasKeyStage2PerformanceTables = keyStagePerformance.HasKeyStage2PerformanceTables;
