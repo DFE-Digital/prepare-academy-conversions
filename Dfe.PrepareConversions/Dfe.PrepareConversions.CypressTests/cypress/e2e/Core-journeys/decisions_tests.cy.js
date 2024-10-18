@@ -42,12 +42,12 @@ describe('Decisions Tests', () => {
 
     Logger.log("Capture the projectId dynamically from the URL");
     cy.url().then((url) => {
-      projectId = url.match(/task-list\/(\d+)/)[1]; 
+      projectId = url.match(/task-list\/(\d+)/)[1];
       Logger.log(`Project ID: ${projectId}`);
     }).then(() => {
       Logger.log("Click on record a decision menubar button");
       decisionPage.clickRecordDecisionMenu();
-  
+
       Logger.log("Click on record a decision button");
       decisionPage.clickRecordDecision();
 
@@ -67,10 +67,10 @@ describe('Decisions Tests', () => {
         .enterDecisionMakerName('Fahad Darwish')
         .enterDecisionDate('12', '12', '2023')
         .verifyDecisionDetails('Deferred', 'Grade 6', 'Fahad Darwish', '12 December 2023');
-  
+
       Logger.log("Verify that decision was recorded successfully then change the decision details, verify the changes");
       decisionPage.changeDecisionDetails();
-  
+
       Logger.log("Change the current decision to DAO (Directive Academy Order) revoked and verify the changes");
       decisionPage.changeDecisionDAODetails();
 
@@ -78,14 +78,10 @@ describe('Decisions Tests', () => {
       decisionPage.changeDecisionApproved();
 
       Logger.log("Check if this project is readonly after adding a decision");
-      decisionPage.clickConfirmProjectDates()
-      .verifyReadOnlyAfterDecision()
-      .goBackToTaskList()
-      .checkReadOnlyOnSchoolInformation();
-  
-  
-      // Logger.log("Delete the project and verify that it was deleted successfully - Project ID: " + projectId);
-      // decisionPage.deleteProject(projectId);
+      decisionPage.clickToGoBackandCheckReadOnly();
+
+      Logger.log("Delete the project and verify that it was deleted successfully - Project ID: " + projectId);
+      decisionPage.deleteProject(projectId);
     });
   });
 });

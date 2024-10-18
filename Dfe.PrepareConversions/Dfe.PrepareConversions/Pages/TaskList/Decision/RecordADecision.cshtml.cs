@@ -44,7 +44,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.Decision
             if (Project.AssignedUser == null || Project.AssignedUser.EmailAddress.Length < 1)
             {
                errorService.AddError($"/project-assignment/{id}",
-               "You must enter the name of the person who worked on this project before you can reford a decison.");
+               "You must enter the name of the person who worked on this project before you can record a decision.");
             }
          }
       }

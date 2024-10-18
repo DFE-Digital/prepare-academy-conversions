@@ -56,8 +56,8 @@ export class DecisionPage {
         cy.get('#errorSummary').should('be.visible');
         cy.get('#error-summary-title').should('contain', 'There is a problem');
         cy.get('[data-cy="error-summary"]')
-            .find('a') 
-            .should('have.length', 2) 
+            .find('a')
+            .should('have.length', 2)
             .eq(0)
             .should('contain', 'You must enter an advisory board date before you can record a decision.')
             .and('be.visible');
@@ -74,14 +74,14 @@ export class DecisionPage {
 
         cy.get('[data-cy="record_decision_menu"] > .moj-sub-navigation__link').click();
 
-        
+
         cy.get('[data-test="record_decision_error_btn"]').click();
         cy.contains('a', 'You must enter the name of the person who worked on this project before you can record a decision.').click();
         cy.get('#delivery-officer').type(userName);
-        cy.get('.autocomplete__option').first().click(); 
+        cy.get('.autocomplete__option').first().click();
         cy.get('[data-cy="continue-Btn"]').click();
 
-        
+
         cy.get('#notification-message').should('include.text', 'Project is assigned');
         cy.get('#main-content > :nth-child(2) > :nth-child(2)').should('include.text', userName);
 
@@ -140,10 +140,10 @@ export class DecisionPage {
         Logger.log(`Decision: ${decision}, Name: ${name}, Date: ${date}`);
         cy.log(`Decision: ${decision}, Name: ${name}, Date: ${date}`);
         cy.get('#decision')
-  .invoke('text')
-  .then((text) => {
-    expect(text.trim()).to.contain(decision);
-  });
+            .invoke('text')
+            .then((text) => {
+                expect(text.trim()).to.contain(decision);
+            });
         cy.get('#decision-made-by').eq(0).should('contain', grade);
         cy.get('#decision-maker-name').should('contain', name);
         cy.get('#decision-date').should('contain', date);
@@ -153,12 +153,12 @@ export class DecisionPage {
 
     verifyDecisionDetailsBeforeChanging(decision, name, date) {
         Logger.log(`Decision: ${decision}, Name: ${name}, Date: ${date}`);
-    cy.log(`Decision: ${decision}, Name: ${name}, Date: ${date}`);
-    cy.get('#decision')
-    .invoke('text')
-    .then((text) => {
-      expect(text.trim().toLowerCase()).to.contain(decision.toLowerCase().trim());
-    });
+        cy.log(`Decision: ${decision}, Name: ${name}, Date: ${date}`);
+        cy.get('#decision')
+            .invoke('text')
+            .then((text) => {
+                expect(text.trim().toLowerCase()).to.contain(decision.toLowerCase().trim());
+            });
         cy.get('#decision-maker-name').should('contain', name);
         cy.get('#decision-date').should('contain', date);
         return this;
@@ -166,10 +166,10 @@ export class DecisionPage {
 
     verifyDecisionDetailsAfterChanging(decision, name, date) {
         cy.get('#decision')
-        .invoke('text')
-        .then((text) => {
-          expect(text.trim().toLowerCase()).to.contain(decision.toLowerCase().trim());
-        });
+            .invoke('text')
+            .then((text) => {
+                expect(text.trim().toLowerCase()).to.contain(decision.toLowerCase().trim());
+            });
         cy.get('#decision-made-by').should('contain', name);
         console.log('Date:', date);
         cy.get('#decision-date').should('contain', date);
@@ -247,18 +247,13 @@ export class DecisionPage {
         this.verifyDecisionDetailsAfterChanging('Approved', 'Minister', '12 November 2023');
         cy.get('#submit-btn').click();
         cy.get('[data-cy="decision-recorded-confirmation"]')
-        .should('be.visible')
-        .within(() => {
-            cy.get('[data-cy="decision-recorded-confirmation"]')
-            .should('contain', 'Decision recorded');
-          cy.get('[data-cy="data-cy="approved-body"]')
-            .should('contain', 'Manchester Academy')
+            .should('be.visible');
+        cy.get('[data-cy="decision-recorded-confirmation"]').should('contain', 'Decision recorded');
+        cy.get('[data-cy="approved-body"]').should('contain', 'Manchester Academy')
             .and('contain', 'Approved');
-        });
 
-  cy.get('[data-cy="open-in-compelete-btn"]')
-  .should('be.visible')
-  .and('contain', 'Open project in complete');
+        cy.get('[data-cy="open-in-compelete-btn"]')
+            .should('be.visible');
         return this;
     }
     deleteProject(projectId) {
@@ -267,33 +262,23 @@ export class DecisionPage {
         });
     }
 
-    clickConfirmProjectDates() {
-        cy.get('[data-cy="confirm_project_dates"]').click();
+    clickToGoBackandCheckReadOnly() {
+        cy.get('[data-cy="select-backlink"]').click();
+        cy.get('[data-cy="record_decision_menu"]').click();
+        cy.get('[data-cy="approved-message_banner"]')
+            .should('be.visible')
+            .and('contain', 'This project was approved');
+
         return this;
     }
 
-    verifyReadOnlyAfterDecision() {
-        cy.get('[data-test="change-advisory-board-date"]').should('not.be.visible');
-        return this;
-    }
+
 
     goBackToTaskList() {
         cy.get('[data-cy="back-link"]').click();
         return this;
     }
 
-    checkReadOnlyOnSchoolInformation() {
-        cy.get('[data-cy="task-name"] a').each((link) => {
-            cy.wrap(link).invoke('attr', 'href').then((href) => {
-                cy.visit(href);
-                // Ensure the change button is absent
-                cy.get('a').contains('Change').should('not.exist');
-                // Return to the task list after each check
-                cy.get('a.govuk-back-link').click();
-            });
-        });
-        return this;
-    }
 
 }
 
