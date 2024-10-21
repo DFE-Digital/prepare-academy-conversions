@@ -40,7 +40,8 @@ public abstract class DecisionBaseModel : PageModel
         Urn = urn;
         var project = await _repository.GetByUrn($"{Urn}");
         Id = project.Result.Id;
-    }
+     
+   }
 
    public override async Task OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, PageHandlerExecutionDelegate next)
    {

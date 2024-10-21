@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
+
 namespace Dfe.PrepareTransfers.Pages.TaskList.Decision;
 
 public class SummaryModel : DecisionBaseModel
@@ -32,6 +33,7 @@ public class SummaryModel : DecisionBaseModel
    public IActionResult OnGet(int urn)
    {
       Decision = GetDecisionFromSession(urn);
+      
 
       if (Decision.Decision == null) return RedirectToPage(Links.Project.Index.PageName, LinkParameters);
 
@@ -44,12 +46,18 @@ public class SummaryModel : DecisionBaseModel
 
         AdvisoryBoardDecision decision = GetDecisionFromSession(urn);
         decision.TransferProjectId = Id;
-
+        
         await CreateOrUpdateDecision(Id, decision);
 
         await UpdateProjectStatus(urn, decision.GetDecisionAsFriendlyName());
 
+        //await CreateOrUpdateDecision(urn, decision);
+
         SetDecisionInSession(urn, null);
+        
+        if (decision.Decision == AdvisoryBoardDecisions.Approved && (decision is not null || decision.Decision != AdvisoryBoardDecisions.Approved)) {
+           return RedirectToPage(Links.Decision.ApprovedInfo.PageName, new {urn});
+        }
 
         TempData.SetNotification("Done", "Decision recorded");
 

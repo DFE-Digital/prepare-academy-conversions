@@ -15,6 +15,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.Decision
       ISession session) : DecisionBaseModel(repository, session)
    {
       public AdvisoryBoardDecision Decision { get; set; }
+      
 
       public async Task<IActionResult> OnGetAsync(int id) {
          ApiResponse<AdvisoryBoardDecision> savedDecision = await advisoryBoardDecisionRepository.Get(id);
