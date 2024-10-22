@@ -24,7 +24,7 @@ export default class ProjectTaskList extends BasePage {
         ofstedLink: 'a[href*="/school-performance-ofsted-information"]',
         keyStageLink: (keyStageNumber) => `a[href*="/key-stage-${keyStageNumber}-performance-tables"]`,
         createNewConversionButton: '[data-cy="create_new_conversion_btn"]',
-        recordDecisionButton: '[data-cy="record_decision_btn"]',
+        recordDecisionButton: '[data-cy="record_decision_error_btn"]',
         schoolName: '[data-cy="school-name"]',
         urn: '[data-cy="urn"]',
         urnId: '.govuk-caption-xl',
