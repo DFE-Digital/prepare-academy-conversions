@@ -77,15 +77,20 @@ public class SummaryModel : PageModel
          trust = await _trustRepository.GetTrustByUkprn(ukprn);
       }
 
-      if (proposedTrustName != null)
+      bool _isFormAMat = !string.IsNullOrEmpty(isFormAMat) && isFormAMat.ToLower().Equals("yes");
+
+      if (!_isFormAMat)
+      {
+         await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust));
+      }
+
+      if (_isFormAMat && proposedTrustName != null)
       {
          trust.Name = proposedTrustName;
          await _academyConversionProjectRepository.CreateFormAMatProject(CreateProjectMapper.MapFormAMatToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust));
-      }
+      }    
 
-      bool _isFormAMAT = !string.IsNullOrEmpty(isFormAMat) && isFormAMat.ToLower().Equals("yes");
-
-      if (_isFormAMAT && proposedTrustName == null)
+      if (_isFormAMat && proposedTrustName == null)
       {
          var createdProject = await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust, true));
          var formAMatProject = await _academyConversionProjectRepository.SearchFormAMatProjects(famReference);
@@ -95,11 +100,6 @@ public class SummaryModel : PageModel
 
          await _academyConversionProjectRepository.SetFormAMatProjectReference(projectId, new SetFormAMatProjectReference(projectId, formAMatProjectID));
       }
-      else
-      {
-         await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust));
-      }
-
 
       return RedirectToPage(Links.ProjectList.Index.Page);
    }
