@@ -36,6 +36,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.Features
             OutgoingAcademyUrn = projectResult.OutgoingAcademyUrn;
             ReasonForTheTransfer = projectResult.Features.ReasonForTheTransfer;
             SpecificReasonForTheTransfer = projectResult.Features.SpecificReasonsForTheTransfer;
+            IsReadOnly = projectResult.IsReadOnly;
             MarkSectionCompletedViewModel = new MarkSectionCompletedViewModel
             {
                 IsCompleted = projectResult.Features.IsCompleted ?? false,

@@ -34,6 +34,7 @@ namespace Dfe.PrepareTransfers.Web.Services
             indexPage.ProjectStatus = project.Result.Status;
             indexPage.AssignedUser = project.Result.AssignedUser;
             indexPage.IsFormAMAT = project.Result.IsFormAMat.HasValue && project.Result.IsFormAMat.Value;
+            indexPage.IsReadOnly = project.Result.IsReadOnly;
         }
 
         private static ProjectStatuses GetAcademyAndTrustInformationStatus(Project project)
@@ -113,7 +114,5 @@ namespace Dfe.PrepareTransfers.Web.Services
 
             return project.Rationale.IsCompleted == true ? ProjectStatuses.Completed : ProjectStatuses.InProgress;
         }
-
-      
     }
 }

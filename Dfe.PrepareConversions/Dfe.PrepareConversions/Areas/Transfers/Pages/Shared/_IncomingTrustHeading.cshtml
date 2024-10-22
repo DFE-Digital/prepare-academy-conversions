@@ -3,20 +3,45 @@
 
 <span class="govuk-caption-l">Project reference: @Model.Reference</span>
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
-    @Model.IncomingTrustName
+   @Model.IncomingTrustName
 </h1>
+@if (Model.IsReadOnly == true)
+{
+   <div data-cy="approved-message_banner">
+      <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+         <div class="govuk-notification-banner__header">
+            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+               Important
+            </h2>
+         </div>
+         <div class="govuk-notification-banner__content">
+            <p class="govuk-notification-banner__heading">
+               Project approved
+            </p>
+            <p class="govuk-body">
+               This project was approved and moved to Complete conversions transfers and changes on .
+            </p>
+            <p class="govuk-body">
+               You cannot make changes to this project in Prepare.
+            </p>
+         </div>
+      </div>
+   </div>
+}
 
 <p class="govuk-body govuk-!-margin-bottom-8">
-    Delivery officer: 
+   Delivery officer:
 
-    @if (Model.AssignedUser == null || string.IsNullOrWhiteSpace(Model?.AssignedUser.FullName))
-    {
-        <span data-id="assigned-user" class="empty">Empty</span>
-    }
-    else
-    {
-        <strong data-id="assigned-user">@Model.AssignedUser.FullName</strong>
-    }
-
-    <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.ProjectAssignment.Index.PageName" asp-route-urn="@Model.Urn">Change</a>
+   @if (Model.AssignedUser == null || string.IsNullOrWhiteSpace(Model?.AssignedUser.FullName))
+   {
+      <span data-id="assigned-user" class="empty">Empty</span>
+   }
+   else
+   {
+      <strong data-id="assigned-user">@Model.AssignedUser.FullName</strong>
+   }
+   @if (Model.IsReadOnly != true)
+   {
+      <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.ProjectAssignment.Index.PageName" asp-route-urn="@Model.Urn">Change</a>
+   }
 </p>

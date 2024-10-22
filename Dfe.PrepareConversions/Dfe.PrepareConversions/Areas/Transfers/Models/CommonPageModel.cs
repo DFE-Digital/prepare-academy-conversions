@@ -16,5 +16,9 @@ namespace Dfe.PrepareTransfers.Web.Models
         public string IncomingTrustName { get; set; }
         [BindProperty]
         public bool IsFormAMAT { get; set; }
+        
+        [BindProperty]
+        
+        public bool? IsReadOnly  { get; set; }
     }
 }

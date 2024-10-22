@@ -9,16 +9,20 @@ namespace Dfe.PrepareTransfers.Web.Models.LegalRequirements
         public readonly ThreeOptions? IncomingTrustAgreement;
         public readonly ThreeOptions? DiocesanConsent;
         public readonly ThreeOptions? OutgoingTrustConsent;
+        public readonly bool? InternalIsReadOnly;
 
         public LegalRequirementsViewModel(ThreeOptions? incomingTrustAgreement,
             ThreeOptions? diocesanConsent,
             ThreeOptions? outgoingTrustConsent,
-            string projectUrn)
+            string projectUrn,
+            bool? IsReadOnly)
         {
             IncomingTrustAgreement = incomingTrustAgreement;
             DiocesanConsent = diocesanConsent;
             OutgoingTrustConsent = outgoingTrustConsent;
             Urn = projectUrn;
+            InternalIsReadOnly = IsReadOnly;
+
         }
     }
 }

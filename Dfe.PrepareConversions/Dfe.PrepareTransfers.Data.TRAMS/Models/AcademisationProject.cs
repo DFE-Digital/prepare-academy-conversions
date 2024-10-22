@@ -33,6 +33,8 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Models
         public TrustSummary OutgoingTrust { get; set; }
         public User AssignedUser { get; set; }
         public bool? IsFormAMat { get; set; }
+        
+        public bool? IsReadOnly  { get; set; }
 
     }
 }

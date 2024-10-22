@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using Dfe.PrepareTransfers.Data;
+using System.Threading.Tasks;
 using Dfe.PrepareTransfers.Web.Models;
 using Dfe.PrepareTransfers.Web.Services.Interfaces;
 using Dfe.PrepareTransfers.Data.Models.Projects;
 using Microsoft.AspNetCore.Mvc;
+using dataModels = Dfe.PrepareTransfers.Data.Models;
 
 namespace Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation
 {
@@ -14,16 +16,20 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation
         public string TargetDate { get; set; }
 
         private readonly IGetInformationForProject _getInformationForProject;
+        
+        private readonly IProjects _projectsRepository;
 
-        public Index(IGetInformationForProject getInformationForProject)
+        public Index(IGetInformationForProject getInformationForProject, IProjects projectsRepository)
         {
             _getInformationForProject = getInformationForProject;
+            _projectsRepository = projectsRepository;
         }
 
         public async Task<IActionResult> OnGetAsync(string urn)
         {
             var projectInformation = await _getInformationForProject.Execute(urn);
-
+            var project = await _projectsRepository.GetByUrn(Urn);
+            dataModels.Project projectResult = project.Result;
             ProjectReference = projectInformation.Project.Reference;
             Recommendation = projectInformation.Project.AcademyAndTrustInformation.Recommendation;
             Author = projectInformation.Project.AcademyAndTrustInformation.Author;
@@ -32,6 +38,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation
             TargetDate = projectInformation.Project.Dates?.Target;
             OutgoingAcademyUrn = projectInformation.Project.OutgoingAcademyUrn;
             Urn = projectInformation.Project.Urn;
+            IsReadOnly = projectResult.IsReadOnly;
             IsFormAMAT = projectInformation.Project.IsFormAMat.HasValue && projectInformation.Project.IsFormAMat.Value == true;
 
             return Page();

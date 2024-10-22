@@ -30,6 +30,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.BenefitsAndRisks
 
             var projectResult = project.Result;
             ProjectReference = projectResult.Reference;
+            IsReadOnly = projectResult.IsReadOnly;
             BenefitsSummaryViewModel = new BenefitsSummaryViewModel(
                 projectResult.Benefits.IntendedBenefits.ToList(),
                 projectResult.Benefits.OtherIntendedBenefit,
@@ -37,7 +38,8 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.BenefitsAndRisks
                 projectResult.Urn,
                 projectResult.OutgoingAcademyUrn,
                 projectResult.Benefits.AnyRisks,
-                projectResult.Benefits.EqualitiesImpactAssessmentConsidered
+                projectResult.Benefits.EqualitiesImpactAssessmentConsidered,
+                projectResult.IsReadOnly
             );
             MarkSectionCompletedViewModel = new MarkSectionCompletedViewModel
             {
