@@ -9,6 +9,7 @@ using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Pages.TaskList.Decision.Models; 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -83,6 +84,6 @@ public class SummaryModel(IAcademyConversionProjectRepository repository,
          await advisoryBoardDecisionRepository.Update(newDecision);
       }
 
-      await academyConversionProjectRepository.UpdateProject(id, new UpdateAcademyConversionProject { ProjectStatus = newDecision.GetDecisionAsFriendlyName() });
+      await academyConversionProjectRepository.UpdateProject(id, new UpdateAcademyConversionProject { ProjectStatus = newDecision.GetDecisionAsFriendlyName()});
    }
 }
