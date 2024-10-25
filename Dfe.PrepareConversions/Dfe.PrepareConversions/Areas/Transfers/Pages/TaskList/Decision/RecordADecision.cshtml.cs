@@ -15,6 +15,8 @@ namespace Dfe.PrepareTransfers.Web.Pages.Decision
       public Project Project { get; set; }
       public AdvisoryBoardDecision Decision { get; set; }
       public bool HasAdvisoryBoardDate { get; set; }
+
+      public bool HasProposedTransferDate { get; set; }
       public bool HasProjectOwnerAssignment { get; set; }
       public async Task<IActionResult> OnGetAsync()
         {
@@ -28,6 +30,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Decision
       private void ValidateProject(int id)
       {
          HasAdvisoryBoardDate = Project.Dates?.Htb != null;
+         HasProposedTransferDate = Project.Dates?.Target != null;
          HasProjectOwnerAssignment = Project.AssignedUser != null && Project.AssignedUser.EmailAddress.Length > 0;
 
          if (!HasAdvisoryBoardDate)
@@ -35,6 +38,13 @@ namespace Dfe.PrepareTransfers.Web.Pages.Decision
             errorService.AddError($"/transfers/project/{id}/transfer-dates/advisory-board-date?returns={Models.Links.Project.Index.PageName}",
             "You must enter an advisory board date before you can record a decision.");
          }
+         
+         if (!HasProposedTransferDate)
+         {
+            errorService.AddError($"/transfers/project/{id}/transfer-dates/target-date?returns={Models.Links.Project.Index.PageName}",
+               "You must enter a proposed transfer date before you can record a decision.");
+         }
+         
          if (!HasProjectOwnerAssignment)
          {
             errorService.AddError($"/transfers/project-assignment/{id}",

@@ -10,4 +10,7 @@ public class RecordDecisionPreviewViewModel(int id, AdvisoryBoardDecision decisi
    public bool IsReadOnly { get; set; } = isReadOnly;
    public bool HasAssignedOwner { get; set; } = hasAssignedOwner;
    public bool HasAdvisoryBoardDate { get; set; } = hasAdvisoryBoardDate;
+   
+   public bool HasProposedConversionDate { get; set; } = hasAdvisoryBoardDate;
+   
 }

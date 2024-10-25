@@ -232,7 +232,7 @@
 else
 {
    <div class="govuk-grid-column-two-thirds">
-      @if (!(Model.HasAdvisoryBoardDate && Model.HasAssignedOwner))
+      @if (!(Model.HasAdvisoryBoardDate && Model.HasAssignedOwner && Model.HasProposedConversionDate))
       {
          <div id="errorSummary" hidden>
                <partial name="_ErrorSummary" />
@@ -247,10 +247,11 @@ else
             <ul class="govuk-list govuk-list--bullet">
                <li>project has been assigned to somebody</li>
                <li>advisory board date has been entered</li>
+                <li>proposed conversion date has been entered</li>
                <li>decision has been made</li>
             </ul>
       </p>
-      @if ((Model.HasAdvisoryBoardDate && Model.HasAssignedOwner))
+      @if ((Model.HasAdvisoryBoardDate && Model.HasAssignedOwner && Model.HasProposedConversionDate))
       {
          <a class="govuk-button" data-cy="record_decision_btn" asp-page="@Links.Decision.RecordDecision.Page" asp-route-id="@Model.Id" id="record-decision-link">
                Record a decision
