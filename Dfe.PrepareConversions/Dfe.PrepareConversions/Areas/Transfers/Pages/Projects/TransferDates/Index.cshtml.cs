@@ -35,6 +35,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
             HasTargetDate = projectResult.Dates?.HasTargetDateForTransfer;
             OutgoingAcademyUrn = projectResult.OutgoingAcademyUrn;
             IsReadOnly = projectResult.IsReadOnly;
+            ProjectSentToCompleteDate = projectResult.ProjectSentToCompleteDate;
             MarkSectionCompletedViewModel = new MarkSectionCompletedViewModel
             {
                 IsCompleted = projectResult.Dates.IsCompleted ?? false,

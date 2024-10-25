@@ -72,7 +72,8 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
                 project.LegalRequirements.DiocesanConsent,
                 project.LegalRequirements.OutgoingTrustConsent,
                 project.Urn,
-                project.IsReadOnly
+                project.IsReadOnly,
+                project.ProjectSentToCompleteDate
             )
             {
                 ReturnToPreview = true

@@ -21,6 +21,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Decision
             Project = (await projectsRepository.GetByUrn(Urn)).Result;
             Decision = (await decisionRepository.Get(Project.Id)).Result;
             IsReadOnly = Project.IsReadOnly;
+            ProjectSentToCompleteDate = Project.ProjectSentToCompleteDate;
             ValidateProject(Project.Id);
             return Page();
         }

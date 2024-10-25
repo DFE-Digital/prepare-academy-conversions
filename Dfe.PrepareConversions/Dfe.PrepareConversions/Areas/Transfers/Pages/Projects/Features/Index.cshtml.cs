@@ -37,6 +37,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.Features
             ReasonForTheTransfer = projectResult.Features.ReasonForTheTransfer;
             SpecificReasonForTheTransfer = projectResult.Features.SpecificReasonsForTheTransfer;
             IsReadOnly = projectResult.IsReadOnly;
+            ProjectSentToCompleteDate = projectResult.ProjectSentToCompleteDate;
             MarkSectionCompletedViewModel = new MarkSectionCompletedViewModel
             {
                 IsCompleted = projectResult.Features.IsCompleted ?? false,

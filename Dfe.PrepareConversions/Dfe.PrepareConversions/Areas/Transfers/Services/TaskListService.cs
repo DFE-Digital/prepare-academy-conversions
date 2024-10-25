@@ -35,6 +35,7 @@ namespace Dfe.PrepareTransfers.Web.Services
             indexPage.AssignedUser = project.Result.AssignedUser;
             indexPage.IsFormAMAT = project.Result.IsFormAMat.HasValue && project.Result.IsFormAMat.Value;
             indexPage.IsReadOnly = project.Result.IsReadOnly;
+            indexPage.ProjectSentToCompleteDate = project.Result.ProjectSentToCompleteDate;
         }
 
         private static ProjectStatuses GetAcademyAndTrustInformationStatus(Project project)

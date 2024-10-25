@@ -30,7 +30,9 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Mappers.Response
                 OutgoingTrustUkprn = input.OutgoingTrust.Ukprn,
                 AssignedUser = input.AssignedUser,
                 IsFormAMat = input.IsFormAMat,
-                IsReadOnly = input.IsReadOnly
+                IsReadOnly = input.IsReadOnly,
+                ProjectSentToCompleteDate = input.ProjectSentToCompleteDate
+               
             };
         }
 

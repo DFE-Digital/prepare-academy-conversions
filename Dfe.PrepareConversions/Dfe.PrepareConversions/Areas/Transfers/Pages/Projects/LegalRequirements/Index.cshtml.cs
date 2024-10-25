@@ -28,12 +28,14 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.LegalRequirements
             var projectResult = project.Result;
             ProjectReference = projectResult.Reference;
             IsReadOnly = projectResult.IsReadOnly;
+            ProjectSentToCompleteDate = projectResult.ProjectSentToCompleteDate;
             LegalRequirementsViewModel = new LegalRequirementsViewModel(
                 projectResult.LegalRequirements.IncomingTrustAgreement,
                 projectResult.LegalRequirements.DiocesanConsent,
                 projectResult.LegalRequirements.OutgoingTrustConsent,
                 projectResult.Urn,
-                projectResult.IsReadOnly
+                projectResult.IsReadOnly,
+                projectResult.ProjectSentToCompleteDate
             );
             MarkSectionCompletedViewModel = new MarkSectionCompletedViewModel
             {

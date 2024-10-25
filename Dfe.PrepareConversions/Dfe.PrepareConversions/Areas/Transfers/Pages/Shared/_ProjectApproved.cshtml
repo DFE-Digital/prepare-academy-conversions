@@ -1,3 +1,4 @@
+@using Dfe.Academisation.ExtensionMethods
 @model Dfe.PrepareTransfers.Web.Models.CommonPageModel
 <div data-cy="approved-message_banner"> 
    <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
@@ -11,7 +12,7 @@
             Project approved
          </p>
          <p class="govuk-body">
-            This project was approved and moved to Complete conversions transfers and changes on .
+            This project was approved and moved to Complete conversions transfers and changes on @Model.ProjectSentToCompleteDate.ToDateString().
          </p>
          <p class="govuk-body">
             You cannot make changes to this project in Prepare.

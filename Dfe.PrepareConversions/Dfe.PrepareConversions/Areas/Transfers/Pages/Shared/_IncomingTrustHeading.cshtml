@@ -1,5 +1,6 @@
 @model Dfe.PrepareTransfers.Data.Models.Project
 @using Links = Dfe.PrepareTransfers.Web.Models.Links
+@using Dfe.Academisation.ExtensionMethods
 
 <span class="govuk-caption-l">Project reference: @Model.Reference</span>
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
@@ -19,7 +20,7 @@
                Project approved
             </p>
             <p class="govuk-body">
-               This project was approved and moved to Complete conversions transfers and changes on .
+               This project was approved and moved to Complete conversions transfers and changes on @Model.ProjectSentToCompleteDate.ToDateString().
             </p>
             <p class="govuk-body">
                You cannot make changes to this project in Prepare.

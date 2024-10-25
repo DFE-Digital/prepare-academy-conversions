@@ -9,7 +9,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.AcademyAndTrustInfo
         private readonly Index _subject;
         public IndexTests()
         {
-            _subject = new Index(GetInformationForProject.Object);
+            _subject = new Index(GetInformationForProject.Object, ProjectRepository.Object);
         }
         [Fact]
         public async void GivenUrn_FetchesProjectFromTheRepository()

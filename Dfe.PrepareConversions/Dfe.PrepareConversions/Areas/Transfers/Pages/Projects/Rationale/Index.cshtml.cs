@@ -30,6 +30,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.Rationale
             TrustRationale = projectResult.Rationale.Trust;
             OutgoingAcademyUrn = projectResult.OutgoingAcademyUrn;
             IsReadOnly = projectResult.IsReadOnly;
+            ProjectSentToCompleteDate = projectResult.ProjectSentToCompleteDate;
             MarkSectionCompletedViewModel = new MarkSectionCompletedViewModel
             {
                 IsCompleted = projectResult.Rationale.IsCompleted ?? false,

@@ -39,6 +39,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation
             OutgoingAcademyUrn = projectInformation.Project.OutgoingAcademyUrn;
             Urn = projectInformation.Project.Urn;
             IsReadOnly = projectResult.IsReadOnly;
+            ProjectSentToCompleteDate = projectResult.ProjectSentToCompleteDate;
             IsFormAMAT = projectInformation.Project.IsFormAMat.HasValue && projectInformation.Project.IsFormAMat.Value == true;
 
             return Page();
