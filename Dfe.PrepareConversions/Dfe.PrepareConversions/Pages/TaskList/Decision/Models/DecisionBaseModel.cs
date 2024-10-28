@@ -37,8 +37,11 @@ public abstract class DecisionBaseModel(IAcademyConversionProjectRepository repo
    {
       Id = id;
       var project = await _repository.GetProjectById(id);
+
       SchoolName = project.Body.SchoolName;
       AcademyTypeAndRoute = project.Body.AcademyTypeAndRoute;
+
+      _project = project.Body;
    }
 
    public override async Task OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, PageHandlerExecutionDelegate next)
