@@ -27,6 +27,11 @@
                             {
                                 <a id="@($"{error.Key}-error-link")" href=@error.Key data-element-type="error-link" data-cy="error-message-@errorCount+=">@error.Message</a>
                             }
+                            else @if (error.Key?.Contains("/update-incoming-trust") ?? false)
+                            {
+                                <a id="@($"{error.Key}-error-link")" href=@error.Key data-element-type="error-link" data-cy="error-message-@errorCount+=">@error.Message</a>
+                            }
+                            
                             else if (!string.IsNullOrWhiteSpace(error.Key))
                             {
                                 <a id="@($"{error.Key}-error-link")" href="#@error.Key" data-element-type="error-link" data-cy="error-message-@errorCount+=">@error.Message</a>

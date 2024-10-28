@@ -195,7 +195,7 @@ else
 {
    <div>
        <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">Record a decision</h2>
-      @if (!Model.HasAdvisoryBoardDate || !Model.HasProjectOwnerAssignment || !Model.HasProposedTransferDate)
+      @if (!Model.HasAdvisoryBoardDate || !Model.HasProjectOwnerAssignment || !Model.HasProposedTransferDate ||!Model.HasIncomingTrustName)
             {
                <div id="errorSummary" hidden>
                   <partial name="_ErrorSummary" />
@@ -209,12 +209,13 @@ else
       <ul class="govuk-list govuk-list--bullet">
          <li>project has been assigned to somebody</li>
          <li>advisory board date has been entered</li>
-          <li>proposed transfer date has been entered</li>
+         <li>proposed transfer date has been entered</li>
+         <li>incoming trust has been entered</li>
          <li>decision has been made</li>
       </ul>
    </p>
    </div>
-       @if (!Model.HasAdvisoryBoardDate || !Model.HasProjectOwnerAssignment)
+       @if (!Model.HasAdvisoryBoardDate || !Model.HasProjectOwnerAssignment || !Model.HasIncomingTrustName || !Model.HasProposedTransferDate)
        {
            <button type="button" class="govuk-button" data-test="record_decision_error_btn" data-module="govuk-button" id="record_decision_error_btn">
                Record a decision

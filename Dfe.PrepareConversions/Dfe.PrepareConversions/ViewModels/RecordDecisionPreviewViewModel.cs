@@ -2,7 +2,7 @@
 
 namespace Dfe.PrepareConversions.ViewModels;
 
-public class RecordDecisionPreviewViewModel(int id, AdvisoryBoardDecision decision, string academyTypeAndRoute, bool isReadOnly, bool hasAssignedOwner, bool hasAdvisoryBoardDate)
+public class RecordDecisionPreviewViewModel(int id, AdvisoryBoardDecision decision, string academyTypeAndRoute, bool isReadOnly, bool hasAssignedOwner, bool hasAdvisoryBoardDate, bool hasTrustName)
 {
    public int Id { get; set; } = id;
    public string AcademyTypeAndRoute { get; set; } = academyTypeAndRoute;
@@ -12,5 +12,7 @@ public class RecordDecisionPreviewViewModel(int id, AdvisoryBoardDecision decisi
    public bool HasAdvisoryBoardDate { get; set; } = hasAdvisoryBoardDate;
    
    public bool HasProposedConversionDate { get; set; } = hasAdvisoryBoardDate;
+   
+   public bool HasTrustName { get; set; } = hasTrustName;
    
 }

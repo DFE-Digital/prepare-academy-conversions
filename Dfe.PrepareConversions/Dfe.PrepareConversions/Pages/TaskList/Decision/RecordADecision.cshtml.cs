@@ -33,7 +33,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.Decision
 
       private void ValidateProject(int id)
       {
-         if (!Project.HeadTeacherBoardDate.HasValue || Project.AssignedUser == null || Project.AssignedUser.EmailAddress.Length < 1 || !Project.ProposedConversionDate.HasValue)
+         if (!Project.HeadTeacherBoardDate.HasValue || Project.AssignedUser == null || Project.AssignedUser.EmailAddress.Length < 1 || !Project.ProposedConversionDate.HasValue || Project.NameOfTrust.IsNullOrEmpty())
          {
             ReturnPage = @Links.TaskList.Index.Page;
             if (!Project.HeadTeacherBoardDate.HasValue)
@@ -52,6 +52,12 @@ namespace Dfe.PrepareConversions.Pages.TaskList.Decision
             { 
                errorService.AddError($"/task-list/{id}/proposed-conversion-date?return={ReturnPage}",
                   "You must enter a proposed conversion date before you can record a decision.");
+            }
+            
+            if (Project.NameOfTrust.IsNullOrEmpty())
+            { 
+               errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/update-trust?return={ReturnPage}",
+                  "You must enter trust name before you can record a decision.");
             }
          }
       }
