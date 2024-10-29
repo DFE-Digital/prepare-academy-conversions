@@ -13,17 +13,17 @@
 }
 
 @section BeforeMain
-{   
-   
+{
+
 }
 <partial name="_IncomingTrustHeading" model="@Model.Project" />
 
 
 <div class="govuk-grid-column-full">
-   <partial name="_SubMenu" />
+    <partial name="_SubMenu" />
 </div>
 
- 
+
 
 @if (Model.Decision != null)
 {
@@ -95,7 +95,7 @@
         {
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
-                Why was this project declined
+                    Why was this project declined
                 </dt>
                 <dd class="govuk-summary-list__value" id="decline-reasons">
 
@@ -180,57 +180,39 @@
             </dd>
         </div>
     </dl>
-@if (Model.IsReadOnly != true)
-{
-   <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
-      You can click the button to change the recorded decision.
-   </p>
+    @if (Model.IsReadOnly != true)
+    {
+        <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
+            You can click the button to change the recorded decision.
+        </p>
 
-   <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.PageName" asp-route-urn="@Model.Urn" id="record-decision-link" role="button">
-      Change your decision
-   </a>
-}
+        <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.PageName" asp-route-urn="@Model.Urn" id="record-decision-link" role="button">
+            Change your decision
+        </a>
+    }
 }
 else
 {
-   <div>
-       <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">Record a decision</h2>
-      @if (!Model.HasAdvisoryBoardDate || !Model.HasProjectOwnerAssignment || !Model.HasProposedTransferDate ||!Model.HasIncomingTrustName)
-            {
-               <div id="errorSummary" hidden>
-                  <partial name="_ErrorSummary" />
-               </div>
-            }
-      <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
-           You have not recorded a decision for this project.
-       </p>
-   <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
-      You can record the decision only when the:
-      <ul class="govuk-list govuk-list--bullet">
-         <li>project has been assigned to somebody</li>
-         <li>advisory board date has been entered</li>
-         <li>proposed transfer date has been entered</li>
-         <li>incoming trust has been entered</li>
-         <li>decision has been made</li>
-      </ul>
-   </p>
-   </div>
-       @if (!Model.HasAdvisoryBoardDate || !Model.HasProjectOwnerAssignment || !Model.HasIncomingTrustName || !Model.HasProposedTransferDate)
-       {
-           <button type="button" class="govuk-button" data-test="record_decision_error_btn" data-module="govuk-button" id="record_decision_error_btn">
-               Record a decision
-           </button>
-           <script type="text/javascript" asp-add-nonce>
-               document.querySelector('#record_decision_error_btn').onclick = () => {
-                   var cookieBanner = document.getElementById("errorSummary");
-                   cookieBanner.style.display = "block";
-               };
-           </script>
-       }
-       else
-       {
-           <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.PageName" asp-route-urn="@Model.Urn" id="record-decision-link">
-               Record a decision
-           </a>
-       } 
+    <div>
+        <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">Record a decision</h2>
+
+        <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
+            You have not recorded a decision for this project.
+        </p>
+        <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
+            You can record an 'Approved' decision only when the:
+            <ul class="govuk-list govuk-list--bullet">
+                <li>project has been assigned to somebody</li>
+                <li>advisory board date has been entered</li>
+                <li>proposed transfer date has been entered</li>
+                <li>incoming trust has been entered</li>
+                <li>decision has been made</li>
+            </ul>
+        </p>
+    </div>
+
+    <a class="govuk-button" asp-page="@Links.Decision.RecordDecision.PageName" asp-route-urn="@Model.Urn" id="record-decision-link">
+        Record a decision
+    </a>
+
 }
