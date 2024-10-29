@@ -3,70 +3,85 @@
 @using Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers.TagHelpers
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation.Index
-<dl class="govuk-summary-list">    
-    <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-            Recommendation
-        </dt>
-        <dd class="govuk-summary-list__value">
-            @if (Model.Recommendation == TransferAcademyAndTrustInformation.RecommendationResult.Empty)
-            {
-                <span class="empty">Empty</span>
-            }
-            else
-            {
-                var displayName = EnumHelpers<TransferAcademyAndTrustInformation.RecommendationResult>.GetDisplayValue(Model.Recommendation);
-                @displayName
-            }
-        </dd>
-        <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="/Projects/AcademyAndTrustInformation/Recommendation" asp-route-urn="@Model.Urn" asp-route-returnToPreview="@(Model.ReturnToPreview ? "true" : null)" data-test="recommendation">
-                Change<span class="govuk-visually-hidden"> recommendation</span>
-            </a>
-        </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-            Author
-        </dt>
-        <dd class="govuk-summary-list__value ">
-            @if (string.IsNullOrEmpty(Model.Author))
-            {
-                <span class="empty">Empty</span>
-            }
-            else
-            {
-                <span class="dfe-text-area-display">@Model.Author</span>
-            }
-        </dd>
-        <dd class="govuk-summary-list__actions">
+<dl class="govuk-summary-list">
+   <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+         Recommendation
+      </dt>
+      <dd class="govuk-summary-list__value">
+         @if (Model.Recommendation == TransferAcademyAndTrustInformation.RecommendationResult.Empty)
+         {
+            <span class="empty">Empty</span>
+         }
+         else
+         {
+            var displayName = EnumHelpers<TransferAcademyAndTrustInformation.RecommendationResult>.GetDisplayValue(Model.Recommendation);
+            @displayName
+         }
+      </dd>
+      @if (Model.IsReadOnly != true)
+      {
+         @if (Model.IsReadOnly != true)
+         {
+            <dd class="govuk-summary-list__actions">
+               <a class="govuk-link" asp-page="/Projects/AcademyAndTrustInformation/Recommendation" asp-route-urn="@Model.Urn" asp-route-returnToPreview="@(Model.ReturnToPreview ? "true" : null)" data-test="recommendation">
+                  Change<span class="govuk-visually-hidden"> recommendation</span>
+               </a>
+            </dd>
+         }
+      }
+   </div>
+   <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+         Author
+      </dt>
+      <dd class="govuk-summary-list__value ">
+         @if (string.IsNullOrEmpty(Model.Author))
+         {
+            <span class="empty">Empty</span>
+         }
+         else
+         {
+            <span class="dfe-text-area-display">@Model.Author</span>
+         }
+      </dd>
+      @if (Model.IsReadOnly != true)
+      {
+         <dd class="govuk-summary-list__actions">
             <a class="govuk-link" asp-page="/Projects/AcademyAndTrustInformation/Recommendation" asp-route-urn="@Model.Urn" asp-route-returnToPreview="@(Model.ReturnToPreview ? "true" : null)">
-                Change<span class="govuk-visually-hidden"> author</span>
+               Change<span class="govuk-visually-hidden"> author</span>
             </a>
-        </dd>
-    </div>
-    <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-            Incoming trust name
-        </dt>
-        <dd class="govuk-summary-list__value ">
-            <displaynodataforemptystring>@Model.IncomingTrustName</displaynodataforemptystring>
-        </dd>
-        @if (Model.IsFormAMAT)
-        {
+         </dd>
+      }
+   </div>
+   <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+         Incoming trust name
+      </dt>
+      <dd class="govuk-summary-list__value ">
+         <displaynodataforemptystring>@Model.IncomingTrustName</displaynodataforemptystring>
+      </dd>
+      @if (Model.IsFormAMAT)
+      {
+         @if (Model.IsReadOnly != true)
+         {
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" asp-page="/Projects/AcademyAndTrustInformation/IncomingTrustName" asp-route-urn="@Model.Urn" asp-route-returnToPreview="@(Model.ReturnToPreview ? "true" : null)">
-                    Change<span class="govuk-visually-hidden"> author</span>
-                </a>
+               <a class="govuk-link" asp-page="/Projects/AcademyAndTrustInformation/IncomingTrustName" asp-route-urn="@Model.Urn" asp-route-returnToPreview="@(Model.ReturnToPreview ? "true" : null)">
+                  Change<span class="govuk-visually-hidden"> author</span>
+               </a>
             </dd>
-        }
-        else
-        {
+         }
+      }
+      else
+      {
+         @if (Model.IsReadOnly != true)
+         {
             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" asp-page="/Projects/AcademyAndTrustInformation/UpdateIncomingTrust" asp-route-urn="@Model.Urn" asp-route-returnToPreview="@(Model.ReturnToPreview ? "true" : null)">
-                    Change
-                </a>
+               <a class="govuk-link" asp-page="/Projects/AcademyAndTrustInformation/UpdateIncomingTrust" asp-route-urn="@Model.Urn" asp-route-returnToPreview="@(Model.ReturnToPreview ? "true" : null)">
+                  Change
+               </a>
             </dd>
-        }
-    </div>
+         }
+      }
+   </div>
 </dl>

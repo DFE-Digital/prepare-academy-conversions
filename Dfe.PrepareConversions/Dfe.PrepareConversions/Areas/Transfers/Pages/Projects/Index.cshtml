@@ -17,11 +17,16 @@
     <div class="govuk-grid-column-three-quarters">
         <span class="govuk-caption-l">Project reference: @Model.ProjectReference</span>
 
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
-            @Model.IncomingTrustName
-        </h1>
+       <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+          @Model.IncomingTrustName
+       </h1>
+       
+       @if (Model.IsReadOnly == true)
+         {
+            <partial name="Shared/_ProjectApproved" for="@Model" />    
+         }
 
-        <p class="govuk-body govuk-!-margin-bottom-1">
+       <p class="govuk-body govuk-!-margin-bottom-1">
             Route: @if (Model.IsFormAMAT)
             {
                 <span>Form a MAT</span>

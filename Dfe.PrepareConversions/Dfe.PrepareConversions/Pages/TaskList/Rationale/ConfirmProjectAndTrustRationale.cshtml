@@ -1,6 +1,7 @@
 @page "/task-list/{id:int}/confirm-project-trust-rationale"
 @using Dfe.PrepareConversions.Data.Models
 @using Dfe.PrepareConversions.TagHelpers
+@using Dfe.Academisation.ExtensionMethods
 @model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
 @{
     Model.SuccessPage = Links.TaskList.Index.Page;
@@ -39,7 +40,7 @@
                         Project approved
                     </p>
                     <p class="govuk-body">
-                        This project was approved and moved to Complete conversions transfers and changes on @Model.Project.ApplicationReceivedDate.
+                        This project was approved and moved to Complete conversions transfers and changes on @Model.Project.ProjectSentToCompleteDate.ToDateString().
                     </p>
                     @if (Model.Project.IsVoluntary)
                     {

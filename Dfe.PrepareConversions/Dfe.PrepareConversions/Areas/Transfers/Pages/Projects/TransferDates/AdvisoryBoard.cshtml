@@ -21,7 +21,7 @@
 @section BeforeMain
 {
     <backtopreview urn="@Model.Urn" return-to-preview="@Model.ReturnToPreview">
-        <a class="govuk-back-link" asp-page="/Projects/TransferDates/Index" asp-route-urn="@Model.Urn">Back</a>
+        <a class="govuk-back-link" asp-page="@Model.Returns" asp-route-urn="@Model.Urn">Back</a>
     </backtopreview>
 }
 

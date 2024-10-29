@@ -13,11 +13,11 @@ public class RecordDecisionPreviewViewComponent(IAcademyConversionAdvisoryBoardD
    public const string DECISION_SESSION_KEY = "Decision";
    protected readonly ISession _session = session;
 
-   public async Task<IViewComponentResult> InvokeAsync(int id, string AcademyTypeAndRoute, bool isReadOnly, bool hasAssignedOwner, bool hasAdvisoryBoardDate)
+   public async Task<IViewComponentResult> InvokeAsync(int id, string AcademyTypeAndRoute, bool isReadOnly, bool hasAssignedOwner, bool hasAdvisoryBoardDate, bool hasTrustName)
    {
       var decision = (await decisionRepository.Get(id)).Body;
       SetDecisionInSession(id, decision);
-      RecordDecisionPreviewViewModel viewModel = new(id, decision, AcademyTypeAndRoute, isReadOnly, hasAssignedOwner, hasAdvisoryBoardDate);
+      RecordDecisionPreviewViewModel viewModel = new(id, decision, AcademyTypeAndRoute, isReadOnly, hasAssignedOwner, hasAdvisoryBoardDate, hasTrustName);
 
       return View(viewModel);
    }

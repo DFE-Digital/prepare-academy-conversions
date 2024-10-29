@@ -101,7 +101,7 @@ public static class Links
         public static readonly LinkItem WhyWithdrawn = Create("/TaskList/Decision/WhyWithdrawn");
         public static readonly LinkItem Summary = Create("/TaskList/Decision/Summary");
         public static readonly LinkItem SubMenuRecordADecision = Create("/TaskList/Decision/RecordADecision");
-
+        public static readonly LinkItem ApprovedInfo = Create("/TaskList/Decision/TransfersDecisionApprovedInfo");
     }
 
 }

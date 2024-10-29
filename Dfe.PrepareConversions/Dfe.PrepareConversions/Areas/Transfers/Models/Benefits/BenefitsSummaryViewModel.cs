@@ -5,6 +5,7 @@ using System.Linq;
 using Dfe.PrepareTransfers.Data.Models.Projects;
 using Dfe.PrepareTransfers.Web.Models.Forms;
 using Dfe.PrepareTransfers.Helpers;
+using System;
 
 namespace Dfe.PrepareTransfers.Web.Models.Benefits
 {
@@ -16,6 +17,9 @@ namespace Dfe.PrepareTransfers.Web.Models.Benefits
         public readonly string OutgoingAcademyUrn;
         public readonly bool? AnyRisks;
         public readonly bool? EqualitiesImpactAssessmentConsidered;
+        public readonly bool? IsReadOnly;
+        public readonly DateTime? ProjectSentToCompleteDate;
+        
 
         public BenefitsSummaryViewModel(IList<TransferBenefits.IntendedBenefit> intendedBenefits, 
             string otherIntendedBenefit, 
@@ -23,7 +27,9 @@ namespace Dfe.PrepareTransfers.Web.Models.Benefits
             string projectUrn,
             string outgoingAcademyUrn,
             bool? anyRisks = null,
-            bool? equalitiesImpactAssessmentConsidered = null)
+            bool? equalitiesImpactAssessmentConsidered = null,
+            bool? isReadOnly = null,
+            DateTime? projectSentToCompleteDate = null)
         {
             _intendedBenefits = intendedBenefits;
             _otherIntendedBenefit = otherIntendedBenefit;
@@ -34,6 +40,8 @@ namespace Dfe.PrepareTransfers.Web.Models.Benefits
             OutgoingAcademyUrn = outgoingAcademyUrn;
             AnyRisks = anyRisks;
             EqualitiesImpactAssessmentConsidered = equalitiesImpactAssessmentConsidered;
+            IsReadOnly = isReadOnly;
+            ProjectSentToCompleteDate = projectSentToCompleteDate;
         }
 
         public List<string> IntendedBenefitsSummary()

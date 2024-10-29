@@ -29,7 +29,10 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Mappers.Response
                 OutgoingTrustName = input.OutgoingTrust.GroupName,
                 OutgoingTrustUkprn = input.OutgoingTrust.Ukprn,
                 AssignedUser = input.AssignedUser,
-                IsFormAMat = input.IsFormAMat
+                IsFormAMat = input.IsFormAMat,
+                IsReadOnly = input.IsReadOnly,
+                ProjectSentToCompleteDate = input.ProjectSentToCompleteDate
+               
             };
         }
 

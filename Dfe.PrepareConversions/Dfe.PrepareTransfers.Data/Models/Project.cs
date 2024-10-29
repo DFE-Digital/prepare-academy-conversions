@@ -1,4 +1,5 @@
 using Dfe.PrepareTransfers.Data.Models.Projects;
+using System;
 using System.Collections.Generic;
 
 namespace Dfe.PrepareTransfers.Data.Models
@@ -38,5 +39,9 @@ namespace Dfe.PrepareTransfers.Data.Models
       public string IncomingTrustName => TransferringAcademies[0].IncomingTrustNameInTitleCase;
       public PrepareConversions.Data.Models.User AssignedUser { get; set; }
       public bool? IsFormAMat { get; set; }
+      
+      public bool? IsReadOnly { get; set; }
+      
+      public DateTime? ProjectSentToCompleteDate { get; set; }
    }
 }

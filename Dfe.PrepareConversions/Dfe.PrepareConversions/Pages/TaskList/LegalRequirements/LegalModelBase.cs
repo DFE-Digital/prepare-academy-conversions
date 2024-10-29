@@ -20,6 +20,8 @@ public class LegalModelBase(IAcademyConversionProjectRepository academyConversio
    public Data.Models.AcademyConversion.LegalRequirements Requirements { get; private set; }
    public bool IsReadOnly { get; set; }
    public bool IsVoluntary { get; set; }
+   
+   public DateTime? ProjectSentToComplete { get; set; }
 
    public override async Task OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, PageHandlerExecutionDelegate next)
    {
@@ -42,6 +44,7 @@ public class LegalModelBase(IAcademyConversionProjectRepository academyConversio
          {
             Requirements = Data.Models.AcademyConversion.LegalRequirements.From(project.Body); 
             IsReadOnly = project.Body.IsReadOnly;
+            ProjectSentToComplete = project.Body.ProjectSentToCompleteDate;
             IsVoluntary = string.IsNullOrWhiteSpace(project.Body.AcademyTypeAndRoute) is false &&
                               project.Body.AcademyTypeAndRoute.Equals(AcademyTypeAndRoutes.Voluntary, StringComparison.InvariantCultureIgnoreCase);
          }

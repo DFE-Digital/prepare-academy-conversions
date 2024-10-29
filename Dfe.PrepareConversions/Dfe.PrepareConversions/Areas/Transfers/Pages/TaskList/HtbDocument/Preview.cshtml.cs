@@ -71,7 +71,9 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
                 project.LegalRequirements.IncomingTrustAgreement,
                 project.LegalRequirements.DiocesanConsent,
                 project.LegalRequirements.OutgoingTrustConsent,
-                project.Urn
+                project.Urn,
+                project.IsReadOnly,
+                project.ProjectSentToCompleteDate
             )
             {
                 ReturnToPreview = true
@@ -89,7 +91,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
             };
 
             AcademyAndTrustInformationSummaryViewModel =
-                new Projects.AcademyAndTrustInformation.Index(_getInformationForProject)
+                new Projects.AcademyAndTrustInformation.Index(_getInformationForProject,_projects)
                 {
                     Recommendation = project.AcademyAndTrustInformation.Recommendation,
                     Author = project.AcademyAndTrustInformation.Author,
@@ -98,7 +100,8 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
                     TargetDate = project.Dates?.Target,
                     OutgoingAcademyUrn = project.OutgoingAcademyUrn,
                     Urn = project.Urn,
-                    ReturnToPreview = true
+                    ReturnToPreview = true,
+                    IsReadOnly = project.IsReadOnly
                 };
 
             RationaleSummaryViewModel = new Pages.Projects.Rationale.Index(_projects)

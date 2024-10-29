@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareTransfers.Data.TRAMS.Models.AcademyTransferProject;
+using System;
 
 namespace Dfe.PrepareTransfers.Data.TRAMS.Models
 {
@@ -33,6 +34,10 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Models
         public TrustSummary OutgoingTrust { get; set; }
         public User AssignedUser { get; set; }
         public bool? IsFormAMat { get; set; }
+        
+        public bool? IsReadOnly  { get; set; }
+        
+        public DateTime? ProjectSentToCompleteDate { get; set; }
 
     }
 }

@@ -13,11 +13,12 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
    {
       [BindProperty] public AdvisoryBoardViewModel AdvisoryBoardViewModel { get; set; }
       public string TrustName { get; set; }
+      public string Returns { get; set; }
 
-      public async Task<IActionResult> OnGetAsync()
+      public async Task<IActionResult> OnGetAsync(string returns = null)
       {
          var project = await projectsRepository.GetByUrn(Urn);
-
+         Returns = returns ?? "/Projects/TransferDates/Index";
          var projectResult = project.Result;
          TrustName = projectResult.OutgoingTrustName;
          AdvisoryBoardViewModel = new AdvisoryBoardViewModel

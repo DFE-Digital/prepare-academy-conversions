@@ -1,4 +1,4 @@
-using Dfe.PrepareConversions.Data;
+using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
@@ -51,9 +51,11 @@ public class RecordDecisionModel : DecisionBaseModel
 
    public async Task<IActionResult> OnPost(int id)
    {
+      ValidateProject(Id);
+
       if (!ModelState.IsValid)
       {
-         _errorService.AddErrors(["AdvisoryBoardDecision"], ModelState);
+         _errorService.AddErrors(ModelState.Keys, ModelState);
          return await OnGet(id);
       }
 
@@ -63,5 +65,39 @@ public class RecordDecisionModel : DecisionBaseModel
 
       if (decision.Decision.Equals(AdvisoryBoardDecisions.DAORevoked)) { return RedirectToPage(Links.Decision.DAOPrecursor.Page, LinkParameters); }
       return RedirectToPage(Links.Decision.WhoDecided.Page, LinkParameters);
+   }
+
+   private void ValidateProject(int id)
+   {
+      if (AdvisoryBoardDecision == AdvisoryBoardDecisions.Approved)
+      {
+         if (!_project.HeadTeacherBoardDate.HasValue || _project.AssignedUser == null || _project.AssignedUser.EmailAddress.Length < 1 || !_project.ProposedConversionDate.HasValue || _project.NameOfTrust.IsEmpty())
+         {
+            var returnPage = @Links.TaskList.Index.Page;
+            if (!_project.HeadTeacherBoardDate.HasValue)
+            {
+               ModelState.AddModelError($"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}",
+               "You must enter an advisory board date before you can record a decision.");
+            }
+
+            if (_project.AssignedUser == null || _project.AssignedUser.EmailAddress.Length < 1)
+            {
+               ModelState.AddModelError($"/project-assignment/{id}",
+               "You must enter the name of the person who worked on this project before you can record a decision.");
+            }
+
+            if (!_project.ProposedConversionDate.HasValue)
+            {
+               ModelState.AddModelError($"/task-list/{id}/proposed-conversion-date?return={returnPage}",
+                  "You must enter a proposed conversion date before you can record a decision.");
+            }
+
+            if (_project.NameOfTrust.IsEmpty())
+            {
+               ModelState.AddModelError($"/task-list/{id}/confirm-school-trust-information-project-dates/update-trust?return={returnPage}",
+                  "You must enter trust name before you can record a decision.");
+            }
+         }
+      }
    }
 }

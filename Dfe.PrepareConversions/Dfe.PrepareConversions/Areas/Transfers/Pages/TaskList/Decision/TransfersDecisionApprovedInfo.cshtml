@@ -1,8 +1,8 @@
-﻿@page "/task-list/{id:int}/decision/approved-info"
+﻿@page "/task-list/decision/transfers-decision-approved-info"
 @using Dfe.PrepareConversions.Extensions
 @using Dfe.PrepareConversions.TagHelpers
 @using Microsoft.Extensions.Configuration
-@model Dfe.PrepareConversions.Pages.TaskList.Decision.DecisionApprovedInfo
+@model Dfe.PrepareTransfers.Pages.TaskList.Decision.TransfersDecisionApprovedInfo
 @inject IConfiguration Configuration
 @{
     ViewData["Title"] = "Approved decision information";
@@ -20,19 +20,10 @@
         Decision recorded
     </h1>
     <div class="govuk-panel__body" data-cy="approved-body">
-        @Model.SchoolName<br><strong>Approved @(Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value ? "with conditions" : string.Empty)</strong>
+        @Model.IncomingTrust<br><strong>Approved @(Model.Decision.ApprovedConditionsSet.HasValue && Model.Decision.ApprovedConditionsSet.Value ? "with conditions" : string.Empty)</strong>
     </div>
 </div>
 <p class="govuk-body">This project is now locked and you can cannot make changes to it.</p>
-@if (Model.IsVoluntaryAcademyType(Model.AcademyTypeAndRoute))
-{
-    <p class="govuk-body">
-        You can only
-        <a class="govuk-link" asp-page="@Links.Decision.AcademyOrderDate.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-ao-date-btn">
-            enter or change the date the academy order was sent<span class="govuk-visually-hidden"> enter or change the date the academy order was sent</span>
-        </a> to the school.
-    </p>
-}
 <h1 class="govuk-heading-m">What happens next</h1>
 <p class="govuk-body">This project has been created in Complete conversions, transfers and changes.</p>
 <h1 class="govuk-heading-s">Add handover details</h1>
