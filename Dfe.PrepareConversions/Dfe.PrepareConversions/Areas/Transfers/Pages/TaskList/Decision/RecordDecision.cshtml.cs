@@ -1,8 +1,8 @@
+using Dfe.PrepareConversions.Services;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareTransfers.Data.Services.Interfaces;
 using Dfe.PrepareTransfers.Pages.TaskList.Decision.Models;
-using Dfe.PrepareTransfers.Services;
 using Dfe.PrepareTransfers.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -51,9 +51,10 @@ public class RecordDecision : DecisionBaseModel
 
     public async Task<IActionResult> OnPost(int urn)
     {
+         ValidateProject(urn);
         if (!ModelState.IsValid)
         {
-            _errorService.AddErrors(new[] { "AdvisoryBoardDecision" }, ModelState);
+            _errorService.AddErrors(ModelState.Keys, ModelState);
             return await OnGet(urn);
         }
 
@@ -63,4 +64,47 @@ public class RecordDecision : DecisionBaseModel
 
         return RedirectToPage(Links.Decision.WhoDecided.PageName, LinkParameters);
     }
+
+   private void ValidateProject(int id)
+   {
+      if (AdvisoryBoardDecision == AdvisoryBoardDecisions.Approved)
+      {
+         var hasAdvisoryBoardDate = _project.Dates?.Htb != null;
+         var hasProposedTransferDate = _project.Dates?.Target != null;
+         var hasProjectOwnerAssignment = _project.AssignedUser != null && _project.AssignedUser.EmailAddress.Length > 0;
+         var hasIncomingTrustName = _project.IncomingTrustName != null;
+         var hasIncomingTrustReferenceNumber = _project.IncomingTrustReferenceNumber != null && _project.IsFormAMat == true;
+         var returnPage = Links.Project.Index.PageName;
+
+         if (!hasAdvisoryBoardDate)
+         {
+            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/advisory-board-date?returns={returnPage}",
+            "You must enter an advisory board date before you can record a decision.");
+         }
+
+         if (!hasProposedTransferDate)
+         {
+            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/target-date?returns={returnPage}",
+               "You must enter a proposed transfer date before you can record a decision.");
+         }
+
+         if (!hasProjectOwnerAssignment)
+         {
+            ModelState.AddModelError($"/transfers/project-assignment/{id}",
+            "You must enter the name of the person who worked on this project before you can record a decision.");
+         }
+
+         if (!hasIncomingTrustName)
+         {
+            ModelState.AddModelError($"/transfers/project/{id}/academy-and-trust-information/update-incoming-trust?returns={returnPage}",
+               "You must enter an incoming trust for this project before you can record a decision.");
+         }
+         
+         if (!hasIncomingTrustReferenceNumber)
+         {
+            ModelState.AddModelError($"/transfers/project/{id}/academy-and-trust-information/incoming-trust-name?returns={returnPage}",
+               "You must enter an incoming reference number for this project before you can record a decision.");
+         }
+      }
+   }
 }

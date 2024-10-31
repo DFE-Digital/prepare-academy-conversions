@@ -22,8 +22,6 @@ namespace Dfe.PrepareConversions.Utils
       public static void AddTransfersApplicationServices(this IServiceCollection services)
       {
          services.AddScoped<IReferenceNumberService, ReferenceNumberService>();
-         services.AddScoped<ErrorService>();
-
 
          services.AddTransient<IMapper<TrustDto, Trust>, TramsTrustMapper>();
          services.AddTransient<IMapper<EstablishmentDto, Academy>, AcademiesEstablishmentMapper>();
