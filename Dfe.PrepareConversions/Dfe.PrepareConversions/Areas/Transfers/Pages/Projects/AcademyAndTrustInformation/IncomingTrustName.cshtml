@@ -32,9 +32,10 @@
                   <input class="govuk-input" name="IncomingTrustName" id="IncomingTrustName" type="text" aria-describedby="query-hint" value="@Model.IncomingTrustName">
 
                </fieldset>
+               <br />
                 @if (Model.HasPermission)
                 {
-                    <br />
+                    
                     <label class="govuk-label govuk-label--m" for="IncomingTrustReferenceNumber">
                         Enter the incoming trust's reference number
                     </label>
@@ -42,7 +43,17 @@
                     <div id="set-ab-date-hint" class="govuk-hint">
                         The trust reference number must be in the following format, TR12345. Please check manually that the proposed trust reference number is not a duplicate.
                     </div>
-                } 
+                }
+                else
+                {
+                   <div class="govuk-warning-text">
+                      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                      <strong class="govuk-warning-text__text">
+                         <span class="govuk-visually-hidden">Warning</span>
+                           The correct permissions are needed to update the trust reference number.
+                      </strong>
+                   </div>
+                }
             </div>
             <button class="govuk-button" data-module="govuk-button" type="submit">
                 Continue
