@@ -18,6 +18,9 @@
     
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">
+            Enter trust details
+        </h1>
         <form class="govuk-form" method="post">
             <input type="hidden" asp-for="@Model.Urn" />
             <input type="hidden" asp-for="@Model.ReturnToPreview" />
@@ -25,7 +28,7 @@
                <fieldset class="govuk-fieldset">
                   <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl" id="@nameof(Model.IncomingTrustName)">
                      <label class="govuk-label govuk-label--m">
-                        Enter the incoming trust's name
+                        Incoming trust name
                      </label>
                   </legend>
                   <p asp-gds-validation-for="IncomingTrustName"></p>
@@ -34,18 +37,18 @@
                </fieldset>
                <br />
                 @if (Model.HasPermission)
-                {
-                    
+                {               
                     <label class="govuk-label govuk-label--m" for="IncomingTrustReferenceNumber">
-                        Enter the incoming trust's reference number
-                    </label>
-                    <input class="govuk-input" id="IncomingTrustReferenceNumber" name="IncomingTrustReferenceNumber" type="text" value="@Model.IncomingTrustReferenceNumber">
+                        Incoming trust reference number
+                    </label> 
                     <div id="set-ab-date-hint" class="govuk-hint">
-                        The trust reference number must be in the following format, TR12345. Please check manually that the proposed trust reference number is not a duplicate.
+                        Like TR12345.
                     </div>
+                    <input class="govuk-input" id="IncomingTrustReferenceNumber" name="IncomingTrustReferenceNumber" type="text" value="@Model.IncomingTrustReferenceNumber">                   
                 }
                 else
                 {
+                    <input type="hidden" asp-for="@Model.IncomingTrustReferenceNumber" />
                    <div class="govuk-warning-text">
                       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
                       <strong class="govuk-warning-text__text">
