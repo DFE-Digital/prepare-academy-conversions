@@ -195,7 +195,7 @@ else
 {
    <div>
        <h2 class="govuk-heading-l govuk-!-margin-bottom govuk-!-font-size-36">Record a decision</h2>
-      @if (!Model.HasAdvisoryBoardDate || !Model.HasProjectOwnerAssignment || !Model.HasProposedTransferDate ||!Model.HasIncomingTrustName)
+      @if (!Model.HasAdvisoryBoardDate || !Model.HasProjectOwnerAssignment || !Model.HasProposedTransferDate ||!Model.HasIncomingTrustName || !Model.HasIncomingTrustReferenceNumber)
             {
                <div id="errorSummary" hidden>
                   <partial name="_ErrorSummary" />
@@ -211,6 +211,7 @@ else
          <li>advisory board date has been entered</li>
          <li>proposed transfer date has been entered</li>
          <li>incoming trust has been entered</li>
+         <li>incoming trust reference number has been entered if this is a Form a MAT transfer</li>
          <li>decision has been made</li>
       </ul>
    </p>

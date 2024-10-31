@@ -20,6 +20,8 @@ namespace Dfe.PrepareTransfers.Web.Pages.Decision
       public bool HasProjectOwnerAssignment { get; set; }
       
       public bool HasIncomingTrustName { get; set; }
+      
+      public bool HasIncomingTrustReferenceNumber { get; set; }
       public async Task<IActionResult> OnGetAsync()
         {
             Project = (await projectsRepository.GetByUrn(Urn)).Result;
@@ -35,6 +37,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Decision
          HasProposedTransferDate = Project.Dates?.Target != null;
          HasProjectOwnerAssignment = Project.AssignedUser != null && Project.AssignedUser.EmailAddress.Length > 0;
          HasIncomingTrustName = Project.IncomingTrustName != null;
+         HasIncomingTrustReferenceNumber = Project.IncomingTrustReferenceNumber != null && Project.IsFormAMat == true;
          if (!HasAdvisoryBoardDate)
          {
             errorService.AddError($"/transfers/project/{id}/transfer-dates/advisory-board-date?returns={Models.Links.Project.Index.PageName}",
@@ -58,6 +61,15 @@ namespace Dfe.PrepareTransfers.Web.Pages.Decision
             errorService.AddError($"/transfers/project/{id}/academy-and-trust-information/update-incoming-trust?returns={Models.Links.Project.Index.PageName}",
                "You must enter an incoming trust for this project before you can record a decision.");
          }
+         
+         if (!HasIncomingTrustReferenceNumber)
+         {
+            errorService.AddError($"/transfers/project/{id}/academy-and-trust-information/incoming-trust-name?returns={Models.Links.Project.Index.PageName}",
+               "You must enter an incoming trust reference number before you can record a decision.");
+         }
+
+         
+         
       }
 
    }

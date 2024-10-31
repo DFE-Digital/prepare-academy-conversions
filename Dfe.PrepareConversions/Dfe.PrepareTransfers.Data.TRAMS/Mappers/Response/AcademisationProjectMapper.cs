@@ -31,7 +31,8 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Mappers.Response
                 AssignedUser = input.AssignedUser,
                 IsFormAMat = input.IsFormAMat,
                 IsReadOnly = input.IsReadOnly,
-                ProjectSentToCompleteDate = input.ProjectSentToCompleteDate
+                ProjectSentToCompleteDate = input.ProjectSentToCompleteDate,
+                IncomingTrustReferenceNumber = input.IncomingTrustReferenceNumber
                
             };
         }

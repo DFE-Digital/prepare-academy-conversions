@@ -38,6 +38,9 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Models
         public bool? IsReadOnly  { get; set; }
         
         public DateTime? ProjectSentToCompleteDate { get; set; }
+        
+        
+        public string? IncomingTrustReferenceNumber { get; set; }
 
     }
 }
