@@ -69,7 +69,8 @@ public class Startup
          {
             options.Conventions.AuthorizeFolder("/");
             options.Conventions.AllowAnonymousToPage("/public/maintenance");
-            options.Conventions.AllowAnonymousToPage("/public/accessibility");
+            options.Conventions.AllowAnonymousToPage("/public/accessibilitystatement");
+            options.Conventions.AllowAnonymousToPage("/public/cookiepreferences");
             options.Conventions.AddAreaPageRoute("Transfers", "/Index", "/transfers");
             options.Conventions.AuthorizeAreaFolder("Transfers", "/");
          })

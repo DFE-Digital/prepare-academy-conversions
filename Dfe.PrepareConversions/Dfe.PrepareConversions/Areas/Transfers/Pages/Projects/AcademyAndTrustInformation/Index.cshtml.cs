@@ -41,7 +41,8 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation
             IsReadOnly = projectResult.IsReadOnly;
             ProjectSentToCompleteDate = projectResult.ProjectSentToCompleteDate;
             IsFormAMAT = projectInformation.Project.IsFormAMat.HasValue && projectInformation.Project.IsFormAMat.Value == true;
-
+            IncomingTrustReferenceNumber = projectResult.IncomingTrustReferenceNumber;
+            
             return Page();
         }
     }
