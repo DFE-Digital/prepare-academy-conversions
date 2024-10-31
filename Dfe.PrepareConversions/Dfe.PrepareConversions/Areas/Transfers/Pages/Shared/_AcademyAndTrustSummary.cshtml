@@ -84,4 +84,37 @@
          }
       }
    </div>
+   @if (Model.IsFormAMAT)
+   {
+      <div class="govuk-summary-list__row">
+         <dt class="govuk-summary-list__key">
+            Incoming trust reference number
+         </dt>
+         <dd class="govuk-summary-list__value ">
+            <displaynodataforemptystring>@Model.IncomingTrustReferenceNumber</displaynodataforemptystring>
+         </dd>
+         @if (Model.IsFormAMAT)
+         {
+            @if (Model.IsReadOnly != true)
+            {
+               <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" asp-page="/Projects/AcademyAndTrustInformation/IncomingTrustName" asp-route-urn="@Model.Urn" asp-route-returnToPreview="@(Model.ReturnToPreview ? "true" : null)">
+                     Change<span class="govuk-visually-hidden"> author</span>
+                  </a>
+               </dd>
+            }
+         }
+         else
+         {
+            @if (Model.IsReadOnly != true)
+            {
+               <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" asp-page="/Projects/AcademyAndTrustInformation/UpdateIncomingTrust" asp-route-urn="@Model.Urn" asp-route-returnToPreview="@(Model.ReturnToPreview ? "true" : null)">
+                     Change
+                  </a>
+               </dd>
+            }
+         }
+      </div>
+   }
 </dl>

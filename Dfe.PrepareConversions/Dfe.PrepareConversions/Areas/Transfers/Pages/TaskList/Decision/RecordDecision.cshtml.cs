@@ -73,6 +73,7 @@ public class RecordDecision : DecisionBaseModel
          var hasProposedTransferDate = _project.Dates?.Target != null;
          var hasProjectOwnerAssignment = _project.AssignedUser != null && _project.AssignedUser.EmailAddress.Length > 0;
          var hasIncomingTrustName = _project.IncomingTrustName != null;
+         var hasIncomingTrustReferenceNumber = _project.IncomingTrustReferenceNumber != null && _project.IsFormAMat == true;
          var returnPage = Links.Project.Index.PageName;
 
          if (!hasAdvisoryBoardDate)
@@ -97,6 +98,12 @@ public class RecordDecision : DecisionBaseModel
          {
             ModelState.AddModelError($"/transfers/project/{id}/academy-and-trust-information/update-incoming-trust?returns={returnPage}",
                "You must enter an incoming trust for this project before you can record a decision.");
+         }
+         
+         if (!hasIncomingTrustReferenceNumber)
+         {
+            ModelState.AddModelError($"/transfers/project/{id}/academy-and-trust-information/incoming-trust-name?returns={returnPage}",
+               "You must enter an incoming reference number for this project before you can record a decision.");
          }
       }
    }

@@ -21,7 +21,7 @@ namespace Dfe.PrepareTransfers.Data
       Task<bool> UpdateAcademy(string urn, TransferringAcademy academy);
       Task<bool> UpdateAcademyGeneralInformation(string projectUrn, TransferringAcademy transferringAcademy);
       Task<bool> UpdateStatus(Project project);
-      Task<bool> UpdateIncomingTrust(string urn, string projectName, string incomingTrustUKPRN = "");
+      Task<bool> UpdateIncomingTrust(string urn, string projectName, string incomingTrustReferenceNumber, string incomingTrustUKPRN = "");
 
       Task<bool> AssignUser(Project project);
       Task<ApiResponse<FileStreamResult>> DownloadProjectExport(GetProjectSearchModel searchModel);
