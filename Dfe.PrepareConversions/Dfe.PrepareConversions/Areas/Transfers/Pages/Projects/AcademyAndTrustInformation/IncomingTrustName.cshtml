@@ -32,14 +32,17 @@
                   <input class="govuk-input" name="IncomingTrustName" id="IncomingTrustName" type="text" aria-describedby="query-hint" value="@Model.IncomingTrustName">
 
                </fieldset>
-               <br/>
-               <label class="govuk-label govuk-label--m" for="IncomingTrustReferenceNumber">
-                  Enter the incoming trust's reference number
-               </label>
-               <input class="govuk-input" id="IncomingTrustReferenceNumber" name="IncomingTrustReferenceNumber" type="text" value="@Model.IncomingTrustReferenceNumber">
-               <div id="set-ab-date-hint" class="govuk-hint">
-                  The trust reference number must be in the following format, TR12345. Please check manually that the proposed trust reference number is not a duplicate.
-               </div>
+                @if (Model.HasPermission)
+                {
+                    <br />
+                    <label class="govuk-label govuk-label--m" for="IncomingTrustReferenceNumber">
+                        Enter the incoming trust's reference number
+                    </label>
+                    <input class="govuk-input" id="IncomingTrustReferenceNumber" name="IncomingTrustReferenceNumber" type="text" value="@Model.IncomingTrustReferenceNumber">
+                    <div id="set-ab-date-hint" class="govuk-hint">
+                        The trust reference number must be in the following format, TR12345. Please check manually that the proposed trust reference number is not a duplicate.
+                    </div>
+                } 
             </div>
             <button class="govuk-button" data-module="govuk-button" type="submit">
                 Continue
