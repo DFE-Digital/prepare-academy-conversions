@@ -8,8 +8,6 @@ using Dfe.PrepareTransfers.Pages.TaskList.Decision.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Dfe.PrepareTransfers.Web.Models;
-using LinkItem = Dfe.PrepareTransfers.Web.Models.LinkItem;
 using Links = Dfe.PrepareTransfers.Web.Models.Links;
 
 namespace Dfe.PrepareTransfers.Pages.TaskList.Decision

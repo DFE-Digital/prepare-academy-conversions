@@ -100,10 +100,10 @@ public class RecordDecision : DecisionBaseModel
                "You must enter an incoming trust for this project before you can record a decision.");
          }
          
-         if (!hasIncomingTrustReferenceNumber)
+         if (!hasIncomingTrustReferenceNumber && _project.IsFormAMat.HasValue && _project.IsFormAMat.Value == true)
          {
             ModelState.AddModelError($"/transfers/project/{id}/academy-and-trust-information/incoming-trust-name?returns={returnPage}",
-               "You must enter an incoming reference number for this project before you can record a decision.");
+               "You must enter an incoming trust reference number for this project before you can record a decision.");
          }
       }
    }

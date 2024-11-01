@@ -2,6 +2,8 @@
 @using Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers.TagHelpers
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Dfe.Academisation.ExtensionMethods
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @model Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation.IncomingTrustNameModel
 @{
     Layout = "_Layout";
@@ -48,12 +50,15 @@
                 }
                 else
                 {
+                    <label class="govuk-label govuk-label--m" for="IncomingTrustReferenceNumber">
+                        Incoming trust reference number
+                    </label>
                     <input type="hidden" asp-for="@Model.IncomingTrustReferenceNumber" />
                    <div class="govuk-warning-text">
                       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
                       <strong class="govuk-warning-text__text">
                          <span class="govuk-visually-hidden">Warning</span>
-                           The correct permissions are needed to update the trust reference number.
+                            You must <a class="govuk-link" href="@Configuration["GetHelpLink"]">contact service support</a> and ask them to update the incoming trust’s reference number to this project.
                       </strong>
                    </div>
                 }
