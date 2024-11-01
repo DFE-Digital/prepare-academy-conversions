@@ -41,7 +41,7 @@ export class DecisionPage {
     }
 
     clickRecordDecision() {
-        cy.get('[data-test="record_decision_error_btn"]').click();
+        cy.get('[data-cy="record_decision_btn"]').click();
         return this;
     }
 
@@ -52,20 +52,31 @@ export class DecisionPage {
 
 
     checkErrorAndAddDetails(day, month, year, userName) {
-
-        cy.get('#errorSummary').should('be.visible');
+        cy.get('.govuk-error-summary').should('be.visible');
         cy.get('#error-summary-title').should('contain', 'There is a problem');
         cy.get('[data-cy="error-summary"]')
             .find('a')
-            .should('have.length', 2)
+            .should('have.length', 4)
             .eq(0)
-            .should('contain', 'You must enter an advisory board date before you can record a decision.')
+            .should('contain', 'You must enter the name of the person who worked on this project before you can record a decision.')
             .and('be.visible');
         cy.get('[data-cy="error-summary"]')
             .find('a')
             .eq(1)
-            .should('contain', 'You must enter the name of the person who worked on this project before you can record a decision.')
+            .should('contain', 'You must enter a proposed conversion date before you can record a decision.')
             .and('be.visible');
+        cy.get('[data-cy="error-summary"]')
+            .find('a')
+            .eq(2)
+            .should('contain', 'You must enter trust name before you can record a decision.')
+            .and('be.visible');
+        cy.get('[data-cy="error-summary"]')
+            .find('a')
+            .eq(3)
+            .should('contain', 'You must enter an advisory board date before you can record a decision.')
+            .and('be.visible');
+
+        // Clicking and filling fields as per the error messages
         cy.contains('a', 'You must enter an advisory board date before you can record a decision').click();
         cy.get('#head-teacher-board-date-day').type(day);
         cy.get('#head-teacher-board-date-month').type(month);
@@ -74,22 +85,48 @@ export class DecisionPage {
 
         cy.get('[data-cy="record_decision_menu"] > .moj-sub-navigation__link').click();
 
+        cy.get('[data-cy="record_decision_btn"]').click();
+        cy.get('#approved-radio').click();
+        cy.get('#submit-btn').click();
 
-        cy.get('[data-test="record_decision_error_btn"]').click();
         cy.contains('a', 'You must enter the name of the person who worked on this project before you can record a decision.').click();
         cy.get('#delivery-officer').type(userName);
         cy.get('.autocomplete__option').first().click();
         cy.get('[data-cy="continue-Btn"]').click();
 
 
+        // Verifying notification messages
         cy.get('#notification-message').should('include.text', 'Project is assigned');
         cy.get('#main-content > :nth-child(2) > :nth-child(2)').should('include.text', userName);
+
+        cy.get('[data-cy="record_decision_menu"] > .moj-sub-navigation__link').click();
+        cy.get('[data-cy="record_decision_btn"]').click();
+        cy.get('#approved-radio').click();
+        cy.get('#submit-btn').click();
+
+        cy.contains('a', 'You must enter a proposed conversion date before you can record a decision.').click();
+        cy.get('#proposed-conversion-month').type(month);
+        cy.get('#proposed-conversion-year').type(year);
+        cy.get('[data-cy="select-common-submitbutton"]').click();
+        cy.get('#confirm-and-continue-button').click();
+
+        cy.get('[data-cy="record_decision_menu"] > .moj-sub-navigation__link').click();
+        cy.get('[data-cy="record_decision_btn"]').click();
+        cy.get('#approved-radio').click();
+        cy.get('#submit-btn').click();
+
+        cy.contains('a', 'You must enter trust name before you can record a decision.').click();
+        cy.get('.autocomplete__wrapper > #SearchQuery').type('10058252');
+        cy.get('#SearchQuery__option--0').click();
+        cy.get('button.govuk-button[data-id="submit"]').click();
 
         return this;
     }
 
 
+
     makeDecision(decision) {
+
         cy.get(`#${decision}-radio`).click();
         cy.get('#submit-btn').click();
         return this;
