@@ -48,8 +48,11 @@ describe('Decisions Tests', () => {
       Logger.log("Click on record a decision menubar button");
       decisionPage.clickRecordDecisionMenu();
 
-      Logger.log("Click on record a decision button");
+      Logger.log("Click on record a decision button and add a decision to check error handling");
       decisionPage.clickRecordDecision();
+
+      decisionPage.makeDecision("approved")
+
 
       Logger.log("Check error and add necessary details to record the decision");
       decisionPage.checkErrorAndAddDetails('15', '10', '2024', 'Paul Lockwood');
@@ -57,11 +60,11 @@ describe('Decisions Tests', () => {
       Logger.log("Click on record a decision menubar button");
       decisionPage.clickRecordDecisionMenu();
 
-      Logger.log("Click on record a decision button");
-      decisionPage.clickRecordDecisionWithoutError();
+      
 
       Logger.log("Record the decision with the necessary details");
-      decisionPage.makeDecision("deferred")
+      decisionPage.clickRecordDecisionWithoutError()
+      .makeDecision("deferred")
         .decsionMaker("grade6")
         .selectReasonWhyDeferred()
         .enterDecisionMakerName('Fahad Darwish')
