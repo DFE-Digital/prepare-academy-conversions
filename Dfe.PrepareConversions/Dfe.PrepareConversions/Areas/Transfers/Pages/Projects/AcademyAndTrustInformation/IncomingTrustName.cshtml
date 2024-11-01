@@ -2,6 +2,8 @@
 @using Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers.TagHelpers
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Dfe.Academisation.ExtensionMethods
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @model Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation.IncomingTrustNameModel
 @{
     Layout = "_Layout";
@@ -56,7 +58,7 @@
                       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
                       <strong class="govuk-warning-text__text">
                          <span class="govuk-visually-hidden">Warning</span>
-                            You must <a class="govuk-link" href="https://forms.office.com/Pages/ResponsePage.aspx?id=yXfS-grGoU2187O4s0qC-X7F89QcWu5CjlJXwF0TVktUMTFEUVRCVVg4WlMyS1AzUEJSUDAySlhQTCQlQCN0PWcu">contact service support</a> and ask them to update the incoming trust’s reference number to this project.
+                            You must <a class="govuk-link" href="@Configuration["GetHelpLink"]">contact service support</a> and ask them to update the incoming trust’s reference number to this project.
                       </strong>
                    </div>
                 }
