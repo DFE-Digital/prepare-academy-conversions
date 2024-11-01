@@ -48,12 +48,15 @@
                 }
                 else
                 {
+                    <label class="govuk-label govuk-label--m" for="IncomingTrustReferenceNumber">
+                        Incoming trust reference number
+                    </label>
                     <input type="hidden" asp-for="@Model.IncomingTrustReferenceNumber" />
                    <div class="govuk-warning-text">
                       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
                       <strong class="govuk-warning-text__text">
                          <span class="govuk-visually-hidden">Warning</span>
-                           The correct permissions are needed to update the trust reference number.
+                            You must <a class="govuk-link" href="https://forms.office.com/Pages/ResponsePage.aspx?id=yXfS-grGoU2187O4s0qC-X7F89QcWu5CjlJXwF0TVktUMTFEUVRCVVg4WlMyS1AzUEJSUDAySlhQTCQlQCN0PWcu">contact service support</a> and ask them to update the incoming trust’s reference number to this project.
                       </strong>
                    </div>
                 }
