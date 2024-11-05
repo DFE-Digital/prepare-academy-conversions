@@ -5,15 +5,15 @@
          "ExpectedSecurity": "AllowAnonymous"
       },
       {
-         "Route": "/public/cookiepreferences",
+         "Route": "/Public/CookiePreferences",
          "ExpectedSecurity": "AllowAnonymous"
       },
       {
-         "Route": "/public/accessibilitystatement",
+         "Route": "/Public/AccessibilityStatement",
          "ExpectedSecurity": "AllowAnonymous"
       },
       {
-         "Route": "/public/maintenance",
+         "Route": "/Public/Maintenance",
          "ExpectedSecurity": "AllowAnonymous"
       }
    ]
