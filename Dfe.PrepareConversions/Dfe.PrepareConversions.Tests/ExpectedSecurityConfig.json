@@ -1,0 +1,20 @@
+﻿{
+   "Endpoints": [
+      {
+         "Route": "/Account/AccessDenied",
+         "ExpectedSecurity": "AllowAnonymous"
+      },
+      {
+         "Route": "/public/cookiepreferences",
+         "ExpectedSecurity": "AllowAnonymous"
+      },
+      {
+         "Route": "/public/accessibilitystatement",
+         "ExpectedSecurity": "AllowAnonymous"
+      },
+      {
+         "Route": "/public/maintenance",
+         "ExpectedSecurity": "AllowAnonymous"
+      }
+   ]
+}

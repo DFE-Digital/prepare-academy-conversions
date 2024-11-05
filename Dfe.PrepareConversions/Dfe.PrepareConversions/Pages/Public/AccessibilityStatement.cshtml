@@ -1,6 +1,7 @@
 @page "/public/accessibility"
+@using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Configuration
-
+@attribute [AllowAnonymous]
 @inject IConfiguration Configuration
 
 @{

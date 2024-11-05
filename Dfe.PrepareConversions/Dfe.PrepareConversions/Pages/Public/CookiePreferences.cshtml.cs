@@ -1,5 +1,6 @@
 using Dfe.PrepareConversions.Configuration;
 using Dfe.PrepareConversions.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,6 +10,7 @@ using System;
 
 namespace Dfe.PrepareConversions.Pages.Public;
 
+[AllowAnonymous]
 public class CookiePreferences(ILogger<CookiePreferences> logger, IOptions<ServiceLinkOptions> options) : PageModel
 {
    private readonly string[] CONSENT_COOKIE_NAMES = [".ManageAnAcademyConversion.Consent", ".ManageAnAcademyTransfer.Consent"];
