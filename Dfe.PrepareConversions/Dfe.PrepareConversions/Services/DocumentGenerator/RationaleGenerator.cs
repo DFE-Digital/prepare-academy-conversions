@@ -16,17 +16,17 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
             if (!project.AcademyTypeAndRoute.Equals(AcademyTypeAndRoutes.Sponsored))
             {
                build.AddHeading("Rationale for the project", HeadingLevel.Two);
-               build.AddTable(new List<TextElement[]>
-                    {
+               build.AddTable(
+                    [
                         DocumentGeneratorStringSanitiser.CreateSingleTextElement(document.RationaleForProject ?? "N/A")
-                    });
+                    ]);
             }
 
             build.AddHeading("Rationale for the trust or sponsor", HeadingLevel.Two);
-            build.AddTable(new List<TextElement[]>
-                {
+            build.AddTable(
+                [
                     DocumentGeneratorStringSanitiser.CreateSingleTextElement(document.RationaleForTrust ?? "N/A")
-                });
+                ]);
          });
       }
    }
