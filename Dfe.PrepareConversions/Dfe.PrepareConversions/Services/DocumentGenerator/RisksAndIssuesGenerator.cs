@@ -12,10 +12,10 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          builder.ReplacePlaceholderWithContent("RisksAndIssuesInformation", build =>
          {
             build.AddHeading("Risks and issues", HeadingLevel.One);
-            build.AddTable(new List<TextElement[]>
-                {
+            build.AddTable(
+                [
                     DocumentGeneratorStringSanitiser.CreateSingleTextElement(document.RisksAndIssues ?? "N/A")
-                });
+                ]);
          });
       }
    }
