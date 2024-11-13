@@ -15,31 +15,30 @@
 
     <tr class="govuk-table__row">
         <td class="govuk-table__cell">
+            @{
+                var result = !project.IsFormAMat.HasValue || !project.IsFormAMat.Value
+                ? string.IsNullOrEmpty(firstOutgoingAcademy?.IncomingTrustUkprn)
+                ? new HtmlString("<span class=\"empty\">Empty</span>")
+                : new HtmlString(firstOutgoingAcademy?.IncomingTrustUkprn)
+                : string.IsNullOrEmpty(project?.OutgoingTrustUkprn)
+                ? new HtmlString("<span class=\"empty\">Empty</span>")
+                : new HtmlString(project?.OutgoingTrustUkprn);
 
+                var trustName = firstOutgoingAcademy?.IncomingTrustName.ToTitleCase() ?? project.OutgoingTrustName.ToTitleCase();
+            }
             <h2 class="govuk-caption-l govuk-!-margin-bottom-0 govuk-!-margin-top-1">
                 <strong>
-                    <a data-id="project-link-@project.Urn" class="govuk-link" asp-page="/Projects/Index" asp-route-urn="@project.Urn">
-                        @(firstOutgoingAcademy?.IncomingTrustName.ToTitleCase() ?? project.OutgoingTrustName.ToTitleCase())
+                    <a data-id="project-link-@project.Urn" class="govuk-link" asp-page="/Projects/Index" asp-route-urn="@project.Urn" aria-label="@(trustName +", UKPRN " + result)">
+                        @trustName
                     </a>
                 </strong>
             </h2>
 
             <p class="govuk-!-margin-top-3">
-                <div>
-                    <strong>UKPRN:</strong>
-                    @{
-                        var result = !project.IsFormAMat.HasValue || !project.IsFormAMat.Value
-                        ? string.IsNullOrEmpty(firstOutgoingAcademy?.IncomingTrustUkprn)
-                        ? new HtmlString("<span class=\"empty\">Empty</span>")
-                        : new HtmlString(firstOutgoingAcademy?.IncomingTrustUkprn)
-                        : string.IsNullOrEmpty(project?.OutgoingTrustUkprn)
-                        ? new HtmlString("<span class=\"empty\">Empty</span>")
-                        : new HtmlString(project?.OutgoingTrustUkprn);
-                    }
-
-                    @result
-
-
+               
+                <div id="@("urn-" + result)">
+                    <strong>UKPRN:</strong> 
+                    @result 
                 </div>
                 <div>
                     <strong>Route:</strong>
