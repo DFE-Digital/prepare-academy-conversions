@@ -376,3 +376,9 @@ variable "enable_container_app_file_share" {
   type        = bool
   default     = false
 }
+
+variable "container_port" {
+  description = "Container port"
+  type        = number
+  default     = 8080
+}

@@ -29,6 +29,7 @@ module "azure_container_apps_hosting" {
   container_secret_environment_variables = local.container_secret_environment_variables
   container_max_replicas                 = local.container_max_replicas
   container_scale_http_concurrency       = local.container_scale_http_concurrency
+  container_port                         = local.container_port
   enable_health_insights_api             = local.enable_health_insights_api
   health_insights_api_cors_origins       = local.health_insights_api_cors_origins
   health_insights_api_ipv4_allow_list    = local.health_insights_api_ipv4_allow_list
