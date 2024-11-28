@@ -1,10 +1,9 @@
 {
 	"scripts": {
 		"build": "npm run build:assets & npm run build:frontend",
-		"build:frontend": "webpack",
-		"build:assets": "webpack --config webpack.assets.config.js & npm run build:assets:application-insights",
-		"build:assets:application-insights": "webpack --config webpack.appinsights.config.js",
-		"build:watch": "webpack --watch"
+		"build:frontend": "webpack --mode=production",
+		"build:assets": "webpack --config webpack.assets.config.js --mode=production & webpack --config webpack.appinsights.config.js --mode=production",
+		"build:watch": "webpack --mode=development --watch"
 	},
 	"devDependencies": {
 		"copy-webpack-plugin": "^7.0.0",
