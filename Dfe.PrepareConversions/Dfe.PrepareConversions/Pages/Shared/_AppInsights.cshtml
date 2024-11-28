@@ -1,0 +1,12 @@
+@{
+    var authenticatedUserId = (User.Identity is not null && User.Identity.IsAuthenticated) ? User.Identity.Name ?? "Unknown" : "Anonymous";
+}
+<script type="text/javascript" integrity="sha384-g/ZkzetdQypWdY0NBZT5r2L3BR9/hURD8OBcd1rEaBpgX6QC7EaTL+o+mzWrBcXW" crossorigin="anonymous" src="https://js.monitor.azure.com/scripts/b/ext/ai.clck.2.8.18.min.js"></script>
+<script type="text/javascript" asp-add-nonce>
+window.appInsights = {
+    connectionString: '@ApplicationInsightsOptions.Value.ConnectionString',
+    instrumentationKey: '@ApplicationInsightsOptions.Value.InstrumentationKey',
+    authenticatedUserId: '@authenticatedUserId'
+}
+</script>
+<script type="text/javascript" src="~/dist/application-insights.min.js" asp-add-nonce></script>
