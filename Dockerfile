@@ -17,7 +17,7 @@ RUN dotnet publish Dfe.PrepareConversions -c Release -o /app --no-restore
 
 # Stage 2 - Build assets
 FROM node:${NODEJS_IMAGE_TAG} as build
-COPY --from=publish /app /app
+COPY ./Dfe.PrepareConversions/Dfe.PrepareConversions/wwwroot /app/wwwroot
 WORKDIR /app/wwwroot
 RUN npm install
 RUN npm run build
@@ -26,7 +26,8 @@ RUN npm run build
 ARG ASPNET_IMAGE_TAG
 FROM "mcr.microsoft.com/dotnet/aspnet:${ASPNET_IMAGE_TAG}" AS final
 LABEL org.opencontainers.image.source=https://github.com/DFE-Digital/prepare-academy-conversions
-COPY --from=build /app /app
+COPY --from=publish /app /app
+COPY --from=build /app/wwwroot /app/wwwroot
 
 WORKDIR /app
 COPY ./script/web-docker-entrypoint.sh ./docker-entrypoint.sh
