@@ -1,9 +1,7 @@
 {
 	"scripts": {
-		"build": "npm run build:assets & npm run build:frontend",
-		"build:frontend": "webpack --mode=production",
-		"build:assets": "webpack --config webpack.assets.config.js --mode=production & webpack --config webpack.appinsights.config.js --mode=production",
-		"build:watch": "webpack --mode=development --watch"
+		"build": "webpack --config webpack.assets.config.js --mode=production & webpack --config webpack.config.js --mode=production & webpack --config webpack.appinsights.config.js --mode=production",
+		"build:watch": "webpack --config webpack.assets.config.js --mode=development --watch & webpack --config webpack.config.js --watch --mode=development & webpack --config webpack.appinsights.config.js --watch --mode=development"
 	},
 	"devDependencies": {
 		"copy-webpack-plugin": "^7.0.0",
