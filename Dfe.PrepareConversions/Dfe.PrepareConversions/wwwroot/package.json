@@ -4,7 +4,7 @@
 		"build:watch": "webpack --config webpack.assets.config.js --mode=development --watch & webpack --config webpack.config.js --watch --mode=development & webpack --config webpack.appinsights.config.js --watch --mode=development"
 	},
 	"devDependencies": {
-		"copy-webpack-plugin": "^7.0.0",
+		"copy-webpack-plugin": "^12.0.0",
 		"css-loader": "^5.2.7",
 		"file-loader": "^6.2.0",
 		"mini-css-extract-plugin": "^1.6.2",
