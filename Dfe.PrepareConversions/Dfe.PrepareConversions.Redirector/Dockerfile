@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 COPY ["Dfe.PrepareConversions.Redirector/Dfe.PrepareConversions.Redirector.csproj", "Dfe.PrepareConversions.Redirector/"]
 RUN dotnet restore "Dfe.PrepareConversions.Redirector/Dfe.PrepareConversions.Redirector.csproj"
@@ -13,13 +13,13 @@ RUN npm run build
 RUN mkdir -p /src/Dfe.PrepareConversions.Redirector/wwwroot/css/
 RUN mv dist/site.css /src/Dfe.PrepareConversions.Redirector/wwwroot/css/site.css
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS sdk
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS sdk
 COPY --from=frontend /src /src
 WORKDIR /src/Dfe.PrepareConversions.Redirector
 RUN dotnet build "Dfe.PrepareConversions.Redirector.csproj" -c Release
 RUN dotnet publish "Dfe.PrepareConversions.Redirector.csproj" -c Release -o /app /p:UseAppHost=false
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 COPY --from=sdk /app /app
 WORKDIR /app
 ENTRYPOINT ["dotnet", "Dfe.PrepareConversions.Redirector.dll"]
