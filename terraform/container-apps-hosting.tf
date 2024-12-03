@@ -32,6 +32,7 @@ module "azure_container_apps_hosting" {
   enable_health_insights_api             = local.enable_health_insights_api
   health_insights_api_cors_origins       = local.health_insights_api_cors_origins
   health_insights_api_ipv4_allow_list    = local.health_insights_api_ipv4_allow_list
+  enable_container_app_file_share        = local.enable_container_app_file_share
 
   enable_cdn_frontdoor                            = local.enable_cdn_frontdoor
   cdn_frontdoor_forwarding_protocol               = local.cdn_frontdoor_forwarding_protocol

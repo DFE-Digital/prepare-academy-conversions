@@ -370,3 +370,9 @@ variable "cdn_frontdoor_vdp_destination_hostname" {
   type        = string
   default     = "vdp.security.education.gov.uk"
 }
+
+variable "enable_container_app_file_share" {
+  description = "Create an Azure Storage Account and File Share to be mounted to the Container Apps"
+  type        = bool
+  default     = false
+}

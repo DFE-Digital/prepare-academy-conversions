@@ -139,6 +139,7 @@ No providers.
 |------|--------|---------|
 | <a name="module_azure_container_apps_hosting"></a> [azure\_container\_apps\_hosting](#module\_azure\_container\_apps\_hosting) | github.com/DFE-Digital/terraform-azurerm-container-apps-hosting | v1.15.0 |
 | <a name="module_azurerm_key_vault"></a> [azurerm\_key\_vault](#module\_azurerm\_key\_vault) | github.com/DFE-Digital/terraform-azurerm-key-vault-tfvars | v0.5.0 |
+| <a name="module_data_protection"></a> [data\_protection](#module\_data\_protection) | github.com/DFE-Digital/terraform-azurerm-aspnet-data-protection | v1.0.1 |
 | <a name="module_statuscake-tls-monitor"></a> [statuscake-tls-monitor](#module\_statuscake-tls-monitor) | github.com/dfe-digital/terraform-statuscake-tls-monitor | v0.1.4 |
 
 ## Resources
@@ -180,6 +181,7 @@ No resources.
 | <a name="input_enable_cdn_frontdoor"></a> [enable\_cdn\_frontdoor](#input\_enable\_cdn\_frontdoor) | Enable Azure CDN Front Door. This will use the Container Apps endpoint as the origin. | `bool` | n/a | yes |
 | <a name="input_enable_cdn_frontdoor_health_probe"></a> [enable\_cdn\_frontdoor\_health\_probe](#input\_enable\_cdn\_frontdoor\_health\_probe) | Enable CDN Front Door health probe | `bool` | `false` | no |
 | <a name="input_enable_cdn_frontdoor_vdp_redirects"></a> [enable\_cdn\_frontdoor\_vdp\_redirects](#input\_enable\_cdn\_frontdoor\_vdp\_redirects) | Deploy redirects for security.txt and thanks.txt to an external Vulnerability Disclosure Program service | `bool` | `true` | no |
+| <a name="input_enable_container_app_file_share"></a> [enable\_container\_app\_file\_share](#input\_enable\_container\_app\_file\_share) | Create an Azure Storage Account and File Share to be mounted to the Container Apps | `bool` | `false` | no |
 | <a name="input_enable_container_registry"></a> [enable\_container\_registry](#input\_enable\_container\_registry) | Set to true to create a container registry | `bool` | n/a | yes |
 | <a name="input_enable_dns_zone"></a> [enable\_dns\_zone](#input\_enable\_dns\_zone) | Conditionally create a DNS zone | `bool` | n/a | yes |
 | <a name="input_enable_event_hub"></a> [enable\_event\_hub](#input\_enable\_event\_hub) | Send Azure Container App logs to an Event Hub sink | `bool` | `false` | no |
