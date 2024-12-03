@@ -1,4 +1,3 @@
-using Azure.Identity;
 using Dfe.Academisation.CorrelationIdMiddleware;
 using Dfe.PrepareTransfers.Web.Services;
 using Dfe.PrepareTransfers.Web.Services.Interfaces;
@@ -20,7 +19,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.CookiePolicy;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -32,7 +30,6 @@ using Microsoft.FeatureManagement;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using System;
-using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -98,26 +95,7 @@ public class Startup
          options.MaxAge = TimeSpan.FromDays(365);
       });
 
-      // Only proceed if this is not a local development environment (path is only valid when running in a Container)
-      var dpTargetPath = "@/srv/app/storage";
-
-      if (Directory.Exists(dpTargetPath)) {
-         // If a Key Vault Key URI is defined, expect to encrypt the keys.xml
-         string kvProtectionKeyUri = Configuration.GetValue<string>("DataProtection:KeyVaultKey");
-
-         // Setup basic Data Protection and persist keys.xml to local file system
-         var dp = services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(dpTargetPath));
-
-         if (!string.IsNullOrEmpty(kvProtectionKeyUri))
-         {
-            // Encrypt the keys using Key Vault
-            var credentials = new DefaultAzureCredential();
-            dp.ProtectKeysWithAzureKeyVault(
-               new Uri(kvProtectionKeyUri),
-               credentials
-            );
-         }
-      }
+      services.AddDataProtectionService(Configuration);
 
       services.AddScoped(sp => sp.GetService<IHttpContextAccessor>()?.HttpContext?.Session);
       services.AddSession(options =>
