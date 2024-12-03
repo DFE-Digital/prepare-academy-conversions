@@ -42,6 +42,11 @@ public abstract class InputTagHelperBase : TagHelper
    [HtmlAttributeName("hint")]
    public string Hint { get; set; }
 
+   [HtmlAttributeName("details-heading")]
+   public string DetailsHeading { get; set; }
+   [HtmlAttributeName("details-body")]
+   public string DetailsBody { get; set; }
+
    [ViewContext]
    public ViewContext ViewContext { get; set; }
 

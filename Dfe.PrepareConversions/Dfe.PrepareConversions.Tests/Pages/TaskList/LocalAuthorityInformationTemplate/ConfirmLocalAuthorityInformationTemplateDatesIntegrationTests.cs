@@ -21,7 +21,7 @@ public class ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests : Bas
    [Fact]
    public async Task Should_be_in_progress_and_display_la_info_template_when_populated()
    {
-      AcademyConversionProject project = AddGetProject(p => p.LocalAuthorityInformationTemplateSectionComplete = false);
+      var project = AddGetProject(p => p.LocalAuthorityInformationTemplateSectionComplete = false);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
@@ -41,7 +41,7 @@ public class ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests : Bas
    [Fact]
    public async Task Should_be_completed_and_checked_when_la_info_template_section_complete()
    {
-      AcademyConversionProject project = AddGetProject(project => project.LocalAuthorityInformationTemplateSectionComplete = true);
+      var project = AddGetProject(project => project.LocalAuthorityInformationTemplateSectionComplete = true);
       AddPatchConfiguredProject(project, x =>
       {
          x.LocalAuthorityInformationTemplateSectionComplete = true;
@@ -65,7 +65,7 @@ public class ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests : Bas
    [Fact]
    public async Task Should_show_error_summary_when_there_is_an_API_error()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
       AddPatchError(project.Id);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
@@ -78,7 +78,7 @@ public class ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests : Bas
    [Fact]
    public async Task Should_navigate_between_task_list_and_confirm_la_info_template_when_navigated_from_task_list()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("LA information template sent date", 0);
@@ -88,5 +88,25 @@ public class ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests : Bas
       await NavigateAsync("Back");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+   }
+   [Theory]
+   [InlineData("change-la-info-template-sent-date",
+      "change-la-info-template-returned-date",
+      "change-la-info-template-comments",
+      "change-la-info-template-sharepoint-link")]
+   public async Task Should_not_have_change_link_if_project_read_only(params string[] elements)
+   {
+      var project = AddGetProject(isReadOnly: true);
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
+      await NavigateAsync("LA information template sent date", 0);
+
+      Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
+      foreach (var element in elements)
+      {
+         VerifyElementDoesNotExist(element);
+      }
+      Document.QuerySelector("#la-info-template-complete").Should().BeNull();
+      Document.QuerySelector("#confirm-and-continue-button").Should().BeNull();
    }
 }

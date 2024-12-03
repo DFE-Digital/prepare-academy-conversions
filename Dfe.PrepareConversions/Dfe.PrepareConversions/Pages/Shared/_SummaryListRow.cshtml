@@ -30,35 +30,38 @@
          <span id="@Model.Id" class="empty">Empty</span>
       }
    </dd>
-   <dd class="govuk-summary-list__actions">
-      @if (!string.IsNullOrEmpty(Model.Page) && !string.IsNullOrEmpty(Model.RouteId))
-      {
-         if (ViewData["IncludeFragment"] is bool includeFragment && includeFragment)
-         {
-            <a class="govuk-link"
-               data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
-               asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return"
-               asp-route-fragment="@Model.Id">
-               Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
-            </a>
-         }
-         else if (!string.IsNullOrEmpty(Model.Fragment))
-         {
-            <a class="govuk-link"
-               data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
-               asp-page="@Model.Page" asp-fragment="@Model.Fragment"
-               asp-route-id="@Model.RouteId" asp-route-return="@Model.Return">
-               Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
-            </a>
-         }
-         else
-         {
-            <a class="govuk-link"
-               data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
-               asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return">
-               Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
-            </a>
-         }
+    @if (!Model.IsReadOnly)
+    {
+         <dd class="govuk-summary-list__actions">
+            @if (!string.IsNullOrEmpty(Model.Page) && !string.IsNullOrEmpty(Model.RouteId))
+            {
+               if (ViewData["IncludeFragment"] is bool includeFragment && includeFragment)
+               {
+                  <a class="govuk-link"
+                     data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
+                     asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return"
+                     asp-route-fragment="@Model.Id">
+                     Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
+                  </a>
+               }
+               else if (!string.IsNullOrEmpty(Model.Fragment))
+               {
+                  <a class="govuk-link"
+                     data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
+                     asp-page="@Model.Page" asp-fragment="@Model.Fragment"
+                     asp-route-id="@Model.RouteId" asp-route-return="@Model.Return">
+                     Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
+                  </a>
+               }
+               else
+               {
+                  <a class="govuk-link"
+                     data-test="@(string.IsNullOrEmpty(Model.Name) ? "" : $"change-{Model.Name}")"
+                     asp-page="@Model.Page" asp-route-id="@Model.RouteId" asp-route-return="@Model.Return">
+                     Change<span class="govuk-visually-hidden">@Model.HiddenText</span>
+                  </a>
+               }
+            }
+         </dd>
       }
-   </dd>
 </div>

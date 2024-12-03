@@ -2,20 +2,16 @@ using Dfe.PrepareConversions.Data.Extensions;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.LegalRequirements;
 
-public class LegalSummaryModel : LegalModelBase
+public class LegalSummaryModel(IAcademyConversionProjectRepository academyConversionProjectRepository) : LegalModelBase(academyConversionProjectRepository)
 {
-   public LegalSummaryModel(IAcademyConversionProjectRepository academyConversionProjectRepository) :
-      base(academyConversionProjectRepository)
-   {
-   }
-
    [BindProperty]
    public bool IsComplete { get; set; }
-
+   
    public void OnGet(int id)
    {
       IsComplete = Requirements.IsComplete;

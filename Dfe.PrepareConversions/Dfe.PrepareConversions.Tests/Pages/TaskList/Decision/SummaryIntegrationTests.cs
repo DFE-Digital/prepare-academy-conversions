@@ -22,6 +22,7 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
    private string PageSubHeading => Document.QuerySelector<IHtmlElement>("[data-test='prepare-project-doc']")?.Text().Trim();
    private string NotificationMessage => Document.QuerySelector<IHtmlElement>("#notification-message")?.Text().Trim();
    private string NotificationBannerTitle => Document.QuerySelector<IHtmlElement>("#govuk-notification-banner-title")!.Text().Trim();
+   
 
    [Fact]
    public async Task Should_redirect_to_task_list()
@@ -63,15 +64,13 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
          ConversionProjectId = _project.Id
       };
 
-      _factory.AddPostWithJsonRequest("/conversion-project/advisory-board-decision", request, new AdvisoryBoardDecision());
+      _factory.AddPostWithJsonRequest("/conversion-project/advisory-board-decision", request, new AdvisoryBoardDecision()); 
 
       await _wizard.StartFor(_project.Id);
       await _wizard.SubmitThroughTheWizard(request);
       await _wizard.ClickSubmitButton();
 
-      Document.Url.Should().EndWith($"/task-list/{_project.Id}");
-      NotificationMessage.Should().Be("Decision recorded");
-      NotificationBannerTitle.Should().Be("Done");
+      Document.Url.Should().EndWith($"/task-list/{_project.Id}/decision/approved-info"); 
    }
 
    [Fact]

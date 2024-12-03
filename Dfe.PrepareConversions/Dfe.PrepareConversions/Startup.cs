@@ -69,8 +69,10 @@ public class Startup
          {
             options.Conventions.AuthorizeFolder("/");
             options.Conventions.AllowAnonymousToPage("/public/maintenance");
-            options.Conventions.AllowAnonymousToPage("/public/accessibility");
+            options.Conventions.AllowAnonymousToPage("/public/accessibilitystatement");
+            options.Conventions.AllowAnonymousToPage("/public/cookiepreferences");
             options.Conventions.AddAreaPageRoute("Transfers", "/Index", "/transfers");
+            options.Conventions.AuthorizeAreaFolder("Transfers", "/");
          })
          .AddViewOptions(options =>
          {
@@ -145,6 +147,7 @@ public class Startup
 
       services.Configure<ServiceLinkOptions>(GetConfigurationSectionFor<ServiceLinkOptions>());
       services.Configure<AzureAdOptions>(GetConfigurationSectionFor<AzureAdOptions>());
+      services.Configure<ApplicationInsightsOptions>(GetConfigurationSectionFor<ApplicationInsightsOptions>());
 
       services.AddScoped<ErrorService>();
       services.AddScoped<IGetEstablishment, EstablishmentService>();
@@ -152,7 +155,7 @@ public class Startup
       services.AddScoped<SchoolPerformanceService>();
       services.AddScoped<SchoolOverviewService>();
       services.AddScoped<KeyStagePerformanceService>();
-      services.AddScoped<ITrustsRepository, TrustsRepository>(); 
+      services.AddScoped<ITrustsRepository, TrustsRepository>();
       services.AddScoped<IProjectGroupsRepository, ProjectGroupsRepository>();
       services.AddScoped<IRoleCapablitiesRepository, RoleCapablitiesRepository>();
       services.AddScoped<IAcademyConversionProjectRepository, AcademyConversionProjectRepository>();

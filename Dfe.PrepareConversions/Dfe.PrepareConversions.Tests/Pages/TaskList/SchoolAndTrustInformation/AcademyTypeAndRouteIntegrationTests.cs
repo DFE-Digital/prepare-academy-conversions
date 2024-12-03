@@ -10,15 +10,13 @@ using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolAndTrustInformation;
 
-public class AcademyTypeAndRouteIntegrationTests : BaseIntegrationTests
+public class AcademyTypeAndRouteIntegrationTests(IntegrationTestingWebApplicationFactory factory) : BaseIntegrationTests(factory)
 {
-   public AcademyTypeAndRouteIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
-
    [Fact]
    public async Task Should_navigate_to_and_update_conversion_support_grant_amount()
    {
-      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
-      UpdateAcademyConversionProject request = AddPatchProjectMany(project, composer =>
+      var project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
+      var request = AddPatchProjectMany(project, composer =>
          composer
             .With(r => r.ConversionSupportGrantAmount)
             .With(r => r.ConversionSupportGrantChangeReason)

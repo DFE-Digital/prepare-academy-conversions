@@ -1,6 +1,7 @@
 @page "/public/accessibility"
+@using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Configuration
-
+@attribute [AllowAnonymous]
 @inject IConfiguration Configuration
 
 @{
@@ -15,105 +16,90 @@
       </h1>
 
       <p class="govuk-body-m">
-         This accessibility statement applies to Prepare conversions and transfers.
+            This accessibility statement applies to Prepare conversions and transfers.
       </p>
       <p class="govuk-body-m">
          This website is run by the Department for Education. We want as many people as possible to be able to use this website. For example, that means you should be able to:
       </p>
       <ul class="govuk-list govuk-list--bullet">
-         <li>change colours, contrast levels and fonts</li>
-         <li>zoom in up to 300% without the text spilling off the screen</li>
-         <li>navigate most of the service using just a keyboard</li>
-         <li>navigate most of the service using speech recognition software</li>
-         <li>listen to most of the website using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)</li>
+         <li>change colours, contrast levels and fonts </li>
+         <li>zoom in up to 400% without the text spilling off the screen</li>
+         <li>navigate most of the website using just a keyboard</li>
+         <li>navigate most of the website using speech recognition software</li>
+         <li>listen to most of the website using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver) </li>
       </ul>
       <p class="govuk-body-m">
          We've also made the website text as simple as possible to understand.
       </p>
       <p class="govuk-body-m">
-         <a class="govuk-link" href="https://mcmw.abilitynet.org.uk/">AbilityNet</a> has advice on making your device easier to use if you have a disability.
-      </p>
+            <a class="govuk-link" target="_blank" href="https://mcmw.abilitynet.org.uk/" rel="noopener">AbilityNet (opens in a new tab)</a> has advice on making your device easier to use if you have a disability.
+        </p>
 
       <h2 class="govuk-heading-l">Feedback and contact information </h2>
+      <p class="govuk-body-m">
+         If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille:
+      </p>
+      <p class="govuk-body-m">
+            <span>email <a class="govuk-link" href="mailto:@Configuration["SupportEmail"]?subject=Prepare%20conversions%20and%20transfers:%20support%20query">@Configuration["SupportEmail"]</a></span>
+            <br />
+            <span>call 0370 000 2288</span>
+         </p> 
       <p class="govuk-body">
-            You can email @Configuration["SupportEmail"] to request the information on this website in a different format, including:
+            We'll consider your request and get back to you in 2 working days.
         </p>
-      <ul class="govuk-list govuk-list--bullet">
-         <li>accessible PDF</li>
-         <li>large print</li>
-         <li>easy read</li>
-         <li>audio recording</li>
-         <li>braille</li>
-      </ul>
+
+        <h2 class="govuk-heading-l">Reporting accessibility problems with this website</h2>
       <p class="govuk-body">
-         We'll consider your request and get back to you in 2 working days.
+            We're always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we're not meeting accessibility requirements, contact us using the details provided above.
+        </p>
+
+        <h2 class="govuk-heading-l">Enforcement procedure</h2>
+      <p class="govuk-body">
+            The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the 'accessibility regulations'). If you're not happy with how we respond to your complaint,
+            <a class="govuk-link" target="_blank" rel="noopener" href="https://www.equalityadvisoryservice.com/">
+                contact the Equality Advisory and Support Service (opens in a new tab)
+            </a>.
       </p>
 
-      <h2 class="govuk-heading-l">Reporting accessibility problems with this website</h2>
+        <h2 class="govuk-heading-l">Technical information about this website's accessibility</h2>
       <p class="govuk-body">
-         We’re always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we’re not meeting accessibility requirements, email us at: <a class="govuk-link" href="mailto:@Configuration["SupportEmail"]?subject=Prepare%20conversions%20and%20transfers:%20support%20query">@Configuration["SupportEmail"]</a>.
-      </p>
-
-      <h2 class="govuk-heading-l">Enforcement procedure</h2>
-      <p class="govuk-body">
-         The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint,
-         <a class="govuk-link" target="_blank" rel="noopener" href="https://www.equalityadvisoryservice.com/">
-            contact the Equality Advisory and Support Service (EASS) (opens in new tab)
-         </a>.
-      </p>
-
-      <h2 class="govuk-heading-l">Technical information about this website's accessibility</h2>
-      <p class="govuk-body">
-         The Department for Education is committed to making its websites accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
-      </p>
+            The Department for Education is committed to making its websites accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
+        </p>
 
       <h2 class="govuk-heading-l">Compliance status</h2>
       <p class="govuk-body">
-         This website is partially compliant with the Web Content Accessibility Guidelines (WCAG) version 2.1 AA standard, due to the following non-compliances and exemptions.
-      </p>
+            This website is partially compliant with the WCAG (Web Content Accessibility Guidelines) version 2.1AA standard, due to the following non-compliances and the following exemptions.
+        </p>
 
-      <h3 class="govuk-heading-m">Non-accessible content </h3>
+      <h3 class="govuk-heading-m">Non-accessible content</h3>
       <p class="govuk-body">
-         The content is non-accessible for the following reason(s):
-      </p>
+            The content is non-accessible for the following reasons:
+        </p>
       <h4 class="govuk-heading-s">
-         Non-compliance with the accessibility regulations
-      </h4>
+            Non-compliance with the accessibility regulations
+        </h4>
       <ul class="govuk-list govuk-list--bullet">
-         <li>main headings on some pages are contained within groups of elements and so may not be read out correctly by some screen readers. This fails WCAG 2.1 AA success criteria 2.4.6 (Headings and Labels) </li>
-         <li>error summaries and messages do not appear for all mistakes users make on certain conversions project pages. This fails WCAG 2.1 A success criteria 3.3.1 (Error Identification) </li>
-         <li>only an error summary appears and no error message when users experience an error on certain transfers project pages. This fails WCAG 2.1 A success criteria 3.3.2 (Labels or Instructions)</li>
+            <li>information and relationships that are implied by visual formatting may not be read out correctly by some screen readers. This fails WCAG 2.1 AA success criteria 1.3.1 (Info and Relationships) </li>
+            <li>on the project lists pages the project status is not provided in the same reading order for assistive technology users compared to sighted users. This fails WCAG 2.1 AA success criteria 1.3.2 (Meaningful Sequence) and 2.4.3 (Focus Order) </li>
+            <li>on some pages the link text doesn't explain the purpose of the link. This fails WCAG 2.1 AA success criteria 2.4.4 (Link Purpose, In Context) </li>
+            <li>main headings on some pages are contained within groups of elements and so may not be read out correctly by some screen readers. This fails WCAG 2.1 AA success criteria 2.4.6 (Headings and Labels) </li>
+            <li>some information that is available to sighted users is not given to assistive technology users. This fails WCAG 2.1 AA success criteria 4.1.2 (Name, Role, Value) </li>
       </ul>
+        <h2 class="govuk-heading-m">What we're doing to improve accessibility</h2>
+      <p class="govuk-body">
+            We are looking into the non-compliances mentioned previously and aim to resolve these in a future iteration of the website.
+        </p>
 
-      <h4 class="govuk-heading-s">
-         Disproportionate burden
-      </h4>
+        <h2 class="govuk-heading-m">Preparation of this accessibility statement</h2>
       <p class="govuk-body">
-         We have determined that there is disproportionate burden to meet all the requirements. Making improvements would leave us unable to provide a minimum viable product (MVP). We will meet the requirements as soon as we can.
-      </p>
-      <h4 class="govuk-heading-s">
-         The content is not within the scope of this accessibility statement
-      </h4>
-      <ul class="govuk-list govuk-list--bullet">
-         <li>data that is populated into our website from <a class="govuk-link" href="https://apply-convert-academy.service.gov.uk/">Apply to become an academy</a> and other Department for Education websites </li>
-         <li>content hosted on other Department for Education websites, such as <a class="govuk-link" href="https://apply-convert-academy.service.gov.uk/">Apply to become an academy</a></li>
-      </ul>
-
-
-      <h2 class="govuk-heading-l">What we’re doing to improve accessibility</h2>
+            This statement was prepared on 19 August 2022. It was last reviewed on 19 November 2024.
+        </p>
+        <p class="govuk-body">This website was last tested in August 2023. The test was carried out by <a target="_blank" href="https://nexerdigital.com" rel="noopener" class="govuk-link">Nexer Digital Ltd</a>.</p>
       <p class="govuk-body">
-         We are looking into the non-compliances mentioned previously and aim to resolve these in a future iteration of the website.
-      </p>
-
-      <h2 class="govuk-heading-l">Preparation of this accessibility statement</h2>
-      <p class="govuk-body">
-         This statement was prepared on 19 August 2022. It was last reviewed on 14 December 2022.
-      </p>
-      <p class="govuk-body">
-         This website was last tested on 26 April 2022. The test was carried out by a Senior Accessibility Advisor at the Department for Education.
-      </p>
-      <p class="govuk-body">
-         We used this approach to deciding on a sample of pages to test: <a class="govuk-link" href="https://docs.google.com/presentation/d/1jBLCXNLE-hAu7MwQxRHfU10o4vG74bUj/edit#slide=id.p1">testing your product with an accessibility expert - Google Slides</a>.
-      </p>
+            They tested the most frequently used pages within the website.
+        </p>
+        <p class="govuk-body">
+            Accessibility statement version: 2.0.0
+        </p>
    </div>
 </div>

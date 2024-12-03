@@ -130,6 +130,8 @@ public class ProjectViewModel : ProjectTypeBase
 
       ProposedConversionDate = project.ProposedConversionDate;
       ProjectDatesSectionComplete = project.ProjectDatesSectionComplete;
+      IsReadOnly = project.IsReadOnly;
+      ProjectSentToCompleteDate = project.ProjectSentToCompleteDate;
    }
 
    public string Id { get; }
@@ -264,8 +266,10 @@ public class ProjectViewModel : ProjectTypeBase
 
    protected override string TypeAndRouteValue => AcademyTypeAndRoute;
 
-   public override bool IsExternalSchoolApplication => string.IsNullOrEmpty(this.ApplicationReferenceNumber);
+   public override bool IsExternalSchoolApplication => string.IsNullOrEmpty(ApplicationReferenceNumber);
 
    public bool HasPermission { get; set; }
-
+   public bool IsReadOnly { get; set; }
+   
+   public DateTime? ProjectSentToCompleteDate { get; set; }
 }

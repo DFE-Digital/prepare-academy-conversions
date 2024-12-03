@@ -33,18 +33,18 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
       // Utility method to create and sanitize TextElement arrays
       public static TextElement[] CreateTextElements(string label, string value)
       {
-         return SanitizeTextElements(new[]
-         {
+         return SanitizeTextElements(
+         [
                 new TextElement { Value = label, Bold = true },
                 new TextElement { Value = value }
-            });
+            ]);
       }
       public static TextElement[] CreateSingleTextElement(string value)
       {
-         return new TextElement[]
-         {
-               new() { Value = SanitizeString(value) }
-         };
+         return
+         [
+            new() { Value = SanitizeString(value) }
+         ];
       }
 
    }

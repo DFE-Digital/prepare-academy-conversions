@@ -6,6 +6,7 @@ namespace Dfe.PrepareConversions.Data.Models.UserRole
       CreateConversionProject,
       CreateTransferProject,
       DeleteConversionProject,
-      DeleteTransferProject
+      DeleteTransferProject,
+      AddIncomingTrustReferenceNumber
    }
 }

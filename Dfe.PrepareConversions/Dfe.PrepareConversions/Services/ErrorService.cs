@@ -1,5 +1,4 @@
 ﻿using Dfe.Academisation.ExtensionMethods;
-using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
@@ -13,7 +12,8 @@ public class ErrorService
    private const string API_ERROR =
       "There is a system problem and we could not save your changes. Contact regionalservices.rg@education.gov.uk if this continues.";
 
-   private readonly List<Error> _errors = new();
+   private readonly List<Error> _errors = [];
+   private static readonly string[] dayUnit = ["-day", "-month", "-year"];
 
    public void AddError(string key, string message)
    {
@@ -80,7 +80,7 @@ public class ErrorService
 
    private static string DateInputId(string id)
    {
-      string timeUnit = new[] { "-day", "-month", "-year" }.FirstOrDefault(id.EndsWith);
+      string timeUnit = dayUnit.FirstOrDefault(id.EndsWith);
 
       return timeUnit is null
          ? id

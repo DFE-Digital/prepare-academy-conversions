@@ -11,29 +11,20 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.ViewComponents;
 
-public class SchoolOverviewViewComponent : ViewComponent
+public class SchoolOverviewViewComponent(SchoolOverviewService schoolOverviewService, IAcademyConversionProjectRepository repository) : ViewComponent
 {
-   private readonly SchoolOverviewService _schoolOverviewService;
-   private readonly IAcademyConversionProjectRepository _repository;
-
-   public SchoolOverviewViewComponent(SchoolOverviewService schoolOverviewService, IAcademyConversionProjectRepository repository)
-   {
-      _schoolOverviewService = schoolOverviewService;
-      _repository = repository;
-   }
-
    public async Task<IViewComponentResult> InvokeAsync()
    {
       int id = int.Parse(ViewContext.RouteData.Values["id"]?.ToString() ?? string.Empty);
 
-      ApiResponse<AcademyConversionProject> response = await _repository.GetProjectById(id);
+      ApiResponse<AcademyConversionProject> response = await repository.GetProjectById(id);
       if (!response.Success)
       {
          throw new InvalidOperationException();
       }
 
       AcademyConversionProject project = response.Body;
-      SchoolOverview schoolOverview = await _schoolOverviewService.GetSchoolOverviewByUrn(project.Urn.ToString());
+      SchoolOverview schoolOverview = await schoolOverviewService.GetSchoolOverviewByUrn(project.Urn.ToString());
 
       SchoolOverviewViewModel viewModel = new()
       {
@@ -68,6 +59,7 @@ public class SchoolOverviewViewComponent : ViewComponent
          NumberOfMedicalPlaces = project.NumberOfMedicalPlaces,
          NumberOfSENUnitPlaces = project.NumberOfSENUnitPlaces,
          NumberOfPost16Places = project.NumberOfPost16Places,
+         IsReadOnly = project.IsReadOnly
       };
 
       return View(viewModel);

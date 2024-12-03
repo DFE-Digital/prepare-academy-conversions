@@ -22,6 +22,7 @@ namespace Dfe.PrepareTransfers.Web.Services
         {
             var project = _projectRepository.GetByUrn(indexPage.Urn).Result;
             indexPage.ProjectReference = project.Result.Reference;
+            indexPage.IncomingTrustReferenceNumber = project.Result.IncomingTrustReferenceNumber;
             indexPage.IncomingTrustName = !string.IsNullOrEmpty(project.Result.IncomingTrustName) ? project.Result.IncomingTrustName.ToTitleCase() : project.Result.OutgoingTrustName.ToTitleCase();
             indexPage.Academies = project.Result.TransferringAcademies
                 .Select(a => new Tuple<string, string>(a.OutgoingAcademyUkprn, a.OutgoingAcademyName)).ToList();
@@ -34,6 +35,8 @@ namespace Dfe.PrepareTransfers.Web.Services
             indexPage.ProjectStatus = project.Result.Status;
             indexPage.AssignedUser = project.Result.AssignedUser;
             indexPage.IsFormAMAT = project.Result.IsFormAMat.HasValue && project.Result.IsFormAMat.Value;
+            indexPage.IsReadOnly = project.Result.IsReadOnly;
+            indexPage.ProjectSentToCompleteDate = project.Result.ProjectSentToCompleteDate;
         }
 
         private static ProjectStatuses GetAcademyAndTrustInformationStatus(Project project)
@@ -113,7 +116,5 @@ namespace Dfe.PrepareTransfers.Web.Services
 
             return project.Rationale.IsCompleted == true ? ProjectStatuses.Completed : ProjectStatuses.InProgress;
         }
-
-      
     }
 }

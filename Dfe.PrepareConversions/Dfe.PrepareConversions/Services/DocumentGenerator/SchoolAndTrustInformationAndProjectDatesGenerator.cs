@@ -35,7 +35,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
       {
          List<TextElement[]> advisoryBoardDetails = new()
             {
-                DocumentGeneratorStringSanitiser.CreateTextElements("Date of advisory board", project.HeadTeacherBoardDate.ToDateString()),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Date of advisory board", project.HeadTeacherBoardDate?.ToDateString()),
                 DocumentGeneratorStringSanitiser.CreateTextElements("Proposed academy opening date", project.ProposedConversionDate.ToDateString()),
                 DocumentGeneratorStringSanitiser.CreateTextElements("Previous advisory board", project.PreviousHeadTeacherBoardDate.ToDateString())
             };
@@ -64,14 +64,14 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          var voluntaryRouteInfo = new List<TextElement[]>
             {
                 DocumentGeneratorStringSanitiser.CreateTextElements("Academy type and route", project.AcademyTypeAndRoute),
-                DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding amount", project.ConversionSupportGrantAmount.ToMoneyString(true)),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding amount", project.ConversionSupportGrantAmount?.ToMoneyString(true)),
                 DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding reason", project.ConversionSupportGrantChangeReason),
                 DocumentGeneratorStringSanitiser.CreateTextElements("Recommendation", project.RecommendationForProject)
             };
 
          if (project.SchoolType.ToLower().Contains("pupil referral unit"))
          {
-            voluntaryRouteInfo.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Number of sites", project.ConversionSupportGrantNumberOfSites.ToString()));
+            voluntaryRouteInfo.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Number of sites", project.ConversionSupportGrantNumberOfSites?.ToString()));
          }
 
          return voluntaryRouteInfo;
@@ -83,17 +83,17 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
             {
                 DocumentGeneratorStringSanitiser.CreateTextElements("Academy type and route", project.AcademyTypeAndRoute),
                 DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding type", project.ConversionSupportGrantType),
-                DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding amount", project.ConversionSupportGrantAmount.ToMoneyString(true)),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding amount", project.ConversionSupportGrantAmount?.ToMoneyString(true)),
                 DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding reason", project.ConversionSupportGrantChangeReason),
                 DocumentGeneratorStringSanitiser.CreateTextElements("Is the school applying for an EIG (Environmental Improvement Grant)?", project.ConversionSupportGrantEnvironmentalImprovementGrant),
                 DocumentGeneratorStringSanitiser.CreateTextElements("Has the Schools Notification Mailbox (SNM) received a Form 7?", project.Form7Received),
-                DocumentGeneratorStringSanitiser.CreateTextElements("Date SNM received Form 7", project.Form7ReceivedDate.ToDateString()),
-                DocumentGeneratorStringSanitiser.CreateTextElements("Date directive academy order (DAO) pack sent", project.DaoPackSentDate.ToDateString())
+                DocumentGeneratorStringSanitiser.CreateTextElements("Date SNM received Form 7", project.Form7ReceivedDate?.ToDateString()),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Date directive academy order (DAO) pack sent", project.DaoPackSentDate?.ToDateString())
             };
 
          if (project.SchoolType.ToLower().Contains("pupil referral unit"))
          {
-            sponsoredRouteInfo.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Number of sites", project.ConversionSupportGrantNumberOfSites.ToString()));
+            sponsoredRouteInfo.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Number of sites", project.ConversionSupportGrantNumberOfSites?.ToString()));
          }
 
          return sponsoredRouteInfo;

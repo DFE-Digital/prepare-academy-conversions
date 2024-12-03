@@ -13,17 +13,8 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.ProjectAssignment;
 
-public class IndexModel : PageModel
+public class IndexModel(IUserRepository userRepository, IAcademyConversionProjectRepository academyConversionProjectRepository) : PageModel
 {
-   private readonly IAcademyConversionProjectRepository _academyConversionProjectRepository;
-   private readonly IUserRepository _userRepository;
-
-   public IndexModel(IUserRepository userRepository, IAcademyConversionProjectRepository academyConversionProjectRepository)
-   {
-      _academyConversionProjectRepository = academyConversionProjectRepository;
-      _userRepository = userRepository;
-   }
-
    public string SchoolName { get; private set; }
    public int Id { get; set; }
    public IEnumerable<User> DeliveryOfficers { get; set; }
@@ -31,19 +22,19 @@ public class IndexModel : PageModel
 
    public async Task<IActionResult> OnGet(int id)
    {
-      var projectResponse = await _academyConversionProjectRepository.GetProjectById(id);
+      var projectResponse = await academyConversionProjectRepository.GetProjectById(id);
       Id = id;
       SchoolName = projectResponse.Body?.SchoolName;
       SelectedDeliveryOfficer = projectResponse.Body?.AssignedUser?.FullName;
 
-      DeliveryOfficers = await _userRepository.GetAllUsers();
+      DeliveryOfficers = await userRepository.GetAllUsers();
 
       return Page();
    }
 
    public async Task<IActionResult> OnPost(int id, string selectedName, bool unassignDeliveryOfficer, string deliveryOfficerInput)
    {
-      ApiResponse<AcademyConversionProject> projectResponse = await _academyConversionProjectRepository.GetProjectById(id);
+      ApiResponse<AcademyConversionProject> projectResponse = await academyConversionProjectRepository.GetProjectById(id);
       if (string.IsNullOrWhiteSpace(deliveryOfficerInput))
       {
          selectedName = string.Empty;
@@ -51,16 +42,16 @@ public class IndexModel : PageModel
 
       if (unassignDeliveryOfficer)
       {
-         await _academyConversionProjectRepository.SetAssignedUser(id, new SetAssignedUserModel(id, Guid.Empty, string.Empty, string.Empty));
+         await academyConversionProjectRepository.SetAssignedUser(id, new SetAssignedUserModel(id, Guid.Empty, string.Empty, string.Empty));
          TempData.SetNotification(NotificationType.Success, "Done", "Project is unassigned");
       }
       else if (!string.IsNullOrEmpty(selectedName))
       {
-         IEnumerable<User> deliveryOfficers = await _userRepository.GetAllUsers();
+         IEnumerable<User> deliveryOfficers = await userRepository.GetAllUsers();
 
          var assignedUser = deliveryOfficers.SingleOrDefault(u => u.FullName == selectedName);
 
-         await _academyConversionProjectRepository.SetAssignedUser(id, new SetAssignedUserModel(id, new Guid(assignedUser.Id), assignedUser.FullName, assignedUser.EmailAddress));
+         await academyConversionProjectRepository.SetAssignedUser(id, new SetAssignedUserModel(id, new Guid(assignedUser.Id), assignedUser.FullName, assignedUser.EmailAddress));
          TempData.SetNotification(NotificationType.Success, "Done", "Project is assigned");
       }
 

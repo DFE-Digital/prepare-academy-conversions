@@ -25,6 +25,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects
         public string ProjectStatus { get; set; }
         public User AssignedUser { get; set; }
         public bool HasPermission { get; set; }
+        
 
         /// <summary>
         /// Item1 Academy Ukprn, Item2 Academy Name

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 
 namespace Dfe.PrepareTransfers.Web.Models
 {
@@ -14,7 +15,20 @@ namespace Dfe.PrepareTransfers.Web.Models
         public string ProjectReference { get; set; }
         [BindProperty]
         public string IncomingTrustName { get; set; }
+        
+        [BindProperty]
+        public string IncomingTrustReferenceNumber { get; set; }
+        
         [BindProperty]
         public bool IsFormAMAT { get; set; }
+        
+        [BindProperty]
+        
+        public bool? IsReadOnly  { get; set; }
+        
+        [BindProperty(SupportsGet = true)]
+        
+        public DateTime? ProjectSentToCompleteDate { get; set; }
+        
     }
 }

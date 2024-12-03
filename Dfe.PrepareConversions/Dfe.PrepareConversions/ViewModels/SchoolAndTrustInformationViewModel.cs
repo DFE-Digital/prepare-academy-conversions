@@ -34,4 +34,5 @@ public class SchoolAndTrustInformationViewModel
    public bool WasForm7Received { get; set; }
 
    public bool IsPreview { get; set; }
+   public bool IsReadOnly { get; set; }
 }

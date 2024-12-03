@@ -21,6 +21,7 @@ public class SummaryListRowViewModel
    public string ValueWidth { get; set; }
    public string Name { get; set; }
    public bool HighlightNegativeValue { get; set; }
+   public bool IsReadOnly { get; set; }
 
    public string NegativeStyleClass
    {

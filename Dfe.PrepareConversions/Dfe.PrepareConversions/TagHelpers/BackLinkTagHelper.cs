@@ -6,10 +6,8 @@ using System.Net;
 namespace Dfe.PrepareConversions.TagHelpers;
 
 [HtmlTargetElement("govuk-back-link", TagStructure = TagStructure.WithoutEndTag)]
-public class BackLinkTagHelper : AnchorTagHelper
+public class BackLinkTagHelper(IHtmlGenerator generator) : AnchorTagHelper(generator)
 {
-   public BackLinkTagHelper(IHtmlGenerator generator) : base(generator) { }
-
    [HtmlAttributeName("link-item")]
    public LinkItem LinkItem { get; set; }
 

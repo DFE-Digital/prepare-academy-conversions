@@ -26,9 +26,12 @@
                     <span if="Model.AplicationFormSaved is false" id="la-info-template-comments">No</span>
             </dd>
             <dd class="govuk-summary-list__actions" data-cy="select-annex-b-form-returned-change">
-               <a asp-page="@Links.ExternalApplicationForm.Edit.Page" asp-route-id="@Model.Project.Id" class="govuk-link">
-                  Change<span class="govuk-visually-hidden">External application form saved for the school</span>
-               </a>
+               @if(!Model.Project.IsReadOnly)
+               {
+                  <a asp-page="@Links.ExternalApplicationForm.Edit.Page" asp-route-id="@Model.Project.Id" class="govuk-link">
+                     Change<span class="govuk-visually-hidden">External application form saved for the school</span>
+                  </a>
+               }
             </dd>
          </div>
 
@@ -39,11 +42,14 @@
             <dd class="govuk-summary-list__value" data-cy="select-annex-b-sharepoint-url">
                <a href="@Model.ApplicationFormLink" target="_blank" rel="noopener" aria-label="Application form (opens in a new tab)">@Model.ApplicationFormLink</a>
             </dd>
-            <dd class="govuk-summary-list__actions" data-cy="select-annex-b-sharepoint-change">
-               <a asp-page="@Links.ExternalApplicationForm.Edit.Page" asp-route-id="@Model.Project.Id" class="govuk-link">
-                  Change<span class="govuk-visually-hidden">school application form url</span>
-               </a>
-            </dd>
+            @if(!Model.Project.IsReadOnly)
+            {
+               <dd class="govuk-summary-list__actions" data-cy="select-annex-b-sharepoint-change">
+                  <a asp-page="@Links.ExternalApplicationForm.Edit.Page" asp-route-id="@Model.Project.Id" class="govuk-link">
+                        Change<span class="govuk-visually-hidden">school application form url</span>
+                  </a>
+               </dd>
+            }
          </div>
       </dl>
    </div>

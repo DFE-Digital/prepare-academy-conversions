@@ -17,7 +17,8 @@ public class IndexModel(KeyStagePerformanceService keyStagePerformanceService,
                   IAcademyConversionProjectRepository repository,
                   ErrorService errorService, ISession session) : BaseAcademyConversionProjectPageModel(repository)
 {
-   public const string SESSION_KEY = "RoleCapabilities"; 
+   public const string SESSION_KEY = "RoleCapabilities";
+   public const string PROJECT_READONLY_SESSION_KEY = "Project_iro";
    protected readonly ISession _session = session;
 
    public bool ShowGenerateHtbTemplateError { get; set; }
@@ -86,6 +87,7 @@ public class IndexModel(KeyStagePerformanceService keyStagePerformanceService,
          TaskList.HasAbsenceData = keyStagePerformance.HasSchoolAbsenceData;
       }
       Project.HasPermission = _session.HasPermission($"{SESSION_KEY}_{HttpContext.User.Identity.Name}", RoleCapability.DeleteConversionProject);
+      _session.SetString($"{PROJECT_READONLY_SESSION_KEY}_{id}", Project.IsReadOnly.ToString());
       return Page();
    }
 }

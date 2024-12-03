@@ -390,11 +390,12 @@ namespace Dfe.PrepareTransfers.Data.TRAMS
          throw new TramsApiException(response);
       }
 
-      public async Task<bool> UpdateIncomingTrust(string urn, string name, string incomingTrustUKPRN)
+      public async Task<bool> UpdateIncomingTrust(string urn, string name, string incomingTrustReferenceNumber,string incomingTrustUKPRN)
       {
          var projectName = new
          {
             ProjectName = name,
+            IncomingTrustReferenceNumber = incomingTrustReferenceNumber,
             IncomingTrustUKPRN = incomingTrustUKPRN
          };
 

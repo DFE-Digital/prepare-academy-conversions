@@ -3,22 +3,12 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.ProjectDates;
 
-public class ConfirmProjectDatesModel : BaseAcademyConversionProjectPageModel
+public class ConfirmProjectDatesModel(IAcademyConversionProjectRepository repository) : BaseAcademyConversionProjectPageModel(repository)
 {
-   private readonly ErrorService _errorService;
-
-   public ConfirmProjectDatesModel(IAcademyConversionProjectRepository repository, ErrorService errorService): base(repository)
-   {
-      _errorService = errorService;
-   }
-
    [BindProperty(Name = "project-dates-complete", BinderType = typeof(CheckboxInputModelBinder))]
    public bool ProjectDatesSectionComplete { get; set; }
 

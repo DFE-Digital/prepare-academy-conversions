@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.LegalRequirements;
 
-public class LegalGoverningBodyModel : LegalModelBase
+public class LegalGoverningBodyModel(IAcademyConversionProjectRepository academyConversionProjectRepository) : LegalModelBase(academyConversionProjectRepository)
 {
-   public LegalGoverningBodyModel(IAcademyConversionProjectRepository academyConversionProjectRepository) :
-      base(academyConversionProjectRepository)
-   {
-   }
-
    [BindProperty]
    public string Approved { get; set; }
 

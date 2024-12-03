@@ -45,13 +45,24 @@
                     @Model.AdditionalInformation 
                 </p>
             </div>
-        }
-
-
+        } 
 
       <div id="@Model.Id-hint" class="govuk-hint">
          @Model.Hint
       </div>
+        @if (string.IsNullOrWhiteSpace(Model.DetailsHeading) is false)
+        {
+            <details class="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        @Model.DetailsHeading
+                    </span>
+                </summary>
+                <div class="govuk-details__text">
+                    @Model.DetailsBody
+                </div>
+            </details>
+        }
       @if (showError)
       {
          <span id="@Model.Id-error" class="govuk-error-message">

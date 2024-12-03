@@ -197,7 +197,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
    [Fact]
    public async Task Should_navigate_between_task_list_and_confirm_school_budget_information()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Budget");
@@ -207,5 +207,29 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
       await NavigateAsync("Back");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+   }
+
+   [Theory]
+   [InlineData("change-financial-year",
+      "change-finance-year-current",
+      "change-finance-current-capital",
+      "change-next-financial-year",
+      "change-finance-year-following",
+      "change-finance-projected-capital",
+      "change-school-budget-information-additional-information")]
+   public async Task Should_not_have_change_link_if_project_read_only(params string[] elements)
+   {
+      var project = AddGetProject(isReadOnly: true);
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
+      await NavigateAsync("Budget");
+
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/budget");
+      foreach (var element in elements)
+      {
+         VerifyElementDoesNotExist(element);
+      }
+      Document.QuerySelector("#school-budget-information-complete").Should().BeNull();
+      Document.QuerySelector("#confirm-and-continue-button").Should().BeNull();
    }
 }

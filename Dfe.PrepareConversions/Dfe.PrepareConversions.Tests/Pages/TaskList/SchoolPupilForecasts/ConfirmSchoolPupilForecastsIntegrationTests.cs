@@ -122,4 +122,21 @@ public class ConfirmSchoolPupilForecastsIntegrationTests : BaseIntegrationTests
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
    }
+
+   [Theory]
+   [InlineData("change-school-pupil-forecasts-additional-information")]
+   public async Task Should_not_have_change_link_if_project_read_only(params string[] elements)
+   {
+      var project = AddGetProject(isReadOnly: true);
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
+      await NavigateAsync("Pupil forecasts");
+
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/pupil-forecasts");
+      foreach (var element in elements)
+      {
+         VerifyElementDoesNotExist(element);
+      }
+      Document.QuerySelector("#confirm-and-continue-button").Should().BeNull();
+   }
 }

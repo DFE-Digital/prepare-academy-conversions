@@ -31,11 +31,14 @@
                    <p class="govuk-body" id="@testTag" data-test=@testTag>@(legalActionValue.ToDescription())</p>
                 }
              </dd>
-             <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" asp-page=@pageRedirect asp-route-urn="@Model.Urn" asp-route-returnToPreview="@(Model.ReturnToPreview ? "true" : null)">
-                   Change<span class="govuk-visually-hidden"> @legalActionName</span>
-                </a>
-             </dd>
+              @if (Model.InternalIsReadOnly != true)
+              {
+                 <dd class="govuk-summary-list__actions">
+                    <a class="govuk-link" asp-page=@pageRedirect asp-route-urn="@Model.Urn" asp-route-returnToPreview="@(Model.ReturnToPreview ? "true" : null)">
+                       Change<span class="govuk-visually-hidden"> @legalActionName</span>
+                    </a>
+                 </dd>
+              }
           </div>
        }
     }

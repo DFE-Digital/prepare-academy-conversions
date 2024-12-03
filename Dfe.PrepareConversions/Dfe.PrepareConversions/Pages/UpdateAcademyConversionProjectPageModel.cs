@@ -10,20 +10,12 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages;
 
-public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProjectPageModel
+public class UpdateAcademyConversionProjectPageModel(IAcademyConversionProjectRepository repository, ErrorService errorService) : BaseAcademyConversionProjectPageModel(repository)
 {
-   private readonly ErrorService _errorService;
-
-   public UpdateAcademyConversionProjectPageModel(IAcademyConversionProjectRepository repository, ErrorService errorService) : base(repository)
-   {
-      _errorService = errorService;
-   }
-
-
    [BindProperty]
    public AcademyConversionProjectPostModel AcademyConversionProject { get; set; }
 
-   public bool ShowError => _errorService.HasErrors();
+   public bool ShowError => errorService.HasErrors();
 
    public string SuccessPage
    {
@@ -42,7 +34,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
          AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate.HasValue &&
          AcademyConversionProject.LocalAuthorityInformationTemplateSentDate > AcademyConversionProject.LocalAuthorityInformationTemplateReturnedDate)
       {
-         _errorService.AddError("returnedDateBeforeSentDateError", "The returned template date be must on or after sent date");
+         errorService.AddError("returnedDateBeforeSentDateError", "The returned template date be must on or after sent date");
       }
 
       if (AcademyConversionProject.EndOfCurrentFinancialYear.HasValue &&
@@ -51,13 +43,13 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
           AcademyConversionProject.EndOfNextFinancialYear != DateTime.MinValue &&
           AcademyConversionProject.EndOfCurrentFinancialYear.Value.AddYears(1).AddDays(-1) > AcademyConversionProject.EndOfNextFinancialYear)
       {
-         _errorService.AddError(
+         errorService.AddError(
             $"/task-list/{id}/confirm-school-budget-information/update-school-budget-information?return=%2FTaskList%2FSchoolBudgetInformation/ConfirmSchoolBudgetInformation&fragment=financial-year",
             "The next financial year cannot be before or within a year of the current financial year");
       }
 
-      _errorService.AddErrors(Request.Form.Keys, ModelState);
-      if (_errorService.HasErrors())
+      errorService.AddErrors(Request.Form.Keys, ModelState);
+      if (errorService.HasErrors())
       {
          RePopDatePickerModelsAfterValidationFail();
          return Page();
@@ -67,7 +59,7 @@ public class UpdateAcademyConversionProjectPageModel : BaseAcademyConversionProj
 
       if (!response.Success)
       {
-         _errorService.AddApiError();
+         errorService.AddApiError();
          return Page();
       }
 

@@ -6,14 +6,14 @@ namespace Dfe.PrepareConversions.Models;
 
 public static class Links
 {
-   private static readonly List<LinkItem> _links = new();
+   private static readonly List<LinkItem> _links = [];
    private static string _transfersUrl;
    public static string TransfersUrl => _transfersUrl;
 
    private static bool _isApplicationDocumentsEnabled;
    public static bool IsApplicationDocumentsEnabled => _isApplicationDocumentsEnabled;
 
-   private static LinkItem AddLinkItem(string page, string backText = "Back")
+   public static LinkItem AddLinkItem(string page, string backText = "Back")
    {
       LinkItem item = new() { Page = page, BackText = backText };
       _links.Add(item);
@@ -239,6 +239,7 @@ public static class Links
       public static readonly LinkItem Summary = AddLinkItem(backText: "Back", page: "/TaskList/Decision/Summary");
       public static readonly LinkItem SubMenuRecordADecision = AddLinkItem(backText: "Back", page: "/TaskList/Decision/RecordADecision");
       public static readonly LinkItem AcademyOrderDate = AddLinkItem(backText: "Back", page: "/TaskList/Decision/AcademyOrderDate");
+      public static readonly LinkItem ApprovedInfo = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DecisionApprovedInfo");
 
    }
    public static class DeleteProject

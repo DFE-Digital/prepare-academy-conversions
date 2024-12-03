@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.LegalRequirements;
 
-public class LegalDiocesanConsentModel : LegalModelBase
+public class LegalDiocesanConsentModel(IAcademyConversionProjectRepository academyConversionProjectRepository) : LegalModelBase(academyConversionProjectRepository)
 {
-   public LegalDiocesanConsentModel(IAcademyConversionProjectRepository academyConversionProjectRepository) :
-      base(academyConversionProjectRepository)
-   {
-   }
-
    [BindProperty]
    public string Approved { get; set; }
 

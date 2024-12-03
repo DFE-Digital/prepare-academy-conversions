@@ -109,7 +109,6 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
             .WithBody(JsonConvert.SerializeObject(responseBody)));
    }
 
-
    public void AddPatchWithJsonRequest<TRequestBody, TResponseBody>(string path, TRequestBody requestBody, TResponseBody responseBody)
    {
       _mockApiServer

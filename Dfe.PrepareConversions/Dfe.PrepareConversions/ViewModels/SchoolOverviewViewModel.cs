@@ -32,4 +32,5 @@ public class SchoolOverviewViewModel
    public int? NumberOfMedicalPlaces { get; set; }
    public int? NumberOfPost16Places { get; set; }
    public int? NumberOfSENUnitPlaces { get; set; }
+   public bool IsReadOnly {  get; set; }
 }

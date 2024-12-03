@@ -10,10 +10,8 @@ using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolOverview;
 
-public class ConfirmSchoolOverviewIntegrationTests : BaseIntegrationTests
+public class ConfirmSchoolOverviewIntegrationTests(IntegrationTestingWebApplicationFactory factory) : BaseIntegrationTests(factory)
 {
-   public ConfirmSchoolOverviewIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
-
    [Fact]
    public async Task Should_be_in_progress_and_display_school_overview()
    {
@@ -178,7 +176,7 @@ public class ConfirmSchoolOverviewIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Back_link_should_navigate_from_school_overview_to_task_list()
    {
-      AcademyConversionProject project = AddGetProject();
+      var project = AddGetProject();
       AddGetEstablishmentDto(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
@@ -189,6 +187,29 @@ public class ConfirmSchoolOverviewIntegrationTests : BaseIntegrationTests
       await NavigateAsync("Back");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+   }
+
+   [Theory]
+   [InlineData("change-published-admission-number",
+      "change-viability-issues",
+      "change-financial-deficit",
+      "change-part-of-pfi",
+      "change-distance-to-trust-headquarters",
+      "change-member-of-parliament-name-and-party")]
+   public async Task Should_not_have_change_link_if_project_read_only(params string[] elements)
+   {
+      var project = AddGetProject(isReadOnly: true);
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
+      await NavigateAsync("School overview");
+
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-overview");
+      foreach (var element in elements)
+      {
+         VerifyElementDoesNotExist(element);
+      }
+      Document.QuerySelector("#school-overview-complete").Should().BeNull();
+      Document.QuerySelector("#confirm-and-continue-button").Should().BeNull();
    }
 
    private static string AsPercentageOf(string numberOfPupils, string schoolCapacity)
