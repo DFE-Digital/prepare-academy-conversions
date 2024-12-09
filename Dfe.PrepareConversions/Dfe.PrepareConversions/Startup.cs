@@ -95,6 +95,8 @@ public class Startup
          options.MaxAge = TimeSpan.FromDays(365);
       });
 
+      services.AddDataProtectionService(Configuration);
+
       services.AddScoped(sp => sp.GetService<IHttpContextAccessor>()?.HttpContext?.Session);
       services.AddSession(options =>
       {
