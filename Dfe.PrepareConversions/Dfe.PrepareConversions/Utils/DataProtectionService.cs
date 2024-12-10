@@ -1,5 +1,5 @@
 using Azure.Identity;
-using Microsoft.Extensions.Configuration;
+using Config = Dfe.PrepareConversions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.DataProtection;
 using System;
@@ -9,16 +9,16 @@ namespace Dfe.PrepareConversions.Utils
 {
    internal static class DataProtectionService
    {
-      public static void AddDataProtectionService(this IServiceCollection services, IConfiguration configuration)
+      public static void AddDataProtectionService(this IServiceCollection services, Config.DataProtectionOptions options)
       {
          var dp = services.AddDataProtection();
-         var dpTargetPath = "@/srv/app/storage";
+         var dpTargetPath = @"/srv/app/storage";
 
          if (Directory.Exists(dpTargetPath)) {
             dp.PersistKeysToFileSystem(new DirectoryInfo(dpTargetPath));
 
             // If a Key Vault Key URI is defined, expect to encrypt the keys.xml
-            string kvProtectionKeyUri = configuration.GetValue<string>("DataProtection:KeyVaultKey");
+            string kvProtectionKeyUri = options.KeyVaultKey;
 
             if (!string.IsNullOrWhiteSpace(kvProtectionKeyUri))
             {
