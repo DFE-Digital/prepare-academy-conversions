@@ -14,6 +14,7 @@ locals {
   container_secret_environment_variables          = var.container_secret_environment_variables
   container_max_replicas                          = var.container_max_replicas
   container_scale_http_concurrency                = var.container_scale_http_concurrency
+  container_port                                  = var.container_port
   enable_event_hub                                = var.enable_event_hub
   enable_logstash_consumer                        = var.enable_logstash_consumer
   eventhub_export_log_analytics_table_names       = var.eventhub_export_log_analytics_table_names
