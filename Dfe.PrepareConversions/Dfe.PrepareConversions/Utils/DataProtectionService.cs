@@ -15,16 +15,15 @@ namespace Dfe.PrepareConversions.Utils
          var dpTargetPath = "@/srv/app/storage";
 
          if (Directory.Exists(dpTargetPath)) {
+            dp.PersistKeysToFileSystem(new DirectoryInfo(dpTargetPath));
+
             // If a Key Vault Key URI is defined, expect to encrypt the keys.xml
             string kvProtectionKeyUri = configuration.GetValue<string>("DataProtection:KeyVaultKey");
 
             if (!string.IsNullOrWhiteSpace(kvProtectionKeyUri))
             {
-               throw new InvalidOperationException("DataProtection:Path is undefined or empty");
+               dp.ProtectKeysWithAzureKeyVault(new Uri(kvProtectionKeyUri), new DefaultAzureCredential());
             }
-
-            dp.PersistKeysToFileSystem(new DirectoryInfo(dpTargetPath));
-            dp.ProtectKeysWithAzureKeyVault(new Uri(kvProtectionKeyUri), new DefaultAzureCredential());
          }
       }
    }
