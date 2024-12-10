@@ -5,9 +5,15 @@ on:
     branches: main
     paths:
       - 'terraform/**.tf'
+      - 'terraform/**.hcl'
   pull_request:
     paths:
       - 'terraform/**.tf'
+      - 'terraform/**.hcl'
+
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
   terraform-validate:
@@ -60,7 +66,7 @@ jobs:
       - name: Setup TFLint
         uses: terraform-linters/setup-tflint@v4
         with:
-          tflint_version: v0.44.1
+          tflint_version: v0.54.0
 
       - name: Run TFLint
         working-directory: terraform
