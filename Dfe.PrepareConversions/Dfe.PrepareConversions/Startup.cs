@@ -95,8 +95,6 @@ public class Startup
          options.MaxAge = TimeSpan.FromDays(365);
       });
 
-      services.AddDataProtectionService(Configuration);
-
       services.AddScoped(sp => sp.GetService<IHttpContextAccessor>()?.HttpContext?.Session);
       services.AddSession(options =>
       {
@@ -150,6 +148,9 @@ public class Startup
       services.Configure<ServiceLinkOptions>(GetConfigurationSectionFor<ServiceLinkOptions>());
       services.Configure<AzureAdOptions>(GetConfigurationSectionFor<AzureAdOptions>());
       services.Configure<ApplicationInsightsOptions>(GetConfigurationSectionFor<ApplicationInsightsOptions>());
+      services.Configure<DataProtectionOptions>(GetConfigurationSectionFor<DataProtectionOptions>());
+
+      services.AddDataProtectionService(GetTypedConfigurationFor<DataProtectionOptions>());
 
       services.AddScoped<ErrorService>();
       services.AddScoped<IGetEstablishment, EstablishmentService>();
