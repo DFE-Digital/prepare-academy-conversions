@@ -1,4 +1,4 @@
-name: Run Cypress tests
+name: Cypress Tests using Cypress Docker Image
 
 on:
   workflow_call:
@@ -29,14 +29,18 @@ on:
 concurrency:
   group: ${{ github.workflow }}
 
-env:
-  NODE_VERSION: 18.x
-
 jobs:
   cypress-tests:
     name: Run Cypress Tests
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
+    strategy:
+      matrix:
+        browser: [
+          "edge"
+        ]
+    container:
+      image: cypress/browsers:22.12.0
     defaults:
       run:
         working-directory: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
@@ -45,31 +49,49 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      - name: Setup node.js
-        uses: actions/setup-node@v4
+      - name: Prepare Cypress cache
+        uses: cypress-io/github-action@v6
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          runTests: false
+          browser: ${{ matrix.browser }}
+          working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
 
-      - name: Npm install
-        run: npm install
-
-      - name: Run cypress (dev)
+      - name: Run (dev)
         if: inputs.environment == 'dev'
-        run: npm run cy:run -- --env url='${{ secrets.AZURE_ENDPOINT }}',cypressTestSecret='${{ secrets.CYPRESS_TEST_SECRET }}, academisationApiUrl=${{secrets.CYPRESS_ACADEMISATION_API_URL}}, academisationApiKey=${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}'
+        uses: cypress-io/github-action@v6
         env:
-          db: ${{ secrets.DB_CONNECTION_STRING }}
+          CYPRESS_db: ${{ secrets.DB_CONNECTION_STRING }}
+          CYPRESS_url: ${{ secrets.AZURE_ENDPOINT }}
+          CYPRESS_cypressTestSecret: ${{ secrets.CYPRESS_TEST_SECRET }}
+          CYPRESS_academisationApiUrl: ${{secrets.CYPRESS_ACADEMISATION_API_URL}}
+          CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}
+        with:
+          browser: ${{ matrix.browser }}
+          working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
+          wait-on: ${{ secrets.AZURE_ENDPOINT }}
+          install: false
 
-      - name: Run cypress (staging)
+      - name: Run (staging)
         if: inputs.environment == 'staging'
-        run: npm run cy:run -- --env url='${{ secrets.AZURE_ENDPOINT }}',grep='-dao',cypressTestSecret='${{ secrets.CYPRESS_TEST_SECRET }}, academisationApiUrl=${{secrets.CYPRESS_ACADEMISATION_API_URL}}, academisationApiKey=${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}'
+        uses: cypress-io/github-action@v6
         env:
-          db: ${{ secrets.DB_CONNECTION_STRING }}
+          CYPRESS_db: ${{ secrets.DB_CONNECTION_STRING }}
+          CYPRESS_url: ${{ secrets.AZURE_ENDPOINT }}
+          CYPRESS_cypressTestSecret: ${{ secrets.CYPRESS_TEST_SECRET }}
+          CYPRESS_academisationApiUrl: ${{secrets.CYPRESS_ACADEMISATION_API_URL}}
+          CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}
+          CYPRESS_grep: '-dao'
+        with:
+          browser: ${{ matrix.browser }}
+          working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
+          wait-on: ${{ secrets.AZURE_ENDPOINT }}
+          install: false
 
       - name: Upload screenshots
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
-          name: screenshots-dev
+          name: screenshots-${{ inputs.environment }}-${{ matrix.browser }}
           path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots
 
       - name: Generate report
@@ -82,7 +104,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: reports-dev
+          name: reports-${{ inputs.environment }}-${{ matrix.browser }}
           path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports
 
       - name: Report results
