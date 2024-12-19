@@ -41,45 +41,43 @@ jobs:
         ]
     container:
       image: cypress/browsers:22.12.0
-    defaults:
-      run:
-        working-directory: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
 
-      - name: Prepare Cypress cache
+      # Step 1: Run Tests for Dfe.PrepareConversions.CypressTests
+      - name: Prepare Cypress cache (Conversions)
         uses: cypress-io/github-action@v6
         with:
           runTests: false
           browser: ${{ matrix.browser }}
           working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
 
-      - name: Run (dev)
+      - name: Run Conversions (dev)
         if: inputs.environment == 'dev'
         uses: cypress-io/github-action@v6
         env:
           CYPRESS_db: ${{ secrets.DB_CONNECTION_STRING }}
           CYPRESS_url: ${{ secrets.AZURE_ENDPOINT }}
           CYPRESS_cypressTestSecret: ${{ secrets.CYPRESS_TEST_SECRET }}
-          CYPRESS_academisationApiUrl: ${{secrets.CYPRESS_ACADEMISATION_API_URL}}
-          CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}
+          CYPRESS_academisationApiUrl: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
+          CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
         with:
           browser: ${{ matrix.browser }}
           working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
           wait-on: ${{ secrets.AZURE_ENDPOINT }}
           install: false
 
-      - name: Run (staging)
+      - name: Run Conversions (staging)
         if: inputs.environment == 'staging'
         uses: cypress-io/github-action@v6
         env:
           CYPRESS_db: ${{ secrets.DB_CONNECTION_STRING }}
           CYPRESS_url: ${{ secrets.AZURE_ENDPOINT }}
           CYPRESS_cypressTestSecret: ${{ secrets.CYPRESS_TEST_SECRET }}
-          CYPRESS_academisationApiUrl: ${{secrets.CYPRESS_ACADEMISATION_API_URL}}
-          CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY}}
+          CYPRESS_academisationApiUrl: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
+          CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
           CYPRESS_grep: '-dao'
         with:
           browser: ${{ matrix.browser }}
@@ -87,27 +85,56 @@ jobs:
           wait-on: ${{ secrets.AZURE_ENDPOINT }}
           install: false
 
-      - name: Upload screenshots
+      - name: Upload screenshots (Conversions)
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
-          name: screenshots-${{ inputs.environment }}-${{ matrix.browser }}
+          name: screenshots-conversions-${{ inputs.environment }}-${{ matrix.browser }}
           path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots
 
-      - name: Generate report
+      # Step 2: Run Tests for Dfe.PrepareTransfers.CypressTests
+      - name: Run Conversions Tests (${{ inputs.environment }})
+        if: inputs.environment == 'staging' || inputs.environment == 'dev'
+        uses: cypress-io/github-action@v6
+        env:
+          CYPRESS_db: ${{ secrets.DB_CONNECTION_STRING }}
+          CYPRESS_url: ${{ secrets.AZURE_ENDPOINT }}
+          CYPRESS_cypressTestSecret: ${{ secrets.CYPRESS_TEST_SECRET }}
+          CYPRESS_academisationApiUrl: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
+          CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
+        with:
+          browser: edge
+          working-directory: ./Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests
+          wait-on: ${{ secrets.AZURE_ENDPOINT }}
+          install: false
+
+      - name: Upload screenshots (Conversions)
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-conversions
+          path: Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests/cypress/screenshots
+
+      # Step 3: Generate Combined Report
+      - name: Generate combined report
         if: always()
         run: |
           mkdir mochareports
-          npm run generate:html:report
+          npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
+          npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests
+          mv Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.html mochareports/
+          mv Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests/mochareports/*.html mochareports/
+          echo "Combined reports generated"
+          npx mochawesome-merge mochareports/*.html > mochareports/combined-reports-${{ inputs.environment }}-${{ matrix.browser }}.html
 
-      - name: Upload report
+      - name: Upload combined report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: reports-${{ inputs.environment }}-${{ matrix.browser }}
-          path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports
+          name: combined-reports-${{ inputs.environment }}-${{ matrix.browser }}
+          path: mochareports
 
-      - name: Report results
+      - name: Report results to Slack
         if: always()
         run: npm run cy:notify -- --custom-text="Environment ${{ inputs.environment }}, See more information https://github.com/DFE-Digital/prepare-academy-conversions/actions/runs/${{github.run_id}}"
         env:
