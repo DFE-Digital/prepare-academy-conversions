@@ -46,7 +46,34 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      # Step 1: Install Cypress for Conversions Tests
+      # Step 1: Install Cypress for Transfers Tests
+      - name: Install Cypress for Transfers
+        run: npm install cypress
+        working-directory: ./Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests
+
+      - name: Run Transfers Tests (${{ inputs.environment }})
+        if: inputs.environment == 'staging' || inputs.environment == 'dev'
+        uses: cypress-io/github-action@v6
+        env:
+          CYPRESS_db: ${{ secrets.DB_CONNECTION_STRING }}
+          CYPRESS_url: ${{ secrets.AZURE_ENDPOINT }}
+          CYPRESS_cypressTestSecret: ${{ secrets.CYPRESS_TEST_SECRET }}
+          CYPRESS_academisationApiUrl: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
+          CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
+        with:
+          browser: edge
+          working-directory: ./Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests
+          wait-on: ${{ secrets.AZURE_ENDPOINT }}
+          install: false
+
+      - name: Upload screenshots (Transfers)
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-transfers-${{ inputs.environment }}-${{ matrix.browser }}
+          path: Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests/cypress/screenshots
+
+      # Step 2: Install Cypress for Conversions Tests
       - name: Install Cypress for Conversions
         run: npm install cypress
         working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
@@ -89,42 +116,15 @@ jobs:
           name: screenshots-conversions-${{ inputs.environment }}-${{ matrix.browser }}
           path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots
 
-      # Step 2: Install Cypress for Transfers Tests
-      - name: Install Cypress for Transfers
-        run: npm install cypress
-        working-directory: ./Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests
-
-      - name: Run Transfers Tests (${{ inputs.environment }})
-        if: inputs.environment == 'staging' || inputs.environment == 'dev'
-        uses: cypress-io/github-action@v6
-        env:
-          CYPRESS_db: ${{ secrets.DB_CONNECTION_STRING }}
-          CYPRESS_url: ${{ secrets.AZURE_ENDPOINT }}
-          CYPRESS_cypressTestSecret: ${{ secrets.CYPRESS_TEST_SECRET }}
-          CYPRESS_academisationApiUrl: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
-          CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
-        with:
-          browser: edge
-          working-directory: ./Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests
-          wait-on: ${{ secrets.AZURE_ENDPOINT }}
-          install: false
-
-      - name: Upload screenshots (Transfers)
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: screenshots-transfers-${{ inputs.environment }}-${{ matrix.browser }}
-          path: Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests/cypress/screenshots
-
       # Step 3: Generate Combined Report
       - name: Generate combined report
         if: always()
         run: |
           mkdir mochareports
-          npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
           npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests
-          mv Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.html mochareports/
+          npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
           mv Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests/mochareports/*.html mochareports/
+          mv Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.html mochareports/
           echo "Combined reports generated"
           npx mochawesome-merge mochareports/*.html > mochareports/combined-reports-${{ inputs.environment }}-${{ matrix.browser }}.html
 
