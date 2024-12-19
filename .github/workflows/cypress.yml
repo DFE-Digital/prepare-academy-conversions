@@ -46,13 +46,10 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      # Step 1: Run Tests for Dfe.PrepareConversions.CypressTests
-      - name: Prepare Cypress cache (Conversions)
-        uses: cypress-io/github-action@v6
-        with:
-          runTests: false
-          browser: ${{ matrix.browser }}
-          working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
+      # Step 1: Install Cypress for Conversions Tests
+      - name: Install Cypress for Conversions
+        run: npm install cypress
+        working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
 
       - name: Run Conversions (dev)
         if: inputs.environment == 'dev'
@@ -92,7 +89,11 @@ jobs:
           name: screenshots-conversions-${{ inputs.environment }}-${{ matrix.browser }}
           path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots
 
-      # Step 2: Run Tests for Dfe.PrepareTransfers.CypressTests
+      # Step 2: Install Cypress for Transfers Tests
+      - name: Install Cypress for Transfers
+        run: npm install cypress
+        working-directory: ./Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests
+
       - name: Run Transfers Tests (${{ inputs.environment }})
         if: inputs.environment == 'staging' || inputs.environment == 'dev'
         uses: cypress-io/github-action@v6
@@ -108,11 +109,11 @@ jobs:
           wait-on: ${{ secrets.AZURE_ENDPOINT }}
           install: false
 
-      - name: Upload screenshots (Conversions)
+      - name: Upload screenshots (Transfers)
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
-          name: screenshots-conversions
+          name: screenshots-transfers-${{ inputs.environment }}-${{ matrix.browser }}
           path: Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests/cypress/screenshots
 
       # Step 3: Generate Combined Report

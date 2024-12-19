@@ -11,7 +11,7 @@ describe('Conversion Date Change Tests', () => {
         projectTaskList.getHomePage();
     });
 
-    it.only('Creating a conversion project', () => {
+    it('Creating a conversion project', () => {
         Logger.log("Go to the home page then click create new conversion");
         projectTaskList.clickCreateNewConversionBtn();
 
