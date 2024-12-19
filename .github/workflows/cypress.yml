@@ -93,7 +93,7 @@ jobs:
           path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots
 
       # Step 2: Run Tests for Dfe.PrepareTransfers.CypressTests
-      - name: Run Conversions Tests (${{ inputs.environment }})
+      - name: Run Transfers Tests (${{ inputs.environment }})
         if: inputs.environment == 'staging' || inputs.environment == 'dev'
         uses: cypress-io/github-action@v6
         env:
