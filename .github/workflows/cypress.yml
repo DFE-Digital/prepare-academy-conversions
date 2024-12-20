@@ -39,6 +39,15 @@ jobs:
         browser: [
           "edge"
         ]
+        project: [
+          "conversions",
+          "transfers"
+        ]
+        include:
+          - project: "transfers"
+            working_dir: "./Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests"
+          - project: "conversions"
+            working_dir: "./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests"
     container:
       image: cypress/browsers:22.12.0
     steps:
@@ -46,13 +55,17 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      # Step 1: Install Cypress for Transfers Tests
-      - name: Install Cypress for Transfers
-        run: npm install cypress
-        working-directory: ./Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests
+      - run: |
+          INPUT=${{ github.event.inputs.environment }}
+          ENVIRONMENT=${INPUT:-"Dev"}
+          if [[ $ENVIRONMENT == 'Staging' ]]
+          then
+            echo "GREP=-dao" >> $GITHUB_ENV
+          else
+            echo "GREP=" >> $GITHUB_ENV
+          fi
 
-      - name: Run Transfers Tests (${{ inputs.environment }})
-        if: inputs.environment == 'staging' || inputs.environment == 'dev'
+      - name: Run (${{ inputs.environment }})
         uses: cypress-io/github-action@v6
         env:
           CYPRESS_db: ${{ secrets.DB_CONNECTION_STRING }}
@@ -60,79 +73,63 @@ jobs:
           CYPRESS_cypressTestSecret: ${{ secrets.CYPRESS_TEST_SECRET }}
           CYPRESS_academisationApiUrl: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
           CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
+          CYPRESS_grep: ${{ env.GREP }}
         with:
-          browser: edge
-          working-directory: ./Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests
+          browser: ${{ matrix.browser }}
+          working-directory: ${{ matrix.working_dir }}
           wait-on: ${{ secrets.AZURE_ENDPOINT }}
-          install: false
 
-      - name: Upload screenshots (Transfers)
+      - name: Upload screenshots
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
-          name: screenshots-transfers-${{ inputs.environment }}-${{ matrix.browser }}
-          path: Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests/cypress/screenshots
+          name: screenshots-${{ matrix.project }}-${{ inputs.environment }}-${{ matrix.browser }}
+          path: ${{ matrix.working_dir }}/cypress/screenshots
 
-      # Step 2: Install Cypress for Conversions Tests
-      - name: Install Cypress for Conversions
-        run: npm install cypress
-        working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
-
-      - name: Run Conversions (dev)
-        if: inputs.environment == 'dev'
-        uses: cypress-io/github-action@v6
-        env:
-          CYPRESS_db: ${{ secrets.DB_CONNECTION_STRING }}
-          CYPRESS_url: ${{ secrets.AZURE_ENDPOINT }}
-          CYPRESS_cypressTestSecret: ${{ secrets.CYPRESS_TEST_SECRET }}
-          CYPRESS_academisationApiUrl: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
-          CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
-        with:
-          browser: ${{ matrix.browser }}
-          working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
-          wait-on: ${{ secrets.AZURE_ENDPOINT }}
-          install: false
-
-      - name: Run Conversions (staging)
-        if: inputs.environment == 'staging'
-        uses: cypress-io/github-action@v6
-        env:
-          CYPRESS_db: ${{ secrets.DB_CONNECTION_STRING }}
-          CYPRESS_url: ${{ secrets.AZURE_ENDPOINT }}
-          CYPRESS_cypressTestSecret: ${{ secrets.CYPRESS_TEST_SECRET }}
-          CYPRESS_academisationApiUrl: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
-          CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
-          CYPRESS_grep: '-dao'
-        with:
-          browser: ${{ matrix.browser }}
-          working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
-          wait-on: ${{ secrets.AZURE_ENDPOINT }}
-          install: false
-
-      - name: Upload screenshots (Conversions)
-        if: ${{ failure() }}
+      - name: Upload reports
+        if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: screenshots-conversions-${{ inputs.environment }}-${{ matrix.browser }}
-          path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots
+          name: reports-${{ inputs.environment }}-${{ matrix.project }}-${{ matrix.browser }}
+          path: ${{ matrix.working_dir }}/cypress/reports
 
-      # Step 3: Generate Combined Report
+  build-reports:
+    name: Build combined reports
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    needs: cypress-tests
+    env:
+      working_dir: "./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+        working-directory: ${{ env.working_dir }}
+
+      - name: Download reports
+        uses: actions/download-artifact@v4
+        with:
+          pattern: reports-${{ inputs.environment }}-*
+          path: ${{ env.working_dir }}/reports
+          merge-multiple: true
+
       - name: Generate combined report
-        if: always()
+        working-directory: ${{ env.working_dir }}
         run: |
           mkdir mochareports
-          npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests
-          npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
-          mv Dfe.PrepareConversions/Dfe.PrepareTransfers.CypressTests/mochareports/*.html mochareports/
-          mv Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.html mochareports/
-          echo "Combined reports generated"
-          npx mochawesome-merge mochareports/*.html > mochareports/combined-reports-${{ inputs.environment }}-${{ matrix.browser }}.html
+          npm run generate:html:report
 
       - name: Upload combined report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: combined-reports-${{ inputs.environment }}-${{ matrix.browser }}
+          name: combined-reports-${{ inputs.environment }}
           path: mochareports
 
       - name: Report results to Slack
