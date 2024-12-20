@@ -20,7 +20,7 @@ export default defineConfig({
 
   video: false,
 
-  userAgent: 'PrepareTransfers/1.0 Cypress',
+  userAgent: 'PrepareConversions/1.0 Cypress',
 
   e2e: {
     // eslint-disable-next-line no-unused-vars
