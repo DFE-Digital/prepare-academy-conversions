@@ -3,25 +3,19 @@ const { generateZapReport } = require('./cypress/plugins/generateZapReport')
 const { verifyDownloadTasks } = require('cy-verify-downloads')
 
 export default defineConfig({
-
   reporter: 'cypress-multi-reporters',
   reporterOptions: {
     reporterEnabled: 'mochawesome',
     mochawesomeReporterOptions: {
       reportDir: 'cypress/reports/mocha',
-      quite: true,
+      quiet: true,
       overwrite: false,
       html: false,
       json: true,
     }
   },
-
-  retries: 0,
-
   video: false,
-
-  userAgent: 'PrepareConversions/1.0 Cypress',
-
+  retries: 0,
   e2e: {
     // eslint-disable-next-line no-unused-vars
     setupNodeEvents(on, config) {
@@ -33,7 +27,8 @@ export default defineConfig({
         }
       }),
 
-        on('task', verifyDownloadTasks)
+      on('task', verifyDownloadTasks)
     },
   },
+  userAgent: 'PrepareConversions/1.0 Cypress'
 })
