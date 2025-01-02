@@ -1,7 +1,7 @@
 /* eslint-env node */
 
-import { defineConfig } from 'cypress'
-import { generateZapReport } from './cypress/plugins/generateZapReport'
+import { defineConfig } from 'Cypress'
+import { generateZapReport } from './cypress/plugins/generateZapReport.js'
 
 export default defineConfig({
   reporter: 'cypress-multi-reporters',

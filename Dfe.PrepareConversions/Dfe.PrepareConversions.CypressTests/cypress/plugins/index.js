@@ -1,4 +1,4 @@
-/// <reference types="cypress" />
+/// <reference types="Cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
 //
@@ -17,8 +17,6 @@
  * @type {Cypress.PluginConfig}
  */
 
-/// <reference types="cypress" />
-
 // Load the TypeScript plugin
 import * as webpackPreprocessor from '@cypress/webpack-preprocessor';
 
@@ -26,7 +24,7 @@ import * as webpackPreprocessor from '@cypress/webpack-preprocessor';
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
-  on('file:preprocessor', webpackPreprocessor());
+ // on('file:preprocessor', webpackPreprocessor());
 
   // Other configurations or plugins...
 
