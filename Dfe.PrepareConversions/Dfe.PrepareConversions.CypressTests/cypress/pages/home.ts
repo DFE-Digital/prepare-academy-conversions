@@ -4,7 +4,7 @@ class HomePage {
 
   public open(): this {
 
-    cy.visit(Cypress.env('url'))
+    cy.visit(Cypress.env('transfersUrl'))
     return this
   }
 

@@ -1,4 +1,4 @@
-import homePage from '../pages/home'
+import homePage from 'cypress/pages/home'
 import newTransferPage from 'cypress/pages/newTransfer'
 import outgoingTrustSearchPage from 'cypress/pages/outgoingTrustSearch'
 import outgoingTrustSearchResultsPage from 'cypress/pages/outgoingTrustSearchResults'
