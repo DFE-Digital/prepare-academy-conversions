@@ -2,27 +2,36 @@
     var authenticatedUserId = (User.Identity is not null && User.Identity.IsAuthenticated) ? User.Identity.Name ?? "Unknown" : "Anonymous";
 }
 <script type="text/javascript" integrity="sha384-g/ZkzetdQypWdY0NBZT5r2L3BR9/hURD8OBcd1rEaBpgX6QC7EaTL+o+mzWrBcXW" crossorigin="anonymous" src="https://js.monitor.azure.com/scripts/b/ext/ai.clck.2.8.18.min.js"></script>
-<script type="text/javascript" asp-add-nonce>
+<script type="text/javascript" nonce="IWBhZ0c3Eqtf2P5uHZfSifs+6NEs3nPDKJR9CqOp5Tw=">
+    var startTime = Date.now(); // Initialize startTime
+    window.addEventListener('beforeunload', function () {
+        var endTime = Date.now();
+        var timeSpent = endTime - startTime;
+
+        // Track custom metric
+        appInsights.trackMetric({ name: 'TimeSpentOnPage', average: timeSpent });
+        appInsights.flush();
+    });
+
     (function () {
-        var appInsights = window.appInsights || function (config) 
-        { 
-           function r(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } } 
-           var t = { config: config }, u = document, e = window, o = "script", s = u.createElement(o), i, f; 
-           for (s.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", u.getElementsByTagName(o)[0].parentNode.appendChild(s), t.cookie = u.cookie, t.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace", "Dependency"]; i.length;)r("track" + i.pop()); 
-           return t
+        var appInsights = window.appInsights || function (config) {
+            function r(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } }
+            var t = { config: config }, u = document, e = window, o = "script", s = u.createElement(o), i, f;
+            s.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js";
+            u.getElementsByTagName(o)[0].parentNode.appendChild(s);
+            t.cookie = u.cookie;
+            t.queue = [];
+            i = ["PageView"];
+            while (i.length) r("track" + i.pop());
+            return t;
         }({
             connectionString: '@ApplicationInsightsOptions.Value.ConnectionString',
             instrumentationKey: '@ApplicationInsightsOptions.Value.InstrumentationKey',
             authenticatedUserId: '@authenticatedUserId',
         });
+
         window.appInsights = appInsights;
-        appInsights.trackPageView(); 
-        let startTime = new Date(); 
-        window.addEventListener('beforeunload', function (event) 
-        {
-           let endTime = new Date(); 
-           let timeSpent = endTime - startTime; 
-           appInsights.trackMetric({ name: "TimeSpentOnPage", average: timeSpent });
-        });
+        appInsights.trackPageView();
+    })();
 </script>
 <script type="text/javascript" src="~/dist/application-insights.min.js" asp-add-nonce></script>
