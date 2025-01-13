@@ -12,6 +12,7 @@ locals {
   registry_managed_identity_assign_role           = var.registry_managed_identity_assign_role
   container_command                               = var.container_command
   container_secret_environment_variables          = var.container_secret_environment_variables
+  container_min_replicas                          = var.container_min_replicas
   container_max_replicas                          = var.container_max_replicas
   container_scale_http_concurrency                = var.container_scale_http_concurrency
   container_port                                  = var.container_port
