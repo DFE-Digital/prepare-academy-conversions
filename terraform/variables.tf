@@ -99,9 +99,16 @@ variable "container_secret_environment_variables" {
   sensitive   = true
 }
 
+variable "container_min_replicas" {
+  description = "Container min replicas"
+  type        = number
+  default     = 1
+}
+
 variable "container_max_replicas" {
   description = "Container max replicas"
   type        = number
+  default     = 2
 }
 
 variable "container_scale_http_concurrency" {
