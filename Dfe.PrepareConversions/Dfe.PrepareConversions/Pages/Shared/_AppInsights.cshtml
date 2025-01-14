@@ -12,6 +12,7 @@
         connectionString: '@ApplicationInsightsOptions.Value.ConnectionString',
         instrumentationKey: '@ApplicationInsightsOptions.Value.InstrumentationKey',
         authenticatedUserId: '@authenticatedUserId',
+        autoTrackPageVisitTime: true
     });
     window.appInsights = appInsights;
     appInsights.queue && appInsights.queue.push(function () {
