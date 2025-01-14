@@ -2,36 +2,20 @@
     var authenticatedUserId = (User.Identity is not null && User.Identity.IsAuthenticated) ? User.Identity.Name ?? "Unknown" : "Anonymous";
 }
 <script type="text/javascript" integrity="sha384-g/ZkzetdQypWdY0NBZT5r2L3BR9/hURD8OBcd1rEaBpgX6QC7EaTL+o+mzWrBcXW" crossorigin="anonymous" src="https://js.monitor.azure.com/scripts/b/ext/ai.clck.2.8.18.min.js"></script>
-<script type="text/javascript" nonce="IWBhZ0c3Eqtf2P5uHZfSifs+6NEs3nPDKJR9CqOp5Tw=">
-    var startTime = Date.now(); // Initialize startTime
-    window.addEventListener('beforeunload', function () {
-        var endTime = Date.now();
-        var timeSpent = endTime - startTime;
-
-        // Track custom metric
-        appInsights.trackMetric({ name: 'TimeSpentOnPage', average: timeSpent });
-        appInsights.flush();
+<script type="text/javascript" asp-add-nonce>
+    var appInsights = window.appInsights || function (config) {
+        function r(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } }
+        var t = { config: config }, u = document, e = window, o = "script", s = u.createElement(o), i, f;
+        for (s.src = config.src || "https://az416426.vo.msecnd.net/scripts/b/ai.2.min.js", u.getElementsByTagName(o)[0].parentNode.appendChild(s), t.cookie = u.cookie; i = ["trackPageView", "trackEvent", "trackException", "trackMetric", "trackDependency", "trackTrace", "setAuthenticatedUserContext", "clearAuthenticatedUserContext", "startTrackPage", "stopTrackPage", "flush"], i.length;) r(i.pop());
+        return t.queue = [], t.version = 2.0, t;
+    }({
+        connectionString: '@ApplicationInsightsOptions.Value.ConnectionString',
+        instrumentationKey: '@ApplicationInsightsOptions.Value.InstrumentationKey',
+        authenticatedUserId: '@authenticatedUserId',
     });
-
-    (function () {
-        var appInsights = window.appInsights || function (config) {
-            function r(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } }
-            var t = { config: config }, u = document, e = window, o = "script", s = u.createElement(o), i, f;
-            s.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js";
-            u.getElementsByTagName(o)[0].parentNode.appendChild(s);
-            t.cookie = u.cookie;
-            t.queue = [];
-            i = ["PageView"];
-            while (i.length) r("track" + i.pop());
-            return t;
-        }({
-            connectionString: '@ApplicationInsightsOptions.Value.ConnectionString',
-            instrumentationKey: '@ApplicationInsightsOptions.Value.InstrumentationKey',
-            authenticatedUserId: '@authenticatedUserId',
-        });
-
-        window.appInsights = appInsights;
+    window.appInsights = appInsights;
+    appInsights.queue && appInsights.queue.push(function () {
         appInsights.trackPageView();
-    })();
+    });
 </script>
 <script type="text/javascript" src="~/dist/application-insights.min.js" asp-add-nonce></script>
