@@ -36,6 +36,9 @@ module "azure_container_apps_hosting" {
   health_insights_api_ipv4_allow_list    = local.health_insights_api_ipv4_allow_list
   enable_container_app_file_share        = local.enable_container_app_file_share
 
+  enable_redis_cache = local.enable_redis_cache
+  redis_cache_sku    = local.redis_cache_sku
+
   enable_cdn_frontdoor                            = local.enable_cdn_frontdoor
   cdn_frontdoor_forwarding_protocol               = local.cdn_frontdoor_forwarding_protocol
   cdn_frontdoor_origin_host_header_override       = local.cdn_frontdoor_origin_host_header_override
