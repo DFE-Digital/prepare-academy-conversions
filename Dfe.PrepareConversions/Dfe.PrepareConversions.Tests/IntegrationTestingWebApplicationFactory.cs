@@ -76,7 +76,8 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
                { "TramsApi:Endpoint", _mockApiServer.Url },
                { "AcademisationApi:BaseUrl", _mockApiServer.Url },
                { "AzureAd:AllowedRoles", string.Empty }, // Do not restrict access for integration test
-               { "ServiceLink:TransfersUrl", "https://an-external-service.com/" }
+               { "ServiceLink:TransfersUrl", "https://an-external-service.com/" },
+               { "ConnectionStrings:RedisCache", "localhost:6379" }
             })
             .AddEnvironmentVariables();
       });
