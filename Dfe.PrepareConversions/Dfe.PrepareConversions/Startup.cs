@@ -32,6 +32,7 @@ using Microsoft.Identity.Web.UI;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using StackExchange.Redis;
 
 namespace Dfe.PrepareConversions;
 
@@ -96,6 +97,24 @@ public class Startup
       });
 
       services.AddScoped(sp => sp.GetService<IHttpContextAccessor>()?.HttpContext?.Session);
+
+      // Configure Redis Based Distributed Session
+      var redisConfigurationOptions = ConfigurationOptions.Parse(Configuration["ConnectionStrings:RedisCache"]);
+      redisConfigurationOptions.AsyncTimeout = 15000;
+      redisConfigurationOptions.SyncTimeout = 15000;
+
+      // https://stackexchange.github.io/StackExchange.Redis/ThreadTheft.html
+      ConnectionMultiplexer.SetFeatureFlag("preventthreadtheft", true);
+
+      IConnectionMultiplexer redisConnectionMultiplexer = ConnectionMultiplexer.Connect(redisConfigurationOptions);
+
+      services.AddStackExchangeRedisCache(redisCacheConfig =>
+      {
+         redisCacheConfig.ConfigurationOptions = redisConfigurationOptions;
+         redisCacheConfig.ConnectionMultiplexerFactory = () => Task.FromResult(redisConnectionMultiplexer);
+         redisCacheConfig.InstanceName = "redis-master";
+      });
+
       services.AddSession(options =>
       {
          options.IdleTimeout = _authenticationExpiration;
