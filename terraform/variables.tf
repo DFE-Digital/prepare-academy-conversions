@@ -389,3 +389,14 @@ variable "container_port" {
   type        = number
   default     = 8080
 }
+
+variable "enable_redis_cache" {
+  description = "Set to true to create an Azure Redis Cache, with a private endpoint within the virtual network"
+  type        = bool
+}
+
+variable "redis_cache_sku" {
+  description = "Redis Cache SKU"
+  type        = string
+  default     = "Basic"
+}
