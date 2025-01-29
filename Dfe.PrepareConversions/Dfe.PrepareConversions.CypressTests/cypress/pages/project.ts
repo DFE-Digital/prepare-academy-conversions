@@ -4,7 +4,8 @@ class ProjectPage {
 
   public loadProject(projectId): this {
 
-    cy.visit(`${Cypress.env('url')}project/${projectId}`)
+    cy.visit(`${Cypress.env('url')}/transfers/project/${projectId}`);
+
     
     return this
   }

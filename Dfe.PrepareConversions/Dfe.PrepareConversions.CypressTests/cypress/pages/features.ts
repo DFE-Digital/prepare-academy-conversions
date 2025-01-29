@@ -21,7 +21,7 @@ class FeaturesPage {
     cy.get('button').contains('Save and continue').click();
 
     cy.get('#Finance').click();
-cy.get("button").contains("Save and continue").click();
+    cy.get("button").contains("Save and continue").click();
 
     // Check the table has been updated
     cy.get('dd').eq(0).should('contain.text', 'Intervention');

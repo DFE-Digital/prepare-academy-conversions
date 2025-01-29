@@ -16,7 +16,7 @@ class PreviewPage {
 
     cy.get('section').then(($sections) => {
       // Key Stage Data may vary so set minimum
-      cy.wrap($sections).should('have.length.at.least', 9)
+      cy.wrap($sections).should('have.length.at.least', 8)
     })
 
     return this

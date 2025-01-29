@@ -4,7 +4,7 @@ class RationalePage {
 
   public completeRationale(): this {
 
-    cy.get('[data-test="project-rationale"]').click()    
+    cy.get('[data-test="project-rationale"]').click()
 
     cy.get('h1').should('contain.text', 'Write the rationale for the project')
 

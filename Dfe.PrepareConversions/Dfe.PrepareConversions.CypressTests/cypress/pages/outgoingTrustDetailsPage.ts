@@ -1,22 +1,19 @@
-import { BasePage } from './basePage'
+import BasePage from './basePage';
 
 class OutgoingTrustDetailsPage extends BasePage {
+  public slug: string = 'transfers/outgoingtrustdetails';
 
-  public slug = 'transfers/outgoingtrustdetails'
+  public checkTrustDetails(trustInfo: { name: string; companiesHouseNo: string; ukPrn: string }): this {
+    cy.get('.govuk-summary-list').as('outgoingTrustInfo');
 
-  public checkTrustDetails(trustInfo): this {
+    cy.get('@outgoingTrustInfo').should('contain.text', trustInfo.name);
+    cy.get('@outgoingTrustInfo').should('contain.text', trustInfo.companiesHouseNo);
+    cy.get('@outgoingTrustInfo').should('contain.text', trustInfo.ukPrn);
 
-    cy.get('.govuk-summary-list').as('outgoingTrustInfo')
-
-    cy.get('@outgoingTrustInfo').should('contain.text', trustInfo.name)
-    cy.get('@outgoingTrustInfo').should('contain.text', trustInfo.companiesHouseNo)
-    cy.get('@outgoingTrustInfo').should('contain.text', trustInfo.ukPrn)
-
-    return this
+    return this;
   }
-
 }
 
-const outgoingTrustDetailsPage = new OutgoingTrustDetailsPage()
+const outgoingTrustDetailsPage = new OutgoingTrustDetailsPage();
 
-export default outgoingTrustDetailsPage
+export default outgoingTrustDetailsPage;

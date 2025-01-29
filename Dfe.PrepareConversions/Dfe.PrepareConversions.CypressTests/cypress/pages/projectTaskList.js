@@ -1,6 +1,7 @@
 /// <reference types ='Cypress'/>
 
-import BasePage from "./BasePage"
+import BasePage from './BasePage';
+
 
 export default class ProjectTaskList extends BasePage {
 

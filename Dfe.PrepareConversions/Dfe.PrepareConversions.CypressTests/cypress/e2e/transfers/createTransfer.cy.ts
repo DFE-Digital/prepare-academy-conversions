@@ -16,18 +16,23 @@ import previewPage from 'cypress/pages/preview'
 import projectAssignmentPage from 'cypress/pages/projectAssignment'
 import rationalePage from 'cypress/pages/rationale'
 import trustInformationProjectDatesPage from 'cypress/pages/trustInformationProjectDates'
+import dayjs from 'dayjs';
+
+
+
 
 describe('Create a new transfer', () => {
 
   let outgoingTrustData, incomingTrustData, projectId
-  const advisoryBoardDate = Cypress.dayjs().add(3, 'month')
-  const transferDate = Cypress.dayjs().add(4, 'month')
+
+  const advisoryBoardDate = dayjs().add(3, 'month');
+  const transferDate = dayjs().add(4, 'month');
 
   beforeEach(() => {
 
     cy.fixture('trustInformation.json').then((jsonData) => {
       outgoingTrustData = jsonData[0]
-      // Only single academy required
+      
       outgoingTrustData.academies = outgoingTrustData.academies[0]
       
       incomingTrustData = jsonData[1]
@@ -70,10 +75,12 @@ describe('Create a new transfer', () => {
         .checkDetails(outgoingTrustData, incomingTrustData)
         .continue()
 
-      cy.url().then(($url) =>{
-        cy.wrap($url).should('include', `${projectPage.slug}`)
-        projectId = $url.split('/').pop()
-      })
+        cy.url().then(($url) => {
+          cy.log(`Generated Project URL: ${$url}`);
+          cy.wrap($url).should('include', `${projectPage.slug}`);
+          projectId = $url.split('/').pop();
+          cy.log(`Captured Project ID: ${projectId}`);
+        });
     })
   })
 
@@ -95,7 +102,7 @@ describe('Create a new transfer', () => {
       projectPage
         .loadProject(projectId)
         .checkDeliveryOfficerDetails('Empty')
-        .startChangeDeliveryOfficer()
+        .startChangeDeliveryOfficer() 
 
       projectAssignmentPage
         .assignDeliveryOfficer(deliveryOfficer)
@@ -132,8 +139,7 @@ describe('Create a new transfer', () => {
 
     it('Fill in Transfer Dates', () => {
 
-      cy.visit(`${Cypress.env('url')}project/${projectId}`)
-
+      cy.visit(`${Cypress.env('url')}/transfers/project/${projectId}`);
       projectPage
         .checkTransferDatesStatus('Not Started')
         .startTransferDates()
@@ -149,7 +155,7 @@ describe('Create a new transfer', () => {
 
     it('Fill in Benefits and Risks', () => {
 
-      cy.visit(`${Cypress.env('url')}project/${projectId}`)
+      cy.visit(`${Cypress.env('url')}/transfers/project/${projectId}`);
 
       projectPage
         .loadProject(projectId)
@@ -169,7 +175,7 @@ describe('Create a new transfer', () => {
 
     it('Fill in Legal Requirements', () => {
 
-      cy.visit(`${Cypress.env('url')}project/${projectId}`)
+      cy.visit(`${Cypress.env('url')}/transfers/project/${projectId}`);
 
       projectPage
         .loadProject(projectId)
@@ -187,9 +193,9 @@ describe('Create a new transfer', () => {
         .checkLegalRequirementsStatus('Completed')
     })
 
-    it('Fill in Rationale', () => {
+    it ('Fill in Rationale', () => {
 
-      cy.visit(`${Cypress.env('url')}project/${projectId}`)
+      cy.visit(`${Cypress.env('url')}/transfers/project/${projectId}`);
 
       projectPage
         .loadProject(projectId)

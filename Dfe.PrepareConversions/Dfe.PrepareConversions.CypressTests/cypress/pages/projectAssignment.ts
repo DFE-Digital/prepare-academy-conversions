@@ -1,19 +1,17 @@
-import { BasePage } from "./basePage"
+import BasePage from "./basePage"
+
+
 
 class ProjectAssignmentPage extends BasePage{
 
   public slug = 'project-assignment'
 
-  public assignDeliveryOfficer(deliveryOfficer): this {
-
-    cy.get('[id="delivery-officer"]').type(deliveryOfficer)
-
-    cy.get('li').contains(deliveryOfficer).click()
-
-    this.continue()
-
-    return this
-  }
+  public assignDeliveryOfficer(deliveryOfficer: string): this {
+    cy.get('[id="delivery-officer"]').type(deliveryOfficer); 
+    cy.get('li').contains(deliveryOfficer).click();         
+    this.continue();
+    return this;
+}
 
   public unassignDeliveryOfficer(): this {
 
@@ -21,8 +19,8 @@ class ProjectAssignmentPage extends BasePage{
 
     return this
   }
+
+
 }
-
-const projectAssignmentPage = new ProjectAssignmentPage()
-
-export default projectAssignmentPage
+const projectAssignmentPage = new ProjectAssignmentPage();
+export default projectAssignmentPage;
