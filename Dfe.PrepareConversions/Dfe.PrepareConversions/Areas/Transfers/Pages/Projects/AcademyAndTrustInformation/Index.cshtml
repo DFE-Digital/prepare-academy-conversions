@@ -33,7 +33,7 @@
         <partial name="Shared/_AcademyAndTrustSummary" model="Model"></partial>
            @if (Model.IsReadOnly != true)
            {
-           <form asp-page="/transfers/Projects/Index" asp-route-urn="@Model.Urn" method="get">
+           <form asp-page="/Projects/Index" asp-route-urn="@Model.Urn" method="get">
               <button class="govuk-button govuk-!-margin-top-6" type="submit">
                  Confirm and continue
               </button>
