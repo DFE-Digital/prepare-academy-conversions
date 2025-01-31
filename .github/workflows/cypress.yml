@@ -45,9 +45,7 @@ jobs:
           ref: ${{ github.ref }}
 
       
-      - name: Install Cypress
-        run: npm install cypress
-        working-directory: ./Dfe.PrepareConversions/Dfe.CypressTests
+    
 
       
       - name: Run Cypress Tests (${{ inputs.environment }})
