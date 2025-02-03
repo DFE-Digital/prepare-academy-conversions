@@ -17,9 +17,6 @@ export default defineConfig({
   },
   video: false,
   retries: 0,
-  env: {
-    url: 'https://dev.prepare-conversions.education.gov.uk', // Add the base URL here
-  },
   e2e: {
     setupNodeEvents(on, config) {
       on('after:run', async () => {
