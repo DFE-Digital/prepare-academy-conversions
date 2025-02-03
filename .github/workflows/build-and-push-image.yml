@@ -36,14 +36,14 @@ jobs:
           echo "environment=${ENVIRONMENT,,}" >> $GITHUB_OUTPUT
           echo "release=${RELEASE}" >> $GITHUB_OUTPUT
 
-  deploy-image:
+  deploy:
     permissions:
       id-token: write
       contents: read
       packages: write
     name: Deploy
     needs: [ set-env ]
-    uses: DFE-Digital/deploy-azure-container-apps-action/.github/workflows/build-push-deploy.yml@v3.1.0
+    uses: DFE-Digital/deploy-azure-container-apps-action/.github/workflows/build-push-deploy.yml@v4.1.0
     with:
       docker-image-name: 'a2bint-app'
       docker-build-file-name: './Dockerfile'
@@ -60,7 +60,7 @@ jobs:
 
   create-tag:
     name: Tag and release
-    needs: [ set-env, deploy-image ]
+    needs: [ set-env, deploy ]
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -94,7 +94,7 @@ jobs:
   cypress-tests:
     name: Run Cypress Tests
     if: needs.set-env.outputs.environment == 'staging' || needs.set-env.outputs.environment == 'dev'
-    needs: [ deploy-image, set-env ]
+    needs: [ deploy, set-env ]
     uses: ./.github/workflows/cypress.yml
     with:
       environment: ${{ needs.set-env.outputs.environment }}
