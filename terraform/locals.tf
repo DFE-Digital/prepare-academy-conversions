@@ -60,4 +60,6 @@ locals {
   enable_cdn_frontdoor_vdp_redirects              = var.enable_cdn_frontdoor_vdp_redirects
   cdn_frontdoor_vdp_destination_hostname          = var.cdn_frontdoor_vdp_destination_hostname
   enable_container_app_file_share                 = var.enable_container_app_file_share
+  monitor_http_availability_fqdn                  = var.monitor_http_availability_fqdn
+  dns_alias_records                               = var.dns_alias_records
 }
