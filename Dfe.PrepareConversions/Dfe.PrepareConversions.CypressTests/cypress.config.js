@@ -18,6 +18,7 @@ export default defineConfig({
   video: false,
   retries: 0,
   e2e: {
+    specPattern: 'cypress/e2e',
     setupNodeEvents(on, config) {
       on('after:run', async () => {
         if (process.env.ZAP) {
