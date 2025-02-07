@@ -57,7 +57,6 @@ jobs:
           browser: ${{ matrix.browser }}
           working-directory: ./Dfe.PrepareConversions/Dfe.CypressTests
           wait-on: ${{ secrets.AZURE_ENDPOINT }}
-          install: false
 
       - name: Upload screenshots (Cypress Tests)
         if: ${{ failure() }}
