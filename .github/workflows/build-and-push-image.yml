@@ -36,13 +36,25 @@ jobs:
           echo "environment=${ENVIRONMENT,,}" >> $GITHUB_OUTPUT
           echo "release=${RELEASE}" >> $GITHUB_OUTPUT
 
+  validate-packages:
+    runs-on: windows-latest
+    name: Package Validation
+    permissions:
+      contents: read
+    needs: [ set-env ]
+    steps:
+      - name: Validate Packages
+        uses: DFE-Digital/rsd-github-actions/.github/actions/validate-packages@v1.1.2
+        with:
+          environment: ${{ needs.set-env.outputs.environment }}
+
   deploy:
     permissions:
       id-token: write
       contents: read
       packages: write
     name: Deploy
-    needs: [ set-env ]
+    needs: [ set-env, validate-packages ]
     uses: DFE-Digital/deploy-azure-container-apps-action/.github/workflows/build-push-deploy.yml@v4.1.0
     with:
       docker-image-name: 'a2bint-app'
