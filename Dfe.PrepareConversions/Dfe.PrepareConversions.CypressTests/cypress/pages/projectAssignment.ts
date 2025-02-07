@@ -7,8 +7,8 @@ class ProjectAssignmentPage extends BasePage{
   public slug = 'project-assignment'
 
   public assignDeliveryOfficer(deliveryOfficer: string): this {
-    cy.get('[id="delivery-officer"]').type(deliveryOfficer); 
-    cy.get('li').contains(deliveryOfficer).click();         
+    cy.get('[id="delivery-officer"]').type(deliveryOfficer);
+    cy.get('li').contains(deliveryOfficer).click();
     this.continue();
     return this;
 }

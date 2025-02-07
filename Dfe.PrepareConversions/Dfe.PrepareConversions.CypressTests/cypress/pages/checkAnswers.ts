@@ -1,4 +1,4 @@
-import BasePage from './basePage';
+import BasePage from "./basePage";
 
 class CheckAnswersPage extends BasePage {
 
@@ -10,12 +10,12 @@ class CheckAnswersPage extends BasePage {
 
     cy.get('@trustAcademiesDetails').then($el => {
       const textContent = $el.text().trim();
-      
+
       expect(textContent).to.contain(outgoingTrust.name.trim());
       expect(textContent).to.contain(outgoingTrust.ukPrn.trim());
       expect(textContent).to.contain(outgoingTrust.academies.trim());
       expect(textContent).to.contain(incomingTrust.name.trim());
-      
+
     });
 
     return this;
