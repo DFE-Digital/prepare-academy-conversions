@@ -1,6 +1,6 @@
 /* eslint-env node */
 
-import { defineConfig } from 'Cypress';
+import { defineConfig } from 'cypress';
 import { generateZapReport } from './cypress/plugins/generateZapReport.js';
 
 export default defineConfig({
