@@ -1,6 +1,7 @@
 /// <reference types ='Cypress'/>
 
-import BasePage from "./BasePage"
+import BasePage from "./basePage";
+
 
 export default class ProjectTaskList extends BasePage {
 
@@ -167,5 +168,3 @@ export default class ProjectTaskList extends BasePage {
         return this;
     }
 }
-
-

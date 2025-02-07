@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-import BasePage from "./BasePage"
+import BasePage from "./basePage"
 
 const currentYear = new Date()
 const nextYear = new Date().setFullYear(new Date().getFullYear() + 1)

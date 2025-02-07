@@ -1,7 +1,7 @@
 /* eslint-env node */
 
-import { defineConfig } from 'cypress'
-import { generateZapReport } from './cypress/plugins/generateZapReport'
+import { defineConfig } from 'cypress';
+import { generateZapReport } from './cypress/plugins/generateZapReport.js';
 
 export default defineConfig({
   reporter: 'cypress-multi-reporters',
@@ -9,24 +9,22 @@ export default defineConfig({
     reporterEnabled: 'mochawesome',
     mochawesomeReporterOptions: {
       reportDir: 'cypress/reports/mocha',
-      quite: true,
+      quiet: true,
       overwrite: false,
       html: false,
       json: true,
-    }
+    },
   },
   video: false,
   retries: 0,
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
+    specPattern: 'cypress/e2e',
     setupNodeEvents(on, config) {
-
       on('after:run', async () => {
         if (process.env.ZAP) {
-          await generateZapReport()
+          await generateZapReport();
         }
-      })
+      });
 
       on('task', {
         log(message) {
@@ -35,9 +33,9 @@ export default defineConfig({
         },
       });
 
-      require('./cypress/plugins/index.js')(on, config)
+      require('./cypress/plugins/index.js')(on, config);
       return config;
-    }
+    },
   },
-  userAgent: 'PrepareConversions/1.0 Cypress'
-})
+  userAgent: 'PrepareConversions/1.0 Cypress',
+});
