@@ -1,6 +1,6 @@
 /// <reference types ='Cypress'/>
 
-import BasePage from "./BasePage"
+import BasePage from "./basePage"
 
 export default class Rationale extends BasePage {
     static selectors = {

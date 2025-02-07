@@ -1,5 +1,5 @@
 /// <reference types ='Cypress'/>
-import BasePage from './BasePage'
+import BasePage from "./basePage"
 
 export default class projectList extends BasePage {
 
@@ -16,14 +16,14 @@ export default class projectList extends BasePage {
 
     static getNthProjectDeliveryOfficer(n = 0) {
         this.checkProjectListPage()
-        return cy.get(`[id="assigned-to-${n}"]`) 
+        return cy.get(`[id="assigned-to-${n}"]`)
     }
 
     static filterProjectList(titleFilter) {
         const filterQuery = `?Title=${encodeURIComponent(titleFilter)}`
         cy.visit(`${Cypress.env('url')}/${this.path}${filterQuery}`)
     }
-    
+
     static filterByRegion(region) {
         this.filterProjectList({ region: region });
     }
@@ -69,4 +69,3 @@ export default class projectList extends BasePage {
         return ''
     }
 }
-

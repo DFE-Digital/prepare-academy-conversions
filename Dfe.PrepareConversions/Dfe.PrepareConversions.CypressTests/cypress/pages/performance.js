@@ -1,13 +1,13 @@
 /// <reference types ='Cypress'/>
 
-import BasePage from "./BasePage"
+import BasePage from "./basePage"
 
 export default class Performance extends BasePage {
     static selectors = {
         ofstedInfoText: 'This information comes from TRAMS. It is for reference only. It will not appear in the project document.',
         keyStageText: 'This information comes from Find and compare schools in England. It is for reference only. It will not appear in the project document.',
-        ofstedInfoTextId: '.govuk-grid-column-two-thirds > .govuk-body', 
-        keyStageLinkText: 'Source of data: Find and compare school performance (opens in new tab)',  
+        ofstedInfoTextId: '.govuk-grid-column-two-thirds > .govuk-body',
+        keyStageLinkText: 'Source of data: Find and compare school performance (opens in new tab)',
         keyStageLink: (urn) => `https://www.compare-school-performance.service.gov.uk/school/${urn}`,
         keyStageTextId: '.govuk-grid-column-two-thirds > :nth-child(3)',
         keyStageLinkTextId: ':nth-child(4) > .govuk-link',
@@ -24,7 +24,7 @@ export default class Performance extends BasePage {
     }
 
     static verifyOfsteadScreenText(){
-        cy.get(this.selectors.ofstedInfoTextId).should('contain.text', this.selectors.ofstedInfoText); 
+        cy.get(this.selectors.ofstedInfoTextId).should('contain.text', this.selectors.ofstedInfoText);
     }
 
     static changeKeyStageInfo(keyStageNumber) {
