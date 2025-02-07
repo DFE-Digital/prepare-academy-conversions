@@ -55,7 +55,7 @@ jobs:
           CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
         with:
           browser: ${{ matrix.browser }}
-          working-directory: ./Dfe.PrepareConversions/Dfe.CypressTests
+          working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
           wait-on: ${{ secrets.AZURE_ENDPOINT }}
 
       - name: Upload screenshots (Cypress Tests)
@@ -63,14 +63,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: screenshots-${{ inputs.environment }}-${{ matrix.browser }}
-          path: Dfe.PrepareConversions/Dfe.CypressTests/cypress/screenshots
+          path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots
 
       - name: Generate combined report
         if: always()
         run: |
           mkdir mochareports
-          npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.CypressTests
-          mv Dfe.PrepareConversions/Dfe.CypressTests/mochareports/*.html mochareports/
+          npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
+          mv Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.html mochareports/
           echo "Combined reports generated"
           npx mochawesome-merge mochareports/*.html > mochareports/combined-reports-${{ inputs.environment }}-${{ matrix.browser }}.html
 
