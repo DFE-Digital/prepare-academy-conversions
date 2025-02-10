@@ -2,3 +2,4 @@ videos/
 screenshots/
 downloads/
 cypress.env.json
+mochareports/

@@ -34,6 +34,9 @@ jobs:
     name: Run Cypress Tests
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
+    defaults:
+      run:
+         working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
     strategy:
       matrix:
         browser: ["edge"]
@@ -65,24 +68,26 @@ jobs:
           name: screenshots-${{ inputs.environment }}-${{ matrix.browser }}
           path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots
 
-      - name: Generate combined report
+      - name: Combine reports
         if: always()
         run: |
-          mkdir mochareports
-          npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
-          mv Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.html mochareports/
-          echo "Combined reports generated"
-          npx mochawesome-merge mochareports/*.html > mochareports/combined-reports-${{ inputs.environment }}-${{ matrix.browser }}.html
+          mkdir -p mochareports
+          npm run combine:reports
 
-      - name: Upload combined report
+      - name: Generate HTML report
+        if: always()
+        run: |
+          npm run create:html:report
+
+      - name: Upload reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: combined-reports-${{ inputs.environment }}-${{ matrix.browser }}
-          path: mochareports
+          path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.html
 
       - name: Report results to Slack
         if: always()
-        run: npm run cy:notify -- --custom-text="Environment ${{ inputs.environment }}, See more information https://github.com/DFE-Digital/prepare-academy-conversions/actions/runs/${{github.run_id}}"
+        run: npm run cy:notify -- --custom-text="Environment ${{ inputs.environment }}, See more information https://github.com/DFE-Digital/prepare-academy-conversions/actions/runs/${{ github.run_id }}"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
