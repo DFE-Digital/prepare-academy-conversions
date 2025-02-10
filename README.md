@@ -2,8 +2,8 @@
 Internal service for managing applications for schools to become academies.
 
 ## Requirements
-- .NET 6.0
-- NodeJS (for frontend build tools)
+- .NET 8.0
+- NodeJS 21 (for frontend build tools)
 
 ## Development Setup
 
@@ -39,51 +39,58 @@ To execute the tests locally and view the output, you will need to set environme
 
 ```json
 {
-  "url": "BASE_URL_OF_APP",
-  "cypressTestSecret": "<SECRET HERE>",
-  "academisationApiUrl": "<SECRET HERE>",
-  "academisationApiKey": "<SECRET HERE>"
+   "url": "BASE_URL_OF_APP",
+   "cypressTestSecret": "<SECRET HERE>",
+   "academisationApiUrl": "<SECRET HERE>",
+   "academisationApiKey": "<SECRET HERE>"
 }
+```
 
 Please make sure to replace `<SECRET HERE>` with the actual secret values in the `cypress.env.json` file before running the tests.
 
 ### Open the Cypress Test Runner for interactive testing
-npx cypress open
+`npx cypress open`
 
 ### Run the Cypress tests in headless or headed modes
-npm run cy:run - headless
-npm run cy:open - headed
 
+```
+npm run cy:run -headless
+```
+
+or
+
+```
+npm run cy:open -headed
+```
 
 ### Useful tips
 
 #### Maintaining sessions
 Each 'it' block usually runs the test with a clear cache. For our purposes, we may need to maintain the user session to test various scenarios. This can be achieved by adding the following code to your tests:
 
-```
+```js
 afterEach(() => {
-		cy.storeSessionData();
-	});
+   cy.storeSessionData();
+});
 ```
 
 ##### Writing global commands
 The cypress.json file in the `support` folder contains functions which can be used globally throughout your tests. Below is an example of a custom login command
 
-```
+```js
 Cypress.Commands.add("login",()=> {
-	cy.visit(Cypress.env('url')+"/login");
-	cy.get("#username").type(Cypress.env('username'));
-	cy.get("#password").type(Cypress.env('password')+"{enter}");
-	cy.saveLocalStorage();
+   cy.visit(Cypress.env('url')+"/login");
+   cy.get("#username").type(Cypress.env('username'));
+   cy.get("#password").type(Cypress.env('password')+"{enter}");
+   cy.saveLocalStorage();
 })
-
 ```
 
 Which you can access in your tests like so:
 
-```
+```js
 before(function () {
-	cy.login();
+   cy.login();
 });
 ```
 
@@ -93,74 +100,81 @@ Further details about Cypress can be found here: https://docs.cypress.io/api/tab
 Further details on using cypress-grep test tagging: https://github.com/cypress-io/cypress-grep
 cypress 10.9.0 Latest changes: https://docs.cypress.io/guides/references/changelog
 
-Accessibility
-```
-i.e.,
-Basic usage
+#### Accessibility
 
+**Basic usage**
+
+By default, it will scan the whole page but it also can be configured to run against a specific element, or to exclude some elements.
+
+```js
 it('Has no detectable a11y violations on load', () => {
-  // Test the page at initial load
-  cy.checkA11y()
+   // Test the page at initial load
+   cy.checkA11y()
 })
-//By default, it will scan the whole page but it also can be configured to run against a specific element, or to exclude some elements.
 ```
-```
-i.e.,
-Applying a context and run parameters
 
+**Applying a context and run parameters**
+
+```js
 it('Has no detectable a11y violations on load (with custom parameters)', () => {
-  // Test the page at initial load (with context and options)
-  cy.checkA11y('.example-class', {
-    runOnly: {
-      type: 'tag',
-      values: ['wcag2a']
-    }
-  })
+   // Test the page at initial load (with context and options)
+   cy.checkA11y('.example-class', {
+      runOnly: {
+         type: 'tag',
+         values: ['wcag2a']
+      }
+   })
 })
 ```
+
 For more receipes: https://www.npmjs.com/package/cypress-axe
 
-
 ##### Cypress Linting
- ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs.
+ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs.
 
- Note: If you installed ESLint globally then you must also install eslint-plugin-cypress globally.
+Note: If you installed ESLint globally then you must also install eslint-plugin-cypress globally.
 
- -Installation using npm
-  `npm install eslint-plugin-cypress --save-dev`
+Installation using npm
+`npm install eslint-plugin-cypress --save-dev`
 
- -Installation using yarn
-  `yarn add eslint-plugin-cypress --dev`
+Installation using yarn
+`yarn add eslint-plugin-cypress --dev`
 
- -Usage: Add an .eslintrc.json file to your cypress directory with the following:
-```
-   {
-      "plugins": [
+Usage: Add an .eslintrc.json file to your cypress directory with the following:
+
+```json
+{
+   "plugins": [
       "cypress"
-     ]
-    }
+   ]
+}
 ```
--Add rules, example:
+
+Add rules, example:
+
+```json
+{
+   "rules": {
+       "cypress/no-assigning-return-values": "error",
+       "cypress/no-unnecessary-waiting": "error",
+       "cypress/assertion-before-screenshot": "warn",
+       "cypress/no-force": "warn",
+       "cypress/no-async-tests": "error",
+       "cypress/no-pause": "error"
+   }
+}
 ```
-  {
-    "rules": {
-      "cypress/no-assigning-return-values": "error",
-      "cypress/no-unnecessary-waiting": "error",
-      "cypress/assertion-before-screenshot": "warn",
-      "cypress/no-force": "warn",
-      "cypress/no-async-tests": "error",
-      "cypress/no-pause": "error"
-    }
-  }
-```
- -Use the recommended configuration and you can forego configuring plugins, rules, and env individually.
-```
-  {
-    "extends": [
+
+Use the recommended configuration and you can forego configuring plugins, rules, and env individually.
+ 
+```json
+{
+   "extends": [
       "plugin:cypress/recommended"
-    ]
-  }
+   ]
+}
 ```
+
 ### Security testing with ZAP
 
 The Cypress tests can also be run, proxied via OWASP ZAP for passive security scanning of the application.
@@ -174,17 +188,21 @@ Create a .env file for docker, this file needs to include
 * ZAP_API_KEY, can be any random guid
 
 Example env:
-```
+
+```dotenv
 URL=<Enter URL>
 API_KEY=<Enter API key>
 HTTP_PROXY=http://zap:8080
 ZAP_API_KEY=<Enter random guid>
 ```
+
 _Note: You might have trouble running this locally because of docker thinking localhost is the container and not your machine_
 
 To run docker compose use:
 
-`docker-compose -f docker-compose.yml --exit-code-from cypress`
+```
+docker-compose -f docker-compose.yml --exit-code-from cypress
+```
 
 _Note: `--exit-code-from cypress` tells the container to quit when cypress finishes_
 
@@ -193,10 +211,14 @@ You can also exclude URLs from being intercepted by using the NO_PROXY setting
 e.g. `NO_PROXY=*.google.com,yahoo.co.uk`
 
 Alternatively, you can run the Cypress tests against an existing ZAP proxy by setting the environment configuration
-```
+
+```dotenv
 HTTP_PROXY="<zap-daemon-url>"
 NO_PROXY="<list-of-urls-to-ignore>"
 ```
+
 and setting the runtime variables
 
-`zapReport=true,zapApiKey=<zap-api-key>,zapUrl="<zap-daemon-url>"`
+```
+zapReport=true,zapApiKey=<zap-api-key>,zapUrl="<zap-daemon-url>"
+```
