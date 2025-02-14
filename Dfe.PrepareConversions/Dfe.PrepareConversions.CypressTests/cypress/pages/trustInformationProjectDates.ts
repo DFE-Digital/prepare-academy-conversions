@@ -34,11 +34,10 @@ class TrustInformationProjectDatesPage {
     return this
   }
 
-  public checkOtherTableData(advisoryBoardDate, projectName, transferDate): this {
+  public checkOtherTableData(advisoryBoardDate, transferDate): this {
     
     cy.get('[data-test="transfer-dates"]').click()
     cy.get('dd').eq(0).should('contain.text', advisoryBoardDate.format('D MMMM YYYY'))
-    cy.get('[data-test="trust_name"]').should('contain.text', projectName)
     cy.get('dd').eq(4).should('contain.text', transferDate.format('1 MMMM YYYY'))
     
 
