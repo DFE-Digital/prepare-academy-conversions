@@ -14,6 +14,7 @@ describe('Cookie Policy', () => {
     })
 
     it('Should consent to cookies from cookie header button', () => {
+      cy.wait(2000);
       cy.getCookie('.ManageAnAcademyTransfer.Consent')
         .should('exist')
         .should('have.property', 'value', 'True')

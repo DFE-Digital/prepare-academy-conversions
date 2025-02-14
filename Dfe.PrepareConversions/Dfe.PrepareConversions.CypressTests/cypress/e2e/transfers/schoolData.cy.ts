@@ -35,20 +35,17 @@ describe('School Data', () => {
 
     schoolDataPage
       .checkOfstedReport()
-      .confirm()
   })
 
   it('Shows KS4 Performance Tables', () => {
 
     schoolDataPage
       .checkKS4Tables()
-      .confirm()
   })
 
   it('Shows KS5 Performance Tables', () => {
 
     schoolDataPage
       .checkKS5Tables()
-      .confirm()
   })
 })

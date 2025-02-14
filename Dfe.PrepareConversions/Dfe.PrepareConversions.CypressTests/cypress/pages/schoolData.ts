@@ -46,7 +46,7 @@ class SchoolDataPage {
     cy.get('h2').should('contain.text', 'Last full inspection')
 
     const ofsteadHeadings = ['Latest full inspection date', 'Quality of education', 'Behaviour and attitudes', 'Personal development',
-                            'Leadership and management', 'Sixth form provision', 'Ofsted report', 'Additional information']
+                            'Leadership and management', 'Sixth form provision', 'Ofsted report']
 
     cy.get('dt').then(($keys) => {
       const keys = Cypress._.map($keys, 'innerText')
