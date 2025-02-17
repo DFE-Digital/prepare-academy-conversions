@@ -53,6 +53,7 @@ jobs:
         env:
           CYPRESS_db: ${{ secrets.DB_CONNECTION_STRING }}
           CYPRESS_url: ${{ secrets.AZURE_ENDPOINT }}
+          CYPRESS_transfersUrl: ${{ secrets.AZURE_ENDPOINT }}transfers/home
           CYPRESS_cypressTestSecret: ${{ secrets.CYPRESS_TEST_SECRET }}
           CYPRESS_academisationApiUrl: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
           CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
