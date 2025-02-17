@@ -2,7 +2,7 @@
 
 import BasePage from "./basePage"
 
-export default class ProjectAssignment1 extends BasePage {
+export default class projectAssignmentConversion extends BasePage {
     static selectors = {
         assignInput: '[id="delivery-officer"]',
         unassignLink: '[id="unassign-link"]',

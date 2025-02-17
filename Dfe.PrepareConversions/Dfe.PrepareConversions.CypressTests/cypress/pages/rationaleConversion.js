@@ -2,7 +2,7 @@
 
 import BasePage from "./basePage"
 
-export default class rationale1 extends BasePage {
+export default class rationaleConversion extends BasePage {
     static selectors = {
         rationaleLink: '[data-test="change-rationale-for-trust"]',
         rationaleInput: '[id="trust-rationale"]',
