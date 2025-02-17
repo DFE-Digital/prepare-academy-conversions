@@ -70,9 +70,7 @@ jobs:
       - name: Generate combined report
         if: always()
         run: |
-          pwd 
           mkdir -p mochareports
-          ls -R 
           npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
           ls -R Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/
           mv Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.html mochareports/
