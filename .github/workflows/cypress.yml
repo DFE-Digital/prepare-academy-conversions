@@ -66,17 +66,16 @@ jobs:
           name: screenshots-${{ inputs.environment }}-${{ matrix.browser }}
           path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots
 
-      - name: Ensure mochareports directory exists
-        run: mkdir -p Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports
-        
       - name: Generate combined report
         if: always()
         run: |
-            mkdir -p Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports
-            npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
-            mv Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.html Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/
-            echo "Combined reports generated"
-            npx mochawesome-merge Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.json > Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/report.json
+          pwd 
+          mkdir -p mochareports
+          ls -R 
+          npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
+          mv Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.html mochareports/
+          echo "Combined reports generated"
+          npx mochawesome-merge mochareports/*.html > mochareports/combined-reports-${{ inputs.environment }}-${{ matrix.browser }}.html
 
       - name: Upload combined report
         if: always()
