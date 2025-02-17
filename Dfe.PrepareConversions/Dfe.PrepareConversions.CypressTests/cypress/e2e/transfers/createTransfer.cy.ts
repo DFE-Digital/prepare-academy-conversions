@@ -221,7 +221,7 @@ describe('Create a new transfer', () => {
       trustInformationProjectDatesPage
         .completeRecommendationAndAuthor()
         .confirmTrustInformationProjectDates()
-        .checkOtherTableData(advisoryBoardDate, incomingTrustData.name, transferDate)
+        .checkOtherTableData(advisoryBoardDate, transferDate)
         .confirmTrustInformationProjectDates()
 
       projectPage

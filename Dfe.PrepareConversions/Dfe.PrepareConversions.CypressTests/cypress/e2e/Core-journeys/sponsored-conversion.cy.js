@@ -2,15 +2,17 @@
 
 import projectList from "../../pages/projectList";
 import projectTaskList from "../../pages/projectTaskList";
-import projectAssignment from "../../pages/projectAssignment";
+import projectAssignmentConversion from "../../pages/projectAssignmentConversion";
 import schoolOverview from "../../pages/schoolOverview";
 import budget from "../../pages/budget";
 import PupilForecast from "../../pages/pupilForecast";
 import ConversionDetails from "../../pages/conversionDetails";
-import Rationale from "../../pages/rationale";
+import Rationale from "../../pages/rationaleConversion";
 import RisksAndIssues from "../../pages/risksAndIssues";
 import LocalAuthorityInfomation from "../../pages/localAuthorityInformation";
 import Performance from "../../pages/performance";
+
+
 
 
 describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
@@ -67,7 +69,7 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
 
    it('TC01: Assign Project', () => {
       projectTaskList.selectAssignProject();
-      projectAssignment.assignProject(testData.projectAssignment.deliveryOfficer)
+      projectAssignmentConversion.assignProject(testData.projectAssignment.deliveryOfficer)
       projectTaskList.getNotificationMessage().should('contain.text', testData.projectAssignment.assignedOfficerMessage);
       projectTaskList.getAssignedUser().should('contain.text', testData.projectAssignment.deliveryOfficer);
       projectList.filterProjectList(testData.projectName);

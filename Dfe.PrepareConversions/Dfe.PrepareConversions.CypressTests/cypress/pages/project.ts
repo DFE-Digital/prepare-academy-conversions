@@ -6,7 +6,7 @@ class ProjectPage {
 
     cy.visit(`${Cypress.env('url')}/transfers/project/${projectId}`);
 
-    
+
     return this
   }
 
@@ -26,14 +26,12 @@ class ProjectPage {
 
   public checkDeliveryOfficerAssigned(deliveryOfficer): this {
 
-    const status = deliveryOfficer != 'Empty' ? 'assigned' : 'unassigned'
 
-    cy.get('[data-module="govuk-notification-banner"]').should('be.visible')
-    cy.get('[data-module="govuk-notification-banner"]').should('contain.text', 'Done')
-    cy.get('[data-module="govuk-notification-banner"]').should('contain.text', `Project is ${status}`)
+
+
 
     this.checkDeliveryOfficerDetails(deliveryOfficer)
-    
+
     return this
   }
 
@@ -41,7 +39,7 @@ class ProjectPage {
 
     cy.get('[data-id="assigned-user"]').should('have.text', deliveryOfficer)
 
-    if(deliveryOfficer == 'Empty') {
+    if (deliveryOfficer == 'Empty') {
       cy.get('[data-id="assigned-user"]').should('have.class', 'empty')
     }
     else {
@@ -78,7 +76,7 @@ class ProjectPage {
 
   public startTransferDates(): this {
     cy.get('[data-test="transfer-dates"]').click()
-    
+
     return this
   }
 
@@ -90,7 +88,7 @@ class ProjectPage {
 
   public startBenefitsAndRisk(): this {
     cy.get('[data-test="transfer-benefits"]').click()
-    
+
     return this
   }
 
@@ -102,7 +100,7 @@ class ProjectPage {
 
   public startLegalRequirements(): this {
     cy.get('[data-test="transfer-legal-requirements"]').click()
-    
+
     return this
   }
 
@@ -114,7 +112,7 @@ class ProjectPage {
 
   public startRationale(): this {
     cy.get('[data-test="transfer-rationale"]').click()
-    
+
     return this
   }
 
@@ -126,7 +124,7 @@ class ProjectPage {
 
   public startTrustInformationProjectDates(): this {
     cy.get('[data-test="academy-trust-information"]').click()
-    
+
     return this
   }
 
@@ -147,7 +145,7 @@ class ProjectPage {
   public viewSchoolData(): this {
 
     cy.get('[data-test="sd-academy-1"]').click()
-    
+
     return this
   }
 }

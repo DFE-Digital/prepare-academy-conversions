@@ -14,13 +14,15 @@ describe('Cookie Policy', () => {
     })
 
     it('Should consent to cookies from cookie header button', () => {
+      cy.wait(2000);
       cy.getCookie('.ManageAnAcademyTransfer.Consent')
-      .should('exist')
-      .should('have.property', 'value', 'True')
+        .should('exist')
+        .should('have.property', 'value', 'True')
     });
 
     it('Should hide the cookie banner when consent has been given', () => {
-      cy.get("[data-test='cookie-banner']").should('not.exist')
+      cy.get("#acceptCookieBanner").should('have.css', 'display', 'block');  // Ensure the new acceptance message is visible
+
     });
   })
 
@@ -46,7 +48,7 @@ describe('Cookie Policy', () => {
       cy.get("[data-qa='submit']").click()
       cy.get('[data-test="success-banner-return-link"]').click()
       cy.url().then(href => {
-        expect(href).includes('/home')
+        expect(href).includes('/project-list')
       });
     });
   })
