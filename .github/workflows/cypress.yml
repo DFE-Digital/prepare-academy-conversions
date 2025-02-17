@@ -70,12 +70,14 @@ jobs:
       - name: Generate combined report
         if: always()
         run: |
-          mkdir -p mochareports
-          npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
-          ls -R Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/
-          mv Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.html mochareports/
-          echo "Combined reports generated"
-          npx mochawesome-merge mochareports/*.html > mochareports/combined-reports-${{ inputs.environment }}-${{ matrix.browser }}.html
+            mkdir -p mochareports
+            npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
+            ls -R Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/
+            mv Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.json mochareports/
+            echo "Combined reports generated"
+            npx mochawesome-merge mochareports/*.json > mochareports/combined-reports-${{ inputs.environment }}-${{ matrix.browser }}.json
+            npx marge mochareports/combined-reports-${{ inputs.environment }}-${{ matrix.browser }}.json -o mochareports
+        
 
       - name: Upload combined report
         if: always()
