@@ -34,6 +34,9 @@ jobs:
     name: Run Cypress Tests
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
+    defaults:
+      run:
+         working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
     strategy:
       matrix:
         browser: ["edge"]
@@ -50,7 +53,6 @@ jobs:
         env:
           CYPRESS_db: ${{ secrets.DB_CONNECTION_STRING }}
           CYPRESS_url: ${{ secrets.AZURE_ENDPOINT }}
-          CYPRESS_transfersUrl: ${{ secrets.AZURE_ENDPOINT }}transfers/home
           CYPRESS_cypressTestSecret: ${{ secrets.CYPRESS_TEST_SECRET }}
           CYPRESS_academisationApiUrl: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
           CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
@@ -58,7 +60,6 @@ jobs:
           browser: ${{ matrix.browser }}
           working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
           wait-on: ${{ secrets.AZURE_ENDPOINT }}
-          spec: "cypress/e2e/transfers/cookiePolicy.cy.ts"
 
       - name: Upload screenshots (Cypress Tests)
         if: ${{ failure() }}
@@ -67,40 +68,26 @@ jobs:
           name: screenshots-${{ inputs.environment }}-${{ matrix.browser }}
           path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots
 
-      - name: Generate combined report
+      - name: Combine reports
         if: always()
         run: |
-            mkdir -p mochareports
-            echo "Created mochareports directory"
-        
-            npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
-            echo "Generated HTML report"
-        
-            ls -R Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/
-        
-            echo "Checking mochareports directory..."
-            ls -ld mochareports || mkdir -p mochareports
-        
-            echo "Checking if JSON reports exist before merging..."
-            ls -lah cypress/reports/mocha/ || echo "No reports found!"
-        
-            echo "Merging JSON reports..."
-            npx mochawesome-merge cypress/reports/mocha/*.json > mochareports/report.json
-        
-            echo "Ensuring mochareports directory exists..."
-            ls -ld mochareports
-        
-        
+          mkdir -p mochareports
+          npm run combine:reports
 
-      - name: Upload combined report
+      - name: Generate HTML report
+        if: always()
+        run: |
+          npm run create:html:report
+
+      - name: Upload reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: combined-reports-${{ inputs.environment }}-${{ matrix.browser }}
-          path: mochareports
+          path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.html
 
       - name: Report results to Slack
         if: always()
-        run: npm run cy:notify -- --custom-text="Environment ${{ inputs.environment }}, See more information https://github.com/DFE-Digital/prepare-academy-conversions/actions/runs/${{github.run_id}}"
+        run: npm run cy:notify -- --custom-text="Environment ${{ inputs.environment }}, See more information https://github.com/DFE-Digital/prepare-academy-conversions/actions/runs/${{ github.run_id }}"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
