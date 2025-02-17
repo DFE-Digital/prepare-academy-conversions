@@ -60,6 +60,7 @@ jobs:
           browser: ${{ matrix.browser }}
           working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
           wait-on: ${{ secrets.AZURE_ENDPOINT }}
+          spec: "cypress/e2e/transfers/cookiePolicy.cy.ts"
 
       - name: Upload screenshots (Cypress Tests)
         if: ${{ failure() }}
