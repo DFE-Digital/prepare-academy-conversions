@@ -71,12 +71,25 @@ jobs:
         if: always()
         run: |
             mkdir -p mochareports
+            echo "Created mochareports directory"
+        
             npm run generate:html:report --prefix Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
-            ls -R Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/
-            mv Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.json mochareports/
-            echo "Combined reports generated"
-            npx mochawesome-merge mochareports/*.json > mochareports/combined-reports-${{ inputs.environment }}-${{ matrix.browser }}.json
-            npx marge mochareports/combined-reports-${{ inputs.environment }}-${{ matrix.browser }}.json -o mochareports
+            echo "Generated HTML report"
+        
+            ls -R Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/
+        
+            echo "Checking mochareports directory..."
+            ls -ld mochareports || mkdir -p mochareports
+        
+            echo "Checking if JSON reports exist before merging..."
+            ls -lah cypress/reports/mocha/ || echo "No reports found!"
+        
+            echo "Merging JSON reports..."
+            npx mochawesome-merge cypress/reports/mocha/*.json > mochareports/report.json
+        
+            echo "Ensuring mochareports directory exists..."
+            ls -ld mochareports
+        
         
 
       - name: Upload combined report
