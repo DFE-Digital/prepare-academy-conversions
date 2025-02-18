@@ -21,7 +21,8 @@ describe('Cookie Policy', () => {
     });
 
     it('Should hide the cookie banner when consent has been given', () => {
-      cy.get("#acceptCookieBanner").should('have.css', 'display', 'block');  // Ensure the new acceptance message is visible
+      cy.get("#acceptCookieBanner").should('be.visible');
+
 
     });
   })
