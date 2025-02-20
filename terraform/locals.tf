@@ -62,4 +62,5 @@ locals {
   enable_container_app_file_share                 = var.enable_container_app_file_share
   monitor_http_availability_fqdn                  = var.monitor_http_availability_fqdn
   dns_alias_records                               = var.dns_alias_records
+  enable_monitoring_traces                        = var.enable_monitoring_traces
 }
