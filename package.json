@@ -1,0 +1,11 @@
+{
+  "name": "prepare-academy-conversions-1",
+  "version": "1.0.0",
+  "description": "Internal service for managing applications for schools to become academies.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
