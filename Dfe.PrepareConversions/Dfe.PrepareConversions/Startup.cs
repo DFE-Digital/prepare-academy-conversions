@@ -248,7 +248,7 @@ public class Startup
 
       app.UseStaticFiles();
       app.UseRouting();
-      app.UseSentryTracing();
+
       app.UseSession();
       app.UseAuthentication();
       app.UseAuthorization();
