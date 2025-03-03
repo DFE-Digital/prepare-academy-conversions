@@ -35,6 +35,16 @@ jobs:
   build:
     name: Build .NET, Test and Analyse
     runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:alpine
+        ports:
+        - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
     - uses: actions/checkout@v4
       with:
@@ -74,6 +84,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        ConnectionStrings__RedisCache: "redis:6379,ssl=False,abortConnect=False"
       run: |
         dotnet-sonarscanner begin /d:sonar.scanner.skipJreProvisioning=true /k:"DFE-Digital-prepare-conversions" /o:"dfe-digital" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.coverageReportPaths=./Dfe.PrepareConversions/CoverageReport/SonarQube.xml
         dotnet build Dfe.PrepareConversions/Dfe.PrepareConversions.sln --no-restore
