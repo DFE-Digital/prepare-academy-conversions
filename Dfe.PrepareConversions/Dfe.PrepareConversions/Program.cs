@@ -15,7 +15,6 @@ public static class Program
          .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
          .Enrich.FromLogContext()
          .WriteTo.Console(new RenderedCompactJsonFormatter())
-         .WriteTo.Sentry()
          .CreateLogger();
 
       Log.Information("Starting web host");
@@ -29,7 +28,6 @@ public static class Program
          .ConfigureAppConfiguration((_, configuration) => configuration.AddEnvironmentVariables())
          .ConfigureWebHostDefaults(webBuilder =>
          {
-            webBuilder.UseSentry();
             webBuilder.UseStartup<Startup>();
             webBuilder.UseKestrel(options =>
             {
