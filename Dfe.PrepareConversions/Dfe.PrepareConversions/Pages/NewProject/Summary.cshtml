@@ -130,7 +130,7 @@
                     }
                     else
                     {
-                        @DateTime.ParseExact(Model.Establishment.OfstedLastInspection, "dd-mm-yyyy", CultureInfo.CurrentCulture).ToDateString()
+                        @DateTime.ParseExact(Model.Establishment.OfstedLastInspection, "dd/mm/yyyy", CultureInfo.CurrentCulture).ToDateString()
                     }
                 </dd>
                 <dd class="govuk-summary-list__value"></dd>
