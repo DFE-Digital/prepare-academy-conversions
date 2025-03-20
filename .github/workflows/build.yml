@@ -3,15 +3,7 @@ name: Pull request checks
 on:
   push:
     branches: [ main ]
-    paths:
-    - 'Dfe.PrepareConversions/**'
-    - '!Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/**'
   pull_request:
-    branches: [ main ]
-    types: [opened, synchronize, reopened]
-    paths:
-    - 'Dfe.PrepareConversions/**'
-    - '!Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/**'
 
 env:
   JAVA_VERSION: '21'
@@ -20,7 +12,7 @@ env:
 jobs:
   lint:
     name: Lint Cypress
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
       with:
@@ -34,7 +26,7 @@ jobs:
 
   build:
     name: Build .NET, Test and Analyse
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     services:
       redis:
         image: redis:alpine
@@ -86,7 +78,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         ConnectionStrings__RedisCache: "redis:6379,ssl=False,abortConnect=False"
       run: |
-        dotnet-sonarscanner begin /d:sonar.scanner.skipJreProvisioning=true /k:"DFE-Digital-prepare-conversions" /o:"dfe-digital" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.coverageReportPaths=./Dfe.PrepareConversions/CoverageReport/SonarQube.xml
+        dotnet-sonarscanner begin /d:sonar.scanner.skipJreProvisioning=true /k:"DFE-Digital-prepare-academy-conversions" /o:"dfe-digital" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.coverageReportPaths=./Dfe.PrepareConversions/CoverageReport/SonarQube.xml
         dotnet build Dfe.PrepareConversions/Dfe.PrepareConversions.sln --no-restore
         dotnet test Dfe.PrepareConversions/Dfe.PrepareConversions.sln --no-build --verbosity normal --collect:"XPlat Code Coverage"
         reportgenerator -reports:"./**/coverage.cobertura.xml" -targetdir:./Dfe.PrepareConversions/CoverageReport -reporttypes:SonarQube
