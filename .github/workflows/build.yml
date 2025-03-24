@@ -78,7 +78,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         ConnectionStrings__RedisCache: "redis:6379,ssl=False,abortConnect=False"
       run: |
-        dotnet-sonarscanner begin /d:sonar.scanner.skipJreProvisioning=true /k:"DFE-Digital-prepare-academy-conversions" /o:"dfe-digital" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.coverageReportPaths=./Dfe.PrepareConversions/CoverageReport/SonarQube.xml
+        dotnet-sonarscanner begin /d:sonar.scanner.skipJreProvisioning=true /d:sonar.qualitygate.wait=true /k:"DFE-Digital-prepare-academy-conversions" /o:"dfe-digital" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.coverageReportPaths=./Dfe.PrepareConversions/CoverageReport/SonarQube.xml
         dotnet build Dfe.PrepareConversions/Dfe.PrepareConversions.sln --no-restore
         dotnet test Dfe.PrepareConversions/Dfe.PrepareConversions.sln --no-build --verbosity normal --collect:"XPlat Code Coverage"
         reportgenerator -reports:"./**/coverage.cobertura.xml" -targetdir:./Dfe.PrepareConversions/CoverageReport -reporttypes:SonarQube
