@@ -9,7 +9,7 @@ export default class projectList extends BasePage {
         cy.url().should('include', this.path)
     }
 
-    static getNthProject(n = 0) {
+    static getNthProject(n = 1) {
         this.checkProjectListPage()
         return cy.get(`[id="school-name-${n}"]`)
     }
@@ -49,6 +49,11 @@ export default class projectList extends BasePage {
         this.filterProjectList(projectName)
         this.selectFirstItem()
         return cy.url().then(url => this.getIdFromUrl(url))
+    }
+
+    static filterProject(projectName = 'Gloucester school') {
+        this.filterProjectList(projectName)
+        return this;
     }
 
     static selectVoluntaryProject() {

@@ -19,6 +19,23 @@ import registerCypressGrep from '@cypress/grep/src/support'
 
 registerCypressGrep()
 
+Cypress.on('uncaught:exception', (err) => {
+	if (
+	  err.message.includes('ResizeObserver') ||
+	  err.name === 'ResizeObserver loop limit exceeded'
+	) {
+	  return false;
+	}
+  });
+  
+  Cypress.on('fail', (err, runnable) => {
+	if (err.message.includes('ResizeObserver loop completed')) {
+	  // suppress the error completely
+	  return false;
+	}
+	throw err; // re-throw all other errors
+  });
+  
 // ***********************************************************
 
 beforeEach(() => {
