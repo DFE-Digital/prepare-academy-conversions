@@ -19,6 +19,7 @@ export default defineConfig({
   retries: 0,
   e2e: {
     specPattern: 'cypress/e2e',
+    supportFile: 'cypress/support/e2e.js',
     setupNodeEvents(on, config) {
       on('after:run', async () => {
         if (process.env.ZAP) {
