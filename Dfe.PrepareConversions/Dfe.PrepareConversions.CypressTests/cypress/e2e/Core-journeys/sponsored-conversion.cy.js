@@ -29,7 +29,7 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
       projectName: 'Deanshanger Primary School',
       completedText: 'Completed',
       projectAssignment: {
-         deliveryOfficer: 'Chris Sherlock',
+         deliveryOfficer: 'Dan Good',
          assignedOfficerMessage: 'Project is assigned',
       },
       schoolOverview: {

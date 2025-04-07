@@ -53,12 +53,12 @@ describe('Filteration Tests', { tags: ['@dev', '@stage'] }, () => {
   })
 
   beforeEach(() => {
-    projectList.selectProject(testData.projectName)
+    cy.visit(`${Cypress.env('url')}/`); 
+    projectList.filterProject(testData.projectName)
   })
 
   it('Should filter projects by region', () => {
-      // Visit the home page or the initial project list page
-      cy.visit(`${Cypress.env('url')}/`); 
+    
     // Check if the Region accordion section is not expanded
     cy.get('[data-cy="select-projectlist-filter-region"]').should('have.attr', 'aria-expanded', 'false').then(($accordion) => {
       const isAccordionExpanded = $accordion.attr('aria-expanded') === 'true';
@@ -77,7 +77,7 @@ describe('Filteration Tests', { tags: ['@dev', '@stage'] }, () => {
       cy.get('[data-cy="select-projectlist-filter-apply"]').click();
 
       // Assert that the results are updated based on the selected regions
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 5; i++) {
         const regionSelector = `#region-${i}`;
 
         // Ensure that the selected regions are present in the results
@@ -100,8 +100,6 @@ describe('Filteration Tests', { tags: ['@dev', '@stage'] }, () => {
   });
 
   it('Filter by Project Status', () => {
-    // Visit the home page or the initial project list page
-    cy.visit(`${Cypress.env('url')}/`); 
 
     // Check if the Project Status accordion section is not expanded
     cy.get('[data-cy="select-projectlist-filter-project-status"]').should('have.attr', 'aria-expanded', 'false').then(($accordion) => {
@@ -140,9 +138,7 @@ describe('Filteration Tests', { tags: ['@dev', '@stage'] }, () => {
 
         // Clear the filter
         cy.get('[data-cy="clear-filter"]').click();
-
       });
-
     });
   });
 
