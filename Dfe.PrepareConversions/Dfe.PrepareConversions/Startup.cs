@@ -39,11 +39,12 @@ namespace Dfe.PrepareConversions;
 public class Startup
 {
    private readonly TimeSpan _authenticationExpiration;
+   private readonly ILogger<Startup> _logger;
 
-   public Startup(IConfiguration configuration)
+   public Startup(IConfiguration configuration, ILogger<Startup> logger)
    {
       Configuration = configuration;
-
+      _logger = logger;
       _authenticationExpiration = TimeSpan.FromMinutes(int.Parse(Configuration["AuthenticationExpirationInMinutes"] ?? "60"));
    }
 
@@ -99,21 +100,26 @@ public class Startup
       services.AddScoped(sp => sp.GetService<IHttpContextAccessor>()?.HttpContext?.Session);
 
       // Configure Redis Based Distributed Session
-      var redisConfigurationOptions = ConfigurationOptions.Parse(Configuration["ConnectionStrings:RedisCache"]);
-      redisConfigurationOptions.AsyncTimeout = 15000;
-      redisConfigurationOptions.SyncTimeout = 15000;
+      try {
+         var redisConfigurationOptions = ConfigurationOptions.Parse(Configuration["ConnectionStrings:RedisCache"]);
+         redisConfigurationOptions.AsyncTimeout = 15000;
+         redisConfigurationOptions.SyncTimeout = 15000;
 
-      // https://stackexchange.github.io/StackExchange.Redis/ThreadTheft.html
-      ConnectionMultiplexer.SetFeatureFlag("preventthreadtheft", true);
+         // https://stackexchange.github.io/StackExchange.Redis/ThreadTheft.html
+         ConnectionMultiplexer.SetFeatureFlag("preventthreadtheft", true);
 
-      IConnectionMultiplexer redisConnectionMultiplexer = ConnectionMultiplexer.Connect(redisConfigurationOptions);
+         IConnectionMultiplexer redisConnectionMultiplexer = ConnectionMultiplexer.Connect(redisConfigurationOptions);
 
-      services.AddStackExchangeRedisCache(redisCacheConfig =>
-      {
-         redisCacheConfig.ConfigurationOptions = redisConfigurationOptions;
-         redisCacheConfig.ConnectionMultiplexerFactory = () => Task.FromResult(redisConnectionMultiplexer);
-         redisCacheConfig.InstanceName = "redis-master";
-      });
+         services.AddStackExchangeRedisCache(redisCacheConfig =>
+         {
+            redisCacheConfig.ConfigurationOptions = redisConfigurationOptions;
+            redisCacheConfig.ConnectionMultiplexerFactory = () => Task.FromResult(redisConnectionMultiplexer);
+            redisCacheConfig.InstanceName = "redis-master";
+         });
+         _logger.LogInformation("Redis has been configured");
+      } catch (ArgumentException e) {
+         _logger.LogError("Missing Redis configuration. Please populate the appsetting 'ConnectionStrings:RedisCache' with a valid connection string. {0}", e);
+      }
 
       services.AddSession(options =>
       {
