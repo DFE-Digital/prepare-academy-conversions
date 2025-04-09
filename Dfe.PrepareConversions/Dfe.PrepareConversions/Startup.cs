@@ -31,11 +31,13 @@ using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using StackExchange.Redis;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions;
 
+[ExcludeFromCodeCoverage]
 public class Startup
 {
    private readonly TimeSpan _authenticationExpiration;
