@@ -1,8 +1,8 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
-using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Tests.Customisations;
+using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 using FluentAssertions;
 using System;
 using System.Threading.Tasks;
@@ -20,7 +20,7 @@ public class SummaryIntegrationTests : BaseIntegrationTests
    [AutoMoqData]
    public async Task Should_render_summary_page_with_school_and_trust(EstablishmentDto establishment, TrustDtoResponse TrustDtoResponse)
    {
-      establishment.OfstedLastInspection = DateTime.Now.ToString("dd-mm-yyyy");
+      establishment.OfstedLastInspection = DateTime.Now.ToString("dd/mm/yyyy");
       string ukprn = TrustDtoResponse.Data[0].Ukprn;
       _factory.AddGetWithJsonResponse($"/v4/establishment/urn/{establishment.Urn}", establishment);
       _factory.AddGetWithJsonResponse("/v4/trusts*", TrustDtoResponse);

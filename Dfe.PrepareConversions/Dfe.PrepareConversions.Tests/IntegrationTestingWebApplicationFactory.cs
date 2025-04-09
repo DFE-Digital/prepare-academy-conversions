@@ -3,6 +3,7 @@ using Dfe.PrepareConversions.Tests.Pages.ProjectAssignment;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -14,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
@@ -77,7 +79,7 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
                { "AcademisationApi:BaseUrl", _mockApiServer.Url },
                { "AzureAd:AllowedRoles", string.Empty }, // Do not restrict access for integration test
                { "ServiceLink:TransfersUrl", "https://an-external-service.com/" },
-               { "ConnectionStrings:RedisCache", "localhost:6379" }
+               { "EnableDistributedCache", "false" }
             })
             .AddEnvironmentVariables();
       });
@@ -94,6 +96,12 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
          services.AddTransient<IAuthenticationSchemeProvider, MockSchemeProvider>();
          services.AddScoped(x => UserRepository);
          services.AddTransient(_ => featureManager.Object);
+
+         // Remove and replace Redis
+         var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IDistributedCache));
+         if (descriptor != null) services.Remove(descriptor);
+
+         services.AddSingleton<IDistributedCache, MemoryDistributedCache>();
       });
    }
 
