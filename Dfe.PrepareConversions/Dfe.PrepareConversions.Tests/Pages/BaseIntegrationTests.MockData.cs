@@ -1,6 +1,5 @@
 ﻿using AutoFixture;
 using AutoFixture.Dsl;
-using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
@@ -8,6 +7,7 @@ using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.Data.Models.UserRole;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Tests.Customisations;
+using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -129,11 +129,11 @@ public abstract partial class BaseIntegrationTests
       var response = new RoleCapabilitiesModel
       {
          Capabilities = [
-            RoleCapability.CreateConversionProject, 
+            RoleCapability.CreateConversionProject,
             RoleCapability.CreateTransferProject
-          ] 
+          ]
       };
-      _factory.AddPostWithJsonRequest(PathFor.GetRoleCapabilities, roles, response); 
+      _factory.AddPostWithJsonRequest(PathFor.GetRoleCapabilities, roles, response);
    }
 
    public UpdateAcademyConversionProject AddPatchConfiguredProject(AcademyConversionProject project, Action<UpdateAcademyConversionProject> configure = null)

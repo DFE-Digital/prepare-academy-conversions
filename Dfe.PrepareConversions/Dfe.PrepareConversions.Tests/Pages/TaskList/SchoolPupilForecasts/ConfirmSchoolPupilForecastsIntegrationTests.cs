@@ -1,10 +1,10 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
-using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Tests.Extensions;
+using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;

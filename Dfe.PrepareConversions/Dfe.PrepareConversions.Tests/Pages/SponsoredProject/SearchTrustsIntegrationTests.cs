@@ -1,6 +1,6 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
-using Dfe.Academies.Contracts.V4.Establishments;
+using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 using FluentAssertions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
