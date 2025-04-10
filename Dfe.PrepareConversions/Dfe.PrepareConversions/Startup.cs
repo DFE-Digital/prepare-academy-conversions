@@ -1,6 +1,4 @@
 using Dfe.Academisation.CorrelationIdMiddleware;
-using Dfe.PrepareTransfers.Web.Services;
-using Dfe.PrepareTransfers.Web.Services.Interfaces;
 using Dfe.PrepareConversions.Authorization;
 using Dfe.PrepareConversions.Configuration;
 using Dfe.PrepareConversions.Data.Features;
@@ -15,6 +13,8 @@ using Dfe.PrepareConversions.Security;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareTransfers.Web.BackgroundServices;
+using Dfe.PrepareTransfers.Web.Services;
+using Dfe.PrepareTransfers.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -29,13 +29,15 @@ using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
+using StackExchange.Redis;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using StackExchange.Redis;
 
 namespace Dfe.PrepareConversions;
 
+[ExcludeFromCodeCoverage]
 public class Startup
 {
    private readonly TimeSpan _authenticationExpiration;
@@ -98,22 +100,25 @@ public class Startup
 
       services.AddScoped(sp => sp.GetService<IHttpContextAccessor>()?.HttpContext?.Session);
 
-      // Configure Redis Based Distributed Session
-      var redisConfigurationOptions = ConfigurationOptions.Parse(Configuration["ConnectionStrings:RedisCache"]);
-      redisConfigurationOptions.AsyncTimeout = 15000;
-      redisConfigurationOptions.SyncTimeout = 15000;
-
-      // https://stackexchange.github.io/StackExchange.Redis/ThreadTheft.html
-      ConnectionMultiplexer.SetFeatureFlag("preventthreadtheft", true);
-
-      IConnectionMultiplexer redisConnectionMultiplexer = ConnectionMultiplexer.Connect(redisConfigurationOptions);
-
-      services.AddStackExchangeRedisCache(redisCacheConfig =>
+      if (Configuration.GetValue<bool>("EnableDistributedCache"))
       {
-         redisCacheConfig.ConfigurationOptions = redisConfigurationOptions;
-         redisCacheConfig.ConnectionMultiplexerFactory = () => Task.FromResult(redisConnectionMultiplexer);
-         redisCacheConfig.InstanceName = "redis-master";
-      });
+         // Configure Redis Based Distributed Session
+         var redisConfigurationOptions = ConfigurationOptions.Parse(Configuration["ConnectionStrings:RedisCache"]);
+         redisConfigurationOptions.AsyncTimeout = 15000;
+         redisConfigurationOptions.SyncTimeout = 15000;
+
+         // https://stackexchange.github.io/StackExchange.Redis/ThreadTheft.html
+         ConnectionMultiplexer.SetFeatureFlag("preventthreadtheft", true);
+
+         IConnectionMultiplexer redisConnectionMultiplexer = ConnectionMultiplexer.Connect(redisConfigurationOptions);
+
+         services.AddStackExchangeRedisCache(redisCacheConfig =>
+         {
+            redisCacheConfig.ConfigurationOptions = redisConfigurationOptions;
+            redisCacheConfig.ConnectionMultiplexerFactory = () => Task.FromResult(redisConnectionMultiplexer);
+            redisCacheConfig.InstanceName = "redis-master";
+         });
+      }
 
       services.AddSession(options =>
       {
@@ -213,7 +218,8 @@ public class Startup
    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
    {
       // Ensure we do not lose X-Forwarded-* Headers when behind a Proxy
-      var forwardOptions = new ForwardedHeadersOptions {
+      var forwardOptions = new ForwardedHeadersOptions
+      {
          ForwardedHeaders = ForwardedHeaders.All,
          RequireHeaderSymmetry = false
       };

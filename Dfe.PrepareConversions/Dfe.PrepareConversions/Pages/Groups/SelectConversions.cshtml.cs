@@ -1,14 +1,13 @@
-using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Services;
+using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using static Dfe.PrepareConversions.Models.Links;
 
@@ -66,15 +65,15 @@ public class SelectConversionsModel(IAcademyConversionProjectRepository academyC
       }
    }
 
-   public async Task<IActionResult>  OnPost(string ukprn, string referenceNumber, List<string> selectedconversions, int? groupId, string groupName)
+   public async Task<IActionResult> OnPost(string ukprn, string referenceNumber, List<string> selectedconversions, int? groupId, string groupName)
    {
       if (selectedconversions.IsNullOrEmpty())
       {
          Ukprn = ukprn;
-         
+
          ModelState.AddModelError("noconversionsselected", "Select at least one conversion for the group");
          errorService.AddErrors(ModelState.Keys, ModelState);
-         
+
          ConversionProjects.Clear();
 
          var projects = await academyConversionProjectRepository.GetProjectsForGroup(referenceNumber);
@@ -83,11 +82,11 @@ public class SelectConversionsModel(IAcademyConversionProjectRepository academyC
          {
             ConversionProjects.Add(project);
          }
-         
+
          return Page();
       }
 
       return RedirectToPage(ProjectGroups.CheckConversionDetails.Page, new { ukprn, selectedconversions, groupId, groupName });
-      
+
    }
 }

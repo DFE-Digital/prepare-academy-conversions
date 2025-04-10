@@ -1,12 +1,12 @@
 ﻿using Dfe.PrepareConversions.Data.Exceptions;
 using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
+using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using EstablishmentDto = Dfe.Academies.Contracts.V4.Establishments.EstablishmentDto;
 
 namespace Dfe.PrepareConversions.Data.Services;
 

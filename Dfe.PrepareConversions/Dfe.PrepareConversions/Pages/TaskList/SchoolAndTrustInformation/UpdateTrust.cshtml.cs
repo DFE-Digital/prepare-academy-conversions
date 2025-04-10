@@ -1,4 +1,3 @@
-using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Exceptions;
 using Dfe.PrepareConversions.Data.Models;
@@ -7,9 +6,8 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
-using DocumentFormat.OpenXml.Office2010.Excel;
+using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Linq;
@@ -27,7 +25,7 @@ public class UpdateTrustModel : BaseAcademyConversionProjectPageModel
    private readonly ITrustsRepository _trustsRepository;
 
    public UpdateTrustModel(ITrustsRepository trustsRepository, IAcademyConversionProjectRepository academyConversionProjectRepository, ErrorService errorService)
-      :base(academyConversionProjectRepository)
+      : base(academyConversionProjectRepository)
    {
       _trustsRepository = trustsRepository;
       _errorService = errorService;
@@ -41,7 +39,7 @@ public class UpdateTrustModel : BaseAcademyConversionProjectPageModel
    public override async Task<IActionResult> OnGetAsync(int id)
    {
       await base.OnGetAsync(id);
-      
+
       AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
 
       return Page();

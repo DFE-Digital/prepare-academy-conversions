@@ -1,5 +1,5 @@
-﻿using Dfe.Academies.Contracts.V4.Trusts;
-using Dfe.PrepareConversions.Data.Models.Trust;
+﻿using Dfe.PrepareConversions.Data.Models.Trust;
+using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Data.Services.Interfaces;

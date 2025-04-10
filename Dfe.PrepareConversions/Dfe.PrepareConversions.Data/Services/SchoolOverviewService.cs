@@ -1,5 +1,5 @@
-﻿using Dfe.Academies.Contracts.V4.Establishments;
-using Dfe.PrepareConversions.Data.Models;
+﻿using Dfe.PrepareConversions.Data.Models;
+using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 using System;
 using System.Threading.Tasks;
 

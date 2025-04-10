@@ -1,6 +1,6 @@
+using DfE.CoreLibs.Contracts.Academies.V1.EducationalPerformance;
 using System.Collections.Generic;
 using System.Linq;
-using Dfe.Academies.Contracts.V1.EducationalPerformance;
 
 namespace Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 

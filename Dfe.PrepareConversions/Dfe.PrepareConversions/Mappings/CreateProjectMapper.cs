@@ -1,6 +1,6 @@
-﻿using Dfe.Academies.Contracts.V4.Establishments;
-using Dfe.Academies.Contracts.V4.Trusts;
-using Dfe.PrepareConversions.Data.Models.NewProject;
+﻿using Dfe.PrepareConversions.Data.Models.NewProject;
+using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
 using System;
 
 namespace Dfe.PrepareConversions.Mappings;

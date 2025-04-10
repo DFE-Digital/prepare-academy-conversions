@@ -1,7 +1,7 @@
 ﻿using AutoFixture;
-using Dfe.Academies.Contracts.V4.Establishments;
-using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.PrepareConversions.Mappings;
+using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using System;
