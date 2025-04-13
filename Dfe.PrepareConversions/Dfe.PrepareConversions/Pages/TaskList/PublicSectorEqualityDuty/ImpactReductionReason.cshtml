@@ -14,20 +14,20 @@
 }
 
 <div class="govuk-form-group">
-    <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+    <span class="govuk-caption-l" data-cy="psed-school-name">@Model.Project.SchoolName</span>
     <h1 class="govuk-heading-l">
         Public sector Equality Duty
     </h1>
 
     <div class="govuk-form-group @ModelState.GetErrorStyleClass()" id="reason">
-        <h1 class="govuk-heading-l" data-test="psed-heading">What will be done to reduce this impact?</h1>
+        <h1 class="govuk-heading-l" data-cy="psed-heading">What will be done to reduce this impact?</h1>
 
         <div id="hint" class="govuk-hint">Briefly outline any actions or policies that were included in the Equality Impact Assessment</div>
 
         <inline-error for="@nameof(Model.Reason)" />
 
         <textarea asp-for="@Model.Reason"
-                  data-test="psed-impact-reason-input"
+                  data-cy="psed-impact-reason-input"
                   class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.Reason))"
                   rows="5"
                   aria-label="text-area-psed-impact-reason">

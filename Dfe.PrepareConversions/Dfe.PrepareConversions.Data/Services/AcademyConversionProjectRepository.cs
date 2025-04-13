@@ -311,7 +311,7 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
    {
       HttpResponseMessage result = await _apiClient.SetConversionPublicEqualityDuty(id, model);
 
-      if (result.IsSuccessStatusCode is false)
+      if (!result.IsSuccessStatusCode)
          throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
 

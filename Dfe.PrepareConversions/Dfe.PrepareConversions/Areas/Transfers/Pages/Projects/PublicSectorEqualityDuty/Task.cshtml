@@ -39,7 +39,7 @@
             </div>
         </p>
 
-        <p>Further information on <a class="govuk-link" href="https://educationgovuk.sharepoint.com/sites/design-good-policy/SitePages/psed.aspx?web=1" target="_blank" rel="noopener">meeting the Public Sector Equality Duty (opens in a new tab) is in Sharepoint</a></p>
+        <p>Further information on <a class="govuk-link" href="https://educationgovuk.sharepoint.com/sites/design-good-policy/SitePages/psed.aspx?web=1" target="_blank" rel="noopener" data-cy="psed-task-further-info">meeting the Public Sector Equality Duty (opens in a new tab) is in Sharepoint</a></p>
     </div>
 
     @{
@@ -69,7 +69,7 @@
                                     value="@Model.ReduceImpactReason"
                                     asp-page="@impactReductionLink.Page"
                                     asp-route-id="@Model.Urn"
-                                    hidden-text="What will be done to reduce this impact" />
+                                    hidden-text="What will be done to reduce this impact"/>
         </dl>
     </div>
 
