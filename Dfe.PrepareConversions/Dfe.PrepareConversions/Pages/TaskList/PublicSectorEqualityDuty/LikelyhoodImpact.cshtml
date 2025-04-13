@@ -1,0 +1,65 @@
+﻿@page "/task-list/{id:int}/public-sector-likelyhood-impact"
+@using Dfe.PrepareConversions.Models
+
+@model Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Conversion.LikelyhoodImpactModel
+
+@{
+    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Public sector equality duty likelyhood impacts";
+}
+
+@section BeforeMain
+{
+    <govuk-back-link link-item="@Links.PublicSectorEqualityDutySection.ConversionTask" />
+}
+
+@if (Model.ShowError)
+{
+    <partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+
+        <h1 class="govuk-heading-l">
+            Public sector Equality Duty
+        </h1>
+
+        <form method="post">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios" id="Impact">
+                        <h1 class="govuk-heading-l" data-test="how-likely-question">How likely is the project to disproportionately impact people with protected characteristics?</h1>
+                        <inline-error for="@nameof(Model.Impact)" />
+
+                        @foreach (var option in Enum.GetValues(typeof(PublicSectorEqualityDutyImpact)))
+                        {
+                            Enum.TryParse(option.ToString(), out PublicSectorEqualityDutyImpact impact);
+                            var id = $"radio-psed-impact-{option.ToString()?.ToLower()}";
+
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input"
+                                       type="radio"
+                                       asp-for="@Model.Impact"
+                                       title="@option.ToString()?.ToLower()"
+                                       value="@option"
+                                       id="@id"
+                                       data-cy="select-@id" />
+                                <label class="govuk-label govuk-radios__label" for="@id" data-test="select-@id">
+                                    @Model.GetImpactDescription(impact)
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </fieldset>
+            </div>
+
+            @if (!Model.Project.IsReadOnly)
+            {
+                <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton">
+                    Confirm and continue
+                </button>
+            }
+        </form>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+﻿@page "/task-list/{id:int}/public-sector-equality-duty"
+@model Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Conversion.TaskModel
+
+@{
+    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Public sector equality duty";
+}
+
+@section BeforeMain
+{
+    <govuk-back-link link-item="@Links.TaskList.Index" />
+}
+
+@if (Model.ShowError)
+{
+    <partial name="_ErrorSummary" />
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+
+        <h1 class="govuk-heading-l">
+            Public sector Equality Duty
+        </h1>
+
+        <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
+            Consider the impact of public sector projects on people who share protected characteristics.
+        </p>
+
+        <p class="govuk-body govuk-!-margin-top-5 govuk--!-margin-bottom-0">
+            You must:
+            <div class="govuk-grid-column-full">
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>check if an Equality Impact Assessment hasbeen completed</li>
+                    <li>review the project and consider how it will affect people with different protected characteristics</li>
+                    <li>decide the likely impact of the project</li>
+                </ul>
+            </div>
+        </p>
+
+        <p>Further information on <a class="govuk-link" href="https://educationgovuk.sharepoint.com/sites/design-good-policy/SitePages/psed.aspx?web=1" target="_blank" rel="noopener">meeting the Public Sector Equality Duty (opens in a new tab) is in Sharepoint</a></p>
+    </div>
+
+    @{
+        var containerWidth = Model.IsNew ? "govuk-grid-column-two-thirds" : "govuk-grid-column-full";
+        var keyWidth = Model.IsNew ? @WidthOverride.OneThird : @WidthOverride.OneQuarter;
+    }
+
+    <div class="@containerWidth govuk-!-margin-top-8">
+        <dl id="Impact" class="govuk-summary-list">
+            <govuk-summary-list-row name="reduce-impact-reason-label"
+                                    label="Public Sector Equality Duty consideration"
+                                    key-width="@keyWidth"
+                                    asp-page="@Links.PublicSectorEqualityDutySection.ConversionLikelyhoodToImpact.Page"
+                                    asp-route-id="@Model.Project.Id"
+                                    hidden-text="public sector equality duty consideration"
+                                    value="@Model.ReduceImpactReasonLabel" />
+
+            <govuk-summary-list-row if="@Model.RequiresReason" id="ReduceImpactReason" name="reduce-impact-reason"
+                                    label="What will be done to reduce this impact?"
+                                    key-width="@WidthOverride.OneQuarter"
+                                    value="@Model.ReduceImpactReason"
+                                    asp-page="@Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page"
+                                    asp-route-id="@Model.Project.Id"
+                                    hidden-text="What will be done to reduce this impact" />
+        </dl>
+    </div>
+
+    <div if="!Model.Project.IsReadOnly" class="govuk-grid-column-full">
+        <form method="post">
+            <govuk-checkbox-input name="public-sector-equality-duty-complete" asp-for="SectionComplete" label="Mark this section as complete, you can still make changes later" />
+
+            <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton">
+                Confirm and continue
+            </button>
+        </form>
+    </div>
+</div>
+
+

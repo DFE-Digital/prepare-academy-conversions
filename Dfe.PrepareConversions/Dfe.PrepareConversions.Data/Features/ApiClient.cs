@@ -1,6 +1,5 @@
 ﻿using Dfe.PrepareConversions.Data.Extensions;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Data.Models.NewProject;
 using Dfe.PrepareConversions.Data.Models.SchoolImprovementPlans;
 using Dfe.PrepareConversions.Data.Services;
 using Microsoft.FeatureManagement;
@@ -115,6 +114,21 @@ public class ApiClient : IApiClient
       var formattedString = string.Format(PathFor.SetSchoolOverview, id);
       return await AcademisationClient.PutAsync(formattedString, JsonContent.Create(payload));
    }
+
+   public async Task<HttpResponseMessage> SetConversionPublicEqualityDuty(int id, SetConversionPublicEqualityDutyModel model)
+   {
+      var payload = new
+      {
+         id = model.Id,
+         publicEqualityDutyImpact = model.PublicEqualityDutyImpact ?? string.Empty,
+         publicEqualityDutyReduceImpactReason = model.PublicEqualityDutyReduceImpactReason ?? string.Empty,
+         publicEqualityDutySectionComplete = model.PublicEqualityDutySectionComplete
+      };
+
+      var formattedString = string.Format(PathFor.SetConversionPublicEqualityDuty, id);
+      return await AcademisationClient.PutAsync(formattedString, JsonContent.Create(payload));
+   }
+
    public async Task<HttpResponseMessage> SetAssignedUser(int id, SetAssignedUserModel updatedAssignedUser)
    {
       var payload = new

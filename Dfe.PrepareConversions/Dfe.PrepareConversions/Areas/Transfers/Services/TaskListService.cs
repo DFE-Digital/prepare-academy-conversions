@@ -6,6 +6,7 @@ using Dfe.PrepareTransfers.Data.Models.Projects;
 using System;
 using System.Linq;
 using Index = Dfe.PrepareTransfers.Web.Pages.Projects.Index;
+using DocumentFormat.OpenXml.Presentation;
 
 namespace Dfe.PrepareTransfers.Web.Services
 {
@@ -32,6 +33,7 @@ namespace Dfe.PrepareTransfers.Web.Services
             indexPage.BenefitsAndOtherFactorsStatus = GetBenefitsAndOtherFactorsStatus(project.Result);
             indexPage.LegalRequirementsStatus = GetLegalRequirementsStatus(project.Result);
             indexPage.RationaleStatus = GetRationaleStatus(project.Result);
+            indexPage.PublicSectorEqualityDutyStatus = GetPublicSectorEqualityDutyStatus(project.Result);
             indexPage.ProjectStatus = project.Result.Status;
             indexPage.AssignedUser = project.Result.AssignedUser;
             indexPage.IsFormAMAT = project.Result.IsFormAMat.HasValue && project.Result.IsFormAMat.Value;
@@ -67,6 +69,21 @@ namespace Dfe.PrepareTransfers.Web.Services
 
             return project.Features.IsCompleted == true ? ProjectStatuses.Completed : ProjectStatuses.InProgress;
         }
+
+         private static ProjectStatuses GetPublicSectorEqualityDutyStatus(Project project)
+         {
+            if (project.PublicEqualityDutySectionComplete != null && project.PublicEqualityDutySectionComplete == true)
+            {
+               return ProjectStatuses.Completed;
+            }
+
+            if (project.PublicEqualityDutyImpact == null)
+            {
+               return ProjectStatuses.NotStarted;
+            }
+
+            return ProjectStatuses.InProgress;
+         }
 
         private static ProjectStatuses GetTransferDatesStatus(Project project)
         {

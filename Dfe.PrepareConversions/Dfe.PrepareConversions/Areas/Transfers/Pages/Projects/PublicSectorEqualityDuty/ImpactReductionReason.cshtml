@@ -1,0 +1,35 @@
+﻿@page "/transfers/project/{id:int}/public-sector-likelyhood-impact-reducion-reason"
+
+@model Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqualityDuty.ImpactReductionReasonModel
+
+@{
+    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Decide what will be done to reduce the impact";
+    Layout = "_QuestionLayout";
+}
+
+@section BeforeMain
+{
+    <a class="govuk-back-link" asp-page="/Projects/PublicSectorEqualityDuty/Task" asp-route-urn="@Model.Urn">Back</a>
+}
+
+<div class="govuk-form-group">
+    <span class="govuk-caption-l">@Model.OutgoingTrustName</span>
+    <h1 class="govuk-heading-l">
+        Public sector Equality Duty
+    </h1>
+
+    <div class="govuk-form-group @ModelState.GetErrorStyleClass()" id="reason">
+        <h1 class="govuk-heading-l" data-test="psed-heading">What will be done to reduce this impact?</h1>
+
+        <div id="hint" class="govuk-hint">Briefly outline any actions or policies that were included in the Equality Impact Assessment</div>
+
+        <inline-error for="@nameof(Model.Reason)" />
+
+        <textarea asp-for="@Model.Reason"
+                  data-test="psed-impact-reason-input"
+                  class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.Reason))"
+                  rows="5"
+                  aria-label="text-area-psed-impact-reason">
+        </textarea>
+    </div>
+</div>

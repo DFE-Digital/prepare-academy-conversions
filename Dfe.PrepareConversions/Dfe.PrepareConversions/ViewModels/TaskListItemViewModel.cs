@@ -177,6 +177,21 @@ public sealed class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
       return InProgress;
    }
 
+   public static TaskListItemViewModel PublicSectorEqualityDutyStatus(ProjectViewModel project)
+   {
+      if (project.PublicEqualityDutySectionComplete)
+      {
+         return Completed;
+      }
+
+      if (project.PublicEqualityDutyImpact == null)
+      {
+         return NotStarted;
+      }
+
+      return InProgress;
+   }
+
    public override int GetHashCode()
    {
       return $"{Status} {CssClass}".GetHashCode();

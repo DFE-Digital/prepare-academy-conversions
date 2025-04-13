@@ -27,6 +27,9 @@ public class PathFor
    public static string SetPerformanceData => "/conversion-project/{0}/SetPerformanceData";
    public static string SetIncomingTrust => "/conversion-project/{0}/SetIncomingTrust";
    public static string SetSchoolOverview => "/conversion-project/{0}/SetSchoolOverview";
+   public static string SetConversionPublicEqualityDuty => "/conversion-project/{0}/public-equality-duty";
+
+   public static string SetTransferPublicEqualityDuty => "/transfer-project/{0}/public-equality-duty";
    public static string SetAssignedUser => "/conversion-project/{0}/SetAssignedUser";
    public static string SetFormAMatAssignedUser => "/conversion-project/{0}/SetFormAMatAssignedUser";
    public static string DeleteConversionProject => "/conversion-project/{0}/delete";

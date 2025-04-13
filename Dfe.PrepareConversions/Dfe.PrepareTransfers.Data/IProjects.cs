@@ -10,6 +10,8 @@ namespace Dfe.PrepareTransfers.Data
    {
       Task<RepositoryResult<List<ProjectSearchResult>>> GetProjects(GetProjectSearchModel searchModel);
       Task<RepositoryResult<Project>> GetByUrn(string urn);
+
+      Task<bool> SetTransferPublicEqualityDuty(int urn, PrepareConversions.Data.Models.SetTransferPublicEqualityDutyModel model);
       Task<RepositoryResult<Project>> Create(Project project);
       Task<bool> UpdateRationale(Project project);
       Task<bool> UpdateFeatures(Project project);

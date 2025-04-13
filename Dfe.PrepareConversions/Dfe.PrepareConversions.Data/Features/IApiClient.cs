@@ -21,6 +21,8 @@ public interface IApiClient
 
    Task<HttpResponseMessage> SetProjectExternalApplicationForm(int id, bool externalApplicationFormSaved, string externalApplicationFormUrl);
    Task<HttpResponseMessage> SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview);
+
+   Task<HttpResponseMessage> SetConversionPublicEqualityDuty(int id, SetConversionPublicEqualityDutyModel model);
    Task<HttpResponseMessage> SetAssignedUser(int id, SetAssignedUserModel updatedAssignedUser);
    Task<HttpResponseMessage> SetFormAMatAssignedUser(int id, SetAssignedUserModel updatedAssignedUser);
    Task<HttpResponseMessage> SetPerformanceData(int id, SetPerformanceDataModel setPerformanceDataModel);

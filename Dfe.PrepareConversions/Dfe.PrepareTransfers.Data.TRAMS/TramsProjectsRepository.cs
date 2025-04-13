@@ -1,3 +1,4 @@
+using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Data.TRAMS.Mappers.Request;
@@ -135,6 +136,27 @@ namespace Dfe.PrepareTransfers.Data.TRAMS
             {
                Result = mappedProject
             };
+         }
+
+         throw new TramsApiException(response);
+      }
+
+      public async Task<bool> SetTransferPublicEqualityDuty(int urn, PrepareConversions.Data.Models.SetTransferPublicEqualityDutyModel model)
+      {
+         var payload = new
+         {
+            urn = model.Urn,
+            publicEqualityDutyImpact = model.PublicEqualityDutyImpact ?? string.Empty,
+            publicEqualityDutyReduceImpactReason = model.PublicEqualityDutyReduceImpactReason ?? string.Empty,
+            publicEqualityDutySectionComplete = model.PublicEqualityDutySectionComplete
+         };
+
+         var formattedString = string.Format(PathFor.SetTransferPublicEqualityDuty, urn);
+         HttpResponseMessage response = await AcademisationClient.PutAsync(formattedString, JsonContent.Create(payload));
+
+         if (response.IsSuccessStatusCode)
+         {
+            return true;
          }
 
          throw new TramsApiException(response);

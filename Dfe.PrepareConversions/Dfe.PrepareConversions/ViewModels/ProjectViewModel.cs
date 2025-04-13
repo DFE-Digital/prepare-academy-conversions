@@ -115,6 +115,11 @@ public class ProjectViewModel : ProjectTypeBase
       KeyStage5PerformanceAdditionalInformation = project.KeyStage5PerformanceAdditionalInformation;
       EducationalAttendanceAdditionalInformation = project.EducationalAttendanceAdditionalInformation;
 
+      // Public sector equality duty
+      PublicEqualityDutyImpact = project.PublicEqualityDutyImpact;
+      PublicEqualityDutyReduceImpactReason = project.PublicEqualityDutyReduceImpactReason;
+      PublicEqualityDutySectionComplete = project.PublicEqualityDutySectionComplete;
+
       AssignedUser = project.AssignedUser;
 
       Notes = project.Notes;
@@ -256,6 +261,12 @@ public class ProjectViewModel : ProjectTypeBase
    public string KeyStage4PerformanceAdditionalInformation { get; set; }
    public string KeyStage5PerformanceAdditionalInformation { get; set; }
    public string EducationalAttendanceAdditionalInformation { get; set; }
+
+   // Public sector equality duty
+   public string PublicEqualityDutyImpact { get; set; } // 'Likely', 'Some Impact', 'Unlikely'
+   public string PublicEqualityDutyReduceImpactReason { get; set; }
+
+   public bool PublicEqualityDutySectionComplete { get; init; }
 
    public User AssignedUser { get; set; }
 
