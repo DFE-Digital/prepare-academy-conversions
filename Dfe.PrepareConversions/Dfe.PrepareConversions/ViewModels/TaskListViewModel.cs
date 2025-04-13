@@ -40,7 +40,7 @@ public class TaskListViewModel
          ProjectStatusColour = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Colour,
          PerformanceDataHintText = ProjectListHelper.MapPerformanceDataHint(project.SchoolType, hasSchoolAbsenceData),
          ProjectDatesTaskListTaskListStatus = TaskListItemViewModel.GetProjectDatesTaskListStatus(project),
-         PublicSectorEqualityDutyStatus = TaskListItemViewModel.PublicSectorEqualityDutyStatus(project)
+         PublicSectorEqualityDutyStatus = TaskListItemViewModel.PublicSectorEqualityDutyStatus(project.PublicEqualityDutySectionComplete, project.PublicEqualityDutyImpact)
       };
    }
 }

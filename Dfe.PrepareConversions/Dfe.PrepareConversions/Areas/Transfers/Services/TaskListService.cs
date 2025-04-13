@@ -77,7 +77,7 @@ namespace Dfe.PrepareTransfers.Web.Services
                return ProjectStatuses.Completed;
             }
 
-            if (project.PublicEqualityDutyImpact == null)
+            if (string.IsNullOrWhiteSpace(project.PublicEqualityDutyImpact))
             {
                return ProjectStatuses.NotStarted;
             }

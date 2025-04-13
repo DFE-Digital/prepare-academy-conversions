@@ -177,14 +177,14 @@ public sealed class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
       return InProgress;
    }
 
-   public static TaskListItemViewModel PublicSectorEqualityDutyStatus(ProjectViewModel project)
+   public static TaskListItemViewModel PublicSectorEqualityDutyStatus(bool sectionComplete, string publicEqualityDutyImpact)
    {
-      if (project.PublicEqualityDutySectionComplete)
+      if (sectionComplete)
       {
          return Completed;
       }
 
-      if (project.PublicEqualityDutyImpact == null)
+      if (string.IsNullOrWhiteSpace(publicEqualityDutyImpact))
       {
          return NotStarted;
       }
