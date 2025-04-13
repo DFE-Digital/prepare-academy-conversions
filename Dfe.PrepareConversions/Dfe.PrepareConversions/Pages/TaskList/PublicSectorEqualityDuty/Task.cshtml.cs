@@ -30,7 +30,6 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
          }
       }
 
-
       public bool RequiresReason
       {
          get

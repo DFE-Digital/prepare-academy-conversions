@@ -26,4 +26,8 @@
       <ProjectReference Include="..\Dfe.PrepareConversions\Dfe.PrepareConversions.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="PagesTests\PublicEqualityDutyImpact\Transfer\" />
+    </ItemGroup>
+
 </Project>

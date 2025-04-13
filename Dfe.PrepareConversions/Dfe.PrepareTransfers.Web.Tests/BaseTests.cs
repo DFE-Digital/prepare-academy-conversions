@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 using AutoFixture;
+using Dfe.PrepareConversions.Data.Models;
+using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Data.Models.Projects;
 using Dfe.PrepareTransfers.Data.TRAMS;
 using Dfe.PrepareTransfers.Web.Services.Interfaces;
 using Dfe.PrepareTransfers.Web.Services.Responses;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Moq;
 
 namespace Dfe.PrepareTransfers.Web.Tests
@@ -26,7 +30,10 @@ namespace Dfe.PrepareTransfers.Web.Tests
         protected GetInformationForProjectResponse FoundInformationForProject;
         protected Project FoundProjectFromRepo;
         protected Project FoundPopulatedProjectFromRepo;
-        
+        protected AcademyConversionProject ConversionProject;
+
+        protected Mock<IAcademyConversionProjectRepository> AcademyConversionProjectRepository;
+
         protected const string OutgoingAcademyName = "Academy Name";
         private const string LAName = "LA Name";
 
@@ -34,7 +41,31 @@ namespace Dfe.PrepareTransfers.Web.Tests
         {
             MockGetInformationForProject();
             MockProjectRepository();
+            //MockAcademyConversionProjectRepository();
         }
+
+      //  public void MockAcademyConversionProjectRepository()
+      //  {
+      //      AcademyConversionProjectRepository = new Mock<IAcademyConversionProjectRepository>();
+
+      //      ConversionProject = new AcademyConversionProject
+      //      {
+      //         Id = 12345,
+      //         Urn = 113609,
+      //         SchoolName = "Plymouth",
+      //         PublicEqualityDutyImpact = "Likely",
+      //         PublicEqualityDutyReduceImpactReason = "Some likely reason",
+      //         PublicEqualityDutySectionComplete = true
+      //      };
+
+      //   //   AcademyConversionProjectRepository.Setup(s => s.GetProjectById(It.IsAny<int>())).ReturnsAsync(
+      //   //       new ApiResponse<AcademyConversionProject>
+      //   //       {
+      //   //          Body = FoundProjectFromRepo
+      //   //       });
+
+      //   //Task<ApiResponse<AcademyConversionProject>>
+      //}
 
         private void MockProjectRepository()
         {
@@ -140,5 +171,7 @@ namespace Dfe.PrepareTransfers.Web.Tests
                     FoundInformationForProject
                 );
         }
+
+
     }
 }
