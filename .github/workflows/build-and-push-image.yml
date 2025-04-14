@@ -20,7 +20,7 @@ env:
 jobs:
   set-env:
     name: Determine environment
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     outputs:
       environment: ${{ steps.var.outputs.environment }}
       release: ${{ steps.var.outputs.release }}
@@ -73,7 +73,7 @@ jobs:
   create-tag:
     name: Tag and release
     needs: [ set-env, deploy ]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
