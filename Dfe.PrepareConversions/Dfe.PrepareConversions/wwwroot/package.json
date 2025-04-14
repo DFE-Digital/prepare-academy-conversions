@@ -4,15 +4,15 @@
 		"build:watch": "webpack --config webpack.assets.config.js --mode=development --watch & webpack --config webpack.config.js --watch --mode=development & webpack --config webpack.appinsights.config.js --watch --mode=development"
 	},
 	"devDependencies": {
-		"copy-webpack-plugin": "^7.0.0",
-		"css-loader": "^5.2.7",
-		"file-loader": "^6.2.0",
-		"mini-css-extract-plugin": "^1.6.2",
-		"sass": "^1.56.0",
-		"sass-loader": "^11.1.1",
-		"style-loader": "^2.0.0",
-		"webpack": "^5.74.0",
-		"webpack-cli": "^4.10.0"
+		"copy-webpack-plugin": "7.0.0",
+		"css-loader": "5.2.7",
+		"file-loader": "6.2.0",
+		"mini-css-extract-plugin": "1.6.2",
+		"sass": "1.86.3",
+		"sass-loader": "11.1.1",
+		"style-loader": "2.0.0",
+		"webpack": "5.99.5",
+		"webpack-cli": "4.10.0"
 	},
 	"dependencies": {
 		"@microsoft/applicationinsights-web": "^3.2.2",
