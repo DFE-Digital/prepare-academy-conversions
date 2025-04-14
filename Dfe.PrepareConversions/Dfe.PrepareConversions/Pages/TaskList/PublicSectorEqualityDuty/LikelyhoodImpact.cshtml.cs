@@ -11,58 +11,58 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
 {
     public class LikelyhoodImpactModel(IAcademyConversionProjectRepository repository, ErrorService errorService) : BaseAcademyConversionProjectPageModel(repository)
     {
-      public bool ShowError => errorService.HasErrors();
+         public bool ShowError => errorService.HasErrors();
 
-      [BindProperty]
-      [Required(ErrorMessage = "Decide the likely impact of the project")]
-      public PublicSectorEqualityDutyImpact? Impact { get; set; }
+         [BindProperty]
+         [Required(ErrorMessage = "Decide the likely impact of the project")]
+         public PublicSectorEqualityDutyImpact? Impact { get; set; }
 
-      public string GetImpactDescription(PublicSectorEqualityDutyImpact impact)
-      {
-         var result = "";
-
-         switch(impact)
+         public string GetImpactDescription(PublicSectorEqualityDutyImpact impact)
          {
-            case PublicSectorEqualityDutyImpact.Unlikely:
-               result = "Unlikely";
-               break;
-            case PublicSectorEqualityDutyImpact.SomeImpact:
-               result = "Some impact";
-               break;
-            case PublicSectorEqualityDutyImpact.Likely:
-               result = "Likely";
-               break;
+            var result = "";
+
+            switch(impact)
+            {
+               case PublicSectorEqualityDutyImpact.Unlikely:
+                  result = "Unlikely";
+                  break;
+               case PublicSectorEqualityDutyImpact.SomeImpact:
+                  result = "Some impact";
+                  break;
+               case PublicSectorEqualityDutyImpact.Likely:
+                  result = "Likely";
+                  break;
+            }
+
+            return result;
          }
 
-         return result;
-      }
+         public override async Task<IActionResult> OnGetAsync(int id)
+         {
+               IActionResult result = await SetProject(id);
 
-      public override async Task<IActionResult> OnGetAsync(int id)
-      {
-            IActionResult result = await SetProject(id);
+               if (result is StatusCodeResult { StatusCode: (int)HttpStatusCode.NotFound })
+               {
+                  return NotFound();
+               }
 
-            if (result is StatusCodeResult { StatusCode: (int)HttpStatusCode.NotFound })
-            {
-               return NotFound();
-            }
+               switch(Project.PublicEqualityDutyImpact)
+               {
+                  case "Unlikely":
+                     Impact = PublicSectorEqualityDutyImpact.Unlikely;
+                     break;
+                  case "Some impact":
+                     Impact = PublicSectorEqualityDutyImpact.SomeImpact;
+                     break;
+                  case "Likely":
+                     Impact = PublicSectorEqualityDutyImpact.Likely;
+                     break;
+                  default:
+                     break;
+               }
 
-            switch(Project.PublicEqualityDutyImpact)
-            {
-               case "Unlikely":
-                  Impact = PublicSectorEqualityDutyImpact.Unlikely;
-                  break;
-               case "Some impact":
-                  Impact = PublicSectorEqualityDutyImpact.SomeImpact;
-                  break;
-               case "Likely":
-                  Impact = PublicSectorEqualityDutyImpact.Likely;
-                  break;
-               default:
-                  break;
-            }
-
-            return Page();
-       }
+               return Page();
+          }
 
         public override async Task<IActionResult> OnPostAsync(int id)
         {

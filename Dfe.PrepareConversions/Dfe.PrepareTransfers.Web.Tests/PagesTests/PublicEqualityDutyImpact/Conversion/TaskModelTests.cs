@@ -1,32 +1,36 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
+using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Conversion;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Linq;
 using Moq;
 using Xunit;
+using FluentAssertions;
 
 namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Conversion
 {
-    public class TaskTests
+    public class TaskModelTests
     {
       private readonly Mock<IAcademyConversionProjectRepository> _academyConversionProjectRepository;
-      private readonly ErrorService _errorService = new();
+      private readonly Mock<ErrorService> _errorService;
       private readonly TaskModel _subject;
 
-      public TaskTests()
+      public TaskModelTests()
       {
          _academyConversionProjectRepository = new Mock<IAcademyConversionProjectRepository>();
-         _subject = new TaskModel(_academyConversionProjectRepository.Object, _errorService);
+         _errorService = new Mock<ErrorService>();
+         _subject = new TaskModel(_academyConversionProjectRepository.Object, _errorService.Object);
       }
 
       [Fact]
-      public async Task Given_Id_Returns_NotFound()
+      public async Task OnGet_Returns_NotFound()
       {
          var id = It.IsAny<int>();
 
@@ -42,9 +46,9 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Con
       [InlineData("Unlikely", "The equalities duty has been considered and the Secretary of State’s decision is unlikely to affect disproportionately any particular person or group who share protected characteristics.")]
       [InlineData("Some impact", "The equalities duty has been considered and there are some impacts but on balance the analysis indicates these changes will not affect disproportionately any particular person or group who share protected characteristics.")]
       [InlineData("Likely", "The equalities duty has been considered and the decision is likely to affect disproportionately a particular person or group who share protected characteristics")]
-      public async Task Given_Id_Returns_Custom_Impact_Reason_Label(string impact, string reasonLabel)
+      public async Task OnGet_Returns_Custom_Impact_Reason_Label(string impact, string reasonLabel)
       {
-         AcademyConversionProject conversionProject = new AcademyConversionProject
+         AcademyConversionProject conversionProject = new()
          {
             Id = 12345,
             Urn = 113609,
@@ -64,9 +68,9 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Con
       }
 
       [Fact]
-      public async Task Given_Id_Returns_New_Task_Page()
+      public async Task OnGet_Returns_New_Task_Page()
       {
-         AcademyConversionProject conversionProject = new AcademyConversionProject
+         AcademyConversionProject conversionProject = new()
          {
             Id = 12345,
             Urn = 113609,
@@ -94,9 +98,9 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Con
       }
 
       [Fact]
-      public async Task Given_Id_Returns_Page()
+      public async Task OnGet_Returns_Page()
       {
-         AcademyConversionProject conversionProject = new AcademyConversionProject
+         AcademyConversionProject conversionProject = new()
          {
             Id = 12345,
             Urn = 113609,
@@ -122,11 +126,91 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Con
          Assert.False(_subject.IsNew);
          Assert.True(_subject.RequiresReason);
       }
+
+      [Fact]
+      public async Task OnPost_Returns_Error_Consider_Public_Sector_Equality_Duty()
+      {
+         AcademyConversionProject conversionProject = new()
+         {
+            Id = 12345,
+            Urn = 113609,
+            SchoolName = "Plymouth",
+            ProjectStatus = "Approved"
+         };
+
+         _academyConversionProjectRepository.Setup(s => s.GetProjectById(conversionProject.Id))
+            .ReturnsAsync(new ApiResponse<AcademyConversionProject>(HttpStatusCode.OK, conversionProject));
+
+         var result = await _subject.OnPostAsync(conversionProject.Id);
+
+         Assert.IsType<PageResult>(result);
+
+         List<Error> errors = _errorService.Object.GetErrors().ToList();
+         errors.Count.Should().Be(1);
+         errors[0].Key.Should().Be("Impact");
+         errors[0].Message.Should().Be("Consder the public Sector Equility Duty");
+      }
+
+      [Fact]
+      public async Task OnPost_Returns_Error_Describe_What_Will_Be_Done_To_Reduce_Impact()
+      {
+         AcademyConversionProject conversionProject = new()
+         {
+            Id = 12345,
+            Urn = 113609,
+            SchoolName = "Plymouth",
+            PublicEqualityDutyImpact = "Likely",
+            PublicEqualityDutyReduceImpactReason = "", // is required
+            PublicEqualityDutySectionComplete = false,
+            ProjectStatus = "Approved"
+         };
+
+         _academyConversionProjectRepository.Setup(s => s.GetProjectById(conversionProject.Id))
+            .ReturnsAsync(new ApiResponse<AcademyConversionProject>(HttpStatusCode.OK, conversionProject));
+
+         var result = await _subject.OnPostAsync(conversionProject.Id);
+
+         Assert.IsType<PageResult>(result);
+
+         List<Error> errors = _errorService.Object.GetErrors().ToList();
+         errors.Count.Should().Be(1);
+         errors[0].Key.Should().Be("ReduceImpactReason");
+         errors[0].Message.Should().Be("Describe what will be done to reduce the impact");
+      }
+
+      [Fact]
+      public async Task OnPost_Updates_Record()
+      {
+         AcademyConversionProject conversionProject = new()
+         {
+            Id = 12345,
+            Urn = 113609,
+            SchoolName = "Plymouth",
+            PublicEqualityDutyImpact = "Likely",
+            PublicEqualityDutyReduceImpactReason = "Some likely reason",
+            PublicEqualityDutySectionComplete = true,
+            ProjectStatus = "Approved"
+         };
+
+         _academyConversionProjectRepository.Setup(s => s.GetProjectById(conversionProject.Id))
+            .ReturnsAsync(new ApiResponse<AcademyConversionProject>(HttpStatusCode.OK, conversionProject));
+
+         var response = await _subject.OnPostAsync(conversionProject.Id);
+
+         _academyConversionProjectRepository.Verify(r => r.SetPublicEqualityDuty(
+            conversionProject.Id,
+            It.Is<SetConversionPublicEqualityDutyModel>(model => 
+               model.Id == conversionProject.Id
+               && model.PublicEqualityDutyImpact == conversionProject.PublicEqualityDutyImpact
+               && model.PublicEqualityDutyReduceImpactReason == conversionProject.PublicEqualityDutyReduceImpactReason
+               && model.PublicEqualityDutySectionComplete == _subject.SectionComplete
+            )
+         ), Times.Once);
+
+         var redirectResponse = Assert.IsType<RedirectToPageResult>(response);
+
+         Assert.Equal(Links.TaskList.Index.Page, redirectResponse.PageName);
+         Assert.Equal(conversionProject.Id, redirectResponse.RouteValues["id"]);
+      }
    }
 }
-
-//AdvisoryBoardDecisions.Approved => new ProjectStatus(result.ToString().ToUpper(), green),
-//               AdvisoryBoardDecisions.Deferred => new ProjectStatus(result.ToString().ToUpper(), orange),
-//               AdvisoryBoardDecisions.Declined => new ProjectStatus(result.ToString().ToUpper(), red),
-//               AdvisoryBoardDecisions.DAORevoked => new ProjectStatus("DAO Revoked", red),
-//               AdvisoryBoardDecisions.Withdrawn => new ProjectStatus(result.ToString().ToUpper(), purple),
