@@ -14,7 +14,6 @@ namespace Dfe.PrepareTransfers.Data.TRAMS
           : base(message ?? $"API encountered an error-({httpResponseMessage.StatusCode})")
         {
             StatusCode = httpResponseMessage.StatusCode;
-            base.Data.Add("Sentry:Tag:StatusCode", StatusCode);
 
             var messageContent = httpResponseMessage.Content.ReadAsStringAsync().Result;
             if (string.IsNullOrWhiteSpace(messageContent) is false)

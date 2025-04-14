@@ -1,9 +1,9 @@
-using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
+using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
@@ -94,7 +94,7 @@ public class SearchTrustModel : PageModel
          return Page();
       }
 
-      string ukprn = searchSplit[searchSplit.Length -1];
+      string ukprn = searchSplit[searchSplit.Length - 1];
 
       TrustDtoResponse trusts = await _trustsRepository.SearchTrusts(ukprn);
 

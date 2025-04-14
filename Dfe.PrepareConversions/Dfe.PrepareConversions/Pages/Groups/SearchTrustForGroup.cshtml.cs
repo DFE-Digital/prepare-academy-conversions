@@ -1,9 +1,9 @@
-using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
+using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
@@ -17,11 +17,11 @@ public class SearchTrustForGroupModel : PageModel
 {
    [BindProperty]
    public string SearchQuery { get; set; } = "";
-   
+
    public string Urn { get; set; }
-   
+
    public string Ukprn { get; set; }
-   
+
    private const string SEARCH_LABEL =
       "Search for the incoming trust name, UKPRN or Companies House number.";
 
@@ -36,9 +36,9 @@ public class SearchTrustForGroupModel : PageModel
       _errorService = errorService;
       AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, string.Empty, SEARCH_ENDPOINT);
    }
-   
+
    public AutoCompleteSearchModel AutoCompleteSearchModel { get; set; }
-   
+
    public async Task<IActionResult> OnGet(string ukprn, string urn, string hasSchoolApplied)
    {
       if (string.IsNullOrWhiteSpace(ukprn)) return Page();
@@ -54,7 +54,7 @@ public class SearchTrustForGroupModel : PageModel
 
       return Page();
    }
-   
+
    public async Task<IActionResult> OnGetSearch(string searchQuery)
    {
       string[] searchSplit = SplitOnBrackets(searchQuery);
@@ -70,7 +70,7 @@ public class SearchTrustForGroupModel : PageModel
          return new { suggestion = HighlightSearchMatch(suggestion, searchSplit[0].Trim(), t), value = $"{t.Name?.ToTitleCase() ?? ""} ({t.Ukprn})" };
       }));
    }
-   
+
    public async Task<IActionResult> OnPost(string urn)
    {
       AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
@@ -89,8 +89,8 @@ public class SearchTrustForGroupModel : PageModel
          return Page();
       }
 
-      string ukprn = searchSplit[searchSplit.Length -1];
-      
+      string ukprn = searchSplit[searchSplit.Length - 1];
+
 
       TrustDtoResponse trusts = await _trustsRepository.SearchTrusts(ukprn);
 
@@ -100,10 +100,10 @@ public class SearchTrustForGroupModel : PageModel
          _errorService.AddErrors(ModelState.Keys, ModelState);
          return Page();
       }
-      
-      return RedirectToPage(Links.ProjectGroups.CheckIncomingTrustsDetails.Page, new { ukprn});
+
+      return RedirectToPage(Links.ProjectGroups.CheckIncomingTrustsDetails.Page, new { ukprn });
    }
-   
+
    private static string HighlightSearchMatch(string input, string toReplace, TrustDto trust)
    {
       if (trust == null ||

@@ -3,6 +3,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Models.ProjectList;
 using Dfe.PrepareConversions.Services;
+using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.IdentityModel.Tokens;
@@ -10,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EstablishmentDto = Dfe.Academies.Contracts.V4.Establishments.EstablishmentDto;
 
 namespace Dfe.PrepareConversions.Pages.SponsoredProject;
 
@@ -61,7 +61,7 @@ public class LinkFormAMatProject : PageModel
 
    public async Task<IActionResult> OnGetSearch(string searchQuery)
    {
-     string[] searchSplit = SplitOnBrackets(searchQuery);
+      string[] searchSplit = SplitOnBrackets(searchQuery);
 
       IEnumerable<FormAMatProject> projects = (await _repository.SearchFormAMatProjects(searchQuery)).Body;
 

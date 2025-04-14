@@ -4,6 +4,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Pages.SponsoredProject;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.Tests.Customisations;
+using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -12,7 +13,6 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
-using EstablishmentDto = Dfe.Academies.Contracts.V4.Establishments.EstablishmentDto;
 
 namespace Dfe.PrepareConversions.Tests.Pages.SponsoredProject;
 

@@ -1,4 +1,4 @@
-﻿using Dfe.Academies.Contracts.V4.Trusts;
+﻿using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
 using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Data.Models.Trust;

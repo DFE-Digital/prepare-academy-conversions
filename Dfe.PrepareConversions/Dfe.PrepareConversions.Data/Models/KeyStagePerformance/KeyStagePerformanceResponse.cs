@@ -1,4 +1,4 @@
-﻿using Dfe.Academies.Contracts.V1.EducationalPerformance;
+﻿using DfE.CoreLibs.Contracts.Academies.V1.EducationalPerformance;
 using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Data.Models.KeyStagePerformance;

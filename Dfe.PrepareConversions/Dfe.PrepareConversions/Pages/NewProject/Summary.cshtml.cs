@@ -1,9 +1,10 @@
-using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Mappings;
 using Dfe.PrepareConversions.Models;
+using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq;
@@ -26,7 +27,7 @@ public class SummaryModel : PageModel
       _academyConversionProjectRepository = academyConversionProjectRepository;
    }
 
-   public Academies.Contracts.V4.Establishments.EstablishmentDto Establishment { get; set; }
+   public EstablishmentDto Establishment { get; set; }
    public TrustDto Trust { get; set; } = null;
    public string HasSchoolApplied { get; set; }
    public string HasPreferredTrust { get; set; }
@@ -69,7 +70,7 @@ public class SummaryModel : PageModel
 
    public async Task<IActionResult> OnPostAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat, string famReference)
    {
-      Academies.Contracts.V4.Establishments.EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
+      EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
 
       TrustDto trust = new TrustDto();
       if (ukprn != null)
@@ -88,7 +89,7 @@ public class SummaryModel : PageModel
       {
          trust.Name = proposedTrustName;
          await _academyConversionProjectRepository.CreateFormAMatProject(CreateProjectMapper.MapFormAMatToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust));
-      }    
+      }
 
       if (_isFormAMat && proposedTrustName == null)
       {
