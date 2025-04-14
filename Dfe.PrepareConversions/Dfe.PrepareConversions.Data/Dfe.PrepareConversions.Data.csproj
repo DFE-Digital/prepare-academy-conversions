@@ -14,7 +14,7 @@
 	  <PackageReference Include="Dfe.Academisation.CorrelationIdMiddleware" Version="2.0.2" />
 	  <PackageReference Include="Dfe.Academisation.ExtensionMethods" Version="2.0.0" />
 	  <PackageReference Include="DfE.CoreLibs.Contracts" Version="1.0.10" />
-	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
 	  <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
 	  <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
 	  <PackageReference Include="Microsoft.FeatureManagement" Version="3.5.0" />
