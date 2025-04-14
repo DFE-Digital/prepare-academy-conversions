@@ -16,21 +16,21 @@ public class SummaryIntegrationTests : BaseIntegrationTests
    {
    }
 
-   [Theory(Skip = "I will come back to it shortly")]
-   [AutoMoqData]
-   public async Task Should_render_summary_page_with_school_and_trust(EstablishmentDto establishment, TrustDtoResponse TrustDtoResponse)
-   {
-      establishment.OfstedLastInspection = DateTime.Now.ToString("dd-mm-yyyy");
-      string ukprn = TrustDtoResponse.Data[0].Ukprn;
-      _factory.AddGetWithJsonResponse($"/v4/establishment/urn/{establishment.Urn}", establishment);
-      _factory.AddGetWithJsonResponse("/v4/trusts*", TrustDtoResponse);
+   //[Theory(Skip = "I will come back to it shortly")]
+   //[AutoMoqData]
+   //public async Task Should_render_summary_page_with_school_and_trust(EstablishmentDto establishment, TrustDtoResponse TrustDtoResponse)
+   //{
+   //   establishment.OfstedLastInspection = DateTime.Now.ToString("dd-mm-yyyy");
+   //   string ukprn = TrustDtoResponse.Data[0].Ukprn;
+   //   _factory.AddGetWithJsonResponse($"/v4/establishment/urn/{establishment.Urn}", establishment);
+   //   _factory.AddGetWithJsonResponse("/v4/trusts*", TrustDtoResponse);
 
-      await OpenAndConfirmPathAsync($"/start-new-project/check-school-trust-details?ukprn={ukprn}&urn={establishment.Urn}&hasSchoolApplied=true&hasPreferredTrust=yes");
+   //   await OpenAndConfirmPathAsync($"/start-new-project/check-school-trust-details?ukprn={ukprn}&urn={establishment.Urn}&hasSchoolApplied=true&hasPreferredTrust=yes");
 
-      Document.QuerySelector<IHtmlElement>("[data-cy=school-name]")!.Text().Trim().Should()
-         .Be(establishment.Name);
-      Document.QuerySelector<IHtmlElement>("[data-cy=trust-name]")!.Text().Trim().Should()
-         .Be(TrustDtoResponse.Data[0].Name);
-   }
+   //   Document.QuerySelector<IHtmlElement>("[data-cy=school-name]")!.Text().Trim().Should()
+   //      .Be(establishment.Name);
+   //   Document.QuerySelector<IHtmlElement>("[data-cy=trust-name]")!.Text().Trim().Should()
+   //      .Be(TrustDtoResponse.Data[0].Name);
+   //}
 
 }

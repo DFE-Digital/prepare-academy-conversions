@@ -28,7 +28,7 @@ namespace Dfe.PrepareConversions.Data.Tests.Features
          _subject = new ApiClient(_httpClientFactory.Object, _features.Object, _pathFor);
       }
 
-      private HttpClient GetMockHttpClient(string methodName, HttpStatusCode statusCode)
+      private static HttpClient GetMockHttpClient(string methodName, HttpStatusCode statusCode)
       {
          var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
          mockHttpMessageHandler.Protected()

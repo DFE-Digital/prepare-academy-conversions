@@ -37,7 +37,7 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Tests
          );
       }
 
-      private HttpClient GetMockHttpClient(string methodName, HttpStatusCode statusCode)
+      private static HttpClient GetMockHttpClient(string methodName, HttpStatusCode statusCode)
       {
          var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
          mockHttpMessageHandler.Protected()
@@ -50,7 +50,7 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Tests
          return httpClient;
       }
 
-      private PrepareConversions.Data.Models.SetTransferPublicEqualityDutyModel GetUpdateModel()
+      private static PrepareConversions.Data.Models.SetTransferPublicEqualityDutyModel GetUpdateModel()
       {
          var urn = 12345;
          var publicEqualityDutyImpact = "Likely";

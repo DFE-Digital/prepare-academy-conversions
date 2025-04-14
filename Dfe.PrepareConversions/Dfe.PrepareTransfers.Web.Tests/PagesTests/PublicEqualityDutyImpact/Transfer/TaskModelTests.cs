@@ -37,37 +37,37 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Tra
       }
 
 
-      [Fact(Skip = "Will look into this shortly")]
-      public async Task OnGet_Returns_Page()
-      {
-         var projectResponse = new GetInformationForProjectResponse
-         {
-            Project = {
-               Urn = "12345",
-               TransferringAcademies = 
-               [
-                  new TransferringAcademy { }
-               ],
-               PublicEqualityDutyImpact = "Likely",
-               PublicEqualityDutyReduceImpactReason = "Some reason",
-               PublicEqualityDutySectionComplete = false
-            },
-            OutgoingAcademies = []
-         };
+      //[Fact(Skip = "Will look into this shortly")]
+      //public async Task OnGet_Returns_Page()
+      //{
+      //   var projectResponse = new GetInformationForProjectResponse
+      //   {
+      //      Project = {
+      //         Urn = "12345",
+      //         TransferringAcademies = 
+      //         [
+      //            new TransferringAcademy { }
+      //         ],
+      //         PublicEqualityDutyImpact = "Likely",
+      //         PublicEqualityDutyReduceImpactReason = "Some reason",
+      //         PublicEqualityDutySectionComplete = false
+      //      },
+      //      OutgoingAcademies = []
+      //   };
 
-         _getInformationForProject.Setup(s => s.Execute(projectResponse.Project.Urn)).ReturnsAsync(projectResponse);
+      //   _getInformationForProject.Setup(s => s.Execute(projectResponse.Project.Urn)).ReturnsAsync(projectResponse);
 
-         var result = await _subject.OnGetAsync(projectResponse.Project.Urn);
+      //   var result = await _subject.OnGetAsync(projectResponse.Project.Urn);
 
-         Assert.IsType<PageResult>(result);
+      //   Assert.IsType<PageResult>(result);
 
-         _getInformationForProject.Verify(r => r.Execute(projectResponse.Project.Urn), Times.Once);
+      //   _getInformationForProject.Verify(r => r.Execute(projectResponse.Project.Urn), Times.Once);
 
-         Assert.Equal(projectResponse.Project.Urn, _subject.Urn);
-         Assert.Equal(projectResponse.Project.OutgoingTrustName, _subject.OutgoingTrustName);
-         Assert.Equal(projectResponse.Project.PublicEqualityDutyImpact, _subject.Impact);
-         Assert.Equal(projectResponse.Project.PublicEqualityDutyReduceImpactReason, _subject.ReduceImpactReason);
-         Assert.Equal(projectResponse.Project.PublicEqualityDutySectionComplete, _subject.SectionComplete);
-      }
+      //   Assert.Equal(projectResponse.Project.Urn, _subject.Urn);
+      //   Assert.Equal(projectResponse.Project.OutgoingTrustName, _subject.OutgoingTrustName);
+      //   Assert.Equal(projectResponse.Project.PublicEqualityDutyImpact, _subject.Impact);
+      //   Assert.Equal(projectResponse.Project.PublicEqualityDutyReduceImpactReason, _subject.ReduceImpactReason);
+      //   Assert.Equal(projectResponse.Project.PublicEqualityDutySectionComplete, _subject.SectionComplete);
+      //}
    }
 }
