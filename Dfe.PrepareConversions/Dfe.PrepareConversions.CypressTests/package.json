@@ -57,7 +57,7 @@
   "devDependencies": {
     "@cypress/grep": "^4.0.1",
     "@cypress/webpack-preprocessor": "^6.0.1",
-    "@types/jest": "^29.5.14",
+    "@types/jest": "29.5.14",
     "@types/node": "^20.11.16",
     "@typescript-eslint/parser": "8.29.0",
     "cy-verify-downloads": "^0.2.3",
@@ -71,7 +71,7 @@
     "dayjs": "^1.11.13",
     "eslint": "9.24.0",
     "eslint-plugin-cypress": "3.6.0",
-    "mochawesome": "^7.1.3",
+    "mochawesome": "7.1.3",
     "typescript": "^5.3.3"
   },
   "author": ""
