@@ -1,26 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using Dfe.PrepareConversions.Data.Services;
+using Dfe.PrepareTransfers.Data.Models;
+using DfE.CoreLibs.Contracts.Academies.V4;
+using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Dfe.Academies.Contracts.V4;
-using Dfe.Academies.Contracts.V4.Trusts;
-using Dfe.PrepareConversions.Data.Services;
-using Dfe.PrepareTransfers.Data.Models;
-using Newtonsoft.Json;
 
 namespace Dfe.PrepareTransfers.Data.TRAMS
 {
-    public class TramsTrustsRepository : ITrusts
-    {
-        private readonly IMapper<TrustDto, Trust> _trustMapper;
+   public class TramsTrustsRepository : ITrusts
+   {
+      private readonly IMapper<TrustDto, Trust> _trustMapper;
 
-        public TramsTrustsRepository(IDfeHttpClientFactory httpClientFactory,
-            IMapper<TrustDto, Trust> trustMapper
-            )
-        {
+      public TramsTrustsRepository(IDfeHttpClientFactory httpClientFactory,
+          IMapper<TrustDto, Trust> trustMapper
+          )
+      {
          _httpClientFactory = httpClientFactory;
          _trustMapper = trustMapper;
-        }
+      }
 
       private readonly IDfeHttpClientFactory _httpClientFactory;
 
@@ -29,40 +29,40 @@ namespace Dfe.PrepareTransfers.Data.TRAMS
 
       public async Task<List<Trust>> SearchTrusts(string searchQuery = "",
             string outgoingTrustId = "")
-        {
-            var url = $"v4/trusts?groupName={searchQuery}&ukprn={searchQuery}&companiesHouseNumber={searchQuery}";
-            using var response = await TramsClient.GetAsync(url);
+      {
+         var url = $"v4/trusts?groupName={searchQuery}&ukprn={searchQuery}&companiesHouseNumber={searchQuery}";
+         using var response = await TramsClient.GetAsync(url);
 
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new TramsApiException(response);
-            }
+         if (!response.IsSuccessStatusCode)
+         {
+            throw new TramsApiException(response);
+         }
 
-            var apiResponse = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<PagedDataResponse<TrustDto>>(apiResponse);
+         var apiResponse = await response.Content.ReadAsStringAsync();
+         var result = JsonConvert.DeserializeObject<PagedDataResponse<TrustDto>>(apiResponse);
 
-            var mappedResult = result.Data.Where(t => !string.IsNullOrEmpty(t.Ukprn) &&
-                                                 t.Ukprn != outgoingTrustId)
-                .Select(r => _trustMapper.Map(r)).ToList();
+         var mappedResult = result.Data.Where(t => !string.IsNullOrEmpty(t.Ukprn) &&
+                                              t.Ukprn != outgoingTrustId)
+             .Select(r => _trustMapper.Map(r)).ToList();
 
-            return mappedResult;
-        }
+         return mappedResult;
+      }
 
-        public async Task<Trust> GetByUkprn(string ukprn)
-        {
-            var url = $"v4/trust/{ukprn}";
-            using var response = await TramsClient.GetAsync(url);
+      public async Task<Trust> GetByUkprn(string ukprn)
+      {
+         var url = $"v4/trust/{ukprn}";
+         using var response = await TramsClient.GetAsync(url);
 
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new TramsApiException(response);
-            }
+         if (!response.IsSuccessStatusCode)
+         {
+            throw new TramsApiException(response);
+         }
 
-            var apiResponse = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<TrustDto>(apiResponse);
-            var trust = _trustMapper.Map(result);
+         var apiResponse = await response.Content.ReadAsStringAsync();
+         var result = JsonConvert.DeserializeObject<TrustDto>(apiResponse);
+         var trust = _trustMapper.Map(result);
 
-            return trust;
-        }
-    }
+         return trust;
+      }
+   }
 }
