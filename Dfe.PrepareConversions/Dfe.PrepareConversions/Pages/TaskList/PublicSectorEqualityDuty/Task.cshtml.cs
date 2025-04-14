@@ -43,7 +43,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
          switch (Project.PublicEqualityDutyImpact)
          {
             case "Unlikely":
-               ReduceImpactReasonLabel = "The equalities duty has been considered and the Secretary of State’s decision is unlikely to affect disproportionately any particular person or group who share protected characteristics.";
+               ReduceImpactReasonLabel = "The equalities duty has been considered and the Secretary of State's decision is unlikely to affect disproportionately any particular person or group who share protected characteristics.";
                break;
             case "Some impact":
                ReduceImpactReasonLabel = "The equalities duty has been considered and there are some impacts but on balance the analysis indicates these changes will not affect disproportionately any particular person or group who share protected characteristics.";

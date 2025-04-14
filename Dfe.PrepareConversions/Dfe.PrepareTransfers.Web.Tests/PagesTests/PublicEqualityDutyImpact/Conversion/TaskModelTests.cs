@@ -43,7 +43,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Con
       }
 
       [Theory]
-      [InlineData("Unlikely", "The equalities duty has been considered and the Secretary of State’s decision is unlikely to affect disproportionately any particular person or group who share protected characteristics.")]
+      [InlineData("Unlikely", "The equalities duty has been considered and the Secretary of State's decision is unlikely to affect disproportionately any particular person or group who share protected characteristics.")]
       [InlineData("Some impact", "The equalities duty has been considered and there are some impacts but on balance the analysis indicates these changes will not affect disproportionately any particular person or group who share protected characteristics.")]
       [InlineData("Likely", "The equalities duty has been considered and the decision is likely to affect disproportionately a particular person or group who share protected characteristics")]
       public async Task OnGet_Returns_Custom_Impact_Reason_Label(string impact, string reasonLabel)
