@@ -8,6 +8,7 @@ module.exports = {
 				{ from: path.join(__dirname, 'node_modules/govuk-frontend/govuk/assets'), to: path.join(__dirname, 'assets') },
 				{ from: path.join(__dirname, 'node_modules/accessible-autocomplete/dist'), to: path.join(__dirname, 'dist') },
             { from: path.join(__dirname, 'node_modules/dfe-frontend/dist'), to: path.join(__dirname, 'dist') },
+            { from: path.join(__dirname, 'node_modules/dfe-frontend/packages/assets'), to: path.join(__dirname, 'assets') },
 				{ from: path.resolve(__dirname, 'node_modules/@ministryofjustice/frontend/moj/assets'), to: path.resolve(__dirname, 'assets') },
 			],
 		})
