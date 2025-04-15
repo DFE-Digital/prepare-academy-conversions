@@ -520,6 +520,43 @@ namespace Dfe.PrepareTransfers.Web.Tests.ServicesTests
                 Assert.Equal(ProjectStatuses.Completed, _index.RationaleStatus);
             }
         }
+
+         public class GetPublicSectorEqualityDutyStatus : TaskListServiceTests
+         {
+            [Fact]
+            public void GivenPublicSectorEqualityDutyNotStarted_StatusNotStarted()
+            {
+               FoundProjectFromRepo.PublicEqualityDutyImpact = null;
+               FoundProjectFromRepo.PublicEqualityDutyReduceImpactReason = null;
+               FoundProjectFromRepo.PublicEqualityDutySectionComplete = false;
+
+               _subject.BuildTaskListStatuses(_index);
+               Assert.Equal(ProjectStatuses.NotStarted, _index.PublicSectorEqualityDutyStatus);
+            }
+
+            [Fact]
+            public void GivenPublicSectorEqualityDutyInProgress_StatusInProgress()
+            {
+               FoundProjectFromRepo.PublicEqualityDutyImpact = "Some impact";
+               FoundProjectFromRepo.PublicEqualityDutyReduceImpactReason = "Some impact reduction reason";
+               FoundProjectFromRepo.PublicEqualityDutySectionComplete = false;
+
+               _subject.BuildTaskListStatuses(_index);
+               Assert.Equal(ProjectStatuses.InProgress, _index.PublicSectorEqualityDutyStatus);
+            }
+
+            [Fact]
+            public void GivenPublicSectorEqualityDutyComplete_StatusCompleted()
+            {
+               FoundProjectFromRepo.PublicEqualityDutyImpact = "Some impact";
+               FoundProjectFromRepo.PublicEqualityDutyReduceImpactReason = "Some impact reduction reason";
+               FoundProjectFromRepo.PublicEqualityDutySectionComplete = true;
+
+               _subject.BuildTaskListStatuses(_index);
+               Assert.Equal(ProjectStatuses.Completed, _index.PublicSectorEqualityDutyStatus);
+            }
+      }
+
         public static IEnumerable<object[]> LegalRequirementsCompleted()
         {
             yield return new object[]

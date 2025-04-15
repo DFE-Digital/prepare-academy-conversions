@@ -1,4 +1,3 @@
-using DocumentFormat.OpenXml.InkML;
 using System;
 using System.Collections.Generic;
 
@@ -93,6 +92,7 @@ public static class Links
    public static class TaskList
    {
       public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/TaskList/Index");
+      public static readonly LinkItem ConversionPublicSectorEqualityDutyTask = AddLinkItem(page: "/Conversion/TaskList/PublicSectorEqualityDuty/Task");
       public static readonly LinkItem PreviewHTBTemplate = AddLinkItem(backText: "Back", page: "/TaskList/PreviewProjectTemplate");
       public static readonly LinkItem GenerateHTBTemplate = AddLinkItem(page: "/TaskList/DownloadProjectTemplate");
    }
@@ -141,6 +141,13 @@ public static class Links
       public static readonly LinkItem GrantType = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Sponsored/GrantType");
       public static readonly LinkItem NumberOfSites = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/Sponsored/NumberOfSites");
       public static readonly LinkItem DaoPackSent = AddLinkItem(page: "/TaskList/SchoolAndTrustInformation/DaoPackSentDate");
+   }
+
+   public static class PublicSectorEqualityDutySection
+   {
+      public static readonly LinkItem ConversionTask = AddLinkItem(page: "/TaskList/PublicSectorEqualityDuty/Task");
+      public static readonly LinkItem ConversionLikelyhoodToImpact = AddLinkItem(page: "/TaskList/PublicSectorEqualityDuty/LikelyhoodImpact");
+      public static readonly LinkItem ConversionImpactReductionReason = AddLinkItem(page: "/TaskList/PublicSectorEqualityDuty/ImpactReductionReason");
    }
 
    public static class SchoolOverviewSection

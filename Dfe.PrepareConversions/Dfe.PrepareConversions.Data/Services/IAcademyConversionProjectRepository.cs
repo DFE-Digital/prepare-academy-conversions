@@ -61,6 +61,8 @@ public interface IAcademyConversionProjectRepository
    Task SetAssignedUser(int id, SetAssignedUserModel updatedAssignedUser);
    Task SetFormAMatAssignedUser(int id, SetAssignedUserModel updatedAssignedUser);
    Task SetSchoolOverview(int id, SetSchoolOverviewModel updatedSchoolOverview);
+
+   Task SetPublicEqualityDuty(int id, SetConversionPublicEqualityDutyModel model);
    Task SetPerformanceData(int id, SetPerformanceDataModel setPerformanceDataModel);
    Task SetIncomingTrust(int id, SetIncomingTrustDataModel setIncomingTrustDataModel);
    Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters();

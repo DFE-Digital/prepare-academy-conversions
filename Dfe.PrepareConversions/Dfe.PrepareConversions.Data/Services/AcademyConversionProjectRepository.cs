@@ -143,8 +143,6 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       return new ApiResponse<IEnumerable<AcademyConversionProject>>(response.StatusCode, projects);
    }
 
-
-
    public async Task<ApiResponse<ProjectFilterParameters>> GetFilterParameters()
    {
       HttpResponseMessage response = await _apiClient.GetFilterParametersAsync();
@@ -308,6 +306,15 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       HttpResponseMessage result = await _apiClient.SetSchoolOverview(id, updatedSchoolOverview);
       if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
+
+   public async Task SetPublicEqualityDuty(int id, SetConversionPublicEqualityDutyModel model)
+   {
+      HttpResponseMessage result = await _apiClient.SetConversionPublicEqualityDuty(id, model);
+
+      if (!result.IsSuccessStatusCode)
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+   }
+
    public async Task SetAssignedUser(int id, SetAssignedUserModel updatedAssignedUser)
    {
       HttpResponseMessage result = await _apiClient.SetAssignedUser(id, updatedAssignedUser);

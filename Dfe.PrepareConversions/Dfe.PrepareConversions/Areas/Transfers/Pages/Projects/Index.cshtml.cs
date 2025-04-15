@@ -17,20 +17,21 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects
     public class Index(ITaskListService taskListService, PerformanceDataChannel performanceDataChannel, ISession session) : CommonPageModel
     {
       public ProjectStatuses FeatureTransferStatus { get; set; }
-        public ProjectStatuses TransferDatesStatus { get; set; }
-        public ProjectStatuses BenefitsAndOtherFactorsStatus { get; set; }
-        public ProjectStatuses LegalRequirementsStatus { get; set; }
-        public ProjectStatuses RationaleStatus { get; set; }
-        public ProjectStatuses AcademyAndTrustInformationStatus { get; set; }
-        public string ProjectStatus { get; set; }
-        public User AssignedUser { get; set; }
-        public bool HasPermission { get; set; }
+      public ProjectStatuses TransferDatesStatus { get; set; }
+      public ProjectStatuses BenefitsAndOtherFactorsStatus { get; set; }
+      public ProjectStatuses LegalRequirementsStatus { get; set; }
+      public ProjectStatuses RationaleStatus { get; set; }
+      public ProjectStatuses AcademyAndTrustInformationStatus { get; set; }
+      public ProjectStatuses PublicSectorEqualityDutyStatus { get; set; }
+      public string ProjectStatus { get; set; }
+      public User AssignedUser { get; set; }
+      public bool HasPermission { get; set; }
         
 
-        /// <summary>
-        /// Item1 Academy Ukprn, Item2 Academy Name
-        /// </summary>
-        public List<Tuple<string, string>> Academies { get; set; }
+      /// <summary>
+      /// Item1 Academy Ukprn, Item2 Academy Name
+      /// </summary>
+      public List<Tuple<string, string>> Academies { get; set; }
       public const string SESSION_KEY = "RoleCapabilities";
 
       public Task<IActionResult> OnGet(CancellationToken cancellationToken)

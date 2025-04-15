@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using AutoFixture;
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Data.Models.Projects;
@@ -26,7 +27,8 @@ namespace Dfe.PrepareTransfers.Web.Tests
         protected GetInformationForProjectResponse FoundInformationForProject;
         protected Project FoundProjectFromRepo;
         protected Project FoundPopulatedProjectFromRepo;
-        
+        protected AcademyConversionProject ConversionProject;
+
         protected const string OutgoingAcademyName = "Academy Name";
         private const string LAName = "LA Name";
 

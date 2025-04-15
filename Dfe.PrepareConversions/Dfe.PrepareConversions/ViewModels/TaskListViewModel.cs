@@ -14,8 +14,9 @@ public class TaskListViewModel
    public TaskListItemViewModel SchoolBudgetInformationTaskListStatus { get; set; }
    public TaskListItemViewModel ProjectDatesTaskListTaskListStatus { get; set; }
 
+   public TaskListItemViewModel PublicSectorEqualityDutyStatus { get; set; }
 
-   
+
    public string ProjectStatus { get; set; }
    public string ProjectStatusColour { get; set; }
    public bool HasKeyStage2PerformanceTables { get; set; }
@@ -38,7 +39,8 @@ public class TaskListViewModel
          ProjectStatus = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Value,
          ProjectStatusColour = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Colour,
          PerformanceDataHintText = ProjectListHelper.MapPerformanceDataHint(project.SchoolType, hasSchoolAbsenceData),
-         ProjectDatesTaskListTaskListStatus = TaskListItemViewModel.GetProjectDatesTaskListStatus(project)
+         ProjectDatesTaskListTaskListStatus = TaskListItemViewModel.GetProjectDatesTaskListStatus(project),
+         PublicSectorEqualityDutyStatus = TaskListItemViewModel.PublicSectorEqualityDutyStatus(project.PublicEqualityDutySectionComplete, project.PublicEqualityDutyImpact)
       };
    }
 }

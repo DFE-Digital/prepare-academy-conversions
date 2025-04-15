@@ -104,4 +104,10 @@ public static class Links
         public static readonly LinkItem ApprovedInfo = Create("/TaskList/Decision/TransfersDecisionApprovedInfo");
     }
 
+   public static class PublicSectorEqualityDutySection
+   {
+      public static readonly LinkItem TransferTask = Create("/Projects/PublicSectorEqualityDuty/Task");
+      public static readonly LinkItem TransferLikelyhoodToImpact = Create("/Projects/PublicSectorEqualityDuty/LikelyhoodImpact");
+      public static readonly LinkItem TransferImpactReductionReason = Create("/Projects/PublicSectorEqualityDuty/ImpactReductionReason");
+   }
 }

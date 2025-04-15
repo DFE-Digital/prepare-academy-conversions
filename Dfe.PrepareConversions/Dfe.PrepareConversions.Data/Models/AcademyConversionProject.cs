@@ -1,5 +1,4 @@
-﻿using Microsoft.Graph;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Data.Models;
@@ -130,6 +129,11 @@ public class AcademyConversionProject
    public string KeyStage4PerformanceAdditionalInformation { get; set; }
    public string KeyStage5PerformanceAdditionalInformation { get; set; }
    public string EducationalAttendanceAdditionalInformation { get; set; }
+
+   // Public sector equality duty
+   public string PublicEqualityDutyImpact { get; set; }
+   public string PublicEqualityDutyReduceImpactReason { get; set; }
+   public bool PublicEqualityDutySectionComplete { get; init; }
 
    // assigned user
    public User AssignedUser { get; set; }

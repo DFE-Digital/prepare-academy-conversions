@@ -42,8 +42,6 @@
              </ul>
         </div>
 
-
-
         <h3 class="app-task-list__section govuk-!-margin-top-8">Add school information</h3>
        <div class="app-task-list">
           <ul class="app-task-list__items govuk-!-padding-left-0">
@@ -93,6 +91,14 @@
                    </strong>
                 </li>
              }
+            <li class="app-task-list__item">
+               <span class="app-task-list__task-name">
+                   <a class="govuk-link" asp-page="@Links.PublicSectorEqualityDutySection.ConversionTask.Page" asp-route-id="@Model.Project.Id" aria-describedby="public-sector-equality-duty-task">Public Sector Equality Duty</a>
+               </span>
+                    <strong class="govuk-tag @Model.TaskList.PublicSectorEqualityDutyStatus.CssClass app-task-list__tag" id="public-sector-equality-duty-task" data-cy="select-tasklist-psed-status">
+                      @Model.TaskList.PublicSectorEqualityDutyStatus.Status
+                  </strong>
+            </li>
           </ul>
        </div>
        @if(!Model.Project.IsReadOnly)

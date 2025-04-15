@@ -6,7 +6,6 @@ using Dfe.PrepareConversions.Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Services;
@@ -118,6 +117,12 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       await _innerRepository.SetSchoolOverview(id, updatedSchoolOverview);
    }
+
+   public async Task SetPublicEqualityDuty(int id, SetConversionPublicEqualityDutyModel model)
+   {
+      await _innerRepository.SetPublicEqualityDuty(id, model);
+   }
+
    public async Task SetAssignedUser(int id, SetAssignedUserModel updatedAssignedUser)
    {
       await _innerRepository.SetAssignedUser(id, updatedAssignedUser);

@@ -41,7 +41,12 @@ namespace Dfe.PrepareTransfers.Data.Models
       public string? IncomingTrustReferenceNumber { get; set; }
       public PrepareConversions.Data.Models.User AssignedUser { get; set; }
       public bool? IsFormAMat { get; set; }
-      
+
+      // Public sector equality duty
+      public string PublicEqualityDutyImpact { get; set; }
+      public string PublicEqualityDutyReduceImpactReason { get; set; }
+      public bool? PublicEqualityDutySectionComplete { get; set; }
+
       public bool? IsReadOnly { get; set; }
       
       public DateTime? ProjectSentToCompleteDate { get; set; }

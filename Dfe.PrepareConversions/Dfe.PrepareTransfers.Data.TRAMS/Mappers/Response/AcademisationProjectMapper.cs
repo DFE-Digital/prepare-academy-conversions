@@ -32,8 +32,10 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Mappers.Response
                 IsFormAMat = input.IsFormAMat,
                 IsReadOnly = input.IsReadOnly,
                 ProjectSentToCompleteDate = input.ProjectSentToCompleteDate,
-                IncomingTrustReferenceNumber = input.IncomingTrustReferenceNumber
-               
+                IncomingTrustReferenceNumber = input.IncomingTrustReferenceNumber,
+                PublicEqualityDutyImpact = input.PublicEqualityDutyImpact,
+                PublicEqualityDutyReduceImpactReason = input.PublicEqualityDutyReduceImpactReason,
+                PublicEqualityDutySectionComplete = input.PublicEqualityDutySectionComplete
             };
         }
 
