@@ -82,7 +82,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
             SectionComplete = false;
 
             ModelStateDictionary model = new();
-            model.AddModelError("Impact", "Consder the public Sector Equility Duty");
+            model.AddModelError("Impact", "Consder the public Sector Equality Duty");
             errorService.AddErrors(["Impact"], model);
 
             return Page();
