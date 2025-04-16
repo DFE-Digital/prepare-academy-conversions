@@ -148,7 +148,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Con
          List<Error> errors = _errorService.Object.GetErrors().ToList();
          errors.Count.Should().Be(1);
          errors[0].Key.Should().Be("Impact");
-         errors[0].Message.Should().Be("Consder the public Sector Equility Duty");
+         errors[0].Message.Should().Be("Consder the public Sector Equality Duty");
       }
 
       [Fact]

@@ -89,7 +89,7 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
          if (IsNew)
          {
             ModelStateDictionary model = new();
-            model.AddModelError("Impact", "Consder the public Sector Equility Duty");
+            model.AddModelError("Impact", "Consder the public Sector Equality Duty");
             errorService.AddErrors(["Impact"], model);
 
             return Page();
