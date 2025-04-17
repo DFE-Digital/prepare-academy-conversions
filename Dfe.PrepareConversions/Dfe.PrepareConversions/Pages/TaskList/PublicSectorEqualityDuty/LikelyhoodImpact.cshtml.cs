@@ -94,10 +94,16 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
             (string returnPage, string fragment) = GetReturnPageAndFragment();
             if (!string.IsNullOrWhiteSpace(returnPage))
             {
-               return RedirectToPage(returnPage, null, new { id }, fragment);
+                return RedirectToPage(returnPage, null, new { id }, fragment);
             }
 
-            return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionTask.Page, new { id });
+            if (Impact == PublicSectorEqualityDutyImpact.Unlikely)
+            {
+               return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionTask.Page, new { id });
+            }
+
+            var returnUrl = Links.PublicSectorEqualityDutySection.ConversionLikelyhoodToImpact.Page;
+            return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page, new { id, returnUrl });
       }
     }
 }

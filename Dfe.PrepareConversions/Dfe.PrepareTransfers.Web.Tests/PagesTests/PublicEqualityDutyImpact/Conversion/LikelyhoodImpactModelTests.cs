@@ -101,7 +101,9 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Con
 
          var redirectResponse = Assert.IsType<RedirectToPageResult>(response);
 
-         Assert.Equal(Links.PublicSectorEqualityDutySection.ConversionTask.Page, redirectResponse.PageName);
+         var pageUrl = impactEnum == PublicSectorEqualityDutyImpact.Unlikely ? Links.PublicSectorEqualityDutySection.ConversionTask.Page : Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page;
+
+         Assert.Equal(pageUrl, redirectResponse.PageName);
          Assert.Equal(conversionProject.Id, redirectResponse.RouteValues["id"]);
       }
    }

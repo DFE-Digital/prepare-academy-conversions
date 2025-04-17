@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Dfe.PrepareConversions.Data.Models;
-//using Dfe.PrepareConversions.Models;
 
 namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqualityDuty
 {
@@ -69,27 +68,31 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
 
          ReduceImpactReasonLabel = Dfe.PrepareConversions.Models.PreviewPublicSectorEqualityDutyModel.GenerateReduceImpactReasonLabel(Impact);
 
-         if (IsNew)
+         if (SectionComplete)
          {
-            ModelStateDictionary model = new();
-            model.AddModelError("Impact", "Consder the public Sector Equality Duty");
-            errorService.AddErrors(["Impact"], model);
+            if (IsNew)
+            {
+               ModelStateDictionary model = new();
+               model.AddModelError("Impact", "Consider the public Sector Equality Duty");
+               errorService.AddErrors(["Impact"], model);
 
-            return Page();
+               return Page();
+            }
+
+            if (RequiresReason && string.IsNullOrWhiteSpace(projectInformation.Project.PublicEqualityDutyReduceImpactReason))
+            {
+               ModelStateDictionary model = new();
+               model.AddModelError("ReduceImpactReason", "Describe what will be done to reduce the impact");
+               errorService.AddErrors(["ReduceImpactReason"], model);
+
+               return Page();
+            }
+
+            var key = int.Parse(urn);
+            SetTransferPublicEqualityDutyModel dutyModel = new(key, projectInformation.Project.PublicEqualityDutyImpact, projectInformation.Project.PublicEqualityDutyReduceImpactReason, SectionComplete);
+
+            await projectsRepository.SetTransferPublicEqualityDuty(key, dutyModel);
          }
-
-         if (RequiresReason && string.IsNullOrWhiteSpace(projectInformation.Project.PublicEqualityDutyReduceImpactReason))
-         {
-            ModelStateDictionary model = new();
-            model.AddModelError("ReduceImpactReason", "Describe what will be done to reduce the impact");
-            errorService.AddErrors(["ReduceImpactReason"], model);
-            return Page();
-         }
-
-         var key = int.Parse(urn);
-         SetTransferPublicEqualityDutyModel dutyModel = new(key, projectInformation.Project.PublicEqualityDutyImpact, projectInformation.Project.PublicEqualityDutyReduceImpactReason, SectionComplete);
-
-         await projectsRepository.SetTransferPublicEqualityDuty(key, dutyModel);
 
          return RedirectToPage(Links.Project.Index.PageName, new { projectInformation.Project.Urn });
       }

@@ -95,12 +95,18 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
 
          await projectsRepository.SetTransferPublicEqualityDuty(urn, model);
 
-         if (ReturnToPreview)
-         {
+        if (ReturnToPreview)
+        {
             return RedirectToPage("/TaskList/HtbDocument/Preview", new { projectInformation.Project.Urn });
+        }
+
+            if (Impact == Models.PublicSectorEqualityDutyImpact.Unlikely)
+         {
+            return RedirectToPage(Links.PublicSectorEqualityDutySection.TransferTask.PageName, new { projectInformation.Project.Urn });
          }
 
-         return RedirectToPage(Links.PublicSectorEqualityDutySection.TransferTask.PageName, new { projectInformation.Project.Urn });
+         var returnUrl = Links.PublicSectorEqualityDutySection.TransferLikelyhoodToImpact.PageName;
+         return RedirectToPage(Links.PublicSectorEqualityDutySection.TransferImpactReductionReason.PageName, new { id = projectInformation.Project.Urn, returnUrl });
       }
    }
 }
