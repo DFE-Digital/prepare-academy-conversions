@@ -49,7 +49,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
                ReduceImpactReasonLabel = "The equalities duty has been considered and there are some impacts but on balance the analysis indicates these changes will not affect disproportionately any particular person or group who share protected characteristics.";
                break;
             case "Likely":
-               ReduceImpactReasonLabel = "The equalities duty has been considered and the decision is likely to affect disproportionately a particular person or group who share protected characteristics";
+               ReduceImpactReasonLabel = "The equalities duty has been considered and the decision is likely to affect disproportionately a particular person or group who share protected characteristics.";
                break;
             default:
                break;
@@ -77,33 +77,36 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
       {
          await SetProject(id);
 
-         if (IsNew)
+         if (SectionComplete)
          {
-            SectionComplete = false;
+            if (IsNew)
+            {
+               SectionComplete = false;
 
-            ModelStateDictionary model = new();
-            model.AddModelError("Impact", "Consder the public Sector Equality Duty");
-            errorService.AddErrors(["Impact"], model);
+               ModelStateDictionary model = new();
+               model.AddModelError("Impact", "Consider the public Sector Equality Duty");
+               errorService.AddErrors(["Impact"], model);
 
-            return Page();
+               return Page();
+            }
+
+            MapReduceImpactReasonLabel();
+
+            ReduceImpactReason = Project.PublicEqualityDutyReduceImpactReason;
+
+            if (RequiresReason && string.IsNullOrWhiteSpace(Project.PublicEqualityDutyReduceImpactReason))
+            {
+               ModelStateDictionary model = new();
+               model.AddModelError("ReduceImpactReason", "Describe what will be done to reduce the impact");
+               errorService.AddErrors(["ReduceImpactReason"], model);
+
+               return Page();
+            }
+
+            SetConversionPublicEqualityDutyModel dutyModel = new(id, Project.PublicEqualityDutyImpact, Project.PublicEqualityDutyReduceImpactReason, SectionComplete);
+
+            await _repository.SetPublicEqualityDuty(id, dutyModel);
          }
-
-         MapReduceImpactReasonLabel();
-
-         ReduceImpactReason = Project.PublicEqualityDutyReduceImpactReason;
-
-         if (RequiresReason && string.IsNullOrWhiteSpace(Project.PublicEqualityDutyReduceImpactReason))
-         {
-            ModelStateDictionary model = new();
-            model.AddModelError("ReduceImpactReason", "Describe what will be done to reduce the impact");
-            errorService.AddErrors(["ReduceImpactReason"], model);
-
-            return Page();
-         }
-
-         SetConversionPublicEqualityDutyModel dutyModel = new(id, Project.PublicEqualityDutyImpact, Project.PublicEqualityDutyReduceImpactReason, SectionComplete);
-
-         await _repository.SetPublicEqualityDuty(id, dutyModel);
 
          return RedirectToPage(Links.TaskList.Index.Page, new { id });
       }

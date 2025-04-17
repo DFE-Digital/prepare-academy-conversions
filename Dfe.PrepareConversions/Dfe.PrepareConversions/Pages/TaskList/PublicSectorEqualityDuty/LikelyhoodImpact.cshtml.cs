@@ -83,7 +83,13 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
 
             await _repository.SetPublicEqualityDuty(id, model);
 
-            return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionTask.Page, new { id });
-        }
+            if (Impact == PublicSectorEqualityDutyImpact.Unlikely)
+            {
+               return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionTask.Page, new { id });
+            }
+
+            var returnUrl = Links.PublicSectorEqualityDutySection.ConversionLikelyhoodToImpact.Page;
+            return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page, new { id, returnUrl });
+      }
     }
 }
