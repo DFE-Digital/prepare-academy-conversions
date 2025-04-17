@@ -1,0 +1,46 @@
+﻿@{
+    var dutyKey = "Public Sector Equality Duty consideration";
+    var dutyTestTag = "psed-impact-key";
+    var reasonKey = "What will be done to reduce this impact?";
+    var reasonTestTag = "psed-impact-reduce-reason";
+}
+
+<dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">@dutyKey</dt>
+        <dd class="govuk-summary-list__value">
+            @if (string.IsNullOrWhiteSpace(@Model.ReduceImpactDescription))
+            {
+                <span class="empty" id="@dutyTestTag" data-test=@dutyTestTag>Empty</span>
+            }
+            else
+            {
+                <p class="govuk-body" id="@dutyTestTag" data-test=@dutyTestTag>@Model.ReduceImpactDescription</p>
+            }
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" asp-page="/Projects/PublicSectorEqualityDuty/LikelyhoodImpact" asp-route-id="@Model.Urn" asp-route-returnToPreview="true">
+                Change<span class="govuk-visually-hidden"> @dutyKey</span>
+            </a>
+        </dd>
+    </div>
+
+    <div if="@Model.RequiresReason" class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">@reasonKey</dt>
+        <dd class="govuk-summary-list__value">
+            @if (string.IsNullOrWhiteSpace(@Model.ReduceImpactReason))
+            {
+                <span class="empty" id="@reasonTestTag" data-test=@reasonTestTag>Empty</span>
+            }
+            else
+            {
+                <p class="govuk-body" id="@reasonTestTag" data-test=@reasonTestTag>@Model.ReduceImpactReason</p>
+            }
+        </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" asp-page="/Projects/PublicSectorEqualityDuty/ImpactReductionReason" asp-route-id="@Model.Urn" asp-route-returnToPreview="true">
+                Change<span class="govuk-visually-hidden"> @dutyKey</span>
+            </a>
+        </dd>
+    </div>
+</dl>

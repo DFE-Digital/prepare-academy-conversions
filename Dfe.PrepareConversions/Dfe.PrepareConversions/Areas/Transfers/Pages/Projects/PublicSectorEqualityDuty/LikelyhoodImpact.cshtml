@@ -7,9 +7,13 @@
     Layout = "_Layout";
 }
 
+@{
+    var backUrl = Model.ReturnToPreview ? "/TaskList/HtbDocument/Preview" : "/Projects/PublicSectorEqualityDuty/Task";
+}
+
 @section BeforeMain
 {
-    <a class="govuk-back-link" asp-page="/Projects/PublicSectorEqualityDuty/Task" asp-route-urn="@Model.Urn">Back</a>
+    <a class="govuk-back-link" asp-page="@backUrl" asp-route-urn="@Model.Urn">Back</a>
 }
 
 @if (Model.ShowError)

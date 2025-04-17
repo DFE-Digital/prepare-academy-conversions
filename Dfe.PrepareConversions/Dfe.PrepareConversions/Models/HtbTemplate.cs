@@ -229,6 +229,14 @@ public class HtbTemplate
    [DocumentText("SchoolPupilForecastsAdditionalInformation")]
    public string SchoolPupilForecastsAdditionalInformation { get; set; }
    public IEnumerable<EducationalAttendanceViewModel> EducationalAttendance { get; set; }
+
+   // Public Sector Equality Duty
+   [DocumentText("PublicEqualityDutyImpact")]
+   public string PublicEqualityDutyImpact { get; set; }
+
+   [DocumentText("PublicEqualityDutyReduceImpactReason")]
+   public string PublicEqualityDutyReduceImpactReason { get; set; }
+
    public static HtbTemplate Build(AcademyConversionProject project,
                                    SchoolOverview schoolOverview, KeyStagePerformance keyStagePerformance)
    {
@@ -307,7 +315,10 @@ public class HtbTemplate
          NumberOfAlternativeProvisionPlaces = project.NumberOfAlternativeProvisionPlaces?.ToString(),
          NumberOfSENUnitPlaces = project.NumberOfSENUnitPlaces?.ToString(),
          NumberOfMedicalPlaces = project.NumberOfMedicalPlaces?.ToString(),
-         NumberOfPost16Places = project.NumberOfPost16Places?.ToString()
+         NumberOfPost16Places = project.NumberOfPost16Places?.ToString(),
+         // Public Sector Equality Duty
+         PublicEqualityDutyImpact = project.PublicEqualityDutyImpact,
+         PublicEqualityDutyReduceImpactReason = project.PublicEqualityDutyReduceImpactReason
       };
 
       if (keyStagePerformance.HasSchoolAbsenceData)

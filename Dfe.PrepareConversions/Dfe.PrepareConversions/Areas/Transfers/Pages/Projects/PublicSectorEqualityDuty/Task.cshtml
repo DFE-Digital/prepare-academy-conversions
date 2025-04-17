@@ -45,9 +45,7 @@
     @{
         var containerWidth = Model.IsNew ? "govuk-grid-column-two-thirds" : "govuk-grid-column-full";
         var keyWidth = Model.IsNew ? @WidthOverride.OneThird : @WidthOverride.OneQuarter;
-    }
 
-    @{
         LinkItem likelyhoodImpactLink = new() { Page = "/Projects/PublicSectorEqualityDuty/LikelyhoodImpact" };
         LinkItem impactReductionLink = new() { Page = "/Projects/PublicSectorEqualityDuty/ImpactReductionReason" };
     }

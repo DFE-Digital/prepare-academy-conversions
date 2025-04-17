@@ -12,10 +12,7 @@
    <a asp-page="@Model.ReturnPage" asp-route-Id="@Model.ReturnId" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
 }
 
-@if (Model.ShowGenerateHtbTemplateError)
-{
-    <partial name="_ErrorSummary" />
-}
+<partial name="_ErrorSummary" />
 
 <partial name="_ProjectHeader" model="Model.Project" />
 

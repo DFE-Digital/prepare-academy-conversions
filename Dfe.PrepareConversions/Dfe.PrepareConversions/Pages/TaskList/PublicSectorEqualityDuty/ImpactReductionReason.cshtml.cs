@@ -6,6 +6,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Primitives;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Conversion
 {
@@ -17,7 +18,14 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
          [Required(ErrorMessage = "Decide what will be done to reduce the impact")]
          public string Reason { get; set; }
 
-         public override async Task<IActionResult> OnGetAsync(int id)
+         private (string, string) GetReturnPageAndFragment()
+         {
+            Request.Query.TryGetValue("return", out StringValues returnQuery);
+            Request.Query.TryGetValue("fragment", out StringValues fragmentQuery);
+            return (returnQuery, fragmentQuery);
+         }
+
+      public override async Task<IActionResult> OnGetAsync(int id)
          {
             IActionResult result = await SetProject(id);
 
@@ -45,6 +53,12 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
             SetConversionPublicEqualityDutyModel model = new(id, Project.PublicEqualityDutyImpact, Reason, Project.PublicEqualityDutySectionComplete);
 
             await _repository.SetPublicEqualityDuty(id, model);
+
+            (string returnPage, string fragment) = GetReturnPageAndFragment();
+            if (!string.IsNullOrWhiteSpace(returnPage))
+            {
+               return RedirectToPage(returnPage, null, new { id }, fragment);
+            }
 
             return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionTask.Page, new { id });
       }

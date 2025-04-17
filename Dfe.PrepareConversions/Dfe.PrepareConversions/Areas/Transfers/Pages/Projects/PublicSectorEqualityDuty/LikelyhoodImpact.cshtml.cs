@@ -19,6 +19,9 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
 
       public bool ShowError => errorService.HasErrors();
 
+      [BindProperty]
+      public bool ReturnToPreview { get; set; }
+
       public string GetImpactDescription(Models.PublicSectorEqualityDutyImpact impact)
       {
          var result = "";
@@ -65,6 +68,8 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
          OutgoingTrustName = projectInformation.Project.OutgoingTrustName;
          IsReadOnly = projectInformation.Project.IsReadOnly;
 
+         ReturnToPreview = Request.Query["returnToPreview"] == "true";
+
          MapImpact(projectInformation.Project.PublicEqualityDutyImpact);
 
          return Page();
@@ -89,6 +94,11 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
          SetTransferPublicEqualityDutyModel model = new(urn, impact, reason, false);
 
          await projectsRepository.SetTransferPublicEqualityDuty(urn, model);
+
+         if (ReturnToPreview)
+         {
+            return RedirectToPage("/TaskList/HtbDocument/Preview", new { projectInformation.Project.Urn });
+         }
 
          return RedirectToPage(Links.PublicSectorEqualityDutySection.TransferTask.PageName, new { projectInformation.Project.Urn });
       }

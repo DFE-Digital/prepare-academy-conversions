@@ -6,6 +6,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Primitives;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Conversion
 {
@@ -37,35 +38,42 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
             return result;
          }
 
-         public override async Task<IActionResult> OnGetAsync(int id)
+         private (string, string) GetReturnPageAndFragment()
          {
-               IActionResult result = await SetProject(id);
+            Request.Query.TryGetValue("return", out StringValues returnQuery);
+            Request.Query.TryGetValue("fragment", out StringValues fragmentQuery);
+            return (returnQuery, fragmentQuery);
+         }
 
-               if (result is StatusCodeResult { StatusCode: (int)HttpStatusCode.NotFound })
+         public override async Task<IActionResult> OnGetAsync(int id)
                {
-                  return NotFound();
-               }
+                     IActionResult result = await SetProject(id);
 
-               switch(Project.PublicEqualityDutyImpact)
-               {
-                  case "Unlikely":
-                     Impact = PublicSectorEqualityDutyImpact.Unlikely;
-                     break;
-                  case "Some impact":
-                     Impact = PublicSectorEqualityDutyImpact.SomeImpact;
-                     break;
-                  case "Likely":
-                     Impact = PublicSectorEqualityDutyImpact.Likely;
-                     break;
-                  default:
-                     break;
-               }
+                     if (result is StatusCodeResult { StatusCode: (int)HttpStatusCode.NotFound })
+                     {
+                        return NotFound();
+                     }
 
-               return Page();
-          }
+                     switch(Project.PublicEqualityDutyImpact)
+                     {
+                        case "Unlikely":
+                           Impact = PublicSectorEqualityDutyImpact.Unlikely;
+                           break;
+                        case "Some impact":
+                           Impact = PublicSectorEqualityDutyImpact.SomeImpact;
+                           break;
+                        case "Likely":
+                           Impact = PublicSectorEqualityDutyImpact.Likely;
+                           break;
+                        default:
+                           break;
+                     }
 
-        public override async Task<IActionResult> OnPostAsync(int id)
-        {
+                     return Page();
+                }
+
+         public override async Task<IActionResult> OnPostAsync(int id)
+         {
             if (!ModelState.IsValid)
             {
                errorService.AddErrors(ModelState.Keys, ModelState);
@@ -83,7 +91,13 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
 
             await _repository.SetPublicEqualityDuty(id, model);
 
+            (string returnPage, string fragment) = GetReturnPageAndFragment();
+            if (!string.IsNullOrWhiteSpace(returnPage))
+            {
+               return RedirectToPage(returnPage, null, new { id }, fragment);
+            }
+
             return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionTask.Page, new { id });
-        }
+      }
     }
 }

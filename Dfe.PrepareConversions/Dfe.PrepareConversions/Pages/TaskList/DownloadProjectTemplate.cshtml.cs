@@ -18,9 +18,11 @@ public class DownloadProjectTemplate(SchoolOverviewService schoolOverviewService
    public override async Task<IActionResult> OnGetAsync(int id)
    {
       await base.OnGetAsync(id);
-      if (Project.HeadTeacherBoardDate != null) return Page();
+
+      if (Project.HeadTeacherBoardDate != null || string.IsNullOrWhiteSpace(Project.PublicEqualityDutyImpact) ) return Page();
 
       TempData["ShowGenerateHtbTemplateError"] = true;
+
       return RedirectToPage(ErrorPage, new { id });
    }
 

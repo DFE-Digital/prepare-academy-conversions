@@ -21,7 +21,6 @@ public class IndexModel(KeyStagePerformanceService keyStagePerformanceService,
    public const string PROJECT_READONLY_SESSION_KEY = "Project_iro";
    protected readonly ISession _session = session;
 
-   public bool ShowGenerateHtbTemplateError { get; set; }
    public TaskListViewModel TaskList { get; set; }
    public string ReturnPage { get; set; }
    public string ReturnId { get; set; }
@@ -67,13 +66,24 @@ public class IndexModel(KeyStagePerformanceService keyStagePerformanceService,
          return NotFound();
       }
 
-      ShowGenerateHtbTemplateError = (bool)(TempData["ShowGenerateHtbTemplateError"] ?? false);
-      if (ShowGenerateHtbTemplateError)
+      if (Project != null)
       {
-         string returnPage = WebUtility.UrlEncode(Links.TaskList.Index.Page);
-         // this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
-         errorService.AddError($"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}",
-            "Set an Advisory board date before you generate your project template");
+         string returnPage = WebUtility.UrlEncode(Links.TaskList.PreviewHTBTemplate.Page);
+
+         var hasAdvisoryBoardDate = Project.HeadTeacherBoardDate is not null;
+
+         if (!hasAdvisoryBoardDate)
+         {
+            errorService.AddError($"/task-list/{Project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}&fragment=advisory-board-date",
+               "Set an Advisory Board date before you generate your project template");
+         }
+
+         var hasPsed = !string.IsNullOrWhiteSpace(Project.PublicEqualityDutyImpact);
+         if (!hasPsed)
+         {
+            errorService.AddError($"/task-list/{Project.Id}/public-sector-equality-duty?return={returnPage}",
+               "Consider the Public Sector Equality Duty");
+         }
       }
 
       var keyStagePerformance = await keyStagePerformanceService.GetKeyStagePerformance(Project?.SchoolURN);

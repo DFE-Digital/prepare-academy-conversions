@@ -27,7 +27,10 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
         public Projects.Rationale.Index RationaleSummaryViewModel { get; set; }
         public List<PreviewPageAcademyModel> Academies { get; private set; }
 
-        public Preview(IGetInformationForProject getInformationForProject, IProjects projects)
+         public string PublicEqualityDutyImpact { get; set; }
+         public string PublicEqualityDutyReduceImpactReason { get; set; }
+
+         public Preview(IGetInformationForProject getInformationForProject, IProjects projects)
         {
             _getInformationForProject = getInformationForProject;
             _projects = projects;
@@ -40,6 +43,9 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
             var project = response.Project;
 
             ProjectReference = project.Reference;
+            PublicEqualityDutyImpact = project.PublicEqualityDutyImpact;
+            PublicEqualityDutyReduceImpactReason = project.PublicEqualityDutyReduceImpactReason;
+
 
             FeaturesSummaryViewModel = new Index(null)
             {

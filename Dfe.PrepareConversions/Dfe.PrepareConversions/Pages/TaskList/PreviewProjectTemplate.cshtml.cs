@@ -62,14 +62,24 @@ public class PreviewHtbTemplateModel : BaseAcademyConversionProjectPageModel
 
    private bool ValidateProject(ProjectViewModel project)
    {
+      string returnPage = WebUtility.UrlEncode(Links.TaskList.PreviewHTBTemplate.Page);
+
       var hasAdvisoryBoardDate = project.HeadTeacherBoardDate is not null;
       
       if (!hasAdvisoryBoardDate)
-      {
-         string returnPage = WebUtility.UrlEncode(Links.TaskList.PreviewHTBTemplate.Page);
+      {  
          // this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
          _errorService.AddError($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}&fragment=advisory-board-date",
             "Set an Advisory Board date before you generate your project template");
+
+         ShowGenerateHtbTemplateError = true;
+      }
+
+      var hasPsed = !string.IsNullOrWhiteSpace(project.PublicEqualityDutyImpact);
+      if (!hasPsed)
+      {
+         _errorService.AddError($"/task-list/{project.Id}/public-sector-equality-duty?return={returnPage}",
+            "Consider the Public Sector Equality Duty");
 
          ShowGenerateHtbTemplateError = true;
       }
