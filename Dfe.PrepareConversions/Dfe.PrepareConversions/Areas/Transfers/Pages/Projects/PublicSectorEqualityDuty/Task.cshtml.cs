@@ -95,8 +95,6 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
          await projectsRepository.SetTransferPublicEqualityDuty(key, dutyModel);
 
          return RedirectToPage(Links.Project.Index.PageName, new { projectInformation.Project.Urn });
-
-         
       }
     }
 }

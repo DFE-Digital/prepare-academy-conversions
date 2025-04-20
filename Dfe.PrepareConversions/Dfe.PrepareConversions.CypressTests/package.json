@@ -59,7 +59,7 @@
     "@cypress/webpack-preprocessor": "6.0.4",
     "@types/jest": "29.5.14",
     "@types/node": "20.17.30",
-    "@typescript-eslint/parser": "8.29.0",
+    "@typescript-eslint/parser": "8.29.1",
     "cy-verify-downloads": "0.2.6",
     "cypress": "13.17.0",
     "cypress-axe": "1.6.0",

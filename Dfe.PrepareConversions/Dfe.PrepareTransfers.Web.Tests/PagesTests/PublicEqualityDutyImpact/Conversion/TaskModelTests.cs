@@ -13,6 +13,8 @@ using System.Linq;
 using Moq;
 using Xunit;
 using FluentAssertions;
+using System.Runtime.InteropServices.JavaScript;
+using Azure;
 
 namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Conversion
 {
