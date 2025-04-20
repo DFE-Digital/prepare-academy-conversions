@@ -6,7 +6,6 @@ using Dfe.PrepareTransfers.Data.Models.Projects;
 using System;
 using System.Linq;
 using Index = Dfe.PrepareTransfers.Web.Pages.Projects.Index;
-using DocumentFormat.OpenXml.Presentation;
 
 namespace Dfe.PrepareTransfers.Web.Services
 {
@@ -39,9 +38,14 @@ namespace Dfe.PrepareTransfers.Web.Services
             indexPage.IsFormAMAT = project.Result.IsFormAMat.HasValue && project.Result.IsFormAMat.Value;
             indexPage.IsReadOnly = project.Result.IsReadOnly;
             indexPage.ProjectSentToCompleteDate = project.Result.ProjectSentToCompleteDate;
-        }
 
-        private static ProjectStatuses GetAcademyAndTrustInformationStatus(Project project)
+            // Public Sector Equality Duty
+            indexPage.PublicEqualityDutyImpact = project.Result.PublicEqualityDutyImpact;
+            indexPage.PublicEqualityDutyReduceImpactReason = project.Result.PublicEqualityDutyReduceImpactReason;
+            indexPage.PublicEqualityDutySectionComplete = project.Result.PublicEqualityDutySectionComplete;
+      }
+
+      private static ProjectStatuses GetAcademyAndTrustInformationStatus(Project project)
         {
             TransferAcademyAndTrustInformation academyAndTrustInformation = project.AcademyAndTrustInformation;
 

@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Dfe.PrepareTransfers.Web.Helpers;
 using Dfe.PrepareTransfers.Web.Models.ProjectTemplate;
 using Dfe.PrepareTransfers.Web.Services.Interfaces;
 using Dfe.PrepareTransfers.Web.Services.Responses;
@@ -14,6 +13,7 @@ using static Dfe.PrepareTransfers.Web.Services.DocumentGenerators.BenefitsGenera
 using static Dfe.PrepareTransfers.Web.Services.DocumentGenerators.RationaleGenerator;
 using static Dfe.PrepareTransfers.Web.Services.DocumentGenerators.LegalRequirementsGenerator;
 using static Dfe.PrepareTransfers.Web.Services.DocumentGenerators.TransferFeaturesGenerator;
+using static Dfe.PrepareTransfers.Web.Services.DocumentGenerators.PublicSectorEqualityDutyGenerator;
 using Dfe.PrepareConversions.DocumentGeneration;
 using Dfe.PrepareConversions.DocumentGeneration.Elements;
 using Dfe.PrepareConversions.DocumentGeneration.Interfaces;
@@ -55,6 +55,7 @@ namespace Dfe.PrepareTransfers.Web.Services
          AddRationale(builder, projectTemplateModel);
          AddLegalRequirementsDetail(builder, projectTemplateModel);
          BuildAcademyData(builder, projectTemplateModel.Academies);
+         AddPublicSectorEqualityDuty(builder, projectTemplateModel);
 
          return new CreateProjectTemplateResponse
          {

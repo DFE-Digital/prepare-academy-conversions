@@ -47,7 +47,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
             return NotFound();
          }
 
-         ReduceImpactReasonLabel = Dfe.PrepareConversions.Models.PreviewPublicSectorEqualityDutyModel.GenerateReduceImpactReasonLabel(Project.PublicEqualityDutyImpact);
+         ReduceImpactReasonLabel = PreviewPublicSectorEqualityDutyModel.GenerateReduceImpactReasonLabel(Project.PublicEqualityDutyImpact);
          ReduceImpactReason = Project.PublicEqualityDutyReduceImpactReason;
          SectionComplete = Project.PublicEqualityDutySectionComplete;
 
@@ -71,7 +71,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
                return Page();
             }
 
-         ReduceImpactReasonLabel = Dfe.PrepareConversions.Models.PreviewPublicSectorEqualityDutyModel.GenerateReduceImpactReasonLabel(Project.PublicEqualityDutyImpact);
+            ReduceImpactReasonLabel = PreviewPublicSectorEqualityDutyModel.GenerateReduceImpactReasonLabel(Project.PublicEqualityDutyImpact);
 
             ReduceImpactReason = Project.PublicEqualityDutyReduceImpactReason;
 
@@ -83,11 +83,11 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
 
                return Page();
             }
-
-            SetConversionPublicEqualityDutyModel dutyModel = new(id, Project.PublicEqualityDutyImpact, Project.PublicEqualityDutyReduceImpactReason, SectionComplete);
-
-            await _repository.SetPublicEqualityDuty(id, dutyModel);
          }
+
+         SetConversionPublicEqualityDutyModel dutyModel = new(id, Project.PublicEqualityDutyImpact, Project.PublicEqualityDutyReduceImpactReason, SectionComplete);
+
+         await _repository.SetPublicEqualityDuty(id, dutyModel);
 
          return RedirectToPage(Links.TaskList.Index.Page, new { id });
       }

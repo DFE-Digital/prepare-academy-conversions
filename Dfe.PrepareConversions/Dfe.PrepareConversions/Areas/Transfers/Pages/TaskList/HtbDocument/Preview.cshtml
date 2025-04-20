@@ -13,6 +13,8 @@
         <partial name="_DynamicBackLink" model="@Dfe.PrepareTransfers.Web.Transfers.Links.Project.Index.For(Model.Urn)"></partial>
 }
 
+<partial name="Shared/_ErrorSummary" />
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
         <span class="govuk-caption-l">
@@ -148,17 +150,18 @@
         <p class="govuk-body govuk-!-margin-bottom-6">
             Generate the project template into a Word document and download it.
         </p>
-       <form asp-page="/TaskList/HtbDocument/Download" asp-route-urn="@Model.Urn" method="get">
+       
+        <form method="post" asp-route-urn="@Model.Urn">
             <input type="hidden" name="bl" value="@Dfe.PrepareTransfers.Web.Transfers.Links.HeadteacherBoard.Preview.PageName" />
-          <input type="hidden" name="u" value="@Model.Urn" />
-          <div class="govuk-button-group">
-             <button class="govuk-button" data-module="govuk-button" data-test="generate-htb">Generate project template</button>
-             <p class="govuk-body">
-                <a asp-page="/Home/Index" class="govuk-link govuk-link--no-visited-state">
-                   Save and return to this project later
-                </a>
-             </p>
-          </div>
-       </form>
+            <input type="hidden" name="u" value="@Model.Urn" />
+            <div class="govuk-button-group">
+                <button class="govuk-button" data-module="govuk-button" data-test="generate-htb">Generate project template</button>
+                <p class="govuk-body">
+                    <a asp-page="/Home/Index" class="govuk-link govuk-link--no-visited-state">
+                        Save and return to this project later
+                    </a>
+                </p>
+            </div>
+        </form>
     </div>
 </div>

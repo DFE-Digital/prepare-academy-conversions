@@ -276,4 +276,17 @@ public class AcademyConversionProjectPostModel
    [BindProperty(Name = "key-stage-5-additional-information")]
    [DisplayFormat(ConvertEmptyStringToNull = false)]
    public string KeyStage5PerformanceAdditionalInformation { get; set; }
+
+   // Public sector equality duty
+   [BindProperty(Name = "public-equality-duty-impact")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+   public string PublicEqualityDutyImpact { get; set; }
+
+   [BindProperty(Name = "public-equality-duty-reduce-impact-reason")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+   public string PublicEqualityDutyReduceImpactReason { get; set; }
+
+   [BindProperty(Name = "public-equality-duty-section-complete")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+   public bool PublicEqualityDutySectionComplete { get; init; }
 }

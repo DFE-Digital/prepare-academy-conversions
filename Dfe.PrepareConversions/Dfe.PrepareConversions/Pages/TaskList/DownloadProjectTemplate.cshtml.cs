@@ -1,7 +1,4 @@
-using Dfe.PrepareConversions.Data;
-using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
-using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services.DocumentGenerator;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -42,6 +39,4 @@ public class DownloadProjectTemplate(SchoolOverviewService schoolOverviewService
 
       return File(documentByteArray, "application/vnd.ms-word.document", $"{document.SchoolName}-project-template-{DateTime.Today:dd-MM-yyyy}.docx");
    }
-
-  
 }

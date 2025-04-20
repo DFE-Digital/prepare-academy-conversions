@@ -102,4 +102,9 @@ public class UpdateAcademyConversionProject
 
    // assigned user
    public User AssignedUser { get; set; }
+
+   // Public sector equality duty
+   public string PublicEqualityDutyImpact { get; set; }
+   public string PublicEqualityDutyReduceImpactReason { get; set; }
+   public bool PublicEqualityDutySectionComplete { get; init; }
 }

@@ -54,7 +54,7 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
          ReduceImpactReason = projectInformation.Project.PublicEqualityDutyReduceImpactReason;
          SectionComplete = projectInformation.Project.PublicEqualityDutySectionComplete ?? false;
 
-         ReduceImpactReasonLabel = Dfe.PrepareConversions.Models.PreviewPublicSectorEqualityDutyModel.GenerateReduceImpactReasonLabel(Impact);
+         ReduceImpactReasonLabel = Models.PreviewPublicSectorEqualityDutyModel.GenerateReduceImpactReasonLabel(Impact);
 
          return Page();
       }
@@ -66,7 +66,7 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
          Impact = projectInformation.Project.PublicEqualityDutyImpact;
          IsReadOnly = projectInformation.Project.IsReadOnly;
 
-         ReduceImpactReasonLabel = Dfe.PrepareConversions.Models.PreviewPublicSectorEqualityDutyModel.GenerateReduceImpactReasonLabel(Impact);
+         ReduceImpactReasonLabel = Models.PreviewPublicSectorEqualityDutyModel.GenerateReduceImpactReasonLabel(Impact);
 
          if (SectionComplete)
          {
@@ -87,14 +87,16 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
 
                return Page();
             }
-
-            var key = int.Parse(urn);
-            SetTransferPublicEqualityDutyModel dutyModel = new(key, projectInformation.Project.PublicEqualityDutyImpact, projectInformation.Project.PublicEqualityDutyReduceImpactReason, SectionComplete);
-
-            await projectsRepository.SetTransferPublicEqualityDuty(key, dutyModel);
          }
 
+         var key = int.Parse(urn);
+         SetTransferPublicEqualityDutyModel dutyModel = new(key, projectInformation.Project.PublicEqualityDutyImpact, projectInformation.Project.PublicEqualityDutyReduceImpactReason, SectionComplete);
+
+         await projectsRepository.SetTransferPublicEqualityDuty(key, dutyModel);
+
          return RedirectToPage(Links.Project.Index.PageName, new { projectInformation.Project.Urn });
+
+         
       }
     }
 }
