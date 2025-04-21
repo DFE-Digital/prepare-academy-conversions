@@ -46,31 +46,31 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
          }
 
          public override async Task<IActionResult> OnGetAsync(int id)
-               {
-                     IActionResult result = await SetProject(id);
+         {
+            IActionResult result = await SetProject(id);
 
-                     if (result is StatusCodeResult { StatusCode: (int)HttpStatusCode.NotFound })
-                     {
-                        return NotFound();
-                     }
+            if (result is StatusCodeResult { StatusCode: (int)HttpStatusCode.NotFound })
+            {
+               return NotFound();
+            }
 
-                     switch(Project.PublicEqualityDutyImpact)
-                     {
-                        case "Unlikely":
-                           Impact = PublicSectorEqualityDutyImpact.Unlikely;
-                           break;
-                        case "Some impact":
-                           Impact = PublicSectorEqualityDutyImpact.SomeImpact;
-                           break;
-                        case "Likely":
-                           Impact = PublicSectorEqualityDutyImpact.Likely;
-                           break;
-                        default:
-                           break;
-                     }
+            switch(Project.PublicEqualityDutyImpact)
+            {
+               case "Unlikely":
+                  Impact = PublicSectorEqualityDutyImpact.Unlikely;
+                  break;
+               case "Some impact":
+                  Impact = PublicSectorEqualityDutyImpact.SomeImpact;
+                  break;
+               case "Likely":
+                  Impact = PublicSectorEqualityDutyImpact.Likely;
+                  break;
+               default:
+                  break;
+            }
 
-                     return Page();
-                }
+            return Page();
+         }
 
          public override async Task<IActionResult> OnPostAsync(int id)
          {

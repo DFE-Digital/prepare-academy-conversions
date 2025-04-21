@@ -16,7 +16,7 @@ public class DownloadProjectTemplate(SchoolOverviewService schoolOverviewService
    {
       await base.OnGetAsync(id);
 
-      if (Project.HeadTeacherBoardDate != null || string.IsNullOrWhiteSpace(Project.PublicEqualityDutyImpact) ) return Page();
+      if (Project.HeadTeacherBoardDate != null && !string.IsNullOrWhiteSpace(Project.PublicEqualityDutyImpact) ) return Page();
 
       TempData["ShowGenerateHtbTemplateError"] = true;
 

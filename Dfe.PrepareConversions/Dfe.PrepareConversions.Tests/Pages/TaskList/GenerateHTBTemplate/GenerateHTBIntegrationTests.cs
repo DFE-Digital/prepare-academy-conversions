@@ -1,4 +1,3 @@
-using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AutoFixture;
@@ -6,11 +5,9 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Tests.Customisations;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
-using Microsoft.Graph;
 using System;
 using System.Threading.Tasks;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Dfe.PrepareConversions.Tests.Pages.TaskList.GenerateHTBTemplate;
 
@@ -48,11 +45,11 @@ public class GenerateHTBIntegrationTests : BaseIntegrationTests
 
       Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
 
-      Document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Set an Advisory board date");
+      Document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Set an Advisory Board date");
 
-      await NavigateAsync("Set an Advisory board date before you generate your project template");
+      await NavigateAsync("Set an Advisory Board date before you generate your project template");
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FIndex");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FIndex&fragment=advisory-board-date");
    }
 
    [Fact]
@@ -65,11 +62,12 @@ public class GenerateHTBIntegrationTests : BaseIntegrationTests
       await NavigateAsync("Create project document");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+      
+      var selector = Document.QuerySelector(".govuk-error-summary");
+      selector.Should().NotBeNull();
+      selector.TextContent.Should().Contain("Set an Advisory Board date");
 
-      Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-      Document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Set an Advisory board date");
-
-      await NavigateAsync("Set an Advisory board date before you generate your project template");
+      await NavigateAsync("Set an Advisory Board date before you generate your project template");
 
       await NavigateDataTestAsync("headteacher-board-date-back-link");
 
@@ -93,15 +91,15 @@ public class GenerateHTBIntegrationTests : BaseIntegrationTests
       Document.Url.Should().BeUrl($"/task-list/{project.Id}");
 
       Document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-      Document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Set an Advisory board date");
+      Document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Set an Advisory Board date");
 
-      await NavigateAsync("Set an Advisory board date before you generate your project template");
+      await NavigateAsync("Set an Advisory Board date before you generate your project template");
       Document.QuerySelector<IHtmlInputElement>("#head-teacher-board-date-day")!.Value = request.HeadTeacherBoardDate?.Day.ToString()!;
       Document.QuerySelector<IHtmlInputElement>("#head-teacher-board-date-month")!.Value = request.HeadTeacherBoardDate?.Month.ToString()!;
       Document.QuerySelector<IHtmlInputElement>("#head-teacher-board-date-year")!.Value = request.HeadTeacherBoardDate?.Year.ToString()!;
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}");
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}#advisory-board-date");
    }
 }

@@ -21,6 +21,7 @@ public class IndexModel(KeyStagePerformanceService keyStagePerformanceService,
    public const string PROJECT_READONLY_SESSION_KEY = "Project_iro";
    protected readonly ISession _session = session;
 
+   public bool ShowGenerateHtbTemplateError { get; set; }
    public TaskListViewModel TaskList { get; set; }
    public string ReturnPage { get; set; }
    public string ReturnId { get; set; }
@@ -66,14 +67,16 @@ public class IndexModel(KeyStagePerformanceService keyStagePerformanceService,
          return NotFound();
       }
 
-      if (Project != null)
+      ShowGenerateHtbTemplateError = (bool)(TempData["ShowGenerateHtbTemplateError"] ?? false);
+      if (ShowGenerateHtbTemplateError && Project != null)
       {
-         string returnPage = WebUtility.UrlEncode(Links.TaskList.PreviewHTBTemplate.Page);
+         string returnPage = WebUtility.UrlEncode(Links.TaskList.Index.Page);
 
          var hasAdvisoryBoardDate = Project.HeadTeacherBoardDate is not null;
 
          if (!hasAdvisoryBoardDate)
          {
+            // this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
             errorService.AddError($"/task-list/{Project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}&fragment=advisory-board-date",
                "Set an Advisory Board date before you generate your project template");
          }

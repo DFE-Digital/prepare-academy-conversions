@@ -38,7 +38,7 @@
                result = "The equalities duty has been considered and there are some impacts but on balance the analysis indicates these changes will not affect disproportionately any particular person or group who share protected characteristics.";
                break;
             case "Likely":
-               result = "The equalities duty has been considered and the decision is likely to affect disproportionately a particular person or group who share protected characteristics";
+               result = "The equalities duty has been considered and the decision is likely to affect disproportionately a particular person or group who share protected characteristics.";
                break;
             default:
                break;

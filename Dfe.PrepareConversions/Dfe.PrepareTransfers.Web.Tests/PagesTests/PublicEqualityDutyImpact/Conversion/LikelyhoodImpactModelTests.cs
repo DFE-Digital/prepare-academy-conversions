@@ -6,6 +6,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Conversion;
 using Dfe.PrepareConversions.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
@@ -23,7 +24,18 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Con
       {
          _academyConversionProjectRepository = new Mock<IAcademyConversionProjectRepository>();
          _errorService = new Mock<ErrorService>();
-         _subject = new LikelyhoodImpactModel(_academyConversionProjectRepository.Object, _errorService.Object);
+
+         var httpContext = new DefaultHttpContext();
+         httpContext.Request.Query = new QueryCollection();
+         var pageContext = new PageContext
+         {
+            HttpContext = httpContext
+         };
+
+         _subject = new LikelyhoodImpactModel(_academyConversionProjectRepository.Object, _errorService.Object)
+         {
+            PageContext = pageContext
+         };
       }
 
       [Fact]
@@ -64,11 +76,46 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Con
          Assert.Equal(impactEnum, _subject.Impact);
       }
 
+      [Fact]
+      public async Task OnPost_Updates_Record_And_Redirects_to_Psed_screen_when_impact_is_unlikely()
+      {
+         var impact = "Unlikely";
+
+         AcademyConversionProject conversionProject = new()
+         {
+            Id = 12345,
+            Urn = 113609,
+            SchoolName = "Plymouth",
+            PublicEqualityDutyImpact = impact,
+            ProjectStatus = "Approved"
+         };
+
+         _academyConversionProjectRepository.Setup(s => s.GetProjectById(conversionProject.Id))
+            .ReturnsAsync(new ApiResponse<AcademyConversionProject>(HttpStatusCode.OK, conversionProject));
+
+         _subject.Impact = PublicSectorEqualityDutyImpact.Unlikely;
+
+         var response = await _subject.OnPostAsync(conversionProject.Id);
+
+         _academyConversionProjectRepository.Verify(r => r.SetPublicEqualityDuty(
+            conversionProject.Id,
+            It.Is<SetConversionPublicEqualityDutyModel>(model =>
+               model.Id == conversionProject.Id
+               && model.PublicEqualityDutyImpact == impact
+               && model.PublicEqualityDutyReduceImpactReason == string.Empty
+               && !model.PublicEqualityDutySectionComplete)
+         ), Times.Once);
+
+         var redirectResponse = Assert.IsType<RedirectToPageResult>(response);
+
+         Assert.Equal(Links.PublicSectorEqualityDutySection.ConversionTask.Page, redirectResponse.PageName);
+         Assert.Equal(conversionProject.Id, redirectResponse.RouteValues["id"]);
+      }
+
       [Theory]
-      [InlineData("Unlikely", PublicSectorEqualityDutyImpact.Unlikely)]
       [InlineData("Some impact", PublicSectorEqualityDutyImpact.SomeImpact)]
       [InlineData("Likely", PublicSectorEqualityDutyImpact.Likely)]
-      public async Task OnPost_Updates_Record(string impact, PublicSectorEqualityDutyImpact impactEnum)
+      public async Task OnPost_Updates_Record_And_Redirects_to_Psed_reasons_screen_when_impact_is_likely_or_some_impact(string impact, PublicSectorEqualityDutyImpact impactEnum)
       {
          AcademyConversionProject conversionProject = new()
          {
@@ -88,22 +135,18 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Con
 
          var response = await _subject.OnPostAsync(conversionProject.Id);
 
-         var reason = impact != "Unlikely" ? conversionProject.PublicEqualityDutyReduceImpactReason : string.Empty;
-
          _academyConversionProjectRepository.Verify(r => r.SetPublicEqualityDuty(
             conversionProject.Id,
             It.Is<SetConversionPublicEqualityDutyModel>(model =>
                model.Id == conversionProject.Id
                && model.PublicEqualityDutyImpact == impact
-               && model.PublicEqualityDutyReduceImpactReason == reason
+               && model.PublicEqualityDutyReduceImpactReason == conversionProject.PublicEqualityDutyReduceImpactReason
                && !model.PublicEqualityDutySectionComplete)
          ), Times.Once);
 
          var redirectResponse = Assert.IsType<RedirectToPageResult>(response);
 
-         var pageUrl = impactEnum == PublicSectorEqualityDutyImpact.Unlikely ? Links.PublicSectorEqualityDutySection.ConversionTask.Page : Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page;
-
-         Assert.Equal(pageUrl, redirectResponse.PageName);
+         Assert.Equal(Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page, redirectResponse.PageName);
          Assert.Equal(conversionProject.Id, redirectResponse.RouteValues["id"]);
       }
    }
