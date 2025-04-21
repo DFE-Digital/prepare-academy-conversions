@@ -5,6 +5,7 @@ using Dfe.PrepareTransfers.Web.Services.Interfaces;
 using Xunit;
 using Dfe.PrepareTransfers.Web.Models.ProjectTemplate;
 using Dfe.PrepareTransfers.Web.Services.DocumentGenerators;
+using System.Threading.Tasks;
 
 namespace Dfe.PrepareTransfers.Web.Tests.ServicesTests
 {
@@ -28,7 +29,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ServicesTests
         public class ExecuteTests : CreateProjectTemplateTests
         {
             [Fact]
-            public async void GivenGetHtbDocumentForProjectReturnsNotFound_ReturnsCorrectError()
+            public async Task GivenGetHtbDocumentForProjectReturnsNotFound_ReturnsCorrectError()
             {
                 _getHtbDocumentForProject.Setup(r => r.Execute(It.IsAny<string>())).ReturnsAsync(
                     new GetProjectTemplateModelResponse()
@@ -48,7 +49,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ServicesTests
             }
 
             [Fact]
-            public async void GivenGetHtbDocumentForProjectReturnsServiceError_ReturnsCorrectError()
+            public async Task GivenGetHtbDocumentForProjectReturnsServiceError_ReturnsCorrectError()
             {
                 _getHtbDocumentForProject.Setup(r => r.Execute(It.IsAny<string>())).ReturnsAsync(
                     new GetProjectTemplateModelResponse()
@@ -68,7 +69,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ServicesTests
             }
 
             [Fact]
-            public async void GivenGetHtbDocument_Returns_Valid_Word_Document_Stream_Result()
+            public async Task GivenGetHtbDocument_Returns_Valid_Word_Document_Stream_Result()
             {
                var projectTemplateResponse = new GetProjectTemplateModelResponse
                {
