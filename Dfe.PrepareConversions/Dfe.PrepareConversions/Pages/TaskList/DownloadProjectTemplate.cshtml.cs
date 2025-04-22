@@ -1,4 +1,5 @@
 using Dfe.PrepareConversions.Data.Services;
+using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services.DocumentGenerator;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -16,11 +17,7 @@ public class DownloadProjectTemplate(SchoolOverviewService schoolOverviewService
    {
       await base.OnGetAsync(id);
 
-      if (Project.HeadTeacherBoardDate != null && !string.IsNullOrWhiteSpace(Project.PublicEqualityDutyImpact) ) return Page();
-
-      TempData["ShowGenerateHtbTemplateError"] = true;
-
-      return RedirectToPage(ErrorPage, new { id });
+      return Page();
    }
 
    public async Task<IActionResult> OnGetHtbTemplateAsync(int id)

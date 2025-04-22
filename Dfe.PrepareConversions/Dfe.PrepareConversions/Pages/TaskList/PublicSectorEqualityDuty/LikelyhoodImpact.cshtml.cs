@@ -87,23 +87,27 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
 
             var reason = Project.PublicEqualityDutyImpact != "Unlikely" ? Project.PublicEqualityDutyReduceImpactReason : string.Empty;
 
-            SetConversionPublicEqualityDutyModel model = new(id, impact, reason, false);
+            SetConversionPublicEqualityDutyModel model = new(id, impact, reason, Project.PublicEqualityDutySectionComplete);
 
             await _repository.SetPublicEqualityDuty(id, model);
 
             (string returnPage, string fragment) = GetReturnPageAndFragment();
-            if (!string.IsNullOrWhiteSpace(returnPage))
-            {
-                return RedirectToPage(returnPage, null, new { id }, fragment);
-            }
 
             if (Impact == PublicSectorEqualityDutyImpact.Unlikely)
             {
-               return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionTask.Page, new { id });
+               if (!string.IsNullOrWhiteSpace(returnPage))
+               {
+                  return RedirectToPage(returnPage, null, new { id }, fragment);
+               }
+               else
+               {
+                  return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionTask.Page, new { id });
+               }
             }
-
-            var returnUrl = Links.PublicSectorEqualityDutySection.ConversionLikelyhoodToImpact.Page;
-            return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page, new { id, returnUrl });
-      }
+            else
+            {
+               return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page, new { id, returnUrl = returnPage, fragment });
+            }
+         }
     }
 }

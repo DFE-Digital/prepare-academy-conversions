@@ -38,6 +38,7 @@ namespace Dfe.PrepareTransfers.Web.Services
             indexPage.IsFormAMAT = project.Result.IsFormAMat.HasValue && project.Result.IsFormAMat.Value;
             indexPage.IsReadOnly = project.Result.IsReadOnly;
             indexPage.ProjectSentToCompleteDate = project.Result.ProjectSentToCompleteDate;
+            indexPage.HeadTeacherBoardDate = project.Result.Dates.Htb;
 
             // Public Sector Equality Duty
             indexPage.PublicEqualityDutyImpact = project.Result.PublicEqualityDutyImpact;

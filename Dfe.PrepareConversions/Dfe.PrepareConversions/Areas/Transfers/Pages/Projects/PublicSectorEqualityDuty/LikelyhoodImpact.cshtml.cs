@@ -91,22 +91,59 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
          var reason = projectInformation.Project.PublicEqualityDutyImpact != "Unlikely" ? projectInformation.Project.PublicEqualityDutyReduceImpactReason : string.Empty;
 
          var urn = int.Parse(projectInformation.Project.Urn);
-         SetTransferPublicEqualityDutyModel model = new(urn, impact, reason, false);
+         SetTransferPublicEqualityDutyModel model = new(urn, impact, reason, projectInformation.Project.PublicEqualityDutySectionComplete ?? false);
 
          await projectsRepository.SetTransferPublicEqualityDuty(urn, model);
 
-        if (ReturnToPreview)
-        {
-            return RedirectToPage("/TaskList/HtbDocument/Preview", new { projectInformation.Project.Urn });
-        }
-
-            if (Impact == Models.PublicSectorEqualityDutyImpact.Unlikely)
+         if (Impact == Models.PublicSectorEqualityDutyImpact.Unlikely)
          {
-            return RedirectToPage(Links.PublicSectorEqualityDutySection.TransferTask.PageName, new { projectInformation.Project.Urn });
+            if (ReturnToPreview)
+            {
+               return RedirectToPage("/TaskList/HtbDocument/Preview", new { projectInformation.Project.Urn });
+            }
+            else
+            {
+               return RedirectToPage(Links.PublicSectorEqualityDutySection.TransferTask.PageName, new { projectInformation.Project.Urn });
+            }
+         }
+         else
+         {
+            var returnUrl = Links.PublicSectorEqualityDutySection.TransferLikelyhoodToImpact.PageName;
+            return RedirectToPage(Links.PublicSectorEqualityDutySection.TransferImpactReductionReason.PageName, new { id = projectInformation.Project.Urn, returnUrl, ReturnToPreview });
          }
 
-         var returnUrl = Links.PublicSectorEqualityDutySection.TransferLikelyhoodToImpact.PageName;
-         return RedirectToPage(Links.PublicSectorEqualityDutySection.TransferImpactReductionReason.PageName, new { id = projectInformation.Project.Urn, returnUrl });
+
+
+         //   if (ReturnToPreview)
+         //{
+         //   return RedirectToPage("/TaskList/HtbDocument/Preview", new { projectInformation.Project.Urn });
+         //}
+
+         //if (Impact == Models.PublicSectorEqualityDutyImpact.Unlikely)
+         //{
+         //   return RedirectToPage(Links.PublicSectorEqualityDutySection.TransferTask.PageName, new { projectInformation.Project.Urn });
+         //}
+
+         //var returnUrl = Links.PublicSectorEqualityDutySection.TransferLikelyhoodToImpact.PageName;
+         //return RedirectToPage(Links.PublicSectorEqualityDutySection.TransferImpactReductionReason.PageName, new { id = projectInformation.Project.Urn, returnUrl });
       }
    }
 }
+
+//(string returnPage, string fragment) = GetReturnPageAndFragment();
+
+//if (Impact == PublicSectorEqualityDutyImpact.Unlikely)
+//{
+//   if (!string.IsNullOrWhiteSpace(returnPage))
+//   {
+//      return RedirectToPage(returnPage, null, new { id }, fragment);
+//   }
+//   else
+//   {
+//      return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionTask.Page, new { id });
+//   }
+//}
+//else
+//{
+//   return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page, new { id, returnUrl = returnPage, fragment });
+//}

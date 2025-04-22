@@ -20,7 +20,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
 
          private (string, string) GetReturnPageAndFragment()
          {
-            Request.Query.TryGetValue("return", out StringValues returnQuery);
+            Request.Query.TryGetValue("returnUrl", out StringValues returnQuery);
             Request.Query.TryGetValue("fragment", out StringValues fragmentQuery);
             return (returnQuery, fragmentQuery);
          }

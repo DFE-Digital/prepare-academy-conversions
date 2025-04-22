@@ -16,6 +16,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
       public async Task<IActionResult> OnGetAsync()
       {
          var project = await GetProject();
+
          ProjectReference = project.Reference;
          FileName = GenerateFormattedFileName(project);
 

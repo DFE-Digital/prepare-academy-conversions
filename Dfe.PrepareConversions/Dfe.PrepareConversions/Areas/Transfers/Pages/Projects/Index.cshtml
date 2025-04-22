@@ -199,13 +199,10 @@
             Project documents are in Microsoft Word format. You can preview them first and make changes to them afterwards.
         </p>
         <div class="govuk-button-group">
-            <form asp-page="@Dfe.PrepareTransfers.Web.Models.Links.HeadteacherBoard.Preview.PageName" asp-route-urn="@Model.Urn" method="get">
-                <button class="govuk-button govuk-button--secondary" data-module="govuk-button" data-test="preview-htb">Preview project document</button>
+            <form method="post" asp-route-urn="@Model.Urn">
+                <button asp-page-handler="preview" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-test="preview-htb">Preview project document</button>
+                <button asp-page-handler="generate" class="govuk-button" data-module="govuk-button" data-test="generate-htb" data-google-analytics-project-generate>Create project document</button>
             </form>
-            <form asp-page="/TaskList/HtbDocument/Download" asp-route-urn="@Model.Urn" method="get">
-                <button class="govuk-button" data-module="govuk-button" data-test="generate-htb" data-google-analytics-project-generate>Create project document</button>
-            </form>
-
         </div>
     </div>
 </div>

@@ -13,8 +13,6 @@ using System.Linq;
 using Moq;
 using Xunit;
 using FluentAssertions;
-using System.Runtime.InteropServices.JavaScript;
-using Azure;
 
 namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Conversion
 {
@@ -45,9 +43,9 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Con
       }
 
       [Theory]
-      [InlineData("Unlikely", "The equalities duty has been considered and the Secretary of State's decision is unlikely to affect disproportionately any particular person or group who share protected characteristics.")]
-      [InlineData("Some impact", "The equalities duty has been considered and there are some impacts but on balance the analysis indicates these changes will not affect disproportionately any particular person or group who share protected characteristics.")]
-      [InlineData("Likely", "The equalities duty has been considered and the decision is likely to affect disproportionately a particular person or group who share protected characteristics.")]
+      [InlineData("Unlikely", "The decision is unlikely to disproportionately affect any particular person or group who share protected characteristics")]
+      [InlineData("Some impact", "There are some impacts but on balance the analysis indicates these changes will not disproportionately affect any particular person or group who share protected")]
+      [InlineData("Likely", "The decision is likely to disproportionately affect any particular person or group who share protected characteristics")]
       public async Task OnGet_Returns_Custom_Impact_Reason_Label(string impact, string reasonLabel)
       {
          AcademyConversionProject conversionProject = new()
@@ -123,7 +121,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Con
          _academyConversionProjectRepository.Verify(r => r.GetProjectById(conversionProject.Id), Times.Once);
 
          Assert.Equal(conversionProject.PublicEqualityDutyReduceImpactReason, _subject.ReduceImpactReason);
-         Assert.Equal("The equalities duty has been considered and the decision is likely to affect disproportionately a particular person or group who share protected characteristics.", _subject.ReduceImpactReasonLabel);
+         Assert.Equal("The decision is likely to disproportionately affect any particular person or group who share protected characteristics", _subject.ReduceImpactReasonLabel);
          Assert.Equal(conversionProject.PublicEqualityDutySectionComplete, _subject.SectionComplete);
          Assert.False(_subject.IsNew);
          Assert.True(_subject.RequiresReason);

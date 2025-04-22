@@ -30,9 +30,6 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
         public Projects.Rationale.Index RationaleSummaryViewModel { get; set; }
         public List<PreviewPageAcademyModel> Academies { get; private set; }
 
-         public string PublicEqualityDutyImpact { get; set; }
-         public string PublicEqualityDutyReduceImpactReason { get; set; }
-
          public Preview(IGetInformationForProject getInformationForProject, IProjects projects, ErrorService errorService)
          {
             _getInformationForProject = getInformationForProject;
@@ -45,7 +42,9 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
             ProjectReference = project.Reference;
             PublicEqualityDutyImpact = project.PublicEqualityDutyImpact;
             PublicEqualityDutyReduceImpactReason = project.PublicEqualityDutyReduceImpactReason;
+            PublicEqualityDutySectionComplete = project.PublicEqualityDutySectionComplete;
 
+            HeadTeacherBoardDate = project.Dates.Htb;
 
             FeaturesSummaryViewModel = new Index(null)
             {
@@ -192,10 +191,16 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
             }
          }
 
-         private void ValidateModel()
+         private void Validate()
          {
-            var hasPsed = !string.IsNullOrWhiteSpace(PublicEqualityDutyImpact);
-            if (!hasPsed)
+            if (string.IsNullOrWhiteSpace(HeadTeacherBoardDate))
+            {
+               _errorService.AddError($"/transfers/project/{Urn}/transfer-dates/advisory-board-date?returnToPreview=true",
+                  "Set an Advisory Board date before you generate your project template");
+            }
+
+            var isPsedValid = PrepareConversions.Models.PreviewPublicSectorEqualityDutyModel.IsValid(PublicEqualityDutyImpact, PublicEqualityDutyReduceImpactReason, PublicEqualityDutySectionComplete ?? false);
+            if (!isPsedValid)
             {
                _errorService.AddError($"/transfers/project/{Urn}/public-sector-equality-duty?returnToPreview=true",
                   "Consider the Public Sector Equality Duty");
@@ -208,8 +213,6 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
 
             MapModel(response.Project, response.OutgoingAcademies);
 
-            ValidateModel();
-
             return Page();
          }
 
@@ -219,7 +222,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
 
             MapModel(response.Project, response.OutgoingAcademies);
 
-            ValidateModel();
+            Validate();
 
             if (_errorService.HasErrors())
             {

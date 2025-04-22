@@ -32,16 +32,28 @@
          switch (publicSectorEqualityDutyImpact)
          {
             case "Unlikely":
-               result = "The equalities duty has been considered and the Secretary of State's decision is unlikely to affect disproportionately any particular person or group who share protected characteristics.";
+               result = "The decision is unlikely to disproportionately affect any particular person or group who share protected characteristics";
                break;
             case "Some impact":
-               result = "The equalities duty has been considered and there are some impacts but on balance the analysis indicates these changes will not affect disproportionately any particular person or group who share protected characteristics.";
+               result = "There are some impacts but on balance the analysis indicates these changes will not disproportionately affect any particular person or group who share protected";
                break;
             case "Likely":
-               result = "The equalities duty has been considered and the decision is likely to affect disproportionately a particular person or group who share protected characteristics.";
+               result = "The decision is likely to disproportionately affect any particular person or group who share protected characteristics";
                break;
             default:
                break;
+         }
+
+         return result;
+      }
+
+      public static bool IsValid(string impact, string reduceImpactReason, bool sectionComplete)
+      {
+         var result = true;
+
+         if (!sectionComplete || ((impact == "Some impact" || impact == "Likely") && string.IsNullOrWhiteSpace(reduceImpactReason)))
+         {
+            result = false;
          }
 
          return result;
