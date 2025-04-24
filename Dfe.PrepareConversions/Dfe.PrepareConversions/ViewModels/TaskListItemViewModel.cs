@@ -177,9 +177,11 @@ public sealed class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
       return InProgress;
    }
 
-   public static TaskListItemViewModel PublicSectorEqualityDutyStatus(bool sectionComplete, string publicEqualityDutyImpact)
+   public static TaskListItemViewModel PublicSectorEqualityDutyStatus(bool sectionComplete, string publicEqualityDutyImpact, string publicEqualityDutyReductionReason)
    {
-      if (sectionComplete)
+      var isPsedValid = Models.PreviewPublicSectorEqualityDutyModel.IsValid(publicEqualityDutyImpact, publicEqualityDutyReductionReason, sectionComplete);
+
+      if (isPsedValid)
       {
          return Completed;
       }

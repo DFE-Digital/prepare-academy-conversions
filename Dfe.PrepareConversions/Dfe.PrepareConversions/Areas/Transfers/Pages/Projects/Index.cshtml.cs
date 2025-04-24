@@ -56,7 +56,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects
          if (string.IsNullOrWhiteSpace(HeadTeacherBoardDate))
          {
             errorService.AddError($"/transfers/project/{Urn}/transfer-dates/advisory-board-date?return={returnPage}",
-               "Set an Advisory Board date before you generate your project template");
+               "Set an Advisory board date before you generate your project template");
          }
 
          var isPsedValid = PrepareConversions.Models.PreviewPublicSectorEqualityDutyModel.IsValid(PublicEqualityDutyImpact, PublicEqualityDutyReduceImpactReason, PublicEqualityDutySectionComplete ?? false);

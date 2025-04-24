@@ -95,6 +95,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
 
             if (Impact == PublicSectorEqualityDutyImpact.Unlikely)
             {
+               
                if (!string.IsNullOrWhiteSpace(returnPage))
                {
                   return RedirectToPage(returnPage, null, new { id }, fragment);
@@ -106,7 +107,9 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
             }
             else
             {
-               return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page, new { id, returnUrl = returnPage, fragment });
+               var fragmentQuery = !string.IsNullOrWhiteSpace(fragment) ? $"&fragment={fragment}" : string.Empty;
+               var url = $"/task-list/{id}/public-sector-equality-duty-reason?return={returnPage ?? WebUtility.UrlEncode(Links.PublicSectorEqualityDutySection.ConversionLikelyhoodToImpact.Page)}{fragmentQuery}";
+               return Redirect(url);
             }
          }
     }

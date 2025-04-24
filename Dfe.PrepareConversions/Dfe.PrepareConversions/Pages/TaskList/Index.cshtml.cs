@@ -100,7 +100,7 @@ public class IndexModel(KeyStagePerformanceService keyStagePerformanceService,
       {
          // this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
          errorService.AddError($"/task-list/{Project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}&fragment=advisory-board-date",
-            "Set an Advisory Board date before you generate your project template");
+            "Set an Advisory board date before you generate your project template");
       }
 
       var isPsedValid = PreviewPublicSectorEqualityDutyModel.IsValid(Project.PublicEqualityDutyImpact, Project.PublicEqualityDutyReduceImpactReason, Project.PublicEqualityDutySectionComplete);
@@ -113,6 +113,8 @@ public class IndexModel(KeyStagePerformanceService keyStagePerformanceService,
 
    public async Task<IActionResult> OnPostPreviewAsync(int id)
    {
+      var request = Request.Headers["Referer"];
+
       IActionResult result = await SetProject(id);
 
       ReturnPage = @Links.ProjectList.Index.Page;

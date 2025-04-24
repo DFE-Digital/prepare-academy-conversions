@@ -141,13 +141,14 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Con
                model.Id == conversionProject.Id
                && model.PublicEqualityDutyImpact == impact
                && model.PublicEqualityDutyReduceImpactReason == conversionProject.PublicEqualityDutyReduceImpactReason
-               && !model.PublicEqualityDutySectionComplete)
+               && model.PublicEqualityDutySectionComplete)
          ), Times.Once);
 
-         var redirectResponse = Assert.IsType<RedirectToPageResult>(response);
+         var redirectResponse = Assert.IsType<RedirectResult>(response);
 
-         Assert.Equal(Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page, redirectResponse.PageName);
-         Assert.Equal(conversionProject.Id, redirectResponse.RouteValues["id"]);
+         var expected = $"/task-list/{conversionProject.Id}/public-sector-equality-duty-reason?return=/TaskList/PublicSectorEqualityDuty/LikelyhoodImpact";
+
+         Assert.Equal(expected, WebUtility.UrlDecode(redirectResponse.Url));
       }
    }
 }

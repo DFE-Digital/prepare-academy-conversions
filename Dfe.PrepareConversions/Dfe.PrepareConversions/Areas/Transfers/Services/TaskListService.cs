@@ -6,6 +6,7 @@ using Dfe.PrepareTransfers.Data.Models.Projects;
 using System;
 using System.Linq;
 using Index = Dfe.PrepareTransfers.Web.Pages.Projects.Index;
+using Dfe.PrepareConversions.Models;
 
 namespace Dfe.PrepareTransfers.Web.Services
 {
@@ -77,7 +78,9 @@ namespace Dfe.PrepareTransfers.Web.Services
 
          private static ProjectStatuses GetPublicSectorEqualityDutyStatus(Project project)
          {
-            if (project.PublicEqualityDutySectionComplete != null && project.PublicEqualityDutySectionComplete == true)
+            var isValid = PreviewPublicSectorEqualityDutyModel.IsValid(project.PublicEqualityDutyImpact, project.PublicEqualityDutyReduceImpactReason, project.PublicEqualityDutySectionComplete ?? false);
+
+            if (isValid)
             {
                return ProjectStatuses.Completed;
             }

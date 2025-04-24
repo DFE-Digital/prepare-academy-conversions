@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.Data.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqualityDuty
 {
@@ -108,42 +109,20 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
          }
          else
          {
-            var returnUrl = Links.PublicSectorEqualityDutySection.TransferLikelyhoodToImpact.PageName;
-            return RedirectToPage(Links.PublicSectorEqualityDutySection.TransferImpactReductionReason.PageName, new { id = projectInformation.Project.Urn, returnUrl, ReturnToPreview });
+            if (ReturnToPreview)
+            {
+               var returnUrl = WebUtility.UrlEncode($"/transfers/project/{projectInformation.Project.Urn}/public-sector-equality-duty-impact?returnToPreview=true");
+               var url = $"/transfers/project/{projectInformation.Project.Urn}/public-sector-equality-duty-reason?return={returnUrl}";
+               return Redirect(url);
+               // https://localhost:5003/transfers/project/10003000/public-sector-equality-duty-impact?returnToPreview=true
+            }
+            else
+            {
+               var returnUrl = WebUtility.UrlEncode($"/transfers/project/{projectInformation.Project.Urn}/public-sector-equality-duty-impact");
+               var url = $"/transfers/project/{projectInformation.Project.Urn}/public-sector-equality-duty-reason?return={returnUrl}";
+               return Redirect(url);
+            }
          }
-
-
-
-         //   if (ReturnToPreview)
-         //{
-         //   return RedirectToPage("/TaskList/HtbDocument/Preview", new { projectInformation.Project.Urn });
-         //}
-
-         //if (Impact == Models.PublicSectorEqualityDutyImpact.Unlikely)
-         //{
-         //   return RedirectToPage(Links.PublicSectorEqualityDutySection.TransferTask.PageName, new { projectInformation.Project.Urn });
-         //}
-
-         //var returnUrl = Links.PublicSectorEqualityDutySection.TransferLikelyhoodToImpact.PageName;
-         //return RedirectToPage(Links.PublicSectorEqualityDutySection.TransferImpactReductionReason.PageName, new { id = projectInformation.Project.Urn, returnUrl });
       }
    }
 }
-
-//(string returnPage, string fragment) = GetReturnPageAndFragment();
-
-//if (Impact == PublicSectorEqualityDutyImpact.Unlikely)
-//{
-//   if (!string.IsNullOrWhiteSpace(returnPage))
-//   {
-//      return RedirectToPage(returnPage, null, new { id }, fragment);
-//   }
-//   else
-//   {
-//      return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionTask.Page, new { id });
-//   }
-//}
-//else
-//{
-//   return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page, new { id, returnUrl = returnPage, fragment });
-//}
