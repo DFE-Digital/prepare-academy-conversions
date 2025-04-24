@@ -10,7 +10,7 @@
 
 @section BeforeMain
 {
-    <govuk-back-link link-item="@Links.PublicSectorEqualityDutySection.ConversionTask" />
+    <a class="govuk-back-link" asp-page="@Model.Back" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="@Model.ReturnToPreview">Back</a>
 }
 
 <div class="govuk-form-group">

@@ -1,4 +1,4 @@
-﻿@page "/transfers/project/{id}/public-sector-equality-duty-impact"
+﻿@page "/transfers/project/{urn}/public-sector-equality-duty-impact"
 
 @model Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqualityDuty.LikelyhoodImpactModel
 
@@ -7,13 +7,16 @@
     Layout = "_Layout";
 }
 
-@{
-    var backUrl = Model.ReturnToPreview ? "/TaskList/HtbDocument/Preview" : "/Projects/PublicSectorEqualityDuty/Task";
-}
-
 @section BeforeMain
 {
-    <a class="govuk-back-link" asp-page="@backUrl" asp-route-urn="@Model.Urn">Back</a>
+    @if (Model.ReturnToPreview)
+    {
+        <a class="govuk-back-link" asp-page="@Model.Back" asp-route-urn="@Model.Urn" asp-route-returnToPreview="@Model.ReturnToPreview">Back</a>
+    }
+    else
+    {
+        <a class="govuk-back-link" asp-page="/Projects/PublicSectorEqualityDuty/Task" asp-route-urn="@Model.Urn" asp-route-returnToPreview="@Model.ReturnToPreview">Back</a>
+    }
 }
 
 @if (Model.ShowError)

@@ -19,7 +19,7 @@
             }
         </dd>
         <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="/Projects/PublicSectorEqualityDuty/LikelyhoodImpact" asp-route-id="@Model.Urn" asp-route-returnToPreview="true">
+            <a class="govuk-link" asp-page="/Projects/PublicSectorEqualityDuty/LikelyhoodImpact" asp-route-urn="@Model.Urn" asp-route-return="/TaskList/HtbDocument/Preview" asp-route-returnToPreview="true">
                 Change<span class="govuk-visually-hidden"> @dutyKey</span>
             </a>
         </dd>
@@ -38,7 +38,7 @@
             }
         </dd>
         <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="/Projects/PublicSectorEqualityDuty/ImpactReductionReason" asp-route-id="@Model.Urn" asp-route-returnToPreview="true">
+            <a class="govuk-link" asp-page="/Projects/PublicSectorEqualityDuty/ImpactReductionReason" asp-route-urn="@Model.Urn" asp-route-return="/TaskList/HtbDocument/Preview" asp-route-returnToPreview="true">
                 Change<span class="govuk-visually-hidden"> @dutyKey</span>
             </a>
         </dd>

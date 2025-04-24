@@ -56,7 +56,8 @@
                                     label="Public Sector Equality Duty consideration"
                                     key-width="@keyWidth"
                                     asp-page="@likelyhoodImpactLink.Page"
-                                    asp-route-id="@Model.Urn"
+                                    asp-route-urn="@Model.Urn"
+                                    asp-route-return="/Projects/PublicSectorEqualityDuty/Task"
                                     hidden-text="public sector equality duty consideration"
                                     value="@Model.ReduceImpactReasonLabel" />
 
@@ -65,7 +66,8 @@
                                     key-width="@WidthOverride.OneQuarter"
                                     value="@Model.ReduceImpactReason"
                                     asp-page="@impactReductionLink.Page"
-                                    asp-route-id="@Model.Urn"
+                                    asp-route-urn="@Model.Urn"
+                                    asp-route-return="/Projects/PublicSectorEqualityDuty/Task"
                                     hidden-text="What will be done to reduce this impact"/>
         </dl>
     </div>

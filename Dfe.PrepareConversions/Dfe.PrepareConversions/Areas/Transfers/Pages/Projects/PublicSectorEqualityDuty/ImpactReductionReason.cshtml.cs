@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Dfe.PrepareConversions.Services;
 using System.ComponentModel.DataAnnotations;
 using Dfe.PrepareConversions.Data.Models;
+using Microsoft.Extensions.Primitives;
 
 namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqualityDuty
 {
@@ -19,46 +20,75 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
 
       public bool ShowError => errorService.HasErrors();
 
-      [BindProperty]
-      public bool ReturnToPreview { get; set; }
-
-      public async Task<IActionResult> OnGetAsync(string id)
+      private (string, string) GetReturnPageAndFragment()
       {
-         var projectInformation = await getInformationForProject.Execute(id);
+         Request.Query.TryGetValue("return", out StringValues returnQuery);
+         Request.Query.TryGetValue("fragment", out StringValues fragmentQuery);
+         return (returnQuery, fragmentQuery);
+      }
+
+      public string Return
+      {
+         get
+         {
+            (string returnPage, string fragment) = GetReturnPageAndFragment();
+
+            return returnPage ?? "/Projects/PublicSectorEqualityDuty/LikelyhoodImpact";
+
+         }
+      }
+
+      private void SetReturnToPreview()
+      {
+         (string returnPage, string fragment) = GetReturnPageAndFragment();
+
+         if (returnPage == "/TaskList/HtbDocument/Preview")
+         {
+            ReturnToPreview = true;
+         }
+      }
+
+      public async Task<IActionResult> OnGetAsync(string urn)
+      {
+         var projectInformation = await getInformationForProject.Execute(urn);
 
          Urn = projectInformation.Project.Urn;
          OutgoingTrustName = projectInformation.Project.OutgoingTrustName;
 
          Reason = projectInformation.Project.PublicEqualityDutyReduceImpactReason;
 
-         ReturnToPreview = Request.Query["returnToPreview"] == "true";
+         SetReturnToPreview();
 
          return Page();
       }
 
-      public async Task<IActionResult> OnPostAsync(string id)
+      public async Task<IActionResult> OnPostAsync(string urn)
       {
          if (!ModelState.IsValid)
          {
             errorService.AddErrors(ModelState.Keys, ModelState);
 
-            return await OnGetAsync(id);
+            return await OnGetAsync(urn);
          }
 
-         var projectInformation = await getInformationForProject.Execute(id);
+         SetReturnToPreview();
 
-         var urn = int.Parse(projectInformation.Project.Urn);
+         var projectInformation = await getInformationForProject.Execute(urn);
 
-         SetTransferPublicEqualityDutyModel model = new(urn, projectInformation.Project.PublicEqualityDutyImpact, Reason, projectInformation.Project.PublicEqualityDutySectionComplete ?? false);
+         var identifier = int.Parse(projectInformation.Project.Urn);
 
-         await projectsRepository.SetTransferPublicEqualityDuty(urn, model);
+         SetTransferPublicEqualityDutyModel model = new(identifier, projectInformation.Project.PublicEqualityDutyImpact, Reason, projectInformation.Project.PublicEqualityDutySectionComplete ?? false);
+
+         await projectsRepository.SetTransferPublicEqualityDuty(identifier, model);
+
+         (string returnPage, string fragment) = GetReturnPageAndFragment();
 
          if (ReturnToPreview)
          {
             return RedirectToPage("/TaskList/HtbDocument/Preview", new { projectInformation.Project.Urn });
          }
 
-         return RedirectToPage(Links.PublicSectorEqualityDutySection.TransferTask.PageName, new { projectInformation.Project.Urn });
+         return RedirectToPage(returnPage ?? Links.PublicSectorEqualityDutySection.TransferTask.PageName, new { projectInformation.Project.Urn });
       }
    }
 }

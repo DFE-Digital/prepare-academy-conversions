@@ -18,6 +18,9 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
          [Required(ErrorMessage = "Decide the likely impact of the project")]
          public PublicSectorEqualityDutyImpact? Impact { get; set; }
 
+         [BindProperty(SupportsGet = true)]
+         public bool ReturnToPreview { get; set; }
+
          public string GetImpactDescription(PublicSectorEqualityDutyImpact impact)
          {
             var result = "";
@@ -45,6 +48,39 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
             return (returnQuery, fragmentQuery);
          }
 
+         private void SetReturnToPreview()
+         {
+            (string returnPage, string fragment) = GetReturnPageAndFragment();
+
+            if (returnPage == "/TaskList/PreviewProjectTemplate")
+            {
+               ReturnToPreview = true;
+            }
+         }
+
+         public string Back
+         {
+            get
+            {
+               (string returnPage, string fragment) = GetReturnPageAndFragment();
+
+               if (ReturnToPreview)
+               {
+                  return "/TaskList/PreviewProjectTemplate";
+               }
+
+               return returnPage ?? "/TaskList/PublicSectorEqualityDuty/Task";
+            }
+         }
+
+         public string Return
+         {
+            get
+            {
+               return "/TaskList/PublicSectorEqualityDuty/LikelyhoodImpact";
+         }
+         }
+
          public override async Task<IActionResult> OnGetAsync(int id)
          {
             IActionResult result = await SetProject(id);
@@ -69,6 +105,8 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
                   break;
             }
 
+            SetReturnToPreview();
+
             return Page();
          }
 
@@ -83,6 +121,8 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
 
             await base.OnGetAsync(id);
 
+            SetReturnToPreview();
+
             var impact = GetImpactDescription((PublicSectorEqualityDutyImpact)Impact);
 
             var reason = Project.PublicEqualityDutyImpact != "Unlikely" ? Project.PublicEqualityDutyReduceImpactReason : string.Empty;
@@ -95,21 +135,12 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
 
             if (Impact == PublicSectorEqualityDutyImpact.Unlikely)
             {
-               
-               if (!string.IsNullOrWhiteSpace(returnPage))
-               {
-                  return RedirectToPage(returnPage, null, new { id }, fragment);
-               }
-               else
-               {
-                  return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionTask.Page, new { id });
-               }
+               return RedirectToPage(Back, new { id, fragment });
             }
             else
             {
-               var fragmentQuery = !string.IsNullOrWhiteSpace(fragment) ? $"&fragment={fragment}" : string.Empty;
-               var url = $"/task-list/{id}/public-sector-equality-duty-reason?return={returnPage ?? WebUtility.UrlEncode(Links.PublicSectorEqualityDutySection.ConversionLikelyhoodToImpact.Page)}{fragmentQuery}";
-               return Redirect(url);
+
+               return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page, new { id, ReturnToPreview, fragment });
             }
          }
     }

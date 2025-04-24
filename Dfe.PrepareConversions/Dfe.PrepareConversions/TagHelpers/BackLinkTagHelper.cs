@@ -37,7 +37,7 @@ public class BackLinkTagHelper(IHtmlGenerator generator) : AnchorTagHelper(gener
          if (Back != null) RouteValues.Add("back", BackLookup.Page);
          if (Return != null) RouteValues.Add("return", ReturnLookup.Page);
       }
-      else if (ViewContext.HttpContext.Request.Query.ContainsKey("return") && ViewContext.HttpContext.Request.Query["return"].Count == 1)
+      else if ((ViewContext.HttpContext.Request.Query.ContainsKey("return") && ViewContext.HttpContext.Request.Query["return"].Count == 1) || (ViewContext.HttpContext.Request.Query.ContainsKey("Return") && ViewContext.HttpContext.Request.Query["Return"].Count == 1))
       {
          string returnPage = ViewContext.HttpContext.Request.Query["return"][0];
          Page = (Links.ByPage(WebUtility.UrlDecode(returnPage)) ?? Links.TaskList.Index).Page;

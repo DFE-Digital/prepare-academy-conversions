@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.Data.Models;
 using System.ComponentModel.DataAnnotations;
-using System.Net;
+using Microsoft.Extensions.Primitives;
 
 namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqualityDuty
 {
@@ -20,8 +20,37 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
 
       public bool ShowError => errorService.HasErrors();
 
-      [BindProperty]
-      public bool ReturnToPreview { get; set; }
+      private (string, string) GetReturnPageAndFragment()
+      {
+         Request.Query.TryGetValue("return", out StringValues returnQuery);
+         Request.Query.TryGetValue("fragment", out StringValues fragmentQuery);
+         return (returnQuery, fragmentQuery);
+      }
+
+      public string Back
+      {
+         get
+         {
+            (string returnPage, string fragment) = GetReturnPageAndFragment();
+
+            if (ReturnToPreview)
+            {
+               return "/TaskList/HtbDocument/Preview";
+            }
+
+            return returnPage ?? "/Projects/PublicSectorEqualityDuty/Task";
+         }
+      }
+
+      private void SetReturnToPreview()
+      {
+         (string returnPage, string fragment) = GetReturnPageAndFragment();
+
+         if (returnPage == "/TaskList/HtbDocument/Preview")
+         {
+            ReturnToPreview = true;
+         }
+      }
 
       public string GetImpactDescription(Models.PublicSectorEqualityDutyImpact impact)
       {
@@ -61,67 +90,50 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
          }
       }
 
-      public async Task<IActionResult> OnGetAsync(string id)
+      public async Task<IActionResult> OnGetAsync(string urn)
       {
-         var projectInformation = await getInformationForProject.Execute(id);
+         var projectInformation = await getInformationForProject.Execute(urn);
 
          Urn = projectInformation.Project.Urn;
          OutgoingTrustName = projectInformation.Project.OutgoingTrustName;
          IsReadOnly = projectInformation.Project.IsReadOnly;
 
-         ReturnToPreview = Request.Query["returnToPreview"] == "true";
+         SetReturnToPreview();
 
          MapImpact(projectInformation.Project.PublicEqualityDutyImpact);
 
          return Page();
       }
 
-      public async Task<IActionResult> OnPostAsync(string id)
+      public async Task<IActionResult> OnPostAsync(string urn)
       {
          if (!ModelState.IsValid)
          {
             errorService.AddErrors(ModelState.Keys, ModelState);
 
-            return await OnGetAsync(id);
+            return await OnGetAsync(urn);
          }
 
-         var projectInformation = await getInformationForProject.Execute(id);
+         var projectInformation = await getInformationForProject.Execute(urn);
          IsReadOnly = projectInformation.Project.IsReadOnly;
 
          var impact = GetImpactDescription((Models.PublicSectorEqualityDutyImpact)Impact);
          var reason = projectInformation.Project.PublicEqualityDutyImpact != "Unlikely" ? projectInformation.Project.PublicEqualityDutyReduceImpactReason : string.Empty;
 
-         var urn = int.Parse(projectInformation.Project.Urn);
-         SetTransferPublicEqualityDutyModel model = new(urn, impact, reason, projectInformation.Project.PublicEqualityDutySectionComplete ?? false);
+         var identifier = int.Parse(projectInformation.Project.Urn);
+         SetTransferPublicEqualityDutyModel model = new(identifier, impact, reason, projectInformation.Project.PublicEqualityDutySectionComplete ?? false);
 
-         await projectsRepository.SetTransferPublicEqualityDuty(urn, model);
+         await projectsRepository.SetTransferPublicEqualityDuty(identifier, model);
+
+         SetReturnToPreview();
 
          if (Impact == Models.PublicSectorEqualityDutyImpact.Unlikely)
          {
-            if (ReturnToPreview)
-            {
-               return RedirectToPage("/TaskList/HtbDocument/Preview", new { projectInformation.Project.Urn });
-            }
-            else
-            {
-               return RedirectToPage(Links.PublicSectorEqualityDutySection.TransferTask.PageName, new { projectInformation.Project.Urn });
-            }
+            return RedirectToPage(Back, new { projectInformation.Project.Urn, ReturnToPreview });
          }
          else
          {
-            if (ReturnToPreview)
-            {
-               var returnUrl = WebUtility.UrlEncode($"/transfers/project/{projectInformation.Project.Urn}/public-sector-equality-duty-impact?returnToPreview=true");
-               var url = $"/transfers/project/{projectInformation.Project.Urn}/public-sector-equality-duty-reason?return={returnUrl}";
-               return Redirect(url);
-               // https://localhost:5003/transfers/project/10003000/public-sector-equality-duty-impact?returnToPreview=true
-            }
-            else
-            {
-               var returnUrl = WebUtility.UrlEncode($"/transfers/project/{projectInformation.Project.Urn}/public-sector-equality-duty-impact");
-               var url = $"/transfers/project/{projectInformation.Project.Urn}/public-sector-equality-duty-reason?return={returnUrl}";
-               return Redirect(url);
-            }
+            return RedirectToPage(Links.PublicSectorEqualityDutySection.TransferImpactReductionReason.PageName, new { projectInformation.Project.Urn, ReturnToPreview });
          }
       }
    }
