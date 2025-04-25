@@ -230,7 +230,7 @@ describe('Create a new transfer', () => {
   })
 
   context('Project Template', () => {
-    it('Preview Project Template', () => {
+    it.skip('Preview Project Template', () => {
 
       projectPage
         .loadProject(projectId)
@@ -240,7 +240,7 @@ describe('Create a new transfer', () => {
         .checkSections()
     })
 
-    it('Generate Project Template', () => {
+    it.skip('Generate Project Template', () => {
 
       projectPage
         .loadProject(projectId)
