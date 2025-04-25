@@ -44,7 +44,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Con
 
       [Theory]
       [InlineData("Unlikely", "The decision is unlikely to disproportionately affect any particular person or group who share protected characteristics")]
-      [InlineData("Some impact", "There are some impacts but on balance the analysis indicates these changes will not disproportionately affect any particular person or group who share protected")]
+      [InlineData("Some impact", "There are some impacts but on balance the analysis indicates these changes will not disproportionately affect any particular person or group who share protected characteristics")]
       [InlineData("Likely", "The decision is likely to disproportionately affect any particular person or group who share protected characteristics")]
       public async Task OnGet_Returns_Custom_Impact_Reason_Label(string impact, string reasonLabel)
       {

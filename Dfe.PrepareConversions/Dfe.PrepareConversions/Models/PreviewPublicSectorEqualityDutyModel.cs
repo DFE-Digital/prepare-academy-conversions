@@ -35,7 +35,7 @@
                result = "The decision is unlikely to disproportionately affect any particular person or group who share protected characteristics";
                break;
             case "Some impact":
-               result = "There are some impacts but on balance the analysis indicates these changes will not disproportionately affect any particular person or group who share protected";
+               result = "There are some impacts but on balance the analysis indicates these changes will not disproportionately affect any particular person or group who share protected characteristics";
                break;
             case "Likely":
                result = "The decision is likely to disproportionately affect any particular person or group who share protected characteristics";
