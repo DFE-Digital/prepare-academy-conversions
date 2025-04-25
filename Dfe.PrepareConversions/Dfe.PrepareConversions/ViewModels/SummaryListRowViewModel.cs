@@ -15,6 +15,7 @@ public class SummaryListRowViewModel
    public string Page { get; set; }
    public string Fragment { get; set; }
    public string RouteId { get; set; }
+   public string RouteUrn { get; set; }
    public string Return { get; set; }
    public string HiddenText { get; set; }
    public string KeyWidth { get; set; }
@@ -22,6 +23,7 @@ public class SummaryListRowViewModel
    public string Name { get; set; }
    public bool HighlightNegativeValue { get; set; }
    public bool IsReadOnly { get; set; }
+   public bool ReturnToPreview { get; set; }
 
    public string NegativeStyleClass
    {

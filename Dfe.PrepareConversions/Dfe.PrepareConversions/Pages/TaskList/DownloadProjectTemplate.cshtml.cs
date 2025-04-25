@@ -1,5 +1,3 @@
-using Dfe.PrepareConversions.Data;
-using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services.DocumentGenerator;
@@ -18,10 +16,8 @@ public class DownloadProjectTemplate(SchoolOverviewService schoolOverviewService
    public override async Task<IActionResult> OnGetAsync(int id)
    {
       await base.OnGetAsync(id);
-      if (Project.HeadTeacherBoardDate != null) return Page();
 
-      TempData["ShowGenerateHtbTemplateError"] = true;
-      return RedirectToPage(ErrorPage, new { id });
+      return Page();
    }
 
    public async Task<IActionResult> OnGetHtbTemplateAsync(int id)
@@ -40,6 +36,4 @@ public class DownloadProjectTemplate(SchoolOverviewService schoolOverviewService
 
       return File(documentByteArray, "application/vnd.ms-word.document", $"{document.SchoolName}-project-template-{DateTime.Today:dd-MM-yyyy}.docx");
    }
-
-  
 }

@@ -49,6 +49,13 @@ namespace Dfe.PrepareTransfers.Web.Models.ProjectTemplate
         [DocumentText("AnyIdentifiedRisks")] public bool? AnyIdentifiedRisks  { get; set; }
         public List<Tuple<string,string>> OtherFactors { get; set; }
 
+        // Public Sector Equality Duty
+        [DocumentText("PublicEqualityDutyImpact")]
+        public string PublicEqualityDutyImpact { get; set; }
+
+        [DocumentText("PublicEqualityDutyReduceImpactReason")]
+        public string PublicEqualityDutyReduceImpactReason { get; set; }
+
         public List<IntendedBenefit> ListOfTransferBenefits { get; set; }
         public Dictionary<OtherFactor, string> ListOfOtherFactors { get; set; }
     }

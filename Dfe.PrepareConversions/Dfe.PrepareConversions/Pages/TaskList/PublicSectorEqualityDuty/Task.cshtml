@@ -56,12 +56,13 @@
                                     hidden-text="public sector equality duty consideration"
                                     value="@Model.ReduceImpactReasonLabel" />
 
-            <govuk-summary-list-row if="@Model.RequiresReason" id="ReduceImpactReason" name="reduce-impact-reason"
+            <govuk-summary-list-row if="@Model.RequiresReason" name="reduce-impact-reason"
                                     label="What will be done to reduce this impact?"
                                     key-width="@WidthOverride.OneQuarter"
                                     value="@Model.ReduceImpactReason"
                                     asp-page="@Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page"
                                     asp-route-id="@Model.Project.Id"
+                                    asp-route-return="@Links.PublicSectorEqualityDutySection.ConversionTask.Page"
                                     hidden-text="What will be done to reduce this impact" />
         </dl>
     </div>

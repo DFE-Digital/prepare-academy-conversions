@@ -15,6 +15,7 @@ using static Dfe.PrepareConversions.Services.DocumentGenerator.SchoolAndTrustInf
 using static Dfe.PrepareConversions.Services.DocumentGenerator.SchoolBudgetInformationGenerator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.SchoolOverviewGenerator;
 using static Dfe.PrepareConversions.Services.DocumentGenerator.SchoolPupilForecastGenerator;
+using static Dfe.PrepareConversions.Services.DocumentGenerator.PublicSectorEqualityDutyGenerator;
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator
 {
@@ -36,6 +37,8 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          AddSchoolBudgetInformation(documentBuilder, document);
          AddSchoolPupilForecast(documentBuilder, document);
          AddEducationalAttendanceInformation(documentBuilder, document, project);
+         AddPublicSectorEqualityDuty(documentBuilder, document);
+
          documentByteArray = documentBuilder.Build();
          return document;
       }

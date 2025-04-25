@@ -38,7 +38,7 @@ public class TaskListItemViewModelUnitTests
    [Fact]
    public void Should_return_Completed_when_psed_task_is_completed()
    {
-      var status = TaskListItemViewModel.PublicSectorEqualityDutyStatus(true, "Some impact");
+      var status = TaskListItemViewModel.PublicSectorEqualityDutyStatus(true, "Some impact", "Some impact reason");
 
       Assert.Equal(status, TaskListItemViewModel.Completed);
    }
@@ -46,7 +46,7 @@ public class TaskListItemViewModelUnitTests
    [Fact]
    public void Should_return_NotStarted_psed_task_is_new()
    {
-      var status = TaskListItemViewModel.PublicSectorEqualityDutyStatus(false, "");
+      var status = TaskListItemViewModel.PublicSectorEqualityDutyStatus(false, "", "");
 
       Assert.Equal(status, TaskListItemViewModel.NotStarted);
    }
@@ -54,7 +54,7 @@ public class TaskListItemViewModelUnitTests
    [Fact]
    public void Should_return_InProgress_psed_task_is_in_progress()
    {
-      var status = TaskListItemViewModel.PublicSectorEqualityDutyStatus(false, "This is the reason");
+      var status = TaskListItemViewModel.PublicSectorEqualityDutyStatus(false, "Some impact", "");
 
       Assert.Equal(status, TaskListItemViewModel.InProgress);
    }

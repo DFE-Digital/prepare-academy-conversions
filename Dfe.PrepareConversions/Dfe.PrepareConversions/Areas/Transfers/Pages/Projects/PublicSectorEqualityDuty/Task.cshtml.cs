@@ -42,24 +42,6 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
          }
       }
 
-      private void MapReduceImpactReasonLabel()
-      {
-         switch (Impact)
-         {
-            case "Unlikely":
-               ReduceImpactReasonLabel = "The equalities duty has been considered and the Secretary of State's decision is unlikely to affect disproportionately any particular person or group who share protected characteristics.";
-               break;
-            case "Some impact":
-               ReduceImpactReasonLabel = "The equalities duty has been considered and there are some impacts but on balance the analysis indicates these changes will not affect disproportionately any particular person or group who share protected characteristics.";
-               break;
-            case "Likely":
-               ReduceImpactReasonLabel = "The equalities duty has been considered and the decision is likely to affect disproportionately a particular person or group who share protected characteristics.";
-               break;
-            default:
-               break;
-         }
-      }
-
       public async Task<IActionResult> OnGetAsync(string urn)
       {
          var projectInformation = await getInformationForProject.Execute(urn);
@@ -72,7 +54,7 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
          ReduceImpactReason = projectInformation.Project.PublicEqualityDutyReduceImpactReason;
          SectionComplete = projectInformation.Project.PublicEqualityDutySectionComplete ?? false;
 
-         MapReduceImpactReasonLabel();
+         ReduceImpactReasonLabel = Models.PreviewPublicSectorEqualityDutyModel.GenerateReduceImpactReasonLabel(Impact);
 
          return Page();
       }
@@ -84,7 +66,7 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
          Impact = projectInformation.Project.PublicEqualityDutyImpact;
          IsReadOnly = projectInformation.Project.IsReadOnly;
 
-         MapReduceImpactReasonLabel();
+         ReduceImpactReasonLabel = Models.PreviewPublicSectorEqualityDutyModel.GenerateReduceImpactReasonLabel(Impact);
 
          if (SectionComplete)
          {
@@ -105,12 +87,12 @@ namespace Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqua
 
                return Page();
             }
-
-            var key = int.Parse(urn);
-            SetTransferPublicEqualityDutyModel dutyModel = new(key, projectInformation.Project.PublicEqualityDutyImpact, projectInformation.Project.PublicEqualityDutyReduceImpactReason, SectionComplete);
-
-            await projectsRepository.SetTransferPublicEqualityDuty(key, dutyModel);
          }
+
+         var key = int.Parse(urn);
+         SetTransferPublicEqualityDutyModel dutyModel = new(key, projectInformation.Project.PublicEqualityDutyImpact, projectInformation.Project.PublicEqualityDutyReduceImpactReason, SectionComplete);
+
+         await projectsRepository.SetTransferPublicEqualityDuty(key, dutyModel);
 
          return RedirectToPage(Links.Project.Index.PageName, new { projectInformation.Project.Urn });
       }

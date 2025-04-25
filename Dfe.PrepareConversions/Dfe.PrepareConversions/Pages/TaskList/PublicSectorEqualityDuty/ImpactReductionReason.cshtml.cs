@@ -6,6 +6,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Primitives;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Conversion
 {
@@ -17,6 +18,36 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
          [Required(ErrorMessage = "Decide what will be done to reduce the impact")]
          public string Reason { get; set; }
 
+         [BindProperty(SupportsGet = true)]
+         public bool ReturnToPreview { get; set; }
+
+         private (string, string) GetReturnPageAndFragment()
+         {
+            Request.Query.TryGetValue("return", out StringValues returnQuery);
+            Request.Query.TryGetValue("fragment", out StringValues fragmentQuery);
+            return (returnQuery, fragmentQuery);
+         }
+
+         public string Back
+         {
+            get
+            {
+               (string returnPage, string fragment) = GetReturnPageAndFragment();
+
+               return returnPage ?? "/TaskList/PublicSectorEqualityDuty/LikelyhoodImpact";
+            }
+         }
+
+         private void SetReturnToPreview()
+         {
+            (string returnPage, string fragment) = GetReturnPageAndFragment();
+
+            if (returnPage == "/TaskList/PreviewProjectTemplate")
+            {
+               ReturnToPreview = true;
+            }
+         }
+
          public override async Task<IActionResult> OnGetAsync(int id)
          {
             IActionResult result = await SetProject(id);
@@ -25,6 +56,8 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
             {
                return NotFound();
             }
+
+            SetReturnToPreview();
 
             Reason = Project.PublicEqualityDutyReduceImpactReason;
 
@@ -42,11 +75,20 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
 
             await base.OnGetAsync(id);
 
+            SetReturnToPreview();
+
             SetConversionPublicEqualityDutyModel model = new(id, Project.PublicEqualityDutyImpact, Reason, Project.PublicEqualityDutySectionComplete);
 
             await _repository.SetPublicEqualityDuty(id, model);
 
-            return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionTask.Page, new { id });
-      }
+            (string returnPage, string fragment) = GetReturnPageAndFragment();
+
+            if (ReturnToPreview)
+            {
+               return RedirectToPage("/TaskList/PreviewProjectTemplate", new { id, fragment });
+            }
+
+            return RedirectToPage(returnPage ?? Links.PublicSectorEqualityDutySection.ConversionTask.Page, new { id });
+         }
     }
 }

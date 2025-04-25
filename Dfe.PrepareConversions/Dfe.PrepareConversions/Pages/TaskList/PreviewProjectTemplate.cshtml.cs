@@ -1,4 +1,3 @@
-using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
@@ -33,7 +32,7 @@ public class PreviewHtbTemplateModel : BaseAcademyConversionProjectPageModel
    public override async Task<IActionResult> OnGetAsync(int id)
    {
       await SetProject(id);
-      _ = ValidateProject(Project);
+
       await SetKeyStagePerformancePageData(Project);
 
       return Page();
@@ -57,19 +56,29 @@ public class PreviewHtbTemplateModel : BaseAcademyConversionProjectPageModel
          return Page();
       }
 
-      return RedirectToPage("DownloadProjectTemplate", new { Id = Project.Id });
+      return RedirectToPage("DownloadProjectTemplate", new { Project.Id });
    }
 
    private bool ValidateProject(ProjectViewModel project)
    {
+      string returnPage = WebUtility.UrlEncode(Links.TaskList.PreviewHTBTemplate.Page);
+
       var hasAdvisoryBoardDate = project.HeadTeacherBoardDate is not null;
       
       if (!hasAdvisoryBoardDate)
-      {
-         string returnPage = WebUtility.UrlEncode(Links.TaskList.PreviewHTBTemplate.Page);
+      {  
          // this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
          _errorService.AddError($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}&fragment=advisory-board-date",
-            "Set an Advisory Board date before you generate your project template");
+            "Set an Advisory board date before you generate your project template");
+
+         ShowGenerateHtbTemplateError = true;
+      }
+
+      var isPsedValid = PreviewPublicSectorEqualityDutyModel.IsValid(Project.PublicEqualityDutyImpact, Project.PublicEqualityDutyReduceImpactReason, Project.PublicEqualityDutySectionComplete);
+      if (!isPsedValid)
+      {
+         _errorService.AddError($"/task-list/{project.Id}/public-sector-equality-duty?return={returnPage}",
+            "Consider the Public Sector Equality Duty");
 
          ShowGenerateHtbTemplateError = true;
       }

@@ -55,7 +55,9 @@ public class UpdateAcademyConversionProjectPageModel(IAcademyConversionProjectRe
          return Page();
       }
 
-      ApiResponse<AcademyConversionProject> response = await _repository.UpdateProject(id, Build());
+      var model = Build();
+
+      ApiResponse<AcademyConversionProject> response = await _repository.UpdateProject(id, model);
 
       if (!response.Success)
       {
@@ -187,6 +189,10 @@ public class UpdateAcademyConversionProjectPageModel(IAcademyConversionProjectRe
          NumberOfMedicalPlaces = AcademyConversionProject.NumberOfMedicalPlaces,
          NumberOfSENUnitPlaces = AcademyConversionProject.NumberOfSENUnitPlaces,
          NumberOfPost16Places = AcademyConversionProject.NumberOfPost16Places,
+         // Public sector equality duty
+         PublicEqualityDutyImpact = AcademyConversionProject.PublicEqualityDutyImpact,
+         PublicEqualityDutyReduceImpactReason = AcademyConversionProject.PublicEqualityDutyReduceImpactReason,
+         PublicEqualityDutySectionComplete = AcademyConversionProject.PublicEqualityDutySectionComplete,
       };
    }
 

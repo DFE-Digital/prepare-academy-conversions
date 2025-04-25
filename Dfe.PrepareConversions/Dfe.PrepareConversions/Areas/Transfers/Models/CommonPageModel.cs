@@ -29,6 +29,16 @@ namespace Dfe.PrepareTransfers.Web.Models
         [BindProperty(SupportsGet = true)]
         
         public DateTime? ProjectSentToCompleteDate { get; set; }
-        
-    }
+      [BindProperty]
+      public string HeadTeacherBoardDate { get; set; }
+
+      [BindProperty]
+      public string PublicEqualityDutyImpact { get; set; }
+
+      [BindProperty]
+      public string PublicEqualityDutyReduceImpactReason { get; set; }
+
+      [BindProperty]
+      public bool? PublicEqualityDutySectionComplete { get; set; }
+   }
 }

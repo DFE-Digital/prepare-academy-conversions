@@ -6,6 +6,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Primitives;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Conversion
 {
@@ -16,6 +17,9 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
          [BindProperty]
          [Required(ErrorMessage = "Decide the likely impact of the project")]
          public PublicSectorEqualityDutyImpact? Impact { get; set; }
+
+         [BindProperty(SupportsGet = true)]
+         public bool ReturnToPreview { get; set; }
 
          public string GetImpactDescription(PublicSectorEqualityDutyImpact impact)
          {
@@ -37,35 +41,77 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
             return result;
          }
 
+         private (string, string) GetReturnPageAndFragment()
+         {
+            Request.Query.TryGetValue("return", out StringValues returnQuery);
+            Request.Query.TryGetValue("fragment", out StringValues fragmentQuery);
+            return (returnQuery, fragmentQuery);
+         }
+
+         private void SetReturnToPreview()
+         {
+            (string returnPage, string fragment) = GetReturnPageAndFragment();
+
+            if (returnPage == "/TaskList/PreviewProjectTemplate")
+            {
+               ReturnToPreview = true;
+            }
+         }
+
+         public string Back
+         {
+            get
+            {
+               (string returnPage, string fragment) = GetReturnPageAndFragment();
+
+               if (ReturnToPreview)
+               {
+                  return "/TaskList/PreviewProjectTemplate";
+               }
+
+               return returnPage ?? "/TaskList/PublicSectorEqualityDuty/Task";
+            }
+         }
+
+         public string Return
+         {
+            get
+            {
+               return "/TaskList/PublicSectorEqualityDuty/LikelyhoodImpact";
+         }
+         }
+
          public override async Task<IActionResult> OnGetAsync(int id)
          {
-               IActionResult result = await SetProject(id);
+            IActionResult result = await SetProject(id);
 
-               if (result is StatusCodeResult { StatusCode: (int)HttpStatusCode.NotFound })
-               {
-                  return NotFound();
-               }
+            if (result is StatusCodeResult { StatusCode: (int)HttpStatusCode.NotFound })
+            {
+               return NotFound();
+            }
 
-               switch(Project.PublicEqualityDutyImpact)
-               {
-                  case "Unlikely":
-                     Impact = PublicSectorEqualityDutyImpact.Unlikely;
-                     break;
-                  case "Some impact":
-                     Impact = PublicSectorEqualityDutyImpact.SomeImpact;
-                     break;
-                  case "Likely":
-                     Impact = PublicSectorEqualityDutyImpact.Likely;
-                     break;
-                  default:
-                     break;
-               }
+            switch(Project.PublicEqualityDutyImpact)
+            {
+               case "Unlikely":
+                  Impact = PublicSectorEqualityDutyImpact.Unlikely;
+                  break;
+               case "Some impact":
+                  Impact = PublicSectorEqualityDutyImpact.SomeImpact;
+                  break;
+               case "Likely":
+                  Impact = PublicSectorEqualityDutyImpact.Likely;
+                  break;
+               default:
+                  break;
+            }
 
-               return Page();
-          }
+            SetReturnToPreview();
 
-        public override async Task<IActionResult> OnPostAsync(int id)
-        {
+            return Page();
+         }
+
+         public override async Task<IActionResult> OnPostAsync(int id)
+         {
             if (!ModelState.IsValid)
             {
                errorService.AddErrors(ModelState.Keys, ModelState);
@@ -75,21 +121,27 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
 
             await base.OnGetAsync(id);
 
+            SetReturnToPreview();
+
             var impact = GetImpactDescription((PublicSectorEqualityDutyImpact)Impact);
 
             var reason = Project.PublicEqualityDutyImpact != "Unlikely" ? Project.PublicEqualityDutyReduceImpactReason : string.Empty;
 
-            SetConversionPublicEqualityDutyModel model = new(id, impact, reason, false);
+            SetConversionPublicEqualityDutyModel model = new(id, impact, reason, Project.PublicEqualityDutySectionComplete);
 
             await _repository.SetPublicEqualityDuty(id, model);
 
+            (string returnPage, string fragment) = GetReturnPageAndFragment();
+
             if (Impact == PublicSectorEqualityDutyImpact.Unlikely)
             {
-               return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionTask.Page, new { id });
+               return RedirectToPage(Back, new { id, fragment });
             }
+            else
+            {
 
-            var returnUrl = Links.PublicSectorEqualityDutySection.ConversionLikelyhoodToImpact.Page;
-            return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page, new { id, returnUrl });
-      }
+               return RedirectToPage(Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page, new { id, ReturnToPreview, fragment });
+            }
+         }
     }
 }

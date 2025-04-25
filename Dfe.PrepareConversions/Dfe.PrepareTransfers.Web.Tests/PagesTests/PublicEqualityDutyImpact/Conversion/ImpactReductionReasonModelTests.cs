@@ -6,6 +6,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Conversion;
 using Dfe.PrepareConversions.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
@@ -23,7 +24,18 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.PublicEqualityDutyImpact.Con
       {
          _academyConversionProjectRepository = new Mock<IAcademyConversionProjectRepository>();
          _errorService = new Mock<ErrorService>();
-         _subject = new ImpactReductionReasonModel(_academyConversionProjectRepository.Object, _errorService.Object);
+
+         var httpContext = new DefaultHttpContext();
+         httpContext.Request.Query = new QueryCollection();
+         var pageContext = new PageContext
+         {
+            HttpContext = httpContext
+         };
+
+         _subject = new ImpactReductionReasonModel(_academyConversionProjectRepository.Object, _errorService.Object)
+         {
+            PageContext = pageContext
+         };
       }
 
       [Fact]

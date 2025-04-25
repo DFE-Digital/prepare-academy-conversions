@@ -38,24 +38,6 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
          }
       }
 
-      private void MapReduceImpactReasonLabel()
-      {
-         switch (Project.PublicEqualityDutyImpact)
-         {
-            case "Unlikely":
-               ReduceImpactReasonLabel = "The equalities duty has been considered and the Secretary of State's decision is unlikely to affect disproportionately any particular person or group who share protected characteristics.";
-               break;
-            case "Some impact":
-               ReduceImpactReasonLabel = "The equalities duty has been considered and there are some impacts but on balance the analysis indicates these changes will not affect disproportionately any particular person or group who share protected characteristics.";
-               break;
-            case "Likely":
-               ReduceImpactReasonLabel = "The equalities duty has been considered and the decision is likely to affect disproportionately a particular person or group who share protected characteristics.";
-               break;
-            default:
-               break;
-         }
-      }
-
       public override async Task<IActionResult> OnGetAsync(int id)
       {
          IActionResult result = await SetProject(id);
@@ -65,8 +47,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
             return NotFound();
          }
 
-         MapReduceImpactReasonLabel();
-
+         ReduceImpactReasonLabel = PreviewPublicSectorEqualityDutyModel.GenerateReduceImpactReasonLabel(Project.PublicEqualityDutyImpact);
          ReduceImpactReason = Project.PublicEqualityDutyReduceImpactReason;
          SectionComplete = Project.PublicEqualityDutySectionComplete;
 
@@ -90,7 +71,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
                return Page();
             }
 
-            MapReduceImpactReasonLabel();
+            ReduceImpactReasonLabel = PreviewPublicSectorEqualityDutyModel.GenerateReduceImpactReasonLabel(Project.PublicEqualityDutyImpact);
 
             ReduceImpactReason = Project.PublicEqualityDutyReduceImpactReason;
 
@@ -102,11 +83,11 @@ namespace Dfe.PrepareConversions.Pages.TaskList.PublicSectorEqualityDuty.Convers
 
                return Page();
             }
-
-            SetConversionPublicEqualityDutyModel dutyModel = new(id, Project.PublicEqualityDutyImpact, Project.PublicEqualityDutyReduceImpactReason, SectionComplete);
-
-            await _repository.SetPublicEqualityDuty(id, dutyModel);
          }
+
+         SetConversionPublicEqualityDutyModel dutyModel = new(id, Project.PublicEqualityDutyImpact, Project.PublicEqualityDutyReduceImpactReason, SectionComplete);
+
+         await _repository.SetPublicEqualityDuty(id, dutyModel);
 
          return RedirectToPage(Links.TaskList.Index.Page, new { id });
       }

@@ -2,6 +2,7 @@
 @model Dfe.PrepareConversions.Pages.TaskList.PreviewHtbTemplateModel
 @using Dfe.Academisation.ExtensionMethods
 @using Dfe.PrepareConversions.TagHelpers
+@* @using Dfe.PrepareConversions.Models *@
 
 @{
    Model.SetErrorPage(Links.TaskList.PreviewHTBTemplate.Page);
@@ -110,6 +111,20 @@
    </section>
 }
 
+<h2 class="govuk-heading-s">Public sector equality duty</h2>
+<section class="app-summary-card govuk-!-margin-bottom-6">
+    <header class="app-summary-card__header">
+        <h2 class="app-summary-card__title">
+            Public sector equality duty
+        </h2>
+    </header>
+    @{
+        var psedModel = new PreviewPublicSectorEqualityDutyModel(Model.Project.Id, Model.Project.PublicEqualityDutyImpact, Model.Project.PublicEqualityDutyReduceImpactReason);
+    }
+    <partial name="PublicSectorEqualityDuty/PreviewRow" model="@psedModel"></partial>
+</section>
+
+
 <h2 class="govuk-heading-s">Rationale</h2>
 <section class="app-summary-card govuk-!-margin-bottom-6">
     <header class="app-summary-card__header">
@@ -164,8 +179,6 @@
                 Create your project document
             </h2>
             <p class="govuk-body">Project documents are in Microsoft Word format. You can make changes to documents after you create them.</p>
-
-
             <form method="post">
                 <button class="govuk-button govuk-!-margin-bottom-2" name="generate-template-button" id="generate-template-button">Create project document</button>
             </form>

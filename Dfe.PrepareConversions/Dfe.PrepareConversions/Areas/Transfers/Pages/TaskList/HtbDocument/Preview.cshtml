@@ -10,8 +10,10 @@
 
 @section BeforeMain
 {
-    <partial name="_DynamicBackLink" model="@Dfe.PrepareTransfers.Web.Transfers.Links.Project.Index.For(Model.Urn)"></partial>
+        <partial name="_DynamicBackLink" model="@Dfe.PrepareTransfers.Web.Transfers.Links.Project.Index.For(Model.Urn)"></partial>
 }
+
+<partial name="Shared/_ErrorSummary" />
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
@@ -23,7 +25,7 @@
         </h1>
         <hr class="govuk-section-break govuk-section-break--l">
     </div>
-    
+
     <div class="govuk-grid-column-full govuk-!-margin-bottom-6">
         <h2 class="govuk-heading-l">
             Transfer details
@@ -38,7 +40,7 @@
                 </h2>
             </header>
             <div class="app-summary-card__body">
-                <partial name="_FeaturesSummary" model="Model.FeaturesSummaryViewModel"></partial>
+                    <partial name="_FeaturesSummary" model="Model.FeaturesSummaryViewModel"></partial>
             </div>
         </section>
 
@@ -49,7 +51,7 @@
                 </h2>
             </header>
             <div class="app-summary-card__body">
-                <partial name="_TransferDatesSummary" model="Model.TransferDatesSummaryViewModel"></partial>
+                    <partial name="_TransferDatesSummary" model="Model.TransferDatesSummaryViewModel"></partial>
             </div>
         </section>
 
@@ -60,10 +62,10 @@
                 </h2>
             </header>
             <div class="app-summary-card__body">
-                <partial name="Shared/_BenefitsSummary" model="Model.BenefitsSummaryViewModel"></partial>
+                    <partial name="Shared/_BenefitsSummary" model="Model.BenefitsSummaryViewModel"></partial>
             </div>
         </section>
-        
+
         <section class="app-summary-card govuk-!-margin-bottom-7">
             <header class="app-summary-card__header">
                 <h2 class="app-summary-card__title">
@@ -71,7 +73,22 @@
                 </h2>
             </header>
             <div class="app-summary-card__body">
-                <partial name="Shared/_LegalSummary" model="Model.LegalRequirementsViewModel"></partial>
+                    <partial name="Shared/_LegalSummary" model="Model.LegalRequirementsViewModel"></partial>
+            </div>
+        </section>
+
+        <section class="app-summary-card govuk-!-margin-bottom-7">
+            <header class="app-summary-card__header">
+                <h2 class="app-summary-card__title">
+                    Public sector equality duty
+                </h2>
+            </header>
+            <div class="app-summary-card__body">
+               @{
+                    var psedModel = new PreviewPublicSectorEqualityDutyModel(Model.Urn, Model.PublicEqualityDutyImpact, Model.PublicEqualityDutyReduceImpactReason);
+               }
+
+                <partial name="Shared/_PublicSectorEqualityDutyPreviewRow" model="@psedModel"></partial>
             </div>
         </section>
 
@@ -133,17 +150,18 @@
         <p class="govuk-body govuk-!-margin-bottom-6">
             Generate the project template into a Word document and download it.
         </p>
-       <form asp-page="/TaskList/HtbDocument/Download" asp-route-urn="@Model.Urn" method="get">
+       
+        <form method="post" asp-route-urn="@Model.Urn">
             <input type="hidden" name="bl" value="@Dfe.PrepareTransfers.Web.Transfers.Links.HeadteacherBoard.Preview.PageName" />
-          <input type="hidden" name="u" value="@Model.Urn" />
-          <div class="govuk-button-group">
-             <button class="govuk-button" data-module="govuk-button" data-test="generate-htb">Generate project template</button>
-             <p class="govuk-body">
-                <a asp-page="/Home/Index" class="govuk-link govuk-link--no-visited-state">
-                   Save and return to this project later
-                </a>
-             </p>
-          </div>
-       </form>
+            <input type="hidden" name="u" value="@Model.Urn" />
+            <div class="govuk-button-group">
+                <button class="govuk-button" data-module="govuk-button" data-test="generate-htb">Generate project template</button>
+                <p class="govuk-body">
+                    <a asp-page="/Home/Index" class="govuk-link govuk-link--no-visited-state">
+                        Save and return to this project later
+                    </a>
+                </p>
+            </div>
+        </form>
     </div>
 </div>

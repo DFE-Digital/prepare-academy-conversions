@@ -9,7 +9,14 @@
 
 @section BeforeMain
 {
-    <govuk-back-link link-item="@Links.PublicSectorEqualityDutySection.ConversionTask" />
+    @if (Model.ReturnToPreview)
+    {
+        <a class="govuk-back-link" asp-page="@Model.Back" asp-route-id="@Model.Project.Id" asp-route-returnToPreview="@Model.ReturnToPreview">Back</a>
+    }
+    else
+    {
+        <govuk-back-link link-item="@Links.PublicSectorEqualityDutySection.ConversionTask" />
+    }
 }
 
 @if (Model.ShowError)
@@ -57,7 +64,7 @@
             @if (!Model.Project.IsReadOnly)
             {
                 <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton">
-                    Confirm and continue
+                    Save and continue
                 </button>
             }
         </form>

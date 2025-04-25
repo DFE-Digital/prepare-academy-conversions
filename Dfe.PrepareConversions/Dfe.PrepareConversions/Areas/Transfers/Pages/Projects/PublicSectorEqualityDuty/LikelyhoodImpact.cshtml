@@ -1,4 +1,4 @@
-﻿@page "/transfers/project/{id}/public-sector-equality-duty-impact"
+﻿@page "/transfers/project/{urn}/public-sector-equality-duty-impact"
 
 @model Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqualityDuty.LikelyhoodImpactModel
 
@@ -9,7 +9,14 @@
 
 @section BeforeMain
 {
-    <a class="govuk-back-link" asp-page="/Projects/PublicSectorEqualityDuty/Task" asp-route-urn="@Model.Urn">Back</a>
+    @if (Model.ReturnToPreview)
+    {
+        <a class="govuk-back-link" asp-page="@Model.Back" asp-route-urn="@Model.Urn" asp-route-returnToPreview="@Model.ReturnToPreview">Back</a>
+    }
+    else
+    {
+        <a class="govuk-back-link" asp-page="/Projects/PublicSectorEqualityDuty/Task" asp-route-urn="@Model.Urn" asp-route-returnToPreview="@Model.ReturnToPreview">Back</a>
+    }
 }
 
 @if (Model.ShowError)
@@ -57,7 +64,7 @@
             @if (Model.IsReadOnly == false)
             {
                 <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton">
-                    Confirm and continue
+                    Save and continue
                 </button>
             }
         </form>

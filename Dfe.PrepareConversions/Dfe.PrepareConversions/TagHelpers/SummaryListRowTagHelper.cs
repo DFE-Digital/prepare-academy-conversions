@@ -29,6 +29,12 @@ public class SummaryListRowTagHelper(IHtmlHelper htmlHelper) : InputTagHelperBas
    [HtmlAttributeName("asp-route-id")]
    public string RouteId { get; set; }
 
+   [HtmlAttributeName("asp-route-urn")]
+   public string RouteUrn { get; set; }
+
+   [HtmlAttributeName("asp-route-return")]
+   public string RouteReturn { get; set; }
+
    [HtmlAttributeName("hidden-text")]
    public string HiddenText { get; set; }
 
@@ -44,6 +50,9 @@ public class SummaryListRowTagHelper(IHtmlHelper htmlHelper) : InputTagHelperBas
    [HtmlAttributeName("asp-read-only")]
    public bool IsReadOnly { get; set; }
 
+   [HtmlAttributeName("asp-route-returnToPreview")]
+   public bool ReturnToPreview { get; set; }
+
    protected override async Task<IHtmlContent> RenderContentAsync()
    {
       string value1 = For == null ? Value : For.Model?.ToString();
@@ -58,13 +67,15 @@ public class SummaryListRowTagHelper(IHtmlHelper htmlHelper) : InputTagHelperBas
          Page = Page,
          Fragment = Fragment,
          RouteId = RouteId,
-         Return = ViewContext.ViewData["Return"]?.ToString(),
+         RouteUrn = RouteUrn,
+         Return = RouteReturn ?? ViewContext.ViewData["Return"]?.ToString(),
          HiddenText = HiddenText,
          KeyWidth = KeyWidth,
          ValueWidth = ValueWidth,
          Name = Name,
          HighlightNegativeValue = HighlightNegativeValue,
-         IsReadOnly = IsReadOnly
+         IsReadOnly = IsReadOnly,
+         ReturnToPreview = ReturnToPreview
       };
 
       return await _htmlHelper.PartialAsync("_SummaryListRow", model);

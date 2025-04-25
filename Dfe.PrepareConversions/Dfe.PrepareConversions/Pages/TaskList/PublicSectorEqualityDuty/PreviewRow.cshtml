@@ -1,0 +1,24 @@
+﻿@model Dfe.PrepareConversions.Models.PreviewPublicSectorEqualityDutyModel
+@using Dfe.PrepareConversions.Models
+
+<div class="app-summary-card__body">
+    <dl class="govuk-summary-list">
+        <govuk-summary-list-row id="reduce-impact-reason-label" name="reduce-impact-reason-label"
+                                label="Public Sector Equality Duty consideration"
+                                key-width="govuk-!-width-one-quarter"
+                                asp-page="/TaskList/PublicSectorEqualityDuty/LikelyhoodImpact"
+                                asp-route-id="@Model.Id"
+                                hidden-text="public sector equality duty consideration"
+                                asp-route-returnToPreview="true"
+                                value="@Model.ReduceImpactDescription" />
+
+        <govuk-summary-list-row if="@Model.RequiresReason" id="reduce-impact-reason" name="reduce-impact-reason"
+                                label="What will be done to reduce this impact?"
+                                key-width="govuk-!-width-one-quarter"
+                                value="@Model.ReduceImpactReason"
+                                asp-page="/TaskList/PublicSectorEqualityDuty/ImpactReductionReason"
+                                asp-route-id="@Model.Id"
+                                asp-route-returnToPreview="true"
+                                hidden-text="What will be done to reduce this impact" />
+    </dl>
+</div>

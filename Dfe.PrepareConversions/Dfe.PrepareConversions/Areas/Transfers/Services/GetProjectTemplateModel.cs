@@ -62,6 +62,9 @@ namespace Dfe.PrepareTransfers.Web.Services
                 OtherIntendedBenefit = project.Benefits.OtherIntendedBenefit,
                 ListOfOtherFactors = project.Benefits.OtherFactors,
                 AnyIdentifiedRisks = project.Benefits.AnyRisks,
+               // Public sector equality duty
+               PublicEqualityDutyImpact = project.PublicEqualityDutyImpact,
+               PublicEqualityDutyReduceImpactReason = project.PublicEqualityDutyReduceImpactReason
             };
 
             return new GetProjectTemplateModelResponse

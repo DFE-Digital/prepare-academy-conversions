@@ -1,4 +1,5 @@
-﻿using Dfe.PrepareTransfers.Data;
+﻿using Dfe.PrepareConversions.Services;
+using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Data.Models.KeyStagePerformance;
 using Dfe.PrepareTransfers.Data.Models.Projects;
@@ -32,7 +33,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ServicesTests
                 });
 
             _subject = new TaskListService(ProjectRepository.Object);
-            _index = new Index(_subject, new PerformanceDataChannel(new Mock<ILogger<PerformanceDataChannel>>().Object),null)
+            _index = new Index(new ErrorService(), _subject, new PerformanceDataChannel(new Mock<ILogger<PerformanceDataChannel>>().Object),null)
             {
                 Urn = ProjectUrn0001
             };

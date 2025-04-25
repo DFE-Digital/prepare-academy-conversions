@@ -1,4 +1,4 @@
-﻿@page "/transfers/project/{id:int}/public-sector-equality-duty-reason"
+﻿@page "/transfers/project/{urn}/public-sector-equality-duty-reason"
 
 @model Dfe.PrepareConversions.Areas.Transfers.Pages.Projects.PublicSectorEqualityDuty.ImpactReductionReasonModel
 
@@ -9,7 +9,7 @@
 
 @section BeforeMain
 {
-    <a class="govuk-back-link" asp-page="/Projects/PublicSectorEqualityDuty/Task" asp-route-urn="@Model.Urn">Back</a>
+    <a class="govuk-back-link" asp-page="@Model.Return" asp-route-urn="@Model.Urn" asp-route-returnToPreview="@Model.ReturnToPreview">Back</a>
 }
 
 <div class="govuk-form-group">
