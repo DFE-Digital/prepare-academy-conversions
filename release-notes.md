@@ -1,4 +1,11 @@
-## NEXT
+## 1.7.0
+
+* 200233 - Add PSED task to Prepare
+* 200234 - Add Equalities Duty section to pre-populated Project Template Word Document
+* 201243 - Add PSED section to 'Preview project document' screen
+
+
+## 1.6.0
 
 * Added ability to filter filters (Example being; to refine delivery officer list)
 * Added ability to have 'DAO Revoked' decision recorded against a Sponsored conversion project
