@@ -16,6 +16,7 @@ concurrency:
 
 env:
   NODE_VERSION: 18.x
+  IMAGE_NAME: a2bint-app
 
 jobs:
   set-env:
@@ -24,6 +25,7 @@ jobs:
     outputs:
       environment: ${{ steps.var.outputs.environment }}
       release: ${{ steps.var.outputs.release }}
+      image-name: ${{ steps.var.outputs.image-name }}
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -35,6 +37,7 @@ jobs:
           RELEASE=${ENVIRONMENT,,}-`date +%Y-%m-%d`.${{ github.run_number }}
           echo "environment=${ENVIRONMENT,,}" >> $GITHUB_OUTPUT
           echo "release=${RELEASE}" >> $GITHUB_OUTPUT
+          echo "image-name=${{ env.IMAGE_NAME }}" >> $GITHUB_OUTPUT
 
   validate-packages:
     runs-on: windows-latest
@@ -49,26 +52,49 @@ jobs:
           environment: ${{ needs.set-env.outputs.environment }}
 
   deploy:
-    permissions:
-      id-token: write
-      contents: read
-      packages: write
-    name: Deploy
+    name: Build, Import, Deploy
     needs: [ set-env, validate-packages ]
-    uses: DFE-Digital/deploy-azure-container-apps-action/.github/workflows/build-push-deploy.yml@2669c85cf877ce3161b7d0edf36690106412c70b # v4.1.0
-    with:
-      docker-image-name: 'a2bint-app'
-      docker-build-file-name: './Dockerfile'
-      environment: ${{ needs.set-env.outputs.environment }}
-      annotate-release: true
-    secrets:
-      azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-      azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      azure-acr-client-id: ${{ secrets.ACR_CLIENT_ID }}
-      azure-acr-name: ${{ secrets.ACR_NAME }}
-      azure-aca-client-id: ${{ secrets.ACA_CLIENT_ID }}
-      azure-aca-name: ${{ secrets.ACA_CONTAINERAPP_NAME }}
-      azure-aca-resource-group: ${{ secrets.ACA_RESOURCE_GROUP }}
+    runs-on: ubuntu-24.04
+    environment: ${{ needs.set-env.outputs.environment }}
+    permissions:
+      packages: write
+      id-token: write
+      attestations: write
+    steps:
+      - uses: DFE-Digital/deploy-azure-container-apps-action/.github/actions/build@v5.2.0
+        with:
+          build-file-name: ./Dockerfile
+          build-args: CI=true
+          image-name: ${{ needs.set-env.outputs.image-name }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: DFE-Digital/deploy-azure-container-apps-action/.github/actions/import@v5.2.0
+        with:
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure-acr-client-id: ${{ secrets.ACR_CLIENT_ID }}
+          azure-acr-name: ${{ secrets.ACR_NAME }}
+          image-name: ${{ needs.set-env.outputs.image-name }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID || '' }}
+          AZURE_SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION_ID || '' }}
+          AZURE_ACR_CLIENT_ID: ${{ secrets.ACR_CLIENT_ID || '' }}
+
+      - uses: DFE-Digital/deploy-azure-container-apps-action/.github/actions/deploy@v5.2.0
+        with:
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure-aca-client-id: ${{ secrets.ACA_CLIENT_ID }}
+          azure-aca-name: ${{ secrets.ACA_CONTAINERAPP_NAME }}
+          azure-aca-resource-group: ${{ secrets.ACA_RESOURCE_GROUP }}
+          azure-acr-name: ${{ secrets.ACR_NAME }}
+          annotate-release: 'yes'
+          image-name: ${{ needs.set-env.outputs.image-name }}
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID || '' }}
+          AZURE_SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION_ID || '' }}
+          AZURE_ACA_CLIENT_ID: ${{ secrets.ACA_CLIENT_ID || '' }}
 
   create-tag:
     name: Tag and release
