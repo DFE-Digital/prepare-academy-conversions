@@ -55,7 +55,7 @@ jobs:
       packages: write
     name: Deploy
     needs: [ set-env, validate-packages ]
-    uses: DFE-Digital/deploy-azure-container-apps-action/.github/workflows/build-push-deploy.yml@2669c85cf877ce3161b7d0edf36690106412c70b # v4.1.0
+    uses: DFE-Digital/deploy-azure-container-apps-action/.github/workflows/build-push-deploy.yml@893261fb0934cda6c09b68081400892b999c5d96 # v5.1.0
     with:
       docker-image-name: 'a2bint-app'
       docker-build-file-name: './Dockerfile'
