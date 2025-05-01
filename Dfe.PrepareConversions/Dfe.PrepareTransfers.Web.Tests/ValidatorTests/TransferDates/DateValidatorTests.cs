@@ -38,7 +38,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
             var result = await _validator.TestValidateAsync(dateVm);
 
             result.ShouldHaveValidationErrorFor(a => a.Date)
-                .WithErrorMessage("Enter Advisory board date or select I do not know this");
+                .WithErrorMessage("Enter Advisory board date");
         }
         
         [Fact]
@@ -58,7 +58,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
             var result = await _validator.TestValidateAsync(dateVm);
 
             result.ShouldHaveValidationErrorFor(a => a.Date)
-                .WithErrorMessage("Enter Advisory board date or select I do not know this");
+                .WithErrorMessage("Enter Advisory board date");
         }
 
         [Fact]

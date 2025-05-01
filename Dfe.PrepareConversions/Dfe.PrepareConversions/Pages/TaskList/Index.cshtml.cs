@@ -113,8 +113,6 @@ public class IndexModel(KeyStagePerformanceService keyStagePerformanceService,
 
    public async Task<IActionResult> OnPostPreviewAsync(int id)
    {
-      var request = Request.Headers["Referer"];
-
       IActionResult result = await SetProject(id);
 
       ReturnPage = @Links.ProjectList.Index.Page;
