@@ -121,7 +121,7 @@ public class DateValidator : AbstractValidator<DateViewModel>
             if ((!dateVm.UnknownDate && DateIsEmpty(dateVm.Date, dateVm.IgnoreDayPart)) ||
                 (dateVm.UnknownDate && DateIsEmpty(dateVm.Date, dateVm.IgnoreDayPart) is false))
             {
-                context.AddFailure($"Enter {ErrorDisplayName} or select I do not know this");
+               context.AddFailure($"Enter {ErrorDisplayName}");
             }
          });
    }
