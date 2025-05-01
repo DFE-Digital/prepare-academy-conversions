@@ -21,13 +21,13 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList
          _fixture.Customizations.Add(new RandomDateBuilder(DateTime.Now.AddDays(1), DateTime.Now.AddMonths(12)));
       }
 
-      private void VerifyAdvisoryBoardError(IElement element, int projectId)
+      private static void VerifyAdvisoryBoardError(IElement element, int projectId)
       {
          element.TextContent.Should().Be("Set an Advisory board date before you generate your project template");
          element.Id.Should().Be($"/task-list/{projectId}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FIndex&fragment=advisory-board-date-error-link");
       }
 
-      private void VerifyPsedError(IElement element, int projectId)
+      private static void VerifyPsedError(IElement element, int projectId)
       {
          element.TextContent.Should().Be("Consider the Public Sector Equality Duty");
          element.Id.Should().Be($"/task-list/{projectId}/public-sector-equality-duty?return=%2FTaskList%2FIndex-error-link");
