@@ -11,8 +11,7 @@ import Rationale from "../../pages/rationaleConversion";
 import RisksAndIssues from "../../pages/risksAndIssues";
 import LocalAuthorityInfomation from "../../pages/localAuthorityInformation";
 import Performance from "../../pages/performance";
-
-
+import PublicSectorEqualityDutyImpact from "../../pages/publicSectorEqualityDutyImpact";
 
 
 describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
@@ -50,6 +49,14 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
       pupilForecast: {
          additionalInfomation: 'Pupil Forecast Additional Information'
       },
+      psed: {
+         unlikely: 'The decision is unlikely to disproportionately affect any particular person ',
+         someImpact: 'There are some impacts but on balance the analysis indicates these changes',
+         likely: 'The decision is likely to disproportionately affect',
+         reason: 'Test PSED reason',
+         errorMessage: 'Consider the Public Sector Equality Duty',
+         reasonErrorMessage: 'Decide what will be done to reduce the impact'
+      },
       rationale: 'This is why this school should become an academy',
       risksAndIssues: 'Here are the risks and issues for this conversion',
       localAuthority: {
@@ -60,14 +67,14 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
    }
 
    before(() => {
-     // Do the spin up a project journey
+      // Do the spin up a project journey
    })
 
    beforeEach(() => {
       projectList.selectProject(testData.projectName)
    })
 
-   it('TC01: Assign Project', () => {
+   it('User could Assign Project', () => {
       projectTaskList.selectAssignProject();
       projectAssignmentConversion.assignProject(testData.projectAssignment.deliveryOfficer)
       projectTaskList.getNotificationMessage().should('contain.text', testData.projectAssignment.assignedOfficerMessage);
@@ -76,7 +83,7 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
       projectList.getNthProjectDeliveryOfficer().should('contain.text', testData.projectAssignment.deliveryOfficer);
    })
 
-   it('TC02: School Overview', () => {
+   it('User could complete the School Overview task ', () => {
       projectList.selectProject(testData.projectName);
       projectTaskList.selectSchoolOverview();
       //PAN
@@ -109,7 +116,7 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
       projectTaskList.getSchoolOverviewStatus().should('contain.text', testData.completedText);
    })
 
-   it('TC03: Budget ', () => {
+   it('User could complete Budget task ', () => {
       projectTaskList.selectBudget();
       budget.updateBudgetInfomation(testData.budget);
 
@@ -130,14 +137,14 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
       projectTaskList.getBudgetStatus().should('contain.text', testData.completedText);
    });
 
-   it('TC04: Pupil Forecast ', () => {
+   it('User could complete Pupil Forecast task', () => {
       projectTaskList.selectPupilForecast();
       PupilForecast.enterAditionalInfomation(testData.pupilForecast.additionalInfomation);
       PupilForecast.getAdditionalInfomation().should('contain.text', testData.pupilForecast.additionalInfomation);
       cy.confirmContinueBtn().click();
    });
 
-   it('TC05: Conversion Details ', () => {
+   it('User could complete Conversion Details task', () => {
       projectTaskList.selectConversionDetails();
 
       // Form 7
@@ -175,11 +182,56 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
       // Complete
       ConversionDetails.markComplete();
       cy.confirmContinueBtn().click();
-      
+
       projectTaskList.getConversionDetailsStatus().should('contain.text', testData.completedText);
    });
 
-   it('TC06: Rationale ', () => {
+   it('User gets an error message whilst previewing or creating project document for incomplete PSED task', () => {
+      projectTaskList.selectPublicSectorEqualityDuty();
+      PublicSectorEqualityDutyImpact.markIncomplete();
+      cy.confirmContinueBtn().click();
+      projectTaskList.clickPreviewProjectDocumentButton();
+      projectTaskList.getErrorMessage().should('include.text', testData.psed.errorMessage);
+      projectTaskList.clickCreateProjectDocumentButton();
+      projectTaskList.getErrorMessage().should('include.text', testData.psed.errorMessage);
+   });
+
+   it('User could complete Public Sector Equality Duty task for Unlikely Impact', () => {
+      projectTaskList.selectPublicSectorEqualityDuty();
+      PublicSectorEqualityDutyImpact.changePsed('Unlikely');
+      PublicSectorEqualityDutyImpact.getPsed().should('include.text', testData.psed.unlikely);
+      PublicSectorEqualityDutyImpact.markComplete();
+      cy.confirmContinueBtn().click();
+      projectTaskList.publicSectorEqualityDutyStatus().should('contain.text', testData.completedText)
+   });
+
+   it('User could complete Public Sector Equality Duty task for Some Impact', () => {
+      projectTaskList.selectPublicSectorEqualityDuty();
+      PublicSectorEqualityDutyImpact.changePsed('Some impact');
+      //should get an error if impact reason not provided
+      PublicSectorEqualityDutyImpact.clickSaveBtnWithoutReason();
+      PublicSectorEqualityDutyImpact.getErrorMessage().should('include.text', testData.psed.reasonErrorMessage)
+      //should be able to save with impact reason
+      PublicSectorEqualityDutyImpact.enterImpactReason();
+      PublicSectorEqualityDutyImpact.getPsed().should('include.text', testData.psed.someImpact);
+      PublicSectorEqualityDutyImpact.getImpactReason().should('include.text', testData.psed.reason);
+      PublicSectorEqualityDutyImpact.markComplete();
+      cy.confirmContinueBtn().click();
+      projectTaskList.publicSectorEqualityDutyStatus().should('contain.text', testData.completedText)
+   });
+
+   it('User could complete Public Sector Equality Duty task for Likely Impact', () => {
+      projectTaskList.selectPublicSectorEqualityDuty();
+      PublicSectorEqualityDutyImpact.changePsed('Likely');
+      PublicSectorEqualityDutyImpact.enterImpactReason();
+      PublicSectorEqualityDutyImpact.getPsed().should('include.text', testData.psed.likely);
+      PublicSectorEqualityDutyImpact.getImpactReason().should('include.text', testData.psed.reason);
+      PublicSectorEqualityDutyImpact.markComplete();
+      cy.confirmContinueBtn().click();
+      projectTaskList.publicSectorEqualityDutyStatus().should('contain.text', testData.completedText)
+   });
+
+   it('User could complete Rationale task', () => {
       projectTaskList.selectRationale();
       Rationale.changeRationale(testData.rationale);
       Rationale.getRationale().should('contain.text', testData.rationale);
@@ -188,7 +240,7 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
       projectTaskList.getRationaleStatus().should('contain.text', testData.completedText);
    });
 
-   it('TC07: Risks and issues ', () => {
+   it('User could complete Risks and issues task', () => {
       projectTaskList.selectRisksAndIssues();
       RisksAndIssues.changeRisksAndIssues(testData.risksAndIssues);
       RisksAndIssues.getRisksAndIssues().should('contain.text', testData.risksAndIssues);
@@ -197,7 +249,7 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
       projectTaskList.getRisksAndIssuesStatus().should('contain.text', testData.completedText);
    });
 
-   it('TC08: Local authority ', () => {
+   it('User could complete Local authority task ', () => {
       projectTaskList.selectLA();
       LocalAuthorityInfomation.changeTemplateDates(oneMonthAgoDate, nextMonthDate);
       LocalAuthorityInfomation.getTemplateSentDate().should('contain.text', oneMonthAgoDate.getDate());
@@ -219,7 +271,7 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
 
    });
 
-   it('TC09: Performance Info ', () => {
+   it('Performance Info ', () => {
       projectTaskList.selectOfsted();
       Performance.verifyOfsteadScreenText();
       projectTaskList.clickOfStedINfoBackButton();
