@@ -2,7 +2,7 @@
 
 import BasePage from "./basePage"
 
-export default class publicSectorEqualityDutyImpact extends BasePage {
+export default class PublicSectorEqualityDutyImpact extends BasePage {
     static selectors = {
         psedChangeLink: '[data-test="change-reduce-impact-reason-label"]',
         confirmButton: '[id="confirm-and-continue-button"]',
