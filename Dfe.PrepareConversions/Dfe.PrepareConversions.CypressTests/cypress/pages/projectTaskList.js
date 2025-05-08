@@ -2,7 +2,6 @@
 
 import BasePage from "./basePage";
 
-
 export default class ProjectTaskList extends BasePage {
 
     static selectors = {
@@ -16,6 +15,8 @@ export default class ProjectTaskList extends BasePage {
         pupilForecastLink: 'a[href*="/pupil-forecast"]',
         conversionDetailsLink: 'a[href*="/conversion-details"]',
         conversionDetailsStatus: '[id="school-and-trust-information-status"]',
+        publicSectorEqualityDutyLink: 'a[href*="/task-list/29157/public-sector-equality-duty"]',
+        publicSectorEqualityDutyStatus: '[data-cy="select-tasklist-psed-status"]',
         rationaleLink: 'a[href*="/confirm-project-trust-rationale"]',
         rationaleStatus: '[id="rationale-status"]',
         riskAndIssuesLink: 'a[href*="/confirm-risks-issues"]',
@@ -29,8 +30,11 @@ export default class ProjectTaskList extends BasePage {
         schoolName: '[data-cy="school-name"]',
         urn: '[data-cy="urn"]',
         urnId: '.govuk-caption-xl',
-        acceptCookieBtn:'[data-test="cookie-banner-accept"]',
-        hideAcceptCookieBtn: '#acceptCookieBanner > .govuk-button-group'
+        acceptCookieBtn: '[data-test="cookie-banner-accept"]',
+        hideAcceptCookieBtn: '#acceptCookieBanner > .govuk-button-group',
+        previewProjectDocument: '#preview-project-template-button',
+        createProjectDocument: '[data-test="generate-htb"]',
+        errorMessage: '[data-cy="error-message-0+="]'
     }
 
     static path = 'task-list'
@@ -99,6 +103,16 @@ export default class ProjectTaskList extends BasePage {
         return cy.get(this.selectors.conversionDetailsStatus)
     }
 
+    static selectPublicSectorEqualityDuty() {
+        cy.checkPath(this.path)
+        cy.get(this.selectors.publicSectorEqualityDutyLink).click()
+    }
+
+    static publicSectorEqualityDutyStatus() {
+        cy.checkPath(this.path)
+        return cy.get(this.selectors.publicSectorEqualityDutyStatus)
+    }
+
     static selectRationale() {
         cy.checkPath(this.path)
         cy.get(this.selectors.rationaleLink).click()
@@ -137,13 +151,13 @@ export default class ProjectTaskList extends BasePage {
     static getProjectUrn() {
         cy.checkPath(this.path)
         return cy.get(this.selectors.urnId)
-        .invoke('text')
-        .then((text) => {
-            return text.replace('URN: ', '').trim();
-        });
+            .invoke('text')
+            .then((text) => {
+                return text.replace('URN: ', '').trim();
+            });
     }
 
-    static clickOfStedINfoBackButton(){
+    static clickOfStedINfoBackButton() {
         cy.get('[data-cy="ofsted-info-back-btn"]').click();
     }
 
@@ -166,5 +180,19 @@ export default class ProjectTaskList extends BasePage {
         cy.get(this.selectors.schoolName).should('contain', schoolName);
         cy.get(this.selectors.urn).should('contain', urn);
         return this;
+    }
+
+    static clickPreviewProjectDocumentButton() {
+        cy.checkPath(this.path)
+        cy.get(this.selectors.previewProjectDocument).click()
+    }
+
+    static clickCreateProjectDocumentButton() {
+        cy.checkPath(this.path)
+        cy.get(this.selectors.createProjectDocument).click()
+    }
+
+    static getErrorMessage() {
+        return cy.get(this.selectors.errorMessage)
     }
 }
