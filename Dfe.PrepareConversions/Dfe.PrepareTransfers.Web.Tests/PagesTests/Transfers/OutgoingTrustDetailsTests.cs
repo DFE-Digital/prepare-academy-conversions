@@ -117,7 +117,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Transfers
 
                 var response = await subject.OnGetAsync();
 
-                var redirectResponse = AssertRedirectToPage(response, "/Transfers/TrustSearch");
+                var redirectResponse = AssertRedirectToPage(response, "/NewTransfer/TrustSearch");
                 Assert.Equal("", redirectResponse.RouteValues["query"]);
                 Assert.Equal("Select a trust", subject.TempData["ErrorMessage"]);
             }

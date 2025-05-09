@@ -60,7 +60,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Transfers
         private IActionResult SetErrorMessageAndRedirectToTrustName(ValidationResult validationResult)
         {
             TempData["ErrorMessage"] = validationResult.Errors.First().ErrorMessage;
-            return RedirectToPage("/Transfers/TrustName", new { query = SearchQuery });
+            return RedirectToPage("/NewTransfer/TrustName", new { query = SearchQuery });
         }
 
         void ISetTrusts.SetTrusts(IEnumerable<Trust> trusts)
