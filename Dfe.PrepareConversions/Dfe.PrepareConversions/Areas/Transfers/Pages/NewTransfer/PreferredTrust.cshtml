@@ -1,4 +1,6 @@
-﻿@page
+﻿@* https://localhost:5003/Transfers/NewTransfer/PreferredTrust *@
+
+@page
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers.TagHelpers
 @model Dfe.PrepareTransfers.Web.Pages.Transfers.PreferredTrustModel
@@ -12,11 +14,11 @@
 {
     @if ((bool) ViewData["ChangeLink"])
     {
-        <a class="govuk-back-link" asp-page="/Transfers/CheckYourAnswers">Back</a>
+        <a class="govuk-back-link" asp-page="/NewTransfer/CheckYourAnswers">Back</a>
     }
     else
     {
-        <a class="govuk-back-link" asp-page="/Transfers/OutgoingTrustAcademies">Back</a>
+        <a class="govuk-back-link" asp-page="/NewTransfer/IsFormAMat">Back</a>
     }
 }
 

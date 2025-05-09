@@ -33,7 +33,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Transfers
             if (!validationResult.IsValid)
             {
                 TempData["ErrorMessage"] = validationResult.Errors.First().ErrorMessage;
-                return RedirectToPage("/Transfers/TrustSearch", new { query = SearchQuery, change });
+                return RedirectToPage("/NewTransfer/TrustSearch", new { query = SearchQuery, change });
             }
 
             var result = await _trustsRepository.GetByUkprn(TrustId);

@@ -61,7 +61,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Transfers
 
             var response = await _subject.OnGetAsync();
 
-            AssertRedirectToPage(response, "/Transfers/TrustName");
+            AssertRedirectToPage(response, "/NewTransfer/TrustName");
             Assert.Equal("Enter the outgoing trust name", _subject.TempData["ErrorMessage"]);
         }
 
@@ -74,7 +74,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Transfers
 
             var response = await _subject.OnGetAsync();
 
-            var redirectResponse = AssertRedirectToPage(response, "/Transfers/TrustName");
+            var redirectResponse = AssertRedirectToPage(response, "/NewTransfer/TrustName");
             Assert.Equal("Meow", redirectResponse.RouteValues["query"]);
             Assert.Equal("We could not find any trusts matching your search criteria", _subject.TempData["ErrorMessage"]);
         }
