@@ -5,6 +5,7 @@ using Dfe.PrepareTransfers.Web.Validators.Transfers;
 using Moq;
 using Xunit;
 using Dfe.PrepareTransfers.Web.Pages.NewTransfer;
+using System.Threading.Tasks;
 
 namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.Transfers
 {
@@ -21,7 +22,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.Transfers
       [InlineData(null)]
       [InlineData("")]
       [InlineData(" ")]
-      public async void WhenOutgoingTrustNameIsEmpty_ShouldSetError(string trustName)
+      public async Task WhenOutgoingTrustNameIsEmpty_ShouldSetError(string trustName)
       {
          var model = new TrustNameModel()
          {
@@ -35,7 +36,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.Transfers
       }
 
       [Fact]
-      public async void WhenOutgoingTrustIdIsNotEmpty_ShouldNotSetError()
+      public async Task WhenOutgoingTrustIdIsNotEmpty_ShouldNotSetError()
       {
          var model = new TrustNameModel()
          {
