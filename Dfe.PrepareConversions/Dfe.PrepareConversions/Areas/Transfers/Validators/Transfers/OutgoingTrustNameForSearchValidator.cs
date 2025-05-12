@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using Dfe.PrepareTransfers.Web.Pages.NewTransfer;
+using Dfe.PrepareTransfers.Web.Pages.Transfers;
 
 namespace Dfe.PrepareTransfers.Web.Validators.Transfers
 {
-    public class OutgoingTrustNameValidator : AbstractValidator<TrustNameModel>
+    public class OutgoingTrustNameForSearchValidator : AbstractValidator<TrustSearchModel>
     {
-        public OutgoingTrustNameValidator()
+        public OutgoingTrustNameForSearchValidator()
         {
             RuleFor(request => request.SearchQuery)
                 .NotEmpty()

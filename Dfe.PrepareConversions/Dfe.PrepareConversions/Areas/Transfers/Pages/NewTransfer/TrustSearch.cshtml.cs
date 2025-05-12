@@ -28,7 +28,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Transfers
         {
             ViewData["ChangeLink"] = change;
 
-            var queryValidator = new OutgoingTrustNameValidator();
+            var queryValidator = new OutgoingTrustNameForSearchValidator();
             var queryValidationResult = await queryValidator.ValidateAsync(this);
             if (!queryValidationResult.IsValid)
             {

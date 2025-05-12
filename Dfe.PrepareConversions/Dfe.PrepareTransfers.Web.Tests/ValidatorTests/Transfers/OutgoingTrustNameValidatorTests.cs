@@ -10,11 +10,11 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.Transfers
     public class OutgoingTrustNameValidatorTests
     {
         private readonly Mock<ITrusts> _trustsRepository;
-        private readonly OutgoingTrustNameValidator _validator;
+        private readonly OutgoingTrustNameForSearchValidator _validator;
 
         public OutgoingTrustNameValidatorTests()
         {
-            _validator = new OutgoingTrustNameValidator();
+            _validator = new OutgoingTrustNameForSearchValidator();
             _trustsRepository = new Mock<ITrusts>();
         }
 

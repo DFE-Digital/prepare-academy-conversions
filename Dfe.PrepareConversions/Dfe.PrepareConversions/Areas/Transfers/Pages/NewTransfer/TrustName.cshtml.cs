@@ -1,5 +1,8 @@
 using Dfe.PrepareTransfers.Web.Pages.Transfers;
+using Dfe.PrepareTransfers.Web.Validators.Transfers;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Dfe.PrepareTransfers.Web.Pages.NewTransfer
 {
@@ -21,5 +24,20 @@ namespace Dfe.PrepareTransfers.Web.Pages.NewTransfer
 
             return Page();
         }
-    }
+
+         public async Task<IActionResult> OnPostAsync(bool change = false)
+         {
+            var validator = new OutgoingTrustNameValidator();
+            var validationResults = await validator.ValidateAsync(this);
+
+            validationResults.AddToModelState(ModelState, null);
+
+            if (!ModelState.IsValid)
+            {
+               return OnGet(change);
+            }
+
+            return change ? RedirectToPage("/NewTransfer/CheckYourAnswers") : RedirectToPage("/NewTransfer/TrustSearch", new { query = SearchQuery });
+         }
+   }
 }
