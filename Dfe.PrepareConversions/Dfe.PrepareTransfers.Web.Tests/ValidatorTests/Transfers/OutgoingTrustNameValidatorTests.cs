@@ -4,47 +4,46 @@ using Dfe.PrepareTransfers.Web.Pages.Transfers;
 using Dfe.PrepareTransfers.Web.Validators.Transfers;
 using Moq;
 using Xunit;
+using Dfe.PrepareTransfers.Web.Pages.NewTransfer;
 
 namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.Transfers
 {
     public class OutgoingTrustNameValidatorTests
     {
-        private readonly Mock<ITrusts> _trustsRepository;
-        private readonly OutgoingTrustNameForSearchValidator _validator;
+      private readonly OutgoingTrustNameValidator _validator;
 
-        public OutgoingTrustNameValidatorTests()
-        {
-            _validator = new OutgoingTrustNameForSearchValidator();
-            _trustsRepository = new Mock<ITrusts>();
-        }
+      public OutgoingTrustNameValidatorTests()
+      {
+         _validator = new OutgoingTrustNameValidator();
+      }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        public async void WhenOutgoingTrustNameIsEmpty_ShouldSetError(string trustName)
-        {
-            var trustSearch = new TrustSearchModel(_trustsRepository.Object)
-            {
-                SearchQuery = trustName
-            };
+      [Theory]
+      [InlineData(null)]
+      [InlineData("")]
+      [InlineData(" ")]
+      public async void WhenOutgoingTrustNameIsEmpty_ShouldSetError(string trustName)
+      {
+         var model = new TrustNameModel()
+         {
+            SearchQuery = trustName
+         };
 
-            var result = await _validator.TestValidateAsync(trustSearch);
+         var result = await _validator.TestValidateAsync(model);
 
-            result.ShouldHaveValidationErrorFor(x => x.SearchQuery)
-                .WithErrorMessage("Enter the outgoing trust name");
-        }
+         result.ShouldHaveValidationErrorFor(x => x.SearchQuery)
+             .WithErrorMessage("Enter the outgoing trust name");
+      }
 
-        [Fact]
-        public async void WhenOutgoingTrustIdIsNotEmpty_ShouldNotSetError()
-        {
-            var trustSearch = new TrustSearchModel(_trustsRepository.Object)
-            {
-                SearchQuery = "trust name"
-            };
-            var result = await _validator.TestValidateAsync(trustSearch);
+      [Fact]
+      public async void WhenOutgoingTrustIdIsNotEmpty_ShouldNotSetError()
+      {
+         var model = new TrustNameModel()
+         {
+            SearchQuery = "test trust name"
+         };
+         var result = await _validator.TestValidateAsync(model);
 
-            result.ShouldNotHaveValidationErrorFor(x => x);
-        }
-    }
+         result.ShouldNotHaveValidationErrorFor(x => x);
+      }
+   }
 }
