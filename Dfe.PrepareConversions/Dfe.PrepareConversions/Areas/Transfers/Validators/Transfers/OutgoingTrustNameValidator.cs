@@ -11,10 +11,5 @@ namespace Dfe.PrepareTransfers.Web.Validators.Transfers
                 .NotEmpty()
                 .WithMessage("Enter the outgoing trust name");
         }
-
-        protected override void EnsureInstanceNotNull(object instanceToValidate)
-        {
-            //Allow Null
-        }
     }
 }
