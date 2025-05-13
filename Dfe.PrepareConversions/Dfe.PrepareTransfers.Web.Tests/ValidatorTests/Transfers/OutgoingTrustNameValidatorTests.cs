@@ -1,6 +1,5 @@
 ﻿using Dfe.PrepareTransfers.Data;
 using FluentValidation.TestHelper;
-using Dfe.PrepareTransfers.Web.Pages.Transfers;
 using Dfe.PrepareTransfers.Web.Validators.Transfers;
 using Moq;
 using Xunit;
@@ -12,10 +11,12 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.Transfers
     public class OutgoingTrustNameValidatorTests
     {
       private readonly OutgoingTrustNameValidator _validator;
+      private readonly Mock<ITrusts> _trustsRepository;
 
       public OutgoingTrustNameValidatorTests()
       {
          _validator = new OutgoingTrustNameValidator();
+         _trustsRepository = new Mock<ITrusts>();
       }
 
       [Theory]
@@ -24,7 +25,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.Transfers
       [InlineData(" ")]
       public async Task WhenOutgoingTrustNameIsEmpty_ShouldSetError(string trustName)
       {
-         var model = new TrustNameModel()
+         var model = new TrustNameModel(_trustsRepository.Object)
          {
             SearchQuery = trustName
          };
@@ -38,7 +39,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.Transfers
       [Fact]
       public async Task WhenOutgoingTrustIdIsNotEmpty_ShouldNotSetError()
       {
-         var model = new TrustNameModel()
+         var model = new TrustNameModel(_trustsRepository.Object)
          {
             SearchQuery = "test trust name"
          };

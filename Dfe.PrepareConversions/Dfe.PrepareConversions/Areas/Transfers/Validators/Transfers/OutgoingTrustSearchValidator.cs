@@ -11,6 +11,10 @@ namespace Dfe.PrepareTransfers.Web.Validators.Transfers
             RuleFor(model => model.Trusts)
                 .Must(x => x.Any())
                 .WithMessage("We could not find any trusts matching your search criteria");
-        }
+
+            RuleFor(x => x.TrustId)
+                   .NotEmpty()
+                   .WithMessage("Select a trust");
+      }
     }
 }

@@ -1,3 +1,4 @@
+using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Web.Pages.Transfers;
 using Dfe.PrepareTransfers.Web.Validators.Transfers;
 using FluentValidation.AspNetCore;
@@ -8,15 +9,20 @@ namespace Dfe.PrepareTransfers.Web.Pages.NewTransfer
 {
     public class TrustNameModel : TransfersPageModel
     {
-        [BindProperty(Name = "query", SupportsGet = true)]
+         protected readonly ITrusts TrustsRepository;
+
+         public TrustNameModel(ITrusts trustsRepository)
+         {
+            TrustsRepository = trustsRepository;
+         }
+
+         [BindProperty(Name = "query", SupportsGet = true)]
         public string SearchQuery { get; set; } = "";
 
         public IActionResult OnGet(bool change = false)
         {
             ViewData["ChangeLink"] = change;
 
-            // We redirect here with any error messages from the subsequent
-            // search step.
             if (TempData.Peek("ErrorMessage") != null)
             {
                 ModelState.AddModelError(nameof(SearchQuery), (string)TempData["ErrorMessage"]);
@@ -32,12 +38,18 @@ namespace Dfe.PrepareTransfers.Web.Pages.NewTransfer
 
             validationResults.AddToModelState(ModelState, null);
 
+            var result = await TrustsRepository.SearchTrusts(SearchQuery);
+            if (result.Count == 0)
+            {
+               ModelState.AddModelError(nameof(SearchQuery), "We could not find any trusts matching your search criteria");
+            }
+
             if (!ModelState.IsValid)
             {
                return OnGet(change);
             }
 
-            return change ? RedirectToPage("/NewTransfer/CheckYourAnswers") : RedirectToPage("/NewTransfer/TrustSearch", new { query = SearchQuery });
+            return RedirectToPage("/NewTransfer/TrustSearch", new { query = SearchQuery, change });
          }
    }
 }

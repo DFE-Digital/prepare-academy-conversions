@@ -1,6 +1,4 @@
-﻿@* https://localhost:5003/Transfers/NewTransfer/TrustSearch?query=The+Bishop+Fraser+Trust&change=False *@
-
-@page
+﻿@page
 @using Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers.TagHelpers
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Dfe.Academisation.ExtensionMethods
@@ -20,7 +18,7 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form asp-page="/NewTransfer/OutgoingTrustDetails" method="get" novalidate="">
+        <form method="post">
             <input type="text" name="query" value="@Model.SearchQuery" hidden/>
             <input type="text" name="change" value="@ViewData["ChangeLink"].ToString()" hidden/>
             <div class="govuk-form-group @formClasses">
@@ -31,13 +29,13 @@
                         </h1>
                     </legend>
 
-                     <p asp-gds-validation-for="Trusts"></p>
+                    <p asp-gds-validation-for="Trusts"></p>
 
                     <div class="govuk-radios">
                         @foreach (var trust in Model.Trusts)
                         {
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="@trust.Ukprn" name="trustId" type="radio" value="@trust.Ukprn" aria-describedby="@trust.Ukprn-hint">
+                                <input class="govuk-radios__input" id="@trust.Ukprn" name="trustId" type="radio" value="@trust.Ukprn" checked="@(Model.TrustId == trust.Ukprn)" aria-describedby="@trust.Ukprn-hint">
                                 <label class="govuk-label govuk-radios__label" for="@trust.Ukprn">
                                     @trust.Name.ToTitleCase() (@trust.Ukprn)
                                 </label>
