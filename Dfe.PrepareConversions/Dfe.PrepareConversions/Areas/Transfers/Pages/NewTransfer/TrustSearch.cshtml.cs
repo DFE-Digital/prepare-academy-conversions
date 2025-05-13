@@ -32,6 +32,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Transfers
             ViewData["ChangeLink"] = change;
 
             Trusts = await TrustsRepository.SearchTrusts(SearchQuery);
+            TrustId = trustId;
 
             return Page();
          }
