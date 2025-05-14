@@ -17,6 +17,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Transfers
          HttpContext.Session.Remove(IncomingTrustIdSessionKey);
          HttpContext.Session.Remove(OutgoingAcademyIdSessionKey);
          HttpContext.Session.Remove(ProposedTrustNameSessionKey);
+         HttpContext.Session.Remove(IsFormAMatSessionKey);
 
          return RedirectToPage("/NewTransfer/TrustName");
       }
