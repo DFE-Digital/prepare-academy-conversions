@@ -42,13 +42,13 @@ namespace Dfe.PrepareTransfers.Web.Pages.Transfers
             return Page();
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(bool change = false)
         {
             HttpContext.Session.SetString(OutgoingTrustIdSessionKey, TrustId);
             HttpContext.Session.Remove(IncomingTrustIdSessionKey);
             HttpContext.Session.Remove(OutgoingAcademyIdSessionKey);
 
-            return RedirectToPage("/NewTransfer/OutgoingTrustAcademies");
+            return RedirectToPage("/NewTransfer/OutgoingTrustAcademies", new { query = SearchQuery, change });
         }
     }
 }

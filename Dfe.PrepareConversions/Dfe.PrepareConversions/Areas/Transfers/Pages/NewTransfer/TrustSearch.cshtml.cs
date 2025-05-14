@@ -1,12 +1,12 @@
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
-using FluentValidation.Results;
 using Dfe.PrepareTransfers.Web.Validators.Transfers;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dfe.PrepareTransfers.Web.Helpers;
+using FluentValidation.AspNetCore;
 
 namespace Dfe.PrepareTransfers.Web.Pages.Transfers
 {
@@ -17,52 +17,45 @@ namespace Dfe.PrepareTransfers.Web.Pages.Transfers
         [BindProperty(Name = "query", SupportsGet = true)]
         public string SearchQuery { get; set; } = "";
 
-        protected readonly ITrusts TrustsRepository;
+         [BindProperty(Name = "trustId", SupportsGet = true)]
+         public string TrustId { get; set; }
+
+         protected readonly ITrusts TrustsRepository;
 
         public TrustSearchModel(ITrusts trustsRepository)
         {
             TrustsRepository = trustsRepository;
         }
 
-        public async Task<IActionResult> OnGetAsync(bool change = false)
+        public async Task<IActionResult> OnGetAsync(string trustId, bool change = false)
         {
             ViewData["ChangeLink"] = change;
 
-            var queryValidator = new OutgoingTrustNameForSearchValidator();
-            var queryValidationResult = await queryValidator.ValidateAsync(this);
-            if (!queryValidationResult.IsValid)
-            {
-                return SetErrorMessageAndRedirectToTrustName(queryValidationResult);
-            }
+            Trusts = await TrustsRepository.SearchTrusts(SearchQuery);
+            TrustId = trustId;
 
-            var result = await TrustsRepository.SearchTrusts(SearchQuery);
-            Trusts = result;
+            return Page();
+         }
+
+         public async Task<IActionResult> OnPostAsync(string query, string trustId, bool change = false)
+         {
+            Trusts = await TrustsRepository.SearchTrusts(query);
+            TrustId = trustId;
 
             var searchValidator = new OutgoingTrustSearchValidator();
             var searchValidationResult = await searchValidator.ValidateAsync(this);
-            if (!searchValidationResult.IsValid)
+
+            searchValidationResult.AddToModelState(ModelState, null);
+
+            if (!ModelState.IsValid)
             {
-                return SetErrorMessageAndRedirectToTrustName(searchValidationResult);
+               return await OnGetAsync(trustId, change);
             }
 
-            // We redirect here with any error messages from the subsequent
-            // details step. This allows us handle errors when we visit the
-            // next step via query.
-            if (TempData.Peek("ErrorMessage") != null)
-            {
-                ModelState.AddModelError(nameof(Trusts), (string)TempData["ErrorMessage"]);
-                return Page();
-            }
+            var trust = Trusts.First(x => x.Ukprn == trustId);
 
-            return Page();
-        }
-
-        private IActionResult SetErrorMessageAndRedirectToTrustName(ValidationResult validationResult)
-        {
-            TempData["ErrorMessage"] = validationResult.Errors.First().ErrorMessage;
-            return RedirectToPage("/NewTransfer/TrustName", new { query = SearchQuery });
-        }
-
+            return RedirectToPage("/NewTransfer/OutgoingTrustDetails", new { query = SearchQuery, TrustId = trust.Ukprn, change });
+         }
         void ISetTrusts.SetTrusts(IEnumerable<Trust> trusts)
         {
            Trusts = trusts.ToList();
