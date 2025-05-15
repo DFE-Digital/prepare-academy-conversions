@@ -15,7 +15,7 @@ export default class ProjectTaskList extends BasePage {
         pupilForecastLink: 'a[href*="/pupil-forecast"]',
         conversionDetailsLink: 'a[href*="/conversion-details"]',
         conversionDetailsStatus: '[id="school-and-trust-information-status"]',
-        publicSectorEqualityDutyLink: 'a[href*="/task-list/29157/public-sector-equality-duty"]',
+        publicSectorEqualityDutyLink: 'a[href*="/public-sector-equality-duty"]',
         publicSectorEqualityDutyStatus: '[data-cy="select-tasklist-psed-status"]',
         rationaleLink: 'a[href*="/confirm-project-trust-rationale"]',
         rationaleStatus: '[id="rationale-status"]',
