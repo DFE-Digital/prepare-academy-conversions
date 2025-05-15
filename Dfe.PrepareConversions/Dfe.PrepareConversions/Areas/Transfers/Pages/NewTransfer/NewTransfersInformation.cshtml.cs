@@ -9,5 +9,17 @@ namespace Dfe.PrepareTransfers.Web.Pages.Transfers
         {
             return Page();
         }
-    }
+
+
+      public IActionResult OnPost()
+      {
+         HttpContext.Session.Remove(OutgoingTrustIdSessionKey);
+         HttpContext.Session.Remove(IncomingTrustIdSessionKey);
+         HttpContext.Session.Remove(OutgoingAcademyIdSessionKey);
+         HttpContext.Session.Remove(ProposedTrustNameSessionKey);
+         HttpContext.Session.Remove(IsFormAMatSessionKey);
+
+         return RedirectToPage("/NewTransfer/TrustName");
+      }
+   }
 }
