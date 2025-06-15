@@ -20,6 +20,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests(IntegrationTesting
       {
          p.SchoolAndTrustInformationSectionComplete = false;
          p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+         p.ApplicationReceivedDate = new DateTime(2024, 12, 19, 23, 59, 59, DateTimeKind.Utc); // Before the deadline
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
@@ -159,6 +160,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests(IntegrationTesting
    {
       var project = AddGetProject(project =>
       {
+         project.ApplicationReceivedDate = new DateTime(2024, 12, 19, 23, 59, 59, DateTimeKind.Utc); // Before deadline
          project.ConversionSupportGrantAmount = 2000m;
          project.ConversionSupportGrantChangeReason = null;
          project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;

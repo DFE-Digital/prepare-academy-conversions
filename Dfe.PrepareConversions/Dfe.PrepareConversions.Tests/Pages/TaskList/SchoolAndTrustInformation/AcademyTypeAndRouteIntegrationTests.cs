@@ -2,9 +2,9 @@ using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,7 +15,12 @@ public class AcademyTypeAndRouteIntegrationTests(IntegrationTestingWebApplicatio
    [Fact]
    public async Task Should_navigate_to_and_update_conversion_support_grant_amount()
    {
-      var project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
+      var project = AddGetProject(x =>
+      {
+         x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+         x.ApplicationReceivedDate = new DateTime(2024, 12, 19, 23, 59, 59, DateTimeKind.Utc); // Before deadline
+      });
+
       var request = AddPatchProjectMany(project, composer =>
          composer
             .With(r => r.ConversionSupportGrantAmount)

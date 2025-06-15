@@ -4,6 +4,7 @@ using AutoFixture;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -16,7 +17,12 @@ public class ClearedByIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_and_update_cleared_by()
    {
-      AcademyConversionProject project = AddGetProject(p => p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
+      var project = AddGetProject(x =>
+      {
+         x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+         x.ApplicationReceivedDate = new DateTime(2024, 12, 19, 23, 59, 59, DateTimeKind.Utc); // Before deadline
+      });
+
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
       {
          x.ClearedBy = _fixture.Create<string>();
