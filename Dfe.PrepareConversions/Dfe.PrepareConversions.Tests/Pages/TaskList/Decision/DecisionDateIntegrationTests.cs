@@ -52,7 +52,12 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_not_redirect_if_future_date()
    {
-      AcademyConversionProject project = AddGetProject(p => p.SchoolOverviewSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(x =>
+      {
+         x.SchoolOverviewSectionComplete = false;
+         x.ApplicationReceivedDate = new DateTime(2024, 12, 19, 23, 59, 59, DateTimeKind.Utc); // Before the deadline
+      });
+
       DateTime tomorrow = DateTime.UtcNow.AddDays(1);
 
       await ProgressToDecisionDateStep(project);
