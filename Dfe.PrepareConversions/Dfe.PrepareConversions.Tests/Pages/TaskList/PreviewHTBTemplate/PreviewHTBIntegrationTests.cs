@@ -391,6 +391,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       var project = AddGetProject(x =>
       {
          x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+         x.ApplicationReceivedDate = new DateTime(2024, 12, 19, 23, 59, 59, DateTimeKind.Utc); // Before the deadline
          x.ConversionSupportGrantAmount = 10;
       });
 
@@ -410,6 +411,38 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Contain(project.AcademyTypeAndRoute);
       Document.QuerySelector("#grant-funding-amount")!.TextContent.Should().Contain(project.ConversionSupportGrantAmount?.ToMoneyString());
       Document.QuerySelector("#grant-funding-reason")!.TextContent.Should().Contain(project.ConversionSupportGrantChangeReason);
+   }
+
+   [Fact]
+   public async Task Should_NOT_display_school_and_trust_information_section()
+   {
+      var project = AddGetProject(x =>
+      {
+         x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+         x.ApplicationReceivedDate = new DateTime(2024, 12, 20, 0, 0, 1, DateTimeKind.Utc); // After the deadline
+         x.ConversionSupportGrantAmount = 10;
+      });
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
+      Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
+
+      Document.QuerySelector("#project-recommendation")!.TextContent.Should().Be(project.RecommendationForProject);
+      Document.QuerySelector("#author")!.TextContent.Should().Be(project.Author);
+      Document.QuerySelector("#cleared-by")!.TextContent.Should().Be(project.ClearedBy);
+      Document.QuerySelector("#school-name")!.TextContent.Should().Be(project.SchoolName);
+      Document.QuerySelector("#unique-reference-number")!.TextContent.Should().Be(project.Urn.ToString());
+      Document.QuerySelector("#local-authority")!.TextContent.Should().Be(project.LocalAuthority);
+      Document.QuerySelector("#trust-reference-number")!.TextContent.Should().Be(project.TrustReferenceNumber);
+      Document.QuerySelector("#name-of-trust")!.TextContent.Should().Be(project.NameOfTrust);
+      Document.QuerySelector("#sponsor-reference-number")!.TextContent.Should().Be(project.SponsorReferenceNumber);
+      Document.QuerySelector("#sponsor-name")!.TextContent.Should().Be(project.SponsorName);
+      Document.QuerySelector("#academy-type-and-route")!.TextContent.Should().Contain(project.AcademyTypeAndRoute);
+
+      var fundingAmountSection = Document.QuerySelector("#grant-funding-amount");
+      Assert.Null(fundingAmountSection);
+
+      var fundingReasonSection = Document.QuerySelector("#grant-funding-reason");
+      Assert.Null(fundingReasonSection);
    }
 
    [Fact]
