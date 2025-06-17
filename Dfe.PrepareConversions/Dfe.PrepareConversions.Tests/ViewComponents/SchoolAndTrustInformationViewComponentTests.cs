@@ -67,7 +67,7 @@ namespace Dfe.PrepareConversions.Tests.ViewComponents
       public async Task When_Application_Received_After_Deadline_Should_Not_Allow_Conversion_Support_Grant()
       {
          // Arrange
-         var applicationReceivedDate = new DateTime(2024, 12, 20, 0, 0, 1, DateTimeKind.Utc); // After the deadline
+         var applicationReceivedDate = new DateTime(2024, 12, 21, 0, 0, 1, DateTimeKind.Utc); // After the deadline
          AcademyConversionProject project = CreateConversionProject(applicationReceivedDate);
 
          SchoolAndTrustInformationViewComponent viewComponent = GetViewComponent(project);
@@ -85,7 +85,7 @@ namespace Dfe.PrepareConversions.Tests.ViewComponents
       public async Task When_Application_Received_Before_Deadline_Should_Allow_Conversion_Support_Grant()
       {
          // Arrange
-         var applicationReceivedDate = new DateTime(2024, 12, 19, 23, 59, 59, DateTimeKind.Utc); // Before the deadline
+         var applicationReceivedDate = new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc); // Before the deadline
          AcademyConversionProject project = CreateConversionProject(applicationReceivedDate);
 
          SchoolAndTrustInformationViewComponent viewComponent = GetViewComponent(project);

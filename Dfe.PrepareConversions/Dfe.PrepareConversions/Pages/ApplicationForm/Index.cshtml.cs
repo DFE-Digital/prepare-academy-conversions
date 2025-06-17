@@ -4,7 +4,9 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models.ApplicationForm;
 using Dfe.PrepareConversions.Models.ApplicationForm.Sections;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -53,6 +55,19 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
 
       Application application = applicationResponse.Body;
 
+      //Sections = new BaseFormSection[]
+      //{
+      //   new ApplicationFormSection(application),
+      //   new AboutConversionSection(application.ApplyingSchools.First()),
+      //   new FurtherInformationSection(application.ApplyingSchools.First()),
+      //   new FinanceSection(application.ApplyingSchools.First()),
+      //   new FuturePupilNumberSection(application.ApplyingSchools.First()),
+      //   new LandAndBuildingsSection(application.ApplyingSchools.First()),
+      //   new ConversionSupportGrantSection(application.ApplyingSchools.First()),
+      //   new ConsultationSection(application.ApplyingSchools.First()),
+      //   new DeclarationSection(application.ApplyingSchools.First())
+      //};
+
       Sections = new BaseFormSection[]
       {
          new ApplicationFormSection(application),
@@ -60,11 +75,21 @@ public class IndexModel : BaseAcademyConversionProjectPageModel
          new FurtherInformationSection(application.ApplyingSchools.First()),
          new FinanceSection(application.ApplyingSchools.First()),
          new FuturePupilNumberSection(application.ApplyingSchools.First()),
-         new LandAndBuildingsSection(application.ApplyingSchools.First()),
-         new ConversionSupportGrantSection(application.ApplyingSchools.First()),
+         new LandAndBuildingsSection(application.ApplyingSchools.First())
+      };
+
+      var applicationReceivedDate = DateTime.Parse(Project.ApplicationReceivedDate, CultureInfo.GetCultureInfo("en-GB"));
+
+      if (DateTime.Compare(applicationReceivedDate, new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc)) <= 0)
+      {
+         Sections = [.. Sections, new ConversionSupportGrantSection(application.ApplyingSchools.First())];
+      }
+
+      Sections = [
+         .. Sections,
          new ConsultationSection(application.ApplyingSchools.First()),
          new DeclarationSection(application.ApplyingSchools.First())
-      };
+      ];
 
       return result;
    }

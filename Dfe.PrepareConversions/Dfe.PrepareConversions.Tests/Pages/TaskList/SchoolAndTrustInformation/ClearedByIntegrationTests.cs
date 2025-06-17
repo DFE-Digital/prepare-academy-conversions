@@ -20,7 +20,7 @@ public class ClearedByIntegrationTests : BaseIntegrationTests
       var project = AddGetProject(x =>
       {
          x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
-         x.ApplicationReceivedDate = new DateTime(2024, 12, 19, 23, 59, 59, DateTimeKind.Utc); // Before deadline
+         x.ApplicationReceivedDate = new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc); // Before deadline
       });
 
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>

@@ -3,6 +3,7 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 using Dfe.PrepareConversions.Data.Models.Application;
 using FluentAssertions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ public class ApplicationFormIntegrationTests : BaseIntegrationTests
       {
          project.Id = projectId;
          project.ApplicationReferenceNumber = $"A2B_{applicationId}";
+         project.ApplicationReceivedDate = new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc); // Before the deadline
       });
 
       var application = AddGetApplication(app =>
@@ -180,6 +182,32 @@ public class ApplicationFormIntegrationTests : BaseIntegrationTests
 
       Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Conversion support grant").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
+   }
+
+   [Theory]
+   [InlineData("/school-application-form/{0}")]
+   [InlineData("/school-application-form/school-application-tab/{0}")]
+   public async Task Should_Hide_Pre_Opening_Support_Grant_Section_When_Deadline_Passed(string path)
+   {
+      const int applicationId = 420;
+      const int projectId = 421;
+      _project = AddGetProject(project =>
+      {
+         project.Id = projectId;
+         project.ApplicationReferenceNumber = $"A2B_{applicationId}";
+         project.ApplicationReceivedDate = new DateTime(2024, 12, 21, 0, 0, 1, DateTimeKind.Utc); // After the deadline
+      });
+
+      var application = AddGetApplication(app =>
+      {
+         app.ApplicationId = applicationId;
+         app.ApplicationReference = _project.ApplicationReferenceNumber;
+         app.ApplicationType = "JoinMat";
+      });
+
+      await OpenAndConfirmPathAsync(string.Format(path, _project.Id));
+
+      Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Conversion support grant").Should().BeEmpty();
    }
 
    [Theory]

@@ -391,7 +391,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       var project = AddGetProject(x =>
       {
          x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
-         x.ApplicationReceivedDate = new DateTime(2024, 12, 19, 23, 59, 59, DateTimeKind.Utc); // Before the deadline
+         x.ApplicationReceivedDate = new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc); // Before the deadline
          x.ConversionSupportGrantAmount = 10;
       });
 
@@ -419,7 +419,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       var project = AddGetProject(x =>
       {
          x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
-         x.ApplicationReceivedDate = new DateTime(2024, 12, 20, 0, 0, 1, DateTimeKind.Utc); // After the deadline
+         x.ApplicationReceivedDate = new DateTime(2024, 12, 21, 0, 0, 1, DateTimeKind.Utc); // After the deadline
          x.ConversionSupportGrantAmount = 10;
       });
 
