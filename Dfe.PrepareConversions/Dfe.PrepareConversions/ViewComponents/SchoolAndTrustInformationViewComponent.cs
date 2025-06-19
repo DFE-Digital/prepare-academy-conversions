@@ -64,7 +64,7 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
          IsReadOnly = project.IsReadOnly
       };
 
-      if (project.ApplicationReceivedDate.HasValue && DateTime.Compare(project.ApplicationReceivedDate.Value, new DateTime(2024, 12, 20, 0, 0, 0, DateTimeKind.Utc)) < 0)
+      if (project.ApplicationReceivedDate.HasValue && DateTime.Compare(project.ApplicationReceivedDate.Value, new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc)) <= 0)
       {
          viewModel.IsApplicationReceivedBeforeSupportGrantDeadline = true;
       }
