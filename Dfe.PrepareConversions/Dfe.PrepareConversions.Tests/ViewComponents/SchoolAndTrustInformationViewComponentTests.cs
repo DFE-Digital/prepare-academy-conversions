@@ -28,10 +28,11 @@ namespace Dfe.PrepareConversions.Tests.ViewComponents
          _academyConversionProjectRepository = new Mock<IAcademyConversionProjectRepository>();
       }
 
-      private AcademyConversionProject CreateConversionProject(DateTime applicationReceivedDate)
+      private AcademyConversionProject CreateVoluntaryConversionProject(DateTime applicationReceivedDate)
       {
          return _fixture
             .Build<AcademyConversionProject>()
+            .With(x => x.AcademyTypeAndRoute, "Converter")
             .With(x => x.ApplicationReceivedDate, applicationReceivedDate)
             .With(x => x.AssignedUser, _fixture.Create<User>())
             .Create();
@@ -64,11 +65,11 @@ namespace Dfe.PrepareConversions.Tests.ViewComponents
       }
 
       [Fact]
-      public async Task When_Application_Received_After_Deadline_Should_Not_Allow_Conversion_Support_Grant()
+      public async Task When_Application_Received_After_Deadline_Should_Not_Show_Voluntary_Conversion_Support_Grant()
       {
          // Arrange
          var applicationReceivedDate = new DateTime(2024, 12, 21, 0, 0, 1, DateTimeKind.Utc); // After the deadline
-         AcademyConversionProject project = CreateConversionProject(applicationReceivedDate);
+         AcademyConversionProject project = CreateVoluntaryConversionProject(applicationReceivedDate);
 
          SchoolAndTrustInformationViewComponent viewComponent = GetViewComponent(project);
 
@@ -78,15 +79,15 @@ namespace Dfe.PrepareConversions.Tests.ViewComponents
 
          var model = result.ViewData.Model as SchoolAndTrustInformationViewModel;
          Assert.NotNull(result);
-         Assert.False(model.IsApplicationReceivedBeforeSupportGrantDeadline);
+         Assert.False(model.IsVoluntaryConversionSupportGrantVisible);
       }
 
       [Fact]
-      public async Task When_Application_Received_Before_Deadline_Should_Allow_Conversion_Support_Grant()
+      public async Task When_Application_Received_Before_Deadline_Should_Show_Voluntary_Conversion_Support_Grant()
       {
          // Arrange
          var applicationReceivedDate = new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc); // Before the deadline
-         AcademyConversionProject project = CreateConversionProject(applicationReceivedDate);
+         AcademyConversionProject project = CreateVoluntaryConversionProject(applicationReceivedDate);
 
          SchoolAndTrustInformationViewComponent viewComponent = GetViewComponent(project);
 
@@ -96,7 +97,7 @@ namespace Dfe.PrepareConversions.Tests.ViewComponents
 
          var model = result.ViewData.Model as SchoolAndTrustInformationViewModel;
          Assert.NotNull(result);
-         Assert.True(model.IsApplicationReceivedBeforeSupportGrantDeadline);
+         Assert.True(model.IsVoluntaryConversionSupportGrantVisible);
       }
    }
 }

@@ -26,6 +26,7 @@ public class SchoolAndTrustInformationViewModel
    public string ConversionSupportGrantType { get; set; }
    public string ConversionSupportGrantEnvironmentalImprovementGrant { get; set; }
    public bool IsApplicationReceivedBeforeSupportGrantDeadline { get; set; } = false;
+   public bool IsVoluntaryConversionSupportGrantVisible { get; set; } = false;
    public string DaoPackSentDate { get; set; }
    public string Form7Received { get; set; }
    public string Form7ReceivedDate { get; set; }
