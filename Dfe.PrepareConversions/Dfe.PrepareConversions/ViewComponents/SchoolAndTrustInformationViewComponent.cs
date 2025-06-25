@@ -18,7 +18,7 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
       _repository = repository;
    }
 
-   private bool IsVoluntaryConversionSupportGrantVisible(DateTime? applicationReceivedDate, string academyTypeAndRoute)
+   private static bool IsVoluntaryConversionSupportGrantVisible(DateTime? applicationReceivedDate, string academyTypeAndRoute)
    {
       var isPreDeadline = applicationReceivedDate.HasValue && DateTime.Compare(applicationReceivedDate.Value, new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc)) <= 0;
 
