@@ -3,6 +3,7 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.DocumentGeneration;
 using Dfe.PrepareConversions.DocumentGeneration.Elements;
 using Dfe.PrepareConversions.DocumentGeneration.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Services.DocumentGenerator
@@ -59,15 +60,27 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          });
       }
 
+      private static bool IsVoluntaryConversionPreDeadline(string? academyTypeAndRoute, DateTime? applicationReceivedDate)
+      {
+         bool isPreDeadline = applicationReceivedDate.HasValue && DateTime.Compare(applicationReceivedDate.Value, new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc)) <= 0;
+         return isPreDeadline && academyTypeAndRoute == "Converter";
+      }
+
       private static List<TextElement[]> VoluntaryRouteInfo(AcademyConversionProject project)
       {
          var voluntaryRouteInfo = new List<TextElement[]>
-            {
-                DocumentGeneratorStringSanitiser.CreateTextElements("Academy type and route", project.AcademyTypeAndRoute),
-                DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding amount", project.ConversionSupportGrantAmount?.ToMoneyString(true)),
-                DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding reason", project.ConversionSupportGrantChangeReason),
-                DocumentGeneratorStringSanitiser.CreateTextElements("Recommendation", project.RecommendationForProject)
-            };
+         {
+               DocumentGeneratorStringSanitiser.CreateTextElements("Academy type and route", project.AcademyTypeAndRoute),
+         };
+
+         bool isVoluntaryConverionPreDeadline = IsVoluntaryConversionPreDeadline(project.AcademyTypeAndRoute, project.ApplicationReceivedDate);
+         if (isVoluntaryConverionPreDeadline)
+         {
+            voluntaryRouteInfo.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding amount", project.ConversionSupportGrantAmount?.ToMoneyString(true)));
+            voluntaryRouteInfo.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding reason", project.ConversionSupportGrantChangeReason));
+         }
+
+         voluntaryRouteInfo.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Recommendation", project.RecommendationForProject));
 
          if (project.SchoolType.ToLower().Contains("pupil referral unit"))
          {
