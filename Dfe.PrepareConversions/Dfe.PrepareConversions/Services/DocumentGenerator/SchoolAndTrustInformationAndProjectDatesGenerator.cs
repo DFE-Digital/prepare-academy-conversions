@@ -60,12 +60,6 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          });
       }
 
-      private static bool IsVoluntaryConversionPreDeadline(string? academyTypeAndRoute, DateTime? applicationReceivedDate)
-      {
-         bool isPreDeadline = applicationReceivedDate.HasValue && DateTime.Compare(applicationReceivedDate.Value, new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc)) <= 0;
-         return isPreDeadline && academyTypeAndRoute == "Converter";
-      }
-
       private static List<TextElement[]> VoluntaryRouteInfo(AcademyConversionProject project)
       {
          var voluntaryRouteInfo = new List<TextElement[]>
@@ -73,7 +67,9 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
                DocumentGeneratorStringSanitiser.CreateTextElements("Academy type and route", project.AcademyTypeAndRoute),
          };
 
-         bool isVoluntaryConverionPreDeadline = IsVoluntaryConversionPreDeadline(project.AcademyTypeAndRoute, project.ApplicationReceivedDate);
+         bool isPreDeadline = project.ApplicationReceivedDate.HasValue && DateTime.Compare(project.ApplicationReceivedDate.Value, new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc)) <= 0;
+         bool isVoluntaryConverionPreDeadline = isPreDeadline && project.AcademyTypeAndRoute == "Converter";
+
          if (isVoluntaryConverionPreDeadline)
          {
             voluntaryRouteInfo.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Grant funding amount", project.ConversionSupportGrantAmount?.ToMoneyString(true)));
