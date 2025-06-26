@@ -60,7 +60,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          });
       }
 
-      private static List<TextElement[]> VoluntaryRouteInfo(AcademyConversionProject project)
+      public static List<TextElement[]> VoluntaryRouteInfo(AcademyConversionProject project)
       {
          var voluntaryRouteInfo = new List<TextElement[]>
          {
