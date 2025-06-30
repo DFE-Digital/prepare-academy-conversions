@@ -55,7 +55,7 @@ public class DecisionDateIntegrationTests : BaseIntegrationTests
       AcademyConversionProject project = AddGetProject(x =>
       {
          x.SchoolOverviewSectionComplete = false;
-         x.ApplicationReceivedDate = new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc); // Before the deadline
+         x.AcademyTypeAndRoute = "Converter";
       });
 
       DateTime tomorrow = DateTime.UtcNow.AddDays(1);

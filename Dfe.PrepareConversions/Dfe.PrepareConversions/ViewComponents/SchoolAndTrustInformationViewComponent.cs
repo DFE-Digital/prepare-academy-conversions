@@ -18,6 +18,13 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
       _repository = repository;
    }
 
+   private static bool IsVoluntaryConversionSupportGrantVisible(DateTime? applicationReceivedDate, string academyTypeAndRoute)
+   {
+      var isPreDeadline = applicationReceivedDate.HasValue && DateTime.Compare(applicationReceivedDate.Value, new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc)) <= 0;
+
+      return isPreDeadline && academyTypeAndRoute is AcademyTypeAndRoutes.Voluntary;
+   }
+
    public async Task<IViewComponentResult> InvokeAsync()
    {
       int id = int.Parse(ViewContext.RouteData.Values["id"]?.ToString() ?? string.Empty);
@@ -55,6 +62,7 @@ public class SchoolAndTrustInformationViewComponent : ViewComponent
          Form7Received = project.Form7Received,
          Form7ReceivedDate = project.Form7ReceivedDate.ToDateString(),
          WasForm7Received = project.Form7Received is not null && project.Form7Received.Equals("Yes"),
+         IsVoluntaryConversionSupportGrantVisible = IsVoluntaryConversionSupportGrantVisible(project.ApplicationReceivedDate, project.AcademyTypeAndRoute),
          ConversionSupportGrantAmount = project?.ConversionSupportGrantAmount?.ToMoneyString(true),
          ConversionSupportGrantChangeReason = project.ConversionSupportGrantChangeReason,
          ConversionSupportGrantType = project.ConversionSupportGrantType,

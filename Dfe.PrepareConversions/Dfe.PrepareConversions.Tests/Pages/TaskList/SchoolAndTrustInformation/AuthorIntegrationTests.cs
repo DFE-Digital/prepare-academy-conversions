@@ -17,7 +17,12 @@ public class AuthorIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_and_update_author()
    {
-      AcademyConversionProject project = AddGetProject(x => x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary);
+      AcademyConversionProject project = AddGetProject(x =>
+      {
+         x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
+         x.ApplicationReceivedDate = new DateTime(2024, 12, 16, 15, 0, 0, DateTimeKind.Utc);
+      });
+
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
       {
          x.Author = _fixture.Create<string>();
