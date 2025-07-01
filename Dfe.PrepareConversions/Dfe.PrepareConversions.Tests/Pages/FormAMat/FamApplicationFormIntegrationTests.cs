@@ -24,7 +24,10 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
 
    private void AddProjectWithFullApplicationForm()
    {
-      _project = AddGetProject();
+      _project = AddGetProject(project =>
+      {
+         project.ApplicationReceivedDate = new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc); // Before the deadline
+      });
 
       AddGetApplication(app =>
       {
