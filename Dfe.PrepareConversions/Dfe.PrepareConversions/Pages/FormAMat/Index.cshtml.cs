@@ -1,5 +1,4 @@
 using Dfe.PrepareConversions.Data;
-using Dfe.PrepareConversions.Data.Extensions;
 using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models.Application;
 using Dfe.PrepareConversions.Data.Services;
@@ -13,6 +12,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Dfe.PrepareConversions.Models;
+using System.Globalization;
 
 namespace Dfe.PrepareConversions.Pages.FormAMat;
 
@@ -67,11 +67,20 @@ public class FormAMatIndexModel : BaseAcademyConversionProjectPageModel
          new FurtherInformationSection(currentSchool),
          new FinanceSection(currentSchool),
          new FuturePupilNumberSection(currentSchool),
-         new LandAndBuildingsSection(currentSchool),
-         new ConversionSupportGrantSection(currentSchool),
-         new ConsultationSection(currentSchool),
-         new DeclarationSection(currentSchool)
+         new LandAndBuildingsSection(currentSchool)
       };
+
+      var applicationReceivedDate = DateTime.Parse(Project.ApplicationReceivedDate, CultureInfo.GetCultureInfo("en-GB"));
+      if (DateTime.Compare(applicationReceivedDate, new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc)) <= 0)
+      {
+         Sections = [.. Sections, new ConversionSupportGrantSection(application.ApplyingSchools.First())];
+      }
+
+      Sections = [
+         .. Sections,
+         new ConsultationSection(application.ApplyingSchools.First()),
+         new DeclarationSection(application.ApplyingSchools.First())
+      ];
 
       ReturnPage = @Links.ProjectList.Index.Page;
       var returnToFormAMatMenu = TempData["returnToFormAMatMenu"] as bool?;

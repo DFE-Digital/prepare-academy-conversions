@@ -2,8 +2,8 @@
 using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
-using Dfe.PrepareConversions.Data.Models.Application;
 using FluentAssertions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,7 +24,10 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
 
    private void AddProjectWithFullApplicationForm()
    {
-      _project = AddGetProject();
+      _project = AddGetProject(project =>
+      {
+         project.ApplicationReceivedDate = new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc); // Before the deadline
+      });
 
       AddGetApplication(app =>
       {
@@ -153,15 +156,48 @@ public class FamApplicationFormIntegrationTests : BaseIntegrationTests
    }
 
    [Fact]
-   public async Task Should_Display_Pre_Opening_Support_Grant_Section()
+   public async Task Should_Display_Pre_Opening_Support_Grant_Section_When_Submitted_Before_Deadline()
    {
-      AddProjectWithFullApplicationForm();
+      _project = AddGetProject(x =>
+      {
+         x.ApplicationReceivedDate = new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc); // Before the deadline
+      });
+
+      AddGetApplication(app =>
+      {
+         app.ApplicationId = _project.Id;
+         app.ApplicationReference = _project.ApplicationReferenceNumber;
+         app.Schools.FirstOrDefault()!.SchoolName = _project.SchoolName;
+         app.ApplicationType = GlobalStrings.FormAMat;
+      });
 
       await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
 
       Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Conversion support grant").Should().NotBeEmpty();
       Document.QuerySelectorAll("h3").Where(contents => contents.InnerHtml == "Details").Should().NotBeEmpty();
    }
+
+   [Fact]
+   public async Task Should_Hide_Pre_Opening_Support_Grant_Section_When_Submitted_Before_Deadline()
+   {
+      _project = AddGetProject(x =>
+      {
+         x.ApplicationReceivedDate = new DateTime(2024, 12, 28, 0, 0, 0, DateTimeKind.Utc); // After the deadline
+      });
+
+      AddGetApplication(app =>
+      {
+         app.ApplicationId = _project.Id;
+         app.ApplicationReference = _project.ApplicationReferenceNumber;
+         app.Schools.FirstOrDefault()!.SchoolName = _project.SchoolName;
+         app.ApplicationType = GlobalStrings.FormAMat;
+      });
+
+      await OpenAndConfirmPathAsync(string.Format(Path, _project.Id));
+
+      Document.QuerySelectorAll("h2").Where(contents => contents.InnerHtml == "Conversion support grant").Should().BeEmpty();
+   }
+
    [Fact]
    public async Task Should_Display_Trust_Information_Section()
    {
