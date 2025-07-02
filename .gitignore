@@ -89,7 +89,9 @@ StyleCopReport.xml
 *.log
 *.vspscc
 *.vssscc
+# Ignore .build file or folder(used for build metadata or CI tools)
 .builds
+.builds/
 *.pidb
 *.svclog
 *.scc
