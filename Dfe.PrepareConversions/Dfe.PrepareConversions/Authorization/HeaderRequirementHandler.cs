@@ -40,7 +40,7 @@ public class HeaderRequirementHandler : AuthorizationHandler<DenyAnonymousAuthor
                                               IConfiguration configuration)
    {
       //Header authorisation not applicable for production
-      if (!hostEnvironment.IsStaging() && !hostEnvironment.IsDevelopment())
+      if (!hostEnvironment.IsStaging() && !hostEnvironment.IsDevelopment() && !hostEnvironment.IsEnvironment("Test"))
       {
          return false;
       }
