@@ -58,7 +58,7 @@ public class ProjectListIntegrationTests(IntegrationTestingWebApplicationFactory
    }
 
    [Fact]
-   public async Task Should_display_pre_advisory_board_by_default()
+   public async Task Should_display_proposed_decision_date_by_default()
    {
       AddGetStatuses();
       var projects = AddGetProjects().ToList();
@@ -66,7 +66,7 @@ public class ProjectListIntegrationTests(IntegrationTestingWebApplicationFactory
       await OpenAndConfirmPathAsync("/project-list");
 
       Document.QuerySelector<IHtmlElement>($"#project-status-{projects.First().Id}")?.Text().Should()
-         .Be("PRE ADVISORY BOARD");
+         .Be("PRE DECISION");
    }
 
    [Fact]
