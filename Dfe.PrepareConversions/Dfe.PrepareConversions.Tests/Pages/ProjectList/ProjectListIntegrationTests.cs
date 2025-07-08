@@ -1,10 +1,8 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.Academisation.ExtensionMethods;
-using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
