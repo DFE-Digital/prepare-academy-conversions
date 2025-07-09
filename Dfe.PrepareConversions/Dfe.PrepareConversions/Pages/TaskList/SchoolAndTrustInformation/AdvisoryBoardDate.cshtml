@@ -4,8 +4,7 @@
 @{
    Layout = "_QuestionLayout";
    Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
-   ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Set the advisory board date";
-   ViewData["ShowScheduleOfAdvisoryBoardMeetingsLink"] = true;
+    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Set the proposed decision date";
    ViewData["SchoolName"] = Model.Project.SchoolName;
    ViewData["ProjectId"] = Model.Project.Id;
    ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
@@ -16,4 +15,4 @@
    <govuk-back-link link-item="@Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation" data-test="headteacher-board-date-back-link"/>
 }
 
-<govuk-date-input heading-label="true" label="Set the advisory board date" details-body="If a decision was made about this project without an advisory board meeting, use the date that decision was made instead." details-heading="What to do if there was no advisory board meeting" name="head-teacher-board-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
+<govuk-date-input heading-label="true" label="Set the proposed decision date" details-body="If a decision was made about this project without a proposed decision date meeting, use the date that decision was made instead." details-heading="What to do if there was no proposed decision meeting" name="head-teacher-board-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
