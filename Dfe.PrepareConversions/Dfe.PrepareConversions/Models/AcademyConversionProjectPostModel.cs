@@ -77,7 +77,7 @@ public class AcademyConversionProjectPostModel
    [DateValidation(DateRangeValidationService.DateRange.Past)]
    [BindProperty(Name = "previous-head-teacher-board-date")]
    [Required]
-   [Display(Name = "Previous advisory board")]
+   [Display(Name = "Previously considered")]
    public DateTime? PreviousHeadTeacherBoardDate { get; set; }
 
    [ModelBinder(BinderType = typeof(DateInputModelBinder))]
