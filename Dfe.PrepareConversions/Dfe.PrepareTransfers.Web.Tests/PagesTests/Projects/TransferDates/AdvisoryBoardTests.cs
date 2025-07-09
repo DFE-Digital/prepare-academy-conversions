@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Web.Models;
@@ -127,7 +128,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.TransferDates
             }
             
             [Fact]
-            public async void GivenAdvisoryBoardDateGreaterThanTargetDate_SetsErrorOnViewModel()
+            public async Task GivenProposedDecisionDateGreaterThanTargetDate_SetsErrorOnViewModel()
             {
                 ProjectRepository.Setup(r => r.GetByUrn(It.IsAny<string>()))
                     .ReturnsAsync(new RepositoryResult<Project>
@@ -160,7 +161,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.TransferDates
                 var result = await _subject.OnPostAsync();
                 
                 Assert.IsType<PageResult>(result);
-                Assert.Single(_subject.ModelState[$"AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Day"].Errors);
+                Assert.Single(_subject.ModelState[$"AdvisoryBoardViewModel.ProposedDecisionDate.Date.Day"].Errors);
             }
         }
     }
