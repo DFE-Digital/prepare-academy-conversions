@@ -18,7 +18,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
         [Fact]
         public void ShouldHaveChildValidators()
         {
-            _validator.ShouldHaveChildValidator(a => a.AdvisoryBoardDate, typeof(DateValidator));
+            _validator.ShouldHaveChildValidator(a => a.ProposedDecisionDate, typeof(DateValidator));
         }
 
         [Fact]
@@ -28,7 +28,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
             var targetDate = DateTime.Now.AddMonths(1);
             var vm = new AdvisoryBoardViewModel()
             {
-                AdvisoryBoardDate = new DateViewModel
+                ProposedDecisionDate = new DateViewModel
                 {
                     Date = new DateInputViewModel
                     {
@@ -59,7 +59,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
             var targetDate = DateTime.Now.AddMonths(2);
             var vm = new AdvisoryBoardViewModel
             {
-                AdvisoryBoardDate = new DateViewModel
+                ProposedDecisionDate = new DateViewModel
                 {
                     Date = new DateInputViewModel
                     {
@@ -91,7 +91,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
             var advisoryBoardDate = DateTime.Today;
             var vm = new AdvisoryBoardViewModel()
             {
-                AdvisoryBoardDate = new DateViewModel
+                ProposedDecisionDate = new DateViewModel
                 {
                     Date = new DateInputViewModel
                     {
@@ -120,7 +120,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
             var targetDate = DateTime.Now;
             var vm = new AdvisoryBoardViewModel
             {
-                AdvisoryBoardDate = new DateViewModel
+                ProposedDecisionDate = new DateViewModel
                 {
                     Date = new DateInputViewModel(),
                     UnknownDate = true
