@@ -1,16 +1,10 @@
-﻿using AngleSharp.Dom;
-using AngleSharp.Html.Dom;
-using AutoFixture;
-using Dfe.Academisation.ExtensionMethods;
+﻿using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.DocumentGeneration.Elements;
 using Dfe.PrepareConversions.Services.DocumentGenerator;
-using Dfe.PrepareConversions.Tests.Extensions;
 using Dfe.PrepareConversions.Tests.Pages;
-using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Services.DocumentGenerator
@@ -18,6 +12,27 @@ namespace Dfe.PrepareConversions.Tests.Services.DocumentGenerator
    public class SchoolAndTrustInformationAndProjectDatesGeneratorTests : BaseIntegrationTests
    {
       public SchoolAndTrustInformationAndProjectDatesGeneratorTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
+
+      [Fact]
+      public void AddLocalAuthorityAndSponsorDetails_ReturnsExpectedElements()
+      {
+         // Arrange
+         var project = new AcademyConversionProject
+         {
+               LocalAuthority = "Test LA",
+               SponsorName = "Test Sponsor",
+               SponsorReferenceNumber = "12345"
+         };
+
+         // Act
+         var result = SchoolAndTrustInformationAndProjectDatesGenerator.AddLocalAuthorityAndSponsorDetails(project);
+
+         // Assert
+         Assert.Equal(3, result.Count);
+         Assert.Contains(result, row => row[0].Value.Equals("Local authority") && row[1].Value.Equals("Test LA"));
+         Assert.Contains(result, row => row[0].Value.Equals("Sponsor name") && row[1].Value.Equals("Test Sponsor"));
+         Assert.Contains(result, row => row[0].Value.Equals("Sponsor reference number") && row[1].Value.Equals("12345"));
+      }
 
       [Fact]
       public void Should_render_conversion_details_into_word_document()
