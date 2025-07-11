@@ -53,7 +53,7 @@
    <div class="govuk-grid-column-full">
       <dl class="govuk-summary-list">
             <govuk-summary-list-row name="proposed-decision-date" label="Proposed decision date" value="@Model.Project.HeadTeacherBoardDate.ToDateString()" asp-page="@Links.ProjectDates.AdvisoryBoardDate.Page" asp-route-id="@Model.Project.Id" asp-read-only="@Model.Project.IsReadOnly" hidden-text="Proposed decision date" />
-            <govuk-summary-list-row name="previously-considered-on" label="Previously considered on" value="@Model.Project.PreviousHeadTeacherBoardDate.ToDateString()" asp-page="@Links.ProjectDates.PreviousAdvisoryBoard.Page" asp-route-id="@Model.Project.Id" asp-read-only="@Model.Project.IsReadOnly" hidden-text="Previously considered date" />
+            <govuk-summary-list-row name="previously-considered-on" label="Previously considered date" value="@Model.Project.PreviousHeadTeacherBoardDate.ToDateString()" asp-page="@Links.ProjectDates.PreviousAdvisoryBoard.Page" asp-route-id="@Model.Project.Id" asp-read-only="@Model.Project.IsReadOnly" hidden-text="Previously considered date" />
             <govuk-summary-list-row name="proposed-conversion-date" label="Proposed conversion date" value="@Model.Project.ProposedConversionDate.ToDateString()" asp-page="@Links.ProjectDates.PropsedConversionDate.Page" asp-route-id="@Model.Project.Id" asp-read-only="@Model.Project.IsReadOnly" hidden-text="Proposed conversion date" />
       </dl>
    </div>
