@@ -55,7 +55,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects
 
          if (string.IsNullOrWhiteSpace(HeadTeacherBoardDate))
          {
-            errorService.AddError($"/transfers/project/{Urn}/transfer-dates/advisory-board-date?return={returnPage}",
+            errorService.AddError($"/transfers/project/{Urn}/transfer-dates/proposed-decision-date?return={returnPage}",
                "Set an Advisory board date before you generate your project template");
          }
 

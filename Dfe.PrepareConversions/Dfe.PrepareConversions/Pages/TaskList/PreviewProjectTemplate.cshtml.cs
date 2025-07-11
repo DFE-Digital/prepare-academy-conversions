@@ -68,7 +68,7 @@ public class PreviewHtbTemplateModel : BaseAcademyConversionProjectPageModel
       if (!hasAdvisoryBoardDate)
       {  
          // this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
-         _errorService.AddError($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}&fragment=advisory-board-date",
+         _errorService.AddError($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-decision-date?return={returnPage}&fragment=advisory-board-date",
             "Set an Advisory board date before you generate your project template");
 
          ShowGenerateHtbTemplateError = true;

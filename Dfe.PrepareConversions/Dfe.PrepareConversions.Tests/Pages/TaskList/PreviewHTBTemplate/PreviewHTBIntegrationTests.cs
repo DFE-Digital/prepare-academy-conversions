@@ -67,7 +67,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Set an Advisory board date");
 
       document = await NavigateAsync(document, "Set an Advisory board date before you generate your project template");
-      document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date");
+      document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-decision-date");
 
       document = await NavigateDataTestAsync(document, "headteacher-board-date-back-link");
 
@@ -108,7 +108,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       document.Url.Should()
          .BeUrl(
-            $"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FPreviewProjectTemplate&fragment=advisory-board-date");
+            $"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-decision-date?return=%2FTaskList%2FPreviewProjectTemplate&fragment=advisory-board-date");
    }
 
    [Fact]
