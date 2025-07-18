@@ -23,7 +23,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList
 
       private static void VerifyAdvisoryBoardError(IElement element, int projectId)
       {
-         element.TextContent.Should().Be("Set an Advisory board date before you generate your project template");
+         element.TextContent.Should().Be("Set a Proposed decision date before you generate your project template");
          element.Id.Should().Be($"/task-list/{projectId}/confirm-school-trust-information-project-dates/proposed-decision-date?return=%2FTaskList%2FIndex&fragment=advisory-board-date-error-link");
       }
 

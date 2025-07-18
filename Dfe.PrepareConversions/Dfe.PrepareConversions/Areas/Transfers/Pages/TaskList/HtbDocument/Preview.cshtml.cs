@@ -196,7 +196,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
             if (string.IsNullOrWhiteSpace(HeadTeacherBoardDate))
             {
                _errorService.AddError($"/transfers/project/{Urn}/transfer-dates/proposed-decision-date?returnToPreview=true",
-                  "Set an Advisory board date before you generate your project template");
+                  "Set a Proposed decision date before you generate your project template");
             }
 
             var isPsedValid = PrepareConversions.Models.PreviewPublicSectorEqualityDutyModel.IsValid(PublicEqualityDutyImpact, PublicEqualityDutyReduceImpactReason, PublicEqualityDutySectionComplete ?? false);

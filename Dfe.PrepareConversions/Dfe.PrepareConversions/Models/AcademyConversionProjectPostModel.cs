@@ -14,7 +14,7 @@ public class AcademyConversionProjectPostModel
    [BindProperty(Name = "head-teacher-board-date")]
    [ModelBinder(BinderType = typeof(DateInputModelBinder))]
    [DateValidation(DateRangeValidationService.DateRange.PastOrFuture)]
-   [Display(Name = "Advisory board")]
+   [Display(Name = "Proposed decision")]
    public DateTime? HeadTeacherBoardDate { get; set; }
 
    public DateTime? BaselineDate { get; set; }

@@ -96,7 +96,7 @@ public class PreviewProjectTemplateTests : BaseIntegrationTests
       var errors = Document.QuerySelectorAll(selector);
       errors.Length.Should().Be(2);
 
-      errors[0].TextContent.Should().Be("Set an Advisory board date before you generate your project template");
+      errors[0].TextContent.Should().Be("Set a Proposed decision date before you generate your project template");
       errors[1].TextContent.Should().Be("Consider the Public Sector Equality Duty");
    }
 
@@ -129,7 +129,7 @@ public class PreviewProjectTemplateTests : BaseIntegrationTests
       var errors = Document.QuerySelectorAll(selector);
       errors.Length.Should().Be(1);
 
-      errors.First().TextContent.Should().Be("Set an Advisory board date before you generate your project template");
+      errors.First().TextContent.Should().Be("Set a Proposed decision date before you generate your project template");
    }
 
    [Fact]

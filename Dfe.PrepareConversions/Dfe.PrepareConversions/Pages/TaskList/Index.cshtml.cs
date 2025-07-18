@@ -100,7 +100,7 @@ public class IndexModel(KeyStagePerformanceService keyStagePerformanceService,
       {
          // this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
          errorService.AddError($"/task-list/{Project.Id}/confirm-school-trust-information-project-dates/proposed-decision-date?return={returnPage}&fragment=advisory-board-date",
-            "Set an Advisory board date before you generate your project template");
+            "Set a Proposed decision date before you generate your project template");
       }
 
       var isPsedValid = PreviewPublicSectorEqualityDutyModel.IsValid(Project.PublicEqualityDutyImpact, Project.PublicEqualityDutyReduceImpactReason, Project.PublicEqualityDutySectionComplete);
