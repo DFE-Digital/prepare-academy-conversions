@@ -110,7 +110,7 @@ describe('Filteration Tests', { tags: ['@dev', '@stage'] }, () => {
         cy.get('[data-cy="select-projectlist-filter-project-status"]').click();
       }
 
-      const projectStatuses = ['Approved', 'Approved with conditions', 'Declined', 'Deferred', 'Pre advisory board'];
+      const projectStatuses = ['Approved', 'Approved with conditions', 'Declined', 'Deferred', 'Pre decision'];
 
       // Select each project status checkbox and check the URL
       projectStatuses.forEach((statusToFilter) => {
