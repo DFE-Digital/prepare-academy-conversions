@@ -69,7 +69,7 @@ public class PreviewHtbTemplateModel : BaseAcademyConversionProjectPageModel
       {  
          // this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
          _errorService.AddError($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-decision-date?return={returnPage}&fragment=advisory-board-date",
-            "Set a Proposed decision date before you generate your project template");
+            "Set a proposed decision date before you generate your project template");
 
          ShowGenerateHtbTemplateError = true;
       }
