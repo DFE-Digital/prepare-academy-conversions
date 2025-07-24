@@ -55,8 +55,9 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects
 
          if (string.IsNullOrWhiteSpace(HeadTeacherBoardDate))
          {
-            errorService.AddError($"/transfers/project/{Urn}/transfer-dates/advisory-board-date?return={returnPage}",
-               "Set an Advisory board date before you generate your project template");
+         // TODO added by during rebase to check whether the query param advisory board is correct, external dependency? Looks like an error summary extra, so change it
+            errorService.AddError($"/transfers/project/{Urn}/transfer-dates/proposed-decision-date?return={returnPage}",
+               "Set a proposed decision date before you generate your project template");
          }
 
          var isPsedValid = PrepareConversions.Models.PreviewPublicSectorEqualityDutyModel.IsValid(PublicEqualityDutyImpact, PublicEqualityDutyReduceImpactReason, PublicEqualityDutySectionComplete ?? false);
