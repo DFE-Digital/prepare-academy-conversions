@@ -60,7 +60,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
 
       document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-      document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Set a Proposed decision date");
+      document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Set a proposed decision date");
 
       document = await NavigateAsync(document, "Set a proposed decision date before you generate your project template");
       document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-decision-date");
