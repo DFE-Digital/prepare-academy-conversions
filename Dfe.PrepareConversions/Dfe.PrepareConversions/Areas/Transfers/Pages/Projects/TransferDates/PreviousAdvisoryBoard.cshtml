@@ -1,18 +1,17 @@
-@page "/transfers/project/{urn}/transfer-dates/previous-advisory-board-date"
+@page "/transfers/project/{urn}/transfer-dates/previously-considered-date"
 @using Dfe.PrepareTransfers.Web.ExtensionMethods;
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers.TagHelpers
 @using Dfe.Academisation.ExtensionMethods
 @model Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates.PreviousAdvisoryBoard
 
-
 @{
    Layout = "_Layout";
-   ViewBag.Title = ViewData.ModelState.BuildPageTitle("Previous advisory board date");
+    ViewBag.Title = ViewData.ModelState.BuildPageTitle("Previously considered date");
    var formClasses = ViewData.ModelState.GetFormGroupErrorStyle();
-   var dayInputError = ViewData.ModelState.GetFormFieldErrorStyle("AdvisoryBoardViewModel.AdvisoryBoardDate.Date", "AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Day");
-   var monthInputError = ViewData.ModelState.GetFormFieldErrorStyle("AdvisoryBoardViewModel.AdvisoryBoardDate.Date", "AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Month");
-   var yearInputError = ViewData.ModelState.GetFormFieldErrorStyle("AdvisoryBoardViewModel.AdvisoryBoardDate.Date", "AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Year");
+    var dayInputError = ViewData.ModelState.GetFormFieldErrorStyle("PreviouslyConsideredViewModel.PreviouslyConsideredDate.Date", "PreviouslyConsideredViewModel.PreviouslyConsideredDate.Date.Day");
+    var monthInputError = ViewData.ModelState.GetFormFieldErrorStyle("PreviouslyConsideredViewModel.PreviouslyConsideredDate.Date", "PreviouslyConsideredViewModel.PreviouslyConsideredDate.Date.Month");
+    var yearInputError = ViewData.ModelState.GetFormFieldErrorStyle("PreviouslyConsideredViewModel.PreviouslyConsideredDate.Date", "PreviouslyConsideredViewModel.PreviouslyConsideredDate.Date.Year");
 }
 
 @section BeforeMain
@@ -37,41 +36,41 @@
                             <span class="govuk-caption-l">
                                 @Model.IncomingTrustName?.ToTitleCase()
                             </span>
-                            Advisory board date
+                            Previously considered date
                         </h1>
                     </legend>
                     <div id="set-ab-date-hint" class="govuk-hint">
                         For example, 12 11 2021. You can change this date later.
                     </div>
 
-                   <p asp-gds-validation-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date"></p>
-                   <p asp-gds-validation-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Day"></p>
-                   <p asp-gds-validation-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Month"></p>
-                   <p asp-gds-validation-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Year"></p>
+                    <p asp-gds-validation-for="PreviouslyConsideredViewModel.PreviouslyConsideredDate.Date"></p>
+                    <p asp-gds-validation-for="PreviouslyConsideredViewModel.PreviouslyConsideredDate.Date.Day"></p>
+                    <p asp-gds-validation-for="PreviouslyConsideredViewModel.PreviouslyConsideredDate.Date.Month"></p>
+                    <p asp-gds-validation-for="PreviouslyConsideredViewModel.PreviouslyConsideredDate.Date.Year"></p>
 
                    <div class="govuk-date-input" id="ab-date">
                         <div class="govuk-date-input__item">
                             <div class="govuk-form-group">
-                                <label asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Day" class="govuk-label govuk-date-input__label">
+                                <label asp-for="PreviouslyConsideredViewModel.PreviouslyConsideredDate.Date.Day" class="govuk-label govuk-date-input__label">
                                     Day
                                 </label>
-                                <input asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Day" class="govuk-input govuk-date-input__input govuk-input--width-2 @dayInputError" type="text" pattern="[0-9]*" inputmode="numeric" data-test="day">
+                                <input asp-for="PreviouslyConsideredViewModel.PreviouslyConsideredDate.Date.Day" class="govuk-input govuk-date-input__input govuk-input--width-2 @dayInputError" type="text" pattern="[0-9]*" inputmode="numeric" data-test="day">
                             </div>
                         </div>
                         <div class="govuk-date-input__item">
                             <div class="govuk-form-group">
-                                <label asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Month" class="govuk-label govuk-date-input__label">
+                                <label asp-for="PreviouslyConsideredViewModel.PreviouslyConsideredDate.Date.Month" class="govuk-label govuk-date-input__label">
                                     Month
                                 </label>
-                                <input asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Month" class="govuk-input govuk-date-input__input govuk-input--width-2 @monthInputError" type="text" pattern="[0-9]*" inputmode="numeric" data-test="month">
+                                <input asp-for="PreviouslyConsideredViewModel.PreviouslyConsideredDate.Date.Month" class="govuk-input govuk-date-input__input govuk-input--width-2 @monthInputError" type="text" pattern="[0-9]*" inputmode="numeric" data-test="month">
                             </div>
                         </div>
                         <div class="govuk-date-input__item">
                             <div class="govuk-form-group">
-                                <label asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Year" class="govuk-label govuk-date-input__label">
+                                <label asp-for="PreviouslyConsideredViewModel.PreviouslyConsideredDate.Date.Year" class="govuk-label govuk-date-input__label">
                                     Year
                                 </label>
-                                <input asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Year" class="govuk-input govuk-date-input__input govuk-input--width-4 @yearInputError" type="text" pattern="[0-9]*" inputmode="numeric" data-test="year">
+                                <input asp-for="PreviouslyConsideredViewModel.PreviouslyConsideredDate.Date.Year" class="govuk-input govuk-date-input__input govuk-input--width-4 @yearInputError" type="text" pattern="[0-9]*" inputmode="numeric" data-test="year">
                             </div>
                         </div>
                     </div>
@@ -80,8 +79,8 @@
 
                     <div class="govuk-checkboxes govuk-!-margin-top-4" data-module="govuk-checkboxes">
                         <div class="govuk-checkboxes__item">
-                            <input asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.UnknownDate" class="govuk-checkboxes__input" type="checkbox">
-                            <label asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.UnknownDate" class="govuk-label govuk-checkboxes__label">
+                            <input asp-for="PreviouslyConsideredViewModel.PreviouslyConsideredDate.UnknownDate" class="govuk-checkboxes__input" type="checkbox">
+                            <label asp-for="PreviouslyConsideredViewModel.PreviouslyConsideredDate.UnknownDate" class="govuk-label govuk-checkboxes__label">
                                 I do not know this
                             </label>
                         </div>

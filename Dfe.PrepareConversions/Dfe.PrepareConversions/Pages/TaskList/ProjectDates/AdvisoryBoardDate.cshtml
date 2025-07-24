@@ -1,11 +1,10 @@
-﻿@page "/task-list/{id:int}/advisory-board-date"
+﻿@page "/task-list/{id:int}/proposed-decision-date"
 @using Dfe.PrepareConversions.TagHelpers
 @using Dfe.Academisation.ExtensionMethods
 @model Dfe.PrepareConversions.Pages.TaskList.ProjectDates.AdvisoryBoardDateModel;
 @{
    Layout = "_QuestionLayout";
-   ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Advisory board date";
-   ViewData["ShowScheduleOfAdvisoryBoardMeetingsLink"] = true;
+    ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Proposed decision date";
    ViewData["SchoolName"] = Model.Project.SchoolName;
    ViewData["ProjectId"] = Model.Project.Id;
    ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
@@ -18,8 +17,8 @@
 
 @if (!Model.Project.HeadTeacherBoardDate.HasValue)
 {
-    <govuk-date-input heading-label="true" label="Advisory board date" details-body="If a decision was made about this project without an advisory board meeting, use the date that decision was made instead." details-heading="What to do if there was no advisory board meeting" name="advisory-board-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
+    <govuk-date-input heading-label="true" label="Proposed decision date" name="advisory-board-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
 }else{
-    <govuk-date-input heading-label="true" label="Advisory board date" details-body="If a decision was made about this project without an advisory board meeting, use the date that decision was made instead." details-heading="What to do if there was no advisory board meeting" sub-label="Enter new advisory board date" previous-information="The current advisory board date is" additional-information="Make sure all stakeholders are aware of the change and the reason for it" name="advisory-board-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
+    <govuk-date-input heading-label="true" label="Proposed decision date" sub-label="Enter new proposed decision date" previous-information="The current proposed decision date is" additional-information="Make sure all stakeholders are aware of the change and the reason for it" name="advisory-board-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
 }
 

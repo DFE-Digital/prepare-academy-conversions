@@ -16,7 +16,7 @@ namespace Dfe.PrepareConversions.Data.Services;
 
 public class AcademyConversionProjectRepository : IAcademyConversionProjectRepository
 {
-   private readonly IReadOnlyDictionary<string, string> _aliasedStatuses = new Dictionary<string, string> { { "converter pre-ao (c)", "Pre advisory board" } };
+   private readonly IReadOnlyDictionary<string, string> _aliasedStatuses = new Dictionary<string, string> { { "converter pre-ao (c)", "Pre decision" } };
    private readonly IApiClient _apiClient;
    private readonly IDfeHttpClientFactory _httpClientFactory;
    private readonly IHttpClientService _httpClientService;

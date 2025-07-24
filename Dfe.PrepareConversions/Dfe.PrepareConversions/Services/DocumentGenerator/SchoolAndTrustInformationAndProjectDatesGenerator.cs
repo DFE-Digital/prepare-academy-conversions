@@ -2,7 +2,6 @@
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.DocumentGeneration;
 using Dfe.PrepareConversions.DocumentGeneration.Elements;
-using Dfe.PrepareConversions.DocumentGeneration.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -12,12 +11,24 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
    {
       public static void AddSchoolAndTrustInfoAndProjectDates(DocumentBuilder documentBuilder, AcademyConversionProject project)
       {
-         AddAcademyRouteInfo(documentBuilder, project);
-         AddAdvisoryBoardDetails(documentBuilder, project);
-         AddLocalAuthorityAndSponsorDetails(documentBuilder, project);
+         var academyRouteInfo = AddAcademyRouteInfo(project);
+         documentBuilder.ReplacePlaceholderWithContent("AcademyRouteInfo", body =>
+         {
+            body.AddHeading("Conversion details", HeadingLevel.One);
+            body.AddTable(academyRouteInfo);
+         });
+
+         var advisoryBoardDetails = AddAdvisoryBoardDetails(project);
+         documentBuilder.ReplacePlaceholderWithContent("AdvisoryBoardDetails", body => body.AddTable(advisoryBoardDetails));
+
+         var localAuthorityAndSponsorDetails = AddLocalAuthorityAndSponsorDetails(project);
+         documentBuilder.ReplacePlaceholderWithContent("LocalAuthorityAndSponsorDetails", body =>
+         {
+            body.AddTable(localAuthorityAndSponsorDetails);
+         });
       }
 
-      private static void AddLocalAuthorityAndSponsorDetails(IDocumentBuilder builder, AcademyConversionProject project)
+      public static List<TextElement[]> AddLocalAuthorityAndSponsorDetails(AcademyConversionProject project)
       {
          List<TextElement[]> localAuthorityAndSponsorDetails = new()
             {
@@ -26,25 +37,22 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
                 DocumentGeneratorStringSanitiser.CreateTextElements("Sponsor reference number", project.SponsorReferenceNumber)
             };
 
-         builder.ReplacePlaceholderWithContent("LocalAuthorityAndSponsorDetails", body =>
-         {
-            body.AddTable(localAuthorityAndSponsorDetails);
-         });
+         return localAuthorityAndSponsorDetails;
       }
 
-      private static void AddAdvisoryBoardDetails(IDocumentBuilder builder, AcademyConversionProject project)
+      public static List<TextElement[]> AddAdvisoryBoardDetails(AcademyConversionProject project)
       {
          List<TextElement[]> advisoryBoardDetails = new()
-            {
-                DocumentGeneratorStringSanitiser.CreateTextElements("Date of advisory board", project.HeadTeacherBoardDate?.ToDateString()),
-                DocumentGeneratorStringSanitiser.CreateTextElements("Proposed academy opening date", project.ProposedConversionDate.ToDateString()),
-                DocumentGeneratorStringSanitiser.CreateTextElements("Previous advisory board", project.PreviousHeadTeacherBoardDate.ToDateString())
-            };
+         {
+               DocumentGeneratorStringSanitiser.CreateTextElements("Proposed decision date", project.HeadTeacherBoardDate?.ToDateString()),
+               DocumentGeneratorStringSanitiser.CreateTextElements("Proposed academy opening date", project.ProposedConversionDate.ToDateString()),
+               DocumentGeneratorStringSanitiser.CreateTextElements("Previously considered date", project.PreviousHeadTeacherBoardDate.ToDateString())
+         };
 
-         builder.ReplacePlaceholderWithContent("AdvisoryBoardDetails", body => body.AddTable(advisoryBoardDetails));
+         return advisoryBoardDetails;
       }
 
-      private static void AddAcademyRouteInfo(IDocumentBuilder builder, AcademyConversionProject project)
+      public static List<TextElement[]> AddAcademyRouteInfo(AcademyConversionProject project)
       {
          List<TextElement[]> academyRouteInfo = project.AcademyTypeAndRoute switch
          {
@@ -53,11 +61,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
             _ => new List<TextElement[]>()
          };
 
-         builder.ReplacePlaceholderWithContent("AcademyRouteInfo", body =>
-         {
-            body.AddHeading("Conversion details", HeadingLevel.One);
-            body.AddTable(academyRouteInfo);
-         });
+         return academyRouteInfo;
       }
 
       public static List<TextElement[]> VoluntaryRouteInfo(AcademyConversionProject project)
@@ -86,7 +90,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          return voluntaryRouteInfo;
       }
 
-      private static List<TextElement[]> SponsoredRouteInfo(AcademyConversionProject project)
+      public static List<TextElement[]> SponsoredRouteInfo(AcademyConversionProject project)
       {
          var sponsoredRouteInfo = new List<TextElement[]>
             {

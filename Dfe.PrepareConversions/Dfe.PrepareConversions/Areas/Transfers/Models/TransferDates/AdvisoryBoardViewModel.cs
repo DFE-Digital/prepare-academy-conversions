@@ -4,6 +4,6 @@ namespace Dfe.PrepareTransfers.Web.Models.TransferDates
 {
     public class AdvisoryBoardViewModel : CommonViewModel
     {
-        public DateViewModel AdvisoryBoardDate { get; set; }
+        public DateViewModel ProposedDecisionDate { get; set; }
     }
 }

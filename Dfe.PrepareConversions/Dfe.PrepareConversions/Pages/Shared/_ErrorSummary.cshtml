@@ -15,7 +15,7 @@
                     @foreach (Error error in ErrorService.GetErrors())
                     {
                         <li>
-                            @if (error.Key?.Contains("/advisory-board-date") ?? false)
+                            @if (error.Key?.Contains("/proposed-decision-date") ?? false)
                             {
                                 <a id="@($"{error.Key}-error-link")" href=@error.Key data-element-type="error-link" data-cy="error-message-@errorCount+=">@error.Message</a>
                             }

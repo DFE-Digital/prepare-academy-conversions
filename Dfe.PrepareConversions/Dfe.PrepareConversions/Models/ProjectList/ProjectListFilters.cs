@@ -23,7 +23,7 @@ public class ProjectListFilters
    public List<string> AvailableRegions { get; set; } = new();
 
    public List<string> AvailableLocalAuthorities { get; set; } = new();
-   public List<string> AvailableAdvisoryBoardDates { get; set; } = new();
+   public List<string> AvailableProposedDecisionDates { get; set; } = new();
 
    [BindProperty]
    public string? Title { get; set; }
@@ -41,14 +41,14 @@ public class ProjectListFilters
    public string[] SelectedLocalAuthorities { get; set; } = Array.Empty<string>();
 
    [BindProperty]
-   public string[] SelectedAdvisoryBoardDates { get; set; } = Array.Empty<string>();
+   public string[] SelectedProposedDecisionDates { get; set; } = Array.Empty<string>();
 
    public bool IsVisible => string.IsNullOrWhiteSpace(Title) is false ||
                             SelectedStatuses.Length > 0 ||
                             SelectedOfficers.Length > 0 ||
                             SelectedRegions.Length > 0 ||
                               SelectedLocalAuthorities.Length > 0 ||
-                              SelectedAdvisoryBoardDates.Length > 0;
+                              SelectedProposedDecisionDates.Length > 0;
 
    public ProjectListFilters PersistUsing(IDictionary<string, object?> store)
    {
@@ -59,7 +59,7 @@ public class ProjectListFilters
       SelectedOfficers = Get(FilterOfficers);
       SelectedRegions = Get(FilterRegions);
       SelectedLocalAuthorities = Get(FilterLocalAuthorities);
-      SelectedAdvisoryBoardDates = Get(FilterAdvisoryBoardDates);
+      SelectedProposedDecisionDates = Get(FilterAdvisoryBoardDates);
 
       return this;
    }
@@ -77,7 +77,7 @@ public class ProjectListFilters
          SelectedOfficers = Array.Empty<string>();
          SelectedRegions = Array.Empty<string>();
          SelectedLocalAuthorities = Array.Empty<string>();
-         SelectedAdvisoryBoardDates = Array.Empty<string>();
+         SelectedProposedDecisionDates = Array.Empty<string>();
 
          return;
       }
@@ -88,7 +88,7 @@ public class ProjectListFilters
          SelectedOfficers = GetAndRemove(FilterOfficers, GetFromQuery(nameof(SelectedOfficers)), true);
          SelectedRegions = GetAndRemove(FilterRegions, GetFromQuery(nameof(SelectedRegions)), true);
          SelectedLocalAuthorities = GetAndRemove(FilterLocalAuthorities, GetFromQuery(nameof(SelectedLocalAuthorities)), true);
-         SelectedAdvisoryBoardDates = GetAndRemove(FilterAdvisoryBoardDates, GetFromQuery(nameof(SelectedAdvisoryBoardDates)), true);
+         SelectedProposedDecisionDates = GetAndRemove(FilterAdvisoryBoardDates, GetFromQuery(nameof(SelectedProposedDecisionDates)), true);
 
          return;
       }
@@ -98,7 +98,7 @@ public class ProjectListFilters
                                  query.ContainsKey(nameof(SelectedOfficers)) ||
                                  query.ContainsKey(nameof(SelectedRegions)) ||
                                  query.ContainsKey(nameof(SelectedLocalAuthorities)) ||
-                                 query.ContainsKey(nameof(SelectedAdvisoryBoardDates));
+                                 query.ContainsKey(nameof(SelectedProposedDecisionDates));
 
       if (activeFilterChanges)
       {
@@ -107,7 +107,7 @@ public class ProjectListFilters
          SelectedOfficers = Cache(FilterOfficers, GetFromQuery(nameof(SelectedOfficers)));
          SelectedRegions = Cache(FilterRegions, GetFromQuery(nameof(SelectedRegions)));
          SelectedLocalAuthorities = Cache(FilterLocalAuthorities, GetFromQuery(nameof(SelectedLocalAuthorities)));
-         SelectedAdvisoryBoardDates = Cache(FilterAdvisoryBoardDates, GetFromQuery(nameof(SelectedAdvisoryBoardDates)));
+         SelectedProposedDecisionDates = Cache(FilterAdvisoryBoardDates, GetFromQuery(nameof(SelectedProposedDecisionDates)));
       }
       else
       {
@@ -116,7 +116,7 @@ public class ProjectListFilters
          SelectedOfficers = Get(FilterOfficers, true);
          SelectedRegions = Get(FilterRegions, true);
          SelectedLocalAuthorities = Get(FilterLocalAuthorities, true);
-         SelectedAdvisoryBoardDates = Get(FilterAdvisoryBoardDates, true);
+         SelectedProposedDecisionDates = Get(FilterAdvisoryBoardDates, true);
       }
 
       string[] GetFromQuery(string key)

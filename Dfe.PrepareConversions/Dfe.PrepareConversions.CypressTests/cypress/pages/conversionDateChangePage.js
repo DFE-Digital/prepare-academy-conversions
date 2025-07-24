@@ -38,7 +38,7 @@ export class ConversionDateChangePage {
     }
 
     updateAdvisoryBoardDate() {
-        cy.get('[data-test="change-advisory-board-date"]').click();
+        cy.get('[data-test="change-proposed-decision-date"]').click();
         cy.get('#advisory-board-date-day').clear().type('12');
         cy.get('#advisory-board-date-month').clear().type('12');
         cy.get('#advisory-board-date-year').clear().type('2023');
@@ -48,12 +48,12 @@ export class ConversionDateChangePage {
     }
 
     checkAdvisoryBoardDateChange() {
-        cy.get('#advisory-board-date').should('contain', '12 December 2023');
+        cy.get('#proposed-decision-date').should('contain', '12 December 2023');
 
         return this;
     }
     updatePreviousAdvisoryBoardDate() {
-        cy.get('[data-test="change-previous-advisory-board"]').click();
+        cy.get('[data-test="change-previously-considered-on"]').click();
         cy.get('#previous-advisory-board-day').clear().type('12');
         cy.get('#previous-advisory-board-month').clear().type('12');
         cy.get('#previous-advisory-board-year').clear().type('2023');
@@ -63,7 +63,7 @@ export class ConversionDateChangePage {
 
 
     checkPreviousAdvisoryBoardDateChange() {
-        cy.get('#previous-advisory-board').should('contain', '12 December 2023');
+        cy.get('#previously-considered-on').should('contain', '12 December 2023');
         return this;
     }
     updateProposedConversionDate() {

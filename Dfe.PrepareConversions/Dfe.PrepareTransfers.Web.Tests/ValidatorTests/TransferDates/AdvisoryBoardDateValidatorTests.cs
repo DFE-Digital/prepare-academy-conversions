@@ -6,6 +6,7 @@ using Dfe.PrepareTransfers.Web.Models.TransferDates;
 using Dfe.PrepareTransfers.Helpers;
 using Dfe.PrepareTransfers.Web.Transfers.Validators.TransferDates;
 using Xunit;
+using System.Threading.Tasks;
 
 namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
 {
@@ -18,17 +19,17 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
         [Fact]
         public void ShouldHaveChildValidators()
         {
-            _validator.ShouldHaveChildValidator(a => a.AdvisoryBoardDate, typeof(DateValidator));
+            _validator.ShouldHaveChildValidator(a => a.ProposedDecisionDate, typeof(DateValidator));
         }
 
         [Fact]
-        public async void GivenAdvisoryBoardDateGreaterThanTargetDate_ShouldGiveError()
+        public async Task GivenProposedDecisionDateGreaterThanTargetDate_ShouldGiveError()
         {
             var advisoryBoardDate = DateTime.Now.AddMonths(2);
             var targetDate = DateTime.Now.AddMonths(1);
             var vm = new AdvisoryBoardViewModel()
             {
-                AdvisoryBoardDate = new DateViewModel
+                ProposedDecisionDate = new DateViewModel
                 {
                     Date = new DateInputViewModel
                     {
@@ -49,7 +50,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
             
             var result = await _validator.ValidateAsync(validationContext);
             Assert.Single(result.Errors);
-            Assert.Equal("The Advisory board date must be on or before the target date for the transfer", result.ToString());
+            Assert.Equal("The proposed decision date must be on or before the target date for the transfer", result.ToString());
         }
         
         [Fact]
@@ -59,7 +60,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
             var targetDate = DateTime.Now.AddMonths(2);
             var vm = new AdvisoryBoardViewModel
             {
-                AdvisoryBoardDate = new DateViewModel
+                ProposedDecisionDate = new DateViewModel
                 {
                     Date = new DateInputViewModel
                     {
@@ -91,7 +92,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
             var advisoryBoardDate = DateTime.Today;
             var vm = new AdvisoryBoardViewModel()
             {
-                AdvisoryBoardDate = new DateViewModel
+                ProposedDecisionDate = new DateViewModel
                 {
                     Date = new DateInputViewModel
                     {
@@ -120,7 +121,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
             var targetDate = DateTime.Now;
             var vm = new AdvisoryBoardViewModel
             {
-                AdvisoryBoardDate = new DateViewModel
+                ProposedDecisionDate = new DateViewModel
                 {
                     Date = new DateInputViewModel(),
                     UnknownDate = true

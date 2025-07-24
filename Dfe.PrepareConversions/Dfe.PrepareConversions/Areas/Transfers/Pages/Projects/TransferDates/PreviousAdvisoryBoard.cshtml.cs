@@ -1,3 +1,4 @@
+using Dfe.PrepareConversions.Areas.Transfers.Validators.TransferDates;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Web.Models;
 using Dfe.PrepareTransfers.Web.Models;
@@ -15,7 +16,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
     {
         private readonly IProjects _projectsRepository;
 
-        [BindProperty] public AdvisoryBoardViewModel AdvisoryBoardViewModel { get; set; }
+        [BindProperty] public PreviouslyConsideredViewModel PreviouslyConsideredViewModel { get; set; }
         public string TrustName { get; set; }
 
         public PreviousAdvisoryBoard(IProjects projectsRepository)
@@ -29,11 +30,11 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
 
             var projectResult = project.Result;
             TrustName = projectResult.OutgoingTrustName;
-            AdvisoryBoardViewModel = new AdvisoryBoardViewModel
+            PreviouslyConsideredViewModel = new PreviouslyConsideredViewModel
             {
-                AdvisoryBoardDate = new DateViewModel
+               PreviouslyConsideredDate = new DateViewModel
                 {
-                    Date = DateViewModel.SplitDateIntoDayMonthYear(projectResult.Dates.PreviousAdvisoryBoardDate),
+                    Date = DateViewModel.SplitDateIntoDayMonthYear(projectResult.Dates.PreviouslyConsideredDate),
                     UnknownDate = projectResult.Dates.HasHtbDate is false
                 }
             };
@@ -52,23 +53,23 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
 
             var projectResult = project.Result;
 
-            var validationContext = new ValidationContext<AdvisoryBoardViewModel>(AdvisoryBoardViewModel)
+            var validationContext = new ValidationContext<PreviouslyConsideredViewModel>(PreviouslyConsideredViewModel)
             {
                 RootContextData =
                 {
                     ["TargetDate"] = projectResult.Dates.Target
                 }
             };
-            var validator = new AdvisoryBoardDateValidator();
+            var validator = new PreviouslyConsideredDateValidator();
             var validationResult = await validator.ValidateAsync(validationContext);
 
             if (!validationResult.IsValid)
             {
-                validationResult.AddToModelState(ModelState, nameof(AdvisoryBoardViewModel));
+                validationResult.AddToModelState(ModelState, nameof(PreviouslyConsideredViewModel));
                 return Page();
             }
 
-            projectResult.Dates.PreviousAdvisoryBoardDate = AdvisoryBoardViewModel.AdvisoryBoardDate.DateInputAsString();
+            projectResult.Dates.PreviouslyConsideredDate = PreviouslyConsideredViewModel.PreviouslyConsideredDate.DateInputAsString();
 
             await _projectsRepository.UpdateDates(projectResult);
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Web.Models;
@@ -47,8 +48,8 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.TransferDates
 
                 Assert.IsType<PageResult>(response);
                 Assert.Equal(FoundProjectFromRepo.Urn, _subject.Urn);
-                Assert.Equal(FoundProjectFromRepo.Dates.Htb, _subject.AdvisoryBoardViewModel.AdvisoryBoardDate.DateInputAsString());
-                Assert.Equal(FoundProjectFromRepo.Dates.HasHtbDate, !_subject.AdvisoryBoardViewModel.AdvisoryBoardDate.UnknownDate);
+                Assert.Equal(FoundProjectFromRepo.Dates.Htb, _subject.AdvisoryBoardViewModel.ProposedDecisionDate.DateInputAsString());
+                Assert.Equal(FoundProjectFromRepo.Dates.HasHtbDate, !_subject.AdvisoryBoardViewModel.ProposedDecisionDate.UnknownDate);
             }
         }
 
@@ -58,7 +59,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.TransferDates
             {
                 _subject.AdvisoryBoardViewModel = new AdvisoryBoardViewModel
                 {
-                    AdvisoryBoardDate = new DateViewModel
+                    ProposedDecisionDate = new DateViewModel
                     {
                         Date = new DateInputViewModel { Day = "15", Month = "10", Year = (System.DateTime.Now.Year + 1).ToString() },
                         UnknownDate = false
@@ -77,7 +78,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.TransferDates
             [Fact]
             public async void GivenErrorOnModel_ShouldReturnPage()
             {
-                _subject.ModelState.AddModelError(nameof(_subject.AdvisoryBoardViewModel.AdvisoryBoardDate.Date),
+                _subject.ModelState.AddModelError(nameof(_subject.AdvisoryBoardViewModel.ProposedDecisionDate.Date),
                     "error");
                 var result = await _subject.OnPostAsync();
 
@@ -94,9 +95,9 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.TransferDates
 
                 ProjectRepository.Verify(r =>
                         r.UpdateDates(It.Is<Data.Models.Project>(project =>
-                            project.Dates.Htb == _subject.AdvisoryBoardViewModel.AdvisoryBoardDate.DateInputAsString()
+                            project.Dates.Htb == _subject.AdvisoryBoardViewModel.ProposedDecisionDate.DateInputAsString()
                             && project.Dates.HasHtbDate ==
-                            !_subject.AdvisoryBoardViewModel.AdvisoryBoardDate.UnknownDate)),
+                            !_subject.AdvisoryBoardViewModel.ProposedDecisionDate.UnknownDate)),
                     Times.Once);
             }
 
@@ -127,7 +128,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.TransferDates
             }
             
             [Fact]
-            public async void GivenAdvisoryBoardDateGreaterThanTargetDate_SetsErrorOnViewModel()
+            public async Task GivenProposedDecisionDateGreaterThanTargetDate_SetsErrorOnViewModel()
             {
                 ProjectRepository.Setup(r => r.GetByUrn(It.IsAny<string>()))
                     .ReturnsAsync(new RepositoryResult<Project>
@@ -145,7 +146,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.TransferDates
                 _subject.AdvisoryBoardViewModel = new AdvisoryBoardViewModel
                 {
                     Urn = "0002",
-                    AdvisoryBoardDate = new DateViewModel
+                    ProposedDecisionDate = new DateViewModel
                     {
                         Date = new DateInputViewModel
                         {
@@ -160,7 +161,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.TransferDates
                 var result = await _subject.OnPostAsync();
                 
                 Assert.IsType<PageResult>(result);
-                Assert.Single(_subject.ModelState[$"AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Day"].Errors);
+                Assert.Single(_subject.ModelState[$"AdvisoryBoardViewModel.ProposedDecisionDate.Date.Day"].Errors);
             }
         }
     }

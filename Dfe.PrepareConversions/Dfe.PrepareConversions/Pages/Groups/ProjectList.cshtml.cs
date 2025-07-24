@@ -43,7 +43,7 @@ public class ProjectListModel : PaginatedPageModel
       Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
       this.PagePath = "/groups/project-list";
       ApiResponse<ApiV2Wrapper<IEnumerable<ProjectGroup>>> response =
-         await _repository.GetProjectGroups(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedAdvisoryBoardDates);
+         await _repository.GetProjectGroups(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedProposedDecisionDates);
 
       Paging = response.Body?.Paging;
       Projects = response.Body?.Data.Select(ProjectListHelper.Build).ToList();
@@ -59,7 +59,7 @@ public class ProjectListModel : PaginatedPageModel
             .ToList();
          Filters.AvailableRegions = filterParametersResponse.Body.Regions;
          Filters.AvailableLocalAuthorities = filterParametersResponse.Body.LocalAuthorities;
-         Filters.AvailableAdvisoryBoardDates = filterParametersResponse.Body.AdvisoryBoardDates;
+         Filters.AvailableProposedDecisionDates = filterParametersResponse.Body.AdvisoryBoardDates;
       }
    }
 
