@@ -23,8 +23,9 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList
 
       private static void VerifyAdvisoryBoardError(IElement element, int projectId)
       {
-         element.TextContent.Should().Be("Set an Advisory board date before you generate your project template");
-         element.Id.Should().Be($"/task-list/{projectId}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FIndex&fragment=advisory-board-date-error-link");
+         element.TextContent.Should().Be("Set a proposed decision date before you generate your project template");
+         // TODO added by during rebase to check whether the query param advisory board is correct, external dependency? Looks like an error summary extra, so change it
+         element.Id.Should().Be($"/task-list/{projectId}/confirm-school-trust-information-project-dates/proposed-decision-date?return=%2FTaskList%2FIndex&fragment=advisory-board-date-error-link");
       }
 
       private static void VerifyPsedError(IElement element, int projectId)
