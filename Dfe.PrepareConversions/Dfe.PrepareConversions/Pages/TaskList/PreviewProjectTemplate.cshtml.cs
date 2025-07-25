@@ -68,8 +68,7 @@ public class PreviewHtbTemplateModel : BaseAcademyConversionProjectPageModel
       if (!hasAdvisoryBoardDate)
       {  
          // this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
-         // TODO added by during rebase to check whether the query param advisory board is correct, external dependency? Looks like an error summary extra, so change it
-         _errorService.AddError($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-decision-date?return={returnPage}&fragment=advisory-board-date",
+         _errorService.AddError($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-decision-date?return={returnPage}&fragment=proposed-decision-date",
             "Set a proposed decision date before you generate your project template");
 
          ShowGenerateHtbTemplateError = true;

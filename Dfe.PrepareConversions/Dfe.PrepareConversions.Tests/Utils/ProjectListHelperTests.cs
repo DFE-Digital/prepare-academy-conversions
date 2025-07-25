@@ -9,43 +9,28 @@ using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Utils;
 
-public class ProjectListHelperTests : BaseIntegrationTests
+public class ProjectListHelperTests(IntegrationTestingWebApplicationFactory factory) : BaseIntegrationTests(factory)
 {
    private const string green = nameof(green);
    private const string yellow = nameof(yellow);
    private const string orange = nameof(orange);
    private const string red = nameof(red);
 
-   public ProjectListHelperTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
+   [Theory]
+   [InlineData("Approved", green)]
+   [InlineData("Deferred", orange)]
+   [InlineData("Declined", red)]
+   public void MapProjectString_Approved_ReturnsCorrectValues(string inputStatus, string expectedColour)
    {
+      ProjectStatus actual = ProjectListHelper.MapProjectStatus(inputStatus);
+      Assert.Equivalent(new ProjectStatus(inputStatus, expectedColour), actual);
    }
-
-   [Fact]
-   public void MapProjectString_Approved_ReturnsCorrectValues()
-   {
-      ProjectStatus actual = ProjectListHelper.MapProjectStatus("Approved");
-      Assert.Equivalent(new ProjectStatus("Approved", green), actual);
-   }
-
-   [Fact]
-   public void MapProjectString_Deferred_ReturnsCorrectValues()
-   {
-      ProjectStatus actual = ProjectListHelper.MapProjectStatus("Deferred");
-      Assert.Equivalent(new ProjectStatus("Deferred", orange), actual);
-   }
-
-   [Fact]
-   public void MapProjectString_Declined_ReturnsCorrectValues()
-   {
-      ProjectStatus actual = ProjectListHelper.MapProjectStatus("Declined");
-      Assert.Equivalent(new ProjectStatus("Declined", red), actual);
-   }
-
+ 
    [Fact]
    public void MapProjectString_OtherValue_ReturnsCorrectValues()
    {
       ProjectStatus actual = ProjectListHelper.MapProjectStatus("Hello!");
-      Assert.Equivalent(new ProjectStatus("Pre advisory board", yellow), actual);
+      Assert.Equivalent(new ProjectStatus("PRE DECISION", yellow), actual);
    }
 
    [Theory]

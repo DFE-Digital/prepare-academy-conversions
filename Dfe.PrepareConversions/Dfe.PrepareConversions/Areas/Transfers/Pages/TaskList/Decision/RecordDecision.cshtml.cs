@@ -81,15 +81,11 @@ public class RecordDecision : DecisionBaseModel
          var hasIncomingTrustReferenceNumber = _project.IncomingTrustReferenceNumber != null && _project.IsFormAMat == true;
          var returnPage = WebUtility.UrlEncode(Links.Decision.RecordDecision.PageName);
 
+            // @* // TODO added by during rebase as we may as well rename this to be thorough *@
          if (!hasAdvisoryBoardDate)
          {
-            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/advisory-board-date?returns={returnPage}",
-               "You must enter an advisory board date before you can record a decision.");
-         }
-         else if (advisoryBoardDate > DateTime.Now)
-         {
-            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/advisory-board-date?returns={returnPage}",
-               "The advisory board date must be today or in the past.");
+            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/proposed-decision-date?returns={returnPage}",
+            "You must enter a proposed decision date before you can record a decision.");
          }
 
          if (!hasProposedTransferDate)
