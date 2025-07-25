@@ -23,7 +23,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
          TrustName = projectResult.OutgoingTrustName;
          AdvisoryBoardViewModel = new AdvisoryBoardViewModel
          {
-            ProposedDecisionDate = new DateViewModel
+            AdvisoryBoardDate = new DateViewModel
             {
                Date = DateViewModel.SplitDateIntoDayMonthYear(projectResult.Dates.Htb),
                UnknownDate = projectResult.Dates.HasHtbDate is false
@@ -60,8 +60,8 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
             return Page();
          }
 
-         projectResult.Dates.Htb = AdvisoryBoardViewModel.ProposedDecisionDate.DateInputAsString();
-         projectResult.Dates.HasHtbDate = !AdvisoryBoardViewModel.ProposedDecisionDate.UnknownDate;
+         projectResult.Dates.Htb = AdvisoryBoardViewModel.AdvisoryBoardDate.DateInputAsString();
+         projectResult.Dates.HasHtbDate = !AdvisoryBoardViewModel.AdvisoryBoardDate.UnknownDate;
 
          await projectsRepository.UpdateDates(projectResult);
 

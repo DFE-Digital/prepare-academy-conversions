@@ -31,7 +31,7 @@ public class TargetDateValidator : AbstractValidator<TargetDateViewModel>
                    (string)advisoryBoardDate, dateVm.TargetDate.DateInputAsString()))
             {
                 context.AddFailure(
-                    "The target transfer date must be on or after the Proposed decision");
+                    "The target transfer date must be on or after the Advisory board date");
             }
          });
    }

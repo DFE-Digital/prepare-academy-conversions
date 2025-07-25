@@ -1,10 +1,9 @@
 /* eslint-env node */
 
-const { defineConfig } = require('Cypress');
+import { defineConfig } from 'cypress';
 import { generateZapReport } from './cypress/plugins/generateZapReport.js';
 
 export default defineConfig({
-  defaultCommandTimeout: 10000,
   reporter: 'cypress-multi-reporters',
   reporterOptions: {
     reporterEnabled: 'mochawesome',

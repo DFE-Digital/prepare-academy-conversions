@@ -38,7 +38,7 @@ public class ProjectListModel : PaginatedPageModel
       Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
       this.PagePath = "/FormAMat/ProjectList";
       ApiResponse<ApiV2Wrapper<IEnumerable<FormAMatProject>>> response =
-         await _repository.GetFormAMatProjects(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedProposedDecisionDates);
+         await _repository.GetFormAMatProjects(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedAdvisoryBoardDates);
 
       Paging = response.Body?.Paging;
       Projects = response.Body?.Data.Select(ProjectListHelper.Build).ToList();
@@ -54,7 +54,7 @@ public class ProjectListModel : PaginatedPageModel
             .ToList();
          Filters.AvailableRegions = filterParametersResponse.Body.Regions;
          Filters.AvailableLocalAuthorities = filterParametersResponse.Body.LocalAuthorities;
-         Filters.AvailableProposedDecisionDates = filterParametersResponse.Body.AdvisoryBoardDates;
+         Filters.AvailableAdvisoryBoardDates = filterParametersResponse.Body.AdvisoryBoardDates;
       }
    }
 

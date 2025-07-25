@@ -35,7 +35,7 @@ public class AdvisoryBoardDateModel : BaseAcademyConversionProjectPageModel, IDa
 
    string IDateValidationMessageProvider.AllMissing(string displayName)
    {
-      return $"Enter the proposed decision date";
+      return $"Enter the advisory board date";
    }
 
    public override async Task<IActionResult> OnGetAsync(int id)
