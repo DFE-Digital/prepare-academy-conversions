@@ -10,10 +10,10 @@ public class AdvisoryBoardDateValidator : AbstractValidator<AdvisoryBoardViewMod
    {
       ClassLevelCascadeMode = CascadeMode.Stop;
 
-      RuleFor(x => x.ProposedDecisionDate)
-         .SetValidator(new DateValidator { ErrorDisplayName = "proposed decision date" });
+      RuleFor(x => x.AdvisoryBoardDate)
+         .SetValidator(new DateValidator { ErrorDisplayName = "Advisory board date" });
 
-      RuleFor(x => x.ProposedDecisionDate.Date.Day)
+      RuleFor(x => x.AdvisoryBoardDate.Date.Day)
          .Custom((day, context) =>
          {
             if (!context.RootContextData.TryGetValue("TargetDate", out var targetDate))
@@ -27,12 +27,12 @@ public class AdvisoryBoardDateValidator : AbstractValidator<AdvisoryBoardViewMod
                 return;
             }
 
-            if (!dateVm.ProposedDecisionDate.UnknownDate && DatesHelper.SourceDateStringIsGreaterThanToTargetDateString(
-                    dateVm.ProposedDecisionDate.DateInputAsString(),
+            if (!dateVm.AdvisoryBoardDate.UnknownDate && DatesHelper.SourceDateStringIsGreaterThanToTargetDateString(
+                    dateVm.AdvisoryBoardDate.DateInputAsString(),
                     (string)targetDate))
             {
                 context.AddFailure(
-                    "The proposed decision date must be on or before the target date for the transfer");
+                    "The Advisory board date must be on or before the target date for the transfer");
             }
          });
    }

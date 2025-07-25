@@ -35,7 +35,7 @@ public class PreviousAdvisoryBoardDateModel : BaseAcademyConversionProjectPageMo
 
    string IDateValidationMessageProvider.AllMissing(string displayName)
    {
-      return $"Enter the Previously considered date";
+      return $"Enter the previous advisory board";
    }
 
    public override async Task<IActionResult> OnGetAsync(int id)

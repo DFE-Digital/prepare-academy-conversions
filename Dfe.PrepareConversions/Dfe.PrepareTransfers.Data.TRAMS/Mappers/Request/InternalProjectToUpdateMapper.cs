@@ -88,7 +88,7 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Mappers.Request
             {
                 HtbDate = input.Dates.HasHtbDate != false && input.Dates.Htb != null ? DateTime.ParseExact(input.Dates.Htb, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("u") : null,
                 HasHtbDate = input.Dates.HasHtbDate,
-                PreviousAdvisoryBoardDate = input.Dates.PreviouslyConsideredDate != null ? DateTime.ParseExact(input.Dates.PreviouslyConsideredDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("u") : null,
+                PreviousAdvisoryBoardDate = input.Dates.PreviousAdvisoryBoardDate != null ? DateTime.ParseExact(input.Dates.PreviousAdvisoryBoardDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("u") : null,
                 TargetDateForTransfer = input.Dates.HasTargetDateForTransfer != false && input.Dates.Target != null ? DateTime.ParseExact(input.Dates.Target, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("u") : null,
                 HasTargetDateForTransfer = input.Dates.HasTargetDateForTransfer,
                 IsCompleted = input.Dates.IsCompleted
@@ -100,7 +100,7 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Mappers.Request
             {
                 HtbDate = input.Dates.HasHtbDate != false && input.Dates.Htb != null ? DateTime.ParseExact(input.Dates.Htb, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("u") : null,
                 HasHtbDate = input.Dates.HasHtbDate,
-                PreviousAdvisoryBoardDate = input.Dates.PreviouslyConsideredDate != null ? DateTime.ParseExact(input.Dates.PreviouslyConsideredDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("u") : null,
+                PreviousAdvisoryBoardDate = input.Dates.PreviousAdvisoryBoardDate != null ? DateTime.ParseExact(input.Dates.PreviousAdvisoryBoardDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("u") : null,
                 TargetDateForTransfer = input.Dates.HasTargetDateForTransfer != false && input.Dates.Target != null ? DateTime.ParseExact(input.Dates.Target, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("u") : null,
                 HasTargetDateForTransfer = input.Dates.HasTargetDateForTransfer,
                 IsCompleted = input.Dates.IsCompleted

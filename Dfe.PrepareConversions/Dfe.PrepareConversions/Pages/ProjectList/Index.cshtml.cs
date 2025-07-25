@@ -40,7 +40,7 @@ public class IndexModel : PaginatedPageModel
       Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
 
       ApiResponse<ApiV2Wrapper<IEnumerable<AcademyConversionProject>>> response =
-         await _repository.GetAllProjectsV2(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedProposedDecisionDates);
+         await _repository.GetAllProjectsV2(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedAdvisoryBoardDates);
 
       Paging = response.Body?.Paging;
       Projects = response.Body?.Data.Select(ProjectListHelper.Build).ToList();
@@ -56,13 +56,13 @@ public class IndexModel : PaginatedPageModel
             .ToList();
          Filters.AvailableRegions = filterParametersResponse.Body.Regions;
          Filters.AvailableLocalAuthorities = filterParametersResponse.Body.LocalAuthorities;
-         Filters.AvailableProposedDecisionDates = filterParametersResponse.Body.AdvisoryBoardDates;
+         Filters.AvailableAdvisoryBoardDates = filterParametersResponse.Body.AdvisoryBoardDates;
       }
    }
    public async Task<FileStreamResult> OnGetDownload()
    {
       Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
-      ApiResponse<FileStreamResult> response = await _repository.DownloadProjectExport(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedProposedDecisionDates);
+      ApiResponse<FileStreamResult> response = await _repository.DownloadProjectExport(CurrentPage, PageSize, Filters.Title, Filters.SelectedStatuses, Filters.SelectedOfficers, Filters.SelectedRegions, Filters.SelectedLocalAuthorities, Filters.SelectedAdvisoryBoardDates);
 
       if (response.Success)
       {

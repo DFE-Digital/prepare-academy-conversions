@@ -6,7 +6,7 @@ class DatesPage {
 
     cy.get('[data-test="ab-date"]').click()
 
-    cy.get('h1').should('contain.text', 'Proposed decision date')
+    cy.get('h1').should('contain.text', 'Advisory board date')
 
 
     cy.get('[data-test="day"]').clear()

@@ -5,7 +5,7 @@
 <dl class="govuk-summary-list">
    <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
-            Proposed decision date
+         Advisory board date
       </dt>
       <dd class="govuk-summary-list__value">
          <datesummary value="@Model.AdvisoryBoardDate" has-date="@Model.HasAdvisoryBoardDate"></datesummary>
@@ -15,14 +15,14 @@
          <dd class="govuk-summary-list__actions">
             <a class="govuk-link" asp-page="/Projects/TransferDates/AdvisoryBoard" data-test="ab-date"
                asp-route-urn="@Model.Urn" asp-route-returnToPreview="@(Model.ReturnToPreview ? "true" : null)">
-                    Change<span class="govuk-visually-hidden"> Proposed decision date</span>
+               Change<span class="govuk-visually-hidden"> Advisory board date</span>
             </a>
          </dd>
       }
    </div>
    <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
-            Previously considered date
+         Previous advisory board
       </dt>
       <dd class="govuk-summary-list__value">
          <datesummary value="@Model.PreviousAdvisoryBoardDate"></datesummary>
@@ -32,7 +32,7 @@
          <dd class="govuk-summary-list__actions">
             <a class="govuk-link" asp-page="/Projects/TransferDates/PreviousAdvisoryBoard" data-test="previous-ab-date"
                asp-route-urn="@Model.Urn" asp-route-returnToPreview="@(Model.ReturnToPreview ? "true" : null)">
-                    Change<span class="govuk-visually-hidden"> Previously considered date</span>
+               Change<span class="govuk-visually-hidden"> Previous advisory board</span>
             </a>
          </dd>
       }

@@ -17,7 +17,7 @@ namespace Dfe.PrepareTransfers.Web.Services.DocumentGenerators
             new[] { new TextElement { Value = "Recommendation", Bold = true }, new TextElement { Value = projectTemplateModel.Recommendation } },
             new[] { new TextElement { Value = "Author", Bold = true }, new TextElement { Value = projectTemplateModel.Author }},
             new[] { new TextElement { Value = "Project name", Bold = true }, new TextElement { Value = projectTemplateModel.ProjectName }},
-            new[] { new TextElement { Value = "Proposed decision date", Bold = true }, new TextElement { Value = projectTemplateModel.DateOfHtb }},
+            new[] { new TextElement { Value = "Date of advisory board", Bold = true }, new TextElement { Value = projectTemplateModel.DateOfHtb }},
             new[] { new TextElement { Value = "Proposed academy transfer date", Bold = true }, new TextElement { Value = projectTemplateModel.DateOfProposedTransfer}}
          });
          });

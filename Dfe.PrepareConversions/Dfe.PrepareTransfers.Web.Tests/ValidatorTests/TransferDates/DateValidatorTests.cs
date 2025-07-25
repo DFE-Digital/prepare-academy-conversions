@@ -15,7 +15,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
         {
             _validator = new DateValidator
             {
-                ErrorDisplayName = "Proposed decision date"
+                ErrorDisplayName = "Advisory board date"
             };
         }
         
@@ -38,7 +38,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
             var result = await _validator.TestValidateAsync(dateVm);
 
             result.ShouldHaveValidationErrorFor(a => a.Date)
-                .WithErrorMessage("Enter Proposed decision date");
+                .WithErrorMessage("Enter Advisory board date");
         }
         
         [Fact]
@@ -58,7 +58,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
             var result = await _validator.TestValidateAsync(dateVm);
 
             result.ShouldHaveValidationErrorFor(a => a.Date)
-                .WithErrorMessage("Enter Proposed decision date");
+                .WithErrorMessage("Enter Advisory board date");
         }
 
         [Fact]
@@ -77,13 +77,13 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
             
             var result = await _validator.TestValidateAsync(dateVm);
 
-            result.ShouldHaveValidationErrorFor(viewModel => viewModel.Date).WithoutErrorMessage("The Proposed decision date must include a day");
+            result.ShouldHaveValidationErrorFor(viewModel => viewModel.Date).WithoutErrorMessage("The Advisory board date must include a day");
         }
 
         [Theory]
-        [InlineData("", "1", "2022", "The Proposed decision date must include a day", "Date.Day")]
-        [InlineData("1", "", "2022", "The Proposed decision date must include a month", "Date.Month")]
-        [InlineData("1", "1", "", "The Proposed decision date must include a year", "Date.Year")]
+        [InlineData("", "1", "2022", "The Advisory board date must include a day", "Date.Day")]
+        [InlineData("1", "", "2022", "The Advisory board date must include a month", "Date.Month")]
+        [InlineData("1", "1", "", "The Advisory board date must include a year", "Date.Year")]
         public async Task WhenFieldIsEmptyAndUnknownDateIsFalse_HasMissingFieldError(string day, string month, string year,
             string expectedErrorMessage, string expectedPropertyName)
         {
