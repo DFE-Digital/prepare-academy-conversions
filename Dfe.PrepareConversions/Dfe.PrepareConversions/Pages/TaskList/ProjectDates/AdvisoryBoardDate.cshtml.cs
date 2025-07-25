@@ -21,7 +21,7 @@ public class AdvisoryBoardDateModel : BaseAcademyConversionProjectPageModel, IDa
       _errorService = errorService;
    }
 
-   [BindProperty(Name = "advisory-board-date", BinderType = typeof(DateInputModelBinder))]
+   [BindProperty(Name = "proposed-decision-date", BinderType = typeof(DateInputModelBinder))]
    //[DateValidation(DateRangeValidationService.DateRange.PastOrToday)]
    [Required]
    public DateTime? AdvisoryBoardDate { get; set; }
@@ -35,7 +35,7 @@ public class AdvisoryBoardDateModel : BaseAcademyConversionProjectPageModel, IDa
 
    string IDateValidationMessageProvider.AllMissing(string displayName)
    {
-      return $"Enter the advisory board date";
+      return $"Enter the proposed decision date";
    }
 
    public override async Task<IActionResult> OnGetAsync(int id)

@@ -36,7 +36,7 @@ public class ProjectListIntegrationTests(IntegrationTestingWebApplicationFactory
          Document.QuerySelector($"#urn-{i}")?.TextContent.Should().Contain(project.Urn.ToString());
          Document.QuerySelector($"#application-to-join-trust-{i}")?.TextContent.Should().Contain(project.NameOfTrust);
          Document.QuerySelector($"#local-authority-{i}")?.TextContent.Should().Contain(project.LocalAuthority);
-         Document.QuerySelector($"#Advisory-Board-date-{i}")?.TextContent.Should().Contain(project.HeadTeacherBoardDate.ToDateString());
+         Document.QuerySelector($"#proposed-decision-date-{i}")?.TextContent.Should().Contain(project.HeadTeacherBoardDate.ToDateString());
          Document.QuerySelector($"#opening-date-{i}")?.TextContent.Should().Contain(project.ProposedConversionDate.ToDateString());
          Document.QuerySelector($"#application-received-date-{i}")?.TextContent.Should().Contain(project.CreatedOn.ToDateString());
          Document.QuerySelector($"#delivery-officer-{i}")?.TextContent.Should().Contain(project.AssignedUser.FullName);
@@ -66,7 +66,7 @@ public class ProjectListIntegrationTests(IntegrationTestingWebApplicationFactory
       await OpenAndConfirmPathAsync("/project-list");
 
       Document.QuerySelector<IHtmlElement>($"#project-status-{projects.First().Id}")?.Text().Should()
-         .Be("PRE ADVISORY BOARD");
+         .Be("PRE DECISION");
    }
 
    [Fact]

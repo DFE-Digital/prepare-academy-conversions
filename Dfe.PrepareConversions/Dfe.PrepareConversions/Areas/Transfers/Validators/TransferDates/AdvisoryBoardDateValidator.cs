@@ -11,7 +11,7 @@ public class AdvisoryBoardDateValidator : AbstractValidator<AdvisoryBoardViewMod
       ClassLevelCascadeMode = CascadeMode.Stop;
 
       RuleFor(x => x.AdvisoryBoardDate)
-         .SetValidator(new DateValidator { ErrorDisplayName = "Advisory board date" });
+         .SetValidator(new DateValidator { ErrorDisplayName = "proposed decision date" });
 
       RuleFor(x => x.AdvisoryBoardDate.Date.Day)
          .Custom((day, context) =>
@@ -32,7 +32,7 @@ public class AdvisoryBoardDateValidator : AbstractValidator<AdvisoryBoardViewMod
                     (string)targetDate))
             {
                 context.AddFailure(
-                    "The Advisory board date must be on or before the target date for the transfer");
+                    "The proposed decision date must be on or before the target date for the transfer");
             }
          });
    }

@@ -1,4 +1,4 @@
-@page "/transfers/project/{urn}/transfer-dates/advisory-board-date"
+@page "/transfers/project/{urn}/transfer-dates/proposed-decision-date"
 @using Dfe.PrepareTransfers.Web.ExtensionMethods;
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers.TagHelpers
@@ -7,10 +7,9 @@
 @model Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates.AdvisoryBoard
 @inject IConfiguration Configuration
 
-
 @{
     Layout = "_Layout";
-    ViewBag.Title = ViewData.ModelState.BuildPageTitle("Advisory board date");
+    ViewBag.Title = ViewData.ModelState.BuildPageTitle("Proposed decision date");
     var formClasses = ViewData.ModelState.GetFormGroupErrorStyle();
     var dayInputError = ViewData.ModelState.GetFormFieldErrorStyle("AdvisoryBoardViewModel.AdvisoryBoardDate.Date", "AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Day");
     var monthInputError = ViewData.ModelState.GetFormFieldErrorStyle("AdvisoryBoardViewModel.AdvisoryBoardDate.Date", "AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Month");
@@ -34,10 +33,10 @@
                 <span class="govuk-caption-l">
                     @Model.IncomingTrustName?.ToTitleCase()
                 </span>
-                Advisory board date
+                Proposed decision date
             </h1>
         </legend>       
-        <p class="govuk-body">You can <a class="govuk-link" href="@advisoryBoardScheduleUrl" target="_blank" rel="noopener noreferrer">view the schedule of advisory board meetings (opens in a new tab)</a>.</p>
+        <p class="govuk-body">You can <a class="govuk-link" href="@advisoryBoardScheduleUrl" target="_blank" rel="noopener noreferrer">view the schedule of proposed decision meetings (opens in a new tab)</a>.</p>
         <form method="post" novalidate="">
             <input type="hidden" asp-for="@Model.Urn" />
             <input type="hidden" asp-for="@Model.ReturnToPreview" />
@@ -46,7 +45,7 @@
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l" aria-describedby="set-ab-date-hint">
                         <h1 class="govuk-fieldset__heading" id="AdvisoryBoardViewModel_AdvisoryBoardDate_Date">
-                            Enter advisory board date
+                            Enter proposed decision date
                         </h1>
                     </legend>
                     <div id="set-ab-date-hint" class="govuk-hint">
