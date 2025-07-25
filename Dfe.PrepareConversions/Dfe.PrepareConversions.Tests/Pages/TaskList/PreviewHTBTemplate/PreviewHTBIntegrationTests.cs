@@ -22,32 +22,6 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       => _fixture.Customizations.Add(new RandomDateBuilder(DateTime.Now.AddMonths(-2), DateTime.Now.AddDays(-1)));
 
    [Fact]
-   public async Task Should_navigate_between_task_list_and_preview_htb_template()
-   {
-      static void PostProjectSetup(AcademyConversionProject project)
-      {
-         project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored;
-         project.HeadTeacherBoardDate = DateTime.Now;
-         project.PublicEqualityDutyImpact = "Likely";
-         project.PublicEqualityDutyReduceImpactReason = "Some reason";
-         project.PublicEqualityDutySectionComplete = true;
-      }
-
-      AcademyConversionProject project = AddGetProject(PostProjectSetup);
-
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
-
-      var button = Document.QuerySelector<IHtmlButtonElement>("#preview-project-template-button");
-      button.DoClick();
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
-
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
-
-      await NavigateAsync("Back");
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}");
-   }
-
-   [Fact]
    public async Task Should_navigate_from_error_summary_on_preview_to_headteacher_board_date_back_to_preview()
    {
       var project = AddGetProject(p => p.HeadTeacherBoardDate = null);

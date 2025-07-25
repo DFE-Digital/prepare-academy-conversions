@@ -76,8 +76,8 @@ public class RecordDecisionModel : DecisionBaseModel
             var returnPage = @Links.TaskList.Index.Page;
             if (!_project.HeadTeacherBoardDate.HasValue)
             {
-               ModelState.AddModelError($"/task-list/{id}/confirm-school-trust-information-project-dates/proposed-decision-date?return={returnPage}",
-               "You must enter an advisory board date before you can record a decision.");
+               ModelState.AddModelError($"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}",
+               "You must enter a proposed decision date before you can record a decision.");
             }
 
             if (_project.AssignedUser == null || _project.AssignedUser.EmailAddress.Length < 1)

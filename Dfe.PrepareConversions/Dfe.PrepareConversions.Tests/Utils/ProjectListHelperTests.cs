@@ -41,7 +41,7 @@ namespace Dfe.PrepareConversions.Tests.Utils
       public void MapProjectString_OtherValue_ReturnsCorrectValues()
       {
          var actual = ProjectListHelper.MapProjectStatus("Hello!");
-         Assert.Equivalent(new ProjectStatus("PRE DECISION", yellow), actual);
+         Assert.Equivalent(new ProjectStatus("PRE ADVISORY BOARD", yellow), actual);
       }
 
       [Theory]

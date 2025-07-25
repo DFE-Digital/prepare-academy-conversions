@@ -93,7 +93,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ServicesTests
                 Assert.Equal(project.AcademyAndTrustInformation.Author, createdText[4].InnerText);
                 Assert.Equal("Project name", createdText[5].InnerText);
                 Assert.Equal(project.IncomingTrustName, createdText[6].InnerText);    
-                Assert.Equal("Proposed decision date", createdText[7].InnerText); 
+                Assert.Equal("Date of advisory board", createdText[7].InnerText); 
                 Assert.Equal(DateTime.Parse(project.Dates.Htb), DateTime.Parse(createdText[8].InnerText));
                 Assert.Equal("Proposed academy transfer date", createdText[9].InnerText);
                 Assert.Equal(DateTime.Parse(project.Dates.Target),DateTime.Parse(createdText[10].InnerText));

@@ -115,7 +115,7 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Mappers.Response
             return new TransferDates
             {
                 Htb = input.Dates.HtbDate,
-                PreviouslyConsideredDate = input.Dates.PreviousAdvisoryBoardDate,
+                PreviousAdvisoryBoardDate = input.Dates.PreviousAdvisoryBoardDate,
                 Target = input.Dates.TargetDateForTransfer,
                 HasHtbDate = input.Dates.HasHtbDate,
                 HasTargetDateForTransfer = input.Dates.HasTargetDateForTransfer,

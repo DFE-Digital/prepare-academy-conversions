@@ -83,15 +83,15 @@
 
                 </ul>
             }
-            @if (Model.SelectedProposedDecisionDates.Length > 0)
+            @if (Model.SelectedAdvisoryBoardDates.Length > 0)
             {
                 <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Proposed decision date</h3>
 
                 <ul class="moj-filter-tags">
                     @{
-                        foreach (var date in Model.SelectedProposedDecisionDates)
+                        foreach (var date in Model.SelectedAdvisoryBoardDates)
                         {
-                            <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedProposedDecisionDates=@date"><span class="govuk-visually-hidden">Remove this filter</span> @date.Stub()</a></li>
+                            <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedAdvisoryBoardDates=@date"><span class="govuk-visually-hidden">Remove this filter</span> @date.Stub()</a></li>
                         }
                     }
 
@@ -229,18 +229,18 @@
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
                                         <span class="govuk-accordion__section-button" id="accordion-advisory-board-dates-heading">
-                                            Proposed Decision Date
+                                            Proposed decision date
                                         </span>
                                     </h2>
                                 </div>
                                 <div class="govuk-accordion__section-content" aria-labelledby="accordion-advisory-board-dates-heading">
-                                    <input type="text" class="govuk-input govuk-!-display-none govuk-!-margin-bottom-2" id="filter-searches" placeholder="Type to filter pre decision dates...">
+                                    <input type="text" class="govuk-input govuk-!-display-none govuk-!-margin-bottom-2" id="filter-searches" placeholder="Type to filter proposed decision date...">
                                     <div class="govuk-checkboxes">
-                                        @foreach (var boardDate in Model.AvailableProposedDecisionDates)
+                                        @foreach (var boardDate in Model.AvailableAdvisoryBoardDates)
                                         {
                                             <div class="govuk-checkboxes__item">
-                                                <input class="govuk-checkboxes__input" id="filter-project-advisory-board-@boardDate.Stub()" name="selectedProposedDecisionDates" type="checkbox" value="@boardDate" data-cy="select-projectlist-filter-advisory-board-@boardDate"
-                                                @(Model.SelectedProposedDecisionDates.Contains(boardDate) ? "checked" : null) />
+                                                <input class="govuk-checkboxes__input" id="filter-project-advisory-board-@boardDate.Stub()" name="selectedAdvisoryBoardDates" type="checkbox" value="@boardDate" data-cy="select-projectlist-filter-advisory-board-@boardDate"
+                                                @(Model.SelectedAdvisoryBoardDates.Contains(boardDate) ? "checked" : null) />
                                                 <label class="govuk-label govuk-checkboxes__label" for="filter-project-advisory-board-@boardDate.Stub()">
                                                     @boardDate
                                                 </label>

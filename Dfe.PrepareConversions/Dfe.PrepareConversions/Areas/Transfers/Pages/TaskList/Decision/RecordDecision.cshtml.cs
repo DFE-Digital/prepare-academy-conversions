@@ -78,8 +78,8 @@ public class RecordDecision : DecisionBaseModel
 
          if (!hasAdvisoryBoardDate)
          {
-            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/proposed-decision-date?returns={returnPage}",
-            "You must enter an advisory board date before you can record a decision.");
+            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/advisory-board-date?returns={returnPage}",
+            "You must enter a proposed decision date before you can record a decision.");
          }
 
          if (!hasProposedTransferDate)

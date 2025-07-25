@@ -29,7 +29,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
             IncomingTrustName = projectResult.IncomingTrustName;
             ProjectReference = projectResult.Reference;
             AdvisoryBoardDate = projectResult.Dates?.Htb;
-            PreviousAdvisoryBoardDate = projectResult.Dates?.PreviouslyConsideredDate;
+            PreviousAdvisoryBoardDate = projectResult.Dates?.PreviousAdvisoryBoardDate;
             HasAdvisoryBoardDate = projectResult.Dates?.HasHtbDate;
             TargetDate = projectResult.Dates?.Target;
             HasTargetDate = projectResult.Dates?.HasTargetDateForTransfer;
