@@ -78,7 +78,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       document.Url.Should()
          .BeUrl(
-            $"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-decision-date?return=%2FTaskList%2FPreviewProjectTemplate&fragment=advisory-board-date");
+            $"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-decision-date?return=%2FTaskList%2FPreviewProjectTemplate&fragment=proposed-decision-date");
    }
 
    [Fact]

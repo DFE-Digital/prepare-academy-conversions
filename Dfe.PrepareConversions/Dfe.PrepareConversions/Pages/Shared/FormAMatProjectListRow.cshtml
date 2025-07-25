@@ -27,7 +27,7 @@
             <span id="application-received-date-@Model.Index">
                 Project created date: @Model.Item.CreatedOn.ToDateString()<br>
             </span>
-            <span if="Model.Item.ShowHtbDate" id="@("Advisory-Board-date-" + Model.Index)">
+            <span if="Model.Item.ShowHtbDate" id="@("proposed-decision-date-" + Model.Index)">
                 @("Proposed decision date: " + Model.Item.HeadTeacherBoardDate)<br>
             </span>
             <span if="Model.Item.ShowProposedOpeningDate" id="@("opening-date-" + Model.Index)">

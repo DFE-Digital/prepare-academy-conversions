@@ -26,7 +26,7 @@
                 <div class="govuk-radios__item">
                     <input asp-for="ExpectedEndDate" class="govuk-radios__input" id="ToAdvisoryBoard-radio" type="radio" value="@SchoolImprovementPlanExpectedEndDate.ToAdvisoryBoard" data-aria-controls="conditional-ToAdvisoryBoard">
                     <label class="govuk-label govuk-radios__label" for="ToAdvisoryBoard-radio">
-                        To advisory board <span if="@Model.AdvisoryBoradDate.HasValue">(@Model.AdvisoryBoradDate.Value.ToString(Constants.DateTimeFormat))</span>
+                        To proposed decision <span if="@Model.AdvisoryBoradDate.HasValue">(@Model.AdvisoryBoradDate.Value.ToString(Constants.DateTimeFormat))</span>
                     </label>
                 </div>
                 

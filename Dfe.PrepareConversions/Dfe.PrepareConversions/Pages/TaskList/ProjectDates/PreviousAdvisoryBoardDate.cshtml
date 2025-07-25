@@ -1,15 +1,15 @@
-@page "/task-list/{id:int}/previous-advisory-board-date"
+@page "/task-list/{id:int}/previous-proposed-decision-date"
 @using Dfe.PrepareConversions.TagHelpers
 @model Dfe.PrepareConversions.Pages.TaskList.ProjectDates.PreviousAdvisoryBoardDateModel
 @{
    Layout = "_QuestionLayout";
-   ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Date of previous advisory board";
+   ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Date of Previously considered date";
    ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
 }
 
 @section BeforeMain
 {
-    <govuk-back-link link-item="@Links.ProjectDates.ConfirmProjectDates" data-test="advisory-board-date-back-link" />
+    <govuk-back-link link-item="@Links.ProjectDates.ConfirmProjectDates" data-test="proposed-decision-date-back-link" />
 }
 
-<govuk-date-input heading-label="true" label="Date of previous advisory board" id="previous-advisory-board" name="previous-advisory-board" asp-for="Project.PreviousHeadTeacherBoardDate" hint="For example, 27 3 2021" />
+<govuk-date-input heading-label="true" label="Date of Previously considered date" id="previous-advisory-board" name="previous-advisory-board" asp-for="Project.PreviousHeadTeacherBoardDate" hint="For example, 27 3 2021" />

@@ -120,7 +120,7 @@ namespace Dfe.PrepareConversions.Utils
          {
             "approved with conditions" => new ProjectStatus("Approved with Conditions", green),
             "daorevoked" => new ProjectStatus("DAO Revoked", red),
-            _ => new ProjectStatus("PRE ADVISORY BOARD", yellow)
+            _ => new ProjectStatus("PRE DECISION", yellow)
          };
       }
 

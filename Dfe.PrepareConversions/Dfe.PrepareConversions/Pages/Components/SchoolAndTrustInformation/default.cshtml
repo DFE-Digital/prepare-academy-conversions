@@ -36,9 +36,9 @@
 
     @if (Model.IsPreview)
     {
-        <govuk-summary-list-row name="advisory-board-date" label="Date of advisory board" key-width="@kw" value="@Model.HeadTeacherBoardDate" asp-page="@Links.ProjectDates.AdvisoryBoardDate.Page" asp-route-id="@Model.Id" hidden-text="head teacher board date" asp-read-only="@Model.IsReadOnly" />
+        <govuk-summary-list-row name="proposed-decision-date" label="Proposed decision date" key-width="@kw" value="@Model.HeadTeacherBoardDate" asp-page="@Links.ProjectDates.AdvisoryBoardDate.Page" asp-route-id="@Model.Id" hidden-text="head teacher board date" asp-read-only="@Model.IsReadOnly" />
         <govuk-summary-list-row name="proposed-academy-opening-date" label="Proposed academy opening date" key-width="@kw" value="@Model.ProposedAcademyOpeningDate" asp-page="@Links.ProjectDates.PropsedConversionDate.Page" asp-route-id="@Model.Id" hidden-text="proposed academy opening date" asp-read-only="@Model.IsReadOnly" />
-        <govuk-summary-list-row name="previous-advisory-board" label="Previous advisory board" key-width="@kw" value="@Model.PreviousHeadTeacherBoardDate" asp-page="@Links.ProjectDates.PreviousAdvisoryBoard.Page" asp-route-id="@Model.Id" hidden-text="previous head teacher board date" asp-read-only="@Model.IsReadOnly" />
+        <govuk-summary-list-row name="previous-advisory-board" label="Previously considered date" key-width="@kw" value="@Model.PreviousHeadTeacherBoardDate" asp-page="@Links.ProjectDates.PreviousAdvisoryBoard.Page" asp-route-id="@Model.Id" hidden-text="previous head teacher board date" asp-read-only="@Model.IsReadOnly" />
     }
     <govuk-summary-list-row name="local-authority" label="Local authority" key-width="@kw" asp-for="LocalAuthority" />
     <govuk-summary-list-row name="sponsor-name" label="Sponsor name" key-width="@kw" asp-for="SponsorName" />

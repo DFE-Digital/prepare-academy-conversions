@@ -1,11 +1,10 @@
-﻿@page "/task-list/{id:int}/advisory-board-date"
+﻿@page "/task-list/{id:int}/proposed-decision-date"
 @using Dfe.PrepareConversions.TagHelpers
 @using Dfe.Academisation.ExtensionMethods
 @model Dfe.PrepareConversions.Pages.TaskList.ProjectDates.AdvisoryBoardDateModel;
 @{
    Layout = "_QuestionLayout";
     ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Proposed decision date";
-   ViewData["ShowScheduleOfAdvisoryBoardMeetingsLink"] = true;
    ViewData["SchoolName"] = Model.Project.SchoolName;
    ViewData["ProjectId"] = Model.Project.Id;
    ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
@@ -13,13 +12,13 @@
 
 @section BeforeMain
 {
-   <govuk-back-link link-item="@Links.ProjectDates.ConfirmProjectDates" data-test="advisory-board-date-back-link"/>
+   <govuk-back-link link-item="@Links.ProjectDates.ConfirmProjectDates" data-test="proposed-decision-date-back-link"/>
 }
 
 @if (!Model.Project.HeadTeacherBoardDate.HasValue)
 {
-    <govuk-date-input heading-label="true" label="Proposed decision date" details-body="If a decision was made about this project without a proposed decision meeting, use the date that decision was made instead." details-heading="What to do if there was no a proposed decision meeting" name="advisory-board-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
+    <govuk-date-input heading-label="true" label="Proposed decision date" details-body="If a decision was made about this project without a proposed decision meeting, use the date that decision was made instead." details-heading="What to do if there was no a proposed decision meeting" name="proposed-decision-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
 }else{
-    <govuk-date-input heading-label="true" label="Proposed decision date" details-body="If a decision was made about this project without a proposed decision meeting, use the date that decision was made instead." details-heading="What to do if there was no a proposed decision meeting" sub-label="Enter new proposed decision date" previous-information="The current proposed decision date is" additional-information="Make sure all stakeholders are aware of the change and the reason for it" name="advisory-board-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
+    <govuk-date-input heading-label="true" label="Proposed decision date" details-body="If a decision was made about this project without a proposed decision meeting, use the date that decision was made instead." details-heading="What to do if there was no a proposed decision meeting" sub-label="Enter new proposed decision date" previous-information="The current proposed decision date is" additional-information="Make sure all stakeholders are aware of the change and the reason for it" name="proposed-decision-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
 }
 

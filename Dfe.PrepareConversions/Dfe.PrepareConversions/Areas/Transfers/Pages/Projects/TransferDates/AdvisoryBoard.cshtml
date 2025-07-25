@@ -1,4 +1,4 @@
-@page "/transfers/project/{urn}/transfer-dates/advisory-board-date"
+@page "/transfers/project/{urn}/transfer-dates/proposed-decision-date"
 @using Dfe.PrepareTransfers.Web.ExtensionMethods;
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers.TagHelpers
@@ -6,7 +6,6 @@
 @using Dfe.Academisation.ExtensionMethods
 @model Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates.AdvisoryBoard
 @inject IConfiguration Configuration
-
 
 @{
     Layout = "_Layout";
@@ -37,7 +36,7 @@
                 Proposed decision date
             </h1>
         </legend>       
-        <p class="govuk-body">You can <a class="govuk-link" href="@advisoryBoardScheduleUrl" target="_blank" rel="noopener noreferrer">view the schedule of advisory board meetings (opens in a new tab)</a>.</p>
+        <p class="govuk-body">You can <a class="govuk-link" href="@advisoryBoardScheduleUrl" target="_blank" rel="noopener noreferrer">view the schedule of proposed decision meetings (opens in a new tab)</a>.</p>
         <form method="post" novalidate="">
             <input type="hidden" asp-for="@Model.Urn" />
             <input type="hidden" asp-for="@Model.ReturnToPreview" />

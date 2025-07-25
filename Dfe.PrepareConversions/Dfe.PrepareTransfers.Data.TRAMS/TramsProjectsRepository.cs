@@ -25,7 +25,7 @@ namespace Dfe.PrepareTransfers.Data.TRAMS
       private readonly IMapper<TramsProjectSummary, ProjectSearchResult> _summaryToInternalProjectMapper;
       private readonly ITrusts _trusts;
 
-      private readonly IReadOnlyDictionary<string, string> _aliasedStatuses = new Dictionary<string, string> { { "converter pre-ao (c)", "Pre advisory board" } };
+      private readonly IReadOnlyDictionary<string, string> _aliasedStatuses = new Dictionary<string, string> { { "converter pre-ao (c)", "Pre decision" } };
       private readonly IReadOnlyDictionary<string, string> _invertedAliasedStatuses;
       private readonly IDfeHttpClientFactory _httpClientFactory;
 

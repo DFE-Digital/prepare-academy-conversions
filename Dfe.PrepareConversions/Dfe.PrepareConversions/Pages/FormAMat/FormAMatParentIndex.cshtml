@@ -111,7 +111,7 @@
                                     <span if="projectRow.Item.NameOfTrust.IsEmpty()" class="empty">Empty</span>
                                     <span if="projectRow.Item.NameOfTrust.IsPresent()">@projectRow.Item.NameOfTrust?.ToTitleCase()</span>
                                 </div>
-                                <div id="@("advisory-board-date-" + projectRow.Index)" class="govuk-!-margin-top-1">
+                                <div id="@("proposed-decision-date-" + projectRow.Index)" class="govuk-!-margin-top-1">
                                     <strong>Proposed decision date:</strong>
                                     <span if="projectRow.Item.HeadTeacherBoardDate.IsEmpty()" class="empty">Unconfirmed</span>
                                     <span if="projectRow.Item.HeadTeacherBoardDate.IsPresent()">@projectRow.Item.HeadTeacherBoardDate</span>

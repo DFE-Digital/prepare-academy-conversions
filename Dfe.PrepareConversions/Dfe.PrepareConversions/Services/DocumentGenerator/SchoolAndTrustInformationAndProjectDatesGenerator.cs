@@ -36,9 +36,9 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
       {
          List<TextElement[]> advisoryBoardDetails = new()
             {
-                DocumentGeneratorStringSanitiser.CreateTextElements("Date of advisory board", project.HeadTeacherBoardDate?.ToDateString()),
+                DocumentGeneratorStringSanitiser.CreateTextElements("Proposed decision date", project.HeadTeacherBoardDate?.ToDateString()),
                 DocumentGeneratorStringSanitiser.CreateTextElements("Proposed academy opening date", project.ProposedConversionDate.ToDateString()),
-                DocumentGeneratorStringSanitiser.CreateTextElements("Previous advisory board", project.PreviousHeadTeacherBoardDate.ToDateString())
+                DocumentGeneratorStringSanitiser.CreateTextElements("Previously considered date", project.PreviousHeadTeacherBoardDate.ToDateString())
             };
 
          builder.ReplacePlaceholderWithContent("AdvisoryBoardDetails", body => body.AddTable(advisoryBoardDetails));
