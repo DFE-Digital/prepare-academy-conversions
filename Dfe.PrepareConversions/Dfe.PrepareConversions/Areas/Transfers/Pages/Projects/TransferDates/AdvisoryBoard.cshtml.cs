@@ -33,7 +33,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
          return Page();
       }
 
-      public async Task<IActionResult> OnPostAsync()
+      public async Task<IActionResult> OnPostAsync(string returns = null)
       {
          var project = await projectsRepository.GetByUrn(Urn);
 
@@ -70,7 +70,9 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
             return RedirectToPage(Links.HeadteacherBoard.Preview.PageName, new { Urn });
          }
 
-         return RedirectToPage("/Projects/TransferDates/Index", new { Urn });
+         Returns = returns ?? "/Projects/TransferDates/Index";
+
+         return RedirectToPage(Returns, new { Urn });
       }
    }
 }

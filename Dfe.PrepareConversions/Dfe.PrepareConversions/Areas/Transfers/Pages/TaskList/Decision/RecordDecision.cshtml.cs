@@ -6,6 +6,7 @@ using Dfe.PrepareTransfers.Pages.TaskList.Decision.Models;
 using Dfe.PrepareTransfers.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
@@ -70,6 +71,9 @@ public class RecordDecision : DecisionBaseModel
       if (AdvisoryBoardDecision == AdvisoryBoardDecisions.Approved)
       {
          var hasAdvisoryBoardDate = _project.Dates?.Htb != null;
+         DateTime? advisoryBoardDate = hasAdvisoryBoardDate
+               ? DateTime.ParseExact(_project.Dates?.Htb, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
+               : null;
          var hasProposedTransferDate = _project.Dates?.Target != null;
          var hasProjectOwnerAssignment = _project.AssignedUser != null && _project.AssignedUser.EmailAddress.Length > 0;
          var hasIncomingTrustName = _project.IncomingTrustName != null;
@@ -78,8 +82,13 @@ public class RecordDecision : DecisionBaseModel
 
          if (!hasAdvisoryBoardDate)
          {
-            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/advisory-board-date?returns={returnPage}",
-            "You must enter an advisory board date before you can record a decision.");
+            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/advisory-board-date?returns={Links.Decision.RecordDecision.PageName}",
+               "You must enter an advisory board date before you can record a decision.");
+         }
+         else if (advisoryBoardDate > DateTime.Now)
+         {
+            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/advisory-board-date?returns={Links.Decision.RecordDecision.PageName}",
+               "The advisory board date must be today or in the past.");
          }
 
          if (!hasProposedTransferDate)
