@@ -6,6 +6,7 @@ using Xunit;
 using AutoFixture;
 using System.Linq;
 using Dfe.Academisation.ExtensionMethods;
+using static Dfe.PrepareConversions.Models.Links;
 
 namespace Dfe.PrepareConversions.Tests.Utils
 {
@@ -123,6 +124,30 @@ namespace Dfe.PrepareConversions.Tests.Utils
          Assert.Equal(string.Join(", ", projectGroup.Projects.Select(x => x.SchoolName).Distinct()), actual.SchoolNames);
          Assert.Equal(string.Join(", ", projectGroup.Projects.Select(x => x.Region).Distinct()), actual.Regions);
          Assert.Equivalent(projectGroup.Projects.Select(x => x.ProjectStatus).Select(ProjectListHelper.MapProjectStatus).ToList(), actual.Status);
+      }
+
+      [Fact]
+      public void MapPerformanceDataHint_With_School_Type_Pupil_Referral()
+      {
+         var actual = ProjectListHelper.MapPerformanceDataHint("pupil referral unit", false);
+
+         Assert.Equal("Your document will automatically include some Ofsted inspection data. Educational performance data isn't published for pupil referral units.\r\n\r\nAsk the pupil referral unit to share their educational performance and absence data with you. You can add that to the document once you have created it.", actual);
+      }
+
+      [Fact]
+      public void MapPerformanceDataHint_With_School_Absence()
+      {
+         var actual = ProjectListHelper.MapPerformanceDataHint("", true);
+
+         Assert.Equal("Only educational attendance information will be added to your project template.", actual);
+      }
+
+      [Fact]
+      public void MapPerformanceDataHint_With_No_School_Absence()
+      {
+         var actual = ProjectListHelper.MapPerformanceDataHint("", false);
+
+         Assert.Equal("This information will not be added to your project.", actual);
       }
    }
 }
