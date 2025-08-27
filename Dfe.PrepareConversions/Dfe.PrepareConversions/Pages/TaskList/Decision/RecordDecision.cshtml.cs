@@ -70,35 +70,38 @@ public class RecordDecisionModel : DecisionBaseModel
 
    private void ValidateProject(int id)
    {
-      var returnPage = @Links.TaskList.Index.Page;
+      if (AdvisoryBoardDecision == AdvisoryBoardDecisions.Approved)
+      {
+         var returnPage = @Links.TaskList.Index.Page;
 
-      if (!_project.HeadTeacherBoardDate.HasValue)
-      {
-         ModelState.AddModelError($"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return={Links.Decision.RecordDecision.Page}",
-         "You must enter an advisory board date before you can record a decision.");
-      }
-      else if (_project.HeadTeacherBoardDate.Value > DateTime.Now)
-      {
-         ModelState.AddModelError($"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return={Links.Decision.RecordDecision.Page}",
-         "The advisory board date must be today or in the past.");
-      }
+         if (!_project.HeadTeacherBoardDate.HasValue)
+         {
+            ModelState.AddModelError($"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return={Links.Decision.RecordDecision.Page}",
+            "You must enter an advisory board date before you can record a decision.");
+         }
+         else if (_project.HeadTeacherBoardDate.Value > DateTime.Now)
+         {
+            ModelState.AddModelError($"/task-list/{id}/confirm-school-trust-information-project-dates/advisory-board-date?return={Links.Decision.RecordDecision.Page}",
+            "The advisory board date must be today or in the past.");
+         }
 
-      if (_project.AssignedUser == null || _project.AssignedUser.EmailAddress.Length < 1)
-      {
-         ModelState.AddModelError($"/project-assignment/{id}",
-         "You must enter the name of the person who worked on this project before you can record a decision.");
-      }
+         if (_project.AssignedUser == null || _project.AssignedUser.EmailAddress.Length < 1)
+         {
+            ModelState.AddModelError($"/project-assignment/{id}",
+            "You must enter the name of the person who worked on this project before you can record a decision.");
+         }
 
-      if (!_project.ProposedConversionDate.HasValue)
-      {
-         ModelState.AddModelError($"/task-list/{id}/proposed-conversion-date?return={returnPage}",
-            "You must enter a proposed conversion date before you can record a decision.");
-      }
+         if (!_project.ProposedConversionDate.HasValue)
+         {
+            ModelState.AddModelError($"/task-list/{id}/proposed-conversion-date?return={returnPage}",
+               "You must enter a proposed conversion date before you can record a decision.");
+         }
 
-      if (_project.NameOfTrust.IsEmpty())
-      {
-         ModelState.AddModelError($"/task-list/{id}/confirm-school-trust-information-project-dates/update-trust?return={returnPage}",
-            "You must enter trust name before you can record a decision.");
+         if (_project.NameOfTrust.IsEmpty())
+         {
+            ModelState.AddModelError($"/task-list/{id}/confirm-school-trust-information-project-dates/update-trust?return={returnPage}",
+               "You must enter trust name before you can record a decision.");
+         }
       }
    }
 }
