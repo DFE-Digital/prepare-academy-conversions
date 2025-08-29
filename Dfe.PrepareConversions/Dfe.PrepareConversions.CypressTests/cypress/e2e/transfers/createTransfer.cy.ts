@@ -97,7 +97,7 @@ describe('Create a new transfer', () => {
   context('Delivery Officer', () => {
     it('Assign and Unassign Delivery Officer', () => {
 
-      const deliveryOfficer = 'Dan Good'
+      const deliveryOfficer = 'Richika Dogra'
 
       projectPage
         .loadProject(projectId)

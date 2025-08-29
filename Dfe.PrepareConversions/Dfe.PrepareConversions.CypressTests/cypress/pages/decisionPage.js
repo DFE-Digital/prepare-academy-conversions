@@ -82,10 +82,6 @@ export class DecisionPage {
         cy.get('#head-teacher-board-date-month').type(month);
         cy.get('#head-teacher-board-date-year').type(year);
         cy.get('[data-cy="select-common-submitbutton"]').click();
-
-        cy.get('[data-cy="record_decision_menu"] > .moj-sub-navigation__link').click();
-
-        cy.get('[data-cy="record_decision_btn"]').click();
         cy.get('#approved-radio').click();
         cy.get('#submit-btn').click();
 

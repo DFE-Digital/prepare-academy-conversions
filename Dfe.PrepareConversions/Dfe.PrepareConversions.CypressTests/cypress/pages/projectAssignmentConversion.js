@@ -14,7 +14,7 @@ export default class projectAssignmentConversion extends BasePage {
     static assignProject(deliveryOfficer) {
         cy.checkPath(this.path)
         cy.get(this.selectors.assignInput).click()
-        cy.get(this.selectors.assignInput).type(`${deliveryOfficer}{enter}`)
+        cy.get(this.selectors.assignInput).type(`${deliveryOfficer}`)
         cy.get(this.selectors.saveButton).click()
     }
 
