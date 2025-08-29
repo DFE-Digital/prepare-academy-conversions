@@ -26,7 +26,7 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
 
    const testData = {
       projectName: 'Deanshanger Primary School',
-      completedText: 'PRE ADVISORY BOARD',
+      completedText: 'Completed',
       projectAssignment: {
          deliveryOfficer: 'Richika Dogra',
          assignedOfficerMessage: 'Project is assigned',
