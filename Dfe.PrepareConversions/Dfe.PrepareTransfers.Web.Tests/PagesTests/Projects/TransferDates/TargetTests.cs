@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Routing;
 using Moq;
 using Xunit;
 using Index = Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates.Index;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.TransferDates
 {
@@ -26,9 +28,20 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.TransferDates
 
         protected TargetTests()
         {
-            _subject = new Target(ProjectRepository.Object)
+            var tempData = new Mock<ITempDataDictionary>();
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Query = new QueryCollection();
+
+            var pageContext = new PageContext
             {
-                Urn = ProjectUrn0001
+               HttpContext = httpContext
+            };
+
+            _subject = new Target(ProjectRepository.Object)
+               {
+                   Urn = ProjectUrn0001,
+                  PageContext = pageContext,
+                  TempData = tempData.Object
             };
         }
 

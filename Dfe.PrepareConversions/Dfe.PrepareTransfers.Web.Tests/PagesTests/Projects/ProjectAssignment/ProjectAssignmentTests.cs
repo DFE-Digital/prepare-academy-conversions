@@ -15,6 +15,7 @@ using Xunit;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.ProjectAssignment
 {
@@ -31,7 +32,19 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.ProjectAssignment
 			{
 				_userRepository = new Mock<IUserRepository>();
 				_projectRepository = new Mock<IProjects>();
-				_subject = new IndexModel(_userRepository.Object, _projectRepository.Object);
+            _subject = new IndexModel(_userRepository.Object, _projectRepository.Object)
+            {
+               PageContext = new PageContext
+               {
+                  HttpContext = new DefaultHttpContext()
+                  {
+                     Request =
+                     {
+                        Query = new QueryCollection()
+                     }
+                  }
+               }
+            };
 			}
 
 			[Fact]
@@ -79,7 +92,20 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.ProjectAssignment
 				_userRepository = new Mock<IUserRepository>();
 				_projectRepository = new Mock<IProjects>();
 				_tempDataDictionary = new Mock<ITempDataDictionary>();
-				_subject = new IndexModel(_userRepository.Object, _projectRepository.Object) { TempData = _tempDataDictionary.Object };
+
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Query = new QueryCollection();
+
+            var pageContext = new PageContext
+            {
+               HttpContext = httpContext
+            };
+
+            _subject = new IndexModel(_userRepository.Object, _projectRepository.Object)
+            {
+               PageContext = pageContext,
+               TempData = _tempDataDictionary.Object,
+            };
 			}
 
 			[Fact]

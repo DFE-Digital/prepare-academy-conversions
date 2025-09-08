@@ -6,6 +6,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Primitives;
 
 namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
 {
@@ -73,6 +74,13 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
          Returns = returns ?? "/Projects/TransferDates/Index";
 
          return RedirectToPage(Returns, new { Urn });
+      }
+
+      private (string, string) GetReturnPageAndFragment()
+      {
+         Request.Query.TryGetValue("return", out StringValues returnQuery);
+         Request.Query.TryGetValue("fragment", out StringValues fragmentQuery);
+         return (returnQuery, fragmentQuery);
       }
    }
 }

@@ -9,6 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Primitives;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using static Dfe.PrepareConversions.Models.Links;
 
 namespace Dfe.PrepareTransfers.Web.Pages.Projects.ProjectAssignment
 {
@@ -61,7 +64,23 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.ProjectAssignment
 				TempData.SetNotification("Done", "Project is assigned");
 			}
 
-			return RedirectToPage(Links.Project.Index.PageName, new { urn });
+         (string returnPage, string fragment) = GetReturnPageAndFragment();
+
+         if (!string.IsNullOrWhiteSpace(returnPage))
+         {
+            return RedirectToPage(returnPage, null, new { urn }, fragment);
+         }
+         else
+         {
+            return RedirectToPage(Links.Project.Index.PageName, new { urn });
+         }
 		}
-	}
+
+      private (string, string) GetReturnPageAndFragment()
+      {
+         Request.Query.TryGetValue("return", out StringValues returnQuery);
+         Request.Query.TryGetValue("fragment", out StringValues fragmentQuery);
+         return (returnQuery, fragmentQuery);
+      }
+   }
 }

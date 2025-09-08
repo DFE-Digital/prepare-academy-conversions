@@ -8,6 +8,8 @@ using System.Linq;
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareTransfers.Web.Models;
 using Dfe.PrepareConversions.Services;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.Extensions.Primitives;
 
 namespace Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation
 {
@@ -99,6 +101,13 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation
                   return RedirectToPage(Links.HeadteacherBoard.Preview.PageName, new { Urn });
                }
 
+               (string returnPage, string fragment) = GetReturnPageAndFragment();
+
+               if (!string.IsNullOrWhiteSpace(returnPage))
+               {
+                  return RedirectToPage(returnPage, null, new { urn }, fragment);
+               }
+
                return RedirectToPage("/Projects/AcademyAndTrustInformation/Index", new { urn });
 
             }
@@ -131,6 +140,13 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation
          if (string.IsNullOrWhiteSpace(input)) return new string[1] { string.Empty };
 
          return input.Split(new[] { '(', ')' }, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+      }
+
+      private (string, string) GetReturnPageAndFragment()
+      {
+         Request.Query.TryGetValue("return", out StringValues returnQuery);
+         Request.Query.TryGetValue("fragment", out StringValues fragmentQuery);
+         return (returnQuery, fragmentQuery);
       }
    }
 }

@@ -78,40 +78,40 @@ public class RecordDecision : DecisionBaseModel
          var hasProjectOwnerAssignment = _project.AssignedUser != null && _project.AssignedUser.EmailAddress.Length > 0;
          var hasIncomingTrustName = _project.IncomingTrustName != null;
          var hasIncomingTrustReferenceNumber = _project.IncomingTrustReferenceNumber != null && _project.IsFormAMat == true;
-         var returnPage = Links.Project.Index.PageName;
+         var returnPage = Links.Decision.RecordDecision.PageName;
 
          if (!hasAdvisoryBoardDate)
          {
-            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/advisory-board-date?returns={Links.Decision.RecordDecision.PageName}",
+            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/advisory-board-date?returns={returnPage}",
                "You must enter an advisory board date before you can record a decision.");
          }
          else if (advisoryBoardDate > DateTime.Now)
          {
-            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/advisory-board-date?returns={Links.Decision.RecordDecision.PageName}",
+            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/advisory-board-date?returns={returnPage}",
                "The advisory board date must be today or in the past.");
          }
 
          if (!hasProposedTransferDate)
          {
-            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/target-date?returns={returnPage}",
+            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/target-date?return={returnPage}",
                "You must enter a proposed transfer date before you can record a decision.");
          }
 
          if (!hasProjectOwnerAssignment)
          {
-            ModelState.AddModelError($"/transfers/project-assignment/{id}",
+            ModelState.AddModelError($"/transfers/project-assignment/{id}?return={returnPage}",
             "You must enter the name of the person who worked on this project before you can record a decision.");
          }
 
          if (!hasIncomingTrustName)
          {
-            ModelState.AddModelError($"/transfers/project/{id}/academy-and-trust-information/update-incoming-trust?returns={returnPage}",
+            ModelState.AddModelError($"/transfers/project/{id}/academy-and-trust-information/update-incoming-trust?return={returnPage}",
                "You must enter an incoming trust for this project before you can record a decision.");
          }
-         
+
          if (!hasIncomingTrustReferenceNumber && _project.IsFormAMat.HasValue && _project.IsFormAMat.Value == true)
          {
-            ModelState.AddModelError($"/transfers/project/{id}/academy-and-trust-information/incoming-trust-name?returns={returnPage}",
+            ModelState.AddModelError($"/transfers/project/{id}/academy-and-trust-information/incoming-trust-name?return={returnPage}",
                "You must enter an incoming trust reference number for this project before you can record a decision.");
          }
       }

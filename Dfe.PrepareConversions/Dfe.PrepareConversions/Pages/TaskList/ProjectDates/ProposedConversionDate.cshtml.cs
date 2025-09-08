@@ -3,6 +3,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,8 +68,16 @@ public class ProposedConversionDate : BaseAcademyConversionProjectPageModel
 
          await _repository.SetProjectDates(id, projectDatesModel);
 
-         return RedirectToPage(Links.ProjectDates.ConfirmProjectDates.Page, new { id });
+         (string returnPage, string fragment) = GetReturnPageAndFragment();
 
+         if (!string.IsNullOrWhiteSpace(returnPage))
+         {
+            return RedirectToPage(returnPage, null, new { id }, fragment);
+         }
+         else
+         {
+            return RedirectToPage(Links.ProjectDates.ConfirmProjectDates.Page, new { id });
+         }
       }
 
       return RedirectToPage(Links.ProjectDates.ReasonForConversionDateChange.Page, new { id, conversionDate });
@@ -126,5 +135,12 @@ public class ProposedConversionDate : BaseAcademyConversionProjectPageModel
    private string SomeMissing(IEnumerable<string> missingParts)
    {
       return $"Date must include a {string.Join(" and ", missingParts)}";
+   }
+
+   private (string, string) GetReturnPageAndFragment()
+   {
+      Request.Query.TryGetValue("return", out StringValues returnQuery);
+      Request.Query.TryGetValue("fragment", out StringValues fragmentQuery);
+      return (returnQuery, fragmentQuery);
    }
 }

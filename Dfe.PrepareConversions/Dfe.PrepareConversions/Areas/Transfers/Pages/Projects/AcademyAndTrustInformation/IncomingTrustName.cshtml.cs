@@ -8,6 +8,8 @@ using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using Dfe.PrepareConversions.Data.Models.UserRole;
 using Dfe.PrepareConversions.Extensions;
+using Microsoft.Extensions.Primitives;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation
 {
@@ -54,7 +56,16 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation
                 return RedirectToPage(Links.HeadteacherBoard.Preview.PageName, new { Urn });
             }
 
-            return RedirectToPage("/Projects/AcademyAndTrustInformation/Index", new { Urn });
+            (string returnPage, string fragment) = GetReturnPageAndFragment();
+
+            if (!string.IsNullOrWhiteSpace(returnPage))
+            {
+               return RedirectToPage(returnPage, null, new { Urn }, fragment);
+            }
+            else
+            {
+               return RedirectToPage("/Projects/AcademyAndTrustInformation/Index", new { Urn });
+            }
         }
         
         public static bool TrustReferenceNumberIsValid(string? input)
@@ -68,5 +79,12 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation
            
            return Regex.IsMatch(input, pattern);
         }
-    }
+
+      private (string, string) GetReturnPageAndFragment()
+      {
+         Request.Query.TryGetValue("return", out StringValues returnQuery);
+         Request.Query.TryGetValue("fragment", out StringValues fragmentQuery);
+         return (returnQuery, fragmentQuery);
+      }
+   }
 }

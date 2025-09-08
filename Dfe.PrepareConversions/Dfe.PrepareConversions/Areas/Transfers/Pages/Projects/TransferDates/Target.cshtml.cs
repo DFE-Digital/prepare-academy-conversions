@@ -8,6 +8,8 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Primitives;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
 {
@@ -91,7 +93,23 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
                 return RedirectToPage(Links.HeadteacherBoard.Preview.PageName, new { Urn });
             }
 
-            return RedirectToPage("/Projects/TransferDates/Index", new { Urn });
+            (string returnPage, string fragment) = GetReturnPageAndFragment();
+
+            if (!string.IsNullOrWhiteSpace(returnPage))
+            {
+               return RedirectToPage(returnPage, null, new { Urn }, fragment);
+            }
+            else
+            {
+               return RedirectToPage("/Projects/TransferDates/Index", new { Urn });
+            }
         }
-    }
+
+      private (string, string) GetReturnPageAndFragment()
+      {
+         Request.Query.TryGetValue("return", out StringValues returnQuery);
+         Request.Query.TryGetValue("fragment", out StringValues fragmentQuery);
+         return (returnQuery, fragmentQuery);
+      }
+   }
 }
