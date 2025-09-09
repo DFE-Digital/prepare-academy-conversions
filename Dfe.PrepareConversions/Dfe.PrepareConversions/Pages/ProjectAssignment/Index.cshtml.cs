@@ -6,6 +6,7 @@ using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,22 @@ public class IndexModel(IUserRepository userRepository, IAcademyConversionProjec
          TempData.SetNotification(NotificationType.Success, "Done", "Project is assigned");
       }
 
-      return RedirectToPage(Links.TaskList.Index.Page, new { id });
+      (string returnPage, string fragment) = GetReturnPageAndFragment();
+
+      if (!string.IsNullOrWhiteSpace(returnPage))
+      {
+         return RedirectToPage(returnPage, null, new { id }, fragment);
+      }
+      else
+      {
+         return RedirectToPage(Links.TaskList.Index.Page, new { id });
+      }
+   }
+
+   private (string, string) GetReturnPageAndFragment()
+   {
+      Request.Query.TryGetValue("return", out StringValues returnQuery);
+      Request.Query.TryGetValue("fragment", out StringValues fragmentQuery);
+      return (returnQuery, fragmentQuery);
    }
 }
