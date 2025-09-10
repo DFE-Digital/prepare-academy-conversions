@@ -67,7 +67,7 @@ public class ConfirmSchoolOverviewIntegrationTests(IntegrationTestingWebApplicat
 
       await NavigateAsync("School overview");
       var test = Document.QuerySelector("[data-test=annex-b-help]").TextContent;
-      Document.QuerySelector("[data-test=annex-b-help]").TextContent.Should().Be("Some details have been taken from TRAMS. You can add more from the Annex B form.");
+      Document.QuerySelector("[data-test=annex-b-help]").TextContent.Should().Be("Some details have been taken from Ofsted. You can add more from the Annex B form.");
    }
    [Fact]
    public async Task Should_display_change_on_pfi_scheme()
