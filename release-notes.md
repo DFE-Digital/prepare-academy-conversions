@@ -1,3 +1,8 @@
+## 1.7.1
+* 235754 - Performance data references TRAMS incorrectly - Two other instances
+* 233570 - Transfer of Projects into Complete - Return url missing
+* 226293 - Performance data references TRAMS not Ofsted
+ 
 ## 1.7.0
 
 * 200233 - Add PSED task to Prepare
