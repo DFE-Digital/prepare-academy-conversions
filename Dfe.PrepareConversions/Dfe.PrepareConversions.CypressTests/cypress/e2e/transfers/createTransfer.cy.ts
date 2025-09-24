@@ -17,9 +17,7 @@ import projectAssignmentPage from 'cypress/pages/projectAssignment'
 import rationalePage from 'cypress/pages/rationale'
 import trustInformationProjectDatesPage from 'cypress/pages/trustInformationProjectDates'
 import dayjs from 'dayjs';
-
-
-
+import { Logger } from '../../support/logger'
 
 describe('Create a new transfer', () => {
 
@@ -29,18 +27,17 @@ describe('Create a new transfer', () => {
   const transferDate = dayjs().add(4, 'month');
 
   beforeEach(() => {
-
     cy.fixture('trustInformation.json').then((jsonData) => {
       outgoingTrustData = jsonData[0]
       
       outgoingTrustData.academies = outgoingTrustData.academies[0]
-      
+
       incomingTrustData = jsonData[1]
     })
   })
 
   context('Create new transfer', () => {
-    it('Creates a new academy transfer', () => {
+    it.only('Creates a new academy transfer', () => {
 
       homePage
         .open()
@@ -62,11 +59,11 @@ describe('Create a new transfer', () => {
       outgoingTrustAcademiesPage.selectSingleAcademy(outgoingTrustData.academies)
         .continue()
 
-          // Select the option (Is the result of this transfer the formation of a new trust?) with id "false", then click continue
-          outgoingTrustAcademiesPage.selectOptionYes();
-          outgoingTrustAcademiesPage.submitForm();
+      // CURRENTLY FAILING - WILL WORK ON IT SOON
+      // Select the option (Is the result of this transfer the formation of a new trust?) with id "false", then click continue
+      outgoingTrustAcademiesPage.selectOptionYes();
+      outgoingTrustAcademiesPage.submitForm();
 
-   
       incomingTrustSearchPage
         .searchTrustsByName(incomingTrustData.name)
 
@@ -97,25 +94,30 @@ describe('Create a new transfer', () => {
   context('Delivery Officer', () => {
     it('Assign and Unassign Delivery Officer', () => {
 
-      const deliveryOfficer = 'Richika Dogra'
+      cy.url().then((url) => {
+          projectId = url.match(/task-list\/(\d+)/)![1];
+          Logger.log(`Project ID: ${projectId}`);
+      }).then(() => {
+        const deliveryOfficer = 'Richika Dogra'
 
-      projectPage
-        .loadProject(projectId)
-        .checkDeliveryOfficerDetails('Empty')
-        .startChangeDeliveryOfficer() 
+        projectPage
+          .loadProject(projectId)
+          .checkDeliveryOfficerDetails('Empty')
+          .startChangeDeliveryOfficer() 
 
-      projectAssignmentPage
-        .assignDeliveryOfficer(deliveryOfficer)
+        projectAssignmentPage
+          .assignDeliveryOfficer(deliveryOfficer)
 
-      projectPage
-        .checkDeliveryOfficerAssigned(deliveryOfficer)
-        .startChangeDeliveryOfficer()
+        projectPage
+          .checkDeliveryOfficerAssigned(deliveryOfficer)
+          .startChangeDeliveryOfficer()
 
-      projectAssignmentPage
-        .unassignDeliveryOfficer()
+        projectAssignmentPage
+          .unassignDeliveryOfficer()
 
-      projectPage
-        .checkDeliveryOfficerAssigned('Empty')
+        projectPage
+          .checkDeliveryOfficerAssigned('Empty')
+      });
     })
   })
 

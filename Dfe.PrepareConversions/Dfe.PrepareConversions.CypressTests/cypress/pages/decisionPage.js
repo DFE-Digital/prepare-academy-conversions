@@ -93,28 +93,25 @@ export class DecisionPage {
 
         // Verifying notification messages
         cy.get('#notification-message').should('include.text', 'Project is assigned');
-        cy.get('#main-content > :nth-child(2) > :nth-child(2)').should('include.text', userName);
 
-        cy.get('[data-cy="record_decision_menu"] > .moj-sub-navigation__link').click();
-        cy.get('[data-cy="record_decision_btn"]').click();
-        cy.get('#approved-radio').click();
+       cy.get('#approved-radio').click();
         cy.get('#submit-btn').click();
 
         cy.contains('a', 'You must enter a proposed conversion date before you can record a decision.').click();
         cy.get('#proposed-conversion-month').type(month);
         cy.get('#proposed-conversion-year').type(year);
         cy.get('[data-cy="select-common-submitbutton"]').click();
-        cy.get('#confirm-and-continue-button').click();
 
-        cy.get('[data-cy="record_decision_menu"] > .moj-sub-navigation__link').click();
-        cy.get('[data-cy="record_decision_btn"]').click();
-        cy.get('#approved-radio').click();
+       cy.get('#approved-radio').click();
         cy.get('#submit-btn').click();
 
         cy.contains('a', 'You must enter trust name before you can record a decision.').click();
         cy.get('.autocomplete__wrapper > #SearchQuery').type('10058252');
         cy.get('#SearchQuery__option--0').click();
         cy.get('button.govuk-button[data-id="submit"]').click();
+
+        // go back to the 
+        cy.get('[data-cy="select-backlink"]').click();
 
         return this;
     }

@@ -4,7 +4,7 @@ import BasePage from "./basePage"
 
 export default class Performance extends BasePage {
     static selectors = {
-        ofstedInfoText: 'This information comes from TRAMS. It is for reference only. It will not appear in the project document.',
+        ofstedInfoText: 'This information comes from Ofsted. It is for reference only. It will not appear in the project document.',
         keyStageText: 'This information comes from Find and compare schools in England. It is for reference only. It will not appear in the project document.',
         ofstedInfoTextId: '.govuk-grid-column-two-thirds > .govuk-body',
         keyStageLinkText: 'Source of data: Find and compare school performance (opens in new tab)',

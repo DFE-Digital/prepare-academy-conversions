@@ -60,13 +60,13 @@
         @if (ViewData["AcademyTypeAndRoute"] is AcademyTypeAndRoutes.Sponsored)
         {
            <div class="govuk-body">
-                <p data-test="annex-b-help">You can add more data from the <a class="govuk-link" asp-page="@Links.AnnexB.Index.Page" asp-route-id="@Model.Project.Id">school's application form</a>.</p>
+                <p data-test="annex-b-help">You can add more data from the <a class="govuk-link" asp-page="@Links.AnnexB.Index.Page" asp-route-id="@Model.Project.Id">Annex B form</a>.</p>
            </div>
         }
         else
         {
            <div class="govuk-body">
-               Some of the information has come from
+               Some of the information has come from the 
                <a class="govuk-link" asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
            </div>
            <br>
