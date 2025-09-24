@@ -53,14 +53,16 @@ describe('Decisions Tests', () => {
 
       decisionPage.makeDecision("approved")
 
+      const userName = 'Paul Lockwood';
 
       Logger.log("Check error and add necessary details to record the decision");
-      decisionPage.checkErrorAndAddDetails('15', '10', '2024', 'Paul Lockwood');
+      decisionPage.checkErrorAndAddDetails('15', '10', '2024', userName);
+
+      Logger.log("Check assigned user");
+      cy.get('[data-id="assigned-user"]').should('include.text', userName);
 
       Logger.log("Click on record a decision menubar button");
       decisionPage.clickRecordDecisionMenu();
-
-      
 
       Logger.log("Record the decision with the necessary details");
       decisionPage.clickRecordDecisionWithoutError()
