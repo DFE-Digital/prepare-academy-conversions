@@ -1,11 +1,11 @@
 ﻿@using Dfe.PrepareConversions.Data.Models
 @if (ViewData["AcademyTypeAndRoute"] is not null)
 {
-   @if (ViewData["AcademyTypeAndRoute"].Equals(AcademyTypeAndRoutes.Voluntary))
-   {
-      <p>
-         This information comes from Ofsted and the
-         <a class="govuk-link" asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
-      </p>
-   }
+    @if (ViewData["AcademyTypeAndRoute"].Equals(AcademyTypeAndRoutes.Voluntary))
+    {
+        <p>
+            Some of the information has come from the
+            <a class="govuk-link" asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+        </p>
+    }
 }
