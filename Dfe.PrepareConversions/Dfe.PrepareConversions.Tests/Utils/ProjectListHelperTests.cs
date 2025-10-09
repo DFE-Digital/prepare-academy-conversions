@@ -45,13 +45,13 @@ public class ProjectListHelperTests : BaseIntegrationTests
    public void MapProjectString_OtherValue_ReturnsCorrectValues()
    {
       ProjectStatus actual = ProjectListHelper.MapProjectStatus("Hello!");
-      Assert.Equivalent(new ProjectStatus("Pre Advisory Board", yellow), actual);
+      Assert.Equivalent(new ProjectStatus("Pre advisory board", yellow), actual);
    }
 
    [Theory]
-   [InlineData("APPROVED WITH CONDITIONS", "Approved with Conditions", green)]
-   [InlineData("approved with conditions", "Approved with Conditions", green)]
-   [InlineData("Approved with Conditions", "Approved with Conditions", green)]
+   [InlineData("APPROVED WITH CONDITIONS", "Approved with conditions", green)]
+   [InlineData("approved with conditions", "Approved with conditions", green)]
+   [InlineData("Approved with Conditions", "Approved with conditions", green)]
    public void MapProjectString_ApprovedWithConditions_ReturnsCorrectValues(string inputStatus, string expectedStatus, string expectedColour)
    {
       ProjectStatus actual = ProjectListHelper.MapProjectStatus(inputStatus);

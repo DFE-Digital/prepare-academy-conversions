@@ -111,20 +111,20 @@ public static class ProjectListHelper
       {
          return result switch
          {
-            AdvisoryBoardDecisions.Approved => new ProjectStatus(result.ToString().ToTitleCase(), green),
-            AdvisoryBoardDecisions.Deferred => new ProjectStatus(result.ToString().ToTitleCase(), orange),
-            AdvisoryBoardDecisions.Declined => new ProjectStatus(result.ToString().ToTitleCase(), red),
-            AdvisoryBoardDecisions.DAORevoked => new ProjectStatus("DAO Revoked", red),
-            AdvisoryBoardDecisions.Withdrawn => new ProjectStatus(result.ToString().ToTitleCase(), purple),
-            _ => new ProjectStatus(result.ToString().ToTitleCase(), yellow)
+            AdvisoryBoardDecisions.Approved => new ProjectStatus(result.ToString().ToFirstUpper(), green),
+            AdvisoryBoardDecisions.Deferred => new ProjectStatus(result.ToString().ToFirstUpper(), orange),
+            AdvisoryBoardDecisions.Declined => new ProjectStatus(result.ToString().ToFirstUpper(), red),
+            AdvisoryBoardDecisions.DAORevoked => new ProjectStatus("DAO revoked", red),
+            AdvisoryBoardDecisions.Withdrawn => new ProjectStatus(result.ToString().ToFirstUpper(), purple),
+            _ => new ProjectStatus(result.ToString().ToFirstUpper(), yellow)
          };
       }
 
       return status?.ToLowerInvariant() switch
       {
-         "approved with conditions" => new ProjectStatus("Approved with Conditions", green),
-         "daorevoked" => new ProjectStatus("DAO Revoked", red),
-         _ => new ProjectStatus("Pre Advisory Board", yellow)
+         "approved with conditions" => new ProjectStatus("Approved with conditions", green),
+         "daorevoked" => new ProjectStatus("DAO revoked", red),
+         _ => new ProjectStatus("Pre advisory board", yellow)
       };
    }
 

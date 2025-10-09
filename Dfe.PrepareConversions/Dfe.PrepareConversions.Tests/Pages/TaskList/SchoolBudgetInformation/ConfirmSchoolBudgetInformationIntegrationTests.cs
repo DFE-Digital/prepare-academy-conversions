@@ -2,7 +2,6 @@
 using AngleSharp.Html.Dom;
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
 using System;
@@ -22,7 +21,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      Document.QuerySelector("#school-budget-information-status")!.TextContent.Trim().Should().Be("In Progress");
+      Document.QuerySelector("#school-budget-information-status")!.TextContent.Trim().Should().Be("In progress");
       Document.QuerySelector("#school-budget-information-status")!.ClassName.Should().Contain("blue");
 
       await NavigateAsync("Budget");
@@ -52,7 +51,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      Document.QuerySelector("#school-budget-information-status")!.TextContent.Trim().Should().Be("In Progress");
+      Document.QuerySelector("#school-budget-information-status")!.TextContent.Trim().Should().Be("In progress");
       Document.QuerySelector("#school-budget-information-status")!.ClassName.Should().Contain("blue");
 
       await NavigateAsync("Budget");
@@ -162,7 +161,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      Document.QuerySelector("#school-budget-information-status")!.TextContent.Trim().Should().Be("Not Started");
+      Document.QuerySelector("#school-budget-information-status")!.TextContent.Trim().Should().Be("Not started");
       Document.QuerySelector("#school-budget-information-status")!.ClassName.Should().Contain("grey");
 
       await NavigateAsync("Budget");
@@ -197,7 +196,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
    [Fact]
    public async Task Should_navigate_between_task_list_and_confirm_school_budget_information()
    {
-      var project = AddGetProject();
+      AcademyConversionProject project = AddGetProject();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Budget");
@@ -219,16 +218,17 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
       "change-school-budget-information-additional-information")]
    public async Task Should_not_have_change_link_if_project_read_only(params string[] elements)
    {
-      var project = AddGetProject(isReadOnly: true);
+      AcademyConversionProject project = AddGetProject(isReadOnly: true);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Budget");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/budget");
-      foreach (var element in elements)
+      foreach (string element in elements)
       {
          VerifyElementDoesNotExist(element);
       }
+
       Document.QuerySelector("#school-budget-information-complete").Should().BeNull();
       Document.QuerySelector("#confirm-and-continue-button").Should().BeNull();
    }

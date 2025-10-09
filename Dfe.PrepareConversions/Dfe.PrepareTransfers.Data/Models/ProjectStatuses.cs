@@ -6,9 +6,9 @@ public enum ProjectStatuses
 {
    Empty = 0,
 
-   [Display(Name = "Not Started")] NotStarted,
+   [Display(Name = "Not started")] NotStarted,
 
-   [Display(Name = "In Progress")] InProgress,
+   [Display(Name = "In progress")] InProgress,
 
    [Display(Name = "Completed")] Completed
 }

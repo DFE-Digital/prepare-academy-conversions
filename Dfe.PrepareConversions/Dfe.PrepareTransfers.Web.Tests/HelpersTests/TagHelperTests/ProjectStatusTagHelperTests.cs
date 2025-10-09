@@ -11,8 +11,8 @@ namespace Dfe.PrepareTransfers.Web.Tests.HelpersTests.TagHelperTests;
 public class ProjectStatusTagHelperTests
 {
    [Theory]
-   [InlineData(ProjectStatuses.NotStarted, "Not Started", "govuk-tag--grey")]
-   [InlineData(ProjectStatuses.InProgress, "In Progress", "govuk-tag--blue")]
+   [InlineData(ProjectStatuses.NotStarted, "Not started", "govuk-tag--grey")]
+   [InlineData(ProjectStatuses.InProgress, "In progress", "govuk-tag--blue")]
    [InlineData(ProjectStatuses.Completed, "Completed", null)]
    [InlineData(ProjectStatuses.Empty, "", null)]
    public void GivenNotStartedStatus_ReturnsRedNotStartedTag(ProjectStatuses projectStatus,

@@ -4,7 +4,7 @@ namespace Dfe.PrepareConversions.Data.Models.AcademyConversion;
 
 public enum Status
 {
-   [Description("Not Started")] NotStarted = 0,
-   [Description("In Progress")] InProgress = 1,
+   [Description("Not started")] NotStarted = 0,
+   [Description("In progress")] InProgress = 1,
    Completed = 2
 }
