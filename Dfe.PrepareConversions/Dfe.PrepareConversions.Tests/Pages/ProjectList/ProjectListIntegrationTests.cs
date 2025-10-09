@@ -16,11 +16,11 @@ public class ProjectListIntegrationTests(IntegrationTestingWebApplicationFactory
    [Fact]
    public async Task Should_display_list_of_projects_and_navigate_to_and_from_task_list()
    {
-      var projects = AddGetProjects(x => x.AcademyTypeAndRoute = "Converter").ToList();
+      List<AcademyConversionProject> projects = AddGetProjects(x => x.AcademyTypeAndRoute = "Converter").ToList();
       AddGetStatuses();
 
       await OpenAndConfirmPathAsync("/project-list");
-      var firstProject = AddGetProject(p => p.Id = projects.First().Id);
+      AcademyConversionProject firstProject = AddGetProject(p => p.Id = projects.First().Id);
 
       await NavigateAsync(projects.First().SchoolName);
       Document.Url.Should().BeUrl($"/task-list/{firstProject.Id}?returnToFormAMatMenu=False");
@@ -30,7 +30,7 @@ public class ProjectListIntegrationTests(IntegrationTestingWebApplicationFactory
 
       for (int i = 0; i < 2; i++)
       {
-         var project = projects.ElementAt(i);
+         AcademyConversionProject project = projects.ElementAt(i);
 
          Document.QuerySelector($"#school-name-{i}")?.TextContent.Should().Contain(project.SchoolName);
          Document.QuerySelector($"#urn-{i}")?.TextContent.Should().Contain(project.Urn.ToString());
@@ -49,35 +49,35 @@ public class ProjectListIntegrationTests(IntegrationTestingWebApplicationFactory
    public async Task Should_display_approved_after_recording_decision()
    {
       AddGetStatuses();
-      var projects = AddGetProjects(p => p.ProjectStatus = "Approved");
+      IEnumerable<AcademyConversionProject> projects = AddGetProjects(p => p.ProjectStatus = "Approved");
 
       await OpenAndConfirmPathAsync("/project-list");
 
       Document.QuerySelector<IHtmlElement>($"#project-status-{projects.First().Id}")?.Text().Should()
-         .Be("APPROVED");
+         .Be("Approved");
    }
 
    [Fact]
    public async Task Should_display_pre_advisory_board_by_default()
    {
       AddGetStatuses();
-      var projects = AddGetProjects().ToList();
+      List<AcademyConversionProject> projects = AddGetProjects().ToList();
 
       await OpenAndConfirmPathAsync("/project-list");
 
       Document.QuerySelector<IHtmlElement>($"#project-status-{projects.First().Id}")?.Text().Should()
-         .Be("PRE ADVISORY BOARD");
+         .Be("Pre Advisory Board");
    }
 
    [Fact]
    public async Task Should_display_application_received_date_when_no_htb_date_set()
    {
       AddGetStatuses();
-      var projects = AddGetProjects(p => p.HeadTeacherBoardDate = null);
+      IEnumerable<AcademyConversionProject> projects = AddGetProjects(p => p.HeadTeacherBoardDate = null);
 
       await OpenAndConfirmPathAsync("/project-list");
 
-      var project = projects.First();
+      AcademyConversionProject project = projects.First();
       Document.QuerySelector("#application-to-join-trust-0")?.TextContent.Should().Contain(project.NameOfTrust);
       Document.QuerySelector("#local-authority-0")?.TextContent.Should().Contain(project.LocalAuthority);
       Document.QuerySelector("#application-received-date-0")?.TextContent.Should().Contain(project.CreatedOn.ToDateString());
@@ -89,15 +89,15 @@ public class ProjectListIntegrationTests(IntegrationTestingWebApplicationFactory
    public async Task Should_not_have_create_project_document_buttons_if_project_read_only()
    {
       AddGetStatuses();
-      var projects = AddGetProjects(p => p.ProjectStatus = "Approved", isReadOnly: true);
+      IEnumerable<AcademyConversionProject> projects = AddGetProjects(p => p.ProjectStatus = "Approved", isReadOnly: true);
 
       await OpenAndConfirmPathAsync("/project-list");
 
-      var project = projects.First();
+      AcademyConversionProject project = projects.First();
 
       await NavigateAsync(project.SchoolName);
-       
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}?returnToFormAMatMenu=False"); 
+
+      Document.Url.Should().BeUrl($"/task-list/{project.Id}?returnToFormAMatMenu=False");
       Document.QuerySelector("#preview-project-template-button").Should().BeNull();
       Document.QuerySelector("#generate-project-template-button").Should().BeNull();
    }
