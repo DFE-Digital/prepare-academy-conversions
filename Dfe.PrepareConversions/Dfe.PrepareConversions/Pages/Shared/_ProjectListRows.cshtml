@@ -56,7 +56,7 @@
                     <span if="projectRow.Item.AssignedUserFullName.IsPresent()">@projectRow.Item.AssignedUserFullName</span>
                 </div>
                 <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
-                  <strong class="govuk-tag govuk-tag--@projectRow.Item.Status.Colour" id="project-status-@projectRow.Item.Id">@projectRow.Item.Status.Value</strong>
+                  <strong class="govuk-tag govuk-tag--@projectRow.Item.Status.Colour" id="project-status-@projectRow.Item.Id">@projectRow.Item.Status.Value.ToTitleCase()</strong>
                </div>
             </td>
         </tr>

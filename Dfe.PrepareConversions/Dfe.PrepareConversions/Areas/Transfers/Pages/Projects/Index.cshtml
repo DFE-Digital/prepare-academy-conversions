@@ -1,4 +1,5 @@
 ﻿@page "/transfers/project/{urn}"
+@using Dfe.Academisation.ExtensionMethods
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using NetEscapades.AspNetCore.SecurityHeaders.TagHelpers
 @using Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers.TagHelpers
@@ -61,13 +62,13 @@
                 if (string.IsNullOrEmpty(Model.ProjectStatus))
                 {
                     <strong class="govuk-tag govuk-tag--yellow">
-                        PRE ADVISORY BOARD
+                        Pre Advisory Board
                     </strong>
                 }
                 else
                 {
                     <strong class="@($"govuk-tag {decisionClass}")">
-                        @Model.ProjectStatus
+                        @Model.ProjectStatus.ToTitleCase()
                     </strong>
                 }
             }
