@@ -1,18 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Dfe.PrepareTransfers.Data.Models
+namespace Dfe.PrepareTransfers.Data.Models;
+
+public enum ProjectStatuses
 {
-    public enum ProjectStatuses
-    {
-        Empty = 0,
+   Empty = 0,
 
-        [Display(Name = "NOT STARTED")]
-        NotStarted,
+   [Display(Name = "Not started")] NotStarted,
 
-        [Display(Name = "IN PROGRESS")]
-        InProgress,
+   [Display(Name = "In progress")] InProgress,
 
-        [Display(Name = "COMPLETED")]
-        Completed
-    }
+   [Display(Name = "Completed")] Completed
 }

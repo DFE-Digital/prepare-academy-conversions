@@ -13,11 +13,11 @@ public class ConfirmRisksAndIssuesIntegrationTests(IntegrationTestingWebApplicat
    [Fact]
    public async Task Should_be_in_progress_and_display_risks_and_issues()
    {
-      var project = AddGetProject(p => p.RisksAndIssuesSectionComplete = false);
+      AcademyConversionProject project = AddGetProject(p => p.RisksAndIssuesSectionComplete = false);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      Document.QuerySelector("#risks-and-issues-status")!.TextContent.Trim().Should().Be("In Progress");
+      Document.QuerySelector("#risks-and-issues-status")!.TextContent.Trim().Should().Be("In progress");
       Document.QuerySelector("#risks-and-issues-status")!.ClassName.Should().Contain("blue");
 
       await NavigateAsync("Risks and issues");
@@ -28,7 +28,7 @@ public class ConfirmRisksAndIssuesIntegrationTests(IntegrationTestingWebApplicat
    [Fact]
    public async Task Should_be_completed_and_checked_when_risks_and_issues_mark_as_complete_true()
    {
-      var project = AddGetProject(project =>
+      AcademyConversionProject project = AddGetProject(project =>
       {
          project.RisksAndIssuesSectionComplete = true;
       });
@@ -54,7 +54,7 @@ public class ConfirmRisksAndIssuesIntegrationTests(IntegrationTestingWebApplicat
    [Fact]
    public async Task Should_be_not_started_and_display_empty_when_risks_and_issues_not_prepopulated()
    {
-      var project = AddGetProject(project =>
+      AcademyConversionProject project = AddGetProject(project =>
       {
          project.RisksAndIssues = null;
          project.RisksAndIssuesSectionComplete = false;
@@ -67,7 +67,7 @@ public class ConfirmRisksAndIssuesIntegrationTests(IntegrationTestingWebApplicat
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      Document.QuerySelector("#risks-and-issues-status")!.TextContent.Trim().Should().Be("Not Started");
+      Document.QuerySelector("#risks-and-issues-status")!.TextContent.Trim().Should().Be("Not started");
       Document.QuerySelector("#risks-and-issues-status")!.ClassName.Should().Contain("grey");
 
       await NavigateAsync("Risks and issues");
@@ -83,7 +83,7 @@ public class ConfirmRisksAndIssuesIntegrationTests(IntegrationTestingWebApplicat
    [Fact]
    public async Task Should_show_error_summary_when_there_is_an_API_error()
    {
-      var project = AddGetProject();
+      AcademyConversionProject project = AddGetProject();
       AddPatchError(project.Id);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-risks-issues");
@@ -96,7 +96,7 @@ public class ConfirmRisksAndIssuesIntegrationTests(IntegrationTestingWebApplicat
    [Fact]
    public async Task Should_navigate_between_task_list_and_confirm_risks_and_issues()
    {
-      var project = AddGetProject();
+      AcademyConversionProject project = AddGetProject();
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Risks and issues");
@@ -111,7 +111,7 @@ public class ConfirmRisksAndIssuesIntegrationTests(IntegrationTestingWebApplicat
    [Fact]
    public async Task Should_not_have_change_link_if_project_read_only()
    {
-      var project = AddGetProject(isReadOnly: true);
+      AcademyConversionProject project = AddGetProject(isReadOnly: true);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("Risks and issues");

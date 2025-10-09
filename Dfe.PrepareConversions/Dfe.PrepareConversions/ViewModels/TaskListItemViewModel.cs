@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dfe.PrepareConversions.Models;
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.PrepareConversions.ViewModels;
@@ -14,8 +15,8 @@ public sealed class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
    public string Status { get; }
    public string CssClass { get; }
 
-   public static TaskListItemViewModel NotStarted => new("Not Started", "govuk-tag--grey");
-   public static TaskListItemViewModel InProgress => new("In Progress", "govuk-tag--blue");
+   public static TaskListItemViewModel NotStarted => new("Not started", "govuk-tag--grey");
+   public static TaskListItemViewModel InProgress => new("In progress", "govuk-tag--blue");
    public static TaskListItemViewModel Completed => new("Completed", "");
 
    public bool Equals([AllowNull] TaskListItemViewModel other)
@@ -179,7 +180,7 @@ public sealed class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
 
    public static TaskListItemViewModel PublicSectorEqualityDutyStatus(bool sectionComplete, string publicEqualityDutyImpact, string publicEqualityDutyReductionReason)
    {
-      var isPsedValid = Models.PreviewPublicSectorEqualityDutyModel.IsValid(publicEqualityDutyImpact, publicEqualityDutyReductionReason, sectionComplete);
+      bool isPsedValid = PreviewPublicSectorEqualityDutyModel.IsValid(publicEqualityDutyImpact, publicEqualityDutyReductionReason, sectionComplete);
 
       if (isPsedValid)
       {

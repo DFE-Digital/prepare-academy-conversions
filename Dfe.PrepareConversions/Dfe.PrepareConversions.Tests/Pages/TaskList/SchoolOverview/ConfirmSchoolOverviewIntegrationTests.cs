@@ -1,9 +1,9 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.Academisation.ExtensionMethods;
+using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Tests.Extensions;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 using FluentAssertions;
 using System.Threading.Tasks;
 using Xunit;
@@ -20,7 +20,7 @@ public class ConfirmSchoolOverviewIntegrationTests(IntegrationTestingWebApplicat
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      Document.QuerySelector("#school-overview-status")!.TextContent.Trim().Should().Be("In Progress");
+      Document.QuerySelector("#school-overview-status")!.TextContent.Trim().Should().Be("In progress");
       Document.QuerySelector("#school-overview-status")!.ClassName.Should().Contain("blue");
 
       await NavigateAsync("School overview");
@@ -58,6 +58,7 @@ public class ConfirmSchoolOverviewIntegrationTests(IntegrationTestingWebApplicat
 
       Document.QuerySelector("#distance-to-trust-headquarters-additional-text")!.TextContent.Should().Be(project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
    }
+
    [Fact]
    public async Task Should_display_annex_b_help_when_sponsored()
    {
@@ -66,9 +67,10 @@ public class ConfirmSchoolOverviewIntegrationTests(IntegrationTestingWebApplicat
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
       await NavigateAsync("School overview");
-      var test = Document.QuerySelector("[data-test=annex-b-help]").TextContent;
+      string test = Document.QuerySelector("[data-test=annex-b-help]").TextContent;
       Document.QuerySelector("[data-test=annex-b-help]").TextContent.Should().Be("You can add more data from the Annex B form.");
    }
+
    [Fact]
    public async Task Should_display_change_on_pfi_scheme()
    {
@@ -132,7 +134,7 @@ public class ConfirmSchoolOverviewIntegrationTests(IntegrationTestingWebApplicat
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      Document.QuerySelector("#school-overview-status")!.TextContent.Trim().Should().Be("Not Started");
+      Document.QuerySelector("#school-overview-status")!.TextContent.Trim().Should().Be("Not started");
       Document.QuerySelector("#school-overview-status")!.ClassName.Should().Contain("grey");
 
       await NavigateAsync("School overview");
@@ -176,7 +178,7 @@ public class ConfirmSchoolOverviewIntegrationTests(IntegrationTestingWebApplicat
    [Fact]
    public async Task Back_link_should_navigate_from_school_overview_to_task_list()
    {
-      var project = AddGetProject();
+      AcademyConversionProject project = AddGetProject();
       AddGetEstablishmentDto(project.Urn.ToString());
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
@@ -198,16 +200,17 @@ public class ConfirmSchoolOverviewIntegrationTests(IntegrationTestingWebApplicat
       "change-member-of-parliament-name-and-party")]
    public async Task Should_not_have_change_link_if_project_read_only(params string[] elements)
    {
-      var project = AddGetProject(isReadOnly: true);
+      AcademyConversionProject project = AddGetProject(isReadOnly: true);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
       await NavigateAsync("School overview");
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/school-overview");
-      foreach (var element in elements)
+      foreach (string element in elements)
       {
          VerifyElementDoesNotExist(element);
       }
+
       Document.QuerySelector("#school-overview-complete").Should().BeNull();
       Document.QuerySelector("#confirm-and-continue-button").Should().BeNull();
    }
