@@ -1,6 +1,5 @@
 ﻿using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models;
-using Dfe.PrepareConversions.Extensions;
 using FluentAssertions;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,11 +51,12 @@ public class OtherSchoolsInMatTests : BaseIntegrationTests
       {
          AcademyConversionProject project = projects.ElementAt(i);
 
-         Document.QuerySelector($"#project-status-{project.Id}")?.TextContent.Should().Contain("PRE ADVISORY BOARD");
+         Document.QuerySelector($"#project-status-{project.Id}")?.TextContent.Should().Contain("Pre advisory board");
       }
 
       ResetServer();
    }
+
    private List<AcademyConversionProject> GenerateProjects()
    {
       List<AcademyConversionProject> projects = AddGetProjects(project =>

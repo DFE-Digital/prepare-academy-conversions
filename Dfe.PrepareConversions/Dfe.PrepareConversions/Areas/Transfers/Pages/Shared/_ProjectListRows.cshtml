@@ -78,13 +78,13 @@
                     if (string.IsNullOrEmpty(project.Status))
                     {
                         <strong class="govuk-tag govuk-tag--yellow">
-                            PRE ADVISORY BOARD
+                           Pre advisory board
                         </strong>
                     }
                     else
                     {
                         <strong class="@($"govuk-tag {decisionClass}")" }>
-                            @project.Status
+                            @project.Status.ToFirstUpper()
                         </strong>
                     }
                 }

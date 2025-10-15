@@ -1,4 +1,5 @@
 ﻿@page "/task-list/{id:int}"
+@using Dfe.Academisation.ExtensionMethods
 @using Dfe.PrepareConversions.Data.Models
 @using Dfe.PrepareConversions.TagHelpers
 @model Dfe.PrepareConversions.Pages.TaskList.IndexModel
@@ -34,7 +35,7 @@
                             Confirm project dates
                         </a>
                     </span>
-                    <strong class="govuk-tag @Model.TaskList.ProjectDatesTaskListTaskListStatus.CssClass app-task-list__tag" id="project-dates-status"> @Model.TaskList.ProjectDatesTaskListTaskListStatus.Status</strong>
+                    <strong class="govuk-tag @Model.TaskList.ProjectDatesTaskListTaskListStatus.CssClass app-task-list__tag" id="project-dates-status"> @Model.TaskList.ProjectDatesTaskListTaskListStatus.Status.ToFirstUpper()</strong>
                 </li>
              </ul>
         </div>
@@ -137,7 +138,7 @@
                             LA information template sent date
                         </a>
                     </span>
-                    <strong class="govuk-tag @Model.TaskList.LocalAuthorityInformationTemplateTaskListStatus.CssClass app-task-list__tag" id="la-info-template-status">@Model.TaskList.LocalAuthorityInformationTemplateTaskListStatus.Status</strong>
+                    <strong class="govuk-tag @Model.TaskList.LocalAuthorityInformationTemplateTaskListStatus.CssClass app-task-list__tag" id="la-info-template-status">@Model.TaskList.LocalAuthorityInformationTemplateTaskListStatus.Status.ToFirstUpper()</strong>
                 </li>
             </ul>
         </div>
