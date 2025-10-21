@@ -35,20 +35,8 @@ internal static class TransfersExtensions
       services.AddTransient<ICreateProjectTemplate, CreateProjectTemplate>();
       services.AddTransient<IGetInformationForProject, GetInformationForProject>();
       services.AddTransient<IGetProjectTemplateModel, GetProjectTemplateModel>();
-      //services.AddTransient<ITaskListService, TaskListService>();
-
-      //services.AddTransient<IUserRepository, UserRepository>();
-      //services.AddTransient<IGraphClientFactory, GraphClientFactory>();
-      //services.AddTransient<IGraphUserService, GraphUserService>();
 
       services.AddScoped<IAcademyTransfersAdvisoryBoardDecisionRepository, AcademyTransfersAdvisoryBoardDecisionRepository>();
-
-      //services.AddSingleton<PerformanceDataChannel>();
       services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
-      //services.AddSingleton<IAuthorizationHandler, HeaderRequirementHandler>();
-      //services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>();
-      //services.AddScoped<ICorrelationContext, CorrelationContext>();
-
-      //services.AddHostedService<PerformanceDataProcessingService>();
    }
 }

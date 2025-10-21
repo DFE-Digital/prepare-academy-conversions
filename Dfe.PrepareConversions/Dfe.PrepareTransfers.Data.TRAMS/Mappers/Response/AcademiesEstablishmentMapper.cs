@@ -78,11 +78,6 @@ public class AcademiesEstablishmentMapper : IMapper<EstablishmentDto, Academy>
          PercentageFsm = PercentageHelper.DisplayAsPercentage(input.Census.PercentageFsm)
       };
 
-      //if (input.ViewAcademyConversion == null)
-      //{
-      //    return generalInformation;
-      //}
-
       generalInformation.Pan = input.Pan;
       generalInformation.Pfi = input.Pfi;
       generalInformation.Deficit = input.Deficit;

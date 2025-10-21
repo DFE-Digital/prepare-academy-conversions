@@ -10,6 +10,7 @@ public class EducationalAttendanceViewModel
 
    public static EducationalAttendanceViewModel Build(SchoolAbsenceDataDto dto)
    {
-      return new EducationalAttendanceViewModel { Year = dto.Year, OverallAbsence = dto.OverallAbsence, PersistentAbsence = dto.PersistentAbsence };
+       return new EducationalAttendanceViewModel
+           { Year = dto.Year, OverallAbsence = dto.OverallAbsence, PersistentAbsence = dto.PersistentAbsence };
    }
 }

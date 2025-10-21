@@ -9,7 +9,7 @@ public static class CreateProjectMapper
 {
    public static CreateNewFormAMatProject MapFormAMatToDto(EstablishmentDto establishment, TrustDto trust, string HasSchoolApplied, string HasPreferredTrust)
    {
-      CreateNewProject conversion = MapToDto(establishment, trust, HasSchoolApplied, HasPreferredTrust, true);
+      var conversion = MapToDto(establishment, trust, HasSchoolApplied, HasPreferredTrust, true);
       return new CreateNewFormAMatProject(conversion);
    }
 
@@ -20,7 +20,7 @@ public static class CreateProjectMapper
          throw new ArgumentNullException(nameof(establishment));
       }
 
-      bool partOfPfiScheme = !string.IsNullOrWhiteSpace(establishment.Pfi)
+      var partOfPfiScheme = !string.IsNullOrWhiteSpace(establishment.Pfi)
                              && !establishment.Pfi.Equals("No", StringComparison.InvariantCultureIgnoreCase);
 
 
@@ -34,7 +34,7 @@ public static class CreateProjectMapper
       NewProjectTrust createTrust = null;
       if (trust != null)
       {
-         createTrust = new NewProjectTrust(
+         createTrust = new(
             trust.Name,
             trust.ReferenceNumber);
       }
