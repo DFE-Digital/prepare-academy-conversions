@@ -2,12 +2,11 @@
 using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Tests.Customisations;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 using FluentAssertions;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using System;
 using System.Threading.Tasks;
 using Xunit;
-using System.Linq;
 
 namespace Dfe.PrepareConversions.Tests.Pages.SponsoredProject;
 
@@ -33,5 +32,4 @@ public class SummaryIntegrationTests : BaseIntegrationTests
       Document.QuerySelector<IHtmlElement>("[data-cy=trust-name]")!.Text().Trim().Should()
          .Be(TrustDtoResponse.Data[0].Name);
    }
-
 }

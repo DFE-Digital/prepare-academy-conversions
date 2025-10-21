@@ -1,7 +1,7 @@
 ﻿using Dfe.PrepareConversions.Data.Exceptions;
 using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
-using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Trusts;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;

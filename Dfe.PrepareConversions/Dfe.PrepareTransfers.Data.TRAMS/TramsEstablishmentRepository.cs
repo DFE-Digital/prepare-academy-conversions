@@ -1,6 +1,6 @@
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareTransfers.Data.Models;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using System;

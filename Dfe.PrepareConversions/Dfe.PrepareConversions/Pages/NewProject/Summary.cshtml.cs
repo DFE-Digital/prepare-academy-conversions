@@ -1,12 +1,14 @@
+using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Mappings;
 using Dfe.PrepareConversions.Models;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
-using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Trusts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,8 +21,8 @@ public class SummaryModel : PageModel
    private readonly ITrustsRepository _trustRepository;
 
    public SummaryModel(IGetEstablishment getEstablishment,
-                       ITrustsRepository trustRepository,
-                       IAcademyConversionProjectRepository academyConversionProjectRepository)
+      ITrustsRepository trustRepository,
+      IAcademyConversionProjectRepository academyConversionProjectRepository)
    {
       _getEstablishment = getEstablishment;
       _trustRepository = trustRepository;
@@ -28,7 +30,7 @@ public class SummaryModel : PageModel
    }
 
    public EstablishmentDto Establishment { get; set; }
-   public TrustDto Trust { get; set; } = null;
+   public TrustDto Trust { get; set; }
    public string HasSchoolApplied { get; set; }
    public string HasPreferredTrust { get; set; }
    public string ProposedTrustName { get; set; }
@@ -39,7 +41,8 @@ public class SummaryModel : PageModel
    public string FamReference { get; set; }
 
 
-   public async Task<IActionResult> OnGetAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat, string isProjectInPrepare, string famReference)
+   public async Task<IActionResult> OnGetAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat,
+      string isProjectInPrepare, string famReference)
    {
       Establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
       if (!string.IsNullOrEmpty(ukprn))
@@ -58,8 +61,8 @@ public class SummaryModel : PageModel
 
       if (FamReference != null)
       {
-         var results = await _academyConversionProjectRepository.SearchFormAMatProjects(FamReference);
-         var famProject = results.Body.First();
+         ApiResponse<IEnumerable<FormAMatProject>> results = await _academyConversionProjectRepository.SearchFormAMatProjects(FamReference);
+         FormAMatProject famProject = results.Body.First();
 
          ProposedTrustName = famProject.ProposedTrustName;
          ApplicationReference = string.IsNullOrEmpty(famProject.ApplicationReference) ? null : famProject.ApplicationReference;
@@ -68,11 +71,12 @@ public class SummaryModel : PageModel
       return Page();
    }
 
-   public async Task<IActionResult> OnPostAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat, string famReference)
+   public async Task<IActionResult> OnPostAsync(string urn, string ukprn, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat,
+      string famReference)
    {
       EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUrn(urn);
 
-      TrustDto trust = new TrustDto();
+      TrustDto trust = new();
       if (ukprn != null)
       {
          trust = await _trustRepository.GetTrustByUkprn(ukprn);
@@ -93,17 +97,19 @@ public class SummaryModel : PageModel
 
       if (_isFormAMat && proposedTrustName == null)
       {
-         var createdProject = await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust, true));
-         var formAMatProject = await _academyConversionProjectRepository.SearchFormAMatProjects(famReference);
+         ApiResponse<AcademyConversionProject> createdProject =
+            await _academyConversionProjectRepository.CreateProject(CreateProjectMapper.MapToDto(establishment, trust, hasSchoolApplied, hasPreferredTrust, true));
+         ApiResponse<IEnumerable<FormAMatProject>> formAMatProject = await _academyConversionProjectRepository.SearchFormAMatProjects(famReference);
 
          int projectId = createdProject.Body.Id;
-         var formAMatProjectID = formAMatProject.Body.First().Id;
+         int formAMatProjectID = formAMatProject.Body.First().Id;
 
          await _academyConversionProjectRepository.SetFormAMatProjectReference(projectId, new SetFormAMatProjectReference(projectId, formAMatProjectID));
       }
 
       return RedirectToPage(Links.ProjectList.Index.Page);
    }
+
    /// <summary>
    /// Determines the appropriate back link based on the application's current state in the New conversion journey.
    /// </summary>
@@ -119,15 +125,13 @@ public class SummaryModel : PageModel
          return Links.NewProject.CreateNewFormAMat.Page;
       }
       // If the school has applied or a preferred trust has been specified, return the search trusts page as both will need to search trust.
-      else if (hasSchoolApplied || hasPreferredTrust)
+
+      if (hasSchoolApplied || hasPreferredTrust)
       {
          return Links.NewProject.SearchTrusts.Page;
       }
       // If it's not of the above cases it suggests that it is a sponsored conversion without a preferred trust
-      else
-      {
-         return Links.NewProject.PreferredTrust.Page;
-      }
 
+      return Links.NewProject.PreferredTrust.Page;
    }
 }

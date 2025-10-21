@@ -3,11 +3,10 @@ using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
-using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Trusts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,8 +14,7 @@ namespace Dfe.PrepareConversions.Pages.Groups;
 
 public class SearchTrustForGroupModel : PageModel
 {
-   [BindProperty]
-   public string SearchQuery { get; set; } = "";
+   [BindProperty] public string SearchQuery { get; set; } = "";
 
    public string Urn { get; set; }
 

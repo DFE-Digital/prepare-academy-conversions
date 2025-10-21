@@ -7,7 +7,7 @@ using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
 using Dfe.PrepareConversions.Data.Models.UserRole;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Tests.Customisations;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,11 +22,11 @@ public abstract partial class BaseIntegrationTests
    private readonly string[] _routes = [AcademyTypeAndRoutes.Voluntary, AcademyTypeAndRoutes.Sponsored];
 
    protected IEnumerable<AcademyConversionProject> AddGetProjects(Action<AcademyConversionProject> postSetup = null,
-                                                                  int? recordCount = null,
-                                                                  AcademyConversionSearchModelV2 searchModel = null,
-                                                                  bool isReadOnly = false)
+      int? recordCount = null,
+      AcademyConversionSearchModelV2 searchModel = null,
+      bool isReadOnly = false)
    {
-      var projects = _fixture
+      List<AcademyConversionProject> projects = _fixture
          .Build<AcademyConversionProject>()
          .With(x => x.AcademyTypeAndRoute, _routes[Random.Shared.Next(0, _routes.Length)])
          .With(x => x.IsReadOnly, isReadOnly)
@@ -40,8 +40,7 @@ public abstract partial class BaseIntegrationTests
 
       ApiV2Wrapper<IEnumerable<AcademyConversionProject>> response = new()
       {
-         Data = projects,
-         Paging = new ApiV2PagingInfo { RecordCount = recordCount ?? projects.Count, Page = 0 }
+         Data = projects, Paging = new ApiV2PagingInfo { RecordCount = recordCount ?? projects.Count, Page = 0 }
       };
 
       searchModel ??= new AcademyConversionSearchModelV2
@@ -62,11 +61,7 @@ public abstract partial class BaseIntegrationTests
 
    protected ProjectFilterParameters AddGetStatuses()
    {
-      ProjectFilterParameters filterParameters = new()
-      {
-         Statuses = ["Accepted", "Accepted with Conditions", "Deferred", "Declined"],
-         AssignedUsers = ["Bob"]
-      };
+      ProjectFilterParameters filterParameters = new() { Statuses = ["Accepted", "Accepted with Conditions", "Deferred", "Declined"], AssignedUsers = ["Bob"] };
 
 
       _factory.AddGetWithJsonResponse(PathFor.GetFilterParameters, filterParameters);
@@ -76,7 +71,7 @@ public abstract partial class BaseIntegrationTests
 
    public AcademyConversionProject AddGetProject(Action<AcademyConversionProject> postSetup = null, bool isReadOnly = false)
    {
-      var project = _fixture
+      AcademyConversionProject project = _fixture
          .Build<AcademyConversionProject>()
          .With(x => x.AcademyTypeAndRoute, AcademyTypeAndRoutes.Voluntary)
          .With(x => x.IsReadOnly, isReadOnly)
@@ -93,7 +88,7 @@ public abstract partial class BaseIntegrationTests
 
    public KeyStagePerformanceResponse AddGetKeyStagePerformance(int urn, Action<KeyStagePerformanceResponse> postSetup = null)
    {
-      var keyStagePerformance = _fixture.Create<KeyStagePerformanceResponse>();
+      KeyStagePerformanceResponse keyStagePerformance = _fixture.Create<KeyStagePerformanceResponse>();
       postSetup?.Invoke(keyStagePerformance);
 
       _factory.AddGetWithJsonResponse($"/educationPerformance/{urn}", keyStagePerformance);
@@ -102,7 +97,7 @@ public abstract partial class BaseIntegrationTests
 
    public IEnumerable<ProjectNote> AddGetProjectNotes(int academyConversionProjectId, Action<IEnumerable<ProjectNote>> postSetup = null)
    {
-      var projectNotes = _fixture.CreateMany<ProjectNote>().ToList();
+      List<ProjectNote> projectNotes = _fixture.CreateMany<ProjectNote>().ToList();
       postSetup?.Invoke(projectNotes);
 
       _factory.AddGetWithJsonResponse($"/project-notes/{academyConversionProjectId}", projectNotes);
@@ -111,10 +106,10 @@ public abstract partial class BaseIntegrationTests
    }
 
    public UpdateAcademyConversionProject AddPatchProject<TProperty>(AcademyConversionProject project,
-                                                                    Expression<Func<UpdateAcademyConversionProject, TProperty>> propertyThatWillChange,
-                                                                    TProperty expectedNewValue)
+      Expression<Func<UpdateAcademyConversionProject, TProperty>> propertyThatWillChange,
+      TProperty expectedNewValue)
    {
-      var request = _fixture
+      UpdateAcademyConversionProject request = _fixture
          .Build<UpdateAcademyConversionProject>()
          .OmitAutoProperties()
          .With(propertyThatWillChange, expectedNewValue)
@@ -126,19 +121,20 @@ public abstract partial class BaseIntegrationTests
 
    public void GetRoleCapabilities(List<string> roles)
    {
-      var response = new RoleCapabilitiesModel
+      RoleCapabilitiesModel response = new()
       {
-         Capabilities = [
+         Capabilities =
+         [
             RoleCapability.CreateConversionProject,
             RoleCapability.CreateTransferProject
-          ]
+         ]
       };
       _factory.AddPostWithJsonRequest(PathFor.GetRoleCapabilities, roles, response);
    }
 
    public UpdateAcademyConversionProject AddPatchConfiguredProject(AcademyConversionProject project, Action<UpdateAcademyConversionProject> configure = null)
    {
-      var request = _fixture
+      UpdateAcademyConversionProject request = _fixture
          .Build<UpdateAcademyConversionProject>()
          .OmitAutoProperties()
          .Create();
@@ -168,7 +164,7 @@ public abstract partial class BaseIntegrationTests
 
    public SetPerformanceDataModel AddPutPerformanceData(AcademyConversionProject project)
    {
-      var request = _fixture
+      SetPerformanceDataModel request = _fixture
          .Build<SetPerformanceDataModel>()
          .OmitAutoProperties()
          .With(x => x.Id, project.Id)
@@ -181,33 +177,34 @@ public abstract partial class BaseIntegrationTests
       _factory.AddPutWithJsonRequest(string.Format(PathFor.SetPerformanceData, project.Id), request, project);
       return request;
    }
+
    public SetAssignedUserModel AddSetAssignUser(AcademyConversionProject project, string fullName)
    {
-      var deliveryOfficers = _factory.UserRepository.GetAllUsers().Result;
-      var assignedUser = deliveryOfficers.SingleOrDefault(u => u.FullName == fullName);
+      IEnumerable<User> deliveryOfficers = _factory.UserRepository.GetAllUsers().Result;
+      User assignedUser = deliveryOfficers.SingleOrDefault(u => u.FullName == fullName);
       SetAssignedUserModel request;
 
       if (assignedUser == null)
       {
          request = _fixture
-           .Build<SetAssignedUserModel>()
-           .OmitAutoProperties()
-           .With(x => x.Id, project.Id)
-           .With(x => x.UserId, Guid.Empty)
-           .With(x => x.FullName, string.Empty)
-           .With(x => x.EmailAddress, string.Empty)
-           .Create();
+            .Build<SetAssignedUserModel>()
+            .OmitAutoProperties()
+            .With(x => x.Id, project.Id)
+            .With(x => x.UserId, Guid.Empty)
+            .With(x => x.FullName, string.Empty)
+            .With(x => x.EmailAddress, string.Empty)
+            .Create();
       }
       else
       {
          request = _fixture
-           .Build<SetAssignedUserModel>()
-           .OmitAutoProperties()
-           .With(x => x.Id, project.Id)
-           .With(x => x.UserId, Guid.Parse(assignedUser.Id))
-           .With(x => x.FullName, fullName)
-           .With(x => x.EmailAddress, assignedUser.EmailAddress)
-           .Create();
+            .Build<SetAssignedUserModel>()
+            .OmitAutoProperties()
+            .With(x => x.Id, project.Id)
+            .With(x => x.UserId, Guid.Parse(assignedUser.Id))
+            .With(x => x.FullName, fullName)
+            .With(x => x.EmailAddress, assignedUser.EmailAddress)
+            .Create();
       }
 
       _factory.AddPutWithJsonRequest(string.Format(PathFor.SetAssignedUser, project.Id), request, project);
@@ -216,14 +213,14 @@ public abstract partial class BaseIntegrationTests
 
 
    public UpdateAcademyConversionProject AddPatchProjectMany(AcademyConversionProject project,
-                                                             Func<IPostprocessComposer<UpdateAcademyConversionProject>, IPostprocessComposer<UpdateAcademyConversionProject>>
-                                                                postProcess)
+      Func<IPostprocessComposer<UpdateAcademyConversionProject>, IPostprocessComposer<UpdateAcademyConversionProject>>
+         postProcess)
    {
-      var composer = _fixture
+      IPostprocessComposer<UpdateAcademyConversionProject> composer = _fixture
          .Build<UpdateAcademyConversionProject>()
          .OmitAutoProperties();
 
-      var request = postProcess(composer)
+      UpdateAcademyConversionProject request = postProcess(composer)
          .Create();
 
       _factory.AddPatchWithJsonRequest(string.Format(PathFor.UpdateProject, project.Id), request, project);
@@ -263,7 +260,7 @@ public abstract partial class BaseIntegrationTests
    {
       // create just 1 applying school as that's all we accept so far
       _fixture.Customize<AcademisationApplication>(a => a.With(s => s.Schools, () => new List<School> { _fixture.Create<School>() }));
-      var application = _fixture.Create<AcademisationApplication>();
+      AcademisationApplication application = _fixture.Create<AcademisationApplication>();
       postSetup?.Invoke(application);
 
       _factory.AddGetWithJsonResponse(string.Format(_pathFor.GetApplicationByReference, application.ApplicationReference), application);

@@ -1,7 +1,7 @@
 ﻿using Dfe.PrepareConversions.Data.Exceptions;
 using Dfe.PrepareConversions.Data.Models.Establishment;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -17,8 +17,8 @@ public class EstablishmentService : IGetEstablishment
    private readonly ILogger<EstablishmentService> _logger;
 
    public EstablishmentService(IDfeHttpClientFactory httpClientFactory,
-                               ILogger<EstablishmentService> logger,
-                               IHttpClientService httpClientService)
+      ILogger<EstablishmentService> logger,
+      IHttpClientService httpClientService)
    {
       _httpClient = httpClientFactory.CreateTramsClient();
       _logger = logger;

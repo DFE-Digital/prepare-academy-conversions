@@ -1,7 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 using FluentAssertions;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;

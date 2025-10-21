@@ -1,54 +1,54 @@
-﻿using Microsoft.AspNetCore.Routing;
+﻿using GovUK.Dfe.CoreLibs.Testing.Authorization;
+using GovUK.Dfe.CoreLibs.Testing.Authorization.Helpers;
+using GovUK.Dfe.CoreLibs.Testing.Mocks.WebApplicationFactory;
+using GovUK.Dfe.CoreLibs.Testing.Results;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using DfE.CoreLibs.Testing.Authorization;
-using DfE.CoreLibs.Testing.Mocks.WebApplicationFactory;
-using Microsoft.Extensions.DependencyInjection;
-using DfE.CoreLibs.Testing.Authorization.Helpers;
 
-namespace Dfe.PrepareConversions.Tests.Pages
+namespace Dfe.PrepareConversions.Tests.Pages;
+
+public class PageSecurityTests
 {
-   public class PageSecurityTests
+   private readonly AuthorizationTester _validator;
+   private static readonly Lazy<IEnumerable<RouteEndpoint>> _endpoints = new(InitializeEndpoints);
+   private const bool _globalAuthorizationEnabled = true;
+
+   public PageSecurityTests()
    {
-      private readonly AuthorizationTester _validator;
-      private static readonly Lazy<IEnumerable<RouteEndpoint>> _endpoints = new(InitializeEndpoints);
-      private const bool _globalAuthorizationEnabled = true;
+      _validator = new AuthorizationTester(_globalAuthorizationEnabled);
+   }
 
-      public PageSecurityTests()
-      {
-         _validator = new AuthorizationTester(_globalAuthorizationEnabled);
-      }
+   [Theory]
+   [MemberData(nameof(GetPageSecurityTestData))]
+   public void ValidatePageSecurity(string route, string expectedSecurity)
+   {
+      ValidationResult result = _validator.ValidatePageSecurity(route, expectedSecurity, _endpoints.Value);
+      Assert.Null(result.Message);
+   }
 
-      [Theory]
-      [MemberData(nameof(GetPageSecurityTestData))]
-      public void ValidatePageSecurity(string route, string expectedSecurity)
-      {
-         var result = _validator.ValidatePageSecurity(route, expectedSecurity, _endpoints.Value);
-         Assert.Null(result.Message);
-      }
+   public static IEnumerable<object[]> GetPageSecurityTestData()
+   {
+      string configFilePath = "ExpectedSecurityConfig.json";
+      IEnumerable<object[]> pages = EndpointTestDataProvider.GetPageSecurityTestDataFromFile(configFilePath, _endpoints.Value, _globalAuthorizationEnabled);
+      return pages;
+   }
 
-      public static IEnumerable<object[]> GetPageSecurityTestData()
-      {
-         var configFilePath = "ExpectedSecurityConfig.json";
-        var pages = EndpointTestDataProvider.GetPageSecurityTestDataFromFile(configFilePath, _endpoints.Value, _globalAuthorizationEnabled);
-         return pages;
-      }
+   private static IEnumerable<RouteEndpoint> InitializeEndpoints()
+   {
+      // Using a temporary factory to access the EndpointDataSource for lazy initialization
+      CustomWebApplicationFactory<Startup> factory = new();
+      EndpointDataSource endpointDataSource = factory.Services.GetRequiredService<EndpointDataSource>();
 
-      private static IEnumerable<RouteEndpoint> InitializeEndpoints()
-      {
-         // Using a temporary factory to access the EndpointDataSource for lazy initialization
-         var factory = new CustomWebApplicationFactory<Startup>();
-         var endpointDataSource = factory.Services.GetRequiredService<EndpointDataSource>();
+      IEnumerable<RouteEndpoint> endpoints = endpointDataSource.Endpoints
+         .OfType<RouteEndpoint>()
+         .Where(x => !x.RoutePattern.RawText.Contains("MicrosoftIdentity") &&
+                     !x.RoutePattern.RawText.Equals("/") &&
+                     !x.Metadata.Any(m => m is RouteNameMetadata && ((RouteNameMetadata)m).RouteName == "default"));
 
-         var endpoints = endpointDataSource.Endpoints
-            .OfType<RouteEndpoint>()
-            .Where(x => !x.RoutePattern.RawText.Contains("MicrosoftIdentity") &&
-                        !x.RoutePattern.RawText.Equals("/") &&
-                        !x.Metadata.Any(m => m is RouteNameMetadata && ((RouteNameMetadata)m).RouteName == "default"));
-
-         return endpoints;
-      }
+      return endpoints;
    }
 }

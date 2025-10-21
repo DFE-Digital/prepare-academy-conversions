@@ -1,7 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 using FluentAssertions;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
@@ -48,7 +48,7 @@ public class SearchSchoolIntegrationTests : BaseIntegrationTests
       await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]")!.SubmitAsync();
 
       Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
-        .Be("We could not find any schools matching your search criteria");
+         .Be("We could not find any schools matching your search criteria");
    }
 
    [Fact]
@@ -64,6 +64,6 @@ public class SearchSchoolIntegrationTests : BaseIntegrationTests
       await Document.QuerySelector<IHtmlButtonElement>("[data-id=submit]")!.SubmitAsync();
 
       Document.QuerySelector<IHtmlElement>("[data-cy=error-summary]")!.Text().Trim().Should()
-        .Be("We could not find a school matching your search criteria");
+         .Be("We could not find a school matching your search criteria");
    }
 }

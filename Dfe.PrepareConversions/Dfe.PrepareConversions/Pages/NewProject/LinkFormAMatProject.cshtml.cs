@@ -3,7 +3,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Models.ProjectList;
 using Dfe.PrepareConversions.Services;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.IdentityModel.Tokens;
@@ -30,15 +30,11 @@ public class LinkFormAMatProject : PageModel
    private const string SEARCH_LABEL = "Enter the trust name, application reference or FAM reference of the existing form a MAT/SAT project";
    private const string SEARCH_ENDPOINT = "/start-new-project/link-project?handler=Search&searchQuery=";
 
-   [BindProperty]
-   public string SearchQuery { get; set; } = "";
+   [BindProperty] public string SearchQuery { get; set; } = "";
 
-   [BindProperty]
-   public string IsFormAMat { get; set; }
-   [BindProperty]
-   public string IsProjectInPrepare { get; set; }
-   [BindProperty]
-   public string HasSchoolApplied { get; set; }
+   [BindProperty] public string IsFormAMat { get; set; }
+   [BindProperty] public string IsProjectInPrepare { get; set; }
+   [BindProperty] public string HasSchoolApplied { get; set; }
 
    public string Urn { get; set; }
 
@@ -65,7 +61,11 @@ public class LinkFormAMatProject : PageModel
 
       IEnumerable<FormAMatProject> projects = (await _repository.SearchFormAMatProjects(searchQuery)).Body;
 
-      return new JsonResult(projects.Select(s => new { suggestion = HighlightSearchMatch($"{s.ProposedTrustName} ({s.ReferenceNumber}){IncludeA2BReferenceNumberIfAvailable(s)}", searchSplit[0].Trim(), s), value = $"{s.ProposedTrustName} ({s.ReferenceNumber}){IncludeA2BReferenceNumberIfAvailable(s)}" }));
+      return new JsonResult(projects.Select(s => new
+      {
+         suggestion = HighlightSearchMatch($"{s.ProposedTrustName} ({s.ReferenceNumber}){IncludeA2BReferenceNumberIfAvailable(s)}", searchSplit[0].Trim(), s),
+         value = $"{s.ProposedTrustName} ({s.ReferenceNumber}){IncludeA2BReferenceNumberIfAvailable(s)}"
+      }));
    }
 
    public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect, string hasPreferredTrust, string proposedTrustName)
@@ -77,15 +77,26 @@ public class LinkFormAMatProject : PageModel
          _errorService.AddError("Application Reference", "Please enter a application reference with more than three characters");
          return Page();
       }
+
       string[] splitSearch = SplitOnBrackets(SearchQuery);
       // Fam reference should always be second in array
-      var FamReference = splitSearch[1];
+      string FamReference = splitSearch[1];
 
-      var nextPage = Links.NewProject.Summary.Page;
+      string nextPage = Links.NewProject.Summary.Page;
 
       redirect = string.IsNullOrEmpty(redirect) ? nextPage : redirect;
 
-      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied, IsFormAMat, IsProjectInPrepare, FamReference, hasPreferredTrust, proposedTrustName });
+      return RedirectToPage(redirect, new
+      {
+         ukprn,
+         urn,
+         HasSchoolApplied,
+         IsFormAMat,
+         IsProjectInPrepare,
+         FamReference,
+         hasPreferredTrust,
+         proposedTrustName
+      });
    }
 
    private static string HighlightSearchMatch(string input, string toReplace, FormAMatProject project)

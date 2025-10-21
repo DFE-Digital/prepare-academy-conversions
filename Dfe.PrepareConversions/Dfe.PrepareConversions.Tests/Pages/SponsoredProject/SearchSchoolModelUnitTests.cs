@@ -4,7 +4,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Pages.SponsoredProject;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.Tests.Customisations;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -93,10 +93,7 @@ public class SearchSchoolModelUnitTests
    public async Task OnGetSearch_SearchSchool_Prepopulated([Frozen] Mock<IGetEstablishment> getEstablishment)
    {
       // Arrange
-      SearchSchoolModel sut = new(getEstablishment.Object, new ErrorService())
-      {
-         TempData = new TempDataDictionary(Mock.Of<HttpContext>(), Mock.Of<ITempDataProvider>())
-      };
+      SearchSchoolModel sut = new(getEstablishment.Object, new ErrorService()) { TempData = new TempDataDictionary(Mock.Of<HttpContext>(), Mock.Of<ITempDataProvider>()) };
       EstablishmentDto EstablishmentDto = new() { Name = "Bristol", Urn = "100" };
       getEstablishment.Setup(m => m.GetEstablishmentByUrn(It.IsAny<string>())).ReturnsAsync(EstablishmentDto);
 

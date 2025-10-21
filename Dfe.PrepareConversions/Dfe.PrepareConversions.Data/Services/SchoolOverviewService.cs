@@ -1,5 +1,5 @@
 ﻿using Dfe.PrepareConversions.Data.Models;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using System;
 using System.Threading.Tasks;
 

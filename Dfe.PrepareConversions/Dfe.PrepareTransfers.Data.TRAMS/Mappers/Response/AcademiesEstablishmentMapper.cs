@@ -1,7 +1,7 @@
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Data.Models.Academies;
 using Dfe.PrepareTransfers.Helpers;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using System.Collections.Generic;
 
 namespace Dfe.PrepareTransfers.Data.TRAMS.Mappers.Response
@@ -77,11 +77,6 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Mappers.Response
             SchoolType = input.EstablishmentType.Name,
             PercentageFsm = PercentageHelper.DisplayAsPercentage(input.Census.PercentageFsm)
          };
-
-         //if (input.ViewAcademyConversion == null)
-         //{
-         //    return generalInformation;
-         //}
 
          generalInformation.Pan = input.Pan;
          generalInformation.Pfi = input.Pfi;

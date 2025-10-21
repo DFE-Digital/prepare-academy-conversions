@@ -1,6 +1,6 @@
 ﻿using Dfe.PrepareConversions.Data.Models.NewProject;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
-using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Trusts;
 using System;
 
 namespace Dfe.PrepareConversions.Mappings;
@@ -12,6 +12,7 @@ public static class CreateProjectMapper
       var conversion = MapToDto(establishment, trust, HasSchoolApplied, HasPreferredTrust, true);
       return new CreateNewFormAMatProject(conversion);
    }
+
    public static CreateNewProject MapToDto(EstablishmentDto establishment, TrustDto trust, string HasSchoolApplied, string HasPreferredTrust, bool isFormAMat = false)
    {
       if (establishment == null)
@@ -19,8 +20,8 @@ public static class CreateProjectMapper
          throw new ArgumentNullException(nameof(establishment));
       }
 
-      var partOfPfiScheme = !string.IsNullOrWhiteSpace(establishment?.Pfi)
-                      && !establishment.Pfi.Equals("No", StringComparison.InvariantCultureIgnoreCase);
+      var partOfPfiScheme = !string.IsNullOrWhiteSpace(establishment.Pfi)
+                             && !establishment.Pfi.Equals("No", StringComparison.InvariantCultureIgnoreCase);
 
 
       NewProjectSchool createSchool = new(
