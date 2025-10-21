@@ -20,7 +20,7 @@ public static class CreateProjectMapper
          throw new ArgumentNullException(nameof(establishment));
       }
 
-      bool partOfPfiScheme = !string.IsNullOrWhiteSpace(establishment?.Pfi)
+      bool partOfPfiScheme = !string.IsNullOrWhiteSpace(establishment.Pfi)
                              && !establishment.Pfi.Equals("No", StringComparison.InvariantCultureIgnoreCase);
 
 
