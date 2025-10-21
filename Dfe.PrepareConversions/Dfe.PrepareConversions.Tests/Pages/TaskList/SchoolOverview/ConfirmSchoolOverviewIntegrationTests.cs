@@ -1,10 +1,10 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.Academisation.ExtensionMethods;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using System.Threading.Tasks;
 using Xunit;
 

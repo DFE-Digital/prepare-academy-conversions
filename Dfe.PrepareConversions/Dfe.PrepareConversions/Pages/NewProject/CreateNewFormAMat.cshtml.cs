@@ -2,7 +2,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Models.ProjectList;
 using Dfe.PrepareConversions.Services;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.IdentityModel.Tokens;
@@ -20,10 +20,10 @@ public class CreateNewFormAMatModel : PageModel
       _getEstablishment = getEstablishment;
       _errorService = errorService;
    }
-   [BindProperty]
-   public string IsFormAMat { get; set; }
-   [BindProperty]
-   public string HasSchoolApplied { get; set; }
+
+   [BindProperty] public string IsFormAMat { get; set; }
+   [BindProperty] public string HasSchoolApplied { get; set; }
+
    [BindProperty(Name = "proposed-trust-name")]
    public string ProposedTrustName { get; set; }
 
@@ -44,17 +44,27 @@ public class CreateNewFormAMatModel : PageModel
 
    public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect, string hasPreferredTrust, string isProjectInPrepare, string famReference)
    {
-
       if (ProposedTrustName.IsNullOrEmpty() || ProposedTrustName.Length <= 2)
       {
          _errorService.AddError("ProposedTrustName", "Please enter a proposed trust name with more than three characters");
          return Page();
       }
-      var nextPage = Links.NewProject.Summary.Page;
+
+      string nextPage = Links.NewProject.Summary.Page;
 
 
       redirect = string.IsNullOrEmpty(redirect) ? nextPage : redirect;
 
-      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied, IsFormAMat, ProposedTrustName, isProjectInPrepare, hasPreferredTrust, famReference });
+      return RedirectToPage(redirect, new
+      {
+         ukprn,
+         urn,
+         HasSchoolApplied,
+         IsFormAMat,
+         ProposedTrustName,
+         isProjectInPrepare,
+         hasPreferredTrust,
+         famReference
+      });
    }
 }

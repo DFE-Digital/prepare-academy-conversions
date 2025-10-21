@@ -3,7 +3,7 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Services;
-using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Trusts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.IdentityModel.Tokens;
@@ -13,7 +13,11 @@ using static Dfe.PrepareConversions.Models.Links;
 
 namespace Dfe.PrepareConversions.Pages.Groups;
 
-public class SelectConversionsModel(IAcademyConversionProjectRepository academyConversionProjectRepository, ITrustsRepository trustRepository, ErrorService errorService, IProjectGroupsRepository projectGroupsRepository) : PageModel
+public class SelectConversionsModel(
+   IAcademyConversionProjectRepository academyConversionProjectRepository,
+   ITrustsRepository trustRepository,
+   ErrorService errorService,
+   IProjectGroupsRepository projectGroupsRepository) : PageModel
 {
    public List<AcademyConversionProject> ConversionProjects { get; set; } = [];
    public string ReferenceNumber { get; set; }
@@ -21,7 +25,7 @@ public class SelectConversionsModel(IAcademyConversionProjectRepository academyC
    private ApiResponse<IEnumerable<AcademyConversionProject>> Projects { get; set; }
    public string Ukprn { get; set; }
 
-   public int? GroupId { get; set; } = null;
+   public int? GroupId { get; set; }
 
    public async Task OnGet(string ukprn, int? id = null)
    {
@@ -35,7 +39,6 @@ public class SelectConversionsModel(IAcademyConversionProjectRepository academyC
 
       if (trust is not null)
       {
-
          ReferenceNumber = trust.ReferenceNumber;
 
          Projects = await academyConversionProjectRepository.GetProjectsForGroup(ReferenceNumber);
@@ -47,19 +50,18 @@ public class SelectConversionsModel(IAcademyConversionProjectRepository academyC
       }
 
       await SetGroupInformation(id);
-
    }
 
    private async Task SetGroupInformation(int? id)
    {
       if (id.HasValue)
       {
-         var projectGroup = await projectGroupsRepository.GetProjectGroupById(id.Value);
+         ApiResponse<ProjectGroup> projectGroup = await projectGroupsRepository.GetProjectGroupById(id.Value);
          GroupId = id;
 
          if (projectGroup.Body != null)
          {
-            var group = projectGroup.Body;
+            ProjectGroup group = projectGroup.Body;
             GroupName = $"{group.TrustName} - {group.ReferenceNumber}";
          }
       }
@@ -76,7 +78,7 @@ public class SelectConversionsModel(IAcademyConversionProjectRepository academyC
 
          ConversionProjects.Clear();
 
-         var projects = await academyConversionProjectRepository.GetProjectsForGroup(referenceNumber);
+         ApiResponse<IEnumerable<AcademyConversionProject>> projects = await academyConversionProjectRepository.GetProjectsForGroup(referenceNumber);
 
          foreach (AcademyConversionProject project in projects.Body)
          {
@@ -87,6 +89,5 @@ public class SelectConversionsModel(IAcademyConversionProjectRepository academyC
       }
 
       return RedirectToPage(ProjectGroups.CheckConversionDetails.Page, new { ukprn, selectedconversions, groupId, groupName });
-
    }
 }

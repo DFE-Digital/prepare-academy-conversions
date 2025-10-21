@@ -3,7 +3,7 @@ using Dfe.PrepareConversions.Data.Models.Trust;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
-using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Trusts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
@@ -28,12 +28,9 @@ public class SearchTrustModel : PageModel
       AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, string.Empty, SEARCH_ENDPOINT);
    }
 
-   [BindProperty]
-   public string SearchQuery { get; set; } = "";
-   [BindProperty]
-   public string HasSchoolApplied { get; set; }
-   [BindProperty]
-   public string HasPreferredTrust { get; set; }
+   [BindProperty] public string SearchQuery { get; set; } = "";
+   [BindProperty] public string HasSchoolApplied { get; set; }
+   [BindProperty] public string HasPreferredTrust { get; set; }
 
    public string Urn { get; set; }
    public string Ukprn { get; set; }
@@ -105,7 +102,17 @@ public class SearchTrustModel : PageModel
          return Page();
       }
 
-      return RedirectToPage(Links.NewProject.Summary.Page, new { ukprn, urn, HasSchoolApplied, HasPreferredTrust, proposedTrustName, isFormAMat, isProjectInPrepare, famReference });
+      return RedirectToPage(Links.NewProject.Summary.Page, new
+      {
+         ukprn,
+         urn,
+         HasSchoolApplied,
+         HasPreferredTrust,
+         proposedTrustName,
+         isFormAMat,
+         isProjectInPrepare,
+         famReference
+      });
    }
 
    private static string HighlightSearchMatch(string input, string toReplace, TrustDto trust)

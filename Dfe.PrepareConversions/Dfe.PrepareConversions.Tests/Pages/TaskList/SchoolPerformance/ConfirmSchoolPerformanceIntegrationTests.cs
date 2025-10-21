@@ -1,8 +1,8 @@
 ﻿using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Extensions;
 using Dfe.PrepareConversions.Tests.Extensions;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 using FluentAssertions;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,9 +27,11 @@ public class ConfirmSchoolPerformanceIntegrationTests : BaseIntegrationTests
 
       Document.QuerySelector("#additional-information")?.TextContent.Should().Be(project.SchoolPerformanceAdditionalInformation);
 
-      Document.QuerySelector("#overall-effectiveness")?.TextContent.Should().Be($"Last full inspection: {schoolPerformance.MISEstablishment.OverallEffectiveness.DisplayOfstedRating()}");
+      Document.QuerySelector("#overall-effectiveness")?.TextContent.Should()
+         .Be($"Last full inspection: {schoolPerformance.MISEstablishment.OverallEffectiveness.DisplayOfstedRating()}");
       Document.QuerySelector("#quality-of-education")?.TextContent.Should().Be(schoolPerformance.MISEstablishment.QualityOfEducation.DisplayOfstedRating());
-      Document.QuerySelector("#leadership-and-management")?.TextContent.Should().Be(schoolPerformance.MISEstablishment.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating());
+      Document.QuerySelector("#leadership-and-management")?.TextContent.Should()
+         .Be(schoolPerformance.MISEstablishment.EffectivenessOfLeadershipAndManagement.DisplayOfstedRating());
       Document.QuerySelector("#behaviour-and-attitudes")?.TextContent.Should().Be(schoolPerformance.MISEstablishment.BehaviourAndAttitudes.DisplayOfstedRating());
       Document.QuerySelector("#personal-development")?.TextContent.Should().Be(schoolPerformance.MISEstablishment.PersonalDevelopment.DisplayOfstedRating());
       Document.QuerySelector("#early-years-provision")?.TextContent.Should().Be(schoolPerformance.MISEstablishment.EarlyYearsProvision.DisplayOfstedRating());

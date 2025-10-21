@@ -6,7 +6,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
-using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Trusts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -32,8 +32,7 @@ public class UpdateTrustModel : BaseAcademyConversionProjectPageModel
       AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, string.Empty, SEARCH_ENDPOINT);
    }
 
-   [BindProperty]
-   public string SearchQuery { get; set; } = "";
+   [BindProperty] public string SearchQuery { get; set; } = "";
    public AutoCompleteSearchModel AutoCompleteSearchModel { get; set; }
 
    public override async Task<IActionResult> OnGetAsync(int id)
@@ -94,11 +93,11 @@ public class UpdateTrustModel : BaseAcademyConversionProjectPageModel
       {
          try
          {
-            var trust = trusts.Data.First();
+            TrustDto trust = trusts.Data.First();
 
             await _repository.SetIncomingTrust(id, new SetIncomingTrustDataModel(id,
-                                                                              trust.ReferenceNumber,
-                                                                              trust.Name));
+               trust.ReferenceNumber,
+               trust.Name));
 
             (string returnPage, string fragment) = GetReturnPageAndFragment();
 
@@ -108,16 +107,14 @@ public class UpdateTrustModel : BaseAcademyConversionProjectPageModel
             }
 
             return RedirectToPage(SuccessPage, new { id });
-
          }
          catch (ApiResponseException ex)
          {
-
             _errorService.AddApiError();
             return Page();
          }
-
       }
+
       return Page();
    }
 
@@ -147,10 +144,10 @@ public class UpdateTrustModel : BaseAcademyConversionProjectPageModel
       Request.Query.TryGetValue("fragment", out StringValues fragmentQuery);
       return (returnQuery, fragmentQuery);
    }
+
    public string SuccessPage
    {
       get => TempData["SuccessPage"].ToString();
       set => TempData["SuccessPage"] = value;
    }
-
 }

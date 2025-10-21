@@ -1,4 +1,4 @@
-using DfE.CoreLibs.Contracts.Academies.V1.EducationalPerformance;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V1.EducationalPerformance;
 using System.Collections.Generic;
 using System.Linq;
 

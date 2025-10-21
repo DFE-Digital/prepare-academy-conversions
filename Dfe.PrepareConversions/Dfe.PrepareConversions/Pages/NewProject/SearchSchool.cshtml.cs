@@ -3,7 +3,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Models.ProjectList;
 using Dfe.PrepareConversions.Services;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
@@ -26,9 +26,7 @@ public class SearchSchoolModel : PageModel
       _errorService = errorService;
    }
 
-   [BindProperty]
-
-   public string SearchQuery { get; set; } = "";
+   [BindProperty] public string SearchQuery { get; set; } = "";
 
    public AutoCompleteSearchModel AutoCompleteSearchModel { get; set; }
 
@@ -56,7 +54,8 @@ public class SearchSchoolModel : PageModel
       return new JsonResult(schools.Select(s => new { suggestion = HighlightSearchMatch($"{s.Name} ({s.Urn})", searchSplit[0].Trim(), s), value = $"{s.Name} ({s.Urn})" }));
    }
 
-   public async Task<IActionResult> OnPost(string ukprn, string redirect, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat, string isProjectInPrepare, string famReference)
+   public async Task<IActionResult> OnPost(string ukprn, string redirect, string hasSchoolApplied, string hasPreferredTrust, string proposedTrustName, string isFormAMat,
+      string isProjectInPrepare, string famReference)
    {
       AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
 
@@ -75,9 +74,10 @@ public class SearchSchoolModel : PageModel
          return Page();
       }
 
-      string expectedUrn = splitSearch[splitSearch.Length - 1]; ;
+      string expectedUrn = splitSearch[splitSearch.Length - 1];
+      ;
 
-      var expectedEstablishment = await _getEstablishment.GetEstablishmentByUrn(expectedUrn);
+      EstablishmentDto expectedEstablishment = await _getEstablishment.GetEstablishmentByUrn(expectedUrn);
 
       if (expectedEstablishment.Name == null)
       {
@@ -88,7 +88,17 @@ public class SearchSchoolModel : PageModel
 
       redirect = string.IsNullOrEmpty(redirect) ? Links.NewProject.SchoolApply.Page : redirect;
 
-      return RedirectToPage(redirect, new { urn = expectedUrn, ukprn, hasSchoolApplied, hasPreferredTrust, proposedTrustName, isFormAMat, isProjectInPrepare, famReference });
+      return RedirectToPage(redirect, new
+      {
+         urn = expectedUrn,
+         ukprn,
+         hasSchoolApplied,
+         hasPreferredTrust,
+         proposedTrustName,
+         isFormAMat,
+         isProjectInPrepare,
+         famReference
+      });
    }
 
    private static string HighlightSearchMatch(string input, string toReplace, EstablishmentSearchResponse school)

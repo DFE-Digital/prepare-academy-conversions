@@ -51,7 +51,7 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
 
    public IUserRepository UserRepository { get; private set; }
 
-   public IEnumerable<LogEntry> GetMockServerLogs(string path, HttpMethod verb = null)
+   public IEnumerable<ILogEntry> GetMockServerLogs(string path, HttpMethod verb = null)
    {
       IRequestBuilder requestBuilder = Request.Create().WithPath(path);
       if (verb is not null) requestBuilder.UsingMethod(verb.Method);
@@ -98,7 +98,7 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
          services.AddTransient(_ => featureManager.Object);
 
          // Remove and replace Redis
-         var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IDistributedCache));
+         ServiceDescriptor descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IDistributedCache));
          if (descriptor != null) services.Remove(descriptor);
 
          services.AddSingleton<IDistributedCache, MemoryDistributedCache>();
@@ -248,18 +248,13 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
       }
    }
 
-   public class MockAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+   public class MockAuthenticationHandler(
+      IOptionsMonitor<AuthenticationSchemeOptions> options,
+      ILoggerFactory logger,
+      UrlEncoder encoder,
+      ISystemClock clock)
+      : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder, clock)
    {
-      public MockAuthenticationHandler(
-         IOptionsMonitor<AuthenticationSchemeOptions> options,
-         ILoggerFactory logger,
-         UrlEncoder encoder,
-         ISystemClock clock
-      )
-         : base(options, logger, encoder, clock)
-      {
-      }
-
       protected override Task<AuthenticateResult> HandleAuthenticateAsync()
       {
          List<Claim> claims = [new(ClaimTypes.Name, "Name"), new(ClaimTypes.Role, "conversionRole"), new(ClaimTypes.Role, "transferRoles")];

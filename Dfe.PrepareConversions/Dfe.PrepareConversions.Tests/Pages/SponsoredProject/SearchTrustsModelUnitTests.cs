@@ -5,7 +5,7 @@ using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Pages.SponsoredProject;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.Tests.Customisations;
-using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Trusts;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Newtonsoft.Json;

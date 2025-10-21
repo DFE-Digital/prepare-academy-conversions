@@ -1,5 +1,4 @@
-using DfE.CoreLibs.Contracts.Academies.V1.EducationalPerformance;
-
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V1.EducationalPerformance;
 
 namespace Dfe.PrepareConversions.ViewModels;
 
@@ -11,11 +10,6 @@ public class EducationalAttendanceViewModel
 
    public static EducationalAttendanceViewModel Build(SchoolAbsenceDataDto dto)
    {
-      return new EducationalAttendanceViewModel
-      {
-         Year = dto.Year,
-         OverallAbsence = dto.OverallAbsence,
-         PersistentAbsence = dto.PersistentAbsence,
-      };
+      return new EducationalAttendanceViewModel { Year = dto.Year, OverallAbsence = dto.OverallAbsence, PersistentAbsence = dto.PersistentAbsence };
    }
 }

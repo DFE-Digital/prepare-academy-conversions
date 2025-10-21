@@ -2,7 +2,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Models.ProjectList;
 using Dfe.PrepareConversions.Services;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.IdentityModel.Tokens;
@@ -20,13 +20,11 @@ public class IsProjectAlreadyInPreprareModel : PageModel
       _getEstablishment = getEstablishment;
       _errorService = errorService;
    }
-   [BindProperty]
-   public string IsFormAMat { get; set; }
-   [BindProperty]
-   public string HasSchoolApplied { get; set; }
 
-   [BindProperty]
-   public string IsProjectInPrepare { get; set; }
+   [BindProperty] public string IsFormAMat { get; set; }
+   [BindProperty] public string HasSchoolApplied { get; set; }
+
+   [BindProperty] public string IsProjectInPrepare { get; set; }
 
    public string Urn { get; set; }
 
@@ -45,12 +43,12 @@ public class IsProjectAlreadyInPreprareModel : PageModel
 
    public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect, string hasPreferredTrust, string proposedTrustName, string famReference)
    {
-
       if (IsProjectInPrepare.IsNullOrEmpty())
       {
          _errorService.AddError("Does project exists", "Select yes if the project already exists in Prepare");
          return Page();
       }
+
       string nextPage = null;
       if (IsProjectInPrepare.ToLower() == "yes")
       {
@@ -64,6 +62,16 @@ public class IsProjectAlreadyInPreprareModel : PageModel
 
       redirect = string.IsNullOrEmpty(redirect) ? nextPage : redirect;
 
-      return RedirectToPage(redirect, new { ukprn, urn, HasSchoolApplied, IsFormAMat, IsProjectInPrepare, hasPreferredTrust, proposedTrustName, famReference });
+      return RedirectToPage(redirect, new
+      {
+         ukprn,
+         urn,
+         HasSchoolApplied,
+         IsFormAMat,
+         IsProjectInPrepare,
+         hasPreferredTrust,
+         proposedTrustName,
+         famReference
+      });
    }
 }
