@@ -68,7 +68,7 @@
                         Search for projects
                     </label>
                     <span class="govuk-hint">You can search by school name, academy name, trust name, URN, UKPRN and project reference</span>
-                    <input id="Title" name="Title" asp-for="Title" type="text" class="govuk-input" aria-describedby="filter-project-title-hint"
+                    <input id="Title" title="search by school name, academy name, trust name, URN, UKPRN and project reference" name="Title" asp-for="Title" type="text" class="govuk-input" aria-describedby="filter-project-title-hint"
                            data-cy="select-projectlist-filter-title">
 
                 </div>
@@ -85,7 +85,7 @@
                                         </span>
                                     </h2>
                                 </div>
-                                <div class="govuk-accordion__section-content" aria-labelledby="accordion-officers-heading">
+                                <div class="govuk-accordion__section-content" aria-labelledby="accordion-officers-heading" role="region" id="accordion-default-content-1">
                                     <input type="text" class="govuk-input govuk-!-display-none govuk-!-margin-bottom-2" id="filter-searches" placeholder="Type to filter officers...">
                                     <div class="govuk-checkboxes">
                                         @{
@@ -119,7 +119,7 @@
                                         </span>
                                     </h2>
                                 </div>
-                                <div class="govuk-accordion__section-content" aria-labelledby="accordion-project-statuses-heading">
+                                <div class="govuk-accordion__section-content" aria-labelledby="accordion-project-statuses-heading" role="region" id="accordion-default-content-2">
                                     <input type="text" class="govuk-input govuk-!-display-none govuk-!-margin-bottom-2" id="filter-searches" placeholder="Type to filter project statuses...">
                                     <div class="govuk-checkboxes">
                                         @foreach (var status in Model.AvailableStatuses)
