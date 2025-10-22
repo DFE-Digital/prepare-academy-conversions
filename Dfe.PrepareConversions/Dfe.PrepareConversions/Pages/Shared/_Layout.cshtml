@@ -42,7 +42,8 @@
 
 
     <title>@ViewData["Title"] @titleDescription</title>
-    <link rel="stylesheet" href="~/dist/site.css" />
+
+    <link rel="stylesheet" href="~/dist/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/dist/accessible-autocomplete.min.css" asp-add-nonce />
     @if (enableGoogleAnalytics)
     {
