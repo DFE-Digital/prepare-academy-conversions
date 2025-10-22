@@ -42,7 +42,8 @@
 
 
     <title>@ViewData["Title"] @titleDescription</title>
-    <link rel="stylesheet" href="~/dist/site.css" />
+
+    <link rel="stylesheet" href="~/dist/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/dist/accessible-autocomplete.min.css" asp-add-nonce />
     @if (enableGoogleAnalytics)
     {
@@ -64,7 +65,7 @@
     {
         <partial name="_AppInsights"/>
     }
-
+    <script type="text/javascript" src="~/dist/accessible-autocomplete.min.js" asp-add-nonce></script>
 </head>
 <body class="govuk-template__body">
 
@@ -273,8 +274,6 @@
           </div>
        </div>
     </footer>
-
-    <script type="text/javascript" src="~/dist/accessible-autocomplete.min.js" asp-add-nonce></script>
     <script src="~/dist/site.js" asp-add-nonce></script>
 </body>
 </html>
