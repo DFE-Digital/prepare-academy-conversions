@@ -25,14 +25,14 @@
             <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios">
                 <div class="govuk-radios__item">
                     <input asp-for="ExpectedEndDate" class="govuk-radios__input" id="ToAdvisoryBoard-radio" type="radio" value="@SchoolImprovementPlanExpectedEndDate.ToAdvisoryBoard" data-aria-controls="conditional-ToAdvisoryBoard">
-                    <label class="govuk-label govuk-radios__label" for="ToAdvisoryBoard-radio">
+                    <label class="govuk-label govuk-radios__label" for="ToAdvisoryBoard-radio" id="conditional-ToAdvisoryBoard">
                         To advisory board <span if="@Model.AdvisoryBoradDate.HasValue">(@Model.AdvisoryBoradDate.Value.ToString(Constants.DateTimeFormat))</span>
                     </label>
                 </div>
                 
                 <div class="govuk-radios__item">
                     <input asp-for="ExpectedEndDate" class="govuk-radios__input" id="ToConversion-radio" type="radio" value="@SchoolImprovementPlanExpectedEndDate.ToConversion" data-aria-controls="conditional-ToConversion">
-                    <label class="govuk-label govuk-radios__label" for="ToConversion-radio">
+                    <label class="govuk-label govuk-radios__label" for="ToConversion-radio" id="conditional-ToConversion">
                         To conversion <span if="@Model.ConversionDate.HasValue">(@Model.ConversionDate.Value.ToString(Constants.DateTimeFormat))</span>
                     </label>
                 </div>
@@ -51,7 +51,7 @@
 
                 <div class="govuk-radios__item">
                     <input asp-for="ExpectedEndDate" class="govuk-radios__input" id="Unknown-radio" type="radio" value="@SchoolImprovementPlanExpectedEndDate.Unknown" data-aria-controls="Unknown-contact">
-                    <label class="govuk-label govuk-radios__label" for="contact">
+                    <label class="govuk-label govuk-radios__label" for="contact" id="Unknown-contact">
                         I don't know
                     </label>
                 </div>
