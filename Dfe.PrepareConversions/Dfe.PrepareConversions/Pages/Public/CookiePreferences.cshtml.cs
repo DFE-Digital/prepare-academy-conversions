@@ -32,7 +32,7 @@ public class CookiePreferences(ILogger<CookiePreferences> logger, IOptions<Servi
          PreferencesSet = true; 
          ApplyCookieConsent(consent);
 
-         if (!string.IsNullOrEmpty(returnUrl))
+         if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
          {
             return Redirect(returnUrl);
          }
