@@ -4,6 +4,7 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using FluentAssertions;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -88,7 +89,7 @@ public class RecordDecisionIntegrationTests : BaseIntegrationTests
 
       await Document.QuerySelector<IHtmlButtonElement>("#submit-btn")!.SubmitAsync();
 
-      IHtmlAnchorElement advisoryBoardDateErrorLink = Document.QuerySelector<IHtmlAnchorElement>($"[id='/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return=/TaskList/Decision/RecordDecision-error-link']");
+      IHtmlAnchorElement advisoryBoardDateErrorLink = Document.QuerySelector<IHtmlAnchorElement>($"[id='/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return={WebUtility.UrlEncode("/TaskList/Decision/RecordDecision-error-link")}']");
 
       advisoryBoardDateErrorLink.Should().NotBeNull();
       advisoryBoardDateErrorLink.Text.Should().Be("You must enter an advisory board date before you can record a decision.");
@@ -109,11 +110,9 @@ public class RecordDecisionIntegrationTests : BaseIntegrationTests
 
       await Document.QuerySelector<IHtmlButtonElement>("#submit-btn")!.SubmitAsync();
 
-      IHtmlAnchorElement advisoryBoardDateErrorLink = Document.QuerySelector<IHtmlAnchorElement>($"[id='/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return=/TaskList/Decision/RecordDecision-error-link']");
+      IHtmlAnchorElement advisoryBoardDateErrorLink = Document.QuerySelector<IHtmlAnchorElement>($"[id='/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return={WebUtility.UrlEncode("/TaskList/Decision/RecordDecision-error-link")}']");
 
       advisoryBoardDateErrorLink.Should().NotBeNull();
       advisoryBoardDateErrorLink.Text.Should().Be("The advisory board date must be today or in the past.");
-
-
    }
 }

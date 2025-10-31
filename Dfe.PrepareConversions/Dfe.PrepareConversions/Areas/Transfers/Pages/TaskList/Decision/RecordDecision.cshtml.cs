@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareTransfers.Pages.TaskList.Decision;
@@ -78,7 +79,7 @@ public class RecordDecision : DecisionBaseModel
          var hasProjectOwnerAssignment = _project.AssignedUser != null && _project.AssignedUser.EmailAddress.Length > 0;
          var hasIncomingTrustName = _project.IncomingTrustName != null;
          var hasIncomingTrustReferenceNumber = _project.IncomingTrustReferenceNumber != null && _project.IsFormAMat == true;
-         var returnPage = Links.Decision.RecordDecision.PageName;
+         var returnPage = WebUtility.UrlEncode(Links.Decision.RecordDecision.PageName);
 
          if (!hasAdvisoryBoardDate)
          {
