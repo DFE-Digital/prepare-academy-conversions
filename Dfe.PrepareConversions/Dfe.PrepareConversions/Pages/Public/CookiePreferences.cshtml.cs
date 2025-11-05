@@ -1,5 +1,6 @@
 using Dfe.PrepareConversions.Configuration;
 using Dfe.PrepareConversions.Models;
+using Dfe.PrepareConversions.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,16 @@ public class CookiePreferences(ILogger<CookiePreferences> logger, IOptions<Servi
 
    public ActionResult OnGet(bool? consent, string returnUrl)
    {
-      ReturnPath = returnUrl;
+      // Validate and sanitize returnUrl to prevent XSS and Open Redirect attacks
+      var sanitizedReturnUrl = UrlValidator.SanitizeReturnUrl(returnUrl, "/", Url);
+
+      // Log suspicious attempts for security monitoring
+      if (!string.IsNullOrEmpty(returnUrl) && returnUrl != sanitizedReturnUrl)
+      {
+         logger.LogWarning("Suspicious returnUrl detected and blocked: {ReturnUrl}", returnUrl);
+      }
+
+      ReturnPath = sanitizedReturnUrl;
 
       if (Request.Cookies.ContainsKey(CONSENT_COOKIE_NAMES[0]) && Request.Cookies.ContainsKey(CONSENT_COOKIE_NAMES[1]))
       {
@@ -32,9 +42,9 @@ public class CookiePreferences(ILogger<CookiePreferences> logger, IOptions<Servi
          PreferencesSet = true; 
          ApplyCookieConsent(consent);
 
-         if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+         if (!string.IsNullOrEmpty(sanitizedReturnUrl))
          {
-            return Redirect(returnUrl);
+            return Redirect(sanitizedReturnUrl);
          }
 
          return RedirectToPage(Links.Public.CookiePreferences);
@@ -45,7 +55,16 @@ public class CookiePreferences(ILogger<CookiePreferences> logger, IOptions<Servi
 
    public IActionResult OnPost(bool? consent, string returnUrl)
    {
-      ReturnPath = returnUrl;
+      // Validate and sanitize returnUrl to prevent XSS and Open Redirect attacks
+      var sanitizedReturnUrl = UrlValidator.SanitizeReturnUrl(returnUrl, "/", Url);
+
+      // Log suspicious attempts for security monitoring
+      if (!string.IsNullOrEmpty(returnUrl) && returnUrl != sanitizedReturnUrl)
+      {
+         logger.LogWarning("Suspicious returnUrl detected and blocked in POST: {ReturnUrl}", returnUrl);
+      }
+
+      ReturnPath = sanitizedReturnUrl;
 
       if (Request.Cookies.ContainsKey(CONSENT_COOKIE_NAMES[0]) && Request.Cookies.ContainsKey(CONSENT_COOKIE_NAMES[1]))
       {
