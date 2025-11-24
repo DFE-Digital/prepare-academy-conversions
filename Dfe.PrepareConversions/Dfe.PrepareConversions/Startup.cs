@@ -20,6 +20,9 @@ using GovUK.Dfe.CoreLibs.Messaging.Contracts.Entities.Topics;
 using GovUK.Dfe.CoreLibs.Messaging.Contracts.Exceptions;
 using GovUK.Dfe.CoreLibs.Messaging.Contracts.Messages.Events;
 using GovUK.Dfe.CoreLibs.Messaging.MassTransit.Extensions;
+using GovUK.Dfe.ExternalApplications.Api.Client;
+using GovUK.Dfe.ExternalApplications.Api.Client.Contracts;
+using GovUK.Dfe.ExternalApplications.Api.Client.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -219,6 +222,7 @@ public class Startup
       // use this to section off the transfers specific dependencies
       services.AddTransfersApplicationServices();
 
+      services.AddExternalApplicationsApiClient<IApplicationsClient, ApplicationsClient>(Configuration);
 
       // Add MassTransit / Subscribe to Transfer-Application-Submitted 
       services.AddDfEMassTransit(
