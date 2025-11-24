@@ -1,0 +1,23 @@
+@page "/transfers/project/{urn}/eat-application"
+@using Dfe.PrepareTransfers.Data.Models
+@model Dfe.PrepareTransfers.Web.Pages.TaskList.EatApplication.EatApplication
+
+@{
+    ViewBag.Title = "EAT Application";
+    Layout = "_Layout";
+}
+
+@section BeforeMain
+{
+}
+<partial name="_IncomingTrustHeading" model="@Model.Project" />
+
+<div class="govuk-grid-column-full">
+    <partial name="_SubMenu" model="@Model.Project.Reference" />
+</div>
+
+<div class="govuk-!-margin-bottom-12">
+    <h2 class="govuk-heading-l govuk-!-margin-bottom-12 govuk-!-font-size-36">EAT Application</h2>
+    <p class="govuk-body">example tab content</p>
+</div>
+

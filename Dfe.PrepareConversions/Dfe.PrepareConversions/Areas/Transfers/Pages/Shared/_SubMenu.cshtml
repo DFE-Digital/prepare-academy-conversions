@@ -1,9 +1,12 @@
 ﻿@using Dfe.PrepareTransfers.Web.Helpers.TagHelpers;
 @using Dfe.PrepareTransfers.Web.Models;
 @using Links = Dfe.PrepareTransfers.Web.Models.Links
+@model string
 
 @{
     var urn = ViewContext.RouteData.Values["urn"];
+    var projectReference = Model;
+    var showEatApplication = !string.IsNullOrEmpty(projectReference) && projectReference.StartsWith("TRF-");
 }
 
 <nav class="moj-sub-navigation" aria-label="Sub navigation">
@@ -32,5 +35,16 @@
                 Transfer date history
             </sub-menu-link>
         </li>
+
+        @if (showEatApplication)
+        {
+            <li class="moj-sub-navigation__item" data-cy="EATApplicationID">
+                <sub-menu-link class="moj-sub-navigation__link"
+                               asp-page="@Links.EatApplication.Index.PageName"
+                               asp-route-urn="@urn">
+                    EAT Application
+                </sub-menu-link>
+            </li>
+        }
    </ul>
 </nav>
