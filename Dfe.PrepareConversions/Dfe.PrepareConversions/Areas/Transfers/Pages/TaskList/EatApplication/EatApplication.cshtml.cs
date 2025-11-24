@@ -3,7 +3,9 @@ using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Web.Models;
 using GovUK.Dfe.ExternalApplications.Api.Client.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -14,15 +16,17 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.EatApplication
         private readonly ILogger<EatApplication> _logger;
         private readonly IProjects _projectsRepository;
         private readonly IApplicationsClient _applicationsClient;
+        private readonly IDistributedCache _distributedCache;
 
         public Project Project { get; set; }
         public string HtmlContent { get; set; }
 
-        public EatApplication(IProjects projectsRepository, ILogger<EatApplication> logger, IApplicationsClient applicationsClient)
+        public EatApplication(IProjects projectsRepository, ILogger<EatApplication> logger, IApplicationsClient applicationsClient, IDistributedCache distributedCache)
         {
             _projectsRepository = projectsRepository;
             _logger = logger;
             _applicationsClient = applicationsClient;
+            _distributedCache = distributedCache;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -35,6 +39,19 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.EatApplication
                 return NotFound();
             }
 
+            // Create cache key based on project reference
+            var cacheKey = $"EatApplication_Html_{Project.Reference}";
+            
+            // Check if HTML content exists in cache
+            var cachedHtml = await _distributedCache.GetStringAsync(cacheKey);
+            if (!string.IsNullOrWhiteSpace(cachedHtml))
+            {
+                _logger.LogInformation("Retrieved EAT Application HTML from cache for project {ProjectReference}", Project.Reference);
+                HtmlContent = cachedHtml;
+                return Page();
+            }
+
+            // Fetch from API if not in cache
             var fileResponse = await _applicationsClient.DownloadApplicationPreviewHtmlAsync(Project.Reference);
 
             // Read the HTML content from the FileResponse stream
@@ -49,6 +66,14 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.EatApplication
             {
                 HtmlContent = "<p class='govuk-body'>No application data available.</p>";
             }
+
+            // Store in cache with 10-minute expiration
+            var cacheOptions = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1)
+            };
+            await _distributedCache.SetStringAsync(cacheKey, HtmlContent, cacheOptions);
+            _logger.LogInformation("Cached EAT Application HTML for project {ProjectReference} with 10-minute expiration", Project.Reference);
 
             return Page();
         }
