@@ -20,6 +20,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.EatApplication
 
         public Project Project { get; set; }
         public string HtmlContent { get; set; }
+        public bool IsLoading { get; set; }
 
         public EatApplication(IProjects projectsRepository, ILogger<EatApplication> logger, IApplicationsClient applicationsClient, IDistributedCache distributedCache)
         {
@@ -29,7 +30,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.EatApplication
             _distributedCache = distributedCache;
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(bool fetch = false)
         {
             Project = (await _projectsRepository.GetByUrn(Urn)).Result;
             
@@ -48,33 +49,43 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.EatApplication
             {
                 _logger.LogInformation("Retrieved EAT Application HTML from cache for project {ProjectReference}", Project.Reference);
                 HtmlContent = cachedHtml;
+                IsLoading = false;
                 return Page();
             }
 
-            // Fetch from API if not in cache
-            var fileResponse = await _applicationsClient.DownloadApplicationPreviewHtmlAsync(Project.Reference);
-
-            // Read the HTML content from the FileResponse stream
-            if (fileResponse != null && fileResponse.Stream != null)
+            // If fetch parameter is true, fetch the content now
+            if (fetch)
             {
-                using (var reader = new StreamReader(fileResponse.Stream))
+                // Fetch from API
+                var fileResponse = await _applicationsClient.DownloadApplicationPreviewHtmlAsync(Project.Reference);
+
+                // Read the HTML content from the FileResponse stream
+                if (fileResponse != null && fileResponse.Stream != null)
                 {
-                    HtmlContent = await reader.ReadToEndAsync();
+                    using (var reader = new StreamReader(fileResponse.Stream))
+                    {
+                        HtmlContent = await reader.ReadToEndAsync();
+                    }
                 }
-            }
-            else
-            {
-                HtmlContent = "<p class='govuk-body'>No application data available.</p>";
+                else
+                {
+                    HtmlContent = "<p class='govuk-body'>No application data available.</p>";
+                }
+
+                // Store in cache with 1-hour expiration
+                var cacheOptions = new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1)
+                };
+                await _distributedCache.SetStringAsync(cacheKey, HtmlContent, cacheOptions);
+                _logger.LogInformation("Cached EAT Application HTML for project {ProjectReference} with 1-hour expiration", Project.Reference);
+                
+                IsLoading = false;
+                return Page();
             }
 
-            // Store in cache with 10-minute expiration
-            var cacheOptions = new DistributedCacheEntryOptions
-            {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1)
-            };
-            await _distributedCache.SetStringAsync(cacheKey, HtmlContent, cacheOptions);
-            _logger.LogInformation("Cached EAT Application HTML for project {ProjectReference} with 10-minute expiration", Project.Reference);
-
+            // Show loading page that will redirect to fetch
+            IsLoading = true;
             return Page();
         }
     }

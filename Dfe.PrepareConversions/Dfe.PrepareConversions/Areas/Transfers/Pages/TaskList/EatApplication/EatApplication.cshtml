@@ -7,6 +7,11 @@
     Layout = "_Layout";
 }
 
+@if (Model.IsLoading)
+{
+    <meta http-equiv="refresh" content="0;url=/transfers/project/@Model.Urn/eat-application?fetch=true" />
+}
+
 @section BeforeMain
 {
 }
@@ -17,6 +22,24 @@
 </div>
 
 <div class="govuk-!-margin-bottom-12">
-    @Html.Raw(Model.HtmlContent)
+    @if (Model.IsLoading)
+    {
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <h2 class="govuk-heading-l">Loading EAT Application</h2>
+                <p class="govuk-body">Please wait while we retrieve the application data...</p>
+                <div class="govuk-!-margin-top-6">
+                    <div style="border-left: 4px solid #1d70b8; padding-left: 20px;">
+                        <p class="govuk-body govuk-!-font-weight-bold">Loading in progress</p>
+                        <p class="govuk-body">This may take up to a minute. The page will automatically refresh when ready.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        @Html.Raw(Model.HtmlContent)
+    }
 </div>
 
