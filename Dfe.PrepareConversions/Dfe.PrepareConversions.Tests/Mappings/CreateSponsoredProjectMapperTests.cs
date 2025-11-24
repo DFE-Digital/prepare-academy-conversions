@@ -3,6 +3,7 @@ using Dfe.PrepareConversions.Data.Models.NewProject;
 using Dfe.PrepareConversions.Mappings;
 using FluentAssertions;
 using FluentAssertions.Execution;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.Base;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Trusts;
 using System;

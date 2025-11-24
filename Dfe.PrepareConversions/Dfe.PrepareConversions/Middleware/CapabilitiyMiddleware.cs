@@ -19,10 +19,10 @@ namespace Dfe.PrepareConversions.Middleware
 
       public async Task Invoke(HttpContext httpContext, ICorrelationContext correlationContext, ISession session, IRoleCapablitiesRepository roleCapablitiesRepository)
       {
-         if (httpContext.User.Identity.IsAuthenticated && !httpContext.User.Identity.Name.IsNullOrEmpty())
+         if (httpContext.User.Identity.IsAuthenticated && !string.IsNullOrEmpty(httpContext.User.Identity.Name))
          {
             var sessionKey = $"{SESSION_KEY}_{httpContext.User.Identity.Name}";
-            if (session.Get<string>(sessionKey).IsNullOrEmpty())
+            if (string.IsNullOrEmpty(session.Get<string>(sessionKey)))
             {
                SetCorrelationId(httpContext, correlationContext);
                var roles = httpContext.User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x=> x.Value).ToList(); 

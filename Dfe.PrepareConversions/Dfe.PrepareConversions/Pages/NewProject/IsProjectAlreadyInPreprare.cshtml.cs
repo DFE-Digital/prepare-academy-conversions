@@ -43,7 +43,7 @@ public class IsProjectAlreadyInPreprareModel : PageModel
 
    public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect, string hasPreferredTrust, string proposedTrustName, string famReference)
    {
-      if (IsProjectInPrepare.IsNullOrEmpty())
+      if (string.IsNullOrEmpty(IsProjectInPrepare))
       {
          _errorService.AddError("Does project exists", "Select yes if the project already exists in Prepare");
          return Page();
