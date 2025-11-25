@@ -20,7 +20,7 @@ namespace Dfe.PrepareTransfers.Web.Services.DocumentGenerators
             {
                 build.AddHeading("Benefits", HeadingLevel.One);
 
-                if (projectTemplateModel.TransferBenefits.IsNullOrEmpty())
+                if (string.IsNullOrEmpty(projectTemplateModel.TransferBenefits))
                 {
                     build.AddTable(new List<TextElement[]>
                     {

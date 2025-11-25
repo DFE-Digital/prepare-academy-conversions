@@ -41,7 +41,7 @@ public class IsThisFormAMatModel : PageModel
    public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect, string hasPreferredTrust, string proposedTrustName, string isProjectInPrepare,
       string famReference)
    {
-      if (IsFormAMat.IsNullOrEmpty())
+      if (string.IsNullOrEmpty(IsFormAMat))
       {
          _errorService.AddError("IsFormAMat", "Select yes if the conversion is part of the formation of a new trust");
          return Page();

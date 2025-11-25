@@ -68,6 +68,11 @@ public static class Links
     {
         public static readonly LinkItem Index = Create("/TaskList/DateHistory/DateHistory");
     }
+    
+    public static class EatApplication
+    {
+        public static readonly LinkItem Index = Create("/TaskList/EatApplication/EatApplication");
+    }
     public static class LegalRequirements
     {
         public static readonly LinkItem Index = Create("/Projects/LegalRequirements/Index");

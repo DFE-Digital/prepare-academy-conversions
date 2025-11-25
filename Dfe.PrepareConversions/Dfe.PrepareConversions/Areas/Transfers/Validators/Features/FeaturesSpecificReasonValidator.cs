@@ -11,7 +11,7 @@ namespace Dfe.PrepareTransfers.Web.Transfers.Validators.Features
         public FeaturesSpecificReasonValidator()
         {
             RuleFor(x => x.SpecificReasonsForTheTransfer)
-                .Must(collection => collection.IsNullOrEmpty() || collection.All(item => item != TransferFeatures.SpecificReasonForTheTransferTypes.Empty))
+                .Must(collection => (collection is null || collection.Count <= 0) || collection.All(item => item != TransferFeatures.SpecificReasonForTheTransferTypes.Empty))
                 .WithMessage("Select a specific reason for the transfer");
         }
     }

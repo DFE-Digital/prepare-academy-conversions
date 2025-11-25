@@ -53,7 +53,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.GeneralInformation
          MP = academy.MPNameAndParty;
          Urn = urn;
          GIASLastChangedDate = "N/A";
-         if (academy.LastChangedDate.IsNullOrEmpty() is false)
+         if (string.IsNullOrEmpty(academy.LastChangedDate) is false)
          {
             GIASLastChangedDate = DateTime.Parse(academy.LastChangedDate, CultureInfo.GetCultureInfo("en-GB")).ToString("MMMM yyyy");
          }

@@ -44,7 +44,7 @@ public class CreateNewFormAMatModel : PageModel
 
    public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect, string hasPreferredTrust, string isProjectInPrepare, string famReference)
    {
-      if (ProposedTrustName.IsNullOrEmpty() || ProposedTrustName.Length <= 2)
+      if (string.IsNullOrEmpty(ProposedTrustName) || ProposedTrustName.Length <= 2)
       {
          _errorService.AddError("ProposedTrustName", "Please enter a proposed trust name with more than three characters");
          return Page();

@@ -72,7 +72,7 @@ public class LinkFormAMatProject : PageModel
    {
       AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
 
-      if (SearchQuery.IsNullOrEmpty() || SearchQuery.Length <= 2)
+      if (string.IsNullOrEmpty(SearchQuery) || SearchQuery.Length <= 2)
       {
          _errorService.AddError("Application Reference", "Please enter a application reference with more than three characters");
          return Page();

@@ -23,7 +23,7 @@ public static class SessionExtensions
    public static bool HasPermission(this ISession session, string key, RoleCapability roleCapability)
    {
       var sessionData = session.Get<string>(key) ?? string.Empty;
-      return !sessionData.IsNullOrEmpty() && sessionData.Split(",").Any(x =>
+      return !string.IsNullOrEmpty(sessionData) && sessionData.Split(",").Any(x =>
       {
          return x.Contains(roleCapability.ToString(), StringComparison.OrdinalIgnoreCase);
       });

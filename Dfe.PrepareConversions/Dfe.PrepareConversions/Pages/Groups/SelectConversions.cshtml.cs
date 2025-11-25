@@ -69,7 +69,7 @@ public class SelectConversionsModel(
 
    public async Task<IActionResult> OnPost(string ukprn, string referenceNumber, List<string> selectedconversions, int? groupId, string groupName)
    {
-      if (selectedconversions.IsNullOrEmpty())
+      if (selectedconversions is null || selectedconversions.Count <= 0)
       {
          Ukprn = ukprn;
 
