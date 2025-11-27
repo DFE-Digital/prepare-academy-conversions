@@ -25,7 +25,19 @@ public static class Program
    {
       return Host.CreateDefaultBuilder(args)
          .UseSerilog()
-         .ConfigureAppConfiguration((_, configuration) => configuration.AddEnvironmentVariables())
+         .ConfigureAppConfiguration((context, configuration) =>
+         {
+            var env = context.HostingEnvironment;
+            
+            configuration.Sources.Clear();
+            
+            // Load configuration in order of precedence (later sources override earlier ones)
+            configuration
+               .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+               .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+               .AddEnvironmentVariables()
+               .AddCommandLine(args);
+         })
          .ConfigureWebHostDefaults(webBuilder =>
          {
             webBuilder.UseStartup<Startup>();
