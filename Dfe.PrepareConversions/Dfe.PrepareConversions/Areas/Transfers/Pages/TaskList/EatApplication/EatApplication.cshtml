@@ -22,7 +22,33 @@
 </div>
 
 <div class="govuk-!-margin-bottom-12">
-    @if (Model.IsLoading)
+    @if (Model.HasError)
+    {
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary">
+                    <h2 class="govuk-error-summary__title" id="error-summary-title">
+                        There is a problem
+                    </h2>
+                    <div class="govuk-error-summary__body">
+                        <p class="govuk-body">@Model.ErrorMessage</p>
+                    </div>
+                </div>
+                <div class="govuk-!-margin-top-6">
+                    <h2 class="govuk-heading-m">What you can do</h2>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>Try refreshing the page</li>
+                        <li>Come back later and try again</li>
+                        <li>Contact support if the problem continues</li>
+                    </ul>
+                    <a href="/transfers/project/@Model.Urn" class="govuk-button govuk-!-margin-top-4">
+                        Return to project details
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.IsLoading)
     {
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">

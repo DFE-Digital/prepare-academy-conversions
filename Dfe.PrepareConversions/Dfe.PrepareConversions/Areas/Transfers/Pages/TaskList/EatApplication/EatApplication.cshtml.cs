@@ -24,6 +24,8 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.EatApplication
         public Project Project { get; set; }
         public string HtmlContent { get; set; }
         public bool IsLoading { get; set; }
+        public bool HasError { get; set; }
+        public string ErrorMessage { get; set; }
 
         [BindProperty]
         public string FileId { get; set; }
@@ -41,6 +43,9 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.EatApplication
 
         public async Task<IActionResult> OnGetAsync(bool fetch = false)
         {
+           try
+           {
+
             Project = (await _projectsRepository.GetByUrn(Urn)).Result;
             
             // Ensure this page is only accessible for TRF- projects
@@ -101,7 +106,31 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.EatApplication
             // Show loading page that will redirect to fetch
             IsLoading = true;
             return Page();
-        }
+
+           }
+           catch (Exception ex)
+           {
+              _logger.LogError(ex, "Error loading EAT Application for project {Urn}", Urn);
+              
+              // Set error state instead of throwing
+              HasError = true;
+              ErrorMessage = "We're sorry, but we couldn't load the application details at this time. Please try again later or contact support if the problem persists.";
+              IsLoading = false;
+              
+              // Try to get project info for header display
+              try
+              {
+                  Project = (await _projectsRepository.GetByUrn(Urn)).Result;
+              }
+              catch
+              {
+                  // If we can't even get the project, return NotFound
+                  return NotFound();
+              }
+              
+              return Page();
+           }
+      }
 
         public async Task<IActionResult> OnPostDownloadEatFileAsync()
         {
