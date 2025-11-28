@@ -1,13 +1,21 @@
-@using Dfe.PrepareConversions.TagHelpers
-@using NetEscapades.AspNetCore.SecurityHeaders.TagHelpers
+﻿@using NetEscapades.AspNetCore.SecurityHeaders.TagHelpers
 @model AutoCompleteSearchModel
 
 <p asp-gds-validation-for="SearchQuery"></p>
 <div id="query-hint" class="govuk-hint">
    @Model.Label
 </div>
+<!-- Non-JavaScript fallback input -->
+<noscript>
+    <input type="text"
+           id="SearchQuery"
+           name="SearchQuery"
+           value="@Model.SearchQuery"
+           class="govuk-input"           
+           minlength="3" />
+</noscript>
 <div id="search"></div>
-<input type="hidden" id="SearchQuery" name="SearchQuery"/>
+<input type="hidden" id="SearchQuery" name="SearchQuery" value="@Model.SearchQuery" />
 
 <script type="application/javascript" asp-add-nonce>
 

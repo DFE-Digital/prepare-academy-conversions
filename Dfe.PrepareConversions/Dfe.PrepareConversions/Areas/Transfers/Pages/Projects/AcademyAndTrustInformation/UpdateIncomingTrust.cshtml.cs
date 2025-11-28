@@ -1,15 +1,15 @@
+using Dfe.Academisation.ExtensionMethods;
+using Dfe.PrepareConversions.Services;
 using Dfe.PrepareTransfers.Data;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using System;
 using Dfe.PrepareTransfers.Data.Models;
+using Dfe.PrepareTransfers.Web.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dfe.Academisation.ExtensionMethods;
-using Dfe.PrepareTransfers.Web.Models;
-using Dfe.PrepareConversions.Services;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using Microsoft.Extensions.Primitives;
+using System.Threading.Tasks;
+using PrepareConversionsModels = Dfe.PrepareConversions.Models;
 
 namespace Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation
 {
@@ -28,16 +28,16 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation
          _trustsRepository = trustsRepository;
          _repository = projectRepository;
          _errorService = errorService;
-         AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, string.Empty, SEARCH_ENDPOINT);
+         AutoCompleteSearchModel = new PrepareConversionsModels.AutoCompleteSearchModel(SEARCH_LABEL, string.Empty, SEARCH_ENDPOINT);
       }
 
       [BindProperty]
       public string SearchQuery { get; set; } = "";
-      public AutoCompleteSearchModel AutoCompleteSearchModel { get; set; }
+      public PrepareConversionsModels.AutoCompleteSearchModel AutoCompleteSearchModel { get; set; }
 
       public async Task<IActionResult> OnGetAsync(int urn)
       {
-         AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
+         AutoCompleteSearchModel = new PrepareConversionsModels.AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
 
          return Page();
       }
@@ -60,7 +60,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.AcademyAndTrustInformation
 
       public async Task<IActionResult> OnPostAsync(int urn)
       {
-         AutoCompleteSearchModel = new AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
+         AutoCompleteSearchModel = new PrepareConversionsModels.AutoCompleteSearchModel(SEARCH_LABEL, SearchQuery, SEARCH_ENDPOINT);
          if (string.IsNullOrWhiteSpace(SearchQuery))
          {
             ModelState.AddModelError(nameof(SearchQuery), "Enter the Trust name, UKPRN or Companies House number");

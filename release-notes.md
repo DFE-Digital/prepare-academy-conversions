@@ -1,3 +1,6 @@
+## NEXT
+* 213008 - BUG accessibility -Prepare - cant create conversion when javascript turned off
+
 ## 1.7.1
 * 235754 - Performance data references TRAMS incorrectly - Two other instances
 * 233570 - Transfer of Projects into Complete - Return url missing
