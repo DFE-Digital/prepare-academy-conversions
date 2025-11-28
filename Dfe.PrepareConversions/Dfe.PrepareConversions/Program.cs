@@ -25,7 +25,6 @@ public static class Program
    {
       return Host.CreateDefaultBuilder(args)
          .UseSerilog()
-         .ConfigureAppConfiguration((_, configuration) => configuration.AddEnvironmentVariables())
          .ConfigureWebHostDefaults(webBuilder =>
          {
             webBuilder.UseStartup<Startup>();
