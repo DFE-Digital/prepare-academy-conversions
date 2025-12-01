@@ -1,11 +1,15 @@
+##Next 
+
+## 1.8.2
+* 213008 - BUG accessibility -Prepare - cant create conversion when javascript turned off
+* BUG: Accessibility: Filters Partial: Conversions/Transfers/FAM/Groups: Missing Labels And Broken ARIA refs
+
 ## 1.8.1
 * 209885 - BUG: Accessibility: Moderate: Prepare: Filters Partial: Conversions
 * 244520 - Prepare not allocating delivery officer.
 
 ## 1.8.0
 * 240477 - Rebrand of head and footer 
-## NEXT
-* 213008 - BUG accessibility -Prepare - cant create conversion when javascript turned off
 
 ## 1.7.1
 * 235754 - Performance data references TRAMS incorrectly - Two other instances
