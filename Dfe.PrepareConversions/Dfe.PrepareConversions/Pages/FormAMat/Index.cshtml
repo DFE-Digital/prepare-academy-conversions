@@ -37,7 +37,7 @@
         @foreach (BaseFormSection formSection in Model.Sections)
         {
             <h2 id="@Model.GenerateId(formSection.Heading)" class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-36">@formSection.Heading</h2>
-            <dl if="formSection.Fields.Any()" class="govuk-summary-list">
+            <dl if="@formSection.Fields.Any()" class="govuk-summary-list">
                 @{
                     var index = 1;
                     foreach (FormField sectionField in formSection.Fields)

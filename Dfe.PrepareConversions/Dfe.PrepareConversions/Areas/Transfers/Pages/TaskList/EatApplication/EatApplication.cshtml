@@ -1,0 +1,71 @@
+@page "/transfers/project/{urn}/eat-application"
+@using Dfe.PrepareTransfers.Data.Models
+@model Dfe.PrepareTransfers.Web.Pages.TaskList.EatApplication.EatApplication
+
+@{
+    ViewBag.Title = "EAT Application";
+    Layout = "_Layout";
+}
+
+@if (Model.IsLoading)
+{
+    <meta http-equiv="refresh" content="0;url=/transfers/project/@Model.Urn/eat-application?fetch=true" />
+}
+
+@section BeforeMain
+{
+}
+<partial name="_IncomingTrustHeading" model="@Model.Project" />
+
+<div class="govuk-grid-column-full">
+    <partial name="_SubMenu" model="@Model.Project.Reference" />
+</div>
+
+<div class="govuk-!-margin-bottom-12">
+    @if (Model.HasError)
+    {
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary">
+                    <h2 class="govuk-error-summary__title" id="error-summary-title">
+                        There is a problem
+                    </h2>
+                    <div class="govuk-error-summary__body">
+                        <p class="govuk-body">@Model.ErrorMessage</p>
+                    </div>
+                </div>
+                <div class="govuk-!-margin-top-6">
+                    <h2 class="govuk-heading-m">What you can do</h2>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>Try refreshing the page</li>
+                        <li>Come back later and try again</li>
+                        <li>Contact support if the problem continues</li>
+                    </ul>
+                    <a href="/transfers/project/@Model.Urn" class="govuk-button govuk-!-margin-top-4">
+                        Return to project details
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.IsLoading)
+    {
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <h2 class="govuk-heading-l">Loading application details</h2>
+                <p class="govuk-body">Please wait while we retrieve the application data...</p>
+                <div class="govuk-!-margin-top-6">
+                    <div style="border-left: 4px solid #1d70b8; padding-left: 20px;">
+                        <p class="govuk-body govuk-!-font-weight-bold">Loading in progress</p>
+                        <p class="govuk-body">This may take up to a minute. The page will automatically refresh when ready.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        @Html.Raw(Model.HtmlContent)
+    }
+</div>
+

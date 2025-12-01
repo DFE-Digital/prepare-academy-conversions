@@ -1,6 +1,5 @@
 ﻿using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models.Application;
-using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -130,7 +129,7 @@ public class AcademisationApplication
    public static void PopulateSchoolLeases(ApplyingSchool academiesApplicationSchool,
                                            School academisationApplicationSchool)
    {
-      if (academisationApplicationSchool.Leases.IsNullOrEmpty() is false)
+      if (academisationApplicationSchool.Leases != null && academisationApplicationSchool.Leases.Any())
       {
          foreach (Lease lease in academisationApplicationSchool.Leases)
          {
@@ -152,7 +151,7 @@ public class AcademisationApplication
    public static void PopulateSchoolLoans(ApplyingSchool academiesApplicationSchool,
                                           School academisationApplicationSchool)
    {
-      if (academisationApplicationSchool.Loans.IsNullOrEmpty() is false)
+      if (academisationApplicationSchool.Loans != null && academisationApplicationSchool.Loans.Any())
       {
          foreach (Loan loan in academisationApplicationSchool.Loans)
          {
@@ -226,7 +225,7 @@ public class AcademisationApplication
       academiesApplicationSchool.SchoolAdSchoolContributionToTrust =
          academisationApplicationSchool
             .TrustBenefitDetails;
-      academiesApplicationSchool.SchoolAdInspectedButReportNotPublished = !academisationApplicationSchool.OfstedInspectionDetails.IsNullOrEmpty();
+      academiesApplicationSchool.SchoolAdInspectedButReportNotPublished = !string.IsNullOrEmpty(academisationApplicationSchool.OfstedInspectionDetails);
       academiesApplicationSchool.SchoolAdInspectedButReportNotPublishedExplain =
          academisationApplicationSchool.OfstedInspectionDetails;
       academiesApplicationSchool.SchoolOngoingSafeguardingInvestigations =
@@ -234,22 +233,20 @@ public class AcademisationApplication
       // Questions regarding the below are outstanding
       // academiesApplicationSchool.SchoolOngoingSafeguardingDetails = academisationApplicationSchool.SafeguardingDetails;
       academiesApplicationSchool.SchoolPartOfLaReorganizationPlan =
-         !academisationApplicationSchool.LocalAuthorityReorganisationDetails
-            .IsNullOrEmpty();
+         !string.IsNullOrEmpty(academisationApplicationSchool.LocalAuthorityReorganisationDetails);
       academiesApplicationSchool.SchoolLaReorganizationDetails =
          academisationApplicationSchool.LocalAuthorityReorganisationDetails;
       academiesApplicationSchool.SchoolPartOfLaClosurePlan =
-         !academisationApplicationSchool.LocalAuthorityClosurePlanDetails.IsNullOrEmpty();
+         !string.IsNullOrEmpty(academisationApplicationSchool.LocalAuthorityClosurePlanDetails);
       academiesApplicationSchool.SchoolLaClosurePlanDetails =
          academisationApplicationSchool
             .LocalAuthorityClosurePlanDetails;
       academiesApplicationSchool.SchoolFaithSchool =
-         !academisationApplicationSchool.DioceseName
-            .IsNullOrEmpty();
+         !string.IsNullOrEmpty(academisationApplicationSchool.DioceseName);
       academiesApplicationSchool.SchoolFaithSchoolDioceseName = academisationApplicationSchool.DioceseName;
       academiesApplicationSchool.SchoolIsPartOfFederation = academisationApplicationSchool.PartOfFederation;
       academiesApplicationSchool.SchoolIsSupportedByFoundation =
-         !academisationApplicationSchool.FoundationTrustOrBodyName.IsNullOrEmpty();
+         !string.IsNullOrEmpty(academisationApplicationSchool.FoundationTrustOrBodyName);
       academiesApplicationSchool.SchoolSupportedFoundationBodyName =
          academisationApplicationSchool.FoundationTrustOrBodyName;
       if (academisationApplicationSchool.ExemptionEndDate is not null)
@@ -258,7 +255,7 @@ public class AcademisationApplication
          academiesApplicationSchool.SchoolSACREExemptionEndDate = academisationApplicationSchool.ExemptionEndDate.Value.DateTime;
       academiesApplicationSchool.SchoolAdFeederSchools = academisationApplicationSchool.MainFeederSchools;
       academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentCompleted =
-         !academisationApplicationSchool.ProtectedCharacteristics.IsNullOrEmpty();
+         !string.IsNullOrEmpty(academisationApplicationSchool.ProtectedCharacteristics);
       academiesApplicationSchool.SchoolAdEqualitiesImpactAssessmentDetails =
          academisationApplicationSchool.ProtectedCharacteristics switch
          {
@@ -268,7 +265,7 @@ public class AcademisationApplication
             _ => string.Empty
          };
       academiesApplicationSchool.SchoolAdditionalInformationAdded =
-         !academisationApplicationSchool.FurtherInformation.IsNullOrEmpty();
+         !string.IsNullOrEmpty(academisationApplicationSchool.FurtherInformation);
       academiesApplicationSchool.SchoolAdditionalInformation =
          academisationApplicationSchool.FurtherInformation;
    }
@@ -336,7 +333,7 @@ public class AcademisationApplication
       academiesApplication.ApplicationId =
          academisationApplication.ApplicationReference;
       Contributor academisationContributors = academisationApplication.Contributors.FirstOrDefault();
-      if (academisationContributors?.FirstName.IsNullOrEmpty() is false && academisationContributors.LastName.IsNullOrEmpty() is false)
+      if (!string.IsNullOrEmpty(academisationContributors?.FirstName) && !string.IsNullOrEmpty(academisationContributors?.LastName))
       {
          academiesApplication.ApplicationLeadAuthorName =
             academisationApplication.Contributors.FirstOrDefault()!.FirstName + " " + academisationApplication.Contributors.FirstOrDefault()!.LastName;

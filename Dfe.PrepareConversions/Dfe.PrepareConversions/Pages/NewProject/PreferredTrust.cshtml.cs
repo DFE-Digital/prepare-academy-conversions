@@ -41,7 +41,7 @@ public class PreferredTrustModel : PageModel
 
    public async Task<IActionResult> OnPost(string urn, string redirect, string proposedTrustName, string isFormAMat, string isProjectInPrepare, string famReference)
    {
-      if (HasPreferredTrust.IsNullOrEmpty())
+      if (string.IsNullOrEmpty(HasPreferredTrust))
       {
          _errorService.AddError("IsPreferredTrust", "Select yes if there is a preferred trust");
          return Page();

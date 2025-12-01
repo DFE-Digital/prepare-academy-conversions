@@ -1,0 +1,14 @@
+services:
+  dfe.prepareconversions:
+    image: ${DOCKER_REGISTRY-}dfeprepareconversions
+    build:
+      context: .
+      dockerfile: Dfe.PrepareConversions/Dockerfile
+    ports:
+       - 5002:5002
+       - 5003:5003
+    networks:
+      - local-dev
+
+networks:
+  local-dev:

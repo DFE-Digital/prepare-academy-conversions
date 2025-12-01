@@ -39,7 +39,7 @@ public class SchoolApplyModel : PageModel
    public async Task<IActionResult> OnPost(string ukprn, string urn, string redirect, string hasPreferredTrust, string proposedTrustName, string isFormAMat,
       string isProjectInPrepare, string famReference)
    {
-      if (HasSchoolApplied.IsNullOrEmpty())
+      if (string.IsNullOrEmpty(HasSchoolApplied))
       {
          _errorService.AddError("HasSchoolApplied", "Select yes if the school has applied for academy conversion");
          return Page();

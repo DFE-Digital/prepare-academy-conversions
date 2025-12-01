@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.Decision;
@@ -72,7 +73,7 @@ public class RecordDecisionModel : DecisionBaseModel
    {
       if (AdvisoryBoardDecision == AdvisoryBoardDecisions.Approved)
       {
-         var returnPage = Links.Decision.RecordDecision.Page;
+         var returnPage = WebUtility.UrlEncode(Links.Decision.RecordDecision.Page);
 
          if (!_project.HeadTeacherBoardDate.HasValue)
          {

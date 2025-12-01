@@ -1,6 +1,7 @@
 using Dfe.Academisation.CorrelationIdMiddleware;
 using Dfe.PrepareConversions.Authorization;
 using Dfe.PrepareConversions.Configuration;
+using Dfe.PrepareConversions.Consumers;
 using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
@@ -15,6 +16,14 @@ using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareTransfers.Web.BackgroundServices;
 using Dfe.PrepareTransfers.Web.Services;
 using Dfe.PrepareTransfers.Web.Services.Interfaces;
+using GovUK.Dfe.CoreLibs.Messaging.Contracts.Entities.Topics;
+using GovUK.Dfe.CoreLibs.Messaging.Contracts.Exceptions;
+using GovUK.Dfe.CoreLibs.Messaging.Contracts.Messages.Events;
+using GovUK.Dfe.CoreLibs.Messaging.MassTransit.Extensions;
+using GovUK.Dfe.ExternalApplications.Api.Client;
+using GovUK.Dfe.ExternalApplications.Api.Client.Contracts;
+using GovUK.Dfe.ExternalApplications.Api.Client.Extensions;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -213,6 +222,41 @@ public class Startup
       // use this to section off the transfers specific dependencies
       services.AddTransfersApplicationServices();
 
+      services.AddExternalApplicationsApiClient<IApplicationsClient, ApplicationsClient>(Configuration);
+
+      // Add MassTransit / Subscribe to Transfer-Application-Submitted 
+      services.AddDfEMassTransit(
+         Configuration,
+         configureConsumers: x =>
+         {
+            x.AddConsumer<TransferApplicationSubmittedConsumer>();
+         },
+         configureBus: (context, cfg) =>
+         {
+            // Configure topic names for message types
+            cfg.Message<TransferApplicationSubmittedEvent>(m => m.SetEntityName(TopicNames.TransferApplicationSubmitted));
+
+            cfg.UseJsonSerializer();
+         },
+         configureAzureServiceBus: (context, cfg) =>
+         {
+            cfg.UseJsonSerializer();
+            // Azure Service Bus specific configuration
+            cfg.SubscriptionEndpoint<TransferApplicationSubmittedEvent>("prepare-transfer-application-submitted", e =>
+            {
+               e.UseMessageRetry(r =>
+               {
+                  r.Handle<MessageNotForThisInstanceException>();
+                  r.Immediate(10);
+
+                  r.Ignore<MessageNotForThisInstanceException>();
+                  r.Interval(3, TimeSpan.FromSeconds(5)); // 3 retries, 5 seconds apart for real erros
+               });
+
+               e.ConfigureConsumeTopology = false;
+               e.ConfigureConsumer<TransferApplicationSubmittedConsumer>(context);
+            });
+         });
    }
 
    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)

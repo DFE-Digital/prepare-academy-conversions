@@ -40,7 +40,6 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Mappers.Request
                 Recommendation = input.AcademyAndTrustInformation.Recommendation.ToString()
             };
         }
-
         public static TransferProjectCreate MapToCreate(Project input)
         {
             return new TransferProjectCreate
@@ -56,7 +55,8 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Mappers.Request
                     Region = x.Region,
                     LocalAuthority = x.LocalAuthority
                 }).ToList(),
-                IsFormAMat = input.IsFormAMat
+                IsFormAMat = input.IsFormAMat,
+                Reference = input.Reference
             };
         }
 
