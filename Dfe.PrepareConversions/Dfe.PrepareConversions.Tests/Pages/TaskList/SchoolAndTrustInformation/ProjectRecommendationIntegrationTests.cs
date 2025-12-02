@@ -39,6 +39,7 @@ public class ProjectRecommendationIntegrationTests : BaseIntegrationTests
       AddPatchConfiguredProject(project, x =>
       {
          x.RecommendationForProject = toSelect.Value;
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 

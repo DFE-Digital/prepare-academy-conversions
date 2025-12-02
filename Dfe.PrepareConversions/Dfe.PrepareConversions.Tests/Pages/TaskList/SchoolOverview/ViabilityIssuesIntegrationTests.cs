@@ -21,6 +21,7 @@ public class ViabilityIssuesIntegrationTests : BaseIntegrationTests
       AddPatchConfiguredProject(project, x =>
       {
          x.ViabilityIssues = toSelect.Value;
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 

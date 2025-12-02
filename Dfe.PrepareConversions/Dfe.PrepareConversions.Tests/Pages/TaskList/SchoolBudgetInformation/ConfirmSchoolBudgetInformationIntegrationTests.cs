@@ -123,6 +123,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
       AddPatchConfiguredProject(project, x =>
       {
          x.SchoolBudgetInformationSectionComplete = true;
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 
@@ -156,6 +157,7 @@ public class ConfirmSchoolBudgetInformationIntegrationTests : BaseIntegrationTes
       AddPatchConfiguredProject(project, x =>
       {
          x.SchoolBudgetInformationSectionComplete = false;
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 

@@ -20,12 +20,13 @@ public class AuthorIntegrationTests : BaseIntegrationTests
       AcademyConversionProject project = AddGetProject(x =>
       {
          x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
-         x.ApplicationReceivedDate = new DateTime(2024, 12, 16, 15, 0, 0, DateTimeKind.Utc);
+         x.ApplicationReceivedDate = new DateTime(2024, 12, 16, 15, 0, 0, DateTimeKind.Utc); 
       });
 
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
       {
          x.Author = _fixture.Create<string>();
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 
