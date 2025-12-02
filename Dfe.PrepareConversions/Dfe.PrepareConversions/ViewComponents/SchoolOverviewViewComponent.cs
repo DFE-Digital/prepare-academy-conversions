@@ -47,6 +47,7 @@ public class SchoolOverviewViewComponent(SchoolOverviewService schoolOverviewSer
          ViabilityIssues = project.ViabilityIssues,
          FinancialDeficit = project.FinancialDeficit,
          IsSchoolLinkedToADiocese = schoolOverview.IsSchoolLinkedToADiocese,
+         ReligiousCharacter = schoolOverview.ReligiousCharacter,
          DistanceFromSchoolToTrustHeadquarters =
             ViewData["Return"] == null ? project.DistanceFromSchoolToTrustHeadquarters.ToSafeString() : $"{project.DistanceFromSchoolToTrustHeadquarters.ToSafeString()}",
          DistanceFromSchoolToTrustHeadquartersAdditionalInformation = project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
