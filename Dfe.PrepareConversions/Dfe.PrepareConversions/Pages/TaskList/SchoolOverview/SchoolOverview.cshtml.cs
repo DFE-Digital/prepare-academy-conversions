@@ -43,7 +43,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.SchoolOverview
                return Page();
             }
 
-            SetError("member-of-parliament-name-and-party", "The Member of Parliement name and Political party could not be retrieved");
+            SetError("member-of-parliament-name-and-party", "MP name and political party are not currently available. Try again later.");
          }
 
          return Page();

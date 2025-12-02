@@ -77,8 +77,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList.SchoolOverview
          _repo.Verify(r => r.UpdateProject(It.IsAny<int>(), It.IsAny<UpdateAcademyConversionProject>()), Times.Never);
          Assert.IsType<PageResult>(result);
 
-         //_errorService.Verify(es => es.AddError("member-of-parliament-name-and-party", "The Member of Parliement name and Political party could not be retrieved"), Times.Once);
-         //_errorService.Verify(es => es.AddError(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+         //_errorService.Verify(es => es.AddError("member-of-parliament-name-and-party", "MP name and political party are not currently available. Try again later."), Times.Once);
       }
 
       [Fact]
