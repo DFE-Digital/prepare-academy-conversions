@@ -1,30 +1,30 @@
-@page "/task-list/{id:int}/school-overview"
-@using Dfe.PrepareConversions.TagHelpers
+﻿@page "/task-list/{id:int}/school-overview"
+@model Dfe.PrepareConversions.Pages.TaskList.SchoolOverview.SchoolOverviewModel
 @using Dfe.PrepareConversions.Data.Models
 @using Dfe.Academisation.ExtensionMethods
-@model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
+
 @{
-   Model.SuccessPage = Links.TaskList.Index.Page;
+    Model.SuccessPage = Links.TaskList.Index.Page;
     ViewData["Title"] = "Confirm school overview";
-   ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
+    ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
 }
 
 @section BeforeMain
 {
-   <govuk-back-link link-item="@Links.TaskList.Index"/>
+    <govuk-back-link link-item="@Links.TaskList.Index" />
 }
 
 @if (Model.ShowError)
 {
-   <partial name="_ErrorSummary"/>
+    <partial name="_ErrorSummary" />
 }
 
 <div class="govuk-grid-row">
-   <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l">@Model.Project.SchoolName</span>
-      <h1 class="govuk-heading-l">
-         School overview
-      </h1>
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+        <h1 class="govuk-heading-l">
+            School overview
+        </h1>
         @if (Model.Project.IsReadOnly)
         {
             <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
@@ -59,23 +59,23 @@
         }
         @if (ViewData["AcademyTypeAndRoute"] is AcademyTypeAndRoutes.Sponsored)
         {
-           <div class="govuk-body">
+            <div class="govuk-body">
                 <p data-test="annex-b-help">You can add more data from the <a class="govuk-link" asp-page="@Links.AnnexB.Index.Page" asp-route-id="@Model.Project.Id">Annex B form</a>.</p>
-           </div>
+            </div>
         }
         else
         {
-           <div class="govuk-body">
-               Some of the information has come from the 
-               <a class="govuk-link" asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
-           </div>
-           <br>
+            <div class="govuk-body">
+                Some of the information has come from the
+                <a class="govuk-link" asp-page="@Links.SchoolApplicationForm.Index.Page" asp-route-id="@Model.Project.Id" target="_blank">school's application form (opens in a new tab)</a>.
+            </div>
+            <br>
         }
-         
-   </div>
-    
-        <div class="govuk-grid-column-full">
-            @await Component.InvokeAsync("SchoolOverview")
+
+    </div>
+
+    <div class="govuk-grid-column-full">
+        @await Component.InvokeAsync("SchoolOverview")
         @if (!Model.Project.IsReadOnly)
         {
             <form method="post">
@@ -86,5 +86,5 @@
                 </button>
             </form>
         }
-        </div> 
+    </div>
 </div>
