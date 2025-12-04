@@ -52,6 +52,7 @@ public class RationaleForProjectIntegrationTests : BaseIntegrationTests
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
       {
          x.RationaleForProject = _fixture.Create<string>();
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 

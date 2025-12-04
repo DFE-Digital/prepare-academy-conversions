@@ -35,6 +35,7 @@ public class ConfirmRisksAndIssuesIntegrationTests(IntegrationTestingWebApplicat
       AddPatchConfiguredProject(project, x =>
       {
          x.RisksAndIssuesSectionComplete = true;
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 
@@ -62,6 +63,7 @@ public class ConfirmRisksAndIssuesIntegrationTests(IntegrationTestingWebApplicat
       AddPatchConfiguredProject(project, x =>
       {
          x.RisksAndIssuesSectionComplete = false;
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 

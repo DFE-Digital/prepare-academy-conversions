@@ -36,7 +36,7 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
          pfiDescription: 'PFI Description',
          distance: '15',
          distanceDecription: 'Distance description',
-         mp: 'Important Politician, Independent',
+         mp: 'Sarah Bool',
       },
       budget: {
          endOfFinanicalYear: currentDate,
@@ -94,11 +94,8 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
       schoolOverview.getViabilityIssues().should('contain.text', 'Yes');
       schoolOverview.changeViabilityIssues(false);
       schoolOverview.getViabilityIssues().should('contain.text', 'No');
-      //Financial deficit
-      schoolOverview.changeFinancialDeficit(true);
-      schoolOverview.getFinancialDeficit().should('contain.text', 'Yes');
-      schoolOverview.changeFinancialDeficit(false);
-      schoolOverview.getFinancialDeficit().should('contain.text', 'No');
+      //Financial deficit 
+      schoolOverview.getFinancialDeficit().should('contain.text', 'No'); 
       //PFI + details
       schoolOverview.changePFI(true, testData.schoolOverview.pfiDescription);
       schoolOverview.getPFI().should('contain.text', 'Yes');

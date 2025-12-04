@@ -26,6 +26,7 @@ public class ClearedByIntegrationTests : BaseIntegrationTests
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
       {
          x.ClearedBy = _fixture.Create<string>();
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 

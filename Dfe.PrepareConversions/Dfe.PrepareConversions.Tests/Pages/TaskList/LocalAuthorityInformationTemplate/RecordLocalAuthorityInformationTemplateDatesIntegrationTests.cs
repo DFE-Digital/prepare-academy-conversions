@@ -70,6 +70,7 @@ public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : Base
             .With(r => r.LocalAuthorityInformationTemplateReturnedDate, expected.AddDays(1))
             .With(r => r.LocalAuthorityInformationTemplateComments)
             .With(r => r.LocalAuthorityInformationTemplateLink)
+            .With(r => r.FinancialDeficit, SetFinancialDeficit())
             .With(r => r.Urn, project.Urn));
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-local-authority-information-template-dates");
@@ -139,7 +140,8 @@ public class RecordLocalAuthorityInformationTemplateDatesIntegrationTests : Base
       AddPatchProjectMany(project, composer =>
          composer
             .With(r => r.LocalAuthorityInformationTemplateComments, project.LocalAuthorityInformationTemplateComments)
-            .With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink)
+            .With(r => r.LocalAuthorityInformationTemplateLink, project.LocalAuthorityInformationTemplateLink) 
+            .With(r => r.FinancialDeficit, SetFinancialDeficit())
             .With(r => r.Urn, project.Urn));
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/record-local-authority-information-template-dates");

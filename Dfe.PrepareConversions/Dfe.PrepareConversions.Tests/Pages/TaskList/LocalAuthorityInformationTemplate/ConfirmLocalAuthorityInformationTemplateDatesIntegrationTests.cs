@@ -45,6 +45,7 @@ public class ConfirmLocalAuthorityInformationTemplateDatesIntegrationTests : Bas
       AddPatchConfiguredProject(project, x =>
       {
          x.LocalAuthorityInformationTemplateSectionComplete = true;
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 

@@ -18,6 +18,7 @@ public class RisksAndIssuesIntegrationTests(IntegrationTestingWebApplicationFact
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
       {
          x.RisksAndIssues = _fixture.Create<string>();
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 

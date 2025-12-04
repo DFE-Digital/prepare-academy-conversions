@@ -68,13 +68,14 @@ public class MPDetailsIntegrationTests : BaseIntegrationTests
       UpdateAcademyConversionProject request = AddPatchProjectMany(project, composer =>
          composer
             .With(r => r.MemberOfParliamentNameAndParty)
+            .With(r => r.FinancialDeficit, SetFinancialDeficit())
             .With(r => r.Urn, project.Urn));
 
       // open SchoolOverview page
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-overview");
 
       // move to MP details page
-      await NavigateAsync("Change", 5);
+      await NavigateAsync("Change", 4);
 
       // check existing details are there
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-overview/enter-MP-name-and-political-party");
