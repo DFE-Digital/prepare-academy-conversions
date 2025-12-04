@@ -124,7 +124,7 @@ public class UpdateAcademyConversionProjectPageModel(IAcademyConversionProjectRe
    {
       if (AcademyConversionProject.RevenueCarryForwardAtEndMarchCurrentYear.HasValue)
       {
-         return AcademyConversionProject.RevenueCarryForwardAtEndMarchCurrentYear < 0 ? "No" : "Yes";
+         return AcademyConversionProject.RevenueCarryForwardAtEndMarchCurrentYear < 0 ? "Yes" : "No";
       }
       return Project.FinancialDeficit;
    }

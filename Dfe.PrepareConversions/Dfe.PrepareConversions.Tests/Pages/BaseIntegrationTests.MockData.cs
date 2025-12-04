@@ -71,8 +71,8 @@ public abstract partial class BaseIntegrationTests
    }
    public string SetFinancialDeficit(decimal? revenueCarryForwardAtEndMarchCurrentYear = null)
     => (revenueCarryForwardAtEndMarchCurrentYear ?? _revenueCarryForwardAtEndMarchCurrentYear) < 0
-        ? "No"
-        : "Yes";
+        ? "Yes"
+        : "No";
 
    public AcademyConversionProject AddGetProject(Action<AcademyConversionProject> postSetup = null, bool isReadOnly = false)
    {
