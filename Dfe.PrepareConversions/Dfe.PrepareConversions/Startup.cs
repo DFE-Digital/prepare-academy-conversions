@@ -44,6 +44,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
+using GovUK.Dfe.PersonsApi.Client;
+using GovUK.Dfe.PersonsApi.Client.Contracts;
+using GovUK.Dfe.PersonsApi.Client.Extensions;
+using Dfe.PrepareConversions.Data.Services.Person;
+
 namespace Dfe.PrepareConversions;
 
 [ExcludeFromCodeCoverage]
@@ -177,6 +182,9 @@ public class Startup
          client.DefaultRequestHeaders.Add("x-api-key", apiOptions.ApiKey);
          client.DefaultRequestHeaders.Add("User-Agent", "PrepareConversions/1.0");
       });
+
+      services.AddPersonsApiClient<IEstablishmentsClient, EstablishmentsClient>(Configuration);
+      services.AddScoped<IPersonApiEstablishmentsService, PersonApiEstablishmentsService>();
 
       services.Configure<ServiceLinkOptions>(GetConfigurationSectionFor<ServiceLinkOptions>());
       services.Configure<AzureAdOptions>(GetConfigurationSectionFor<AzureAdOptions>());

@@ -15,6 +15,11 @@ public class UpdateAcademyConversionProjectPageModel(IAcademyConversionProjectRe
    [BindProperty]
    public AcademyConversionProjectPostModel AcademyConversionProject { get; set; }
 
+   public void SetError(string key, string message)
+   {
+      errorService.AddError(key, message);
+   }
+
    public bool ShowError => errorService.HasErrors();
 
    public string SuccessPage

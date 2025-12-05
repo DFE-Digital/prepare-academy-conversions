@@ -1,5 +1,8 @@
 ﻿using Dfe.PrepareConversions.Data.Services.Interfaces;
+using Dfe.PrepareConversions.Data.Services.Person;
 using Dfe.PrepareConversions.Tests.Pages.ProjectAssignment;
+using GovUK.Dfe.PersonsApi.Client;
+using GovUK.Dfe.PersonsApi.Client.Contracts;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -13,12 +16,14 @@ using Moq;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
+using System.Threading;
 using System.Threading.Tasks;
 using WireMock.Logging;
 using WireMock.Matchers;
@@ -100,6 +105,9 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
          // Remove and replace Redis
          ServiceDescriptor descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IDistributedCache));
          if (descriptor != null) services.Remove(descriptor);
+
+         services.AddScoped<IEstablishmentsClient, MockEstablishmentsClient>();
+         services.AddScoped<IPersonApiEstablishmentsService, PersonApiEstablishmentsService>();
 
          services.AddSingleton<IDistributedCache, MemoryDistributedCache>();
       });
@@ -262,6 +270,29 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
          AuthenticationTicket ticket = new(principal, "Test");
 
          return Task.FromResult(AuthenticateResult.Success(ticket));
+      }
+   }
+
+   public class MockEstablishmentsClient : IEstablishmentsClient
+   {
+      public Task<ObservableCollection<AcademyGovernance>> GetAllPersonsAssociatedWithAcademyByUrnAsync(int urn)
+      {
+         throw new NotImplementedException();
+      }
+
+      public Task<ObservableCollection<AcademyGovernance>> GetAllPersonsAssociatedWithAcademyByUrnAsync(int urn, CancellationToken cancellationToken)
+      {
+         throw new NotImplementedException();
+      }
+
+      public Task<MemberOfParliament> GetMemberOfParliamentBySchoolUrnAsync(int urn)
+      {
+         throw new NotImplementedException();
+      }
+
+      public Task<MemberOfParliament> GetMemberOfParliamentBySchoolUrnAsync(int urn, CancellationToken cancellationToken)
+      {
+         throw new NotImplementedException();
       }
    }
 }
