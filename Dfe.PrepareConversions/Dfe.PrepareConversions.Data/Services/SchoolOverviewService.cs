@@ -29,7 +29,8 @@ public class SchoolOverviewService
          SchoolCapacity = ToInt(establishment.SchoolCapacity),
          PercentageFreeSchoolMeals = establishment.Census?.PercentageFsm,
          IsSchoolLinkedToADiocese = IsPartOfADiocesanTrust(establishment.Diocese),
-         ParliamentaryConstituency = establishment.ParliamentaryConstituency?.Name
+         ParliamentaryConstituency = establishment.ParliamentaryConstituency?.Name,
+         ReligiousCharacter = ParseReligiousCharacter(establishment.ReligiousCharacter)
       };
 
       return schoolOverview;
@@ -51,6 +52,16 @@ public class SchoolOverviewService
       }
 
       return $"Yes, {nameAndCode.Name}";
+   }
+
+   private static string ParseReligiousCharacter(NameAndCodeDto nameAndCode)
+   {
+      if (nameAndCode == null)
+      {
+         return "NA";
+      }
+
+      return nameAndCode.Name;
    }
 
    private static int? ToInt(string value)

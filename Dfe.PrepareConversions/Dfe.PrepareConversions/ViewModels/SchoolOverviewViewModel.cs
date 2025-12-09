@@ -19,6 +19,7 @@ public class SchoolOverviewViewModel
    public string ViabilityIssues { get; set; }
    public string FinancialDeficit { get; set; }
    public string IsSchoolLinkedToADiocese { get; set; }
+   public string ReligiousCharacter { get; set; }
    public decimal? PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust { get; set; }
    public string DistanceFromSchoolToTrustHeadquarters { get; set; }
    public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
