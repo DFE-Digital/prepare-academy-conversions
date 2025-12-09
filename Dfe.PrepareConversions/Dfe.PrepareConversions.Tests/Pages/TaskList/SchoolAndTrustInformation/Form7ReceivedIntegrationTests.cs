@@ -23,6 +23,7 @@ public class Form7ReceivedIntegrationTests : BaseIntegrationTests
       AddPatchConfiguredProject(project, x =>
       {
          x.Form7Received = "Yes";
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 
