@@ -163,13 +163,15 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");
    }
 
+
    [Fact]
    public async Task Should_update_school_overview_pan_and_navigate_back_to_preview()
    {
-      var project = AddGetProject();
+      var project = AddGetProject(); 
       var request = AddPatchConfiguredProject(project, x =>
       {
-         x.PublishedAdmissionNumber = _fixture.Create<string>();
+         x.PublishedAdmissionNumber = _fixture.Create<string>(); 
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 
@@ -217,16 +219,17 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
    [Fact]
    public async Task Should_update_school_budget_fields_and_navigate_back_to_preview()
-   {
+   { 
       var project = AddGetProject();
       var request = AddPatchProjectMany(project, composer =>
          composer
             .With(r => r.EndOfCurrentFinancialYear, new DateTime(2022, 04, 01))
-            .With(r => r.EndOfNextFinancialYear, new DateTime(2023, 04, 01))
-            .With(r => r.RevenueCarryForwardAtEndMarchCurrentYear)
+            .With(r => r.EndOfNextFinancialYear, new DateTime(2023, 04, 01)) 
             .With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear)
             .With(r => r.CapitalCarryForwardAtEndMarchCurrentYear)
             .With(r => r.CapitalCarryForwardAtEndMarchNextYear)
+            .With(r => r.RevenueCarryForwardAtEndMarchCurrentYear, _revenueCarryForwardAtEndMarchCurrentYear)
+            .With(r => r.FinancialDeficit, SetFinancialDeficit())
             .With(r => r.Urn, project.Urn));
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
@@ -312,6 +315,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       var request = AddPatchConfiguredProject(project, x =>
       {
          x.SchoolPupilForecastsAdditionalInformation = _fixture.Create<string>();
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 
@@ -453,7 +457,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 14);
+      await NavigateAsync("Change", 13);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/project-recommendation");
 
       await NavigateAsync("Back");
@@ -474,12 +478,13 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       {
          x.RecommendationForProject = toSelect.Value;
          x.RecommendationNotesForProject = "Updated recommendation notes";
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 14);
+      await NavigateAsync("Change", 13);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/project-recommendation");
 
       Document.QuerySelector<IHtmlInputElement>(toSelect.Id)!.IsChecked.Should().BeFalse();

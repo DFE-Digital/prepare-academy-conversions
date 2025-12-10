@@ -1,4 +1,10 @@
 ## NEXT
+
+## 1.7.2 
+- prepopulate the feild 'Is the school linked to a diocese'
+- Prepopulate the field 'Financial deficit' under 'School Overview'
+
+## 1.7.2
 * 213008 - BUG accessibility -Prepare - cant create conversion when javascript turned off
 
 ## 1.7.1
