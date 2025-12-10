@@ -72,6 +72,7 @@ namespace Dfe.PrepareConversions.Tests.Services.DocumentGenerator
             x.ConversionSupportGrantAmount = 0;
             x.ConversionSupportGrantChangeReason = null;
             x.RecommendationForProject = "Test recommendation for project";
+            x.RecommendationNotesForProject = null;
             x.SchoolType = "pupil referral unit";
             x.ConversionSupportGrantNumberOfSites = "2";
          });
