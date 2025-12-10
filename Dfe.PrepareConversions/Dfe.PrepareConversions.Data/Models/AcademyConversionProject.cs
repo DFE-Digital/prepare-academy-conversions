@@ -32,6 +32,7 @@ public class AcademyConversionProject
 
    //school/trust info
    public string RecommendationForProject { get; set; }
+   public string RecommendationNotesForProject { get; set; }
    public string Author { get; set; }
    public string Version { get; set; }
    public string ClearedBy { get; set; }
