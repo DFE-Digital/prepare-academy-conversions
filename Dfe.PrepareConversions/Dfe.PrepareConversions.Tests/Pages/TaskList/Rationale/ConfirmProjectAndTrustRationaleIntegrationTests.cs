@@ -53,6 +53,7 @@ public class ConfirmProjectAndTrustRationaleIntegrationTests(IntegrationTestingW
       AddPatchConfiguredProject(project, x =>
       {
          x.RationaleSectionComplete = true;
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 
@@ -76,13 +77,14 @@ public class ConfirmProjectAndTrustRationaleIntegrationTests(IntegrationTestingW
       {
          project.RationaleForProject = null;
          project.RationaleForTrust = null;
-         project.RationaleSectionComplete = false;
+         project.RationaleSectionComplete = false; 
          project.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
       });
 
       AddPatchConfiguredProject(project, x =>
       {
          x.RationaleSectionComplete = false;
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 

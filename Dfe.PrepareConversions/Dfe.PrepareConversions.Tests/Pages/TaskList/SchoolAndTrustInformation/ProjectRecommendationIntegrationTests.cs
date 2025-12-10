@@ -44,6 +44,7 @@ public class ProjectRecommendationIntegrationTests : BaseIntegrationTests
       {
          x.RecommendationForProject = toSelect.Value;
          x.RecommendationNotesForProject = "Updated recommendation notes";
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 

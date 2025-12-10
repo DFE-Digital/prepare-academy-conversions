@@ -75,6 +75,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests(IntegrationTesting
       AddPatchConfiguredProject(project, x =>
       {
          x.SchoolAndTrustInformationSectionComplete = true;
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 
@@ -113,6 +114,7 @@ public class ConfirmSchoolAndTrustInformationIntegrationTests(IntegrationTesting
          project.ConversionSupportGrantChangeReason = null;
          project.ProposedConversionDate = null;
          project.SchoolAndTrustInformationSectionComplete = false;
+         project.FinancialDeficit = null;
       });
       AddPatchProject(project, r => r.SchoolAndTrustInformationSectionComplete, false);
 

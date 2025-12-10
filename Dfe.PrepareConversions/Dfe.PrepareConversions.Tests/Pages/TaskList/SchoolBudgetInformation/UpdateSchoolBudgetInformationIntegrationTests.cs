@@ -35,6 +35,7 @@ public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTest
             .With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear)
             .With(r => r.CapitalCarryForwardAtEndMarchCurrentYear)
             .With(r => r.CapitalCarryForwardAtEndMarchNextYear)
+            .With(r => r.FinancialDeficit, SetFinancialDeficit())
             .With(r => r.Urn, project.Urn));
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/budget");
@@ -69,16 +70,19 @@ public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTest
          project.EndOfNextFinancialYear = null;
          project.CapitalCarryForwardAtEndMarchCurrentYear = null;
          project.CapitalCarryForwardAtEndMarchNextYear = null;
-         project.SchoolBudgetInformationSectionComplete = false;
+         project.SchoolBudgetInformationSectionComplete = false; 
+         project.FinancialDeficit = null;
       });
+      var revenueCarryForwardAtEndMarchCurrentYear = -100.25M;
       UpdateAcademyConversionProject request = AddPatchProjectMany(project, composer =>
          composer
             .With(r => r.EndOfCurrentFinancialYear, new DateTime(2022, 12, 2))
-            .With(r => r.RevenueCarryForwardAtEndMarchCurrentYear, -100.25M)
+            .With(r => r.RevenueCarryForwardAtEndMarchCurrentYear, revenueCarryForwardAtEndMarchCurrentYear)
             .With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear, -10.75M)
             .With(r => r.EndOfNextFinancialYear, new DateTime(2023, 12, 2))
             .With(r => r.CapitalCarryForwardAtEndMarchCurrentYear, -65.90M)
             .With(r => r.CapitalCarryForwardAtEndMarchNextYear, -1024.95M)
+            .With(r => r.FinancialDeficit, SetFinancialDeficit(revenueCarryForwardAtEndMarchCurrentYear))
             .With(r => r.Urn, project.Urn));
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/budget");
@@ -182,6 +186,7 @@ public class UpdateSchoolBudgetInformationIntegrationTests : BaseIntegrationTest
             .With(r => r.ProjectedRevenueBalanceAtEndMarchNextYear, default(decimal))
             .With(r => r.CapitalCarryForwardAtEndMarchCurrentYear, default(decimal))
             .With(r => r.CapitalCarryForwardAtEndMarchNextYear, default(decimal))
+            .With(r => r.FinancialDeficit, SetFinancialDeficit())
             .With(r => r.Urn, project.Urn));
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/confirm-school-budget-information/update-school-budget-information");

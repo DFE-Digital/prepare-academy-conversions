@@ -91,6 +91,7 @@ public class ConfirmSchoolOverviewIntegrationTests(IntegrationTestingWebApplicat
       AddPatchConfiguredProject(project, x =>
       {
          x.SchoolOverviewSectionComplete = true;
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 

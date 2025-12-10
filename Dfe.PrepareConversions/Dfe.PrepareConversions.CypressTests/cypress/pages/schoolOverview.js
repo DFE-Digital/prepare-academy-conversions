@@ -10,8 +10,7 @@ export default class SchoolOverview extends BasePage {
         panInput: '[id="published-admission-number"]',
         viabilityIssuesValue: '[id="viability-issues"]',
         viabilityIssuesLink: '[data-test="change-viability-issues"]',
-        financialDeficitValue: '[id="financial-deficit"]',
-        financialDeficitLink: '[data-test="change-financial-deficit"]',
+        financialDeficitValue: '[id="financial-deficit"]', 
         pfiValue: '[id="part-of-pfi"]',
         pifDetails: '[id="pfi-scheme-details"]',
         pfiLink: '[data-test="change-part-of-pfi"]',
@@ -64,17 +63,7 @@ export default class SchoolOverview extends BasePage {
         return cy.get(this.selectors.financialDeficitValue)
     }
 
-    static changeFinancialDeficit(financialDeficit) {
-        cy.checkPath(this.path)
-        cy.get(this.selectors.financialDeficitLink).click()
-        if (financialDeficit) {
-            cy.YesRadioBtn().check()
-        }
-        else {
-            cy.NoRadioBtn().check()
-        }
-        cy.saveContinue().click()
-    }
+    
 
     static getPFI() {
         cy.checkPath(this.path)
