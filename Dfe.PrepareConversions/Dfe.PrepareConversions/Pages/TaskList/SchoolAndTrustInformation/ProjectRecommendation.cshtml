@@ -1,6 +1,6 @@
 ﻿@page "/task-list/{id:int}/confirm-school-trust-information-project-dates/project-recommendation"
 @using Dfe.PrepareConversions.TagHelpers
-@model Dfe.PrepareConversions.Pages.UpdateAcademyConversionProjectPageModel
+@model Dfe.PrepareConversions.Pages.TaskList.SchoolAndTrustInformation.ProjectRecommendationModel
 @{
    Layout = "_QuestionLayout";
    Model.SuccessPage = Links.SchoolAndTrustInformationSection.ConfirmSchoolAndTrustInformation.Page;
@@ -8,7 +8,7 @@
    ViewData["SchoolName"] = Model.Project.SchoolName;
    ViewData["ProjectId"] = Model.Project.Id;
    ViewData["AcademyTypeAndRoute"] = Model.Project.AcademyTypeAndRoute;
-   var values = new[] { "Approve", "Defer", "Decline" };
+    var values = new[] { "Approve", "Approve with conditions", "Defer", "Decline" };
 }
 
 @section BeforeMain
@@ -18,3 +18,6 @@
 
 <h1 class="govuk-heading-l">What is the recommendation for this project?</h1>
 <govuk-radios-input name="project-recommendation" asp-for="Project.RecommendationForProject" values="@values" labels="@values"/>
+
+<govuk-textarea-input heading-label="true" label="Recommendation notes"
+                      name="project-recommendation-notes" asp-for="Project.RecommendationNotesForProject" rows="15">

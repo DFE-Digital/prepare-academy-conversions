@@ -150,6 +150,7 @@ public class UpdateAcademyConversionProjectPageModel(IAcademyConversionProjectRe
          LocalAuthorityInformationTemplateLink = AcademyConversionProject.LocalAuthorityInformationTemplateLink,
          LocalAuthorityInformationTemplateSectionComplete = AcademyConversionProject.LocalAuthorityInformationTemplateSectionComplete,
          RecommendationForProject = AcademyConversionProject.RecommendationForProject,
+         RecommendationNotesForProject = AcademyConversionProject.RecommendationNotesForProject,
          Author = AcademyConversionProject.Author,
          ClearedBy = AcademyConversionProject.ClearedBy,
          Form7Received = AcademyConversionProject.Form7Received,

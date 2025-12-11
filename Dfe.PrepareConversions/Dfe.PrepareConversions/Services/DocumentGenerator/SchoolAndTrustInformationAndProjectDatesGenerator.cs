@@ -77,6 +77,11 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
          }
 
          voluntaryRouteInfo.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Recommendation", project.RecommendationForProject));
+         
+         if (!string.IsNullOrWhiteSpace(project.RecommendationNotesForProject))
+         {
+            voluntaryRouteInfo.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Recommendation notes", project.RecommendationNotesForProject));
+         }
 
          if (project.SchoolType.ToLower().Contains("pupil referral unit"))
          {

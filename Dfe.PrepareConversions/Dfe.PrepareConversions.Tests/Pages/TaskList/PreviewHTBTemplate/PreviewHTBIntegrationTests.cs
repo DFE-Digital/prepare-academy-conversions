@@ -467,12 +467,17 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_update_school_and_trust_recommendation_and_navigate_back_to_preview()
    {
-      (RadioButton selected, RadioButton toSelect) = RandomRadioButtons("project-recommendation", "Approve", "Defer", "Decline");
+      (RadioButton selected, RadioButton toSelect) = RandomRadioButtons("project-recommendation", "Approve", "Approve with conditions", "Defer", "Decline");
 
-      var project = AddGetProject(p => p.RecommendationForProject = selected.Value);
-      AddPatchConfiguredProject(project, x =>
+      var project = AddGetProject(p =>
+      {
+         p.RecommendationForProject = selected.Value;
+         p.RecommendationNotesForProject = "Original recommendation notes";
+      });
+      var request = AddPatchConfiguredProject(project, x =>
       {
          x.RecommendationForProject = toSelect.Value;
+         x.RecommendationNotesForProject = "Updated recommendation notes";
          x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
@@ -490,6 +495,12 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       Document.QuerySelector<IHtmlInputElement>(toSelect.Id)!.IsChecked.Should().BeTrue();
       Document.QuerySelector<IHtmlInputElement>(selected.Id)!.IsChecked.Should().BeFalse();
+
+      IHtmlTextAreaElement textArea = Document.QuerySelector<IHtmlTextAreaElement>("#project-recommendation-notes");
+      textArea.Should().NotBeNull();
+      textArea!.TextContent.Should().Be(project.RecommendationNotesForProject ?? string.Empty);
+      textArea.Value = request.RecommendationNotesForProject;
+      textArea.Value.Should().Be(request.RecommendationNotesForProject);
 
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
       Document.Url.Should().Contain($"/task-list/{project.Id}/preview-project-template");

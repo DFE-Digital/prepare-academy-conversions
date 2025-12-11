@@ -35,6 +35,7 @@ public class ProjectViewModel : ProjectTypeBase
       LocalAuthorityInformationTemplateSectionComplete = project.LocalAuthorityInformationTemplateSectionComplete ?? false;
 
       RecommendationForProject = project.RecommendationForProject;
+      RecommendationNotesForProject = project.RecommendationNotesForProject;
       Author = project.Author;
       Version = project.Version;
       ClearedBy = project.ClearedBy;
@@ -166,6 +167,7 @@ public class ProjectViewModel : ProjectTypeBase
 
    //school/trust info
    public string RecommendationForProject { get; set; }
+   public string RecommendationNotesForProject { get; set; }
    public string Author { get; set; }
    public string Version { get; set; }
    public string ClearedBy { get; set; }

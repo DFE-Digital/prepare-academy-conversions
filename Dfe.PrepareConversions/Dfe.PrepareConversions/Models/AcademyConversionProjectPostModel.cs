@@ -47,6 +47,10 @@ public class AcademyConversionProjectPostModel
    [DisplayFormat(ConvertEmptyStringToNull = false)]
    public string RecommendationForProject { get; set; }
 
+   [BindProperty(Name = "project-recommendation-notes")]
+   [DisplayFormat(ConvertEmptyStringToNull = false)]
+   public string RecommendationNotesForProject { get; set; }
+
    [BindProperty(Name = "author")]
    [DisplayFormat(ConvertEmptyStringToNull = false)]
    public string Author { get; set; }
