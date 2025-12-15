@@ -457,7 +457,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 13);
+      await NavigateAsync("Change", 12);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/project-recommendation");
 
       await NavigateAsync("Back");
@@ -479,7 +479,7 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/preview-project-template");
 
-      await NavigateAsync("Change", 13);
+      await NavigateAsync("Change", 12);
       Document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/project-recommendation");
 
       Document.QuerySelector<IHtmlInputElement>(toSelect.Id)!.IsChecked.Should().BeFalse();
