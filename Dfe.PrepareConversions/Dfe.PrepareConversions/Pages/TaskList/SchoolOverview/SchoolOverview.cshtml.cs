@@ -31,9 +31,15 @@ namespace Dfe.PrepareConversions.Pages.TaskList.SchoolOverview
 
             if (result.IsSuccess)
             {
+               var name = result.Value.DisplayName;
+               if (!string.IsNullOrWhiteSpace(result.Value.ConstituencyPartyName))
+               {
+                  name = $"{name} ({result.Value.ConstituencyPartyName})";
+               }
+
                UpdateAcademyConversionProject updatedProject = new()
                {
-                  MemberOfParliamentNameAndParty = result.Value.DisplayName
+                  MemberOfParliamentNameAndParty = name
                };
 
                await _repository.UpdateProject(id, updatedProject);
