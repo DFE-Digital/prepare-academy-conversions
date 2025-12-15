@@ -22,11 +22,12 @@ public class DistanceFromTrustHeadquartersIntegrationTests : BaseIntegrationTest
       UpdateAcademyConversionProject request = AddPatchProjectMany(project, composer =>
          composer
             .With(r => r.DistanceFromSchoolToTrustHeadquarters)
-            .With(r => r.DistanceFromSchoolToTrustHeadquartersAdditionalInformation)
+            .With(r => r.DistanceFromSchoolToTrustHeadquartersAdditionalInformation) 
+            .With(r => r.FinancialDeficit, SetFinancialDeficit())
             .With(r => r.Urn, project.Urn));
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-overview");
-      await NavigateAsync("Change", 4);
+      await NavigateAsync("Change", 3);
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-overview/how-far-converting-school-from-trust");
       Document.QuerySelector<IHtmlInputElement>("#distance-to-trust-headquarters")!.Value.Should().Be(project.DistanceFromSchoolToTrustHeadquarters.ToSafeString());

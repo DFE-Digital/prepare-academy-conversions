@@ -17,6 +17,7 @@ public class AdditionalInformationIntegrationTests(IntegrationTestingWebApplicat
       var request = AddPatchConfiguredProject(project, x =>
       {
          x.SchoolBudgetInformationAdditionalInformation = _fixture.Create<string>();
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 

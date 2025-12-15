@@ -25,6 +25,7 @@ public class AcademyTypeAndRouteIntegrationTests(IntegrationTestingWebApplicatio
          composer
             .With(r => r.ConversionSupportGrantAmount)
             .With(r => r.ConversionSupportGrantChangeReason)
+            .With(r => r.FinancialDeficit, SetFinancialDeficit())
             .With(r => r.Urn, project.Urn)
       );
 

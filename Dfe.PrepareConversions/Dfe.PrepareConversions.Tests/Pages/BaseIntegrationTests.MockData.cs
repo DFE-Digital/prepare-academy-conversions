@@ -20,6 +20,7 @@ namespace Dfe.PrepareConversions.Tests.Pages;
 public abstract partial class BaseIntegrationTests
 {
    private readonly string[] _routes = [AcademyTypeAndRoutes.Voluntary, AcademyTypeAndRoutes.Sponsored];
+   protected readonly decimal _revenueCarryForwardAtEndMarchCurrentYear = (decimal)8.00;
 
    protected IEnumerable<AcademyConversionProject> AddGetProjects(Action<AcademyConversionProject> postSetup = null,
       int? recordCount = null,
@@ -68,6 +69,10 @@ public abstract partial class BaseIntegrationTests
 
       return filterParameters;
    }
+   public string SetFinancialDeficit(decimal? revenueCarryForwardAtEndMarchCurrentYear = null)
+    => (revenueCarryForwardAtEndMarchCurrentYear ?? _revenueCarryForwardAtEndMarchCurrentYear) < 0
+        ? "Yes"
+        : "No";
 
    public AcademyConversionProject AddGetProject(Action<AcademyConversionProject> postSetup = null, bool isReadOnly = false)
    {
@@ -78,6 +83,8 @@ public abstract partial class BaseIntegrationTests
          .With(x => x.IsReadOnly, isReadOnly)
          .With(x => x.HeadTeacherBoardDate, DateTime.Now.AddDays(-1))
          .With(x => x.AssignedUser, _fixture.Create<User>())
+         .With(x=> x.RevenueCarryForwardAtEndMarchCurrentYear, _revenueCarryForwardAtEndMarchCurrentYear)
+         .With(x => x.FinancialDeficit, SetFinancialDeficit())
          .Create();
 
       postSetup?.Invoke(project);

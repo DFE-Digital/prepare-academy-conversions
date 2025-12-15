@@ -125,6 +125,14 @@ public class UpdateAcademyConversionProjectPageModel(IAcademyConversionProjectRe
          _ => defaultAmount + supplementAmount
       };
    }
+   private string SetFinancialDeficit()
+   {
+      if (AcademyConversionProject.RevenueCarryForwardAtEndMarchCurrentYear.HasValue)
+      {
+         return AcademyConversionProject.RevenueCarryForwardAtEndMarchCurrentYear < 0 ? "Yes" : "No";
+      }
+      return Project.FinancialDeficit;
+   }
 
    protected UpdateAcademyConversionProject Build()
    {
@@ -160,7 +168,7 @@ public class UpdateAcademyConversionProjectPageModel(IAcademyConversionProjectRe
          NumberOfPlacesFundedFor = AcademyConversionProject.NumberOfPlacesFundedFor,
          NumberOfResidentialPlaces = AcademyConversionProject.NumberOResidentialPlaces,
          NumberOfFundedResidentialPlaces = AcademyConversionProject.NumberOfFundedResidentialPlaces,
-         FinancialDeficit = AcademyConversionProject.FinancialDeficit,
+         FinancialDeficit = SetFinancialDeficit(),
          IsThisADiocesanTrust = AcademyConversionProject.IsThisADiocesanTrust,
          DistanceFromSchoolToTrustHeadquarters = AcademyConversionProject.DistanceFromSchoolToTrustHeadquarters,
          DistanceFromSchoolToTrustHeadquartersAdditionalInformation = AcademyConversionProject.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,

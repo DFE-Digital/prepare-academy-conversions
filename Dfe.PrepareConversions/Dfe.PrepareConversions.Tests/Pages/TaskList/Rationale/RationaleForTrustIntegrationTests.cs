@@ -18,6 +18,7 @@ public class RationaleForTrustIntegrationTests(IntegrationTestingWebApplicationF
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
       {
          x.RationaleForTrust = _fixture.Create<string>();
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 

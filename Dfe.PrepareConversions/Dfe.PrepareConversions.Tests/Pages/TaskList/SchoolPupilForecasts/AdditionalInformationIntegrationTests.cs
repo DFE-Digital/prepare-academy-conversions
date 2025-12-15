@@ -22,6 +22,7 @@ public class AdditionalInformationIntegrationTests : BaseIntegrationTests
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>
       {
          x.SchoolPupilForecastsAdditionalInformation = _fixture.Create<string>();
+         x.FinancialDeficit = SetFinancialDeficit();
          x.Urn = project.Urn;
       });
 
