@@ -36,6 +36,7 @@ public class HtbTemplateTests
          Assert.Equal(_project.LocalAuthority, _template.LocalAuthority);
 
          Assert.Equal(_project.RecommendationForProject, _template.RecommendationForProject);
+         Assert.Equal(_project.RecommendationNotesForProject, _template.RecommendationNotesForProject);
          Assert.Equal($"{_project.AcademyTypeAndRoute} - {_project.ConversionSupportGrantAmount?.ToMoneyString(true)}", _template.AcademyTypeRouteAndConversionGrant);
          Assert.Equal(_project.HeadTeacherBoardDate.ToDateString(), _template.HeadTeacherBoardDate);
          Assert.Equal(_project.ProposedConversionDate.ToDateString(), _template.ProposedAcademyOpeningDate);

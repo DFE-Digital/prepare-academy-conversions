@@ -21,6 +21,7 @@ public class UpdateAcademyConversionProject
 
    //school/trust info
    public string RecommendationForProject { get; set; }
+   public string RecommendationNotesForProject { get; set; }
    public string Author { get; set; }
    public string ClearedBy { get; set; }
    public string Form7Received { get; set; }
