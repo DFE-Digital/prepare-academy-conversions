@@ -38,6 +38,9 @@ public class HtbTemplate
    [DocumentText("RecommendationForProject")]
    public string RecommendationForProject { get; set; }
 
+   [DocumentText("RecommendationNotesForProject")]
+   public string RecommendationNotesForProject { get; set; }
+
    [DocumentText("Author")]
    public string Author { get; set; }
 
@@ -250,6 +253,7 @@ public class HtbTemplate
          AssignedDate = project.AssignedDate.ToDateString(),
          HeadTeacherBoardDate = project.HeadTeacherBoardDate.ToDateString(),
          RecommendationForProject = project.RecommendationForProject,
+         RecommendationNotesForProject = project.RecommendationNotesForProject,
          Author = $"Author: {project.Author}",
          Version = $"Version: {DateTime.Today.ToDateString()}",
          ClearedBy = $"Cleared by: {project.ClearedBy}",

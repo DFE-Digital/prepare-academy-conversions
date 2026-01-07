@@ -30,6 +30,7 @@ namespace Dfe.PrepareConversions.Tests.Services.DocumentGenerator
             x.ConversionSupportGrantAmount = 30000;
             x.ConversionSupportGrantChangeReason = "I need some cash please";
             x.RecommendationForProject = "Test recommendation for project";
+            x.RecommendationNotesForProject = "Test recommendation notes";
             x.SchoolType = "pupil referral unit";
             x.ConversionSupportGrantNumberOfSites = "2";
          });
@@ -39,7 +40,7 @@ namespace Dfe.PrepareConversions.Tests.Services.DocumentGenerator
 
          // Assert
          Assert.NotNull(elements);
-         Assert.Equal(5, elements.Count);
+         Assert.Equal(6, elements.Count);
 
          Assert.Equal("Academy type and route", elements[0][0].Value);
          Assert.Equal(AcademyTypeAndRoutes.Voluntary, elements[0][1].Value);
@@ -53,8 +54,11 @@ namespace Dfe.PrepareConversions.Tests.Services.DocumentGenerator
          Assert.Equal("Recommendation", elements[3][0].Value);
          Assert.Equal(project.RecommendationForProject, elements[3][1].Value);
 
-         Assert.Equal("Number of sites", elements[4][0].Value);
-         Assert.Equal(project.ConversionSupportGrantNumberOfSites?.ToString(), elements[4][1].Value);
+         Assert.Equal("Recommendation notes", elements[4][0].Value);
+         Assert.Equal(project.RecommendationNotesForProject, elements[4][1].Value);
+
+         Assert.Equal("Number of sites", elements[5][0].Value);
+         Assert.Equal(project.ConversionSupportGrantNumberOfSites?.ToString(), elements[5][1].Value);
       }
 
       [Fact]
@@ -68,6 +72,7 @@ namespace Dfe.PrepareConversions.Tests.Services.DocumentGenerator
             x.ConversionSupportGrantAmount = 0;
             x.ConversionSupportGrantChangeReason = null;
             x.RecommendationForProject = "Test recommendation for project";
+            x.RecommendationNotesForProject = null;
             x.SchoolType = "pupil referral unit";
             x.ConversionSupportGrantNumberOfSites = "2";
          });

@@ -1,5 +1,6 @@
 ﻿using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Threading.Tasks;
@@ -36,6 +37,11 @@ public class RadiosInputTagHelper : InputTagHelperBase
          HeadingLabel = HeadingLabel,
          LeadingParagraph = LeadingParagraph
       };
+
+      if (ViewContext.ModelState.TryGetValue(Name, out ModelStateEntry entry) && entry.Errors.Count > 0)
+      {
+         model.ErrorMessage = entry.Errors[0].ErrorMessage;
+      }
 
       return await _htmlHelper.PartialAsync("_RadiosInput", model);
    }

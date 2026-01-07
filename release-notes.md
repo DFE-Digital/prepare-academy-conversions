@@ -1,5 +1,8 @@
 ## NEXT
 
+## 1.8.0
+- Added 'Approve with conditions' with recommendation notes under 'Conversion details'
+
 ## 1.7.2 
 - prepopulate the feild 'Is the school linked to a diocese'
 - Prepopulate the field 'Financial deficit' under 'School Overview'
