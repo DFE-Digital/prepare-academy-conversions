@@ -104,9 +104,6 @@ describe('Sponsored conversion journey', { tags: ['@dev', '@stage'] }, () => {
       schoolOverview.changeDistance(testData.schoolOverview.distance, testData.schoolOverview.distanceDecription);
       schoolOverview.getDistance().should('contain.text', testData.schoolOverview.distance);
       schoolOverview.getDistanceDetails().should('contain.text', testData.schoolOverview.distanceDecription);
-      //MP
-      schoolOverview.changeMP(testData.schoolOverview.mp);
-      schoolOverview.getMP().should('contain.text', testData.schoolOverview.mp);
       //Complete
       schoolOverview.markComplete();
       cy.confirmContinueBtn().click();

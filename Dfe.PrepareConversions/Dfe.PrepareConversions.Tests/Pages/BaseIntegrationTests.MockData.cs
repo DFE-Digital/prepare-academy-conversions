@@ -79,6 +79,7 @@ public abstract partial class BaseIntegrationTests
       AcademyConversionProject project = _fixture
          .Build<AcademyConversionProject>()
          .With(x => x.AcademyTypeAndRoute, AcademyTypeAndRoutes.Voluntary)
+         .With(x => x.ProjectStatus, "Pre advisory board")
          .With(x => x.IsReadOnly, isReadOnly)
          .With(x => x.HeadTeacherBoardDate, DateTime.Now.AddDays(-1))
          .With(x => x.AssignedUser, _fixture.Create<User>())
