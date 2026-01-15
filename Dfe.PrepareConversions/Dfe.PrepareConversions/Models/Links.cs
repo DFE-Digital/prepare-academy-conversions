@@ -307,6 +307,11 @@ public static class Links
    {
       public static readonly LinkItem Home = AddLinkItem(page: "/Projects/LegalRequirements/DiocesanConsent");
    }
+
+   public static class HardCodedLinks
+   {
+      public const string AccessibilityStatementLink = "https://accessibility-statements.education.gov.uk/s/31";
+   }
    
    
 }
