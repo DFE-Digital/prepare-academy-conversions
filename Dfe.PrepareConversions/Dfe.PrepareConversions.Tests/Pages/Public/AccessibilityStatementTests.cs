@@ -5,20 +5,18 @@ using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Pages.Public;
 
-public class AccessibilityStatementTests : BaseIntegrationTests
+public class AccessibilityStatementTests(IntegrationTestingWebApplicationFactory factory) : BaseIntegrationTests(factory)
 {
-   public AccessibilityStatementTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
-   {
-   }
-
    [Fact]
-   public async Task Should_navigate_to_the_accessibility_statement_from_the_link()
+   public async Task Should_have_correct_accessibility_statement_link()
    {
       AcademyConversionProject project = AddGetProject();
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      await NavigateDataTestAsync("accessibility-statement");
+      var linkElement = GetDataTestAnchorElement("accessibility-statement");
 
-      Document.Url.Should().Contain("/public/accessibility");
+      linkElement.Should().NotBeNull();
+      linkElement.Href.Should().Contain("https://accessibility-statements.education.gov.uk");
+      linkElement.Target.Should().Be("_blank");   
    }
 }

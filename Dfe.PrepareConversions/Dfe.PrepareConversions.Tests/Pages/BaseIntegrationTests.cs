@@ -127,6 +127,11 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
       return anchors;
    }
 
+   protected IHtmlAnchorElement GetDataTestAnchorElement(string dataTest)
+   {
+      return Document.QuerySelectorAll($"[data-test='{dataTest}']").FirstOrDefault() as IHtmlAnchorElement;
+   }
+
    protected static Task<IDocument> NavigateDataTestAsync(IDocument document, string dataTest)
    {
       IHtmlAnchorElement anchors = document.QuerySelectorAll($"[data-test='{dataTest}']").First() as IHtmlAnchorElement;
