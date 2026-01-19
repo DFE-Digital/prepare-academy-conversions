@@ -260,7 +260,6 @@ public static class Links
 
    public static class Public
    {
-      public static readonly LinkItem Accessibility = AddLinkItem(page: "/Public/AccessibilityStatement");
       public static readonly LinkItem CookiePreferences = AddLinkItem(page: "/Public/CookiePreferences");
       public static readonly LinkItem CookiePreferencesURL = AddLinkItem(page: "/public/cookie-Preferences");
    }
