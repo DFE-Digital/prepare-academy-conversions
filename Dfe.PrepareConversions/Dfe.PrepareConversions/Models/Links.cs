@@ -260,7 +260,6 @@ public static class Links
 
    public static class Public
    {
-      public static readonly LinkItem Accessibility = AddLinkItem(page: "/Public/AccessibilityStatement");
       public static readonly LinkItem CookiePreferences = AddLinkItem(page: "/Public/CookiePreferences");
       public static readonly LinkItem CookiePreferencesURL = AddLinkItem(page: "/public/cookie-Preferences");
    }
@@ -306,6 +305,11 @@ public static class Links
    public static class DiocesanConsent
    {
       public static readonly LinkItem Home = AddLinkItem(page: "/Projects/LegalRequirements/DiocesanConsent");
+   }
+
+   public static class HardCodedLinks
+   {
+      public const string AccessibilityStatementLink = "https://accessibility-statements.education.gov.uk/s/27";
    }
    
    
