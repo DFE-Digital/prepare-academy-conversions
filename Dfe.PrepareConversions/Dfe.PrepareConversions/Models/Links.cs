@@ -310,7 +310,7 @@ public static class Links
 
    public static class HardCodedLinks
    {
-      public const string AccessibilityStatementLink = "https://accessibility-statements.education.gov.uk/s/31";
+      public const string AccessibilityStatementLink = "https://accessibility-statements.education.gov.uk/s/27";
    }
    
    
