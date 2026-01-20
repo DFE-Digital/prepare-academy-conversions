@@ -1,29 +1,178 @@
-## NEXT
+# release notes 
 
-## 1.9.0
-- updating environment variables
-- OKR1 Pre-populate Consultation
-- OKR 1- Pre-populate MP Name
-- OKR 1- MP Political Party
-- OKR 1 - Pre-populate 'Viability issues' under 'School Overview'
+All notable changes to this project will be documented in this file.
 
-## 1.8.0
-- Added 'Approve with conditions' with recommendation notes under 'Conversion details'
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). To see an example from a mature product in the program [see the Complete products changelog that follows the same methodology](https://github.com/DFE-Digital/dfe-complete-conversions-transfers-and-changes/blob/main/CHANGELOG.md).
 
-## 1.7.2 
-- prepopulate the feild 'Is the school linked to a diocese'
-- Prepopulate the field 'Financial deficit' under 'School Overview'
 
-## 1.7.2
-* 213008 - BUG accessibility -Prepare - cant create conversion when javascript turned off
+## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-01-20.1023...main)
+NOTE: remember to update unreleased link when making a new release
 
-## 1.7.1
-* 235754 - Performance data references TRAMS incorrectly - Two other instances
-* 233570 - Transfer of Projects into Complete - Return url missing
-* 226293 - Performance data references TRAMS not Ofsted
+## [1.26.0][1.26.0] - 2026-01-20
+
+### Changed
+
+- 255792 - update accessibility statement link
+
+---
+
+## [1.25.0][1.25.0] - 2026-01-16
+
+### Added
+
+- 235884 - OKR 1 - Pre-populate MP Name
+- 251757 - OKR 1 - MP Political Party
+- 236589 - OKR 1 - Pre-populate 'Viability issues' under 'School Overview'
+
+### Changed
+
+- update EAT api client to use latest version
+
+---
+
+## [1.24.0][1.24.0] - 2026-01-07
+
+- rollback to 1.22.0 due to person api env variables missing in production
+
+---
+
+## [1.23.0][1.23.0] - 2026-01-07
+
+### Added
+
+- 235884 - OKR 1 - Pre-populate MP Name
+
+--- 
+
+## [1.22.0][1.22.0] - 2026-01-06
+
+### Added
+
+- 237053 - 'Approve with conditions' with recommendation notes under 'Conversion details'
+
+---
+
+## [1.21.0][1.21.0] - 2025-12-09
+
+### Added
+
+- 236761 - prepopulate the field 'Is the school linked to a diocese'
+- 236756 - Prepopulate the field 'Financial deficit' under 'School Overview'
+
+---
+
+## [1.20.0][1.20.0] - 2025-12-01
+
+### Fixed
+
+- 209924 - BUG accessibility - Missing Labels And Broken ARIA refs
+- 213008 - BUG accessibility - cant create conversion when js turned off
+
+---
+
+## [1.19.0][1.19.0] - 2025-11-28
+
+### Changed
+- Updated EAT API client Auth scope
+
+---
+
+## [1.18.0][1.18.0] - 2025-11-28
+
+### Changed
+- update EAT client setting
+- EAT client error handling
+
+---
+
+## [1.17.0][1.17.0] - 2025-11-05
+
+### Added
+- docker for local development
+
+### Security
+- 240987 - xss vulnerability
+
+---
+
+## [1.16.0][1.16.0] - 2025-10-22
+
+### Fixed
+- 209885 - BUG accessibility aria labels
+
+---
+
+## [1.15.0][1.15.0] - 2025-10-22
+
+### Changed
+- use new govuk design
+
+---
+
+## [1.14.0][1.14.0] - 2025-09-25
+
+### Fixed
+- 235754 - Performance data references
+
+---
+
+## [1.13.0][1.13.0] - 2025-09-23
+
+- update release notes
+
+---
+
+## [1.12.0][1.12.0] - 2025-09-23
+
+### Changed
+- Transfer of Projects into Complete AB date future date
+
+### Fixed
+- 235754 - Performance data references TRAMS incorrectly - Two other instances
+- 233570 - Transfer of Projects into Complete - Return url missing
+- 226293 - Performance data references TRAMS not Ofsted
+
+---
+
+## [1.11.0][1.11.0] - 2025-08-27
+
+### Changed
+- Advisory board date rename to Proposed decision date #1379
+
+---
+
+## [1.10.0][1.10.0] - 2025-07-03
+
+### Deprecated
+- 1899562 - Remove conversion support grant task
+- 210853 - Conversion Support Grant Removal - School Application Form
+
+### Fixed
+- 219657 - SAT-Transfer/FAM-Transfer Minor: Visual: Inset Text Looks Quirky
+- Hide Voluntary Conversion Support Grant when post deadline
+
+---
+
+## [1.9.0][1.9.0] - 2025-05-15
+
+### Fixed
+- 212811 - Change links on CheckYourAnswers page for Transfers project are not working
+
+---
+
+## [1.8.0][1.8.0] - 2025-05-07
+
+### Fixed
+- 211057 - Advisory board date page discrepancy on Conversion and Transfer project
+
+### Changed
+- Publish Artifact Attestation for Docker images
  
-## 1.7.0
+---
 
+## [1.7.0][1.7.0] - 2025-04-28
+
+### Added
 * 200233 - Add PSED task to Prepare
 * 200234 - Add Equalities Duty section to pre-populated Project Template Word Document
 * 201243 - Add PSED section to 'Preview project document' screen
@@ -158,3 +307,45 @@ ___
 
 # 1.0.0 - Initial release of Prepare Conversions
 Initial Release of the Prepare-conversions system into production.
+
+[1.26.0]: 
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-01-20.1023
+[1.25.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-01-16.1018
+[1.24.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-01-07.1010
+[1.23.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-01-07.1009
+[1.22.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-01-06.1001
+[1.21.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2025-12-09.990
+[1.20.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2025-12-01.979
+[1.19.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2025-11-28.973
+[1.18.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/edit/production-2025-11-28.969
+[1.17.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2025-11-05.955
+[1.16.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2025-10-22.945
+[1.15.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/edit/production-2025-10-22.938
+[1.14.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2025-09-25.923
+[1.13.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2025-09-23.916
+[1.12.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2025-09-23.913
+[1.11.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2025-08-27.893
+[1.10.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2025-07-03.872
+[1.9.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2025-05-15.855
+[1.8.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2025-05-07.846
+[1.7.0]:
+   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2025-04-28.837
+   
