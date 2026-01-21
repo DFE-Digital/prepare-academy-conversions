@@ -8,5 +8,8 @@ namespace Dfe.PrepareConversions.Data.Services;
 public interface IGetEstablishment
 {
    Task<EstablishmentDto> GetEstablishmentByUrn(string urn);
+
+   Task<EstablishmentDto> GetEstablishmentByUkprn(string ukprn);
+
    Task<IEnumerable<EstablishmentSearchResponse>> SearchEstablishments(string searchQuery);
 }

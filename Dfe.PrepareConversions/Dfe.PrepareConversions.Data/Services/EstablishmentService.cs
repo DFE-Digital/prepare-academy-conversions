@@ -37,6 +37,19 @@ public class EstablishmentService : IGetEstablishment
       return await response.Content.ReadFromJsonAsync<EstablishmentDto>();
    }
 
+   public async Task<EstablishmentDto> GetEstablishmentByUkprn(string ukprn)
+   {
+      HttpResponseMessage response = await _httpClient.GetAsync($"/v4/establishment/{ukprn}");
+
+      if (!response.IsSuccessStatusCode)
+      {
+         _logger.LogWarning("Unable to get establishment data for establishment with UKPRN: {ukprn}", ukprn);
+         return new EstablishmentDto();
+      }
+
+      return await response.Content.ReadFromJsonAsync<EstablishmentDto>();
+   }
+
    public async Task<IEnumerable<EstablishmentSearchResponse>> SearchEstablishments(string searchQuery)
    {
       string path = int.TryParse(searchQuery, out int urn)

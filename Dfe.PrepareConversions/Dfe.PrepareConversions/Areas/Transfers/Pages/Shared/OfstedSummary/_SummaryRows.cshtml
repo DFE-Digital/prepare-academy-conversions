@@ -5,7 +5,7 @@
 @inject IConfiguration Configuration
 
 @{
-    var ofstedReportElement = $"<a class=\"govuk-link\" href=\"{@Configuration["OfstedReportBaseUrl"]}{@Model.Urn}\" rel=\"noreferrer noopener\" target=\"_blank\">View the school's latest inspection report on Ofsted's website (opens in new tab)</a>";
+    var ofstedReportElement = $"<a class=\"govuk-link\" href=\"{@Configuration["OfstedReportBaseUrl"]}{@Model.Establishment.Urn}\" rel=\"noreferrer noopener\" target=\"_blank\">View the school's latest inspection report on Ofsted's website (opens in new tab)</a>";
 }
 
 <gds-key-value key="Latest full inspection date" value="@DatesHelper.DateStringToGovUkDate(Model.LatestOfstedJudgement.InspectionEndDate)" show-action=@Model.IsPreview />
