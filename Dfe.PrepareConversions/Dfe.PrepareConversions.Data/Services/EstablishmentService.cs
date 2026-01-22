@@ -41,7 +41,7 @@ public class EstablishmentService : IGetEstablishment
    {
       ApiResponse<EstablishmentDto> result = await _httpClientService.Get<EstablishmentDto>(_httpClient, $"/v4/establishment/{ukprn}");
 
-      if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      if (!result.Success) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
 
       return result.Body;
    }
