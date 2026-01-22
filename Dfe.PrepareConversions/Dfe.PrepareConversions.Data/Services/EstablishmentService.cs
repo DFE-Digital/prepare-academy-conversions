@@ -4,6 +4,7 @@ using Dfe.PrepareConversions.Data.Services.Interfaces;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -27,27 +28,20 @@ public class EstablishmentService : IGetEstablishment
 
    public async Task<EstablishmentDto> GetEstablishmentByUrn(string urn)
    {
-      HttpResponseMessage response = await _httpClient.GetAsync($"/v4/establishment/urn/{urn}");
-      if (!response.IsSuccessStatusCode)
-      {
-         _logger.LogWarning("Unable to get establishment data for establishment with URN: {urn}", urn);
-         return new EstablishmentDto();
-      }
+      ApiResponse<EstablishmentDto> result = await _httpClientService.Get<EstablishmentDto>(_httpClient, $"/v4/establishment/urn/{urn}");
 
-      return await response.Content.ReadFromJsonAsync<EstablishmentDto>();
+      if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+
+      return result.Body;
    }
 
    public async Task<EstablishmentDto> GetEstablishmentByUkprn(string ukprn)
    {
-      HttpResponseMessage response = await _httpClient.GetAsync($"/v4/establishment/{ukprn}");
+      ApiResponse<EstablishmentDto> result = await _httpClientService.Get<EstablishmentDto>(_httpClient, $"/v4/establishment/{ukprn}");
 
-      if (!response.IsSuccessStatusCode)
-      {
-         _logger.LogWarning("Unable to get establishment data for establishment with UKPRN: {ukprn}", ukprn);
-         return new EstablishmentDto();
-      }
+      if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
 
-      return await response.Content.ReadFromJsonAsync<EstablishmentDto>();
+      return result.Body;
    }
 
    public async Task<IEnumerable<EstablishmentSearchResponse>> SearchEstablishments(string searchQuery)
