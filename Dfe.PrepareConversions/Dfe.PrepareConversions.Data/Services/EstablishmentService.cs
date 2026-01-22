@@ -4,7 +4,6 @@ using Dfe.PrepareConversions.Data.Services.Interfaces;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -28,11 +27,14 @@ public class EstablishmentService : IGetEstablishment
 
    public async Task<EstablishmentDto> GetEstablishmentByUrn(string urn)
    {
-      ApiResponse<EstablishmentDto> result = await _httpClientService.Get<EstablishmentDto>(_httpClient, $"/v4/establishment/urn/{urn}");
+      HttpResponseMessage response = await _httpClient.GetAsync($"/v4/establishment/urn/{urn}");
+      if (!response.IsSuccessStatusCode)
+      {
+         _logger.LogWarning("Unable to get establishment data for establishment with URN: {Urn}", urn);
+         return new EstablishmentDto();
+      }
 
-      if (result.Success is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
-
-      return result.Body;
+      return await response.Content.ReadFromJsonAsync<EstablishmentDto>();
    }
 
    public async Task<EstablishmentDto> GetEstablishmentByUkprn(string ukprn)
