@@ -74,7 +74,7 @@ describe('Filteration Tests', { tags: ['@dev', '@stage'] }, () => {
       cy.get('#filter-project-region-north-east').check();
 
       // Apply the selections
-      cy.get('[data-cy="select-projectlist-filter-apply"]').click();
+      cy.get('[data-cy="select-projectlist-filter-apply"]').first().click();
 
       // Assert that the results are updated based on the selected regions
       for (let i = 0; i < 5; i++) {
@@ -118,7 +118,7 @@ describe('Filteration Tests', { tags: ['@dev', '@stage'] }, () => {
         cy.get(`[data-cy="select-projectlist-filter-status-${statusToFilter}"]`).check();
 
         // Perform actions to apply the filter by project status
-        cy.get('[data-cy="select-projectlist-filter-apply"]').click();
+        cy.get('[data-cy="select-projectlist-filter-apply"]').first().click();
 
         // Log the actual URL to help debug the issue
         cy.url().then((url) => {

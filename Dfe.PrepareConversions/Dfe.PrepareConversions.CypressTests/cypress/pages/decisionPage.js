@@ -30,7 +30,7 @@ export class DecisionPage {
 
     clickOnFirstProject() {
         cy.get('[data-cy="select-projectlist-filter-title"]').type('Manchester Academy');
-        cy.get('[data-cy="select-projectlist-filter-apply"]').click();
+        cy.get('[data-cy="select-projectlist-filter-apply"]').first().click();
         cy.get('[data-cy="trust-name-Manchester Academy-0"]').click();
         return this;
     }
