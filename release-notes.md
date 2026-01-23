@@ -12,6 +12,11 @@ NOTE: remember to update unreleased link when making a new release
 
 - updated hidden text for "change PFI scheme" link on school overview
 
+
+### Added
+
+- 257437 - duplicated apply filters button to the bottom of conversion and transfer project list filters
+
 ## [1.26.0][1.26.0] - 2026-01-20
 
 ### Changed
