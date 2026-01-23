@@ -8,14 +8,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-01-20.1023...main)
 NOTE: remember to update unreleased link when making a new release
 
+---
+
+## [1.27.0][1.27.0] - 2026-01-23
+
 ### Changed
 
-- updated hidden text for "change PFI scheme" link on school overview
-
+- 257442 - accessibility - updated hidden text for "change PFI scheme" link on school overview
+- 257436 - accessibility - update 'search for projects' visual heading to h2
 
 ### Added
 
-- 257437 - duplicated apply filters button to the bottom of conversion and transfer project list filters
+- 257437 - accessibility - duplicated apply filters button to the bottom of conversion and transfer project list filters
+
+---
 
 ## [1.26.0][1.26.0] - 2026-01-20
 
@@ -317,6 +323,8 @@ ___
 # 1.0.0 - Initial release of Prepare Conversions
 Initial Release of the Prepare-conversions system into production.
 
+[1.27.0]: 
+  https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-01-23.1038
 [1.26.0]: 
    https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-01-20.1023
 [1.25.0]:
