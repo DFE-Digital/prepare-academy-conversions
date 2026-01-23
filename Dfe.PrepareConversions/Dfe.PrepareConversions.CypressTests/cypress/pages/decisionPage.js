@@ -30,10 +30,15 @@ export class DecisionPage {
 
     clickOnFirstProject() {
         cy.get('[data-cy="select-projectlist-filter-title"]').type('Manchester Academy');
-        cy.get('[data-cy="select-projectlist-filter-apply"]').first().click();
+        this.clickApplyFilters();
         cy.get('[data-cy="trust-name-Manchester Academy-0"]').click();
         return this;
     }
+
+   clickApplyFilters() {
+        cy.get('[data-cy="select-projectlist-filter-apply"]').first().click();
+        return this;
+   }
 
     clickRecordDecisionMenu() {
         cy.get('[data-cy="record_decision_menu"]').click();
@@ -110,7 +115,7 @@ export class DecisionPage {
         cy.get('#SearchQuery__option--0').click();
         cy.get('button.govuk-button[data-id="submit"]').click();
 
-        // go back to the 
+        // go back to the
         cy.get('[data-cy="select-backlink"]').click();
 
         return this;

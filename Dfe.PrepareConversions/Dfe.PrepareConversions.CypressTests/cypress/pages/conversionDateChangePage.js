@@ -1,3 +1,5 @@
+import {decisionPage} from "./decisionPage";
+
 export class ConversionDateChangePage {
 
     searchSchool(schoolName) {
@@ -27,7 +29,7 @@ export class ConversionDateChangePage {
 
     clickOnFirstProject() {
         cy.get('[data-cy="select-projectlist-filter-title"]').type('Manchester Academy');
-        cy.get('[data-cy="select-projectlist-filter-apply"]').first().click();
+        decisionPage.clickApplyFilters();
         cy.get('[data-cy="trust-name-Manchester Academy-0"]').click();
         return this;
     }
