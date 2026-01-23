@@ -51,7 +51,7 @@ class HomePage {
 
     cy.get('[id="Title"]').type(projectTitle)
 
-    cy.get('[data-cy="select-projectlist-filter-apply"]').click()
+    cy.get('[data-cy="select-projectlist-filter-apply"]').first().click()
 
     cy.get('[data-module="govuk-notification-banner"]').should('be.visible')
     cy.get('[data-module="govuk-notification-banner"]').should('contain.text', 'Success')
