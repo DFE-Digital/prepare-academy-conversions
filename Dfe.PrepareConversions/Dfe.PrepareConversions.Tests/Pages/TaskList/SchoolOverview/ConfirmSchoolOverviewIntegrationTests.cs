@@ -71,8 +71,12 @@ public class ConfirmSchoolOverviewIntegrationTests(IntegrationTestingWebApplicat
       Document.QuerySelector("[data-test=annex-b-help]").TextContent.Should().Be("You can add more data from the Annex B form.");
    }
 
-   [Fact]
-   public async Task Should_display_change_on_pfi_scheme()
+   [Theory]
+   [InlineData ("change-published-admission-number", "published admission numbers")]
+   [InlineData ("change-viability-issues", "viability issues")]
+   [InlineData ("change-part-of-pfi", "part of a private finance initiative scheme")]
+   [InlineData ("change-distance-to-trust-headquarters", "distance to trust headquarters")]
+   public async Task Should_display_change(string dataTag, string hiddenText)
    {
       AcademyConversionProject project = AddGetProject(p => p.AcademyTypeAndRoute = AcademyTypeAndRoutes.Sponsored);
 
@@ -80,7 +84,7 @@ public class ConfirmSchoolOverviewIntegrationTests(IntegrationTestingWebApplicat
 
       await NavigateAsync("School overview");
 
-      Document.QuerySelector("[data-test=change-part-of-pfi]")!.TextContent.Trim().Should().Be("Change");
+      Document.QuerySelector($"[data-test={dataTag}]")!.TextContent.Trim().Should().Be($"Change{hiddenText}");
    }
 
    [Fact]

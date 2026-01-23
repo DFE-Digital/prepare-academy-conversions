@@ -8,6 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-01-20.1023...main)
 NOTE: remember to update unreleased link when making a new release
 
+### Changed
+
+- updated hidden text for "change PFI scheme" link on school overview
+
+
 ### Added
 
 - 257437 - duplicated apply filters button to the bottom of conversion and transfer project list filters
