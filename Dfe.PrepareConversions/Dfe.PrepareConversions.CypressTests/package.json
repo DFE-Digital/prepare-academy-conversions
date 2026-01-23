@@ -58,7 +58,7 @@
     "@cypress/grep": "4.1.0",
     "@cypress/webpack-preprocessor": "6.0.4",
     "@types/jest": "29.5.14",
-    "@types/node": "20.17.30",
+    "@types/node": "20.17.58",
     "@typescript-eslint/parser": "8.29.1",
     "cy-verify-downloads": "0.2.6",
     "cypress": "13.17.0",
