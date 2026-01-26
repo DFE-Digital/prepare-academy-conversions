@@ -3,7 +3,7 @@ import projectList from '../../pages/projectList';
 import {decisionPage} from '../../pages/decisionPage';
 import {EnvUrl} from '../../constants/cypressConstants';
 
-describe('Filteration Tests', {tags: ['@dev', '@stage']}, () => {
+describe('Filteration Tests', {}, () => {
    const currentDate = new Date();
    const nextYearDate = new Date();
    nextYearDate.setFullYear(currentDate.getFullYear() + 1);

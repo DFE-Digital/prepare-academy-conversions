@@ -13,7 +13,7 @@ import LocalAuthorityInfomation from '../../pages/localAuthorityInformation';
 import Performance from '../../pages/performance';
 import PublicSectorEqualityDutyImpact from '../../pages/publicSectorEqualityDutyImpact';
 
-describe('Sponsored conversion journey', {tags: ['@dev', '@stage']}, () => {
+describe('Sponsored conversion journey', {}, () => {
    const currentDate = new Date();
    const nextYearDate = new Date();
    nextYearDate.setFullYear(currentDate.getFullYear() + 1);
