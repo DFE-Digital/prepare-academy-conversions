@@ -2,16 +2,9 @@
 import projectList from '../../pages/projectList';
 import { decisionPage } from '../../pages/decisionPage';
 import { EnvUrl } from '../../constants/cypressConstants';
+import { currentDate, nextYearDate } from '../../constants/testConstants';
 
-describe('Filteration Tests', {}, () => {
-    const currentDate = new Date();
-    const nextYearDate = new Date();
-    nextYearDate.setFullYear(currentDate.getFullYear() + 1);
-    const oneMonthAgoDate = new Date();
-    oneMonthAgoDate.setMonth(currentDate.getMonth() - 1);
-    const nextMonthDate = new Date();
-    nextMonthDate.setMonth(currentDate.getMonth() + 1);
-
+describe('Filtration Tests', {}, () => {
     const testData = {
         projectName: 'Deanshanger Primary School',
         completedText: 'Completed',

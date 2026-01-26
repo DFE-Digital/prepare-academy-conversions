@@ -12,16 +12,9 @@ import RisksAndIssues from '../../pages/risksAndIssues';
 import LocalAuthorityInfomation from '../../pages/localAuthorityInformation';
 import Performance from '../../pages/performance';
 import PublicSectorEqualityDutyImpact from '../../pages/publicSectorEqualityDutyImpact';
+import { currentDate, nextYearDate, oneMonthAgoDate, nextMonthDate } from '../../constants/testConstants';
 
 describe('Sponsored conversion journey', {}, () => {
-    const currentDate = new Date();
-    const nextYearDate = new Date();
-    nextYearDate.setFullYear(currentDate.getFullYear() + 1);
-    const oneMonthAgoDate = new Date();
-    oneMonthAgoDate.setMonth(currentDate.getMonth() - 1);
-    const nextMonthDate = new Date();
-    nextMonthDate.setMonth(currentDate.getMonth() + 1);
-
     const testData = {
         projectName: 'Deanshanger Primary School',
         completedText: 'Completed',
