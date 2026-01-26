@@ -18,6 +18,6 @@ describe('Filter projects', () => {
         const baseCount = homePage.getProjectsCount();
         homePage.projectsCountShouldBeVisible().filterProjects(projectTitle).clearFilters();
         const afterClearCount = homePage.getProjectsCount();
-        expect(afterClearCount == baseCount);
+        expect(afterClearCount).to.equal(baseCount);
     });
 });
