@@ -1,35 +1,31 @@
 class IncomingTrustSearchPage {
+    public slug = 'transfers/searchincomingtrust';
 
-  public slug = 'transfers/searchincomingtrust'
+    public searchTrustsByName(trustName): this {
+        cy.get('[data-cy="ProposedTrustNameID"]').type(trustName);
 
-  public searchTrustsByName(trustName): this {
+        cy.get('button').contains('Continue').click();
 
-    cy.get('[data-cy="ProposedTrustNameID"]').type(trustName)
+        return this;
+    }
 
-    cy.get('button').contains('Continue').click()
+    public searchTrustsByUkprn(ukprn): this {
+        cy.get('#SearchQuery').type(ukprn);
 
-    return this
-  }
+        cy.get('button').contains('Search').click();
 
-  public searchTrustsByUkprn(ukprn): this {
+        return this;
+    }
 
-    cy.get('#SearchQuery').type(ukprn)
+    public searchTrustsByCompaniesHouseNo(companiesHouseNo): this {
+        cy.get('#SearchQuery').type(companiesHouseNo);
 
-    cy.get('button').contains('Search').click()
+        cy.get('button').contains('Search').click();
 
-    return this
-  }
-
-  public searchTrustsByCompaniesHouseNo(companiesHouseNo): this {
-
-    cy.get('#SearchQuery').type(companiesHouseNo)
-
-    cy.get('button').contains('Search').click()
-
-    return this
-  }
+        return this;
+    }
 }
 
-const incomingTrustSearchPage = new IncomingTrustSearchPage()
+const incomingTrustSearchPage = new IncomingTrustSearchPage();
 
-export default incomingTrustSearchPage
+export default incomingTrustSearchPage;

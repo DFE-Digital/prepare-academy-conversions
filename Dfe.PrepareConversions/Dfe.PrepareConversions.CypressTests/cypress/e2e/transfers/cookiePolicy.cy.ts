@@ -1,58 +1,53 @@
-import {EnvUrl} from "../../constants/cypressConstants";
+import { EnvUrl } from '../../constants/cypressConstants';
 
 describe('Cookie Policy', () => {
-
-  beforeEach(() => {
-     cy.visit(Cypress.env(EnvUrl));
-  })
-
-  it('Should show cookie banner when no preference set', () => {
-    cy.get('[data-test="cookie-banner"]').should('be.visible')
-  })
-
-  context("When cookie banner clicked", () => {
     beforeEach(() => {
-      cy.get('[data-test="cookie-banner-accept"]').click()
-    })
-
-    it('Should consent to cookies from cookie header button', () => {
-      cy.wait(2000);
-      cy.getCookie('.ManageAnAcademyTransfer.Consent')
-        .should('exist')
-        .should('have.property', 'value', 'True')
+        cy.visit(Cypress.env(EnvUrl));
     });
 
-    it('Should hide the cookie banner when consent has been given', () => {
-      cy.get("#acceptCookieBanner").should('be.visible');
-
-
-    });
-  })
-
-  context("When cookie link in footer clicked", () => {
-    beforeEach(() => {
-      cy.get("[data-test='cookie-preferences']").click()
-    })
-
-    it('Should navigate to cookies page', () => {
-      cy.url().then(href => {
-        expect(href).includes('cookie-preferences')
-      });
+    it('Should show cookie banner when no preference set', () => {
+        cy.get('[data-test="cookie-banner"]').should('be.visible');
     });
 
-    it('Should set cookie preferences', () => {
-      cy.get('#cookie-consent-deny').click()
-      cy.get("[data-qa='submit']").click()
-      cy.getCookie('.ManageAnAcademyTransfer.Consent').should('have.property', 'value', 'False')
+    context('When cookie banner clicked', () => {
+        beforeEach(() => {
+            cy.get('[data-test="cookie-banner-accept"]').click();
+        });
+
+        it('Should consent to cookies from cookie header button', () => {
+            cy.wait(2000);
+            cy.getCookie('.ManageAnAcademyTransfer.Consent').should('exist').should('have.property', 'value', 'True');
+        });
+
+        it('Should hide the cookie banner when consent has been given', () => {
+            cy.get('#acceptCookieBanner').should('be.visible');
+        });
     });
 
-    it('Should return show success banner', () => {
-      cy.get('#cookie-consent-deny').click()
-      cy.get("[data-qa='submit']").click()
-      cy.get('[data-test="success-banner-return-link"]').click()
-      cy.url().then(href => {
-        expect(href).includes('/project-list')
-      });
+    context('When cookie link in footer clicked', () => {
+        beforeEach(() => {
+            cy.get("[data-test='cookie-preferences']").click();
+        });
+
+        it('Should navigate to cookies page', () => {
+            cy.url().then((href) => {
+                expect(href).includes('cookie-preferences');
+            });
+        });
+
+        it('Should set cookie preferences', () => {
+            cy.get('#cookie-consent-deny').click();
+            cy.get("[data-qa='submit']").click();
+            cy.getCookie('.ManageAnAcademyTransfer.Consent').should('have.property', 'value', 'False');
+        });
+
+        it('Should return show success banner', () => {
+            cy.get('#cookie-consent-deny').click();
+            cy.get("[data-qa='submit']").click();
+            cy.get('[data-test="success-banner-return-link"]').click();
+            cy.url().then((href) => {
+                expect(href).includes('/project-list');
+            });
+        });
     });
-  })
-})
+});

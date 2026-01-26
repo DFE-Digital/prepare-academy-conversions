@@ -19,20 +19,17 @@ import registerCypressGrep from '@cypress/grep/src/support';
 registerCypressGrep();
 
 Cypress.on('uncaught:exception', (err) => {
-  if (
-    err.message.includes('ResizeObserver') ||
-    err.name === 'ResizeObserver loop limit exceeded'
-  ) {
-    return false;
-  }
+    if (err.message.includes('ResizeObserver') || err.name === 'ResizeObserver loop limit exceeded') {
+        return false;
+    }
 });
 
 Cypress.on('fail', (err) => {
-  if (err.message.includes('ResizeObserver loop completed')) {
-    // suppress the error completely
-    return false;
-  }
-  throw err; // re-throw all other errors
+    if (err.message.includes('ResizeObserver loop completed')) {
+        // suppress the error completely
+        return false;
+    }
+    throw err; // re-throw all other errors
 });
 
 // ***********************************************************
@@ -40,14 +37,14 @@ Cypress.on('fail', (err) => {
 import { CypressTestSecret, EnvUrl } from '../constants/cypressConstants';
 
 beforeEach(() => {
-  cy.intercept(
-    { url: Cypress.env(EnvUrl) + '/**', middleware: true },
-    //Add authorization to all Cypress requests
-    (req) => {
-      req.headers['Authorization'] = 'Bearer ' + Cypress.env(CypressTestSecret);
-      req.headers['AuthorizationRole'] = 'conversions.create';
-    }
-  );
+    cy.intercept(
+        { url: Cypress.env(EnvUrl) + '/**', middleware: true },
+        //Add authorization to all Cypress requests
+        (req) => {
+            req.headers['Authorization'] = 'Bearer ' + Cypress.env(CypressTestSecret);
+            req.headers['AuthorizationRole'] = 'conversions.create';
+        }
+    );
 });
 
 // ***********************************************************

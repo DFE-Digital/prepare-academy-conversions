@@ -3,128 +3,127 @@
 import BasePage from './basePage';
 
 export default class SchoolOverview extends BasePage {
-  static selectors = {
-    panValue: '[id="published-admission-number"]',
-    panLink: '[data-test="change-published-admission-number"]',
-    panInput: '[id="published-admission-number"]',
-    viabilityIssuesValue: '[id="viability-issues"]',
-    viabilityIssuesLink: '[data-test="change-viability-issues"]',
-    financialDeficitValue: '[id="financial-deficit"]',
-    pfiValue: '[id="part-of-pfi"]',
-    pifDetails: '[id="pfi-scheme-details"]',
-    pfiLink: '[data-test="change-part-of-pfi"]',
-    pfiDetailsInput: '[id="PfiSchemeDetails"]',
-    distanceValue: '[id="distance-to-trust-headquarters"]',
-    distanceDetails: '[id="distance-to-trust-headquarters-additional-text"]',
-    distanceLink: '[data-test="change-distance-to-trust-headquarters"]',
-    distanceInput: '[id="distance-to-trust-headquarters"]',
-    distanceDetailsInput:
-      '[id="distance-to-trust-headquarters-additional-information"]',
-    mpValue: '[id="member-of-parliament-name-and-party"',
-    mpLink: '[data-test="change-member-of-parliament-name-and-party"]',
-    mpInput: '[id="member-of-parliament-name-and-party"]',
-    completeCheckbox: '[name="school-overview-complete"]',
-  };
+    static selectors = {
+        panValue: '[id="published-admission-number"]',
+        panLink: '[data-test="change-published-admission-number"]',
+        panInput: '[id="published-admission-number"]',
+        viabilityIssuesValue: '[id="viability-issues"]',
+        viabilityIssuesLink: '[data-test="change-viability-issues"]',
+        financialDeficitValue: '[id="financial-deficit"]',
+        pfiValue: '[id="part-of-pfi"]',
+        pifDetails: '[id="pfi-scheme-details"]',
+        pfiLink: '[data-test="change-part-of-pfi"]',
+        pfiDetailsInput: '[id="PfiSchemeDetails"]',
+        distanceValue: '[id="distance-to-trust-headquarters"]',
+        distanceDetails: '[id="distance-to-trust-headquarters-additional-text"]',
+        distanceLink: '[data-test="change-distance-to-trust-headquarters"]',
+        distanceInput: '[id="distance-to-trust-headquarters"]',
+        distanceDetailsInput: '[id="distance-to-trust-headquarters-additional-information"]',
+        mpValue: '[id="member-of-parliament-name-and-party"',
+        mpLink: '[data-test="change-member-of-parliament-name-and-party"]',
+        mpInput: '[id="member-of-parliament-name-and-party"]',
+        completeCheckbox: '[name="school-overview-complete"]',
+    };
 
-  static path = 'school-overview';
+    static path = 'school-overview';
 
-  static getPan(): Cypress.Chainable<JQuery<HTMLElement>> {
-    cy.checkPath(this.path);
-    return cy.get(this.selectors.panValue);
-  }
-
-  static changePan(newPanNumber: string): void {
-    cy.checkPath(this.path);
-    cy.get(this.selectors.panLink).click();
-    cy.get(this.selectors.panInput).clear();
-    cy.get(this.selectors.panInput).type(newPanNumber);
-    cy.saveContinue().click();
-  }
-
-  static getViabilityIssues(): Cypress.Chainable<JQuery<HTMLElement>> {
-    cy.checkPath(this.path);
-    return cy.get(this.selectors.viabilityIssuesValue);
-  }
-
-  static changeViabilityIssues(viabilityIssues: boolean): void {
-    cy.checkPath(this.path);
-    cy.get(this.selectors.viabilityIssuesLink).click();
-    if (viabilityIssues) {
-      cy.YesRadioBtn().check();
-    } else {
-      cy.NoRadioBtn().check();
+    static getPan(): Cypress.Chainable<JQuery<HTMLElement>> {
+        cy.checkPath(this.path);
+        return cy.get(this.selectors.panValue);
     }
-    cy.saveContinue().click();
-  }
 
-  static getFinancialDeficit(): Cypress.Chainable<JQuery<HTMLElement>> {
-    cy.checkPath(this.path);
-    return cy.get(this.selectors.financialDeficitValue);
-  }
-
-  static getPFI(): Cypress.Chainable<JQuery<HTMLElement>> {
-    cy.checkPath(this.path);
-    return cy.get(this.selectors.pfiValue);
-  }
-
-  static getPFIDetails(): Cypress.Chainable<JQuery<HTMLElement>> {
-    cy.checkPath(this.path);
-    return cy.get(this.selectors.pifDetails);
-  }
-
-  static changePFI(pfi: boolean, description = ''): void {
-    cy.checkPath(this.path);
-    cy.get(this.selectors.pfiLink).click();
-    if (pfi) {
-      cy.YesRadioBtn().check();
-      cy.get(this.selectors.pfiDetailsInput).clear();
-      cy.get(this.selectors.pfiDetailsInput).type(description);
-    } else {
-      cy.NoRadioBtn().check();
+    static changePan(newPanNumber: string): void {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.panLink).click();
+        cy.get(this.selectors.panInput).clear();
+        cy.get(this.selectors.panInput).type(newPanNumber);
+        cy.saveContinue().click();
     }
-    cy.saveContinue().click();
-  }
 
-  static getDistance(): Cypress.Chainable<JQuery<HTMLElement>> {
-    cy.checkPath(this.path);
-    return cy.get(this.selectors.distanceValue);
-  }
+    static getViabilityIssues(): Cypress.Chainable<JQuery<HTMLElement>> {
+        cy.checkPath(this.path);
+        return cy.get(this.selectors.viabilityIssuesValue);
+    }
 
-  static getDistanceDetails(): Cypress.Chainable<JQuery<HTMLElement>> {
-    cy.checkPath(this.path);
-    return cy.get(this.selectors.distanceDetails);
-  }
+    static changeViabilityIssues(viabilityIssues: boolean): void {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.viabilityIssuesLink).click();
+        if (viabilityIssues) {
+            cy.YesRadioBtn().check();
+        } else {
+            cy.NoRadioBtn().check();
+        }
+        cy.saveContinue().click();
+    }
 
-  static changeDistance(distance: string, description = ''): void {
-    cy.checkPath(this.path);
-    cy.get(this.selectors.distanceLink).click();
-    cy.get(this.selectors.distanceInput).clear();
-    cy.get(this.selectors.distanceInput).type(distance);
-    cy.get(this.selectors.distanceDetailsInput).clear();
-    cy.get(this.selectors.distanceDetailsInput).type(description);
-    cy.saveContinue().click();
-  }
+    static getFinancialDeficit(): Cypress.Chainable<JQuery<HTMLElement>> {
+        cy.checkPath(this.path);
+        return cy.get(this.selectors.financialDeficitValue);
+    }
 
-  static getMP(): Cypress.Chainable<JQuery<HTMLElement>> {
-    cy.checkPath(this.path);
-    return cy.get(this.selectors.mpValue);
-  }
+    static getPFI(): Cypress.Chainable<JQuery<HTMLElement>> {
+        cy.checkPath(this.path);
+        return cy.get(this.selectors.pfiValue);
+    }
 
-  static changeMP(mp: string): void {
-    cy.checkPath(this.path);
-    cy.get(this.selectors.mpLink).click();
-    cy.get(this.selectors.mpInput).clear();
-    cy.get(this.selectors.mpInput).type(mp);
-    cy.saveContinue().click();
-  }
+    static getPFIDetails(): Cypress.Chainable<JQuery<HTMLElement>> {
+        cy.checkPath(this.path);
+        return cy.get(this.selectors.pifDetails);
+    }
 
-  static markComplete(): void {
-    cy.checkPath(this.path);
-    cy.get(this.selectors.completeCheckbox).check();
-  }
+    static changePFI(pfi: boolean, description = ''): void {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.pfiLink).click();
+        if (pfi) {
+            cy.YesRadioBtn().check();
+            cy.get(this.selectors.pfiDetailsInput).clear();
+            cy.get(this.selectors.pfiDetailsInput).type(description);
+        } else {
+            cy.NoRadioBtn().check();
+        }
+        cy.saveContinue().click();
+    }
 
-  static markIncomplete(): void {
-    cy.checkPath(this.path);
-    cy.get(this.selectors.completeCheckbox).uncheck();
-  }
+    static getDistance(): Cypress.Chainable<JQuery<HTMLElement>> {
+        cy.checkPath(this.path);
+        return cy.get(this.selectors.distanceValue);
+    }
+
+    static getDistanceDetails(): Cypress.Chainable<JQuery<HTMLElement>> {
+        cy.checkPath(this.path);
+        return cy.get(this.selectors.distanceDetails);
+    }
+
+    static changeDistance(distance: string, description = ''): void {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.distanceLink).click();
+        cy.get(this.selectors.distanceInput).clear();
+        cy.get(this.selectors.distanceInput).type(distance);
+        cy.get(this.selectors.distanceDetailsInput).clear();
+        cy.get(this.selectors.distanceDetailsInput).type(description);
+        cy.saveContinue().click();
+    }
+
+    static getMP(): Cypress.Chainable<JQuery<HTMLElement>> {
+        cy.checkPath(this.path);
+        return cy.get(this.selectors.mpValue);
+    }
+
+    static changeMP(mp: string): void {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.mpLink).click();
+        cy.get(this.selectors.mpInput).clear();
+        cy.get(this.selectors.mpInput).type(mp);
+        cy.saveContinue().click();
+    }
+
+    static markComplete(): void {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.completeCheckbox).check();
+    }
+
+    static markIncomplete(): void {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.completeCheckbox).uncheck();
+    }
 }

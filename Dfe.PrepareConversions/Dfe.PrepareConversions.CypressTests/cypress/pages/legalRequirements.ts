@@ -1,96 +1,90 @@
 class LegalRequirementsPage {
+    public slug = 'legalrequirements';
 
-  public slug = 'legalrequirements'
+    public completeResolution(): this {
+        cy.get('a[href*="outgoing-trust-consent"]').click();
 
-  public completeResolution(): this {
+        cy.get('h1').should('contain.text', 'Have you received a resolution from the outgoing trust?');
 
-    cy.get('a[href*="outgoing-trust-consent"]').click()    
+        // Check the labels of the radios
+        cy.get('.govuk-radios__item').then(($resolutions) => {
+            cy.wrap($resolutions).should('have.length', 3);
 
-    cy.get('h1').should('contain.text', 'Have you received a resolution from the outgoing trust?')
+            cy.wrap($resolutions[0]).should('contain.text', 'Yes');
+            cy.wrap($resolutions[1]).should('contain.text', 'No');
+            cy.wrap($resolutions[2]).should('contain.text', 'Not Applicable');
+        });
 
-    // Check the labels of the radios
-    cy.get('.govuk-radios__item').then(($resolutions) => {
-      cy.wrap($resolutions).should('have.length', 3)
+        cy.get('[value="Yes"]').click();
 
-      cy.wrap($resolutions[0]).should('contain.text', 'Yes')
-      cy.wrap($resolutions[1]).should('contain.text', 'No')
-      cy.wrap($resolutions[2]).should('contain.text', 'Not Applicable')
-    })
+        cy.get('button').contains('Save and continue').click();
 
-    cy.get('[value="Yes"]').click()
+        // Check the table has been updated
+        cy.get('dd').eq(0).should('contain.text', 'Yes');
 
-    cy.get('button').contains('Save and continue').click()
+        return this;
+    }
 
-    // Check the table has been updated
-    cy.get('dd').eq(0).should('contain.text', 'Yes')
+    public completeAgreement(): this {
+        cy.get('a[href*="incoming-trust-agreement"]').click();
 
-    return this
-  }
+        cy.get('h1').should('contain.text', 'Has the incoming trust agreed to take on the academy?');
 
-  public completeAgreement(): this {
+        // Check the labels of the radios
+        cy.get('.govuk-radios__item').then(($resolutions) => {
+            cy.wrap($resolutions).should('have.length', 3);
 
-    cy.get('a[href*="incoming-trust-agreement"]').click()
+            cy.wrap($resolutions[0]).should('contain.text', 'Yes');
+            cy.wrap($resolutions[1]).should('contain.text', 'No');
+            cy.wrap($resolutions[2]).should('contain.text', 'Not Applicable');
+        });
 
-    cy.get('h1').should('contain.text', 'Has the incoming trust agreed to take on the academy?')
+        cy.get('[value="Yes"]').click();
 
-    // Check the labels of the radios
-    cy.get('.govuk-radios__item').then(($resolutions) => {
-      cy.wrap($resolutions).should('have.length', 3)
+        cy.get('button').contains('Save and continue').click();
 
-      cy.wrap($resolutions[0]).should('contain.text', 'Yes')
-      cy.wrap($resolutions[1]).should('contain.text', 'No')
-      cy.wrap($resolutions[2]).should('contain.text', 'Not Applicable')
-    })
+        // Check the table has been updated
+        cy.get('dd').eq(2).should('contain.text', 'Yes');
 
-    cy.get('[value="Yes"]').click()
+        return this;
+    }
 
-    cy.get('button').contains('Save and continue').click()
+    public completeDiocesanConsent(): this {
+        cy.get('a[href*="diocesan-consent"]').click();
 
-    // Check the table has been updated
-    cy.get('dd').eq(2).should('contain.text', 'Yes')
+        cy.get('h1').should('contain.text', 'Have you spoken with the diocese about the incoming trust?');
 
-    return this
-  }
+        // Check the labels of the radios
+        cy.get('.govuk-radios__item').then(($resolutions) => {
+            cy.wrap($resolutions).should('have.length', 3);
 
-  public completeDiocesanConsent(): this {
+            cy.wrap($resolutions[0]).should('contain.text', 'Yes');
+            cy.wrap($resolutions[1]).should('contain.text', 'No');
+            cy.wrap($resolutions[2]).should('contain.text', 'Not Applicable');
+        });
 
-    cy.get('a[href*="diocesan-consent"]').click()
+        cy.get('[value="Yes"]').click();
 
-    cy.get('h1').should('contain.text', 'Have you spoken with the diocese about the incoming trust?')
+        cy.get('button').contains('Save and continue').click();
 
-    // Check the labels of the radios
-    cy.get('.govuk-radios__item').then(($resolutions) => {
-      cy.wrap($resolutions).should('have.length', 3)
+        // Check the table has been updated
+        cy.get('dd').eq(4).should('contain.text', 'Yes');
 
-      cy.wrap($resolutions[0]).should('contain.text', 'Yes')
-      cy.wrap($resolutions[1]).should('contain.text', 'No')
-      cy.wrap($resolutions[2]).should('contain.text', 'Not Applicable')
-    })
+        return this;
+    }
 
-    cy.get('[value="Yes"]').click()
+    public markAsComplete(): this {
+        cy.get('[data-test="mark-section-complete"]').click();
+        return this;
+    }
 
-    cy.get('button').contains('Save and continue').click()
+    public confirmLegalRequirements(): this {
+        cy.get('button').contains('Confirm and continue').click();
 
-    // Check the table has been updated
-    cy.get('dd').eq(4).should('contain.text', 'Yes')
-
-    return this
-  }
-
-  public markAsComplete(): this {
-
-    cy.get('[data-test="mark-section-complete"]').click()
-    return this
-  }
-
-  public confirmLegalRequirements(): this {
-
-    cy.get('button').contains('Confirm and continue').click()
-
-    return this
-  }
+        return this;
+    }
 }
 
-const legalRequirementsPage = new LegalRequirementsPage()
+const legalRequirementsPage = new LegalRequirementsPage();
 
-export default legalRequirementsPage
+export default legalRequirementsPage;

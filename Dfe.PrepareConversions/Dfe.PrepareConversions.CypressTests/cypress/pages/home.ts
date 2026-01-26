@@ -1,86 +1,75 @@
-import {EnvTransfersUrl} from "../constants/cypressConstants";
+import { EnvTransfersUrl } from '../constants/cypressConstants';
 
 class HomePage {
+    public slug = 'home';
 
-  public slug = 'home'
+    public open(): this {
+        cy.visit(Cypress.env(EnvTransfersUrl));
+        return this;
+    }
 
-  public open(): this {
+    public startCreateNewTransfer(): this {
+        cy.get('[data-test=create-transfer]').click();
 
-    cy.visit(Cypress.env(EnvTransfersUrl))
-    return this
-  }
+        return this;
+    }
 
-  public startCreateNewTransfer(): this {
+    public projectsCountShouldBeVisible(): this {
+        cy.get('[data-cy="select-projectlist-filter-count"]').should('be.visible');
+        cy.get('[data-cy="select-projectlist-filter-count"]').should('contain.text', 'projects found');
 
-    cy.get('[data-test=create-transfer]').click()
+        return this;
+    }
 
-    return this
-  }
+    public getProjectsCount(): Number {
+        let projectsCount = 0;
 
-  public projectsCountShouldBeVisible(): this {
+        cy.get('[data-cy="select-projectlist-filter-count"]')
+            .invoke('text')
+            .then((txt) => {
+                projectsCount = Number(txt.split(' ')[0]);
+            });
 
-    cy.get('[data-cy="select-projectlist-filter-count"]').should('be.visible')
-    cy.get('[data-cy="select-projectlist-filter-count"]').should('contain.text', 'projects found')
+        return projectsCount;
+    }
 
-    return this
-  }
+    public toggleFilterProjects(isOpen): this {
+        cy.get('[data-cy="select-projectlist-filter-expand"]').click();
+        if (isOpen) cy.get('details').should('have.attr', 'open');
+        else cy.get('details').should('not.have.attr', 'open');
 
-  public getProjectsCount(): Number {
+        return this;
+    }
 
-    let projectsCount = 0
+    public filterProjects(projectTitle): this {
+        cy.get('[id="Title"]').type(projectTitle);
 
-    cy.get('[data-cy="select-projectlist-filter-count"]')
-      .invoke('text')
-      .then((txt) => {
-        projectsCount = Number(txt.split(' ')[0])
-      })
+        cy.get('[data-cy="select-projectlist-filter-apply"]').first().click();
 
-    return projectsCount
-  }
+        cy.get('[data-module="govuk-notification-banner"]').should('be.visible');
+        cy.get('[data-module="govuk-notification-banner"]').should('contain.text', 'Success');
+        cy.get('[data-module="govuk-notification-banner"]').should('contain.text', 'Projects filtered');
 
-  public toggleFilterProjects(isOpen): this {
-    
-    cy.get('[data-cy="select-projectlist-filter-expand"]').click()
-    if(isOpen)
-      cy.get('details').should('have.attr', 'open')
-    else
-      cy.get('details').should('not.have.attr', 'open')
+        cy.get('[data-cy="select-projectlist-filter-count"]').should('be.visible');
+        cy.get('[data-cy="select-projectlist-filter-count"]').should('contain.text', 'projects found');
 
-    return this
-  }
+        cy.get('tbody > tr').should('have.length.at.least', 1);
 
-  public filterProjects(projectTitle): this {
+        return this;
+    }
 
-    cy.get('[id="Title"]').type(projectTitle)
+    public clearFilters(): this {
+        cy.get('[data-cy="clear-filter"]').click();
 
-    cy.get('[data-cy="select-projectlist-filter-apply"]').first().click()
+        return this;
+    }
 
-    cy.get('[data-module="govuk-notification-banner"]').should('be.visible')
-    cy.get('[data-module="govuk-notification-banner"]').should('contain.text', 'Success')
-    cy.get('[data-module="govuk-notification-banner"]').should('contain.text', 'Projects filtered')
-
-    cy.get('[data-cy="select-projectlist-filter-count"]').should('be.visible')
-    cy.get('[data-cy="select-projectlist-filter-count"]').should('contain.text', 'projects found')
-
-    cy.get('tbody > tr').should('have.length.at.least', 1)
-
-    return this
-  }
-
-  public clearFilters(): this {
-
-    cy.get('[data-cy="clear-filter"]').click()
-
-    return this
-  }
-
-  public selectFirstProject(): this {
-
-    cy.get('[data-id*="project-link"]').first().click()
-    return this
-  }
+    public selectFirstProject(): this {
+        cy.get('[data-id*="project-link"]').first().click();
+        return this;
+    }
 }
 
-const homePage = new HomePage()
+const homePage = new HomePage();
 
-export default homePage
+export default homePage;

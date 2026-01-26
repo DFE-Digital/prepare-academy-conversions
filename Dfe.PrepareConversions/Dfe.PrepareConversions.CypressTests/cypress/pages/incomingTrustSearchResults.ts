@@ -1,19 +1,17 @@
-import { BasePage } from './basePage'
+import { BasePage } from './basePage';
 
 class IncomingTrustSearchResultsPage extends BasePage {
+    public slug = 'transfers/searchincomingtrust';
 
-  public slug = 'transfers/searchincomingtrust'
+    public selectTrust(trustName): this {
+        cy.get('label').contains(trustName).click();
 
-  public selectTrust(trustName): this {
+        this.continue();
 
-    cy.get('label').contains(trustName).click()
-
-    this.continue()
-
-    return this
-  }
+        return this;
+    }
 }
 
-const incomingTrustSearchResultsPage = new IncomingTrustSearchResultsPage()
+const incomingTrustSearchResultsPage = new IncomingTrustSearchResultsPage();
 
-export default incomingTrustSearchResultsPage
+export default incomingTrustSearchResultsPage;

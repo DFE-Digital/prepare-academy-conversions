@@ -94,28 +94,28 @@
                 "schoolAdditionalInformation": "Do you want to add any further information?Any other information",
                 "previousFinancialYear": {
                     "fyEndDate": "17 March 2021",
-                    "revenueCarryForward": 1000.00,
+                    "revenueCarryForward": 1000.0,
                     "revenueIsDeficit": true,
                     "revenueStatusExplained": "Quo delectus labore.",
-                    "capitalCarryForward": 1100.00,
+                    "capitalCarryForward": 1100.0,
                     "capitalIsDeficit": false,
                     "capitalStatusExplained": "Soluta repellendus assumenda."
                 },
                 "currentFinancialYear": {
                     "fyEndDate": "17 March 2022",
-                    "revenueCarryForward": 2000.00,
+                    "revenueCarryForward": 2000.0,
                     "revenueIsDeficit": false,
                     "revenueStatusExplained": "Deserunt exercitationem veritatis.",
-                    "capitalCarryForward": 2100.00,
+                    "capitalCarryForward": 2100.0,
                     "capitalIsDeficit": true,
                     "capitalStatusExplained": "Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan.\r\nProvide details of the financial forecast and/or the deficit recovery plan agreed with the local authority"
                 },
                 "nextFinancialYear": {
                     "fyEndDate": "17 March 2023",
-                    "revenueCarryForward": 3100.00,
+                    "revenueCarryForward": 3100.0,
                     "revenueIsDeficit": true,
                     "revenueStatusExplained": "Answer - Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan",
-                    "capitalCarryForward": 3110.00,
+                    "capitalCarryForward": 3110.0,
                     "capitalIsDeficit": true,
                     "capitalStatusExplained": "Answer - Explain the reasons for the deficit, how the school plans to deal with it, and the recovery plan"
                 },
@@ -147,7 +147,7 @@
                 "declarationSignedByName": "",
                 "schoolLoans": [
                     {
-                        "schoolLoanAmount": 4000.00,
+                        "schoolLoanAmount": 4000.0,
                         "schoolLoanPurpose": "Purpose of loan",
                         "schoolLoanProvider": "Loan provider",
                         "schoolLoanInterestRate": "4",
@@ -157,9 +157,9 @@
                 "schoolLeases": [
                     {
                         "schoolLeaseTerm": "lease term",
-                        "schoolLeaseRepaymentValue": 2000.00,
-                        "schoolLeaseInterestRate": 10.00,
-                        "schoolLeasePaymentToDate": 200.00,
+                        "schoolLeaseRepaymentValue": 2000.0,
+                        "schoolLeaseInterestRate": 10.0,
+                        "schoolLeasePaymentToDate": 200.0,
                         "schoolLeasePurpose": "lease purpose",
                         "schoolLeaseValueOfAssets": "value of assets",
                         "schoolLeaseResponsibleForAssets": "who is responsible"

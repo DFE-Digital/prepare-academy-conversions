@@ -17,17 +17,14 @@
 // Load the TypeScript plugin
 // import * as webpackPreprocessor from '@cypress/webpack-preprocessor';
 
-const pluginConfig = (
-  on: Cypress.PluginEvents,
-  config: Cypress.PluginConfigOptions
-): Cypress.PluginConfigOptions => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
-  // on('file:preprocessor', webpackPreprocessor());
+const pluginConfig = (on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions): Cypress.PluginConfigOptions => {
+    // `on` is used to hook into various events Cypress emits
+    // `config` is the resolved Cypress config
+    // on('file:preprocessor', webpackPreprocessor());
 
-  // Other configurations or plugins...
+    // Other configurations or plugins...
 
-  return config;
+    return config;
 };
 
 export default pluginConfig;
