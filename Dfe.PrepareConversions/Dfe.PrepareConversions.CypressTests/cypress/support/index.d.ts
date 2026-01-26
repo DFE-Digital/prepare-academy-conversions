@@ -21,11 +21,6 @@ declare namespace Cypress {
         login(options?: { titleFilter?: string }): Chainable<void>;
 
         /**
-         * Store session data by preserving cookies
-         */
-        storeSessionData(): Chainable<void>;
-
-        /**
          * Select a school listing by its index
          * @param listing - The listing index
          */
@@ -89,7 +84,7 @@ declare namespace Cypress {
         /**
          * Execute accessibility tests using axe-core
          */
-        excuteAccessibilityTests(): Chainable<void>;
+        executeAccessibilityTests(): Chainable<void>;
 
         /**
          * Call the Academisation API

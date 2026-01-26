@@ -32,29 +32,13 @@ import { AcademisationApiKey, AcademisationApiUrl, CypressApiKey, EnvUrl } from 
 
 Cypress.Commands.add('urlPath', () => cy.location().then((location) => `${location.origin}${location.pathname}`));
 
-Cypress.Commands.add('checkPath', (path: string) => cy.url().should('include', path));
+Cypress.Commands.add('checkPath', (path: string) => {
+    cy.url().should('include', path);
+});
 
 Cypress.Commands.add('login', ({ titleFilter }: { titleFilter?: string } = {}) => {
     const filterQuery = titleFilter ? `?Title=${encodeURIComponent(titleFilter)}` : '';
     cy.visit(`${Cypress.env(EnvUrl)}/project-list${filterQuery}`);
-});
-
-// Preserving Session Data (Universal)
-Cypress.Commands.add('storeSessionData', () => {
-    Cypress.Cookies.preserveOnce('.ManageAnAcademyConversion.Login');
-    const str: string[] = [];
-    cy.getCookies().then((cookie) => {
-        cy.log(cookie as unknown as string);
-        for (let l = 0; l < cookie.length; l++) {
-            if (cookie.length > 0 && l == 0) {
-                str[l] = cookie[l].name;
-                Cypress.Cookies.preserveOnce(str[l]);
-            } else if (cookie.length > 1 && l > 1) {
-                str[l] = cookie[l].name;
-                Cypress.Cookies.preserveOnce(str[l]);
-            }
-        }
-    });
 });
 
 // School Listing Summary Page (Universal)
@@ -116,13 +100,13 @@ Cypress.Commands.add('saveContinue', () => {
     cy.get('[id="save-and-continue-button"]');
 });
 
-Cypress.Commands.add('excuteAccessibilityTests', () => {
+Cypress.Commands.add('executeAccessibilityTests', () => {
     const wcagStandards = ['wcag22aa', 'wcag21aa'];
     const impactLevel = ['critical', 'minor', 'moderate', 'serious'];
     const continueOnFail = false;
     cy.injectAxe();
     cy.checkA11y(
-        null,
+        undefined,
         {
             runOnly: {
                 type: 'tag',
