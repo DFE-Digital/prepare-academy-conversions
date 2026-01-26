@@ -1,0 +1,384 @@
+import { Logger } from '../support/logger';
+
+export class DecisionPage {
+  searchSchool(schoolName: string): this {
+    cy.get('#SearchQuery').type(schoolName);
+    cy.get('.autocomplete__input--default').first().click();
+    return this;
+  }
+
+  clickContinue(): this {
+    cy.get('[data-id="submit"]').click();
+    return this;
+  }
+
+  selectNoAndContinue(): this {
+    cy.get('[data-cy="select-legal-input-no"]').click();
+    cy.get('[data-cy="select-common-submitbutton"]').click();
+    return this;
+  }
+
+  assertSchoolDetails(
+    schoolName: string,
+    urn: string,
+    localAuthority: string,
+    schoolType: string
+  ): this {
+    cy.get('[data-cy="school-name"]').should('contain', schoolName);
+    cy.get('.govuk-summary-list__value').eq(1).should('contain', urn);
+    cy.get('.govuk-summary-list__value').eq(3).should('contain', localAuthority);
+    cy.get('.govuk-summary-list__value').eq(5).should('contain', schoolType);
+    return this;
+  }
+
+  clickOnFirstProject(): this {
+    cy.get('[data-cy="select-projectlist-filter-title"]').type(
+      'Manchester Academy'
+    );
+    this.clickApplyFilters();
+    cy.get('[data-cy="trust-name-Manchester Academy-0"]').click();
+    return this;
+  }
+
+  clickApplyFilters(): this {
+    cy.get('[data-cy="select-projectlist-filter-apply"]').first().click();
+    return this;
+  }
+
+  clickRecordDecisionMenu(): this {
+    cy.get('[data-cy="record_decision_menu"]').click();
+    return this;
+  }
+
+  clickRecordDecision(): this {
+    cy.get('[data-cy="record_decision_btn"]').click();
+    return this;
+  }
+
+  clickRecordDecisionWithoutError(): this {
+    cy.get('[data-cy="record_decision_btn"]').click();
+    return this;
+  }
+
+  checkErrorAndAddDetails(
+    day: string,
+    month: string,
+    year: string,
+    userName: string
+  ): this {
+    cy.get('.govuk-error-summary').should('be.visible');
+    cy.get('#error-summary-title').should('contain', 'There is a problem');
+    cy.get('[data-cy="error-summary"]')
+      .find('a')
+      .should('have.length', 4)
+      .eq(0)
+      .should(
+        'contain',
+        'You must enter the name of the person who worked on this project before you can record a decision.'
+      )
+      .and('be.visible');
+    cy.get('[data-cy="error-summary"]')
+      .find('a')
+      .eq(1)
+      .should(
+        'contain',
+        'You must enter a proposed conversion date before you can record a decision.'
+      )
+      .and('be.visible');
+    cy.get('[data-cy="error-summary"]')
+      .find('a')
+      .eq(2)
+      .should(
+        'contain',
+        'You must enter trust name before you can record a decision.'
+      )
+      .and('be.visible');
+    cy.get('[data-cy="error-summary"]')
+      .find('a')
+      .eq(3)
+      .should(
+        'contain',
+        'You must enter an advisory board date before you can record a decision.'
+      )
+      .and('be.visible');
+
+    // Clicking and filling fields as per the error messages
+    cy.contains(
+      'a',
+      'You must enter an advisory board date before you can record a decision'
+    ).click();
+    cy.get('#head-teacher-board-date-day').type(day);
+    cy.get('#head-teacher-board-date-month').type(month);
+    cy.get('#head-teacher-board-date-year').type(year);
+    cy.get('[data-cy="select-common-submitbutton"]').click();
+    cy.get('#approved-radio').click();
+    cy.get('#submit-btn').click();
+
+    cy.contains(
+      'a',
+      'You must enter the name of the person who worked on this project before you can record a decision.'
+    ).click();
+    cy.get('#delivery-officer').type(userName);
+    cy.get('.autocomplete__option').first().click();
+    cy.get('[data-cy="continue-Btn"]').click();
+
+    // Verifying notification messages
+    cy.get('#notification-message').should('include.text', 'Project is assigned');
+
+    cy.get('#approved-radio').click();
+    cy.get('#submit-btn').click();
+
+    cy.contains(
+      'a',
+      'You must enter a proposed conversion date before you can record a decision.'
+    ).click();
+    cy.get('#proposed-conversion-month').type(month);
+    cy.get('#proposed-conversion-year').type(year);
+    cy.get('[data-cy="select-common-submitbutton"]').click();
+
+    cy.get('#approved-radio').click();
+    cy.get('#submit-btn').click();
+
+    cy.contains(
+      'a',
+      'You must enter trust name before you can record a decision.'
+    ).click();
+    cy.get('.autocomplete__wrapper > #SearchQuery').type('10058252');
+    cy.get('#SearchQuery__option--0').click();
+    cy.get('button.govuk-button[data-id="submit"]').click();
+
+    // go back to the
+    cy.get('[data-cy="select-backlink"]').click();
+
+    return this;
+  }
+
+  makeDecision(decision: string): this {
+    cy.get(`#${decision}-radio`).click();
+    cy.get('#submit-btn').click();
+    return this;
+  }
+
+  decsionMaker(grade: string): this {
+    cy.get(`#${grade}-radio`).click();
+    cy.get('#submit-btn').click();
+    return this;
+  }
+
+  enterDecisionMakerName(name: string): this {
+    cy.get('#decision-maker-name').type(name);
+    cy.get('#submit-btn').click();
+    return this;
+  }
+
+  selectNoConditions(): this {
+    cy.get('#no-radio').click();
+    cy.get('#submit-btn').click();
+    return this;
+  }
+
+  selectReasonWhyDeferred(): this {
+    cy.get('#additionalinformationneeded-checkbox').click();
+    cy.get('#additionalinformationneeded-txtarea').type(
+      'Fahads Cypress Reason is Additional Information Needed'
+    );
+    cy.get('#submit-btn').click();
+    return this;
+  }
+
+  enterDecisionDate(day: string, month: string, year: string): this {
+    cy.get('#decision-date-day').type(day);
+    cy.get('#decision-date-month').type(month);
+    cy.get('#decision-date-year').type(year);
+    cy.get('#submit-btn').click();
+    return this;
+  }
+
+  dateAOWasSent(day: string, month: string, year: string): this {
+    cy.get('#academy-order-date-day').type(day);
+    cy.get('#academy-order-date-month').type(month);
+    cy.get('#academy-order-date-year').type(year);
+    cy.get('#submit-btn').click();
+    return this;
+  }
+
+  verifyDecisionDetails(
+    decision: string,
+    grade: string,
+    name: string,
+    date: string
+  ): this {
+    Logger.log(`Decision: ${decision}, Name: ${name}, Date: ${date}`);
+    cy.log(`Decision: ${decision}, Name: ${name}, Date: ${date}`);
+    cy.get('#decision')
+      .invoke('text')
+      .then((text) => {
+        expect(text.trim()).to.contain(decision);
+      });
+    cy.get('#decision-made-by').eq(0).should('contain', grade);
+    cy.get('#decision-maker-name').should('contain', name);
+    cy.get('#decision-date').should('contain', date);
+    cy.get('#submit-btn').click();
+    return this;
+  }
+
+  verifyDecisionDetailsBeforeChanging(
+    decision: string,
+    name: string,
+    date: string
+  ): this {
+    Logger.log(`Decision: ${decision}, Name: ${name}, Date: ${date}`);
+    cy.log(`Decision: ${decision}, Name: ${name}, Date: ${date}`);
+    cy.get('#decision')
+      .invoke('text')
+      .then((text) => {
+        expect(text.trim().toLowerCase()).to.contain(
+          decision.toLowerCase().trim()
+        );
+      });
+    cy.get('#decision-maker-name').should('contain', name);
+    cy.get('#decision-date').should('contain', date);
+    return this;
+  }
+
+  verifyDecisionDetailsAfterChanging(
+    decision: string,
+    name: string,
+    date: string
+  ): this {
+    cy.get('#decision')
+      .invoke('text')
+      .then((text) => {
+        expect(text.trim().toLowerCase()).to.contain(
+          decision.toLowerCase().trim()
+        );
+      });
+    cy.get('#decision-made-by').should('contain', name);
+    console.log('Date:', date);
+    cy.get('#decision-date').should('contain', date);
+    return this;
+  }
+
+  changeDecisionDetails(): this {
+    cy.get('[data-cy="record_decision_menu"]').click();
+    this.verifyDecisionDetailsBeforeChanging(
+      'DEFERRED',
+      'Fahad Darwish',
+      '12 December 2023'
+    );
+    cy.get('#record-decision-link').click();
+    cy.get('#declined-radio').click();
+    cy.get('#submit-btn').click();
+    cy.get('#directorgeneral-radio').click();
+    cy.get('#submit-btn').click();
+    cy.get('#submit-btn').click();
+    cy.get('#declined-reasons-finance').click();
+    cy.get('#reason-finance').type('Fahads Cypress Reason is Finance');
+    cy.get('#submit-btn').click();
+    cy.get('#submit-btn').click();
+
+    //change the date to 12th November 2023
+    cy.get('#decision-date-day').clear();
+    cy.get('#decision-date-day').type('12');
+    cy.get('#decision-date-month').clear();
+    cy.get('#decision-date-month').type('11');
+    cy.get('#decision-date-year').clear();
+    cy.get('#decision-date-year').type('2023');
+    cy.get('#submit-btn').click();
+    this.verifyDecisionDetailsAfterChanging(
+      'Declined',
+      'Director General',
+      '12 November 2023'
+    );
+    cy.get('#submit-btn').click();
+    return this;
+  }
+
+  changeDecisionDAODetails(): this {
+    cy.get('[data-cy="record_decision_menu"]').click();
+    cy.get('#record-decision-link').click();
+    cy.get('#daorevoked-radio').click();
+    cy.get('#submit-btn').click();
+    cy.get('#submit-btn').click();
+    cy.get('#submit-btn').click();
+    cy.get('#MinisterApproval').click();
+    cy.get('#LetterSent').click();
+    cy.get('#LetterSaved').click();
+    cy.get('#submit-btn').click();
+    cy.get('#schoolclosedorclosing-checkbox').click();
+    cy.get('#schoolclosedorclosing-txtarea').type(
+      'Cypress Test Fahad - Reason school is closing'
+    );
+    cy.get('#submit-btn').click();
+    cy.get('#decision-maker-name').clear();
+    cy.get('#decision-maker-name').type('Fahad Darwish');
+    cy.get('#submit-btn').click();
+    cy.get('#submit-btn').click();
+    this.verifyDecisionDetailsAfterChanging('DAO', 'Minister', '12 November 2023');
+    cy.get('#submit-btn').click();
+    return this;
+  }
+
+  changeDecisionApproved(): this {
+    cy.get('[data-cy="record_decision_menu"]').click();
+    cy.get('#record-decision-link').click();
+    cy.get('#approved-radio').click();
+    cy.get('#submit-btn').click();
+    cy.get('#minister-radio').click();
+    cy.get('#submit-btn').click();
+    cy.get('#no-radio').click();
+    cy.get('#submit-btn').click();
+    cy.get('#decision-maker-name').clear().type('Fahad Darwish');
+    cy.get('#submit-btn').click();
+    cy.get('#decision-date-day').clear();
+    cy.get('#decision-date-day').type('12');
+    cy.get('#decision-date-month').clear();
+    cy.get('#decision-date-month').type('11');
+    cy.get('#decision-date-year').clear();
+    cy.get('#decision-date-year').type('2023');
+    cy.get('#submit-btn').click();
+    this.verifyDecisionDetailsAfterChanging(
+      'Approved',
+      'Minister',
+      '12 November 2023'
+    );
+    cy.get('#submit-btn').click();
+    cy.get('[data-cy="decision-recorded-confirmation"]').should('be.visible');
+    cy.get('[data-cy="decision-recorded-confirmation"]').should(
+      'contain',
+      'Decision recorded'
+    );
+    cy.get('[data-cy="approved-body"]')
+      .should('contain', 'Manchester Academy')
+      .and('contain', 'Approved');
+
+    cy.get('[data-cy="open-in-compelete-btn"]').should('be.visible');
+    return this;
+  }
+
+  deleteProject(projectId: string): void {
+    cy.callAcademisationApi(
+      'DELETE',
+      `/conversion-project/${projectId}/Delete`
+    ).then((response) => {
+      expect(response.status).to.eq(200);
+    });
+  }
+
+  clickToGoBackandCheckReadOnly(): this {
+    cy.get('[data-cy="select-backlink"]').click();
+    cy.get('[data-cy="record_decision_menu"]').click();
+    cy.get('[data-cy="approved-message_banner"]')
+      .should('be.visible')
+      .and('contain', 'This project was approved');
+
+    return this;
+  }
+
+  goBackToTaskList(): this {
+    cy.get('[data-cy="back-link"]').click();
+    return this;
+  }
+}
+
+export const decisionPage = new DecisionPage();

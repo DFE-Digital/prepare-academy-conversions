@@ -1,7 +1,8 @@
 /* eslint-env node */
 
 import { defineConfig } from 'cypress';
-import { generateZapReport } from './cypress/plugins/generateZapReport.js';
+import { generateZapReport } from './cypress/plugins/generateZapReport';
+import pluginConfig from './cypress/plugins/index';
 
 export default defineConfig({
   reporter: 'cypress-multi-reporters',
@@ -19,7 +20,7 @@ export default defineConfig({
   retries: 0,
   e2e: {
     specPattern: 'cypress/e2e',
-    supportFile: 'cypress/support/e2e.js',
+    supportFile: 'cypress/support/e2e.ts',
     setupNodeEvents(on, config) {
       on('after:run', async () => {
         if (process.env.ZAP) {
@@ -28,13 +29,13 @@ export default defineConfig({
       });
 
       on('task', {
-        log(message) {
+        log(message: string) {
           console.log(message);
           return null;
         },
       });
 
-      require('./cypress/plugins/index.js')(on, config);
+      pluginConfig(on, config);
       return config;
     },
   },
