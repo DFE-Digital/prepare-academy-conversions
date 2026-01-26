@@ -18,6 +18,7 @@ import rationalePage from 'cypress/pages/rationale'
 import trustInformationProjectDatesPage from 'cypress/pages/trustInformationProjectDates'
 import dayjs from 'dayjs';
 import { Logger } from '../../support/logger'
+import {EnvUrl} from "../../constants/cypressConstants";
 
 describe('Create a new transfer', () => {
 
@@ -141,7 +142,7 @@ describe('Create a new transfer', () => {
 
     it('Fill in Transfer Dates', () => {
 
-      cy.visit(`${Cypress.env('url')}/transfers/project/${projectId}`);
+      cy.visit(`${Cypress.env(EnvUrl)}/transfers/project/${projectId}`);
       projectPage
         .checkTransferDatesStatus('Not Started')
         .startTransferDates()
@@ -157,7 +158,7 @@ describe('Create a new transfer', () => {
 
     it('Fill in Benefits and Risks', () => {
 
-      cy.visit(`${Cypress.env('url')}/transfers/project/${projectId}`);
+      cy.visit(`${Cypress.env(EnvUrl)}/transfers/project/${projectId}`);
 
       projectPage
         .loadProject(projectId)
@@ -177,7 +178,7 @@ describe('Create a new transfer', () => {
 
     it('Fill in Legal Requirements', () => {
 
-      cy.visit(`${Cypress.env('url')}/transfers/project/${projectId}`);
+      cy.visit(`${Cypress.env(EnvUrl)}/transfers/project/${projectId}`);
 
       projectPage
         .loadProject(projectId)
@@ -197,7 +198,7 @@ describe('Create a new transfer', () => {
 
     it ('Fill in Rationale', () => {
 
-      cy.visit(`${Cypress.env('url')}/transfers/project/${projectId}`);
+      cy.visit(`${Cypress.env(EnvUrl)}/transfers/project/${projectId}`);
 
       projectPage
         .loadProject(projectId)

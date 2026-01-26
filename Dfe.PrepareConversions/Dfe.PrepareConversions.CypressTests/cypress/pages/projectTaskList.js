@@ -1,6 +1,7 @@
 /// <reference types ='Cypress'/>
 
 import BasePage from "./basePage";
+import {EnvUrl} from "../constants/cypressConstants";
 
 export default class ProjectTaskList extends BasePage {
 
@@ -95,7 +96,7 @@ export default class ProjectTaskList extends BasePage {
     }
 
     static getHomePage() {
-        cy.visit(`${Cypress.env('url')}`)
+        cy.visit(`${Cypress.env(EnvUrl)}/`)
     }
 
     static getConversionDetailsStatus() {

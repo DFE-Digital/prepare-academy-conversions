@@ -1,10 +1,12 @@
+import {EnvTransfersUrl} from "../constants/cypressConstants";
+
 class HomePage {
 
   public slug = 'home'
 
   public open(): this {
 
-    cy.visit(Cypress.env('transfersUrl'))
+    cy.visit(Cypress.env(EnvTransfersUrl))
     return this
   }
 

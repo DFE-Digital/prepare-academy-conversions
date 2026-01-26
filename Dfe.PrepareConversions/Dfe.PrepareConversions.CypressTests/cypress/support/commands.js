@@ -25,6 +25,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import 'cypress-localstorage-commands'
+import {AcademisationApiKey, AcademisationApiUrl, CypressApiKey, EnvUrl} from "../constants/cypressConstants";
 
 //--Universal
 
@@ -34,7 +35,7 @@ Cypress.Commands.add('checkPath', (path) => cy.url().should("include", path))
 
 Cypress.Commands.add('login', ({ titleFilter } = {}) => {
     const filterQuery = titleFilter ? `?Title=${encodeURIComponent(titleFilter)}` : ''
-    cy.visit(`${Cypress.env('url')}/project-list${filterQuery}`)
+    cy.visit(`${Cypress.env(EnvUrl)}/project-list${filterQuery}`)
 })
 
 // Preserving Session Data (Universal)
@@ -138,10 +139,10 @@ Cypress.Commands.add('callAcademisationApi',
         let requestDefinition =
         {
             method: method,
-            url: `${Cypress.env('academisationApiUrl')}/${url}`,
+            url: `${Cypress.env(AcademisationApiUrl)}/${url}`,
             headers: {
-                'x-api-key': Cypress.env('academisationApiKey'),
-                'x-api-cypress-endpoints-key': Cypress.env('cypressApiKey'),
+                'x-api-key': Cypress.env(AcademisationApiKey),
+                'x-api-cypress-endpoints-key': Cypress.env(CypressApiKey),
                 'Content-Type': 'application/json'
             },
             failOnStatusCode: failOnStatusCode,

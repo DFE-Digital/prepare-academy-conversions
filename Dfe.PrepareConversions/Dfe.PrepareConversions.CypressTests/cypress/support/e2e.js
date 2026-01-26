@@ -40,9 +40,9 @@ Cypress.on('uncaught:exception', (err) => {
 
 beforeEach(() => {
 	cy.intercept(
-		{ url: Cypress.env('url') + '/**', middleware: true },
+		{ url: Cypress.env(EnvUrl) + '/**', middleware: true },
 		//Add authorization to all Cypress requests
-		(req) => req.headers['Authorization'] = 'Bearer ' + Cypress.env('cypressTestSecret'),
+		(req) => req.headers['Authorization'] = 'Bearer ' + Cypress.env(CypressTestSecret),
 		(req) => req.headers['AuthorizationRole'] = 'conversions.create'
 	)
 })
@@ -53,3 +53,4 @@ import 'cypress-axe'
 
 // ***********************************************************
 import 'cypress-plugin-api'
+import {CypressTestSecret, EnvUrl} from "../constants/cypressConstants";

@@ -1,3 +1,5 @@
+import {AcademisationApiKey, AcademisationApiUrl} from "../constants/cypressConstants";
+
 export class NewTransferProjectWithDecisions {
   public visit(url: string): this {
     cy.visit(url);
@@ -101,8 +103,8 @@ export class NewTransferProjectWithDecisions {
   }
 
   public deleteProject(projectId: string): this {
-    const deleteUrl = `${Cypress.env('academisationApiUrl')}/transfer-project/${projectId}/delete`;
-    const academisationApiKey = Cypress.env('academisationApiKey');
+    const deleteUrl = `${Cypress.env(AcademisationApiUrl)}/transfer-project/${projectId}/delete`;
+    const academisationApiKey = Cypress.env(AcademisationApiKey);
 
 
     cy.request({

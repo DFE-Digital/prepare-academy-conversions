@@ -1,11 +1,12 @@
 import { NewTransferProjectWithDecisions } from 'cypress/pages/newTransferProjectWithDecisions';
+import {EnvTransfersUrl} from "../../constants/cypressConstants";
 
 describe('Transfer Project Tests', () => {
   const transferProject = new NewTransferProjectWithDecisions();
   let projectId: string;
 
   beforeEach(() => {
-    transferProject.visit(Cypress.env('transfersUrl'));
+    transferProject.visit(Cypress.env(EnvTransfersUrl));
   });
 
   it('Creating a transfer project and checking Decision of that project', () => {

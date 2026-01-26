@@ -1,6 +1,7 @@
 /// <reference types="Cypress" />
 import projectList from "../../pages/projectList";
 import {decisionPage} from "../../pages/decisionPage";
+import {EnvUrl} from "../../constants/cypressConstants";
 
 
 describe('Filteration Tests', { tags: ['@dev', '@stage'] }, () => {
@@ -54,7 +55,7 @@ describe('Filteration Tests', { tags: ['@dev', '@stage'] }, () => {
   })
 
   beforeEach(() => {
-    cy.visit(`${Cypress.env('url')}/`); 
+    cy.visit(Cypress.env(EnvUrl));
     projectList.filterProject(testData.projectName)
   })
 
