@@ -10,7 +10,7 @@ describe('Check accessibility of the different pages', () => {
         cy.fixture('transfersLinks.json').then((transfersLinks) => {
             transfersLinks.forEach((link) => {
                 cy.visit(Cypress.env(EnvTransfersUrl));
-                cy.excuteAccessibilityTests();
+                cy.executeAccessibilityTests();
             });
         });
     });
