@@ -31,15 +31,17 @@ concurrency:
 
 jobs:
   cypress-tests:
-    name: Run Cypress Tests
+    name: Run Cypress Tests (${{ matrix.test-suite }})
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     defaults:
       run:
          working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
     strategy:
+      fail-fast: false
       matrix:
         browser: ["edge"]
+        test-suite: ["conversions", "transfers"]
     container:
       image: cypress/browsers:22.13.1@sha256:914c9814a9567f32660203db7ecd610b8f8fede6e9103885728b3bd3f6dca4ff
     steps:
@@ -47,7 +49,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      - name: Run Cypress Tests (${{ inputs.environment }})
+      - name: Run Cypress Tests (${{ inputs.environment }} - ${{ matrix.test-suite }})
         if: inputs.environment == 'staging' || inputs.environment == 'dev'
         uses: cypress-io/github-action@v6
         env:
@@ -61,13 +63,13 @@ jobs:
           browser: ${{ matrix.browser }}
           working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
           wait-on: ${{ secrets.AZURE_ENDPOINT }}
-         
+          spec: cypress/e2e/${{ matrix.test-suite }}/**/*.cy.ts
 
       - name: Upload screenshots (Cypress Tests)
         if: ${{ failure() }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: screenshots-${{ inputs.environment }}-${{ matrix.browser }}
+          name: screenshots-${{ inputs.environment }}-${{ matrix.browser }}-${{ matrix.test-suite }}
           path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots
 
       - name: Combine reports
@@ -85,7 +87,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: combined-reports-${{ inputs.environment }}-${{ matrix.browser }}
+          name: combined-reports-${{ inputs.environment }}-${{ matrix.browser }}-${{ matrix.test-suite }}
           path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.html
 
       - name: Report results to Teams
@@ -95,4 +97,5 @@ jobs:
         env:
           TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
           ENVIRONMENT: ${{ inputs.environment }}
-          INFORMATION_LINK: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"      
+          INFORMATION_LINK: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          TEST_SUITE: ${{ matrix.test-suite }}      
