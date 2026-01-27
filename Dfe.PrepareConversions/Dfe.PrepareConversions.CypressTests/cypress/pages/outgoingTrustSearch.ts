@@ -4,7 +4,7 @@ class OutgoingTrustSearchPage {
     public searchTrustsByName(trustName): this {
         cy.getById('SearchQuery').type(trustName);
 
-        cy.containsText('Search').click();
+        cy.clickButton('Search');
 
         return this;
     }
@@ -12,7 +12,7 @@ class OutgoingTrustSearchPage {
     public searchTrustsByUkprn(ukprn): this {
         cy.getById('SearchQuery').type(ukprn);
 
-        cy.containsText('Search').click();
+        cy.clickButton('Search');
 
         return this;
     }
@@ -20,7 +20,7 @@ class OutgoingTrustSearchPage {
     public searchTrustsByCompaniesHouseNo(companiesHouseNo): this {
         cy.getById('SearchQuery').type(companiesHouseNo);
 
-        cy.containsText('Search').click();
+        cy.clickButton('Search');
 
         return this;
     }

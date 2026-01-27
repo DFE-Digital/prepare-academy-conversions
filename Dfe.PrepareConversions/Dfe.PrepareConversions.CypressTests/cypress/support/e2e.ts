@@ -96,6 +96,12 @@ declare global {
             clickContinueBtn(): Chainable<void>;
 
             /**
+             * Click button with the text matching the provided text
+             * @param buttonText - The text of the button to click
+             */
+            clickButton(buttonText: string): Chainable<void>;
+
+            /**
              * Find an element containing the specified text
              * @param text - The text to search for
              */

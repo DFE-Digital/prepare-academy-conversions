@@ -57,6 +57,10 @@ Cypress.Commands.add('clickContinueBtn', () => {
     cy.get('button').contains('Continue').click();
 });
 
+Cypress.Commands.add('clickButton', (buttonText: string) => {
+    cy.get('button').contains(buttonText).click();
+});
+
 Cypress.Commands.add('containsText', (text: string) => {
     cy.contains(text);
 });
