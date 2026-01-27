@@ -15,10 +15,6 @@ on:
         required: true
       CYPRESS_ACADEMISATION_API_KEY:
         required: true
-      DB_CONNECTION_STRING:
-        required: true
-      SLACK_WEBHOOK_URL:
-        required: true
   workflow_dispatch:
     inputs:
       environment:
@@ -53,9 +49,7 @@ jobs:
         if: inputs.environment == 'staging' || inputs.environment == 'dev'
         uses: cypress-io/github-action@v6
         env:
-          CYPRESS_db: ${{ secrets.DB_CONNECTION_STRING }}
           CYPRESS_url: ${{ secrets.AZURE_ENDPOINT }}
-          CYPRESS_transfersUrl: ${{ secrets.AZURE_ENDPOINT }}transfers/home
           CYPRESS_cypressTestSecret: ${{ secrets.CYPRESS_TEST_SECRET }}
           CYPRESS_academisationApiUrl: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
           CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
