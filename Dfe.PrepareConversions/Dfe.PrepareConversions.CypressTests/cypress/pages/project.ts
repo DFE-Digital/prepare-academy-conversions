@@ -27,7 +27,7 @@ class ProjectPage {
     public checkDeliveryOfficerDetails(deliveryOfficer): this {
         cy.getByDataId('assigned-user').should('have.text', deliveryOfficer);
 
-        if (deliveryOfficer == 'Empty') {
+        if (deliveryOfficer === 'Empty') {
             cy.getByDataId('assigned-user').should('have.class', 'empty');
         } else {
             cy.getByDataId('assigned-user').should('not.have.class', 'empty');
