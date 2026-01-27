@@ -50,8 +50,6 @@ export default class ProjectTaskList extends BasePage {
 
     static selectAssignProject(): void {
         cy.checkPath(this.path);
-        this.acceptCookieBtnClick();
-        this.hideAcceptCookieBanner();
         cy.get(this.selectors.assignProjectButton).click();
     }
 
