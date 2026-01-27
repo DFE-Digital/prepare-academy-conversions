@@ -25,7 +25,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import 'cypress-localstorage-commands';
-import { AcademisationApiKey, AcademisationApiUrl, CypressApiKey, EnvUrl } from '../constants/cypressConstants';
+import { AcademisationApiKey, AcademisationApiUrl, CypressApiKey } from '../constants/cypressConstants';
 
 //--Universal
 
@@ -69,7 +69,7 @@ Cypress.Commands.add('checkPath', (path: string) => {
 
 Cypress.Commands.add('login', ({ titleFilter }: { titleFilter?: string } = {}) => {
     const filterQuery = titleFilter ? `?Title=${encodeURIComponent(titleFilter)}` : '';
-    cy.visit(`${Cypress.env(EnvUrl)}/project-list${filterQuery}`);
+    cy.visit(`/project-list${filterQuery}`);
 });
 
 // School Listing Summary Page (Universal)

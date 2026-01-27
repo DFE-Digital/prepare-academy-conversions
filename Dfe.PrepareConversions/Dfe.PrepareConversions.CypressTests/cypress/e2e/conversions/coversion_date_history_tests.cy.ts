@@ -7,7 +7,7 @@ describe('Conversion Date Change Tests', () => {
 
     beforeEach(() => {
         Logger.log('Visit the homepage before each test');
-        projectTaskList.getHomePage();
+        cy.visit('/');
     });
 
     it('Creating a conversion project', () => {

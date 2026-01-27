@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 import BasePage from './basePage';
-import { EnvUrl } from '../constants/cypressConstants';
 
 export default class projectList extends BasePage {
     static path = 'project-list';
@@ -21,7 +20,7 @@ export default class projectList extends BasePage {
 
     static filterProjectList(titleFilter: string): void {
         const filterQuery = `?Title=${encodeURIComponent(titleFilter)}`;
-        cy.visit(`${Cypress.env(EnvUrl)}/${this.path}${filterQuery}`);
+        cy.visit(`/${this.path}${filterQuery}`);
     }
 
     static filterByRegion(region: string): void {

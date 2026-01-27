@@ -1,8 +1,6 @@
-import { EnvUrl } from '../../constants/cypressConstants';
-
 describe('Cookie Policy', () => {
     beforeEach(() => {
-        cy.visit(Cypress.env(EnvUrl));
+        cy.visit('/');
     });
 
     it('Should show cookie banner when no preference set', () => {

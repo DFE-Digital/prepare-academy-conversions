@@ -1,12 +1,5 @@
-import { EnvTransfersUrl } from '../constants/cypressConstants';
-
 class HomePage {
     public slug = 'home';
-
-    public open(): this {
-        cy.visit(Cypress.env(EnvTransfersUrl));
-        return this;
-    }
 
     public startCreateNewTransfer(): this {
         cy.getByDataTest('create-transfer').click();

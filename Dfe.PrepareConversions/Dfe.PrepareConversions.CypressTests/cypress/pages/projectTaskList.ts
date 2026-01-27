@@ -1,7 +1,6 @@
 /// <reference types="cypress" />
 
 import BasePage from './basePage';
-import { EnvUrl } from '../constants/cypressConstants';
 
 export default class ProjectTaskList extends BasePage {
     static selectors = {
@@ -94,10 +93,6 @@ export default class ProjectTaskList extends BasePage {
     static selectConversionDetails(): void {
         cy.checkPath(this.path);
         cy.get(this.selectors.conversionDetailsLink).click();
-    }
-
-    static getHomePage(): void {
-        cy.visit(`${Cypress.env(EnvUrl)}/`);
     }
 
     static getConversionDetailsStatus(): Cypress.Chainable<JQuery<HTMLElement>> {

@@ -15,6 +15,11 @@
 
 import './commands';
 import registerCypressGrep from '@cypress/grep/src/support';
+import { CypressTestSecret, EnvUrl } from '../constants/cypressConstants';
+import 'cypress-axe';
+
+// ***********************************************************
+import 'cypress-plugin-api';
 
 registerCypressGrep();
 
@@ -34,8 +39,6 @@ Cypress.on('fail', (err) => {
 
 // ***********************************************************
 
-import { CypressTestSecret, EnvUrl } from '../constants/cypressConstants';
-
 beforeEach(() => {
     cy.intercept(
         { url: Cypress.env(EnvUrl) + '/**', middleware: true },
@@ -48,11 +51,6 @@ beforeEach(() => {
 });
 
 // ***********************************************************
-
-import 'cypress-axe';
-
-// ***********************************************************
-import 'cypress-plugin-api';
 
 declare global {
     namespace Cypress {

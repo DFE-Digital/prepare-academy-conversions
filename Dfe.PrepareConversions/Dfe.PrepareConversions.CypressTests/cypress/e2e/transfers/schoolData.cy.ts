@@ -1,12 +1,15 @@
 import homePage from 'cypress/pages/home';
 import projectPage from 'cypress/pages/project';
 import schoolDataPage from 'cypress/pages/schoolData';
+import { Logger } from '../../support/logger';
 
 describe('School Data', () => {
     const trustName = 'The Bishop Fraser Trust';
 
     beforeEach(() => {
-        homePage.open().filterProjects(trustName).selectFirstProject();
+        Logger.log('Visit the transfers homepage before each test');
+        cy.visit('/transfers/home');
+        homePage.filterProjects(trustName).selectFirstProject();
 
         projectPage.viewSchoolData();
     });

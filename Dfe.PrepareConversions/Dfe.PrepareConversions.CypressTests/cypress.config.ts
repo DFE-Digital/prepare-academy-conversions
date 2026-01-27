@@ -35,6 +35,8 @@ export default defineConfig({
                 },
             });
 
+            config.baseUrl = config.env.url;
+
             pluginConfig(on, config);
             return config;
         },

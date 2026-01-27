@@ -1,11 +1,8 @@
-import { EnvUrl } from '../constants/cypressConstants';
-
 class ProjectPage {
     public slug = 'project';
 
     public loadProject(projectId): this {
-        cy.visit(`${Cypress.env(EnvUrl)}/transfers/project/${projectId}`);
-
+        cy.visit(`/transfers/project/${projectId}`);
         return this;
     }
 

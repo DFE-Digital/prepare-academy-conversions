@@ -1,10 +1,12 @@
 import homePage from 'cypress/pages/home';
+import { Logger } from '../../support/logger';
 
 describe('Filter projects', () => {
     const projectTitle = 'Burnt Ash Primary School';
 
     beforeEach(() => {
-        homePage.open();
+        Logger.log('Visit the transfers homepage before each test');
+        cy.visit('/transfers/home');
     });
 
     it('Filters the list of projects', () => {

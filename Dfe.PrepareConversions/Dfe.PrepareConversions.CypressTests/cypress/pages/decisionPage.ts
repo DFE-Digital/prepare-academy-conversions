@@ -149,7 +149,9 @@ export class DecisionPage {
 
     selectReasonWhyDeferred(): this {
         cy.getById('additionalinformationneeded-checkbox').click();
-        cy.getById('additionalinformationneeded-txtarea').type('Fahads Cypress Reason is Additional Information Needed');
+        cy.getById('additionalinformationneeded-txtarea').type(
+            'Fahads Cypress Reason is Additional Information Needed'
+        );
         cy.clickSubmitBtn();
         return this;
     }

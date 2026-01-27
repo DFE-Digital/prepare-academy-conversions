@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
 import projectList from '../../pages/projectList';
 import { decisionPage } from '../../pages/decisionPage';
-import { EnvUrl } from '../../constants/cypressConstants';
 import { currentDate, nextYearDate } from '../../constants/testConstants';
+import { Logger } from '../../support/logger';
 
 describe('Filtration Tests', {}, () => {
     const testData = {
@@ -43,7 +43,8 @@ describe('Filtration Tests', {}, () => {
     before(() => {});
 
     beforeEach(() => {
-        cy.visit(Cypress.env(EnvUrl));
+        Logger.log('Visit the homepage before each test');
+        cy.visit('/');
         projectList.filterProject(testData.projectName);
     });
 

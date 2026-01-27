@@ -7,6 +7,8 @@
     "scripts": {
         "cy:open": "cypress open --browser edge",
         "cy:run": "npm run clean:reports && cypress run --browser edge",
+        "cy:run:conversions": "npm run cy:run --spec \"cypress/e2e/conversions/**\"",
+        "cy:run:transfers": "npm run cy:run --spec \"cypress/e2e/transfers/**\"",
         "cy:zap": "npm run clean:reports && cypress run --browser electron",
         "cy:notify": "cypress-slack-reporter",
         "clean:reports": "rm -rf cypress/reports/mocha/*.json",

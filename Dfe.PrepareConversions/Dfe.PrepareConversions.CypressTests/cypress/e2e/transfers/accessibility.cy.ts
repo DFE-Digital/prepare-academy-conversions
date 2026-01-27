@@ -3,13 +3,11 @@
 // session data setting so must be done manually -
 // transfers/outgoingtrustacademies and transfers/checkyouranswers
 
-import { EnvTransfersUrl } from '../../constants/cypressConstants';
-
 describe('Check accessibility of the different pages', () => {
     it('Validate accessibility', () => {
         cy.fixture('transfersLinks.json').then((transfersLinks) => {
             transfersLinks.forEach((link: string) => {
-                cy.visit(`${Cypress.env(EnvTransfersUrl)}/${link}`);
+                cy.visit(`/${link}`);
                 cy.executeAccessibilityTests();
             });
         });
