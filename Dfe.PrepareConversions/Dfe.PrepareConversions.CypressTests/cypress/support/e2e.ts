@@ -126,6 +126,11 @@ declare global {
             login(options?: { titleFilter?: string }): Chainable<void>;
 
             /**
+             * Accept consent for cookies
+             */
+            acceptCookies(): Chainable<void>;
+
+            /**
              * Select a school listing by its index
              * @param listing - The listing index
              */

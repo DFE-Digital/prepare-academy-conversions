@@ -7,6 +7,7 @@ describe('Filter projects', () => {
     beforeEach(() => {
         Logger.log('Visit the transfers homepage before each test');
         cy.visit('/transfers/home');
+        cy.acceptCookies();
     });
 
     it('Filters the list of projects', () => {

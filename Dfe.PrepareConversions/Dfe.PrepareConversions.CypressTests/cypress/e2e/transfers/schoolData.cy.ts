@@ -9,6 +9,7 @@ describe('School Data', () => {
     beforeEach(() => {
         Logger.log('Visit the transfers homepage before each test');
         cy.visit('/transfers/home');
+        cy.acceptCookies();
         homePage.filterProjects(trustName).selectFirstProject();
 
         projectPage.viewSchoolData();

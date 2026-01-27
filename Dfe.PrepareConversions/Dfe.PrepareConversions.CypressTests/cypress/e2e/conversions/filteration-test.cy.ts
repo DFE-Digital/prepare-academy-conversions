@@ -45,6 +45,7 @@ describe('Filtration Tests', {}, () => {
     beforeEach(() => {
         Logger.log('Visit the homepage before each test');
         cy.visit('/');
+        cy.acceptCookies();
         projectList.filterProject(testData.projectName);
     });
 

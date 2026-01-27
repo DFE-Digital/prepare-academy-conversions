@@ -8,6 +8,7 @@ describe('Transfer Project Tests', () => {
     beforeEach(() => {
         Logger.log('Visit the transfers homepage before each test');
         cy.visit('/transfers/home');
+        cy.acceptCookies();
     });
 
     it('Creating a transfer project and checking Decision of that project', () => {

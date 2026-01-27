@@ -76,6 +76,11 @@ Cypress.Commands.add('login', ({ titleFilter }: { titleFilter?: string } = {}) =
     cy.visit(`/project-list${filterQuery}`);
 });
 
+Cypress.Commands.add('acceptCookies', () => {
+    cy.setCookie('.ManageAnAcademyConversion.Consent', 'True');
+    cy.setCookie('.ManageAnAcademyTransfer.Consent', 'True');
+});
+
 // School Listing Summary Page (Universal)
 Cypress.Commands.add('selectSchoolListing', (listing: number | string) => {
     cy.getById(`school-name-${listing}`).click();

@@ -8,6 +8,7 @@ describe('Decisions Tests', () => {
     beforeEach(() => {
         Logger.log('Visit the homepage before each test');
         cy.visit('/');
+        cy.acceptCookies();
     });
 
     it('Creating a conversion project and recording a new decision then editing the decision', () => {

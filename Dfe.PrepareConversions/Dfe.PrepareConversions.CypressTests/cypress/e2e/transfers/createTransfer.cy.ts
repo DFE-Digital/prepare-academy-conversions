@@ -28,6 +28,7 @@ describe('Create a new transfer', () => {
     beforeEach(() => {
         Logger.log('Visit the transfers homepage before each test');
         cy.visit('/transfers/home');
+        cy.acceptCookies();
 
         cy.fixture('trustInformation.json').then((jsonData) => {
             outgoingTrustData = jsonData[0];
