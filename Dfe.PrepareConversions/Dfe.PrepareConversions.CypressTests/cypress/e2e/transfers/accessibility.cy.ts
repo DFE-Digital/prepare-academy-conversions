@@ -3,10 +3,13 @@
 // session data setting so must be done manually -
 // transfers/outgoingtrustacademies and transfers/checkyouranswers
 
+import { Logger } from '../../support/logger';
+
 describe('Check accessibility of the different pages', () => {
     it('Validate conversions accessibility links', () => {
         cy.fixture('conversionLinks.json').then((conversionLinks) => {
             conversionLinks.forEach((link: string) => {
+                Logger.log(`Visiting page /transfer/${link} for accessibility testing`);
                 cy.visit(`/${link}`);
                 cy.executeAccessibilityTests();
             });
@@ -16,6 +19,7 @@ describe('Check accessibility of the different pages', () => {
     it('Validate transfers accessibility links', () => {
         cy.fixture('transfersLinks.json').then((transfersLinks) => {
             transfersLinks.forEach((link: string) => {
+                Logger.log(`Visiting page /transfer/${link} for accessibility testing`);
                 cy.visit(`/transfers/${link}`);
                 cy.executeAccessibilityTests();
             });
@@ -25,6 +29,7 @@ describe('Check accessibility of the different pages', () => {
     it('Validate general accessibility links', () => {
         cy.fixture('otherLinks.json').then((otherLinks) => {
             otherLinks.forEach((link: string) => {
+                Logger.log(`Visiting page /transfer/${link} for accessibility testing`);
                 cy.visit(`/${link}`);
                 cy.executeAccessibilityTests();
             });
