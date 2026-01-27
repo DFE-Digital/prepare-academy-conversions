@@ -17,25 +17,24 @@ interface BudgetInfo {
 
 export default class Budget extends BasePage {
     static selectors = {
-        changeEndOfFinancialYearLink: '[data-test="change-financial-year"]',
-        currentFinancialYearDayInput: '[id="financial-year-day"]',
-        currentFinancialYearMonthInput: '[id="financial-year-month"]',
-        currentFinancialYearYearInput: '[id="financial-year-year"]',
-        currentFinancialYearValue: '[id="financial-year"]',
-        currentFinancialYearRevenueInput: '[id="finance-year-current"]',
-        currentFinancialYearRevenueValue: '[id="finance-year-current"]',
-        currentFinancialYearCapitalInput: '[id="finance-current-capital"]',
-        currentFinancialYearCapitalValue: '[id="finance-current-capital"]',
-        nextFinancialYearDayInput: '[id="next-financial-year-day"]',
-        nextFinancialYearMonthInput: '[id="next-financial-year-month"]',
-        nextFinancialYearYearInput: '[id="next-financial-year-year"]',
-        nextFinancialYearValue: '[id="next-financial-year"]',
-        nextFinancialYearRevenueInput: '[id="finance-year-following"]',
-        nextFinancialYearRevenueValue: '[id="finance-year-following"]',
-        nextFinancialYearCapitalInput: '[id="finance-projected-capital"]',
-        nextFinancialYearCapitalValue: '[id="finance-projected-capital"]',
-        saveButton: '[data-cy="select-common-submitbutton"]',
-        completeCheckbox: '[id="school-budget-information-complete"]',
+        // data-test values
+        changeEndOfFinancialYearLink: 'change-financial-year',
+        // IDs (without #)
+        currentFinancialYearDayInput: 'financial-year-day',
+        currentFinancialYearMonthInput: 'financial-year-month',
+        currentFinancialYearYearInput: 'financial-year-year',
+        currentFinancialYearValue: 'financial-year',
+        currentFinancialYearRevenueInput: 'finance-year-current',
+        currentFinancialYearCapitalInput: 'finance-current-capital',
+        nextFinancialYearDayInput: 'next-financial-year-day',
+        nextFinancialYearMonthInput: 'next-financial-year-month',
+        nextFinancialYearYearInput: 'next-financial-year-year',
+        nextFinancialYearValue: 'next-financial-year',
+        nextFinancialYearRevenueInput: 'finance-year-following',
+        nextFinancialYearCapitalInput: 'finance-projected-capital',
+        completeCheckbox: 'school-budget-information-complete',
+        // data-cy values
+        saveButton: 'select-common-submitbutton',
     };
 
     static path = 'budget';
@@ -60,70 +59,70 @@ export default class Budget extends BasePage {
         }
         cy.checkPath(this.path);
 
-        cy.get(this.selectors.changeEndOfFinancialYearLink).click();
+        cy.getByDataTest(this.selectors.changeEndOfFinancialYearLink).click();
 
-        cy.get(this.selectors.currentFinancialYearDayInput).clear();
-        cy.get(this.selectors.currentFinancialYearDayInput).type(String(financialYear.getDate()));
-        cy.get(this.selectors.currentFinancialYearMonthInput).clear();
-        cy.get(this.selectors.currentFinancialYearMonthInput).type(String(financialYear.getMonth() + 1)); // Add 1 as months start at 0
-        cy.get(this.selectors.currentFinancialYearYearInput).clear();
-        cy.get(this.selectors.currentFinancialYearYearInput).type(String(financialYear.getFullYear()));
-        cy.get(this.selectors.currentFinancialYearRevenueInput).clear();
-        cy.get(this.selectors.currentFinancialYearRevenueInput).type(String(forecastedRevenueCurrentYear));
-        cy.get(this.selectors.currentFinancialYearCapitalInput).clear();
-        cy.get(this.selectors.currentFinancialYearCapitalInput).type(String(forecastedCapitalCurrentYear));
+        cy.getById(this.selectors.currentFinancialYearDayInput).clear();
+        cy.getById(this.selectors.currentFinancialYearDayInput).type(String(financialYear.getDate()));
+        cy.getById(this.selectors.currentFinancialYearMonthInput).clear();
+        cy.getById(this.selectors.currentFinancialYearMonthInput).type(String(financialYear.getMonth() + 1)); // Add 1 as months start at 0
+        cy.getById(this.selectors.currentFinancialYearYearInput).clear();
+        cy.getById(this.selectors.currentFinancialYearYearInput).type(String(financialYear.getFullYear()));
+        cy.getById(this.selectors.currentFinancialYearRevenueInput).clear();
+        cy.getById(this.selectors.currentFinancialYearRevenueInput).type(String(forecastedRevenueCurrentYear));
+        cy.getById(this.selectors.currentFinancialYearCapitalInput).clear();
+        cy.getById(this.selectors.currentFinancialYearCapitalInput).type(String(forecastedCapitalCurrentYear));
 
-        cy.get(this.selectors.nextFinancialYearDayInput).clear();
-        cy.get(this.selectors.nextFinancialYearDayInput).type(String(nextFinancialYear.getDate()));
-        cy.get(this.selectors.nextFinancialYearMonthInput).clear();
-        cy.get(this.selectors.nextFinancialYearMonthInput).type(String(nextFinancialYear.getMonth() + 1)); // Add 1 as months start at 0
-        cy.get(this.selectors.nextFinancialYearYearInput).clear();
-        cy.get(this.selectors.nextFinancialYearYearInput).type(String(nextFinancialYear.getFullYear()));
-        cy.get(this.selectors.nextFinancialYearRevenueInput).clear();
-        cy.get(this.selectors.nextFinancialYearRevenueInput).type(String(forecastedRevenueNextYear));
-        cy.get(this.selectors.nextFinancialYearCapitalInput).clear();
-        cy.get(this.selectors.nextFinancialYearCapitalInput).type(String(forecastedCapitalNextYear));
+        cy.getById(this.selectors.nextFinancialYearDayInput).clear();
+        cy.getById(this.selectors.nextFinancialYearDayInput).type(String(nextFinancialYear.getDate()));
+        cy.getById(this.selectors.nextFinancialYearMonthInput).clear();
+        cy.getById(this.selectors.nextFinancialYearMonthInput).type(String(nextFinancialYear.getMonth() + 1)); // Add 1 as months start at 0
+        cy.getById(this.selectors.nextFinancialYearYearInput).clear();
+        cy.getById(this.selectors.nextFinancialYearYearInput).type(String(nextFinancialYear.getFullYear()));
+        cy.getById(this.selectors.nextFinancialYearRevenueInput).clear();
+        cy.getById(this.selectors.nextFinancialYearRevenueInput).type(String(forecastedRevenueNextYear));
+        cy.getById(this.selectors.nextFinancialYearCapitalInput).clear();
+        cy.getById(this.selectors.nextFinancialYearCapitalInput).type(String(forecastedCapitalNextYear));
 
-        cy.get(this.selectors.saveButton).click();
+        cy.getByDataCy(this.selectors.saveButton).click();
     }
 
     static getCurrentFinancialYear(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.currentFinancialYearValue);
+        return cy.getById(this.selectors.currentFinancialYearValue);
     }
 
     static getCurrentRevenue(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.currentFinancialYearRevenueValue);
+        return cy.getById(this.selectors.currentFinancialYearRevenueInput);
     }
 
     static getCurrentCapital(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.currentFinancialYearCapitalValue);
+        return cy.getById(this.selectors.currentFinancialYearCapitalInput);
     }
 
     static getNextFinancialYear(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.nextFinancialYearValue);
+        return cy.getById(this.selectors.nextFinancialYearValue);
     }
 
     static getNextRevenue(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.nextFinancialYearRevenueValue);
+        return cy.getById(this.selectors.nextFinancialYearRevenueInput);
     }
 
     static getNextCapital(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.nextFinancialYearCapitalValue);
+        return cy.getById(this.selectors.nextFinancialYearCapitalInput);
     }
 
     static markComplete(): void {
         cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).check();
+        cy.getById(this.selectors.completeCheckbox).check();
     }
 
     static markIncomplete(): void {
         cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).uncheck();
+        cy.getById(this.selectors.completeCheckbox).uncheck();
     }
 }

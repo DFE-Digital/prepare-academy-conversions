@@ -17,7 +17,7 @@ class LegalRequirementsPage {
 
         cy.get('[value="Yes"]').click();
 
-        cy.get('button').contains('Save and continue').click();
+        cy.containsText('Save and continue').click();
 
         // Check the table has been updated
         cy.get('dd').eq(0).should('contain.text', 'Yes');
@@ -41,7 +41,7 @@ class LegalRequirementsPage {
 
         cy.get('[value="Yes"]').click();
 
-        cy.get('button').contains('Save and continue').click();
+        cy.containsText('Save and continue').click();
 
         // Check the table has been updated
         cy.get('dd').eq(2).should('contain.text', 'Yes');
@@ -65,7 +65,7 @@ class LegalRequirementsPage {
 
         cy.get('[value="Yes"]').click();
 
-        cy.get('button').contains('Save and continue').click();
+        cy.containsText('Save and continue').click();
 
         // Check the table has been updated
         cy.get('dd').eq(4).should('contain.text', 'Yes');
@@ -74,12 +74,12 @@ class LegalRequirementsPage {
     }
 
     public markAsComplete(): this {
-        cy.get('[data-test="mark-section-complete"]').click();
+        cy.getByDataTest('mark-section-complete').click();
         return this;
     }
 
     public confirmLegalRequirements(): this {
-        cy.get('button').contains('Confirm and continue').click();
+        cy.containsText('Confirm and continue').click();
 
         return this;
     }

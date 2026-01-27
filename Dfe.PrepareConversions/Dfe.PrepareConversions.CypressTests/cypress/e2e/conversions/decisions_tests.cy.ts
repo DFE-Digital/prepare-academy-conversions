@@ -56,7 +56,7 @@ describe('Decisions Tests', () => {
                 decisionPage.checkErrorAndAddDetails('15', '10', '2024', userName);
 
                 Logger.log('Check assigned user');
-                cy.get('[data-id="assigned-user"]').should('include.text', userName);
+                cy.getByDataId('assigned-user').should('include.text', userName);
 
                 Logger.log('Click on record a decision menubar button');
                 decisionPage.clickRecordDecisionMenu();

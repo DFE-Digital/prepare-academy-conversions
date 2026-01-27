@@ -3,7 +3,7 @@ class TrustInformationProjectDatesPage {
 
     // Whilst two separate links on the page, both of these are on the same form so are merged here
     public completeRecommendationAndAuthor(): this {
-        cy.get('[data-test="recommendation"]').click();
+        cy.getByDataTest('recommendation').click();
 
         cy.get('h1').should('contain.text', 'Recommendation');
 
@@ -23,10 +23,10 @@ class TrustInformationProjectDatesPage {
             'contain.text',
             'Enter the full name of the author of this project template'
         );
-        cy.get('input[id="author"]').clear();
-        cy.get('input[id="author"]').type('Chris Sherlock');
+        cy.getById('author').clear();
+        cy.getById('author').type('Chris Sherlock');
 
-        cy.get('button').contains('Save and continue').click();
+        cy.containsText('Save and continue').click();
 
         // Check the table has been updated
         cy.get('dd').eq(0).should('contain.text', 'Approve');
@@ -36,7 +36,7 @@ class TrustInformationProjectDatesPage {
     }
 
     public checkOtherTableData(advisoryBoardDate, transferDate): this {
-        cy.get('[data-test="transfer-dates"]').click();
+        cy.getByDataTest('transfer-dates').click();
         cy.get('dd').eq(0).should('contain.text', advisoryBoardDate.format('D MMMM YYYY'));
         cy.get('dd').eq(4).should('contain.text', transferDate.format('1 MMMM YYYY'));
 
@@ -44,7 +44,7 @@ class TrustInformationProjectDatesPage {
     }
 
     public confirmTrustInformationProjectDates(): this {
-        cy.get('button').contains('Confirm and continue').click();
+        cy.containsText('Confirm and continue').click();
 
         return this;
     }

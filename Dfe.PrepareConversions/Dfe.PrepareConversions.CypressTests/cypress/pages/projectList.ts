@@ -11,12 +11,12 @@ export default class projectList extends BasePage {
 
     static getNthProject(n = 1): Cypress.Chainable<JQuery<HTMLElement>> {
         this.checkProjectListPage();
-        return cy.get(`[id="school-name-${n}"]`);
+        return cy.getById(`school-name-${n}`);
     }
 
     static getNthProjectDeliveryOfficer(n = 1): Cypress.Chainable<JQuery<HTMLElement>> {
         this.checkProjectListPage();
-        return cy.get(`[id="assigned-to-${n}"]`);
+        return cy.getById(`assigned-to-${n}`);
     }
 
     static filterProjectList(titleFilter: string): void {
@@ -58,7 +58,7 @@ export default class projectList extends BasePage {
 
     static selectVoluntaryProject(): Cypress.Chainable<number | string> {
         cy.login({ titleFilter: 'Voluntary Cypress Project' });
-        cy.get('[id="school-name-0"]').click();
+        cy.getById('school-name-0').click();
 
         return cy.url().then((url) => this.getIdFromUrl(url));
     }

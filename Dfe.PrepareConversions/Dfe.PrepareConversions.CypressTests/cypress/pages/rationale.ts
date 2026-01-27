@@ -2,14 +2,14 @@ class RationalePage {
     public slug = 'rationale';
 
     public completeRationale(): this {
-        cy.get('[data-test="project-rationale"]').click();
+        cy.getByDataTest('project-rationale').click();
 
         cy.get('h1').should('contain.text', 'Write the rationale for the project');
 
-        cy.get('[data-test="project-rationale"]').clear();
-        cy.get('[data-test="project-rationale"]').type('Cypress project rationale');
+        cy.getByDataTest('project-rationale').clear();
+        cy.getByDataTest('project-rationale').type('Cypress project rationale');
 
-        cy.get('button').contains('Save and continue').click();
+        cy.containsText('Save and continue').click();
 
         // Check the table has been updated
         cy.get('dd').eq(0).should('contain.text', 'Cypress project rationale');
@@ -18,14 +18,14 @@ class RationalePage {
     }
 
     public completeChosenReason(): this {
-        cy.get('[data-test="trust-rationale"]').click();
+        cy.getByDataTest('trust-rationale').click();
 
         cy.get('h1').should('contain.text', 'Write the rationale for the incoming trust or sponsor');
 
-        cy.get('[data-test="trust-rationale"]').clear();
-        cy.get('[data-test="trust-rationale"]').type('Cypress trust rationale');
+        cy.getByDataTest('trust-rationale').clear();
+        cy.getByDataTest('trust-rationale').type('Cypress trust rationale');
 
-        cy.get('button').contains('Save and continue').click();
+        cy.containsText('Save and continue').click();
 
         // Check the table has been updated
         cy.get('dd').eq(2).should('contain.text', 'Cypress trust rationale');
@@ -34,12 +34,12 @@ class RationalePage {
     }
 
     public markAsComplete(): this {
-        cy.get('[data-test="mark-section-complete"]').click();
+        cy.getByDataTest('mark-section-complete').click();
         return this;
     }
 
     public confirmRationale(): this {
-        cy.get('button').contains('Confirm and continue').click();
+        cy.containsText('Confirm and continue').click();
 
         return this;
     }

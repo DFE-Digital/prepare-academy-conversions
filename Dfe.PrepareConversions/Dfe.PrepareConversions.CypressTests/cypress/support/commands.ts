@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-/// <reference path="./index.d.ts" />
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -30,6 +29,38 @@ import { AcademisationApiKey, AcademisationApiUrl, CypressApiKey, EnvUrl } from 
 
 //--Universal
 
+Cypress.Commands.add('getByDataTest', (dataTest: string) => {
+    return cy.get(`[data-test="${dataTest}"]`);
+});
+
+Cypress.Commands.add('getByDataCy', (dataCy: string) => {
+    return cy.get(`[data-cy="${dataCy}"]`);
+});
+
+Cypress.Commands.add('getByDataId', (dataId: string) => {
+    return cy.get(`[data-id="${dataId}"]`);
+});
+
+Cypress.Commands.add('getById', (id: string) => {
+    return cy.get(`#${id}`);
+});
+
+Cypress.Commands.add('getByDataModule', (dataModule: string) => {
+    return cy.get(`[data-module="${dataModule}"]`);
+});
+
+Cypress.Commands.add('clickSubmitBtn', () => {
+    return cy.get('#submit-btn').click();
+});
+
+Cypress.Commands.add('clickContinueBtn', () => {
+    cy.get('button').contains('Continue').click();
+});
+
+Cypress.Commands.add('containsText', (text: string) => {
+    cy.contains(text);
+});
+
 Cypress.Commands.add('urlPath', () => cy.location().then((location) => `${location.origin}${location.pathname}`));
 
 Cypress.Commands.add('checkPath', (path: string) => {
@@ -43,24 +74,24 @@ Cypress.Commands.add('login', ({ titleFilter }: { titleFilter?: string } = {}) =
 
 // School Listing Summary Page (Universal)
 Cypress.Commands.add('selectSchoolListing', (listing: number | string) => {
-    cy.get('#school-name-' + listing).click();
+    cy.getById(`school-name-${listing}`).click();
     cy.get('*[href*="/confirm-school-trust-information-project-dates"]').should('be.visible');
     cy.saveLocalStorage();
 });
 
 // Confirm and Continue Button (Universal)
 Cypress.Commands.add('confirmContinueBtn', () => {
-    cy.get('[id="confirm-and-continue-button"]');
+    return cy.getById('confirm-and-continue-button');
 });
 
 // Preview Project Template Button (Universal)
 Cypress.Commands.add('previewProjectTempBtn', () => {
-    cy.get('[id="preview-project-template-button"]');
+    return cy.getById('preview-project-template-button');
 });
 
 // Generate Project Template Button (Universal)
 Cypress.Commands.add('generateProjectTempBtn', () => {
-    cy.get('[id="generate-project-template-button"]');
+    return cy.getById('generate-project-template-button');
 });
 
 Cypress.Commands.add(
@@ -78,26 +109,26 @@ Cypress.Commands.add(
 
 // No Radio Btn
 Cypress.Commands.add('NoRadioBtn', () => {
-    cy.get('[data-cy="select-radio-no" i]');
+    return cy.get('[data-cy="select-radio-no" i]');
 });
 
 // Yes Radio Btn
 Cypress.Commands.add('YesRadioBtn', () => {
-    cy.get('[data-cy="select-radio-yes" i]');
+    return cy.get('[data-cy="select-radio-yes" i]');
 });
 
 // Any radio button
 Cypress.Commands.add('RadioBtn', (label: string) => {
-    cy.get(`[data-cy="select-radio-${label}" i]`);
+    return cy.get(`[data-cy="select-radio-${label}" i]`);
 });
 
 Cypress.Commands.add('clearFilters', () => {
-    cy.get('[data-cy="select-projectlist-filter-clear"]').should('have.text', 'Clear filters');
-    cy.get('[data-cy="select-projectlist-filter-clear"]').click();
+    cy.getByDataCy('select-projectlist-filter-clear').should('have.text', 'Clear filters');
+    cy.getByDataCy('select-projectlist-filter-clear').click();
 });
 
 Cypress.Commands.add('saveContinue', () => {
-    cy.get('[id="save-and-continue-button"]');
+    return cy.getById('save-and-continue-button');
 });
 
 Cypress.Commands.add('executeAccessibilityTests', () => {

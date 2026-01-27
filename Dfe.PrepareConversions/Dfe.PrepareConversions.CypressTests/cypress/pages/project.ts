@@ -28,109 +28,109 @@ class ProjectPage {
     }
 
     public checkDeliveryOfficerDetails(deliveryOfficer): this {
-        cy.get('[data-id="assigned-user"]').should('have.text', deliveryOfficer);
+        cy.getByDataId('assigned-user').should('have.text', deliveryOfficer);
 
         if (deliveryOfficer == 'Empty') {
-            cy.get('[data-id="assigned-user"]').should('have.class', 'empty');
+            cy.getByDataId('assigned-user').should('have.class', 'empty');
         } else {
-            cy.get('[data-id="assigned-user"]').should('not.have.class', 'empty');
+            cy.getByDataId('assigned-user').should('not.have.class', 'empty');
         }
 
         return this;
     }
 
     public startChangeDeliveryOfficer(): this {
-        cy.get('a').contains('Change').click();
+        cy.containsText('Change').click();
 
         return this;
     }
 
     public checkFeaturesStatus(status): this {
-        cy.get('[data-test="features"]').should('have.text', status.toUpperCase());
+        cy.getByDataTest('features').should('have.text', status.toUpperCase());
 
         return this;
     }
 
     public startTransferFeatures(): this {
-        cy.get('[data-test="transfer-features"]').click();
+        cy.getByDataTest('transfer-features').click();
 
         return this;
     }
 
     public checkTransferDatesStatus(status): this {
-        cy.get('[data-test="dates"]').should('have.text', status.toUpperCase());
+        cy.getByDataTest('dates').should('have.text', status.toUpperCase());
 
         return this;
     }
 
     public startTransferDates(): this {
-        cy.get('[data-test="transfer-dates"]').click();
+        cy.getByDataTest('transfer-dates').click();
 
         return this;
     }
 
     public checkBenefitsAndRiskStatus(status): this {
-        cy.get('[data-test="benefits"]').should('have.text', status.toUpperCase());
+        cy.getByDataTest('benefits').should('have.text', status.toUpperCase());
 
         return this;
     }
 
     public startBenefitsAndRisk(): this {
-        cy.get('[data-test="transfer-benefits"]').click();
+        cy.getByDataTest('transfer-benefits').click();
 
         return this;
     }
 
     public checkLegalRequirementsStatus(status): this {
-        cy.get('[data-test="legal-requirements"]').should('have.text', status.toUpperCase());
+        cy.getByDataTest('legal-requirements').should('have.text', status.toUpperCase());
 
         return this;
     }
 
     public startLegalRequirements(): this {
-        cy.get('[data-test="transfer-legal-requirements"]').click();
+        cy.getByDataTest('transfer-legal-requirements').click();
 
         return this;
     }
 
     public checkRationaleStatus(status): this {
-        cy.get('[data-test="rationale"]').should('have.text', status.toUpperCase());
+        cy.getByDataTest('rationale').should('have.text', status.toUpperCase());
 
         return this;
     }
 
     public startRationale(): this {
-        cy.get('[data-test="transfer-rationale"]').click();
+        cy.getByDataTest('transfer-rationale').click();
 
         return this;
     }
 
     public checkTrustInformationProjectDatesStatus(status): this {
-        cy.get('[data-test="academyandtrustinformation"]').should('have.text', status.toUpperCase());
+        cy.getByDataTest('academyandtrustinformation').should('have.text', status.toUpperCase());
 
         return this;
     }
 
     public startTrustInformationProjectDates(): this {
-        cy.get('[data-test="academy-trust-information"]').click();
+        cy.getByDataTest('academy-trust-information').click();
 
         return this;
     }
 
     public openPreviewProjectTemplate(): this {
-        cy.get('[data-test="preview-htb"]').click();
+        cy.getByDataTest('preview-htb').click();
 
         return this;
     }
 
     public generateProjectTemplate(): this {
-        cy.get('[data-test="generate-htb"]').click();
+        cy.getByDataTest('generate-htb').click();
 
         return this;
     }
 
     public viewSchoolData(): this {
-        cy.get('[data-test="sd-academy-1"]').click();
+        cy.getByDataTest('sd-academy-1').click();
 
         return this;
     }

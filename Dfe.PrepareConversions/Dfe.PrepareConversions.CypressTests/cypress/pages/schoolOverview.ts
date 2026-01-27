@@ -4,24 +4,24 @@ import BasePage from './basePage';
 
 export default class SchoolOverview extends BasePage {
     static selectors = {
-        panValue: '[id="published-admission-number"]',
-        panLink: '[data-test="change-published-admission-number"]',
-        panInput: '[id="published-admission-number"]',
-        viabilityIssuesValue: '[id="viability-issues"]',
-        viabilityIssuesLink: '[data-test="change-viability-issues"]',
-        financialDeficitValue: '[id="financial-deficit"]',
-        pfiValue: '[id="part-of-pfi"]',
-        pifDetails: '[id="pfi-scheme-details"]',
-        pfiLink: '[data-test="change-part-of-pfi"]',
-        pfiDetailsInput: '[id="PfiSchemeDetails"]',
-        distanceValue: '[id="distance-to-trust-headquarters"]',
-        distanceDetails: '[id="distance-to-trust-headquarters-additional-text"]',
-        distanceLink: '[data-test="change-distance-to-trust-headquarters"]',
-        distanceInput: '[id="distance-to-trust-headquarters"]',
-        distanceDetailsInput: '[id="distance-to-trust-headquarters-additional-information"]',
-        mpValue: '[id="member-of-parliament-name-and-party"',
-        mpLink: '[data-test="change-member-of-parliament-name-and-party"]',
-        mpInput: '[id="member-of-parliament-name-and-party"]',
+        // IDs (without #)
+        panId: 'published-admission-number',
+        viabilityIssuesId: 'viability-issues',
+        financialDeficitId: 'financial-deficit',
+        pfiId: 'part-of-pfi',
+        pfiDetailsId: 'pfi-scheme-details',
+        pfiDetailsInputId: 'PfiSchemeDetails',
+        distanceId: 'distance-to-trust-headquarters',
+        distanceDetailsId: 'distance-to-trust-headquarters-additional-text',
+        distanceDetailsInputId: 'distance-to-trust-headquarters-additional-information',
+        mpId: 'member-of-parliament-name-and-party',
+        // data-test values
+        panLink: 'change-published-admission-number',
+        viabilityIssuesLink: 'change-viability-issues',
+        pfiLink: 'change-part-of-pfi',
+        distanceLink: 'change-distance-to-trust-headquarters',
+        mpLink: 'change-member-of-parliament-name-and-party',
+        // Other selectors
         completeCheckbox: '[name="school-overview-complete"]',
     };
 
@@ -29,25 +29,25 @@ export default class SchoolOverview extends BasePage {
 
     static getPan(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.panValue);
+        return cy.getById(this.selectors.panId);
     }
 
     static changePan(newPanNumber: string): void {
         cy.checkPath(this.path);
-        cy.get(this.selectors.panLink).click();
-        cy.get(this.selectors.panInput).clear();
-        cy.get(this.selectors.panInput).type(newPanNumber);
+        cy.getByDataTest(this.selectors.panLink).click();
+        cy.getById(this.selectors.panId).clear();
+        cy.getById(this.selectors.panId).type(newPanNumber);
         cy.saveContinue().click();
     }
 
     static getViabilityIssues(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.viabilityIssuesValue);
+        return cy.getById(this.selectors.viabilityIssuesId);
     }
 
     static changeViabilityIssues(viabilityIssues: boolean): void {
         cy.checkPath(this.path);
-        cy.get(this.selectors.viabilityIssuesLink).click();
+        cy.getByDataTest(this.selectors.viabilityIssuesLink).click();
         if (viabilityIssues) {
             cy.YesRadioBtn().check();
         } else {
@@ -58,26 +58,26 @@ export default class SchoolOverview extends BasePage {
 
     static getFinancialDeficit(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.financialDeficitValue);
+        return cy.getById(this.selectors.financialDeficitId);
     }
 
     static getPFI(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.pfiValue);
+        return cy.getById(this.selectors.pfiId);
     }
 
     static getPFIDetails(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.pifDetails);
+        return cy.getById(this.selectors.pfiDetailsId);
     }
 
     static changePFI(pfi: boolean, description = ''): void {
         cy.checkPath(this.path);
-        cy.get(this.selectors.pfiLink).click();
+        cy.getByDataTest(this.selectors.pfiLink).click();
         if (pfi) {
             cy.YesRadioBtn().check();
-            cy.get(this.selectors.pfiDetailsInput).clear();
-            cy.get(this.selectors.pfiDetailsInput).type(description);
+            cy.getById(this.selectors.pfiDetailsInputId).clear();
+            cy.getById(this.selectors.pfiDetailsInputId).type(description);
         } else {
             cy.NoRadioBtn().check();
         }
@@ -86,34 +86,34 @@ export default class SchoolOverview extends BasePage {
 
     static getDistance(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.distanceValue);
+        return cy.getById(this.selectors.distanceId);
     }
 
     static getDistanceDetails(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.distanceDetails);
+        return cy.getById(this.selectors.distanceDetailsId);
     }
 
     static changeDistance(distance: string, description = ''): void {
         cy.checkPath(this.path);
-        cy.get(this.selectors.distanceLink).click();
-        cy.get(this.selectors.distanceInput).clear();
-        cy.get(this.selectors.distanceInput).type(distance);
-        cy.get(this.selectors.distanceDetailsInput).clear();
-        cy.get(this.selectors.distanceDetailsInput).type(description);
+        cy.getByDataTest(this.selectors.distanceLink).click();
+        cy.getById(this.selectors.distanceId).clear();
+        cy.getById(this.selectors.distanceId).type(distance);
+        cy.getById(this.selectors.distanceDetailsInputId).clear();
+        cy.getById(this.selectors.distanceDetailsInputId).type(description);
         cy.saveContinue().click();
     }
 
     static getMP(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.mpValue);
+        return cy.getById(this.selectors.mpId);
     }
 
     static changeMP(mp: string): void {
         cy.checkPath(this.path);
-        cy.get(this.selectors.mpLink).click();
-        cy.get(this.selectors.mpInput).clear();
-        cy.get(this.selectors.mpInput).type(mp);
+        cy.getByDataTest(this.selectors.mpLink).click();
+        cy.getById(this.selectors.mpId).clear();
+        cy.getById(this.selectors.mpId).type(mp);
         cy.saveContinue().click();
     }
 

@@ -7,35 +7,35 @@ export class NewTransferProjectWithDecisions {
     }
 
     public createNewTransferProject(): this {
-        cy.get('[data-test="create-transfer"]').click();
+        cy.getByDataTest('create-transfer').click();
         cy.contains('button.govuk-button', 'Create a new transfer').click();
         return this;
     }
 
     public searchOutgoingTrust(trustName: string): this {
-        cy.get('#SearchQuery').type(trustName);
+        cy.getById('SearchQuery').type(trustName);
         cy.get('button.govuk-button').contains('Search').click();
         return this;
     }
 
     public selectOutgoingTrust(trustId: string): this {
-        cy.get(`#${trustId}`).check();
-        cy.get('button.govuk-button').contains('Continue').click();
+        cy.getById(trustId).check();
+        cy.clickContinueBtn();
         return this;
     }
 
     public createProjectButton(): this {
-        cy.get('[data-test="create-project"]').click();
+        cy.getByDataTest('create-project').click();
         return this;
     }
 
     public confirmOutgoingTrust(): this {
-        cy.get('[data-test="confirm-outgoing-trust"]').click();
+        cy.getByDataTest('confirm-outgoing-trust').click();
         return this;
     }
 
     public selectOptionById(optionId: string): this {
-        cy.get(`#${optionId}`).click();
+        cy.getById(optionId).click();
         return this;
     }
 
@@ -45,60 +45,60 @@ export class NewTransferProjectWithDecisions {
     }
 
     public submitFormRecordDecision(): this {
-        cy.get('#submit-btn').click();
+        cy.clickSubmitBtn();
         return this;
     }
 
     public recordDecision(): this {
-        cy.contains('Record a decision').click();
-        cy.get('#record-decision-link').click();
+        cy.containsText('Record a decision').click();
+        cy.getById('record-decision-link').click();
         return this;
     }
 
     public makeDecision(decisionId: string): this {
-        cy.get(`#${decisionId}-radio`).click();
-        cy.get('#submit-btn').click();
+        cy.getById(`${decisionId}-radio`).click();
+        cy.clickSubmitBtn();
         return this;
     }
 
     public enterDecisionMakerName(name: string): this {
-        cy.get('#decision-maker-name').type(name);
-        cy.get('#submit-btn').click();
+        cy.getById('decision-maker-name').type(name);
+        cy.clickSubmitBtn();
         return this;
     }
 
     public addPerformanceConcerns(concernsText: string): this {
-        cy.get('#performanceconcerns-checkbox').check();
-        cy.get('#performanceconcerns-txtarea').type(concernsText);
-        cy.get('#submit-btn').click();
+        cy.getById('performanceconcerns-checkbox').check();
+        cy.getById('performanceconcerns-txtarea').type(concernsText);
+        cy.clickSubmitBtn();
         return this;
     }
 
     public enterDecisionDate(day: string, month: string, year: string): this {
-        cy.get('#decision-date-day').type(day);
-        cy.get('#decision-date-month').type(month);
-        cy.get('#decision-date-year').type(year);
-        cy.get('#submit-btn').click();
+        cy.getById('decision-date-day').type(day);
+        cy.getById('decision-date-month').type(month);
+        cy.getById('decision-date-year').type(year);
+        cy.clickSubmitBtn();
         return this;
     }
 
     public verifyDecisionDetails(): this {
-        cy.contains('Record a decision').click();
-        cy.get('#decision').should('contain', 'Deferred');
-        cy.get('#decision-made-by').should('contain', 'Grade 6');
-        cy.get('#deferred-reasons').should('contain', 'Performance concerns:');
-        cy.get('#deferred-reasons').should('contain', 'Cypress Test');
-        cy.get('#decision-date').should('contain', '12 December 2023');
+        cy.containsText('Record a decision').click();
+        cy.getById('decision').should('contain', 'Deferred');
+        cy.getById('decision-made-by').should('contain', 'Grade 6');
+        cy.getById('deferred-reasons').should('contain', 'Performance concerns:');
+        cy.getById('deferred-reasons').should('contain', 'Cypress Test');
+        cy.getById('decision-date').should('contain', '12 December 2023');
         return this;
     }
 
     public assertTrustName(expectedName: string): this {
-        cy.get('[data-cy="trust_Name"]').should('contain', expectedName);
+        cy.getByDataCy('trust_Name').should('contain', expectedName);
         return this;
     }
 
     public assertURNNumber(expectedNumber: string): this {
-        cy.get('[data-cy="URN_Id"]').should('contain', expectedNumber);
+        cy.getByDataCy('URN_Id').should('contain', expectedNumber);
         return this;
     }
 

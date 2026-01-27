@@ -6,42 +6,42 @@ import { EnvUrl } from '../constants/cypressConstants';
 export default class ProjectTaskList extends BasePage {
     static selectors = {
         assignProjectButton: 'a[href*="project-assignment"]',
-        assignedUser: '[data-id="assigned-user"]',
-        notificationMessage: '[id="notification-message"]',
+        assignedUser: 'assigned-user',
+        notificationMessage: 'notification-message',
         schoolOverviewLink: 'a[href*="/school-overview"]',
-        schoolOverviewStatus: '[id="school-overview-status"]',
+        schoolOverviewStatus: 'school-overview-status',
         budgetLink: 'a[href*="/budget"]',
-        budgetStatus: '[id="school-budget-information-status"]',
+        budgetStatus: 'school-budget-information-status',
         pupilForecastLink: 'a[href*="/pupil-forecast"]',
         conversionDetailsLink: 'a[href*="/conversion-details"]',
-        conversionDetailsStatus: '[id="school-and-trust-information-status"]',
+        conversionDetailsStatus: 'school-and-trust-information-status',
         publicSectorEqualityDutyLink: 'a[href*="/public-sector-equality-duty"]',
-        publicSectorEqualityDutyStatus: '[data-cy="select-tasklist-psed-status"]',
+        publicSectorEqualityDutyStatus: 'select-tasklist-psed-status',
         rationaleLink: 'a[href*="/confirm-project-trust-rationale"]',
-        rationaleStatus: '[id="rationale-status"]',
+        rationaleStatus: 'rationale-status',
         riskAndIssuesLink: 'a[href*="/confirm-risks-issues"]',
-        riskAndIssuesStatus: '[id="risks-and-issues-status"]',
+        riskAndIssuesStatus: 'risks-and-issues-status',
         LALink: 'a[href*="/confirm-local-authority-information-template-dates"]',
-        LAStatus: '[id="la-info-template-status"]',
+        LAStatus: 'la-info-template-status',
         ofstedLink: 'a[href*="/school-performance-ofsted-information"]',
         keyStageLink: (keyStageNumber: number) => `a[href*="/key-stage-${keyStageNumber}-performance-tables"]`,
-        createNewConversionButton: '[data-cy="create_new_conversion_btn"]',
-        recordDecisionButton: '[data-cy="record_decision_error_btn"]',
-        schoolName: '[data-cy="school-name"]',
-        urn: '[data-cy="urn"]',
+        createNewConversionButton: 'create_new_conversion_btn',
+        recordDecisionButton: 'record_decision_error_btn',
+        schoolName: 'school-name',
+        urn: 'urn',
         urnId: '.govuk-caption-xl',
-        acceptCookieBtn: '[data-test="cookie-banner-accept"]',
+        acceptCookieBtn: 'cookie-banner-accept',
         hideAcceptCookieBtn: '#acceptCookieBanner > .govuk-button-group',
-        previewProjectDocument: '#preview-project-template-button',
-        createProjectDocument: '[data-test="generate-htb"]',
-        errorMessage: '[data-cy="error-message-0+="]',
+        previewProjectDocument: 'preview-project-template-button',
+        createProjectDocument: 'generate-htb',
+        errorMessage: 'error-message-0+=',
     };
 
     static path = 'task-list';
 
     static acceptCookieBtnClick(): void {
         cy.checkPath(this.path);
-        cy.get(this.selectors.acceptCookieBtn).click();
+        cy.getByDataTest(this.selectors.acceptCookieBtn).click();
     }
 
     static hideAcceptCookieBanner(): void {
@@ -58,12 +58,12 @@ export default class ProjectTaskList extends BasePage {
 
     static getAssignedUser(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.assignedUser);
+        return cy.getByDataId(this.selectors.assignedUser);
     }
 
     static getNotificationMessage(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.notificationMessage);
+        return cy.getById(this.selectors.notificationMessage);
     }
 
     static selectSchoolOverview(): void {
@@ -73,7 +73,7 @@ export default class ProjectTaskList extends BasePage {
 
     static getSchoolOverviewStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.schoolOverviewStatus);
+        return cy.getById(this.selectors.schoolOverviewStatus);
     }
 
     static selectBudget(): void {
@@ -83,7 +83,7 @@ export default class ProjectTaskList extends BasePage {
 
     static getBudgetStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.budgetStatus);
+        return cy.getById(this.selectors.budgetStatus);
     }
 
     static selectPupilForecast(): void {
@@ -102,7 +102,7 @@ export default class ProjectTaskList extends BasePage {
 
     static getConversionDetailsStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.conversionDetailsStatus);
+        return cy.getById(this.selectors.conversionDetailsStatus);
     }
 
     static selectPublicSectorEqualityDuty(): void {
@@ -112,7 +112,7 @@ export default class ProjectTaskList extends BasePage {
 
     static publicSectorEqualityDutyStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.publicSectorEqualityDutyStatus);
+        return cy.getByDataCy(this.selectors.publicSectorEqualityDutyStatus);
     }
 
     static selectRationale(): void {
@@ -122,7 +122,7 @@ export default class ProjectTaskList extends BasePage {
 
     static getRationaleStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.rationaleStatus);
+        return cy.getById(this.selectors.rationaleStatus);
     }
 
     static selectRisksAndIssues(): void {
@@ -132,7 +132,7 @@ export default class ProjectTaskList extends BasePage {
 
     static getRisksAndIssuesStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.riskAndIssuesStatus);
+        return cy.getById(this.selectors.riskAndIssuesStatus);
     }
 
     static selectLA(): void {
@@ -142,7 +142,7 @@ export default class ProjectTaskList extends BasePage {
 
     static getLAStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.LAStatus);
+        return cy.getById(this.selectors.LAStatus);
     }
 
     static selectOfsted(): void {
@@ -161,7 +161,7 @@ export default class ProjectTaskList extends BasePage {
     }
 
     static clickOfStedINfoBackButton(): void {
-        cy.get('[data-cy="ofsted-info-back-btn"]').click();
+        cy.getByDataCy('ofsted-info-back-btn').click();
     }
 
     static selectKeyStage(keyStageNumber: number): void {
@@ -170,32 +170,32 @@ export default class ProjectTaskList extends BasePage {
     }
 
     static clickCreateNewConversionBtn(): typeof ProjectTaskList {
-        cy.get(this.selectors.createNewConversionButton).click();
+        cy.getByDataCy(this.selectors.createNewConversionButton).click();
         return this;
     }
 
     static selectRecordDecision(): typeof ProjectTaskList {
-        cy.get(this.selectors.recordDecisionButton).click();
+        cy.getByDataCy(this.selectors.recordDecisionButton).click();
         return this;
     }
 
     static verifyProjectDetails(urn: string, schoolName: string): typeof ProjectTaskList {
-        cy.get(this.selectors.schoolName).should('contain', schoolName);
-        cy.get(this.selectors.urn).should('contain', urn);
+        cy.getByDataCy(this.selectors.schoolName).should('contain', schoolName);
+        cy.getByDataCy(this.selectors.urn).should('contain', urn);
         return this;
     }
 
     static clickPreviewProjectDocumentButton(): void {
         cy.checkPath(this.path);
-        cy.get(this.selectors.previewProjectDocument).click();
+        cy.getById(this.selectors.previewProjectDocument).click();
     }
 
     static clickCreateProjectDocumentButton(): void {
         cy.checkPath(this.path);
-        cy.get(this.selectors.createProjectDocument).click();
+        cy.getByDataTest(this.selectors.createProjectDocument).click();
     }
 
     static getErrorMessage(): Cypress.Chainable<JQuery<HTMLElement>> {
-        return cy.get(this.selectors.errorMessage);
+        return cy.getByDataCy(this.selectors.errorMessage);
     }
 }

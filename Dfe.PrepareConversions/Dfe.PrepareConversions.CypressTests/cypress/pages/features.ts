@@ -3,7 +3,7 @@ class FeaturesPage {
 
     public completeReasonForTransfer(): this {
         // Click the first matched element
-        cy.get('[data-test="initiated"]').first().click();
+        cy.getByDataTest('initiated').first().click();
 
         cy.get('h1').should('contain.text', 'What is the reason for this transfer?');
 
@@ -18,10 +18,10 @@ class FeaturesPage {
 
         cy.get('[value="Dfe"]').click();
 
-        cy.get('button').contains('Save and continue').click();
+        cy.containsText('Save and continue').click();
 
-        cy.get('#Finance').click();
-        cy.get('button').contains('Save and continue').click();
+        cy.getById('Finance').click();
+        cy.containsText('Save and continue').click();
 
         // Check the table has been updated
         cy.get('dd').eq(0).should('contain.text', 'Intervention');
@@ -31,7 +31,7 @@ class FeaturesPage {
 
     public completeTypeOfTransfer(): this {
         // Click the first matched element
-        cy.get('[data-test="type"]').first().click();
+        cy.getByDataTest('type').first().click();
 
         cy.get('h1').should('contain.text', 'What type of transfer is it?');
 
@@ -49,7 +49,7 @@ class FeaturesPage {
 
         cy.get('[value="SatClosure"]').click();
 
-        cy.get('button').contains('Save and continue').click();
+        cy.containsText('Save and continue').click();
 
         // Check the table has been updated
         cy.get('dd').eq(4).should('contain.text', 'Closure of a SAT and the academy joining a MAT');
@@ -58,12 +58,12 @@ class FeaturesPage {
     }
 
     public markAsComplete(): this {
-        cy.get('[data-test="mark-section-complete"]').click();
+        cy.getByDataTest('mark-section-complete').click();
         return this;
     }
 
     public confirmFeatures(): this {
-        cy.get('button').contains('Confirm and continue').click();
+        cy.containsText('Confirm and continue').click();
         return this;
     }
 }

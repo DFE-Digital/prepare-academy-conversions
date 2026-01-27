@@ -2,7 +2,7 @@ class SchoolDataPage {
     public slug = 'school-data';
 
     public checkGeneralInformation(): this {
-        cy.get('[data-test="general-information"]').click();
+        cy.getByDataTest('general-information').click();
 
         cy.get('h1').should('contain.text', 'General information');
 
@@ -33,7 +33,7 @@ class SchoolDataPage {
     }
 
     public checkPupilNumbers(): this {
-        cy.get('[data-test="pupil-numbers"]').click();
+        cy.getByDataTest('pupil-numbers').click();
 
         cy.get('h1').should('contain.text', 'Pupil numbers');
 
@@ -55,7 +55,7 @@ class SchoolDataPage {
     }
 
     public checkOfstedReport(): this {
-        cy.get('[data-test="ofsted"]').click();
+        cy.getByDataTest('ofsted').click();
 
         cy.get('h1').should('contain.text', 'Latest Ofsted report');
 
@@ -81,7 +81,7 @@ class SchoolDataPage {
     }
 
     public checkKS4Tables(): this {
-        cy.get('[data-test="ks4-performance"]').click();
+        cy.getByDataTest('ks4-performance').click();
 
         cy.get('h1').should('contain.text', 'Key stage 4 performance tables');
 
@@ -96,7 +96,7 @@ class SchoolDataPage {
     }
 
     public checkKS5Tables(): this {
-        cy.get('[data-test="ks5-performance"]').click();
+        cy.getByDataTest('ks5-performance').click();
 
         cy.get('h1').should('contain.text', 'Key stage 5 performance tables');
 
@@ -115,7 +115,7 @@ class SchoolDataPage {
     }
 
     public confirm(): this {
-        cy.get('button').contains('Confirm and continue').click();
+        cy.containsText('Confirm and continue').click();
 
         return this;
     }

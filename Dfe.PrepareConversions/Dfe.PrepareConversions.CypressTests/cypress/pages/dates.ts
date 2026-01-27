@@ -2,18 +2,18 @@ class DatesPage {
     public slug = 'features';
 
     public completeAdvisoryBoardDate(date): this {
-        cy.get('[data-test="ab-date"]').click();
+        cy.getByDataTest('ab-date').click();
 
         cy.get('h1').should('contain.text', 'Advisory board date');
 
-        cy.get('[data-test="day"]').clear();
-        cy.get('[data-test="day"]').type(date.date());
-        cy.get('[data-test="month"]').clear();
-        cy.get('[data-test="month"]').type(date.month() + 1);
-        cy.get('[data-test="year"]').clear();
-        cy.get('[data-test="year"]').type(date.year());
+        cy.getByDataTest('day').clear();
+        cy.getByDataTest('day').type(date.date());
+        cy.getByDataTest('month').clear();
+        cy.getByDataTest('month').type(date.month() + 1);
+        cy.getByDataTest('year').clear();
+        cy.getByDataTest('year').type(date.year());
 
-        cy.get('button').contains('Save and continue').click();
+        cy.containsText('Save and continue').click();
 
         // Check the table has been updated
         cy.get('dd').eq(0).should('contain.text', date.format('D MMMM YYYY'));
@@ -22,14 +22,14 @@ class DatesPage {
     }
 
     public completeExpectedTransferDate(date): this {
-        cy.get('[data-test="target-date"]').click();
+        cy.getByDataTest('target-date').click();
 
-        cy.get('[data-test="month"]').clear();
-        cy.get('[data-test="month"]').type(date.month() + 1);
-        cy.get('[data-test="year"]').clear();
-        cy.get('[data-test="year"]').type(date.year());
+        cy.getByDataTest('month').clear();
+        cy.getByDataTest('month').type(date.month() + 1);
+        cy.getByDataTest('year').clear();
+        cy.getByDataTest('year').type(date.year());
 
-        cy.get('button').contains('Save and continue').click();
+        cy.containsText('Save and continue').click();
 
         // Check the table has been updated
         cy.get('dd').eq(4).should('contain.text', date.format('1 MMMM YYYY'));
@@ -38,7 +38,7 @@ class DatesPage {
     }
 
     public confirmDates(): this {
-        cy.get('button').contains('Confirm and continue').click();
+        cy.containsText('Confirm and continue').click();
 
         return this;
     }

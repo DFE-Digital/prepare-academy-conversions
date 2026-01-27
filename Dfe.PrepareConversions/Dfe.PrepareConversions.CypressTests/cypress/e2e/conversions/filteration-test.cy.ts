@@ -49,30 +49,30 @@ describe('Filtration Tests', {}, () => {
 
     it('Should filter projects by region', () => {
         // Check if the Region accordion section is not expanded
-        cy.get('[data-cy="select-projectlist-filter-region"]')
+        cy.getByDataCy('select-projectlist-filter-region')
             .should('have.attr', 'aria-expanded', 'false')
             .then(($accordion) => {
                 const isAccordionExpanded = $accordion.attr('aria-expanded') === 'true';
 
                 // If the accordion is not expanded, click to expand it
                 if (!isAccordionExpanded) {
-                    cy.get('[data-cy="select-projectlist-filter-region"]').click();
+                    cy.getByDataCy('select-projectlist-filter-region').click();
                 }
                 // Select the region checkbox
-                cy.get('#filter-project-region-east-midlands').check();
-                cy.get('#filter-project-region-east-of-england').check();
-                cy.get('#filter-project-region-london').check();
-                cy.get('#filter-project-region-north-east').check();
+                cy.getById('filter-project-region-east-midlands').check();
+                cy.getById('filter-project-region-east-of-england').check();
+                cy.getById('filter-project-region-london').check();
+                cy.getById('filter-project-region-north-east').check();
 
                 // Apply the selections
                 decisionPage.clickApplyFilters();
 
                 // Assert that the results are updated based on the selected regions
                 for (let i = 0; i < 5; i++) {
-                    const regionSelector = `#region-${i}`;
+                    const regionSelector = `region-${i}`;
 
                     // Ensure that the selected regions are present in the results
-                    cy.get(regionSelector).each(($regionElement) => {
+                    cy.getById(regionSelector).each(($regionElement) => {
                         const region = $regionElement.text();
                         expect(region).to.satisfy((text: string) => {
                             return (
@@ -86,20 +86,20 @@ describe('Filtration Tests', {}, () => {
                 }
 
                 // Clear the filters
-                cy.get('[data-cy="clear-filter"]').click();
+                cy.getByDataCy('clear-filter').click();
             });
     });
 
     it('Filter by Project Status', () => {
         // Check if the Project Status accordion section is not expanded
-        cy.get('[data-cy="select-projectlist-filter-project-status"]')
+        cy.getByDataCy('select-projectlist-filter-project-status')
             .should('have.attr', 'aria-expanded', 'false')
             .then(($accordion) => {
                 const isAccordionExpanded = $accordion.attr('aria-expanded') === 'true';
 
                 // If the accordion is not expanded, click to expand it
                 if (!isAccordionExpanded) {
-                    cy.get('[data-cy="select-projectlist-filter-project-status"]').click();
+                    cy.getByDataCy('select-projectlist-filter-project-status').click();
                 }
 
                 const projectStatuses = [
@@ -113,7 +113,7 @@ describe('Filtration Tests', {}, () => {
                 // Select each project status checkbox and check the URL
                 projectStatuses.forEach((statusToFilter) => {
                     // Select the project status checkbox
-                    cy.get(`[data-cy="select-projectlist-filter-status-${statusToFilter}"]`).check();
+                    cy.getByDataCy(`select-projectlist-filter-status-${statusToFilter}`).check();
 
                     // Perform actions to apply the filter by project status
                     decisionPage.clickApplyFilters();
@@ -137,7 +137,7 @@ describe('Filtration Tests', {}, () => {
                     });
 
                     // Clear the filter
-                    cy.get('[data-cy="clear-filter"]').click();
+                    cy.getByDataCy('clear-filter').click();
                 });
             });
     });

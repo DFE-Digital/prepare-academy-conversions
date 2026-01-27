@@ -9,14 +9,14 @@ class HomePage {
     }
 
     public startCreateNewTransfer(): this {
-        cy.get('[data-test=create-transfer]').click();
+        cy.getByDataTest('create-transfer').click();
 
         return this;
     }
 
     public projectsCountShouldBeVisible(): this {
-        cy.get('[data-cy="select-projectlist-filter-count"]').should('be.visible');
-        cy.get('[data-cy="select-projectlist-filter-count"]').should('contain.text', 'projects found');
+        cy.getByDataCy('select-projectlist-filter-count').should('be.visible');
+        cy.getByDataCy('select-projectlist-filter-count').should('contain.text', 'projects found');
 
         return this;
     }
@@ -24,7 +24,7 @@ class HomePage {
     public getProjectsCount(): Number {
         let projectsCount = 0;
 
-        cy.get('[data-cy="select-projectlist-filter-count"]')
+        cy.getByDataCy('select-projectlist-filter-count')
             .invoke('text')
             .then((txt) => {
                 projectsCount = Number(txt.split(' ')[0]);
@@ -34,7 +34,7 @@ class HomePage {
     }
 
     public toggleFilterProjects(isOpen): this {
-        cy.get('[data-cy="select-projectlist-filter-expand"]').click();
+        cy.getByDataCy('select-projectlist-filter-expand').click();
         if (isOpen) cy.get('details').should('have.attr', 'open');
         else cy.get('details').should('not.have.attr', 'open');
 
@@ -42,16 +42,16 @@ class HomePage {
     }
 
     public filterProjects(projectTitle): this {
-        cy.get('[id="Title"]').type(projectTitle);
+        cy.getById('Title').type(projectTitle);
 
-        cy.get('[data-cy="select-projectlist-filter-apply"]').first().click();
+        cy.getByDataCy('select-projectlist-filter-apply').first().click();
 
-        cy.get('[data-module="govuk-notification-banner"]').should('be.visible');
-        cy.get('[data-module="govuk-notification-banner"]').should('contain.text', 'Success');
-        cy.get('[data-module="govuk-notification-banner"]').should('contain.text', 'Projects filtered');
+        cy.getByDataModule('govuk-notification-banner').should('be.visible');
+        cy.getByDataModule('govuk-notification-banner').should('contain.text', 'Success');
+        cy.getByDataModule('govuk-notification-banner').should('contain.text', 'Projects filtered');
 
-        cy.get('[data-cy="select-projectlist-filter-count"]').should('be.visible');
-        cy.get('[data-cy="select-projectlist-filter-count"]').should('contain.text', 'projects found');
+        cy.getByDataCy('select-projectlist-filter-count').should('be.visible');
+        cy.getByDataCy('select-projectlist-filter-count').should('contain.text', 'projects found');
 
         cy.get('tbody > tr').should('have.length.at.least', 1);
 
@@ -59,7 +59,7 @@ class HomePage {
     }
 
     public clearFilters(): this {
-        cy.get('[data-cy="clear-filter"]').click();
+        cy.getByDataCy('clear-filter').click();
 
         return this;
     }

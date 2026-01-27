@@ -2,7 +2,7 @@ class BenefitsPage {
     public slug = 'benefits';
 
     public completeBenefits(): this {
-        cy.get('[data-test="intended-benefits"]').click();
+        cy.getByDataTest('intended-benefits').click();
 
         cy.get('h1').should('contain.text', 'What are the intended benefits of the transfer?');
 
@@ -21,11 +21,11 @@ class BenefitsPage {
             cy.wrap($benefits[8]).should('contain.text', 'Add another benefit');
         });
 
-        cy.get('[id="Other"]').click();
-        cy.get('[id="IntendedBenefitsViewModel_OtherBenefit"]').should('be.visible');
-        cy.get('[id="IntendedBenefitsViewModel_OtherBenefit"]').type('Cypress benefit');
+        cy.getById('Other').click();
+        cy.getById('IntendedBenefitsViewModel_OtherBenefit').should('be.visible');
+        cy.getById('IntendedBenefitsViewModel_OtherBenefit').type('Cypress benefit');
 
-        cy.get('button').contains('Save and continue').click();
+        cy.containsText('Save and continue').click();
 
         // Check the table has been updated
         cy.get('dd').eq(0).should('contain.text', 'Other: Cypress benefit');
@@ -34,14 +34,14 @@ class BenefitsPage {
     }
 
     public completeRisks(): this {
-        cy.get('[data-test="any-risks"]').click();
+        cy.getByDataTest('any-risks').click();
 
         cy.get('h1').should('contain.text', 'Are there any risks to consider?');
 
         // Choose 'Yes' Radio button
         cy.get('[value="true"]').click();
 
-        cy.get('button').contains('Save and continue').click();
+        cy.containsText('Save and continue').click();
 
         // Check the labels of the radios
         cy.get('.govuk-checkboxes__item').then(($risks) => {
@@ -53,16 +53,16 @@ class BenefitsPage {
             cy.wrap($risks[3]).should('contain.text', 'Other risks');
         });
 
-        cy.get('[data-test="OtherRisks"]').click();
+        cy.getByDataTest('OtherRisks').click();
 
-        cy.get('button').contains('Save and continue').click();
+        cy.containsText('Save and continue').click();
 
         cy.get('h1').should('contain.text', 'What other risks are there? (optional)');
 
-        cy.get('[data-test="high-profile-transfer"]').clear();
-        cy.get('[data-test="high-profile-transfer"]').type('Cypress risks');
+        cy.getByDataTest('high-profile-transfer').clear();
+        cy.getByDataTest('high-profile-transfer').type('Cypress risks');
 
-        cy.get('button').contains('Save and continue').click();
+        cy.containsText('Save and continue').click();
 
         // Check the table has been updated
         cy.get('dd').eq(2).should('contain.text', 'Yes');
@@ -79,7 +79,7 @@ class BenefitsPage {
         // Choose 'Yes' Radio button
         cy.get('[value="true"]').click();
 
-        cy.get('button').contains('Save and continue').click();
+        cy.containsText('Save and continue').click();
 
         // Check the table has been updated
         cy.get('dd').eq(6).should('contain.text', 'Yes');
@@ -88,12 +88,12 @@ class BenefitsPage {
     }
 
     public markAsComplete(): this {
-        cy.get('[data-test="mark-section-complete"]').click();
+        cy.getByDataTest('mark-section-complete').click();
         return this;
     }
 
     public confirmBenefitsRisks(): this {
-        cy.get('button').contains('Confirm and continue').click();
+        cy.containsText('Confirm and continue').click();
 
         return this;
     }

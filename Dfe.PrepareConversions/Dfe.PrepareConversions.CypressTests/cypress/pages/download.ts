@@ -6,7 +6,7 @@ class DownloadPage {
 
         cy.intercept('GET', '**/advisory-board/download/GenerateDocument').as('downloadRequest');
 
-        cy.get('[data-test="download-htb"]').click();
+        cy.getByDataTest('download-htb').click();
 
         cy.wait('@downloadRequest').then((interception) => {
             if (interception.response) {

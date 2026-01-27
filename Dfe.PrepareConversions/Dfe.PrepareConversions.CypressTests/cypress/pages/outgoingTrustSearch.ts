@@ -2,25 +2,25 @@ class OutgoingTrustSearchPage {
     public slug = 'transfers/trustname';
 
     public searchTrustsByName(trustName): this {
-        cy.get('#SearchQuery').type(trustName);
+        cy.getById('SearchQuery').type(trustName);
 
-        cy.get('button').contains('Search').click();
+        cy.containsText('Search').click();
 
         return this;
     }
 
     public searchTrustsByUkprn(ukprn): this {
-        cy.get('#SearchQuery').type(ukprn);
+        cy.getById('SearchQuery').type(ukprn);
 
-        cy.get('button').contains('Search').click();
+        cy.containsText('Search').click();
 
         return this;
     }
 
     public searchTrustsByCompaniesHouseNo(companiesHouseNo): this {
-        cy.get('#SearchQuery').type(companiesHouseNo);
+        cy.getById('SearchQuery').type(companiesHouseNo);
 
-        cy.get('button').contains('Search').click();
+        cy.containsText('Search').click();
 
         return this;
     }

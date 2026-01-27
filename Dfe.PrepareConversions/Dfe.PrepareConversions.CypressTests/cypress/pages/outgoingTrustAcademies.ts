@@ -17,10 +17,10 @@ class OutgoingTrustAcademiesPage extends BasePage {
         return this;
     }
     selectOptionYes() {
-        cy.get('[data-test="true"]').click();
+        cy.getByDataTest('true').click();
     }
     selectOptionById(optionId: string) {
-        cy.get(`#${optionId}`).click();
+        cy.getById(optionId).click();
     }
     submitForm() {
         cy.get('[type="submit"]').click();
