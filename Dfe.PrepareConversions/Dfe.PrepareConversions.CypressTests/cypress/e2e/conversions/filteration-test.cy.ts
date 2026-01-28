@@ -11,37 +11,39 @@ describe('Filtration Tests', {}, () => {
 
     const projectStatuses = ['Approved', 'Approved with conditions', 'Declined', 'Deferred', 'Pre advisory board'];
 
-    before(() => {});
-
     beforeEach(() => {
         Logger.log('Visit the homepage before each test');
         cy.visit('/');
         cy.acceptCookies();
     });
 
-    afterEach(() => {
-        filterPage.clearFilters();
-    });
+    describe('Filter operations', () => {
+        afterEach(() => {
+            filterPage.clearFilters();
+        });
 
-    it('Should filter projects by region', () => {
-        filterPage
-            .expandRegionFilter()
-            .selectRegions(regionFilterConfig.regionIds)
-            .applyFilters()
-            .verifyAllRegionsInResults(regionFilterConfig.resultCount, regionFilterConfig.expectedRegionNames);
-    });
-
-    projectStatuses.forEach((statusToFilter) => {
-        it(`Should filter by project status: ${statusToFilter}`, () => {
+        it('Should filter projects by region', () => {
             filterPage
-                .expandProjectStatusFilter()
-                .selectProjectStatus(statusToFilter)
+                .expandRegionFilter()
+                .selectRegions(regionFilterConfig.regionIds)
                 .applyFilters()
-                .verifyProjectStatusInResults(statusToFilter);
+                .verifyAllRegionsInResults(regionFilterConfig.resultCount, regionFilterConfig.expectedRegionNames);
+        });
+
+        projectStatuses.forEach((statusToFilter) => {
+            it(`Should filter by project status: ${statusToFilter}`, () => {
+                filterPage
+                    .expandProjectStatusFilter()
+                    .selectProjectStatus(statusToFilter)
+                    .applyFilters()
+                    .verifyProjectStatusInResults(statusToFilter);
+            });
         });
     });
 
-    it('Check accessibility across pages', () => {
-        cy.checkAccessibilityAcrossPages();
+    describe('Accessibility', () => {
+        it('Check accessibility across pages', () => {
+            cy.checkAccessibilityAcrossPages();
+        });
     });
 });
