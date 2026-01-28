@@ -1,4 +1,5 @@
 import BasePage from './basePage';
+import { Logger } from '../support/logger';
 
 class CookiePolicyPage extends BasePage {
     public path = 'cookie-preferences';
@@ -16,11 +17,27 @@ class CookiePolicyPage extends BasePage {
     }
 
     public acceptCookiesFromBanner(): this {
+        // Intercept the cookie consent fetch request and wait for it to complete
+        cy.intercept('GET', '**/cookie-Preferences?consent=true**').as('cookieConsent');
         cy.getByDataTest('cookie-banner-accept').click();
+        cy.wait('@cookieConsent');
         return this;
     }
 
     public verifyCookieConsentIsSet(value: string): this {
+        // Debug: log URL and all cookies to see what's actually present
+        cy.url().then((url) => {
+            Logger.log(`Current URL: ${url}`);
+        });
+
+        cy.getAllCookies().then((cookies) => {
+            Logger.log(`Looking for cookie: ${this.cookieName}`);
+            Logger.log(`Total cookies found: ${cookies.length}`);
+            cookies.forEach((cookie) => {
+                Logger.log(`Cookie: ${cookie.name} = ${cookie.value} (domain: ${cookie.domain}, path: ${cookie.path})`);
+            });
+        });
+
         cy.getCookie(this.cookieName, { timeout: 10000 }).should('exist').should('have.property', 'value', value);
         return this;
     }
