@@ -17,12 +17,13 @@ describe('Cookie Policy', () => {
             cookiePolicyPage.acceptCookiesFromBanner();
         });
 
-        it('Should consent to cookies from cookie header button', () => {
-            cookiePolicyPage.verifyCookieConsentIsSet('True');
-        });
-
         it('Should hide the cookie banner when consent has been given', () => {
             cookiePolicyPage.acceptedBannerShouldBeVisible();
+        });
+
+        it('Should consent to cookies from cookie header button', () => {
+            cookiePolicyPage.acceptedBannerShouldBeVisible(); // Wait for UI confirmation first
+            cookiePolicyPage.verifyCookieConsentIsSet('True');
         });
     });
 
