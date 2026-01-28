@@ -1,3 +1,5 @@
+import { Logger } from '../support/logger';
+
 class CookiePolicyPage {
     public slug = 'cookie-preferences';
 
@@ -21,14 +23,14 @@ class CookiePolicyPage {
     public verifyCookieConsentIsSet(value: string): this {
         // Debug: log URL and all cookies to see what's actually present
         cy.url().then((url) => {
-            cy.log(`Current URL: ${url}`);
+            Logger.log(`Current URL: ${url}`);
         });
 
         cy.getAllCookies().then((cookies) => {
-            cy.log(`Looking for cookie: ${this.cookieName}`);
-            cy.log(`Total cookies found: ${cookies.length}`);
+            Logger.log(`Looking for cookie: ${this.cookieName}`);
+            Logger.log(`Total cookies found: ${cookies.length}`);
             cookies.forEach((cookie) => {
-                cy.log(`Cookie: ${cookie.name} = ${cookie.value} (domain: ${cookie.domain}, path: ${cookie.path})`);
+                Logger.log(`Cookie: ${cookie.name} = ${cookie.value} (domain: ${cookie.domain}, path: ${cookie.path})`);
             });
         });
 
