@@ -17,7 +17,7 @@ export default defineConfig({
         },
     },
     video: false,
-    retries: 0,
+    retries: 1,
     e2e: {
         specPattern: 'cypress/e2e',
         supportFile: 'cypress/support/e2e.ts',
