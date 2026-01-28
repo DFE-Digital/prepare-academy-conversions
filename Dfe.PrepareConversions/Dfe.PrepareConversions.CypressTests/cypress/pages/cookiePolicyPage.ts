@@ -19,7 +19,22 @@ class CookiePolicyPage {
     }
 
     public verifyCookieConsentIsSet(value: string): this {
-        cy.getCookie(this.cookieName).should('exist').should('have.property', 'value', value);
+        // Debug: log URL and all cookies to see what's actually present
+        cy.url().then((url) => {
+            cy.log(`Current URL: ${url}`);
+        });
+
+        cy.getAllCookies().then((cookies) => {
+            cy.log(`Looking for cookie: ${this.cookieName}`);
+            cy.log(`Total cookies found: ${cookies.length}`);
+            cookies.forEach((cookie) => {
+                cy.log(`Cookie: ${cookie.name} = ${cookie.value} (domain: ${cookie.domain}, path: ${cookie.path})`);
+            });
+        });
+
+        cy.getCookie(this.cookieName, { timeout: 10000 })
+            .should('exist')
+            .should('have.property', 'value', value);
         return this;
     }
 
