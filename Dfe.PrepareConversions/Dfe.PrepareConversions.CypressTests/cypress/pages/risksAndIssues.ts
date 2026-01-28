@@ -1,38 +1,44 @@
 /// <reference types="cypress" />
-
 import BasePage from './basePage';
 
-export default class RisksAndIssues extends BasePage {
-    static selectors = {
+class RisksAndIssues extends BasePage {
+    public path = 'confirm-risks-issues';
+
+    private selectors = {
         rationaleLink: '[data-test="change-risks-and-issues"]',
         rationaleInput: '[id="risks-and-issues"]',
         rationaleValue: '[id="risks-and-issues"]',
         saveButton: '[data-cy="select-common-submitbutton"]',
-        completeCheckbox: '[id="risks-and-issues-complete"]',
+        completeCheckbox: 'risks-and-issues-complete',
     };
 
-    static path = 'confirm-risks-issues';
-
-    static changeRisksAndIssues(rationale: string): void {
+    public changeRisksAndIssues(rationale: string): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.rationaleLink).click();
         cy.get(this.selectors.rationaleInput).clear();
         cy.get(this.selectors.rationaleInput).type(rationale);
         cy.get(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getRisksAndIssues(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getRisksAndIssues(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.rationaleValue);
     }
 
-    static markComplete(): void {
+    public markComplete(): this {
         cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).check();
+        cy.get(`#${this.selectors.completeCheckbox}`).check();
+        return this;
     }
 
-    static markIncomplete(): void {
+    public markIncomplete(): this {
         cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).uncheck();
+        cy.get(`#${this.selectors.completeCheckbox}`).uncheck();
+        return this;
     }
 }
+
+const risksAndIssues = new RisksAndIssues();
+
+export default risksAndIssues;

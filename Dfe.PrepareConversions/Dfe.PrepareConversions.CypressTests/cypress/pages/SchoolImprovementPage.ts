@@ -1,101 +1,71 @@
-import { decisionPage } from './decisionPage';
+import FormBasePage from './formBasePage';
 
-export class SchoolImprovementPage {
-    searchSchool(schoolName: string): this {
-        cy.get('#SearchQuery').type(schoolName);
-        cy.get('.autocomplete__input--default').first().click();
+class SchoolImprovementPage extends FormBasePage {
+    public path = 'school-improvement';
+
+    public navigateToSchoolImprovementSection(): this {
+        cy.getByDataCy('school_improvement_plans_menu').click();
         return this;
     }
 
-    clickContinue(): this {
-        cy.get('[data-id="submit"]').click();
+    public clickAddSchoolImprovementPlan(): this {
+        cy.getByDataCy('add_school_improvement_plan').click();
         return this;
     }
 
-    selectNoAndContinue(): this {
-        cy.get('[data-cy="select-legal-input-no"]').click();
-        cy.get('[data-cy="select-common-submitbutton"]').click();
+    public selectImprovementDetails(): this {
+        cy.getById('localauthority-checkbox').click();
         return this;
     }
 
-    assertSchoolDetails(schoolName: string, urn: string, localAuthority: string, schoolType: string): this {
-        cy.get('[data-cy="school-name"]').should('contain', schoolName);
-        cy.get('.govuk-summary-list__value').eq(1).should('contain', urn);
-        cy.get('.govuk-summary-list__value').eq(3).should('contain', localAuthority);
-        cy.get('.govuk-summary-list__value').eq(5).should('contain', schoolType);
+    public saveImprovementDetails(): this {
+        cy.getById('submit-btn').click();
         return this;
     }
 
-    clickOnFirstProject(): this {
-        cy.get('[data-cy="select-projectlist-filter-title"]').type('Manchester Academy');
-        decisionPage.clickApplyFilters();
-        cy.get('[data-cy="trust-name-Manchester Academy-0"]').click();
+    public enterImprovementDetails(details: string): this {
+        cy.getById('PlanProvider').type(details);
+        cy.getById('submit-btn').click();
         return this;
     }
 
-    navigateToSchoolImprovementSection(): this {
-        cy.get('[data-cy="school_improvement_plans_menu"]').click();
+    public enterImprovementEndDate(day: string, month: string, year: string): this {
+        cy.getById('plan-start-date-day').clear();
+        cy.getById('plan-start-date-day').type(day);
+        cy.getById('plan-start-date-month').clear();
+        cy.getById('plan-start-date-month').type(month);
+        cy.getById('plan-start-date-year').clear();
+        cy.getById('plan-start-date-year').type(year);
+        cy.getById('submit-btn').click();
         return this;
     }
 
-    clickAddSchoolImprovementPlan(): this {
-        cy.get('[data-cy="add_school_improvement_plan"]').click();
+    public enterExpectedEndDate(day: string, month: string, year: string): this {
+        cy.getById('Other-radio').click();
+        cy.getById('plan-end-date-other-day').clear();
+        cy.getById('plan-end-date-other-day').type(day);
+        cy.getById('plan-end-date-other-month').clear();
+        cy.getById('plan-end-date-other-month').type(month);
+        cy.getById('plan-end-date-other-year').clear();
+        cy.getById('plan-end-date-other-year').type(year);
+        cy.getById('submit-btn').click();
         return this;
     }
 
-    selectImprovementDetails(): this {
-        cy.get('#localauthority-checkbox').click();
+    public selectHighConfidenceLevel(): this {
+        cy.getById('High-radio').click();
+        cy.getById('submit-btn').click();
         return this;
     }
 
-    saveImprovementDetails(): this {
-        cy.get('#submit-btn').click();
+    public enterComments(comments: string): this {
+        cy.getById('PlanComments').clear();
+        cy.getById('PlanComments').type(comments);
+        cy.getById('submit-btn').click();
         return this;
     }
 
-    enterImprovementDetails(details: string): this {
-        cy.get('#PlanProvider').type(details);
-        cy.get('#submit-btn').click();
-        return this;
-    }
-
-    enterImprovementEndDate(day: string, month: string, year: string): this {
-        cy.get('#plan-start-date-day').clear();
-        cy.get('#plan-start-date-day').type(day);
-        cy.get('#plan-start-date-month').clear();
-        cy.get('#plan-start-date-month').type(month);
-        cy.get('#plan-start-date-year').clear();
-        cy.get('#plan-start-date-year').type(year);
-        cy.get('#submit-btn').click();
-        return this;
-    }
-
-    enterExpectedEndDate(day: string, month: string, year: string): this {
-        cy.get('#Other-radio').click();
-        cy.get('#plan-end-date-other-day').clear();
-        cy.get('#plan-end-date-other-day').type(day);
-        cy.get('#plan-end-date-other-month').clear();
-        cy.get('#plan-end-date-other-month').type(month);
-        cy.get('#plan-end-date-other-year').clear();
-        cy.get('#plan-end-date-other-year').type(year);
-        cy.get('#submit-btn').click();
-        return this;
-    }
-
-    selectHighConfidenceLevel(): this {
-        cy.get('#High-radio').click();
-        cy.get('#submit-btn').click();
-        return this;
-    }
-
-    enterComments(comments: string): this {
-        cy.get('#PlanComments').clear();
-        cy.get('#PlanComments').type(comments);
-        cy.get('#submit-btn').click();
-        return this;
-    }
-
-    verifyImprovementDetails(
+    public verifyImprovementDetails(
         arrangedBy: string,
         providedBy: string,
         startDate: string,
@@ -103,17 +73,17 @@ export class SchoolImprovementPage {
         confidenceLevel: string,
         comments: string
     ): this {
-        cy.get('#arranged-by').should('contain', arrangedBy);
-        cy.get('#provided-by').eq(0).should('contain', providedBy);
-        cy.get('#start-date').should('contain', startDate);
-        cy.get('#end-date').should('contain', endDate);
-        cy.get('#confidence-level').should('contain', confidenceLevel);
-        cy.get('#comments').should('contain', comments);
-        cy.get('#submit-btn').click();
+        cy.getById('arranged-by').should('contain', arrangedBy);
+        cy.getById('provided-by').eq(0).should('contain', providedBy);
+        cy.getById('start-date').should('contain', startDate);
+        cy.getById('end-date').should('contain', endDate);
+        cy.getById('confidence-level').should('contain', confidenceLevel);
+        cy.getById('comments').should('contain', comments);
+        cy.getById('submit-btn').click();
         return this;
     }
 
-    verifyTheFinalImprovementDetails(
+    public verifyTheFinalImprovementDetails(
         arrangedBy: string,
         providedBy: string,
         startDate: string,
@@ -121,34 +91,34 @@ export class SchoolImprovementPage {
         confidenceLevel: string,
         comments: string
     ): this {
-        cy.get('[data-cy="arranged-by"]').should('contain', arrangedBy);
-        cy.get('[data-cy="provided-by"]').eq(0).should('contain', providedBy);
-        cy.get('[data-cy="start-date"]').should('contain', startDate);
-        cy.get('[data-cy="end-date"]').should('contain', endDate);
-        cy.get('[data-cy="confidence-leve"]').should('contain', confidenceLevel);
-        cy.get('[data-cy="comments"]').should('contain', comments);
+        cy.getByDataCy('arranged-by').should('contain', arrangedBy);
+        cy.getByDataCy('provided-by').eq(0).should('contain', providedBy);
+        cy.getByDataCy('start-date').should('contain', startDate);
+        cy.getByDataCy('end-date').should('contain', endDate);
+        cy.getByDataCy('confidence-leve').should('contain', confidenceLevel);
+        cy.getByDataCy('comments').should('contain', comments);
         return this;
     }
 
-    changeImprovementDetails(providedBy: string, comments: string): this {
-        cy.get('#change-arranger-btn').click();
-        cy.get('#regionaldirector-checkbox').click();
-        cy.get('#submit-btn').click();
-        cy.get('#PlanProvider').clear();
-        cy.get('#PlanProvider').type(providedBy);
-        cy.get('#submit-btn').click();
-        cy.get('#submit-btn').click();
-        cy.get('#Unknown-radio').click();
-        cy.get('#submit-btn').click();
-        cy.get('#Medium-radio').click();
-        cy.get('#submit-btn').click();
-        cy.get('#PlanComments').clear();
-        cy.get('#PlanComments').type(comments);
-        cy.get('#submit-btn').click();
+    public changeImprovementDetails(providedBy: string, comments: string): this {
+        cy.getById('change-arranger-btn').click();
+        cy.getById('regionaldirector-checkbox').click();
+        cy.getById('submit-btn').click();
+        cy.getById('PlanProvider').clear();
+        cy.getById('PlanProvider').type(providedBy);
+        cy.getById('submit-btn').click();
+        cy.getById('submit-btn').click();
+        cy.getById('Unknown-radio').click();
+        cy.getById('submit-btn').click();
+        cy.getById('Medium-radio').click();
+        cy.getById('submit-btn').click();
+        cy.getById('PlanComments').clear();
+        cy.getById('PlanComments').type(comments);
+        cy.getById('submit-btn').click();
         return this;
     }
 
-    verifyChangedImprovementDetails(
+    public verifyChangedImprovementDetails(
         arrangedBy: string,
         providedBy: string,
         startDate: string,
@@ -156,21 +126,22 @@ export class SchoolImprovementPage {
         confidenceLevel: string,
         comments: string
     ): this {
-        cy.get('#arranged-by').should('contain', arrangedBy);
-        cy.get('#provided-by').eq(0).should('contain', providedBy);
-        cy.get('#start-date').should('contain', startDate);
-        cy.get('#end-date').should('contain', endDate);
-        cy.get('#confidence-level').should('contain', confidenceLevel);
-        cy.get('#comments').should('contain', comments);
-        cy.get('#submit-btn').click();
+        cy.getById('arranged-by').should('contain', arrangedBy);
+        cy.getById('provided-by').eq(0).should('contain', providedBy);
+        cy.getById('start-date').should('contain', startDate);
+        cy.getById('end-date').should('contain', endDate);
+        cy.getById('confidence-level').should('contain', confidenceLevel);
+        cy.getById('comments').should('contain', comments);
+        cy.getById('submit-btn').click();
         return this;
     }
 
-    deleteProject(projectId: string): void {
-        cy.callAcademisationApi('DELETE', `/conversion-project/${projectId}/Delete`).then((response) => {
-            expect(response.status).to.eq(200);
-        });
+    public deleteProject(projectId: string): void {
+        this.deleteConversionProject(projectId);
     }
 }
 
-export const schoolImprovementPage = new SchoolImprovementPage();
+const schoolImprovementPage = new SchoolImprovementPage();
+
+export { schoolImprovementPage };
+export default schoolImprovementPage;

@@ -64,7 +64,7 @@ describe('Create a new transfer', () => {
 
             cy.url().then(($url) => {
                 cy.log(`Generated Project URL: ${$url}`);
-                cy.wrap($url).should('include', `${projectPage.slug}`);
+                cy.wrap($url).should('include', `${projectPage.path}`);
                 projectId = $url.split('/').pop();
                 cy.log(`Captured Project ID: ${projectId}`);
             });

@@ -1,5 +1,7 @@
-class CookiePolicyPage {
-    public slug = 'cookie-preferences';
+import BasePage from './basePage';
+
+class CookiePolicyPage extends BasePage {
+    public path = 'cookie-preferences';
 
     private cookieName = '.ManageAnAcademyTransfer.Consent';
 
@@ -34,7 +36,7 @@ class CookiePolicyPage {
     }
 
     public verifyOnCookiePreferencesPage(): this {
-        cy.checkPath(this.slug);
+        cy.checkPath(this.path);
         return this;
     }
 

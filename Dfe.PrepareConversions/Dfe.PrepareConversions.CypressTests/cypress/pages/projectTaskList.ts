@@ -1,9 +1,10 @@
 /// <reference types="cypress" />
-
 import BasePage from './basePage';
 
-export default class ProjectTaskList extends BasePage {
-    static selectors = {
+class ProjectTaskList extends BasePage {
+    public path = 'task-list';
+
+    private selectors = {
         assignProjectButton: 'a[href*="project-assignment"]',
         assignedUser: 'assigned-user',
         notificationMessage: 'notification-message',
@@ -36,114 +37,124 @@ export default class ProjectTaskList extends BasePage {
         errorMessage: 'error-message-0+=',
     };
 
-    static path = 'task-list';
-
-    static acceptCookieBtnClick(): void {
+    public acceptCookieBtnClick(): this {
         cy.checkPath(this.path);
         cy.getByDataTest(this.selectors.acceptCookieBtn).click();
+        return this;
     }
 
-    static hideAcceptCookieBanner(): void {
+    public hideAcceptCookieBanner(): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.hideAcceptCookieBtn).click();
+        return this;
     }
 
-    static selectAssignProject(): void {
+    public selectAssignProject(): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.assignProjectButton).click();
+        return this;
     }
 
-    static getAssignedUser(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getAssignedUser(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getByDataId(this.selectors.assignedUser);
     }
 
-    static getNotificationMessage(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getNotificationMessage(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.notificationMessage);
     }
 
-    static selectSchoolOverview(): void {
+    public selectSchoolOverview(): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.schoolOverviewLink).click();
+        return this;
     }
 
-    static getSchoolOverviewStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getSchoolOverviewStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.schoolOverviewStatus);
     }
 
-    static selectBudget(): void {
+    public selectBudget(): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.budgetLink).click();
+        return this;
     }
 
-    static getBudgetStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getBudgetStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.budgetStatus);
     }
 
-    static selectPupilForecast(): void {
+    public selectPupilForecast(): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.pupilForecastLink).click();
+        return this;
     }
 
-    static selectConversionDetails(): void {
+    public selectConversionDetails(): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.conversionDetailsLink).click();
+        return this;
     }
 
-    static getConversionDetailsStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getConversionDetailsStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.conversionDetailsStatus);
     }
 
-    static selectPublicSectorEqualityDuty(): void {
+    public selectPublicSectorEqualityDuty(): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.publicSectorEqualityDutyLink).click();
+        return this;
     }
 
-    static publicSectorEqualityDutyStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public publicSectorEqualityDutyStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getByDataCy(this.selectors.publicSectorEqualityDutyStatus);
     }
 
-    static selectRationale(): void {
+    public selectRationale(): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.rationaleLink).click();
+        return this;
     }
 
-    static getRationaleStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getRationaleStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.rationaleStatus);
     }
 
-    static selectRisksAndIssues(): void {
+    public selectRisksAndIssues(): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.riskAndIssuesLink).click();
+        return this;
     }
 
-    static getRisksAndIssuesStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getRisksAndIssuesStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.riskAndIssuesStatus);
     }
 
-    static selectLA(): void {
+    public selectLA(): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.LALink).click();
+        return this;
     }
 
-    static getLAStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getLAStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.LAStatus);
     }
 
-    static selectOfsted(): void {
+    public selectOfsted(): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.ofstedLink).click();
+        return this;
     }
 
-    static getProjectUrn(): Cypress.Chainable<string> {
+    public getProjectUrn(): Cypress.Chainable<string> {
         cy.checkPath(this.path);
         return cy
             .get(this.selectors.urnId)
@@ -153,42 +164,50 @@ export default class ProjectTaskList extends BasePage {
             });
     }
 
-    static clickOfStedINfoBackButton(): void {
+    public clickOfStedINfoBackButton(): this {
         cy.getByDataCy('ofsted-info-back-btn').click();
+        return this;
     }
 
-    static selectKeyStage(keyStageNumber: number): void {
+    public selectKeyStage(keyStageNumber: number): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.keyStageLink(keyStageNumber)).click();
+        return this;
     }
 
-    static clickCreateNewConversionBtn(): typeof ProjectTaskList {
+    public clickCreateNewConversionBtn(): this {
         cy.getByDataCy(this.selectors.createNewConversionButton).click();
         return this;
     }
 
-    static selectRecordDecision(): typeof ProjectTaskList {
+    public selectRecordDecision(): this {
         cy.getByDataCy(this.selectors.recordDecisionButton).click();
         return this;
     }
 
-    static verifyProjectDetails(urn: string, schoolName: string): typeof ProjectTaskList {
+    public verifyProjectDetails(urn: string, schoolName: string): this {
         cy.getByDataCy(this.selectors.schoolName).should('contain', schoolName);
         cy.getByDataCy(this.selectors.urn).should('contain', urn);
         return this;
     }
 
-    static clickPreviewProjectDocumentButton(): void {
+    public clickPreviewProjectDocumentButton(): this {
         cy.checkPath(this.path);
         cy.getById(this.selectors.previewProjectDocument).click();
+        return this;
     }
 
-    static clickCreateProjectDocumentButton(): void {
+    public clickCreateProjectDocumentButton(): this {
         cy.checkPath(this.path);
         cy.getByDataTest(this.selectors.createProjectDocument).click();
+        return this;
     }
 
-    static getErrorMessage(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getErrorMessage(): Cypress.Chainable<JQuery<HTMLElement>> {
         return cy.getByDataCy(this.selectors.errorMessage);
     }
 }
+
+const projectTaskList = new ProjectTaskList();
+
+export default projectTaskList;

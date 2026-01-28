@@ -1,7 +1,7 @@
 import BasePage from './basePage';
 
-export default class voluntaryProjectTaskList extends BasePage {
-    static voluntaryProjectElementsVisible(): void {
+class VoluntaryProjectTaskList extends BasePage {
+    public voluntaryProjectElementsVisible(): this {
         const projectName = 'Voluntary Cypress Project';
         const routeType = 'Voluntary conversion';
         const projectOwner = '';
@@ -20,5 +20,10 @@ export default class voluntaryProjectTaskList extends BasePage {
 
         // Check Project details is default tab selected
         cy.get('a[aria-Current="page"]').contains('Project details');
+        return this;
     }
 }
+
+const voluntaryProjectTaskList = new VoluntaryProjectTaskList();
+
+export default voluntaryProjectTaskList;

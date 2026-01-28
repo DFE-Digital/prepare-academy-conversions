@@ -1,5 +1,7 @@
-class TrustInformationProjectDatesPage {
-    public slug = 'academy-and-trust-information';
+import BasePage from './basePage';
+
+class TrustInformationProjectDatesPage extends BasePage {
+    public path = 'academy-and-trust-information';
 
     // Whilst two separate links on the page, both of these are on the same form so are merged here
     public completeRecommendationAndAuthor(): this {
@@ -26,7 +28,7 @@ class TrustInformationProjectDatesPage {
         cy.getById('author').clear();
         cy.getById('author').type('Chris Sherlock');
 
-        cy.containsText('Save and continue').click();
+        this.saveAndContinue();
 
         // Check the table has been updated
         cy.get('dd').eq(0).should('contain.text', 'Approve');
@@ -44,8 +46,7 @@ class TrustInformationProjectDatesPage {
     }
 
     public confirmTrustInformationProjectDates(): this {
-        cy.containsText('Confirm and continue').click();
-
+        this.confirmAndContinue();
         return this;
     }
 }

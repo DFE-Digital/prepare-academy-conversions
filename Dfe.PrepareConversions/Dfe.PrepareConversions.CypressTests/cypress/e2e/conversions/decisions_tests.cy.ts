@@ -66,7 +66,7 @@ describe('Decisions Tests', () => {
                 decisionPage
                     .clickRecordDecisionWithoutError()
                     .makeDecision('deferred')
-                    .decsionMaker('grade6')
+                    .decisionMaker('grade6')
                     .selectReasonWhyDeferred()
                     .enterDecisionMakerName('Fahad Darwish')
                     .enterDecisionDate('12', '12', '2023')

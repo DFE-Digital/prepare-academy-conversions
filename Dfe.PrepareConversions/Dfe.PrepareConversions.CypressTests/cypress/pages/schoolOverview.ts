@@ -1,9 +1,10 @@
 /// <reference types="cypress" />
-
 import BasePage from './basePage';
 
-export default class SchoolOverview extends BasePage {
-    static selectors = {
+class SchoolOverview extends BasePage {
+    public path = 'school-overview';
+
+    private selectors = {
         // IDs (without #)
         panId: 'published-admission-number',
         viabilityIssuesId: 'viability-issues',
@@ -22,30 +23,29 @@ export default class SchoolOverview extends BasePage {
         distanceLink: 'change-distance-to-trust-headquarters',
         mpLink: 'change-member-of-parliament-name-and-party',
         // Other selectors
-        completeCheckbox: '[name="school-overview-complete"]',
+        completeCheckbox: 'school-overview-complete',
     };
 
-    static path = 'school-overview';
-
-    static getPan(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getPan(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.panId);
     }
 
-    static changePan(newPanNumber: string): void {
+    public changePan(newPanNumber: string): this {
         cy.checkPath(this.path);
         cy.getByDataTest(this.selectors.panLink).click();
         cy.getById(this.selectors.panId).clear();
         cy.getById(this.selectors.panId).type(newPanNumber);
         cy.saveContinue().click();
+        return this;
     }
 
-    static getViabilityIssues(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getViabilityIssues(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.viabilityIssuesId);
     }
 
-    static changeViabilityIssues(viabilityIssues: boolean): void {
+    public changeViabilityIssues(viabilityIssues: boolean): this {
         cy.checkPath(this.path);
         cy.getByDataTest(this.selectors.viabilityIssuesLink).click();
         if (viabilityIssues) {
@@ -54,24 +54,25 @@ export default class SchoolOverview extends BasePage {
             cy.NoRadioBtn().check();
         }
         cy.saveContinue().click();
+        return this;
     }
 
-    static getFinancialDeficit(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getFinancialDeficit(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.financialDeficitId);
     }
 
-    static getPFI(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getPFI(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.pfiId);
     }
 
-    static getPFIDetails(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getPFIDetails(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.pfiDetailsId);
     }
 
-    static changePFI(pfi: boolean, description = ''): void {
+    public changePFI(pfi: boolean, description = ''): this {
         cy.checkPath(this.path);
         cy.getByDataTest(this.selectors.pfiLink).click();
         if (pfi) {
@@ -82,19 +83,20 @@ export default class SchoolOverview extends BasePage {
             cy.NoRadioBtn().check();
         }
         cy.saveContinue().click();
+        return this;
     }
 
-    static getDistance(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getDistance(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.distanceId);
     }
 
-    static getDistanceDetails(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getDistanceDetails(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.distanceDetailsId);
     }
 
-    static changeDistance(distance: string, description = ''): void {
+    public changeDistance(distance: string, description = ''): this {
         cy.checkPath(this.path);
         cy.getByDataTest(this.selectors.distanceLink).click();
         cy.getById(this.selectors.distanceId).clear();
@@ -102,28 +104,36 @@ export default class SchoolOverview extends BasePage {
         cy.getById(this.selectors.distanceDetailsInputId).clear();
         cy.getById(this.selectors.distanceDetailsInputId).type(description);
         cy.saveContinue().click();
+        return this;
     }
 
-    static getMP(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getMP(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.mpId);
     }
 
-    static changeMP(mp: string): void {
+    public changeMP(mp: string): this {
         cy.checkPath(this.path);
         cy.getByDataTest(this.selectors.mpLink).click();
         cy.getById(this.selectors.mpId).clear();
         cy.getById(this.selectors.mpId).type(mp);
         cy.saveContinue().click();
+        return this;
     }
 
-    static markComplete(): void {
+    public markComplete(): this {
         cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).check();
+        cy.get(`#${this.selectors.completeCheckbox}`).check();
+        return this;
     }
 
-    static markIncomplete(): void {
+    public markIncomplete(): this {
         cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).uncheck();
+        cy.get(`#${this.selectors.completeCheckbox}`).uncheck();
+        return this;
     }
 }
+
+const schoolOverview = new SchoolOverview();
+
+export default schoolOverview;

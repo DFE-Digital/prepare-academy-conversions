@@ -1,7 +1,7 @@
 import BasePage from './basePage';
 
 class OutgoingTrustDetailsPage extends BasePage {
-    public slug: string = 'transfers/outgoingtrustdetails';
+    public path: string = 'transfers/outgoingtrustdetails';
 
     public checkTrustDetails(trustInfo: { name: string; companiesHouseNo: string; ukPrn: string }): this {
         cy.get('.govuk-summary-list').as('outgoingTrustInfo');

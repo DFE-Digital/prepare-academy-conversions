@@ -1,12 +1,13 @@
 /// <reference types="cypress" />
-
 import BasePage from './basePage';
 
-export default class PublicSectorEqualityDutyImpact extends BasePage {
-    static selectors = {
+class PublicSectorEqualityDutyImpact extends BasePage {
+    public path = 'public-sector-equality-duty';
+
+    private selectors = {
         psedChangeLink: '[data-test="change-reduce-impact-reason-label"]',
         confirmButton: '[id="confirm-and-continue-button"]',
-        completeCheckbox: '[id="public-sector-equality-duty-complete"]',
+        completeCheckbox: 'public-sector-equality-duty-complete',
         unLikely: '[data-cy="select-radio-psed-impact-unlikely"]',
         someImpact: '[data-cy="select-radio-psed-impact-someimpact"]',
         likely: '[data-cy="select-radio-psed-impact-likely"]',
@@ -17,9 +18,7 @@ export default class PublicSectorEqualityDutyImpact extends BasePage {
         saveButton: '[data-cy="select-common-submitbutton"]',
     };
 
-    static path = 'public-sector-equality-duty';
-
-    static changePsed(psedUnlikeyConsideration: string): void {
+    public changePsed(psedUnlikeyConsideration: string): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.psedChangeLink).click();
         if (psedUnlikeyConsideration == 'Unlikely') {
@@ -30,42 +29,50 @@ export default class PublicSectorEqualityDutyImpact extends BasePage {
             cy.get(this.selectors.likely).check();
         }
         cy.get(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getPsed(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getPsed(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.psedValue);
     }
 
-    static enterImpactReason(): void {
+    public enterImpactReason(): this {
         cy.get(this.selectors.psedReasonInput).clear();
         cy.get(this.selectors.psedReasonInput).type('Test PSED reason');
         cy.get(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getImpactReason(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getImpactReason(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.psedReasonValue);
     }
 
-    static markComplete(): void {
+    public markComplete(): this {
         cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).check();
+        cy.get(`#${this.selectors.completeCheckbox}`).check();
+        return this;
     }
 
-    static markIncomplete(): void {
+    public markIncomplete(): this {
         cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).uncheck();
+        cy.get(`#${this.selectors.completeCheckbox}`).uncheck();
+        return this;
     }
 
-    static getErrorMessage(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getErrorMessage(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.psedErrorMessage);
     }
 
-    static clickSaveBtnWithoutReason(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public clickSaveBtnWithoutReason(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         cy.get(this.selectors.psedReasonInput).clear();
         return cy.get(this.selectors.saveButton).click();
     }
 }
+
+const publicSectorEqualityDutyImpact = new PublicSectorEqualityDutyImpact();
+
+export default publicSectorEqualityDutyImpact;

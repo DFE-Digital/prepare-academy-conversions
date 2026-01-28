@@ -1,6 +1,9 @@
 import { AcademisationApiKey, AcademisationApiUrl } from '../constants/cypressConstants';
+import FormBasePage from './formBasePage';
 
-export class NewTransferProjectWithDecisions {
+class NewTransferProjectWithDecisions extends FormBasePage {
+    public path = 'transfers';
+
     public visit(url: string): this {
         cy.visit(url);
         return this;
@@ -55,29 +58,9 @@ export class NewTransferProjectWithDecisions {
         return this;
     }
 
-    public makeDecision(decisionId: string): this {
-        cy.getById(`${decisionId}-radio`).click();
-        cy.clickSubmitBtn();
-        return this;
-    }
-
-    public enterDecisionMakerName(name: string): this {
-        cy.getById('decision-maker-name').type(name);
-        cy.clickSubmitBtn();
-        return this;
-    }
-
     public addPerformanceConcerns(concernsText: string): this {
         cy.getById('performanceconcerns-checkbox').check();
         cy.getById('performanceconcerns-txtarea').type(concernsText);
-        cy.clickSubmitBtn();
-        return this;
-    }
-
-    public enterDecisionDate(day: string, month: string, year: string): this {
-        cy.getById('decision-date-day').type(day);
-        cy.getById('decision-date-month').type(month);
-        cy.getById('decision-date-year').type(year);
         cy.clickSubmitBtn();
         return this;
     }
@@ -119,3 +102,8 @@ export class NewTransferProjectWithDecisions {
         return this;
     }
 }
+
+const newTransferProjectWithDecisions = new NewTransferProjectWithDecisions();
+
+export { NewTransferProjectWithDecisions };
+export default newTransferProjectWithDecisions;

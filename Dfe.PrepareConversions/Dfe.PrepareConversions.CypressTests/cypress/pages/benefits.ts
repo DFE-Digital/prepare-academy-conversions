@@ -1,5 +1,7 @@
-class BenefitsPage {
-    public slug = 'benefits';
+import BasePage from './basePage';
+
+class BenefitsPage extends BasePage {
+    public path = 'benefits';
 
     public completeBenefits(): this {
         cy.getByDataTest('intended-benefits').click();
@@ -25,7 +27,7 @@ class BenefitsPage {
         cy.getById('IntendedBenefitsViewModel_OtherBenefit').should('be.visible');
         cy.getById('IntendedBenefitsViewModel_OtherBenefit').type('Cypress benefit');
 
-        cy.containsText('Save and continue').click();
+        this.saveAndContinue();
 
         // Check the table has been updated
         cy.get('dd').eq(0).should('contain.text', 'Other: Cypress benefit');
@@ -41,7 +43,7 @@ class BenefitsPage {
         // Choose 'Yes' Radio button
         cy.get('[value="true"]').click();
 
-        cy.containsText('Save and continue').click();
+        this.saveAndContinue();
 
         // Check the labels of the radios
         cy.get('.govuk-checkboxes__item').then(($risks) => {
@@ -55,14 +57,14 @@ class BenefitsPage {
 
         cy.getByDataTest('OtherRisks').click();
 
-        cy.containsText('Save and continue').click();
+        this.saveAndContinue();
 
         cy.get('h1').should('contain.text', 'What other risks are there? (optional)');
 
         cy.getByDataTest('high-profile-transfer').clear();
         cy.getByDataTest('high-profile-transfer').type('Cypress risks');
 
-        cy.containsText('Save and continue').click();
+        this.saveAndContinue();
 
         // Check the table has been updated
         cy.get('dd').eq(2).should('contain.text', 'Yes');
@@ -79,7 +81,7 @@ class BenefitsPage {
         // Choose 'Yes' Radio button
         cy.get('[value="true"]').click();
 
-        cy.containsText('Save and continue').click();
+        this.saveAndContinue();
 
         // Check the table has been updated
         cy.get('dd').eq(6).should('contain.text', 'Yes');
@@ -88,13 +90,12 @@ class BenefitsPage {
     }
 
     public markAsComplete(): this {
-        cy.getByDataTest('mark-section-complete').click();
+        this.markSectionComplete();
         return this;
     }
 
     public confirmBenefitsRisks(): this {
-        cy.containsText('Confirm and continue').click();
-
+        this.confirmAndContinue();
         return this;
     }
 }

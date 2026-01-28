@@ -1,5 +1,7 @@
-class RationalePage {
-    public slug = 'rationale';
+import BasePage from './basePage';
+
+class RationalePage extends BasePage {
+    public path = 'rationale';
 
     public completeRationale(): this {
         cy.getByDataTest('project-rationale').click();
@@ -9,7 +11,7 @@ class RationalePage {
         cy.getByDataTest('project-rationale').clear();
         cy.getByDataTest('project-rationale').type('Cypress project rationale');
 
-        cy.containsText('Save and continue').click();
+        this.saveAndContinue();
 
         // Check the table has been updated
         cy.get('dd').eq(0).should('contain.text', 'Cypress project rationale');
@@ -25,7 +27,7 @@ class RationalePage {
         cy.getByDataTest('trust-rationale').clear();
         cy.getByDataTest('trust-rationale').type('Cypress trust rationale');
 
-        cy.containsText('Save and continue').click();
+        this.saveAndContinue();
 
         // Check the table has been updated
         cy.get('dd').eq(2).should('contain.text', 'Cypress trust rationale');
@@ -34,13 +36,12 @@ class RationalePage {
     }
 
     public markAsComplete(): this {
-        cy.getByDataTest('mark-section-complete').click();
+        this.markSectionComplete();
         return this;
     }
 
     public confirmRationale(): this {
-        cy.containsText('Confirm and continue').click();
-
+        this.confirmAndContinue();
         return this;
     }
 }

@@ -1,68 +1,75 @@
 /// <reference types="cypress" />
 import BasePage from './basePage';
 
-export default class projectList extends BasePage {
-    static path = 'project-list';
+class ProjectList extends BasePage {
+    public path = 'project-list';
 
-    static checkProjectListPage(): void {
+    public checkProjectListPage(): this {
         cy.url().should('include', this.path);
+        return this;
     }
 
-    static getNthProject(n = 1): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getNthProject(n = 1): Cypress.Chainable<JQuery<HTMLElement>> {
         this.checkProjectListPage();
         return cy.getById(`school-name-${n}`);
     }
 
-    static getNthProjectDeliveryOfficer(n = 1): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getNthProjectDeliveryOfficer(n = 1): Cypress.Chainable<JQuery<HTMLElement>> {
         this.checkProjectListPage();
         return cy.getById(`assigned-to-${n}`);
     }
 
-    static filterProjectList(titleFilter: string): void {
+    public filterProjectList(titleFilter: string): this {
         const filterQuery = `?Title=${encodeURIComponent(titleFilter)}`;
         cy.visit(`/${this.path}${filterQuery}`);
+        return this;
     }
 
-    static filterByRegion(region: string): void {
+    public filterByRegion(region: string): this {
         this.filterProjectList(region);
+        return this;
     }
 
-    static filterByStatus(status: string): void {
+    public filterByStatus(status: string): this {
         this.filterProjectList(status);
+        return this;
     }
 
-    static filterByAdvisoryBoardDate(advisoryBoardDate: string): void {
+    public filterByAdvisoryBoardDate(advisoryBoardDate: string): this {
         this.filterProjectList(advisoryBoardDate);
+        return this;
     }
 
-    static filterByTitle(title: string): void {
+    public filterByTitle(title: string): this {
         this.filterProjectList(title);
+        return this;
     }
 
-    static selectFirstItem(): void {
+    public selectFirstItem(): this {
         this.checkProjectListPage();
         this.getNthProject().click();
+        return this;
     }
 
-    static selectProject(projectName = 'Gloucester school'): Cypress.Chainable<number | string> {
+    public selectProject(projectName = 'Gloucester school'): Cypress.Chainable<number | string> {
         this.filterProjectList(projectName);
         this.selectFirstItem();
         return cy.url().then((url) => this.getIdFromUrl(url));
     }
 
-    static filterProject(projectName = 'Gloucester school'): typeof projectList {
+    public filterProject(projectName = 'Gloucester school'): this {
         this.filterProjectList(projectName);
         return this;
     }
 
-    static selectVoluntaryProject(): Cypress.Chainable<number | string> {
+    public selectVoluntaryProject(): Cypress.Chainable<number | string> {
         cy.login({ titleFilter: 'Voluntary Cypress Project' });
         cy.getById('school-name-0').click();
 
         return cy.url().then((url) => this.getIdFromUrl(url));
     }
 
-    static getIdFromUrl(url: string): number | string {
+    public getIdFromUrl(url: string): number | string {
         const urlSplit = url.toString().split('/');
         for (let i = urlSplit.length - 1; i > 0; i--) {
             const potentialId = parseInt(urlSplit[i]);
@@ -73,3 +80,7 @@ export default class projectList extends BasePage {
         return '';
     }
 }
+
+const projectList = new ProjectList();
+
+export default projectList;

@@ -1,16 +1,16 @@
-class HomePage {
-    public slug = 'home';
+import BasePage from './basePage';
+
+class HomePage extends BasePage {
+    public path = 'home';
 
     public startCreateNewTransfer(): this {
         cy.getByDataTest('create-transfer').click();
-
         return this;
     }
 
     public projectsCountShouldBeVisible(): this {
         cy.getByDataCy('select-projectlist-filter-count').should('be.visible');
         cy.getByDataCy('select-projectlist-filter-count').should('contain.text', 'projects found');
-
         return this;
     }
 
@@ -30,7 +30,6 @@ class HomePage {
         cy.getByDataCy('select-projectlist-filter-expand').click();
         if (isOpen) cy.get('details').should('have.attr', 'open');
         else cy.get('details').should('not.have.attr', 'open');
-
         return this;
     }
 
@@ -53,7 +52,6 @@ class HomePage {
 
     public clearFilters(): this {
         cy.getByDataCy('clear-filter').click();
-
         return this;
     }
 

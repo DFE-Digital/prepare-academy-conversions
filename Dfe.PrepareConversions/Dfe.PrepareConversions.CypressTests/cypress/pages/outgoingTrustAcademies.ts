@@ -1,29 +1,33 @@
 import BasePage from './basePage';
 
 class OutgoingTrustAcademiesPage extends BasePage {
-    public slug = 'transfers/outgoingtrustacademies';
+    public path = 'transfers/outgoingtrustacademies';
 
     public selectMultipleAcademies(academies): this {
         academies.array.forEach((academy) => {
             this.selectSingleAcademy(academy);
         });
-
         return this;
     }
 
     public selectSingleAcademy(academy): this {
         cy.get('.govuk-checkboxes').contains(academy).click();
-
         return this;
     }
-    selectOptionYes() {
+
+    public selectOptionYes(): this {
         cy.getByDataTest('true').click();
+        return this;
     }
-    selectOptionById(optionId: string) {
+
+    public selectOptionById(optionId: string): this {
         cy.getById(optionId).click();
+        return this;
     }
-    submitForm() {
+
+    public submitForm(): this {
         cy.get('[type="submit"]').click();
+        return this;
     }
 }
 

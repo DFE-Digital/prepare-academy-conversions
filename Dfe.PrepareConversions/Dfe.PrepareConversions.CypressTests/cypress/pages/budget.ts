@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-
 import BasePage from './basePage';
 
 const currentYear = new Date();
@@ -15,8 +14,10 @@ interface BudgetInfo {
     forecastedCapitalNextYear: number;
 }
 
-export default class Budget extends BasePage {
-    static selectors = {
+class Budget extends BasePage {
+    public path = 'budget';
+
+    private selectors = {
         // data-test values
         changeEndOfFinancialYearLink: 'change-financial-year',
         // IDs (without #)
@@ -37,16 +38,14 @@ export default class Budget extends BasePage {
         saveButton: 'select-common-submitbutton',
     };
 
-    static path = 'budget';
-
-    static updateBudgetInfomation({
+    public updateBudgetInfomation({
         endOfFinanicalYear,
         forecastedRevenueCurrentYear,
         forecastedCapitalCurrentYear,
         endOfNextFinancialYear,
         forecastedRevenueNextYear,
         forecastedCapitalNextYear,
-    }: BudgetInfo): void {
+    }: BudgetInfo): this {
         let financialYear = endOfFinanicalYear;
         let nextFinancialYear = endOfNextFinancialYear;
 
@@ -84,45 +83,52 @@ export default class Budget extends BasePage {
         cy.getById(this.selectors.nextFinancialYearCapitalInput).type(String(forecastedCapitalNextYear));
 
         cy.getByDataCy(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getCurrentFinancialYear(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getCurrentFinancialYear(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.currentFinancialYearValue);
     }
 
-    static getCurrentRevenue(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getCurrentRevenue(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.currentFinancialYearRevenueInput);
     }
 
-    static getCurrentCapital(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getCurrentCapital(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.currentFinancialYearCapitalInput);
     }
 
-    static getNextFinancialYear(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getNextFinancialYear(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.nextFinancialYearValue);
     }
 
-    static getNextRevenue(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getNextRevenue(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.nextFinancialYearRevenueInput);
     }
 
-    static getNextCapital(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getNextCapital(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.getById(this.selectors.nextFinancialYearCapitalInput);
     }
 
-    static markComplete(): void {
+    public markComplete(): this {
         cy.checkPath(this.path);
-        cy.getById(this.selectors.completeCheckbox).check();
+        cy.get(`#${this.selectors.completeCheckbox}`).check();
+        return this;
     }
 
-    static markIncomplete(): void {
+    public markIncomplete(): this {
         cy.checkPath(this.path);
-        cy.getById(this.selectors.completeCheckbox).uncheck();
+        cy.get(`#${this.selectors.completeCheckbox}`).uncheck();
+        return this;
     }
 }
+
+const budget = new Budget();
+
+export default budget;

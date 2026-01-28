@@ -1,13 +1,11 @@
 import BasePage from './basePage';
 
 class IncomingTrustSearchResultsPage extends BasePage {
-    public slug = 'transfers/searchincomingtrust';
+    public path = 'transfers/searchincomingtrust';
 
     public selectTrust(trustName): this {
         cy.get('label').contains(trustName).click();
-
         this.continue();
-
         return this;
     }
 }

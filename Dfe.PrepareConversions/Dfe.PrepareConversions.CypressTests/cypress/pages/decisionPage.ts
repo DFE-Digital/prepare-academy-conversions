@@ -1,59 +1,25 @@
 import { Logger } from '../support/logger';
+import FormBasePage from './formBasePage';
 
-export class DecisionPage {
-    searchSchool(schoolName: string): this {
-        cy.getById('SearchQuery').type(schoolName);
-        cy.get('.autocomplete__input--default').first().click();
-        return this;
-    }
+class DecisionPage extends FormBasePage {
+    public path = 'decision';
 
-    clickContinue(): this {
-        cy.getByDataId('submit').click();
-        return this;
-    }
-
-    selectNoAndContinue(): this {
-        cy.getByDataCy('select-legal-input-no').click();
-        cy.getByDataCy('select-common-submitbutton').click();
-        return this;
-    }
-
-    assertSchoolDetails(schoolName: string, urn: string, localAuthority: string, schoolType: string): this {
-        cy.getByDataCy('school-name').should('contain', schoolName);
-        cy.get('.govuk-summary-list__value').eq(1).should('contain', urn);
-        cy.get('.govuk-summary-list__value').eq(3).should('contain', localAuthority);
-        cy.get('.govuk-summary-list__value').eq(5).should('contain', schoolType);
-        return this;
-    }
-
-    clickOnFirstProject(): this {
-        cy.getByDataCy('select-projectlist-filter-title').type('Manchester Academy');
-        this.clickApplyFilters();
-        cy.getByDataCy('trust-name-Manchester Academy-0').click();
-        return this;
-    }
-
-    clickApplyFilters(): this {
-        cy.getByDataCy('select-projectlist-filter-apply').first().click();
-        return this;
-    }
-
-    clickRecordDecisionMenu(): this {
+    public clickRecordDecisionMenu(): this {
         cy.getByDataCy('record_decision_menu').click();
         return this;
     }
 
-    clickRecordDecision(): this {
+    public clickRecordDecision(): this {
         cy.getByDataCy('record_decision_btn').click();
         return this;
     }
 
-    clickRecordDecisionWithoutError(): this {
+    public clickRecordDecisionWithoutError(): this {
         cy.getByDataCy('record_decision_btn').click();
         return this;
     }
 
-    checkErrorAndAddDetails(day: string, month: string, year: string, userName: string): this {
+    public checkErrorAndAddDetails(day: string, month: string, year: string, userName: string): this {
         cy.get('.govuk-error-summary').should('be.visible');
         cy.getById('error-summary-title').should('contain', 'There is a problem');
         cy.getByDataCy('error-summary')
@@ -123,31 +89,19 @@ export class DecisionPage {
         return this;
     }
 
-    makeDecision(decision: string): this {
-        cy.getById(`${decision}-radio`).click();
-        cy.clickSubmitBtn();
-        return this;
-    }
-
-    decsionMaker(grade: string): this {
+    public decisionMaker(grade: string): this {
         cy.getById(`${grade}-radio`).click();
         cy.clickSubmitBtn();
         return this;
     }
 
-    enterDecisionMakerName(name: string): this {
-        cy.getById('decision-maker-name').type(name);
-        cy.clickSubmitBtn();
-        return this;
-    }
-
-    selectNoConditions(): this {
+    public selectNoConditions(): this {
         cy.getById('no-radio').click();
         cy.clickSubmitBtn();
         return this;
     }
 
-    selectReasonWhyDeferred(): this {
+    public selectReasonWhyDeferred(): this {
         cy.getById('additionalinformationneeded-checkbox').click();
         cy.getById('additionalinformationneeded-txtarea').type(
             'Fahads Cypress Reason is Additional Information Needed'
@@ -156,15 +110,7 @@ export class DecisionPage {
         return this;
     }
 
-    enterDecisionDate(day: string, month: string, year: string): this {
-        cy.getById('decision-date-day').type(day);
-        cy.getById('decision-date-month').type(month);
-        cy.getById('decision-date-year').type(year);
-        cy.clickSubmitBtn();
-        return this;
-    }
-
-    dateAOWasSent(day: string, month: string, year: string): this {
+    public dateAOWasSent(day: string, month: string, year: string): this {
         cy.getById('academy-order-date-day').type(day);
         cy.getById('academy-order-date-month').type(month);
         cy.getById('academy-order-date-year').type(year);
@@ -172,7 +118,7 @@ export class DecisionPage {
         return this;
     }
 
-    verifyDecisionDetails(decision: string, grade: string, name: string, date: string): this {
+    public verifyDecisionDetails(decision: string, grade: string, name: string, date: string): this {
         Logger.log(`Decision: ${decision}, Name: ${name}, Date: ${date}`);
         cy.log(`Decision: ${decision}, Name: ${name}, Date: ${date}`);
         cy.getById('decision')
@@ -187,7 +133,7 @@ export class DecisionPage {
         return this;
     }
 
-    verifyDecisionDetailsBeforeChanging(decision: string, name: string, date: string): this {
+    public verifyDecisionDetailsBeforeChanging(decision: string, name: string, date: string): this {
         Logger.log(`Decision: ${decision}, Name: ${name}, Date: ${date}`);
         cy.log(`Decision: ${decision}, Name: ${name}, Date: ${date}`);
         cy.getById('decision')
@@ -200,7 +146,7 @@ export class DecisionPage {
         return this;
     }
 
-    verifyDecisionDetailsAfterChanging(decision: string, name: string, date: string): this {
+    public verifyDecisionDetailsAfterChanging(decision: string, name: string, date: string): this {
         cy.getById('decision')
             .invoke('text')
             .then((text) => {
@@ -212,7 +158,7 @@ export class DecisionPage {
         return this;
     }
 
-    changeDecisionDetails(): this {
+    public changeDecisionDetails(): this {
         cy.getByDataCy('record_decision_menu').click();
         this.verifyDecisionDetailsBeforeChanging('DEFERRED', 'Fahad Darwish', '12 December 2023');
         cy.getById('record-decision-link').click();
@@ -239,7 +185,7 @@ export class DecisionPage {
         return this;
     }
 
-    changeDecisionDAODetails(): this {
+    public changeDecisionDAODetails(): this {
         cy.getByDataCy('record_decision_menu').click();
         cy.getById('record-decision-link').click();
         cy.getById('daorevoked-radio').click();
@@ -262,7 +208,7 @@ export class DecisionPage {
         return this;
     }
 
-    changeDecisionApproved(): this {
+    public changeDecisionApproved(): this {
         cy.getByDataCy('record_decision_menu').click();
         cy.getById('record-decision-link').click();
         cy.getById('approved-radio').click();
@@ -290,13 +236,11 @@ export class DecisionPage {
         return this;
     }
 
-    deleteProject(projectId: string): void {
-        cy.callAcademisationApi('DELETE', `/conversion-project/${projectId}/Delete`).then((response) => {
-            expect(response.status).to.eq(200);
-        });
+    public deleteProject(projectId: string): void {
+        this.deleteConversionProject(projectId);
     }
 
-    clickToGoBackandCheckReadOnly(): this {
+    public clickToGoBackandCheckReadOnly(): this {
         cy.getByDataCy('select-backlink').click();
         cy.getByDataCy('record_decision_menu').click();
         cy.getByDataCy('approved-message_banner').should('be.visible').and('contain', 'This project was approved');
@@ -304,10 +248,13 @@ export class DecisionPage {
         return this;
     }
 
-    goBackToTaskList(): this {
+    public goBackToTaskList(): this {
         cy.getByDataCy('back-link').click();
         return this;
     }
 }
 
-export const decisionPage = new DecisionPage();
+const decisionPage = new DecisionPage();
+
+export { decisionPage };
+export default decisionPage;

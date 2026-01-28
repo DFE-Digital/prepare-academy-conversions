@@ -1,5 +1,7 @@
-class SchoolDataPage {
-    public slug = 'school-data';
+import BasePage from './basePage';
+
+class SchoolDataPage extends BasePage {
+    public path = 'school-data';
 
     public checkGeneralInformation(): this {
         cy.getByDataTest('general-information').click();
@@ -115,8 +117,7 @@ class SchoolDataPage {
     }
 
     public confirm(): this {
-        cy.containsText('Confirm and continue').click();
-
+        this.confirmAndContinue();
         return this;
     }
 }

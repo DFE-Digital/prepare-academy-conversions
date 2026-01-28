@@ -1,5 +1,7 @@
-class DownloadPage {
-    public slug = 'advisory-board/download';
+import BasePage from './basePage';
+
+class DownloadPage extends BasePage {
+    public path = 'advisory-board/download';
 
     public downloadProjectTemplate(): this {
         cy.get('h1').should('contain.text', 'Download project template');

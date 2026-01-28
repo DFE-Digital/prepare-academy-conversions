@@ -1,9 +1,8 @@
 /// <reference types="cypress" />
-
 import BasePage from './basePage';
 
-export default class Performance extends BasePage {
-    static selectors = {
+class Performance extends BasePage {
+    private selectors = {
         ofstedInfoText:
             'This information comes from Ofsted. It is for reference only. It will not appear in the project document.',
         keyStageText:
@@ -15,23 +14,32 @@ export default class Performance extends BasePage {
         keyStageLinkTextId: ':nth-child(4) > .govuk-link',
     };
 
-    static keyStagePath = (keyStageNumber: number): string => `key-stage-${keyStageNumber}-performance-tables`;
+    public keyStagePath(keyStageNumber: number): string {
+        return `key-stage-${keyStageNumber}-performance-tables`;
+    }
 
-    static verifyKeyStageScreenText(urn: string): void {
+    public verifyKeyStageScreenText(urn: string): this {
         cy.get(this.selectors.keyStageTextId).should('contain.text', this.selectors.keyStageText);
         cy.get(this.selectors.keyStageLinkTextId).should('have.text', this.selectors.keyStageLinkText);
         cy.get(this.selectors.keyStageLinkTextId)
             .should('contain.text', this.selectors.keyStageLinkText)
             .should('have.attr', 'href')
             .and('include', this.selectors.keyStageLink(urn));
+        return this;
     }
 
-    static verifyOfsteadScreenText(): void {
+    public verifyOfsteadScreenText(): this {
         cy.get(this.selectors.ofstedInfoTextId).should('contain.text', this.selectors.ofstedInfoText);
+        return this;
     }
 
-    static changeKeyStageInfo(keyStageNumber: number): void {
+    public changeKeyStageInfo(keyStageNumber: number): this {
         cy.checkPath(this.keyStagePath(keyStageNumber));
-        cy.get(`[data-cy="key-stage-${keyStageNumber}-back-btn"]`).click();
+        cy.getByDataCy(`key-stage-${keyStageNumber}-back-btn`).click();
+        return this;
     }
 }
+
+const performance = new Performance();
+
+export default performance;

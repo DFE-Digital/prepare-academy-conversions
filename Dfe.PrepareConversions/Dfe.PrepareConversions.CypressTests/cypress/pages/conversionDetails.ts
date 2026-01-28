@@ -1,11 +1,12 @@
 /// <reference types="cypress" />
-
 import BasePage from './basePage';
 
 const today = new Date();
 
-export default class ConversionDetails extends BasePage {
-    static selectors = {
+class ConversionDetails extends BasePage {
+    public path = 'conversion-details';
+
+    private selectors = {
         saveButton: '[data-cy="select-common-submitbutton"]',
         form7ReceivedLink: '[data-test="change-form-7-received"]',
         form7ReveicedValue: '[id="form-7-received"]',
@@ -45,66 +46,68 @@ export default class ConversionDetails extends BasePage {
         clearedByLink: '[data-test="change-cleared-by"]',
         clearedByValue: '[id="cleared-by"]',
         clearedByInput: '[id="cleared-by"]',
-        completeCheckbox: '[id="school-and-trust-information-complete"]',
+        completeCheckbox: 'school-and-trust-information-complete',
     };
 
-    static path = 'conversion-details';
-
-    static setForm7Receivied(status = 'Yes'): void {
+    public setForm7Receivied(status = 'Yes'): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.form7ReceivedLink).click();
         cy.RadioBtn(status).check();
         cy.get(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getForm7Receivied(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getForm7Receivied(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.form7ReveicedValue);
     }
 
-    static setForm7Date(date: Date = today): void {
+    public setForm7Date(date: Date = today): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.form7DateLink).click();
         cy.enterDate(this.selectors.form7DateInput, date.getDate(), date.getMonth() + 1, date.getFullYear());
         cy.get(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getForm7Date(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getForm7Date(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.form7DateValue);
     }
 
     // DAO
 
-    static setDAODate(date: Date = today): void {
+    public setDAODate(date: Date = today): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.DAOLink).click();
         cy.enterDate(this.selectors.DAODateInput, date.getDate(), date.getMonth() + 1, date.getFullYear());
         cy.get(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getDAODate(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getDAODate(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.DAOValue);
     }
 
     // Funding
 
-    static setFundingType(type = 'Full'): void {
+    public setFundingType(type = 'Full'): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.fundingTypeLink).click();
         cy.RadioBtn(type).check();
         //Save button twice to get back to the details page
         cy.get(this.selectors.saveButton).click();
         cy.get(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getFundingType(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getFundingType(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.fundingTypeValue);
     }
 
-    static setFundingAmount(useDefaultAmount = false, amount = 20000): void {
+    public setFundingAmount(useDefaultAmount = false, amount = 20000): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.fundingAmountLink).click();
         if (useDefaultAmount) {
@@ -115,27 +118,29 @@ export default class ConversionDetails extends BasePage {
             cy.get(this.selectors.fundingAmountInput).type(String(amount));
         }
         cy.get(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getFundingAmount(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getFundingAmount(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.fundingAmountValue);
     }
 
-    static setFundingReason(reason = 'Funding Reason'): void {
+    public setFundingReason(reason = 'Funding Reason'): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.fundingAmountLink).click();
         cy.get(this.selectors.fundingAmountReasonInput).clear();
         cy.get(this.selectors.fundingAmountReasonInput).type(reason);
         cy.get(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getFundingReason(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getFundingReason(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.fundingAmountReasonValue);
     }
 
-    static setEIG(value = true): void {
+    public setEIG(value = true): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.EIGLink).click();
         if (value) {
@@ -144,14 +149,15 @@ export default class ConversionDetails extends BasePage {
             cy.get(this.selectors.EIGNoRadio).check();
         }
         cy.get(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getEIG(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getEIG(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.EIGValue);
     }
 
-    static setPreviousAdvisoryBoardDate(previousBoard = true, date: Date = today): void {
+    public setPreviousAdvisoryBoardDate(previousBoard = true, date: Date = today): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.previousAdvisoryBoardLink).click();
         if (previousBoard) {
@@ -167,50 +173,59 @@ export default class ConversionDetails extends BasePage {
             cy.NoRadioBtn().check();
         }
         cy.get(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getPreviousAdvisoryBoardDate(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getPreviousAdvisoryBoardDate(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.previousAdvisoryBoardValue);
     }
 
     // People
 
-    static setAuthor(author = 'Nicholas Warms'): void {
+    public setAuthor(author = 'Nicholas Warms'): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.authorLink).click();
         cy.get(this.selectors.authorInput).clear();
         cy.get(this.selectors.authorInput).type(author);
         cy.get(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getAuthor(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getAuthor(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.authorValue);
     }
 
-    static setClearedBy(clearedBy = 'Nicholas Warms'): void {
+    public setClearedBy(clearedBy = 'Nicholas Warms'): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.clearedByLink).click();
         cy.get(this.selectors.clearedByInput).clear();
         cy.get(this.selectors.clearedByInput).type(clearedBy);
         cy.get(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getClearedBy(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getClearedBy(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.clearedByValue);
     }
 
     // Complete
 
-    static markComplete(): void {
+    public markComplete(): this {
         cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).check();
+        cy.get(`#${this.selectors.completeCheckbox}`).check();
+        return this;
     }
 
-    static markIncomplete(): void {
+    public markIncomplete(): this {
         cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).uncheck();
+        cy.get(`#${this.selectors.completeCheckbox}`).uncheck();
+        return this;
     }
 }
+
+const conversionDetails = new ConversionDetails();
+
+export default conversionDetails;

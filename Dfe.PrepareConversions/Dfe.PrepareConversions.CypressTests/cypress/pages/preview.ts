@@ -1,5 +1,7 @@
-class PreviewPage {
-    public slug = 'advisory-board/preview';
+import BasePage from './basePage';
+
+class PreviewPage extends BasePage {
+    public path = 'advisory-board/preview';
 
     // Checks the section counts
     // Note: Does *not* check contents are valid

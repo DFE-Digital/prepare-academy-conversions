@@ -1,7 +1,7 @@
 import BasePage from './basePage';
 
 class CheckAnswersPage extends BasePage {
-    public slug = 'transfers/checkyouranswers';
+    public path = 'transfers/checkyouranswers';
 
     public checkDetails(outgoingTrust, incomingTrust): this {
         cy.get('.govuk-grid-column-full').as('trustAcademiesDetails');
@@ -18,7 +18,7 @@ class CheckAnswersPage extends BasePage {
         return this;
     }
 
-    public continue(): this {
+    public override continue(): this {
         cy.get('button.govuk-button').contains('Continue').click();
         return this;
     }

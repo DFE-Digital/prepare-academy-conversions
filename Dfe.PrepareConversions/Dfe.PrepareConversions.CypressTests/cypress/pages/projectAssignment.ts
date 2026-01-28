@@ -1,7 +1,7 @@
 import BasePage from './basePage';
 
 class ProjectAssignmentPage extends BasePage {
-    public slug = 'project-assignment';
+    public path = 'project-assignment';
 
     public assignDeliveryOfficer(deliveryOfficer: string): this {
         cy.getById('delivery-officer').type(deliveryOfficer);
@@ -12,9 +12,10 @@ class ProjectAssignmentPage extends BasePage {
 
     public unassignDeliveryOfficer(): this {
         cy.getById('unassign-link').click();
-
         return this;
     }
 }
+
 const projectAssignmentPage = new ProjectAssignmentPage();
+
 export default projectAssignmentPage;

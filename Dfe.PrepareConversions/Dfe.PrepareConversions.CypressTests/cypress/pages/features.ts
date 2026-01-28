@@ -1,5 +1,7 @@
-class FeaturesPage {
-    public slug = 'features';
+import BasePage from './basePage';
+
+class FeaturesPage extends BasePage {
+    public path = 'features';
 
     public completeReasonForTransfer(): this {
         // Click the first matched element
@@ -18,10 +20,10 @@ class FeaturesPage {
 
         cy.get('[value="Dfe"]').click();
 
-        cy.containsText('Save and continue').click();
+        this.saveAndContinue();
 
         cy.getById('Finance').click();
-        cy.containsText('Save and continue').click();
+        this.saveAndContinue();
 
         // Check the table has been updated
         cy.get('dd').eq(0).should('contain.text', 'Intervention');
@@ -49,7 +51,7 @@ class FeaturesPage {
 
         cy.get('[value="SatClosure"]').click();
 
-        cy.containsText('Save and continue').click();
+        this.saveAndContinue();
 
         // Check the table has been updated
         cy.get('dd').eq(4).should('contain.text', 'Closure of a SAT and the academy joining a MAT');
@@ -58,12 +60,12 @@ class FeaturesPage {
     }
 
     public markAsComplete(): this {
-        cy.getByDataTest('mark-section-complete').click();
+        this.markSectionComplete();
         return this;
     }
 
     public confirmFeatures(): this {
-        cy.containsText('Confirm and continue').click();
+        this.confirmAndContinue();
         return this;
     }
 }

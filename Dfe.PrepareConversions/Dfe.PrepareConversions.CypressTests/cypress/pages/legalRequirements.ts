@@ -1,5 +1,7 @@
-class LegalRequirementsPage {
-    public slug = 'legalrequirements';
+import BasePage from './basePage';
+
+class LegalRequirementsPage extends BasePage {
+    public path = 'legalrequirements';
 
     public completeResolution(): this {
         cy.get('a[href*="outgoing-trust-consent"]').click();
@@ -17,7 +19,7 @@ class LegalRequirementsPage {
 
         cy.get('[value="Yes"]').click();
 
-        cy.containsText('Save and continue').click();
+        this.saveAndContinue();
 
         // Check the table has been updated
         cy.get('dd').eq(0).should('contain.text', 'Yes');
@@ -41,7 +43,7 @@ class LegalRequirementsPage {
 
         cy.get('[value="Yes"]').click();
 
-        cy.containsText('Save and continue').click();
+        this.saveAndContinue();
 
         // Check the table has been updated
         cy.get('dd').eq(2).should('contain.text', 'Yes');
@@ -65,7 +67,7 @@ class LegalRequirementsPage {
 
         cy.get('[value="Yes"]').click();
 
-        cy.containsText('Save and continue').click();
+        this.saveAndContinue();
 
         // Check the table has been updated
         cy.get('dd').eq(4).should('contain.text', 'Yes');
@@ -74,13 +76,12 @@ class LegalRequirementsPage {
     }
 
     public markAsComplete(): this {
-        cy.getByDataTest('mark-section-complete').click();
+        this.markSectionComplete();
         return this;
     }
 
     public confirmLegalRequirements(): this {
-        cy.containsText('Confirm and continue').click();
-
+        this.confirmAndContinue();
         return this;
     }
 }

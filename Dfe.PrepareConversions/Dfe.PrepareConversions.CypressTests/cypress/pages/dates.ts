@@ -1,5 +1,7 @@
-class DatesPage {
-    public slug = 'features';
+import BasePage from './basePage';
+
+class DatesPage extends BasePage {
+    public path = 'features';
 
     public completeAdvisoryBoardDate(date): this {
         cy.getByDataTest('ab-date').click();
@@ -13,7 +15,7 @@ class DatesPage {
         cy.getByDataTest('year').clear();
         cy.getByDataTest('year').type(date.year());
 
-        cy.containsText('Save and continue').click();
+        this.saveAndContinue();
 
         // Check the table has been updated
         cy.get('dd').eq(0).should('contain.text', date.format('D MMMM YYYY'));
@@ -29,7 +31,7 @@ class DatesPage {
         cy.getByDataTest('year').clear();
         cy.getByDataTest('year').type(date.year());
 
-        cy.containsText('Save and continue').click();
+        this.saveAndContinue();
 
         // Check the table has been updated
         cy.get('dd').eq(4).should('contain.text', date.format('1 MMMM YYYY'));
@@ -38,8 +40,7 @@ class DatesPage {
     }
 
     public confirmDates(): this {
-        cy.containsText('Confirm and continue').click();
-
+        this.confirmAndContinue();
         return this;
     }
 }

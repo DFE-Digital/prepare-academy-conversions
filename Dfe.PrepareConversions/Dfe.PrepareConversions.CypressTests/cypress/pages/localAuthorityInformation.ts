@@ -1,9 +1,10 @@
 /// <reference types="cypress" />
-
 import BasePage from './basePage';
 
-export default class LocalAuthorityInfomation extends BasePage {
-    static selectors = {
+class LocalAuthorityInformation extends BasePage {
+    public path = 'confirm-local-authority-information-template-dates';
+
+    private selectors = {
         templateSentLink: '[data-test="change-la-info-template-sent-date"]',
         templateSentInput: 'la-info-template-sent-date',
         templateSentValue: '[id="la-info-template-sent-date"]',
@@ -17,12 +18,10 @@ export default class LocalAuthorityInfomation extends BasePage {
         sharepointLinkInput: '[id="la-info-template-sharepoint-link"]',
         sharepointLinkValue: '[id="la-info-template-sharepoint-link"]',
         saveButton: '[data-cy="select-common-submitbutton"]',
-        completeCheckbox: '[id="la-info-template-complete"]',
+        completeCheckbox: 'la-info-template-complete',
     };
 
-    static path = 'confirm-local-authority-information-template-dates';
-
-    static changeTemplateDates(sentDate: Date, returnedDate: Date): void {
+    public changeTemplateDates(sentDate: Date, returnedDate: Date): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.templateSentLink).click();
         cy.enterDate(
@@ -38,51 +37,60 @@ export default class LocalAuthorityInfomation extends BasePage {
             returnedDate.getFullYear()
         );
         cy.get(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getTemplateSentDate(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getTemplateSentDate(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.templateSentValue);
     }
 
-    static getTemplateReturnedDate(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getTemplateReturnedDate(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.templateReturnedValue);
     }
 
-    static changeComments(comment: string): void {
+    public changeComments(comment: string): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.commentsLink).click();
         cy.get(this.selectors.commentsInput).clear();
         cy.get(this.selectors.commentsInput).type(comment);
         cy.get(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getComments(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getComments(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.commentsValue);
     }
 
-    static changeSharepointLink(sharepointLink: string): void {
+    public changeSharepointLink(sharepointLink: string): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.sharepointLinkLink).click();
         cy.get(this.selectors.sharepointLinkInput).clear();
         cy.get(this.selectors.sharepointLinkInput).type(sharepointLink);
         cy.get(this.selectors.saveButton).click();
+        return this;
     }
 
-    static getSharepointLink(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getSharepointLink(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
         return cy.get(this.selectors.sharepointLinkValue);
     }
 
-    static markComplete(): void {
+    public markComplete(): this {
         cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).check();
+        cy.get(`#${this.selectors.completeCheckbox}`).check();
+        return this;
     }
 
-    static markIncomplete(): void {
+    public markIncomplete(): this {
         cy.checkPath(this.path);
-        cy.get(this.selectors.completeCheckbox).uncheck();
+        cy.get(`#${this.selectors.completeCheckbox}`).uncheck();
+        return this;
     }
 }
+
+const localAuthorityInformation = new LocalAuthorityInformation();
+
+export default localAuthorityInformation;
