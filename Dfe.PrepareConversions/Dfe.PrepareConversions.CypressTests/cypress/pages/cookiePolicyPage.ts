@@ -1,7 +1,7 @@
 class CookiePolicyPage {
     public slug = 'cookie-preferences';
 
-    private cookieName = '.ManageAnAcademyTransfer.Consent';
+    private cookieName = '.ManageAnAcademyConversion.Consent';
 
     public cookieBannerShouldBeVisible(): this {
         cy.getByDataTest('cookie-banner').should('be.visible');
