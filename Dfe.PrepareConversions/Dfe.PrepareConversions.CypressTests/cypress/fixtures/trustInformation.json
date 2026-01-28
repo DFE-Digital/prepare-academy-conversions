@@ -1,23 +1,23 @@
 [
-   {
-      "name": "Activate Learning Education Trust",
-      "companiesHouseNo": "08707909",
-      "type": "",
-      "ukPrn": "10060613",
-      "academies": [
-         "UTC Reading",
-         "UTC Oxfordshire",
-         "The Bicester School",
-         "UTC Swindon",
-         "Theale Green School",
-         "UTC Heathrow"
-      ]
-   },
-   {
-      "name": "The Bishop Fraser Trust",
-      "companiesHouseNo": "11005401",
-      "type": "",
-      "ukPrn": "10067113",
-      "academies": []
-   }
+    {
+        "name": "Activate Learning Education Trust",
+        "companiesHouseNo": "08707909",
+        "type": "",
+        "ukPrn": "10060613",
+        "academies": [
+            "UTC Reading",
+            "UTC Oxfordshire",
+            "The Bicester School",
+            "UTC Swindon",
+            "Theale Green School",
+            "UTC Heathrow"
+        ]
+    },
+    {
+        "name": "The Bishop Fraser Trust",
+        "companiesHouseNo": "11005401",
+        "type": "",
+        "ukPrn": "10067113",
+        "academies": []
+    }
 ]

@@ -13,5 +13,4 @@
 
 	<!-- duplication exclusions -->
 	<Property Name="sonar.cpd.exclusions">**/Dfe.PrepareConversions.CypressTests/cypress/e2e/**</Property>
-	<Property Name="sonar.cpd.exclusions">**/Dfe.PrepareConversions.CypressTests/cypress/pages/**</Property>
 </SonarQubeAnalysisProperties>
