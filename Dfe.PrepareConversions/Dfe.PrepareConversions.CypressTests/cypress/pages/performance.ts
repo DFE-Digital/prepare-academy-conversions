@@ -2,7 +2,7 @@
 import BasePage from './basePage';
 
 class Performance extends BasePage {
-    private selectors = {
+    private readonly selectors = {
         ofstedInfoText:
             'This information comes from Ofsted. It is for reference only. It will not appear in the project document.',
         keyStageText:

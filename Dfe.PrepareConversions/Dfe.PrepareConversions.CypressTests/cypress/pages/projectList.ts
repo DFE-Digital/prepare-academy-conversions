@@ -72,9 +72,9 @@ class ProjectList extends BasePage {
     public getIdFromUrl(url: string): number | string {
         const urlSplit = url.toString().split('/');
         for (let i = urlSplit.length - 1; i > 0; i--) {
-            const potentialId = parseInt(urlSplit[i]);
+            const potentialId = Number.parseInt(urlSplit[i]);
 
-            if (!isNaN(potentialId)) return potentialId;
+            if (!Number.isNaN(potentialId)) return potentialId;
         }
 
         return '';

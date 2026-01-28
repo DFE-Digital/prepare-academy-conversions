@@ -4,7 +4,7 @@ import BasePage from './basePage';
 class RisksAndIssues extends BasePage {
     public path = 'confirm-risks-issues';
 
-    private selectors = {
+    private readonly selectors = {
         rationaleLink: '[data-test="change-risks-and-issues"]',
         rationaleInput: '[id="risks-and-issues"]',
         rationaleValue: '[id="risks-and-issues"]',

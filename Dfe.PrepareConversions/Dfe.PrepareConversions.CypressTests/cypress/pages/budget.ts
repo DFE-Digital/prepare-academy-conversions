@@ -17,7 +17,7 @@ interface BudgetInfo {
 class Budget extends BasePage {
     public path = 'budget';
 
-    private selectors = {
+    private readonly selectors = {
         // data-test values
         changeEndOfFinancialYearLink: 'change-financial-year',
         // IDs (without #)
@@ -49,13 +49,8 @@ class Budget extends BasePage {
         let financialYear = endOfFinanicalYear;
         let nextFinancialYear = endOfNextFinancialYear;
 
-        if (!financialYear) {
-            financialYear = currentYear;
-        }
-
-        if (!nextFinancialYear) {
-            nextFinancialYear = nextYear;
-        }
+        financialYear ??= currentYear;
+        nextFinancialYear ??= nextYear;
         cy.checkPath(this.path);
 
         cy.getByDataTest(this.selectors.changeEndOfFinancialYearLink).click();

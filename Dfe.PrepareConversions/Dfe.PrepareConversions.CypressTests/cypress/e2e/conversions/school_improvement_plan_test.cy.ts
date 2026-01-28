@@ -91,7 +91,7 @@ describe('School Improvement Plan Tests', () => {
                 Logger.log('change the details');
                 schoolImprovementPage.changeImprovementDetails('Cypress Test Interim schoool plan', 'Test comment');
                 Logger.log('Verify the changed interim school improvement plan details are saved correctly');
-                schoolImprovementPage.verifyChangedImprovementDetails(
+                schoolImprovementPage.verifyImprovementDetails(
                     'Regional Director, Local Authority',
                     'Cypress Test Interim schoool plan',
                     '12 December 2023',

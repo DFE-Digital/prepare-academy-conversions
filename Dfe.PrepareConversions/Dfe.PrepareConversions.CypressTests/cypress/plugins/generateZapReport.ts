@@ -32,7 +32,7 @@ export async function generateZapReport(): Promise<void> {
             .recordsToScan()
             .then((resp: ZapRecordsToScanResponse) => {
                 try {
-                    recordsRemaining = parseInt(resp.recordsToScan, 10);
+                    recordsRemaining = Number.parseInt(resp.recordsToScan, 10);
                 } catch (err) {
                     if (err instanceof Error) {
                         console.log(`Error converting result: ${err.message}`);

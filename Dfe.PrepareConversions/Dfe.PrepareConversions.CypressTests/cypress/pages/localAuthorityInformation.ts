@@ -4,7 +4,7 @@ import BasePage from './basePage';
 class LocalAuthorityInformation extends BasePage {
     public path = 'confirm-local-authority-information-template-dates';
 
-    private selectors = {
+    private readonly selectors = {
         templateSentLink: '[data-test="change-la-info-template-sent-date"]',
         templateSentInput: 'la-info-template-sent-date',
         templateSentValue: '[id="la-info-template-sent-date"]',

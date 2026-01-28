@@ -4,7 +4,7 @@ import BasePage from './basePage';
 class RationaleConversion extends BasePage {
     public path = 'confirm-project-trust-rationale';
 
-    private selectors = {
+    private readonly selectors = {
         rationaleLink: '[data-test="change-rationale-for-trust"]',
         rationaleInput: '[id="trust-rationale"]',
         rationaleValue: '[id="rationale-for-trust"]',

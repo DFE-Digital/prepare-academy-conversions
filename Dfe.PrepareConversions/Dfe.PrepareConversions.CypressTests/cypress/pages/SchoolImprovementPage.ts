@@ -118,24 +118,6 @@ class SchoolImprovementPage extends FormBasePage {
         return this;
     }
 
-    public verifyChangedImprovementDetails(
-        arrangedBy: string,
-        providedBy: string,
-        startDate: string,
-        endDate: string,
-        confidenceLevel: string,
-        comments: string
-    ): this {
-        cy.getById('arranged-by').should('contain', arrangedBy);
-        cy.getById('provided-by').eq(0).should('contain', providedBy);
-        cy.getById('start-date').should('contain', startDate);
-        cy.getById('end-date').should('contain', endDate);
-        cy.getById('confidence-level').should('contain', confidenceLevel);
-        cy.getById('comments').should('contain', comments);
-        cy.getById('submit-btn').click();
-        return this;
-    }
-
     public deleteProject(projectId: string): void {
         this.deleteConversionProject(projectId);
     }

@@ -4,7 +4,7 @@ import BasePage from './basePage';
 class ProjectAssignmentConversion extends BasePage {
     public path = 'project-assignment';
 
-    private selectors = {
+    private readonly selectors = {
         assignInput: '[id="delivery-officer"]',
         unassignLink: '[id="unassign-link"]',
         saveButton: '[class="govuk-button"]',

@@ -6,7 +6,7 @@ const today = new Date();
 class ConversionDetails extends BasePage {
     public path = 'conversion-details';
 
-    private selectors = {
+    private readonly selectors = {
         saveButton: '[data-cy="select-common-submitbutton"]',
         form7ReceivedLink: '[data-test="change-form-7-received"]',
         form7ReveicedValue: '[id="form-7-received"]',

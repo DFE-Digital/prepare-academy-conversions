@@ -4,7 +4,7 @@ import BasePage from './basePage';
 class PublicSectorEqualityDutyImpact extends BasePage {
     public path = 'public-sector-equality-duty';
 
-    private selectors = {
+    private readonly selectors = {
         psedChangeLink: '[data-test="change-reduce-impact-reason-label"]',
         confirmButton: '[id="confirm-and-continue-button"]',
         completeCheckbox: 'public-sector-equality-duty-complete',

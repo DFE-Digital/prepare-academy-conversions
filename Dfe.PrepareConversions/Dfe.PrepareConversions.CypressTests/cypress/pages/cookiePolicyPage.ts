@@ -3,7 +3,7 @@ import BasePage from './basePage';
 class CookiePolicyPage extends BasePage {
     public path = 'cookie-preferences';
 
-    private cookieName = '.ManageAnAcademyTransfer.Consent';
+    private readonly cookieName = '.ManageAnAcademyTransfer.Consent';
 
     public cookieBannerShouldBeVisible(): this {
         cy.getByDataTest('cookie-banner').should('be.visible');

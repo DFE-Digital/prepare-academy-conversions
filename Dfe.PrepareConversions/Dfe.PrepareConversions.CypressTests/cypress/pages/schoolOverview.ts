@@ -4,7 +4,7 @@ import BasePage from './basePage';
 class SchoolOverview extends BasePage {
     public path = 'school-overview';
 
-    private selectors = {
+    private readonly selectors = {
         // IDs (without #)
         panId: 'published-admission-number',
         viabilityIssuesId: 'viability-issues',

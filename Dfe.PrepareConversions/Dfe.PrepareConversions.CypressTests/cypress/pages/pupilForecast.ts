@@ -4,7 +4,7 @@ import BasePage from './basePage';
 class PupilForecast extends BasePage {
     public path = 'pupil-forecasts';
 
-    private selectors = {
+    private readonly selectors = {
         changeAdditionalInfoLink: '[data-test="change-school-pupil-forecasts-additional-information"]',
         additionalInfo: '[id="additional-information"]',
         saveButton: '[data-cy="select-common-submitbutton"]',

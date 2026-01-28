@@ -91,13 +91,6 @@ class ConversionDateChangePage extends FormBasePage {
         return this;
     }
 
-    public verifyChangedConversionDateDetails(date: string, comments: string): this {
-        cy.getById('conversion-date').should('contain', date);
-        cy.getById('comments').should('contain', comments);
-        cy.getById('submit-btn').click();
-        return this;
-    }
-
     public deleteProject(projectId: string): void {
         this.deleteConversionProject(projectId);
     }

@@ -4,7 +4,7 @@ import BasePage from './basePage';
 class ProjectTaskList extends BasePage {
     public path = 'task-list';
 
-    private selectors = {
+    private readonly selectors = {
         assignProjectButton: 'a[href*="project-assignment"]',
         assignedUser: 'assigned-user',
         notificationMessage: 'notification-message',
