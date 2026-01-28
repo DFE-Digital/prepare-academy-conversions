@@ -65,4 +65,8 @@ describe('Conversion Date Change Tests', () => {
                 conversionDateChangePage.deleteProject(projectId);
             });
     });
+
+    it('Check accessibility across pages', () => {
+        cy.checkAccessibilityAcrossPages();
+    });
 });

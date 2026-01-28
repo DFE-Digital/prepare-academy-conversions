@@ -34,4 +34,8 @@ describe('School Data', () => {
     it('Shows KS5 Performance Tables', () => {
         schoolDataPage.checkKS5Tables();
     });
+
+    it('Check accessibility across pages', () => {
+        cy.checkAccessibilityAcrossPages();
+    });
 });

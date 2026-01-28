@@ -193,4 +193,8 @@ describe('Create a new transfer', () => {
             downloadPage.downloadProjectTemplate();
         });
     });
+
+    it('Check accessibility across pages', () => {
+        cy.checkAccessibilityAcrossPages();
+    });
 });

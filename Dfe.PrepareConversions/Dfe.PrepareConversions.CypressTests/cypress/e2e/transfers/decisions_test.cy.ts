@@ -48,4 +48,8 @@ describe('Transfer Project Tests', () => {
             }
         });
     });
+
+    it('Check accessibility across pages', () => {
+        cy.checkAccessibilityAcrossPages();
+    });
 });

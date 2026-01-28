@@ -94,4 +94,8 @@ describe('Decisions Tests', () => {
                 decisionPage.deleteProject(projectId);
             });
     });
+
+    it('Check accessibility across pages', () => {
+        cy.checkAccessibilityAcrossPages();
+    });
 });

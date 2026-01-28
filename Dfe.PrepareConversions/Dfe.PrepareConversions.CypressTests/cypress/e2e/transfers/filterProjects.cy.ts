@@ -23,4 +23,8 @@ describe('Filter projects', () => {
         const afterClearCount = homePage.getProjectsCount();
         expect(afterClearCount).to.equal(baseCount);
     });
+
+    it('Check accessibility across pages', () => {
+        cy.checkAccessibilityAcrossPages();
+    });
 });

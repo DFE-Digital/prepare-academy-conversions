@@ -12,7 +12,7 @@ import RisksAndIssues from '../../pages/risksAndIssues';
 import LocalAuthorityInfomation from '../../pages/localAuthorityInformation';
 import Performance from '../../pages/performance';
 import PublicSectorEqualityDutyImpact from '../../pages/publicSectorEqualityDutyImpact';
-import { currentDate, nextYearDate, oneMonthAgoDate, nextMonthDate } from '../../constants/testConstants';
+import { currentDate, nextMonthDate, nextYearDate, oneMonthAgoDate } from '../../constants/testConstants';
 
 describe('Sponsored conversion journey', {}, () => {
     const testData = {
@@ -294,5 +294,9 @@ describe('Sponsored conversion journey', {}, () => {
                 Performance.changeKeyStageInfo(keyStage);
             });
         }
+    });
+
+    it('Check accessibility across pages', () => {
+        cy.checkAccessibilityAcrossPages();
     });
 });

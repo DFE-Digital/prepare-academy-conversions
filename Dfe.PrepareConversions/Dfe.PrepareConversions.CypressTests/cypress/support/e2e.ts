@@ -37,6 +37,17 @@ Cypress.on('fail', (err) => {
     throw err; // re-throw all other errors
 });
 
+// update visited urls for accessiblity checks
+Cypress.on('url:changed', (url) => {
+    url = url.replace(`${Cypress.config('baseUrl')}`, '');
+    url = url.split('#')[0]; // Remove any hash fragments
+    url = url.split('?')[0]; // Remove any query parameters
+    if (!Cypress.env('visitedUrls')) {
+        Cypress.env('visitedUrls', new Set());
+    }
+    Cypress.env('visitedUrls').add(url);
+});
+
 // ***********************************************************
 
 beforeEach(() => {
@@ -195,6 +206,12 @@ declare global {
              * Execute accessibility tests using axe-core
              */
             executeAccessibilityTests(): Chainable<void>;
+
+            /**
+             * Check accessibility across all visited pages
+             * checks each unique URL stored in Cypress.env('visitedUrls')
+             */
+            checkAccessibilityAcrossPages(): Chainable<void>;
 
             /**
              * Call the Academisation API

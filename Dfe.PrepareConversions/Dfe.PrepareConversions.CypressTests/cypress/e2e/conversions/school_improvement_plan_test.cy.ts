@@ -104,4 +104,8 @@ describe('School Improvement Plan Tests', () => {
                 schoolImprovementPage.deleteProject(projectId);
             });
     });
+
+    it('Check accessibility across pages', () => {
+        cy.checkAccessibilityAcrossPages();
+    });
 });

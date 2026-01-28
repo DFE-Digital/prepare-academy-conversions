@@ -48,4 +48,8 @@ describe('Cookie Policy', () => {
                 .verifyRedirectedToProjectList();
         });
     });
+
+    it('Check accessibility across pages', () => {
+        cy.checkAccessibilityAcrossPages();
+    });
 });

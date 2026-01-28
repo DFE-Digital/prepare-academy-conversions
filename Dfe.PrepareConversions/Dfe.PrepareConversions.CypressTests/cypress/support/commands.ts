@@ -26,6 +26,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import 'cypress-localstorage-commands';
 import { AcademisationApiKey, AcademisationApiUrl, CypressApiKey } from '../constants/cypressConstants';
+import { Logger } from './logger';
 
 //--Universal
 
@@ -157,6 +158,15 @@ Cypress.Commands.add('executeAccessibilityTests', () => {
         undefined,
         continueOnFail
     );
+});
+
+Cypress.Commands.add('checkAccessibilityAcrossPages', () => {
+    const visitedUrls = Cypress.env('visitedUrls');
+    visitedUrls.forEach((url: string) => {
+        cy.visit(url, { failOnStatusCode: false });
+        Logger.log('Executing accessibility check for URL: ' + url);
+        cy.executeAccessibilityTests();
+    });
 });
 
 // Interceptors do not run for cy.request or cy.Api. Therefore use a command to make the request instead, an include the required headers etc.

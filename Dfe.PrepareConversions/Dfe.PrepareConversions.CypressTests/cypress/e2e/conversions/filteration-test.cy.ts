@@ -143,4 +143,8 @@ describe('Filtration Tests', {}, () => {
                 });
             });
     });
+
+    it('Check accessibility across pages', () => {
+        cy.checkAccessibilityAcrossPages();
+    });
 });
