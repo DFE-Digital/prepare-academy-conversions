@@ -5,6 +5,7 @@ import { generateZapReport } from './cypress/plugins/generateZapReport';
 import pluginConfig from './cypress/plugins/index';
 
 export default defineConfig({
+    watchForFileChanges: false,
     reporter: 'cypress-multi-reporters',
     reporterOptions: {
         reporterEnabled: 'mochawesome',
@@ -17,7 +18,9 @@ export default defineConfig({
         },
     },
     video: false,
-    retries: 1,
+    retries: {
+        runMode: 1,
+    },
     e2e: {
         specPattern: 'cypress/e2e',
         supportFile: 'cypress/support/e2e.ts',
