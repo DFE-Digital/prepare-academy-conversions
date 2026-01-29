@@ -14,7 +14,7 @@
 // ***********************************************************
 
 import './commands';
-import registerCypressGrep from '@cypress/grep/src/support';
+import { register as registerCypressGrep } from '@cypress/grep';
 import { CypressTestSecret, EnvUrl } from '../constants/cypressConstants';
 import 'cypress-axe';
 
