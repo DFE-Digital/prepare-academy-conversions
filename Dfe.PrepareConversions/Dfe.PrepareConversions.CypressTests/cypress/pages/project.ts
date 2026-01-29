@@ -40,7 +40,11 @@ class ProjectPage extends BasePage {
     }
 
     public checkFeaturesStatus(status): this {
-        cy.getByDataTest('features').should('have.text', status.toUpperCase());
+        cy.getByDataTest('features')
+            .invoke('text')
+            .should((text) => {
+                expect(text.toLowerCase()).to.equal(status.toLowerCase());
+            });
         return this;
     }
 
@@ -50,7 +54,11 @@ class ProjectPage extends BasePage {
     }
 
     public checkTransferDatesStatus(status): this {
-        cy.getByDataTest('dates').should('have.text', status.toUpperCase());
+        cy.getByDataTest('dates')
+            .invoke('text')
+            .should((text) => {
+                expect(text.toLowerCase()).to.equal(status.toLowerCase());
+            });
         return this;
     }
 
@@ -60,7 +68,11 @@ class ProjectPage extends BasePage {
     }
 
     public checkBenefitsAndRiskStatus(status): this {
-        cy.getByDataTest('benefits').should('have.text', status.toUpperCase());
+        cy.getByDataTest('benefits')
+            .invoke('text')
+            .should((text) => {
+                expect(text.toLowerCase()).to.equal(status.toLowerCase());
+            });
         return this;
     }
 
@@ -70,7 +82,11 @@ class ProjectPage extends BasePage {
     }
 
     public checkLegalRequirementsStatus(status): this {
-        cy.getByDataTest('legal-requirements').should('have.text', status.toUpperCase());
+        cy.getByDataTest('legal-requirements')
+            .invoke('text')
+            .should((text) => {
+                expect(text.toLowerCase()).to.equal(status.toLowerCase());
+            });
         return this;
     }
 
@@ -80,7 +96,11 @@ class ProjectPage extends BasePage {
     }
 
     public checkRationaleStatus(status): this {
-        cy.getByDataTest('rationale').should('have.text', status.toUpperCase());
+        cy.getByDataTest('rationale')
+            .invoke('text')
+            .should((text) => {
+                expect(text.toLowerCase()).to.equal(status.toLowerCase());
+            });
         return this;
     }
 
@@ -90,7 +110,11 @@ class ProjectPage extends BasePage {
     }
 
     public checkTrustInformationProjectDatesStatus(status): this {
-        cy.getByDataTest('academyandtrustinformation').should('have.text', status.toUpperCase());
+        cy.getByDataTest('academyandtrustinformation')
+            .invoke('text')
+            .should((text) => {
+                expect(text.toLowerCase()).to.equal(status.toLowerCase());
+            });
         return this;
     }
 

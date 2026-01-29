@@ -40,7 +40,7 @@ describe('Create a new transfer', () => {
     });
 
     context('Create new transfer', () => {
-        it.only('Creates a new academy transfer', () => {
+        it('Creates a new academy transfer', () => {
             homePage.startCreateNewTransfer();
 
             newTransferPage.clickCreateNewTransfer();
@@ -79,27 +79,17 @@ describe('Create a new transfer', () => {
 
     context('Delivery Officer', () => {
         it('Assign and Unassign Delivery Officer', () => {
-            cy.url()
-                .then((url) => {
-                    projectId = url.match(/task-list\/(\d+)/)![1];
-                    Logger.log(`Project ID: ${projectId}`);
-                })
-                .then(() => {
-                    const deliveryOfficer = 'Richika Dogra';
+            const deliveryOfficer = 'Richika Dogra';
 
-                    projectPage
-                        .loadProject(projectId)
-                        .checkDeliveryOfficerDetails('Empty')
-                        .startChangeDeliveryOfficer();
+            projectPage.loadProject(projectId).checkDeliveryOfficerDetails('Empty').startChangeDeliveryOfficer();
 
-                    projectAssignmentPage.assignDeliveryOfficer(deliveryOfficer);
+            projectAssignmentPage.assignDeliveryOfficer(deliveryOfficer);
 
-                    projectPage.checkDeliveryOfficerAssigned(deliveryOfficer).startChangeDeliveryOfficer();
+            projectPage.checkDeliveryOfficerAssigned(deliveryOfficer).startChangeDeliveryOfficer();
 
-                    projectAssignmentPage.unassignDeliveryOfficer();
+            projectAssignmentPage.unassignDeliveryOfficer();
 
-                    projectPage.checkDeliveryOfficerAssigned('Empty');
-                });
+            projectPage.checkDeliveryOfficerAssigned('Empty');
         });
     });
 
