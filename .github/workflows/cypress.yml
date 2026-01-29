@@ -97,10 +97,12 @@ jobs:
           path: ${{ env.WORKING_DIRECTORY }}/cypress/reports/merged/*.json
           retention-days: 1
 
+  # Generate a combined report from all test runs
   generate-combined-report:
     name: Generate Combined Report
     needs: cypress-tests
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     if: always()
     defaults:
       run:

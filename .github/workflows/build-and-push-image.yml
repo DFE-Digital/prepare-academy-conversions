@@ -136,4 +136,9 @@ jobs:
     uses: ./.github/workflows/cypress.yml
     with:
       environment: ${{ needs.set-env.outputs.environment }}
-    secrets: inherit
+    secrets:
+      AZURE_ENDPOINT: ${{ secrets.AZURE_ENDPOINT }}
+      CYPRESS_TEST_SECRET: ${{ secrets.CYPRESS_TEST_SECRET }}
+      CYPRESS_ACADEMISATION_API_URL: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
+      CYPRESS_ACADEMISATION_API_KEY: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
+      TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
