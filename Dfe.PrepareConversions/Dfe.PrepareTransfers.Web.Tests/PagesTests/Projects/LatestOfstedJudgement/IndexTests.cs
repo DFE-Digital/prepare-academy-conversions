@@ -18,7 +18,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.LatestOfstedJudgeme
 
         public IndexTests()
         {
-            _subject = new Index(GetInformationForProject.Object, ProjectRepository.Object)
+            _subject = new Index(GetInformationForProject.Object, ProjectRepository.Object, GetEstablishment.Object)
             {
                 Urn = ProjectUrn0001,
                 AcademyUkprn = AcademyUkprn,

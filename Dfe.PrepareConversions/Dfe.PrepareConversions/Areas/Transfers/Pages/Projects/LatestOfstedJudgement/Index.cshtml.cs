@@ -1,9 +1,11 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Web.Models;
 using Dfe.PrepareTransfers.Web.Models.Forms;
 using Dfe.PrepareTransfers.Web.Services.Interfaces;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dfe.PrepareTransfers.Web.Pages.Projects.LatestOfstedJudgement
@@ -12,21 +14,29 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.LatestOfstedJudgement
     {
         private readonly IGetInformationForProject _getInformationForProject;
         private readonly IProjects _projectsRepository;
+        private readonly IGetEstablishment _getEstablishment;
 
         public Data.Models.Academies.LatestOfstedJudgement LatestOfstedJudgement { get; set; }
 
         [BindProperty]
         public AdditionalInformationViewModel AdditionalInformationViewModel { get; set; }
+
+        public EstablishmentDto Establishment { get; set; }
+
         public bool IsPreview { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string AcademyUkprn { get; set; }
 
-        public Index(IGetInformationForProject getInformationForProject,
-            IProjects projectsRepository)
+        public Index(
+            IGetInformationForProject getInformationForProject,
+            IProjects projectsRepository,
+            IGetEstablishment getEstablishment
+        )
         {
             _getInformationForProject = getInformationForProject;
             _projectsRepository = projectsRepository;
+            _getEstablishment = getEstablishment;
         }
 
         public async Task<IActionResult> OnGetAsync(bool addOrEditAdditionalInformation = false)
@@ -48,6 +58,8 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.LatestOfstedJudgement
                 ReturnToPreview = ReturnToPreview,
                 HideWarning = true
             };
+
+            Establishment = await _getEstablishment.GetEstablishmentByUkprn(academy.Ukprn);
 
             return Page();
         }

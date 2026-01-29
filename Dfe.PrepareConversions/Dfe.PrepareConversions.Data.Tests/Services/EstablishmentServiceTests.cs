@@ -6,6 +6,7 @@ using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Data.Tests.AutoFixture;
 using Dfe.PrepareConversions.Data.Tests.TestDoubles;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using Microsoft.Extensions.Logging;
 using Moq;
 using RichardSzalay.MockHttp;
@@ -19,6 +20,26 @@ namespace Dfe.PrepareConversions.Data.Tests.Services;
 
 public class EstablishmentServiceTests
 {
+   [Theory]
+   [AutoMoqData]
+   public async Task EstablishmentService_GetEstablishmentByUkprn_Should_return_Establishment_given_ukprn(
+      [Frozen] Mock<IHttpClientService> httpService,
+      EstablishmentDto expectedResponse,
+      Mock<ILogger<EstablishmentService>> logger,
+      MockHttpMessageHandler mockHandler)
+   {
+      string ukprn = "fake-ukprn";
+
+      httpService.Setup(m => m.Get<EstablishmentDto>(It.IsAny<HttpClient>(), $"/v4/establishment/{ukprn}"))
+         .ReturnsAsync(new ApiResponse<EstablishmentDto>(HttpStatusCode.OK, expectedResponse));
+
+      EstablishmentService sut = new(new DfeHttpClientFactory(new MockHttpClientFactory(mockHandler), new CorrelationContext()), logger.Object, httpService.Object);
+
+      EstablishmentDto dto = await sut.GetEstablishmentByUkprn(ukprn);
+
+      Assert.Equal(expectedResponse, dto);
+   }
+
    [Theory]
    [AutoMoqData]
    public async Task Should_return_expected_result(

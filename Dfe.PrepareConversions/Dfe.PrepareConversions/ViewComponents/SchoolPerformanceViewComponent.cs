@@ -6,6 +6,7 @@ using Dfe.PrepareConversions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace Dfe.PrepareConversions.ViewComponents;
 
@@ -13,11 +14,13 @@ public class SchoolPerformanceViewComponent : ViewComponent
 {
    private readonly IAcademyConversionProjectRepository _repository;
    private readonly SchoolPerformanceService _schoolPerformanceService;
+   private readonly IConfiguration _configuration;
 
-   public SchoolPerformanceViewComponent(SchoolPerformanceService schoolPerformanceService, IAcademyConversionProjectRepository repository)
+   public SchoolPerformanceViewComponent(SchoolPerformanceService schoolPerformanceService, IAcademyConversionProjectRepository repository, IConfiguration configuration)
    {
       _schoolPerformanceService = schoolPerformanceService;
       _repository = repository;
+      _configuration = configuration;
    }
 
    public async Task<IViewComponentResult> InvokeAsync(bool showAdditionalInformation, bool isPreview)
@@ -53,7 +56,7 @@ public class SchoolPerformanceViewComponent : ViewComponent
          AdditionalInformation = project.SchoolPerformanceAdditionalInformation,
          LatestInspectionIsSection8 = schoolPerformance.LatestInspectionIsSection8,
          IsPreview = isPreview,
-         OfstedReport = schoolPerformance.OfstedReport
+         OfstedReport = $"{_configuration["OfstedReportBaseUrl"]}{project.Urn}"
       };
 
       return View(viewModel);

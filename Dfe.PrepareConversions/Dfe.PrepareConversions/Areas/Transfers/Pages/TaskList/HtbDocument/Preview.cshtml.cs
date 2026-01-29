@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
@@ -20,6 +21,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
     public class Preview : CommonPageModel
     {
         private readonly IGetInformationForProject _getInformationForProject;
+        private readonly IGetEstablishment _getEstablishment;
         private readonly IProjects _projects;
         private readonly ErrorService _errorService;
         public Index FeaturesSummaryViewModel { get; set; }
@@ -30,9 +32,15 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
         public Projects.Rationale.Index RationaleSummaryViewModel { get; set; }
         public List<PreviewPageAcademyModel> Academies { get; private set; }
 
-         public Preview(IGetInformationForProject getInformationForProject, IProjects projects, ErrorService errorService)
+         public Preview(
+            IGetInformationForProject getInformationForProject,
+            IGetEstablishment getEstablishment,
+            IProjects projects, 
+            ErrorService errorService
+         )
          {
             _getInformationForProject = getInformationForProject;
+            _getEstablishment = getEstablishment;
             _projects = projects;
             _errorService = errorService;
          }
@@ -167,7 +175,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
                        }
                     },
                     LatestOfstedJudgementViewModel =
-                         new LatestOfstedJudgementIndex(_getInformationForProject, _projects)
+                         new LatestOfstedJudgementIndex(_getInformationForProject, _projects, _getEstablishment)
                          {
                             Urn = project.Urn,
                             OutgoingAcademyUrn = project.OutgoingAcademyUrn,
