@@ -1,35 +1,27 @@
-class OutgoingTrustSearchPage {
+import BasePage from './basePage';
 
-  public slug = 'transfers/trustname'
+class OutgoingTrustSearchPage extends BasePage {
+    public path = 'transfers/trustname';
 
-  public searchTrustsByName(trustName): this {
+    public searchTrustsByName(trustName): this {
+        cy.getById('SearchQuery').type(trustName);
+        cy.clickButton('Search');
+        return this;
+    }
 
-    cy.get('#SearchQuery').type(trustName)
+    public searchTrustsByUkprn(ukprn): this {
+        cy.getById('SearchQuery').type(ukprn);
+        cy.clickButton('Search');
+        return this;
+    }
 
-    cy.get('button').contains('Search').click()
-
-    return this
-  }
-
-  public searchTrustsByUkprn(ukprn): this {
-
-    cy.get('#SearchQuery').type(ukprn)
-
-    cy.get('button').contains('Search').click()
-
-    return this
-  }
-
-  public searchTrustsByCompaniesHouseNo(companiesHouseNo): this {
-
-    cy.get('#SearchQuery').type(companiesHouseNo)
-
-    cy.get('button').contains('Search').click()
-
-    return this
-  }
+    public searchTrustsByCompaniesHouseNo(companiesHouseNo): this {
+        cy.getById('SearchQuery').type(companiesHouseNo);
+        cy.clickButton('Search');
+        return this;
+    }
 }
 
-const outgoingTrustSearchPage = new OutgoingTrustSearchPage()
+const outgoingTrustSearchPage = new OutgoingTrustSearchPage();
 
-export default outgoingTrustSearchPage
+export default outgoingTrustSearchPage;

@@ -1,155 +1,144 @@
-class ProjectPage {
+import BasePage from './basePage';
 
-  public slug = 'project'
+class ProjectPage extends BasePage {
+    public path = 'project';
 
-  public loadProject(projectId): this {
-
-    cy.visit(`${Cypress.env('url')}/transfers/project/${projectId}`);
-
-
-    return this
-  }
-
-  public checkProjectId(id): this {
-
-    cy.get('.govuk-caption-l').should('have.text', `Project reference: SAT-${id}`)
-
-    return this
-  }
-
-  public checkSchoolName(schoolName): this {
-
-    cy.get('h1').should('contain.text', schoolName)
-
-    return this
-  }
-
-  public checkDeliveryOfficerAssigned(deliveryOfficer): this {
-
-
-
-
-
-    this.checkDeliveryOfficerDetails(deliveryOfficer)
-
-    return this
-  }
-
-  public checkDeliveryOfficerDetails(deliveryOfficer): this {
-
-    cy.get('[data-id="assigned-user"]').should('have.text', deliveryOfficer)
-
-    if (deliveryOfficer == 'Empty') {
-      cy.get('[data-id="assigned-user"]').should('have.class', 'empty')
-    }
-    else {
-      cy.get('[data-id="assigned-user"]').should('not.have.class', 'empty')
+    public loadProject(projectId): this {
+        cy.visit(`/transfers/project/${projectId}`);
+        return this;
     }
 
-    return this
-  }
+    public checkProjectId(id): this {
+        cy.get('.govuk-caption-l').should('have.text', `Project reference: SAT-${id}`);
+        return this;
+    }
 
-  public startChangeDeliveryOfficer(): this {
+    public checkSchoolName(schoolName): this {
+        cy.get('h1').should('contain.text', schoolName);
+        return this;
+    }
 
-    cy.get('a').contains('Change').click()
+    public checkDeliveryOfficerAssigned(deliveryOfficer): this {
+        this.checkDeliveryOfficerDetails(deliveryOfficer);
+        return this;
+    }
 
-    return this
-  }
+    public checkDeliveryOfficerDetails(deliveryOfficer): this {
+        cy.getByDataId('assigned-user').should('have.text', deliveryOfficer);
 
-  public checkFeaturesStatus(status): this {
-    cy.get('[data-test="features"]').should('have.text', status.toUpperCase())
+        if (deliveryOfficer === 'Empty') {
+            cy.getByDataId('assigned-user').should('have.class', 'empty');
+        } else {
+            cy.getByDataId('assigned-user').should('not.have.class', 'empty');
+        }
+        return this;
+    }
 
-    return this
-  }
+    public startChangeDeliveryOfficer(): this {
+        cy.containsText('Change').click();
+        return this;
+    }
 
-  public startTransferFeatures(): this {
-    cy.get('[data-test="transfer-features"]').click()
+    public checkFeaturesStatus(status): this {
+        cy.getByDataTest('features')
+            .invoke('text')
+            .should((text) => {
+                expect(text.toLowerCase()).to.equal(status.toLowerCase());
+            });
+        return this;
+    }
 
-    return this
-  }
+    public startTransferFeatures(): this {
+        cy.getByDataTest('transfer-features').click();
+        return this;
+    }
 
-  public checkTransferDatesStatus(status): this {
-    cy.get('[data-test="dates"]').should('have.text', status.toUpperCase())
+    public checkTransferDatesStatus(status): this {
+        cy.getByDataTest('dates')
+            .invoke('text')
+            .should((text) => {
+                expect(text.toLowerCase()).to.equal(status.toLowerCase());
+            });
+        return this;
+    }
 
-    return this
-  }
+    public startTransferDates(): this {
+        cy.getByDataTest('transfer-dates').click();
+        return this;
+    }
 
-  public startTransferDates(): this {
-    cy.get('[data-test="transfer-dates"]').click()
+    public checkBenefitsAndRiskStatus(status): this {
+        cy.getByDataTest('benefits')
+            .invoke('text')
+            .should((text) => {
+                expect(text.toLowerCase()).to.equal(status.toLowerCase());
+            });
+        return this;
+    }
 
-    return this
-  }
+    public startBenefitsAndRisk(): this {
+        cy.getByDataTest('transfer-benefits').click();
+        return this;
+    }
 
-  public checkBenefitsAndRiskStatus(status): this {
-    cy.get('[data-test="benefits"]').should('have.text', status.toUpperCase())
+    public checkLegalRequirementsStatus(status): this {
+        cy.getByDataTest('legal-requirements')
+            .invoke('text')
+            .should((text) => {
+                expect(text.toLowerCase()).to.equal(status.toLowerCase());
+            });
+        return this;
+    }
 
-    return this
-  }
+    public startLegalRequirements(): this {
+        cy.getByDataTest('transfer-legal-requirements').click();
+        return this;
+    }
 
-  public startBenefitsAndRisk(): this {
-    cy.get('[data-test="transfer-benefits"]').click()
+    public checkRationaleStatus(status): this {
+        cy.getByDataTest('rationale')
+            .invoke('text')
+            .should((text) => {
+                expect(text.toLowerCase()).to.equal(status.toLowerCase());
+            });
+        return this;
+    }
 
-    return this
-  }
+    public startRationale(): this {
+        cy.getByDataTest('transfer-rationale').click();
+        return this;
+    }
 
-  public checkLegalRequirementsStatus(status): this {
-    cy.get('[data-test="legal-requirements"]').should('have.text', status.toUpperCase())
+    public checkTrustInformationProjectDatesStatus(status): this {
+        cy.getByDataTest('academyandtrustinformation')
+            .invoke('text')
+            .should((text) => {
+                expect(text.toLowerCase()).to.equal(status.toLowerCase());
+            });
+        return this;
+    }
 
-    return this
-  }
+    public startTrustInformationProjectDates(): this {
+        cy.getByDataTest('academy-trust-information').click();
+        return this;
+    }
 
-  public startLegalRequirements(): this {
-    cy.get('[data-test="transfer-legal-requirements"]').click()
+    public openPreviewProjectTemplate(): this {
+        cy.getByDataTest('preview-htb').click();
+        return this;
+    }
 
-    return this
-  }
+    public generateProjectTemplate(): this {
+        cy.getByDataTest('generate-htb').click();
+        return this;
+    }
 
-  public checkRationaleStatus(status): this {
-    cy.get('[data-test="rationale"]').should('have.text', status.toUpperCase())
-
-    return this
-  }
-
-  public startRationale(): this {
-    cy.get('[data-test="transfer-rationale"]').click()
-
-    return this
-  }
-
-  public checkTrustInformationProjectDatesStatus(status): this {
-    cy.get('[data-test="academyandtrustinformation"]').should('have.text', status.toUpperCase())
-
-    return this
-  }
-
-  public startTrustInformationProjectDates(): this {
-    cy.get('[data-test="academy-trust-information"]').click()
-
-    return this
-  }
-
-  public openPreviewProjectTemplate(): this {
-
-    cy.get('[data-test="preview-htb"]').click()
-
-    return this
-  }
-
-  public generateProjectTemplate(): this {
-
-    cy.get('[data-test="generate-htb"]').click()
-
-    return this
-  }
-
-  public viewSchoolData(): this {
-
-    cy.get('[data-test="sd-academy-1"]').click()
-
-    return this
-  }
+    public viewSchoolData(): this {
+        cy.getByDataTest('sd-academy-1').click();
+        return this;
+    }
 }
 
-const projectPage = new ProjectPage()
+const projectPage = new ProjectPage();
 
-export default projectPage
+export default projectPage;

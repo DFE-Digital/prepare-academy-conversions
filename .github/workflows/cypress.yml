@@ -15,9 +15,7 @@ on:
         required: true
       CYPRESS_ACADEMISATION_API_KEY:
         required: true
-      DB_CONNECTION_STRING:
-        required: true
-      SLACK_WEBHOOK_URL:
+      TEAMS_WEBHOOK_URL:
         required: true
   workflow_dispatch:
     inputs:
@@ -29,17 +27,22 @@ on:
 concurrency:
   group: ${{ github.workflow }}
 
+env:
+  WORKING_DIRECTORY: 'Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests'
+
 jobs:
   cypress-tests:
-    name: Run Cypress Tests
+    name: Run Cypress Tests (${{ matrix.test-suite }})
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     defaults:
       run:
-         working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
+        working-directory: ${{ env.WORKING_DIRECTORY }}
     strategy:
+      fail-fast: false
       matrix:
         browser: ["edge"]
+        test-suite: ["conversions", "transfers"]
     container:
       image: cypress/browsers:22.13.1@sha256:914c9814a9567f32660203db7ecd610b8f8fede6e9103885728b3bd3f6dca4ff
     steps:
@@ -47,46 +50,95 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      - name: Run Cypress Tests (${{ inputs.environment }})
+      - name: Run Cypress Tests (${{ inputs.environment }} - ${{ matrix.test-suite }})
         if: inputs.environment == 'staging' || inputs.environment == 'dev'
         uses: cypress-io/github-action@v6
         env:
-          CYPRESS_db: ${{ secrets.DB_CONNECTION_STRING }}
           CYPRESS_url: ${{ secrets.AZURE_ENDPOINT }}
-          CYPRESS_transfersUrl: ${{ secrets.AZURE_ENDPOINT }}transfers/home
           CYPRESS_cypressTestSecret: ${{ secrets.CYPRESS_TEST_SECRET }}
           CYPRESS_academisationApiUrl: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
           CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
         with:
           browser: ${{ matrix.browser }}
-          working-directory: ./Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
+          working-directory: ./${{ env.WORKING_DIRECTORY }}
           wait-on: ${{ secrets.AZURE_ENDPOINT }}
-         
+          spec: cypress/e2e/${{ matrix.test-suite }}/**/*.cy.ts
 
-      - name: Upload screenshots (Cypress Tests)
+      - name: Upload screenshots on failure
         if: ${{ failure() }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: screenshots-${{ inputs.environment }}-${{ matrix.browser }}
-          path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/cypress/screenshots
+          name: screenshots-${{ inputs.environment }}-${{ matrix.browser }}-${{ matrix.test-suite }}
+          path: ${{ env.WORKING_DIRECTORY }}/cypress/screenshots
+          retention-days: 5
 
-      - name: Combine reports
+      - name: Prepare test results
+        id: prepare-results
         if: always()
         run: |
-          mkdir -p mochareports
-          npm run combine:reports
+          mkdir -p cypress/reports/merged
+          # Check if test results exist and process them
+          if [ -d "cypress/reports/mocha" ] && [ "$(find cypress/reports/mocha -name '*.json' 2>/dev/null | wc -l)" -gt 0 ]; then
+            for file in cypress/reports/mocha/*.json; do
+              filename=$(basename "$file")
+              cp "$file" "cypress/reports/merged/${{ matrix.test-suite }}-$filename"
+            done
+            echo "Processed test results for ${{ matrix.test-suite }}"
+          else
+            echo "No test results found for ${{ matrix.test-suite }}, creating placeholder"
+            echo '{"stats":{"suites":0,"tests":0,"passes":0,"pending":0,"failures":0,"start":"","end":"","duration":0}}' > "cypress/reports/merged/${{ matrix.test-suite }}-placeholder.json"
+          fi
 
-      - name: Generate HTML report
-        if: always()
-        run: |
-          npm run create:html:report
-
-      - name: Upload reports
-        if: always()
+      - name: Upload test results
+        if: always() && steps.prepare-results.outcome == 'success'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: combined-reports-${{ inputs.environment }}-${{ matrix.browser }}
-          path: Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests/mochareports/*.html
+          name: raw-test-reports-${{ matrix.test-suite }}
+          path: ${{ env.WORKING_DIRECTORY }}/cypress/reports/merged/*.json
+          retention-days: 1
+
+  # Generate a combined report from all test runs
+  generate-combined-report:
+    name: Generate Combined Report
+    needs: cypress-tests
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    if: always()
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: '${{ env.WORKING_DIRECTORY }}/package-lock.json'
+
+      - name: Install dependencies
+        run: npm --ignore-scripts || npm install --ignore-scripts
+
+      - name: Download all test results
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: raw-test-reports-*
+          path: ${{ env.WORKING_DIRECTORY }}/cypress/reports/mocha
+          merge-multiple: true
+
+      - name: Generate combined HTML report
+        run: |
+          mkdir -p mochareports
+          npm run generate:html:report
+
+      - name: Upload combined report
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: combined-report-${{ inputs.environment }}
+          path: ${{ env.WORKING_DIRECTORY }}/mochareports
+          retention-days: 30
 
       - name: Report results to Teams
         if: always()
@@ -95,4 +147,4 @@ jobs:
         env:
           TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
           ENVIRONMENT: ${{ inputs.environment }}
-          INFORMATION_LINK: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"      
+          INFORMATION_LINK: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"

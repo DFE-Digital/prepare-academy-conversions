@@ -28,152 +28,76 @@ For local development, user secrets can be set using the command:
 
 Alternatively, there is a Rider plugin called `.NET Core User Secrets` that allows the secrets to be managed via a json file, accessed by right clicking on the project -> `Tools` -> `Open Project User Secrets`.
 
-## Cypress testing
+## Cypress Testing
 
-Install cypress and dependencies:
-- Run 'npm install' from the Dfe.PrepareConversions.CypressTests directory
+Tests are located in `Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests`.
 
-### Test execution
+### Setup
 
-To execute the tests locally and view the output, you will need to set environment variables. Create a new file named `cypress.env.json` in the project root with the following content:
+```bash
+cd Dfe.PrepareConversions/Dfe.PrepareConversions.CypressTests
+npm install
+```
+
+Create `cypress.env.json` in the CypressTests directory:
 
 ```json
 {
    "url": "BASE_URL_OF_APP",
-   "cypressTestSecret": "<SECRET HERE>",
-   "academisationApiUrl": "<SECRET HERE>",
-   "academisationApiKey": "<SECRET HERE>"
+   "cypressTestSecret": "<SECRET>",
+   "academisationApiUrl": "<SECRET>",
+   "academisationApiKey": "<SECRET>"
 }
 ```
 
-Please make sure to replace `<SECRET HERE>` with the actual secret values in the `cypress.env.json` file before running the tests.
+### Running Tests
 
-### Open the Cypress Test Runner for interactive testing
-`npx cypress open`
+| Command | Description |
+|---------|-------------|
+| `npm run cy:open` | Open Cypress Test Runner (Edge) |
+| `npm run cy:run` | Run all tests headless (Edge) |
+| `npm run cy:run:conversions` | Run only conversion tests |
+| `npm run cy:run:transfers` | Run only transfer tests |
 
-### Run the Cypress tests in headless or headed modes
+Use `@cypress/grep` to filter tests by tags or title patterns.
+
+### Project Structure
 
 ```
-npm run cy:run -headless
+cypress/
+├── e2e/
+│   ├── conversions/    # Conversion journey tests
+│   └── transfers/      # Transfer journey tests
+├── pages/              # Page Object classes (extend BasePage)
+├── fixtures/           # Test data JSON files
+├── constants/          # Shared constants
+├── support/            # Custom commands and setup
+└── plugins/            # Cypress plugins (ZAP integration)
 ```
 
-or
+### Custom Commands
 
-```
-npm run cy:open -headed
-```
+Common commands are defined in `cypress/support/commands.ts`:
+- `cy.login()` - Authenticate and visit project list
+- `cy.callAcademisationApi()` - Make authenticated API requests
+- `cy.executeAccessibilityTests()` - Run axe-core accessibility checks
+- `cy.checkAccessibilityAcrossPages()` - Run a11y checks on all visited URLs
+- Data attribute selectors: `cy.getByDataTest()`, `cy.getByDataCy()`, `cy.getById()`
 
-### Useful tips
+### Accessibility Testing
 
-#### Maintaining sessions
-Each 'it' block usually runs the test with a clear cache. For our purposes, we may need to maintain the user session to test various scenarios. This can be achieved by adding the following code to your tests:
+Tests use `cypress-axe` for accessibility validation. The framework tracks visited URLs and can run accessibility checks across all pages in a test journey.
 
-```js
-afterEach(() => {
-   cy.storeSessionData();
-});
-```
+### Linting & Formatting
 
-##### Writing global commands
-The cypress.json file in the `support` folder contains functions which can be used globally throughout your tests. Below is an example of a custom login command
+| Command | Description |
+|---------|-------------|
+| `npm run lint` | Check for ESLint issues |
+| `npm run lint:fix` | Auto-fix ESLint issues |
+| `npm run format` | Format files with Prettier |
+| `npm run format:check` | Check formatting without changes |
 
-```js
-Cypress.Commands.add("login",()=> {
-   cy.visit(Cypress.env('url')+"/login");
-   cy.get("#username").type(Cypress.env('username'));
-   cy.get("#password").type(Cypress.env('password')+"{enter}");
-   cy.saveLocalStorage();
-})
-```
-
-Which you can access in your tests like so:
-
-```js
-before(function () {
-   cy.login();
-});
-```
-
-Further details about Cypress can be found here: https://docs.cypress.io/api/table-of-contents
-
-
-Further details on using cypress-grep test tagging: https://github.com/cypress-io/cypress-grep
-cypress 10.9.0 Latest changes: https://docs.cypress.io/guides/references/changelog
-
-#### Accessibility
-
-**Basic usage**
-
-By default, it will scan the whole page but it also can be configured to run against a specific element, or to exclude some elements.
-
-```js
-it('Has no detectable a11y violations on load', () => {
-   // Test the page at initial load
-   cy.checkA11y()
-})
-```
-
-**Applying a context and run parameters**
-
-```js
-it('Has no detectable a11y violations on load (with custom parameters)', () => {
-   // Test the page at initial load (with context and options)
-   cy.checkA11y('.example-class', {
-      runOnly: {
-         type: 'tag',
-         values: ['wcag2a']
-      }
-   })
-})
-```
-
-For more receipes: https://www.npmjs.com/package/cypress-axe
-
-##### Cypress Linting
-ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs.
-
-Note: If you installed ESLint globally then you must also install eslint-plugin-cypress globally.
-
-Installation using npm
-`npm install eslint-plugin-cypress --save-dev`
-
-Installation using yarn
-`yarn add eslint-plugin-cypress --dev`
-
-Usage: Add an .eslintrc.json file to your cypress directory with the following:
-
-```json
-{
-   "plugins": [
-      "cypress"
-   ]
-}
-```
-
-Add rules, example:
-
-```json
-{
-   "rules": {
-       "cypress/no-assigning-return-values": "error",
-       "cypress/no-unnecessary-waiting": "error",
-       "cypress/assertion-before-screenshot": "warn",
-       "cypress/no-force": "warn",
-       "cypress/no-async-tests": "error",
-       "cypress/no-pause": "error"
-   }
-}
-```
-
-Use the recommended configuration and you can forego configuring plugins, rules, and env individually.
- 
-```json
-{
-   "extends": [
-      "plugin:cypress/recommended"
-   ]
-}
-```
+ESLint is configured with `eslint-plugin-cypress` rules and Prettier integration.
 
 ### Security testing with ZAP
 

@@ -1,37 +1,36 @@
-import BasePage from "./basePage";
+import BasePage from './basePage';
 
 class OutgoingTrustAcademiesPage extends BasePage {
+    public path = 'transfers/outgoingtrustacademies';
 
-  public slug = 'transfers/outgoingtrustacademies'
+    public selectMultipleAcademies(academies): this {
+        academies.array.forEach((academy) => {
+            this.selectSingleAcademy(academy);
+        });
+        return this;
+    }
 
-  public selectMultipleAcademies(academies): this {
+    public selectSingleAcademy(academy): this {
+        cy.get('.govuk-checkboxes').contains(academy).click();
+        return this;
+    }
 
-    academies.array.forEach(academy => {
-      this.selectSingleAcademy(academy)
-    })
+    public selectOptionYes(): this {
+        cy.getByDataTest('true').click();
+        return this;
+    }
 
-    return this
-  }
+    public selectOptionById(optionId: string): this {
+        cy.getById(optionId).click();
+        return this;
+    }
 
-  public selectSingleAcademy(academy): this {
-
-    cy.get('.govuk-checkboxes').contains(academy).click()
-
-    return this
-  }
-  selectOptionYes() {
-    cy.get('[data-test="true"]').click();
-  }
-  selectOptionById(optionId: string) {
-    cy.get(`#${optionId}`).click();
-  }
-  submitForm() {
-    cy.get('[type="submit"]').click();
-  }
-
-
+    public submitForm(): this {
+        cy.get('[type="submit"]').click();
+        return this;
+    }
 }
 
-const outgoingTrustAcademiesPage = new OutgoingTrustAcademiesPage()
+const outgoingTrustAcademiesPage = new OutgoingTrustAcademiesPage();
 
-export default outgoingTrustAcademiesPage
+export default outgoingTrustAcademiesPage;
