@@ -5,10 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). To see an example from a mature product in the program [see the Complete products changelog that follows the same methodology](https://github.com/DFE-Digital/dfe-complete-conversions-transfers-and-changes/blob/main/CHANGELOG.md).
 
 
-## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-01-20.1023...main)
+## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-02-25.1068...main)
 NOTE: remember to update unreleased link when making a new release
 
 ---
+## [1.27.1][1.27.1] - 2026-02-25
+
+### Changed
+
+- 266949 - Update feedback footer link incorrect
 
 ## [1.27.0][1.27.0] - 2026-01-23
 
@@ -323,6 +328,8 @@ ___
 # 1.0.0 - Initial release of Prepare Conversions
 Initial Release of the Prepare-conversions system into production.
 
+[1.27.1]: 
+  https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-02-25.1068
 [1.27.0]: 
   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-01-23.1038
 [1.26.0]: 
