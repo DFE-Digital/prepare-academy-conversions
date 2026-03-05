@@ -14,7 +14,6 @@ using Dfe.PrepareTransfers.Web.Pages.Projects.BenefitsAndRisks;
 using Dfe.PrepareTransfers.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Index = Dfe.PrepareTransfers.Web.Pages.Projects.Features.Index;
-using LatestOfstedJudgementIndex = Dfe.PrepareTransfers.Web.Pages.Projects.LatestOfstedJudgement.Index;
 
 namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
 {
@@ -173,25 +172,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
                           Urn = project.Urn,
                           ReturnToPreview = true
                        }
-                    },
-                    LatestOfstedJudgementViewModel =
-                         new LatestOfstedJudgementIndex(_getInformationForProject, _projects, _getEstablishment)
-                         {
-                            Urn = project.Urn,
-                            OutgoingAcademyUrn = project.OutgoingAcademyUrn,
-                            AcademyUkprn = academy.Ukprn,
-                            LatestOfstedJudgement = academy.LatestOfstedJudgement,
-                            ReturnToPreview = true,
-                            AdditionalInformationViewModel = new AdditionalInformationViewModel
-                            {
-                               AdditionalInformation = academy.LatestOfstedJudgement.AdditionalInformation,
-                               HintText =
-                                     "If you add comments, they'll be included in the latest Ofsted judgement section of your project template.",
-                               Urn = project.Urn,
-                               ReturnToPreview = true
-                            },
-                            IsPreview = true
-                         }
+                    }
                  }))
             {
                previewPageAcademyModels.Add(previewPageAcademyModel);
