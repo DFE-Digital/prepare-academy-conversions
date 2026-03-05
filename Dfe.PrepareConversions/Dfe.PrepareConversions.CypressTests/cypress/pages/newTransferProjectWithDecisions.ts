@@ -1,121 +1,109 @@
-export class NewTransferProjectWithDecisions {
-  public visit(url: string): this {
-    cy.visit(url);
-    return this;
-  }
+import { AcademisationApiKey, AcademisationApiUrl } from '../constants/cypressConstants';
+import FormBasePage from './formBasePage';
 
-  public createNewTransferProject(): this {
-    cy.get('[data-test="create-transfer"]').click();
-    cy.contains('button.govuk-button', 'Create a new transfer').click();
-    return this;
-  }
+class NewTransferProjectWithDecisions extends FormBasePage {
+    public path = 'transfers';
 
-  public searchOutgoingTrust(trustName: string): this {
-    cy.get('#SearchQuery').type(trustName);
-    cy.get('button.govuk-button').contains('Search').click();
-    return this;
-  }
+    public visit(url: string): this {
+        cy.visit(url);
+        return this;
+    }
 
-  public selectOutgoingTrust(trustId: string): this {
-    cy.get(`#${trustId}`).check();
-    cy.get('button.govuk-button').contains('Continue').click();
-    return this;
-  }
+    public createNewTransferProject(): this {
+        cy.getByDataTest('create-transfer').click();
+        cy.contains('button.govuk-button', 'Create a new transfer').click();
+        return this;
+    }
 
-  public createProjectButton(): this {
-    cy.get('[data-test="create-project"]').click();
-    return this;
-  }
+    public searchOutgoingTrust(trustName: string): this {
+        cy.getById('SearchQuery').type(trustName);
+        cy.get('button.govuk-button').contains('Search').click();
+        return this;
+    }
 
-  public confirmOutgoingTrust(): this {
-    cy.get('[data-test="confirm-outgoing-trust"]').click();
-    return this;
-  }
+    public selectOutgoingTrust(trustId: string): this {
+        cy.getById(trustId).check();
+        cy.clickContinueBtn();
+        return this;
+    }
 
-  public selectOptionById(optionId: string): this {
-    cy.get(`#${optionId}`).click();
-    return this;
-  }
+    public createProjectButton(): this {
+        cy.getByDataTest('create-project').click();
+        return this;
+    }
 
-  public submitForm(): this {
-    cy.get('[type="submit"]').click();
-    return this;
-  }
+    public confirmOutgoingTrust(): this {
+        cy.getByDataTest('confirm-outgoing-trust').click();
+        return this;
+    }
 
-  public submitFormRecordDecision(): this {
-    cy.get('#submit-btn').click();
-    return this;
-  }
+    public selectOptionById(optionId: string): this {
+        cy.getById(optionId).click();
+        return this;
+    }
 
-  public recordDecision(): this {
-    cy.contains('Record a decision').click();
-    cy.get('#record-decision-link').click();
-    return this;
-  }
+    public submitForm(): this {
+        cy.get('[type="submit"]').click();
+        return this;
+    }
 
-  public makeDecision(decisionId: string): this {
-    cy.get(`#${decisionId}-radio`).click();
-    cy.get('#submit-btn').click();
-    return this;
-  }
+    public submitFormRecordDecision(): this {
+        cy.clickSubmitBtn();
+        return this;
+    }
 
-  public enterDecisionMakerName(name: string): this {
-    cy.get('#decision-maker-name').type(name);
-    cy.get('#submit-btn').click();
-    return this;
-  }
+    public recordDecision(): this {
+        cy.containsText('Record a decision').click();
+        cy.getById('record-decision-link').click();
+        return this;
+    }
 
-  public addPerformanceConcerns(concernsText: string): this {
-    cy.get('#performanceconcerns-checkbox').check();
-    cy.get('#performanceconcerns-txtarea').type(concernsText);
-    cy.get('#submit-btn').click();
-    return this;
-  }
+    public addPerformanceConcerns(concernsText: string): this {
+        cy.getById('performanceconcerns-checkbox').check();
+        cy.getById('performanceconcerns-txtarea').type(concernsText);
+        cy.clickSubmitBtn();
+        return this;
+    }
 
-  public enterDecisionDate(day: string, month: string, year: string): this {
-    cy.get('#decision-date-day').type(day);
-    cy.get('#decision-date-month').type(month);
-    cy.get('#decision-date-year').type(year);
-    cy.get('#submit-btn').click();
-    return this;
-  }
+    public verifyDecisionDetails(): this {
+        cy.containsText('Record a decision').click();
+        cy.getById('decision').should('contain', 'Deferred');
+        cy.getById('decision-made-by').should('contain', 'Grade 6');
+        cy.getById('deferred-reasons').should('contain', 'Performance concerns:');
+        cy.getById('deferred-reasons').should('contain', 'Cypress Test');
+        cy.getById('decision-date').should('contain', '12 December 2023');
+        return this;
+    }
 
-  public verifyDecisionDetails(): this {
-    cy.contains('Record a decision').click();
-    cy.get('#decision').should('contain', 'Deferred');
-    cy.get('#decision-made-by').should('contain', 'Grade 6');
-    cy.get('#deferred-reasons').should('contain', 'Performance concerns:');
-    cy.get('#deferred-reasons').should('contain', 'Cypress Test');
-    cy.get('#decision-date').should('contain', '12 December 2023');
-    return this;
-  }
+    public assertTrustName(expectedName: string): this {
+        cy.getByDataCy('trust_Name').should('contain', expectedName);
+        return this;
+    }
 
-  public assertTrustName(expectedName: string): this {
-    cy.get('[data-cy="trust_Name"]').should('contain', expectedName);
-    return this;
-  }
+    public assertURNNumber(expectedNumber: string): this {
+        cy.getByDataCy('URN_Id').should('contain', expectedNumber);
+        return this;
+    }
 
-  public assertURNNumber(expectedNumber: string): this {
-    cy.get('[data-cy="URN_Id"]').should('contain', expectedNumber);
-    return this;
-  }
+    public deleteProject(projectId: string): this {
+        const deleteUrl = `${Cypress.env(AcademisationApiUrl)}/transfer-project/${projectId}/delete`;
+        const academisationApiKey = Cypress.env(AcademisationApiKey);
 
-  public deleteProject(projectId: string): this {
-    const deleteUrl = `${Cypress.env('academisationApiUrl')}/transfer-project/${projectId}/delete`;
-    const academisationApiKey = Cypress.env('academisationApiKey');
+        cy.request({
+            method: 'DELETE',
+            url: deleteUrl,
+            headers: {
+                'x-api-key': academisationApiKey,
+            },
+        }).then((response) => {
+            expect(response.status).to.eq(200); // Verify the response status
+        });
 
-
-    cy.request({
-      method: 'DELETE',
-      url: deleteUrl,
-      headers: {
-        'x-api-key': academisationApiKey,
-      }
-    }).then((response) => {
-      expect(response.status).to.eq(200); // Verify the response status
-    });
-
-    return this;
-  }
+        return this;
+    }
 }
 
+const newTransferProjectWithDecisions = new NewTransferProjectWithDecisions();
+
+export { NewTransferProjectWithDecisions };
+export default newTransferProjectWithDecisions;

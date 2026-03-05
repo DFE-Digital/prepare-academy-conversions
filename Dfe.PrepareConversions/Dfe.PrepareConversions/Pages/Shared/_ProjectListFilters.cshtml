@@ -106,9 +106,9 @@
                 </button>
 
                 <div class="govuk-form-group">
-                    <label class="govuk-label govuk-label--m" for="projects">
+                    <h2 class="govuk-label govuk-label--m govuk-!-margin-top-0" for="projects">
                         Search for projects
-                    </label>
+                    </h2>
                     <span class="govuk-hint" id="filter-project-title-hint">You can search by school name, academy name, trust name and URN</span>
                     <input id="Title" title="search by school name, academy name, trust name, URN, UKPRN and project reference" aria-label="Search for projects" name="Title" asp-for="Title" type="text" class="govuk-input" aria-describedby="filter-project-title-hint"
                            data-cy="select-projectlist-filter-title">
@@ -257,6 +257,10 @@
                     </fieldset>
 
                 </div>
+
+                <button class="govuk-button govuk-!-margin-top-6" data-module="govuk-button" data-test-id="submit-button" data-cy="select-projectlist-filter-apply">
+                    Apply filters
+                </button>
             </form>
         </div>
 

@@ -1,55 +1,51 @@
-class RationalePage {
+import BasePage from './basePage';
 
-  public slug = 'rationale'
+class RationalePage extends BasePage {
+    public path = 'rationale';
 
-  public completeRationale(): this {
+    public completeRationale(): this {
+        cy.getByDataTest('project-rationale').click();
 
-    cy.get('[data-test="project-rationale"]').click()
+        cy.get('h1').should('contain.text', 'Write the rationale for the project');
 
-    cy.get('h1').should('contain.text', 'Write the rationale for the project')
+        cy.getByDataTest('project-rationale').clear();
+        cy.getByDataTest('project-rationale').type('Cypress project rationale');
 
-    cy.get('[data-test="project-rationale"]').clear()
-    cy.get('[data-test="project-rationale"]').type('Cypress project rationale')
+        this.saveAndContinue();
 
-    cy.get('button').contains('Save and continue').click()
+        // Check the table has been updated
+        cy.get('dd').eq(0).should('contain.text', 'Cypress project rationale');
 
-    // Check the table has been updated
-    cy.get('dd').eq(0).should('contain.text', 'Cypress project rationale')
+        return this;
+    }
 
-    return this
-  }
+    public completeChosenReason(): this {
+        cy.getByDataTest('trust-rationale').click();
 
-  public completeChosenReason(): this {
+        cy.get('h1').should('contain.text', 'Write the rationale for the incoming trust or sponsor');
 
-    cy.get('[data-test="trust-rationale"]').click()
+        cy.getByDataTest('trust-rationale').clear();
+        cy.getByDataTest('trust-rationale').type('Cypress trust rationale');
 
-    cy.get('h1').should('contain.text', 'Write the rationale for the incoming trust or sponsor')
+        this.saveAndContinue();
 
-    cy.get('[data-test="trust-rationale"]').clear()
-    cy.get('[data-test="trust-rationale"]').type('Cypress trust rationale')
+        // Check the table has been updated
+        cy.get('dd').eq(2).should('contain.text', 'Cypress trust rationale');
 
-    cy.get('button').contains('Save and continue').click()
+        return this;
+    }
 
-    // Check the table has been updated
-    cy.get('dd').eq(2).should('contain.text', 'Cypress trust rationale')
+    public markAsComplete(): this {
+        this.markSectionComplete();
+        return this;
+    }
 
-    return this
-  }
-
-  public markAsComplete(): this {
-
-    cy.get('[data-test="mark-section-complete"]').click()
-    return this
-  }
-
-  public confirmRationale(): this {
-
-    cy.get('button').contains('Confirm and continue').click()
-
-    return this
-  }
+    public confirmRationale(): this {
+        this.confirmAndContinue();
+        return this;
+    }
 }
 
-const rationalePage = new RationalePage()
+const rationalePage = new RationalePage();
 
-export default rationalePage
+export default rationalePage;

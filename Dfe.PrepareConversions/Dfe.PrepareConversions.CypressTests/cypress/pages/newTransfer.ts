@@ -1,15 +1,14 @@
-class NewTransferPage {
+import BasePage from './basePage';
 
-  public slug = 'transfers/newtransfersinformation'
+class NewTransferPage extends BasePage {
+    public path = 'transfers/newtransfersinformation';
 
-  public clickCreateNewTransfer(): this {
-
-    cy.get('.govuk-button').contains('Create a new transfer').click()
-
-    return this
-  }
+    public clickCreateNewTransfer(): this {
+        cy.get('.govuk-button').contains('Create a new transfer').click();
+        return this;
+    }
 }
 
-const newTransferPage = new NewTransferPage()
+const newTransferPage = new NewTransferPage();
 
-export default newTransferPage
+export default newTransferPage;
