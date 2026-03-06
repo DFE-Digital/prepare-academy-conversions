@@ -31,6 +31,11 @@
                   @Model.Project.SchoolName's project template
                </a>
             </h2>
+                <h2 class="app-c-attachment__title">
+                    <a class="govuk-link app-c-attachment__link" target="_self" asp-route-id="@Model.Project.Id" asp-page-handler="htbtemplateWithPdf">
+                        @Model.Project.SchoolName's project template (PDF)
+                    </a>
+                </h2>
             <p class="app-c-attachment__metadata">
                <span class="app-c-attachment__attribute">
                   Microsoft Word Document
