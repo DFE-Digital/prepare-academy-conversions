@@ -9,7 +9,6 @@ namespace Dfe.PrepareTransfers.Web.Models
         public Academy Academy { get; set; }
         public PupilNumbers PupilNumbersViewModel { get; set; }
         public Pages.Projects.GeneralInformation.Index GeneralInformationViewModel { get; set; }
-        public Pages.Projects.LatestOfstedJudgement.Index LatestOfstedJudgementViewModel { get;  set; }
         public EducationPerformance EducationPerformance { get; set; }
     }
 }
