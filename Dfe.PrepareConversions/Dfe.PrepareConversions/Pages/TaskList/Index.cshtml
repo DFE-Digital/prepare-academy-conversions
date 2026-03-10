@@ -1,7 +1,10 @@
 ﻿@page "/task-list/{id:int}"
 @using Dfe.Academisation.ExtensionMethods
+﻿@using Microsoft.Extensions.Configuration
 @using Dfe.PrepareConversions.Data.Models
-@using Dfe.PrepareConversions.TagHelpers
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
 @model Dfe.PrepareConversions.Pages.TaskList.IndexModel
 @{
     Model.SetErrorPage(Links.TaskList.Index.Page);
@@ -144,14 +147,13 @@
         </div>
         
         <h3 class="app-task-list__section govuk-!-margin-top-0">Performance data</h3>
-
-       <div class="govuk-inset-text show-white-space">@Model.TaskList.PerformanceDataHintText</div>
+        
        <div class="app-task-list" aria-label="list of tasks">
             <ul class="app-task-list__items govuk-!-padding-left-0">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a class="govuk-link" asp-page="@Links.SchoolPerformance.ConfirmSchoolPerformance.Page" asp-route-id="@Model.Project.Id">
-                            Ofsted information
+                        <a class="govuk-link" rel="noreferrer noopener" href="@Configuration["OfstedReportBaseUrl"]@Model.Project.SchoolURN" target="_blank" aria-describedby="school-performance-status">
+                            Ofsted information (opens in a new tab)
                         </a>
                     </span>
                 </li>

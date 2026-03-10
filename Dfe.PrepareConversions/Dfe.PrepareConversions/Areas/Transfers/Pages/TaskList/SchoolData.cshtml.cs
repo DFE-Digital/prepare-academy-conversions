@@ -1,42 +1,34 @@
-﻿using System.Threading.Tasks;
-using Dfe.PrepareTransfers.Data;
+﻿using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers;
 using Dfe.PrepareTransfers.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 
 namespace Dfe.PrepareTransfers.Web.Pages.TaskList
 {
-    public class SchoolData : CommonPageModel
+    public class SchoolData(IAcademies academies, IProjects projects, IEducationPerformance projectRepositoryEducationPerformance)
+       : CommonPageModel
     {
-        private readonly IAcademies _academies;
-        private readonly IProjects _projects;
-        private readonly IEducationPerformance _projectRepositoryEducationPerformance;
-
-        [BindProperty(SupportsGet = true)]
+       [BindProperty(SupportsGet = true)]
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public string AcademyUkprn {get; set; }
         public bool HasKeyStage2PerformanceInformation { get; set; }
         public bool HasKeyStage4PerformanceInformation { get; set; }
         public bool HasKeyStage5PerformanceInformation { get; set; }
         public string AcademyName { get; set; }
-        
-        
-        public SchoolData(IAcademies academies, IProjects projects, IEducationPerformance projectRepositoryEducationPerformance)
-        {
-            _academies = academies;
-            _projects = projects;
-            _projectRepositoryEducationPerformance = projectRepositoryEducationPerformance;
-        }
-        
+        public string AcademyUrn { get; set; }
+
+
         public async Task<PageResult> OnGetAsync()
         {
-            var project = await _projects.GetByUrn(Urn); 
-            var academy = await _academies.GetAcademyByUkprn(AcademyUkprn);
+            var project = await projects.GetByUrn(Urn); 
+            var academy = await academies.GetAcademyByUkprn(AcademyUkprn);
             AcademyName = academy.Name;
+            AcademyUrn = academy.Urn;
             ProjectReference = project.Result.Reference;
             var educationPerformance =
-                _projectRepositoryEducationPerformance.GetByAcademyUrn(project.Result.OutgoingAcademyUrn).Result;
+                projectRepositoryEducationPerformance.GetByAcademyUrn(project.Result.OutgoingAcademyUrn).Result;
             HasKeyStage2PerformanceInformation =
                 PerformanceDataHelpers.HasKeyStage2PerformanceInformation(educationPerformance.Result
                     .KeyStage2Performance);
