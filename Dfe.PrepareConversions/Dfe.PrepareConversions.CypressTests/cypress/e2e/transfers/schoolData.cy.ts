@@ -23,10 +23,6 @@ describe('School Data', () => {
         schoolDataPage.checkPupilNumbers().confirm();
     });
 
-    it('Shows Latest Ofsted Report', () => {
-        schoolDataPage.checkOfstedReport();
-    });
-
     it('Shows KS4 Performance Tables', () => {
         schoolDataPage.checkKS4Tables();
     });

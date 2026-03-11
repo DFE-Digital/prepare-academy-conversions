@@ -148,12 +148,6 @@ class ProjectTaskList extends BasePage {
         return cy.getById(this.selectors.LAStatus);
     }
 
-    public selectOfsted(): this {
-        cy.checkPath(this.path);
-        cy.get(this.selectors.ofstedLink).click();
-        return this;
-    }
-
     public getProjectUrn(): Cypress.Chainable<string> {
         cy.checkPath(this.path);
         return cy
@@ -162,11 +156,6 @@ class ProjectTaskList extends BasePage {
             .then((text) => {
                 return text.replace('URN: ', '').trim();
             });
-    }
-
-    public clickOfStedINfoBackButton(): this {
-        cy.getByDataCy('ofsted-info-back-btn').click();
-        return this;
     }
 
     public selectKeyStage(keyStageNumber: number): this {
