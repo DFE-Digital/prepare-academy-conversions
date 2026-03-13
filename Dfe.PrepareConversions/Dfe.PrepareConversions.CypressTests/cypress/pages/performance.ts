@@ -3,11 +3,8 @@ import BasePage from './basePage';
 
 class Performance extends BasePage {
     private readonly selectors = {
-        ofstedInfoText:
-            'This information comes from Ofsted. It is for reference only. It will not appear in the project document.',
         keyStageText:
             'This information comes from Find and compare schools in England. It is for reference only. It will not appear in the project document.',
-        ofstedInfoTextId: '.govuk-grid-column-two-thirds > .govuk-body',
         keyStageLinkText: 'Source of data: Find and compare school performance (opens in new tab)',
         keyStageLink: (urn: string) => `https://www.compare-school-performance.service.gov.uk/school/${urn}`,
         keyStageTextId: '.govuk-grid-column-two-thirds > :nth-child(3)',
@@ -25,11 +22,6 @@ class Performance extends BasePage {
             .should('contain.text', this.selectors.keyStageLinkText)
             .should('have.attr', 'href')
             .and('include', this.selectors.keyStageLink(urn));
-        return this;
-    }
-
-    public verifyOfsteadScreenText(): this {
-        cy.get(this.selectors.ofstedInfoTextId).should('contain.text', this.selectors.ofstedInfoText);
         return this;
     }
 

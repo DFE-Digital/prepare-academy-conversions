@@ -30,11 +30,20 @@ public class EstablishmentService : IGetEstablishment
       HttpResponseMessage response = await _httpClient.GetAsync($"/v4/establishment/urn/{urn}");
       if (!response.IsSuccessStatusCode)
       {
-         _logger.LogWarning("Unable to get establishment data for establishment with URN: {urn}", urn);
+         _logger.LogWarning("Unable to get establishment data for establishment with URN: {Urn}", urn);
          return new EstablishmentDto();
       }
 
       return await response.Content.ReadFromJsonAsync<EstablishmentDto>();
+   }
+
+   public async Task<EstablishmentDto> GetEstablishmentByUkprn(string ukprn)
+   {
+      ApiResponse<EstablishmentDto> result = await _httpClientService.Get<EstablishmentDto>(_httpClient, $"/v4/establishment/{ukprn}");
+
+      if (!result.Success) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+
+      return result.Body;
    }
 
    public async Task<IEnumerable<EstablishmentSearchResponse>> SearchEstablishments(string searchQuery)

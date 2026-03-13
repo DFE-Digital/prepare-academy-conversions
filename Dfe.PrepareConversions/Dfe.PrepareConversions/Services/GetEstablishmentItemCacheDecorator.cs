@@ -33,6 +33,21 @@ public class GetEstablishmentItemCacheDecorator : IGetEstablishment
       return establishment;
    }
 
+   public async Task<EstablishmentDto> GetEstablishmentByUkprn(string ukprn)
+   {
+      string key = $"establishment-ukprn-{ukprn}";
+      if (_httpContext.Items.ContainsKey(key) && _httpContext.Items[key] is EstablishmentDto cached)
+      {
+         return cached;
+      }
+
+      EstablishmentDto establishment = await _getEstablishment.GetEstablishmentByUkprn(ukprn);
+
+      _httpContext.Items[key] = establishment;
+
+      return establishment;
+   }
+
    public Task<IEnumerable<EstablishmentSearchResponse>> SearchEstablishments(string searchQuery)
    {
       string key = $"establishments-{searchQuery}";

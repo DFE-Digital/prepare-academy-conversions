@@ -56,32 +56,6 @@ class SchoolDataPage extends BasePage {
         return this;
     }
 
-    public checkOfstedReport(): this {
-        cy.getByDataTest('ofsted').click();
-
-        cy.get('h1').should('contain.text', 'Latest Ofsted report');
-
-        cy.get('h2').should('contain.text', 'Last full inspection');
-
-        const ofsteadHeadings = [
-            'Latest full inspection date',
-            'Quality of education',
-            'Behaviour and attitudes',
-            'Personal development',
-            'Leadership and management',
-            'Early years provision',
-            'Sixth form provision',
-            'Ofsted report',
-        ];
-
-        cy.get('dt').then(($keys) => {
-            const keys = Cypress._.map($keys, 'innerText');
-            expect(keys, 'headings').to.deep.equal(ofsteadHeadings);
-        });
-
-        return this;
-    }
-
     public checkKS4Tables(): this {
         cy.getByDataTest('ks4-performance').click();
 
