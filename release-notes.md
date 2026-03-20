@@ -5,9 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). To see an example from a mature product in the program [see the Complete products changelog that follows the same methodology](https://github.com/DFE-Digital/dfe-complete-conversions-transfers-and-changes/blob/main/CHANGELOG.md).
 
 
-## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-03-13.1080...main)
+## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-03-20.1086...main)
 NOTE: remember to update unreleased link when making a new release
 
+---
+## [1.27.4][1.27.4] - 2026-03-20
+
+### Changed
+- 251424 - Font type incorrect for confirm dates sections
+  
+---
+## [1.27.3][1.27.3] - 2026-03-20
+
+### Changed
+- no changes or feature released
+  
 ---
 ## [1.27.2][1.27.2] - 2026-03-13
 
@@ -335,6 +347,10 @@ ___
 # 1.0.0 - Initial release of Prepare Conversions
 Initial Release of the Prepare-conversions system into production.
 
+[1.27.4]: 
+  https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-03-20.1086
+[1.27.3]: 
+  https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-03-20.1084
 [1.27.2]: 
   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-03-13.1080
 [1.27.1]: 
