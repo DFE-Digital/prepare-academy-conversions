@@ -1,4 +1,4 @@
-﻿@model DateInputViewModel
+@model DateInputViewModel
 @{
    var showError = !string.IsNullOrWhiteSpace(Model.ErrorMessage);
 }
@@ -10,7 +10,7 @@
          @if (Model.HeadingLabel)
          {
             <legend class="govuk-fieldset__legend--l">
-               <h1 class="govuk-fieldset__heading">
+               <h1 class="govuk-heading-l govuk-fieldset__heading">
                   @Model.Label
                </h1>
             </legend>
