@@ -42,23 +42,24 @@ Cypress.on('url:changed', (url) => {
     url = url.replace(`${Cypress.config('baseUrl')}`, '');
     url = url.split('#')[0]; // Remove any hash fragments
     url = url.split('?')[0]; // Remove any query parameters
-    if (!Cypress.env('visitedUrls')) {
-        Cypress.env('visitedUrls', new Set());
-    }
-    Cypress.env('visitedUrls').add(url);
+    const visitedUrls: Set<string> = Cypress.expose('visitedUrls') || new Set<string>();
+    visitedUrls.add(url);
+    Cypress.expose('visitedUrls', visitedUrls);
 });
 
 // ***********************************************************
 
 beforeEach(() => {
-    cy.intercept(
-        { url: Cypress.env(EnvUrl) + '/**', middleware: true },
-        //Add authorization to all Cypress requests
-        (req) => {
-            req.headers['Authorization'] = 'Bearer ' + Cypress.env(CypressTestSecret);
-            req.headers['AuthorizationRole'] = 'conversions.create';
-        }
-    );
+    cy.env([CypressTestSecret]).then(({ cypressTestSecret }) => {
+        cy.intercept(
+            { url: Cypress.expose(EnvUrl) + '/**', middleware: true },
+            //Add authorization to all Cypress requests
+            (req) => {
+                req.headers['Authorization'] = `Bearer ${cypressTestSecret}`;
+                req.headers['AuthorizationRole'] = 'conversions.create';
+            }
+        );
+    });
 });
 
 // ***********************************************************

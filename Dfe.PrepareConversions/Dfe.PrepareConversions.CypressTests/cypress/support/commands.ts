@@ -173,26 +173,28 @@ Cypress.Commands.add('checkAccessibilityAcrossPages', () => {
 Cypress.Commands.add(
     'callAcademisationApi',
     (method: string, url: string, body: object | null = null, failOnStatusCode = true) => {
-        const requestDefinition: Partial<Cypress.RequestOptions> = {
-            method: method,
-            url: `${Cypress.env(AcademisationApiUrl)}/${url}`,
-            headers: {
-                'x-api-key': Cypress.env(AcademisationApiKey),
-                'x-api-cypress-endpoints-key': Cypress.env(CypressApiKey),
-                'Content-Type': 'application/json',
-            },
-            failOnStatusCode: failOnStatusCode,
-        };
+        cy.env([AcademisationApiKey, CypressApiKey]).then(({ academisationApiKey, cypressApiKey }) => {
+            const requestDefinition: Partial<Cypress.RequestOptions> = {
+                method: method,
+                url: `${Cypress.expose(AcademisationApiUrl)}/${url}`,
+                headers: {
+                    'x-api-key': academisationApiKey,
+                    'x-api-cypress-endpoints-key': cypressApiKey,
+                    'Content-Type': 'application/json',
+                },
+                failOnStatusCode: failOnStatusCode,
+            };
 
-        // add body to a post/put/patch request, otherwise leave as not supplied
-        switch (method.toUpperCase()) {
-            case 'POST':
-            case 'PUT':
-            case 'PATCH':
-                requestDefinition.body = body;
-                break;
-        }
+            // add body to a post/put/patch request, otherwise leave as not supplied
+            switch (method.toUpperCase()) {
+                case 'POST':
+                case 'PUT':
+                case 'PATCH':
+                    requestDefinition.body = body;
+                    break;
+            }
 
-        return cy.request(requestDefinition);
+            return cy.request(requestDefinition);
+        });
     }
 );

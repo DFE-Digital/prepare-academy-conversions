@@ -1,5 +1,3 @@
-/* eslint-env node */
-
 import { defineConfig } from 'cypress';
 import { generateZapReport } from './cypress/plugins/generateZapReport';
 import pluginConfig from './cypress/plugins/index';
@@ -22,6 +20,7 @@ export default defineConfig({
         runMode: 1,
     },
     e2e: {
+        allowCypressEnv: false,
         specPattern: 'cypress/e2e',
         supportFile: 'cypress/support/e2e.ts',
         setupNodeEvents(on, config) {
