@@ -86,19 +86,18 @@ class NewTransferProjectWithDecisions extends FormBasePage {
     }
 
     public deleteProject(projectId: string): this {
-        const deleteUrl = `${Cypress.env(AcademisationApiUrl)}/transfer-project/${projectId}/delete`;
-        const academisationApiKey = Cypress.env(AcademisationApiKey);
-
-        cy.request({
-            method: 'DELETE',
-            url: deleteUrl,
-            headers: {
-                'x-api-key': academisationApiKey,
-            },
-        }).then((response) => {
-            expect(response.status).to.eq(200); // Verify the response status
+        const deleteUrl = `${Cypress.expose(AcademisationApiUrl)}/transfer-project/${projectId}/delete`;
+        cy.env([AcademisationApiKey]).then(({ academisationApiKey }) => {
+            cy.request({
+                method: 'DELETE',
+                url: deleteUrl,
+                headers: {
+                    'x-api-key': academisationApiKey,
+                },
+            }).then((response) => {
+                expect(response.status).to.eq(200); // Verify the response status
+            });
         });
-
         return this;
     }
 }

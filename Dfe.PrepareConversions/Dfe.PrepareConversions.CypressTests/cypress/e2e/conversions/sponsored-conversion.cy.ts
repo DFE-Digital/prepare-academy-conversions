@@ -62,6 +62,7 @@ describe('Sponsored conversion journey', {}, () => {
     });
 
     beforeEach(() => {
+        cy.login();
         cy.visit('/');
         cy.acceptCookies();
         projectList.selectProject(testData.projectName);

@@ -27,6 +27,7 @@
 import 'cypress-localstorage-commands';
 import { AcademisationApiKey, AcademisationApiUrl, CypressApiKey } from '../constants/cypressConstants';
 import { Logger } from './logger';
+import { AuthenticationInterceptor } from '../auth/authenticationInterceptor';
 
 //--Universal
 
@@ -72,9 +73,13 @@ Cypress.Commands.add('checkPath', (path: string) => {
     cy.url().should('include', path);
 });
 
-Cypress.Commands.add('login', ({ titleFilter }: { titleFilter?: string } = {}) => {
-    const filterQuery = titleFilter ? `?Title=${encodeURIComponent(titleFilter)}` : '';
-    cy.visit(`/project-list${filterQuery}`);
+Cypress.Commands.add('login', () => {
+    cy.clearCookies();
+    cy.clearLocalStorage();
+
+    // Intercept all browser requests and add our special auth header
+    // Means we don't have to use azure to authenticate
+    new AuthenticationInterceptor().register();
 });
 
 Cypress.Commands.add('acceptCookies', () => {
@@ -161,7 +166,7 @@ Cypress.Commands.add('executeAccessibilityTests', () => {
 });
 
 Cypress.Commands.add('checkAccessibilityAcrossPages', () => {
-    const visitedUrls = Cypress.env('visitedUrls');
+    const visitedUrls = Cypress.expose('visitedUrls') as Set<string>;
     visitedUrls.forEach((url: string) => {
         cy.visit(url, { failOnStatusCode: false });
         Logger.log('Executing accessibility check for URL: ' + url);
@@ -173,26 +178,28 @@ Cypress.Commands.add('checkAccessibilityAcrossPages', () => {
 Cypress.Commands.add(
     'callAcademisationApi',
     (method: string, url: string, body: object | null = null, failOnStatusCode = true) => {
-        const requestDefinition: Partial<Cypress.RequestOptions> = {
-            method: method,
-            url: `${Cypress.env(AcademisationApiUrl)}/${url}`,
-            headers: {
-                'x-api-key': Cypress.env(AcademisationApiKey),
-                'x-api-cypress-endpoints-key': Cypress.env(CypressApiKey),
-                'Content-Type': 'application/json',
-            },
-            failOnStatusCode: failOnStatusCode,
-        };
+        cy.env([AcademisationApiKey, CypressApiKey]).then(({ academisationApiKey, cypressApiKey }) => {
+            const requestDefinition: Partial<Cypress.RequestOptions> = {
+                method: method,
+                url: `${Cypress.expose(AcademisationApiUrl)}/${url}`,
+                headers: {
+                    'x-api-key': academisationApiKey,
+                    'x-api-cypress-endpoints-key': cypressApiKey,
+                    'Content-Type': 'application/json',
+                },
+                failOnStatusCode: failOnStatusCode,
+            };
 
-        // add body to a post/put/patch request, otherwise leave as not supplied
-        switch (method.toUpperCase()) {
-            case 'POST':
-            case 'PUT':
-            case 'PATCH':
-                requestDefinition.body = body;
-                break;
-        }
+            // add body to a post/put/patch request, otherwise leave as not supplied
+            switch (method.toUpperCase()) {
+                case 'POST':
+                case 'PUT':
+                case 'PATCH':
+                    requestDefinition.body = body;
+                    break;
+            }
 
-        return cy.request(requestDefinition);
+            return cy.request(requestDefinition);
+        });
     }
 );

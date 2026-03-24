@@ -6,6 +6,7 @@ describe('School Improvement Plan Tests', () => {
     let projectId: string;
 
     beforeEach(() => {
+        cy.login();
         Logger.log('Visit the homepage before each test');
         cy.visit('/');
         cy.acceptCookies();
