@@ -26,6 +26,7 @@ describe('Create a new transfer', () => {
     const transferDate = dayjs().add(4, 'month');
 
     beforeEach(() => {
+        cy.login();
         Logger.log('Visit the transfers homepage before each test');
         cy.visit('/transfers/home');
         cy.acceptCookies();

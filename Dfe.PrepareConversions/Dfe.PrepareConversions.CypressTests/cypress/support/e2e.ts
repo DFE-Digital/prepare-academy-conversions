@@ -15,11 +15,9 @@
 
 import './commands';
 const { register: registerCypressGrep } = require('@cypress/grep');
-import { CypressTestSecret, EnvUrl } from '../constants/cypressConstants';
 import 'cypress-axe';
 
 // ***********************************************************
-import 'cypress-plugin-api';
 
 registerCypressGrep();
 
@@ -45,21 +43,6 @@ Cypress.on('url:changed', (url) => {
     const visitedUrls: Set<string> = Cypress.expose('visitedUrls') || new Set<string>();
     visitedUrls.add(url);
     Cypress.expose('visitedUrls', visitedUrls);
-});
-
-// ***********************************************************
-
-beforeEach(() => {
-    cy.env([CypressTestSecret]).then(({ cypressTestSecret }) => {
-        cy.intercept(
-            { url: Cypress.expose(EnvUrl) + '/**', middleware: true },
-            //Add authorization to all Cypress requests
-            (req) => {
-                req.headers['Authorization'] = `Bearer ${cypressTestSecret}`;
-                req.headers['AuthorizationRole'] = 'conversions.create';
-            }
-        );
-    });
 });
 
 // ***********************************************************
@@ -131,11 +114,9 @@ declare global {
             checkPath(path: string): Chainable<void>;
 
             /**
-             * Login and visit the project list page
-             * @param options - Optional login options
-             * @param options.titleFilter - Optional title filter to apply
+             * Login, register the authentication interceptor, and clear local storage
              */
-            login(options?: { titleFilter?: string }): Chainable<void>;
+            login(): Chainable<void>;
 
             /**
              * Accept consent for cookies
@@ -210,7 +191,7 @@ declare global {
 
             /**
              * Check accessibility across all visited pages
-             * checks each unique URL stored in Cypress.env('visitedUrls')
+             * checks each unique URL stored in Cypress.expose('visitedUrls')
              */
             checkAccessibilityAcrossPages(): Chainable<void>;
 

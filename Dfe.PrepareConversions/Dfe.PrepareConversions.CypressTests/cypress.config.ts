@@ -38,6 +38,10 @@ export default defineConfig({
             });
 
             config.baseUrl = config.env.url;
+            config.expose = {
+                url: config.env.url,
+                academisationApiUrl: config.env.academisationApiUrl,
+            };
 
             pluginConfig(on, config);
             return config;

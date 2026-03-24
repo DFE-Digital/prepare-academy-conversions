@@ -7,6 +7,7 @@ describe('School Data', () => {
     const trustName = 'The Bishop Fraser Trust';
 
     beforeEach(() => {
+        cy.login();
         Logger.log('Visit the transfers homepage before each test');
         cy.visit('/transfers/home');
         cy.acceptCookies();

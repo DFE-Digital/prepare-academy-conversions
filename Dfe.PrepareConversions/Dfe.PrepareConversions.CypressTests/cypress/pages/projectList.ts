@@ -62,13 +62,6 @@ class ProjectList extends BasePage {
         return this;
     }
 
-    public selectVoluntaryProject(): Cypress.Chainable<number | string> {
-        cy.login({ titleFilter: 'Voluntary Cypress Project' });
-        cy.getById('school-name-0').click();
-
-        return cy.url().then((url) => this.getIdFromUrl(url));
-    }
-
     public getIdFromUrl(url: string): number | string {
         const urlSplit = url.toString().split('/');
         for (let i = urlSplit.length - 1; i > 0; i--) {
