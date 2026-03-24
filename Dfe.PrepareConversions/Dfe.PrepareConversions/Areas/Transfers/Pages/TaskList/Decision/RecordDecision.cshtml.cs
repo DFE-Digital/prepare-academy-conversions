@@ -72,16 +72,12 @@ public class RecordDecision : DecisionBaseModel
       if (AdvisoryBoardDecision == AdvisoryBoardDecisions.Approved)
       {
          var hasAdvisoryBoardDate = _project.Dates?.Htb != null;
-         DateTime? advisoryBoardDate = hasAdvisoryBoardDate
-               ? DateTime.ParseExact(_project.Dates?.Htb, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
-               : null;
          var hasProposedTransferDate = _project.Dates?.Target != null;
          var hasProjectOwnerAssignment = _project.AssignedUser != null && _project.AssignedUser.EmailAddress.Length > 0;
          var hasIncomingTrustName = _project.IncomingTrustName != null;
          var hasIncomingTrustReferenceNumber = _project.IncomingTrustReferenceNumber != null && _project.IsFormAMat == true;
          var returnPage = WebUtility.UrlEncode(Links.Decision.RecordDecision.PageName);
 
-            // @* // TODO added by during rebase as we may as well rename this to be thorough *@
          if (!hasAdvisoryBoardDate)
          {
             ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/proposed-decision-date?returns={returnPage}",
