@@ -66,7 +66,7 @@ public class ProjectListIntegrationTests(IntegrationTestingWebApplicationFactory
       await OpenAndConfirmPathAsync("/project-list");
 
       Document.QuerySelector<IHtmlElement>($"#project-status-{projects.First().Id}")?.Text().Should()
-         .Be("PRE DECISION");
+         .Be("Pre decision");
    }
 
    [Fact]

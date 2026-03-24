@@ -30,7 +30,7 @@ public class ProjectListHelperTests(IntegrationTestingWebApplicationFactory fact
    public void MapProjectString_OtherValue_ReturnsCorrectValues()
    {
       ProjectStatus actual = ProjectListHelper.MapProjectStatus("Hello!");
-      Assert.Equivalent(new ProjectStatus("PRE DECISION", yellow), actual);
+      Assert.Equivalent(new ProjectStatus("Pre decision", yellow), actual);
    }
 
    [Theory]
