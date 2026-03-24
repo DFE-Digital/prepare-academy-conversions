@@ -15,7 +15,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
         {
             _validator = new DateValidator
             {
-                ErrorDisplayName = "Advisory board date"
+                ErrorDisplayName = "proposed decision date"
             };
         }
         
@@ -58,7 +58,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.ValidatorTests.TransferDates
             var result = await _validator.TestValidateAsync(dateVm);
 
             result.ShouldHaveValidationErrorFor(a => a.Date)
-                .WithErrorMessage("Enter Advisory board date");
+                .WithErrorMessage("Enter proposed decision date");
         }
 
         [Fact]
