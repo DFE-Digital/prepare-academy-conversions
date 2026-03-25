@@ -51,7 +51,7 @@ public class OtherSchoolsInMatTests : BaseIntegrationTests
       {
          AcademyConversionProject project = projects.ElementAt(i);
 
-         Document.QuerySelector($"#project-status-{project.Id}")?.TextContent.Should().Contain("PRE DECISION");
+         Document.QuerySelector($"#project-status-{project.Id}")?.TextContent.Should().Contain("Pre decision");
       }
 
       ResetServer();

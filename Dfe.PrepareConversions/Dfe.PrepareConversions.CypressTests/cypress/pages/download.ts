@@ -1,12 +1,12 @@
 import BasePage from './basePage';
 
 class DownloadPage extends BasePage {
-    public path = 'advisory-board/download';
+    public path = 'download-project-template';
 
     public downloadProjectTemplate(): this {
         cy.get('h1').should('contain.text', 'Download project template');
 
-        cy.intercept('GET', '**/advisory-board/download/GenerateDocument').as('downloadRequest');
+        cy.intercept('GET', '**/download-project-template/GenerateDocument').as('downloadRequest');
 
         cy.getByDataTest('download-htb').click();
 
