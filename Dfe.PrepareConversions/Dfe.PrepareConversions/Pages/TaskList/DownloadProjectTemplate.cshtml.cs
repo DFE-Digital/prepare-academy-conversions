@@ -36,4 +36,24 @@ public class DownloadProjectTemplate(SchoolOverviewService schoolOverviewService
 
       return File(documentByteArray, "application/vnd.ms-word.document", $"{document.SchoolName}-project-template-{DateTime.Today:dd-MM-yyyy}.docx");
    }
+
+   public async Task<IActionResult> OnGetHtbTemplateWithPdfAsync(int id)
+   {
+      var response = await _repository.GetProjectById(id);
+      if (!response.Success)
+      {
+         return NotFound();
+      }
+
+      var project = response.Body;
+
+      var schoolOverview = await schoolOverviewService.GetSchoolOverviewByUrn(project.Urn.ToString());
+
+      var keyStagePerformance = await keyStagePerformanceService.GetKeyStagePerformance(project.Urn.ToString());
+
+      var generator = new PdfDocumentGenerator();
+      var document = generator.GenerateDocument(project, schoolOverview, keyStagePerformance);
+
+      return File(document, "application/pdf", $"{project.SchoolName}-project-template-{DateTime.Today:dd-MM-yyyy}.pdf");
+   }
 }
