@@ -48,11 +48,12 @@ public class DownloadProjectTemplate(SchoolOverviewService schoolOverviewService
       var project = response.Body;
 
       var schoolOverview = await schoolOverviewService.GetSchoolOverviewByUrn(project.Urn.ToString());
+
       var keyStagePerformance = await keyStagePerformanceService.GetKeyStagePerformance(project.Urn.ToString());
 
       var generator = new PdfDocumentGenerator();
       var document = generator.GenerateDocument(project, schoolOverview, keyStagePerformance);
 
-      return File(document, "application/vnd.ms-word.document", $"{project.SchoolName}-project-template-{DateTime.Today:dd-MM-yyyy}.pdf");
+      return File(document, "application/pdf", $"{project.SchoolName}-project-template-{DateTime.Today:dd-MM-yyyy}.pdf");
    }
 }
