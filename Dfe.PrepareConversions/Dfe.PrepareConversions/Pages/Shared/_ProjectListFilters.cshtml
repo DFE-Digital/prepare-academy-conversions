@@ -83,15 +83,15 @@
 
                 </ul>
             }
-            @if (Model.SelectedAdvisoryBoardDates.Length > 0)
+            @if (Model.SelectedProposedDecisionDates.Length > 0)
             {
                 <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Proposed decision date</h3>
 
                 <ul class="moj-filter-tags">
                     @{
-                        foreach (var date in Model.SelectedAdvisoryBoardDates)
+                        foreach (var date in Model.SelectedProposedDecisionDates)
                         {
-                            <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedAdvisoryBoardDates=@date"><span class="govuk-visually-hidden">Remove this filter</span> @date.Stub()</a></li>
+                            <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedProposedDecisionDates=@date"><span class="govuk-visually-hidden">Remove this filter</span> @date.Stub()</a></li>
                         }
                     }
 
@@ -240,8 +240,8 @@
                                         @foreach (var boardDate in Model.AvailableAdvisoryBoardDates)
                                         {
                                             <div class="govuk-checkboxes__item">
-                                                <input class="govuk-checkboxes__input" id="filter-project-advisory-board-@boardDate.Stub()-@dateIndex" name="selectedAdvisoryBoardDates" type="checkbox" value="@boardDate" data-cy="select-projectlist-filter-advisory-board-@boardDate"
-                                                @(Model.SelectedAdvisoryBoardDates.Contains(boardDate) ? "checked" : null) />
+                                                <input class="govuk-checkboxes__input" id="filter-project-advisory-board-@boardDate.Stub()-@dateIndex" name="SelectedProposedDecisionDates" type="checkbox" value="@boardDate" data-cy="select-projectlist-filter-advisory-board-@boardDate"
+                                                @(Model.SelectedProposedDecisionDates.Contains(boardDate) ? "checked" : null) />
                                                 <label class="govuk-label govuk-checkboxes__label" for="filter-project-advisory-board-@boardDate.Stub()-@dateIndex">
                                                     @boardDate
                                                 </label>
