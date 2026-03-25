@@ -17,8 +17,8 @@
 
 @if (!Model.Project.HeadTeacherBoardDate.HasValue)
 {
-    <govuk-date-input heading-label="true" label="Proposed decision date" details-body="If a decision was made about this project without a proposed decision meeting, use the date that decision was made instead." details-heading="What to do if there was no a proposed decision meeting" name="proposed-decision-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
+    <govuk-date-input heading-label="true" label="Proposed decision date" name="proposed-decision-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
 }else{
-    <govuk-date-input heading-label="true" label="Proposed decision date" details-body="If a decision was made about this project without a proposed decision meeting, use the date that decision was made instead." details-heading="What to do if there was no a proposed decision meeting" sub-label="Enter new proposed decision date" previous-information="The current proposed decision date is" additional-information="Make sure all stakeholders are aware of the change and the reason for it" name="proposed-decision-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
+    <govuk-date-input heading-label="true" label="Proposed decision date" sub-label="Enter new proposed decision date" previous-information="The current proposed decision date is" additional-information="Make sure all stakeholders are aware of the change and the reason for it" name="proposed-decision-date" asp-for="Project.HeadTeacherBoardDate" hint="For example, 21 11 2021" />
 }
 
