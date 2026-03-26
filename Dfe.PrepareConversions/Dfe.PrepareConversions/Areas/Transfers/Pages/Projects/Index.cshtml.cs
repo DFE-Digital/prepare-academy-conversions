@@ -67,7 +67,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects
          }
       }
 
-      public IActionResult OnPostPreviewAsync(string urn)
+      public IActionResult TemplateRedirect(string urn, string link)
       {
          taskListService.BuildTaskListStatuses(this);
 
@@ -76,27 +76,13 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects
          if (errorService.HasErrors())
          {
             SetPermission();
-
             return Page();
          }
 
-         return RedirectToPage("/TaskList/HtbDocument/Preview", new { Urn });
+         return RedirectToPage(link, new { Urn });
       }
 
-      public IActionResult OnPostGenerateAsync(string urn)
-      {
-         taskListService.BuildTaskListStatuses(this);
-
-         Validate();
-
-         if (errorService.HasErrors())
-         {
-            SetPermission();
-
-            return Page();
-         }
-
-         return RedirectToPage("/TaskList/HtbDocument/Download", new { Urn });
-      }
-    }
+      public IActionResult OnPostPreviewAsync(string urn) => TemplateRedirect(urn, "/TaskList/HtbDocument/Preview");
+      public IActionResult OnPostGenerateAsync(string urn) => TemplateRedirect(urn, "/TaskList/HtbDocument/Download");
+   }
 }

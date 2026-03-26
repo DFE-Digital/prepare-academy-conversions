@@ -8,6 +8,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-03-20.1086...main)
 NOTE: remember to update unreleased link when making a new release
 
+### Changed
+- remove/replace references to advisory board
+
+### Fixed
+- inconsistent use of returnUrl on preview/create project templates
+
+### Removed
+- references to "BackText" query argument on preview/create project templates
+
 ---
 ## [1.27.4][1.27.4] - 2026-03-20
 

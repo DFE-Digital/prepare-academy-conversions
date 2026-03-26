@@ -28,20 +28,20 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">        
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l" aria-describedby="set-ab-date-hint">
-            <h1 class="govuk-fieldset__heading govuk-heading-xl" id="AdvisoryBoardViewModel_AdvisoryBoardDate_Date">
-                <span class="govuk-caption-l">
-                    @Model.IncomingTrustName?.ToTitleCase()
-                </span>
-                Proposed decision date
-            </h1>
-        </legend>       
         <form method="post" novalidate="">
             <input type="hidden" asp-for="@Model.Urn" />
             <input type="hidden" asp-for="@Model.ReturnToPreview" />
             <input type="hidden" asp-for="@Model.IncomingTrustName" />
             <div class="govuk-form-group @formClasses">
-                <fieldset class="govuk-fieldset">
+                <fieldset class="govuk-fieldset" aria-describedby="set-ab-date-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading govuk-heading-xl" id="AdvisoryBoardViewModel_AdvisoryBoardDate_Date">
+                            <span class="govuk-caption-l">
+                                @Model.IncomingTrustName?.ToTitleCase()
+                            </span>
+                            Proposed decision date
+                        </h1>
+                    </legend>
                     <div id="set-ab-date-hint" class="govuk-hint">
                         For example, 12 11 2021. You can change this date later.
                     </div>
@@ -57,7 +57,7 @@
                                 <label asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Day" class="govuk-label govuk-date-input__label">
                                     Day
                                 </label>
-                                <input asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Day" class="govuk-input govuk-date-input__input govuk-input--width-2 @dayInputError" type="text" pattern="[0-9]*" inputmode="numeric" data-test="day">
+                                <input asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Day" class="govuk-input govuk-date-input__input govuk-input--width-2 @dayInputError" type="text" pattern="[0-9]*" inputmode="numeric" data-test="day" aria-describedby="AdvisoryBoardViewModel_AdvisoryBoardDate_Date set-ab-date-hint">
                             </div>
                         </div>
                         <div class="govuk-date-input__item">
@@ -65,7 +65,7 @@
                                 <label asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Month" class="govuk-label govuk-date-input__label">
                                     Month
                                 </label>
-                                <input asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Month" class="govuk-input govuk-date-input__input govuk-input--width-2 @monthInputError" type="text" pattern="[0-9]*" inputmode="numeric" data-test="month">
+                                <input asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Month" class="govuk-input govuk-date-input__input govuk-input--width-2 @monthInputError" type="text" pattern="[0-9]*" inputmode="numeric" data-test="month" aria-describedby="AdvisoryBoardViewModel_AdvisoryBoardDate_Date set-ab-date-hint">
                             </div>
                         </div>
                         <div class="govuk-date-input__item">
@@ -73,7 +73,7 @@
                                 <label asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Year" class="govuk-label govuk-date-input__label">
                                     Year
                                 </label>
-                                <input asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Year" class="govuk-input govuk-date-input__input govuk-input--width-4 @yearInputError" type="text" pattern="[0-9]*" inputmode="numeric" data-test="year">
+                                <input asp-for="AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Year" class="govuk-input govuk-date-input__input govuk-input--width-4 @yearInputError" type="text" pattern="[0-9]*" inputmode="numeric" data-test="year" aria-describedby="AdvisoryBoardViewModel_AdvisoryBoardDate_Date set-ab-date-hint">
                             </div>
                         </div>
                     </div>

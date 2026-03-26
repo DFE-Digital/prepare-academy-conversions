@@ -73,7 +73,7 @@ public class RecordDecisionModel : DecisionBaseModel
    {
       if (AdvisoryBoardDecision == AdvisoryBoardDecisions.Approved)
       {
-         var returnPage = @Links.TaskList.Index.Page;
+         var returnPage = WebUtility.UrlEncode(Links.Decision.RecordDecision.Page);
          if (!_project.HeadTeacherBoardDate.HasValue)
          {
             ModelState.AddModelError($"/task-list/{id}/confirm-school-trust-information-project-dates/proposed-decision-date?return={returnPage}",
