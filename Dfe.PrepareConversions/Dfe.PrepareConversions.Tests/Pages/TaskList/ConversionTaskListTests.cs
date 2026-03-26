@@ -54,7 +54,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.TaskList
 
          await Document.QuerySelector<IHtmlButtonElement>("#generate-project-template-button")!.SubmitAsync();
 
-         Document.Url.Should().BeUrl($"/task-list/{project.Id}/download-project-template?return=/TaskList/Index&backText=Back");
+         Document.Url.Should().BeUrl($"/task-list/{project.Id}/download-project-template");
       }
 
       [Theory]

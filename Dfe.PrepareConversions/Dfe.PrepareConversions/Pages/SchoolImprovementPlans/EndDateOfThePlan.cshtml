@@ -24,9 +24,8 @@
             </legend>
             <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios">
                 <div class="govuk-radios__item">
-                    @* ID, Model property, "for" *@
                     <input asp-for="ExpectedEndDate" class="govuk-radios__input" id="ToAdvisoryBoard-radio" type="radio" value="@SchoolImprovementPlanExpectedEndDate.ToAdvisoryBoard" data-aria-controls="conditional-ToAdvisoryBoard">
-                    <label class="govuk-label govuk-radios__label" for="ToAdvisoryBoard-radio">
+                    <label class="govuk-label govuk-radios__label" for="ToAdvisoryBoard-radio" id="conditional-ToAdvisoryBoard">
                         To proposed decision <span if="@Model.AdvisoryBoradDate.HasValue">(@Model.AdvisoryBoradDate.Value.ToString(Constants.DateTimeFormat))</span>
                     </label>
                 </div>
