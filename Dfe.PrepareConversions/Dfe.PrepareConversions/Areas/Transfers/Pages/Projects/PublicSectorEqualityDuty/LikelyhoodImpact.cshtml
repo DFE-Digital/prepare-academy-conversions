@@ -36,7 +36,7 @@
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                     <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios" id="Impact">
-                        <h1 class="govuk-heading-l" data-test="how-likely-question">How likely is the project to disproportionately impact people with protected characteristics?</h1>
+                        <h1 class="govuk-heading-l" data-test="how-likely-question">How likely is the project to disproportionately impact people who share a protected characteristic?</h1>
                         <inline-error for="@nameof(Model.Impact)" />
 
                         @foreach (var option in Enum.GetValues(typeof(PublicSectorEqualityDutyImpact)))
