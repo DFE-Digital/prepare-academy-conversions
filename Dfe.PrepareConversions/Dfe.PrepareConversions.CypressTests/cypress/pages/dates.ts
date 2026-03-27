@@ -3,10 +3,10 @@ import BasePage from './basePage';
 class DatesPage extends BasePage {
     public path = 'features';
 
-    public completeAdvisoryBoardDate(date): this {
+    public completeProposedDecisionDate(date): this {
         cy.getByDataTest('ab-date').click();
 
-        cy.get('h1').should('contain.text', 'Advisory board date');
+        cy.get('h1').should('contain.text', 'Proposed decision date');
 
         cy.getByDataTest('day').clear();
         cy.getByDataTest('day').type(date.date());

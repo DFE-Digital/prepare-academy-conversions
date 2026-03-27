@@ -30,16 +30,15 @@ class ConversionDetails extends BasePage {
         EIGValue: '[id="grant-funding-environmental-improvement-grant"]',
         EIGYesRadio: '[name="conversion-support-grant-environmental-improvement-grant"][data-cy="select-radio-yes" i]',
         EIGNoRadio: '[name="conversion-support-grant-environmental-improvement-grant"][data-cy="select-radio-no" i]',
-        advisoryBoardDateLink: '[data-test="change-advisory-board-date"]',
-        advisoryBoardDateValue: '[id="advisory-board-date"]',
-        advisoryBoardDateInput: 'head-teacher-board-date',
+        proposedDecisionDateLink: '[data-test="change-proposed-decision-date"]',
+        proposedDecisionDateValue: '[id="proposed-decision-date-day]',
         proposedOpeningLink: '[data-test="change-proposed-academy-opening-date"]',
         proposedOpeningValue: '[id="proposed-academy-opening-date"]',
         proposedOpeningRadioButton: (month: number, year: number) =>
             `input[data-cy="select-radio-${month}/01/${year} 00:00:00"]`,
-        previousAdvisoryBoardLink: '[data-test="change-previous-advisory-board"]',
-        previousAdvisoryBoardValue: '[id="previous-advisory-board"]',
-        previousAdvisoryBoardDateInput: 'previous-head-teacher-board-date',
+        previousConsideredDateLink: '[data-test="change-previous-advisory-board"]',
+        previousConsideredDateValue: '[id="previous-advisory-board"]',
+        previousConsideredDateInput: 'previous-advisory-board-day',
         authorLink: '[data-test="change-author"]',
         authorValue: '[id="author"]',
         authorInput: '[id="author"]',
@@ -157,14 +156,14 @@ class ConversionDetails extends BasePage {
         return cy.get(this.selectors.EIGValue);
     }
 
-    public setPreviousAdvisoryBoardDate(previousBoard = true, date: Date = today): this {
+    public setPreviousConsideredDate(previousDate = true, date: Date = today): this {
         cy.checkPath(this.path);
-        cy.get(this.selectors.previousAdvisoryBoardLink).click();
-        if (previousBoard) {
+        cy.get(this.selectors.previousConsideredDateLink).click();
+        if (previousDate) {
             cy.YesRadioBtn().check();
             cy.get(this.selectors.saveButton).click();
             cy.enterDate(
-                this.selectors.previousAdvisoryBoardDateInput,
+                this.selectors.previousConsideredDateInput,
                 date.getDate(),
                 date.getMonth() + 1,
                 date.getFullYear()
@@ -176,9 +175,9 @@ class ConversionDetails extends BasePage {
         return this;
     }
 
-    public getPreviousAdvisoryBoardDate(): Cypress.Chainable<JQuery<HTMLElement>> {
+    public getPreviouslyConsideredDate(): Cypress.Chainable<JQuery<HTMLElement>> {
         cy.checkPath(this.path);
-        return cy.get(this.selectors.previousAdvisoryBoardValue);
+        return cy.get(this.selectors.previousConsideredDateValue);
     }
 
     // People

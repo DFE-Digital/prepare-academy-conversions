@@ -108,7 +108,7 @@ describe('Create a new transfer', () => {
             projectPage.checkTransferDatesStatus('Not Started').startTransferDates();
 
             datesPage
-                .completeAdvisoryBoardDate(advisoryBoardDate)
+                .completeProposedDecisionDate(advisoryBoardDate)
                 .completeExpectedTransferDate(transferDate)
                 .confirmDates();
 

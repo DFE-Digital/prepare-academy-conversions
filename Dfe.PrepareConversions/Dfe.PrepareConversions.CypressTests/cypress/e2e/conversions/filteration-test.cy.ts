@@ -9,7 +9,7 @@ describe('Filtration Tests', {}, () => {
         resultCount: 5,
     };
 
-    const projectStatuses = ['Approved', 'Approved with conditions', 'Declined', 'Deferred', 'Pre advisory board'];
+    const projectStatuses = ['Approved', 'Approved with conditions', 'Declined', 'Deferred', 'Pre decision'];
 
     beforeEach(() => {
         cy.login();

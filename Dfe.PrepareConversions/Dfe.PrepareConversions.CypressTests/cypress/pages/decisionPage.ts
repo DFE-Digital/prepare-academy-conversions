@@ -44,11 +44,11 @@ class DecisionPage extends FormBasePage {
         cy.getByDataCy('error-summary')
             .find('a')
             .eq(3)
-            .should('contain', 'You must enter an advisory board date before you can record a decision.')
+            .should('contain', 'You must enter a proposed decision date before you can record a decision.')
             .and('be.visible');
 
         // Clicking and filling fields as per the error messages
-        cy.contains('a', 'You must enter an advisory board date before you can record a decision').click();
+        cy.contains('a', 'You must enter a proposed decision date before you can record a decision.').click();
         cy.getById('head-teacher-board-date-day').type(day);
         cy.getById('head-teacher-board-date-month').type(month);
         cy.getById('head-teacher-board-date-year').type(year);
