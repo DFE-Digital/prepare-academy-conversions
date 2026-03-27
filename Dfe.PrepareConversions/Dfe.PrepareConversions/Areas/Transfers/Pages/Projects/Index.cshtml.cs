@@ -55,8 +55,8 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects
 
          if (string.IsNullOrWhiteSpace(HeadTeacherBoardDate))
          {
-            errorService.AddError($"/transfers/project/{Urn}/transfer-dates/advisory-board-date?return={returnPage}",
-               "Set an Advisory board date before you generate your project template");
+            errorService.AddError($"/transfers/project/{Urn}/transfer-dates/proposed-decision-date?return={returnPage}",
+               "Set a proposed decision date before you generate your project template");
          }
 
          var isPsedValid = PrepareConversions.Models.PreviewPublicSectorEqualityDutyModel.IsValid(PublicEqualityDutyImpact, PublicEqualityDutyReduceImpactReason, PublicEqualityDutySectionComplete ?? false);
@@ -67,7 +67,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects
          }
       }
 
-      public IActionResult OnPostPreviewAsync(string urn)
+      public IActionResult TemplateRedirect(string urn, string link)
       {
          taskListService.BuildTaskListStatuses(this);
 
@@ -76,27 +76,13 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects
          if (errorService.HasErrors())
          {
             SetPermission();
-
             return Page();
          }
 
-         return RedirectToPage("/TaskList/HtbDocument/Preview", new { Urn });
+         return RedirectToPage(link, new { Urn });
       }
 
-      public IActionResult OnPostGenerateAsync(string urn)
-      {
-         taskListService.BuildTaskListStatuses(this);
-
-         Validate();
-
-         if (errorService.HasErrors())
-         {
-            SetPermission();
-
-            return Page();
-         }
-
-         return RedirectToPage("/TaskList/HtbDocument/Download", new { Urn });
-      }
-    }
+      public IActionResult OnPostPreviewAsync(string urn) => TemplateRedirect(urn, "/TaskList/HtbDocument/Preview");
+      public IActionResult OnPostGenerateAsync(string urn) => TemplateRedirect(urn, "/TaskList/HtbDocument/Download");
+   }
 }

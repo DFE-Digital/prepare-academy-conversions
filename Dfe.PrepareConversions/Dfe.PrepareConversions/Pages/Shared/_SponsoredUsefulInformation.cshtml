@@ -1,5 +1,4 @@
 ﻿@{
-    var showScheduleOfAdvisoryBoardMeetingsLink = (bool)(ViewData["ShowScheduleOfAdvisoryBoardMeetingsLink"] ?? false);
     var showTheyWorkForYouLink = (bool)(ViewData["ShowTheyWorkForYouLink"] ?? false);
 }
 <div class="govuk-grid-column-one-third">
@@ -9,14 +8,6 @@
       </h2>
       <nav role="navigation" aria-labelledby="subsection-title">
          <ul class="govuk-list govuk-!-font-size-16">
-                @if (showScheduleOfAdvisoryBoardMeetingsLink)
-                {
-                    <li>
-                        <p class="govuk-body-s">
-                            <a class="govuk-link" id="advisory-board-meeting-schedules" href="https://www.gov.uk/government/publications/headteacher-board-meetings-schedule-and-preparation-templates" target="application">Schedule of advisory board meetings (opens in a new tab)</a>
-                        </p>
-                    </li>
-                }
                 @if (showTheyWorkForYouLink)
                 {
                     <li>

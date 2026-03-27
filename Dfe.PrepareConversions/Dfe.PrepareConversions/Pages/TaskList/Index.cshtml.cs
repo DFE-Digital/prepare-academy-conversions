@@ -99,8 +99,8 @@ public class IndexModel(KeyStagePerformanceService keyStagePerformanceService,
       if (!hasAdvisoryBoardDate)
       {
          // this sets the return location for the 'Confirm' button on the HeadTeacherBoardDate page
-         errorService.AddError($"/task-list/{Project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return={returnPage}&fragment=advisory-board-date",
-            "Set an Advisory board date before you generate your project template");
+         errorService.AddError($"/task-list/{Project.Id}/confirm-school-trust-information-project-dates/proposed-decision-date?return={returnPage}&fragment=proposed-decision-date",
+            "Set a proposed decision date before you generate your project template");
       }
 
       var isPsedValid = PreviewPublicSectorEqualityDutyModel.IsValid(Project.PublicEqualityDutyImpact, Project.PublicEqualityDutyReduceImpactReason, Project.PublicEqualityDutySectionComplete);
@@ -111,28 +111,10 @@ public class IndexModel(KeyStagePerformanceService keyStagePerformanceService,
       }
    }
 
-   public async Task<IActionResult> OnPostPreviewAsync(int id)
+   public async Task<IActionResult> TemplateRedirect(int id, LinkItem linkItem)
    {
-      IActionResult result = await SetProject(id);
-
-      ReturnPage = @Links.ProjectList.Index.Page;
-
-      Validate();
-
-      if (errorService.HasErrors())
-      {
-         await SetKeyPerformance(id);
-
-         return Page();
-      }
-
-      return RedirectToPage(Links.TaskList.PreviewHTBTemplate.Page, new { id });
-   }
-
-   public async Task<IActionResult> OnPostGenerateAsync(int id)
-   {
-      IActionResult result = await SetProject(id);
-
+      _ = await SetProject(id);
+   
       ReturnPage = @Links.ProjectList.Index.Page;
 
       Validate();
@@ -143,6 +125,9 @@ public class IndexModel(KeyStagePerformanceService keyStagePerformanceService,
          return Page();
       }
 
-      return Redirect($"/task-list/{id}/download-project-template?return=/TaskList/Index&backText=Back");
+      return RedirectToPage(linkItem.Page, new { id });
    }
+
+   public async Task<IActionResult> OnPostPreviewAsync(int id) => await TemplateRedirect(id, Links.TaskList.PreviewHTBTemplate);
+   public async Task<IActionResult> OnPostGenerateAsync(int id) => await TemplateRedirect(id, Links.TaskList.GenerateHTBTemplate);
 }

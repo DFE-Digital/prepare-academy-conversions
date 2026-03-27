@@ -1,4 +1,4 @@
-﻿@page "/transfers/project/{urn}/advisory-board/download/{handler?}"
+﻿@page "/transfers/project/{urn}/download-project-template/{handler?}"
 @inject Microsoft.Extensions.Configuration.IConfiguration _configuration
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument.Download
@@ -44,7 +44,7 @@
 
       <div class="govuk-!-margin-top-6">
          <h2 class="govuk-heading-m">What happens next</h2>
-         <p class="govuk-body">Get the downloaded template ready for advisory board.</p>
+            <p class="govuk-body">Get the downloaded template ready for proposed decision.</p>
          <p class="govuk-body">Save the template in the school's SharePoint folder.</p>
          <p class="govuk-body">
             <a href="@_configuration["TemplateFeedback"]" class="govuk-link" target="_blank" rel="noopener">What did you think of this service? (opens in new tab)</a>. This takes 2 minutes.

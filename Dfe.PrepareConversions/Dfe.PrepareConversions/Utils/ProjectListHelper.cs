@@ -124,7 +124,7 @@ public static class ProjectListHelper
       {
          "approved with conditions" => new ProjectStatus("Approved with conditions", green),
          "daorevoked" => new ProjectStatus("DAO revoked", red),
-         _ => new ProjectStatus("Pre advisory board", yellow)
+         _ => new ProjectStatus("Pre decision", yellow)
       };
    }
 

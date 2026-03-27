@@ -1,4 +1,4 @@
-@page "/transfers/project/{urn}/transfer-dates/previous-advisory-board-date"
+@page "/transfers/project/{urn}/transfer-dates/previous-proposed-decision-date"
 @using Dfe.PrepareTransfers.Web.ExtensionMethods;
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers.TagHelpers
@@ -8,7 +8,7 @@
 
 @{
    Layout = "_Layout";
-   ViewBag.Title = ViewData.ModelState.BuildPageTitle("Previous advisory board date");
+   ViewBag.Title = ViewData.ModelState.BuildPageTitle("Previous proposed decision date");
    var formClasses = ViewData.ModelState.GetFormGroupErrorStyle();
    var dayInputError = ViewData.ModelState.GetFormFieldErrorStyle("AdvisoryBoardViewModel.AdvisoryBoardDate.Date", "AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Day");
    var monthInputError = ViewData.ModelState.GetFormFieldErrorStyle("AdvisoryBoardViewModel.AdvisoryBoardDate.Date", "AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Month");
@@ -37,7 +37,7 @@
                             <span class="govuk-caption-l">
                                 @Model.IncomingTrustName?.ToTitleCase()
                             </span>
-                            Advisory board date
+                            Previous proposed decision date
                         </h1>
                     </legend>
                     <div id="set-ab-date-hint" class="govuk-hint">

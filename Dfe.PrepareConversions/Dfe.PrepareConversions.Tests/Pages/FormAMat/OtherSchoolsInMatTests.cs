@@ -30,7 +30,7 @@ public class OtherSchoolsInMatTests : BaseIntegrationTests
          Document.QuerySelector($"#urn-{i}")?.TextContent.Should().Contain(project.Urn.ToString());
          Document.QuerySelector($"#application-to-join-trust-{i}")?.TextContent.Should().Contain(project.NameOfTrust);
          Document.QuerySelector($"#local-authority-{i}")?.TextContent.Should().Contain(project.LocalAuthority);
-         Document.QuerySelector($"#Advisory-Board-date-{i}")?.TextContent.Should().Contain(project.HeadTeacherBoardDate.ToDateString());
+         Document.QuerySelector($"#proposed-decision-date-{i}")?.TextContent.Should().Contain(project.HeadTeacherBoardDate.ToDateString());
          Document.QuerySelector($"#opening-date-{i}")?.TextContent.Should().Contain(project.ProposedConversionDate.ToDateString());
          Document.QuerySelector($"#application-received-date-{i}")?.TextContent.Should().Contain(project.CreatedOn.ToDateString());
          Document.QuerySelector($"#delivery-officer-{i}")?.TextContent.Should().Contain(project.AssignedUser.FullName);
@@ -51,7 +51,7 @@ public class OtherSchoolsInMatTests : BaseIntegrationTests
       {
          AcademyConversionProject project = projects.ElementAt(i);
 
-         Document.QuerySelector($"#project-status-{project.Id}")?.TextContent.Should().Contain("Pre advisory board");
+         Document.QuerySelector($"#project-status-{project.Id}")?.TextContent.Should().Contain("Pre decision");
       }
 
       ResetServer();

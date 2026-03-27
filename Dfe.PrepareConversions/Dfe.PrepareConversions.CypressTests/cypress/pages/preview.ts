@@ -1,7 +1,7 @@
 import BasePage from './basePage';
 
 class PreviewPage extends BasePage {
-    public path = 'advisory-board/preview';
+    public path = 'preview-project-template';
 
     // Checks the section counts
     // Note: Does *not* check contents are valid

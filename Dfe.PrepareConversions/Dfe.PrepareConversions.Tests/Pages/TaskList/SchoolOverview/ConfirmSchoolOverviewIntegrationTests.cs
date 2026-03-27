@@ -90,6 +90,7 @@ public class ConfirmSchoolOverviewIntegrationTests(IntegrationTestingWebApplicat
    [Fact]
    public async Task Should_be_completed_and_checked_when_school_overview_complete()
    {
+
       AcademyConversionProject project = AddGetProject(project => project.SchoolOverviewSectionComplete = true);
       AddGetEstablishmentDto(project.Urn.ToString());
       AddPatchConfiguredProject(project, x =>
