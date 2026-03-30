@@ -10,11 +10,12 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.TaskList.HtbDocument
     {
         private readonly Pages.TaskList.HtbDocument.Download _subject;
         private readonly Mock<ICreateProjectTemplate> _createHtbDocument;
+      private readonly Mock<ICreateProjectTemplatePdf> _createHtbDocumentPdf;
 
-        protected DownloadTests()
+      protected DownloadTests()
         {
             _createHtbDocument = new Mock<ICreateProjectTemplate>();
-            _subject = new Pages.TaskList.HtbDocument.Download(_createHtbDocument.Object,
+            _subject = new Pages.TaskList.HtbDocument.Download(_createHtbDocument.Object, _createHtbDocumentPdf.Object,
                 GetInformationForProject.Object)
             {
                 Urn = ProjectUrn0001

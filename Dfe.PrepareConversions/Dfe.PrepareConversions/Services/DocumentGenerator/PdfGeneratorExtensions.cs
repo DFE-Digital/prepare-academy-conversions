@@ -48,6 +48,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
       public static TextBlockDescriptor GenerateSectionSubTitle(this IContainer container, string subTitle)
       {
          return container
+            .PaddingTop(4).PaddingBottom(4)
             .Text(subTitle).FontColor(Colors.Blue.Darken4).FontSize(14).Bold();
       }
 
