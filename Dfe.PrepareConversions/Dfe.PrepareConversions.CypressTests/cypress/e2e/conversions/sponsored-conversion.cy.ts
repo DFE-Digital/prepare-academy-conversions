@@ -62,6 +62,7 @@ describe('Sponsored conversion journey', {}, () => {
     });
 
     beforeEach(() => {
+        cy.login();
         cy.visit('/');
         cy.acceptCookies();
         projectList.selectProject(testData.projectName);
@@ -282,10 +283,6 @@ describe('Sponsored conversion journey', {}, () => {
     });
 
     it('Performance Info ', () => {
-        projectTaskList.selectOfsted();
-        Performance.verifyOfsteadScreenText();
-        projectTaskList.clickOfStedINfoBackButton();
-
         for (const keyStage of testData.keyStages) {
             console.log(keyStage);
             projectTaskList.getProjectUrn().then((urn) => {

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
@@ -13,13 +14,13 @@ using Dfe.PrepareTransfers.Web.Pages.Projects.BenefitsAndRisks;
 using Dfe.PrepareTransfers.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Index = Dfe.PrepareTransfers.Web.Pages.Projects.Features.Index;
-using LatestOfstedJudgementIndex = Dfe.PrepareTransfers.Web.Pages.Projects.LatestOfstedJudgement.Index;
 
 namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
 {
     public class Preview : CommonPageModel
     {
         private readonly IGetInformationForProject _getInformationForProject;
+        private readonly IGetEstablishment _getEstablishment;
         private readonly IProjects _projects;
         private readonly ErrorService _errorService;
         public Index FeaturesSummaryViewModel { get; set; }
@@ -30,9 +31,15 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
         public Projects.Rationale.Index RationaleSummaryViewModel { get; set; }
         public List<PreviewPageAcademyModel> Academies { get; private set; }
 
-         public Preview(IGetInformationForProject getInformationForProject, IProjects projects, ErrorService errorService)
+         public Preview(
+            IGetInformationForProject getInformationForProject,
+            IGetEstablishment getEstablishment,
+            IProjects projects, 
+            ErrorService errorService
+         )
          {
             _getInformationForProject = getInformationForProject;
+            _getEstablishment = getEstablishment;
             _projects = projects;
             _errorService = errorService;
          }
@@ -165,25 +172,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
                           Urn = project.Urn,
                           ReturnToPreview = true
                        }
-                    },
-                    LatestOfstedJudgementViewModel =
-                         new LatestOfstedJudgementIndex(_getInformationForProject, _projects)
-                         {
-                            Urn = project.Urn,
-                            OutgoingAcademyUrn = project.OutgoingAcademyUrn,
-                            AcademyUkprn = academy.Ukprn,
-                            LatestOfstedJudgement = academy.LatestOfstedJudgement,
-                            ReturnToPreview = true,
-                            AdditionalInformationViewModel = new AdditionalInformationViewModel
-                            {
-                               AdditionalInformation = academy.LatestOfstedJudgement.AdditionalInformation,
-                               HintText =
-                                     "If you add comments, they'll be included in the latest Ofsted judgement section of your project template.",
-                               Urn = project.Urn,
-                               ReturnToPreview = true
-                            },
-                            IsPreview = true
-                         }
+                    }
                  }))
             {
                previewPageAcademyModels.Add(previewPageAcademyModel);

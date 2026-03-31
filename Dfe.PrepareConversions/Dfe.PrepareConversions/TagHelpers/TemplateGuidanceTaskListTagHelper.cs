@@ -23,7 +23,7 @@ namespace Dfe.PrepareConversions.TagHelpers
                     <ul class='app-task-list__items govuk-!-padding-left-0'>
                         <li class='app-task-list__item'>
                             <span class='app-task-list__task-name'>
-                                <a class='govuk-link' href='{urlSlug}' aria-describedby='trust-template-status'>
+                                <a class='govuk-link' href='{urlSlug}'>
                                     {linkText}
                                 </a>
                             </span>                           

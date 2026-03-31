@@ -12,6 +12,7 @@ describe('Filtration Tests', {}, () => {
     const projectStatuses = ['Approved', 'Approved with conditions', 'Declined', 'Deferred', 'Pre advisory board'];
 
     beforeEach(() => {
+        cy.login();
         Logger.log('Visit the homepage before each test');
         cy.visit('/');
         cy.acceptCookies();

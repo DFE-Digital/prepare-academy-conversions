@@ -3,6 +3,7 @@ import { Logger } from '../../support/logger';
 
 describe('Cookie Policy', () => {
     beforeEach(() => {
+        cy.login();
         Logger.log('Visit the homepage before each test');
         cy.visit('/');
     });

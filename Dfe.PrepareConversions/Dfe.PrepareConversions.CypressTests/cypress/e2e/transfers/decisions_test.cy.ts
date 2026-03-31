@@ -6,6 +6,7 @@ describe('Transfer Project Tests', () => {
     let projectId: string;
 
     beforeEach(() => {
+        cy.login();
         Logger.log('Visit the transfers homepage before each test');
         cy.visit('/transfers/home');
         cy.acceptCookies();

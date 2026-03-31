@@ -1,6 +1,8 @@
 ﻿@page "/transfers/project/{urn}/school-data/{academyUkprn}"
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@using Microsoft.Extensions.Configuration
+@using Microsoft.Extensions.Configuration
 @model Dfe.PrepareTransfers.Web.Pages.TaskList.SchoolData
+@inject IConfiguration Configuration
 
 @{
     ViewBag.Title = Model.AcademyName;
@@ -35,7 +37,7 @@
                 </h2>
                 <ul class="govuk-list govuk-list--spaced">
                     <li>
-                        <a class="govuk-link" aria-describedby="ofsted-report" asp-page="/Projects/LatestOfstedJudgement/Index" asp-route-urn="@Model.Urn" asp-route-academyUkprn="@Model.AcademyUkprn" data-test="ofsted">Latest Ofsted report </a>
+                        <a class="govuk-link" aria-describedby="ofsted-report" href="@Configuration["OfstedReportBaseUrl"]@Model.AcademyUrn" rel="noreferrer noopener" target="_blank" data-test="ofsted">Latest Ofsted report (opens in a new tab)</a>
                     </li>
                     @if (Model.HasKeyStage2PerformanceInformation)
                     {

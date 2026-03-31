@@ -110,11 +110,7 @@
 	  <None Include="Areas\Transfers\Pages\Projects\GeneralInformation\PFIScheme.cshtml" />
 	  <None Include="Areas\Transfers\Pages\Projects\GeneralInformation\PublishedAdmissionNumber.cshtml" />
 	  <None Include="Areas\Transfers\Pages\Projects\GeneralInformation\ViabilityIssues.cshtml" />
-	  <None Include="Areas\Transfers\Pages\Projects\LatestOfstedJudgement\Index.cshtml" />
 	  <None Include="Areas\Transfers\Pages\Projects\ProjectAssignment\Index.cshtml" />
-	  <None Include="Areas\Transfers\Pages\Shared\OfstedSummary\_PreviewSummary.cshtml" />
-	  <None Include="Areas\Transfers\Pages\Shared\OfstedSummary\_ProjectSummary.cshtml" />
-	  <None Include="Areas\Transfers\Pages\Shared\OfstedSummary\_SummaryRows.cshtml" />
 	  <None Include="Areas\Transfers\Pages\Shared\_ProjectListRows.cshtml" />
 	  <None Include="Areas\Transfers\Pages\TaskList\HtbDocument\Download.cshtml" />
 	  <None Include="Areas\Transfers\Pages\TaskList\HtbDocument\KeyStage2PerformanceSummary.cshtml" />

@@ -1,7 +1,10 @@
 ﻿@page "/task-list/{id:int}"
 @using Dfe.Academisation.ExtensionMethods
+﻿@using Microsoft.Extensions.Configuration
 @using Dfe.PrepareConversions.Data.Models
-@using Dfe.PrepareConversions.TagHelpers
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
 @model Dfe.PrepareConversions.Pages.TaskList.IndexModel
 @{
     Model.SetErrorPage(Links.TaskList.Index.Page);
@@ -31,7 +34,7 @@
             <ul class="app-task-list__items govuk-!-padding-left-0">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name" data-cy="task-name">
-                        <a class="govuk-link" asp-page="@Links.ProjectDates.ConfirmProjectDates.Page" asp-route-id="@Model.Project.Id" aria-describedby="la-info-template-status"  data-cy="confirm_project_dates">
+                        <a class="govuk-link" asp-page="@Links.ProjectDates.ConfirmProjectDates.Page" asp-route-id="@Model.Project.Id" aria-describedby="project-dates-status"  data-cy="confirm_project_dates">
                             Confirm project dates
                         </a>
                     </span>
@@ -45,7 +48,7 @@
           <ul class="app-task-list__items govuk-!-padding-left-0">
              <li class="app-task-list__item">
                 <span class="app-task-list__task-name">
-                   <a class="govuk-link" asp-page="@Links.SchoolOverviewSection.ConfirmSchoolOverview.Page" asp-route-id="@Model.Project.Id" aria-describedby="la-info-template-status">
+                   <a class="govuk-link" asp-page="@Links.SchoolOverviewSection.ConfirmSchoolOverview.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-overview-status">
                       School overview
                    </a>
                 </span>
@@ -53,7 +56,7 @@
              </li>
              <li class="app-task-list__item">
                 <span class="app-task-list__task-name">
-                   <a class="govuk-link" asp-page="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="la-info-template-status">
+                   <a class="govuk-link" asp-page="@Links.SchoolBudgetInformationSection.ConfirmSchoolBudgetInformation.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-budget-information-status">
                       Budget
                    </a>
                 </span>
@@ -63,7 +66,7 @@
              </li>
              <li class="app-task-list__item">
                 <span class="app-task-list__task-name">
-                   <a class="govuk-link" asp-page="@Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-pupil-forecasts-status">
+                   <a class="govuk-link" asp-page="@Links.SchoolPupilForecastsSection.ConfirmSchoolPupilForecasts.Page" asp-route-id="@Model.Project.Id">
                       Pupil forecasts
                    </a>
                 </span>
@@ -80,7 +83,7 @@
              {
                 <li class="app-task-list__item">
                    <span class="app-task-list__task-name">
-                      <a class="govuk-link" asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Project.Id" aria-describedby="legal-requirements" data-cy="select-tasklist-links-legalrequirementlinks">
+                      <a class="govuk-link" asp-page="@Links.LegalRequirements.Summary.Page" asp-route-id="@Model.Project.Id" aria-describedby="legal-status" data-cy="select-tasklist-links-legalrequirementlinks">
                          Legal requirements
                       </a>
                    </span>
@@ -118,7 +121,7 @@
                 </li>
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a class="govuk-link" asp-page="@Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page" asp-route-id="@Model.Project.Id" aria-describedby="risks-and-issues">
+                        <a class="govuk-link" asp-page="@Links.RisksAndIssuesSection.ConfirmRisksAndIssues.Page" asp-route-id="@Model.Project.Id" aria-describedby="risks-and-issues-status">
                             Risks and issues
                         </a>
                     </span>
@@ -144,14 +147,13 @@
         </div>
         
         <h3 class="app-task-list__section govuk-!-margin-top-0">Performance data</h3>
-
-       <div class="govuk-inset-text show-white-space">@Model.TaskList.PerformanceDataHintText</div>
+        
        <div class="app-task-list" aria-label="list of tasks">
             <ul class="app-task-list__items govuk-!-padding-left-0">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a class="govuk-link" asp-page="@Links.SchoolPerformance.ConfirmSchoolPerformance.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-performance-status">
-                            Ofsted information
+                        <a class="govuk-link" rel="noreferrer noopener" href="@Configuration["OfstedReportBaseUrl"]@Model.Project.SchoolURN" target="_blank" aria-describedby="school-performance-status">
+                            Ofsted information (opens in a new tab)
                         </a>
                     </span>
                 </li>
@@ -159,7 +161,7 @@
                 {
                     <li class="app-task-list__item">
                         <span class="app-task-list__task-name" id="key-stage-2-performance-tables">
-                            <a class="govuk-link" asp-page="@Links.KeyStagePerformanceSection.KeyStage2PerformanceTables.Page" asp-route-id="@Model.Project.Id" aria-describedby="key-stage-2-performance-tables">
+                            <a class="govuk-link" asp-page="@Links.KeyStagePerformanceSection.KeyStage2PerformanceTables.Page" asp-route-id="@Model.Project.Id">
                                 Key stage 2 performance tables
                             </a>
                         </span>
@@ -169,7 +171,7 @@
                 {
                     <li class="app-task-list__item">
                         <span class="app-task-list__task-name">
-                            <a class="govuk-link" asp-page="@Links.KeyStagePerformanceSection.KeyStage4PerformanceTables.Page" asp-route-id="@Model.Project.Id" aria-describedby="key-stage-4-performance-tables">
+                            <a class="govuk-link" asp-page="@Links.KeyStagePerformanceSection.KeyStage4PerformanceTables.Page" asp-route-id="@Model.Project.Id">
                                 Key stage 4 performance tables
                             </a>
                         </span>
@@ -179,7 +181,7 @@
                 {
                     <li class="app-task-list__item">
                         <span class="app-task-list__task-name">
-                            <a class="govuk-link" asp-page="@Links.KeyStagePerformanceSection.KeyStage5PerformanceTables.Page" asp-route-id="@Model.Project.Id" aria-describedby="key-stage-5-performance-tables">
+                            <a class="govuk-link" asp-page="@Links.KeyStagePerformanceSection.KeyStage5PerformanceTables.Page" asp-route-id="@Model.Project.Id">
                                 Key stage 5 performance tables
                             </a>
                         </span>
@@ -189,7 +191,7 @@
                 {
                     <li class="app-task-list__item">
                         <span class="app-task-list__task-name">
-                            <a class="govuk-link" asp-page="@Links.KeyStagePerformanceSection.EducationalAttendance.Page" asp-route-id="@Model.Project.Id" aria-describedby="school-absence-data">
+                            <a class="govuk-link" asp-page="@Links.KeyStagePerformanceSection.EducationalAttendance.Page" asp-route-id="@Model.Project.Id">
                                 Educational Attendance
                             </a>
                         </span>

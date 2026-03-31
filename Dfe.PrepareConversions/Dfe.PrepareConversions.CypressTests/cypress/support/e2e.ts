@@ -14,12 +14,10 @@
 // ***********************************************************
 
 import './commands';
-import { register as registerCypressGrep } from '@cypress/grep';
-import { CypressTestSecret, EnvUrl } from '../constants/cypressConstants';
+const { register: registerCypressGrep } = require('@cypress/grep');
 import 'cypress-axe';
 
 // ***********************************************************
-import 'cypress-plugin-api';
 
 registerCypressGrep();
 
@@ -42,23 +40,9 @@ Cypress.on('url:changed', (url) => {
     url = url.replace(`${Cypress.config('baseUrl')}`, '');
     url = url.split('#')[0]; // Remove any hash fragments
     url = url.split('?')[0]; // Remove any query parameters
-    if (!Cypress.env('visitedUrls')) {
-        Cypress.env('visitedUrls', new Set());
-    }
-    Cypress.env('visitedUrls').add(url);
-});
-
-// ***********************************************************
-
-beforeEach(() => {
-    cy.intercept(
-        { url: Cypress.env(EnvUrl) + '/**', middleware: true },
-        //Add authorization to all Cypress requests
-        (req) => {
-            req.headers['Authorization'] = 'Bearer ' + Cypress.env(CypressTestSecret);
-            req.headers['AuthorizationRole'] = 'conversions.create';
-        }
-    );
+    const visitedUrls: Set<string> = Cypress.expose('visitedUrls') || new Set<string>();
+    visitedUrls.add(url);
+    Cypress.expose('visitedUrls', visitedUrls);
 });
 
 // ***********************************************************
@@ -130,11 +114,9 @@ declare global {
             checkPath(path: string): Chainable<void>;
 
             /**
-             * Login and visit the project list page
-             * @param options - Optional login options
-             * @param options.titleFilter - Optional title filter to apply
+             * Login, register the authentication interceptor, and clear local storage
              */
-            login(options?: { titleFilter?: string }): Chainable<void>;
+            login(): Chainable<void>;
 
             /**
              * Accept consent for cookies
@@ -209,7 +191,7 @@ declare global {
 
             /**
              * Check accessibility across all visited pages
-             * checks each unique URL stored in Cypress.env('visitedUrls')
+             * checks each unique URL stored in Cypress.expose('visitedUrls')
              */
             checkAccessibilityAcrossPages(): Chainable<void>;
 
