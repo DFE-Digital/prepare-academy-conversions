@@ -12,7 +12,17 @@
             }
             else
             {
-                <span id="@Model.Id" class="@Model.NegativeStyleClass">@Model.Value</span>
+                if (Model.IsHtml)
+                {
+                    var result = Model.Value.Replace("\r\n", "<br />");
+                    result = result.Replace("•\t", "<br />&bull; ");
+
+                    <div>@Html.Raw(result)</div>
+                }
+                else
+                {
+                    <span id="@Model.Id" class="@Model.NegativeStyleClass">@Model.Value</span>
+                }
             }
         }
 

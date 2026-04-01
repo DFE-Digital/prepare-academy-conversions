@@ -1,8 +1,8 @@
 ﻿using Dfe.PrepareConversions.Models;
-using Dfe.PrepareConversions.Services.DocumentGenerator;
 using Dfe.PrepareTransfers.Data.Models.Projects;
 using Dfe.PrepareTransfers.Helpers;
 using Dfe.PrepareTransfers.Web.Models.ProjectTemplate;
+using HTMLQuestPDF.Extensions;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -188,7 +188,10 @@ namespace Dfe.PrepareTransfers.Web.Services
                columns.RelativeColumn(1);
             });
 
-            table.Cell().Element(TableDataCellStyle).Text(projectTemplateModel.RationaleForProject ?? "N/A");
+            table.Cell().Element(TableDataCellStyle).HTML(handler =>
+            {
+               handler.SetHtml(projectTemplateModel.RationaleForProject ?? "N/A");
+            });
          });
       }
 
@@ -201,7 +204,10 @@ namespace Dfe.PrepareTransfers.Web.Services
                columns.RelativeColumn(1);
             });
 
-            table.Cell().Element(TableDataCellStyle).Text(projectTemplateModel.RationaleForTrust ?? "N/A");
+            table.Cell().Element(TableDataCellStyle).HTML(handler =>
+            {
+               handler.SetHtml(projectTemplateModel.RationaleForTrust ?? "N/A");
+            });
          });
       }
 

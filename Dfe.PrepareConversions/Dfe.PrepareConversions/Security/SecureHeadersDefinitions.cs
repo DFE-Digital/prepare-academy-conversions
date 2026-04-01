@@ -6,7 +6,6 @@ public static class SecurityHeadersDefinitions
 {
    private static string GoogleTagManagerUri => "https://www.googletagmanager.com";
    private static string GoogleAnalyticsUri => "https://www.google-analytics.com/";
-   private static string ApplicationInsightsUri => "https://js.monitor.azure.com/";
 
    public static HeaderPolicyCollection GetHeaderPolicyCollection(bool isDev)
    {
@@ -40,9 +39,9 @@ public static class SecurityHeadersDefinitions
             builder.AddFontSrc().Self();
             builder.AddStyleSrc().Self();
             builder.AddBaseUri().Self();
-            builder.AddScriptSrc()
-               .From(GoogleTagManagerUri)
-               .From(ApplicationInsightsUri).UnsafeInline().WithNonce();
+            //builder.AddScriptSrc()
+            //   .From(GoogleTagManagerUri);
+               //.From(ApplicationInsightsUri).UnsafeInline().WithNonce();
             builder.AddFrameAncestors().None();
          })
          .AddPermissionsPolicy(builder =>

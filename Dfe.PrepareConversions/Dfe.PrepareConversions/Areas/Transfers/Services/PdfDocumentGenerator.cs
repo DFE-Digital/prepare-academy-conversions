@@ -1,5 +1,6 @@
 ﻿using Dfe.PrepareConversions.Services.DocumentGenerator;
 using Dfe.PrepareTransfers.Web.Models.ProjectTemplate;
+using HTMLQuestPDF.Extensions;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;

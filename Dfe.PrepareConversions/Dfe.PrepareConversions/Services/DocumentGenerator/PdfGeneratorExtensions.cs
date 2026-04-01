@@ -3,6 +3,7 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
+using HTMLQuestPDF.Extensions;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -376,7 +377,10 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
                columns.RelativeColumn(1);
             });
 
-            table.Cell().Element(TableDataCellStyle).Text(project.RationaleForProject ?? "N/A");
+            table.Cell().Element(TableDataCellStyle).HTML(handler =>
+            {
+               handler.SetHtml(project.RationaleForProject ?? "N/A");
+            });
          });
       }
 
@@ -389,7 +393,10 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
                columns.RelativeColumn(1);
             });
 
-            table.Cell().Element(TableDataCellStyle).Text(project.RationaleForTrust ?? "N/A");
+            table.Cell().Element(TableDataCellStyle).HTML(handler =>
+            {
+               handler.SetHtml(project.RationaleForTrust ?? "N/A");
+            });
          });
       }
 
