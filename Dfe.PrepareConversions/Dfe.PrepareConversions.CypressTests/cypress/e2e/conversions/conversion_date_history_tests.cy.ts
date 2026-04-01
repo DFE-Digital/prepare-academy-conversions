@@ -48,12 +48,12 @@ describe('Conversion Date Change Tests', () => {
                 conversionDateChangePage.navigateToConversionDateChangeSection();
 
                 Logger.log("Click and update 'Advisory board date change'");
-                conversionDateChangePage.updateAdvisoryBoardDate();
-                conversionDateChangePage.checkAdvisoryBoardDateChange();
+                conversionDateChangePage.updateProposedDecisionDate();
+                conversionDateChangePage.checkProposedDecisionDateChange();
 
                 Logger.log("Click and update 'Previous advisory board date change'");
-                conversionDateChangePage.updatePreviousAdvisoryBoardDate();
-                conversionDateChangePage.checkPreviousAdvisoryBoardDateChange();
+                conversionDateChangePage.updatePreviouslyConsideredDate();
+                conversionDateChangePage.checkPreviouslyConsideredDateChange();
 
                 Logger.log("Click and update 'Proposed advisory board date'");
                 conversionDateChangePage.updateProposedConversionDate();

@@ -72,9 +72,6 @@ public class RecordDecision : DecisionBaseModel
       if (AdvisoryBoardDecision == AdvisoryBoardDecisions.Approved)
       {
          var hasAdvisoryBoardDate = _project.Dates?.Htb != null;
-         DateTime? advisoryBoardDate = hasAdvisoryBoardDate
-               ? DateTime.ParseExact(_project.Dates?.Htb, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
-               : null;
          var hasProposedTransferDate = _project.Dates?.Target != null;
          var hasProjectOwnerAssignment = _project.AssignedUser != null && _project.AssignedUser.EmailAddress.Length > 0;
          var hasIncomingTrustName = _project.IncomingTrustName != null;
@@ -83,13 +80,8 @@ public class RecordDecision : DecisionBaseModel
 
          if (!hasAdvisoryBoardDate)
          {
-            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/advisory-board-date?returns={returnPage}",
-               "You must enter an advisory board date before you can record a decision.");
-         }
-         else if (advisoryBoardDate > DateTime.Now)
-         {
-            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/advisory-board-date?returns={returnPage}",
-               "The advisory board date must be today or in the past.");
+            ModelState.AddModelError($"/transfers/project/{id}/transfer-dates/proposed-decision-date?returns={returnPage}",
+            "You must enter a proposed decision date before you can record a decision.");
          }
 
          if (!hasProposedTransferDate)

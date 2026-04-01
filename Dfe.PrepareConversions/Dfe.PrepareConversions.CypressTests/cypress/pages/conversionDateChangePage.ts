@@ -8,23 +8,23 @@ class ConversionDateChangePage extends FormBasePage {
         return this;
     }
 
-    public updateAdvisoryBoardDate(): this {
-        cy.getByDataTest('change-advisory-board-date').click();
-        cy.getById('advisory-board-date-day').clear().type('12');
-        cy.getById('advisory-board-date-month').clear().type('12');
-        cy.getById('advisory-board-date-year').clear().type('2023');
+    public updateProposedDecisionDate(): this {
+        cy.getByDataTest('change-proposed-decision-date').click();
+        cy.getById('proposed-decision-date-day').clear().type('12');
+        cy.getById('proposed-decision-date-month').clear().type('12');
+        cy.getById('proposed-decision-date-year').clear().type('2023');
         cy.getByDataCy('select-common-submitbutton').click();
 
         return this;
     }
 
-    public checkAdvisoryBoardDateChange(): this {
-        cy.getById('advisory-board-date').should('contain', '12 December 2023');
+    public checkProposedDecisionDateChange(): this {
+        cy.getById('proposed-decision-date').should('contain', '12 December 2023');
 
         return this;
     }
 
-    public updatePreviousAdvisoryBoardDate(): this {
+    public updatePreviouslyConsideredDate(): this {
         cy.getByDataTest('change-previous-advisory-board').click();
         cy.getById('previous-advisory-board-day').clear().type('12');
         cy.getById('previous-advisory-board-month').clear().type('12');
@@ -33,7 +33,7 @@ class ConversionDateChangePage extends FormBasePage {
         return this;
     }
 
-    public checkPreviousAdvisoryBoardDateChange(): this {
+    public checkPreviouslyConsideredDateChange(): this {
         cy.getById('previous-advisory-board').should('contain', '12 December 2023');
         return this;
     }

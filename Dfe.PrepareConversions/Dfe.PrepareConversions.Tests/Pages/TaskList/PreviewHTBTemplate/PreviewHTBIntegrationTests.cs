@@ -64,10 +64,10 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
 
       document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-      document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Set an Advisory board date");
+      document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Set a proposed decision date");
 
-      document = await NavigateAsync(document, "Set an Advisory board date before you generate your project template");
-      document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date");
+      document = await NavigateAsync(document, "Set a proposed decision date before you generate your project template");
+      document.Url.Should().Contain($"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-decision-date");
 
       document = await NavigateDataTestAsync(document, "headteacher-board-date-back-link");
 
@@ -102,13 +102,13 @@ public class PreviewHtbIntegrationTests : BaseIntegrationTests
       document.Url.Should().BeUrl($"/task-list/{project.Id}/preview-project-template");
 
       document.QuerySelector(".govuk-error-summary").Should().NotBeNull();
-      document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Set an Advisory board date");
+      document.QuerySelector(".govuk-error-summary")!.TextContent.Should().Contain("Set a proposed decision date");
 
-      document = await NavigateAsync(document, "Set an Advisory board date before you generate your project template");
+      document = await NavigateAsync(document, "Set a proposed decision date before you generate your project template");
 
       document.Url.Should()
          .BeUrl(
-            $"/task-list/{project.Id}/confirm-school-trust-information-project-dates/advisory-board-date?return=%2FTaskList%2FPreviewProjectTemplate&fragment=advisory-board-date");
+            $"/task-list/{project.Id}/confirm-school-trust-information-project-dates/proposed-decision-date?return=%2FTaskList%2FPreviewProjectTemplate&fragment=proposed-decision-date");
    }
 
    [Fact]

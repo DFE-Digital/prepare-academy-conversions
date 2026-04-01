@@ -25,7 +25,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.SchoolOverview
       {
          await base.OnGetAsync(id);
 
-         if (Project.ProjectStatus == "Pre advisory board" || Project.ProjectStatus == "Deferred")
+         if (Project.ProjectStatus == "Pre decision" || Project.ProjectStatus == "Deferred")
          {
             var result = await _establishmentsService.GetMemberOfParliamentBySchoolUrnAsync(Int32.Parse(Project.SchoolURN));
 
