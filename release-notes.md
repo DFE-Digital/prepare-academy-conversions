@@ -5,11 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). To see an example from a mature product in the program [see the Complete products changelog that follows the same methodology](https://github.com/DFE-Digital/dfe-complete-conversions-transfers-and-changes/blob/main/CHANGELOG.md).
 
 
-## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-03-31.1097...main)
+## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-04-01.1101...main)
 NOTE: remember to update unreleased link when making a new release
 
+---
+
+## [1.28.0][1.28.0] - 2026-04-01
+
 ### Changed
-- remove/replace references to advisory board
+- 206120 - remove/replace references to advisory board
 
 ### Fixed
 - inconsistent use of returnUrl on preview/create project templates
@@ -362,6 +366,8 @@ ___
 # 1.0.0 - Initial release of Prepare Conversions
 Initial Release of the Prepare-conversions system into production.
 
+[1.28.0]:
+  https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-04-01.1101
 [1.27.5]: 
   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-03-31.1097
 [1.27.4]: 
