@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareTransfers.Data.Models;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
 {
-   public class Download(ICreateProjectTemplate createProjectTemplate,
+   public class Download(ICreateProjectTemplate createProjectTemplate, ICreateProjectTemplatePdf createProjectTemplatePdf,
        IGetInformationForProject getInformationForProject) : CommonPageModel
    {
       public string FileName { get; private set; }
@@ -33,6 +34,16 @@ namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
          return File(document.Document.ToArray(),
              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
              $"{FileName}.docx");
+      }
+
+      public async Task<IActionResult> OnGetGenerateDocumentPdfAsync()
+      {
+         var project = await GetProject();
+         FileName = GenerateFormattedFileName(project);
+
+         var document = await createProjectTemplatePdf.Execute(Urn);
+
+         return File([.. document.Document], "application/pdf", $"{FileName}.pdf");
       }
 
       private async Task<Project> GetProject()

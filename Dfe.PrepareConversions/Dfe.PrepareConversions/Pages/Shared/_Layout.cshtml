@@ -63,6 +63,24 @@
         <partial name="_AppInsights"/>
     }
     <script type="text/javascript" src="~/dist/accessible-autocomplete.min.js" asp-add-nonce></script>
+
+    <script type="application/javascript" src="~/src/tinymce.8.3.0/js/tinymce/tinymce.min.js" asp-add-nonce></script>
+    <script>
+        tinymce.init({
+          selector: 'textarea',
+          license_key: 'gpl', // gpl for open source, T8LK:... for commercial
+          sandbox_iframes: false,
+          promotion: false,
+          branding: false,
+          resize: false,
+          menubar: false,
+          statusbar: false,
+          protect: [/[\n]/g],
+              toolbar: [
+             'undo redo | bold italic underline | fontfamily fontsize | forecolor backcolor | alignleft aligncenter alignright alignfull | numlist bullist outdent indent | lineheight'
+          ],
+        });
+    </script>
 </head>
 <body class="govuk-template__body">
 

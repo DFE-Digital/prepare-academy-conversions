@@ -33,6 +33,7 @@ internal static class TransfersExtensions
       services.AddTransient<IEducationPerformance, TramsEducationPerformanceRepository>();
       services.AddTransient<IProjects, TramsProjectsRepository>();
       services.AddTransient<ICreateProjectTemplate, CreateProjectTemplate>();
+      services.AddTransient<ICreateProjectTemplatePdf, CreateProjectTemplatePdf>();
       services.AddTransient<IGetInformationForProject, GetInformationForProject>();
       services.AddTransient<IGetProjectTemplateModel, GetProjectTemplateModel>();
 

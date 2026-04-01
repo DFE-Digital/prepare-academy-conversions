@@ -11,11 +11,11 @@ public static class EducationalAttendanceGenerator
 {
    public static void AddEducationalAttendanceInformation(IDocumentBuilder documentBuilder, HtbTemplate document, AcademyConversionProject project)
    {
-      if (document.EducationalAttendance == null || !project.SchoolType.Contains("special", System.StringComparison.CurrentCultureIgnoreCase))
-      {
-         documentBuilder.ReplacePlaceholderWithContent("EducationalAttendanceData", builder => builder.AddParagraph(""));
-         return;
-      }
+      //if (document.EducationalAttendance == null || !project.SchoolType.Contains("special", System.StringComparison.CurrentCultureIgnoreCase))
+      //{
+      //   documentBuilder.ReplacePlaceholderWithContent("EducationalAttendanceData", builder => builder.AddParagraph(""));
+      //   return;
+      //}
 
       documentBuilder.ReplacePlaceholderWithContent("EducationalAttendanceData", builder =>
       {
