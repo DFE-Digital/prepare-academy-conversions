@@ -1,7 +1,7 @@
 # See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0@sha256:f24d74e8185b14aba4c7563e059e0f526699d4730998a83515d3af03058e1266 AS base
 USER $APP_UID
 WORKDIR /app
 EXPOSE 5003
@@ -9,7 +9,7 @@ EXPOSE 5002
 
 
 # This stage is used to build the service project
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0@sha256:dd09bcce84d9130e7f3e85c83a8ce9709e1d95e45c48c722a0d7923b38d8024c AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Dfe.PrepareConversions/Dfe.PrepareConversions.csproj", "Dfe.PrepareConversions/"]
