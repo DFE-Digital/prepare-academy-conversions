@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<UserSecretsId>eae6d8bd-2a58-4ed4-99e2-a82f32b0ce47</UserSecretsId>
 		<CodeAnalysisRuleSet>..\.sonarlint\dfe-digital_a2b-internalcsharp.ruleset</CodeAnalysisRuleSet>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
