@@ -55,6 +55,7 @@
                                     key-width="@keyWidth"
                                     asp-page="@Links.PublicSectorEqualityDutySection.ConversionLikelyhoodToImpact.Page"
                                     asp-route-id="@Model.Project.Id"
+                                    asp-read-only="@Model.Project.IsReadOnly"
                                     hidden-text="public sector equality duty consideration"
                                     value="@Model.ReduceImpactReasonLabel" />
 
@@ -65,6 +66,7 @@
                                     asp-page="@Links.PublicSectorEqualityDutySection.ConversionImpactReductionReason.Page"
                                     asp-route-id="@Model.Project.Id"
                                     asp-route-return="@Links.PublicSectorEqualityDutySection.ConversionTask.Page"
+                                    asp-read-only="@Model.Project.IsReadOnly"
                                     hidden-text="What will be done to reduce this impact" />
         </dl>
     </div>
