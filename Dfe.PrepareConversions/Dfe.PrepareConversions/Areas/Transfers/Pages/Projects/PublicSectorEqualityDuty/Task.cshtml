@@ -60,6 +60,7 @@
                                     asp-page="@likelyhoodImpactLink.Page"
                                     asp-route-urn="@Model.Urn"
                                     asp-route-return="/Projects/PublicSectorEqualityDuty/Task"
+                                    asp-read-only="@Model.IsReadOnly ?? false"
                                     hidden-text="public sector equality duty consideration"
                                     value="@Model.ReduceImpactReasonLabel" />
 
@@ -70,6 +71,7 @@
                                     asp-page="@impactReductionLink.Page"
                                     asp-route-urn="@Model.Urn"
                                     asp-route-return="/Projects/PublicSectorEqualityDuty/Task"
+                                    asp-read-only="@Model.IsReadOnly ?? false"
                                     hidden-text="What will be done to reduce this impact"/>
         </dl>
     </div>
