@@ -75,8 +75,12 @@
             {
                 <govuk-summary-list-row name="rationale-for-project" key-width="@kw" value-width="@vw" label="Rationale for project" value="@Model.Project.RationaleForProject" asp-page="@Links.RationaleSection.RationaleForProject.Page" asp-route-id="@Model.Project.Id" hidden-text="project rationale" asp-read-only="@Model.Project.IsReadOnly"/>
             }
-            <govuk-summary-list-row name="rationale-for-trust" key-width="@kw" value-width="@vw" label="Rationale for the trust or sponsor" value="@Model.Project.RationaleForTrust" asp-page="@Links.RationaleSection.RationaleForTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="sponsor rationale" asp-read-only="@Model.Project.IsReadOnly" />
+
+            <govuk-summary-list-row name="rationale-for-trust" is-html="true" key-width="@kw" value-width="@vw" label="Rationale for the trust or sponsor" value="@Model.Project.RationaleForTrust" asp-page="@Links.RationaleSection.RationaleForTrust.Page" asp-route-id="@Model.Project.Id" hidden-text="sponsor rationale" asp-read-only="@Model.Project.IsReadOnly" />
         </dl>
+
+        @* <textarea>Hello, World!</textarea> *@
+
         @if(!Model.Project.IsReadOnly)
         {
            <form method="post">

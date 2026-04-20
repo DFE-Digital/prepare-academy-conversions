@@ -20,6 +20,9 @@ public class SummaryListRowTagHelper(IHtmlHelper htmlHelper) : InputTagHelperBas
    [HtmlAttributeName("additional-text")]
    public string AdditionalText { get; set; } // allows 2 items to be displayed in the same table row
 
+   [HtmlAttributeName("is-html")]
+   public bool IsHtml { get; set; }
+
    [HtmlAttributeName("asp-page")]
    public string Page { get; set; }
 
@@ -64,6 +67,7 @@ public class SummaryListRowTagHelper(IHtmlHelper htmlHelper) : InputTagHelperBas
          Value = value1,
          ValueLink = ValueLink,
          AdditionalText = AdditionalText,
+         IsHtml = IsHtml,
          Page = Page,
          Fragment = Fragment,
          RouteId = RouteId,

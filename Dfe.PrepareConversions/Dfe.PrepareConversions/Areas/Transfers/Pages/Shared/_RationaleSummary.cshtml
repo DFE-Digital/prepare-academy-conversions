@@ -13,7 +13,8 @@
           }
           else
           {
-             <span class="dfe-text-area-display">@Model.ProjectRationale</span>
+             @* <span class="dfe-text-area-display">@Model.ProjectRationale</span> *@
+             <div class="dfe-text-area-display">@Html.Raw(@Model.ProjectRationale)</div>
           }
        </dd>
        @if (Model.IsReadOnly != true)
@@ -37,7 +38,8 @@
           }
           else
           {
-             <span class="dfe-text-area-display">@Model.TrustRationale</span>
+             @* <span class="dfe-text-area-display">@Model.TrustRationale</span> *@
+             <div class="dfe-text-area-display">@Html.Raw(@Model.TrustRationale)</div>
           }
        </dd>
        @if (Model.IsReadOnly != true)
