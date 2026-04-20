@@ -154,7 +154,7 @@
                     </li>
                 </ul>
             </li>
-            @if (Model.IsFormAMAT)
+            @if (Model.IsFormAMAT && Model.IsReadOnly != true)
             {
                 <li>
                     <h3 class="moj-task-list__section govuk-!-margin-top-8">
