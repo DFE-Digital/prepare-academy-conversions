@@ -154,7 +154,7 @@
                     </li>
                 </ul>
             </li>
-            @if (Model.IsFormAMAT)
+            @if (Model.IsFormAMAT && Model.IsReadOnly != true)
             {
                 <li>
                     <h3 class="moj-task-list__section govuk-!-margin-top-8">
@@ -191,21 +191,23 @@
     </div>
 </div>
 <hr class="govuk-section-break govuk-section-break--m">
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-heading-l">
-            Create your project document
-        </h2>
-        <p class="govuk-body govuk-!-margin-bottom-6">
-            Project documents are in Microsoft Word format. You can preview them first and make changes to them afterwards.
-        </p>
-        <div class="govuk-button-group">
-            <form method="post" asp-route-urn="@Model.Urn">
-                <button asp-page-handler="preview" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-test="preview-htb">Preview project document</button>
-                <button asp-page-handler="generate" class="govuk-button" data-module="govuk-button" data-test="generate-htb" data-google-analytics-project-generate>Create project document</button>
-            </form>
+@if (Model.IsReadOnly != true) {
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h2 class="govuk-heading-l">
+                Create your project document
+            </h2>
+            <p class="govuk-body govuk-!-margin-bottom-6">
+                Project documents are in Microsoft Word format. You can preview them first and make changes to them afterwards.
+            </p>
+            <div class="govuk-button-group">
+                <form method="post" asp-route-urn="@Model.Urn">
+                    <button asp-page-handler="preview" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-test="preview-htb">Preview project document</button>
+                    <button asp-page-handler="generate" class="govuk-button" data-module="govuk-button" data-test="generate-htb" data-google-analytics-project-generate>Create project document</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+}
 
 <script src="~/dist/google-analytics-events.bundle.js" asp-add-nonce></script>

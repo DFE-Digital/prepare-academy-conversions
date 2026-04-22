@@ -10,6 +10,8 @@ NOTE: remember to update unreleased link when making a new release
 
 - Updated Solution to .NET 10
 
+### Fixed
+- [275161](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/275161) - updated Public Sector Equality Duty and Template preview/creation to be read only/unavailable when decision has been recorded
 ---
 
 ## [1.28.0][1.28.0] - 2026-04-01
