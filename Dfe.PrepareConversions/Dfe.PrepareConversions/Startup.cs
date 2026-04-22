@@ -79,7 +79,10 @@ public class Startup
    public void ConfigureServices(IServiceCollection services)
    {
       services.AddFeatureManagement();
-      services.AddApplicationInsightsTelemetry();
+
+      string appInsightsConnectionString = Configuration["ApplicationInsights:ConnectionString"];
+      if (!string.IsNullOrWhiteSpace(appInsightsConnectionString))
+         services.AddApplicationInsightsTelemetry();
       services.AddHealthChecks();
       services
          .AddRazorPages(options =>
