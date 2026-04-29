@@ -5,10 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). To see an example from a mature product in the program [see the Complete products changelog that follows the same methodology](https://github.com/DFE-Digital/dfe-complete-conversions-transfers-and-changes/blob/main/CHANGELOG.md).
 
 
-## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-04-01.1101...main)
+## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-04-29.1112...main)
+
 NOTE: remember to update unreleased link when making a new release
 
+
+---
+
+## [1.29.0][1.29.0] - 2026-04-29
+
+### Changed
 - Updated Solution to .NET 10
+
+---
+
+## [1.28.1][1.28.1] - 2026-04-20
 
 ### Fixed
 - [275161](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/275161) - updated Public Sector Equality Duty and Template preview/creation to be read only/unavailable when decision has been recorded
@@ -370,6 +381,10 @@ ___
 # 1.0.0 - Initial release of Prepare Conversions
 Initial Release of the Prepare-conversions system into production.
 
+[1.29.0]:
+  https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-04-29.1112
+[1.28.1]:
+  https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-04-20.1109
 [1.28.0]:
   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-04-01.1101
 [1.27.5]: 
