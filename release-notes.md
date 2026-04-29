@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-04-01.1101...main)
 NOTE: remember to update unreleased link when making a new release
 
+- Updated Solution to .NET 10
+
 ### Fixed
 - [275161](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/275161) - updated Public Sector Equality Duty and Template preview/creation to be read only/unavailable when decision has been recorded
 ---
