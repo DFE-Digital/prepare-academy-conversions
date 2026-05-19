@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dfe.PrepareConversions.Data.Services;
+using Dfe.PrepareConversions.Data.Services.Person;
 using Dfe.PrepareConversions.Services;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
@@ -17,208 +18,215 @@ using Index = Dfe.PrepareTransfers.Web.Pages.Projects.Features.Index;
 
 namespace Dfe.PrepareTransfers.Web.Pages.TaskList.HtbDocument
 {
-    public class Preview : CommonPageModel
-    {
-        private readonly IGetInformationForProject _getInformationForProject;
-        private readonly IGetEstablishment _getEstablishment;
-        private readonly IProjects _projects;
-        private readonly ErrorService _errorService;
-        public Index FeaturesSummaryViewModel { get; set; }
-        public BenefitsSummaryViewModel BenefitsSummaryViewModel { get; set; }
-        public LegalRequirementsViewModel LegalRequirementsViewModel { get; set; }
-        public Projects.TransferDates.Index TransferDatesSummaryViewModel { get; set; }
-        public Projects.AcademyAndTrustInformation.Index AcademyAndTrustInformationSummaryViewModel { get; set; }
-        public Projects.Rationale.Index RationaleSummaryViewModel { get; set; }
-        public List<PreviewPageAcademyModel> Academies { get; private set; }
+   public class Preview : CommonPageModel
+   {
+      private readonly IGetInformationForProject _getInformationForProject;
+      private readonly IPersonApiEstablishmentsService _establishmentsService;
+      private readonly IProjects _projects;
+      private readonly ErrorService _errorService;
 
-         public Preview(
-            IGetInformationForProject getInformationForProject,
-            IGetEstablishment getEstablishment,
-            IProjects projects, 
-            ErrorService errorService
+      public string ProjectReference { get; set; }
+      public string PublicEqualityDutyImpact { get; set; }
+      public string PublicEqualityDutyReduceImpactReason { get; set; }
+      public bool? PublicEqualityDutySectionComplete { get; set; }
+      public string HeadTeacherBoardDate { get; set; }
+      public Index FeaturesSummaryViewModel { get; set; }
+      public BenefitsSummaryViewModel BenefitsSummaryViewModel { get; set; }
+      public LegalRequirementsViewModel LegalRequirementsViewModel { get; set; }
+      public Projects.TransferDates.Index TransferDatesSummaryViewModel { get; set; }
+      public Projects.AcademyAndTrustInformation.Index AcademyAndTrustInformationSummaryViewModel { get; set; }
+      public Projects.Rationale.Index RationaleSummaryViewModel { get; set; }
+      public List<PreviewPageAcademyModel> Academies { get; private set; }
+
+      public Preview(
+         IGetInformationForProject getInformationForProject,
+         IGetEstablishment getEstablishment,
+         IProjects projects,
+         ErrorService errorService,
+         IPersonApiEstablishmentsService establishmentsService
+      )
+      {
+         _getInformationForProject = getInformationForProject;
+         _projects = projects;
+         _establishmentsService = establishmentsService;
+         _errorService = errorService;
+      }
+
+      private void MapModel(Project project, List<Academy> outgoingAcademies)
+      {
+         ProjectReference = project.Reference;
+         PublicEqualityDutyImpact = project.PublicEqualityDutyImpact;
+         PublicEqualityDutyReduceImpactReason = project.PublicEqualityDutyReduceImpactReason;
+         PublicEqualityDutySectionComplete = project.PublicEqualityDutySectionComplete;
+
+         HeadTeacherBoardDate = project.Dates.Htb;
+
+         FeaturesSummaryViewModel = new Index(null)
+         {
+            Urn = project.Urn,
+            TypeOfTransfer = project.Features.TypeOfTransfer,
+            OtherTypeOfTransfer = project.Features.OtherTypeOfTransfer,
+            OutgoingAcademyUrn = project.OutgoingAcademyUrn,
+            ReasonForTheTransfer = project.Features.ReasonForTheTransfer,
+            SpecificReasonForTheTransfer = project.Features.SpecificReasonsForTheTransfer,
+            ReturnToPreview = true
+         };
+
+         BenefitsSummaryViewModel = new BenefitsSummaryViewModel(
+             project.Benefits.IntendedBenefits.ToList(),
+             project.Benefits.OtherIntendedBenefit,
+             OtherFactors.BuildOtherFactorsItemViewModel(project.Benefits.OtherFactors)
+                 .Where(o => o.Checked)
+                 .ToList(),
+             project.Urn,
+             project.OutgoingAcademyUrn,
+             project.Benefits.AnyRisks,
+             project.Benefits.EqualitiesImpactAssessmentConsidered
          )
          {
-            _getInformationForProject = getInformationForProject;
-            _getEstablishment = getEstablishment;
-            _projects = projects;
-            _errorService = errorService;
-         }
+            ReturnToPreview = true
+         };
 
-         private void MapModel(Project project, List<Academy> outgoingAcademies)
+         LegalRequirementsViewModel = new LegalRequirementsViewModel(
+             project.LegalRequirements.IncomingTrustAgreement,
+             project.LegalRequirements.DiocesanConsent,
+             project.LegalRequirements.OutgoingTrustConsent,
+             project.Urn,
+             project.IsReadOnly,
+             project.ProjectSentToCompleteDate
+         )
          {
-            ProjectReference = project.Reference;
-            PublicEqualityDutyImpact = project.PublicEqualityDutyImpact;
-            PublicEqualityDutyReduceImpactReason = project.PublicEqualityDutyReduceImpactReason;
-            PublicEqualityDutySectionComplete = project.PublicEqualityDutySectionComplete;
+            ReturnToPreview = true
+         };
 
-            HeadTeacherBoardDate = project.Dates.Htb;
+         TransferDatesSummaryViewModel = new Projects.TransferDates.Index(_projects)
+         {
+            Urn = project.Urn,
+            ReturnToPreview = true,
+            OutgoingAcademyUrn = project.OutgoingAcademyUrn,
+            AdvisoryBoardDate = project.Dates.Htb,
+            HasAdvisoryBoardDate = project.Dates.HasHtbDate,
+            TargetDate = project.Dates.Target,
+            HasTargetDate = project.Dates.HasTargetDateForTransfer
+         };
 
-            FeaturesSummaryViewModel = new Index(null)
-            {
-               Urn = project.Urn,
-               TypeOfTransfer = project.Features.TypeOfTransfer,
-               OtherTypeOfTransfer = project.Features.OtherTypeOfTransfer,
-               OutgoingAcademyUrn = project.OutgoingAcademyUrn,
-               ReasonForTheTransfer = project.Features.ReasonForTheTransfer,
-               SpecificReasonForTheTransfer = project.Features.SpecificReasonsForTheTransfer,
-               ReturnToPreview = true
-            };
+         AcademyAndTrustInformationSummaryViewModel =
+             new Projects.AcademyAndTrustInformation.Index(_getInformationForProject, _projects)
+             {
+                Recommendation = project.AcademyAndTrustInformation.Recommendation,
+                Author = project.AcademyAndTrustInformation.Author,
+                AdvisoryBoardDate = project.Dates?.Htb,
+                IncomingTrustName = project.IncomingTrustName,
+                TargetDate = project.Dates?.Target,
+                OutgoingAcademyUrn = project.OutgoingAcademyUrn,
+                Urn = project.Urn,
+                ReturnToPreview = true,
+                IsReadOnly = project.IsReadOnly
+             };
 
-            BenefitsSummaryViewModel = new BenefitsSummaryViewModel(
-                project.Benefits.IntendedBenefits.ToList(),
-                project.Benefits.OtherIntendedBenefit,
-                OtherFactors.BuildOtherFactorsItemViewModel(project.Benefits.OtherFactors)
-                    .Where(o => o.Checked)
-                    .ToList(),
-                project.Urn,
-                project.OutgoingAcademyUrn,
-                project.Benefits.AnyRisks,
-                project.Benefits.EqualitiesImpactAssessmentConsidered
-            )
-            {
-               ReturnToPreview = true
-            };
+         RationaleSummaryViewModel = new Pages.Projects.Rationale.Index(_projects)
+         {
+            ProjectRationale = project.Rationale.Project,
+            TrustRationale = project.Rationale.Trust,
+            OutgoingAcademyUrn = project.OutgoingAcademyUrn,
+            Urn = project.Urn,
+            ReturnToPreview = true
+         };
 
-            LegalRequirementsViewModel = new LegalRequirementsViewModel(
-                project.LegalRequirements.IncomingTrustAgreement,
-                project.LegalRequirements.DiocesanConsent,
-                project.LegalRequirements.OutgoingTrustConsent,
-                project.Urn,
-                project.IsReadOnly,
-                project.ProjectSentToCompleteDate
-            )
-            {
-               ReturnToPreview = true
-            };
-
-            TransferDatesSummaryViewModel = new Projects.TransferDates.Index(_projects)
-            {
-               Urn = project.Urn,
-               ReturnToPreview = true,
-               OutgoingAcademyUrn = project.OutgoingAcademyUrn,
-               AdvisoryBoardDate = project.Dates.Htb,
-               HasAdvisoryBoardDate = project.Dates.HasHtbDate,
-               TargetDate = project.Dates.Target,
-               HasTargetDate = project.Dates.HasTargetDateForTransfer
-            };
-
-            AcademyAndTrustInformationSummaryViewModel =
-                new Projects.AcademyAndTrustInformation.Index(_getInformationForProject, _projects)
-                {
-                   Recommendation = project.AcademyAndTrustInformation.Recommendation,
-                   Author = project.AcademyAndTrustInformation.Author,
-                   AdvisoryBoardDate = project.Dates?.Htb,
-                   IncomingTrustName = project.IncomingTrustName,
-                   TargetDate = project.Dates?.Target,
-                   OutgoingAcademyUrn = project.OutgoingAcademyUrn,
-                   Urn = project.Urn,
-                   ReturnToPreview = true,
-                   IsReadOnly = project.IsReadOnly
-                };
-
-            RationaleSummaryViewModel = new Pages.Projects.Rationale.Index(_projects)
-            {
-               ProjectRationale = project.Rationale.Project,
-               TrustRationale = project.Rationale.Trust,
-               OutgoingAcademyUrn = project.OutgoingAcademyUrn,
-               Urn = project.Urn,
-               ReturnToPreview = true
-            };
-
-            var previewPageAcademyModels = new List<PreviewPageAcademyModel>();
-            foreach (var previewPageAcademyModel in outgoingAcademies.Select(academy =>
-                 new PreviewPageAcademyModel()
+         var previewPageAcademyModels = new List<PreviewPageAcademyModel>();
+         foreach (var previewPageAcademyModel in outgoingAcademies.Select(academy =>
+              new PreviewPageAcademyModel()
+              {
+                 Academy = academy,
+                 EducationPerformance = academy.EducationPerformance,
+                 GeneralInformationViewModel =
+                      new Projects.GeneralInformation.Index(_getInformationForProject, _establishmentsService, _projects, _errorService)
+                      {
+                         ReturnToPreview = true,
+                         Urn = project.Urn,
+                         AcademyUkprn = academy.Ukprn,
+                         SchoolPhase = academy.GeneralInformation.SchoolPhase,
+                         AgeRange = academy.GeneralInformation.AgeRange,
+                         Capacity = academy.GeneralInformation.Capacity,
+                         NumberOnRoll =
+                              $"{academy.GeneralInformation.NumberOnRoll} ({academy.GeneralInformation.PercentageFull})",
+                         FreeSchoolMeals = academy.GeneralInformation.PercentageFsm,
+                         PublishedAdmissionNumber = academy.PublishedAdmissionNumber,
+                         PrivateFinanceInitiative = $"{academy.PFIScheme} {(string.IsNullOrWhiteSpace(academy.PFISchemeDetails) ? string.Empty : $" - {academy.PFISchemeDetails}")}",
+                         ViabilityIssues = academy.ViabilityIssues,
+                         FinancialDeficit = academy.FinancialDeficit,
+                         SchoolType = academy.GeneralInformation.SchoolType,
+                         DiocesePercent = academy.GeneralInformation.DiocesesPercent,
+                         DistanceFromAcademyToTrustHq = $"{academy.DistanceFromAcademyToTrustHq} Miles {(string.IsNullOrWhiteSpace(academy.DistanceFromAcademyToTrustHqDetails) ? string.Empty : $" - {academy.DistanceFromAcademyToTrustHqDetails}")}",
+                         MP = academy.MPNameAndParty
+                      },
+                 PupilNumbersViewModel = new PupilNumbers(_getInformationForProject, _projects)
                  {
-                    Academy = academy,
-                    EducationPerformance = academy.EducationPerformance,
-                    GeneralInformationViewModel =
-                         new Pages.Projects.GeneralInformation.Index(_getInformationForProject)
-                         {
-                            ReturnToPreview = true,
-                            Urn = project.Urn,
-                            AcademyUkprn = academy.Ukprn,
-                            SchoolPhase = academy.GeneralInformation.SchoolPhase,
-                            AgeRange = academy.GeneralInformation.AgeRange,
-                            Capacity = academy.GeneralInformation.Capacity,
-                            NumberOnRoll =
-                                 $"{academy.GeneralInformation.NumberOnRoll} ({academy.GeneralInformation.PercentageFull})",
-                            FreeSchoolMeals = academy.GeneralInformation.PercentageFsm,
-                            PublishedAdmissionNumber = academy.PublishedAdmissionNumber,
-                            PrivateFinanceInitiative = $"{academy.PFIScheme} {(string.IsNullOrWhiteSpace(academy.PFISchemeDetails) ? string.Empty : $" - {academy.PFISchemeDetails}")}",
-                            ViabilityIssues = academy.ViabilityIssues,
-                            FinancialDeficit = academy.FinancialDeficit,
-                            SchoolType = academy.GeneralInformation.SchoolType,
-                            DiocesePercent = academy.GeneralInformation.DiocesesPercent,
-                            DistanceFromAcademyToTrustHq = $"{academy.DistanceFromAcademyToTrustHq} Miles {(string.IsNullOrWhiteSpace(academy.DistanceFromAcademyToTrustHqDetails) ? string.Empty : $" - {academy.DistanceFromAcademyToTrustHqDetails}")}",
-                            MP = academy.MPNameAndParty
-                         },
-                    PupilNumbersViewModel = new PupilNumbers(_getInformationForProject, _projects)
+                    GirlsOnRoll = academy.PupilNumbers.GirlsOnRoll,
+                    BoysOnRoll = academy.PupilNumbers.BoysOnRoll,
+                    WithStatementOfSEN = academy.PupilNumbers.WithStatementOfSen,
+                    WithEAL = academy.PupilNumbers.WhoseFirstLanguageIsNotEnglish,
+                    FreeSchoolMealsLast6Years = academy.PupilNumbers
+                          .PercentageEligibleForFreeSchoolMealsDuringLast6Years,
+                    OutgoingAcademyUrn = academy.Urn,
+                    AcademyUkprn = academy.Ukprn,
+                    IsPreview = true,
+                    Urn = project.Urn,
+                    AdditionalInformationViewModel = new AdditionalInformationViewModel
                     {
-                       GirlsOnRoll = academy.PupilNumbers.GirlsOnRoll,
-                       BoysOnRoll = academy.PupilNumbers.BoysOnRoll,
-                       WithStatementOfSEN = academy.PupilNumbers.WithStatementOfSen,
-                       WithEAL = academy.PupilNumbers.WhoseFirstLanguageIsNotEnglish,
-                       FreeSchoolMealsLast6Years = academy.PupilNumbers
-                             .PercentageEligibleForFreeSchoolMealsDuringLast6Years,
-                       OutgoingAcademyUrn = academy.Urn,
-                       AcademyUkprn = academy.Ukprn,
-                       IsPreview = true,
+                       AdditionalInformation = academy.PupilNumbers.AdditionalInformation,
+                       HintText =
+                              "If you add comments, they'll be included in the pupil numbers section of your project template.",
                        Urn = project.Urn,
-                       AdditionalInformationViewModel = new AdditionalInformationViewModel
-                       {
-                          AdditionalInformation = academy.PupilNumbers.AdditionalInformation,
-                          HintText =
-                                 "If you add comments, they'll be included in the pupil numbers section of your project template.",
-                          Urn = project.Urn,
-                          ReturnToPreview = true
-                       }
+                       ReturnToPreview = true
                     }
-                 }))
-            {
-               previewPageAcademyModels.Add(previewPageAcademyModel);
-               Academies = previewPageAcademyModels;
-            }
+                 }
+              }))
+         {
+            previewPageAcademyModels.Add(previewPageAcademyModel);
+            Academies = previewPageAcademyModels;
+         }
+      }
+
+      private void Validate()
+      {
+         if (string.IsNullOrWhiteSpace(HeadTeacherBoardDate))
+         {
+            _errorService.AddError($"/transfers/project/{Urn}/transfer-dates/proposed-decision-date?returnToPreview=true",
+               "Set a proposed decision date before you generate your project template");
          }
 
-         private void Validate()
+         var isPsedValid = PrepareConversions.Models.PreviewPublicSectorEqualityDutyModel.IsValid(PublicEqualityDutyImpact, PublicEqualityDutyReduceImpactReason, PublicEqualityDutySectionComplete ?? false);
+         if (!isPsedValid)
          {
-            if (string.IsNullOrWhiteSpace(HeadTeacherBoardDate))
-            {
-               _errorService.AddError($"/transfers/project/{Urn}/transfer-dates/proposed-decision-date?returnToPreview=true",
-                  "Set a proposed decision date before you generate your project template");
-            }
-
-            var isPsedValid = PrepareConversions.Models.PreviewPublicSectorEqualityDutyModel.IsValid(PublicEqualityDutyImpact, PublicEqualityDutyReduceImpactReason, PublicEqualityDutySectionComplete ?? false);
-            if (!isPsedValid)
-            {
-               _errorService.AddError($"/transfers/project/{Urn}/public-sector-equality-duty?returnToPreview=true",
-                  "Consider the Public Sector Equality Duty");
-            }
+            _errorService.AddError($"/transfers/project/{Urn}/public-sector-equality-duty?returnToPreview=true",
+               "Consider the Public Sector Equality Duty");
          }
+      }
 
-         public async Task<IActionResult> OnGet()
+      public async Task<IActionResult> OnGet()
+      {
+         var response = await _getInformationForProject.Execute(Urn);
+
+         MapModel(response.Project, response.OutgoingAcademies);
+
+         return Page();
+      }
+
+      public async Task<IActionResult> OnPostAsync(string urn)
+      {
+         var response = await _getInformationForProject.Execute(Urn);
+
+         MapModel(response.Project, response.OutgoingAcademies);
+
+         Validate();
+
+         if (_errorService.HasErrors())
          {
-            var response = await _getInformationForProject.Execute(Urn);
-
-            MapModel(response.Project, response.OutgoingAcademies);
-
             return Page();
          }
 
-         public async Task<IActionResult> OnPostAsync(string urn)
-         {
-            var response = await _getInformationForProject.Execute(Urn);
-
-            MapModel(response.Project, response.OutgoingAcademies);
-
-            Validate();
-
-            if (_errorService.HasErrors())
-            {
-               return Page();
-            }
-
-            return RedirectToPage("/TaskList/HtbDocument/Download", new { Urn });
-         }
+         return RedirectToPage("/TaskList/HtbDocument/Download", new { Urn });
+      }
    }
 }

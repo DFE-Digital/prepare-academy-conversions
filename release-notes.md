@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 NOTE: remember to update unreleased link when making a new release
 
+### Changed
+- [278729](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/278729) - update transfers to fetch MP name and party from PersonsAPI
 
 ---
 
