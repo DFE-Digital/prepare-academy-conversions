@@ -79,7 +79,10 @@ public class Startup
    public void ConfigureServices(IServiceCollection services)
    {
       services.AddFeatureManagement();
-      services.AddApplicationInsightsTelemetry();
+
+      string appInsightsConnectionString = Configuration["ApplicationInsights:ConnectionString"];
+      if (!string.IsNullOrWhiteSpace(appInsightsConnectionString))
+         services.AddApplicationInsightsTelemetry();
       services.AddHealthChecks();
       services
          .AddRazorPages(options =>
@@ -275,7 +278,7 @@ public class Startup
          ForwardedHeaders = ForwardedHeaders.All,
          RequireHeaderSymmetry = false
       };
-      forwardOptions.KnownNetworks.Clear();
+      forwardOptions.KnownIPNetworks.Clear();
       forwardOptions.KnownProxies.Clear();
       app.UseForwardedHeaders(forwardOptions);
 
