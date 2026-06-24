@@ -3,9 +3,9 @@
 
 <footer class="govuk-footer" role="contentinfo">
     <div class="govuk-width-container">
-        <div id="footer-columns" style="display: flex; flex-wrap: nowrap; align-items: stretch; padding-top: 30px; padding-bottom: 20px; gap: 40px;">
+        <div class="prepare-footer__row">
 
-            <div style="width: 25%; flex-shrink: 0; min-width: 0; border-right: 1px solid #b1b4b6; padding-right: 40px;">
+            <div class="prepare-footer__col-govuk">
                 <a href="https://www.gov.uk" class="govuk-footer__link">
                     <svg focusable="false"
                          role="img"
@@ -35,9 +35,11 @@
                 <p class="govuk-body-s govuk-!-margin-bottom-0">We build and support digital services for schools and trusts.</p>
             </div>
 
-            <div style="width: 75%; min-width: 0;">
-                <div style="display: flex; align-items: flex-start; gap: 16px;">
-                    <div style="flex-shrink: 0;">
+            <div aria-hidden="true" class="prepare-footer__divider"></div>
+
+            <div class="prepare-footer__col-content">
+                <div class="prepare-footer__get-started">
+                    <div class="prepare-footer__get-started-icon">
                         <svg xmlns="http://www.w3.org/2000/svg"
                              viewBox="0 0 60 60"
                              width="56"
@@ -86,20 +88,3 @@
 
     </div>
 </footer>
-
-<script asp-add-nonce>
-    (function () {
-        var el = document.getElementById('footer-columns');
-        if (!el) { return; }
-        function nudge() {
-            el.style.display = 'none';
-            void el.offsetHeight; // force reflow
-            el.style.display = 'flex';
-        }
-        if (document.fonts && document.fonts.ready) {
-            document.fonts.ready.then(nudge);
-        } else {
-            window.addEventListener('load', nudge);
-        }
-    })();
-</script>
