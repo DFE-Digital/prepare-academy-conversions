@@ -1,6 +1,12 @@
 ﻿@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 
+@{
+    var unifiedIntakeBaseUrl = Configuration["UnifiedIntake:baseUrl"];
+    var unifiedIntakeServiceCode = Configuration["UnifiedIntake:code"];
+    var unifiedIntakeUrl = $"{unifiedIntakeBaseUrl}?serviceCode={unifiedIntakeServiceCode}";
+}
+
 <footer class="govuk-footer" role="contentinfo">
     <div class="govuk-width-container">
         <div class="prepare-footer__row">
@@ -57,7 +63,7 @@
                     <div>
                         <h2 class="govuk-heading-s govuk-!-margin-bottom-1">Get started</h2>
                         <p class="govuk-body-s">Use this service to suggest an improvement and report a problem.</p>
-                        <a href="/" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+                        <a href="@unifiedIntakeUrl" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
                             Continue
                             <svg class="govuk-button__start-icon"
                                  xmlns="http://www.w3.org/2000/svg"
