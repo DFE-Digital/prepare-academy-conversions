@@ -142,3 +142,23 @@ jobs:
       CYPRESS_ACADEMISATION_API_URL: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
       CYPRESS_ACADEMISATION_API_KEY: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
       TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+
+  security-tests:
+    name: Run Security Scanner Tests
+    needs: [ set-env, cypress-tests ]
+    if: always() && needs.set-env.outputs.environment == 'dev'
+    uses: ./.github/workflows/security-tests.yml
+    with:
+      environment: ${{ needs.set-env.outputs.environment }}
+    secrets:
+      API_KEY: ${{ secrets.CYPRESS_TEST_SECRET }}
+      URL: ${{ secrets.AZURE_ENDPOINT }}
+      ACADEMISATION_API_URL: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
+      ACADEMISATION_API_KEY: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
+      ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
+      AZURE_OWASP_CLIENT_ID: ${{ secrets.AZURE_OWASP_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      OWASP_STORAGE_CONTAINER_NAME: ${{ secrets.OWASP_STORAGE_CONTAINER_NAME }}
+      OWASP_STORAGE_ACCOUNT_NAME: ${{ secrets.OWASP_STORAGE_ACCOUNT_NAME }}
+      TEAMS_OWASP_SCAN_WEBHOOK_URL: ${{ secrets.TEAMS_OWASP_SCAN_WEBHOOK_URL }}
