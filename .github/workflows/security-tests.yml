@@ -30,11 +30,6 @@ on:
       TEAMS_OWASP_SCAN_WEBHOOK_URL:
         required: true
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to run tests against'
-        required: true
-        type: environment
 
 env:
   ZAP_ADDRESS: localhost
