@@ -7,13 +7,13 @@ on:
         required: true
         type: string
     secrets:
-      API_KEY:
+      AZURE_ENDPOINT:
         required: true
-      URL:
+      CYPRESS_TEST_SECRET:
         required: true
-      ACADEMISATION_API_URL:
+      CYPRESS_ACADEMISATION_API_URL:
         required: true
-      ACADEMISATION_API_KEY:
+      CYPRESS_ACADEMISATION_API_KEY:
         required: true
       ZAP_API_KEY:
         required: true
@@ -30,6 +30,11 @@ on:
       TEAMS_OWASP_SCAN_WEBHOOK_URL:
         required: true
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run tests against'
+        required: true
+        type: environment
 
 env:
   ZAP_ADDRESS: localhost
@@ -123,10 +128,10 @@ jobs:
         env:
           HTTP_PROXY: http://${{ env.ZAP_ADDRESS }}:${{ env.ZAP_PORT }}
           NO_PROXY: "google-analytics.com,googletagmanager.com,microsoftonline.com,gvt1.com"
-          CYPRESS_url: ${{ secrets.URL }}
-          CYPRESS_cypressTestSecret: ${{ secrets.API_KEY }}
-          CYPRESS_academisationApiUrl: ${{ secrets.ACADEMISATION_API_URL }}
-          CYPRESS_academisationApiKey: ${{ secrets.ACADEMISATION_API_KEY }}
+          CYPRESS_url: ${{ secrets.AZURE_ENDPOINT }}
+          CYPRESS_cypressTestSecret: ${{ secrets.CYPRESS_TEST_SECRET }}
+          CYPRESS_academisationApiUrl: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
+          CYPRESS_academisationApiKey: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
           ZAP: true
           ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
           ZAP_ADDRESS: ${{ env.ZAP_ADDRESS }}
