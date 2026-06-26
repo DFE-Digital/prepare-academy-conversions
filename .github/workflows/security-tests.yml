@@ -123,16 +123,15 @@ jobs:
         env:
           HTTP_PROXY: http://${{ env.ZAP_ADDRESS }}:${{ env.ZAP_PORT }}
           NO_PROXY: "google-analytics.com,googletagmanager.com,microsoftonline.com,gvt1.com"
-          URL: ${{ secrets.URL }}
-          API_KEY: ${{ secrets.API_KEY }}
-          ACADEMISATION_API_URL: ${{ secrets.ACADEMISATION_API_URL }}
-          ACADEMISATION_API_KEY: ${{ secrets.ACADEMISATION_API_KEY }}
+          CYPRESS_url: ${{ secrets.URL }}
+          CYPRESS_cypressTestSecret: ${{ secrets.API_KEY }}
+          CYPRESS_academisationApiUrl: ${{ secrets.ACADEMISATION_API_URL }}
+          CYPRESS_academisationApiKey: ${{ secrets.ACADEMISATION_API_KEY }}
           ZAP: true
           ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
           ZAP_ADDRESS: ${{ env.ZAP_ADDRESS }}
           ZAP_PORT: ${{ env.ZAP_PORT }}
-        run: |
-          npm run cy:zap -- --env url=$URL,cypressTestSecret=$API_KEY,academisationApiUrl=$ACADEMISATION_API_URL,academisationApiKey=$ACADEMISATION_API_KEY
+        run: npm run cy:zap
 
       - name: Azure login with OIDC
         if: ${{ !cancelled() }}
