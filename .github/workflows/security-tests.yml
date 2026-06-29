@@ -29,6 +29,8 @@ on:
         required: true
       TEAMS_OWASP_SCAN_WEBHOOK_URL:
         required: true
+      TEAMS_WEBHOOK_URL:
+        required: true
   workflow_dispatch:
 
 env:
@@ -132,6 +134,28 @@ jobs:
           ZAP_ADDRESS: ${{ env.ZAP_ADDRESS }}
           ZAP_PORT: ${{ env.ZAP_PORT }}
         run: npm run cy:zap
+
+      - name: Generate combined Cypress HTML report
+        if: ${{ !cancelled() }}
+        run: |
+          mkdir -p mochareports
+          npm run generate:html:report
+
+      - name: Upload combined Cypress report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: combined-cypress-report-${{ inputs.environment }}
+          path: ${{ env.WORKING_DIRECTORY }}/mochareports
+          retention-days: 30
+
+      - name: Report Cypress results to Teams
+        if: ${{ !cancelled() }}
+        run: node scripts/send-teams-notification.js
+        env:
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          ENVIRONMENT: ${{ inputs.environment }}
+          INFORMATION_LINK: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Azure login with OIDC
         if: ${{ !cancelled() }}

@@ -131,7 +131,7 @@ jobs:
 
   cypress-tests:
     name: Run Cypress Tests
-    if: needs.set-env.outputs.environment == 'staging' || needs.set-env.outputs.environment == 'dev'
+    if: needs.set-env.outputs.environment == 'staging'
     needs: [ deploy, set-env ]
     uses: ./.github/workflows/cypress.yml
     with:
@@ -144,9 +144,9 @@ jobs:
       TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
 
   security-tests:
-    name: Run Security Scanner Tests
-    needs: [ set-env, cypress-tests ]
-    if: always() && needs.set-env.outputs.environment == 'dev'
+    name: Run Cypress tests with OWASP ZAP
+    if: needs.set-env.outputs.environment == 'dev'
+    needs: [ deploy, set-env ]
     uses: ./.github/workflows/security-tests.yml
     with:
       environment: ${{ needs.set-env.outputs.environment }}
@@ -155,6 +155,7 @@ jobs:
       CYPRESS_TEST_SECRET: ${{ secrets.CYPRESS_TEST_SECRET }}
       CYPRESS_ACADEMISATION_API_URL: ${{ secrets.CYPRESS_ACADEMISATION_API_URL }}
       CYPRESS_ACADEMISATION_API_KEY: ${{ secrets.CYPRESS_ACADEMISATION_API_KEY }}
+      TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
       ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
       AZURE_OWASP_CLIENT_ID: ${{ secrets.AZURE_OWASP_CLIENT_ID }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
