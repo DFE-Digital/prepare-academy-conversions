@@ -428,6 +428,12 @@ public class AcademyConversionProjectRepository : IAcademyConversionProjectRepos
       if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
    }
 
+   public async Task SetSfsoCommissioning(int id, SetSfsoCommissioningModel model)
+   {
+      HttpResponseMessage result = await _apiClient.SetSfsoCommissioning(id, model);
+      if (result.IsSuccessStatusCode is false) throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+   }
+
    public async Task<ApiResponse<IEnumerable<OpeningDateHistoryDto>>> GetOpeningDateHistoryForConversionProject(int id)
    {
       HttpResponseMessage response = await _apiClient.GetOpeningDateHistoryForConversionProject(id);

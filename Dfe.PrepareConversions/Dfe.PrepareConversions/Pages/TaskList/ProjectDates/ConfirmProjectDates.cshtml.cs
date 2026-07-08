@@ -23,7 +23,7 @@ public class ConfirmProjectDatesModel(IAcademyConversionProjectRepository reposi
    {
       await SetProject(id);
 
-      var projectDatesModel = new SetProjectDatesModel(id, Project.HeadTeacherBoardDate, Project.PreviousHeadTeacherBoardDate, Project.ProposedConversionDate, ProjectDatesSectionComplete);
+      var projectDatesModel = new SetProjectDatesModel(id, Project.HeadTeacherBoardDate, Project.PreviousHeadTeacherBoardDate, Project.ProposedConversionDate, ProjectDatesSectionComplete, sfsoCommissioningRequestedDate: Project.SfsoCommissioningRequestedDate);
 
       await _repository.SetProjectDates(id, projectDatesModel);
 

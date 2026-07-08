@@ -30,6 +30,11 @@ public class AcademyConversionProject
    public string LocalAuthorityInformationTemplateLink { get; set; }
    public bool? LocalAuthorityInformationTemplateSectionComplete { get; set; }
 
+   // SFSO commissioning / Financial Health Assessment
+   public DateTime? SfsoCommissioningRequestedDate { get; set; }
+   public string SfsoCommissioningOverview { get; set; }
+   public bool? SfsoCommissioningSectionComplete { get; set; }
+
    //school/trust info
    public string RecommendationForProject { get; set; }
    public string RecommendationNotesForProject { get; set; }

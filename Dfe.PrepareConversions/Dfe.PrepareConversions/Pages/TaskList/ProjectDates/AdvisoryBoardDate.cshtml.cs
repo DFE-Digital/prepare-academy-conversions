@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using Dfe.PrepareConversions.Utils;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.ProjectDates;
 
@@ -57,7 +58,14 @@ public class AdvisoryBoardDateModel : BaseAcademyConversionProjectPageModel, IDa
          return await base.OnGetAsync(id);
       }
 
-      var projectDatesModel = new SetProjectDatesModel(id, AdvisoryBoardDate, Project.PreviousHeadTeacherBoardDate, Project.ProposedConversionDate, Project.ProjectDatesSectionComplete);
+      var projectDatesModel = new SetProjectDatesModel(
+         id, 
+         AdvisoryBoardDate, 
+         Project.PreviousHeadTeacherBoardDate, 
+         Project.ProposedConversionDate, 
+         Project.ProjectDatesSectionComplete,
+         sfsoCommissioningRequestedDate: SfsoCommissioning.CalculateRequestedDate(
+            AdvisoryBoardDate, DateTime.Today, Project.SfsoCommissioningRequestedDate));
 
       await _repository.SetProjectDates(id, projectDatesModel);
 

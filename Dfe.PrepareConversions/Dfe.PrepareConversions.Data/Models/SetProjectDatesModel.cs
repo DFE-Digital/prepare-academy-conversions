@@ -12,10 +12,11 @@ namespace Dfe.PrepareConversions.Data.Models
       public bool? ProjectDatesSectionComplete { get; set; }
       public IEnumerable<ReasonChange>? ReasonsChanged { get; set; }
       public string? ChangedBy { get; set; }
+      public DateTime? SfsoCommissioningRequestedDate { get; set; }
 
       public SetProjectDatesModel() { }
 
-      public SetProjectDatesModel(int id, DateTime? advisoryBoardDate, DateTime? previousAdvisoryBoard, DateTime? proposedConversionDate, bool? projectDatesSectionComplete, string? changedBy = default, IEnumerable<ReasonChange>? reasonsChanged = default)
+      public SetProjectDatesModel(int id, DateTime? advisoryBoardDate, DateTime? previousAdvisoryBoard, DateTime? proposedConversionDate, bool? projectDatesSectionComplete, string? changedBy = default, IEnumerable<ReasonChange>? reasonsChanged = default, DateTime? sfsoCommissioningRequestedDate = default)
       {
          Id = id;
          AdvisoryBoardDate = advisoryBoardDate;
@@ -24,6 +25,7 @@ namespace Dfe.PrepareConversions.Data.Models
          ProjectDatesSectionComplete = projectDatesSectionComplete;
          ChangedBy = changedBy;
          ReasonsChanged = reasonsChanged;
+         SfsoCommissioningRequestedDate = sfsoCommissioningRequestedDate;
       }
    }
 }

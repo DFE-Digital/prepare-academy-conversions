@@ -16,6 +16,7 @@ public class TaskListViewModel
 
    public TaskListItemViewModel PublicSectorEqualityDutyStatus { get; set; }
 
+   public TaskListItemViewModel RequestFinancialHealthAssessmentTaskListStatus { get; set; }
 
    public string ProjectStatus { get; set; }
    public string ProjectStatusColour { get; set; }
@@ -40,6 +41,7 @@ public class TaskListViewModel
          ProjectStatusColour = ProjectListHelper.MapProjectStatus(project.ProjectStatus).Colour,
          PerformanceDataHintText = ProjectListHelper.MapPerformanceDataHint(project.SchoolType, hasSchoolAbsenceData),
          ProjectDatesTaskListTaskListStatus = TaskListItemViewModel.GetProjectDatesTaskListStatus(project),
+         RequestFinancialHealthAssessmentTaskListStatus = TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(project),
          PublicSectorEqualityDutyStatus = TaskListItemViewModel.PublicSectorEqualityDutyStatus(project.PublicEqualityDutySectionComplete, project.PublicEqualityDutyImpact, project.PublicEqualityDutyReduceImpactReason)
       };
    }

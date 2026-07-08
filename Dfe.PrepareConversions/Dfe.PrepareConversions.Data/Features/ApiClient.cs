@@ -212,10 +212,16 @@ public class ApiClient : IApiClient
          projectDatesSectionComplete = updatedProjectDates.ProjectDatesSectionComplete ?? null,
          changedBy = updatedProjectDates.ChangedBy ?? null,
          reasonsChanged = updatedProjectDates.ReasonsChanged ?? null,
+         sfsoCommissioningRequestedDate = updatedProjectDates.SfsoCommissioningRequestedDate ?? null,
       };
 
       var formattedString = string.Format(PathFor.SetProjectDates, id);
       return await AcademisationClient.PutAsync(formattedString, JsonContent.Create(payload));
+   }
+
+   public async Task<HttpResponseMessage> SetSfsoCommissioning(int id, SetSfsoCommissioningModel model)
+   {
+      return await AcademisationClient.PutAsync(string.Format(PathFor.SetSfsoCommissioning, id), JsonContent.Create(model));
    }
 
    public async Task<HttpResponseMessage> GetOpeningDateHistoryForConversionProject(int id)

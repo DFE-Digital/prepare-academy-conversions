@@ -1,0 +1,45 @@
+
+@page "/task-list/{id:int}/request-financial-health-assessment"
+@using Dfe.Academisation.ExtensionMethods
+@using Dfe.PrepareConversions.TagHelpers
+@model Dfe.PrepareConversions.Pages.TaskList.RequestFinancialHealthAssessment.RequestFinancialHealthAssessmentModel
+@{
+   ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Request Financial Health Assessment";
+}
+
+@section BeforeMain
+{
+   <govuk-back-link link-item="@Links.TaskList.Index"/>
+}
+
+@if (Model.ShowError)
+{
+   <partial name="_ErrorSummary"/>
+}
+
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l">@Model.Project.SchoolName</span>
+      <h1 class="govuk-heading-l">Request Financial Health Assessment</h1>
+
+      <p class="govuk-body">
+         Please ensure a Proposed Decision Date is entered for your project. The system will automatically request a
+         Financial Health Assessment to be provided to support this decision. This will be sent to your email address.
+      </p>
+
+      <h2 class="govuk-heading-m">Financial Health Assessment requested date</h2>
+      <p class="govuk-body" data-test="fha-requested-date">
+         @(Model.RequestedDate.HasValue ? Model.RequestedDate.Value.ToDateString() : "Not yet requested")
+      </p>
+
+      <form method="post" novalidate>
+         <govuk-textarea-input name="sfso-commissioning-overview" asp-for="SfsoCommissioningOverview" rows="5"
+            label="Can you provide an overview of your commission?"
+            hint="This is optional. Overview must be 250 characters or less. You might want to include any case complexities that SFSO need to be aware of and include teams and colleagues that are already involved." />
+
+         <button class="govuk-button" id="save-and-return-button" data-module="govuk-button" data-cy="select-common-submitbutton">
+            Save and return
+         </button>
+      </form>
+   </div>
+</div>

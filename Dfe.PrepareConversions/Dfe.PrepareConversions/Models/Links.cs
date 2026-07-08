@@ -199,6 +199,11 @@ public static class Links
       public static readonly LinkItem AdditionalInformation = AddLinkItem(page: "/TaskList/SchoolBudgetInformation/AdditionalInformation");
    }
 
+   public static class FinancialsSection
+   {
+      public static readonly LinkItem RequestFinancialHealthAssessment = AddLinkItem(page: "/TaskList/RequestFinancialHealthAssessment/RequestFinancialHealthAssessment");
+   }
+
    public static class SchoolPupilForecastsSection
    {
       public static readonly LinkItem ConfirmSchoolPupilForecasts = AddLinkItem(page: "/TaskList/SchoolPupilForecasts/PupilForecasts");
