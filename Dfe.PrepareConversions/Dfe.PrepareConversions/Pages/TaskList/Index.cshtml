@@ -102,8 +102,8 @@
             </li>
           </ul>
        </div>
-        @if (Model.Project.IsVoluntary)
-        {
+        @* @if (Model.Project.IsVoluntary)
+        { *@
            <h3 class="app-task-list__section govuk-!-margin-top-8">Financials</h3>
            <div class="app-task-list">
               <ul class="app-task-list__items govuk-!-padding-left-0">
@@ -119,7 +119,7 @@
                  </li>
               </ul>
            </div>
-        }
+        @* } *@
        @if(!Model.Project.IsReadOnly)
        {
           <template-guidance is-sponsored="@Model.Project.IsSponsored" project-id="@Model.Project.Id"></template-guidance>
