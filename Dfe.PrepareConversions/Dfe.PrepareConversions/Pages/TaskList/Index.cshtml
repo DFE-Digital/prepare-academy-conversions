@@ -101,25 +101,22 @@
                   </strong>
             </li>
           </ul>
-       </div>
-        @* @if (Model.Project.IsVoluntary)
-        { *@
-           <h3 class="app-task-list__section govuk-!-margin-top-8">Financials</h3>
-           <div class="app-task-list">
-              <ul class="app-task-list__items govuk-!-padding-left-0">
-                 <li class="app-task-list__item">
-                    <span class="app-task-list__task-name">
-                       <a class="govuk-link" asp-page="@Links.FinancialsSection.RequestFinancialHealthAssessment.Page" asp-route-id="@Model.Project.Id" aria-describedby="request-fha-status">
-                          Request Financial Health Assessment
-                       </a>
-                    </span>
-                    <strong class="govuk-tag @Model.TaskList.RequestFinancialHealthAssessmentTaskListStatus.CssClass app-task-list__tag" id="request-fha-status">
-                       @Model.TaskList.RequestFinancialHealthAssessmentTaskListStatus.Status
-                    </strong>
-                 </li>
-              </ul>
-           </div>
-        @* } *@
+       </div>        
+        <h3 class="app-task-list__section govuk-!-margin-top-8">Financials</h3>
+        <div class="app-task-list">
+            <ul class="app-task-list__items govuk-!-padding-left-0">
+                <li class="app-task-list__item">
+                <span class="app-task-list__task-name">
+                    <a class="govuk-link" asp-page="@Links.FinancialsSection.RequestFinancialHealthAssessment.Page" asp-route-id="@Model.Project.Id" aria-describedby="request-fha-status">
+                        Request Financial Health Assessment
+                    </a>
+                </span>
+                <strong class="govuk-tag @Model.TaskList.RequestFinancialHealthAssessmentTaskListStatus.CssClass app-task-list__tag" id="request-fha-status">
+                    @Model.TaskList.RequestFinancialHealthAssessmentTaskListStatus.Status
+                </strong>
+                </li>
+            </ul>
+        </div>
        @if(!Model.Project.IsReadOnly)
        {
           <template-guidance is-sponsored="@Model.Project.IsSponsored" project-id="@Model.Project.Id"></template-guidance>
