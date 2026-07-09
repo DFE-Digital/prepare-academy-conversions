@@ -60,12 +60,12 @@
         }
       <div class="govuk-body">
          <partial name="Shared/_OpenApplicationFormNewTab"/>
-            @if (ViewData["AcademyTypeAndRoute"].Equals(AcademyTypeAndRoutes.Sponsored))
-         {
-            <div class="govuk-body">
-                    <p data-test="annex-b-help">Some of the information has come from the <a class="govuk-link" asp-page="@Links.AnnexB.Index.Page" asp-route-id="@Model.Project.Id">Annex B form</a>.</p>
-            </div>
-         }
+            @if (AcademyTypeAndRoutes.Sponsored.Equals(ViewData["AcademyTypeAndRoute"]))
+            {
+                <div class="govuk-body">
+                        <p data-test="annex-b-help">Some of the information has come from the <a class="govuk-link" asp-page="@Links.AnnexB.Index.Page" asp-route-id="@Model.Project.Id">Annex B form</a>.</p>
+                </div>
+            }
       </div>
    </div>
    <div class="govuk-grid-column-full">

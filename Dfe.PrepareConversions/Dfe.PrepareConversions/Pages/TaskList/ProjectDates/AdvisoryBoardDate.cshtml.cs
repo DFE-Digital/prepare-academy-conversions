@@ -63,9 +63,12 @@ public class AdvisoryBoardDateModel : BaseAcademyConversionProjectPageModel, IDa
          AdvisoryBoardDate, 
          Project.PreviousHeadTeacherBoardDate, 
          Project.ProposedConversionDate, 
-         Project.ProjectDatesSectionComplete,
-         sfsoCommissioningRequestedDate: SfsoCommissioning.CalculateRequestedDate(
-            AdvisoryBoardDate, DateTime.Today, Project.SfsoCommissioningRequestedDate));
+         Project.ProjectDatesSectionComplete
+         )
+      {
+         SfsoCommissioningRequestedDate = SfsoCommissioning.CalculateRequestedDate(
+            AdvisoryBoardDate, DateTime.Today, Project.SfsoCommissioningRequestedDate)
+      };
 
       await _repository.SetProjectDates(id, projectDatesModel);
 
