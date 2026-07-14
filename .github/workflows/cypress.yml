@@ -51,7 +51,6 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Run Cypress Tests (${{ inputs.environment }} - ${{ matrix.test-suite }})
-        if: inputs.environment == 'staging' || inputs.environment == 'dev'
         uses: cypress-io/github-action@v6
         env:
           CYPRESS_url: ${{ secrets.AZURE_ENDPOINT }}

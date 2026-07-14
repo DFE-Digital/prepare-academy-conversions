@@ -101,7 +101,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.GeneralInformation
                return;
             }
 
-            SetError("member-of-parliament-name-and-party", "MP name and political party are not currently available. Try again later.");
+            SetError("member-of-parliament-name-and-party", "Member of Parliament name is not currently available. Try again later.");
             return;
          }
 
