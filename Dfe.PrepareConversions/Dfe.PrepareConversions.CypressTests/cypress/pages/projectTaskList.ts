@@ -35,6 +35,9 @@ class ProjectTaskList extends BasePage {
         previewProjectDocument: 'preview-project-template-button',
         createProjectDocument: 'generate-htb',
         errorMessage: 'error-message-0+=',
+        requestFinancialHealthAssessmentLink: 'a[href*="/request-financial-health-assessment"]',
+        requestFinancialHealthAssessmentStatus: 'request-fha-status',
+        requestFinancialHealthAssessmentHint: 'fha-not-requested-hint',
     };
 
     public acceptCookieBtnClick(): this {
@@ -192,6 +195,22 @@ class ProjectTaskList extends BasePage {
         return this;
     }
 
+        public selectRequestFinancialHealthAssessment(): this {
+        cy.checkPath(this.path);
+        cy.get(this.selectors.requestFinancialHealthAssessmentLink).click();
+        return this;
+    }
+
+    public getRequestFinancialHealthAssessmentStatus(): Cypress.Chainable<JQuery<HTMLElement>> {
+        cy.checkPath(this.path);
+        return cy.getById(this.selectors.requestFinancialHealthAssessmentStatus);
+    }
+
+    public getRequestFinancialHealthAssessmentHint(): Cypress.Chainable<JQuery<HTMLElement>> {
+        cy.checkPath(this.path);
+        return cy.getByDataTest(this.selectors.requestFinancialHealthAssessmentHint);
+    }
+    
     public getErrorMessage(): Cypress.Chainable<JQuery<HTMLElement>> {
         return cy.getByDataCy(this.selectors.errorMessage);
     }
