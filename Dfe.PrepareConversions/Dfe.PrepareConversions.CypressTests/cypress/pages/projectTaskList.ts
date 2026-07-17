@@ -195,7 +195,7 @@ class ProjectTaskList extends BasePage {
         return this;
     }
 
-        public selectRequestFinancialHealthAssessment(): this {
+    public selectRequestFinancialHealthAssessment(): this {
         cy.checkPath(this.path);
         cy.get(this.selectors.requestFinancialHealthAssessmentLink).click();
         return this;
@@ -210,7 +210,7 @@ class ProjectTaskList extends BasePage {
         cy.checkPath(this.path);
         return cy.getByDataTest(this.selectors.requestFinancialHealthAssessmentHint);
     }
-    
+
     public getErrorMessage(): Cypress.Chainable<JQuery<HTMLElement>> {
         return cy.getByDataCy(this.selectors.errorMessage);
     }

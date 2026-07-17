@@ -19,7 +19,8 @@ describe('Request Financial Health Assessment (SFSO commissioning)', () => {
 
     it('shows the Financials task on the project task list with a valid status', () => {
         Logger.log('Status is derived from the proposed decision date: Not started or Completed');
-        projectTaskList.getRequestFinancialHealthAssessmentStatus()
+        projectTaskList
+            .getRequestFinancialHealthAssessmentStatus()
             .should('be.visible')
             .invoke('text')
             .then((text) => {
@@ -29,7 +30,8 @@ describe('Request Financial Health Assessment (SFSO commissioning)', () => {
 
     it('shows the not-requested hint only when the task is Not started', () => {
         Logger.log('Hint appears under the row only when no proposed decision date is set');
-        projectTaskList.getRequestFinancialHealthAssessmentStatus()
+        projectTaskList
+            .getRequestFinancialHealthAssessmentStatus()
             .invoke('text')
             .then((status) => {
                 if (status.trim() === 'Not started') {
@@ -53,7 +55,8 @@ describe('Request Financial Health Assessment (SFSO commissioning)', () => {
         Logger.log('Scenario 5/6/past when a proposed decision date is set; Scenario 7 banner when it is not');
         cy.get('body').then(($body) => {
             if ($body.find('[data-test="fha-requested-date"]').length > 0) {
-                requestFinancialHealthAssessment.getRequestedDate()
+                requestFinancialHealthAssessment
+                    .getRequestedDate()
                     .invoke('text')
                     .should('match', /has been sent|was requested on|proposed decision date is on/);
             } else {
@@ -81,7 +84,8 @@ describe('Request Financial Health Assessment (SFSO commissioning)', () => {
         requestFinancialHealthAssessment.enterOverview('a'.repeat(251));
         requestFinancialHealthAssessment.saveAndReturn();
 
-        requestFinancialHealthAssessment.getErrorSummary()
+        requestFinancialHealthAssessment
+            .getErrorSummary()
             .should('be.visible')
             .and('contain.text', 'Overview must be 250 characters or less');
         cy.checkPath('request-financial-health-assessment');

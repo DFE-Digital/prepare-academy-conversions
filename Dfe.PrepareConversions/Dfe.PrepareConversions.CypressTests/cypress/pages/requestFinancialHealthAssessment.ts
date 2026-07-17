@@ -6,12 +6,12 @@ class RequestFinancialHealthAssessment extends BasePage {
 
     private readonly selectors = {
         heading: 'h1',
-        noDecisionDateInset: 'fha-no-decision-date',   // data-test (Scenario 7 banner)
-        notRequested: 'fha-not-requested',              // data-test (Scenario 7 body)
-        requestedDate: 'fha-requested-date',            // data-test (Scenarios 5 / 6 / requested-in-past)
-        overviewReadOnly: 'fha-overview-readonly',      // data-test (Scenario 8 lockdown)
-        overviewInput: 'sfso-commissioning-overview',   // id
-        saveButton: 'select-common-submitbutton',       // data-cy
+        noDecisionDateInset: 'fha-no-decision-date', // data-test (Scenario 7 banner)
+        notRequested: 'fha-not-requested', // data-test (Scenario 7 body)
+        requestedDate: 'fha-requested-date', // data-test (Scenarios 5 / 6 / requested-in-past)
+        overviewReadOnly: 'fha-overview-readonly', // data-test (Scenario 8 lockdown)
+        overviewInput: 'sfso-commissioning-overview', // id
+        saveButton: 'select-common-submitbutton', // data-cy
         errorSummary: '.govuk-error-summary',
     };
 
