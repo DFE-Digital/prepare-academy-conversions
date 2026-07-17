@@ -19,7 +19,7 @@ public static class SfsoCommissioning
          return null;
       }
 
-      bool withinWindow = (proposedDecisionDate.Value.Date - today.Date).TotalDays < DaysBeforeProposedDecisionDate;
+      bool withinWindow = (proposedDecisionDate.Value.Date - today.Date).TotalDays <= DaysBeforeProposedDecisionDate;
       if (!withinWindow)
       {
          return null;

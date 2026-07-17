@@ -85,7 +85,6 @@ public abstract partial class BaseIntegrationTests
          .With(x => x.AssignedUser, _fixture.Create<User>())
          .With(x=> x.RevenueCarryForwardAtEndMarchCurrentYear, _revenueCarryForwardAtEndMarchCurrentYear)
          .With(x => x.FinancialDeficit, SetFinancialDeficit())
-         .With(x => x.SfsoCommissioningSectionComplete, (bool?)null)
          .Create();
 
       postSetup?.Invoke(project);

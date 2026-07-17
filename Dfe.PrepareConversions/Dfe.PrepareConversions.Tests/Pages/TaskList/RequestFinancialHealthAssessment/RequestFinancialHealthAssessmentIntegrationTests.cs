@@ -1,3 +1,4 @@
+
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Data.Features;
@@ -31,13 +32,12 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
    [Theory]
    [InlineData(AcademyTypeAndRoutes.Voluntary)]
    [InlineData(AcademyTypeAndRoutes.Sponsored)]
-   public async Task Task_row_shows_Not_started_for_all_routes_when_no_requested_date(string route)
+   public async Task Task_row_shows_Not_started_for_all_routes_when_no_proposed_decision_date(string route)
    {
       AcademyConversionProject project = AddGetProject(p =>
       {
          p.AcademyTypeAndRoute = route;
-         p.HeadTeacherBoardDate = DateTime.Today.AddDays(30);
-         p.SfsoCommissioningRequestedDate = null;
+         p.HeadTeacherBoardDate = null;
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
@@ -48,25 +48,76 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
    [Theory]
    [InlineData(AcademyTypeAndRoutes.Voluntary)]
    [InlineData(AcademyTypeAndRoutes.Sponsored)]
-   public async Task Task_row_shows_In_progress_for_all_routes_when_requested_and_decision_in_future(string route)
+   public async Task Task_row_shows_Completed_for_all_routes_when_proposed_decision_date_set(string route)
    {
       AcademyConversionProject project = AddGetProject(p =>
       {
          p.AcademyTypeAndRoute = route;
-         p.HeadTeacherBoardDate = DateTime.Today.AddDays(10);
-         p.SfsoCommissioningRequestedDate = DateTime.Today;
+         p.HeadTeacherBoardDate = DateTime.Today.AddDays(30);
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
-      Document.QuerySelector("#request-fha-status")!.TextContent.Trim().Should().Be("In progress");
+      Document.QuerySelector("#request-fha-status")!.TextContent.Trim().Should().Be("Completed");
    }
 
    [Fact]
-   public async Task Page_prepopulates_requested_date_and_overview()
+   public async Task Page_shows_scenario_7_inset_when_no_proposed_decision_date()
+   {
+      AcademyConversionProject project = AddGetProject(p => p.HeadTeacherBoardDate = null);
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/request-financial-health-assessment");
+
+      Document.QuerySelector("[data-test='fha-no-decision-date']").Should().NotBeNull();
+   }
+
+   [Fact]
+   public async Task Page_shows_scenario_5_will_be_sent_when_decision_more_than_15_days_out()
    {
       AcademyConversionProject project = AddGetProject(p =>
       {
+         p.HeadTeacherBoardDate = DateTime.Today.AddDays(30);
+         p.SfsoCommissioningRequestedDate = null;
+      });
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/request-financial-health-assessment");
+
+      Document.QuerySelector("[data-test='fha-requested-date']")!.TextContent.Should().Contain("will be sent on");
+   }
+
+   [Fact]
+   public async Task Page_shows_scenario_6_has_been_sent_when_decision_within_15_days()
+   {
+      AcademyConversionProject project = AddGetProject(p =>
+      {
+         p.HeadTeacherBoardDate = DateTime.Today.AddDays(10);
+         p.SfsoCommissioningRequestedDate = DateTime.Today;
+      });
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/request-financial-health-assessment");
+
+      Document.QuerySelector("[data-test='fha-requested-date']")!.TextContent.Should().Contain("has been sent");
+   }
+
+   [Fact]
+   public async Task Page_locks_and_hides_form_when_decision_recorded()
+   {
+      AcademyConversionProject project = AddGetProject(
+         p => p.SfsoCommissioningOverview = "locked overview",
+         isReadOnly: true);
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/request-financial-health-assessment");
+
+      Document.QuerySelector("form").Should().BeNull();
+      Document.QuerySelector("[data-test='fha-overview-readonly']")!.TextContent.Should().Contain("locked overview");
+   }
+
+   [Fact]
+   public async Task Page_prepopulates_overview_when_editable()
+   {
+      AcademyConversionProject project = AddGetProject(p =>
+      {
+         p.HeadTeacherBoardDate = DateTime.Today.AddDays(10);
          p.SfsoCommissioningRequestedDate = new DateTime(2026, 7, 3);
          p.SfsoCommissioningOverview = "existing overview";
       });
@@ -114,7 +165,7 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
    [Theory]
    [InlineData(AcademyTypeAndRoutes.Voluntary)]
    [InlineData(AcademyTypeAndRoutes.Sponsored)]
-   public async Task Entering_decision_date_less_than_15_days_out_sends_today_as_override(string route)
+   public async Task Entering_decision_date_15_or_fewer_days_out_sends_today_as_override(string route)
    {
       DateTime decision = DateTime.Today.AddDays(10);
       AcademyConversionProject project = AddGetProject(p =>
@@ -143,7 +194,7 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
    [Theory]
    [InlineData(AcademyTypeAndRoutes.Voluntary)]
    [InlineData(AcademyTypeAndRoutes.Sponsored)]
-   public async Task Entering_decision_date_15_or_more_days_out_sends_null_override(string route)
+   public async Task Entering_decision_date_more_than_15_days_out_sends_null_override(string route)
    {
       DateTime decision = DateTime.Today.AddDays(30);
       AcademyConversionProject project = AddGetProject(p =>

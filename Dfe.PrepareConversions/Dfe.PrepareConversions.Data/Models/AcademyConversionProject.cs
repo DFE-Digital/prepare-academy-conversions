@@ -154,6 +154,4 @@ public class AcademyConversionProject
    // SFSO commissioning / Financial Health Assessment
    public DateTime? SfsoCommissioningRequestedDate { get; set; }
    public string SfsoCommissioningOverview { get; set; }
-   public bool? SfsoCommissioningSectionComplete { get; set; }
-
 }

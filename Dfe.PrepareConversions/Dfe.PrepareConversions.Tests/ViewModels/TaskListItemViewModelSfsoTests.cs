@@ -1,3 +1,4 @@
+
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.ViewModels;
 using FluentAssertions;
@@ -8,38 +9,40 @@ namespace Dfe.PrepareConversions.Tests.ViewModels;
 
 public class TaskListItemViewModelSfsoTests
 {
-   private static ProjectViewModel Project(DateTime? proposedDecisionDate, DateTime? requestedDate) =>
+   private static ProjectViewModel Project(DateTime? proposedDecisionDate) =>
       new(new AcademyConversionProject
       {
-         HeadTeacherBoardDate = proposedDecisionDate,
-         SfsoCommissioningRequestedDate = requestedDate
+         // ProjectViewModel's ctor calls ProjectListHelper.MapProjectStatus(ProjectStatus); a non-null
+         // value avoids the pre-existing NRE at ProjectListHelper.cs:109.
+         ProjectStatus = "Pre advisory board",
+         HeadTeacherBoardDate = proposedDecisionDate
       });
 
    [Fact]
-   public void NotStarted_when_no_requested_date_and_future_decision()
+   public void NotStarted_when_no_proposed_decision_date()
    {
-      TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(Project(DateTime.Today.AddDays(30), null))
+      TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(Project(null))
          .Should().Be(TaskListItemViewModel.NotStarted);
    }
 
    [Fact]
-   public void InProgress_when_requested_and_decision_in_future()
+   public void Completed_when_proposed_decision_date_in_future()
    {
-      TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(Project(DateTime.Today.AddDays(10), DateTime.Today))
-         .Should().Be(TaskListItemViewModel.InProgress);
-   }
-
-   [Fact]
-   public void Completed_when_decision_date_reached_today()
-   {
-      TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(Project(DateTime.Today, DateTime.Today))
+      TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(Project(DateTime.Today.AddDays(30)))
          .Should().Be(TaskListItemViewModel.Completed);
    }
 
    [Fact]
-   public void Completed_when_decision_date_in_past()
+   public void Completed_when_proposed_decision_date_today()
    {
-      TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(Project(DateTime.Today.AddDays(-1), null))
+      TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(Project(DateTime.Today))
+         .Should().Be(TaskListItemViewModel.Completed);
+   }
+
+   [Fact]
+   public void Completed_when_proposed_decision_date_in_past()
+   {
+      TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(Project(DateTime.Today.AddDays(-1)))
          .Should().Be(TaskListItemViewModel.Completed);
    }
 }

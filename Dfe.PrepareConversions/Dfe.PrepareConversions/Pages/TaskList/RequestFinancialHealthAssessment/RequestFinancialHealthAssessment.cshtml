@@ -4,7 +4,7 @@
 @using Dfe.PrepareConversions.TagHelpers
 @model Dfe.PrepareConversions.Pages.TaskList.RequestFinancialHealthAssessment.RequestFinancialHealthAssessmentModel
 @{
-   ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Request Financial Health Assessment";
+   ViewData["Title"] = (ViewData.ModelState.IsValid ? "" : "Error: ") + "Financial Health Assessment";
 }
 
 @section BeforeMain
@@ -19,31 +19,93 @@
 
 <div class="govuk-grid-row">
    <div class="govuk-grid-column-two-thirds">
+
+      @if (!Model.HasProposedDecisionDate)
+      {
+         @* Scenario 7: proposed decision date not entered -> banner linking to Confirm project dates. *@
+         <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+              data-module="govuk-notification-banner" data-test="fha-no-decision-date">
+            <div class="govuk-notification-banner__header">
+               <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                  Important
+               </h2>
+            </div>
+            <div class="govuk-notification-banner__content">
+               <p class="govuk-notification-banner__heading">
+                  In order to request a financial health assessment, you will need to
+                  <a class="govuk-notification-banner__link" asp-page="@Links.ProjectDates.ConfirmProjectDates.Page" asp-route-id="@Model.Project.Id">Enter a new proposed decision date</a>.
+               </p>
+            </div>
+         </div>
+      }
+
       <span class="govuk-caption-l">@Model.Project.SchoolName</span>
-      <h1 class="govuk-heading-l">Request Financial Health Assessment</h1>
+      <h1 class="govuk-heading-l">Financial Health Assessment</h1>
 
-      <p class="govuk-body">
-         Please ensure a Proposed Decision Date is entered for your project. The system will automatically request a
-         Financial Health Assessment to be provided to support this decision. This will be sent to your email address.
-      </p>
+      @if (!Model.HasProposedDecisionDate)
+      {
+         @* Scenario 7: no proposed decision date entered. *@
+         <p class="govuk-body" data-test="fha-not-requested">
+            This has not yet been requested, as you have not entered a proposed decision date.
+         </p>
+         <div class="govuk-inset-text">
+            The system will automatically request a Financial Health Assessment to be provided 15 days from the proposed decision date.
+         </div>
+      }
+      else if (!Model.RequestSent)
+      {
+         @* Scenario 5: proposed decision date > 15 days out (nothing requested yet). *@
+         <p class="govuk-body" data-test="fha-requested-date">
+            The proposed decision date is on the <strong>@Model.Project.HeadTeacherBoardDate.Value.ToDateString()</strong>.
+         </p>
+         <div class="govuk-inset-text">
+            The system will automatically request a Financial Health Assessment to be provided 15 days from the proposed decision date.
+         </div>
+      }
+      else if (Model.RequestDateInPast)
+      {
+         @* Completed and the request date is in the past. *@
+         <p class="govuk-body">
+            Please ensure a Proposed Decision Date is entered for your project. The system will automatically request a
+            Financial Health Assessment to be provided to support this decision.
+         </p>
+         <h2 class="govuk-heading-m">Financial Health Assessment requested date</h2>
+         <p class="govuk-body" data-test="fha-requested-date">
+            This was requested on <strong>@Model.RequestedDate.Value.ToDateString()</strong>.
+         </p>
+      }
+      else
+      {
+         @* Requested today (proposed decision date <= 15 days out). Final Figma pending. *@
+         <h2 class="govuk-heading-m">Financial Health Assessment requested date</h2>
+         <p class="govuk-body" data-test="fha-requested-date">
+            The FHA request/commission has been sent on @Model.RequestedDate.Value.ToDateString().
+         </p>
+      }
 
-            <h2 class="govuk-heading-m">Financial Health Assessment requested date</h2>
-      <p class="govuk-body" data-test="fha-requested-date">
-         @(Model.RequestedDate.HasValue ? Model.RequestedDate.Value.ToDateString() : "Not yet requested")
-      </p>
+      @if (Model.IsReadOnly)
+      {
+         @* Scenario 8: decision recorded -> task locked; show the overview read-only. *@
+         <h2 class="govuk-heading-m">Overview of your commission</h2>
+         <p class="govuk-body" data-test="fha-overview-readonly">
+            @(string.IsNullOrWhiteSpace(Model.SfsoCommissioningOverview) ? "Not provided" : Model.SfsoCommissioningOverview)
+         </p>
+      }
+      else
+      {
+         <form method="post" novalidate>
+            <h2 class="govuk-label-wrapper">
+               <label class="govuk-label govuk-label--m" for="sfso-commissioning-overview">
+                  Can you provide an overview of your commission?
+               </label>
+            </h2>
+            <govuk-textarea-input name="sfso-commissioning-overview" asp-for="SfsoCommissioningOverview" rows="5"
+               hint="This is optional. Overview must be 250 characters or less. You might want to include any case complexities that funding delivery need to be aware of and include teams and colleagues that are already involved." />
 
-      <form method="post" novalidate>
-         <h2 class="govuk-label-wrapper">
-            <label class="govuk-label govuk-label--m" for="sfso-commissioning-overview">
-               Can you provide an overview of your commission?
-            </label>
-         </h2>
-         <govuk-textarea-input name="sfso-commissioning-overview" asp-for="SfsoCommissioningOverview" rows="5"
-            hint="This is optional. Overview must be 250 characters or less. You might want to include any case complexities that SFSO need to be aware of and include teams and colleagues that are already involved." />
-
-         <button class="govuk-button" id="save-and-return-button" data-module="govuk-button" data-cy="select-common-submitbutton">
-            Save and return
-         </button>
-      </form>
+            <button class="govuk-button" id="save-and-return-button" data-module="govuk-button" data-cy="select-common-submitbutton">
+               Save and return
+            </button>
+         </form>
+      }
    </div>
 </div>

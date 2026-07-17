@@ -3,6 +3,7 @@ using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Services;
+using Dfe.PrepareConversions.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -25,7 +26,19 @@ public class RequestFinancialHealthAssessmentModel : BaseAcademyConversionProjec
    [StringLength(250, ErrorMessage = "Overview must be 250 characters or less")]
    public string SfsoCommissioningOverview { get; set; }
 
+   // The stored request date (null when the proposed decision date is > 15 days away).
    public DateTime? RequestedDate { get; set; }
+
+   // Scenario 1 / 7: no proposed decision date has been entered yet.
+   public bool HasProposedDecisionDate => Project?.HeadTeacherBoardDate.HasValue == true;
+
+   // Scenario 6: proposed decision date was <= 15 days out when entered, so the request has gone out (date stored).
+   public bool RequestSent => RequestedDate.HasValue;
+
+   public bool RequestDateInPast => RequestedDate.HasValue && RequestedDate.Value.Date < DateTime.Today;
+
+   // Scenario 8: once a decision is recorded the API marks the project read-only -> lock this task.
+   public bool IsReadOnly => Project?.IsReadOnly == true;
 
    public bool ShowError => _errorService.HasErrors();
 
@@ -52,8 +65,7 @@ public class RequestFinancialHealthAssessmentModel : BaseAcademyConversionProjec
 
       var model = new SetSfsoCommissioningModel
       {
-         SfsoCommissioningOverview = SfsoCommissioningOverview,
-         SfsoCommissioningSectionComplete = true
+         SfsoCommissioningOverview = SfsoCommissioningOverview
       };
 
       await _repository.SetSfsoCommissioning(id, model);

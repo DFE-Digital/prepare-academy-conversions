@@ -179,22 +179,10 @@ public sealed class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
    }
 
    
-   public static TaskListItemViewModel GetRequestFinancialHealthAssessmentTaskListStatus(ProjectViewModel project)
-   {
-      // Completed once we reach the proposed decision date (D0)
-      if (project.HeadTeacherBoardDate.HasValue && DateTime.Today >= project.HeadTeacherBoardDate.Value.Date)
-      {
-         return Completed;
-      }
-
-      // Not started until the FHA has been requested (D-15 not yet reached / date not set)
-      if (!project.SfsoCommissioningRequestedDate.HasValue)
-      {
-         return NotStarted;
-      }
-
-      return InProgress;
-   }
+public static TaskListItemViewModel GetRequestFinancialHealthAssessmentTaskListStatus(ProjectViewModel project)
+{
+   return project.HeadTeacherBoardDate.HasValue ? Completed : NotStarted;
+}
 
    public static TaskListItemViewModel PublicSectorEqualityDutyStatus(bool sectionComplete, string publicEqualityDutyImpact, string publicEqualityDutyReductionReason)
    {

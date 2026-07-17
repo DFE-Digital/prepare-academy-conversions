@@ -1,3 +1,4 @@
+
 using Dfe.PrepareConversions.Utils;
 using FluentAssertions;
 using System;
@@ -22,9 +23,10 @@ public class SfsoCommissioningTests
    }
 
    [Fact]
-   public void Returns_null_at_exactly_15_days_away()
+   public void Returns_today_at_exactly_15_days_away()
    {
-      SfsoCommissioning.CalculateRequestedDate(Today.AddDays(15), Today, null).Should().BeNull();
+      // Boundary is inclusive: 15 days or less -> today.
+      SfsoCommissioning.CalculateRequestedDate(Today.AddDays(15), Today, null).Should().Be(Today.Date);
    }
 
    [Fact]
