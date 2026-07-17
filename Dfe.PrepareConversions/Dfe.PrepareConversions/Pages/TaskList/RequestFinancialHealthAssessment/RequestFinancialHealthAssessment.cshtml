@@ -56,7 +56,7 @@
       {
          @* Scenario 5: proposed decision date > 15 days out (nothing requested yet). *@
          <p class="govuk-body" data-test="fha-requested-date">
-            The proposed decision date is on the <strong>@Model.Project.HeadTeacherBoardDate.Value.ToDateString()</strong>.
+            The proposed decision date is on the <strong>@Model.Project.HeadTeacherBoardDate.Value.ToOrdinalDateString()</strong>.
          </p>
          <div class="govuk-inset-text">
             The system will automatically request a Financial Health Assessment to be provided 15 days from the proposed decision date.
@@ -71,7 +71,7 @@
          </p>
          <h2 class="govuk-heading-m">Financial Health Assessment requested date</h2>
          <p class="govuk-body" data-test="fha-requested-date">
-            This was requested on <strong>@Model.RequestedDate.Value.ToDateString()</strong>.
+            This was requested on <strong>@Model.RequestedDate.Value.ToOrdinalDateString()</strong>.
          </p>
       }
       else
@@ -79,7 +79,7 @@
          @* Requested today (proposed decision date <= 15 days out). Final Figma pending. *@
          <h2 class="govuk-heading-m">Financial Health Assessment requested date</h2>
          <p class="govuk-body" data-test="fha-requested-date">
-            The FHA request/commission has been sent on @Model.RequestedDate.Value.ToDateString().
+            The FHA request/commission has been sent on @Model.RequestedDate.Value.ToOrdinalDateString().
          </p>
       }
 
