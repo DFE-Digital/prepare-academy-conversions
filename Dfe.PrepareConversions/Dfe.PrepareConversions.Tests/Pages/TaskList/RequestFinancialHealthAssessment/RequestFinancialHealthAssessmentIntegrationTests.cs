@@ -1,4 +1,3 @@
-
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Data.Features;
@@ -17,6 +16,8 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
 {
    public RequestFinancialHealthAssessmentIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
 
+   // ---------- Task-list row (Deltas A + F) ----------
+
    [Theory]
    [InlineData(AcademyTypeAndRoutes.Voluntary)]
    [InlineData(AcademyTypeAndRoutes.Sponsored)]
@@ -32,7 +33,7 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
    [Theory]
    [InlineData(AcademyTypeAndRoutes.Voluntary)]
    [InlineData(AcademyTypeAndRoutes.Sponsored)]
-   public async Task Task_row_shows_Not_started_for_all_routes_when_no_proposed_decision_date(string route)
+   public async Task Task_row_shows_Not_started_and_hint_when_no_proposed_decision_date(string route)
    {
       AcademyConversionProject project = AddGetProject(p =>
       {
@@ -43,12 +44,13 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
       Document.QuerySelector("#request-fha-status")!.TextContent.Trim().Should().Be("Not started");
+      Document.QuerySelector("[data-test='fha-not-requested-hint']").Should().NotBeNull();
    }
 
    [Theory]
    [InlineData(AcademyTypeAndRoutes.Voluntary)]
    [InlineData(AcademyTypeAndRoutes.Sponsored)]
-   public async Task Task_row_shows_Completed_for_all_routes_when_proposed_decision_date_set(string route)
+   public async Task Task_row_shows_Completed_and_no_hint_when_proposed_decision_date_set(string route)
    {
       AcademyConversionProject project = AddGetProject(p =>
       {
@@ -59,20 +61,24 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}");
 
       Document.QuerySelector("#request-fha-status")!.TextContent.Trim().Should().Be("Completed");
+      Document.QuerySelector("[data-test='fha-not-requested-hint']").Should().BeNull();
    }
 
+   // ---------- FHA page messaging (Delta D) ----------
+
    [Fact]
-   public async Task Page_shows_scenario_7_inset_when_no_proposed_decision_date()
+   public async Task Page_shows_scenario_7_banner_when_no_proposed_decision_date()
    {
       AcademyConversionProject project = AddGetProject(p => p.HeadTeacherBoardDate = null);
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/request-financial-health-assessment");
 
       Document.QuerySelector("[data-test='fha-no-decision-date']").Should().NotBeNull();
+      Document.QuerySelector("[data-test='fha-not-requested']").Should().NotBeNull();
    }
 
    [Fact]
-   public async Task Page_shows_scenario_5_will_be_sent_when_decision_more_than_15_days_out()
+   public async Task Page_shows_scenario_5_proposed_decision_date_when_more_than_15_days_out()
    {
       AcademyConversionProject project = AddGetProject(p =>
       {
@@ -82,11 +88,27 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/request-financial-health-assessment");
 
-      Document.QuerySelector("[data-test='fha-requested-date']")!.TextContent.Should().Contain("will be sent on");
+      Document.QuerySelector("[data-test='fha-requested-date']")!.TextContent.Should().Contain("proposed decision date is on");
    }
 
    [Fact]
-   public async Task Page_shows_scenario_6_has_been_sent_when_decision_within_15_days()
+   public async Task Page_shows_requested_in_past_with_ordinal_date()
+   {
+      AcademyConversionProject project = AddGetProject(p =>
+      {
+         p.HeadTeacherBoardDate = DateTime.Today.AddDays(10);
+         p.SfsoCommissioningRequestedDate = new DateTime(2020, 7, 23); // clearly in the past
+      });
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/request-financial-health-assessment");
+
+      string text = Document.QuerySelector("[data-test='fha-requested-date']")!.TextContent;
+      text.Should().Contain("This was requested on");
+      text.Should().Contain("23rd July 2020");
+   }
+
+   [Fact]
+   public async Task Page_shows_has_been_sent_when_requested_today()
    {
       AcademyConversionProject project = AddGetProject(p =>
       {
@@ -118,15 +140,17 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
       AcademyConversionProject project = AddGetProject(p =>
       {
          p.HeadTeacherBoardDate = DateTime.Today.AddDays(10);
-         p.SfsoCommissioningRequestedDate = new DateTime(2026, 7, 3);
+         p.SfsoCommissioningRequestedDate = new DateTime(2020, 7, 3);
          p.SfsoCommissioningOverview = "existing overview";
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/request-financial-health-assessment");
 
       Document.QuerySelector<IHtmlTextAreaElement>("#sfso-commissioning-overview")!.Value.Should().Be("existing overview");
-      Document.QuerySelector("[data-test='fha-requested-date']")!.TextContent.Should().Contain("2026");
+      Document.QuerySelector("[data-test='fha-requested-date']").Should().NotBeNull();
    }
+
+   // ---------- Overview save + validation (Scenarios 3 & 4) ----------
 
    [Fact]
    public async Task Saving_overview_of_250_or_fewer_chars_redirects_to_task_list()
@@ -160,7 +184,7 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
       Document.QuerySelector(".govuk-error-summary")!.InnerHtml.Should().Contain("Overview must be 250 characters or less");
    }
 
-   // --- D-15 override sent on SetProjectDates (shared by both routes) ---
+   // ---------- D-15 override sent on SetProjectDates (Delta C, both routes) ----------
 
    [Theory]
    [InlineData(AcademyTypeAndRoutes.Voluntary)]
@@ -187,7 +211,6 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
       Document.QuerySelector<IHtmlInputElement>("#proposed-decision-date-year")!.Value = decision.Year.ToString();
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      // Redirect only happens if the SetProjectDates stub matched (i.e. override == today was posted).
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-dates");
    }
 
