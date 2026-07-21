@@ -7,6 +7,9 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Primitives;
+using System;
+using System.Globalization;
+using Dfe.PrepareConversions.Utils;
 
 namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
 {
@@ -63,6 +66,13 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.TransferDates
 
          projectResult.Dates.Htb = AdvisoryBoardViewModel.AdvisoryBoardDate.DateInputAsString();
          projectResult.Dates.HasHtbDate = !AdvisoryBoardViewModel.AdvisoryBoardDate.UnknownDate;
+
+         // D-15: compute the SFSO commissioning requested date from the proposed decision date (HTB date).
+         DateTime? proposedDecisionDate = projectResult.Dates.HasHtbDate == true && projectResult.Dates.Htb != null
+            ? DateTime.ParseExact(projectResult.Dates.Htb, "dd/MM/yyyy", CultureInfo.InvariantCulture)
+            : (DateTime?)null;
+         projectResult.Dates.SfsoCommissioningRequestedDate = SfsoCommissioning.CalculateRequestedDate(
+            proposedDecisionDate, DateTime.Today, projectResult.Dates.SfsoCommissioningRequestedDate);
 
          await projectsRepository.UpdateDates(projectResult);
 

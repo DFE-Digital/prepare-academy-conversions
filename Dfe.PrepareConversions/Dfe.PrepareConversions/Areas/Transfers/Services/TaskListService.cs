@@ -45,9 +45,12 @@ namespace Dfe.PrepareTransfers.Web.Services
             indexPage.PublicEqualityDutyImpact = project.Result.PublicEqualityDutyImpact;
             indexPage.PublicEqualityDutyReduceImpactReason = project.Result.PublicEqualityDutyReduceImpactReason;
             indexPage.PublicEqualityDutySectionComplete = project.Result.PublicEqualityDutySectionComplete;
-      }
 
-      private static ProjectStatuses GetAcademyAndTrustInformationStatus(Project project)
+            // SFSO Commissioning
+            indexPage.FinancialHealthAssessmentStatus = GetFinancialHealthAssessmentStatus(project.Result);
+        }
+
+        private static ProjectStatuses GetAcademyAndTrustInformationStatus(Project project)
         {
             TransferAcademyAndTrustInformation academyAndTrustInformation = project.AcademyAndTrustInformation;
 
@@ -76,22 +79,30 @@ namespace Dfe.PrepareTransfers.Web.Services
             return project.Features.IsCompleted == true ? ProjectStatuses.Completed : ProjectStatuses.InProgress;
         }
 
-         private static ProjectStatuses GetPublicSectorEqualityDutyStatus(Project project)
-         {
+        private static ProjectStatuses GetPublicSectorEqualityDutyStatus(Project project)
+        {
             var isValid = PreviewPublicSectorEqualityDutyModel.IsValid(project.PublicEqualityDutyImpact, project.PublicEqualityDutyReduceImpactReason, project.PublicEqualityDutySectionComplete ?? false);
 
             if (isValid)
             {
-               return ProjectStatuses.Completed;
+                return ProjectStatuses.Completed;
             }
 
             if (string.IsNullOrWhiteSpace(project.PublicEqualityDutyImpact))
             {
-               return ProjectStatuses.NotStarted;
+                return ProjectStatuses.NotStarted;
             }
 
             return ProjectStatuses.InProgress;
-         }
+        }
+        
+        private static ProjectStatuses GetFinancialHealthAssessmentStatus(Project project)
+        {
+            // Completed once a proposed decision date (HTB / advisory board date) is set; otherwise Not started.
+            return project.Dates != null && project.Dates.HasHtbDate == true && !string.IsNullOrEmpty(project.Dates.Htb)
+                ? ProjectStatuses.Completed
+                : ProjectStatuses.NotStarted;
+        }
 
         private static ProjectStatuses GetTransferDatesStatus(Project project)
         {

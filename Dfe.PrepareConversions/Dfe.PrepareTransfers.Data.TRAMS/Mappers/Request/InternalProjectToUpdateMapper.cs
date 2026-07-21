@@ -87,6 +87,7 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Mappers.Request
             return new AcademyTransferProjectDates
             {
                 HtbDate = input.Dates.HasHtbDate != false && input.Dates.Htb != null ? DateTime.ParseExact(input.Dates.Htb, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("u") : null,
+                SfsoCommissioningRequestedDate = input.Dates.SfsoCommissioningRequestedDate,
                 HasHtbDate = input.Dates.HasHtbDate,
                 PreviousAdvisoryBoardDate = input.Dates.PreviousAdvisoryBoardDate != null ? DateTime.ParseExact(input.Dates.PreviousAdvisoryBoardDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("u") : null,
                 TargetDateForTransfer = input.Dates.HasTargetDateForTransfer != false && input.Dates.Target != null ? DateTime.ParseExact(input.Dates.Target, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("u") : null,
@@ -99,6 +100,7 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Mappers.Request
             return new AcademyTransferTargetProjectDates
             {
                 HtbDate = input.Dates.HasHtbDate != false && input.Dates.Htb != null ? DateTime.ParseExact(input.Dates.Htb, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("u") : null,
+                SfsoCommissioningRequestedDate = input.Dates.SfsoCommissioningRequestedDate,
                 HasHtbDate = input.Dates.HasHtbDate,
                 PreviousAdvisoryBoardDate = input.Dates.PreviousAdvisoryBoardDate != null ? DateTime.ParseExact(input.Dates.PreviousAdvisoryBoardDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("u") : null,
                 TargetDateForTransfer = input.Dates.HasTargetDateForTransfer != false && input.Dates.Target != null ? DateTime.ParseExact(input.Dates.Target, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("u") : null,
