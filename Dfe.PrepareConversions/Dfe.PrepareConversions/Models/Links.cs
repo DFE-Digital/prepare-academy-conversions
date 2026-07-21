@@ -97,6 +97,11 @@ public static class Links
       public static readonly LinkItem GenerateHTBTemplate = AddLinkItem(page: "/TaskList/DownloadProjectTemplate");
    }
 
+   public static class SignificantChange
+   {
+      public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/SignificantChange/Index");
+   }
+
    public static class FormAMat
    {
       public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/FormAMat/Index");
