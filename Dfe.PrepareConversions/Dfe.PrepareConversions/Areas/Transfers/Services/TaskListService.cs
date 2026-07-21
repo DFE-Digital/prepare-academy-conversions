@@ -98,8 +98,9 @@ namespace Dfe.PrepareTransfers.Web.Services
         
         private static ProjectStatuses GetFinancialHealthAssessmentStatus(Project project)
         {
-            // Completed once a proposed decision date (HTB / advisory board date) is set; otherwise Not started.
-            return project.Dates != null && project.Dates.HasHtbDate == true && !string.IsNullOrEmpty(project.Dates.Htb)
+            // Completed once a proposed decision date (HTB date) is set; otherwise Not started.
+            // Key off Htb only — HasHtbDate comes back null from the API (mirrors GetTransferDatesStatus).
+            return !string.IsNullOrEmpty(project.Dates?.Htb)
                 ? ProjectStatuses.Completed
                 : ProjectStatuses.NotStarted;
         }

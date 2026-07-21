@@ -1,5 +1,3 @@
-
-using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Web.Models;
@@ -54,14 +52,15 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.FinancialHealthAssessment
 
       private void Populate(Project projectResult)
       {
-         ProjectReference = projectResult.Reference;
-         IncomingTrustName = projectResult.IncomingTrustName;
-         IsReadOnly = projectResult.IsReadOnly;
-         RequestedDate = projectResult.Dates?.SfsoCommissioningRequestedDate;
-         ProposedDecisionDate =
-            projectResult.Dates != null && projectResult.Dates.HasHtbDate == true && !string.IsNullOrEmpty(projectResult.Dates.Htb)
-               ? DateTime.ParseExact(projectResult.Dates.Htb, "dd/MM/yyyy", CultureInfo.InvariantCulture)
-               : (DateTime?)null;
+        ProjectReference = projectResult.Reference;
+        IncomingTrustName = projectResult.IncomingTrustName;
+        IsReadOnly = projectResult.IsReadOnly;
+        RequestedDate = projectResult.Dates?.SfsoCommissioningRequestedDate;
+        ProposedDecisionDate =
+            DateTime.TryParseExact(projectResult.Dates?.Htb, new[] { "dd/MM/yyyy", "dd-MM-yyyy" },
+                CultureInfo.InvariantCulture, DateTimeStyles.None, out var htbDate)
+                ? htbDate
+                : (DateTime?)null;
       }
    }
 }
