@@ -204,6 +204,7 @@ public class Startup
       services.AddScoped<KeyStagePerformanceService>();
       services.AddScoped<ITrustsRepository, TrustsRepository>();
       services.AddScoped<IProjectGroupsRepository, ProjectGroupsRepository>();
+      services.AddScoped<ISignificantChangeProjectRepository, SignificantChangeProjectRepository>();
       services.AddScoped<IRoleCapablitiesRepository, RoleCapablitiesRepository>();
       services.AddScoped<IAcademyConversionProjectRepository, AcademyConversionProjectRepository>();
       services.AddScoped<IAcademyConversionAdvisoryBoardDecisionRepository, AcademyConversionAdvisoryBoardDecisionRepository>();
