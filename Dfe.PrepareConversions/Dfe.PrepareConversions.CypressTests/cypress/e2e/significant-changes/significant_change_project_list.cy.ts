@@ -10,9 +10,7 @@ describe('Significant change project list', () => {
     });
 
     it('Should navigate to significant change project list from service navigation', () => {
-        cy.get('.govuk-service-navigation')
-            .contains('a', 'Significant changes')
-            .click();
+        cy.get('.govuk-service-navigation').contains('a', 'Significant changes').click();
 
         cy.checkPath('/significant-change/project-list');
         cy.getByDataCy('select-heading').should('contain.text', 'Significant change projects');
