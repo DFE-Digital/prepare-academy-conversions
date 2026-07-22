@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Dfe.PrepareTransfers.Data;
 using Dfe.PrepareTransfers.Data.Models;
 using Dfe.PrepareTransfers.Web.Models;
@@ -165,32 +166,32 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.TransferDates
 
 
             [Fact]
-            public async void GivenDecisionDateWithin15Days_StampsSfsoRequestedDateToToday()
+            public async Task GivenDecisionDateWithin15Days_StampsSfsoRequestedDateToToday()
             {
-            var within15 = System.DateTime.Today.AddDays(10);
-            _subject.AdvisoryBoardViewModel = new AdvisoryBoardViewModel
-            {
-                AdvisoryBoardDate = new DateViewModel
+                var within15 = System.DateTime.Today.AddDays(10);
+                _subject.AdvisoryBoardViewModel = new AdvisoryBoardViewModel
                 {
-                    Date = new DateInputViewModel
+                    AdvisoryBoardDate = new DateViewModel
                     {
-                        Day = within15.ToString("dd"),
-                        Month = within15.ToString("MM"),
-                        Year = within15.ToString("yyyy")
-                    },
-                    UnknownDate = false
-                }
-            };
+                        Date = new DateInputViewModel
+                        {
+                            Day = within15.ToString("dd"),
+                            Month = within15.ToString("MM"),
+                            Year = within15.ToString("yyyy")
+                        },
+                        UnknownDate = false
+                    }
+                };
 
-            await _subject.OnPostAsync();
+                await _subject.OnPostAsync();
 
-            ProjectRepository.Verify(r => r.UpdateDates(It.Is<Data.Models.Project>(p =>
-                p.Dates.SfsoCommissioningRequestedDate.HasValue &&
-                p.Dates.SfsoCommissioningRequestedDate.Value.Date == System.DateTime.Today)), Times.Once);
+                ProjectRepository.Verify(r => r.UpdateDates(It.Is<Data.Models.Project>(p =>
+                    p.Dates.SfsoCommissioningRequestedDate.HasValue &&
+                    p.Dates.SfsoCommissioningRequestedDate.Value.Date == System.DateTime.Today)), Times.Once);
             }
 
             [Fact]
-            public async void GivenDecisionDateMoreThan15DaysAway_LeavesSfsoRequestedDateNull()
+            public async Task GivenDecisionDateMoreThan15DaysAway_LeavesSfsoRequestedDateNull()
             {
             var beyond15 = System.DateTime.Today.AddDays(30);
             _subject.AdvisoryBoardViewModel = new AdvisoryBoardViewModel
