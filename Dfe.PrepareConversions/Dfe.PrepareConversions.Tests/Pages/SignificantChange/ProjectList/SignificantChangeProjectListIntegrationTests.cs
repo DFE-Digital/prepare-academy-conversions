@@ -72,6 +72,7 @@ public class SignificantChangeProjectListIntegrationTests(IntegrationTestingWebA
 
       await OpenAndConfirmPathAsync("/significant-change/project-list");
 
-      Document.QuerySelector(".govuk-heading-m")?.TextContent.Should().Contain("There are no matching results.");
+      Document.QuerySelector("[data-cy='select-significant-change-no-results']")?.TextContent.Should()
+         .Contain("There are no matching results.");
    }
 }
