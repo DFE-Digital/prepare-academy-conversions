@@ -12,7 +12,7 @@
         <h2 class="govuk-heading-l" test-id="projectCount" data-cy="select-projectlist-filter-count">@(Model.TotalProjects) projects found</h2>
 
         <div if="@Model.ProjectCount == 0">
-            <div class="govuk-heading-m govuk-!-margin-top-3">There are no matching results.</div>
+            <div class="govuk-heading-m govuk-!-margin-top-3" data-cy="select-significant-change-no-results">There are no matching results.</div>
         </div> 
 
         <div if="@Model.ProjectCount > 0">
