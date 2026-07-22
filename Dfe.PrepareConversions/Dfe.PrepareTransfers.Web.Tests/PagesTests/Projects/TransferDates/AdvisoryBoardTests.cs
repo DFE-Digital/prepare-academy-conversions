@@ -162,6 +162,56 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.TransferDates
                 Assert.IsType<PageResult>(result);
                 Assert.Single(_subject.ModelState[$"AdvisoryBoardViewModel.AdvisoryBoardDate.Date.Day"].Errors);
             }
+
+
+            [Fact]
+            public async void GivenDecisionDateWithin15Days_StampsSfsoRequestedDateToToday()
+            {
+            var within15 = System.DateTime.Today.AddDays(10);
+            _subject.AdvisoryBoardViewModel = new AdvisoryBoardViewModel
+            {
+                AdvisoryBoardDate = new DateViewModel
+                {
+                    Date = new DateInputViewModel
+                    {
+                        Day = within15.ToString("dd"),
+                        Month = within15.ToString("MM"),
+                        Year = within15.ToString("yyyy")
+                    },
+                    UnknownDate = false
+                }
+            };
+
+            await _subject.OnPostAsync();
+
+            ProjectRepository.Verify(r => r.UpdateDates(It.Is<Data.Models.Project>(p =>
+                p.Dates.SfsoCommissioningRequestedDate.HasValue &&
+                p.Dates.SfsoCommissioningRequestedDate.Value.Date == System.DateTime.Today)), Times.Once);
+            }
+
+            [Fact]
+            public async void GivenDecisionDateMoreThan15DaysAway_LeavesSfsoRequestedDateNull()
+            {
+            var beyond15 = System.DateTime.Today.AddDays(30);
+            _subject.AdvisoryBoardViewModel = new AdvisoryBoardViewModel
+            {
+                AdvisoryBoardDate = new DateViewModel
+                {
+                    Date = new DateInputViewModel
+                    {
+                        Day = beyond15.ToString("dd"),
+                        Month = beyond15.ToString("MM"),
+                        Year = beyond15.ToString("yyyy")
+                    },
+                    UnknownDate = false
+                }
+            };
+
+            await _subject.OnPostAsync();
+
+            ProjectRepository.Verify(r => r.UpdateDates(It.Is<Data.Models.Project>(p =>
+                p.Dates.SfsoCommissioningRequestedDate == null)), Times.Once);
+            }
         }
     }
 }
