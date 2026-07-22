@@ -1,12 +1,12 @@
 
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
+using System;
+using System.Threading.Tasks;
 using Xunit;
-using TransferDatesModel = Dfe.PrepareTransfers.Data.Models.Projects.TransferDates;
 using FhaIndex = Dfe.PrepareTransfers.Web.Pages.Projects.FinancialHealthAssessment.Index;
+using TransferDatesModel = Dfe.PrepareTransfers.Data.Models.Projects.TransferDates;
 
 namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAssessment
 {
