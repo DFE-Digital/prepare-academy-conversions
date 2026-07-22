@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
 using Xunit;
-using TransferDates = Dfe.PrepareTransfers.Data.Models.Projects.TransferDates;
+using TransferDatesModel = Dfe.PrepareTransfers.Data.Models.Projects.TransferDates;
 using FhaIndex = Dfe.PrepareTransfers.Web.Pages.Projects.FinancialHealthAssessment.Index;
 
 namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAssessment
@@ -23,7 +23,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
       [Fact]
       public async Task OnGet_NoHtbDate_NotRequested()
       {
-         FoundProjectFromRepo.Dates = new TransferDates { HasHtbDate = false };
+         FoundProjectFromRepo.Dates = new TransferDatesModel { HasHtbDate = false };
          var subject = Subject();
 
          await subject.OnGetAsync();
@@ -35,7 +35,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
       [Fact]
       public async Task OnGet_HtbSet_RequestNull_ShowsProposedDate()
       {
-         FoundProjectFromRepo.Dates = new TransferDates
+         FoundProjectFromRepo.Dates = new TransferDatesModel
          {
             Htb = "23/07/2026",
             HasHtbDate = true,
@@ -53,7 +53,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
       [Fact]
       public async Task OnGet_RequestSent_ExposesRequestedDate()
       {
-         FoundProjectFromRepo.Dates = new TransferDates
+         FoundProjectFromRepo.Dates = new TransferDatesModel
          {
             Htb = "23/07/2026",
             HasHtbDate = true,
@@ -70,7 +70,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
       [Fact]
       public async Task OnGet_RequestDateInPast_IsFlagged()
       {
-         FoundProjectFromRepo.Dates = new TransferDates
+         FoundProjectFromRepo.Dates = new TransferDatesModel
          {
             Htb = "23/07/2026",
             HasHtbDate = true,
@@ -87,7 +87,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
       [Fact]
       public async Task OnGet_PrefillsOverview()
       {
-         FoundProjectFromRepo.Dates = new TransferDates { HasHtbDate = false };
+         FoundProjectFromRepo.Dates = new TransferDatesModel { HasHtbDate = false };
          FoundProjectFromRepo.SfsoCommissioningOverview = "existing overview";
          var subject = Subject();
 
@@ -99,7 +99,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
       [Fact]
       public async Task OnPost_ValidOverview_SavesAndRedirectsToTaskList()
       {
-         FoundProjectFromRepo.Dates = new TransferDates { HasHtbDate = false };
+         FoundProjectFromRepo.Dates = new TransferDatesModel { HasHtbDate = false };
          var subject = Subject();
          subject.SfsoCommissioningOverview = new string('a', 250);
 
@@ -113,7 +113,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
       [Fact]
       public async Task OnPost_OverviewTooLong_DoesNotSave()
       {
-         FoundProjectFromRepo.Dates = new TransferDates { HasHtbDate = false };
+         FoundProjectFromRepo.Dates = new TransferDatesModel { HasHtbDate = false };
          var subject = Subject();
          subject.SfsoCommissioningOverview = new string('a', 251);
          subject.ModelState.AddModelError("SfsoCommissioningOverview", "Overview must be 250 characters or less");
