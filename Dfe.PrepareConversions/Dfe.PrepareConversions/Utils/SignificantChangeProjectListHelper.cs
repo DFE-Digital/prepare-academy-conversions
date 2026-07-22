@@ -12,9 +12,11 @@ public static class SignificantChangeProjectListHelper
       {
          Id = significantChangeProject.Id,
          Urn = significantChangeProject.Urn,
+         SchoolName = significantChangeProject.SchoolName,
          Tier = significantChangeProject.Tier,
          TrustName = significantChangeProject.TrustName,
          TrustUkprn = significantChangeProject.TrustUkprn,
+         AssignedUser = significantChangeProject.AssignedUser,
          TypeOfSignificantChange = significantChangeProject.TypeOfSignificantChange,
          Status = MapProjectStatus(significantChangeProject.Status),
       };

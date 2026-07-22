@@ -1,3 +1,4 @@
+using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Tests.Extensions;
 using FluentAssertions;
@@ -15,26 +16,30 @@ public class SignificantChangeProjectListIntegrationTests(IntegrationTestingWebA
    {
       var rowIndex = 0;
       var projects = AddGetSignificantChangeProjects(
+            projectCount: 1,
             postSetup: p =>
             {
                p.Urn = 10000000 + rowIndex;
+               p.SchoolName = $"School {rowIndex}";
                p.TrustName = $"Trust {rowIndex}";
                p.TrustUkprn = $"UKPRN{rowIndex}";
                p.TypeOfSignificantChange = "Route A";
                p.Tier = (byte)(rowIndex + 1);
                p.Status = "pre decision";
+               p.AssignedUser = new User("test-id", "assigned.user@test.local", "Assigned User");
                rowIndex++;
             })
          .ToList();
 
       await OpenAndConfirmPathAsync("/significant-change/project-list");
 
+      Document.QuerySelector("#school-name-0")?.TextContent.Should().Contain(projects[0].SchoolName);
       Document.QuerySelector("#urn-0")?.TextContent.Should().Contain(projects[0].Urn.ToString());
       Document.QuerySelector("#incoming-trust-0")?.TextContent.Should().Contain(projects[0].TrustName);
       Document.QuerySelector("#incoming-trust-0")?.TextContent.Should().Contain(projects[0].TrustUkprn);
       Document.QuerySelector("#tier-0")?.TextContent.Should().Contain(projects[0].Tier.ToString());
       Document.QuerySelector("#type-and-route-0")?.TextContent.Should().Contain(projects[0].TypeOfSignificantChange);
-      Document.QuerySelector("#assigned-to-0")?.TextContent.Should().Contain("Unassigned");
+      Document.QuerySelector("#assigned-to-0")?.TextContent.Should().Contain(projects[0].AssignedUser.FullName);
       Document.QuerySelector($"#project-status-{projects[0].Id}")?.TextContent.Should().Contain("Pre decision");
    }
 
@@ -74,5 +79,21 @@ public class SignificantChangeProjectListIntegrationTests(IntegrationTestingWebA
 
       Document.QuerySelector("[data-cy='select-significant-change-no-results']")?.TextContent.Should()
          .Contain("There are no matching results.");
+   }
+
+   [Fact]
+   public async Task Should_display_unassigned_when_no_assigned_user_exists()
+   {
+      AddGetSignificantChangeProjects(
+         projectCount: 1,
+         postSetup: p =>
+         {
+            p.SchoolName = "School without assignee";
+            p.AssignedUser = null;
+         });
+
+      await OpenAndConfirmPathAsync("/significant-change/project-list");
+
+      Document.QuerySelector("#assigned-to-0")?.TextContent.Should().Contain("Unassigned");
    }
 }
