@@ -162,4 +162,62 @@ public class SignificantChangeProjectRepositoryTests
       response.Body.Paging.RecordCount.Should().Be(0);
       response.Body.Paging.NextPageUrl.Should().BeNull();
    }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task GetProjectById_ShouldBuildPathWithIdAndReturnApiResponse(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 42;
+      HttpClient httpClient = new();
+      string expectedPath = string.Format(PathFor.GetSignificantChangeProjectById, id);
+
+      SignificantChangeProjectResponse expectedBody = new()
+      {
+         Id = id,
+         Urn = 123456,
+         Tier = 2,
+         SchoolName = "Example School",
+         TrustName = "Example Trust",
+         TrustUkprn = "10000001",
+         TypeOfSignificantChange = "Fast track",
+         Status = "Pre decision"
+      };
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Get<SignificantChangeProjectResponse>(httpClient, expectedPath))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, expectedBody));
+
+      ApiResponse<SignificantChangeProjectResponse> response = await sut.GetProjectById(id);
+
+      response.StatusCode.Should().Be(HttpStatusCode.OK);
+      response.Body.Should().BeSameAs(expectedBody);
+
+      httpClientService.Verify(x => x.Get<SignificantChangeProjectResponse>(httpClient, expectedPath), Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task GetProjectById_WhenApiCallFails_ShouldReturnStatusCodeAndNullBody(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 42;
+      string expectedPath = string.Format(PathFor.GetSignificantChangeProjectById, id);
+
+      httpClientService
+         .Setup(x => x.Get<SignificantChangeProjectResponse>(It.IsAny<HttpClient>(), expectedPath))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.NotFound, null));
+
+      ApiResponse<SignificantChangeProjectResponse> response = await sut.GetProjectById(id);
+
+      response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+      response.Body.Should().BeNull();
+   }
 }
