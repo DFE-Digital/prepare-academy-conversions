@@ -35,5 +35,21 @@ public class SignificantChangeProjectListHelperTests
       var viewModel = SignificantChangeProjectListHelper.Build(response);
 
       Assert.Equal("Approved with conditions", viewModel.Status);
+      Assert.Equal("green", viewModel.StatusColour);
+   }
+
+   [Theory]
+   [InlineData("approved", "green")]
+   [InlineData("approved with conditions", "green")]
+   [InlineData("deferred", "orange")]
+   [InlineData("DAO Revoked", "red")]
+   [InlineData("withdrawn", "purple")]
+   [InlineData("", "yellow")]
+   [InlineData("unknown", "yellow")]
+   public void MapProjectStatusColour_Returns_expected_colour(string inputStatus, string expectedColour)
+   {
+      string result = SignificantChangeProjectListHelper.MapProjectStatusColour(inputStatus);
+
+      Assert.Equal(expectedColour, result);
    }
 }

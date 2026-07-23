@@ -6,9 +6,9 @@ namespace Dfe.PrepareConversions.Utils;
 
 public static class SignificantChangeProjectListHelper
 {
-   public static SignificantChangeProjectListViewModel Build(SignificantChangeProjectResponse significantChangeProject)
+   public static SignificantChangeProjectViewBaseModel Build(SignificantChangeProjectResponse significantChangeProject)
    {
-      return new SignificantChangeProjectListViewModel
+      return new SignificantChangeProjectViewBaseModel
       {
          Id = significantChangeProject.Id,
          Urn = significantChangeProject.Urn,
@@ -19,6 +19,7 @@ public static class SignificantChangeProjectListHelper
          AssignedUser = significantChangeProject.AssignedUser,
          TypeOfSignificantChange = significantChangeProject.TypeOfSignificantChange,
          Status = MapProjectStatus(significantChangeProject.Status),
+         StatusColour = MapProjectStatusColour(significantChangeProject.Status)
       };
    }
 
@@ -36,6 +37,29 @@ public static class SignificantChangeProjectListHelper
          "withdrawn" => "Withdrawn",
          "approved with conditions" => "Approved with conditions",
          _ => "Pre decision"
+      };
+   }
+
+   public static string MapProjectStatusColour(string status)
+   {
+      const string green = nameof(green);
+      const string yellow = nameof(yellow);
+      const string orange = nameof(orange);
+      const string red = nameof(red);
+      const string purple = nameof(purple);
+
+      if (string.IsNullOrWhiteSpace(status)) return yellow;
+
+      return status.Trim().ToLowerInvariant() switch
+      {
+         "approved" => green,
+         "approved with conditions" => green,
+         "deferred" => orange,
+         "declined" => red,
+         "daorevoked" => red,
+         "dao revoked" => red,
+         "withdrawn" => purple,
+         _ => yellow
       };
    }
 }
