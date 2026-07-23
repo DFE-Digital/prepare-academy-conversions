@@ -13,7 +13,7 @@ public class IndexModel(ISignificantChangeProjectRepository significantChangePro
 {
    public ISignificantChangeProjectRepository SignificantChangeProjectRepository { get; } = significantChangeProjectRepository;
    protected override ApiV2PagingInfo Paging { get; set; }
-   public List<SignificantChangeProjectListViewModel> Projects { get; private set; } = [];
+   public List<SignificantChangeProjectViewBaseModel> Projects { get; private set; } = [];
 
    public int ProjectCount => Projects.Count;
 
