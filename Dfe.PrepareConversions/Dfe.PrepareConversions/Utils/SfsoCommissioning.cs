@@ -8,9 +8,10 @@ public static class SfsoCommissioning
    public const int DaysBeforeProposedDecisionDate = 15;
 
    /// <summary>
-   /// Scenario 1: if the proposed decision date is >= 15 days away (or not set) there is no
-   /// request yet (null). Once it is < 15 days away the FHA is requested; keep the original
-   /// request date if we already have one, otherwise stamp today.
+   /// FHA request date = later of ( today , proposed decision date − 15 days ):
+   ///  - proposed decision date not set        -> null (nothing to send).
+   ///  - proposed decision date > 15 days away  -> the future scheduled send date (proposed − 15).
+   ///  - proposed decision date &lt;= 15 days away -> due now: keep the original sent date if we have one, else today.
    /// </summary>
    public static DateTime? CalculateRequestedDate(DateTime? proposedDecisionDate, DateTime today, DateTime? existingRequestedDate)
    {
@@ -19,12 +20,15 @@ public static class SfsoCommissioning
          return null;
       }
 
-      bool withinWindow = (proposedDecisionDate.Value.Date - today.Date).TotalDays <= DaysBeforeProposedDecisionDate;
-      if (!withinWindow)
+      DateTime scheduledSendDate = proposedDecisionDate.Value.Date.AddDays(-DaysBeforeProposedDecisionDate);
+
+      // More than 15 days away -> store the future scheduled send date (previously returned null).
+      if (scheduledSendDate > today.Date)
       {
-         return null;
+         return scheduledSendDate;
       }
 
+      // 15 days or fewer away -> request is due now; keep the original sent date if present, else today.
       return existingRequestedDate ?? today.Date;
    }
 }

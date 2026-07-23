@@ -191,7 +191,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.TransferDates
             }
 
             [Fact]
-            public async Task GivenDecisionDateMoreThan15DaysAway_LeavesSfsoRequestedDateNull()
+            public async Task GivenDecisionDateMoreThan15DaysAway_StampsScheduledSendDate()
             {
             var beyond15 = System.DateTime.Today.AddDays(30);
             _subject.AdvisoryBoardViewModel = new AdvisoryBoardViewModel
@@ -211,7 +211,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.TransferDates
             await _subject.OnPostAsync();
 
             ProjectRepository.Verify(r => r.UpdateDates(It.Is<Data.Models.Project>(p =>
-                p.Dates.SfsoCommissioningRequestedDate == null)), Times.Once);
+                p.Dates.SfsoCommissioningRequestedDate.Value.Date == beyond15.AddDays(-15).Date)), Times.Once);
             }
         }
     }

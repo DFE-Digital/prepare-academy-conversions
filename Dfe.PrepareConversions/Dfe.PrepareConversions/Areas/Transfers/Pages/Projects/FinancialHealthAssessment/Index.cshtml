@@ -45,31 +45,16 @@
                 The system will automatically request a Financial Health Assessment to be provided 15 days from the proposed decision date.
             </div>
         }
-        else if (!Model.RequestSent)
+        else if (Model.RequestWillBeSent)
         {
             <p class="govuk-body" data-test="fha-requested-date">
-                The proposed decision date is on the <strong>@Model.ProposedDecisionDate.Value.ToOrdinalDateString()</strong>.
-            </p>
-            <div class="govuk-inset-text">
-                The system will automatically request a Financial Health Assessment to be provided 15 days from the proposed decision date.
-            </div>
-        }
-        else if (Model.RequestDateInPast)
-        {
-            <p class="govuk-body">
-                Please ensure a Proposed Decision Date is entered for your project. The system will automatically request a
-                Financial Health Assessment to be provided to support this decision.
-            </p>
-            <h2 class="govuk-heading-m">Financial Health Assessment requested date</h2>
-            <p class="govuk-body" data-test="fha-requested-date">
-                This was requested on <strong>@Model.RequestedDate.Value.ToOrdinalDateString()</strong>.
+                The Financial Health Assessment request will be sent on <strong>@Model.RequestedDate.Value.ToOrdinalDateString()</strong>.
             </p>
         }
-        else
+        else if (Model.RequestSent)
         {
-            <h2 class="govuk-heading-m">Financial Health Assessment requested date</h2>
             <p class="govuk-body" data-test="fha-requested-date">
-                The FHA request/commission has been sent on @Model.RequestedDate.Value.ToOrdinalDateString().
+                The Financial Health Assessment request has been sent on <strong>@Model.RequestedDate.Value.ToOrdinalDateString()</strong>.
             </p>
         }
 

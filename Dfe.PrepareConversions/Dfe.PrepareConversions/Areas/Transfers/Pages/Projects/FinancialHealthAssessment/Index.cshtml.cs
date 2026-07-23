@@ -22,10 +22,13 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.FinancialHealthAssessment
 
       public DateTime? RequestedDate { get; set; }
       public DateTime? ProposedDecisionDate { get; set; }
-
       public bool HasProposedDecisionDate => ProposedDecisionDate.HasValue;
-      public bool RequestSent => RequestedDate.HasValue;
-      public bool RequestDateInPast => RequestedDate.HasValue && RequestedDate.Value.Date < DateTime.Today;
+      
+      // Stored request date is in the future -> scheduled but not yet sent.
+      public bool RequestWillBeSent => RequestedDate.HasValue && RequestedDate.Value.Date > DateTime.Today;
+      
+      // Stored request date is today or past -> already sent.
+      public bool RequestSent => RequestedDate.HasValue && RequestedDate.Value.Date <= DateTime.Today;
 
       public async Task<IActionResult> OnGetAsync()
       {

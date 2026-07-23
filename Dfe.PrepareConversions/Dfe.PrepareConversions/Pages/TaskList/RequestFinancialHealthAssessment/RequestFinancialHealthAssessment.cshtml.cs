@@ -32,10 +32,11 @@ public class RequestFinancialHealthAssessmentModel : BaseAcademyConversionProjec
    // Scenario 1 / 7: no proposed decision date has been entered yet.
    public bool HasProposedDecisionDate => Project?.HeadTeacherBoardDate.HasValue == true;
 
-   // Scenario 6: proposed decision date was <= 15 days out when entered, so the request has gone out (date stored).
-   public bool RequestSent => RequestedDate.HasValue;
-
-   public bool RequestDateInPast => RequestedDate.HasValue && RequestedDate.Value.Date < DateTime.Today;
+   // Stored request date is in the future -> scheduled but not yet sent.
+   public bool RequestWillBeSent => RequestedDate.HasValue && RequestedDate.Value.Date > DateTime.Today;
+   
+   // Stored request date is today or past -> already sent.
+   public bool RequestSent => RequestedDate.HasValue && RequestedDate.Value.Date <= DateTime.Today;
 
    // Scenario 8: once a decision is recorded the API marks the project read-only -> lock this task.
    public bool IsReadOnly => Project?.IsReadOnly == true;

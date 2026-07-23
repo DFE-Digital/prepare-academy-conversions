@@ -17,9 +17,9 @@ public class SfsoCommissioningTests
    }
 
    [Fact]
-   public void Returns_null_when_decision_date_is_more_than_15_days_away()
+   public void Returns_scheduled_send_date_when_decision_date_is_more_than_15_days_away()
    {
-      SfsoCommissioning.CalculateRequestedDate(Today.AddDays(16), Today, null).Should().BeNull();
+      SfsoCommissioning.CalculateRequestedDate(Today.AddDays(16), Today, null).Should().Be(Today.AddDays(1));
    }
 
    [Fact]
@@ -43,9 +43,9 @@ public class SfsoCommissioningTests
    }
 
    [Fact]
-   public void Clears_existing_request_date_when_decision_date_moves_out_of_window()
+   public void Returns_scheduled_send_date_ignoring_existing_when_decision_date_is_more_than_15_days_away()
    {
       var existing = Today.AddDays(-3);
-      SfsoCommissioning.CalculateRequestedDate(Today.AddDays(30), Today, existing).Should().BeNull();
+      SfsoCommissioning.CalculateRequestedDate(Today.AddDays(30), Today, Today.AddDays(-3)).Should().Be(Today.AddDays(15));
    }
 }
