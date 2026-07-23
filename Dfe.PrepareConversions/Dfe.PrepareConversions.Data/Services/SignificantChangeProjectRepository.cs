@@ -23,7 +23,7 @@ public class SignificantChangeProjectRepository(
             PathFor.CreateSignificantChangeProject,
             command);
 
-      if (result.Success is false)
+      if (!result.Success)
       {
          throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
       }
