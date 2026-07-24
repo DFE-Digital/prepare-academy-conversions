@@ -2,7 +2,7 @@
 
 namespace Dfe.PrepareConversions.ViewModels;
 
-public class SignificantChangeProjectListViewModel
+public class SignificantChangeProjectViewBaseModel
 {
    public int Id { get; set; }
    public int Urn { get; set; }
@@ -13,4 +13,5 @@ public class SignificantChangeProjectListViewModel
    public User AssignedUser { get; set; }
    public required string TypeOfSignificantChange { get; set; }
    public required string Status { get; set; }
+   public required string StatusColour { get; set; }
 }
