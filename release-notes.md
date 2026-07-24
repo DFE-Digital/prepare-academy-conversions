@@ -5,13 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). To see an example from a mature product in the program [see the Complete products changelog that follows the same methodology](https://github.com/DFE-Digital/dfe-complete-conversions-transfers-and-changes/blob/main/CHANGELOG.md).
 
 
-## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-04-29.1112...main)
+## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-07-24.1136...main)
 
 NOTE: remember to update unreleased link when making a new release
 
-### Changed
-- [278729](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/278729) - update transfers to fetch MP name and party from PersonsAPI
 
+---
+
+## [1.29.2][1.29.2] - 2026-07-24
+
+### Changed
+- - [289902](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/289902) - Vulnerable and outdated components: Prepare
+    
+---
+
+## [1.29.1][1.29.1] - 2026-07-22
+
+### Changed
+- [278729](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/278729) - Transfer - MP Name & Political Party
+- [279101](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/279101) - MP Name - Copy Change's - Conversion  Journey
+  
 ---
 
 ## [1.29.0][1.29.0] - 2026-04-29
@@ -384,6 +397,10 @@ ___
 # 1.0.0 - Initial release of Prepare Conversions
 Initial Release of the Prepare-conversions system into production.
 
+[1.29.2]:
+  https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-07-24.1136
+[1.29.1]:
+  https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-07-22.1132
 [1.29.0]:
   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-04-29.1112
 [1.28.1]:
