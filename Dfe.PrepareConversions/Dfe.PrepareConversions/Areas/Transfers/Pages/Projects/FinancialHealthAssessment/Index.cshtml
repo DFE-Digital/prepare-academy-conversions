@@ -1,0 +1,90 @@
+
+@page "/transfers/project/{urn}/financial-health-assessment"
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Dfe.PrepareTransfers.Web.Pages.Projects.FinancialHealthAssessment.Index
+@{
+    ViewBag.Title = (!ViewData.ModelState.IsValid ? "Error: " : "") + "Financial Health Assessment";
+    Layout = "_Layout";
+}
+
+@section BeforeMain
+{
+    <a class="govuk-back-link" asp-page="/Projects/Index" asp-route-urn="@Model.Urn">Back</a>
+}
+
+<div asp-gds-validation-summary></div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        @if (!Model.HasProposedDecisionDate)
+        {
+            <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
+                 data-module="govuk-notification-banner" data-test="fha-no-decision-date">
+                <div class="govuk-notification-banner__header">
+                    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">Important</h2>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-notification-banner__heading">
+                        In order to request a financial health assessment, you will need to
+                        <a class="govuk-notification-banner__link" asp-page="/Projects/TransferDates/Index" asp-route-urn="@Model.Urn">Enter a new proposed decision date</a>.
+                    </p>
+                </div>
+            </div>
+        }
+
+        <span class="govuk-caption-l">@Model.IncomingTrustName</span>
+        <h1 class="govuk-heading-l">Financial Health Assessment</h1>
+
+        @if (!Model.HasProposedDecisionDate)
+        {
+            <p class="govuk-body" data-test="fha-not-requested">
+                This has not yet been requested, as you have not entered a proposed decision date.
+            </p>
+            <div class="govuk-inset-text">
+                The system will automatically request a Financial Health Assessment to be provided 15 days from the proposed decision date.
+            </div>
+        }
+        else if (Model.RequestWillBeSent)
+        {
+            <p class="govuk-body" data-test="fha-requested-date">
+                The Financial Health Assessment request will be sent on <strong>@Model.RequestedDate.Value.ToOrdinalDateString()</strong>.
+            </p>
+        }
+        else if (Model.RequestSent)
+        {
+            <p class="govuk-body" data-test="fha-requested-date">
+                The Financial Health Assessment request has been sent on <strong>@Model.RequestedDate.Value.ToOrdinalDateString()</strong>.
+            </p>
+        }
+
+        @if (Model.IsReadOnly == true)
+        {
+            <h2 class="govuk-heading-m">Overview of your commission</h2>
+            <p class="govuk-body" data-test="fha-overview-readonly">
+                @(string.IsNullOrWhiteSpace(Model.SfsoCommissioningOverview) ? "Not provided" : Model.SfsoCommissioningOverview)
+            </p>
+        }
+        else
+        {
+            <form method="post" novalidate="">
+                <input type="hidden" asp-for="@Model.Urn" />
+                <div class="govuk-form-group @(ViewData.ModelState.IsValid ? "" : "govuk-form-group--error")">
+                    <h2 class="govuk-label-wrapper">
+                        <label class="govuk-label govuk-label--m" asp-for="SfsoCommissioningOverview">
+                            Can you provide an overview of your commission?
+                        </label>
+                    </h2>
+                    <div id="overview-hint" class="govuk-hint">
+                        This is optional. Overview must be 250 characters or less. You might want to include any case complexities that funding delivery need to be aware of and include teams and colleagues that are already involved.
+                    </div>
+                    <p asp-gds-validation-for="SfsoCommissioningOverview"></p>
+                    <textarea asp-for="SfsoCommissioningOverview" class="govuk-textarea" rows="5" aria-describedby="overview-hint" data-test="sfso-commissioning-overview"></textarea>
+                </div>
+                <button class="govuk-button" data-module="govuk-button" type="submit" data-cy="select-common-submitbutton">
+                    Save and return
+                </button>
+            </form>
+        }
+    </div>
+</div>

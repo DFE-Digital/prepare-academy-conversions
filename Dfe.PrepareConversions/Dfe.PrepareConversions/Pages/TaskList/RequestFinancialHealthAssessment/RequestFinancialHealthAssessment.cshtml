@@ -52,34 +52,16 @@
             The system will automatically request a Financial Health Assessment to be provided 15 days from the proposed decision date.
          </div>
       }
-      else if (!Model.RequestSent)
+      else if (Model.RequestWillBeSent)
       {
-         @* Scenario 5: proposed decision date > 15 days out (nothing requested yet). *@
          <p class="govuk-body" data-test="fha-requested-date">
-            The proposed decision date is on the <strong>@Model.Project.HeadTeacherBoardDate.Value.ToOrdinalDateString()</strong>.
-         </p>
-         <div class="govuk-inset-text">
-            The system will automatically request a Financial Health Assessment to be provided 15 days from the proposed decision date.
-         </div>
-      }
-      else if (Model.RequestDateInPast)
-      {
-         @* Completed and the request date is in the past. *@
-         <p class="govuk-body">
-            Please ensure a Proposed Decision Date is entered for your project. The system will automatically request a
-            Financial Health Assessment to be provided to support this decision.
-         </p>
-         <h2 class="govuk-heading-m">Financial Health Assessment requested date</h2>
-         <p class="govuk-body" data-test="fha-requested-date">
-            This was requested on <strong>@Model.RequestedDate.Value.ToOrdinalDateString()</strong>.
+            The Financial Health Assessment request will be sent on <strong>@Model.RequestedDate.Value.ToOrdinalDateString()</strong>.
          </p>
       }
-      else
+      else if (Model.RequestSent)
       {
-         @* Requested today (proposed decision date <= 15 days out). Final Figma pending. *@
-         <h2 class="govuk-heading-m">Financial Health Assessment requested date</h2>
          <p class="govuk-body" data-test="fha-requested-date">
-            The FHA request/commission has been sent on @Model.RequestedDate.Value.ToOrdinalDateString().
+            The Financial Health Assessment request has been sent on <strong>@Model.RequestedDate.Value.ToOrdinalDateString()</strong>.
          </p>
       }
 

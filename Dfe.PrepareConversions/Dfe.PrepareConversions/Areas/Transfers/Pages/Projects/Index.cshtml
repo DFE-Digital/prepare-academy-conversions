@@ -187,6 +187,16 @@
                     }
                 </ul>
             </li>
+            <li>
+                <h3 class="moj-task-list__section govuk-!-margin-top-8">Financials</h3>
+                <ul class="moj-task-list__items govuk-!-padding-left-0 govuk-!-margin-bottom-6">
+                    <li class="moj-task-list__item">
+                        <span class="moj-task-list__task-name">
+                            <a class="govuk-link" aria-describedby="financial-health-assessment" asp-page="/Projects/FinancialHealthAssessment/Index" asp-route-urn="@Model.Urn" data-test="transfer-financial-health-assessment">Financial Health Assessment</a>
+                        </span><projectstatus id="financial-health-assessment" status="@Model.FinancialHealthAssessmentStatus"></projectstatus>
+                    </li>
+                </ul>
+            </li>
         </ol>
     </div>
 </div>

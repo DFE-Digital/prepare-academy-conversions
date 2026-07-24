@@ -16,8 +16,6 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
 {
    public RequestFinancialHealthAssessmentIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory) { }
 
-   // ---------- Task-list row (Deltas A + F) ----------
-
    [Theory]
    [InlineData(AcademyTypeAndRoutes.Voluntary)]
    [InlineData(AcademyTypeAndRoutes.Sponsored)]
@@ -64,8 +62,6 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
       Document.QuerySelector("[data-test='fha-not-requested-hint']").Should().BeNull();
    }
 
-   // ---------- FHA page messaging (Delta D) ----------
-
    [Fact]
    public async Task Page_shows_scenario_7_banner_when_no_proposed_decision_date()
    {
@@ -78,21 +74,21 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
    }
 
    [Fact]
-   public async Task Page_shows_scenario_5_proposed_decision_date_when_more_than_15_days_out()
+   public async Task Page_shows_will_be_sent_when_requested_date_in_future()
    {
       AcademyConversionProject project = AddGetProject(p =>
       {
          p.HeadTeacherBoardDate = DateTime.Today.AddDays(30);
-         p.SfsoCommissioningRequestedDate = null;
+         p.SfsoCommissioningRequestedDate = DateTime.Today.AddDays(15); // API-derived: proposed − 15, in the future
       });
 
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/request-financial-health-assessment");
 
-      Document.QuerySelector("[data-test='fha-requested-date']")!.TextContent.Should().Contain("proposed decision date is on");
+      Document.QuerySelector("[data-test='fha-requested-date']")!.TextContent.Should().Contain("will be sent");
    }
 
    [Fact]
-   public async Task Page_shows_requested_in_past_with_ordinal_date()
+   public async Task Page_shows_has_been_sent_with_ordinal_date_when_requested_in_past()
    {
       AcademyConversionProject project = AddGetProject(p =>
       {
@@ -103,7 +99,7 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/request-financial-health-assessment");
 
       string text = Document.QuerySelector("[data-test='fha-requested-date']")!.TextContent;
-      text.Should().Contain("This was requested on");
+      text.Should().Contain("has been sent");
       text.Should().Contain("23rd July 2020");
    }
 
@@ -150,8 +146,6 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
       Document.QuerySelector("[data-test='fha-requested-date']").Should().NotBeNull();
    }
 
-   // ---------- Overview save + validation (Scenarios 3 & 4) ----------
-
    [Fact]
    public async Task Saving_overview_of_250_or_fewer_chars_redirects_to_task_list()
    {
@@ -184,52 +178,16 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
       Document.QuerySelector(".govuk-error-summary")!.InnerHtml.Should().Contain("Overview must be 250 characters or less");
    }
 
-   // ---------- D-15 override sent on SetProjectDates (Delta C, both routes) ----------
-
    [Theory]
    [InlineData(AcademyTypeAndRoutes.Voluntary)]
    [InlineData(AcademyTypeAndRoutes.Sponsored)]
-   public async Task Entering_decision_date_15_or_fewer_days_out_sends_today_as_override(string route)
-   {
-      DateTime decision = DateTime.Today.AddDays(10);
-      AcademyConversionProject project = AddGetProject(p =>
-      {
-         p.AcademyTypeAndRoute = route;
-         p.SfsoCommissioningRequestedDate = null;
-      });
-      _factory.AddApiCallWithBodyDelegate(
-         string.Format(PathFor.SetProjectDates, project.Id),
-         x => x?.BodyAsString != null
-              && JsonConvert.DeserializeObject<SetProjectDatesModel>(x.BodyAsString)!
-                    .SfsoCommissioningRequestedDate?.Date == DateTime.Today,
-         project,
-         HttpMethod.Put);
-
-      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/proposed-decision-date");
-      Document.QuerySelector<IHtmlInputElement>("#proposed-decision-date-day")!.Value = decision.Day.ToString();
-      Document.QuerySelector<IHtmlInputElement>("#proposed-decision-date-month")!.Value = decision.Month.ToString();
-      Document.QuerySelector<IHtmlInputElement>("#proposed-decision-date-year")!.Value = decision.Year.ToString();
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
-
-      Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-dates");
-   }
-
-   [Theory]
-   [InlineData(AcademyTypeAndRoutes.Voluntary)]
-   [InlineData(AcademyTypeAndRoutes.Sponsored)]
-   public async Task Entering_decision_date_more_than_15_days_out_sends_null_override(string route)
+   public async Task Entering_a_proposed_decision_date_navigates_to_confirm_project_dates(string route)
    {
       DateTime decision = DateTime.Today.AddDays(30);
-      AcademyConversionProject project = AddGetProject(p =>
-      {
-         p.AcademyTypeAndRoute = route;
-         p.SfsoCommissioningRequestedDate = null;
-      });
+      AcademyConversionProject project = AddGetProject(p => p.AcademyTypeAndRoute = route);
       _factory.AddApiCallWithBodyDelegate(
          string.Format(PathFor.SetProjectDates, project.Id),
-         x => x?.BodyAsString != null
-              && JsonConvert.DeserializeObject<SetProjectDatesModel>(x.BodyAsString)!
-                    .SfsoCommissioningRequestedDate == null,
+         _ => true,
          project,
          HttpMethod.Put);
 
@@ -241,4 +199,5 @@ public class RequestFinancialHealthAssessmentIntegrationTests : BaseIntegrationT
 
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-project-dates");
    }
+   
 }
