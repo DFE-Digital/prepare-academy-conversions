@@ -48,7 +48,7 @@ namespace Dfe.PrepareConversions.Services.DocumentGenerator
             schoolOverviewTable.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Is the school linked to a diocese?", document.IsSchoolLinkedToADiocese));
             schoolOverviewTable.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Distance from the converting school to the trust or other schools in the trust", $"{document.DistanceFromSchoolToTrustHeadquarters} {document.DistanceFromSchoolToTrustHeadquartersAdditionalInformation}"));
             schoolOverviewTable.Add(DocumentGeneratorStringSanitiser.CreateTextElements("Parliamentary constituency", document.ParliamentaryConstituency));
-            schoolOverviewTable.Add(DocumentGeneratorStringSanitiser.CreateTextElements("MP name and political party", document.MemberOfParliamentNameAndParty));
+            schoolOverviewTable.Add(DocumentGeneratorStringSanitiser.CreateTextElements("MP (Party)", document.MemberOfParliamentNameAndParty));
 
             build.AddTable(schoolOverviewTable);
          });

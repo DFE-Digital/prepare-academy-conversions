@@ -31,7 +31,7 @@
     <govuk-summary-list-row name="diocesan-multi-academy-trust" label="Is the school linked to a diocese?" key-width="@kw" asp-for="IsSchoolLinkedToADiocese"/>
     <govuk-summary-list-row name="distance-to-trust-headquarters" label="Distance from the converting school to the trust or other schools in the trust" key-width="@kw" value="@distance" additional-text="@Model.DistanceFromSchoolToTrustHeadquartersAdditionalInformation" asp-page="@Links.SchoolOverviewSection.DistanceFromTrustHeadquarters.Page" asp-route-id="@Model.Id" hidden-text="distance to trust headquarters" asp-read-only="@Model.IsReadOnly" />
     <govuk-summary-list-row name="parliamentary-constituency" label="Parliamentary constituency" key-width="@kw" asp-for="ParliamentaryConstituency"/>
-    <govuk-summary-list-row name="member-of-parliament-name-and-party" label="MP name and political party" asp-for="MemberOfParliamentNameAndParty" />
+    <govuk-summary-list-row name="member-of-parliament-name-and-party" label="MP (Party)" asp-for="MemberOfParliamentNameAndParty" />
 </dl>
 
 @{
