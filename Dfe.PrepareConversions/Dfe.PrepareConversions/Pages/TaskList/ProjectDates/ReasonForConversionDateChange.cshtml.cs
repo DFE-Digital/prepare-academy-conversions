@@ -148,10 +148,14 @@ public class ReasonForConversionDateChangePageModel : BaseAcademyConversionProje
          return await OnGetAsync(id);
       }
 
-      var projectDatesModel = new SetProjectDatesModel(id, Project.HeadTeacherBoardDate, Project.PreviousHeadTeacherBoardDate, ConversionDate, Project.ProjectDatesSectionComplete, User.Identity.Name, MapSelectedReasons())
-      {
-         SfsoCommissioningRequestedDate = Project.SfsoCommissioningRequestedDate
-      };
+      var projectDatesModel = new SetProjectDatesModel(
+         id, 
+         Project.HeadTeacherBoardDate, 
+         Project.PreviousHeadTeacherBoardDate, 
+         ConversionDate, 
+         Project.ProjectDatesSectionComplete, 
+         User.Identity.Name, 
+         MapSelectedReasons());
 
       await _repository.SetProjectDates(id, projectDatesModel);
 

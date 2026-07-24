@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using Dfe.PrepareConversions.Utils;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.ProjectDates;
 
@@ -64,11 +63,7 @@ public class AdvisoryBoardDateModel : BaseAcademyConversionProjectPageModel, IDa
          Project.PreviousHeadTeacherBoardDate, 
          Project.ProposedConversionDate, 
          Project.ProjectDatesSectionComplete
-         )
-      {
-         SfsoCommissioningRequestedDate = SfsoCommissioning.CalculateRequestedDate(
-            AdvisoryBoardDate, DateTime.Today, Project.SfsoCommissioningRequestedDate)
-      };
+         );
 
       await _repository.SetProjectDates(id, projectDatesModel);
 

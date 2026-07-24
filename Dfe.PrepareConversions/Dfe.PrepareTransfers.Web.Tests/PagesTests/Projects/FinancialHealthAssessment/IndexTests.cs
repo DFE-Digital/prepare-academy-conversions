@@ -33,25 +33,25 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
       }
 
       [Fact]
-      public async Task OnGet_HtbSet_RequestNull_ShowsProposedDate()
+      public async Task OnGet_RequestDateInFuture_RequestWillBeSent()
       {
          FoundProjectFromRepo.Dates = new TransferDatesModel
          {
             Htb = "23/07/2026",
             HasHtbDate = true,
-            SfsoCommissioningRequestedDate = null
+            SfsoCommissioningRequestedDate = DateTime.Today.AddDays(5)
          };
          var subject = Subject();
 
          await subject.OnGetAsync();
 
          Assert.True(subject.HasProposedDecisionDate);
+         Assert.True(subject.RequestWillBeSent);
          Assert.False(subject.RequestSent);
-         Assert.Equal(new DateTime(2026, 7, 23), subject.ProposedDecisionDate);
       }
 
       [Fact]
-      public async Task OnGet_RequestSent_ExposesRequestedDate()
+      public async Task OnGet_RequestDateToday_RequestSent()
       {
          FoundProjectFromRepo.Dates = new TransferDatesModel
          {
@@ -64,11 +64,12 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
          await subject.OnGetAsync();
 
          Assert.True(subject.RequestSent);
+         Assert.False(subject.RequestWillBeSent);
          Assert.Equal(DateTime.Today, subject.RequestedDate);
       }
 
       [Fact]
-      public async Task OnGet_RequestDateInPast_IsFlagged()
+      public async Task OnGet_RequestDateInPast_RequestSent()
       {
          FoundProjectFromRepo.Dates = new TransferDatesModel
          {
@@ -81,7 +82,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
          await subject.OnGetAsync();
 
          Assert.True(subject.RequestSent);
-         Assert.True(subject.RequestDateInPast);
+         Assert.False(subject.RequestWillBeSent);
       }
 
       [Fact]

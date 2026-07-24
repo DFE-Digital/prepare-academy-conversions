@@ -212,7 +212,6 @@ public class ApiClient : IApiClient
          projectDatesSectionComplete = updatedProjectDates.ProjectDatesSectionComplete ?? null,
          changedBy = updatedProjectDates.ChangedBy ?? null,
          reasonsChanged = updatedProjectDates.ReasonsChanged ?? null,
-         sfsoCommissioningRequestedDate = updatedProjectDates.SfsoCommissioningRequestedDate ?? null,
       };
 
       var formattedString = string.Format(PathFor.SetProjectDates, id);
