@@ -21,10 +21,11 @@ public class SignificantChangeProjectAssignmentIntegrationTests : BaseIntegratio
    [Fact]
    public async Task Should_display_significant_change_project_assignment_page()
    {
+      User assignedUser = (await _factory.UserRepository.GetAllUsers()).First();
       SignificantChangeProjectResponse project = BuildProject(
          id: 201,
          schoolName: "Significant change school 201",
-         assignedUser: new User(Guid.NewGuid().ToString(), "assigned.user@test.local", "Assigned User"));
+         assignedUser: assignedUser);
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
