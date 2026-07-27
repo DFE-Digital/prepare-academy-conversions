@@ -32,4 +32,5 @@ RUN dotnet publish "./Dfe.PrepareConversions.csproj" -c $BUILD_CONFIGURATION -o 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+RUN find /app/wwwroot -type f -name 'package-lock.json' -delete
 ENTRYPOINT ["dotnet", "Dfe.PrepareConversions.dll"]
