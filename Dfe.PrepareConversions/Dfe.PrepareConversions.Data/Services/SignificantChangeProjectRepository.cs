@@ -73,4 +73,21 @@ public class SignificantChangeProjectRepository(
 
       return new ApiResponse<SignificantChangeProjectResponse>(result.StatusCode, result.Body);
    }
+
+   public async Task SetAssignedUser(int id, SetAssignedUserSignificantChangeCommand updatedAssignedUser)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeAssignedUser, id);
+
+      var result = await httpClientService.Put<SetAssignedUserSignificantChangeCommand, object>(
+            httpClient,
+            path,
+            updatedAssignedUser);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
 }

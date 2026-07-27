@@ -23,6 +23,8 @@
          {
                <strong data-id="assigned-user">@Model.AssignedUser.FullName</strong>
          }
+         <a class="govuk-link govuk-!-padding-left-50" asp-page="@Links.SignificantChange.SignificantChangeProjectAssignment.Page" asp-route-id="@Model.Id">Change</a>
+
    </p>
    <p class="govuk-!-margin-top-0  govuk-!-margin-bottom-5">
       <strong class="govuk-tag govuk-tag--@Model.StatusColour" id="project-status-@Model.Id">@Model.Status</strong>
