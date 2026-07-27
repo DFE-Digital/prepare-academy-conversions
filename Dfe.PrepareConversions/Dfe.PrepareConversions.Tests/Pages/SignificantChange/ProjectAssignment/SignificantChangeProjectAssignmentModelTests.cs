@@ -2,6 +2,7 @@ using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
+using Dfe.PrepareConversions.Models;
 using Dfe.PrepareConversions.Pages.SignificantChange.ProjectAssignment;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
@@ -27,12 +28,7 @@ public class SignificantChangeProjectAssignmentModelTests
    {
       const int id = 100;
       User assignedUser = new(Guid.NewGuid().ToString(), "assigned.user@test.local", "Assigned User");
-      SignificantChangeProjectResponse project = new()
-      {
-         Id = id,
-         SchoolName = "Test school",
-         AssignedUser = assignedUser
-      };
+      SignificantChangeProjectResponse project = BuildProjectResponse(id, assignedUser, "Test school");
 
       Mock<ISignificantChangeProjectRepository> projectRepository = new();
       projectRepository
@@ -73,7 +69,7 @@ public class SignificantChangeProjectAssignmentModelTests
       Mock<ISignificantChangeProjectRepository> projectRepository = new();
       projectRepository
          .Setup(x => x.GetProjectById(id))
-         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, new SignificantChangeProjectResponse { Id = id }));
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, BuildProjectResponse(id)));
       projectRepository
          .Setup(x => x.SetAssignedUser(id, It.IsAny<SetAssignedUserSignificantChangeCommand>()))
          .Returns(Task.CompletedTask);
@@ -111,7 +107,7 @@ public class SignificantChangeProjectAssignmentModelTests
       Mock<ISignificantChangeProjectRepository> projectRepository = new();
       projectRepository
          .Setup(x => x.GetProjectById(id))
-         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, new SignificantChangeProjectResponse { Id = id }));
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, BuildProjectResponse(id)));
       projectRepository
          .Setup(x => x.SetAssignedUser(id, It.IsAny<SetAssignedUserSignificantChangeCommand>()))
          .Returns(Task.CompletedTask);
@@ -147,7 +143,7 @@ public class SignificantChangeProjectAssignmentModelTests
       Mock<ISignificantChangeProjectRepository> projectRepository = new();
       projectRepository
          .Setup(x => x.GetProjectById(id))
-         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, new SignificantChangeProjectResponse { Id = id }));
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, BuildProjectResponse(id)));
 
       Mock<IUserRepository> userRepository = new();
       IndexModel sut = BuildModel(userRepository.Object, projectRepository.Object);
@@ -170,7 +166,7 @@ public class SignificantChangeProjectAssignmentModelTests
       Mock<ISignificantChangeProjectRepository> projectRepository = new();
       projectRepository
          .Setup(x => x.GetProjectById(id))
-         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, new SignificantChangeProjectResponse { Id = id }));
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, BuildProjectResponse(id)));
 
       Mock<IUserRepository> userRepository = new();
       IndexModel sut = BuildModel(userRepository.Object, projectRepository.Object, "?return=/SignificantChange/TaskList/Index&fragment=project-details");
@@ -204,6 +200,22 @@ public class SignificantChangeProjectAssignmentModelTests
       {
          PageContext = pageContext,
          TempData = tempData
+      };
+   }
+
+   private static SignificantChangeProjectResponse BuildProjectResponse(int id, User assignedUser = null, string schoolName = "Test school")
+   {
+      return new SignificantChangeProjectResponse
+      {
+         Id = id,
+         Urn = 10000000 + id,
+         SchoolName = schoolName,
+         Tier = 1,
+         TrustName = "Example Trust",
+         TrustUkprn = "12345678",
+         AssignedUser = assignedUser,
+         TypeOfSignificantChange = "Route A",
+         Status = "Pre decision"
       };
    }
 }
