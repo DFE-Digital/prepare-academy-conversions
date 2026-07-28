@@ -28,6 +28,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.CookiePolicy;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -304,6 +305,22 @@ public class Startup
 
       app.UseStaticFiles();
       app.UseRouting();
+
+      bool showSignificantChangesNavigationItem = Configuration.GetValue<bool>("FeatureManagement:ShowSignificantChangesNavigationItem");
+      if (!showSignificantChangesNavigationItem)
+      {
+         app.Use(async (context, next) =>
+         {
+            if (context.Request.Path.StartsWithSegments("/significant-change"))
+            {
+               context.Features.Get<IStatusCodePagesFeature>()?.Enabled = false;
+               context.Response.StatusCode = StatusCodes.Status404NotFound;
+               return;
+            }
+
+            await next();
+         });
+      }
 
       app.UseSession();
       app.UseAuthentication();
