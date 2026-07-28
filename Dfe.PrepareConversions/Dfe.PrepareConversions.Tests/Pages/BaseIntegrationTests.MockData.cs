@@ -4,6 +4,7 @@ using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.AcademisationApplication;
 using Dfe.PrepareConversions.Data.Models.KeyStagePerformance;
+using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Data.Models.UserRole;
 using Dfe.PrepareConversions.Data.Services;
 using Dfe.PrepareConversions.Tests.Customisations;
@@ -57,6 +58,41 @@ public abstract partial class BaseIntegrationTests
       };
 
       _factory.AddPostWithJsonRequest(PathFor.GetAllProjectsV2, searchModel, response);
+      return projects;
+   }
+
+   protected IEnumerable<SignificantChangeProjectResponse> AddGetSignificantChangeProjects(
+      Action<SignificantChangeProjectResponse> postSetup = null,
+      int? recordCount = null,
+      GetSignificantProjectsQuery searchModel = null,
+      string nextPageUrl = null,
+      int projectCount = 3)
+   {
+      List<SignificantChangeProjectResponse> projects = _fixture
+         .Build<SignificantChangeProjectResponse>()
+         .With(x => x.Status, "Pre decision")
+         .CreateMany(projectCount)
+         .Select(x =>
+         {
+            postSetup?.Invoke(x);
+            return x;
+         })
+         .ToList();
+
+      searchModel ??= new GetSignificantProjectsQuery(1, 10);
+
+      ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>> response = new()
+      {
+         Data = projects,
+         Paging = new ApiV2PagingInfo
+         {
+            RecordCount = recordCount ?? projects.Count,
+            Page = searchModel.Page,
+            NextPageUrl = nextPageUrl
+         }
+      };
+
+      _factory.AddPostWithJsonRequest(PathFor.GetAllSignificantChangeProjects, searchModel, response);
       return projects;
    }
 

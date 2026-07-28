@@ -21,6 +21,8 @@
     var isFormAMatPage = Context.Request.Path.Value.Contains("/form-a-mat/project-list") || Context.Request.Path.Value.Contains("/schools-in-this-mat/");
     var isGroupsPage = Context.Request.Path.Value.Contains("/groups");
     var isTransfersPage = Context.Request.Path.Value.ToLower().Contains("/transfers");
+    var isSignificantChangesPage = Context.Request.Path.Value.ToLower().Contains("/significant-change");
+    var isConversionsPage = !isFormAMatPage && !isGroupsPage && !isTransfersPage && !isSignificantChangesPage;
 }
 
 <!DOCTYPE html>
@@ -115,9 +117,9 @@
                         Menu
                     </button>
                     <ul class="govuk-service-navigation__list" id="navigation">
-                        <li class="govuk-service-navigation__item @(!isFormAMatPage && !isGroupsPage && !isTransfersPage ? "govuk-service-navigation__item--active" : "")">
-                            <a class="govuk-service-navigation__link" asp-page="@Links.ProjectList.Index.Page" aria-current="@(!isFormAMatPage && !isGroupsPage && !isTransfersPage ? "true" : null)">
-                                @if (!isFormAMatPage && !isGroupsPage && !isTransfersPage)
+                        <li class="govuk-service-navigation__item @(isConversionsPage ? "govuk-service-navigation__item--active" : "")">
+                            <a class="govuk-service-navigation__link" asp-page="@Links.ProjectList.Index.Page" aria-current="@(isConversionsPage ? "true" : null)">
+                                @if (isConversionsPage)
                                 {
                                     <strong class="govuk-service-navigation__active-fallback">Conversions</strong>
                                 }
@@ -136,6 +138,18 @@
                                 else
                                 {
                                     @Html.Raw("Transfers")
+                                }
+                            </a>
+                        </li>
+                        <li class="govuk-service-navigation__item @(isSignificantChangesPage ? "govuk-service-navigation__item--active" : "")">
+                            <a class="govuk-service-navigation__link" asp-page="@Links.SignificantChange.ListView.Page" aria-current="@(isSignificantChangesPage ? "true" : null)">
+                                @if (isSignificantChangesPage)
+                                {
+                                    <strong class="govuk-service-navigation__active-fallback">Significant changes</strong>
+                                }
+                                else
+                                {
+                                    @Html.Raw("Significant changes")
                                 }
                             </a>
                         </li>
