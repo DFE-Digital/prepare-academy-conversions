@@ -60,4 +60,17 @@ public class SignificantChangeProjectRepository(
             }
          });
    }
+
+   public async Task<ApiResponse<SignificantChangeProjectResponse>> GetProjectById(int id)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.GetSignificantChangeProjectById, id);
+
+      ApiResponse<SignificantChangeProjectResponse> result =
+         await httpClientService.Get<SignificantChangeProjectResponse>(
+            httpClient,
+            path);
+
+      return new ApiResponse<SignificantChangeProjectResponse>(result.StatusCode, result.Body);
+   }
 }

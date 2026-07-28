@@ -3,7 +3,7 @@
 
 @{
     var index = 0;
-    var link = @Links.SignificantChange.Index.Page;
+    var link = @Links.SignificantChange.SignificantChangeTaskList.Page;
 
     foreach (var project in Model)
     {
@@ -40,9 +40,7 @@
                 </div>
                 <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
                     <span if="project.Status.IsEmpty()" class="empty">Unconfirmed</span>
-                    <strong if="project.Status.IsPresent()" class="govuk-tag govuk-tag--@project.StatusColour"" id="project-status-@project.Id">@project.Status.ToFirstUpper()</strong>
-                     <p class="govuk-!-margin-top-0  govuk-!-margin-bottom-5">
-   </p>
+                    <strong if="project.Status.IsPresent()" class="govuk-tag govuk-tag--@project.StatusColour" id="project-status-@project.Id">@project.Status.ToFirstUpper()</strong>
                </div>
             </td>
         </tr>
