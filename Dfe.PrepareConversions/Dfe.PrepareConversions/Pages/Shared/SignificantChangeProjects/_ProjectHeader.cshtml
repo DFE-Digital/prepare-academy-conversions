@@ -1,0 +1,35 @@
+@model SignificantChangeProjectViewBaseModel
+
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-full">
+        <span class="govuk-caption-xl" data-cy=".govuk-caption-xl">URN: @Model.Urn</span>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-2" data-cy="select-heading">
+         @Model.SchoolName
+      </h1>
+</div>
+
+<div class="govuk-grid-column-full">
+   <p class="govuk-body govuk-!-margin-bottom-1">
+      Route: @Model.TypeOfSignificantChange
+   </p>
+   <p class="govuk-body govuk-!-margin-bottom-5">
+      Project owner:
+
+         @if (Model.AssignedUser == null || string.IsNullOrWhiteSpace(Model?.AssignedUser.FullName))
+         {
+               <span data-id="assigned-user" class="empty">Empty</span>
+         }
+         else
+         {
+               <strong data-id="assigned-user">@Model.AssignedUser.FullName</strong>
+         }
+   </p>
+   <p class="govuk-!-margin-top-0  govuk-!-margin-bottom-5">
+      <strong class="govuk-tag govuk-tag--@Model.StatusColour" id="project-status-@Model.Id">@Model.Status</strong>
+   </p>
+</div
+
+   <div class="govuk-grid-column-full">
+      <partial name="Shared/SignificantChangeProjects/_SubMenu" model="@Model"/>
+   </div>
+</div>

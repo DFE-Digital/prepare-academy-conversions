@@ -1,0 +1,15 @@
+﻿@page "/significant-change/task-list/{id:int}"
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.IndexModel
+@{
+    ViewData["Title"] = "Significant Change Project Task List";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.ListView.Page" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
+}
+
+<partial name="Shared/SignificantChangeProjects/_ProjectHeader" model="Model.Project" />

@@ -33,6 +33,10 @@ describe('Significant change project list', () => {
                     cy.getById('tier-0').should('contain.text', 'Tier:');
                     cy.getById('type-and-route-0').should('contain.text', 'Route:');
                     cy.getById('assigned-to-0').should('contain.text', 'Unassigned');
+                    cy.get('strong[id^="project-status-"]')
+                        .first()
+                        .invoke('attr', 'class')
+                        .should('match', /govuk-tag--(green|yellow|orange|red|purple)/);
                 } else {
                     cy.contains('There are no matching results.').should('be.visible');
                 }
