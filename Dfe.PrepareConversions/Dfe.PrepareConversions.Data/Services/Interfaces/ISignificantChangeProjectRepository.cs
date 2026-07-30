@@ -11,4 +11,7 @@ public interface ISignificantChangeProjectRepository
    Task<ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>> GetAllProjects(int page, int count);
 
    Task<ApiResponse<SignificantChangeProjectResponse>> GetProjectById(int id);
+
+   Task SetAssignedUser(int id, SetAssignedUserSignificantChangeCommand updatedAssignedUser);
+
 }
