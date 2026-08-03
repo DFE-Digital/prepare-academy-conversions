@@ -98,24 +98,21 @@ public class SignificantChangeProjectListIntegrationTests(IntegrationTestingWebA
       Document.QuerySelector("#assigned-to-0")?.TextContent.Should().Contain("Unassigned");
    }
 
-   [Fact]
+      [Fact]
    public async Task Should_display_filter_panel_with_options_from_the_api()
    {
-      AddGetSignificantChangeProjects(projectCount: 1);
       AddGetSignificantChangeFilterParameters();
+      AddGetSignificantChangeProjects(projectCount: 1);
 
       await OpenAndConfirmPathAsync("/significant-change/project-list");
 
       Document.QuerySelector("[data-cy='select-projectlist-filter-apply']").Should().NotBeNull();
 
-      // Status renders the API's Display but posts its Value — the whole point of the paired shape.
-      var status = Document.QuerySelector("#filter-status-PreDecision") as IHtmlInputElement;
+      var status = Document.QuerySelector("#filter-status-predecision") as IHtmlInputElement;
       status.Should().NotBeNull();
       status!.Value.Should().Be("PreDecision");
-      Document.QuerySelector("label[for='filter-status-predecision']")?.TextContent.Trim()
-         .Should().Be("Pre decision");
+      Document.QuerySelector("label[for='filter-status-predecision']")?.TextContent.Trim().Should().Be("Pre decision");
 
-      // Tier label comes from the API too — no "Tier " concatenation left in the view.
       Document.QuerySelector("label[for='filter-tier-1']")?.TextContent.Trim().Should().Be("Tier 1");
 
       Document.QuerySelector("#filter-assignee-not-assigned").Should().NotBeNull();
