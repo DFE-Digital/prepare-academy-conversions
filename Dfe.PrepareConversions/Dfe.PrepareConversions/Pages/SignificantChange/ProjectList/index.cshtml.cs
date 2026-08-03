@@ -43,7 +43,7 @@ public class IndexModel(ISignificantChangeProjectRepository significantChangePro
          Filters.Keyword,
          Filters.SelectedStatuses,
          Filters.SelectedAssignees,
-         Filters.SelectedTiersAsBytes,
+         Filters.GetSelectedTiersAsBytes(),
          Filters.SelectedRoutes);
 
       Paging = response.Body?.Paging ?? new ApiV2PagingInfo { Page = CurrentPage, RecordCount = 0, NextPageUrl = null };

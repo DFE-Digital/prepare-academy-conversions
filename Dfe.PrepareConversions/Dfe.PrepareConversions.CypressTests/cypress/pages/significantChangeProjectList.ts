@@ -101,7 +101,7 @@ class SignificantChangeProjectListPage extends BasePage {
             .invoke('text')
             .then((countText) => {
                 const match = countText.match(/\d+/);
-                return match ? parseInt(match[0], 10) : 0;
+                return match ? Number.parseInt(match[0], 10) : 0;
             });
     }
 }

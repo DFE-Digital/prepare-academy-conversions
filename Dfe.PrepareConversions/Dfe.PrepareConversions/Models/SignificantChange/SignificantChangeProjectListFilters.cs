@@ -44,7 +44,7 @@ public class SignificantChangeProjectListFilters
    [BindProperty]
    public string[] SelectedRoutes { get; set; } = Array.Empty<string>();
 
-   public bool IsVisible => string.IsNullOrWhiteSpace(Keyword) is false ||
+   public bool IsVisible => !string.IsNullOrWhiteSpace(Keyword) ||
                             SelectedStatuses.Length > 0 ||
                             SelectedAssignees.Length > 0 ||
                             SelectedTiers.Length > 0 ||
@@ -55,12 +55,14 @@ public class SignificantChangeProjectListFilters
    ///    byte at the repository boundary. Unparseable values are dropped so a hand-edited query string
    ///    cannot throw.
    /// </summary>
-   public byte[] SelectedTiersAsBytes =>
-      SelectedTiers
+   public byte[] GetSelectedTiersAsBytes()
+   {
+      return SelectedTiers
          .Select(tier => byte.TryParse(tier, out byte parsed) ? (byte?)parsed : null)
          .Where(tier => tier.HasValue)
          .Select(tier => tier!.Value)
          .ToArray();
+   }
 
    /// <summary>
    ///    Resolves a posted Value back to its Display, for rendering the selected-filter tags.
@@ -68,7 +70,7 @@ public class SignificantChangeProjectListFilters
    ///    project got reassigned while their filter was still held in TempData. Showing the raw value
    ///    beats showing a blank tag the user can't identify or remove with confidence.
    /// </summary>
-   public string DisplayFor(List<FilterValueDisplay> available, string value) =>
+   public static string DisplayFor(List<FilterValueDisplay> available, string value) =>
       available.FirstOrDefault(option => option.Value == value)?.Display ?? value;
 
    public SignificantChangeProjectListFilters PersistUsing(IDictionary<string, object?> store)
@@ -138,13 +140,13 @@ public class SignificantChangeProjectListFilters
 
       string[] GetFromQuery(string key)
       {
-         return query.ContainsKey(key) ? query[key]! : Array.Empty<string>();
+         return query.TryGetValue(key, out StringValues values) ? values.ToArray() : Array.Empty<string>();
       }
    }
 
    private string[] Get(string key, bool persist = false)
    {
-      if (_store.ContainsKey(key) is false) return Array.Empty<string>();
+      if (!_store.ContainsKey(key)) return Array.Empty<string>();
 
       string[]? value = (string[]?)_store[key];
       if (persist) Cache(key, value);
@@ -154,7 +156,7 @@ public class SignificantChangeProjectListFilters
 
    private string[] GetAndRemove(string key, string[]? value, bool persist = false)
    {
-      if (_store.ContainsKey(key) is false) return Array.Empty<string>();
+      if (!_store.ContainsKey(key)) return Array.Empty<string>();
 
       string[]? currentValues = (string[]?)_store[key];
 

@@ -10,22 +10,28 @@ namespace Dfe.PrepareConversions.Tests.Models.SignificantChange;
 
 public class SignificantChangeProjectListFiltersTests
 {
+   private static readonly string[] KeywordBishop = ["Bishop"];
+   private static readonly string[] StatusPreDecision = ["PreDecision"];
+   private static readonly string[] StatusPreDecisionAndApproved = ["PreDecision", "Approved"];
+   private static readonly string[] RouteOther = ["Other"];
+   private static readonly string[] Tier2 = ["2"];
+
    [Fact]
    public void PersistUsing_RehydratesFiltersFromStore()
    {
       SignificantChangeProjectListFilters filters = new();
       Dictionary<string, object> store = new()
       {
-         { SignificantChangeProjectListFilters.SigChangeFilterKeyword, new[] { "Bishop" } },
-         { SignificantChangeProjectListFilters.SigChangeFilterStatuses, new[] { "PreDecision" } },
-         { SignificantChangeProjectListFilters.SigChangeFilterTiers, new[] { "2" } }
+         { SignificantChangeProjectListFilters.SigChangeFilterKeyword, KeywordBishop },
+         { SignificantChangeProjectListFilters.SigChangeFilterStatuses, StatusPreDecision },
+         { SignificantChangeProjectListFilters.SigChangeFilterTiers, Tier2 }
       };
 
       filters.PersistUsing(store);
 
       filters.Keyword.Should().Be("Bishop");
-      filters.SelectedStatuses.Should().BeEquivalentTo(["PreDecision"]);
-      filters.SelectedTiers.Should().BeEquivalentTo(["2"]);
+      filters.SelectedStatuses.Should().BeEquivalentTo(StatusPreDecision);
+      filters.SelectedTiers.Should().BeEquivalentTo(Tier2);
       filters.IsVisible.Should().BeTrue();
    }
 
@@ -106,7 +112,7 @@ public class SignificantChangeProjectListFiltersTests
       // A hand-edited query string must not throw — 999 overflows a byte, "notanumber" isn't one.
       SignificantChangeProjectListFilters filters = new() { SelectedTiers = selected };
 
-      filters.SelectedTiersAsBytes.Should().BeEquivalentTo(expected);
+      filters.GetSelectedTiersAsBytes().Should().BeEquivalentTo(expected);
    }
 
    [Fact]
@@ -117,9 +123,21 @@ public class SignificantChangeProjectListFiltersTests
          AvailableStatuses = [new FilterValueDisplay { Value = "PreDecision", Display = "Pre decision" }]
       };
 
-      filters.DisplayFor(filters.AvailableStatuses, "PreDecision").Should().Be("Pre decision");
+      SignificantChangeProjectListFilters.DisplayFor(filters.AvailableStatuses, "PreDecision").Should().Be("Pre decision");
 
       // Stale TempData: the option is no longer offered, so show the raw value rather than a blank tag.
-      filters.DisplayFor(filters.AvailableStatuses, "Withdrawn").Should().Be("Withdrawn");
+      SignificantChangeProjectListFilters.DisplayFor(filters.AvailableStatuses, "Withdrawn").Should().Be("Withdrawn");
+   }
+
+   [Theory]
+   [InlineData(new[] { "1", "3" }, new byte[] { 1, 3 })]
+   [InlineData(new[] { "1", "notanumber", "3" }, new byte[] { 1, 3 })]
+   [InlineData(new[] { "999" }, new byte[] { })]
+   public void GetSelectedTiersAsBytes_DropsAnythingUnparseable(string[] selected, byte[] expected)
+   {
+      // A hand-edited query string must not throw — 999 overflows a byte, "notanumber" isn't one.
+      SignificantChangeProjectListFilters filters = new() { SelectedTiers = selected };
+
+      filters.GetSelectedTiersAsBytes().Should().BeEquivalentTo(expected);
    }
 }
