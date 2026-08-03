@@ -1,4 +1,3 @@
-
 @using Dfe.PrepareConversions.Utils
 @model Dfe.PrepareConversions.Models.SignificantChange.SignificantChangeProjectListFilters
 <div class="moj-filter">
@@ -28,7 +27,7 @@
                 <ul class="moj-filter-tags">
                     @foreach (var assignee in Model.SelectedAssignees)
                     {
-                        <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedAssignees=@assignee"><span class="govuk-visually-hidden">Remove this filter</span> @Model.DisplayFor(Model.AvailableAssignees, assignee).Stub()</a></li>
+                        <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedAssignees=@assignee"><span class="govuk-visually-hidden">Remove this filter</span> @Model.DisplayFor(Model.AvailableAssignees, assignee)</a></li>
                     }
                 </ul>
             }
@@ -37,10 +36,9 @@
             {
                 <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Project status</h3>
                 <ul class="moj-filter-tags">
-                    @* Tags hold posted Values; look the Display up so the tag reads the same as the checkbox. *@
                     @foreach (var status in Model.SelectedStatuses)
                     {
-                        <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedStatuses=@status"><span class="govuk-visually-hidden">Remove this filter</span> @Model.DisplayFor(Model.AvailableStatuses, status).Stub()</a></li>
+                        <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedStatuses=@status"><span class="govuk-visually-hidden">Remove this filter</span> @Model.DisplayFor(Model.AvailableStatuses, status)</a></li>
                     }
                 </ul>
             }
@@ -51,7 +49,7 @@
                 <ul class="moj-filter-tags">
                     @foreach (var tier in Model.SelectedTiers)
                     {
-                        <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedTiers=@tier"><span class="govuk-visually-hidden">Remove this filter</span> @Model.DisplayFor(Model.AvailableTiers, tier).Stub()</a></li>
+                        <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedTiers=@tier"><span class="govuk-visually-hidden">Remove this filter</span> @Model.DisplayFor(Model.AvailableTiers, tier)</a></li>
                     }
                 </ul>
             }
@@ -62,7 +60,7 @@
                 <ul class="moj-filter-tags">
                     @foreach (var route in Model.SelectedRoutes)
                     {
-                        <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedRoutes=@route"><span class="govuk-visually-hidden">Remove this filter</span> @Model.DisplayFor(Model.AvailableRoutes, route).Stub()</a></li>
+                        <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedRoutes=@route"><span class="govuk-visually-hidden">Remove this filter</span> @Model.DisplayFor(Model.AvailableRoutes, route)</a></li>
                     }
                 </ul>
             }

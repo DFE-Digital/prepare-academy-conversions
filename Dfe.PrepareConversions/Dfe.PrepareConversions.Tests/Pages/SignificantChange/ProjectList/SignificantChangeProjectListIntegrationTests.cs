@@ -112,7 +112,7 @@ public class SignificantChangeProjectListIntegrationTests(IntegrationTestingWebA
       var status = Document.QuerySelector("#filter-status-PreDecision") as IHtmlInputElement;
       status.Should().NotBeNull();
       status!.Value.Should().Be("PreDecision");
-      Document.QuerySelector("label[for='filter-status-PreDecision']")?.TextContent.Trim()
+      Document.QuerySelector("label[for='filter-status-predecision']")?.TextContent.Trim()
          .Should().Be("Pre decision");
 
       // Tier label comes from the API too — no "Tier " concatenation left in the view.
