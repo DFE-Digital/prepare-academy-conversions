@@ -84,7 +84,8 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
                { "AcademisationApi:BaseUrl", _mockApiServer.Url },
                { "AzureAd:AllowedRoles", string.Empty }, // Do not restrict access for integration test
                { "ServiceLink:TransfersUrl", "https://an-external-service.com/" },
-               { "EnableDistributedCache", "false" }
+               { "EnableDistributedCache", "false" },
+               { "FeatureManagement:ShowFHAPage", "true" }
             })
             .AddEnvironmentVariables();
       });
