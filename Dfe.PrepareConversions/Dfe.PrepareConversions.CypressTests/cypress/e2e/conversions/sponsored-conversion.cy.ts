@@ -295,5 +295,6 @@ describe('Sponsored conversion journey', {}, () => {
 
     it('Check accessibility across pages', () => {
         cy.checkAccessibilityAcrossPages();
+        cy.url().should('match', /^https?:\/\//);
     });
 });

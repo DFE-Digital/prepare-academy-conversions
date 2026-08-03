@@ -23,4 +23,7 @@ public interface ISignificantChangeProjectRepository
    Task<ApiResponse<SignificantChangeProjectResponse>> GetProjectById(int id);
 
    Task<ApiResponse<SignificantChangeFilterParameters>> GetFilterParameters();
+
+   Task SetAssignedUser(int id, SetAssignedUserSignificantChangeCommand updatedAssignedUser);
+
 }

@@ -38,6 +38,7 @@ public class PartOfPfiSchemeIntegrationTests : BaseIntegrationTests
 
    private async Task NavigateToPfiFromSchoolOverview(AcademyConversionProject project)
    {
+      AddGetEstablishmentDto(project.Urn.ToString());
       await OpenAndConfirmPathAsync($"/task-list/{project.Id}/school-overview");
       await NavigateDataTestAsync("change-part-of-pfi");
       Document.Url.Should().BeUrl($"/task-list/{project.Id}/confirm-school-overview/part-of-pfi-scheme");

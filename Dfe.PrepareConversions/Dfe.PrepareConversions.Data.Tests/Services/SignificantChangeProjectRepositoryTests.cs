@@ -7,8 +7,8 @@ using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Data.Tests.AutoFixture;
 using FluentAssertions;
 using Moq;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -219,6 +219,52 @@ public class SignificantChangeProjectRepositoryTests
 
       response.StatusCode.Should().Be(HttpStatusCode.NotFound);
       response.Body.Should().BeNull();
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetAssignedUser_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 42;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeAssignedUser, id);
+      HttpClient httpClient = new();
+      SetAssignedUserSignificantChangeCommand command = new(Guid.NewGuid(), "Delivery Officer", "delivery.officer@test.local");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetAssignedUserSignificantChangeCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetAssignedUser(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetAssignedUserSignificantChangeCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetAssignedUser_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 42;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeAssignedUser, id);
+      SetAssignedUserSignificantChangeCommand command = new(Guid.NewGuid(), "Delivery Officer", "delivery.officer@test.local");
+
+      httpClientService
+         .Setup(x => x.Put<SetAssignedUserSignificantChangeCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetAssignedUser(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }
 
    [Theory]
