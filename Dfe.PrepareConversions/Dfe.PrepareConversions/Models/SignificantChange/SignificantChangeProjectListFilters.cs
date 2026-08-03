@@ -140,15 +140,17 @@ public class SignificantChangeProjectListFilters
 
       string[] GetFromQuery(string key)
       {
-         return query.TryGetValue(key, out StringValues values) ? values.ToArray() : Array.Empty<string>();
+         return query.TryGetValue(key, out StringValues values)
+            ? values.OfType<string>().ToArray()
+            : Array.Empty<string>();
       }
    }
 
-   private string[] Get(string key, bool persist = false)
+     private string[] Get(string key, bool persist = false)
    {
-      if (!_store.ContainsKey(key)) return Array.Empty<string>();
+      if (_store.TryGetValue(key, out object? stored) is false) return Array.Empty<string>();
 
-      string[]? value = (string[]?)_store[key];
+      string[]? value = (string[]?)stored;
       if (persist) Cache(key, value);
 
       return value ?? Array.Empty<string>();
@@ -156,9 +158,9 @@ public class SignificantChangeProjectListFilters
 
    private string[] GetAndRemove(string key, string[]? value, bool persist = false)
    {
-      if (!_store.ContainsKey(key)) return Array.Empty<string>();
+      if (_store.TryGetValue(key, out object? stored) is false) return Array.Empty<string>();
 
-      string[]? currentValues = (string[]?)_store[key];
+      string[]? currentValues = (string[]?)stored;
 
       if (value is not null && value.Length > 0 && currentValues is not null)
       {
