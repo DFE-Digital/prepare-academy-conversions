@@ -1,3 +1,4 @@
+using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Tests.Extensions;
@@ -95,5 +96,79 @@ public class SignificantChangeProjectListIntegrationTests(IntegrationTestingWebA
       await OpenAndConfirmPathAsync("/significant-change/project-list");
 
       Document.QuerySelector("#assigned-to-0")?.TextContent.Should().Contain("Unassigned");
+   }
+
+   [Fact]
+   public async Task Should_display_filter_panel_with_options_from_the_api()
+   {
+      AddGetSignificantChangeProjects(projectCount: 1);
+      AddGetSignificantChangeFilterParameters();
+
+      await OpenAndConfirmPathAsync("/significant-change/project-list");
+
+      Document.QuerySelector("[data-cy='select-projectlist-filter-apply']").Should().NotBeNull();
+
+      // Status renders the API's Display but posts its Value — the whole point of the paired shape.
+      var status = Document.QuerySelector("#filter-status-PreDecision") as IHtmlInputElement;
+      status.Should().NotBeNull();
+      status!.Value.Should().Be("PreDecision");
+      Document.QuerySelector("label[for='filter-status-PreDecision']")?.TextContent.Trim()
+         .Should().Be("Pre decision");
+
+      // Tier label comes from the API too — no "Tier " concatenation left in the view.
+      Document.QuerySelector("label[for='filter-tier-1']")?.TextContent.Trim().Should().Be("Tier 1");
+
+      Document.QuerySelector("#filter-assignee-not-assigned").Should().NotBeNull();
+   }
+
+   [Fact]
+   public async Task Should_send_selected_filters_to_the_search_endpoint()
+   {
+      AddGetSignificantChangeFilterParameters();
+
+      // Stub the filtered request specifically — if the page sends anything else no stub matches,
+      // so this asserts the exact query the page builds.
+      AddGetSignificantChangeProjects(
+         projectCount: 1,
+         searchModel: new GetSignificantProjectsQuery(
+            1, 10, "Example", ["PreDecision"], ["Bob"], [1], ["Change of age range"]));
+
+      await OpenAndConfirmPathAsync(
+         "/significant-change/project-list?Keyword=Example&SelectedStatuses=PreDecision" +
+         "&SelectedAssignees=Bob&SelectedTiers=1&SelectedRoutes=Change%20of%20age%20range");
+
+      Document.QuerySelector("[data-cy='select-projectlist-filter-banner']").Should().NotBeNull();
+      Document.QuerySelector("[data-cy='select-projectlist-filter-count']")?.TextContent
+         .Should().Contain("1 projects found");
+   }
+
+   [Fact]
+   public async Task Should_render_selected_filter_tags_using_display_names()
+   {
+      AddGetSignificantChangeFilterParameters();
+      AddGetSignificantChangeProjects(
+         projectCount: 1,
+         searchModel: new GetSignificantProjectsQuery(1, 10, null, ["PreDecision"], null, [1], null));
+
+      await OpenAndConfirmPathAsync(
+         "/significant-change/project-list?SelectedStatuses=PreDecision&SelectedTiers=1");
+
+      var tags = Document.QuerySelectorAll(".moj-filter__tag").Select(tag => tag.TextContent).ToList();
+
+      // Tags must read like the checkboxes, not like the posted values.
+      tags.Should().Contain(tag => tag.Contains("Pre decision"));
+      tags.Should().Contain(tag => tag.Contains("Tier 1"));
+   }
+
+   [Fact]
+   public async Task Should_clear_all_filters_when_clear_is_used()
+   {
+      AddGetSignificantChangeFilterParameters();
+      AddGetSignificantChangeProjects(projectCount: 1);
+
+      await OpenAndConfirmPathAsync("/significant-change/project-list?clear");
+
+      Document.QuerySelector("[data-cy='select-projectlist-filter-banner']").Should().BeNull();
+      Document.QuerySelectorAll(".moj-filter__tag").Should().BeEmpty();
    }
 }

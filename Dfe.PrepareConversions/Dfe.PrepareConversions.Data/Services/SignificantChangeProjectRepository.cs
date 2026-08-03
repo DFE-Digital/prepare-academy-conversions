@@ -1,3 +1,5 @@
+#nullable enable
+
 using Dfe.PrepareConversions.Data.Exceptions;
 using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
@@ -31,10 +33,29 @@ public class SignificantChangeProjectRepository(
       return new ApiResponse<SignificantChangeProjectResponse>(result.StatusCode, result.Body);
    }
 
-   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>> GetAllProjects(int page, int count)
+   public async Task<ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>> GetAllProjects(
+      int page,
+      int count,
+      string? keyword = null,
+      string[]? statuses = null,
+      string[]? assignees = null,
+      byte[]? tiers = null,
+      string[]? routes = null)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
-      GetSignificantProjectsQuery query = new(page, count);
+
+      // Empty collections must normalise to null, not to empty lists. GetSignificantProjectsQuery is
+      // a record and record equality on List<T> members is reference equality, so an empty list would
+      // break both the Moq assertions in SignificantChangeProjectRepositoryTests and the
+      // serialised-request-body matching the integration test stubs rely on.
+      GetSignificantProjectsQuery query = new(
+         page,
+         count,
+         string.IsNullOrWhiteSpace(keyword) ? null : keyword.Trim(),
+         statuses?.Length > 0 ? statuses.ToList() : null,
+         assignees?.Length > 0 ? assignees.ToList() : null,
+         tiers?.Length > 0 ? tiers.ToList() : null,
+         routes?.Length > 0 ? routes.ToList() : null);
 
       ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>> result =
          await httpClientService.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
@@ -59,6 +80,27 @@ public class SignificantChangeProjectRepository(
                NextPageUrl = null
             }
          });
+   }
+
+      public async Task<ApiResponse<SignificantChangeFilterParameters>> GetFilterParameters()
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+
+      ApiResponse<SignificantChangeFilterParameters> result =
+         await httpClientService.Get<SignificantChangeFilterParameters>(
+            httpClient,
+            PathFor.GetSignificantChangeFilterParameters);
+
+      // Fail soft, matching GetAllProjects above. An empty filter panel is a far better failure than
+      // a 500 on the whole list page — and this endpoint may not be deployed yet.
+      if (result.Success && result.Body is not null)
+      {
+         return new ApiResponse<SignificantChangeFilterParameters>(result.StatusCode, result.Body);
+      }
+
+      return new ApiResponse<SignificantChangeFilterParameters>(
+         result.StatusCode,
+         new SignificantChangeFilterParameters());
    }
 
    public async Task<ApiResponse<SignificantChangeProjectResponse>> GetProjectById(int id)

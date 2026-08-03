@@ -45,4 +45,5 @@ public class PathFor
    public static string CreateSignificantChangeProject => "/significant-change";
    public static string GetSignificantChangeProjectById => "/significant-change/{0}";
    public static string GetAllSignificantChangeProjects => "/significant-change/search";
+   public static string GetSignificantChangeFilterParameters => "/significant-change/filter-parameters";
 }
