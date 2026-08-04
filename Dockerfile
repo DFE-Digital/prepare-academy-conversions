@@ -46,6 +46,9 @@ LABEL org.opencontainers.image.source="https://github.com/DFE-Digital/prepare-ac
 COPY --from=build /app .
 COPY --from=assets /app/ ./wwwroot/
 
+# Remove package-lock.json so it isn't served as a static file in the running container
+RUN find ./wwwroot -type f -name 'package-lock.json' -delete
+
 # Set permissions and user
 RUN chmod +x ./docker-entrypoint.sh
 USER $APP_UID
