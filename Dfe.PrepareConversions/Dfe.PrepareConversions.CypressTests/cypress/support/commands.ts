@@ -181,7 +181,7 @@ Cypress.Commands.add(
         cy.env([AcademisationApiKey, CypressApiKey]).then(({ academisationApiKey, cypressApiKey }) => {
             const requestDefinition: Partial<Cypress.RequestOptions> = {
                 method: method,
-                url: `${Cypress.expose(AcademisationApiUrl)}/${url}`,
+                url: `${Cypress.expose(AcademisationApiUrl).replace(/\/+$/, '')}/${url.replace(/^\/+/, '')}`,
                 headers: {
                     'x-api-key': academisationApiKey,
                     'x-api-cypress-endpoints-key': cypressApiKey,

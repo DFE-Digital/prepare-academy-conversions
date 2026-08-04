@@ -79,15 +79,12 @@ describe('Transfers - Financial Health Assessment (SFSO commissioning)', () => {
         transferFinancialHealthAssessment.getOverview().should('have.value', overview);
     });
 
-    it('shows a validation error when the overview is more than 250 characters', () => {
+    it('caps the overview at 250 characters', () => {
         cy.getByDataTest('transfer-financial-health-assessment').click();
         transferFinancialHealthAssessment.enterOverview('a'.repeat(251));
+        transferFinancialHealthAssessment.getOverview().invoke('val').its('length').should('eq', 250);
         transferFinancialHealthAssessment.saveAndReturn();
-
-        transferFinancialHealthAssessment
-            .getErrorSummary()
-            .should('be.visible')
-            .and('contain.text', 'Overview must be 250 characters or less');
-        cy.checkPath('financial-health-assessment');
+        cy.url().should('include', '/transfers/project/');
+        cy.url().should('not.include', 'financial-health-assessment');
     });
 });
