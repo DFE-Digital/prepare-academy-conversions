@@ -42,4 +42,8 @@ public class PathFor
    public static string GetOpeningDateHistoryForConversionProject => "/conversion-project/{0}/conversion-date-history";
    public static string CreateNewProjectGroup => "/project-group/create-project-group";
    public static string GetProjectGroups => "/project-group/get-project-groups";
+   public static string CreateSignificantChangeProject => "/significant-change";
+   public static string GetSignificantChangeProjectById => "/significant-change/{0}";
+   public static string GetAllSignificantChangeProjects => "/significant-change/search";
+   public static string SetSignificantChangeAssignedUser => "/significant-change/{0}/SetAssignedUser";
 }

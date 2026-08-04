@@ -1,0 +1,51 @@
+﻿@using Dfe.Academisation.ExtensionMethods
+@model List<SignificantChangeProjectViewBaseModel>
+
+@{
+    var index = 0;
+    var link = @Links.SignificantChange.SignificantChangeTaskList.Page;
+
+    foreach (var project in Model)
+    {
+        <tr class="govuk-table__row" data-cy="select-projectlist-row">
+            <td class="govuk-table__cell">
+                    <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                        <strong>
+                            <a id="@("school-name-" + index)" class="govuk-link" aria-label="@(project.SchoolName +", U R N is " + project.Urn)" asp-page="@link" data-cy="school-name-@project.SchoolName-@index" asp-route-id="@project.Id" asp-route-returnToFormAMatMenu="False">@project.SchoolName</a>
+                        </strong>
+                    </div>
+               <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                  <span id="@("urn-" + index)"><strong>URN:</strong> @project.Urn</span>
+               </div>
+               <div id="@("incoming-trust-" + index)" class="govuk-!-margin-top-1">
+                     <strong>Trust:</strong>
+                     <span if="project.TrustName.IsEmpty() && project.TrustUkprn.IsEmpty()" class="empty">Empty</span>
+                     <span if="project.TrustName.IsPresent() && project.TrustUkprn.IsPresent()">@project.TrustName.ToTitleCase() (@project.TrustUkprn)</span>
+                     <span if="project.TrustName.IsPresent() && project.TrustUkprn.IsEmpty()">@project.TrustName.ToTitleCase()</span>
+                     <span if="project.TrustName.IsEmpty() && project.TrustUkprn.IsPresent()">(@project.TrustUkprn)</span>
+               </div>
+               <div id="@("tier-" + index)" class="govuk-!-margin-top-1">
+                    <strong>Tier:</strong>
+                    <span>@project.Tier</span>
+                </div>
+                <div id="@("type-and-route-" + index)" class="govuk-!-margin-top-1">
+                    <strong>Route:</strong>
+                    <span if="project.TypeOfSignificantChange.IsEmpty()" class="empty">Unconfirmed</span>
+                    <span if="project.TypeOfSignificantChange.IsPresent()">@project.TypeOfSignificantChange</span>
+                </div>
+                <div id="@("assigned-to-" + index)" class="do govuk-!-margin-top-1">
+                    <strong>Assigned to:</strong>
+                    <span if="project.AssignedUser == null || project.AssignedUser.FullName.IsEmpty()" class="empty">Unassigned</span>
+                    <span if="project.AssignedUser != null && project.AssignedUser.FullName.IsPresent()">@project.AssignedUser.FullName</span>
+                </div>
+                <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                    <span if="project.Status.IsEmpty()" class="empty">Unconfirmed</span>
+                    <strong if="project.Status.IsPresent()" class="govuk-tag govuk-tag--@project.StatusColour" id="project-status-@project.Id">@project.Status.ToFirstUpper()</strong>
+               </div>
+            </td>
+        </tr>
+
+        index++;
+    }
+}
+

@@ -40,15 +40,11 @@ namespace Dfe.PrepareConversions.Tests;
 
 public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Startup>
 {
-   private static int _currentPort = 5080;
-   private static readonly object Sync = new();
-
    private readonly WireMockServer _mockApiServer;
 
    public IntegrationTestingWebApplicationFactory()
    {
-      int port = AllocateNext();
-      _mockApiServer = WireMockServer.Start(port);
+      _mockApiServer = WireMockServer.Start();
       _mockApiServer.LogEntriesChanged += EntriesChanged;
    }
 
@@ -84,7 +80,8 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
                { "AcademisationApi:BaseUrl", _mockApiServer.Url },
                { "AzureAd:AllowedRoles", string.Empty }, // Do not restrict access for integration test
                { "ServiceLink:TransfersUrl", "https://an-external-service.com/" },
-               { "EnableDistributedCache", "false" }
+               { "EnableDistributedCache", "false" },
+               { "FeatureManagement:ShowSignificantChangesNavigationItem", "true" }
             })
             .AddEnvironmentVariables();
       });
@@ -203,16 +200,6 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
    public void Reset()
    {
       _mockApiServer.Reset();
-   }
-
-   private static int AllocateNext()
-   {
-      lock (Sync)
-      {
-         int next = _currentPort;
-         _currentPort++;
-         return next;
-      }
    }
 
    protected override void Dispose(bool disposing)

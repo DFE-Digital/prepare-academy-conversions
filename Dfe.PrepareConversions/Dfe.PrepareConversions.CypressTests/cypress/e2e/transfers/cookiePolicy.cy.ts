@@ -35,6 +35,7 @@ describe('Cookie Policy', () => {
 
         it('Should navigate to cookies page', () => {
             cookiePolicyPage.verifyOnCookiePreferencesPage();
+            cy.url().should('include', 'cookie');
         });
 
         it('Should set cookie preferences', () => {
@@ -47,10 +48,13 @@ describe('Cookie Policy', () => {
                 .submitCookiePreferences()
                 .clickSuccessBannerReturnLink()
                 .verifyRedirectedToProjectList();
+
+            cy.url().should('not.include', 'cookie');
         });
     });
 
     it('Check accessibility across pages', () => {
+        cookiePolicyPage.cookieBannerShouldBeVisible();
         cy.checkAccessibilityAcrossPages();
     });
 });
