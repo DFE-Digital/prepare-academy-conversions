@@ -80,7 +80,7 @@ describe('Request Financial Health Assessment (SFSO commissioning)', () => {
     });
 
     it('shows an error when the overview is more than 250 characters', () => {
-        projectTaskList.selectRequestFinancialHealthAssessment();        
+        projectTaskList.selectRequestFinancialHealthAssessment();
         requestFinancialHealthAssessment
             .getOverview()
             .invoke('removeAttr', 'maxlength')
