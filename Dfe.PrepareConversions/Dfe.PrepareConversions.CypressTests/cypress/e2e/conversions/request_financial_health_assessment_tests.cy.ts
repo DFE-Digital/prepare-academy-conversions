@@ -52,15 +52,15 @@ describe('Request Financial Health Assessment (SFSO commissioning)', () => {
         projectTaskList.selectRequestFinancialHealthAssessment();
         requestFinancialHealthAssessment.verifyOnPage();
 
-        Logger.log('Scenario 5/6/past when a proposed decision date is set; Scenario 7 banner when it is not');
+        Logger.log('A request date renders a message; otherwise the page explains it has not been requested yet');
         cy.get('body').then(($body) => {
             if ($body.find('[data-test="fha-requested-date"]').length > 0) {
                 requestFinancialHealthAssessment
                     .getRequestedDate()
                     .invoke('text')
-                    .should('match', /has been sent|was requested on|proposed decision date is on/);
+                    .should('match', /will be sent|has been sent/);
             } else {
-                requestFinancialHealthAssessment.getNoDecisionDateBanner().should('be.visible');
+                cy.get('[data-test="fha-no-decision-date"], [data-test="fha-not-requested"]').should('be.visible');
             }
         });
     });
@@ -80,10 +80,13 @@ describe('Request Financial Health Assessment (SFSO commissioning)', () => {
     });
 
     it('shows an error when the overview is more than 250 characters', () => {
-        projectTaskList.selectRequestFinancialHealthAssessment();
-        requestFinancialHealthAssessment.enterOverview('a'.repeat(251));
+        projectTaskList.selectRequestFinancialHealthAssessment();        
+        requestFinancialHealthAssessment
+            .getOverview()
+            .invoke('removeAttr', 'maxlength')
+            .clear()
+            .type('a'.repeat(251), { delay: 0 });
         requestFinancialHealthAssessment.saveAndReturn();
-
         requestFinancialHealthAssessment
             .getErrorSummary()
             .should('be.visible')

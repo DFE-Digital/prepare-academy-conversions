@@ -64,6 +64,15 @@
             The Financial Health Assessment request has been sent on <strong>@Model.RequestedDate.Value.ToOrdinalDateString()</strong>.
          </p>
       }
+      else
+      {
+         <p class="govuk-body" data-test="fha-not-requested">
+            This has not yet been requested.
+         </p>
+         <div class="govuk-inset-text">
+            The system will automatically request a Financial Health Assessment to be provided 15 days from the proposed decision date.
+         </div>
+      }
 
       @if (Model.IsReadOnly)
       {
