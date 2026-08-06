@@ -24,6 +24,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects
       public ProjectStatuses RationaleStatus { get; set; }
       public ProjectStatuses AcademyAndTrustInformationStatus { get; set; }
       public ProjectStatuses PublicSectorEqualityDutyStatus { get; set; }
+      public ProjectStatuses FinancialHealthAssessmentStatus { get; set; }
       public string ProjectStatus { get; set; }
       public User AssignedUser { get; set; }
       public bool HasPermission { get; set; }

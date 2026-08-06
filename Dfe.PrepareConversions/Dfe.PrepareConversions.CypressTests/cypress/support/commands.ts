@@ -28,6 +28,7 @@ import 'cypress-localstorage-commands';
 import { AcademisationApiKey, AcademisationApiUrl, CypressApiKey } from '../constants/cypressConstants';
 import { Logger } from './logger';
 import { AuthenticationInterceptor } from '../auth/authenticationInterceptor';
+import { joinApiUrl } from './urls';
 
 //--Universal
 
@@ -181,7 +182,8 @@ Cypress.Commands.add(
         cy.env([AcademisationApiKey, CypressApiKey]).then(({ academisationApiKey, cypressApiKey }) => {
             const requestDefinition: Partial<Cypress.RequestOptions> = {
                 method: method,
-                url: `${Cypress.expose(AcademisationApiUrl)}/${url}`,
+                // url: `${Cypress.expose(AcademisationApiUrl).replace(/\/+$/, '')}/${url.replace(/^\/+/, '')}`,
+                url: joinApiUrl(Cypress.expose(AcademisationApiUrl), url),
                 headers: {
                     'x-api-key': academisationApiKey,
                     'x-api-cypress-endpoints-key': cypressApiKey,

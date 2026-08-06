@@ -151,4 +151,7 @@ public class AcademyConversionProject
    
    public DateTime? ProjectSentToCompleteDate { get; set; }
 
+   // SFSO commissioning / Financial Health Assessment
+   public DateTime? SfsoCommissioningRequestedDate { get; set; }
+   public string SfsoCommissioningOverview { get; set; }
 }

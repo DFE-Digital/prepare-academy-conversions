@@ -56,6 +56,11 @@
 	}
 }
 
+.app-task-list__hint {
+	clear: both;
+	margin-bottom: 0;
+}
+
 // The `app-task-list__task-completed` class was previously used on the task
 // list for the completed tag (changed in 86c90ec) – it's still included here to
 // avoid breaking task lists in existing prototypes.

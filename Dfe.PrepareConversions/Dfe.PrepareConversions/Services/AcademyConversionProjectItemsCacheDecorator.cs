@@ -170,6 +170,11 @@ public class AcademyConversionProjectItemsCacheDecorator : IAcademyConversionPro
    {
       await _innerRepository.SetProjectDates(id, updatedProjectDates);
    }
+   
+   public async Task SetSfsoCommissioning(int id, SetSfsoCommissioningModel model)
+   {
+      await _innerRepository.SetSfsoCommissioning(id, model);
+   }
 
    public async Task<ApiResponse<IEnumerable<OpeningDateHistoryDto>>> GetOpeningDateHistoryForConversionProject(int id)
    {

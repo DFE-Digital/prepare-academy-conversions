@@ -35,7 +35,8 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Mappers.Response
                 IncomingTrustReferenceNumber = input.IncomingTrustReferenceNumber,
                 PublicEqualityDutyImpact = input.PublicEqualityDutyImpact,
                 PublicEqualityDutyReduceImpactReason = input.PublicEqualityDutyReduceImpactReason,
-                PublicEqualityDutySectionComplete = input.PublicEqualityDutySectionComplete
+                PublicEqualityDutySectionComplete = input.PublicEqualityDutySectionComplete,
+                SfsoCommissioningOverview = input.SfsoCommissioningOverview,
             };
         }
 
@@ -116,6 +117,7 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Mappers.Response
             {
                 Htb = input.Dates.HtbDate,
                 PreviousAdvisoryBoardDate = input.Dates.PreviousAdvisoryBoardDate,
+                SfsoCommissioningRequestedDate = input.Dates.SfsoCommissioningRequestedDate,
                 Target = input.Dates.TargetDateForTransfer,
                 HasHtbDate = input.Dates.HasHtbDate,
                 HasTargetDateForTransfer = input.Dates.HasTargetDateForTransfer,

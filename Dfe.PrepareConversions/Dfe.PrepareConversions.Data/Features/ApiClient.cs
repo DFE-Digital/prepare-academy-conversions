@@ -218,6 +218,11 @@ public class ApiClient : IApiClient
       return await AcademisationClient.PutAsync(formattedString, JsonContent.Create(payload));
    }
 
+   public async Task<HttpResponseMessage> SetSfsoCommissioning(int id, SetSfsoCommissioningModel model)
+   {
+      return await AcademisationClient.PutAsync(string.Format(PathFor.SetSfsoCommissioning, id), JsonContent.Create(model));
+   }
+
    public async Task<HttpResponseMessage> GetOpeningDateHistoryForConversionProject(int id)
    {
       HttpResponseMessage getHistoryResponse = await AcademisationClient.GetAsync(string.Format(PathFor.GetOpeningDateHistoryForConversionProject, id));
