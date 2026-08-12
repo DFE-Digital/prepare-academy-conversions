@@ -58,11 +58,11 @@ public class RecordDecisionModel : SignificantChangeDecisionBaseModel
 
       return decision.Decision switch
       {
-         SignificantChangeDecisions.Approved => RedirectToPage(Links.SignificantChange.Decision.AnyConditions.Page, LinkParameters),
-         SignificantChangeDecisions.Declined => RedirectToPage(Links.SignificantChange.Decision.DeclineReason.Page, LinkParameters),
-         SignificantChangeDecisions.Deferred => RedirectToPage(Links.SignificantChange.Decision.WhyDeferred.Page, LinkParameters),
-         SignificantChangeDecisions.Withdrawn => RedirectToPage(Links.SignificantChange.Decision.WhyWithdrawn.Page, LinkParameters),
-         _ => RedirectToPage(Links.SignificantChange.Decision.AnyConditions.Page, LinkParameters)
+         SignificantChangeDecisions.Approved => RedirectToPage(Links.SignificantChangeDecision.AnyConditions.Page, LinkParameters),
+         SignificantChangeDecisions.Declined => RedirectToPage(Links.SignificantChangeDecision.DeclineReason.Page, LinkParameters),
+         SignificantChangeDecisions.Deferred => RedirectToPage(Links.SignificantChangeDecision.WhyDeferred.Page, LinkParameters),
+         SignificantChangeDecisions.Withdrawn => RedirectToPage(Links.SignificantChangeDecision.WhyWithdrawn.Page, LinkParameters),
+         _ => RedirectToPage(Links.SignificantChangeDecision.AnyConditions.Page, LinkParameters)
       };
    }
 }

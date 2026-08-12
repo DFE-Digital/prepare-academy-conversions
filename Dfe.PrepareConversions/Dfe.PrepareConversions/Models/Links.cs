@@ -97,14 +97,15 @@ public static class Links
       public static readonly LinkItem GenerateHTBTemplate = AddLinkItem(page: "/TaskList/DownloadProjectTemplate");
    }
 
-
    public static class SignificantChange
    {
       public static readonly LinkItem ListView = AddLinkItem(backText: "Back", page: "/SignificantChange/ProjectList/Index");
       public static readonly LinkItem SignificantChangeTaskList = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Index");
       public static readonly LinkItem SignificantChangeProjectAssignment = AddLinkItem(backText: "Back", page: "/SignificantChange/ProjectAssignment/Index");
 
-      public static class Decision
+   }
+
+    public static class SignificantChangeDecision
       {
          public static readonly LinkItem RecordDecision = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/RecordDecision");
          public static readonly LinkItem AnyConditions = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/AnyConditions");
@@ -116,7 +117,6 @@ public static class Links
          public static readonly LinkItem DecisionDate = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/DecisionDate");
          public static readonly LinkItem Summary = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/Summary");
       }
-   }
    public static class FormAMat
    {
       public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/FormAMat/Index");

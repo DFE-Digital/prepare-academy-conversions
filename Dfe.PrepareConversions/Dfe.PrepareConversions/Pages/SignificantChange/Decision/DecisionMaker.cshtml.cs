@@ -25,7 +25,7 @@ public class DecisionMakerModel(ISignificantChangeProjectRepository repository,
       IActionResult redirect = RedirectToStartIfNoDecision(decision, id);
       if (redirect != null) return redirect;
 
-      SetBackLinkModel(Links.SignificantChange.Decision.WhoDecided, id);
+      SetBackLinkModel(Links.SignificantChangeDecision.WhoDecided, id);
       DecisionMakerName = decision.DecisionMakerName;
 
       return Page();
@@ -44,6 +44,6 @@ public class DecisionMakerModel(ISignificantChangeProjectRepository repository,
 
       SetDecisionInSession(id, decision);
 
-      return RedirectToPage(Links.SignificantChange.Decision.DecisionDate.Page, LinkParameters);
+      return RedirectToPage(Links.SignificantChangeDecision.DecisionDate.Page, LinkParameters);
    }
 }

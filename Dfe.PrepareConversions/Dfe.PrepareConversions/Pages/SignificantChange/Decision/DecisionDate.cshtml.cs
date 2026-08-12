@@ -51,8 +51,8 @@ public class DecisionDateModel(ISignificantChangeProjectRepository repository,
 
       SetBackLinkModel(
          decision.DecisionMadeBy == DecisionMadeBy.None
-            ? Links.SignificantChange.Decision.WhoDecided
-            : Links.SignificantChange.Decision.DecisionMaker,
+            ? Links.SignificantChangeDecision.WhoDecided
+            : Links.SignificantChangeDecision.DecisionMaker,
          id);
 
       DateOfDecision = decision.DecisionDate;
@@ -73,6 +73,6 @@ public class DecisionDateModel(ISignificantChangeProjectRepository repository,
 
       SetDecisionInSession(id, decision);
 
-      return RedirectToPage(Links.SignificantChange.Decision.Summary.Page, new { id });
+      return RedirectToPage(Links.SignificantChangeDecision.Summary.Page, new { id });
    }
 }

@@ -59,7 +59,7 @@ class SignificantChangeDecision extends BasePage {
     }
 
     public verifyOnStep(step: string): this {
-        cy.url().should('match', new RegExp(`/significant-change/\\d+/decision/${step}$`));
+        cy.url().should('match', new RegExp(String.raw`/significant-change/\d+/decision/${step}$`));
         return this;
     }
 }

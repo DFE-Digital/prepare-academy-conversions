@@ -26,7 +26,7 @@ public class SummaryModel(ISignificantChangeProjectRepository repository,
       IActionResult redirect = RedirectToStartIfNoDecision(Decision, id);
       if (redirect != null) return redirect;
 
-      SetBackLinkModel(Links.SignificantChange.Decision.DecisionDate, id);
+      SetBackLinkModel(Links.SignificantChangeDecision.DecisionDate, id);
 
       return Page();
    }

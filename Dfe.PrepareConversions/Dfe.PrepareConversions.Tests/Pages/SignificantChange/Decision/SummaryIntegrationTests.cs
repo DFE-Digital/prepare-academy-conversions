@@ -15,6 +15,7 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
    : SignificantChangeDecisionTestBase(factory)
 {
    private static readonly DateTime DecisionDate = new(2026, 3, 27);
+   private static readonly int[] GovernanceAndChoiceOfTrustReasons = [3, 4];
 
    private async Task CompleteApprovedJourney(bool conditionsSet = true, string conditionDetails = "Appoint a new chair")
    {
@@ -126,7 +127,8 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
 
       JArray declined = (JArray)Field(posted, "DeclinedReasons");
       declined.Should().HaveCount(2);
-      declined.Select(r => Field(r, "Reason").Value<int>()).Should().BeEquivalentTo(new[] { 3, 4 });
+      declined.Select(r => Field(r, "Reason").Value<int>())
+         .Should().BeEquivalentTo(GovernanceAndChoiceOfTrustReasons);
       declined.Select(r => Field(r, "Details").Value<string>())
          .Should().BeEquivalentTo("Weak governance", "Trust not suitable");
    }

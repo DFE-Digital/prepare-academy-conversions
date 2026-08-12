@@ -38,7 +38,7 @@ public class WhyWithdrawnModel(ISignificantChangeProjectRepository repository,
       IActionResult redirect = RedirectToStartIfNoDecision(decision, id);
       if (redirect != null) return redirect;
 
-      SetBackLinkModel(Links.SignificantChange.Decision.RecordDecision, id);
+      SetBackLinkModel(Links.SignificantChangeDecision.RecordDecision, id);
       SetReasonsModel(decision.WithdrawnReasons);
 
       return Page();
@@ -62,7 +62,7 @@ public class WhyWithdrawnModel(ISignificantChangeProjectRepository repository,
       errorService.AddErrors(ModelState.Keys, ModelState);
       if (errorService.HasErrors()) return OnGet(id);
 
-      return RedirectToPage(Links.SignificantChange.Decision.WhoDecided.Page, LinkParameters);
+      return RedirectToPage(Links.SignificantChangeDecision.WhoDecided.Page, LinkParameters);
    }
 
    private void SetReasonsModel(List<AdvisoryBoardWithdrawnReasonDetails> reasons)

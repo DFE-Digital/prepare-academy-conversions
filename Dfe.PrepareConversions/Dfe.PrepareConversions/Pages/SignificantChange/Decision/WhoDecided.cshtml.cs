@@ -56,19 +56,19 @@ public class WhoDecidedModel(ISignificantChangeProjectRepository repository,
       SetDecisionInSession(id, decision);
 
       return skipName
-         ? RedirectToPage(Links.SignificantChange.Decision.DecisionDate.Page, LinkParameters)
-         : RedirectToPage(Links.SignificantChange.Decision.DecisionMaker.Page, LinkParameters);
+         ? RedirectToPage(Links.SignificantChangeDecision.DecisionDate.Page, LinkParameters)
+         : RedirectToPage(Links.SignificantChangeDecision.DecisionMaker.Page, LinkParameters);
    }
 
    private static LinkItem GetPageForBackLink(SignificantChangeDecision decision)
    {
       return decision.Decision switch
       {
-         SignificantChangeDecisions.Approved => Links.SignificantChange.Decision.AnyConditions,
-         SignificantChangeDecisions.Declined => Links.SignificantChange.Decision.DeclineReason,
-         SignificantChangeDecisions.Deferred => Links.SignificantChange.Decision.WhyDeferred,
-         SignificantChangeDecisions.Withdrawn => Links.SignificantChange.Decision.WhyWithdrawn,
-         _ => Links.SignificantChange.Decision.RecordDecision
+         SignificantChangeDecisions.Approved => Links.SignificantChangeDecision.AnyConditions,
+         SignificantChangeDecisions.Declined => Links.SignificantChangeDecision.DeclineReason,
+         SignificantChangeDecisions.Deferred => Links.SignificantChangeDecision.WhyDeferred,
+         SignificantChangeDecisions.Withdrawn => Links.SignificantChangeDecision.WhyWithdrawn,
+         _ => Links.SignificantChangeDecision.RecordDecision
       };
    }
 }

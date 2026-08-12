@@ -79,7 +79,7 @@ public abstract class SignificantChangeDecisionBaseModel(ISignificantChangeProje
    protected IActionResult RedirectToStartIfNoDecision(SignificantChangeDecision decision, int id)
    {
       return decision?.Decision == null
-         ? RedirectToPage(Links.SignificantChange.Decision.RecordDecision.Page, new { id })
+         ? RedirectToPage(Links.SignificantChangeDecision.RecordDecision.Page, new { id })
          : null;
    }
 }

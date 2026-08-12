@@ -42,7 +42,7 @@
          }
       </dd>
       <dd class="govuk-summary-list__actions">
-         <a class="govuk-link" asp-page="@Links.SignificantChange.Decision.RecordDecision.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-decision-btn">
+         <a class="govuk-link" asp-page="@Links.SignificantChangeDecision.RecordDecision.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-decision-btn">
             Change<span class="govuk-visually-hidden"> decision</span>
          </a>
       </dd>
@@ -66,7 +66,7 @@
             }
          </dd>
          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.SignificantChange.Decision.AnyConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-conditions-set-btn">
+            <a class="govuk-link" asp-page="@Links.SignificantChangeDecision.AnyConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-conditions-set-btn">
                Change<span class="govuk-visually-hidden"> condition answer</span>
             </a>
          </dd>
@@ -107,9 +107,9 @@
             @{
                var reasonPage = Model.Decision.Decision switch
                {
-                  SignificantChangeDecisions.Declined => Links.SignificantChange.Decision.DeclineReason.Page,
-                  SignificantChangeDecisions.Deferred => Links.SignificantChange.Decision.WhyDeferred.Page,
-                  _ => Links.SignificantChange.Decision.WhyWithdrawn.Page
+                  SignificantChangeDecisions.Declined => Links.SignificantChangeDecision.DeclineReason.Page,
+                  SignificantChangeDecisions.Deferred => Links.SignificantChangeDecision.WhyDeferred.Page,
+                  _ => Links.SignificantChangeDecision.WhyWithdrawn.Page
                };
             }
             <a class="govuk-link" asp-page="@reasonPage" asp-route-id="@Model.Id" asp-route-obl="true" id="change-reasons-btn">
@@ -132,7 +132,7 @@
          }
       </dd>
       <dd class="govuk-summary-list__actions">
-         <a class="govuk-link" asp-page="@Links.SignificantChange.Decision.WhoDecided.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-who-btn">
+         <a class="govuk-link" asp-page="@Links.SignificantChangeDecision.WhoDecided.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-who-btn">
             Change<span class="govuk-visually-hidden"> who made this decision</span>
          </a>
       </dd>
@@ -153,7 +153,7 @@
             }
          </dd>
          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.SignificantChange.Decision.DecisionMaker.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="decision-maker-btn">
+            <a class="govuk-link" asp-page="@Links.SignificantChangeDecision.DecisionMaker.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="decision-maker-btn">
                Change<span class="govuk-visually-hidden"> decision maker's name</span>
             </a>
          </dd>
@@ -173,7 +173,7 @@
          }
       </dd>
       <dd class="govuk-summary-list__actions">
-         <a class="govuk-link" asp-page="@Links.SignificantChange.Decision.DecisionDate.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-date-btn">
+         <a class="govuk-link" asp-page="@Links.SignificantChangeDecision.DecisionDate.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-date-btn">
             Change<span class="govuk-visually-hidden"> date of decision</span>
          </a>
       </dd>

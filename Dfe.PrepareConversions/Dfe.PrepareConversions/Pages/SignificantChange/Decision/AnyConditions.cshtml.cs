@@ -30,7 +30,7 @@ public class AnyConditionsModel(ISignificantChangeProjectRepository repository,
       IActionResult redirect = RedirectToStartIfNoDecision(decision, id);
       if (redirect != null) return redirect;
 
-      SetBackLinkModel(Links.SignificantChange.Decision.RecordDecision, id);
+      SetBackLinkModel(Links.SignificantChangeDecision.RecordDecision, id);
 
       ApprovedConditionsSet = decision.ApprovedConditionsSet;
       ApprovedConditionsDetails = decision.ApprovedConditionsDetails;
@@ -52,7 +52,7 @@ public class AnyConditionsModel(ISignificantChangeProjectRepository repository,
 
          SetDecisionInSession(id, decision);
 
-         return RedirectToPage(Links.SignificantChange.Decision.WhoDecided.Page, LinkParameters);
+         return RedirectToPage(Links.SignificantChangeDecision.WhoDecided.Page, LinkParameters);
       }
 
       errorService.AddErrors(ModelState.Keys, ModelState);
