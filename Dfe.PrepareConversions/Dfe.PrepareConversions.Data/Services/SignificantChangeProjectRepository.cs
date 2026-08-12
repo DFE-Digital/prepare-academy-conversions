@@ -90,4 +90,20 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+      public async Task RecordDecision(SignificantChangeDecision decision)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+
+      ApiResponse<SignificantChangeDecision> result =
+         await httpClientService.Post<SignificantChangeDecision, SignificantChangeDecision>(
+            httpClient,
+            PathFor.RecordSignificantChangeDecision,
+            decision);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
 }

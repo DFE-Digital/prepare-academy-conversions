@@ -97,13 +97,26 @@ public static class Links
       public static readonly LinkItem GenerateHTBTemplate = AddLinkItem(page: "/TaskList/DownloadProjectTemplate");
    }
 
+
    public static class SignificantChange
    {
       public static readonly LinkItem ListView = AddLinkItem(backText: "Back", page: "/SignificantChange/ProjectList/Index");
       public static readonly LinkItem SignificantChangeTaskList = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Index");
       public static readonly LinkItem SignificantChangeProjectAssignment = AddLinkItem(backText: "Back", page: "/SignificantChange/ProjectAssignment/Index");
-   }
 
+      public static class Decision
+      {
+         public static readonly LinkItem RecordDecision = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/RecordDecision");
+         public static readonly LinkItem AnyConditions = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/AnyConditions");
+         public static readonly LinkItem DeclineReason = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/DeclineReason");
+         public static readonly LinkItem WhyDeferred = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/WhyDeferred");
+         public static readonly LinkItem WhyWithdrawn = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/WhyWithdrawn");
+         public static readonly LinkItem WhoDecided = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/WhoDecided");
+         public static readonly LinkItem DecisionMaker = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/DecisionMaker");
+         public static readonly LinkItem DecisionDate = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/DecisionDate");
+         public static readonly LinkItem Summary = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/Summary");
+      }
+   }
    public static class FormAMat
    {
       public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/FormAMat/Index");

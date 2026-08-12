@@ -1,0 +1,187 @@
+
+@page "/significant-change/{id:int}/decision/summary"
+@using Dfe.PrepareConversions.Configuration
+@using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
+@using Dfe.PrepareConversions.Data.Models.SignificantChange
+@using Dfe.Academisation.ExtensionMethods
+@model Dfe.PrepareConversions.Pages.SignificantChange.Decision.SummaryModel
+@{
+   ViewData["Title"] = $"Check your {Model.DecisionText} answers";
+}
+
+@section BeforeMain
+{
+   <partial name="_BackLink" model="@Model.BackLinkModel"/>
+}
+
+<span id="selection-span" class="govuk-caption-l">Record the decision</span>
+<h1 class="govuk-heading-l">Check your answers before recording this decision</h1>
+
+<dl class="govuk-summary-list">
+
+   <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Decision</dt>
+      <dd class="govuk-summary-list__value">
+         @{
+            var decisionName = Model.Decision.GetDecisionAsFriendlyName();
+            var decisionClass = Model.Decision.Decision switch
+            {
+               SignificantChangeDecisions.Approved => "govuk-tag--green",
+               SignificantChangeDecisions.Deferred => "govuk-tag--orange",
+               SignificantChangeDecisions.Withdrawn => "govuk-tag--purple",
+               _ => "govuk-tag--red"
+            };
+         }
+         @if (string.IsNullOrEmpty(decisionName))
+         {
+            <span class="empty">Empty</span>
+         }
+         else
+         {
+            <strong class="govuk-tag @decisionClass" id="decision">@decisionName</strong>
+         }
+      </dd>
+      <dd class="govuk-summary-list__actions">
+         <a class="govuk-link" asp-page="@Links.SignificantChange.Decision.RecordDecision.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-decision-btn">
+            Change<span class="govuk-visually-hidden"> decision</span>
+         </a>
+      </dd>
+   </div>
+
+   @if (Model.Decision.Decision == SignificantChangeDecisions.Approved)
+   {
+      var conditionsSet = Model.Decision.ApprovedConditionsSet.GetValueOrDefault();
+
+      <div class="govuk-summary-list__row">
+         <dt class="govuk-summary-list__key">Conditions</dt>
+         <dd class="govuk-summary-list__value" id="condition-set">
+            @if (conditionsSet)
+            {
+               <div class="govuk-!-margin-bottom-2">Yes:</div>
+               <div class="govuk-!-margin-bottom-2">@Model.Decision.ApprovedConditionsDetails</div>
+            }
+            else
+            {
+               <span>No</span>
+            }
+         </dd>
+         <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" asp-page="@Links.SignificantChange.Decision.AnyConditions.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-conditions-set-btn">
+               Change<span class="govuk-visually-hidden"> condition answer</span>
+            </a>
+         </dd>
+      </div>
+   }
+
+   @if (Model.Decision.Decision is SignificantChangeDecisions.Declined or SignificantChangeDecisions.Deferred or SignificantChangeDecisions.Withdrawn)
+   {
+      <div class="govuk-summary-list__row">
+         <dt class="govuk-summary-list__key">Reasons</dt>
+         <dd class="govuk-summary-list__value" id="reasons">
+            @if (Model.Decision.Decision == SignificantChangeDecisions.Declined)
+            {
+               foreach (SignificantChangeDeclinedReasonDetails reason in Model.Decision.DeclinedReasons)
+               {
+                  <div>@reason.Reason.ToDescription():</div>
+                  <div class="govuk-!-margin-bottom-2">@reason.Details</div>
+               }
+            }
+            else if (Model.Decision.Decision == SignificantChangeDecisions.Deferred)
+            {
+               foreach (AdvisoryBoardDeferredReasonDetails reason in Model.Decision.DeferredReasons)
+               {
+                  <div>@reason.Reason.ToDescription():</div>
+                  <div class="govuk-!-margin-bottom-2">@reason.Details</div>
+               }
+            }
+            else
+            {
+               foreach (AdvisoryBoardWithdrawnReasonDetails reason in Model.Decision.WithdrawnReasons)
+               {
+                  <div>@reason.Reason.ToDescription():</div>
+                  <div class="govuk-!-margin-bottom-2">@reason.Details</div>
+               }
+            }
+         </dd>
+         <dd class="govuk-summary-list__actions">
+            @{
+               var reasonPage = Model.Decision.Decision switch
+               {
+                  SignificantChangeDecisions.Declined => Links.SignificantChange.Decision.DeclineReason.Page,
+                  SignificantChangeDecisions.Deferred => Links.SignificantChange.Decision.WhyDeferred.Page,
+                  _ => Links.SignificantChange.Decision.WhyWithdrawn.Page
+               };
+            }
+            <a class="govuk-link" asp-page="@reasonPage" asp-route-id="@Model.Id" asp-route-obl="true" id="change-reasons-btn">
+               Change<span class="govuk-visually-hidden"> reasons</span>
+            </a>
+         </dd>
+      </div>
+   }
+
+   <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Decision maker's role</dt>
+      <dd class="govuk-summary-list__value">
+         @if (Model.Decision.DecisionMadeBy != null)
+         {
+            <div id="decision-made-by">@Model.Decision.DecisionMadeBy.ToDescription()</div>
+         }
+         else
+         {
+            <span class="empty">Empty</span>
+         }
+      </dd>
+      <dd class="govuk-summary-list__actions">
+         <a class="govuk-link" asp-page="@Links.SignificantChange.Decision.WhoDecided.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-who-btn">
+            Change<span class="govuk-visually-hidden"> who made this decision</span>
+         </a>
+      </dd>
+   </div>
+
+   @if (Model.Decision.DecisionMadeBy != DecisionMadeBy.None)
+   {
+      <div class="govuk-summary-list__row">
+         <dt class="govuk-summary-list__key">Decision maker's name</dt>
+         <dd class="govuk-summary-list__value">
+            @if (!string.IsNullOrWhiteSpace(Model.Decision.DecisionMakerName))
+            {
+               <div id="decision-maker-name">@Model.Decision.DecisionMakerName</div>
+            }
+            else
+            {
+               <span class="empty">Empty</span>
+            }
+         </dd>
+         <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" asp-page="@Links.SignificantChange.Decision.DecisionMaker.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="decision-maker-btn">
+               Change<span class="govuk-visually-hidden"> decision maker's name</span>
+            </a>
+         </dd>
+      </div>
+   }
+
+   <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Date of decision</dt>
+      <dd class="govuk-summary-list__value" id="decision-date">
+         @if (Model.Decision.DecisionDate.HasValue)
+         {
+            <span>@Model.Decision.DecisionDate.Value.ToString(Constants.DateTimeFormat)</span>
+         }
+         else
+         {
+            <span class="empty">Empty</span>
+         }
+      </dd>
+      <dd class="govuk-summary-list__actions">
+         <a class="govuk-link" asp-page="@Links.SignificantChange.Decision.DecisionDate.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-date-btn">
+            Change<span class="govuk-visually-hidden"> date of decision</span>
+         </a>
+      </dd>
+   </div>
+</dl>
+
+<form method="post">
+   <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+      Record decision
+   </button>
+</form>
