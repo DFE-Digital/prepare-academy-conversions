@@ -38,6 +38,33 @@ public class SignificantChangeProjectListHelperTests
       Assert.Equal("green", viewModel.StatusColour);
    }
 
+   [Fact]
+   public void Build_Maps_nested_consult_stakeholders_values()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         Status = "pre decision",
+         StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
+         {
+            TrustConsultedStakeholders = false,
+            TrustConsultedStakeholdersNotConsultedReason = "Consultation planned",
+            Status = SignificantChangeTaskStatus.InProgress
+         }
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.False(viewModel.StakeholderConsultationTrustConsultedStakeholders);
+      Assert.Equal("Consultation planned", viewModel.StakeholderConsultationTrustConsultedStakeholdersNotConsultedReason);
+      Assert.Equal(SignificantChangeTaskStatus.InProgress, viewModel.StakeholderConsultationStatus);
+   }
+
    [Theory]
    [InlineData("approved", "green")]
    [InlineData("approved with conditions", "green")]

@@ -13,3 +13,31 @@
 }
 
 <partial name="Shared/SignificantChangeProjects/_ProjectHeader" model="Model.Project" />
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-l govuk-!-margin-bottom-2">Change tasks</h2>
+        <p class="govuk-body">These tasks help you gather and record the information needed for this project.</p>
+        <p class="govuk-body">You can complete them in any order.</p>
+
+        @foreach (var taskSection in Model.TaskList.Sections)
+        {
+            <h3 class="app-task-list__section govuk-!-margin-top-8">@taskSection.Title</h3>
+            <div class="app-task-list">
+                <ul class="app-task-list__items govuk-!-padding-left-0">
+                    @foreach (var taskItem in taskSection.Tasks)
+                    {
+                        <li class="app-task-list__item">
+                            <span class="app-task-list__task-name">
+                                <a class="govuk-link" asp-page="@taskItem.Page" asp-route-id="@Model.Project.Id" aria-describedby="@taskItem.StatusId">
+                                    @taskItem.Title
+                                </a>
+                            </span>
+                            <strong class="govuk-tag @taskItem.Status.CssClass app-task-list__tag" id="@taskItem.StatusId">@taskItem.Status.Status</strong>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+</div>

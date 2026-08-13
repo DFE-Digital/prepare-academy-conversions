@@ -1,4 +1,4 @@
-﻿using Dfe.PrepareConversions.Data.Models.SignificantChange;
+using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.ViewModels;
 
 namespace Dfe.PrepareConversions.Utils;
@@ -18,7 +18,10 @@ public static class SignificantChangeProjectListHelper
          AssignedUser = significantChangeProject.AssignedUser,
          TypeOfSignificantChange = significantChangeProject.TypeOfSignificantChange,
          Status = MapProjectStatus(significantChangeProject.Status),
-         StatusColour = MapProjectStatusColour(significantChangeProject.Status)
+         StatusColour = MapProjectStatusColour(significantChangeProject.Status),
+         StakeholderConsultationStatus = significantChangeProject.StakeholderConsultation?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         StakeholderConsultationTrustConsultedStakeholders = significantChangeProject.StakeholderConsultation?.TrustConsultedStakeholders,
+         StakeholderConsultationTrustConsultedStakeholdersNotConsultedReason = significantChangeProject.StakeholderConsultation?.TrustConsultedStakeholdersNotConsultedReason ?? string.Empty
       };
    }
 

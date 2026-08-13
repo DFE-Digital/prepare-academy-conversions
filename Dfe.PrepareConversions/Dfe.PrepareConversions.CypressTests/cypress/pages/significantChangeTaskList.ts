@@ -23,6 +23,18 @@ class SignificantChangeTaskList extends BasePage {
 
         return this;
     }
+
+    public verifyTaskListContentLayout(): this {
+        cy.contains('h2', 'Change tasks')
+            .should('be.visible')
+            .parent()
+            .should('have.class', 'govuk-grid-column-two-thirds')
+            .and('not.have.class', 'govuk-grid-column-full');
+
+        cy.get('.app-task-list').should('be.visible');
+
+        return this;
+    }
 }
 
 const significantChangeTaskList = new SignificantChangeTaskList();

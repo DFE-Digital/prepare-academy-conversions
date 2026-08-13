@@ -26,6 +26,7 @@ describe('Significant change task list', () => {
                     // so the id must not be anchored to the end of the URL.
                     cy.url().should('match', /\/significant-change\/task-list\/\d+(\?.*)?$/);
                     significantChangeTaskList.verifyHeaderAndSubNavigation();
+                    significantChangeTaskList.verifyTaskListContentLayout();
                 } else {
                     cy.contains('There are no matching results.').should('be.visible');
                 }

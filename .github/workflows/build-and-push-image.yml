@@ -102,6 +102,8 @@ jobs:
     name: Tag and release
     needs: [ set-env, deploy ]
     runs-on: ubuntu-24.04
+    permissions:
+        contents: write
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
@@ -146,6 +148,10 @@ jobs:
       TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
 
   security-tests:
+    permissions:
+      id-token: write
+      contents: read
+      packages: read
     name: Run Cypress tests with OWASP ZAP
     if: needs.set-env.outputs.environment == 'dev'
     needs: [ deploy, set-env ]
