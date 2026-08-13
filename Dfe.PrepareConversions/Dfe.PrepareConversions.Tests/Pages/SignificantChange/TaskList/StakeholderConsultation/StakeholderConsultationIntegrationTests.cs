@@ -23,7 +23,7 @@ public class StakeholderConsultationIntegrationTests(IntegrationTestingWebApplic
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/stakeholder-consultation");
 
-      Document.QuerySelector<IHtmlHeadingElement>("h1")!.TextContent.Trim().Should().Be("Consult stakeholders");
+      Document.QuerySelector<IHtmlHeadingElement>("h1")!.TextContent.Trim().Should().Be("Stakeholder consultation");
       Document.QuerySelector<IHtmlInputElement>("#trust-consulted-stakeholders-no")!.IsChecked.Should().BeTrue();
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='trust-consulted-stakeholders-not-consulted-reason']")!.Value
          .Should().Be("Consultation is planned after trustee meeting");
@@ -83,7 +83,7 @@ public class StakeholderConsultationIntegrationTests(IntegrationTestingWebApplic
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}/stakeholder-consultation");
       Document.QuerySelector<IHtmlElement>("#TrustConsultedStakeholdersNotConsultedReason-error")!
-         .TextContent.Should().Contain("Enter why the trust did not consult stakeholders");
+         .TextContent.Should().Contain("Add a reason");
    }
 
    private static SignificantChangeProjectResponse BuildProject(int id)
