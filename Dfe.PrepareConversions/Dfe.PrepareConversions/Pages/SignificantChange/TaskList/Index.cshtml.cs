@@ -14,6 +14,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository) : PageMo
    protected readonly ISignificantChangeProjectRepository _repository = repository;
 
    public SignificantChangeProjectViewBaseModel Project { get; set; }
+   public SignificantChangeTaskListViewModel TaskList { get; set; }
 
    public async Task<IActionResult> OnGetAsync(int id)
    {
@@ -24,6 +25,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository) : PageMo
       }
 
       Project = SignificantChangeProjectListHelper.Build(result.Body);
+      TaskList = SignificantChangeTaskListBuilder.Build(Project);
       return Page();
    }
 }

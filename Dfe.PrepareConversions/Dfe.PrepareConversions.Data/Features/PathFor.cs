@@ -1,4 +1,4 @@
-﻿using Microsoft.FeatureManagement;
+using Microsoft.FeatureManagement;
 
 namespace Dfe.PrepareConversions.Data.Features;
 
@@ -47,4 +47,5 @@ public class PathFor
    public static string GetSignificantChangeProjectById => "/significant-change/{0}";
    public static string GetAllSignificantChangeProjects => "/significant-change/search";
    public static string SetSignificantChangeAssignedUser => "/significant-change/{0}/SetAssignedUser";
+   public static string SetSignificantChangeStakeholderConsultation => "/significant-change/{0}/SetStakeholderConsultation";
 }
