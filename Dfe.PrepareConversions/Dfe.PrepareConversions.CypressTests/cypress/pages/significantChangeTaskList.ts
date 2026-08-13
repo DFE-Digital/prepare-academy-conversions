@@ -28,8 +28,8 @@ class SignificantChangeTaskList extends BasePage {
         cy.contains('h2', 'Change tasks')
             .should('be.visible')
             .parent()
-            .should('have.class', 'govuk-grid-column-full')
-            .and('not.have.class', 'govuk-grid-column-two-thirds');
+            .should('have.class', 'govuk-grid-column-two-thirds')
+            .and('not.have.class', 'govuk-grid-column-full');
 
         cy.get('.app-task-list').should('be.visible');
 
