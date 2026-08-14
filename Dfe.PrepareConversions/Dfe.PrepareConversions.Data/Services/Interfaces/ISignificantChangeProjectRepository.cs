@@ -7,13 +7,9 @@ namespace Dfe.PrepareConversions.Data.Services.Interfaces;
 public interface ISignificantChangeProjectRepository
 {
    Task<ApiResponse<SignificantChangeProjectResponse>> CreateProject(CreateSignificantProjectCommand command);
-
    Task<ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>> GetAllProjects(int page, int count);
-
    Task<ApiResponse<SignificantChangeProjectResponse>> GetProjectById(int id);
-
    Task SetAssignedUser(int id, SetAssignedUserSignificantChangeCommand updatedAssignedUser);
-
    Task RecordDecision(SignificantChangeDecision decision);
-
+   Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command);
 }
