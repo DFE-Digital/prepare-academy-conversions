@@ -21,8 +21,18 @@ public static class SignificantChangeTaskListBuilder
                "Stakeholder consultation",
                1,
                Links.SignificantChange.StakeholderConsultation,
-               project => GetTaskStatus(project.StakeholderConsultationStatus))
+               project => GetTaskStatus(project.StakeholderConsultationStatus)),
+            new SignificantChangeTaskDefinition(
+               "consultation-duration",
+               "Consultation duration",
+               2,
+               Links.SignificantChange.ConsultationDuration,
+               project => GetTaskStatus(project.ConsultationDurationStatus))
+               {
+                  IsVisible = project => project.StakeholderConsultationTrustConsultedStakeholders == true
+               }
          ])
+
    ];
 
    public static SignificantChangeTaskListViewModel Build(SignificantChangeProjectViewBaseModel project)

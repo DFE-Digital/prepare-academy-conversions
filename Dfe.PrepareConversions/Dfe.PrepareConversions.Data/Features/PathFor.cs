@@ -48,4 +48,5 @@ public class PathFor
    public static string GetAllSignificantChangeProjects => "/significant-change/search";
    public static string SetSignificantChangeAssignedUser => "/significant-change/{0}/SetAssignedUser";
    public static string SetSignificantChangeStakeholderConsultation => "/significant-change/{0}/SetStakeholderConsultation";
+   public static string SetSignificantChangeConsultationDuration => "/significant-change/{0}/SetConsultationDuration";
 }
