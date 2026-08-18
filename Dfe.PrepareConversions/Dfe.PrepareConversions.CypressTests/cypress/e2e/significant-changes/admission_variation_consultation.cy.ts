@@ -34,7 +34,6 @@ describe('Admission variation consultation', () => {
             });
     });
 
-
     it('Should show validation error when no is selected without a reason', () => {
         cy.visit('/significant-change/project-list');
 
