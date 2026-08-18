@@ -24,7 +24,7 @@ public class AdmissionVariationConsultationIntegrationTests(IntegrationTestingWe
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admission-variation-consultation");
 
       Document.QuerySelector<IHtmlHeadingElement>("h1")!.TextContent.Trim().Should().Be("Admission variation consultation");
-      Document.QuerySelector<IHtmlInputElement>("#consultation-include-admision-variation-no")!.IsChecked.Should().BeTrue();
+      Document.QuerySelector<IHtmlInputElement>("#consultation-include-admission-variation-no")!.IsChecked.Should().BeTrue();
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='consultation-no-admission-variation-reason']")!.Value
          .Should().Be("The consultation focused on governance and implementation approach");
    }
@@ -42,7 +42,7 @@ public class AdmissionVariationConsultationIntegrationTests(IntegrationTestingWe
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admission-variation-consultation");
 
-      Document.QuerySelector<IHtmlInputElement>("#consultation-include-admision-variation-yes")!.IsChecked = true;
+      Document.QuerySelector<IHtmlInputElement>("#consultation-include-admission-variation-yes")!.IsChecked = true;
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");
@@ -62,7 +62,7 @@ public class AdmissionVariationConsultationIntegrationTests(IntegrationTestingWe
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admission-variation-consultation");
 
-      Document.QuerySelector<IHtmlInputElement>("#consultation-include-admision-variation-no")!.IsChecked = true;
+      Document.QuerySelector<IHtmlInputElement>("#consultation-include-admission-variation-no")!.IsChecked = true;
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='consultation-no-admission-variation-reason']")!.Value = reason;
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
@@ -77,7 +77,7 @@ public class AdmissionVariationConsultationIntegrationTests(IntegrationTestingWe
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admission-variation-consultation");
 
-      Document.QuerySelector<IHtmlInputElement>("#consultation-include-admision-variation-no")!.IsChecked = true;
+      Document.QuerySelector<IHtmlInputElement>("#consultation-include-admission-variation-no")!.IsChecked = true;
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='consultation-no-admission-variation-reason']")!.Value = "";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 

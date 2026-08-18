@@ -20,24 +20,24 @@
       <div class="govuk-radios" data-module="govuk-radios">
          <div class="govuk-radios__item">
             <input asp-for="@Model.ConsultationIncludeAdmissionVariation" class="govuk-radios__input"
-                   id="consultation-include-admision-variation-yes" type="radio" value="true"
-                       data-test="consultation-include-admision-variation-yes" />
-                <label class="govuk-label govuk-radios__label" for="consultation-include-admision-variation-yes">
+                   id="consultation-include-admission-variation-yes" type="radio" value="true"
+                       data-test="consultation-include-admission-variation-yes" />
+                <label class="govuk-label govuk-radios__label" for="consultation-include-admission-variation-yes">
                Yes
             </label>
          </div>
 
          <div class="govuk-radios__item">
                 <input asp-for="@Model.ConsultationIncludeAdmissionVariation" class="govuk-radios__input"
-                       id="consultation-include-admision-variation-no" type="radio" value="false"
-                       aria-controls="conditional-include-admision-variation-no"
-                       data-test="consultation-include-admision-variation-no" />
-                <label class="govuk-label govuk-radios__label" for="consultation-include-admision-variation-no">
+                       id="consultation-include-admission-variation-no" type="radio" value="false"
+                       aria-controls="conditional-include-admission-variation-no"
+                       data-test="consultation-include-admission-variation-no" />
+                <label class="govuk-label govuk-radios__label" for="consultation-include-admission-variation-no">
                No
             </label>
          </div>
 
-            <div class="govuk-radios__conditional" id="conditional-include-admision-variation-no">
+            <div class="govuk-radios__conditional" id="conditional-include-admission-variation-no">
             <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
                     <label class="govuk-label" for="ConsultationNoAdmissionVariationReason">
                   Use this area for additional information relating to mitigations, actions and further investigations.
