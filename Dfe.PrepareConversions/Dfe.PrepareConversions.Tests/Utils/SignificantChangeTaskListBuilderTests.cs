@@ -60,7 +60,58 @@ public class SignificantChangeTaskListBuilderTests
       Assert.Equal(TaskListItemViewModel.NotStarted, result.Sections[0].Tasks[0].Status);
    }
 
-   private static SignificantChangeProjectViewBaseModel BuildProject(SignificantChangeTaskStatus stakeholderConsultationStatus = SignificantChangeTaskStatus.NotStarted)
+      [Theory]
+   [InlineData(null)]
+   [InlineData(false)]
+   public void Build_Hides_consultation_duration_when_stakeholders_were_not_consulted(bool? trustConsultedStakeholders)
+   {
+      SignificantChangeProjectViewBaseModel project = BuildProject(trustConsultedStakeholders: trustConsultedStakeholders);
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      Assert.Single(result.Sections[0].Tasks);
+      Assert.Equal("stakeholder-consultation", result.Sections[0].Tasks[0].Key);
+   }
+
+   [Fact]
+   public void Build_Shows_consultation_duration_after_stakeholder_consultation_when_consulted()
+   {
+      SignificantChangeProjectViewBaseModel project = BuildProject(trustConsultedStakeholders: true);
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      Assert.Equal(2, result.Sections[0].Tasks.Count);
+      Assert.Equal("stakeholder-consultation", result.Sections[0].Tasks[0].Key);
+      Assert.Equal("consultation-duration", result.Sections[0].Tasks[1].Key);
+      Assert.Equal("Consultation duration", result.Sections[0].Tasks[1].Title);
+   }
+
+   [Theory]
+   [InlineData(SignificantChangeTaskStatus.NotStarted)]
+   [InlineData(SignificantChangeTaskStatus.InProgress)]
+   [InlineData(SignificantChangeTaskStatus.Completed)]
+   public void Build_Maps_consultation_duration_status(SignificantChangeTaskStatus status)
+   {
+      SignificantChangeProjectViewBaseModel project = BuildProject(
+         trustConsultedStakeholders: true,
+         consultationDurationStatus: status);
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      TaskListItemViewModel expected = status switch
+      {
+         SignificantChangeTaskStatus.Completed => TaskListItemViewModel.Completed,
+         SignificantChangeTaskStatus.InProgress => TaskListItemViewModel.InProgress,
+         _ => TaskListItemViewModel.NotStarted
+      };
+
+      Assert.Equal(expected, result.Sections[0].Tasks[1].Status);
+   }
+
+   private static SignificantChangeProjectViewBaseModel BuildProject(
+      SignificantChangeTaskStatus stakeholderConsultationStatus = SignificantChangeTaskStatus.NotStarted,
+      bool? trustConsultedStakeholders = null,
+      SignificantChangeTaskStatus consultationDurationStatus = SignificantChangeTaskStatus.NotStarted)
    {
       return new SignificantChangeProjectViewBaseModel
       {
@@ -73,7 +124,9 @@ public class SignificantChangeTaskListBuilderTests
          TypeOfSignificantChange = "Route A",
          Status = "Pre decision",
          StatusColour = "yellow",
-         StakeholderConsultationStatus = stakeholderConsultationStatus
+         StakeholderConsultationStatus = stakeholderConsultationStatus,
+         StakeholderConsultationTrustConsultedStakeholders = trustConsultedStakeholders,
+         ConsultationDurationStatus = consultationDurationStatus
       };
    }
 }

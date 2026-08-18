@@ -79,4 +79,53 @@ public class SignificantChangeProjectListHelperTests
 
       Assert.Equal(expectedColour, result);
    }
+
+      [Fact]
+   public void Build_Maps_nested_consultation_duration_values()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         Status = "pre decision",
+         ConsultationDuration = new SignificantChangeConsultationDurationResponse
+         {
+            ConsultationLastedMinimumThreeWeeks = ConsultationDurationAnswer.No,
+            ConsultationDurationNotMetReason = "Consultation ran for two weeks only",
+            Status = SignificantChangeTaskStatus.Completed
+         }
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.Equal(ConsultationDurationAnswer.No, viewModel.ConsultationLastedMinimumThreeWeeks);
+      Assert.Equal("Consultation ran for two weeks only", viewModel.ConsultationDurationNotMetReason);
+      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.ConsultationDurationStatus);
+   }
+
+   [Fact]
+   public void Build_Defaults_consultation_duration_when_section_is_missing()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         Status = "pre decision",
+         ConsultationDuration = null
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.Null(viewModel.ConsultationLastedMinimumThreeWeeks);
+      Assert.Equal(string.Empty, viewModel.ConsultationDurationNotMetReason);
+      Assert.Equal(SignificantChangeTaskStatus.NotStarted, viewModel.ConsultationDurationStatus);
+   }
 }

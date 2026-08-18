@@ -313,4 +313,50 @@ public class SignificantChangeProjectRepositoryTests
 
       exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetConsultationDuration_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 78;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeConsultationDuration, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeConsultationDurationCommand command = new(ConsultationDurationAnswer.No, "Consultation ran for two weeks only");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeConsultationDurationCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetConsultationDuration(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeConsultationDurationCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetConsultationDuration_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 78;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeConsultationDuration, id);
+      SetSignificantChangeConsultationDurationCommand command = new(ConsultationDurationAnswer.No, "Reason");
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeConsultationDurationCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetConsultationDuration(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
 }
