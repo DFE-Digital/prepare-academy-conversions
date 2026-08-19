@@ -65,6 +65,33 @@ public class SignificantChangeProjectListHelperTests
       Assert.Equal(SignificantChangeTaskStatus.InProgress, viewModel.StakeholderConsultationStatus);
    }
 
+   [Fact]
+   public void Build_Maps_nested_admission_variation_values()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         Status = "pre decision",
+         AdmissionVariationConsultation = new SignificantChangeAdmissionVariationConsultationResponse
+         {
+            ConsultationIncludeAdmissionVariation = false,
+            ConsultationNoAdmissionVariationReason = "Consultation focused on governance only",
+            Status = SignificantChangeTaskStatus.Completed
+         }
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.False(viewModel.ConsultationIncludeAdmissionVariation);
+      Assert.Equal("Consultation focused on governance only", viewModel.ConsultationNoAdmissionVariationReason);
+      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.AdmissionVariationStatus);
+   }
+
    [Theory]
    [InlineData("approved", "green")]
    [InlineData("approved with conditions", "green")]

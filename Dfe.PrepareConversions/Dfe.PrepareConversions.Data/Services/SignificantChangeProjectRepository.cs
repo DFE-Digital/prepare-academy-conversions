@@ -106,4 +106,20 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+   public async Task SetAdmissionVariationConsultation(int id, SetSignificantChangeAdmissionVariationConsultationCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetAdmissionVariationConsultation, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeAdmissionVariationConsultationCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
 }

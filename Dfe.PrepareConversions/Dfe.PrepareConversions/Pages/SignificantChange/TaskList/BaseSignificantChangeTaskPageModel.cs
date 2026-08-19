@@ -11,8 +11,6 @@ namespace Dfe.PrepareConversions.Pages.SignificantChange.TaskList;
 
 public abstract class BaseSignificantChangeTaskPageModel(ISignificantChangeProjectRepository repository) : PageModel
 {
-   private readonly ISignificantChangeProjectRepository _repository = repository;
-
    public SignificantChangeProjectViewBaseModel Project { get; private set; }
 
    protected abstract string TaskTitle { get; }
@@ -24,7 +22,7 @@ public abstract class BaseSignificantChangeTaskPageModel(ISignificantChangeProje
 
    protected async Task<IActionResult> SetProjectAndMetadata(int id)
    {
-      var result = await _repository.GetProjectById(id);
+      var result = await repository.GetProjectById(id);
 
       if (result.StatusCode == HttpStatusCode.NotFound || result.Body == null)
          return NotFound();

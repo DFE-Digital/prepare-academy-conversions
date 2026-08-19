@@ -16,4 +16,6 @@ public interface ISignificantChangeProjectRepository
 
    Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command);
 
+   Task SetAdmissionVariationConsultation(int id, SetSignificantChangeAdmissionVariationConsultationCommand command);
+
 }

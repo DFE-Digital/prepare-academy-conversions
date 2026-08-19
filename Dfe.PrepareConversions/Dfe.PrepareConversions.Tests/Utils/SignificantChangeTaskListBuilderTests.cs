@@ -1,6 +1,7 @@
 using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
+using System.Linq;
 using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Utils;
@@ -8,46 +9,61 @@ namespace Dfe.PrepareConversions.Tests.Utils;
 public class SignificantChangeTaskListBuilderTests
 {
    [Fact]
-   public void Build_Includes_consultation_section_with_stakeholder_consultation_task()
+   public void Build_Includes_consultation_section_with_expectedTasks()
    {
+      string[] expectedTasks = [
+         "stakeholder-consultation",
+         "admission-variation-consultation"
+      ];
+
       SignificantChangeProjectViewBaseModel project = BuildProject();
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
       Assert.Single(result.Sections);
       Assert.Equal("consultation", result.Sections[0].Key);
-      Assert.Single(result.Sections[0].Tasks);
-      Assert.Equal("stakeholder-consultation", result.Sections[0].Tasks[0].Key);
+      Assert.Equal(expectedTasks.Length, result.Sections[0].Tasks.Count);
+      Assert.Equal(expectedTasks, result.Sections[0].Tasks.Select(t => t.Key));
    }
+
 
    [Fact]
    public void Build_Sets_task_status_to_completed_when_status_is_completed()
    {
-      SignificantChangeProjectViewBaseModel project = BuildProject(stakeholderConsultationStatus: SignificantChangeTaskStatus.Completed);
+      SignificantChangeProjectViewBaseModel project = BuildProject(
+         stakeholderConsultationStatus: SignificantChangeTaskStatus.Completed,
+         admissionVariationStatus: SignificantChangeTaskStatus.Completed);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
       Assert.Equal(TaskListItemViewModel.Completed, result.Sections[0].Tasks[0].Status);
+      Assert.Equal(TaskListItemViewModel.Completed, result.Sections[0].Tasks[1].Status);
    }
 
    [Fact]
    public void Build_Sets_task_status_to_in_progress_when_status_is_in_progress()
    {
-      SignificantChangeProjectViewBaseModel project = BuildProject(stakeholderConsultationStatus: SignificantChangeTaskStatus.InProgress);
+      SignificantChangeProjectViewBaseModel project = BuildProject(
+         stakeholderConsultationStatus: SignificantChangeTaskStatus.InProgress,
+         admissionVariationStatus: SignificantChangeTaskStatus.InProgress);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
       Assert.Equal(TaskListItemViewModel.InProgress, result.Sections[0].Tasks[0].Status);
+      Assert.Equal(TaskListItemViewModel.InProgress, result.Sections[0].Tasks[1].Status);
    }
 
    [Fact]
    public void Build_Sets_task_status_to_not_started_when_status_is_not_started()
    {
-      SignificantChangeProjectViewBaseModel project = BuildProject(stakeholderConsultationStatus: SignificantChangeTaskStatus.NotStarted);
+      SignificantChangeProjectViewBaseModel project = BuildProject(
+         stakeholderConsultationStatus: SignificantChangeTaskStatus.NotStarted,
+         admissionVariationStatus: SignificantChangeTaskStatus.NotStarted);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
       Assert.Equal(TaskListItemViewModel.NotStarted, result.Sections[0].Tasks[0].Status);
+      Assert.Equal(TaskListItemViewModel.NotStarted, result.Sections[0].Tasks[1].Status);
    }
 
    [Fact]
@@ -58,9 +74,12 @@ public class SignificantChangeTaskListBuilderTests
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(defaultStatusProject);
 
       Assert.Equal(TaskListItemViewModel.NotStarted, result.Sections[0].Tasks[0].Status);
+      Assert.Equal(TaskListItemViewModel.NotStarted, result.Sections[0].Tasks[1].Status);
    }
 
-   private static SignificantChangeProjectViewBaseModel BuildProject(SignificantChangeTaskStatus stakeholderConsultationStatus = SignificantChangeTaskStatus.NotStarted)
+   private static SignificantChangeProjectViewBaseModel BuildProject(
+      SignificantChangeTaskStatus stakeholderConsultationStatus = SignificantChangeTaskStatus.NotStarted,
+      SignificantChangeTaskStatus admissionVariationStatus = SignificantChangeTaskStatus.NotStarted)
    {
       return new SignificantChangeProjectViewBaseModel
       {
@@ -73,7 +92,8 @@ public class SignificantChangeTaskListBuilderTests
          TypeOfSignificantChange = "Route A",
          Status = "Pre decision",
          StatusColour = "yellow",
-         StakeholderConsultationStatus = stakeholderConsultationStatus
+         StakeholderConsultationStatus = stakeholderConsultationStatus,
+         AdmissionVariationStatus = admissionVariationStatus
       };
    }
 }
