@@ -178,6 +178,12 @@ public sealed class TaskListItemViewModel : IEquatable<TaskListItemViewModel>
       return InProgress;
    }
 
+   
+public static TaskListItemViewModel GetRequestFinancialHealthAssessmentTaskListStatus(ProjectViewModel project)
+{
+   return project.HeadTeacherBoardDate.HasValue ? Completed : NotStarted;
+}
+
    public static TaskListItemViewModel PublicSectorEqualityDutyStatus(bool sectionComplete, string publicEqualityDutyImpact, string publicEqualityDutyReductionReason)
    {
       bool isPsedValid = PreviewPublicSectorEqualityDutyModel.IsValid(publicEqualityDutyImpact, publicEqualityDutyReductionReason, sectionComplete);

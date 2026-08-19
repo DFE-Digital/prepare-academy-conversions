@@ -1,3 +1,5 @@
+using System;
+
 namespace Dfe.PrepareTransfers.Data.Models.Projects
 {
     public class TransferDates
@@ -5,6 +7,7 @@ namespace Dfe.PrepareTransfers.Data.Models.Projects
         public string Target { get; set; }
         public string Htb { get; set; }
         public string PreviousAdvisoryBoardDate { get; set; }
+        public DateTime? SfsoCommissioningRequestedDate { get; set; }
 
 
         public bool? HasHtbDate { get; set; }

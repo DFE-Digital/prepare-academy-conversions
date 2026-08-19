@@ -1,3 +1,5 @@
+using System;
+
 namespace Dfe.PrepareTransfers.Data.TRAMS.Models.AcademyTransferProject
 {
     public class AcademyTransferProjectDates
@@ -8,5 +10,6 @@ namespace Dfe.PrepareTransfers.Data.TRAMS.Models.AcademyTransferProject
         public string TargetDateForTransfer { get; set; }
         public bool? HasTargetDateForTransfer { get; set; }
         public bool? IsCompleted { get; set; }
+        public DateTime? SfsoCommissioningRequestedDate { get; set; }
     }
 }

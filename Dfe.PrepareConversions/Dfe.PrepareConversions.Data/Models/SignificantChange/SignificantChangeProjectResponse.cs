@@ -11,4 +11,5 @@ public class SignificantChangeProjectResponse
    public User AssignedUser { get; set; }
    public required string TypeOfSignificantChange { get; set; }
    public required string Status { get; set; }
+   public SignificantChangeStakeholderConsultationResponse StakeholderConsultation { get; set; } = new();
 }

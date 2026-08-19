@@ -34,6 +34,9 @@ public class ProjectViewModel : ProjectTypeBase
       LocalAuthorityInformationTemplateLink = project.LocalAuthorityInformationTemplateLink;
       LocalAuthorityInformationTemplateSectionComplete = project.LocalAuthorityInformationTemplateSectionComplete ?? false;
 
+      SfsoCommissioningRequestedDate = project.SfsoCommissioningRequestedDate;
+      SfsoCommissioningOverview = project.SfsoCommissioningOverview;
+
       RecommendationForProject = project.RecommendationForProject;
       RecommendationNotesForProject = project.RecommendationNotesForProject;
       Author = project.Author;
@@ -164,6 +167,10 @@ public class ProjectViewModel : ProjectTypeBase
    public string LocalAuthorityInformationTemplateComments { get; set; }
    public string LocalAuthorityInformationTemplateLink { get; set; }
    public bool LocalAuthorityInformationTemplateSectionComplete { get; set; }
+
+   // SFSO commissioning / Financial Health Assessment
+   public DateTime? SfsoCommissioningRequestedDate { get; set; }
+   public string SfsoCommissioningOverview { get; set; }
 
    //school/trust info
    public string RecommendationForProject { get; set; }

@@ -17,10 +17,13 @@ public class ClearedByIntegrationTests : BaseIntegrationTests
    [Fact]
    public async Task Should_navigate_to_and_update_cleared_by()
    {
+      var originalClearedBy = _fixture.Create<string>();
+
       var project = AddGetProject(x =>
       {
          x.AcademyTypeAndRoute = AcademyTypeAndRoutes.Voluntary;
          x.ApplicationReceivedDate = new DateTime(2024, 12, 20, 23, 59, 59, DateTimeKind.Utc); // Before deadline
+         x.ClearedBy = originalClearedBy;
       });
 
       UpdateAcademyConversionProject request = AddPatchConfiguredProject(project, x =>

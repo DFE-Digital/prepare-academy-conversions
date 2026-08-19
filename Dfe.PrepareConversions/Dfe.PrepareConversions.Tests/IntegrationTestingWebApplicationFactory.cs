@@ -81,6 +81,7 @@ public class IntegrationTestingWebApplicationFactory : WebApplicationFactory<Sta
                { "AzureAd:AllowedRoles", string.Empty }, // Do not restrict access for integration test
                { "ServiceLink:TransfersUrl", "https://an-external-service.com/" },
                { "EnableDistributedCache", "false" },
+               { "FeatureManagement:ShowFHAPage", "true" },
                { "FeatureManagement:ShowSignificantChangesNavigationItem", "true" }
             })
             .AddEnvironmentVariables();

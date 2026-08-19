@@ -63,7 +63,65 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       statusTag.ClassName.Should().Contain("govuk-tag--yellow");
    }
 
-   private static SignificantChangeProjectResponse BuildProject(int id, string status, User assignedUser)
+   [Fact]
+   public async Task Should_render_ordered_task_sections_and_links()
+   {
+      SignificantChangeProjectResponse project = BuildProject(
+         id: 103,
+         status: "pre decision",
+         assignedUser: null);
+
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
+
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
+
+      Document.QuerySelectorAll("h3.app-task-list__section").Select(x => x.TextContent.Trim())
+         .Should().ContainSingle().Which.Should().Be("Consultation");
+
+      var stakeholderConsultationLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Stakeholder consultation"));
+
+      stakeholderConsultationLink.Should().NotBeNull();
+      stakeholderConsultationLink!.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/stakeholder-consultation");
+
+      Document.QuerySelectorAll("a").Any(a => a.TextContent != null && a.TextContent.Contains("Gather trust feedback"))
+         .Should().BeFalse();
+
+      Document.QuerySelectorAll("a").Any(a => a.TextContent != null && a.TextContent.Contains("Record rationale"))
+         .Should().BeFalse();
+
+      var statusTag = Document.QuerySelector("#task-status-stakeholder-consultation");
+      statusTag.Should().NotBeNull();
+      statusTag!.TextContent.Should().Contain("Not started");
+   }
+
+   [Fact]
+   public async Task Should_show_stakeholder_consultation_task_as_completed_when_status_is_completed()
+   {
+      SignificantChangeProjectResponse project = BuildProject(
+         id: 104,
+         status: "pre decision",
+         assignedUser: null,
+         route: "Route B",
+         stakeholderConsultationStatus: SignificantChangeTaskStatus.Completed);
+
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
+
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
+
+      var statusTag = Document.QuerySelector("#task-status-stakeholder-consultation");
+      statusTag.Should().NotBeNull();
+      statusTag!.TextContent.Should().Contain("Completed");
+   }
+
+   private static SignificantChangeProjectResponse BuildProject(
+      int id,
+      string status,
+      User assignedUser,
+      string route = "Route A",
+      SignificantChangeTaskStatus stakeholderConsultationStatus = SignificantChangeTaskStatus.NotStarted,
+      bool? trustConsultedStakeholders = null,
+      string trustConsultedStakeholdersNotConsultedReason = null)
    {
       return new SignificantChangeProjectResponse
       {
@@ -74,8 +132,14 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
          TrustName = "Example Trust",
          TrustUkprn = "12345678",
          AssignedUser = assignedUser,
-         TypeOfSignificantChange = "Route A",
-         Status = status
+         TypeOfSignificantChange = route,
+         Status = status,
+         StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
+         {
+            Status = stakeholderConsultationStatus,
+            TrustConsultedStakeholders = trustConsultedStakeholders,
+            TrustConsultedStakeholdersNotConsultedReason = trustConsultedStakeholdersNotConsultedReason
+         }
       };
    }
 }

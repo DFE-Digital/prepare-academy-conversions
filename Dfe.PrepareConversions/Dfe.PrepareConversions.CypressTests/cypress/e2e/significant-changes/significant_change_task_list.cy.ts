@@ -22,8 +22,11 @@ describe('Significant change task list', () => {
                 if (count > 0) {
                     cy.getById('school-name-0').click();
 
-                    cy.url().should('match', /\/significant-change\/task-list\/\d+$/);
+                    // The app appends a query string (e.g. ?returnToFormAMatMenu=False),
+                    // so the id must not be anchored to the end of the URL.
+                    cy.url().should('match', /\/significant-change\/task-list\/\d+(\?.*)?$/);
                     significantChangeTaskList.verifyHeaderAndSubNavigation();
+                    significantChangeTaskList.verifyTaskListContentLayout();
                 } else {
                     cy.contains('There are no matching results.').should('be.visible');
                 }

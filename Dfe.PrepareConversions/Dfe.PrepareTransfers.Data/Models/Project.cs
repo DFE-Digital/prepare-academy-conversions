@@ -47,6 +47,9 @@ namespace Dfe.PrepareTransfers.Data.Models
       public string PublicEqualityDutyReduceImpactReason { get; set; }
       public bool? PublicEqualityDutySectionComplete { get; set; }
 
+      // SFSO Commissioning
+      public string SfsoCommissioningOverview { get; set; }
+
       public bool? IsReadOnly { get; set; }
       
       public DateTime? ProjectSentToCompleteDate { get; set; }

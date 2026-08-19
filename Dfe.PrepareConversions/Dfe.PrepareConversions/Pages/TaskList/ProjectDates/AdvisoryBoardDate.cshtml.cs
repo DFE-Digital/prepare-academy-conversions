@@ -57,7 +57,13 @@ public class AdvisoryBoardDateModel : BaseAcademyConversionProjectPageModel, IDa
          return await base.OnGetAsync(id);
       }
 
-      var projectDatesModel = new SetProjectDatesModel(id, AdvisoryBoardDate, Project.PreviousHeadTeacherBoardDate, Project.ProposedConversionDate, Project.ProjectDatesSectionComplete);
+      var projectDatesModel = new SetProjectDatesModel(
+         id, 
+         AdvisoryBoardDate, 
+         Project.PreviousHeadTeacherBoardDate, 
+         Project.ProposedConversionDate, 
+         Project.ProjectDatesSectionComplete
+         );
 
       await _repository.SetProjectDates(id, projectDatesModel);
 

@@ -102,6 +102,7 @@ public static class Links
       public static readonly LinkItem ListView = AddLinkItem(backText: "Back", page: "/SignificantChange/ProjectList/Index");
       public static readonly LinkItem SignificantChangeTaskList = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Index");
       public static readonly LinkItem SignificantChangeProjectAssignment = AddLinkItem(backText: "Back", page: "/SignificantChange/ProjectAssignment/Index");
+      public static readonly LinkItem StakeholderConsultation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/StakeholderConsultation/Index");
    }
 
    public static class FormAMat
@@ -204,6 +205,11 @@ public static class Links
       public static readonly LinkItem ConfirmSchoolBudgetInformation = AddLinkItem(page: "/TaskList/SchoolBudgetInformation/Budget");
       public static readonly LinkItem UpdateSchoolBudgetInformation = AddLinkItem(page: "/TaskList/SchoolBudgetInformation/UpdateSchoolBudgetInformation");
       public static readonly LinkItem AdditionalInformation = AddLinkItem(page: "/TaskList/SchoolBudgetInformation/AdditionalInformation");
+   }
+
+   public static class FinancialsSection
+   {
+      public static readonly LinkItem RequestFinancialHealthAssessment = AddLinkItem(page: "/TaskList/RequestFinancialHealthAssessment/RequestFinancialHealthAssessment");
    }
 
    public static class SchoolPupilForecastsSection

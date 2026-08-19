@@ -74,6 +74,7 @@ public interface IAcademyConversionProjectRepository
    Task<ApiResponse<IEnumerable<SchoolImprovementPlan>>> GetSchoolImprovementPlansForProject(int id);
    Task UpdateSchoolImprovementPlan(int id, UpdateSchoolImprovementPlan updateSchoolImprovementPlan);
    Task SetProjectDates(int id, SetProjectDatesModel updatedProjectDates);
+   Task SetSfsoCommissioning(int id, SetSfsoCommissioningModel model);
    Task<ApiResponse<IEnumerable<OpeningDateHistoryDto>>> GetOpeningDateHistoryForConversionProject(int id);
 
    Task<ApiResponse<ApiV2Wrapper<IEnumerable<ProjectGroup>>>> GetProjectGroups(

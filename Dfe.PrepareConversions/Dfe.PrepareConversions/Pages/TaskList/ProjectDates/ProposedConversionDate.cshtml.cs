@@ -64,7 +64,12 @@ public class ProposedConversionDate : BaseAcademyConversionProjectPageModel
       if (!Project.ProposedConversionDate.HasValue)
       {
          var parsedConversionDate = DateTime.Parse(conversionDate);
-         var projectDatesModel = new SetProjectDatesModel(id, Project.HeadTeacherBoardDate, Project.PreviousHeadTeacherBoardDate, parsedConversionDate, Project.ProjectDatesSectionComplete);
+         var projectDatesModel = new SetProjectDatesModel(
+            id, 
+            Project.HeadTeacherBoardDate, 
+            Project.PreviousHeadTeacherBoardDate, 
+            parsedConversionDate, 
+            Project.ProjectDatesSectionComplete);
 
          await _repository.SetProjectDates(id, projectDatesModel);
 

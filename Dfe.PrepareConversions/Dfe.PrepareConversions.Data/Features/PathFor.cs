@@ -1,4 +1,4 @@
-﻿using Microsoft.FeatureManagement;
+using Microsoft.FeatureManagement;
 
 namespace Dfe.PrepareConversions.Data.Features;
 
@@ -39,6 +39,7 @@ public class PathFor
    public static string SearchFormAMatProjects => "/conversion-project/search-formamatprojects";
    public static string SetFormAMatProjectReference => "/conversion-project/{0}/SetFormAMatProjectReference";
    public static string SetProjectDates => "/conversion-project/{0}/SetProjectDates";
+   public static string SetSfsoCommissioning => "/conversion-project/{0}/sfso-commissioning";
    public static string GetOpeningDateHistoryForConversionProject => "/conversion-project/{0}/conversion-date-history";
    public static string CreateNewProjectGroup => "/project-group/create-project-group";
    public static string GetProjectGroups => "/project-group/get-project-groups";
@@ -47,4 +48,5 @@ public class PathFor
    public static string GetAllSignificantChangeProjects => "/significant-change/search";
    public static string GetSignificantChangeFilterParameters => "/significant-change/filter-parameters";
    public static string SetSignificantChangeAssignedUser => "/significant-change/{0}/SetAssignedUser";
+   public static string SetSignificantChangeStakeholderConsultation => "/significant-change/{0}/SetStakeholderConsultation";
 }

@@ -1,5 +1,6 @@
 import { AcademisationApiKey, AcademisationApiUrl } from '../constants/cypressConstants';
 import FormBasePage from './formBasePage';
+import { joinApiUrl } from '../support/urls';
 
 class NewTransferProjectWithDecisions extends FormBasePage {
     public path = 'transfers';
@@ -86,7 +87,8 @@ class NewTransferProjectWithDecisions extends FormBasePage {
     }
 
     public deleteProject(projectId: string): this {
-        const deleteUrl = `${Cypress.expose(AcademisationApiUrl)}/transfer-project/${projectId}/delete`;
+        // const deleteUrl = `${Cypress.expose(AcademisationApiUrl)}/transfer-project/${projectId}/delete`;
+        const deleteUrl = joinApiUrl(Cypress.expose(AcademisationApiUrl), `transfer-project/${projectId}/delete`);
         cy.env([AcademisationApiKey]).then(({ academisationApiKey }) => {
             cy.request({
                 method: 'DELETE',

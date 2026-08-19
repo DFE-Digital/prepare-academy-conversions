@@ -132,4 +132,20 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+   public async Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeStakeholderConsultation, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeStakeholderConsultationCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
 }

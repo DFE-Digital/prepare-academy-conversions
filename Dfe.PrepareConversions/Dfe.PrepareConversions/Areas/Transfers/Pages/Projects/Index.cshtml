@@ -3,10 +3,14 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using NetEscapades.AspNetCore.SecurityHeaders.TagHelpers
 @using Dfe.PrepareTransfers.Web.Dfe.PrepareTransfers.Helpers.TagHelpers
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
 @model Dfe.PrepareTransfers.Web.Pages.Projects.Index
 @{
     Layout = "_Layout";
     ViewBag.Title = Model.IncomingTrustName;
+    var showFHANaviLink = Configuration.GetValue<bool>("FeatureManagement:ShowFHAPage");
 }
 
 @section BeforeMain
@@ -170,23 +174,37 @@
                 </li>
             }
             <li>
-                <h3 class="moj-task-list__section govuk-!-margin-top-8">
-                    School data
-                </h3>
-                <div class="govuk-inset-text">
-                    This information will be added to your project document automatically
-                </div>
-                <ul class="moj-task-list__items govuk-!-padding-left-0 govuk-!-margin-bottom-6">
-                    @for (int i = 0; i < Model.Academies.Count; i++)
-                    {
-                        <li class="moj-task-list__item">
-                            <span class="moj-task-list__task-name">
-                                <a data-test="sd-academy-@(i+1)" class="govuk-link" asp-page="/TaskList/SchoolData" asp-route-urn="@Model.Urn" asp-route-academyUkprn="@Model.Academies[i].Item1">@Model.Academies[i].Item2</a>
-                            </span>
-                        </li>
-                    }
-                </ul>
+               <h3 class="moj-task-list__section govuk-!-margin-top-8">
+                  School data
+               </h3>
+               <div class="govuk-inset-text">
+                  This information will be added to your project document automatically
+               </div>
+               <ul class="moj-task-list__items govuk-!-padding-left-0 govuk-!-margin-bottom-6">
+                  @for (int i = 0; i < Model.Academies.Count; i++)
+                  {
+                     <li class="moj-task-list__item">
+                        <span class="moj-task-list__task-name">
+                           <a data-test="sd-academy-@(i+1)" class="govuk-link" asp-page="/TaskList/SchoolData" asp-route-urn="@Model.Urn" asp-route-academyUkprn="@Model.Academies[i].Item1">@Model.Academies[i].Item2</a>
+                        </span>
+                     </li>
+                  }
+               </ul>
             </li>
+
+            @if (showFHANaviLink)
+            {
+               <li>
+                  <h3 class="moj-task-list__section govuk-!-margin-top-8">Financials</h3>
+                  <ul class="moj-task-list__items govuk-!-padding-left-0 govuk-!-margin-bottom-6">
+                     <li class="moj-task-list__item">
+                        <span class="moj-task-list__task-name">
+                           <a class="govuk-link" aria-describedby="financial-health-assessment" asp-page="/Projects/FinancialHealthAssessment/Index" asp-route-urn="@Model.Urn" data-test="transfer-financial-health-assessment">Financial Health Assessment</a>
+                        </span><projectstatus id="financial-health-assessment" status="@Model.FinancialHealthAssessmentStatus"></projectstatus>
+                     </li>
+                  </ul>
+               </li>
+            }
         </ol>
     </div>
 </div>

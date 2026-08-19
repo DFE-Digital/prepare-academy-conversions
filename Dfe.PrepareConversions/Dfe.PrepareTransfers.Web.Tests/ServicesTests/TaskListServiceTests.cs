@@ -350,6 +350,25 @@ namespace Dfe.PrepareTransfers.Web.Tests.ServicesTests
 
         }
 
+        public class GetFinancialHealthAssessmentStatus : TaskListServiceTests
+        {
+            [Fact]
+            public void GivenHtbDateSet_StatusCompleted()
+            {
+                FoundProjectFromRepo.Dates = new TransferDates { Htb = "23/07/2026", HasHtbDate = true };
+                _subject.BuildTaskListStatuses(_index);
+                Assert.Equal(ProjectStatuses.Completed, _index.FinancialHealthAssessmentStatus);
+            }
+
+            [Fact]
+            public void GivenNoHtbDate_StatusNotStarted()
+            {
+                FoundProjectFromRepo.Dates = new TransferDates { HasHtbDate = false };
+                _subject.BuildTaskListStatuses(_index);
+                Assert.Equal(ProjectStatuses.NotStarted, _index.FinancialHealthAssessmentStatus);
+            }
+        }
+
         public class GetBenefitsStatus : TaskListServiceTests
         {
             [Fact]

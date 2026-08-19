@@ -162,6 +162,14 @@ namespace Dfe.PrepareTransfers.Data.TRAMS
          throw new TramsApiException(response);
       }
 
+      public async Task<bool> UpdateSfsoCommissioning(string urn, string overview)
+      {
+         var payload = new { sfsoCommissioningOverview = overview };
+         var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
+         var response = await AcademisationClient.PutAsync($"transfer-project/{urn}/sfso-commissioning", content);
+         return response.IsSuccessStatusCode;
+      }
+
       public async Task<bool> UpdateRationale(Project project)
       {
          var rationale = InternalProjectToUpdateMapper.Rationale(project);
