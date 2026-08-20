@@ -105,6 +105,25 @@ public abstract partial class BaseIntegrationTests
 
       return filterParameters;
    }
+
+   protected SignificantChangeFilterParameters AddGetSignificantChangeFilterParameters()
+   {
+      SignificantChangeFilterParameters filterParameters = new()
+      {
+         Statuses = [new FilterValueDisplay { Value = "PreDecision", Display = "Pre decision" }],
+         AssignedUsers = [new FilterValueDisplay { Value = "Bob", Display = "Bob" }],
+         Tiers =
+         [
+            new FilterValueDisplay { Value = "1", Display = "Tier 1" },
+            new FilterValueDisplay { Value = "2", Display = "Tier 2" }
+         ],
+         Routes = [new FilterValueDisplay { Value = "Change of age range", Display = "Change of age range" }]
+      };
+
+      _factory.AddGetWithJsonResponse(PathFor.GetSignificantChangeFilterParameters, filterParameters);
+
+      return filterParameters;
+   }
    public string SetFinancialDeficit(decimal? revenueCarryForwardAtEndMarchCurrentYear = null)
     => (revenueCarryForwardAtEndMarchCurrentYear ?? _revenueCarryForwardAtEndMarchCurrentYear) < 0
         ? "Yes"
