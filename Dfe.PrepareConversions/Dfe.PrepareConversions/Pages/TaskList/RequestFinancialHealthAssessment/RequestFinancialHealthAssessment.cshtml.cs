@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Pages.TaskList.RequestFinancialHealthAssessment;
 
@@ -29,8 +30,11 @@ public class RequestFinancialHealthAssessmentModel : BaseAcademyConversionProjec
    // The stored request date (null when the proposed decision date is > 15 days away).
    public DateTime? RequestedDate { get; set; }
 
-   // Scenario 1 / 7: no proposed decision date has been entered yet.
-   public bool HasProposedDecisionDate => Project?.HeadTeacherBoardDate.HasValue == true;
+   // Mandatory information still outstanding. Empty == ready to request.
+   public IReadOnlyList<FinancialHealthAssessmentPrerequisite> MissingInformation =>
+      FinancialHealthAssessmentPrerequisites.GetMissing(Project);
+
+   public bool HasAllMandatoryInformation => MissingInformation.Count == 0;
 
    // Stored request date is in the future -> scheduled but not yet sent.
    public bool RequestWillBeSent => RequestedDate.HasValue && RequestedDate.Value.Date > DateTime.Today;
