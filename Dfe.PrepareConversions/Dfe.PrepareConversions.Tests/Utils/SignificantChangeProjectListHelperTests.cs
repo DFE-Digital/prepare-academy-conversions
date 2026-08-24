@@ -1,23 +1,12 @@
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Utils;
+using FluentAssertions;
 using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Utils;
 
 public class SignificantChangeProjectListHelperTests
 {
-   [Theory]
-   [InlineData("approved", "Approved")]
-   [InlineData("approved with conditions", "Approved with conditions")]
-   [InlineData("DAO Revoked", "DAO revoked")]
-   [InlineData("something unexpected", "Pre decision")]
-   public void MapProjectStatus_Returns_expected_display_value(string inputStatus, string expectedStatus)
-   {
-      string result = SignificantChangeProjectListHelper.MapProjectStatus(inputStatus);
-
-      Assert.Equal(expectedStatus, result);
-   }
-
    [Fact]
    public void Build_Maps_status_using_shared_status_mapping()
    {
@@ -66,17 +55,31 @@ public class SignificantChangeProjectListHelperTests
    }
 
    [Theory]
-   [InlineData("approved", "green")]
-   [InlineData("approved with conditions", "green")]
-   [InlineData("deferred", "orange")]
-   [InlineData("DAO Revoked", "red")]
-   [InlineData("withdrawn", "purple")]
+   [InlineData("PreDecision", "Pre decision")]
+   [InlineData("Approved", "Approved")]
+   [InlineData("ApprovedWithConditions", "Approved with conditions")]
+   [InlineData("Deferred", "Deferred")]
+   [InlineData("Declined", "Declined")]
+   [InlineData("Withdrawn", "Withdrawn")]
+   [InlineData("approved with conditions", "Approved with conditions")]  // display form still accepted
+   [InlineData("", "Pre decision")]
+   [InlineData("something unexpected", "Pre decision")]
+   public void MapProjectStatus_Returns_expected_display_value(string inputStatus, string expectedStatus)
+   {
+      SignificantChangeProjectListHelper.MapProjectStatus(inputStatus).Should().Be(expectedStatus);
+   }
+
+   [Theory]
+   [InlineData("PreDecision", "yellow")]
+   [InlineData("Approved", "green")]
+   [InlineData("ApprovedWithConditions", "green")]
+   [InlineData("Deferred", "orange")]
+   [InlineData("Declined", "red")]
+   [InlineData("Withdrawn", "purple")]
    [InlineData("", "yellow")]
    [InlineData("unknown", "yellow")]
    public void MapProjectStatusColour_Returns_expected_colour(string inputStatus, string expectedColour)
    {
-      string result = SignificantChangeProjectListHelper.MapProjectStatusColour(inputStatus);
-
-      Assert.Equal(expectedColour, result);
+      SignificantChangeProjectListHelper.MapProjectStatusColour(inputStatus).Should().Be(expectedColour);
    }
 }

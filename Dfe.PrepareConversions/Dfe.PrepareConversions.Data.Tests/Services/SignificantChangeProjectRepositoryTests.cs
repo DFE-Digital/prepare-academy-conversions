@@ -9,7 +9,6 @@ using FluentAssertions;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -366,5 +365,144 @@ public class SignificantChangeProjectRepositoryTests
       ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetStakeholderConsultation(id, command));
 
       exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task GetAllProjects_WithNoFilters_ShouldSendNullForEveryFilterMember(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      GetSignificantProjectsQuery capturedQuery = null;
+
+      httpClientService
+         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+            It.IsAny<HttpClient>(),
+            PathFor.GetAllSignificantChangeProjects,
+            It.IsAny<GetSignificantProjectsQuery>()))
+         .Callback<HttpClient, string, GetSignificantProjectsQuery>((_, _, query) => capturedQuery = query)
+         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.OK, null));
+
+      await sut.GetAllProjects(1, 10);
+
+      capturedQuery.Should().NotBeNull();
+      capturedQuery.Keyword.Should().BeNull();
+      capturedQuery.Status.Should().BeNull();
+      capturedQuery.Assignee.Should().BeNull();
+      capturedQuery.Tier.Should().BeNull();
+      capturedQuery.Route.Should().BeNull();
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task GetAllProjects_WithEmptyFilters_ShouldNormaliseThemToNull(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      GetSignificantProjectsQuery capturedQuery = null;
+
+      httpClientService
+         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+            It.IsAny<HttpClient>(),
+            PathFor.GetAllSignificantChangeProjects,
+            It.IsAny<GetSignificantProjectsQuery>()))
+         .Callback<HttpClient, string, GetSignificantProjectsQuery>((_, _, query) => capturedQuery = query)
+         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.OK, null));
+
+      // Empty arrays and a whitespace-only keyword must not become empty lists — record equality on
+      // List<T> is reference equality, so an empty list breaks request-body matching downstream.
+      await sut.GetAllProjects(1, 10, "   ", [], [], [], []);
+
+      capturedQuery.Keyword.Should().BeNull();
+      capturedQuery.Status.Should().BeNull();
+      capturedQuery.Assignee.Should().BeNull();
+      capturedQuery.Tier.Should().BeNull();
+      capturedQuery.Route.Should().BeNull();
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task GetAllProjects_WithFilters_ShouldSendTrimmedKeywordAndPopulatedLists(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      GetSignificantProjectsQuery capturedQuery = null;
+
+      httpClientService
+         .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
+            It.IsAny<HttpClient>(),
+            PathFor.GetAllSignificantChangeProjects,
+            It.IsAny<GetSignificantProjectsQuery>()))
+         .Callback<HttpClient, string, GetSignificantProjectsQuery>((_, _, query) => capturedQuery = query)
+         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.OK, null));
+
+      await sut.GetAllProjects(
+         2, 20,
+         "  Example School  ",
+         ["PreDecision"],
+         ["Assigned User", "Not assigned"],
+         [1, 3],
+         ["Change of age range"]);
+
+      capturedQuery.Page.Should().Be(2);
+      capturedQuery.Count.Should().Be(20);
+      capturedQuery.Keyword.Should().Be("Example School");
+      capturedQuery.Status.Should().BeEquivalentTo(["PreDecision"]);
+      capturedQuery.Assignee.Should().BeEquivalentTo(["Assigned User", "Not assigned"]);
+      capturedQuery.Tier.Should().BeEquivalentTo([(byte)1, (byte)3]);
+      capturedQuery.Route.Should().BeEquivalentTo(["Change of age range"]);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task GetFilterParameters_WhenApiCallSucceeds_ShouldReturnApiResponseBody(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      HttpClient httpClient = new();
+      SignificantChangeFilterParameters expectedBody = new()
+      {
+         Statuses = [new FilterValueDisplay { Value = "PreDecision", Display = "Pre decision" }],
+         Tiers = [new FilterValueDisplay { Value = "1", Display = "Tier 1" }],
+         AssignedUsers = [new FilterValueDisplay { Value = "Bob", Display = "Bob" }],
+         Routes = [new FilterValueDisplay { Value = "Other", Display = "Other" }]
+      };
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Get<SignificantChangeFilterParameters>(httpClient, PathFor.GetSignificantChangeFilterParameters))
+         .ReturnsAsync(new ApiResponse<SignificantChangeFilterParameters>(HttpStatusCode.OK, expectedBody));
+
+      ApiResponse<SignificantChangeFilterParameters> response = await sut.GetFilterParameters();
+
+      response.StatusCode.Should().Be(HttpStatusCode.OK);
+      response.Body.Should().BeSameAs(expectedBody);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task GetFilterParameters_WhenApiCallFails_ShouldReturnEmptyBodyNotNull(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      httpClientService
+         .Setup(x => x.Get<SignificantChangeFilterParameters>(
+            It.IsAny<HttpClient>(),
+            PathFor.GetSignificantChangeFilterParameters))
+         .ReturnsAsync(new ApiResponse<SignificantChangeFilterParameters>(HttpStatusCode.NotFound, null));
+
+      ApiResponse<SignificantChangeFilterParameters> response = await sut.GetFilterParameters();
+
+      // Fail soft: a missing endpoint must give an empty panel, never a null-reference on the page.
+      response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+      response.Body.Should().NotBeNull();
+      response.Body.Statuses.Should().BeEmpty();
+      response.Body.Tiers.Should().BeEmpty();
+      response.Body.AssignedUsers.Should().BeEmpty();
+      response.Body.Routes.Should().BeEmpty();
    }
 }
