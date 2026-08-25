@@ -11,14 +11,10 @@ using Xunit;
 
 namespace Dfe.PrepareConversions.Tests.Pages.TaskList.Decision;
 
-public class WhyDAONotIssuedIntegrationTests : BaseIntegrationTests, IAsyncLifetime
+public class WhyDAONotIssuedIntegrationTests(IntegrationTestingWebApplicationFactory factory) : BaseIntegrationTests(factory), IAsyncLifetime
 {
    private AcademyConversionProject _project;
    private RecordDecisionWizard _wizard;
-
-   public WhyDAONotIssuedIntegrationTests(IntegrationTestingWebApplicationFactory factory) : base(factory)
-   {
-   }
 
    private string PageHeading => Document.QuerySelector("h1")!.TextContent.Trim();
    private IElement ErrorSummary => Document.QuerySelector(".govuk-error-summary");
@@ -130,9 +126,8 @@ public class WhyDAONotIssuedIntegrationTests : BaseIntegrationTests, IAsyncLifet
 
    private static AdvisoryBoardDAONotIssuedReason ReasonOtherThan(AdvisoryBoardDAONotIssuedReason reason)
    {
-      return Enum.GetValues(typeof(AdvisoryBoardDAONotIssuedReason))
-         .Cast<AdvisoryBoardDAONotIssuedReason>()
-         .Except(new[] { reason })
+      return Enum.GetValues<AdvisoryBoardDAONotIssuedReason>()
+         .Except([reason])
          .First();
    }
 
