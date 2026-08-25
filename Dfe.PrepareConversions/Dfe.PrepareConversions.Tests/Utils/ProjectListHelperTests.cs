@@ -17,13 +17,15 @@ public class ProjectListHelperTests(IntegrationTestingWebApplicationFactory fact
    private const string red = nameof(red);
 
    [Theory]
-   [InlineData("Approved", green)]
-   [InlineData("Deferred", orange)]
-   [InlineData("Declined", red)]
-   public void MapProjectString_Approved_ReturnsCorrectValues(string inputStatus, string expectedColour)
+   [InlineData("Approved", "Approved", green)]
+   [InlineData("Deferred", "Deferred", orange)]
+   [InlineData("Declined", "Declined", red)]
+   [InlineData("DAONotIssued", "DAO not issued", red)]
+   [InlineData("DAORevoked", "DAO revoked", red)]
+   public void MapProjectString_Approved_ReturnsCorrectValues(string inputStatus, string expectedStatus, string expectedColour)
    {
       ProjectStatus actual = ProjectListHelper.MapProjectStatus(inputStatus);
-      Assert.Equivalent(new ProjectStatus(inputStatus, expectedColour), actual);
+      Assert.Equivalent(new ProjectStatus(expectedStatus, expectedColour), actual);
    }
  
    [Fact]
