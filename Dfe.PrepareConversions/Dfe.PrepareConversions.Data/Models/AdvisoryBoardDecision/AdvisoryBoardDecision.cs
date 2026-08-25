@@ -13,6 +13,7 @@ namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
          DeclinedReasons = new List<AdvisoryBoardDeclinedReasonDetails>();
          WithdrawnReasons = new List<AdvisoryBoardWithdrawnReasonDetails>();
          DAORevokedReasons = new List<AdvisoryBoardDAORevokedReasonDetails>();
+         DAONotIssuedReasons = new List<AdvisoryBoardDAONotIssuedReasonDetails>();
       }
 
       public int AdvisoryBoardDecisionId { get; set; }
@@ -23,6 +24,7 @@ namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
       public List<AdvisoryBoardDeferredReasonDetails> DeferredReasons { get; set; }
       public List<AdvisoryBoardWithdrawnReasonDetails> WithdrawnReasons { get; set; }
       public List<AdvisoryBoardDAORevokedReasonDetails> DAORevokedReasons { get; set; }
+      public List<AdvisoryBoardDAONotIssuedReasonDetails> DAONotIssuedReasons { get; set; }
       public DateTime? AdvisoryBoardDecisionDate { get; set; }
       public DecisionMadeBy? DecisionMadeBy { get; set; }
       public DateTime? AcademyOrderDate { get; set; }
@@ -50,6 +52,7 @@ namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
                DeferredReasons.Clear();
                WithdrawnReasons.Clear();
                DAORevokedReasons.Clear();
+               DAONotIssuedReasons.Clear();
                break;
             case AdvisoryBoardDecisions.Declined:
                ApprovedConditionsSet = null;
@@ -57,6 +60,7 @@ namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
                DeferredReasons.Clear();
                WithdrawnReasons.Clear();
                DAORevokedReasons.Clear();
+               DAONotIssuedReasons.Clear();
                break;
             case AdvisoryBoardDecisions.Deferred:
                ApprovedConditionsSet = null;
@@ -64,6 +68,7 @@ namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
                DeclinedReasons.Clear();
                WithdrawnReasons.Clear();
                DAORevokedReasons.Clear();
+               DAONotIssuedReasons.Clear();
                break;
             case AdvisoryBoardDecisions.Withdrawn:
                ApprovedConditionsSet = null;
@@ -71,6 +76,7 @@ namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
                DeclinedReasons.Clear();
                DeferredReasons.Clear();
                DAORevokedReasons.Clear();
+               DAONotIssuedReasons.Clear();
                break;
             case AdvisoryBoardDecisions.DAORevoked:
                ApprovedConditionsSet = null;
@@ -78,6 +84,15 @@ namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
                DeclinedReasons.Clear();
                DeferredReasons.Clear();
                WithdrawnReasons.Clear();
+               DAONotIssuedReasons.Clear();
+               break;
+            case AdvisoryBoardDecisions.DAONotIssued:
+               ApprovedConditionsSet = null;
+               ApprovedConditionsDetails = null;
+               DeclinedReasons.Clear();
+               DeferredReasons.Clear();
+               WithdrawnReasons.Clear();
+               DAORevokedReasons.Clear();
                break;
             default:
                break;
@@ -90,6 +105,7 @@ namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision
          {
             { Decision: AdvisoryBoardDecisions.Approved, ApprovedConditionsSet: true } => "Approved with Conditions",
             { Decision: AdvisoryBoardDecisions.DAORevoked } => "DAO Revoked",
+            { Decision: AdvisoryBoardDecisions.DAONotIssued } => "DAO Not Issued",
             _ => Decision?.ToString()
          };
       }

@@ -25,6 +25,8 @@ public class SummaryModel(IAcademyConversionProjectRepository repository,
    public string DecisionText =>
       Decision.Decision == AdvisoryBoardDecisions.DAORevoked
       ? "DAO revoked"
+      : Decision.Decision == AdvisoryBoardDecisions.DAONotIssued
+      ? "DAO not issued"
       : Decision.Decision.ToDescription().ToLowerInvariant();
 
 

@@ -107,6 +107,7 @@ public static class ProjectListHelper
       const string red = nameof(red);
       const string purple = nameof(purple);
       if (status?.Equals("DAO Revoked", StringComparison.OrdinalIgnoreCase) == true) status = "DAORevoked";
+      if (status?.Equals("DAO Not Issued", StringComparison.OrdinalIgnoreCase) == true) status = "DAONotIssued";
       if (Enum.TryParse(status, out AdvisoryBoardDecisions result))
       {
          return result switch
@@ -115,6 +116,7 @@ public static class ProjectListHelper
             AdvisoryBoardDecisions.Deferred => new ProjectStatus(result.ToString().ToFirstUpper(), orange),
             AdvisoryBoardDecisions.Declined => new ProjectStatus(result.ToString().ToFirstUpper(), red),
             AdvisoryBoardDecisions.DAORevoked => new ProjectStatus("DAO revoked", red),
+            AdvisoryBoardDecisions.DAONotIssued => new ProjectStatus("DAO not issued", red),
             AdvisoryBoardDecisions.Withdrawn => new ProjectStatus(result.ToString().ToFirstUpper(), purple),
             _ => new ProjectStatus(result.ToString().ToFirstUpper(), yellow)
          };
@@ -124,6 +126,7 @@ public static class ProjectListHelper
       {
          "approved with conditions" => new ProjectStatus("Approved with conditions", green),
          "daorevoked" => new ProjectStatus("DAO revoked", red),
+         "daonotissued" => new ProjectStatus("DAO not issued", red),
          _ => new ProjectStatus("Pre decision", yellow)
       };
    }
