@@ -27,7 +27,8 @@
                     { AdvisoryBoardDecisions.Declined, 2 },
                     { AdvisoryBoardDecisions.Deferred, 3 },
                     { AdvisoryBoardDecisions.DAORevoked, 4 },
-                    { AdvisoryBoardDecisions.Withdrawn, 5 }
+                    { AdvisoryBoardDecisions.DAONotIssued, 5 },
+                    { AdvisoryBoardDecisions.Withdrawn, 6 }
                     };
 
                     @* Get the enum values and sort them based on the defined order based on Completes order*@
@@ -39,13 +40,18 @@
                         
                         @foreach (var decision in sortedDecisions)
                         {
-                            if (decision == AdvisoryBoardDecisions.DAORevoked && Model.AcademyTypeAndRoute.ToLower() != "sponsored")
+                            if (decision is AdvisoryBoardDecisions.DAORevoked or AdvisoryBoardDecisions.DAONotIssued && Model.AcademyTypeAndRoute.ToLower() != "sponsored")
                             {
                                 continue;
                             }
 
                             var id = $"{decision.ToString().ToLower()}-radio";
-                            var title = decision == AdvisoryBoardDecisions.DAORevoked ? "DAO (Directive Academy Order) revoked" : decision.ToString();
+                            var title = decision switch
+                            {
+                                AdvisoryBoardDecisions.DAORevoked => "DAO (Directive Academy Order) revoked",
+                                AdvisoryBoardDecisions.DAONotIssued => "DAO not issued",
+                                _ => decision.ToString()
+                            };
 
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" type="radio" asp-for="@Model.AdvisoryBoardDecision"

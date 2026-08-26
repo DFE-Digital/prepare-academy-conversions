@@ -191,6 +191,26 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
    }
 
    [Fact]
+   public async Task Should_show_the_selected_dao_not_issued_reasons_and_details()
+   {
+      await _wizard.StartFor(_project.Id);
+      await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.DAONotIssued);
+      await _wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
+      await _wizard.SetDAONotIssuedReasonsAndContinue(
+         Tuple.Create(AdvisoryBoardDAONotIssuedReason.SchoolWouldNotBeViableAsAnAcademy, "viability detail"),
+         Tuple.Create(AdvisoryBoardDAONotIssuedReason.ThereAreNoSuitableTrustOptions, "trust detail"));
+      await _wizard.SetDecisionMakerName("Tester");
+      await _wizard.SetDecisionDateAndContinue(DateTime.Today);
+
+      string reasonSummary = Document.QuerySelector("#reasons")!.TextContent;
+
+      reasonSummary.Should().Contain("The school would not be viable as an academy:");
+      reasonSummary.Should().Contain("viability detail");
+      reasonSummary.Should().Contain("There are no suitable trust options:");
+      reasonSummary.Should().Contain("trust detail");
+   }
+
+   [Fact]
    public async Task Should_not_display_conditions_details_for_declined_projects()
    {
       await _wizard.StartFor(_project.Id);

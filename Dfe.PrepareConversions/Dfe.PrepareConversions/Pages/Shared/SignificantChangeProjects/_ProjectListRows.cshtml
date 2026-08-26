@@ -40,7 +40,7 @@
                 </div>
                 <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
                     <span if="project.Status.IsEmpty()" class="empty">Unconfirmed</span>
-                    <strong if="project.Status.IsPresent()" class="govuk-tag govuk-tag--@project.StatusColour" id="project-status-@project.Id">@project.Status.ToFirstUpper()</strong>
+                    <strong if="project.Status.IsPresent()" class="govuk-tag govuk-tag--@project.StatusColour" id="project-status-@project.Id">@project.Status</strong>
                </div>
             </td>
         </tr>

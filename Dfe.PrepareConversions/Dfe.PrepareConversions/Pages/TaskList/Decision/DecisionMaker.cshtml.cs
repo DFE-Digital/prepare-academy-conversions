@@ -45,6 +45,7 @@ namespace Dfe.PrepareConversions.Pages.TaskList.Decision
             { Decision: AdvisoryBoardDecisions.Declined } => Links.Decision.DeclineReason,
             { Decision: AdvisoryBoardDecisions.Deferred } => Links.Decision.WhyDeferred,
             { Decision: AdvisoryBoardDecisions.Withdrawn } => Links.Decision.WhyWithdrawn,
+            { Decision: AdvisoryBoardDecisions.DAONotIssued } => Links.Decision.WhyDAONotIssued,
             { Decision: AdvisoryBoardDecisions.DAORevoked } => Links.Decision.WhyDAORevoked,
             _ => throw new Exception("Unexpected decision state")
          };
