@@ -14,7 +14,7 @@ public static class SignificantChangeTaskListBuilder
       new SignificantChangeTaskSectionDefinition(
          "consultation",
          "Consultation",
-         1,
+         2,
          [
             new SignificantChangeTaskDefinition(
                "stakeholder-consultation",
@@ -22,7 +22,17 @@ public static class SignificantChangeTaskListBuilder
                1,
                Links.SignificantChange.StakeholderConsultation,
                project => GetTaskStatus(project.StakeholderConsultationStatus))
-         ])
+         ]),
+      new SignificantChangeTaskSectionDefinition(
+         "Proposed decision and conversion dates",
+         "Proposed decision and conversion dates",
+         2,
+         [ new SignificantChangeTaskDefinition(
+            "confirm-project-dates",
+            "Confirm project dates",
+            1,
+            Links.SignificantChange.ConfirmProjectDates,
+            project => GetTaskStatus(project.ProjectDatesStatus))])
    ];
 
    public static SignificantChangeTaskListViewModel Build(SignificantChangeProjectViewBaseModel project)
