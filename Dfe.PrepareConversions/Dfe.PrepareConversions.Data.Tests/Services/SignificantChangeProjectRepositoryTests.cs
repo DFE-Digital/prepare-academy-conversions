@@ -451,4 +451,50 @@ public class SignificantChangeProjectRepositoryTests
       response.Body.AssignedUsers.Should().BeEmpty();
       response.Body.Routes.Should().BeEmpty();
    }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetProjectDates_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 77;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeProjectDates, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeProjectDatesCommand command = new(DateTime.UtcNow, null);
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeProjectDatesCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetProjectDates(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeProjectDatesCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetProjectDates_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 77;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeProjectDates, id);
+      SetSignificantChangeProjectDatesCommand command = new(DateTime.UtcNow, DateTime.UtcNow);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeProjectDatesCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetProjectDates(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
 }
