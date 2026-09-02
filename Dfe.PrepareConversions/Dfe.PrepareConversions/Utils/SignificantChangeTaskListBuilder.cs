@@ -14,7 +14,7 @@ public static class SignificantChangeTaskListBuilder
       new SignificantChangeTaskSectionDefinition(
          "consultation",
          "Consultation",
-         2,
+         1,
          [
             new SignificantChangeTaskDefinition(
                "stakeholder-consultation",

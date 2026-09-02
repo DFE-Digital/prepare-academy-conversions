@@ -48,10 +48,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       if (!ModelState.IsValid)
       {
          errorService.AddErrors(ModelState.Keys, ModelState);
-         if (errorService.HasErrors())
-         {
-            return await OnGetAsync(id);
-         }
+         return Page();
       }
 
       SetSignificantChangeProjectDatesCommand command = new(
@@ -62,7 +59,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       return RedirectToTaskList(id);
    }
-
+   
    string IDateValidationMessageProvider.SomeMissing(string displayName, IEnumerable<string> missingParts)
    {
       return $"{displayName} must include a {string.Join(" and ", missingParts)}";
