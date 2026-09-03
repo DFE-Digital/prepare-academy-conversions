@@ -21,6 +21,8 @@ class SignificantChangeTaskList extends BasePage {
             .should('be.visible')
             .and('have.attr', 'aria-current', 'page');
 
+        cy.contains('a.moj-sub-navigation__link', 'Record a decision').should('be.visible');
+
         return this;
     }
 

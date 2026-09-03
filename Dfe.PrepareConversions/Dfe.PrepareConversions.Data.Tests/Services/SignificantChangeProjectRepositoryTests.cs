@@ -269,6 +269,39 @@ public class SignificantChangeProjectRepositoryTests
 
    [Theory]
    [AutoMoqData]
+   public async Task RecordDecision_ShouldPostDecisionToApi(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      SignificantChangeDecision decision = new()
+      {
+         SignificantChangeProjectId = 123,
+         Decision = SignificantChangeDecisions.Approved,
+         ApprovedConditionsSet = false,
+         DecisionDate = new DateTime(2026, 3, 27),
+         DecisionMakerName = "Jane Smith"
+      };
+
+      HttpClient httpClient = new();
+
+      httpClientFactory.Setup(x => x.CreateAcademisationClient()).Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Post<SignificantChangeDecision, SignificantChangeDecision>(
+            httpClient, PathFor.RecordSignificantChangeDecision, decision))
+         .ReturnsAsync(new ApiResponse<SignificantChangeDecision>(HttpStatusCode.Created, decision));
+
+      await sut.RecordDecision(decision);
+
+      httpClientService.Verify(
+         x => x.Post<SignificantChangeDecision, SignificantChangeDecision>(
+            httpClient, PathFor.RecordSignificantChangeDecision, decision),
+            Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
    public async Task SetStakeholderConsultation_WhenApiCallSucceeds_ShouldPutToExpectedPath(
       [Frozen] Mock<IHttpClientService> httpClientService,
       [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
@@ -292,6 +325,27 @@ public class SignificantChangeProjectRepositoryTests
       httpClientService.Verify(
          x => x.Put<SetSignificantChangeStakeholderConsultationCommand, object>(httpClient, expectedPath, command),
          Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task RecordDecision_ShouldThrow_WhenApiCallFails(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      SignificantChangeDecision decision = new() { SignificantChangeProjectId = 123 };
+      HttpClient httpClient = new();
+
+      httpClientFactory.Setup(x => x.CreateAcademisationClient()).Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Post<SignificantChangeDecision, SignificantChangeDecision>(
+            It.IsAny<HttpClient>(), It.IsAny<string>(), It.IsAny<SignificantChangeDecision>()))
+         .ReturnsAsync(new ApiResponse<SignificantChangeDecision>(HttpStatusCode.BadRequest, null));
+
+      await sut.Invoking(s => s.RecordDecision(decision))
+         .Should().ThrowAsync<ApiResponseException>();
    }
 
    [Theory]
