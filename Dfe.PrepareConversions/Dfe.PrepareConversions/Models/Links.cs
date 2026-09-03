@@ -103,6 +103,7 @@ public static class Links
       public static readonly LinkItem SignificantChangeTaskList = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Index");
       public static readonly LinkItem SignificantChangeProjectAssignment = AddLinkItem(backText: "Back", page: "/SignificantChange/ProjectAssignment/Index");
       public static readonly LinkItem StakeholderConsultation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/StakeholderConsultation/Index");
+      public static readonly LinkItem PublicSectorEqualityDuty = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/PublicSectorEqualityDuty/Index");
    }
 
    public static class FormAMat

@@ -49,4 +49,5 @@ public class PathFor
    public static string GetSignificantChangeFilterParameters => "/significant-change/filter-parameters";
    public static string SetSignificantChangeAssignedUser => "/significant-change/{0}/SetAssignedUser";
    public static string SetSignificantChangeStakeholderConsultation => "/significant-change/{0}/SetStakeholderConsultation";
+   public static string SetSignificantChangeEqualitiesImpactAssessment => "/significant-change/{0}/SetEqualitiesImpactAssessment";
 }

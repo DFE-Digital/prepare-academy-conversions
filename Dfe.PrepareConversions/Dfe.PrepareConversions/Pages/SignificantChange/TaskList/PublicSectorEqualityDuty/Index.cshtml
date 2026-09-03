@@ -1,0 +1,92 @@
+@page "/significant-change/task-list/{id:int}/public-sector-equality-duty"
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.PublicSectorEqualityDuty.IndexModel
+@using Dfe.PrepareConversions.Data.Models.SignificantChange
+@{
+   Layout = "_SignificantChangeTaskLayout";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@Model.Project.Id"
+      class="govuk-back-link">Back</a>
+}
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+         Has the trust advised it has considered the Public Sector Equality Duty (PSED) and completed an Equalities
+         Impact Assessment compliant with the Equality Act 2010?
+      </legend>
+      <inline-error for="@nameof(Model.EqualitiesImpactAssessmentCompleted)" />
+
+      <div class="govuk-radios" data-module="govuk-radios">
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.EqualitiesImpactAssessmentCompleted" class="govuk-radios__input"
+                       id="assessment-completed-yes" type="radio" value="true"
+                   data-test="assessment-completed-yes" />
+                <label class="govuk-label govuk-radios__label" for="assessment-completed-yes">
+               Yes
+            </label>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.EqualitiesImpactAssessmentCompleted" class="govuk-radios__input"
+                       id="assessment-completed-no" type="radio" value="false"
+                       data-test="assessment-completed-no" />
+                <label class="govuk-label govuk-radios__label" for="assessment-completed-no">
+               No
+            </label>
+         </div>
+      </div>
+   </fieldset>
+</div>
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+         What impacts exist post Equalities Impact Assessment?
+      </legend>
+      <inline-error for="@nameof(Model.EqualitiesImpactIdentified)" />
+
+      <div class="govuk-radios" data-module="govuk-radios">
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.EqualitiesImpactIdentified" class="govuk-radios__input"
+                   id="equalities-impact-none" type="radio" value="@EqualitiesImpact.None"
+                   data-test="equalities-impact-none" />
+            <label class="govuk-label govuk-radios__label" for="equalities-impact-none">
+               No material impacts identified. Unlikely to affect any particular group.
+            </label>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.EqualitiesImpactIdentified" class="govuk-radios__input"
+                   id="equalities-impact-potential-impacts" type="radio" value="@EqualitiesImpact.PotentialImpacts"
+                   data-test="equalities-impact-potential-impacts" />
+            <label class="govuk-label govuk-radios__label" for="equalities-impact-potential-impacts">
+               Potential impacts identified. Review indicates will not affect any particular group
+            </label>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.EqualitiesImpactIdentified" class="govuk-radios__input"
+                   id="equalities-impact-impacts-identified" type="radio" value="@EqualitiesImpact.ImpactsIdentified"
+                   aria-controls="conditional-equalities-impact-impacts-identified"
+                   data-test="equalities-impact-impacts-identified" />
+            <label class="govuk-label govuk-radios__label" for="equalities-impact-impacts-identified">
+               Impacts identified. Likely to impact any particular group
+            </label>
+         </div>
+
+         <div class="govuk-radios__conditional" id="conditional-equalities-impact-impacts-identified">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="EqualitiesImpactIdentifiedMitigation">
+                  Which groups are affected and how have impacts been mitigated?
+               </label>
+               <textarea asp-for="@Model.EqualitiesImpactIdentifiedMitigation" id="EqualitiesImpactIdentifiedMitigation"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.EqualitiesImpactIdentifiedMitigation))"
+                         rows="5" data-test="which-groups-affected"></textarea>
+            </div>
+         </div>
+      </div>
+   </fieldset>
+</div>

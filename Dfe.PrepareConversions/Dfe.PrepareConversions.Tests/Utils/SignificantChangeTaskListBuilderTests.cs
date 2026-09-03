@@ -14,10 +14,37 @@ public class SignificantChangeTaskListBuilderTests
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
-      Assert.Single(result.Sections);
+      Assert.Equal(2, result.Sections.Count);
       Assert.Equal("consultation", result.Sections[0].Key);
       Assert.Single(result.Sections[0].Tasks);
       Assert.Equal("stakeholder-consultation", result.Sections[0].Tasks[0].Key);
+   }
+
+   [Fact]
+   public void Build_Includes_public_sector_equality_duty_section_with_matching_task()
+   {
+      SignificantChangeProjectViewBaseModel project = BuildProject();
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      SignificantChangeTaskSectionViewModel section = Assert.Single(result.Sections, s => s.Key == "public-sector-equality-duty");
+      Assert.Equal(3, section.DisplayOrder);
+      Assert.Equal("Public Sector Equality Duty", section.Title);
+      SignificantChangeTaskItemViewModel task = Assert.Single(section.Tasks);
+      Assert.Equal("public-sector-equality-duty", task.Key);
+      Assert.Equal("Public Sector Equality Duty", task.Title);
+   }
+
+   [Fact]
+   public void Build_Sets_equalities_impact_assessment_task_status_to_completed_when_status_is_completed()
+   {
+      SignificantChangeProjectViewBaseModel project = BuildProject();
+      project.EqualitiesImpactAssessmentStatus = SignificantChangeTaskStatus.Completed;
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      SignificantChangeTaskSectionViewModel section = Assert.Single(result.Sections, s => s.Key == "public-sector-equality-duty");
+      Assert.Equal(TaskListItemViewModel.Completed, section.Tasks[0].Status);
    }
 
    [Fact]

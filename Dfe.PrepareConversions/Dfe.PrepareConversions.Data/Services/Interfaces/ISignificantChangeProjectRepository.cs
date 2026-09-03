@@ -28,4 +28,6 @@ public interface ISignificantChangeProjectRepository
 
    Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command);
 
+   Task SetEqualitiesImpactAssessment(int id, SetSignificantChangeEqualitiesImpactAssessmentCommand command);
+
 }
