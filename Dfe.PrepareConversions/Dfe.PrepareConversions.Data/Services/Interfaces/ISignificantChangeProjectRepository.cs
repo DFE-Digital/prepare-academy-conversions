@@ -25,7 +25,6 @@ public interface ISignificantChangeProjectRepository
    Task<ApiResponse<SignificantChangeFilterParameters>> GetFilterParameters();
 
    Task SetAssignedUser(int id, SetAssignedUserSignificantChangeCommand updatedAssignedUser);
-
+   Task RecordDecision(SignificantChangeDecision decision);
    Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command);
-
 }
