@@ -1,0 +1,29 @@
+
+@page "/significant-change/{id:int}/decision/decision-maker"
+@using Dfe.PrepareConversions.Extensions
+@model Dfe.PrepareConversions.Pages.SignificantChange.Decision.DecisionMakerModel
+@{
+   ViewData["Title"] = "Decision maker's name";
+}
+
+@section BeforeMain
+{
+   <partial name="_BackLink" model="@Model.BackLinkModel"/>
+   <partial name="_ErrorSummary"/>
+}
+
+<span id="selection-span" class="govuk-caption-l">Record the decision</span>
+<h1 class="govuk-heading-l">Decision maker's name</h1>
+
+<form method="post">
+   <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+      <label class="govuk-hint" for="decision-maker-name">
+         Enter the name of the person who made the decision
+      </label>
+      <input class="govuk-input govuk-!-width-two-thirds" id="decision-maker-name" name="decision-maker-name" type="text" value="@Model.DecisionMakerName">
+   </div>
+
+   <button class="govuk-button" data-module="govuk-button" id="submit-btn">
+      Continue
+   </button>
+</form>

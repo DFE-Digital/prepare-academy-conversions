@@ -144,4 +144,23 @@ public class ChangeDecisionOptionsIntegrationTests : BaseIntegrationTests, IAsyn
 
       Document.Url.Should().Contain("obl=");
    }
+
+   [Fact]
+   public async Task Should_pass_on_the_obl_parameter_when_changing_dao_not_issued_reasons()
+   {
+      await _wizard.StartFor(_project.Id);
+      await _wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.DAONotIssued);
+      await _wizard.SetDecisionByAndContinue(DecisionMadeBy.DirectorGeneral);
+      await _wizard.SetDAONotIssuedReasonsAndContinue(Tuple.Create(AdvisoryBoardDAONotIssuedReason.Other, "other"));
+      await _wizard.SetDecisionMakerName("Tester");
+      await _wizard.SetDecisionDateAndContinue(DateTime.Today);
+      await NavigateAsync("Change", 1);
+
+      PageHeading.Should().Be("Why was a Directive Academy Order (DAO) not issued for this project?");
+      Document.Url.Should().Contain("obl=");
+
+      await _wizard.SetDAONotIssuedReasonsAndContinue(Tuple.Create(AdvisoryBoardDAONotIssuedReason.ThereAreNoSuitableTrustOptions, "trust"));
+
+      Document.Url.Should().Contain("obl=");
+   }
 }

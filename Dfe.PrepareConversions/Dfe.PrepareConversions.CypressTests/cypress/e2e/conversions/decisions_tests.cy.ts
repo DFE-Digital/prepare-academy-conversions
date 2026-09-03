@@ -84,6 +84,11 @@ describe('Decisions Tests', () => {
                 decisionPage.changeDecisionDAODetails();
 
                 Logger.log(
+                    'Change the current decision to DAO (Directive Academy Order) not issued and verify the changes'
+                );
+                decisionPage.changeDecisionDAONotIssuedDetails();
+
+                Logger.log(
                     'Change the current decision to Approved, verify the changes then check if the project is readonly'
                 );
                 decisionPage.changeDecisionApproved();

@@ -1,3 +1,6 @@
+
+#nullable enable
+
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,14 +11,22 @@ public interface ISignificantChangeProjectRepository
 {
    Task<ApiResponse<SignificantChangeProjectResponse>> CreateProject(CreateSignificantProjectCommand command);
 
-   Task<ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>> GetAllProjects(int page, int count);
+   Task<ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>> GetAllProjects(
+      int page,
+      int count,
+      string? keyword = null,
+      string[]? statuses = null,
+      string[]? assignees = null,
+      byte[]? tiers = null,
+      string[]? routes = null);
 
    Task<ApiResponse<SignificantChangeProjectResponse>> GetProjectById(int id);
 
-   Task SetAssignedUser(int id, SetAssignedUserSignificantChangeCommand updatedAssignedUser);
+   Task<ApiResponse<SignificantChangeFilterParameters>> GetFilterParameters();
 
-   Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command);
-   
+   Task SetAssignedUser(int id, SetAssignedUserSignificantChangeCommand updatedAssignedUser);
+   Task RecordDecision(SignificantChangeDecision decision);
+   Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command);   
    Task SetConsultationDuration(int id, SetSignificantChangeConsultationDurationCommand command);
 
 }

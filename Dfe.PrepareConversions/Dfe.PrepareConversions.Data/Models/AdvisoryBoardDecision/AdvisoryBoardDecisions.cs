@@ -1,4 +1,6 @@
-﻿namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
+﻿using System.ComponentModel;
+
+namespace Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 
 public enum AdvisoryBoardDecisions
 {
@@ -6,5 +8,7 @@ public enum AdvisoryBoardDecisions
    Declined = 1,
    Deferred = 2,
    Withdrawn = 3,
-   DAORevoked = 4
+   DAORevoked = 4,
+   [Description("DAO not issued")]
+   DAONotIssued = 5
 }

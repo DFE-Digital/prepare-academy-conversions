@@ -1,0 +1,210 @@
+@using Dfe.PrepareConversions.Utils
+@model Dfe.PrepareConversions.Models.SignificantChange.SignificantChangeProjectListFilters
+@using Dfe.PrepareConversions.Models.SignificantChange
+
+<div class="moj-filter">
+
+    <div class="moj-filter__header">
+        <div class="moj-filter__header-title">
+            <h2 class="govuk-heading-m">Filter</h2>
+        </div>
+        <div class="moj-filter__header-action"></div>
+    </div>
+
+    <div class="moj-filter__content">
+        <div if="Model.IsVisible" class="moj-filter__selected">
+
+            <div class="moj-filter__selected-heading">
+                <div class="moj-filter__heading-title">
+                    <h2 class="govuk-heading-m">Selected filters</h2>
+                </div>
+                <div class="moj-filter__heading-action">
+                    <p><a class="govuk-link govuk-link--no-visited-state" data-cy="clear-filter" href="@Url.RouteUrl(ViewContext.RouteData.Values)?clear">Clear filters</a></p>
+                </div>
+            </div>
+
+            @if (Model.SelectedAssignees.Length > 0)
+            {
+                <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Assigned to</h3>
+                <ul class="moj-filter-tags">
+                    @foreach (var assignee in Model.SelectedAssignees)
+                    {
+                        <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedAssignees=@assignee"><span class="govuk-visually-hidden">Remove this filter</span> @SignificantChangeProjectListFilters.DisplayFor(Model.AvailableAssignees, assignee)</a></li>
+                    }
+                </ul>
+            }
+
+            @if (Model.SelectedStatuses.Length > 0)
+            {
+                <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Project status</h3>
+                <ul class="moj-filter-tags">
+                    @foreach (var status in Model.SelectedStatuses)
+                    {
+                        <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedStatuses=@status"><span class="govuk-visually-hidden">Remove this filter</span> @SignificantChangeProjectListFilters.DisplayFor(Model.AvailableStatuses, status)</a></li>
+                    }
+                </ul>
+            }
+
+            @if (Model.SelectedTiers.Length > 0)
+            {
+                <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Tier</h3>
+                <ul class="moj-filter-tags">
+                    @foreach (var tier in Model.SelectedTiers)
+                    {
+                        <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedTiers=@tier"><span class="govuk-visually-hidden">Remove this filter</span> @SignificantChangeProjectListFilters.DisplayFor(Model.AvailableTiers, tier)</a></li>
+                    }
+                </ul>
+            }
+
+            @if (Model.SelectedRoutes.Length > 0)
+            {
+                <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Route</h3>
+                <ul class="moj-filter-tags">
+                    @foreach (var route in Model.SelectedRoutes)
+                    {
+                        <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedRoutes=@route"><span class="govuk-visually-hidden">Remove this filter</span> @SignificantChangeProjectListFilters.DisplayFor(Model.AvailableRoutes, route)</a></li>
+                    }
+                </ul>
+            }
+        </div>
+
+        <div class="moj-filter__options">
+            <form method="get" class="form">
+                <button class="govuk-button" data-module="govuk-button" data-test-id="submit-button" data-cy="select-projectlist-filter-apply">
+                    Apply filters
+                </button>
+
+                <div class="govuk-form-group">
+                    <h2 class="govuk-label govuk-label--m govuk-!-margin-top-0" for="Keyword">
+                        Search for projects
+                    </h2>
+                    <span class="govuk-hint" id="filter-project-keyword-hint">You can search by school name, trust name, URN and UKPRN</span>
+                    <input id="Keyword" title="search by school name, trust name, URN and UKPRN" aria-label="Search for projects" name="Keyword" asp-for="Keyword" type="text" class="govuk-input" aria-describedby="filter-project-keyword-hint"
+                           data-cy="select-projectlist-filter-keyword">
+                </div>
+
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
+
+                            <div class="govuk-accordion__section">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-assignees-heading" data-cy="select-projectlist-filter-assignee">
+                                            Assigned to
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div class="govuk-accordion__section-content" aria-labelledby="accordion-assignees-heading" role="region" id="accordion-default-content-1">
+                                    <input type="text" class="govuk-input govuk-!-display-none govuk-!-margin-bottom-2" id="filter-searches" placeholder="Type to filter users..." aria-label="Type to filter users...">
+                                    <div class="govuk-checkboxes">
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="filter-assignee-not-assigned"
+                                                   name="SelectedAssignees" type="checkbox" value="Not assigned" @(Model.SelectedAssignees.Contains("Not assigned") ? "checked" : null)
+                                                   data-cy="select-projectlist-filter-assignee-not-assigned">
+                                            <label class="govuk-label govuk-checkboxes__label" for="filter-assignee-not-assigned">
+                                                Not assigned
+                                            </label>
+                                        </div>
+                                        @foreach (var assignee in Model.AvailableAssignees)
+                                        {
+                                            <div class="govuk-checkboxes__item">
+                                                <input class="govuk-checkboxes__input" id="filter-assignee-@assignee.Value.Stub()" name="SelectedAssignees" type="checkbox" value="@assignee.Value" data-cy="select-projectlist-filter-assignee-@assignee.Value"
+                                                @(Model.SelectedAssignees.Contains(assignee.Value) ? "checked" : null) />
+                                                <label class="govuk-label govuk-checkboxes__label" for="filter-assignee-@assignee.Value.Stub()">
+                                                    @assignee.Display
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="govuk-accordion__section">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-statuses-heading" data-cy="select-projectlist-filter-status">
+                                            Project status
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div class="govuk-accordion__section-content" aria-labelledby="accordion-statuses-heading" role="region" id="accordion-default-content-2">
+                                    <div class="govuk-checkboxes">
+                                        @foreach (var status in Model.AvailableStatuses)
+                                        {
+                                            @* Value is what the search endpoint matches ("PreDecision"); Display is the label. *@
+                                            <div class="govuk-checkboxes__item">
+                                                <input class="govuk-checkboxes__input" id="filter-status-@status.Value.Stub()" name="SelectedStatuses" type="checkbox" value="@status.Value" data-cy="select-projectlist-filter-status-@status.Value"
+                                                @(Model.SelectedStatuses.Contains(status.Value) ? "checked" : null) />
+                                                <label class="govuk-label govuk-checkboxes__label" for="filter-status-@status.Value.Stub()">
+                                                    @status.Display
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="govuk-accordion__section">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-tiers-heading" data-cy="select-projectlist-filter-tier">
+                                            Tier
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div class="govuk-accordion__section-content" aria-labelledby="accordion-tiers-heading" role="region" id="accordion-default-content-3">
+                                    <div class="govuk-checkboxes">
+                                        @foreach (var tier in Model.AvailableTiers)
+                                        {
+                                            @* "Tier 1" comes from the API — no string building in the view. *@
+                                            <div class="govuk-checkboxes__item">
+                                                <input class="govuk-checkboxes__input" id="filter-tier-@tier.Value" name="SelectedTiers" type="checkbox" value="@tier.Value" data-cy="select-projectlist-filter-tier-@tier.Value"
+                                                @(Model.SelectedTiers.Contains(tier.Value) ? "checked" : null) />
+                                                <label class="govuk-label govuk-checkboxes__label" for="filter-tier-@tier.Value">
+                                                    @tier.Display
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="govuk-accordion__section">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-routes-heading" data-cy="select-projectlist-filter-route">
+                                            Route
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div class="govuk-accordion__section-content" aria-labelledby="accordion-routes-heading" role="region" id="accordion-default-content-4">
+                                    <input type="text" class="govuk-input govuk-!-display-none govuk-!-margin-bottom-2" id="filter-searches" placeholder="Type to filter routes..." aria-label="Type to filter routes...">
+                                    <div class="govuk-checkboxes">
+                                        @foreach (var route in Model.AvailableRoutes)
+                                        {
+                                            <div class="govuk-checkboxes__item">
+                                                <input class="govuk-checkboxes__input" id="filter-route-@route.Value.Stub()" name="SelectedRoutes" type="checkbox" value="@route.Value" data-cy="select-projectlist-filter-route-@route.Value"
+                                                @(Model.SelectedRoutes.Contains(route.Value) ? "checked" : null) />
+                                                <label class="govuk-label govuk-checkboxes__label" for="filter-route-@route.Value.Stub()">
+                                                    @route.Display
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </div>
+
+                <button class="govuk-button govuk-!-margin-top-6" data-module="govuk-button" data-test-id="submit-button" data-cy="select-projectlist-filter-apply">
+                    Apply filters
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/src/filter.js" asp-add-nonce></script>
