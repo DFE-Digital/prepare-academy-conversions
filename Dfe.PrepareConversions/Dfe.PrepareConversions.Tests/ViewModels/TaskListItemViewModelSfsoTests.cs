@@ -9,13 +9,14 @@ namespace Dfe.PrepareConversions.Tests.ViewModels;
 
 public class TaskListItemViewModelSfsoTests
 {
-   private static ProjectViewModel Project(DateTime? proposedDecisionDate, bool includeAllMandatoryInformation = false) =>
+   private static ProjectViewModel Project(DateTime? proposedDecisionDate, DateTime? sfsoRequestedDate, bool includeAllMandatoryInformation = false) =>
       new(new AcademyConversionProject
       {
          // ProjectViewModel's ctor calls ProjectListHelper.MapProjectStatus(ProjectStatus); a non-null
          // value avoids the pre-existing NRE at ProjectListHelper.cs:109.
          ProjectStatus = "Pre advisory board",
          HeadTeacherBoardDate = proposedDecisionDate,
+         SfsoCommissioningRequestedDate = sfsoRequestedDate,
          ProposedConversionDate = includeAllMandatoryInformation ? DateTime.Today.AddDays(60) : null,
          RevenueCarryForwardAtEndMarchCurrentYear = includeAllMandatoryInformation ? 1m : null,
          CapitalCarryForwardAtEndMarchCurrentYear = includeAllMandatoryInformation ? 2m : null,
@@ -26,28 +27,28 @@ public class TaskListItemViewModelSfsoTests
    [Fact]
    public void NotStarted_when_no_proposed_decision_date()
    {
-      TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(Project(null, includeAllMandatoryInformation: true))
+      TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(Project(null, sfsoRequestedDate: null, includeAllMandatoryInformation: true))
          .Should().Be(TaskListItemViewModel.NotStarted);
    }
 
    [Fact]
-   public void Completed_when_proposed_decision_date_in_future()
+   public void Completed_when_requested_date_is_set_and_mandatory_information_is_present()
    {
-      TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(Project(DateTime.Today.AddDays(30), includeAllMandatoryInformation: true))
+      TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(Project(DateTime.Today.AddDays(30), sfsoRequestedDate: DateTime.Today.AddDays(15), includeAllMandatoryInformation: true))
          .Should().Be(TaskListItemViewModel.Completed);
    }
 
    [Fact]
-   public void Completed_when_proposed_decision_date_today()
+   public void NotStarted_when_requested_date_is_missing_even_if_other_mandatory_information_is_present()
    {
-      TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(Project(DateTime.Today, includeAllMandatoryInformation: true))
-         .Should().Be(TaskListItemViewModel.Completed);
+      TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(Project(DateTime.Today, sfsoRequestedDate: null, includeAllMandatoryInformation: true))
+         .Should().Be(TaskListItemViewModel.NotStarted);
    }
 
    [Fact]
-   public void Completed_when_proposed_decision_date_in_past()
+   public void NotStarted_when_requested_date_is_set_but_mandatory_information_is_missing()
    {
-      TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(Project(DateTime.Today.AddDays(-1), includeAllMandatoryInformation: true))
-         .Should().Be(TaskListItemViewModel.Completed);
+      TaskListItemViewModel.GetRequestFinancialHealthAssessmentTaskListStatus(Project(DateTime.Today.AddDays(30), sfsoRequestedDate: DateTime.Today.AddDays(15), includeAllMandatoryInformation: false))
+         .Should().Be(TaskListItemViewModel.NotStarted);
    }
 }

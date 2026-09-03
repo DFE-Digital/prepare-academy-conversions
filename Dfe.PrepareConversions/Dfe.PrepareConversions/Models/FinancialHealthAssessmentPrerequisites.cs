@@ -61,5 +61,13 @@ public static class FinancialHealthAssessmentPrerequisites
       return missing;
    }
 
-   public static bool IsComplete(ProjectViewModel project) => GetMissing(project).Count == 0;
+   public static bool IsComplete(ProjectViewModel project)
+   {
+      if (project is null)
+      {
+         return false;
+      }
+
+      return project.SfsoCommissioningRequestedDate.HasValue && GetMissing(project).Count == 0;
+   }
 }
