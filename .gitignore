@@ -466,6 +466,7 @@ $RECYCLE.BIN/
 .env.*.local
 !.env.development.local.example
 !.env.database.example
+.https/
 
 ## Terraform
 .terraformrc*

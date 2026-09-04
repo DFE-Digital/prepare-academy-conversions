@@ -11,6 +11,17 @@ Internal service for managing applications for schools to become academies.
 - Run `dotnet restore` from the `Dfe.PrepareConversions` project to restore dependencies.
 - Run `dotnet run` from the `Dfe.PrepareConversions` project to run the application.
 
+### Container HTTPS certificate
+
+The development container serves HTTPS on port 5003. Generate a local certificate before starting it:
+
+```bash
+mkdir -p .https
+dotnet dev-certs https -ep ./.https/Dfe.PrepareConversions.pfx -p "<local certificate password>"
+```
+
+Set the same password in `Kestrel__Certificates__Default__Password` in `.env.development`. The `.https` directory is ignored by git and each developer generates their own certificate locally.
+
 ### User-secrets
 The following user secrets are required to be able to connect to the TRAMS API (also known as the Academies API):
 
