@@ -50,4 +50,5 @@ public class PathFor
    public static string SetSignificantChangeAssignedUser => "/significant-change/{0}/SetAssignedUser";
    public static string RecordSignificantChangeDecision => "/significant-change/decision";
    public static string SetSignificantChangeStakeholderConsultation => "/significant-change/{0}/SetStakeholderConsultation";
+   public static string SetSignificantChangeConsultationDuration => "/significant-change/{0}/SetConsultationDuration";
 }

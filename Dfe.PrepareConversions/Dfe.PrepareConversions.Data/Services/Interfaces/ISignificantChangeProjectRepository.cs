@@ -26,5 +26,7 @@ public interface ISignificantChangeProjectRepository
 
    Task SetAssignedUser(int id, SetAssignedUserSignificantChangeCommand updatedAssignedUser);
    Task RecordDecision(SignificantChangeDecision decision);
-   Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command);
+   Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command);   
+   Task SetConsultationDuration(int id, SetSignificantChangeConsultationDurationCommand command);
+
 }
