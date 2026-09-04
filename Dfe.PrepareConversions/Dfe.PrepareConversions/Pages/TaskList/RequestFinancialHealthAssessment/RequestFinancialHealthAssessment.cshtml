@@ -20,11 +20,10 @@
 <div class="govuk-grid-row">
    <div class="govuk-grid-column-two-thirds">
 
-      @if (!Model.HasProposedDecisionDate)
+      @if (!Model.HasAllMandatoryInformation)
       {
-         @* Scenario 7: proposed decision date not entered -> banner linking to Confirm project dates. *@
          <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title"
-              data-module="govuk-notification-banner" data-test="fha-no-decision-date">
+              data-module="govuk-notification-banner" data-test="fha-missing-information">
             <div class="govuk-notification-banner__header">
                <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
                   Important
@@ -32,9 +31,17 @@
             </div>
             <div class="govuk-notification-banner__content">
                <p class="govuk-notification-banner__heading">
-                  In order to request a financial health assessment, you will need to
-                  <a class="govuk-notification-banner__link" asp-page="@Links.ProjectDates.ConfirmProjectDates.Page" asp-route-id="@Model.Project.Id">Enter a new proposed decision date</a>.
+                  In order to request a financial health assessment, you will need to enter:
                </p>
+               <ul class="govuk-list govuk-list--bullet">
+                  @foreach (var item in Model.MissingInformation)
+                  {
+                     <li>
+                        <a class="govuk-notification-banner__link" data-test="fha-missing-information-link"
+                           asp-page="@item.Link.Page" asp-route-id="@Model.Project.Id">@item.Description</a>
+                     </li>
+                  }
+               </ul>
             </div>
          </div>
       }
@@ -42,14 +49,13 @@
       <span class="govuk-caption-l">@Model.Project.SchoolName</span>
       <h1 class="govuk-heading-l">Financial Health Assessment</h1>
 
-      @if (!Model.HasProposedDecisionDate)
+      @if (!Model.HasAllMandatoryInformation)
       {
-         @* Scenario 7: no proposed decision date entered. *@
          <p class="govuk-body" data-test="fha-not-requested">
-            This has not yet been requested, as you have not entered a proposed decision date.
+            This has not yet been requested, as some mandatory information is missing.
          </p>
          <div class="govuk-inset-text">
-            The system will automatically request a Financial Health Assessment to be provided 15 days from the proposed decision date.
+            The system will automatically request a Financial Health Assessment to be provided 15 days from the proposed decision date, once all mandatory information has been entered.
          </div>
       }
       else if (Model.RequestWillBeSent)

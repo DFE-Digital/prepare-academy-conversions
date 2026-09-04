@@ -98,9 +98,11 @@ namespace Dfe.PrepareTransfers.Web.Services
         
         private static ProjectStatuses GetFinancialHealthAssessmentStatus(Project project)
         {
-            // Completed once a proposed decision date (HTB date) is set; otherwise Not started.
-            // Key off Htb only — HasHtbDate comes back null from the API (mirrors GetTransferDatesStatus).
-            return !string.IsNullOrEmpty(project.Dates?.Htb)
+            var hasRequestedDate = project.Dates?.SfsoCommissioningRequestedDate.HasValue == true;
+
+            // Fail-safe: keep mandatory prerequisites in this check even though the API should
+            // only set the requested date once prerequisites are complete.
+            return hasRequestedDate && Models.FinancialHealthAssessmentPrerequisites.IsComplete(project)
                 ? ProjectStatuses.Completed
                 : ProjectStatuses.NotStarted;
         }
