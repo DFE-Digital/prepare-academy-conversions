@@ -54,6 +54,35 @@ public class SignificantChangeProjectListHelperTests
       Assert.Equal(SignificantChangeTaskStatus.InProgress, viewModel.StakeholderConsultationStatus);
    }
 
+   [Fact]
+   public void Build_Maps_nested_equalities_impact_assessment_values()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         Status = "pre decision",
+         EqualitiesImpactAssessment = new SignificantChangeEqualitiesImpactAssessmentResponse
+         {
+            EqualitiesImpactAssessmentCompleted = true,
+            EqualitiesImpactIdentified = EqualitiesImpact.ImpactsIdentified,
+            EqualitiesImpactIdentifiedMitigation = "Need more info",
+            Status = SignificantChangeTaskStatus.Completed
+         }
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.True(viewModel.EqualitiesImpactAssessmentCompleted);
+      Assert.Equal(EqualitiesImpact.ImpactsIdentified, viewModel.EqualitiesImpactIdentified);
+      Assert.Equal("Need more info", viewModel.EqualitiesImpactIdentifiedMitigation);
+      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.EqualitiesImpactAssessmentStatus);
+   }
+
    [Theory]
    [InlineData("PreDecision", "Pre decision")]
    [InlineData("Approved", "Approved")]

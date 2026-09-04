@@ -22,6 +22,18 @@ public static class SignificantChangeTaskListBuilder
                1,
                Links.SignificantChange.StakeholderConsultation,
                project => GetTaskStatus(project.StakeholderConsultationStatus))
+         ]),
+      new SignificantChangeTaskSectionDefinition(
+         "public-sector-equality-duty",
+         "Public Sector Equality Duty",
+         3,
+         [
+            new SignificantChangeTaskDefinition(
+               "public-sector-equality-duty",
+               "Public Sector Equality Duty",
+               1,
+               Links.SignificantChange.PublicSectorEqualityDuty,
+               project => GetTaskStatus(project.EqualitiesImpactAssessmentStatus))
          ])
    ];
 
