@@ -76,13 +76,19 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
 
       Document.QuerySelectorAll("h3.app-task-list__section").Select(x => x.TextContent.Trim())
-         .Should().ContainSingle().Which.Should().Be("Consultation");
+         .Should().OnlyContain(x=> x == "Consultation" || x == "Proposed decision and conversion dates");
 
       var stakeholderConsultationLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Stakeholder consultation"));
 
       stakeholderConsultationLink.Should().NotBeNull();
       stakeholderConsultationLink!.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/stakeholder-consultation");
+
+      var confirmProjectDatesLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Confirm project dates"));
+
+      confirmProjectDatesLink.Should().NotBeNull();
+      confirmProjectDatesLink!.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/confirm-project-dates");
 
       Document.QuerySelectorAll("a").Any(a => a.TextContent != null && a.TextContent.Contains("Gather trust feedback"))
          .Should().BeFalse();
