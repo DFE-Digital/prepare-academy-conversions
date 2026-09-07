@@ -5,17 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). To see an example from a mature product in the program [see the Complete products changelog that follows the same methodology](https://github.com/DFE-Digital/dfe-complete-conversions-transfers-and-changes/blob/main/CHANGELOG.md).
 
 
-## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-07-24.1136...main)
+## [Unreleased](https://github.com/DFE-Digital/prepare-academy-conversions/compare/production-2026-08-26.1192...main)
 
 NOTE: remember to update unreleased link when making a new release
 
 
 ---
+## [1.30.0][1.30.0] - 2026-08-26
+
+### Added
+- [298202](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/298202) - Add DAO not issued decision to record decision flow
+- [297453](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/297453) - Prepare column rename SIG change
+- [290415](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/290415) -  Filtered list view (skeleton)
+- [296555](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/296555) -  Task - Consult stakeholders - assumptions
+- [290427](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/290427) -   Change assignee
+- [294715](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/294715) -   Feature flag in prepare for sig. change
+- [290416](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/290416) -    Prepare - Detail view
+- [290414](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/290414) -Prepare - Basic list view
+- [290377](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/290377) -Prepare - Basic list view
 
 ## [1.29.2][1.29.2] - 2026-07-24
 
 ### Changed
-- - [289902](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/289902) - Vulnerable and outdated components: Prepare
+- [289902](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/289902) - Vulnerable and outdated components: Prepare
     
 ---
 
@@ -397,6 +409,8 @@ ___
 # 1.0.0 - Initial release of Prepare Conversions
 Initial Release of the Prepare-conversions system into production.
 
+[1.30.0]:
+  https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-08-26.1192
 [1.29.2]:
   https://github.com/DFE-Digital/prepare-academy-conversions/releases/tag/production-2026-07-24.1136
 [1.29.1]:
