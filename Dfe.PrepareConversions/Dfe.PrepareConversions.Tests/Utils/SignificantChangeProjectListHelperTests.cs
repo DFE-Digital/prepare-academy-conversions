@@ -56,6 +56,33 @@ public class SignificantChangeProjectListHelperTests
    }
 
    [Fact]
+   public void Build_Maps_nested_religious_body_consultation_values()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         Status = "pre decision",
+         ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse
+         {
+            TrustConsultedReligiousBody = false,
+            TrustConsultedReligiousBodyNotConsultedReason = "Further action needed",
+            Status = SignificantChangeTaskStatus.Completed
+         }
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.False(viewModel.ReligiousBodyConsultationTrustConsultedReligiousBody);
+      Assert.Equal("Further action needed", viewModel.ReligiousBodyConsultationTrustConsultedReligiousBodyNotConsultedReason);
+      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.ReligiousBodyConsultationStatus);
+   }
+
+   [Fact]
    public void Build_Maps_project_dates_values_when_dates_are_set()
    {
       var proposedDecisionDate = new DateTime(2024, 12, 15);

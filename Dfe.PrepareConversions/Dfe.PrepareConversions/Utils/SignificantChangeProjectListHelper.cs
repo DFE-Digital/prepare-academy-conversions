@@ -5,7 +5,7 @@ namespace Dfe.PrepareConversions.Utils;
 
 public static class SignificantChangeProjectListHelper
 {
-   public static SignificantChangeProjectViewBaseModel Build(SignificantChangeProjectResponse significantChangeProject)
+   public static SignificantChangeProjectViewBaseModel SBuild(SignificantChangeProjectResponse significantChangeProject)
    {
       return new SignificantChangeProjectViewBaseModel
       {
@@ -26,6 +26,9 @@ public static class SignificantChangeProjectListHelper
          EqualitiesImpactAssessmentCompleted = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactAssessmentCompleted,
          EqualitiesImpactIdentified = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactIdentified,
          EqualitiesImpactIdentifiedMitigation = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactIdentifiedMitigation ?? string.Empty,
+         ReligiousBodyConsultationStatus = significantChangeProject.ReligiousBodyConsultation?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         ReligiousBodyConsultationTrustConsultedReligiousBody = significantChangeProject.ReligiousBodyConsultation?.TrustConsultedReligiousBody,
+         ReligiousBodyConsultationTrustConsultedReligiousBodyNotConsultedReason = significantChangeProject.ReligiousBodyConsultation?.TrustConsultedReligiousBodyNotConsultedReason ?? string.Empty,
          ProjectDatesStatus = significantChangeProject.ProjectDates?.Status ?? SignificantChangeTaskStatus.NotStarted,
          ProposedDecisionDate = significantChangeProject.ProjectDates?.ProposedDecisionDate,
          ProposedChangeDate = significantChangeProject.ProjectDates?.ProposedChangeDate
