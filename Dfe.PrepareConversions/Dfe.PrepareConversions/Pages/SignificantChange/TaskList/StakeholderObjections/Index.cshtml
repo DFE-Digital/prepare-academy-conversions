@@ -1,0 +1,62 @@
+@page "/significant-change/task-list/{id:int}/stakeholder-objections"
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.StakeholderObjections.IndexModel
+@{
+   Layout = "_SignificantChangeTaskLayout";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@Model.Project.Id"
+      class="govuk-back-link">Back</a>
+}
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        Were there any objections raised by stakeholders?
+      </legend>
+      <inline-error for="@nameof(Model.StakeholderObjection)" />
+
+      <div class="govuk-radios" data-module="govuk-radios">
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.StakeholderObjection" class="govuk-radios__input"
+                   id="stakeholder-objections-no" type="radio" value="No"
+                   data-test="stakeholder-objections-no" />
+            <label class="govuk-label govuk-radios__label" for="stakeholder-objections-no">
+               No
+            </label>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.StakeholderObjection" class="govuk-radios__input"
+                   id="stakeholder-objections-YesAllObjectionsAddressed" type="radio" value="YesAllObjectionsAddressed"
+                   data-test="stakeholder-objections-YesAllObjectionsAddressed" />
+            <label class="govuk-label govuk-radios__label" for="stakeholder-objections-YesAllObjectionsAddressed">
+                Yes - all objections have been addressed
+            </label>
+         </div>
+
+           <div class="govuk-radios__item">
+            <input asp-for="@Model.StakeholderObjection" class="govuk-radios__input"
+                   id="stakeholder-objections-YesNoFurtherInformationProvided" type="radio" value="YesNoFurtherInformationProvided"
+                   aria-controls="conditional-stakeholder-objections-YesNoFurtherInformationProvided"
+                   data-test="stakeholder-objections-YesNoFurtherInformationProvided" />
+            <label class="govuk-label govuk-radios__label" for="stakeholder-objections-YesNoFurtherInformationProvided">
+                Yes - no further information provided
+            </label>
+         </div>
+
+         <div class="govuk-radios__conditional" id="conditional-stakeholder-objections-YesNoFurtherInformationProvided">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="stakeholder-objections-additional-comments">
+                  Use this area for additional Comments relating to objections raised by stakeholders.
+               </label>
+               <inline-error for="@nameof(Model.StakeHolderObjectionsAdditionalComments)" />
+               <textarea asp-for="@Model.StakeHolderObjectionsAdditionalComments"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.StakeHolderObjectionsAdditionalComments))"
+                         rows="5" data-test="stakeholder-objections-additional-comments"></textarea>
+            </div>
+         </div>
+      </div>
+   </fieldset>
+</div>

@@ -21,7 +21,14 @@ public static class SignificantChangeTaskListBuilder
                "Stakeholder consultation",
                1,
                Links.SignificantChange.StakeholderConsultation,
-               project => GetTaskStatus(project.StakeholderConsultationStatus))
+               project => GetTaskStatus(project.StakeholderConsultationStatus)),
+               
+            new SignificantChangeTaskDefinition(
+               "stakeholder-objections",
+               "Stakeholder objections",
+               2,
+               Links.SignificantChange.StakeholderObjections,
+               project => GetTaskStatus(project.StakeholderObjectionsStatus))
          ])
    ];
 

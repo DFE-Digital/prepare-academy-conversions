@@ -21,8 +21,10 @@ public static class SignificantChangeProjectListHelper
          StatusColour = MapProjectStatusColour(significantChangeProject.Status),
          StakeholderConsultationStatus = significantChangeProject.StakeholderConsultation?.Status ?? SignificantChangeTaskStatus.NotStarted,
          StakeholderConsultationTrustConsultedStakeholders = significantChangeProject.StakeholderConsultation?.TrustConsultedStakeholders,
-         StakeholderConsultationTrustConsultedStakeholdersNotConsultedReason = significantChangeProject.StakeholderConsultation?.TrustConsultedStakeholdersNotConsultedReason ?? string.Empty
-      };
+         StakeholderConsultationTrustConsultedStakeholdersNotConsultedReason = significantChangeProject.StakeholderConsultation?.TrustConsultedStakeholdersNotConsultedReason ?? string.Empty,
+         StakeholderObjectionsStatus = significantChangeProject.StakeholderObjections?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         StakeholderObjection = significantChangeProject.StakeholderObjections?.TrustStakeholderObjections,
+      }; 
    }
 
    public static string MapProjectStatus(string status)
