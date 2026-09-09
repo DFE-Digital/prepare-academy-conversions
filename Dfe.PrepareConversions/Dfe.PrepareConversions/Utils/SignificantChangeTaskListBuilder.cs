@@ -32,7 +32,20 @@ public static class SignificantChangeTaskListBuilder
             "Confirm project dates",
             1,
             Links.SignificantChange.ConfirmProjectDates,
-            project => GetTaskStatus(project.ProjectDatesStatus))])
+            project => GetTaskStatus(project.ProjectDatesStatus))
+         ]),
+      new SignificantChangeTaskSectionDefinition(
+         "public-sector-equality-duty",
+         "Public Sector Equality Duty",
+         3,
+         [
+            new SignificantChangeTaskDefinition(
+               "public-sector-equality-duty",
+               "Public Sector Equality Duty",
+               1,
+               Links.SignificantChange.PublicSectorEqualityDuty,
+               project => GetTaskStatus(project.EqualitiesImpactAssessmentStatus))
+         ])
    ];
 
    public static SignificantChangeTaskListViewModel Build(SignificantChangeProjectViewBaseModel project)

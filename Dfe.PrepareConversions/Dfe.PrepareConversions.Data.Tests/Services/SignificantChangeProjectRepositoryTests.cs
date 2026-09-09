@@ -369,6 +369,52 @@ public class SignificantChangeProjectRepositoryTests
 
    [Theory]
    [AutoMoqData]
+   public async Task SetEqualitiesImpactAssessment_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 77;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(true, EqualitiesImpact.ImpactsIdentified, "Affected group and mitigation");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeEqualitiesImpactAssessmentCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetEqualitiesImpactAssessment(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeEqualitiesImpactAssessmentCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetEqualitiesImpactAssessment_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 77;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, id);
+      SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(true, EqualitiesImpact.None, null);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeEqualitiesImpactAssessmentCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetEqualitiesImpactAssessment(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+   [Theory]
+   [AutoMoqData]
    public async Task GetAllProjects_WithNoFilters_ShouldSendNullForEveryFilterMember(
       [Frozen] Mock<IHttpClientService> httpClientService,
       SignificantChangeProjectRepository sut)

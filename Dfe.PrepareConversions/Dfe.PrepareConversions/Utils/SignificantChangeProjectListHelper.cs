@@ -22,6 +22,10 @@ public static class SignificantChangeProjectListHelper
          StakeholderConsultationStatus = significantChangeProject.StakeholderConsultation?.Status ?? SignificantChangeTaskStatus.NotStarted,
          StakeholderConsultationTrustConsultedStakeholders = significantChangeProject.StakeholderConsultation?.TrustConsultedStakeholders,
          StakeholderConsultationTrustConsultedStakeholdersNotConsultedReason = significantChangeProject.StakeholderConsultation?.TrustConsultedStakeholdersNotConsultedReason ?? string.Empty,
+         EqualitiesImpactAssessmentStatus = significantChangeProject.EqualitiesImpactAssessment?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         EqualitiesImpactAssessmentCompleted = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactAssessmentCompleted,
+         EqualitiesImpactIdentified = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactIdentified,
+         EqualitiesImpactIdentifiedMitigation = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactIdentifiedMitigation ?? string.Empty,
          ProjectDatesStatus = significantChangeProject.ProjectDates?.Status ?? SignificantChangeTaskStatus.NotStarted,
          ProposedDecisionDate = significantChangeProject.ProjectDates?.ProposedDecisionDate,
          ProposedChangeDate = significantChangeProject.ProjectDates?.ProposedChangeDate

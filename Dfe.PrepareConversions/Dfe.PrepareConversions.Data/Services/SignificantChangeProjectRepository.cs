@@ -179,5 +179,21 @@ public class SignificantChangeProjectRepository(
          throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
       }
    }
+   
+   public async Task SetEqualitiesImpactAssessment(int id, SetSignificantChangeEqualitiesImpactAssessmentCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeEqualitiesImpactAssessmentCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
 
 }
