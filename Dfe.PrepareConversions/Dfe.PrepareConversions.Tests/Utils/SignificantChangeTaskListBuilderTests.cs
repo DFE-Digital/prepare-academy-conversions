@@ -9,20 +9,23 @@ namespace Dfe.PrepareConversions.Tests.Utils;
 public class SignificantChangeTaskListBuilderTests
 {
    [Fact]
-   public void Build_Includes_consultation_section_with_stakeholder_consultation_task()
+   public void Build_Includes_consultation_section_with_expectedTasks()
    {
+      string[] expectedTasks = [
+         "stakeholder-consultation"
+      ];
+
       SignificantChangeProjectViewBaseModel project = BuildProject();
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
-      Assert.Equal(2, result.Sections.Count);
       Assert.Equal("consultation", result.Sections[0].Key);
-      Assert.Single(result.Sections[0].Tasks);
-      Assert.Equal("stakeholder-consultation", result.Sections[0].Tasks[0].Key);
+      Assert.Equal(expectedTasks.Length, result.Sections[0].Tasks.Count);
+      Assert.Equal(expectedTasks, result.Sections[0].Tasks.Select(t => t.Key));
    }
 
    [Fact]
-   public void Build_Includes_proposed_decsion_and_conversion_dates_section_with_task()
+   public void Build_Includes_proposed_decision_and_conversion_dates_section_with_task()
    {
       string[] expectedTasks = [
          "confirm-project-dates"

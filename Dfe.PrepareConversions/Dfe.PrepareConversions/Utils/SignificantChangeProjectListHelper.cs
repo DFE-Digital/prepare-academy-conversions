@@ -25,7 +25,7 @@ public static class SignificantChangeProjectListHelper
          EqualitiesImpactAssessmentStatus = significantChangeProject.EqualitiesImpactAssessment?.Status ?? SignificantChangeTaskStatus.NotStarted,
          EqualitiesImpactAssessmentCompleted = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactAssessmentCompleted,
          EqualitiesImpactIdentified = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactIdentified,
-         EqualitiesImpactIdentifiedMitigation = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactIdentifiedMitigation ?? string.Empty
+         EqualitiesImpactIdentifiedMitigation = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactIdentifiedMitigation ?? string.Empty,
          ProjectDatesStatus = significantChangeProject.ProjectDates?.Status ?? SignificantChangeTaskStatus.NotStarted,
          ProposedDecisionDate = significantChangeProject.ProjectDates?.ProposedDecisionDate,
          ProposedChangeDate = significantChangeProject.ProjectDates?.ProposedChangeDate
