@@ -24,6 +24,17 @@ public static class SignificantChangeTaskListBuilder
                project => GetTaskStatus(project.StakeholderConsultationStatus))
          ]),
       new SignificantChangeTaskSectionDefinition(
+         "Proposed decision and conversion dates",
+         "Proposed decision and conversion dates",
+         2,
+         [ new SignificantChangeTaskDefinition(
+            "confirm-project-dates",
+            "Confirm project dates",
+            1,
+            Links.SignificantChange.ConfirmProjectDates,
+            project => GetTaskStatus(project.ProjectDatesStatus))
+         ]),
+      new SignificantChangeTaskSectionDefinition(
          "public-sector-equality-duty",
          "Public Sector Equality Duty",
          3,

@@ -1,5 +1,6 @@
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
+using System;
 
 namespace Dfe.PrepareConversions.ViewModels;
 
@@ -22,4 +23,7 @@ public class SignificantChangeProjectViewBaseModel
    public bool? EqualitiesImpactAssessmentCompleted { get; set; }
    public EqualitiesImpact? EqualitiesImpactIdentified { get; set; }
    public string EqualitiesImpactIdentifiedMitigation { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus ProjectDatesStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public DateTime? ProposedDecisionDate { get; set; }
+   public DateTime? ProposedChangeDate { get; set; }
 }

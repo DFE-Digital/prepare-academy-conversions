@@ -77,6 +77,7 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
 
       Document.QuerySelectorAll("h3.app-task-list__section").Select(x => x.TextContent.Trim())
          .Should().Equal("Consultation", "Public Sector Equality Duty");
+         .Should().OnlyContain(x=> x == "Consultation" || x == "Proposed decision and conversion dates");
 
       var stakeholderConsultationLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Stakeholder consultation"));
@@ -89,6 +90,11 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
 
       publicSectorEqualityDutyLink.Should().NotBeNull();
       publicSectorEqualityDutyLink!.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/public-sector-equality-duty");
+      var confirmProjectDatesLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Confirm project dates"));
+
+      confirmProjectDatesLink.Should().NotBeNull();
+      confirmProjectDatesLink!.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/confirm-project-dates");
 
       Document.QuerySelectorAll("a").Any(a => a.TextContent != null && a.TextContent.Contains("Gather trust feedback"))
          .Should().BeFalse();

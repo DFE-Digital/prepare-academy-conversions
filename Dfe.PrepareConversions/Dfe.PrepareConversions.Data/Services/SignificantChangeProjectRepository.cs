@@ -164,6 +164,22 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+   public async Task SetProjectDates(int id, SetSignificantChangeProjectDatesCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeProjectDates, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeProjectDatesCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+   
    public async Task SetEqualitiesImpactAssessment(int id, SetSignificantChangeEqualitiesImpactAssessmentCommand command)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
