@@ -5,7 +5,7 @@ namespace Dfe.PrepareConversions.Utils;
 
 public static class SignificantChangeProjectListHelper
 {
-   public static SignificantChangeProjectViewBaseModel SBuild(SignificantChangeProjectResponse significantChangeProject)
+   public static SignificantChangeProjectViewBaseModel Build(SignificantChangeProjectResponse significantChangeProject)
    {
       return new SignificantChangeProjectViewBaseModel
       {

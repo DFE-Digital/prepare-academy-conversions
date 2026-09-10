@@ -12,7 +12,8 @@ public class SignificantChangeTaskListBuilderTests
    public void Build_Includes_consultation_section_with_expectedTasks()
    {
       string[] expectedTasks = [
-         "stakeholder-consultation"
+         "stakeholder-consultation",
+         "religious-body-consultation"
       ];
 
       SignificantChangeProjectViewBaseModel project = BuildProject();
