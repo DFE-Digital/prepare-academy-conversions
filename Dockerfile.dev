@@ -1,12 +1,20 @@
 # See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
+ARG NODEJS_VERSION_MAJOR=22
+
+# Build assets
+FROM node:${NODEJS_VERSION_MAJOR}-bullseye-slim AS assets
+WORKDIR /app
+EXPOSE 5003
+EXPOSE 5002
+COPY ./Dfe.PrepareConversions/Dfe.PrepareConversions/wwwroot .
+RUN npm install && \
+    npm run build
+
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 USER $APP_UID
 WORKDIR /app
-EXPOSE 5003
-EXPOSE 5002
-
 
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
@@ -18,19 +26,22 @@ COPY ["Dfe.PrepareConversions/Dfe.PrepareConversions.DocumentGeneration/Dfe.Prep
 COPY ["Dfe.PrepareConversions/Dfe.PrepareTransfers.Data.TRAMS/Dfe.PrepareTransfers.Data.TRAMS.csproj", "Dfe.PrepareTransfers.Data.TRAMS/"]
 COPY ["Dfe.PrepareConversions/Dfe.PrepareTransfers.Data/Dfe.PrepareTransfers.Data.csproj", "Dfe.PrepareTransfers.Data/"]
 COPY ["Dfe.PrepareConversions/Dfe.PrepareTransfers.Helpers/Dfe.PrepareTransfers.Helpers.csproj", "Dfe.PrepareTransfers.Helpers/"]
-RUN dotnet restore "./Dfe.PrepareConversions/Dfe.PrepareConversions.csproj"
+
 COPY . .
 WORKDIR "/src/Dfe.PrepareConversions"
-RUN dotnet build "./Dfe.PrepareConversions.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN --mount=type=secret,id=github_token dotnet nuget add source --username USERNAME --password $(cat /run/secrets/github_token) --store-password-in-clear-text --name github "https://nuget.pkg.github.com/DFE-Digital/index.json" && \
+    dotnet restore Dfe.PrepareConversions
+RUN dotnet build "Dfe.PrepareConversions" --no-restore -c $BUILD_CONFIGURATION -o /app/build 
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Debug
-RUN dotnet publish "./Dfe.PrepareConversions.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Dfe.PrepareConversions" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-RUN find /app/wwwroot -type f -name 'package-lock.json' -delete
+COPY --from=assets /app/ ./wwwroot/
+#RUN find /app/wwwroot -type f -name 'package-lock.json' -delete
 ENTRYPOINT ["dotnet", "Dfe.PrepareConversions.dll"]
