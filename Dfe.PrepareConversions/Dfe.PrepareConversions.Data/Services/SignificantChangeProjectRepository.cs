@@ -164,6 +164,22 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+   public async Task SetReligiousBodyConsultation(int id, SetSignificantChangeReligiousBodyConsultationCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeReligiousBodyConsultation, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeReligiousBodyConsultationCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
    public async Task SetProjectDates(int id, SetSignificantChangeProjectDatesCommand command)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();

@@ -12,7 +12,8 @@ public class SignificantChangeTaskListBuilderTests
    public void Build_Includes_consultation_section_with_expectedTasks()
    {
       string[] expectedTasks = [
-         "stakeholder-consultation"
+         "stakeholder-consultation",
+         "religious-body-consultation"
       ];
 
       SignificantChangeProjectViewBaseModel project = BuildProject();
@@ -22,6 +23,9 @@ public class SignificantChangeTaskListBuilderTests
       Assert.Equal("consultation", result.Sections[0].Key);
       Assert.Equal(expectedTasks.Length, result.Sections[0].Tasks.Count);
       Assert.Equal(expectedTasks, result.Sections[0].Tasks.Select(t => t.Key));
+      Assert.Equal(2, result.Sections[0].Tasks.Count);
+      Assert.Equal("stakeholder-consultation", result.Sections[0].Tasks[0].Key);
+      Assert.Equal("religious-body-consultation", result.Sections[0].Tasks[1].Key);
    }
 
    [Fact]
@@ -99,6 +103,16 @@ public class SignificantChangeTaskListBuilderTests
    }
 
    [Fact]
+   public void Build_Sets_religious_body_consultation_task_status_to_completed_when_status_is_completed()
+   {
+      SignificantChangeProjectViewBaseModel project = BuildProject(religiousBodyConsultationStatus: SignificantChangeTaskStatus.Completed);
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      Assert.Equal(TaskListItemViewModel.Completed, result.Sections[0].Tasks[1].Status);
+   }
+
+   [Fact]
    public void Build_Sets_task_status_to_not_started_when_status_is_default()
    {
       SignificantChangeProjectViewBaseModel defaultStatusProject = BuildProject();
@@ -141,6 +155,7 @@ public class SignificantChangeTaskListBuilderTests
 
    private static SignificantChangeProjectViewBaseModel BuildProject(
       SignificantChangeTaskStatus stakeholderConsultationStatus = SignificantChangeTaskStatus.NotStarted,
+      SignificantChangeTaskStatus religiousBodyConsultationStatus = SignificantChangeTaskStatus.NotStarted,
       SignificantChangeTaskStatus projectDatesStatus = SignificantChangeTaskStatus.NotStarted)
    {
       return new SignificantChangeProjectViewBaseModel
@@ -155,6 +170,7 @@ public class SignificantChangeTaskListBuilderTests
          Status = "Pre decision",
          StatusColour = "yellow",
          StakeholderConsultationStatus = stakeholderConsultationStatus,
+         ReligiousBodyConsultationStatus = religiousBodyConsultationStatus,
          ProjectDatesStatus = projectDatesStatus
       };
    }

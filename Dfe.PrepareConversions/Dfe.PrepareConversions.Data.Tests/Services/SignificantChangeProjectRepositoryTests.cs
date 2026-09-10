@@ -415,6 +415,52 @@ public class SignificantChangeProjectRepositoryTests
 
    [Theory]
    [AutoMoqData]
+   public async Task SetReligiousBodyConsultation_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 78;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeReligiousBodyConsultation, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeReligiousBodyConsultationCommand command = new(false, "Further evidence is being gathered");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeReligiousBodyConsultationCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetReligiousBodyConsultation(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeReligiousBodyConsultationCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetReligiousBodyConsultation_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 78;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeReligiousBodyConsultation, id);
+      SetSignificantChangeReligiousBodyConsultationCommand command = new(false, "Reason");
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeReligiousBodyConsultationCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetReligiousBodyConsultation(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+   [Theory]
+   [AutoMoqData]
    public async Task GetAllProjects_WithNoFilters_ShouldSendNullForEveryFilterMember(
       [Frozen] Mock<IHttpClientService> httpClientService,
       SignificantChangeProjectRepository sut)
