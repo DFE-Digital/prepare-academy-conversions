@@ -1,5 +1,6 @@
 using Dfe.PrepareConversions.Data.Models;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
+using System;
 
 namespace Dfe.PrepareConversions.ViewModels;
 
@@ -18,4 +19,14 @@ public class SignificantChangeProjectViewBaseModel
    public SignificantChangeTaskStatus StakeholderConsultationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public bool? StakeholderConsultationTrustConsultedStakeholders { get; set; }
    public string StakeholderConsultationTrustConsultedStakeholdersNotConsultedReason { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus EqualitiesImpactAssessmentStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public bool? EqualitiesImpactAssessmentCompleted { get; set; }
+   public EqualitiesImpact? EqualitiesImpactIdentified { get; set; }
+   public string EqualitiesImpactIdentifiedMitigation { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus ReligiousBodyConsultationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public bool? ReligiousBodyConsultationTrustConsultedReligiousBody { get; set; }
+   public string ReligiousBodyConsultationTrustConsultedReligiousBodyNotConsultedReason { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus ProjectDatesStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public DateTime? ProposedDecisionDate { get; set; }
+   public DateTime? ProposedChangeDate { get; set; }
 }
