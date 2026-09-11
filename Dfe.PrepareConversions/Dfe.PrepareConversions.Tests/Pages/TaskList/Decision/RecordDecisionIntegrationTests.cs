@@ -74,4 +74,32 @@ public class RecordDecisionIntegrationTests : BaseIntegrationTests
       Document.QuerySelector<IHtmlElement>("h1")!.Text().Trim().Should().Be(project.SchoolName);
       Document.Url.Should().EndWith($"/task-list/{project.Id}");
    }
+
+   [Fact]
+   public async Task Should_show_dao_not_issued_option_for_sponsored_projects()
+   {
+      AcademyConversionProject project = AddGetProject(p =>
+      {
+         p.SchoolOverviewSectionComplete = false;
+         p.AcademyTypeAndRoute = "Sponsored";
+      });
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
+
+      Document.QuerySelector<IHtmlInputElement>("#daonotissued-radio").Should().NotBeNull();
+   }
+
+   [Fact]
+   public async Task Should_not_show_dao_not_issued_option_for_non_sponsored_projects()
+   {
+      AcademyConversionProject project = AddGetProject(p =>
+      {
+         p.SchoolOverviewSectionComplete = false;
+         p.AcademyTypeAndRoute = "Converter";
+      });
+
+      await OpenAndConfirmPathAsync($"/task-list/{project.Id}/decision/record-decision");
+
+      Document.QuerySelector<IHtmlInputElement>("#daonotissued-radio").Should().BeNull();
+   }
 }

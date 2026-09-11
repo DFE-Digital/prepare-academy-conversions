@@ -55,6 +55,22 @@ public static class AdvisoryBoardExtensions
       return reasons;
    }
 
+   public static List<AdvisoryBoardDAONotIssuedReasonDetails> AddReasonIfValid(this List<AdvisoryBoardDAONotIssuedReasonDetails> reasons,
+                                                                     bool isChecked,
+                                                                     AdvisoryBoardDAONotIssuedReason reason,
+                                                                     string detail,
+                                                                     ModelStateDictionary modelState)
+   {
+      if (isChecked && string.IsNullOrWhiteSpace(detail))
+      {
+         modelState.AddModelError($"{reason}Details", $"Enter a reason for selecting {reason.ToDescription()}");
+      }
+
+      if (isChecked) reasons.Add(new AdvisoryBoardDAONotIssuedReasonDetails(reason, detail));
+
+      return reasons;
+   }
+
    public static AdvisoryBoardDeferredReasonDetails GetReason(this List<AdvisoryBoardDeferredReasonDetails> reasons, AdvisoryBoardDeferredReason reason)
    {
       return reasons.FirstOrDefault(r => r.Reason == reason);
@@ -65,6 +81,11 @@ public static class AdvisoryBoardExtensions
       return reasons.FirstOrDefault(r => r.Reason == reason);
    }
    public static AdvisoryBoardDAORevokedReasonDetails GetReason(this List<AdvisoryBoardDAORevokedReasonDetails> reasons, AdvisoryBoardDAORevokedReason reason)
+   {
+      return reasons.FirstOrDefault(r => r.Reason == reason);
+   }
+
+   public static AdvisoryBoardDAONotIssuedReasonDetails GetReason(this List<AdvisoryBoardDAONotIssuedReasonDetails> reasons, AdvisoryBoardDAONotIssuedReason reason)
    {
       return reasons.FirstOrDefault(r => r.Reason == reason);
    }

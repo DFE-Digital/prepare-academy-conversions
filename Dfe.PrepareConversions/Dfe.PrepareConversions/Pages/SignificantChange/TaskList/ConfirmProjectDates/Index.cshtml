@@ -1,0 +1,20 @@
+@page "/significant-change/task-list/{id:int}/confirm-project-dates"
+@using Dfe.PrepareConversions.TagHelpers
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.ConfirmProjectDates.IndexModel
+@{
+   Layout = "_SignificantChangeTaskLayout";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@Model.Project.Id"
+      class="govuk-back-link">Back</a>
+}
+
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-two-thirds">
+         <govuk-date-input heading-label="false" label="Proposed decision date" name="proposed-decision-date" asp-for="ProposedDecisionDate" hint="For example, 21 11 2021" />
+         
+         <govuk-date-input heading-label="false" label="Proposed change date" name="proposed-change-date" asp-for="ProposedChangeDate" hint="For example, 21 11 2021" />
+   </div>
+</div>

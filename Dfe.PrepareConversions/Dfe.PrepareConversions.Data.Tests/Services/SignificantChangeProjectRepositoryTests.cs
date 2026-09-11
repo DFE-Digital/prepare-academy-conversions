@@ -269,6 +269,39 @@ public class SignificantChangeProjectRepositoryTests
 
    [Theory]
    [AutoMoqData]
+   public async Task RecordDecision_ShouldPostDecisionToApi(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      SignificantChangeDecision decision = new()
+      {
+         SignificantChangeProjectId = 123,
+         Decision = SignificantChangeDecisions.Approved,
+         ApprovedConditionsSet = false,
+         DecisionDate = new DateTime(2026, 3, 27),
+         DecisionMakerName = "Jane Smith"
+      };
+
+      HttpClient httpClient = new();
+
+      httpClientFactory.Setup(x => x.CreateAcademisationClient()).Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Post<SignificantChangeDecision, SignificantChangeDecision>(
+            httpClient, PathFor.RecordSignificantChangeDecision, decision))
+         .ReturnsAsync(new ApiResponse<SignificantChangeDecision>(HttpStatusCode.Created, decision));
+
+      await sut.RecordDecision(decision);
+
+      httpClientService.Verify(
+         x => x.Post<SignificantChangeDecision, SignificantChangeDecision>(
+            httpClient, PathFor.RecordSignificantChangeDecision, decision),
+            Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
    public async Task SetStakeholderConsultation_WhenApiCallSucceeds_ShouldPutToExpectedPath(
       [Frozen] Mock<IHttpClientService> httpClientService,
       [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
@@ -296,6 +329,27 @@ public class SignificantChangeProjectRepositoryTests
 
    [Theory]
    [AutoMoqData]
+   public async Task RecordDecision_ShouldThrow_WhenApiCallFails(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      SignificantChangeDecision decision = new() { SignificantChangeProjectId = 123 };
+      HttpClient httpClient = new();
+
+      httpClientFactory.Setup(x => x.CreateAcademisationClient()).Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Post<SignificantChangeDecision, SignificantChangeDecision>(
+            It.IsAny<HttpClient>(), It.IsAny<string>(), It.IsAny<SignificantChangeDecision>()))
+         .ReturnsAsync(new ApiResponse<SignificantChangeDecision>(HttpStatusCode.BadRequest, null));
+
+      await sut.Invoking(s => s.RecordDecision(decision))
+         .Should().ThrowAsync<ApiResponseException>();
+   }
+
+   [Theory]
+   [AutoMoqData]
    public async Task SetStakeholderConsultation_WhenApiCallFails_ShouldThrowApiResponseException(
       [Frozen] Mock<IHttpClientService> httpClientService,
       SignificantChangeProjectRepository sut)
@@ -314,6 +368,98 @@ public class SignificantChangeProjectRepositoryTests
    }
 
    [Theory]
+   [AutoMoqData]
+   public async Task SetEqualitiesImpactAssessment_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 77;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(true, EqualitiesImpact.ImpactsIdentified, "Affected group and mitigation");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeEqualitiesImpactAssessmentCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetEqualitiesImpactAssessment(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeEqualitiesImpactAssessmentCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetEqualitiesImpactAssessment_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 77;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, id);
+      SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(true, EqualitiesImpact.None, null);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeEqualitiesImpactAssessmentCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetEqualitiesImpactAssessment(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetReligiousBodyConsultation_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 78;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeReligiousBodyConsultation, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeReligiousBodyConsultationCommand command = new(false, "Further evidence is being gathered");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeReligiousBodyConsultationCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetReligiousBodyConsultation(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeReligiousBodyConsultationCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetReligiousBodyConsultation_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 78;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeReligiousBodyConsultation, id);
+      SetSignificantChangeReligiousBodyConsultationCommand command = new(false, "Reason");
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeReligiousBodyConsultationCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetReligiousBodyConsultation(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+      [Theory]
    [AutoMoqData]
    public async Task SetStakeholderObjections_WhenApiCallSucceeds_ShouldPutToExpectedPath(
       [Frozen] Mock<IHttpClientService> httpClientService,
@@ -500,5 +646,51 @@ public class SignificantChangeProjectRepositoryTests
       response.Body.Tiers.Should().BeEmpty();
       response.Body.AssignedUsers.Should().BeEmpty();
       response.Body.Routes.Should().BeEmpty();
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetProjectDates_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 77;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeProjectDates, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeProjectDatesCommand command = new(DateTime.UtcNow, null);
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeProjectDatesCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetProjectDates(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeProjectDatesCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetProjectDates_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 77;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeProjectDates, id);
+      SetSignificantChangeProjectDatesCommand command = new(DateTime.UtcNow, DateTime.UtcNow);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeProjectDatesCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetProjectDates(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }
 }

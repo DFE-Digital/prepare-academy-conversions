@@ -24,8 +24,18 @@ public static class SignificantChangeProjectListHelper
          StakeholderConsultationTrustConsultedStakeholdersNotConsultedReason = significantChangeProject.StakeholderConsultation?.TrustConsultedStakeholdersNotConsultedReason ?? string.Empty,
          StakeholderObjectionsStatus = significantChangeProject.StakeholderObjections?.Status ?? SignificantChangeTaskStatus.NotStarted,
          StakeholderObjections = significantChangeProject.StakeholderObjections?.StakeholderObjections,
-         StakeholderObjectionsComment = significantChangeProject.StakeholderObjections?.StakeholderObjectionsComment ?? string.Empty
-      }; 
+         StakeholderObjectionsComment = significantChangeProject.StakeholderObjections?.StakeholderObjectionsComment ?? string.Empty,
+         EqualitiesImpactAssessmentStatus = significantChangeProject.EqualitiesImpactAssessment?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         EqualitiesImpactAssessmentCompleted = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactAssessmentCompleted,
+         EqualitiesImpactIdentified = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactIdentified,
+         EqualitiesImpactIdentifiedMitigation = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactIdentifiedMitigation ?? string.Empty,
+         ReligiousBodyConsultationStatus = significantChangeProject.ReligiousBodyConsultation?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         ReligiousBodyConsultationTrustConsultedReligiousBody = significantChangeProject.ReligiousBodyConsultation?.TrustConsultedReligiousBody,
+         ReligiousBodyConsultationTrustConsultedReligiousBodyNotConsultedReason = significantChangeProject.ReligiousBodyConsultation?.TrustConsultedReligiousBodyNotConsultedReason ?? string.Empty,
+         ProjectDatesStatus = significantChangeProject.ProjectDates?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         ProposedDecisionDate = significantChangeProject.ProjectDates?.ProposedDecisionDate,
+         ProposedChangeDate = significantChangeProject.ProjectDates?.ProposedChangeDate
+      };
    }
 
    public static string MapProjectStatus(string status)

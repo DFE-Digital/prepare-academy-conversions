@@ -5,6 +5,8 @@ using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using FluentAssertions;
 using Xunit;
 using System.Linq;
+using Dfe.PrepareConversions.Models;
+
 
 namespace Dfe.PrepareConversions.Tests.Utils;
 
@@ -12,8 +14,10 @@ public class SignificantChangeTaskListBuilderTests
 {
    
    [Theory]
-   [InlineData(1, "consultation", "Consultation", new[] { "stakeholder-consultation", "stakeholder-objections" })]
-   public void Build_includes_correct_sections_when_supplied(int sectionDisplayOrder, string sectionKey, string sectionTitle, string[] taskKeys)
+   [InlineData(1, "consultation", "Consultation", new[] { "stakeholder-consultation", "stakeholder-objections", "religious-body-consultation" })]
+   [InlineData(5, "Proposed decision and conversion dates", "Proposed decision and conversion dates", new[] { "confirm-project-dates" })]
+   [InlineData(10, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
+   public void Build_includes_ordered_sections_and_tasks_when_supplied(int sectionDisplayOrder, string sectionKey, string sectionTitle, string[] taskKeys)
    {
       SignificantChangeProjectViewBaseModel project = BuildProject();
 
@@ -29,42 +33,79 @@ public class SignificantChangeTaskListBuilderTests
       var tasks = section.Tasks;
 
       Assert.Equal(taskKeys.Length, tasks.Count);
-      Assert.Equal(taskKeys, tasks.Select(t => t.Key).ToArray());
+      Assert.Equal(taskKeys, tasks.OrderBy(t => t.DisplayOrder).Select(t => t.Key).ToArray());
    }
 
-   public static TheoryData<SignificantChangeTaskStatus, TaskListItemViewModel, string> StatusCases =>
+   public static TheoryData<SignificantChangeTaskStatus, TaskListItemViewModel> StatusCases =>
     new()
     {
-         { SignificantChangeTaskStatus.Completed, TaskListItemViewModel.Completed, "InProgress" },
-         { SignificantChangeTaskStatus.InProgress, TaskListItemViewModel.InProgress, "InProgress" },
-         { SignificantChangeTaskStatus.NotStarted, TaskListItemViewModel.NotStarted, "NotStarted" },
-         {default, TaskListItemViewModel.NotStarted, "Default" }
+         { SignificantChangeTaskStatus.Completed, TaskListItemViewModel.Completed },
+         { SignificantChangeTaskStatus.InProgress, TaskListItemViewModel.InProgress },
+         { SignificantChangeTaskStatus.NotStarted, TaskListItemViewModel.NotStarted },
+         {default, TaskListItemViewModel.NotStarted }
     };
 
    [Theory]
    [MemberData(nameof(StatusCases))]
-   public void Build_maps_stakeholder_consultation_status_to_task_status(SignificantChangeTaskStatus TaskStatus, TaskListItemViewModel expectedTaskStatus, string caseName)
+   public void Build_maps_stakeholder_consultation_status_to_task_status(SignificantChangeTaskStatus TaskStatus, TaskListItemViewModel expectedTaskStatus)
    {
+      const string sectionKey = "consultation";
+      const string taskKey = "stakeholder-consultation";
+
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.StakeholderConsultationStatus = TaskStatus);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
-      const int SectionIndex = 0;
-      const int TaskIndex = 0;
+      var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
+      var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
 
-      result.Sections[SectionIndex].Tasks[TaskIndex].Status.Should().Be(expectedTaskStatus);
+      task.Status.Should().Be(expectedTaskStatus);
    }
 
    [Theory]
    [MemberData(nameof(StatusCases))]
-   public void Build_maps_stakeholder_objections_status_to_task_status(SignificantChangeTaskStatus TaskStatus, TaskListItemViewModel expectedTaskStatus, string caseName)
+   public void Build_maps_stakeholder_objections_status_to_task_status(SignificantChangeTaskStatus TaskStatus, TaskListItemViewModel expectedTaskStatus)
    {
+      const string sectionKey = "consultation";
+      const string taskKey = "stakeholder-objections";
+      
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.StakeholderObjectionsStatus = TaskStatus);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
-      const int SectionIndex = 0;
-      const int TaskIndex = 1;
+      var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
+      var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
+
+      task.Status.Should().Be(expectedTaskStatus);
+   }
+
+   [Theory]
+   [MemberData(nameof(StatusCases))]
+   public void Build_maps_religious_body_consultation_status_to_task_status(SignificantChangeTaskStatus TaskStatus, TaskListItemViewModel expectedTaskStatus)
+   {
+      const string sectionKey = "consultation";
+      const string taskKey = "religious-body-consultation";
+
+      SignificantChangeProjectViewBaseModel project = BuildProject(p => p.ReligiousBodyConsultationStatus = TaskStatus);
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
+      var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
+
+      task.Status.Should().Be(expectedTaskStatus);
+   }
+
+   [Theory]
+   [MemberData(nameof(StatusCases))]
+   public void Build_maps_confirm_project_dates_status_to_task_status(SignificantChangeTaskStatus TaskStatus, TaskListItemViewModel expectedTaskStatus)
+   {
+      SignificantChangeProjectViewBaseModel project = BuildProject(p => p.ProjectDatesStatus = TaskStatus);
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      const int SectionIndex = 1;
+      const int TaskIndex = 0;
 
       result.Sections[SectionIndex].Tasks[TaskIndex].Status.Should().Be(expectedTaskStatus);
    }

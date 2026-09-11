@@ -26,10 +26,46 @@ public static class SignificantChangeTaskListBuilder
             new SignificantChangeTaskDefinition(
                "stakeholder-objections",
                "Stakeholder objections",
-               2,
+               5,
                Links.SignificantChange.StakeholderObjections,
-               project => GetTaskStatus(project.StakeholderObjectionsStatus))
-         ])
+               project => GetTaskStatus(project.StakeholderObjectionsStatus)),
+
+            new SignificantChangeTaskDefinition(
+               "religious-body-consultation",
+               "Religious body consultation",
+               10,
+               Links.SignificantChange.ReligiousBodyConsultation,
+               project => GetTaskStatus(project.ReligiousBodyConsultationStatus))
+         ]
+      ),
+
+      new SignificantChangeTaskSectionDefinition(
+         "Proposed decision and conversion dates",
+         "Proposed decision and conversion dates",
+         5,
+         [ 
+            new SignificantChangeTaskDefinition(
+            "confirm-project-dates",
+            "Confirm project dates",
+            1,
+            Links.SignificantChange.ConfirmProjectDates,
+            project => GetTaskStatus(project.ProjectDatesStatus))
+         ]
+      ),
+
+      new SignificantChangeTaskSectionDefinition(
+         "public-sector-equality-duty",
+         "Public Sector Equality Duty",
+         10,
+         [
+            new SignificantChangeTaskDefinition(
+               "public-sector-equality-duty",
+               "Public Sector Equality Duty",
+               1,
+               Links.SignificantChange.PublicSectorEqualityDuty,
+               project => GetTaskStatus(project.EqualitiesImpactAssessmentStatus))
+         ]
+      )
    ];
 
    public static SignificantChangeTaskListViewModel Build(SignificantChangeProjectViewBaseModel project)
