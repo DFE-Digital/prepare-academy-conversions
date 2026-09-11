@@ -122,6 +122,27 @@ public class StakeholderObjectionsModelTests
                && command.StakeholderObjectionsComment == comment)), Times.Once);
    }
 
+   [Fact]
+   public async Task OnPostAsync_WhenAnswerIsYesNoFurtherInformationProvidedWithWhitespaceComment_ShouldReturnPageWithValidationError()
+   {
+      const int id = 408;
+
+      Mock<ISignificantChangeProjectRepository> repository = new();
+      repository
+         .Setup(x => x.GetProjectById(id))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, BuildProject(id)));
+
+      IndexModel sut = BuildModel(repository.Object);
+      sut.StakeholderObjections = SignificantChangeStakeholderObjection.YesNoFurtherInformationProvided;
+      sut.StakeholderObjectionsComment = "   ";
+
+      IActionResult result = await sut.OnPostAsync(id);
+
+      result.Should().BeOfType<PageResult>();
+      sut.ModelState.ContainsKey(nameof(IndexModel.StakeholderObjectionsComment)).Should().BeTrue();
+      repository.Verify(x => x.SetStakeholderObjections(id, It.IsAny<SetSignificantChangeStakeholderObjectionsCommand>()), Times.Never);
+   }
+
     private static SignificantChangeProjectResponse BuildProject(int id)
    {
       return new SignificantChangeProjectResponse
