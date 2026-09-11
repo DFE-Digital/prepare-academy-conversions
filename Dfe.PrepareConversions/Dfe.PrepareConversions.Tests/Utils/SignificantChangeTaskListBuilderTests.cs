@@ -5,8 +5,6 @@ using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using FluentAssertions;
 using Xunit;
 using System.Linq;
-using Dfe.PrepareConversions.Models;
-
 
 namespace Dfe.PrepareConversions.Tests.Utils;
 
@@ -19,11 +17,12 @@ public class SignificantChangeTaskListBuilderTests
    [InlineData(10, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
    public void Build_includes_ordered_sections_and_tasks_when_supplied(int sectionDisplayOrder, string sectionKey, string sectionTitle, string[] taskKeys)
    {
-      SignificantChangeProjectViewBaseModel project = BuildProject();
+      var expectedSectionCount = 3;
 
+      SignificantChangeProjectViewBaseModel project = BuildProject();
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
-      Assert.Single(result.Sections);
+      Assert.Equal(expectedSectionCount, result.Sections.Count);
 
       var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
       
@@ -53,7 +52,6 @@ public class SignificantChangeTaskListBuilderTests
       const string taskKey = "stakeholder-consultation";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.StakeholderConsultationStatus = TaskStatus);
-
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
       var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
@@ -70,7 +68,6 @@ public class SignificantChangeTaskListBuilderTests
       const string taskKey = "stakeholder-objections";
       
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.StakeholderObjectionsStatus = TaskStatus);
-
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
       var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
@@ -87,7 +84,6 @@ public class SignificantChangeTaskListBuilderTests
       const string taskKey = "religious-body-consultation";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.ReligiousBodyConsultationStatus = TaskStatus);
-
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
       var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
@@ -100,14 +96,34 @@ public class SignificantChangeTaskListBuilderTests
    [MemberData(nameof(StatusCases))]
    public void Build_maps_confirm_project_dates_status_to_task_status(SignificantChangeTaskStatus TaskStatus, TaskListItemViewModel expectedTaskStatus)
    {
+      const string sectionKey = "Proposed decision and conversion dates";
+      const string taskKey = "confirm-project-dates";
+
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.ProjectDatesStatus = TaskStatus);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
-      const int SectionIndex = 1;
-      const int TaskIndex = 0;
+      var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
+      var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
 
-      result.Sections[SectionIndex].Tasks[TaskIndex].Status.Should().Be(expectedTaskStatus);
+      task.Status.Should().Be(expectedTaskStatus);
+   }
+
+   [Theory]
+   [MemberData(nameof(StatusCases))]
+   public void Build_maps_public_sector_equality_duty_status_to_task_status(SignificantChangeTaskStatus TaskStatus, TaskListItemViewModel expectedTaskStatus)
+   {
+      const string sectionKey = "public-sector-equality-duty";
+      const string taskKey = "public-sector-equality-duty";
+
+      SignificantChangeProjectViewBaseModel project = BuildProject(p => p.ProjectDatesStatus = TaskStatus);
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
+      var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
+
+      task.Status.Should().Be(expectedTaskStatus);
    }
 
    private static SignificantChangeProjectViewBaseModel BuildProject(Action<SignificantChangeProjectViewBaseModel> configure = null)
