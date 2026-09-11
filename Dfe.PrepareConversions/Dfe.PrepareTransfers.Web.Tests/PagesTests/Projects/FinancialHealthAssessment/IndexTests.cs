@@ -53,6 +53,42 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
       }
 
       [Fact]
+      public async Task OnGet_NoRequestedDate_AndHtbWithin15Days_FHARequestedWithin15DaysTrue()
+      {
+         FoundProjectFromRepo.Dates = new TransferDatesModel
+         {
+            Htb = DateTime.UtcNow.AddDays(5).ToString("dd/MM/yyyy"),
+            Target = DateTime.UtcNow.AddDays(20).ToString("dd/MM/yyyy"),
+            HasHtbDate = true,
+            HasTargetDateForTransfer = true,
+            SfsoCommissioningRequestedDate = null
+         };
+         var subject = Subject();
+
+         await subject.OnGetAsync();
+
+         Assert.True(subject.FHARequestedWithin15Days);
+      }
+
+      [Fact]
+      public async Task OnGet_NoRequestedDate_AndHtbOutside15Days_FHARequestedWithin15DaysFalse()
+      {
+         FoundProjectFromRepo.Dates = new TransferDatesModel
+         {
+            Htb = DateTime.UtcNow.AddDays(20).ToString("dd/MM/yyyy"),
+            Target = DateTime.UtcNow.AddDays(35).ToString("dd/MM/yyyy"),
+            HasHtbDate = true,
+            HasTargetDateForTransfer = true,
+            SfsoCommissioningRequestedDate = null
+         };
+         var subject = Subject();
+
+         await subject.OnGetAsync();
+
+         Assert.False(subject.FHARequestedWithin15Days);
+      }
+
+      [Fact]
       public async Task OnGet_RequestDateToday_RequestSent()
       {
          FoundProjectFromRepo.Dates = new TransferDatesModel
@@ -81,7 +117,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
             Target = "24/07/2026",
             HasHtbDate = true,
             HasTargetDateForTransfer = true,
-            SfsoCommissioningRequestedDate = new DateTime(2020, 7, 23)
+            SfsoCommissioningRequestedDate = new DateTime(2020, 7, 23, 0, 0, 0, DateTimeKind.Utc)
          };
          var subject = Subject();
 

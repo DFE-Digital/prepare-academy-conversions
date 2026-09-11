@@ -48,6 +48,7 @@ namespace Dfe.PrepareTransfers.Web.Services
 
             // SFSO Commissioning
             indexPage.FinancialHealthAssessmentStatus = GetFinancialHealthAssessmentStatus(project.Result);
+            indexPage.FHARequestedWithin15Days = Models.FinancialHealthAssessmentPrerequisites.FHARequestedWithin15Days(project.Result);
         }
 
         private static ProjectStatuses GetAcademyAndTrustInformationStatus(Project project)

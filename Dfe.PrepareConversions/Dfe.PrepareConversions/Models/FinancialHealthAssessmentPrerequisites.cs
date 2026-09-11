@@ -1,4 +1,5 @@
 using Dfe.PrepareConversions.ViewModels;
+using System;
 using System.Collections.Generic;
 
 namespace Dfe.PrepareConversions.Models;
@@ -7,6 +8,12 @@ public record FinancialHealthAssessmentPrerequisite(string Description, LinkItem
 
 public static class FinancialHealthAssessmentPrerequisites
 {
+   public static bool FHARequestedWithin15Days(ProjectViewModel project)
+   {
+      if (!project.HeadTeacherBoardDate.HasValue || project.HeadTeacherBoardDate >= DateTime.UtcNow.AddDays(15)) return false;
+      return project.SfsoCommissioningRequestedDate is null;
+   }
+
    public static IReadOnlyList<FinancialHealthAssessmentPrerequisite> GetMissing(ProjectViewModel project)
    {
       List<FinancialHealthAssessmentPrerequisite> missing = [];

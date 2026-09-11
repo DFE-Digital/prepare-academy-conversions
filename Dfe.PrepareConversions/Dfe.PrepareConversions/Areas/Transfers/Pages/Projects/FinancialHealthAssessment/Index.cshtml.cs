@@ -23,6 +23,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.FinancialHealthAssessment
 
       public DateTime? RequestedDate { get; set; }
       public DateTime? ProposedDecisionDate { get; set; }
+      public bool FHARequestedWithin15Days { get; set; }
       
       // Mandatory information still outstanding (user story 298244). Empty == ready to request.
       public IReadOnlyList<FinancialHealthAssessmentPrerequisite> MissingInformation { get; private set; } = [];
@@ -64,6 +65,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.FinancialHealthAssessment
         IncomingTrustName = projectResult.IncomingTrustName;
         IsReadOnly = projectResult.IsReadOnly;
         RequestedDate = projectResult.Dates?.SfsoCommissioningRequestedDate;
+            FHARequestedWithin15Days = FinancialHealthAssessmentPrerequisites.FHARequestedWithin15Days(projectResult);
         ProposedDecisionDate =
             DateTime.TryParseExact(projectResult.Dates?.Htb, new[] { "dd/MM/yyyy", "dd-MM-yyyy" },
                 CultureInfo.InvariantCulture, DateTimeStyles.None, out var htbDate)
