@@ -52,8 +52,6 @@ public class SignificantChangeTaskListBuilderTests
       const int SectionIndex = 0;
       const int TaskIndex = 0;
 
-      // Assert.Equal(expectedTaskStatus, result.Sections[SectionIndex].Tasks[TaskIndex].Status);
-
       result.Sections[SectionIndex].Tasks[TaskIndex].Status.Should().Be(expectedTaskStatus);
    }
 
