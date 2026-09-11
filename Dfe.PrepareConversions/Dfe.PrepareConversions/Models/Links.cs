@@ -104,8 +104,23 @@ public static class Links
       public static readonly LinkItem SignificantChangeProjectAssignment = AddLinkItem(backText: "Back", page: "/SignificantChange/ProjectAssignment/Index");
       public static readonly LinkItem StakeholderConsultation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/StakeholderConsultation/Index");
       public static readonly LinkItem AdmissionVariationConsultation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/AdmissionVariationConsultation/Index");
+      public static readonly LinkItem PublicSectorEqualityDuty = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/PublicSectorEqualityDuty/Index");
+      public static readonly LinkItem ReligiousBodyConsultation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/ReligiousBodyConsultation/Index");
+      public static readonly LinkItem ConfirmProjectDates = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/ConfirmProjectDates/Index");
    }
 
+    public static class SignificantChangeDecision
+   {
+      public static readonly LinkItem RecordDecision = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/RecordDecision");
+      public static readonly LinkItem AnyConditions = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/AnyConditions");
+      public static readonly LinkItem DeclineReason = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/DeclineReason");
+      public static readonly LinkItem WhyDeferred = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/WhyDeferred");
+      public static readonly LinkItem WhyWithdrawn = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/WhyWithdrawn");
+      public static readonly LinkItem WhoDecided = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/WhoDecided");
+      public static readonly LinkItem DecisionMaker = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/DecisionMaker");
+      public static readonly LinkItem DecisionDate = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/DecisionDate");
+      public static readonly LinkItem Summary = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/Summary");
+   }
    public static class FormAMat
    {
       public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/FormAMat/Index");
@@ -255,6 +270,7 @@ public static class Links
       public static readonly LinkItem DecisionMaker = AddLinkItem(backText: "Back", page: "/TaskList/Decision/DecisionMaker");
       public static readonly LinkItem WhyDeferred = AddLinkItem(backText: "Back", page: "/TaskList/Decision/WhyDeferred");
       public static readonly LinkItem WhyWithdrawn = AddLinkItem(backText: "Back", page: "/TaskList/Decision/WhyWithdrawn");
+      public static readonly LinkItem WhyDAONotIssued = AddLinkItem(backText: "Back", page: "/TaskList/Decision/WhyDAONotIssued");
       public static readonly LinkItem WhyDAORevoked = AddLinkItem(backText: "Back", page: "/TaskList/Decision/WhyDAORevoked");
       public static readonly LinkItem Summary = AddLinkItem(backText: "Back", page: "/TaskList/Decision/Summary");
       public static readonly LinkItem SubMenuRecordADecision = AddLinkItem(backText: "Back", page: "/TaskList/Decision/RecordADecision");

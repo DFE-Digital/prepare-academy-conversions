@@ -93,6 +93,20 @@ public class RecordDecisionWizard
       await ClickSubmitButton();
    }
 
+   public async Task SetDAONotIssuedReasonsAndContinue(Tuple<AdvisoryBoardDAONotIssuedReason, string> reason,
+      params Tuple<AdvisoryBoardDAONotIssuedReason, string>[] furtherReasons)
+   {
+      foreach ((AdvisoryBoardDAONotIssuedReason option, string detail) in new[] { reason }.Concat(furtherReasons))
+      {
+         string id = $"#{option.ToString().ToLowerInvariant()}";
+
+         Document.QuerySelector<IHtmlInputElement>($"{id}-checkbox")!.IsChecked = true;
+         Document.QuerySelector<IHtmlTextAreaElement>($"{id}-txtarea")!.TextContent = detail;
+      }
+
+      await ClickSubmitButton();
+   }
+
    public async Task SetIsConditionalAndContinue(bool required, string conditionDetails)
    {
       string controlId = required ? "#yes-radio" : "#no-radio";

@@ -1,19 +1,47 @@
+
 @page "/significant-change/project-list"
 @model Dfe.PrepareConversions.Pages.SignificantChange.ProjectList.IndexModel
 @{
     ViewData["Title"] = "Significant change projects";
 }
 
+<div if="Model.Filters.IsVisible" class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+     data-cy="select-projectlist-filter-banner">
+    <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+            Success
+        </h2>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <h3 class="govuk-notification-banner__heading">
+            Projects filtered.
+        </h3>
+    </div>
+</div>
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-3" data-cy="select-heading">Significant change projects</h1>
         <p class="govuk-body-l">Find and manage existing significant change projects.</p>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+        <partial name="Shared/SignificantChangeProjects/_ProjectListFilters" model="Model.Filters" />
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
 
         <h2 class="govuk-heading-l" test-id="projectCount" data-cy="select-projectlist-filter-count">@(Model.TotalProjects) projects found</h2>
 
         <div if="@Model.ProjectCount == 0">
             <div class="govuk-heading-m govuk-!-margin-top-3" data-cy="select-significant-change-no-results">There are no matching results.</div>
-        </div> 
+            <p class="govuk-body">Improve your results by:</p>
+            <ul class="govuk-list govuk-list--bullet govuk-body">
+                <li>double-checking your spelling</li>
+                <li>searching again with another school</li>
+                <li>removing some filters</li>
+            </ul>
+        </div>
 
         <div if="@Model.ProjectCount > 0">
             <div class="sort-component">
@@ -24,15 +52,15 @@
 
             <table class="govuk-table">
                 <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Projects (@Model.ProjectCount)</caption>
-                    <thead class="govuk-table__head">
+                <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th class="govuk-table__header app-!-width-three-fifths">Application information</th>
                     </tr>
-                    </thead>
+                </thead>
                 <tbody class="govuk-table__body">
-                @{
-                    <partial name="Shared/SignificantChangeProjects/_ProjectListRows" model="Model.Projects" />
-                }
+                    @{
+                        <partial name="Shared/SignificantChangeProjects/_ProjectListRows" model="Model.Projects" />
+                    }
                 </tbody>
             </table>
 

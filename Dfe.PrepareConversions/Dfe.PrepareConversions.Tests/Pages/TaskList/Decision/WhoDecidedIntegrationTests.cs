@@ -73,4 +73,23 @@ public class WhoDecidedIntegrationTests : BaseIntegrationTests
       Document.QuerySelector<IHtmlHeadingElement>(".govuk-fieldset__heading")!.TextContent.Trim()
          .Should().Be("Why was this project declined?", "the decline reason page is the expected next step");
    }
+
+   [Fact]
+   public async Task Should_redirect_to_dao_not_issued_reasons_if_project_is_dao_not_issued()
+   {
+      AcademyConversionProject project = AddGetProject(p =>
+      {
+         p.SchoolOverviewSectionComplete = false;
+         p.AcademyTypeAndRoute = "Sponsored";
+      });
+
+      RecordDecisionWizard wizard = new(Context);
+      await wizard.StartFor(project.Id);
+      await wizard.SetDecisionToAndContinue(AdvisoryBoardDecisions.DAONotIssued);
+      await wizard.SetDecisionByAndContinue(DecisionMadeBy.RegionalDirectorForRegion);
+
+      Document.Url.Should().EndWith("/decision/why-dao-not-issued", "reason should be the second question in the DAO not issued journey");
+      Document.QuerySelector<IHtmlHeadingElement>("h1")!.TextContent.Trim()
+         .Should().Be("Why was a Directive Academy Order (DAO) not issued for this project?", "the DAO not issued reason page is the expected next step");
+   }
 }

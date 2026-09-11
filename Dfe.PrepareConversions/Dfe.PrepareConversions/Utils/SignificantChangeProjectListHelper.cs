@@ -25,6 +25,16 @@ public static class SignificantChangeProjectListHelper
          AdmissionVariationStatus = significantChangeProject.AdmissionVariationConsultation?.Status ?? SignificantChangeTaskStatus.NotStarted,
          ConsultationIncludeAdmissionVariation = significantChangeProject.AdmissionVariationConsultation?.ConsultationIncludeAdmissionVariation,
          ConsultationNoAdmissionVariationReason = significantChangeProject.AdmissionVariationConsultation?.ConsultationNoAdmissionVariationReason
+         EqualitiesImpactAssessmentStatus = significantChangeProject.EqualitiesImpactAssessment?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         EqualitiesImpactAssessmentCompleted = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactAssessmentCompleted,
+         EqualitiesImpactIdentified = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactIdentified,
+         EqualitiesImpactIdentifiedMitigation = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactIdentifiedMitigation ?? string.Empty,
+         ReligiousBodyConsultationStatus = significantChangeProject.ReligiousBodyConsultation?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         ReligiousBodyConsultationTrustConsultedReligiousBody = significantChangeProject.ReligiousBodyConsultation?.TrustConsultedReligiousBody,
+         ReligiousBodyConsultationTrustConsultedReligiousBodyNotConsultedReason = significantChangeProject.ReligiousBodyConsultation?.TrustConsultedReligiousBodyNotConsultedReason ?? string.Empty,
+         ProjectDatesStatus = significantChangeProject.ProjectDates?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         ProposedDecisionDate = significantChangeProject.ProjectDates?.ProposedDecisionDate,
+         ProposedChangeDate = significantChangeProject.ProjectDates?.ProposedChangeDate
       };
    }
 
@@ -32,15 +42,16 @@ public static class SignificantChangeProjectListHelper
    {
       if (string.IsNullOrWhiteSpace(status)) return "Pre decision";
 
-      return status.Trim().ToLowerInvariant() switch
+      // Space-stripped so this accepts the API's member name ("ApprovedWithConditions") as well as a
+      // display-style value ("Approved with conditions"). The API sends the former.
+      return status.Trim().Replace(" ", string.Empty).ToLowerInvariant() switch
       {
+         "predecision" => "Pre decision",
          "approved" => "Approved",
+         "approvedwithconditions" => "Approved with conditions",
          "deferred" => "Deferred",
          "declined" => "Declined",
-         "daorevoked" => "DAO revoked",
-         "dao revoked" => "DAO revoked",
          "withdrawn" => "Withdrawn",
-         "approved with conditions" => "Approved with conditions",
          _ => "Pre decision"
       };
    }
@@ -55,14 +66,13 @@ public static class SignificantChangeProjectListHelper
 
       if (string.IsNullOrWhiteSpace(status)) return yellow;
 
-      return status.Trim().ToLowerInvariant() switch
+      return status.Trim().Replace(" ", string.Empty).ToLowerInvariant() switch
       {
+         "predecision" => yellow,
          "approved" => green,
-         "approved with conditions" => green,
+         "approvedwithconditions" => green,
          "deferred" => orange,
          "declined" => red,
-         "daorevoked" => red,
-         "dao revoked" => red,
          "withdrawn" => purple,
          _ => yellow
       };

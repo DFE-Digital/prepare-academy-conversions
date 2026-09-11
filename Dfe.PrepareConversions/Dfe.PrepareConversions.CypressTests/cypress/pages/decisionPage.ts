@@ -208,6 +208,33 @@ class DecisionPage extends FormBasePage {
         return this;
     }
 
+    public changeDecisionDAONotIssuedDetails(): this {
+        cy.getByDataCy('record_decision_menu').click();
+        cy.getById('record-decision-link').click();
+        cy.getById('daonotissued-radio').click();
+        cy.clickSubmitBtn();
+        cy.getById('minister-radio').click();
+        cy.clickSubmitBtn();
+        cy.getById('schoolwouldnotbeviableasanacademy-checkbox').click();
+        cy.getById('schoolwouldnotbeviableasanacademy-txtarea').type(
+            'Cypress Test ste - School would be unviable as an academy'
+        );
+        cy.getById('other-checkbox').click();
+        cy.getById('other-txtarea').type('Cypress Test ste - Other reason for DAO not issued');
+        cy.clickSubmitBtn();
+        cy.getById('decision-maker-name').clear();
+        cy.getById('decision-maker-name').type('Ste B');
+        cy.clickSubmitBtn();
+        cy.clickSubmitBtn();
+        this.verifyDecisionDetailsAfterChanging('DAO not issued', 'Minister', '12 November 2023');
+        cy.getById('reasons').should('contain', 'The school would not be viable as an academy');
+        cy.getById('reasons').should('contain', 'Cypress Test ste - School would be unviable as an academy');
+        cy.getById('reasons').should('contain', 'Other');
+        cy.getById('reasons').should('contain', 'Cypress Test ste - Other reason for DAO not issued');
+        cy.clickSubmitBtn();
+        return this;
+    }
+
     public changeDecisionApproved(): this {
         cy.getByDataCy('record_decision_menu').click();
         cy.getById('record-decision-link').click();

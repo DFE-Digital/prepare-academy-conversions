@@ -130,6 +130,25 @@
                 <dd class="govuk-summary-list__actions"></dd>
             </div>
         }
+
+        @if (Model.Decision.Decision == AdvisoryBoardDecisions.DAONotIssued)
+        {
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Reasons
+                </dt>
+                <dd class="govuk-summary-list__value" id="dao-not-issued-reasons">
+
+                    @foreach (AdvisoryBoardDAONotIssuedReasonDetails reason in Model.Decision.DAONotIssuedReasons)
+                    {
+                        <div>@reason.Reason.ToDescription():</div>
+                        <div class="govuk-!-margin-bottom-2">@reason.Details</div>
+                    }
+                </dd>
+                <dd class="govuk-summary-list__actions"></dd>
+            </div>
+        }
         <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
                 Decision maker's role

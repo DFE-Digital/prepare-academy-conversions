@@ -1,3 +1,6 @@
+
+#nullable enable
+
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,13 +11,25 @@ public interface ISignificantChangeProjectRepository
 {
    Task<ApiResponse<SignificantChangeProjectResponse>> CreateProject(CreateSignificantProjectCommand command);
 
-   Task<ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>> GetAllProjects(int page, int count);
+   Task<ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>> GetAllProjects(
+      int page,
+      int count,
+      string? keyword = null,
+      string[]? statuses = null,
+      string[]? assignees = null,
+      byte[]? tiers = null,
+      string[]? routes = null);
 
    Task<ApiResponse<SignificantChangeProjectResponse>> GetProjectById(int id);
 
-   Task SetAssignedUser(int id, SetAssignedUserSignificantChangeCommand updatedAssignedUser);
+   Task<ApiResponse<SignificantChangeFilterParameters>> GetFilterParameters();
 
+   Task SetAssignedUser(int id, SetAssignedUserSignificantChangeCommand updatedAssignedUser);
+   Task RecordDecision(SignificantChangeDecision decision);
    Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command);
+   Task SetEqualitiesImpactAssessment(int id, SetSignificantChangeEqualitiesImpactAssessmentCommand command);
+   Task SetReligiousBodyConsultation(int id, SetSignificantChangeReligiousBodyConsultationCommand command);
+   Task SetProjectDates(int id, SetSignificantChangeProjectDatesCommand command);
 
    Task SetAdmissionVariationConsultation(int id, SetSignificantChangeAdmissionVariationConsultationCommand command);
 
