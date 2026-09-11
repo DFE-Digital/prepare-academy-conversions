@@ -13,8 +13,8 @@ public class SignificantChangeTaskListBuilderTests
    {
       string[] expectedTasks = [
          "stakeholder-consultation",
-         "religious-body-consultation",
-         "admission-variation-consultation"
+         "admission-variation-consultation",
+         "religious-body-consultation"
       ];
 
       SignificantChangeProjectViewBaseModel project = BuildProject();
@@ -24,10 +24,9 @@ public class SignificantChangeTaskListBuilderTests
       Assert.Equal("consultation", result.Sections[0].Key);
       Assert.Equal(expectedTasks.Length, result.Sections[0].Tasks.Count);
       Assert.Equal(expectedTasks, result.Sections[0].Tasks.Select(t => t.Key));
-      Assert.Equal(2, result.Sections[0].Tasks.Count);
       Assert.Equal("stakeholder-consultation", result.Sections[0].Tasks[0].Key);
-      Assert.Equal("religious-body-consultation", result.Sections[0].Tasks[1].Key);
-      Assert.Equal("admission-variation-consultation", result.Sections[0].Tasks[2].Key);
+      Assert.Equal("admission-variation-consultation", result.Sections[0].Tasks[1].Key);
+      Assert.Equal("religious-body-consultation", result.Sections[0].Tasks[2].Key);
    }
 
    [Fact]
@@ -92,26 +91,36 @@ public class SignificantChangeTaskListBuilderTests
    public void Build_Sets_task_status_to_in_progress_when_status_is_in_progress()
    {
       SignificantChangeProjectViewBaseModel project = BuildProject(
-         stakeholderConsultationStatus: SignificantChangeTaskStatus.InProgress,
-         admissionVariationStatus: SignificantChangeTaskStatus.InProgress);
+         SignificantChangeTaskStatus.InProgress,
+         SignificantChangeTaskStatus.InProgress,
+         SignificantChangeTaskStatus.InProgress,
+         SignificantChangeTaskStatus.InProgress);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
-      Assert.Equal(TaskListItemViewModel.InProgress, result.Sections[0].Tasks[0].Status);
-      Assert.Equal(TaskListItemViewModel.InProgress, result.Sections[0].Tasks[1].Status);
+      foreach (var task in result.Sections[0].Tasks)
+      {
+         Assert.Equal(TaskListItemViewModel.InProgress, task.Status);
+      }
    }
 
    [Fact]
    public void Build_Sets_task_status_to_not_started_when_status_is_not_started()
    {
       SignificantChangeProjectViewBaseModel project = BuildProject(
-         stakeholderConsultationStatus: SignificantChangeTaskStatus.NotStarted,
-         admissionVariationStatus: SignificantChangeTaskStatus.NotStarted);
+         SignificantChangeTaskStatus.NotStarted,
+         SignificantChangeTaskStatus.NotStarted,
+         SignificantChangeTaskStatus.NotStarted,
+         SignificantChangeTaskStatus.NotStarted);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
       Assert.Equal(TaskListItemViewModel.NotStarted, result.Sections[0].Tasks[0].Status);
-      Assert.Equal(TaskListItemViewModel.NotStarted, result.Sections[0].Tasks[1].Status);
+
+      foreach (var task in result.Sections[0].Tasks)
+      {
+         Assert.Equal(TaskListItemViewModel.NotStarted, task.Status);
+      }
    }
 
    [Fact]
@@ -121,7 +130,7 @@ public class SignificantChangeTaskListBuilderTests
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
-      Assert.Equal(TaskListItemViewModel.Completed, result.Sections[0].Tasks[1].Status);
+      Assert.Equal(TaskListItemViewModel.Completed, result.Sections[0].Tasks.First(x=>x.Key == "religious-body-consultation").Status);
    }
 
    [Fact]

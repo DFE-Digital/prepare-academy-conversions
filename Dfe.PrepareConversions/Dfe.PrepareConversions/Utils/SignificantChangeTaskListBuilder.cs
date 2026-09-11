@@ -27,7 +27,7 @@ public static class SignificantChangeTaskListBuilder
                "Admission variation consultation",
                2,
                Links.SignificantChange.AdmissionVariationConsultation,
-               project => GetTaskStatus(project.AdmissionVariationStatus))
+               project => GetTaskStatus(project.AdmissionVariationStatus)),
             new SignificantChangeTaskDefinition(
                "religious-body-consultation",
                "Religious body consultation",

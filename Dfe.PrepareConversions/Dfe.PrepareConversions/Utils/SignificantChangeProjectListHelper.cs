@@ -24,7 +24,7 @@ public static class SignificantChangeProjectListHelper
          StakeholderConsultationTrustConsultedStakeholdersNotConsultedReason = significantChangeProject.StakeholderConsultation?.TrustConsultedStakeholdersNotConsultedReason ?? string.Empty,
          AdmissionVariationStatus = significantChangeProject.AdmissionVariationConsultation?.Status ?? SignificantChangeTaskStatus.NotStarted,
          ConsultationIncludeAdmissionVariation = significantChangeProject.AdmissionVariationConsultation?.ConsultationIncludeAdmissionVariation,
-         ConsultationNoAdmissionVariationReason = significantChangeProject.AdmissionVariationConsultation?.ConsultationNoAdmissionVariationReason
+         ConsultationNoAdmissionVariationReason = significantChangeProject.AdmissionVariationConsultation?.ConsultationNoAdmissionVariationReason ?? string.Empty,
          EqualitiesImpactAssessmentStatus = significantChangeProject.EqualitiesImpactAssessment?.Status ?? SignificantChangeTaskStatus.NotStarted,
          EqualitiesImpactAssessmentCompleted = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactAssessmentCompleted,
          EqualitiesImpactIdentified = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactIdentified,
