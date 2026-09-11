@@ -199,9 +199,14 @@
                   <ul class="moj-task-list__items govuk-!-padding-left-0 govuk-!-margin-bottom-6">
                      <li class="moj-task-list__item">
                         <span class="moj-task-list__task-name">
-                            @* PROBABLY NEED TO ADD ALL THE WORDING HERE *@
                            <a class="govuk-link" aria-describedby="financial-health-assessment" asp-page="/Projects/FinancialHealthAssessment/Index" asp-route-urn="@Model.Urn" data-test="transfer-financial-health-assessment">Financial Health Assessment</a>
-                        </span><projectstatus id="financial-health-assessment" status="@Model.FinancialHealthAssessmentStatus"></projectstatus>
+                                </span><projectstatus id="financial-health-assessment" status="@Model.FinancialHealthAssessmentStatus"></projectstatus>
+                                @if (Model.FHARequestedWithin15Days)
+                                {
+                                    <p class="govuk-hint app-task-list__hint" data-test="fha-not-requested-hint">
+                                        A financial health assessment cannot be requested at this time as the decision date is in less than 15 days. If you need an urgent financial health assessment, please contact the Directorate Support Team (DST) for the trust's home region.
+                                    </p>
+                                }
                      </li>
                   </ul>
                </li>

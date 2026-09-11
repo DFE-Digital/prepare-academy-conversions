@@ -395,6 +395,38 @@ namespace Dfe.PrepareTransfers.Web.Tests.ServicesTests
                 _subject.BuildTaskListStatuses(_index);
                 Assert.Equal(ProjectStatuses.NotStarted, _index.FinancialHealthAssessmentStatus);
             }
+
+            [Fact]
+            public void GivenNoRequestedDateAndHtbWithin15Days_FlagIsTrue()
+            {
+                FoundProjectFromRepo.Dates = new TransferDates
+                {
+                    Htb = DateTime.UtcNow.AddDays(5).ToString("dd/MM/yyyy"),
+                    Target = DateTime.UtcNow.AddDays(25).ToString("dd/MM/yyyy"),
+                    HasHtbDate = true,
+                    HasTargetDateForTransfer = true
+                };
+
+                _subject.BuildTaskListStatuses(_index);
+
+                Assert.True(_index.FHARequestedWithin15Days);
+            }
+
+            [Fact]
+            public void GivenNoRequestedDateAndHtbOutside15Days_FlagIsFalse()
+            {
+                FoundProjectFromRepo.Dates = new TransferDates
+                {
+                    Htb = DateTime.UtcNow.AddDays(20).ToString("dd/MM/yyyy"),
+                    Target = DateTime.UtcNow.AddDays(35).ToString("dd/MM/yyyy"),
+                    HasHtbDate = true,
+                    HasTargetDateForTransfer = true
+                };
+
+                _subject.BuildTaskListStatuses(_index);
+
+                Assert.False(_index.FHARequestedWithin15Days);
+            }
         }
 
         public class GetBenefitsStatus : TaskListServiceTests
