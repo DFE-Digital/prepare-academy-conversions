@@ -14,6 +14,7 @@ public class SignificantChangeProjectResponse
    public required string TypeOfSignificantChange { get; set; }
    public required string Status { get; set; }
    public SignificantChangeStakeholderConsultationResponse StakeholderConsultation { get; set; } = new();
+   public SignificantChangeStakeholderObjectionsResponse StakeholderObjections { get; set; } = new();
    public SignificantChangeEqualitiesImpactAssessmentResponse EqualitiesImpactAssessment { get; set; } = new();
    public SignificantChangeReligiousBodyConsultationResponse ReligiousBodyConsultation { get; set; } = new();
    public SignificantChangeProjectDatesResponse ProjectDates { get; set; } = new();
