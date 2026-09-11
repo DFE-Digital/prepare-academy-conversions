@@ -15,11 +15,11 @@
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         Were there any objections raised by stakeholders?
       </legend>
-      <inline-error for="@nameof(Model.StakeholderObjection)" />
+      <inline-error for="@nameof(Model.StakeholderObjections)" />
 
       <div class="govuk-radios" data-module="govuk-radios">
          <div class="govuk-radios__item">
-            <input asp-for="@Model.StakeholderObjection" class="govuk-radios__input"
+            <input asp-for="@Model.StakeholderObjections" class="govuk-radios__input"
                    id="stakeholder-objections-no" type="radio" value="No"
                    data-test="stakeholder-objections-no" />
             <label class="govuk-label govuk-radios__label" for="stakeholder-objections-no">
@@ -28,7 +28,7 @@
          </div>
 
          <div class="govuk-radios__item">
-            <input asp-for="@Model.StakeholderObjection" class="govuk-radios__input"
+            <input asp-for="@Model.StakeholderObjections" class="govuk-radios__input"
                    id="stakeholder-objections-YesAllObjectionsAddressed" type="radio" value="YesAllObjectionsAddressed"
                    data-test="stakeholder-objections-YesAllObjectionsAddressed" />
             <label class="govuk-label govuk-radios__label" for="stakeholder-objections-YesAllObjectionsAddressed">
@@ -37,7 +37,7 @@
          </div>
 
            <div class="govuk-radios__item">
-            <input asp-for="@Model.StakeholderObjection" class="govuk-radios__input"
+            <input asp-for="@Model.StakeholderObjections" class="govuk-radios__input"
                    id="stakeholder-objections-YesNoFurtherInformationProvided" type="radio" value="YesNoFurtherInformationProvided"
                    aria-controls="conditional-stakeholder-objections-YesNoFurtherInformationProvided"
                    data-test="stakeholder-objections-YesNoFurtherInformationProvided" />
@@ -51,9 +51,9 @@
                <label class="govuk-label" for="stakeholder-objections-additional-comments">
                   Use this area for additional Comments relating to objections raised by stakeholders.
                </label>
-               <inline-error for="@nameof(Model.StakeHolderObjectionsAdditionalComments)" />
-               <textarea asp-for="@Model.StakeHolderObjectionsAdditionalComments"
-                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.StakeHolderObjectionsAdditionalComments))"
+               <inline-error for="@nameof(Model.StakeholderObjectionsComment)" />
+               <textarea asp-for="@Model.StakeholderObjectionsComment"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.StakeholderObjectionsComment))"
                          rows="5" data-test="stakeholder-objections-additional-comments"></textarea>
             </div>
          </div>

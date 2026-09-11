@@ -23,7 +23,8 @@ public static class SignificantChangeProjectListHelper
          StakeholderConsultationTrustConsultedStakeholders = significantChangeProject.StakeholderConsultation?.TrustConsultedStakeholders,
          StakeholderConsultationTrustConsultedStakeholdersNotConsultedReason = significantChangeProject.StakeholderConsultation?.TrustConsultedStakeholdersNotConsultedReason ?? string.Empty,
          StakeholderObjectionsStatus = significantChangeProject.StakeholderObjections?.Status ?? SignificantChangeTaskStatus.NotStarted,
-         StakeholderObjection = significantChangeProject.StakeholderObjections?.TrustStakeholderObjections,
+         StakeholderObjections = significantChangeProject.StakeholderObjections?.StakeholderObjections,
+         StakeholderObjectionsComment = significantChangeProject.StakeholderObjections?.StakeholderObjectionsComment ?? string.Empty
       }; 
    }
 

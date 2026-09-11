@@ -1,9 +1,9 @@
 namespace Dfe.PrepareConversions.Data.Models.SignificantChange;
 
 public class SetSignificantChangeStakeholderObjectionsCommand(
-   SignificantChangeStakeholderObjection stakeholderObjection,
-   string additionalComments)
+   SignificantChangeStakeholderObjection stakeholderObjections,
+   string stakeholderObjectionsComment)
 {
-   public SignificantChangeStakeholderObjection? StakeholderObjection { get; set; } = stakeholderObjection;
-   public string AdditionalComments { get; set; } = additionalComments;
+   public SignificantChangeStakeholderObjection? StakeholderObjections { get; set; } = stakeholderObjections;
+   public string StakeholderObjectionsComment { get; set; } = stakeholderObjectionsComment;
 }

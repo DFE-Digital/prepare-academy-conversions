@@ -12,11 +12,11 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
    private readonly ErrorService _errorService = errorService;
 
    [BindProperty]
-   public SignificantChangeStakeholderObjection? StakeholderObjection { get; set; }
+   public SignificantChangeStakeholderObjection? StakeholderObjections { get; set; }
 
    [BindProperty]
-   public string StakeHolderObjectionsAdditionalComments { get; set; }
-
+   public string StakeholderObjectionsComment { get; set; }
+   
    protected override string TaskTitle => "Stakeholder objections";
 
    public override async Task<IActionResult> OnGetAsync(int id)
@@ -28,8 +28,8 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
          return result;
       }
 
-      StakeholderObjection = Project.StakeholderObjection;
-      StakeHolderObjectionsAdditionalComments = Project.StakeHolderObjectionsAdditionalComments;
+      StakeholderObjections = Project.StakeholderObjections;
+      StakeholderObjectionsComment = Project.StakeholderObjectionsComment;
 
       return Page();
    }
@@ -48,15 +48,15 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       if (!ModelState.IsValid)
       {
          _errorService.AddErrors(
-            [nameof(StakeholderObjection), nameof(StakeHolderObjectionsAdditionalComments)],
+            [nameof(StakeholderObjections), nameof(StakeholderObjectionsComment)],
             ModelState);
 
          return Page();
       }
 
       SetSignificantChangeStakeholderObjectionsCommand command = new(
-         StakeholderObjection!.Value,
-         StakeHolderObjectionsAdditionalComments);
+         StakeholderObjections!.Value,
+         StakeholderObjectionsComment);
 
         await _repository.SetStakeholderObjections(id, command);
 
@@ -65,14 +65,14 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
     public void Validate()
     {
-        if (StakeholderObjection is null)
+        if (StakeholderObjections is null)
         {
-            ModelState.AddModelError(nameof(StakeholderObjection), "Select whether there are any stakeholder objections");
+            ModelState.AddModelError(nameof(StakeholderObjections), "Select whether there are any stakeholder objections");
         }
 
-        if (StakeholderObjection == SignificantChangeStakeholderObjection.YesNoFurtherInformationProvided && string.IsNullOrWhiteSpace(StakeHolderObjectionsAdditionalComments))
+        if (StakeholderObjections == SignificantChangeStakeholderObjection.YesNoFurtherInformationProvided && string.IsNullOrWhiteSpace(StakeholderObjectionsComment))
         {
-            ModelState.AddModelError(nameof(StakeHolderObjectionsAdditionalComments), "Enter the additional information provided");
+            ModelState.AddModelError(nameof(StakeholderObjectionsComment), "Enter the additional information provided");
         }
     }
 }
