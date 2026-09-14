@@ -39,7 +39,6 @@ describe('Significant change - consultation duration', () => {
             });
     };
 
-
     it('Should show all three options and hide the comment box until No is selected', () => {
         openTaskListAndConsultStakeholders(() => {
             significantChangeTaskList.openConsultationDurationTask();
@@ -56,7 +55,6 @@ describe('Significant change - consultation duration', () => {
                 .verifyReasonVisible();
         });
     });
-
 
     it('Should require a reason when No is selected, then save and return to the task list', () => {
         openTaskListAndConsultStakeholders(() => {
