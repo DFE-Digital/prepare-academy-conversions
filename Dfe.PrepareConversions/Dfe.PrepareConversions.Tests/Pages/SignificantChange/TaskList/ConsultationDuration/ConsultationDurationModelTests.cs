@@ -42,22 +42,6 @@ public class ConsultationDurationModelTests
    }
 
    [Theory]
-   [InlineData(null)]
-   [InlineData(false)]
-   public async Task OnGetAsync_WhenStakeholderConsultationIsNotYes_ShouldRedirectToTaskList(bool? trustConsultedStakeholders)
-   {
-      const int id = 602;
-      SignificantChangeProjectResponse project = BuildProject(id, trustConsultedStakeholders);
-
-      IndexModel sut = BuildModel(BuildRepository(id, project).Object);
-
-      IActionResult result = await sut.OnGetAsync(id);
-
-      RedirectToPageResult redirect = Assert.IsType<RedirectToPageResult>(result);
-      redirect.PageName.Should().Be(Links.SignificantChange.SignificantChangeTaskList.Page);
-   }
-
-   [Theory]
    [InlineData(ConsultationDurationAnswer.Yes)]
    [InlineData(ConsultationDurationAnswer.NoSatisfactoryConsultationCarriedOut)]
    public async Task OnPostAsync_WhenAnswerIsNotNo_ShouldSaveWithoutReasonAndRedirect(ConsultationDurationAnswer answer)
@@ -143,22 +127,6 @@ public class ConsultationDurationModelTests
 
       result.Should().BeOfType<PageResult>();
       sut.ModelState.ContainsKey(nameof(IndexModel.ConsultationLastedMinimumThreeWeeks)).Should().BeTrue();
-      repository.Verify(x => x.SetConsultationDuration(id, It.IsAny<SetSignificantChangeConsultationDurationCommand>()), Times.Never);
-   }
-
-   [Fact]
-   public async Task OnPostAsync_WhenStakeholderConsultationIsNotYes_ShouldRedirectWithoutSaving()
-   {
-      const int id = 607;
-
-      Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id, trustConsultedStakeholders: false));
-
-      IndexModel sut = BuildModel(repository.Object);
-      sut.ConsultationLastedMinimumThreeWeeks = ConsultationDurationAnswer.Yes;
-
-      IActionResult result = await sut.OnPostAsync(id);
-
-      Assert.IsType<RedirectToPageResult>(result);
       repository.Verify(x => x.SetConsultationDuration(id, It.IsAny<SetSignificantChangeConsultationDurationCommand>()), Times.Never);
    }
 

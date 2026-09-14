@@ -27,11 +27,7 @@ public static class SignificantChangeTaskListBuilder
                "Consultation duration",
                2,
                Links.SignificantChange.ConsultationDuration,
-               project => GetTaskStatus(project.ConsultationDurationStatus))
-               {
-                  IsVisible = project => project.StakeholderConsultationTrustConsultedStakeholders == true
-               }), 
-          
+               project => GetTaskStatus(project.ConsultationDurationStatus)),
             new SignificantChangeTaskDefinition(
                "religious-body-consultation",
                "Religious body consultation",

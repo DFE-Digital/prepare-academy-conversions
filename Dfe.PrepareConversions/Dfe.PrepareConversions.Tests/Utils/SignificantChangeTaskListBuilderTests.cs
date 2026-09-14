@@ -13,6 +13,7 @@ public class SignificantChangeTaskListBuilderTests
    {
       string[] expectedTasks = [
          "stakeholder-consultation",
+         "consultation-duration",
          "religious-body-consultation"
       ];
 
@@ -23,9 +24,9 @@ public class SignificantChangeTaskListBuilderTests
       Assert.Equal("consultation", result.Sections[0].Key);
       Assert.Equal(expectedTasks.Length, result.Sections[0].Tasks.Count);
       Assert.Equal(expectedTasks, result.Sections[0].Tasks.Select(t => t.Key));
-      Assert.Equal(2, result.Sections[0].Tasks.Count);
       Assert.Equal("stakeholder-consultation", result.Sections[0].Tasks[0].Key);
-      Assert.Equal("religious-body-consultation", result.Sections[0].Tasks[1].Key);
+      Assert.Equal("consultation-duration", result.Sections[0].Tasks[1].Key);
+      Assert.Equal("religious-body-consultation", result.Sections[0].Tasks[2].Key);
    }
 
    [Fact]
@@ -109,7 +110,7 @@ public class SignificantChangeTaskListBuilderTests
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
-      Assert.Equal(TaskListItemViewModel.Completed, result.Sections[0].Tasks[1].Status);
+      Assert.Equal(TaskListItemViewModel.Completed, result.Sections[0].Tasks[2].Status);
    }
 
    [Fact]
@@ -152,41 +153,14 @@ public class SignificantChangeTaskListBuilderTests
 
       Assert.Equal(TaskListItemViewModel.InProgress, result.Sections[1].Tasks[0].Status);
    }
-  
-    [InlineData(null)]
-   [InlineData(false)]
-   public void Build_Hides_consultation_duration_when_stakeholders_were_not_consulted(bool? trustConsultedStakeholders)
-   {
-      SignificantChangeProjectViewBaseModel project = BuildProject(trustConsultedStakeholders: trustConsultedStakeholders);
-
-      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
-
-      Assert.Single(result.Sections[0].Tasks);
-      Assert.Equal("stakeholder-consultation", result.Sections[0].Tasks[0].Key);
-   }
-
-   [Fact]
-   public void Build_Shows_consultation_duration_after_stakeholder_consultation_when_consulted()
-   {
-      SignificantChangeProjectViewBaseModel project = BuildProject(trustConsultedStakeholders: true);
-
-      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
-
-      Assert.Equal(2, result.Sections[0].Tasks.Count);
-      Assert.Equal("stakeholder-consultation", result.Sections[0].Tasks[0].Key);
-      Assert.Equal("consultation-duration", result.Sections[0].Tasks[1].Key);
-      Assert.Equal("Consultation duration", result.Sections[0].Tasks[1].Title);
-   }
-
+   
    [Theory]
    [InlineData(SignificantChangeTaskStatus.NotStarted)]
    [InlineData(SignificantChangeTaskStatus.InProgress)]
    [InlineData(SignificantChangeTaskStatus.Completed)]
    public void Build_Maps_consultation_duration_status(SignificantChangeTaskStatus status)
    {
-      SignificantChangeProjectViewBaseModel project = BuildProject(
-         trustConsultedStakeholders: true,
-         consultationDurationStatus: status);
+      SignificantChangeProjectViewBaseModel project = BuildProject(consultationDurationStatus: status);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
@@ -203,7 +177,8 @@ public class SignificantChangeTaskListBuilderTests
    private static SignificantChangeProjectViewBaseModel BuildProject(
       SignificantChangeTaskStatus stakeholderConsultationStatus = SignificantChangeTaskStatus.NotStarted,
       SignificantChangeTaskStatus religiousBodyConsultationStatus = SignificantChangeTaskStatus.NotStarted,
-      SignificantChangeTaskStatus projectDatesStatus = SignificantChangeTaskStatus.NotStarted)
+      SignificantChangeTaskStatus projectDatesStatus = SignificantChangeTaskStatus.NotStarted,
+      SignificantChangeTaskStatus consultationDurationStatus = SignificantChangeTaskStatus.NotStarted)
    {
       return new SignificantChangeProjectViewBaseModel
       {
@@ -218,7 +193,8 @@ public class SignificantChangeTaskListBuilderTests
          StatusColour = "yellow",
          StakeholderConsultationStatus = stakeholderConsultationStatus,
          ReligiousBodyConsultationStatus = religiousBodyConsultationStatus,
-         ProjectDatesStatus = projectDatesStatus
+         ProjectDatesStatus = projectDatesStatus,
+         ConsultationDurationStatus = consultationDurationStatus
       };
    }
 }

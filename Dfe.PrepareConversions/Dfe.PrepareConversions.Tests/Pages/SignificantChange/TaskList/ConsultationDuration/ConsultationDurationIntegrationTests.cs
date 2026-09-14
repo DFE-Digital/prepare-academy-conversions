@@ -105,20 +105,6 @@ public class ConsultationDurationIntegrationTests(IntegrationTestingWebApplicati
          .TextContent.Should().Contain("Add a reason");
    }
 
-    [Fact]
-   public async Task Should_redirect_to_task_list_when_stakeholders_were_not_consulted()
-   {
-      SignificantChangeProjectResponse project = BuildProject(id: 706, trustConsultedStakeholders: false);
-      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
-
-      await OpenAndConfirmPathAsync(
-         $"/significant-change/task-list/{project.Id}/consultation-duration",
-         $"/significant-change/task-list/{project.Id}",
-         "the task is not available until stakeholders have been consulted");
-
-      VerifyNullElement("Consultation duration");
-   }
-
    private static SignificantChangeProjectResponse BuildProject(int id, bool? trustConsultedStakeholders = true)
    {
       return new SignificantChangeProjectResponse

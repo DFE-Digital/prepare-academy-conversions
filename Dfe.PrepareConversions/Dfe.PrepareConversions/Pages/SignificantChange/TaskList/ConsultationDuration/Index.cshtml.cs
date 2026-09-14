@@ -28,11 +28,6 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
          return result;
       }
 
-      if (!IsTaskAvailable())
-      {
-         return RedirectToTaskList(id);
-      }
-
       ConsultationLastedMinimumThreeWeeks = Project.ConsultationLastedMinimumThreeWeeks;
       ConsultationDurationNotMetReason = Project.ConsultationDurationNotMetReason;
 
@@ -46,11 +41,6 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       if (result is NotFoundResult)
       {
          return result;
-      }
-
-      if (!IsTaskAvailable())
-      {
-         return RedirectToTaskList(id);
       }
 
       Validate();
@@ -73,10 +63,6 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       return RedirectToTaskList(id);
    }
 
-   private bool IsTaskAvailable()
-   {
-      return Project.StakeholderConsultationTrustConsultedStakeholders == true;
-   }
 
    private void Validate()
    {
