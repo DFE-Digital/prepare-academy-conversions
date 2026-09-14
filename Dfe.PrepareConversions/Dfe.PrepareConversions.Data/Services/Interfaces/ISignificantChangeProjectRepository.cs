@@ -28,5 +28,9 @@ public interface ISignificantChangeProjectRepository
    Task RecordDecision(SignificantChangeDecision decision);
    Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command);   
    Task SetConsultationDuration(int id, SetSignificantChangeConsultationDurationCommand command);
+   Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command);
+   Task SetEqualitiesImpactAssessment(int id, SetSignificantChangeEqualitiesImpactAssessmentCommand command);
+   Task SetReligiousBodyConsultation(int id, SetSignificantChangeReligiousBodyConsultationCommand command);
+   Task SetProjectDates(int id, SetSignificantChangeProjectDatesCommand command);
 
 }

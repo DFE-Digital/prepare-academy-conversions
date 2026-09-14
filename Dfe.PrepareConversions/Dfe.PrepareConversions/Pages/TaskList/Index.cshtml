@@ -119,13 +119,13 @@
                    <strong class="govuk-tag @Model.TaskList.RequestFinancialHealthAssessmentTaskListStatus.CssClass app-task-list__tag" id="request-fha-status">
                       @Model.TaskList.RequestFinancialHealthAssessmentTaskListStatus.Status
                    </strong>
-                   @* "Not started" == no proposed decision date has been entered. *@
-                   @if (!Model.Project.HeadTeacherBoardDate.HasValue)
-                   {
-                      <p class="govuk-hint app-task-list__hint" data-test="fha-not-requested-hint">
-                         This has not yet been requested, as you have not entered a proposed decision date.
-                      </p>
-                   }
+                    @* "Not started" == mandatory information is still outstanding. *@
+                    @if (!FinancialHealthAssessmentPrerequisites.IsComplete(Model.Project))
+                    {
+                        <p class="govuk-hint app-task-list__hint" data-test="fha-not-requested-hint">
+                            This has not yet been requested, as some mandatory information is missing.
+                        </p>
+                    }
                 </li>
              </ul>
           </div>

@@ -22,7 +22,7 @@ public static class SignificantChangeTaskListBuilder
                1,
                Links.SignificantChange.StakeholderConsultation,
                project => GetTaskStatus(project.StakeholderConsultationStatus)),
-            new SignificantChangeTaskDefinition(
+             new SignificantChangeTaskDefinition(
                "consultation-duration",
                "Consultation duration",
                2,
@@ -30,7 +30,37 @@ public static class SignificantChangeTaskListBuilder
                project => GetTaskStatus(project.ConsultationDurationStatus))
                {
                   IsVisible = project => project.StakeholderConsultationTrustConsultedStakeholders == true
-               }
+               }), 
+          
+            new SignificantChangeTaskDefinition(
+               "religious-body-consultation",
+               "Religious body consultation",
+               6,
+               Links.SignificantChange.ReligiousBodyConsultation,
+               project => GetTaskStatus(project.ReligiousBodyConsultationStatus))
+         ]),
+      new SignificantChangeTaskSectionDefinition(
+         "Proposed decision and conversion dates",
+         "Proposed decision and conversion dates",
+         2,
+         [ new SignificantChangeTaskDefinition(
+            "confirm-project-dates",
+            "Confirm project dates",
+            1,
+            Links.SignificantChange.ConfirmProjectDates,
+            project => GetTaskStatus(project.ProjectDatesStatus))
+         ]),
+      new SignificantChangeTaskSectionDefinition(
+         "public-sector-equality-duty",
+         "Public Sector Equality Duty",
+         3,
+         [
+            new SignificantChangeTaskDefinition(
+               "public-sector-equality-duty",
+               "Public Sector Equality Duty",
+               1,
+               Links.SignificantChange.PublicSectorEqualityDuty,
+               project => GetTaskStatus(project.EqualitiesImpactAssessmentStatus))
          ])
 
    ];

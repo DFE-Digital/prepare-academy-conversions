@@ -353,17 +353,45 @@ namespace Dfe.PrepareTransfers.Web.Tests.ServicesTests
         public class GetFinancialHealthAssessmentStatus : TaskListServiceTests
         {
             [Fact]
-            public void GivenHtbDateSet_StatusCompleted()
+            public void GivenRequestedDateAndMandatoryDatesSet_StatusCompleted()
             {
-                FoundProjectFromRepo.Dates = new TransferDates { Htb = "23/07/2026", HasHtbDate = true };
+                FoundProjectFromRepo.Dates = new TransferDates
+                {
+                    Htb = "23/07/2026",
+                    Target = "23/08/2026",
+                    SfsoCommissioningRequestedDate = DateTime.Today,
+                    HasHtbDate = true,
+                    HasTargetDateForTransfer = true
+                };
                 _subject.BuildTaskListStatuses(_index);
                 Assert.Equal(ProjectStatuses.Completed, _index.FinancialHealthAssessmentStatus);
             }
 
             [Fact]
-            public void GivenNoHtbDate_StatusNotStarted()
+            public void GivenNoRequestedDate_StatusNotStarted()
             {
-                FoundProjectFromRepo.Dates = new TransferDates { HasHtbDate = false };
+                FoundProjectFromRepo.Dates = new TransferDates
+                {
+                    Htb = "23/07/2026",
+                    Target = "23/08/2026",
+                    HasHtbDate = true,
+                    HasTargetDateForTransfer = true
+                };
+                _subject.BuildTaskListStatuses(_index);
+                Assert.Equal(ProjectStatuses.NotStarted, _index.FinancialHealthAssessmentStatus);
+            }
+
+            [Fact]
+            public void GivenRequestedDateButMissingMandatoryDate_StatusNotStarted()
+            {
+                FoundProjectFromRepo.Dates = new TransferDates
+                {
+                    Htb = "23/07/2026",
+                    Target = null,
+                    SfsoCommissioningRequestedDate = DateTime.Today,
+                    HasHtbDate = true,
+                    HasTargetDateForTransfer = true
+                };
                 _subject.BuildTaskListStatuses(_index);
                 Assert.Equal(ProjectStatuses.NotStarted, _index.FinancialHealthAssessmentStatus);
             }

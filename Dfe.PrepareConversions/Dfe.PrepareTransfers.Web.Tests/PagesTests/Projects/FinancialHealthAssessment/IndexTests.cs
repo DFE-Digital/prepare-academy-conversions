@@ -18,7 +18,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
             .ReturnsAsync(true);
       }
 
-      private FhaIndex Subject() => new FhaIndex(ProjectRepository.Object) { Urn = ProjectUrn0001 };
+      private FhaIndex Subject() => new(ProjectRepository.Object) { Urn = ProjectUrn0001 };
 
       [Fact]
       public async Task OnGet_NoHtbDate_NotRequested()
@@ -28,7 +28,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
 
          await subject.OnGetAsync();
 
-         Assert.False(subject.HasProposedDecisionDate);
+         Assert.False(subject.HasAllMandatoryInformation);
          Assert.False(subject.RequestSent);
       }
 
@@ -38,14 +38,16 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
          FoundProjectFromRepo.Dates = new TransferDatesModel
          {
             Htb = "23/07/2026",
+            Target = "24/07/2026",
             HasHtbDate = true,
+            HasTargetDateForTransfer = true,
             SfsoCommissioningRequestedDate = DateTime.Today.AddDays(5)
          };
          var subject = Subject();
 
          await subject.OnGetAsync();
 
-         Assert.True(subject.HasProposedDecisionDate);
+         Assert.True(subject.HasAllMandatoryInformation);
          Assert.True(subject.RequestWillBeSent);
          Assert.False(subject.RequestSent);
       }
@@ -56,7 +58,9 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
          FoundProjectFromRepo.Dates = new TransferDatesModel
          {
             Htb = "23/07/2026",
+            Target = "24/07/2026",
             HasHtbDate = true,
+            HasTargetDateForTransfer = true,
             SfsoCommissioningRequestedDate = DateTime.Today
          };
          var subject = Subject();
@@ -74,7 +78,9 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
          FoundProjectFromRepo.Dates = new TransferDatesModel
          {
             Htb = "23/07/2026",
+            Target = "24/07/2026",
             HasHtbDate = true,
+            HasTargetDateForTransfer = true,
             SfsoCommissioningRequestedDate = new DateTime(2020, 7, 23)
          };
          var subject = Subject();

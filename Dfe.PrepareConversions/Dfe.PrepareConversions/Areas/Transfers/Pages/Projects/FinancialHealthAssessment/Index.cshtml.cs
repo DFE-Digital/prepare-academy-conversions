@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Dfe.PrepareTransfers.Web.Pages.Projects.FinancialHealthAssessment
 {
@@ -22,7 +23,11 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.FinancialHealthAssessment
 
       public DateTime? RequestedDate { get; set; }
       public DateTime? ProposedDecisionDate { get; set; }
-      public bool HasProposedDecisionDate => ProposedDecisionDate.HasValue;
+      
+      // Mandatory information still outstanding (user story 298244). Empty == ready to request.
+      public IReadOnlyList<FinancialHealthAssessmentPrerequisite> MissingInformation { get; private set; } = [];
+
+      public bool HasAllMandatoryInformation => MissingInformation.Count == 0;
       
       // Stored request date is in the future -> scheduled but not yet sent.
       public bool RequestWillBeSent => RequestedDate.HasValue && RequestedDate.Value.Date > DateTime.Today;
@@ -64,6 +69,7 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.FinancialHealthAssessment
                 CultureInfo.InvariantCulture, DateTimeStyles.None, out var htbDate)
                 ? htbDate
                 : (DateTime?)null;
+         MissingInformation = FinancialHealthAssessmentPrerequisites.GetMissing(projectResult);
       }
    }
 }

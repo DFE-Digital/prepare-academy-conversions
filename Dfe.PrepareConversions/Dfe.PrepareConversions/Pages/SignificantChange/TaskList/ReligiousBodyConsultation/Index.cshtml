@@ -1,0 +1,54 @@
+@page "/significant-change/task-list/{id:int}/religious-body-consultation"
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.ReligiousBodyConsultation.IndexModel
+@{
+   Layout = "_SignificantChangeTaskLayout";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@Model.Project.Id"
+      class="govuk-back-link">Back</a>
+}
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+         Has the relevant religious body been consulted?
+      </legend>
+
+      <inline-error for="@nameof(Model.TrustConsultedReligiousBody)" />
+
+      <div class="govuk-radios" data-module="govuk-radios" id="trust-consulted-religious-body-options">
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.TrustConsultedReligiousBody" class="govuk-radios__input"
+                   id="trust-consulted-religious-body-yes" type="radio" value="true"
+                   data-test="trust-consulted-religious-body-yes" />
+            <label class="govuk-label govuk-radios__label" for="trust-consulted-religious-body-yes">
+               Yes
+            </label>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.TrustConsultedReligiousBody" class="govuk-radios__input"
+                   id="trust-consulted-religious-body-no" type="radio" value="false"
+                   aria-controls="conditional-trust-consulted-religious-body-no"
+                   data-test="trust-consulted-religious-body-no" />
+            <label class="govuk-label govuk-radios__label" for="trust-consulted-religious-body-no">
+               No
+            </label>
+         </div>
+
+         <div class="govuk-radios__conditional" id="conditional-trust-consulted-religious-body-no">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="TrustConsultedReligiousBodyNotConsultedReason">
+                  Use this area for additional information relating to mitigations, actions and further investigations.
+               </label>
+               <inline-error for="@nameof(Model.TrustConsultedReligiousBodyNotConsultedReason)" />
+               <textarea asp-for="@Model.TrustConsultedReligiousBodyNotConsultedReason"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.TrustConsultedReligiousBodyNotConsultedReason))"
+                         rows="5" data-test="trust-consulted-religious-body-not-consulted-reason"></textarea>
+            </div>
+         </div>
+      </div>
+   </fieldset>
+</div>

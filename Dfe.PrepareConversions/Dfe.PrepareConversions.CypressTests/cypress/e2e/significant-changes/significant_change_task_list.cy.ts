@@ -27,6 +27,7 @@ describe('Significant change task list', () => {
                     cy.url().should('match', /\/significant-change\/task-list\/\d+(\?.*)?$/);
                     significantChangeTaskList.verifyHeaderAndSubNavigation();
                     significantChangeTaskList.verifyTaskListContentLayout();
+                    cy.contains('a', 'Religious body consultation').should('be.visible');
                 } else {
                     cy.contains('There are no matching results.').should('be.visible');
                 }
