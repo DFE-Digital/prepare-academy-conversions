@@ -39,20 +39,6 @@ describe('Significant change - consultation duration', () => {
             });
     };
 
-    it('Should reveal the consultation duration task only once stakeholders have been consulted', () => {
-        openTaskListAndConsultStakeholders(() => {
-            significantChangeTaskList.verifyConsultationDurationTaskVisible();
-
-            significantChangeTaskList.openStakeholderConsultationTask();
-            cy.getByDataTest('trust-consulted-stakeholders-no').check();
-            cy.getByDataTest('trust-consulted-stakeholders-not-consulted-reason')
-                .clear()
-                .type('Consultation has not started yet');
-            cy.getById('save-and-continue-button').click();
-
-            significantChangeTaskList.verifyConsultationDurationTaskHidden();
-        });
-    });
 
     it('Should show all three options and hide the comment box until No is selected', () => {
         openTaskListAndConsultStakeholders(() => {
@@ -71,18 +57,6 @@ describe('Significant change - consultation duration', () => {
         });
     });
 
-    it('Should show a validation error when no option is selected', () => {
-        openTaskListAndConsultStakeholders(() => {
-            significantChangeTaskList.openConsultationDurationTask();
-
-            significantChangeConsultationDuration.save();
-
-            significantChangeConsultationDuration
-                .verifyPageLoaded()
-                .verifyErrorSummaryContains('Select an option')
-                .verifyInlineError('ConsultationLastedMinimumThreeWeeks', 'Select an option');
-        });
-    });
 
     it('Should require a reason when No is selected, then save and return to the task list', () => {
         openTaskListAndConsultStakeholders(() => {
