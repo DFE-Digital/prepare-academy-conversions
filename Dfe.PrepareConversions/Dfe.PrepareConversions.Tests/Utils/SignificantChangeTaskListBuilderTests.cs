@@ -116,7 +116,7 @@ public class SignificantChangeTaskListBuilderTests
       const string sectionKey = "public-sector-equality-duty";
       const string taskKey = "public-sector-equality-duty";
 
-      SignificantChangeProjectViewBaseModel project = BuildProject(p => p.ProjectDatesStatus = TaskStatus);
+      SignificantChangeProjectViewBaseModel project = BuildProject(p => p.EqualitiesImpactAssessmentStatus = TaskStatus);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
