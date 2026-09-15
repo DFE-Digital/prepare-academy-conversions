@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using FluentAssertions;
 using Xunit;
+using Xunit.Abstractions;
 using System.Linq;
 
 namespace Dfe.PrepareConversions.Tests.Utils;
@@ -35,18 +37,24 @@ public class SignificantChangeTaskListBuilderTests
       Assert.Equal(taskKeys, tasks.OrderBy(t => t.DisplayOrder).Select(t => t.Key).ToArray());
    }
 
-   public static TheoryData<SignificantChangeTaskStatus, TaskListItemViewModel> StatusCases =>
+   public interface IMyDict<TKey, TValue> : IDictionary<TKey, TValue>, IXunitSerializable
+      {
+      // Implement the necessary methods for serialization and deserialization.
+      }
+      
+
+   public static TheoryData<SignificantChangeTaskStatus, string> StatusCases =>
     new()
     {
-         { SignificantChangeTaskStatus.Completed, TaskListItemViewModel.Completed },
-         { SignificantChangeTaskStatus.InProgress, TaskListItemViewModel.InProgress },
-         { SignificantChangeTaskStatus.NotStarted, TaskListItemViewModel.NotStarted },
-         {default, TaskListItemViewModel.NotStarted }
+         { SignificantChangeTaskStatus.Completed, TaskListItemViewModel.Completed.Status },
+         { SignificantChangeTaskStatus.InProgress, TaskListItemViewModel.InProgress.Status },
+         { SignificantChangeTaskStatus.NotStarted, TaskListItemViewModel.NotStarted.Status },
+         {default, TaskListItemViewModel.NotStarted.Status }
     };
 
    [Theory]
    [MemberData(nameof(StatusCases))]
-   public void Build_maps_stakeholder_consultation_status_to_task_status(SignificantChangeTaskStatus TaskStatus, TaskListItemViewModel expectedTaskStatus)
+   public void Build_maps_stakeholder_consultation_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
    {
       const string sectionKey = "consultation";
       const string taskKey = "stakeholder-consultation";
@@ -57,12 +65,12 @@ public class SignificantChangeTaskListBuilderTests
       var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
       var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
 
-      task.Status.Should().Be(expectedTaskStatus);
+      task.Status.Status.Should().Be(expectedTaskStatus);
    }
 
    [Theory]
    [MemberData(nameof(StatusCases))]
-   public void Build_maps_stakeholder_objections_status_to_task_status(SignificantChangeTaskStatus TaskStatus, TaskListItemViewModel expectedTaskStatus)
+   public void Build_maps_stakeholder_objections_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
    {
       const string sectionKey = "consultation";
       const string taskKey = "stakeholder-objections";
@@ -73,12 +81,12 @@ public class SignificantChangeTaskListBuilderTests
       var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
       var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
 
-      task.Status.Should().Be(expectedTaskStatus);
+      task.Status.Status.Should().Be(expectedTaskStatus);
    }
 
    [Theory]
    [MemberData(nameof(StatusCases))]
-   public void Build_maps_religious_body_consultation_status_to_task_status(SignificantChangeTaskStatus TaskStatus, TaskListItemViewModel expectedTaskStatus)
+   public void Build_maps_religious_body_consultation_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
    {
       const string sectionKey = "consultation";
       const string taskKey = "religious-body-consultation";
@@ -89,12 +97,12 @@ public class SignificantChangeTaskListBuilderTests
       var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
       var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
 
-      task.Status.Should().Be(expectedTaskStatus);
+      task.Status.Status.Should().Be(expectedTaskStatus);
    }
 
    [Theory]
    [MemberData(nameof(StatusCases))]
-   public void Build_maps_confirm_project_dates_status_to_task_status(SignificantChangeTaskStatus TaskStatus, TaskListItemViewModel expectedTaskStatus)
+   public void Build_maps_confirm_project_dates_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
    {
       const string sectionKey = "Proposed decision and conversion dates";
       const string taskKey = "confirm-project-dates";
@@ -106,12 +114,12 @@ public class SignificantChangeTaskListBuilderTests
       var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
       var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
 
-      task.Status.Should().Be(expectedTaskStatus);
+      task.Status.Status.Should().Be(expectedTaskStatus);
    }
 
    [Theory]
    [MemberData(nameof(StatusCases))]
-   public void Build_maps_public_sector_equality_duty_status_to_task_status(SignificantChangeTaskStatus TaskStatus, TaskListItemViewModel expectedTaskStatus)
+   public void Build_maps_public_sector_equality_duty_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
    {
       const string sectionKey = "public-sector-equality-duty";
       const string taskKey = "public-sector-equality-duty";
@@ -123,7 +131,7 @@ public class SignificantChangeTaskListBuilderTests
       var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
       var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
 
-      task.Status.Should().Be(expectedTaskStatus);
+      task.Status.Status.Should().Be(expectedTaskStatus);
    }
 
    private static SignificantChangeProjectViewBaseModel BuildProject(Action<SignificantChangeProjectViewBaseModel> configure = null)
