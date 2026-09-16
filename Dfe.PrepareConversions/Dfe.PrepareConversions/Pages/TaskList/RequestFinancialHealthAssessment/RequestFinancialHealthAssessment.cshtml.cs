@@ -30,6 +30,9 @@ public class RequestFinancialHealthAssessmentModel : BaseAcademyConversionProjec
    // The stored request date (null when the proposed decision date is > 15 days away).
    public DateTime? RequestedDate { get; set; }
 
+   public bool FHARequestedWithin15Days =>
+      FinancialHealthAssessmentPrerequisites.FHARequestedWithin15Days(Project);
+
    // Mandatory information still outstanding. Empty == ready to request.
    public IReadOnlyList<FinancialHealthAssessmentPrerequisite> MissingInformation =>
       FinancialHealthAssessmentPrerequisites.GetMissing(Project);
