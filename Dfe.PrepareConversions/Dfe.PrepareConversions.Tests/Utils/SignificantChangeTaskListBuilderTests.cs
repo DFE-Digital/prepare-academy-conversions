@@ -35,13 +35,7 @@ public class SignificantChangeTaskListBuilderTests
 
       Assert.Equal(taskKeys.Length, tasks.Count);
       Assert.Equal(taskKeys, tasks.OrderBy(t => t.DisplayOrder).Select(t => t.Key).ToArray());
-   }
-
-   public interface IMyDict<TKey, TValue> : IDictionary<TKey, TValue>, IXunitSerializable
-      {
-      // Implement the necessary methods for serialization and deserialization.
-      }
-      
+   }  
 
    public static TheoryData<SignificantChangeTaskStatus, string> StatusCases =>
     new()
