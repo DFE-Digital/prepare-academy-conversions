@@ -19,6 +19,9 @@ public class SignificantChangeProjectViewBaseModel
    public SignificantChangeTaskStatus StakeholderConsultationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public bool? StakeholderConsultationTrustConsultedStakeholders { get; set; }
    public string StakeholderConsultationTrustConsultedStakeholdersNotConsultedReason { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus AdmissionVariationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public bool? ConsultationIncludeAdmissionVariation { get; set; }
+   public string ConsultationNoAdmissionVariationReason { get; set; } = string.Empty;
    public SignificantChangeTaskStatus EqualitiesImpactAssessmentStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public bool? EqualitiesImpactAssessmentCompleted { get; set; }
    public EqualitiesImpact? EqualitiesImpactIdentified { get; set; }
