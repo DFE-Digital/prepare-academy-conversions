@@ -61,17 +61,17 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects.FinancialHealthAssessment
 
       private void Populate(Project projectResult)
       {
-        ProjectReference = projectResult.Reference;
-        IncomingTrustName = projectResult.IncomingTrustName;
-        IsReadOnly = projectResult.IsReadOnly;
-        RequestedDate = projectResult.Dates?.SfsoCommissioningRequestedDate;
-            FHARequestedWithin15Days = FinancialHealthAssessmentPrerequisites.FHARequestedWithin15Days(projectResult);
-        ProposedDecisionDate =
-            DateTime.TryParseExact(projectResult.Dates?.Htb, new[] { "dd/MM/yyyy", "dd-MM-yyyy" },
+          ProjectReference = projectResult.Reference;
+          IncomingTrustName = projectResult.IncomingTrustName;
+          IsReadOnly = projectResult.IsReadOnly;
+          RequestedDate = FinancialHealthAssessmentPrerequisites.GetRequestedDate(projectResult);
+          FHARequestedWithin15Days = FinancialHealthAssessmentPrerequisites.FHARequestedWithin15Days(projectResult);
+          ProposedDecisionDate =
+             DateTime.TryParseExact(projectResult.Dates?.Htb, new[] { "dd/MM/yyyy", "dd-MM-yyyy" },
                 CultureInfo.InvariantCulture, DateTimeStyles.None, out var htbDate)
                 ? htbDate
                 : (DateTime?)null;
-         MissingInformation = FinancialHealthAssessmentPrerequisites.GetMissing(projectResult);
+          MissingInformation = FinancialHealthAssessmentPrerequisites.GetMissing(projectResult);
       }
    }
 }

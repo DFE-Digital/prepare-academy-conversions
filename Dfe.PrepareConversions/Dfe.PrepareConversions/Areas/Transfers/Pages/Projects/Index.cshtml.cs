@@ -26,9 +26,17 @@ namespace Dfe.PrepareTransfers.Web.Pages.Projects
       public ProjectStatuses PublicSectorEqualityDutyStatus { get; set; }
       public ProjectStatuses FinancialHealthAssessmentStatus { get; set; }
       public bool FHARequestedWithin15Days { get; set; }
+      public bool HasAllFinancialHealthAssessmentMandatoryInformation { get; set; }
+      public DateTime? FinancialHealthAssessmentRequestedDate { get; set; }
       public string ProjectStatus { get; set; }
       public User AssignedUser { get; set; }
       public bool HasPermission { get; set; }
+
+      public bool FinancialHealthAssessmentRequestWillBeSent =>
+         FinancialHealthAssessmentRequestedDate.HasValue && FinancialHealthAssessmentRequestedDate.Value.Date > DateTime.Today;
+
+      public bool FinancialHealthAssessmentRequestSent =>
+         FinancialHealthAssessmentRequestedDate.HasValue && FinancialHealthAssessmentRequestedDate.Value.Date <= DateTime.Today;
         
 
       /// <summary>

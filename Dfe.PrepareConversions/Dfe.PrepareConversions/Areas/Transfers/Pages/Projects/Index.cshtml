@@ -207,6 +207,12 @@
                                         A financial health assessment cannot be requested at this time as the decision date is in less than 15 days. If you need an urgent financial health assessment, please contact the Directorate Support Team (DST) for the trust's home region.
                                     </p>
                                 }
+                                else if (!Model.HasAllFinancialHealthAssessmentMandatoryInformation)
+                                {
+                                    <p class="govuk-hint app-task-list__hint" data-test="fha-not-requested-hint">
+                                        This has not yet been requested, as some mandatory information is missing.
+                                    </p>
+                                }
                      </li>
                   </ul>
                </li>

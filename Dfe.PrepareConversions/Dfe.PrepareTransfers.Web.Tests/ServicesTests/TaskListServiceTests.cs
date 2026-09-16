@@ -363,8 +363,14 @@ namespace Dfe.PrepareTransfers.Web.Tests.ServicesTests
                     HasHtbDate = true,
                     HasTargetDateForTransfer = true
                 };
+                FoundProjectFromRepo.Features = new TransferFeatures
+                {
+                    TypeOfTransfer = TransferFeatures.TransferTypes.MatClosure
+                };
                 _subject.BuildTaskListStatuses(_index);
                 Assert.Equal(ProjectStatuses.Completed, _index.FinancialHealthAssessmentStatus);
+                Assert.True(_index.HasAllFinancialHealthAssessmentMandatoryInformation);
+                Assert.True(_index.FinancialHealthAssessmentRequestedDate.HasValue);
             }
 
             [Fact]
@@ -376,6 +382,10 @@ namespace Dfe.PrepareTransfers.Web.Tests.ServicesTests
                     Target = "23/08/2026",
                     HasHtbDate = true,
                     HasTargetDateForTransfer = true
+                };
+                FoundProjectFromRepo.Features = new TransferFeatures
+                {
+                    TypeOfTransfer = TransferFeatures.TransferTypes.MatClosure
                 };
                 _subject.BuildTaskListStatuses(_index);
                 Assert.Equal(ProjectStatuses.NotStarted, _index.FinancialHealthAssessmentStatus);
@@ -392,8 +402,58 @@ namespace Dfe.PrepareTransfers.Web.Tests.ServicesTests
                     HasHtbDate = true,
                     HasTargetDateForTransfer = true
                 };
+                FoundProjectFromRepo.Features = new TransferFeatures
+                {
+                    TypeOfTransfer = TransferFeatures.TransferTypes.MatClosure
+                };
                 _subject.BuildTaskListStatuses(_index);
                 Assert.Equal(ProjectStatuses.NotStarted, _index.FinancialHealthAssessmentStatus);
+                Assert.False(_index.HasAllFinancialHealthAssessmentMandatoryInformation);
+            }
+
+            [Fact]
+            public void GivenRequestedDateAndMandatoryDatesButMissingTransferType_StatusNotStarted()
+            {
+                FoundProjectFromRepo.Dates = new TransferDates
+                {
+                    Htb = "23/07/2026",
+                    Target = "23/08/2026",
+                    SfsoCommissioningRequestedDate = DateTime.Today,
+                    HasHtbDate = true,
+                    HasTargetDateForTransfer = true
+                };
+                FoundProjectFromRepo.Features = new TransferFeatures
+                {
+                    TypeOfTransfer = TransferFeatures.TransferTypes.Empty
+                };
+
+                _subject.BuildTaskListStatuses(_index);
+
+                Assert.Equal(ProjectStatuses.NotStarted, _index.FinancialHealthAssessmentStatus);
+                Assert.False(_index.HasAllFinancialHealthAssessmentMandatoryInformation);
+            }
+
+            [Fact]
+            public void GivenNoStoredRequestedDateAndMandatoryInfoOutside15Days_StatusCompletedWithScheduledRequestDate()
+            {
+                FoundProjectFromRepo.Dates = new TransferDates
+                {
+                    Htb = DateTime.UtcNow.AddDays(45).ToString("dd/MM/yyyy"),
+                    Target = DateTime.UtcNow.AddDays(60).ToString("dd/MM/yyyy"),
+                    HasHtbDate = true,
+                    HasTargetDateForTransfer = true
+                };
+                FoundProjectFromRepo.Features = new TransferFeatures
+                {
+                    TypeOfTransfer = TransferFeatures.TransferTypes.MatClosure
+                };
+
+                _subject.BuildTaskListStatuses(_index);
+
+                Assert.Equal(ProjectStatuses.Completed, _index.FinancialHealthAssessmentStatus);
+                Assert.True(_index.HasAllFinancialHealthAssessmentMandatoryInformation);
+                Assert.True(_index.FinancialHealthAssessmentRequestedDate.HasValue);
+                Assert.True(_index.FinancialHealthAssessmentRequestWillBeSent);
             }
 
             [Fact]

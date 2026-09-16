@@ -1,4 +1,5 @@
 using Dfe.PrepareTransfers.Data.Models;
+using Dfe.PrepareTransfers.Data.Models.Projects;
 using System;
 using System.Globalization;
 using System.Collections.Generic;
@@ -59,10 +60,38 @@ public static class FinancialHealthAssessmentPrerequisites
             "a proposed transfer date", "/Projects/TransferDates/Target"));
       }
 
+      if (project.Features is null || project.Features.TypeOfTransfer == TransferFeatures.TransferTypes.Empty)
+      {
+         missing.Add(new FinancialHealthAssessmentPrerequisite(
+            "what type of transfer it is", "/Projects/Features/Type"));
+      }
+
       return missing;
    }
 
    public static bool IsComplete(Project project) => GetMissing(project).Count == 0;
+
+   public static DateTime? GetRequestedDate(Project project)
+   {
+      if (project is null)
+      {
+         return null;
+      }
+
+      if (project.Dates?.SfsoCommissioningRequestedDate.HasValue == true)
+      {
+         return project.Dates.SfsoCommissioningRequestedDate;
+      }
+
+      if (!IsComplete(project) || FHARequestedWithin15Days(project))
+      {
+         return null;
+      }
+
+      DateTime? proposedDecisionDate = TryParseDate(project.Dates?.Htb);
+
+      return proposedDecisionDate?.AddDays(-15);
+   }
 
    private static DateTime? TryParseDate(string date)
    {
