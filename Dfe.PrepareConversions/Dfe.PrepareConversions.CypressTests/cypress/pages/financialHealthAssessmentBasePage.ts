@@ -6,7 +6,7 @@ import BasePage from './basePage';
 export default abstract class FinancialHealthAssessmentBasePage extends BasePage {
     protected readonly selectors = {
         heading: 'h1',
-        noDecisionDateBanner: 'fha-no-decision-date', // data-test (Scenario 7 banner)
+        noDecisionDateBanner: 'fha-not-requested', // data-test (Scenario 7 banner)
         notRequested: 'fha-not-requested', // data-test (Scenario 7 body)
         requestedDate: 'fha-requested-date', // data-test (Scenarios 5 / 6 / requested-in-past)
         overviewReadOnly: 'fha-overview-readonly', // data-test (Scenario 8 lockdown)
