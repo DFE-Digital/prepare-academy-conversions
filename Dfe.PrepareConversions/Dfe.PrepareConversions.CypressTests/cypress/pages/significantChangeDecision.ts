@@ -2,7 +2,6 @@
 import BasePage from './basePage';
 
 class SignificantChangeDecision extends BasePage {
-
     public path = 'significant-change';
 
     public openFor(projectId: number | string): this {
