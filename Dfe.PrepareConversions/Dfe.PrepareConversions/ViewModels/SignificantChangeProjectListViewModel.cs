@@ -22,6 +22,9 @@ public class SignificantChangeProjectViewBaseModel
    public SignificantChangeTaskStatus StakeholderObjectionsStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public SignificantChangeStakeholderObjection? StakeholderObjections { get; set; }
    public string StakeholderObjectionsComment { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus AdmissionVariationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public bool? ConsultationIncludeAdmissionVariation { get; set; }
+   public string ConsultationNoAdmissionVariationReason { get; set; } = string.Empty;
    public SignificantChangeTaskStatus EqualitiesImpactAssessmentStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public bool? EqualitiesImpactAssessmentCompleted { get; set; }
    public EqualitiesImpact? EqualitiesImpactIdentified { get; set; }
