@@ -2,6 +2,7 @@
 import BasePage from './basePage';
 
 class SignificantChangeDecision extends BasePage {
+
     public path = 'significant-change';
 
     public openFor(projectId: number | string): this {
@@ -59,7 +60,7 @@ class SignificantChangeDecision extends BasePage {
     }
 
     public verifyOnStep(step: string): this {
-        cy.url().should('match', new RegExp(String.raw`/significant-change/\d+/decision/${step}$`));
+        cy.url().should('match', new RegExp(String.raw`/significant-change/\d+/decision/${step}(?:\?.*)?$`));
         return this;
     }
 }

@@ -9,19 +9,14 @@ public class SignificantChangeDecision
 {
    private SignificantChangeDecisions? _decision;
 
-   public SignificantChangeDecision()
-   {
-      DeclinedReasons = new List<SignificantChangeDeclinedReasonDetails>();
-      DeferredReasons = new List<AdvisoryBoardDeferredReasonDetails>();
-      WithdrawnReasons = new List<AdvisoryBoardWithdrawnReasonDetails>();
-   }
+   public int AdvisoryBoardDecisionId { get; set; }
 
    public int? SignificantChangeProjectId { get; set; }
    public bool? ApprovedConditionsSet { get; set; }
    public string ApprovedConditionsDetails { get; set; }
-   public List<SignificantChangeDeclinedReasonDetails> DeclinedReasons { get; set; }
-   public List<AdvisoryBoardDeferredReasonDetails> DeferredReasons { get; set; }
-   public List<AdvisoryBoardWithdrawnReasonDetails> WithdrawnReasons { get; set; }
+   public List<SignificantChangeDeclinedReasonDetails> DeclinedReasons { get; set; } = new();
+   public List<AdvisoryBoardDeferredReasonDetails> DeferredReasons { get; set; } = new();
+   public List<AdvisoryBoardWithdrawnReasonDetails> WithdrawnReasons { get; set; } = new();
    public DateTime? DecisionDate { get; set; }
    public DecisionMadeBy? DecisionMadeBy { get; set; }
    public string DecisionMakerName { get; set; }
