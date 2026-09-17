@@ -15,6 +15,14 @@ public class SignificantChangeApplicationSubmittedConsumer(
    ICorrelationContext correlationContext,
    ILogger<SignificantChangeApplicationSubmittedConsumer> logger) : IConsumer<SchemaEventEnvelope>
 {
+   private record PayloadValues(
+      string ApplicationReference,
+      string ApplicationId,
+      int Urn,
+      string TrustUkprn,
+      byte Tier,
+      string TypeOfSignificantChange);
+
    private const string ExpectedMessageType = "SignificantChangeApplicationSubmitted";
    private const string ExpectedTopicName = "significant-change-application-submitted";
 
@@ -39,16 +47,13 @@ public class SignificantChangeApplicationSubmittedConsumer(
 
       try
       {
-         int urn = ParseUrn(message);
-         string trustUkprn = ParseTrustUkprn(message);
-
-         (byte tier, string typeOfSignificantChange) = ResolveTierAndType(message);
+         var resolvedPayload = ParsePayload(message.Payload);
 
          var command = new CreateSignificantProjectCommand(
-            Urn: urn,
-            Tier: tier,
-            Route: typeOfSignificantChange,
-            TrustUkprn: trustUkprn);
+            Urn: resolvedPayload.Urn,
+            Tier: resolvedPayload.Tier,
+            Route: resolvedPayload.TypeOfSignificantChange,
+            TrustUkprn: resolvedPayload.TrustUkprn);
 
          _ = await significantChangeProjectRepository.CreateProject(command);
 
@@ -60,7 +65,7 @@ public class SignificantChangeApplicationSubmittedConsumer(
                "Created significant change project for application reference {ApplicationReference}, template {TemplateId}, urn {Urn}",
                applicationReference,
                message.Metadata?.TemplateId,
-               urn);
+               resolvedPayload.Urn);
          }
       }
       catch (Exception ex)
@@ -72,6 +77,40 @@ public class SignificantChangeApplicationSubmittedConsumer(
             $"Failed to process significant change schema event for application reference '{message?.Payload?.ApplicationReference ?? message?.Metadata?.ApplicationReference ?? "<unknown>"}'.",
             ex);
       }
+   }
+
+   private static PayloadValues ParsePayload(SchemaEventPayload payload)
+   {
+      if (payload == null) 
+         throw new InvalidOperationException("Schema event payload is missing.");
+
+      if (string.IsNullOrWhiteSpace(payload.ApplicationId))
+         throw new InvalidOperationException("Schema event payload applicationId is missing.");
+         
+      if (string.IsNullOrWhiteSpace(payload.ApplicationReference))
+         throw new InvalidOperationException("Schema event payload applicationReference is missing.");
+      
+      if (!int.TryParse(payload.Urn, out int urn))
+         throw new InvalidOperationException("Schema event payload urn is missing or invalid.");
+
+      if (string.IsNullOrWhiteSpace(payload.TrustUkprn))
+         throw new InvalidOperationException("Schema event payload trustUkprn is missing.");
+      
+      if (!payload.Tier.HasValue)
+         throw new InvalidOperationException("Schema event payload tier is missing.");
+      
+      if (payload.Tier.Value != 1 && payload.Tier.Value != 3)
+         throw new InvalidOperationException("Schema event payload tier is invalid.");
+
+
+      // Hardcode the type for now
+      return new PayloadValues(
+         ApplicationId: payload.ApplicationId,
+         ApplicationReference: payload.ApplicationReference,
+         Urn: urn,
+         TrustUkprn: payload.TrustUkprn,
+         Tier: payload.Tier.Value,
+         TypeOfSignificantChange: "Hardcoded temporary value");
    }
 
    private static bool ShouldProcess(SchemaEventEnvelope message)
@@ -87,45 +126,13 @@ public class SignificantChangeApplicationSubmittedConsumer(
       return messageTypeMatches || topicMatches;
    }
 
-   private static int ParseUrn(SchemaEventEnvelope message)
-   {
-      if (!int.TryParse(message?.Payload?.Urn, out int urn))
-      {
-         throw new InvalidOperationException("Schema event payload urn is missing or invalid.");
-      }
-
-      return urn;
-   }
-
-   private static string ParseTrustUkprn(SchemaEventEnvelope message)
-   {
-      if (string.IsNullOrWhiteSpace(message?.Payload?.TrustUkprn))
-      {
-         throw new InvalidOperationException("Schema event payload trustUkprn is missing.");
-      }
-
-      return message.Payload.TrustUkprn;
-   }
-
-   private static (byte Tier, string TypeOfSignificantChange) ResolveTierAndType(SchemaEventEnvelope message)
-   {
-      if (message?.Payload?.Tier.HasValue == true)
-      {
-         // Hardcode the type for now
-         return (message.Payload.Tier.Value, "Hardcoded temporary value");
-      }
-
-      throw new InvalidOperationException("Schema event payload tier is missing.");
-   }
-
    private void SetCorrelationId(ConsumeContext context, ICorrelationContext correlationContext)
    {
-      Guid correlationId;
       bool isInformationEnabled = logger.IsEnabled(LogLevel.Information);
 
       if (context.Headers.TryGetHeader("x-correlationId", out var headerValue) &&
           headerValue != null &&
-          Guid.TryParse(headerValue.ToString(), out correlationId))
+          Guid.TryParse(headerValue.ToString(), out Guid correlationId))
       {
          if (isInformationEnabled)
          {
