@@ -22,18 +22,18 @@ public static class SignificantChangeTaskListBuilder
                1,
                Links.SignificantChange.StakeholderConsultation,
                project => GetTaskStatus(project.StakeholderConsultationStatus)),
-              new SignificantChangeTaskDefinition(
-               "admission-variation-consultation",
-               "Admission variation consultation",
-               2,
-               Links.SignificantChange.AdmissionVariationConsultation,
-               project => GetTaskStatus(project.AdmissionVariationStatus)),
             new SignificantChangeTaskDefinition(
                "consultation-duration",
                "Consultation duration",
-               3,
+               2,
                Links.SignificantChange.ConsultationDuration,
                project => GetTaskStatus(project.ConsultationDurationStatus)),
+              new SignificantChangeTaskDefinition(
+               "admission-variation-consultation",
+               "Admission variation consultation",
+               3,
+               Links.SignificantChange.AdmissionVariationConsultation,
+               project => GetTaskStatus(project.AdmissionVariationStatus)),
             new SignificantChangeTaskDefinition(
                "religious-body-consultation",
                "Religious body consultation",
