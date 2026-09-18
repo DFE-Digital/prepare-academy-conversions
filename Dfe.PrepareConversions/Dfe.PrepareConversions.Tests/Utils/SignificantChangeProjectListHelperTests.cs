@@ -19,6 +19,8 @@ public class SignificantChangeProjectListHelperTests
          TrustName = "Trust name",
          TrustUkprn = "12345678",
          TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "approved with conditions"
       };
 
@@ -39,6 +41,8 @@ public class SignificantChangeProjectListHelperTests
          TrustName = "Trust name",
          TrustUkprn = "12345678",
          TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "pre decision",
          StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
          {
@@ -66,6 +70,8 @@ public class SignificantChangeProjectListHelperTests
          TrustName = "Trust name",
          TrustUkprn = "12345678",
          TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "pre decision",
          ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse
          {
@@ -96,6 +102,8 @@ public class SignificantChangeProjectListHelperTests
          TrustName = "Trust name",
          TrustUkprn = "12345678",
          TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "pre decision",
          ProjectDates = new SignificantChangeProjectDatesResponse
          {
@@ -123,6 +131,8 @@ public class SignificantChangeProjectListHelperTests
          TrustName = "Trust name",
          TrustUkprn = "12345678",
          TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "pre decision",
          ProjectDates = null
       };
@@ -174,6 +184,8 @@ public class SignificantChangeProjectListHelperTests
          TrustName = "Trust name",
          TrustUkprn = "12345678",
          TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "pre decision",
          EqualitiesImpactAssessment = new SignificantChangeEqualitiesImpactAssessmentResponse
          {
@@ -203,6 +215,8 @@ public class SignificantChangeProjectListHelperTests
          TrustName = "Trust name",
          TrustUkprn = "12345678",
          TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "pre decision",
          AdmissionVariationConsultation = new SignificantChangeAdmissionVariationConsultationResponse
          {

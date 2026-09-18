@@ -53,9 +53,12 @@ public class SignificantChangeApplicationSubmittedConsumer(
             Urn: resolvedPayload.Urn,
             Tier: resolvedPayload.Tier,
             Route: resolvedPayload.TypeOfSignificantChange,
-            TrustUkprn: resolvedPayload.TrustUkprn);
+            TrustUkprn: resolvedPayload.TrustUkprn,
+            ApplicationId: resolvedPayload.ApplicationId,
+            ApplicationReference: resolvedPayload.ApplicationReference
+         );
 
-         _ = await significantChangeProjectRepository.CreateProject(command);
+         await significantChangeProjectRepository.CreateProject(command);
 
          if (isInformationEnabled)
          {
