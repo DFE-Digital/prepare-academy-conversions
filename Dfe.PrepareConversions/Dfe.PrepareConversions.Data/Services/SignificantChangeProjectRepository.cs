@@ -148,6 +148,35 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+   public async Task UpdateDecision(SignificantChangeDecision decision)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+
+      ApiResponse<SignificantChangeDecision> result =
+         await httpClientService.Put<SignificantChangeDecision, SignificantChangeDecision>(
+            httpClient,
+            PathFor.RecordSignificantChangeDecision,
+            decision);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
+   public async Task<ApiResponse<SignificantChangeDecision>> GetDecision(int id)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.GetSignificantChangeDecision, id);
+
+      ApiResponse<SignificantChangeDecision> result =
+         await httpClientService.Get<SignificantChangeDecision>(
+            httpClient,
+            path);
+
+      return new ApiResponse<SignificantChangeDecision>(result.StatusCode, result.Body);
+   }
+
    public async Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();

@@ -1,3 +1,5 @@
+using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
@@ -177,5 +179,49 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
       await CompleteApprovedJourney();
 
       Document.QuerySelector("#change-who-btn")?.GetAttribute("href").Should().Contain("obl=true");
+   }
+
+   [Fact]
+   public async Task Should_update_an_existing_decision_and_clear_answers_from_the_previous_branch()
+   {
+      AddProject();
+
+      SignificantChangeDecision existingDecision = new()
+      {
+         SignificantChangeProjectId = ProjectId,
+         Decision = SignificantChangeDecisions.Approved,
+         ApprovedConditionsSet = true,
+         ApprovedConditionsDetails = "Old condition"
+      };
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeDecision, ProjectId), existingDecision);
+
+      SignificantChangeDecision updatedDecision = new()
+      {
+         SignificantChangeProjectId = ProjectId,
+         Decision = SignificantChangeDecisions.Declined,
+         DeclinedReasons =
+         [
+            new(SignificantChangeDeclinedReason.Governance, "Weak governance")
+         ],
+         DecisionMadeBy = DecisionMadeBy.None,
+         DecisionDate = DecisionDate
+      };
+      _factory.AddPutWithJsonRequest(
+         PathFor.RecordSignificantChangeDecision,
+         updatedDecision,
+         new SignificantChangeDecision());
+
+      await Wizard.StartFor(ProjectId);
+      Document.QuerySelector<IHtmlInputElement>("#declined-radio")!.IsChecked = true;
+      await Wizard.ClickSubmitButton();
+      await Wizard.SetDeclinedReasonsAndContinue(
+         (SignificantChangeDeclinedReason.Governance, "Weak governance"));
+      await Wizard.SetDecisionByAndContinue(DecisionMadeBy.None);
+      await Wizard.SetDecisionDateAndContinue(DecisionDate);
+      await Wizard.ClickSubmitButton();
+
+      Document.Url.Should().Be(BuildRequestAddress($"/significant-change/task-list/{ProjectId}"));
+      _factory.GetMockServerLogs(PathFor.RecordSignificantChangeDecision, HttpMethod.Put).Should().ContainSingle();
+      _factory.GetMockServerLogs(PathFor.RecordSignificantChangeDecision, HttpMethod.Post).Should().BeEmpty();
    }
 }

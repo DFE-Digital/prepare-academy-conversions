@@ -1,6 +1,4 @@
-
 using Dfe.Academisation.ExtensionMethods;
-using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Extensions;
@@ -40,12 +38,32 @@ public class SummaryModel(ISignificantChangeProjectRepository repository,
 
       decision.SignificantChangeProjectId = id;
 
-      await _repository.RecordDecision(decision);
+      var savedDecisionResponse = await _repository.GetDecision(id);
+      bool hasExistingDecision = false;
+
+      if (savedDecisionResponse.Success && savedDecisionResponse.Body != null)
+      {
+         hasExistingDecision = true;
+      }
+
+      await CreateOrUpdateDecision(hasExistingDecision, decision);
 
       SetDecisionInSession(id, null);
 
       TempData.SetNotification(NotificationType.Success, "Done", "Decision recorded");
 
       return RedirectToPage(Links.SignificantChange.SignificantChangeTaskList.Page, new { id });
+   }
+
+   private async Task CreateOrUpdateDecision(bool hasExisting, SignificantChangeDecision newDecision)
+   {
+      if (!hasExisting)
+      {
+         await _repository.RecordDecision(newDecision);
+      }
+      else
+      {
+         await _repository.UpdateDecision(newDecision);
+      }
    }
 }

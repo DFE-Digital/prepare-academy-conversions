@@ -302,6 +302,60 @@ public class SignificantChangeProjectRepositoryTests
 
    [Theory]
    [AutoMoqData]
+   public async Task UpdateDecision_ShouldPutDecisionToApi(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      SignificantChangeDecision decision = new()
+      {
+         SignificantChangeProjectId = 123,
+         Decision = SignificantChangeDecisions.Declined
+      };
+
+      HttpClient httpClient = new();
+
+      httpClientFactory.Setup(x => x.CreateAcademisationClient()).Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SignificantChangeDecision, SignificantChangeDecision>(
+            httpClient, PathFor.RecordSignificantChangeDecision, decision))
+         .ReturnsAsync(new ApiResponse<SignificantChangeDecision>(HttpStatusCode.OK, decision));
+
+      await sut.UpdateDecision(decision);
+
+      httpClientService.Verify(
+         x => x.Put<SignificantChangeDecision, SignificantChangeDecision>(
+            httpClient, PathFor.RecordSignificantChangeDecision, decision),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task GetDecision_ShouldGetDecisionByProjectId(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int projectId = 123;
+      SignificantChangeDecision expectedDecision = new() { SignificantChangeProjectId = projectId };
+      HttpClient httpClient = new();
+      string expectedPath = string.Format(PathFor.GetSignificantChangeDecision, projectId);
+
+      httpClientFactory.Setup(x => x.CreateAcademisationClient()).Returns(httpClient);
+      httpClientService
+         .Setup(x => x.Get<SignificantChangeDecision>(httpClient, expectedPath))
+         .ReturnsAsync(new ApiResponse<SignificantChangeDecision>(HttpStatusCode.OK, expectedDecision));
+
+      ApiResponse<SignificantChangeDecision> response = await sut.GetDecision(projectId);
+
+      response.Body.Should().BeSameAs(expectedDecision);
+      response.StatusCode.Should().Be(HttpStatusCode.OK);
+      httpClientService.Verify(x => x.Get<SignificantChangeDecision>(httpClient, expectedPath), Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
    public async Task SetStakeholderConsultation_WhenApiCallSucceeds_ShouldPutToExpectedPath(
       [Frozen] Mock<IHttpClientService> httpClientService,
       [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
