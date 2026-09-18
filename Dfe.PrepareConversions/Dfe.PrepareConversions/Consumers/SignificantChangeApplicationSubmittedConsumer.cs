@@ -15,7 +15,7 @@ public class SignificantChangeApplicationSubmittedConsumer(
    ICorrelationContext correlationContext,
    ILogger<SignificantChangeApplicationSubmittedConsumer> logger) : IConsumer<SchemaEventEnvelope>
 {
-   private record PayloadValues(
+   private sealed record PayloadValues(
       string ApplicationReference,
       string ApplicationId,
       int Urn,
