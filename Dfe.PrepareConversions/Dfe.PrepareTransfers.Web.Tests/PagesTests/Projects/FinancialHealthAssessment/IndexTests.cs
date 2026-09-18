@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xunit;
 using FhaIndex = Dfe.PrepareTransfers.Web.Pages.Projects.FinancialHealthAssessment.Index;
 using TransferDatesModel = Dfe.PrepareTransfers.Data.Models.Projects.TransferDates;
+using TransferFeaturesModel = Dfe.PrepareTransfers.Data.Models.Projects.TransferFeatures;
 
 namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAssessment
 {
@@ -43,6 +44,10 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
             HasTargetDateForTransfer = true,
             SfsoCommissioningRequestedDate = DateTime.Today.AddDays(5)
          };
+         FoundProjectFromRepo.Features = new TransferFeaturesModel
+         {
+            TypeOfTransfer = TransferFeaturesModel.TransferTypes.MatClosure
+         };
          var subject = Subject();
 
          await subject.OnGetAsync();
@@ -50,6 +55,72 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
          Assert.True(subject.HasAllMandatoryInformation);
          Assert.True(subject.RequestWillBeSent);
          Assert.False(subject.RequestSent);
+      }
+
+      [Fact]
+      public async Task OnGet_NoTypeOfTransfer_MissingInformationContainsTypeOfTransfer()
+      {
+         FoundProjectFromRepo.Dates = new TransferDatesModel
+         {
+            Htb = "23/07/2026",
+            Target = "24/07/2026",
+            HasHtbDate = true,
+            HasTargetDateForTransfer = true
+         };
+         FoundProjectFromRepo.Features = new TransferFeaturesModel
+         {
+            TypeOfTransfer = TransferFeaturesModel.TransferTypes.Empty
+         };
+         var subject = Subject();
+
+         await subject.OnGetAsync();
+
+         Assert.False(subject.HasAllMandatoryInformation);
+         var missingInfo = Assert.Single(subject.MissingInformation);
+         Assert.Equal("what type of transfer it is", missingInfo.Description);
+         Assert.Equal("/Projects/Features/Type", missingInfo.PageName);
+      }
+
+      [Fact]
+      public async Task OnGet_NoRequestedDate_AndHtbWithin15Days_FHARequestedWithin15DaysTrue()
+      {
+         FoundProjectFromRepo.Dates = new TransferDatesModel
+         {
+            Htb = DateTime.UtcNow.AddDays(5).ToString("dd/MM/yyyy"),
+            Target = DateTime.UtcNow.AddDays(20).ToString("dd/MM/yyyy"),
+            HasHtbDate = true,
+            HasTargetDateForTransfer = true,
+            SfsoCommissioningRequestedDate = null
+         };
+         var subject = Subject();
+
+         await subject.OnGetAsync();
+
+         Assert.True(subject.FHARequestedWithin15Days);
+      }
+
+      [Fact]
+      public async Task OnGet_NoRequestedDate_AndHtbOutside15Days_FHARequestedWithin15DaysFalse()
+      {
+         FoundProjectFromRepo.Dates = new TransferDatesModel
+         {
+            Htb = DateTime.UtcNow.AddDays(45).ToString("dd/MM/yyyy"),
+            Target = DateTime.UtcNow.AddDays(60).ToString("dd/MM/yyyy"),
+            HasHtbDate = true,
+            HasTargetDateForTransfer = true,
+            SfsoCommissioningRequestedDate = null
+         };
+         FoundProjectFromRepo.Features = new TransferFeaturesModel
+         {
+            TypeOfTransfer = TransferFeaturesModel.TransferTypes.MatClosure
+         };
+         var subject = Subject();
+
+         await subject.OnGetAsync();
+
+         Assert.False(subject.FHARequestedWithin15Days);
+         Assert.True(subject.RequestWillBeSent);
+         Assert.True(subject.RequestedDate.HasValue);
       }
 
       [Fact]
@@ -81,7 +152,7 @@ namespace Dfe.PrepareTransfers.Web.Tests.PagesTests.Projects.FinancialHealthAsse
             Target = "24/07/2026",
             HasHtbDate = true,
             HasTargetDateForTransfer = true,
-            SfsoCommissioningRequestedDate = new DateTime(2020, 7, 23)
+            SfsoCommissioningRequestedDate = new DateTime(2020, 7, 23, 0, 0, 0, DateTimeKind.Utc)
          };
          var subject = Subject();
 

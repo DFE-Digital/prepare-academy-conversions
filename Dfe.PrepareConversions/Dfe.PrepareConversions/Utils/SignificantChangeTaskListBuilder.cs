@@ -22,10 +22,16 @@ public static class SignificantChangeTaskListBuilder
                1,
                Links.SignificantChange.StakeholderConsultation,
                project => GetTaskStatus(project.StakeholderConsultationStatus)),
-             new SignificantChangeTaskDefinition(
+              new SignificantChangeTaskDefinition(
+               "admission-variation-consultation",
+               "Admission variation consultation",
+               2,
+               Links.SignificantChange.AdmissionVariationConsultation,
+               project => GetTaskStatus(project.AdmissionVariationStatus)),
+            new SignificantChangeTaskDefinition(
                "consultation-duration",
                "Consultation duration",
-               2,
+               3,
                Links.SignificantChange.ConsultationDuration,
                project => GetTaskStatus(project.ConsultationDurationStatus)),
             new SignificantChangeTaskDefinition(

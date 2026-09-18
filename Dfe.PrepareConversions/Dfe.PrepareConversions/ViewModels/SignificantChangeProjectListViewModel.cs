@@ -22,6 +22,9 @@ public class SignificantChangeProjectViewBaseModel
    public SignificantChangeTaskStatus ConsultationDurationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public ConsultationDurationAnswer? ConsultationLastedMinimumThreeWeeks { get; set; }
    public string ConsultationDurationNotMetReason { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus AdmissionVariationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public bool? ConsultationIncludeAdmissionVariation { get; set; }
+   public string ConsultationNoAdmissionVariationReason { get; set; } = string.Empty;
    public SignificantChangeTaskStatus EqualitiesImpactAssessmentStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public bool? EqualitiesImpactAssessmentCompleted { get; set; }
    public EqualitiesImpact? EqualitiesImpactIdentified { get; set; }
