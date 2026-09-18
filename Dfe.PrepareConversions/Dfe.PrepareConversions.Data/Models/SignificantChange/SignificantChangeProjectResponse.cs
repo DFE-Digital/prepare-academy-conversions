@@ -12,6 +12,8 @@ public class SignificantChangeProjectResponse
    public required string TrustUkprn { get; set; }
    public User AssignedUser { get; set; }
    public required string TypeOfSignificantChange { get; set; }
+   public required string ApplicationId { get; set; }
+   public required string ApplicationReference { get; set; }
    public required string Status { get; set; }
    public SignificantChangeStakeholderConsultationResponse StakeholderConsultation { get; set; } = new();
    public SignificantChangeConsultationDurationResponse ConsultationDuration { get; set; } = new();
