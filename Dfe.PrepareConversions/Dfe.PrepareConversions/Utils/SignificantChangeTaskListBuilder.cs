@@ -22,10 +22,16 @@ public static class SignificantChangeTaskListBuilder
                1,
                Links.SignificantChange.StakeholderConsultation,
                project => GetTaskStatus(project.StakeholderConsultationStatus)),
-             new SignificantChangeTaskDefinition(
+            new SignificantChangeTaskDefinition(
+               "consultation-duration",
+               "Consultation duration",
+               2,
+               Links.SignificantChange.ConsultationDuration,
+               project => GetTaskStatus(project.ConsultationDurationStatus)),
+              new SignificantChangeTaskDefinition(
                "admission-variation-consultation",
                "Admission variation consultation",
-               2,
+               3,
                Links.SignificantChange.AdmissionVariationConsultation,
                project => GetTaskStatus(project.AdmissionVariationStatus)),
             new SignificantChangeTaskDefinition(
@@ -58,6 +64,7 @@ public static class SignificantChangeTaskListBuilder
                Links.SignificantChange.PublicSectorEqualityDuty,
                project => GetTaskStatus(project.EqualitiesImpactAssessmentStatus))
          ])
+
    ];
 
    public static SignificantChangeTaskListViewModel Build(SignificantChangeProjectViewBaseModel project)

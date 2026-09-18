@@ -140,6 +140,29 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       statusTag.TextContent.Should().Contain("Completed");
    }
 
+      [Fact]
+   public async Task Should_render_consultation_duration_task_when_stakeholders_were_consulted()
+   {
+      SignificantChangeProjectResponse project = BuildProject(
+         id: 105,
+         status: "pre decision",
+         assignedUser: null,
+         trustConsultedStakeholders: true);
+
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
+
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
+
+      var consultationDurationLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Consultation duration"));
+
+      consultationDurationLink.Should().NotBeNull();
+      consultationDurationLink!.GetAttribute("href")
+         .Should().Contain($"/significant-change/task-list/{project.Id}/consultation-duration");
+
+      Document.QuerySelector("#task-status-consultation-duration")!.TextContent.Should().Contain("Not started");
+   }
+
    private static SignificantChangeProjectResponse BuildProject(
       int id,
       string status,
@@ -147,7 +170,8 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       string route = "Route A",
       SignificantChangeTaskStatus stakeholderConsultationStatus = SignificantChangeTaskStatus.NotStarted,
       bool? trustConsultedStakeholders = null,
-      string trustConsultedStakeholdersNotConsultedReason = null)
+      string trustConsultedStakeholdersNotConsultedReason = null,
+      SignificantChangeTaskStatus consultationDurationStatus = SignificantChangeTaskStatus.NotStarted)
    {
       return new SignificantChangeProjectResponse
       {

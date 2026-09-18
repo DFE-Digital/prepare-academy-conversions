@@ -13,6 +13,7 @@ public class SignificantChangeTaskListBuilderTests
    {
       string[] expectedTasks = [
          "stakeholder-consultation",
+         "consultation-duration",
          "admission-variation-consultation",
          "religious-body-consultation"
       ];
@@ -25,8 +26,9 @@ public class SignificantChangeTaskListBuilderTests
       Assert.Equal(expectedTasks.Length, result.Sections[0].Tasks.Count);
       Assert.Equal(expectedTasks, result.Sections[0].Tasks.Select(t => t.Key));
       Assert.Equal("stakeholder-consultation", result.Sections[0].Tasks[0].Key);
-      Assert.Equal("admission-variation-consultation", result.Sections[0].Tasks[1].Key);
-      Assert.Equal("religious-body-consultation", result.Sections[0].Tasks[2].Key);
+      Assert.Equal("consultation-duration", result.Sections[0].Tasks[1].Key);
+      Assert.Equal("admission-variation-consultation", result.Sections[0].Tasks[2].Key);
+      Assert.Equal("religious-body-consultation", result.Sections[0].Tasks[3].Key);
    }
 
    [Fact]
@@ -78,19 +80,25 @@ public class SignificantChangeTaskListBuilderTests
    public void Build_Sets_task_status_to_completed_when_status_is_completed()
    {
       SignificantChangeProjectViewBaseModel project = BuildProject(
-         stakeholderConsultationStatus: SignificantChangeTaskStatus.Completed,
-         admissionVariationStatus: SignificantChangeTaskStatus.Completed);
+         SignificantChangeTaskStatus.Completed,
+         SignificantChangeTaskStatus.Completed,
+         SignificantChangeTaskStatus.Completed,
+         SignificantChangeTaskStatus.Completed,
+         SignificantChangeTaskStatus.Completed);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
-      Assert.Equal(TaskListItemViewModel.Completed, result.Sections[0].Tasks[0].Status);
-      Assert.Equal(TaskListItemViewModel.Completed, result.Sections[0].Tasks[1].Status);
+      foreach (var task in result.Sections[0].Tasks)
+      {
+         Assert.Equal(TaskListItemViewModel.Completed, task.Status);
+      }
    }
 
    [Fact]
    public void Build_Sets_task_status_to_in_progress_when_status_is_in_progress()
    {
       SignificantChangeProjectViewBaseModel project = BuildProject(
+         SignificantChangeTaskStatus.InProgress,
          SignificantChangeTaskStatus.InProgress,
          SignificantChangeTaskStatus.InProgress,
          SignificantChangeTaskStatus.InProgress,
@@ -174,11 +182,32 @@ public class SignificantChangeTaskListBuilderTests
 
       Assert.Equal(TaskListItemViewModel.InProgress, result.Sections[1].Tasks[0].Status);
    }
+   
+   [Theory]
+   [InlineData(SignificantChangeTaskStatus.NotStarted)]
+   [InlineData(SignificantChangeTaskStatus.InProgress)]
+   [InlineData(SignificantChangeTaskStatus.Completed)]
+   public void Build_Maps_consultation_duration_status(SignificantChangeTaskStatus status)
+   {
+      SignificantChangeProjectViewBaseModel project = BuildProject(consultationDurationStatus: status);
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      TaskListItemViewModel expected = status switch
+      {
+         SignificantChangeTaskStatus.Completed => TaskListItemViewModel.Completed,
+         SignificantChangeTaskStatus.InProgress => TaskListItemViewModel.InProgress,
+         _ => TaskListItemViewModel.NotStarted
+      };
+
+      Assert.Equal(expected, result.Sections[0].Tasks[1].Status);
+   }
 
    private static SignificantChangeProjectViewBaseModel BuildProject(
       SignificantChangeTaskStatus stakeholderConsultationStatus = SignificantChangeTaskStatus.NotStarted,
       SignificantChangeTaskStatus religiousBodyConsultationStatus = SignificantChangeTaskStatus.NotStarted,
       SignificantChangeTaskStatus projectDatesStatus = SignificantChangeTaskStatus.NotStarted,
+      SignificantChangeTaskStatus consultationDurationStatus = SignificantChangeTaskStatus.NotStarted,
       SignificantChangeTaskStatus admissionVariationStatus = SignificantChangeTaskStatus.NotStarted)
    {
       return new SignificantChangeProjectViewBaseModel
@@ -195,6 +224,7 @@ public class SignificantChangeTaskListBuilderTests
          StakeholderConsultationStatus = stakeholderConsultationStatus,
          ReligiousBodyConsultationStatus = religiousBodyConsultationStatus,
          ProjectDatesStatus = projectDatesStatus,
+         ConsultationDurationStatus = consultationDurationStatus,
          AdmissionVariationStatus  = admissionVariationStatus
       };
    }
