@@ -183,6 +183,8 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
          TrustUkprn = "12345678",
          AssignedUser = assignedUser,
          TypeOfSignificantChange = route,
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = status,
          StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
          {

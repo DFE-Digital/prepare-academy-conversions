@@ -35,14 +35,15 @@ public class SignificantChangeApplicationSubmittedConsumerTests
          TopicName = "significant-change-application-submitted",
          Payload = new SchemaEventPayload
          {
-            ApplicationReference = "SC123",
+            ApplicationId = "ID_APP_123",
+            ApplicationReference = "APP_REF_123",
             Urn = "123456",
             TrustUkprn = "10001234",
-            Tier = 2
+            Tier = 1
          },
          Metadata = new SchemaEventMetadata
          {
-            ApplicationReference = "SC123",
+            ApplicationReference = "APP_REF_123",
             TemplateId = "template-a"
          }
       });
@@ -53,8 +54,10 @@ public class SignificantChangeApplicationSubmittedConsumerTests
          It.Is<CreateSignificantProjectCommand>(command =>
             command.Urn == 123456 &&
             command.TrustUkprn == "10001234" &&
-            command.Tier == 2 &&
-            command.TypeOfSignificantChange == "Hardcoded temporary value")), Times.Once);
+            command.Tier == 1 &&
+            command.Route == "Hardcoded temporary value" &&
+            command.ApplicationId == "ID_APP_123" &&
+            command.ApplicationReference == "APP_REF_123")), Times.Once);
       correlationContext.Verify(x => x.SetContext(It.IsAny<Guid>()), Times.Once);
    }
 
@@ -76,7 +79,8 @@ public class SignificantChangeApplicationSubmittedConsumerTests
          TopicName = "significant-change-application-submitted",
          Payload = new SchemaEventPayload
          {
-            ApplicationReference = "SC124",
+            ApplicationId = "ID_APP_124",
+            ApplicationReference = "APP_REF_124",
             Urn = "654321",
             TrustUkprn = "10009999",
             Tier = 1,
@@ -95,7 +99,9 @@ public class SignificantChangeApplicationSubmittedConsumerTests
             command.Urn == 654321 &&
             command.TrustUkprn == "10009999" &&
             command.Tier == 1 &&
-            command.TypeOfSignificantChange == "Hardcoded temporary value")), Times.Once);
+            command.Route == "Hardcoded temporary value" &&
+            command.ApplicationId == "ID_APP_124" &&
+            command.ApplicationReference == "APP_REF_124")), Times.Once);
    }
 
    [Fact]
@@ -117,6 +123,7 @@ public class SignificantChangeApplicationSubmittedConsumerTests
          Payload = new SchemaEventPayload
          {
             ApplicationReference = "SIG-20260916-047",
+            ApplicationId = "ID_APP_MISSING_TIER",
             Urn = "100010",
             TrustUkprn = "10061000"
          },
@@ -163,6 +170,8 @@ public class SignificantChangeApplicationSubmittedConsumerTests
          TrustName = "Trust",
          TrustUkprn = "10001234",
          TypeOfSignificantChange = "TypeOfSignificantChange A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "Pre decision"
       };
    }
