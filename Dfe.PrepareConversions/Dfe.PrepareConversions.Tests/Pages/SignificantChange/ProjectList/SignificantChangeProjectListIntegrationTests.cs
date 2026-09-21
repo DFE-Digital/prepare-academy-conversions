@@ -132,7 +132,7 @@ public class SignificantChangeProjectListIntegrationTests(IntegrationTestingWebA
 
       await OpenAndConfirmPathAsync(
          "/significant-change/project-list?Keyword=Example&SelectedStatuses=PreDecision" +
-         "&SelectedAssignees=Bob&SelectedTiers=1&SelectedRoutes=Change%20of%20age%20range");
+         "&SelectedProjectOwners=Bob&SelectedTiers=1&SelectedRoutes=Change%20of%20age%20range");
 
       Document.QuerySelector("[data-cy='select-projectlist-filter-banner']").Should().NotBeNull();
       Document.QuerySelector("[data-cy='select-projectlist-filter-count']")?.TextContent

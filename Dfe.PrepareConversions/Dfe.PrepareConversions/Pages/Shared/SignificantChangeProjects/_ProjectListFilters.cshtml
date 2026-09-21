@@ -23,13 +23,13 @@
                 </div>
             </div>
 
-            @if (Model.SelectedAssignees.Length > 0)
+            @if (Model.SelectedProjectOwners.Length > 0)
             {
-                <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Assigned to</h3>
+                <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Project owner</h3>
                 <ul class="moj-filter-tags">
-                    @foreach (var assignee in Model.SelectedAssignees)
+                    @foreach (var projectOwner in Model.SelectedProjectOwners)
                     {
-                        <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedAssignees=@assignee"><span class="govuk-visually-hidden">Remove this filter</span> @SignificantChangeProjectListFilters.DisplayFor(Model.AvailableAssignees, assignee)</a></li>
+                        <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&@nameof(SignificantChangeProjectListFilters.SelectedProjectOwners)=@projectOwner"><span class="govuk-visually-hidden">Remove this filter</span> @SignificantChangeProjectListFilters.DisplayFor(Model.AvailableProjectOwners, projectOwner)</a></li>
                     }
                 </ul>
             }
@@ -91,7 +91,7 @@
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
                                         <span class="govuk-accordion__section-button" id="accordion-assignees-heading" data-cy="select-projectlist-filter-assignee">
-                                            Assigned to
+                                            Project owner
                                         </span>
                                     </h2>
                                 </div>
@@ -100,19 +100,19 @@
                                     <div class="govuk-checkboxes">
                                         <div class="govuk-checkboxes__item">
                                             <input class="govuk-checkboxes__input" id="filter-assignee-not-assigned"
-                                                   name="SelectedAssignees" type="checkbox" value="Not assigned" @(Model.SelectedAssignees.Contains("Not assigned") ? "checked" : null)
+                                                   name="@nameof(SignificantChangeProjectListFilters.SelectedProjectOwners)" type="checkbox" value="Not assigned" @(Model.SelectedProjectOwners.Contains("Not assigned") ? "checked" : null)
                                                    data-cy="select-projectlist-filter-assignee-not-assigned">
                                             <label class="govuk-label govuk-checkboxes__label" for="filter-assignee-not-assigned">
                                                 Not assigned
                                             </label>
                                         </div>
-                                        @foreach (var assignee in Model.AvailableAssignees)
+                                        @foreach (var projectOwner in Model.AvailableProjectOwners)
                                         {
                                             <div class="govuk-checkboxes__item">
-                                                <input class="govuk-checkboxes__input" id="filter-assignee-@assignee.Value.Stub()" name="SelectedAssignees" type="checkbox" value="@assignee.Value" data-cy="select-projectlist-filter-assignee-@assignee.Value"
-                                                @(Model.SelectedAssignees.Contains(assignee.Value) ? "checked" : null) />
-                                                <label class="govuk-label govuk-checkboxes__label" for="filter-assignee-@assignee.Value.Stub()">
-                                                    @assignee.Display
+                                                <input class="govuk-checkboxes__input" id="filter-assignee-@projectOwner.Value.Stub()" name="@nameof(SignificantChangeProjectListFilters.SelectedProjectOwners)" type="checkbox" value="@projectOwner.Value" data-cy="select-projectlist-filter-assignee-@projectOwner.Value"
+                                                @(Model.SelectedProjectOwners.Contains(projectOwner.Value) ? "checked" : null) />
+                                                <label class="govuk-label govuk-checkboxes__label" for="filter-assignee-@projectOwner.Value.Stub()">
+                                                    @projectOwner.Display
                                                 </label>
                                             </div>
                                         }
