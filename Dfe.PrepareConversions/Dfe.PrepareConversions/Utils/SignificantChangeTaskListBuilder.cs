@@ -127,11 +127,18 @@ public static class SignificantChangeTaskListBuilder
          displayOrder,
          [
             new SignificantChangeTaskDefinition(
+               "local-authority-objections",
+               "Local authority objections",
+               1,
+               Links.SignificantChange.LocalAuthorityObjections,
+               project => GetTaskStatus(project.LocalAuthorityObjectionsStatus)),
+            new SignificantChangeTaskDefinition(
                "planning-permission",
                "Planning Permission",
-               1,
+               2,
                Links.SignificantChange.PlanningPermission,
                project => GetTaskStatus(project.PlanningPermissionTaskStatus))
+            
          ]
       );
    }

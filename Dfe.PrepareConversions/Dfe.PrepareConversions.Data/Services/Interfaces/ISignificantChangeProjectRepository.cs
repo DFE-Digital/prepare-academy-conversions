@@ -37,6 +37,7 @@ public interface ISignificantChangeProjectRepository
    Task SetStakeholderConsultation(int id, SetSignificantChangeStakeholderConsultationCommand command);
    Task SetEqualitiesImpactAssessment(int id, SetSignificantChangeEqualitiesImpactAssessmentCommand command);
    Task SetReligiousBodyConsultation(int id, SetSignificantChangeReligiousBodyConsultationCommand command);
+   Task SetLocalAuthorityObjections(int id, SetSignificantChangeLocalAuthorityObjectionsCommand command);
    Task SetProjectDates(int id, SetSignificantChangeProjectDatesCommand command);
    Task SetPlanningPermission(int id, SetSignificantChangePlanningPermissionCommand command);
    Task SetStakeholderObjections(int id, SetSignificantChangeStakeholderObjectionsCommand command);

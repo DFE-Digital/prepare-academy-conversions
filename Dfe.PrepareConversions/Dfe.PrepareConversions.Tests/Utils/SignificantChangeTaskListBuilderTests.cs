@@ -12,14 +12,13 @@ namespace Dfe.PrepareConversions.Tests.Utils;
 
 public class SignificantChangeTaskListBuilderTests
 {
-   
    [Theory]
    [InlineData(1, "key-project-dates", "Key project dates", new[] { "confirm-project-dates" })]
    [InlineData(2, "admissions-variation", "Admissions variation", new string[0])]
    [InlineData(3, "consultation-details", "Consultation details", new[] { "stakeholder-consultation", "consultation-duration", "admission-variation-consultation", "stakeholder-objections", "religious-body-consultation" })]
    [InlineData(4, "academy-performance", "Academy performance", new string[0])]
    [InlineData(5, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
-   [InlineData(6, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "planning-permission" })]
+   [InlineData(6, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "planning-permission", "local-authority-objections" })]
    [InlineData(7, "financial-details", "Financial details", new [] { "funding" })]
    [InlineData(8, "high-quality-trust-framework", "High Quality Trust Framework", new string[0])]
    [InlineData(9, "recommendation-on-how-to-proceed", "Recommendation on how to proceed", new string[0])]
@@ -149,7 +148,6 @@ public class SignificantChangeTaskListBuilderTests
 
       task.Status.Status.Should().Be(expectedTaskStatus);
    }
-
    
    [Theory]
    [MemberData(nameof(StatusCases))]
@@ -159,6 +157,23 @@ public class SignificantChangeTaskListBuilderTests
       const string taskKey = "consultation-duration";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.ConsultationDurationStatus = TaskStatus);
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
+      var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
+
+      task.Status.Status.Should().Be(expectedTaskStatus);
+   }
+   
+   [Theory]
+   [MemberData(nameof(StatusCases))]
+   public void Build_maps_local_authority_objections_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
+   {
+      const string sectionKey = "local-authority-objections";
+      const string taskKey = "local-authority-objections";
+
+      SignificantChangeProjectViewBaseModel project = BuildProject(p => p.LocalAuthorityObjectionsStatus = TaskStatus);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
