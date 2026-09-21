@@ -697,6 +697,52 @@ public class SignificantChangeProjectRepositoryTests
 
       exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetPlanningPermission_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 77;
+      string expectedPath = string.Format(PathFor.SetSignificantChangePlanningPermission, id);
+      HttpClient httpClient = new();
+      SetSignificantChangePlanningPermissionCommand command = new(PlanningPermissionAnswer.No, "Pending decision", "Planning reference 12345");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangePlanningPermissionCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetPlanningPermission(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangePlanningPermissionCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetPlanningPermission_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 77;
+      string expectedPath = string.Format(PathFor.SetSignificantChangePlanningPermission, id);
+      SetSignificantChangePlanningPermissionCommand command = new(PlanningPermissionAnswer.Yes, null, "Planning reference 12345");
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangePlanningPermissionCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetPlanningPermission(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
   
     [Theory]
    [AutoMoqData]

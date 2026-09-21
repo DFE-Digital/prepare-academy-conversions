@@ -191,6 +191,35 @@ public class SignificantChangeProjectListHelperTests
       Assert.Equal("Need more info", viewModel.EqualitiesImpactIdentifiedMitigation);
       Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.EqualitiesImpactAssessmentStatus);
    }
+
+   [Fact]
+   public void Build_Maps_nested_planning_permission_values()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         Status = "pre decision",
+         PlanningPermission = new SignificantChangePlanningPermissionResponse
+         {
+            PlanningPermissionAnswer = PlanningPermissionAnswer.No,
+            AdditionalInformation = "Planning permission is still pending",
+            SupportingEvidence = "Planning reference 12345",
+            Status = SignificantChangeTaskStatus.InProgress
+         }
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+   Assert.Equal(PlanningPermissionAnswer.No, viewModel.PlanningPermissionAnswer);
+      Assert.Equal("Planning permission is still pending", viewModel.PlanningPermissionAdditionalInformation);
+      Assert.Equal("Planning reference 12345", viewModel.PlanningPermissionSupportingEvidence);
+      Assert.Equal(SignificantChangeTaskStatus.InProgress, viewModel.PlanningPermissionTaskStatus);
+   }
   
    [Fact]
    public void Build_Maps_nested_admission_variation_values()

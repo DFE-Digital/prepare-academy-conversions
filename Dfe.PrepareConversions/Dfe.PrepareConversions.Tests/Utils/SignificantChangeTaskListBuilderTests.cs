@@ -64,6 +64,33 @@ public class SignificantChangeTaskListBuilderTests
    }
 
    [Fact]
+   public void Build_Includes_land_and_planning_section_with_planning_permission_task()
+   {
+      SignificantChangeProjectViewBaseModel project = BuildProject();
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      SignificantChangeTaskSectionViewModel section = Assert.Single(result.Sections, s => s.Key == "land-and-planning");
+      Assert.Equal(4, section.DisplayOrder);
+      Assert.Equal("Land and Planning", section.Title);
+      SignificantChangeTaskItemViewModel task = Assert.Single(section.Tasks);
+      Assert.Equal("planning-permission", task.Key);
+      Assert.Equal("Planning Permission", task.Title);
+   }
+
+   [Fact]
+   public void Build_Sets_planning_permission_task_status_to_completed_when_status_is_completed()
+   {
+      SignificantChangeProjectViewBaseModel project = BuildProject();
+      project.PlanningPermissionTaskStatus = SignificantChangeTaskStatus.Completed;
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      SignificantChangeTaskSectionViewModel section = Assert.Single(result.Sections, s => s.Key == "land-and-planning");
+      Assert.Equal(TaskListItemViewModel.Completed, section.Tasks[0].Status);
+   }
+
+   [Fact]
    public void Build_Sets_equalities_impact_assessment_task_status_to_completed_when_status_is_completed()
    {
       SignificantChangeProjectViewBaseModel project = BuildProject();

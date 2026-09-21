@@ -33,6 +33,7 @@ public interface ISignificantChangeProjectRepository
    Task SetEqualitiesImpactAssessment(int id, SetSignificantChangeEqualitiesImpactAssessmentCommand command);
    Task SetReligiousBodyConsultation(int id, SetSignificantChangeReligiousBodyConsultationCommand command);
    Task SetProjectDates(int id, SetSignificantChangeProjectDatesCommand command);
+   Task SetPlanningPermission(int id, SetSignificantChangePlanningPermissionCommand command);
 
    Task SetAdmissionVariationConsultation(int id, SetSignificantChangeAdmissionVariationConsultationCommand command);
 

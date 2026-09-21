@@ -35,4 +35,8 @@ public class SignificantChangeProjectViewBaseModel
    public SignificantChangeTaskStatus ProjectDatesStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public DateTime? ProposedDecisionDate { get; set; }
    public DateTime? ProposedChangeDate { get; set; }
+   public SignificantChangeTaskStatus PlanningPermissionTaskStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public PlanningPermissionAnswer? PlanningPermissionAnswer { get; set; }
+   public string PlanningPermissionAdditionalInformation { get; set; } = string.Empty;
+   public string PlanningPermissionSupportingEvidence { get; set; } = string.Empty;
 }
