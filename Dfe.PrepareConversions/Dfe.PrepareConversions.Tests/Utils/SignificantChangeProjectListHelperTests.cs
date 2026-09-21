@@ -89,6 +89,58 @@ public class SignificantChangeProjectListHelperTests
    }
 
    [Fact]
+   public void Build_Maps_nested_local_authority_objections_values()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         Status = "pre decision",
+         LocalAuthorityObjections = new SignificantChangeLocalAuthorityObjectionsResponse
+         {
+            LocalAuthorityRaisedObjections = true,
+            LocalAuthorityObjectionsFurtherInformation = "Objections raised during planning consultation",
+            SupportingEvidenceLink = "https://example.org/evidence",
+            Status = SignificantChangeTaskStatus.InProgress
+         }
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.True(viewModel.LocalAuthorityRaisedObjections);
+      Assert.Equal("Objections raised during planning consultation", viewModel.LocalAuthorityObjectionsFurtherInformation);
+      Assert.Equal("https://example.org/evidence", viewModel.LocalAuthorityObjectionsSupportingEvidenceLink);
+      Assert.Equal(SignificantChangeTaskStatus.InProgress, viewModel.LocalAuthorityObjectionsStatus);
+   }
+
+   [Fact]
+   public void Build_Defaults_local_authority_objections_when_section_is_missing()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         Status = "pre decision",
+         LocalAuthorityObjections = null
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.Null(viewModel.LocalAuthorityRaisedObjections);
+      Assert.Equal(string.Empty, viewModel.LocalAuthorityObjectionsFurtherInformation);
+      Assert.Equal(string.Empty, viewModel.LocalAuthorityObjectionsSupportingEvidenceLink);
+      Assert.Equal(SignificantChangeTaskStatus.NotStarted, viewModel.LocalAuthorityObjectionsStatus);
+   }
+
+   [Fact]
    public void Build_Maps_project_dates_values_when_dates_are_set()
    {
       var proposedDecisionDate = new DateTime(2024, 12, 15);

@@ -1,0 +1,63 @@
+@page "/significant-change/task-list/{id:int}/local-authority-objections"
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.LocalAuthorityObjections.IndexModel
+@{
+   Layout = "_SignificantChangeTaskLayout";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@Model.Project.Id"
+      class="govuk-back-link">Back</a>
+}
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+         Has the local authority raised any objections to the significant change?
+      </legend>
+
+      <inline-error for="@nameof(Model.LocalAuthorityRaisedObjections)" />
+
+      <div class="govuk-radios" data-module="govuk-radios" id="local-authority-objections-options">
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.LocalAuthorityRaisedObjections" class="govuk-radios__input"
+                   id="local-authority-objections-yes" type="radio" value="true"
+                   aria-controls="conditional-local-authority-objections-yes"
+                   data-test="local-authority-objections-yes" />
+            <label class="govuk-label govuk-radios__label" for="local-authority-objections-yes">
+               Yes
+            </label>
+         </div>
+
+         <div class="govuk-radios__conditional" id="conditional-local-authority-objections-yes">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="LocalAuthorityObjectionsFurtherInformation">
+                  Use this area for additional information relating to mitigations, actions and further investigations.
+               </label>
+               <textarea asp-for="@Model.LocalAuthorityObjectionsFurtherInformation"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.LocalAuthorityObjectionsFurtherInformation))"
+                         rows="5" data-test="local-authority-objections-further-information"></textarea>
+            </div>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.LocalAuthorityRaisedObjections" class="govuk-radios__input"
+                   id="local-authority-objections-no" type="radio" value="false"
+                   data-test="local-authority-objections-no" />
+            <label class="govuk-label govuk-radios__label" for="local-authority-objections-no">
+               No
+            </label>
+         </div>
+      </div>
+   </fieldset>
+</div>
+
+<div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+   <label class="govuk-label" for="LocalAuthorityObjectionsSupportingEvidenceLink">
+      Supporting evidence link (optional)
+   </label>
+   <input asp-for="@Model.LocalAuthorityObjectionsSupportingEvidenceLink"
+          class="govuk-input"
+          type="text"
+          data-test="local-authority-objections-supporting-evidence-link" />
+</div>

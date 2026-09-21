@@ -108,6 +108,7 @@ public static class Links
       public static readonly LinkItem ConsultationDuration = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/ConsultationDuration/Index");
       public static readonly LinkItem PublicSectorEqualityDuty = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/PublicSectorEqualityDuty/Index");
       public static readonly LinkItem ReligiousBodyConsultation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/ReligiousBodyConsultation/Index");
+      public static readonly LinkItem LocalAuthorityObjections = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/LocalAuthorityObjections/Index");
       public static readonly LinkItem ConfirmProjectDates = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/ConfirmProjectDates/Index");
    }
 
