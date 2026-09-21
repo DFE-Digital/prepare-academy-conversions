@@ -51,7 +51,10 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       if (!ModelState.IsValid)
       {
-         _errorService.AddErrors([nameof(LocalAuthorityRaisedObjections)], ModelState);
+         _errorService.AddErrors(
+            [nameof(LocalAuthorityRaisedObjections), nameof(LocalAuthorityObjectionsFurtherInformation)],
+            ModelState);
+
          return Page();
       }
 
@@ -72,6 +75,12 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       if (!LocalAuthorityRaisedObjections.HasValue)
       {
          ModelState.AddModelError(nameof(LocalAuthorityRaisedObjections), "Select an option");
+      }
+
+      if (LocalAuthorityRaisedObjections == true
+          && string.IsNullOrWhiteSpace(LocalAuthorityObjectionsFurtherInformation))
+      {
+         ModelState.AddModelError(nameof(LocalAuthorityObjectionsFurtherInformation), "Add a reason");
       }
    }
 }
