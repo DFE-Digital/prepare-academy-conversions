@@ -27,6 +27,19 @@ describe('Significant change task list', () => {
                     cy.url().should('match', /\/significant-change\/task-list\/\d+(\?.*)?$/);
                     significantChangeTaskList.verifyHeaderAndSubNavigation();
                     significantChangeTaskList.verifyTaskListContentLayout();
+                    cy.get('h3.app-task-list__section').then(($sections) => {
+                        const sectionTitles = [...$sections].map((section) => section.textContent?.trim());
+                        expect(sectionTitles).to.deep.equal([
+                            'Consultation',
+                            'Proposed decision and conversion dates',
+                            'Public Sector Equality Duty',
+                            'Land transaction application and planning permission',
+                        ]);
+                    });
+
+                    cy.contains('a', 'Confirm project dates').should('be.visible');
+                    cy.contains('a', 'Public Sector Equality Duty').should('be.visible');
+                    cy.contains('a', 'Local authority objections').should('be.visible');
                     cy.contains('a', 'Religious body consultation').should('be.visible');
                 } else {
                     cy.contains('There are no matching results.').should('be.visible');
