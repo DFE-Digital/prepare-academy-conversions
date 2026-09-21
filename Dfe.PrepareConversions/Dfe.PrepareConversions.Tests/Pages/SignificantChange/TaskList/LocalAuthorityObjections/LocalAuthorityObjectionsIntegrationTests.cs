@@ -24,11 +24,11 @@ public class LocalAuthorityObjectionsIntegrationTests(IntegrationTestingWebAppli
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/local-authority-objections");
 
-      Document.QuerySelector<IHtmlHeadingElement>("h1")!.TextContent.Trim().Should().Be("Local authority objections");
-      Document.QuerySelector<IHtmlInputElement>("#local-authority-objections-yes")!.IsChecked.Should().BeTrue();
-      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='local-authority-objections-further-information']")!.Value
+      Document.QuerySelector<IHtmlHeadingElement>("h1").TextContent.Trim().Should().Be("Local authority objections");
+      Document.QuerySelector<IHtmlInputElement>("#local-authority-objections-yes").IsChecked.Should().BeTrue();
+      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='local-authority-objections-further-information']").Value
          .Should().Be("Objections have been raised about timing");
-      Document.QuerySelector<IHtmlInputElement>("[data-test='local-authority-objections-supporting-evidence-link']")!.Value
+      Document.QuerySelector<IHtmlInputElement>("[data-test='local-authority-objections-supporting-evidence-link']").Value
          .Should().Be("https://example.org/evidence");
    }
 
@@ -45,10 +45,10 @@ public class LocalAuthorityObjectionsIntegrationTests(IntegrationTestingWebAppli
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/local-authority-objections");
 
-      Document.QuerySelector<IHtmlInputElement>("#local-authority-objections-yes")!.IsChecked = true;
-      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='local-authority-objections-further-information']")!.Value = "Objection details";
-      Document.QuerySelector<IHtmlInputElement>("[data-test='local-authority-objections-supporting-evidence-link']")!.Value = "https://example.org/evidence";
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
+      Document.QuerySelector<IHtmlInputElement>("#local-authority-objections-yes").IsChecked = true;
+      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='local-authority-objections-further-information']").Value = "Objection details";
+      Document.QuerySelector<IHtmlInputElement>("[data-test='local-authority-objections-supporting-evidence-link']").Value = "https://example.org/evidence";
+      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");
    }
@@ -66,9 +66,9 @@ public class LocalAuthorityObjectionsIntegrationTests(IntegrationTestingWebAppli
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/local-authority-objections");
 
-      Document.QuerySelector<IHtmlInputElement>("#local-authority-objections-no")!.IsChecked = true;
-      Document.QuerySelector<IHtmlInputElement>("[data-test='local-authority-objections-supporting-evidence-link']")!.Value = "https://example.org/evidence";
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
+      Document.QuerySelector<IHtmlInputElement>("#local-authority-objections-no").IsChecked = true;
+      Document.QuerySelector<IHtmlInputElement>("[data-test='local-authority-objections-supporting-evidence-link']").Value = "https://example.org/evidence";
+      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");
    }
@@ -81,11 +81,28 @@ public class LocalAuthorityObjectionsIntegrationTests(IntegrationTestingWebAppli
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/local-authority-objections");
 
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
+      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}/local-authority-objections");
-      Document.QuerySelector<IHtmlElement>("#LocalAuthorityRaisedObjections-error")!
+      Document.QuerySelector<IHtmlElement>("#LocalAuthorityRaisedObjections-error")
          .TextContent.Should().Contain("Select an option");
+   }
+
+   [Fact]
+   public async Task Should_show_validation_error_when_yes_is_selected_without_further_information()
+   {
+      SignificantChangeProjectResponse project = BuildProject(id: 705);
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
+
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/local-authority-objections");
+
+      Document.QuerySelector<IHtmlInputElement>("#local-authority-objections-yes").IsChecked = true;
+      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='local-authority-objections-further-information']").Value = " ";
+      await Document.QuerySelector<IHtmlFormElement>("form").SubmitAsync();
+
+      Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}/local-authority-objections");
+      Document.QuerySelector<IHtmlElement>("#LocalAuthorityObjectionsFurtherInformation-error")
+         .TextContent.Should().Contain("Add a reason");
    }
 
    private static SignificantChangeProjectResponse BuildProject(int id)
