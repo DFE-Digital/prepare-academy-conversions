@@ -133,9 +133,9 @@ public class SignificantChangeApplicationSubmittedConsumer(
    {
       bool isInformationEnabled = logger.IsEnabled(LogLevel.Information);
 
-      if (context.Headers.TryGetHeader("x-correlationId", out var headerValue) &&
-          headerValue != null &&
-          Guid.TryParse(headerValue.ToString(), out Guid correlationId))
+
+        if (context.Headers.TryGetHeader("x-correlationId", out var headerValue) &&
+           Guid.TryParse(Convert.ToString(headerValue), out Guid correlationId))
       {
          if (isInformationEnabled)
          {
