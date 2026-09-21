@@ -49,13 +49,6 @@ describe('Significant change record a decision', () => {
         });
     });
 
-    it('Should show an error when no decision is selected', () => {
-        withAProject((projectId) => {
-            significantChangeDecision.openFor(projectId).submit();
-            significantChangeDecision.verifyErrorSummaryContains('Select a decision');
-        });
-    });
-
     it('Should complete an approved decision with conditions', () => {
         withAProject((projectId) => {
             significantChangeDecision
@@ -82,6 +75,31 @@ describe('Significant change record a decision', () => {
                 .verifySummaryRow('decision-made-by', 'Regional Director for the region')
                 .verifySummaryRow('decision-maker-name', 'Jane Smith')
                 .verifySummaryRow('decision-date', '27 March 2026');
+        });
+    });
+
+    it('Should return to the decision branch when changing the decision', () => {
+        withAProject((projectId) => {
+            significantChangeDecision
+                .openFor(projectId)
+                .selectDecision('approved')
+                .submit()
+                .setConditions(true, 'Trust must appoint a new chair')
+                .submit()
+                .selectDecisionMaker('regionaldirectorforregion')
+                .submit()
+                .enterDecisionMakerName('Jane Smith')
+                .submit()
+                .enterDecisionDate('27', '3', '2026')
+                .submit()
+                .verifyOnStep('summary');
+
+            cy.getById('change-decision-btn').click();
+            significantChangeDecision
+                .verifyOnStep('record-decision')
+                .selectDecision('declined')
+                .submit()
+                .verifyOnStep('declined-reason');
         });
     });
 

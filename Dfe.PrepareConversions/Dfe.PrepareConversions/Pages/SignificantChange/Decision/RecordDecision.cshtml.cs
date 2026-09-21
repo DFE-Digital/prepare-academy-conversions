@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Dfe.PrepareConversions.Pages.SignificantChange.Decision;
 
@@ -35,24 +36,35 @@ public class RecordDecisionModel : SignificantChangeDecisionBaseModel
    public IEnumerable<SignificantChangeDecisions> DecisionOptions =>
       Enum.GetValues(typeof(SignificantChangeDecisions)).Cast<SignificantChangeDecisions>();
 
-   public IActionResult OnGet(int id)
+   public async Task<IActionResult> OnGet(int id)
    {
       SetBackLinkModel(Links.SignificantChange.SignificantChangeTaskList, id);
 
-      SignificantChangeDecision = GetDecisionFromSession(id).Decision;
+      var sessionDecision = GetDecisionFromSession(id);
+
+      if (sessionDecision.Decision == null)
+      {
+         var savedDecision = await _repository.GetDecision(id);
+         SetDecisionInSession(id, savedDecision.Body);
+         SignificantChangeDecision = savedDecision.Body?.Decision;
+      }
+      else
+      {
+         SignificantChangeDecision = sessionDecision.Decision;
+      }
 
       return Page();
    }
 
-   public IActionResult OnPost(int id)
+   public async Task<IActionResult> OnPost(int id)
    {
       if (!ModelState.IsValid)
       {
          _errorService.AddErrors(["SignificantChangeDecision"], ModelState);
-         return OnGet(id);
+         return await OnGet(id);
       }
 
-      Data.Models.SignificantChange.SignificantChangeDecision decision = GetDecisionFromSession(id);
+      SignificantChangeDecision decision = GetDecisionFromSession(id);
       decision.Decision = SignificantChangeDecision.Value;
       SetDecisionInSession(id, decision);
 
