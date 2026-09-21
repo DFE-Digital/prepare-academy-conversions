@@ -98,6 +98,25 @@ public class LocalAuthorityObjectionsModelTests
    }
 
    [Fact]
+   public async Task OnPostAsync_WhenYesIsSelectedWithoutFurtherInformation_ShouldReturnPageWithValidationError()
+   {
+      const int id = 606;
+
+      Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
+
+      IndexModel sut = BuildModel(repository.Object);
+      sut.LocalAuthorityRaisedObjections = true;
+      sut.LocalAuthorityObjectionsFurtherInformation = " ";
+      sut.LocalAuthorityObjectionsSupportingEvidenceLink = "https://example.org/evidence";
+
+      IActionResult result = await sut.OnPostAsync(id);
+
+      result.Should().BeOfType<PageResult>();
+      sut.ModelState.ContainsKey(nameof(IndexModel.LocalAuthorityObjectionsFurtherInformation)).Should().BeTrue();
+      repository.Verify(x => x.SetLocalAuthorityObjections(id, It.IsAny<SetSignificantChangeLocalAuthorityObjectionsCommand>()), Times.Never);
+   }
+
+   [Fact]
    public async Task OnPostAsync_WhenEvidenceLinkIsBlank_ShouldSaveNullEvidenceLink()
    {
       const int id = 605;

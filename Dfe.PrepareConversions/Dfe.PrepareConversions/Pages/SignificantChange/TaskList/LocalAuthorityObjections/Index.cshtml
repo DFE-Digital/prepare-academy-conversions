@@ -34,6 +34,7 @@
                <label class="govuk-label" for="LocalAuthorityObjectionsFurtherInformation">
                   Use this area for additional information relating to mitigations, actions and further investigations.
                </label>
+               <inline-error for="@nameof(Model.LocalAuthorityObjectionsFurtherInformation)" />
                <textarea asp-for="@Model.LocalAuthorityObjectionsFurtherInformation"
                          class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.LocalAuthorityObjectionsFurtherInformation))"
                          rows="5" data-test="local-authority-objections-further-information"></textarea>
