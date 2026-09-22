@@ -34,6 +34,17 @@
                 </ul>
             }
 
+            @if (Model.SelectedLocalAuthorities.Length > 0)
+            {
+                <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Local authority</h3>
+                <ul class="moj-filter-tags">
+                    @foreach (var localAuthority in Model.SelectedLocalAuthorities)
+                    {
+                        <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedLocalAuthorities=@localAuthority"><span class="govuk-visually-hidden">Remove this filter</span> @SignificantChangeProjectListFilters.DisplayFor(Model.AvailableLocalAuthorities, localAuthority)</a></li>
+                    }
+                </ul>
+            }
+
             @if (Model.SelectedStatuses.Length > 0)
             {
                 <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Project status</h3>
@@ -113,6 +124,30 @@
                                                 @(Model.SelectedAssignees.Contains(assignee.Value) ? "checked" : null) />
                                                 <label class="govuk-label govuk-checkboxes__label" for="filter-assignee-@assignee.Value.Stub()">
                                                     @assignee.Display
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="govuk-accordion__section">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-local-authority-heading" data-cy="select-projectlist-filter-local-authority">
+                                            Local Authority
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div class="govuk-accordion__section-content" aria-labelledby="accordion-local-authority-heading" role="region" id="accordion-default-content-2">
+                                    <div class="govuk-checkboxes">
+                                        @foreach (var localAuthority in Model.AvailableLocalAuthorities)
+                                        {
+                                            <div class="govuk-checkboxes__item">
+                                                <input class="govuk-checkboxes__input" id="filter-local-authority-@localAuthority.Value.Stub()" name="SelectedLocalAuthorities" type="checkbox" value="@localAuthority.Value" data-cy="select-projectlist-filter-local-authority-@localAuthority.Value"
+                                                @(Model.SelectedLocalAuthorities.Contains(localAuthority.Value) ? "checked" : null) />
+                                                <label class="govuk-label govuk-checkboxes__label" for="filter-local-authority-@localAuthority.Value.Stub()">
+                                                    @localAuthority.Display
                                                 </label>
                                             </div>
                                         }
