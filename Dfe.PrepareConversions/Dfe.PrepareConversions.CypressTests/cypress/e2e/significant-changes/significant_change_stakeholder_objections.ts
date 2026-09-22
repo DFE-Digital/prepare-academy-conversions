@@ -103,7 +103,6 @@ describe('Stakeholder Objections Form', () => {
         it('should submit and redirect when StakeholderObjections is "Yes - no further information provided" and StakeholderObjectionsComment is NOT empty', () => {
             cy.contains('label', 'Yes - no further information provided').click();
             
-            // Leveraging accessibility links to set focus and type cleanly
             cy.contains('label', 'Use this area for additional Comments').click();
             cy.focused().type('Test user feedback comment strings.');
 
