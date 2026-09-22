@@ -10,7 +10,7 @@ const navigateToTaskPage = () => {
 };
 
 describe('Stakeholder Objections Form', () => {
-    
+
     beforeEach(() => {
         navigateToTaskPage();
 
@@ -25,7 +25,7 @@ describe('Stakeholder Objections Form', () => {
             cy.getByDataTest('stakeholder-objections-form-group').should('exist');
         });
 
-         it('should have the correct initial empty form state', () => {   
+        it('should have the correct initial empty form state', () => {
             cy.get('input[name="StakeholderObjections"]').should('not.be.checked');
             cy.get('textarea[name="StakeholderObjectionsComment"]').should('not.be.visible');
             cy.get('.govuk-error-message').should('not.exist');
@@ -51,7 +51,7 @@ describe('Stakeholder Objections Form', () => {
                 // Select the conditional trigger option
                 cy.contains('label', 'Yes - no further information provided').click();
                 cy.get(`textarea[name="${inputName}"]`).should('be.visible');
-                
+
                 // Accessibility check: Click label -> ensure StakeholderObjectionsComment focuses
                 cy.contains('label', 'Use this area for additional Comments relating to objections raised by stakeholders').should('be.visible').click();
                 cy.get(`textarea[name="${inputName}"]`).should('have.focus');
@@ -64,9 +64,9 @@ describe('Stakeholder Objections Form', () => {
                 cy.contains('label', 'No').click();
                 cy.get(`textarea[name="${inputName}"]`).should('not.be.visible');
             });
-        }); 
+        });
 
-         it('should block submission and display error when StakeholderObjections radio options are not selected', () => {
+        it('should block submission and display error when StakeholderObjections radio options are not selected', () => {
             cy.contains('button', 'Save and continue').click();
 
             cy.get('span')
@@ -102,7 +102,7 @@ describe('Stakeholder Objections Form', () => {
 
         it('should submit and redirect when StakeholderObjections is "Yes - no further information provided" and StakeholderObjectionsComment is NOT empty', () => {
             cy.contains('label', 'Yes - no further information provided').click();
-            
+
             cy.contains('label', 'Use this area for additional Comments').click();
             cy.focused().type('Test user feedback comment strings.');
 
@@ -112,7 +112,7 @@ describe('Stakeholder Objections Form', () => {
 
         it('should block submission when nothing is selected', () => {
             cy.contains('button', 'Save and continue').click();
-            
+
             cy.urlPath().should('not.match', TASK_LIST_URL);
         });
     });
