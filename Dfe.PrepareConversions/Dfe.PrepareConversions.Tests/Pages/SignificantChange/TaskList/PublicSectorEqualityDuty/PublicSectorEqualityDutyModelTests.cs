@@ -141,6 +141,7 @@ public class PublicSectorEqualityDutyModelTests
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
          Status = "pre decision",
+         LocalAuthorityName = "Test local authority",
          EqualitiesImpactAssessment = new SignificantChangeEqualitiesImpactAssessmentResponse()
       };
    }

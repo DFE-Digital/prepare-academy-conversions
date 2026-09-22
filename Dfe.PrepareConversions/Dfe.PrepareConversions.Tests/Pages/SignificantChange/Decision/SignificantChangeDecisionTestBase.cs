@@ -30,7 +30,8 @@ public abstract class SignificantChangeDecisionTestBase : BaseIntegrationTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
-         Status = "pre decision"
+         Status = "pre decision",
+         LocalAuthorityName = "Test local authority"
       };
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, id), project);

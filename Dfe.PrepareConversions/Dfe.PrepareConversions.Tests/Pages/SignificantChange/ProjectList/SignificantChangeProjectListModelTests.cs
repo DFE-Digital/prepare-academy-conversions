@@ -63,15 +63,15 @@ public class SignificantChangeProjectListModelTests
    [Fact]
    public async Task OnGetAsync_ForwardsSelectedLocalAuthoritiesToRepository()
    {
-      ISignificantChangeProjectRepository.SignificantChangeFilterOptions? capturedFilterOptions = null;
+      ISignificantChangeProjectRepository.SignificantChangeFilterOptions capturedFilterOptions = null;
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(new SignificantChangeFilterParameters());
 
       repository
          .Setup(x => x.GetAllProjects(
             It.IsAny<int>(),
             It.IsAny<int>(),
-            It.IsAny<ISignificantChangeProjectRepository.SignificantChangeFilterOptions?>()))
-         .Callback<int, int, ISignificantChangeProjectRepository.SignificantChangeFilterOptions?>((_, _, options) =>
+            It.IsAny<ISignificantChangeProjectRepository.SignificantChangeFilterOptions>()))
+         .Callback<int, int, ISignificantChangeProjectRepository.SignificantChangeFilterOptions>((_, _, options) =>
             capturedFilterOptions = options)
          .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.OK, null));
 
@@ -92,7 +92,7 @@ public class SignificantChangeProjectListModelTests
       repository
          .Setup(x => x.GetAllProjects(
             It.IsAny<int>(), It.IsAny<int>(),
-            It.IsAny<ISignificantChangeProjectRepository.SignificantChangeFilterOptions?>()))
+            It.IsAny<ISignificantChangeProjectRepository.SignificantChangeFilterOptions>()))
          .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
             HttpStatusCode.OK, null));
 

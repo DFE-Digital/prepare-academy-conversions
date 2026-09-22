@@ -39,6 +39,7 @@ public class SignificantChangeProjectRepositoryTests
          Status = "Pre decision",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority"
       };
 
       httpClientFactory
@@ -109,14 +110,15 @@ public class SignificantChangeProjectRepositoryTests
                Status = "Pre decision",
                ApplicationId = "ID_APP_123",
                ApplicationReference = "APP_REF_123"
-            }],
-         Paging = new ApiV2PagingInfo
-         {
-            Page = page,
-            RecordCount = 1,
-            NextPageUrl = "https://example.org/next"
-         }
-      };
+               LocalAuthorityName = "Test local authority"
+            },
+            Paging = new ApiV2PagingInfo
+            {
+               Page = page,
+               RecordCount = 1,
+               NextPageUrl = "https://example.org/next"
+            }
+      ]};
 
       httpClientService
          .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
@@ -187,7 +189,8 @@ public class SignificantChangeProjectRepositoryTests
          TypeOfSignificantChange = "Fast track",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
-         Status = "Pre decision"
+         Status = "Pre decision",
+         LocalAuthorityName = "Test local authority"
       };
 
       httpClientFactory

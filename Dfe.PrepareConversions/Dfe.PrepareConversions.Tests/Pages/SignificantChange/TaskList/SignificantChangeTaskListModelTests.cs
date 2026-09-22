@@ -65,7 +65,8 @@ public class SignificantChangeTaskListModelTests
          TypeOfSignificantChange = route,
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
-         Status = "pre decision"
+         Status = "pre decision",
+         LocalAuthorityName = "Test local authority"
       };
    }
 }

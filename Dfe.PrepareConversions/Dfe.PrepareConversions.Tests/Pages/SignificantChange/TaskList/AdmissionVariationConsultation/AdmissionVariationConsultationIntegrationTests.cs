@@ -116,6 +116,7 @@ public class AdmissionVariationConsultationIntegrationTests(IntegrationTestingWe
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
          Status = "pre decision",
+         LocalAuthorityName = "Test local authority",
          AdmissionVariationConsultation = new SignificantChangeAdmissionVariationConsultationResponse()
       };
    }
