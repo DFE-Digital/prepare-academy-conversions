@@ -10,12 +10,12 @@
       class="govuk-back-link">Back</a>
 }
 
-<div class="govuk-form-group">
+<div class="govuk-form-group" data-test="stakeholder-objections-form-group">
    <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
         Were there any objections raised by stakeholders?
       </legend>
-      <inline-error for="@nameof(Model.StakeholderObjections)" />
+      <inline-error for="@nameof(Model.StakeholderObjections)" data-test="@nameof(Model.StakeholderObjections)-error" />
 
       <div class="govuk-radios" data-module="govuk-radios">
          <div class="govuk-radios__item">
@@ -52,7 +52,7 @@
                   Use this area for additional Comments relating to objections raised by stakeholders.
                </label>
                <inline-error for="@nameof(Model.StakeholderObjectionsComment)" />
-               <textarea asp-for="@Model.StakeholderObjectionsComment"
+               <textarea asp-for="@Model.StakeholderObjectionsComment" id="stakeholder-objections-additional-comments"
                          class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.StakeholderObjectionsComment))"
                          rows="5" data-test="stakeholder-objections-additional-comments"></textarea>
             </div>
