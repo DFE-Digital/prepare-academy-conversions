@@ -22,6 +22,9 @@ public class SignificantChangeProjectViewBaseModel
    public SignificantChangeTaskStatus StakeholderObjectionsStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public SignificantChangeStakeholderObjection? StakeholderObjections { get; set; }
    public string StakeholderObjectionsComment { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus ConsultationDurationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public ConsultationDurationAnswer? ConsultationLastedMinimumThreeWeeks { get; set; }
+   public string ConsultationDurationNotMetReason { get; set; } = string.Empty;
    public SignificantChangeTaskStatus AdmissionVariationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public bool? ConsultationIncludeAdmissionVariation { get; set; }
    public string ConsultationNoAdmissionVariationReason { get; set; } = string.Empty;

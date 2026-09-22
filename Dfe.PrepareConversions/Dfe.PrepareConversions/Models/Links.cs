@@ -105,6 +105,7 @@ public static class Links
       public static readonly LinkItem StakeholderConsultation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/StakeholderConsultation/Index");
       public static readonly LinkItem StakeholderObjections = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/StakeholderObjections/Index");
       public static readonly LinkItem AdmissionVariationConsultation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/AdmissionVariationConsultation/Index");
+      public static readonly LinkItem ConsultationDuration = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/ConsultationDuration/Index");
       public static readonly LinkItem PublicSectorEqualityDuty = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/PublicSectorEqualityDuty/Index");
       public static readonly LinkItem ReligiousBodyConsultation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/ReligiousBodyConsultation/Index");
       public static readonly LinkItem ConfirmProjectDates = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/ConfirmProjectDates/Index");
