@@ -44,7 +44,8 @@ public class IndexModel(ISignificantChangeProjectRepository significantChangePro
          Filters.SelectedStatuses,
          Filters.SelectedAssignees,
          Filters.GetSelectedTiersAsBytes(),
-         Filters.SelectedRoutes);
+         Filters.SelectedRoutes,
+         Filters.SelectedLocalAuthorities);
 
       Paging = response.Body?.Paging ?? new ApiV2PagingInfo { Page = CurrentPage, RecordCount = 0, NextPageUrl = null };
       Projects = response.Body?.Data?.Select(SignificantChangeProjectListHelper.Build).ToList() ?? [];
@@ -57,6 +58,7 @@ public class IndexModel(ISignificantChangeProjectRepository significantChangePro
       Filters.AvailableStatuses = filterParameters.Body?.Statuses ?? [];
       Filters.AvailableTiers = filterParameters.Body?.Tiers ?? [];
       Filters.AvailableRoutes = filterParameters.Body?.Routes ?? [];
+      Filters.AvailableLocalAuthorities = filterParameters.Body?.LocalAuthorities ?? [];
 
       // Float the signed-in user to the top, exactly as all four existing list pages do.
       // NameOfUser is the "name" claim ("Last, First"); ConvertToFirstLast flips it to match the API.
