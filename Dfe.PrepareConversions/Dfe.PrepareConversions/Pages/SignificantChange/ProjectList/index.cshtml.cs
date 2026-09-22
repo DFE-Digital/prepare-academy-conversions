@@ -38,14 +38,17 @@ public class IndexModel(ISignificantChangeProjectRepository significantChangePro
       Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
 
       var response = await SignificantChangeProjectRepository.GetAllProjects(
-         page: CurrentPage,
-         count: PageSize,
-         keyword: Filters.Keyword,
-         statuses: Filters.SelectedStatuses,
-         assignees: Filters.SelectedProjectOwners,
-         tiers: Filters.GetSelectedTiersAsBytes(),
-         routes: Filters.SelectedRoutes,
-         localAuthorities: Filters.SelectedLocalAuthorities);
+         CurrentPage,
+         PageSize,
+         new (
+            Filters.Keyword,
+            Filters.SelectedStatuses,
+            Filters.SelectedProjectOwners,
+            Filters.GetSelectedTiersAsBytes(),
+            Filters.SelectedRoutes,
+            Filters.SelectedLocalAuthorities
+         )
+      );
 
       Paging = response.Body?.Paging ?? new ApiV2PagingInfo { Page = CurrentPage, RecordCount = 0, NextPageUrl = null };
       Projects = response.Body?.Data?.Select(SignificantChangeProjectListHelper.Build).ToList() ?? [];

@@ -17,6 +17,7 @@ public static class SignificantChangeProjectListHelper
          TrustUkprn = significantChangeProject.TrustUkprn,
          AssignedUser = significantChangeProject.AssignedUser,
          TypeOfSignificantChange = significantChangeProject.TypeOfSignificantChange,
+         LocalAuthorityName = significantChangeProject.LocalAuthorityName,
          Status = MapProjectStatus(significantChangeProject.Status),
          StatusColour = MapProjectStatusColour(significantChangeProject.Status),
          StakeholderConsultationStatus = significantChangeProject.StakeholderConsultation?.Status ?? SignificantChangeTaskStatus.NotStarted,

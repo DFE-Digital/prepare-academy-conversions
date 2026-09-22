@@ -14,6 +14,7 @@ public class SignificantChangeProjectViewBaseModel
    public required string TrustUkprn { get; set; }
    public User AssignedUser { get; set; }
    public required string TypeOfSignificantChange { get; set; }
+   public string LocalAuthorityName { get; set; } = string.Empty;
    public required string Status { get; set; }
    public required string StatusColour { get; set; }
    public SignificantChangeTaskStatus StakeholderConsultationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
