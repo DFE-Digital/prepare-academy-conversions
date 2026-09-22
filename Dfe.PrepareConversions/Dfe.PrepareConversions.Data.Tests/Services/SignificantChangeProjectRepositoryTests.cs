@@ -109,16 +109,17 @@ public class SignificantChangeProjectRepositoryTests
                TypeOfSignificantChange = "Fast track",
                Status = "Pre decision",
                ApplicationId = "ID_APP_123",
-               ApplicationReference = "APP_REF_123"
+               ApplicationReference = "APP_REF_123",
                LocalAuthorityName = "Test local authority"
-            },
-            Paging = new ApiV2PagingInfo
-            {
-               Page = page,
-               RecordCount = 1,
-               NextPageUrl = "https://example.org/next"
             }
-      ]};
+         ],
+         Paging = new ApiV2PagingInfo
+         {
+            Page = page,
+            RecordCount = 1,
+            NextPageUrl = "https://example.org/next"
+         }
+      };
 
       httpClientService
          .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
