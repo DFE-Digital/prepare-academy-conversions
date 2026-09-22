@@ -175,6 +175,7 @@ public class StakeholderConsultationModelTests
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
          Status = "pre decision",
+         LocalAuthorityName = "Test local authority",
          StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse()
       };
    }

@@ -186,6 +186,7 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
          Status = status,
+         LocalAuthorityName = "Test local authority",
          StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
          {
             Status = stakeholderConsultationStatus,

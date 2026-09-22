@@ -45,6 +45,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
          {
@@ -74,6 +75,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse
          {
@@ -106,6 +108,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          ProjectDates = new SignificantChangeProjectDatesResponse
          {
@@ -135,6 +138,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          ProjectDates = null
       };
@@ -188,6 +192,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          EqualitiesImpactAssessment = new SignificantChangeEqualitiesImpactAssessmentResponse
          {
@@ -250,6 +255,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          AdmissionVariationConsultation = new SignificantChangeAdmissionVariationConsultationResponse
          {
@@ -279,6 +285,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          ConsultationDuration = new SignificantChangeConsultationDurationResponse
          {
@@ -308,6 +315,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          ConsultationDuration = null
       };

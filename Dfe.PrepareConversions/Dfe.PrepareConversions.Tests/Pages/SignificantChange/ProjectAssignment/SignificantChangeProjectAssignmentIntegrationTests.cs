@@ -96,7 +96,8 @@ public class SignificantChangeProjectAssignmentIntegrationTests : BaseIntegratio
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
-         Status = "Pre decision"
+         Status = "Pre decision",
+         LocalAuthorityName = "Test local authority"
       };
    }
 }
