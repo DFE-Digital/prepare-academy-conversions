@@ -30,7 +30,7 @@ public class SignificantChangeTaskListModelTests
       Assert.IsType<PageResult>(result);
       Assert.NotNull(model.TaskList);
       Assert.Equal(3, model.TaskList.Sections.Count);
-      Assert.Equal(4, model.TaskList.Sections[0].Tasks.Count);
+      Assert.Equal(5, model.TaskList.Sections[0].Tasks.Count);
       repository.Verify(r => r.GetProjectById(id), Times.Once);
    }
 
