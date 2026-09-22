@@ -33,6 +33,11 @@
                     <span if="project.TypeOfSignificantChange.IsEmpty()" class="empty">Unconfirmed</span>
                     <span if="project.TypeOfSignificantChange.IsPresent()">@project.TypeOfSignificantChange</span>
                 </div>
+                <div id="@("local-authority-" + index)" class="govuk-!-margin-top-1">
+                    <strong>Local authority:</strong>
+                    <span if="project.LocalAuthorityName.IsEmpty()" class="empty">Unconfirmed</span>
+                    <span if="project.LocalAuthorityName.IsPresent()">@project.LocalAuthorityName</span>
+                </div>
                 <div id="@("assigned-to-" + index)" class="do govuk-!-margin-top-1">
                     <strong>Assigned to:</strong>
                     <span if="project.AssignedUser == null || project.AssignedUser.FullName.IsEmpty()" class="empty">Unassigned</span>

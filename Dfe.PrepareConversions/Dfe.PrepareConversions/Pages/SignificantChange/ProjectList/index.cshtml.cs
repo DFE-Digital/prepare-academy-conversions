@@ -40,12 +40,13 @@ public class IndexModel(ISignificantChangeProjectRepository significantChangePro
       var response = await SignificantChangeProjectRepository.GetAllProjects(
          CurrentPage,
          PageSize,
-         Filters.Keyword,
-         Filters.SelectedStatuses,
-         Filters.SelectedAssignees,
-         Filters.GetSelectedTiersAsBytes(),
-         Filters.SelectedRoutes,
-         Filters.SelectedLocalAuthorities);
+         new(
+            Filters.Keyword,
+            Filters.SelectedStatuses,
+            Filters.SelectedAssignees,
+            Filters.GetSelectedTiersAsBytes(),
+            Filters.SelectedRoutes,
+            Filters.SelectedLocalAuthorities));
 
       Paging = response.Body?.Paging ?? new ApiV2PagingInfo { Page = CurrentPage, RecordCount = 0, NextPageUrl = null };
       Projects = response.Body?.Data?.Select(SignificantChangeProjectListHelper.Build).ToList() ?? [];

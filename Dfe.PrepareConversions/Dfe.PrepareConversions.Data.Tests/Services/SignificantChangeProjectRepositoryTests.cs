@@ -591,6 +591,7 @@ public class SignificantChangeProjectRepositoryTests
       capturedQuery.Assignee.Should().BeNull();
       capturedQuery.Tier.Should().BeNull();
       capturedQuery.Route.Should().BeNull();
+      capturedQuery.LocalAuthority.Should().BeNull();
    }
 
    [Theory]
@@ -611,13 +612,23 @@ public class SignificantChangeProjectRepositoryTests
 
       // Empty arrays and a whitespace-only keyword must not become empty lists — record equality on
       // List<T> is reference equality, so an empty list breaks request-body matching downstream.
-      await sut.GetAllProjects(1, 10, "   ", [], [], [], []);
+      await sut.GetAllProjects(
+         1,
+         10,
+         new ISignificantChangeProjectRepository.SignificantChangeFilterOptions(
+         "   ",
+         [],
+         [],
+         [],
+         [],
+         []));
 
       capturedQuery.Keyword.Should().BeNull();
       capturedQuery.Status.Should().BeNull();
       capturedQuery.Assignee.Should().BeNull();
       capturedQuery.Tier.Should().BeNull();
       capturedQuery.Route.Should().BeNull();
+      capturedQuery.LocalAuthority.Should().BeNull();
    }
 
    [Theory]
@@ -637,12 +648,15 @@ public class SignificantChangeProjectRepositoryTests
          .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.OK, null));
 
       await sut.GetAllProjects(
-         2, 20,
-         "  Example School  ",
-         ["PreDecision"],
-         ["Assigned User", "Not assigned"],
-         [1, 3],
-         ["Change of age range"]);
+         2,
+         20,
+         new ISignificantChangeProjectRepository.SignificantChangeFilterOptions(
+            "  Example School  ",
+            ["PreDecision"],
+            ["Assigned User", "Not assigned"],
+            [1, 3],
+            ["Change of age range"],
+            ["Kent", "Bristol"]));
 
       capturedQuery.Page.Should().Be(2);
       capturedQuery.Count.Should().Be(20);
@@ -651,6 +665,7 @@ public class SignificantChangeProjectRepositoryTests
       capturedQuery.Assignee.Should().BeEquivalentTo("Assigned User", "Not assigned");
       capturedQuery.Tier.Should().BeEquivalentTo([(byte)1, (byte)3]);
       capturedQuery.Route.Should().BeEquivalentTo("Change of age range");
+      capturedQuery.LocalAuthority.Should().BeEquivalentTo("Kent", "Bristol");
    }
 
    [Theory]
@@ -666,7 +681,8 @@ public class SignificantChangeProjectRepositoryTests
          Statuses = [new FilterValueDisplay { Value = "PreDecision", Display = "Pre decision" }],
          Tiers = [new FilterValueDisplay { Value = "1", Display = "Tier 1" }],
          AssignedUsers = [new FilterValueDisplay { Value = "Bob", Display = "Bob" }],
-         Routes = [new FilterValueDisplay { Value = "Other", Display = "Other" }]
+         Routes = [new FilterValueDisplay { Value = "Other", Display = "Other" }],
+         LocalAuthorities = [new FilterValueDisplay { Value = "Kent", Display = "Kent" }]
       };
 
       httpClientFactory
@@ -704,6 +720,7 @@ public class SignificantChangeProjectRepositoryTests
       response.Body.Tiers.Should().BeEmpty();
       response.Body.AssignedUsers.Should().BeEmpty();
       response.Body.Routes.Should().BeEmpty();
+      response.Body.LocalAuthorities.Should().BeEmpty();
    }
 
    [Theory]

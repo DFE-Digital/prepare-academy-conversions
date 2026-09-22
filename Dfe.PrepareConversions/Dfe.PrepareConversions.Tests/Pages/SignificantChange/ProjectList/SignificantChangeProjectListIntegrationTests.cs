@@ -25,6 +25,7 @@ public class SignificantChangeProjectListIntegrationTests(IntegrationTestingWebA
                p.TrustName = $"Trust {rowIndex}";
                p.TrustUkprn = $"UKPRN{rowIndex}";
                p.TypeOfSignificantChange = "Route A";
+               p.LocalAuthorityName = $"Local Authority {rowIndex}";
                p.Tier = (byte)(rowIndex + 1);
                p.Status = "pre decision";
                p.AssignedUser = new User("test-id", "assigned.user@test.local", "Assigned User");
@@ -40,6 +41,7 @@ public class SignificantChangeProjectListIntegrationTests(IntegrationTestingWebA
       Document.QuerySelector("#incoming-trust-0")?.TextContent.Should().Contain(projects[0].TrustUkprn);
       Document.QuerySelector("#tier-0")?.TextContent.Should().Contain(projects[0].Tier.ToString());
       Document.QuerySelector("#type-and-route-0")?.TextContent.Should().Contain(projects[0].TypeOfSignificantChange);
+      Document.QuerySelector("#local-authority-0")?.TextContent.Should().Contain(projects[0].LocalAuthorityName);
       Document.QuerySelector("#assigned-to-0")?.TextContent.Should().Contain(projects[0].AssignedUser.FullName);
       Document.QuerySelector($"#project-status-{projects[0].Id}")?.TextContent.Should().Contain("Pre decision");
    }
@@ -110,12 +112,13 @@ public class SignificantChangeProjectListIntegrationTests(IntegrationTestingWebA
 
       var status = Document.QuerySelector("#filter-status-predecision") as IHtmlInputElement;
       status.Should().NotBeNull();
-      status!.Value.Should().Be("PreDecision");
+      status.Value.Should().Be("PreDecision");
       Document.QuerySelector("label[for='filter-status-predecision']")?.TextContent.Trim().Should().Be("Pre decision");
 
       Document.QuerySelector("label[for='filter-tier-1']")?.TextContent.Trim().Should().Be("Tier 1");
 
       Document.QuerySelector("#filter-assignee-not-assigned").Should().NotBeNull();
+      Document.QuerySelector("label[for='filter-local-authority-kent']")?.TextContent.Trim().Should().Be("Kent");
    }
 
    [Fact]
@@ -128,11 +131,12 @@ public class SignificantChangeProjectListIntegrationTests(IntegrationTestingWebA
       AddGetSignificantChangeProjects(
          projectCount: 1,
          searchModel: new GetSignificantProjectsQuery(
-            1, 10, "Example", ["PreDecision"], ["Bob"], [1], ["Change of age range"]));
+            1, 10, "Example", ["PreDecision"], ["Bob"], [1], ["Change of age range"], ["Kent"]));
 
       await OpenAndConfirmPathAsync(
          "/significant-change/project-list?Keyword=Example&SelectedStatuses=PreDecision" +
-         "&SelectedAssignees=Bob&SelectedTiers=1&SelectedRoutes=Change%20of%20age%20range");
+         "&SelectedAssignees=Bob&SelectedTiers=1&SelectedRoutes=Change%20of%20age%20range" +
+         "&SelectedLocalAuthorities=Kent");
 
       Document.QuerySelector("[data-cy='select-projectlist-filter-banner']").Should().NotBeNull();
       Document.QuerySelector("[data-cy='select-projectlist-filter-count']")?.TextContent
@@ -145,16 +149,17 @@ public class SignificantChangeProjectListIntegrationTests(IntegrationTestingWebA
       AddGetSignificantChangeFilterParameters();
       AddGetSignificantChangeProjects(
          projectCount: 1,
-         searchModel: new GetSignificantProjectsQuery(1, 10, null, ["PreDecision"], null, [1], null));
+         searchModel: new GetSignificantProjectsQuery(1, 10, null, ["PreDecision"], null, [1], null, ["Kent"]));
 
       await OpenAndConfirmPathAsync(
-         "/significant-change/project-list?SelectedStatuses=PreDecision&SelectedTiers=1");
+         "/significant-change/project-list?SelectedStatuses=PreDecision&SelectedTiers=1&SelectedLocalAuthorities=Kent");
 
       var tags = Document.QuerySelectorAll(".moj-filter__tag").Select(tag => tag.TextContent).ToList();
 
       // Tags must read like the checkboxes, not like the posted values.
       tags.Should().Contain(tag => tag.Contains("Pre decision"));
       tags.Should().Contain(tag => tag.Contains("Tier 1"));
+      tags.Should().Contain(tag => tag.Contains("Kent"));
    }
 
    [Fact]

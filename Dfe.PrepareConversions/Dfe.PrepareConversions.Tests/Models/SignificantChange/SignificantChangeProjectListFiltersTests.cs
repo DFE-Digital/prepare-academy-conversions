@@ -14,6 +14,7 @@ public class SignificantChangeProjectListFiltersTests
    private static readonly string[] StatusPreDecisionAndApproved = ["PreDecision", "Approved"];
    private static readonly string[] RouteOther = ["Other"];
    private static readonly string[] Tier2 = ["2"];
+   private static readonly string[] LocalAuthorityKent = ["Kent"];
 
    [Fact]
    public void PersistUsing_RehydratesFiltersFromStore()
@@ -23,7 +24,8 @@ public class SignificantChangeProjectListFiltersTests
       {
          { SignificantChangeProjectListFilters.SigChangeFilterKeyword, KeywordBishop },
          { SignificantChangeProjectListFilters.SigChangeFilterStatuses, StatusPreDecision },
-         { SignificantChangeProjectListFilters.SigChangeFilterTiers, Tier2 }
+         { SignificantChangeProjectListFilters.SigChangeFilterTiers, Tier2 },
+         { SignificantChangeProjectListFilters.SigChangeFilterLocalAuthorities, LocalAuthorityKent }
       };
 
       filters.PersistUsing(store);
@@ -31,6 +33,7 @@ public class SignificantChangeProjectListFiltersTests
       filters.Keyword.Should().Be("Bishop");
       filters.SelectedStatuses.Should().BeEquivalentTo(StatusPreDecision);
       filters.SelectedTiers.Should().BeEquivalentTo(Tier2);
+      filters.SelectedLocalAuthorities.Should().BeEquivalentTo(LocalAuthorityKent);
       filters.IsVisible.Should().BeTrue();
    }
 
@@ -41,7 +44,8 @@ public class SignificantChangeProjectListFiltersTests
       Dictionary<string, object> store = new()
       {
          { SignificantChangeProjectListFilters.SigChangeFilterKeyword, KeywordBishop },
-         { SignificantChangeProjectListFilters.SigChangeFilterRoutes, RouteOther }
+         { SignificantChangeProjectListFilters.SigChangeFilterRoutes, RouteOther },
+         { SignificantChangeProjectListFilters.SigChangeFilterLocalAuthorities, LocalAuthorityKent }
       };
 
       filters.PersistUsing(store);
@@ -50,6 +54,7 @@ public class SignificantChangeProjectListFiltersTests
       filters.IsVisible.Should().BeFalse();
       filters.Keyword.Should().BeNull();
       filters.SelectedRoutes.Should().BeEmpty();
+      filters.SelectedLocalAuthorities.Should().BeEmpty();
    }
 
    [Fact]
