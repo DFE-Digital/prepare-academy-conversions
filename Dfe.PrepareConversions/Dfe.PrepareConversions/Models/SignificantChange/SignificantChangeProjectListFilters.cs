@@ -43,9 +43,6 @@ public class SignificantChangeProjectListFilters
    [BindProperty]
    public string[] SelectedLocalAuthorities { get; set; } = [];
 
-   [BindProperty]
-   public string[] SelectedLocalAuthorities { get; set; } = [];
-
    public bool IsVisible => !string.IsNullOrWhiteSpace(Keyword) ||
                             SelectedStatuses.Length > 0 ||
                             SelectedProjectOwners.Length > 0 ||
