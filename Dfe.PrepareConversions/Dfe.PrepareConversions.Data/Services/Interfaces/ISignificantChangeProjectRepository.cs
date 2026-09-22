@@ -18,7 +18,8 @@ public interface ISignificantChangeProjectRepository
       string[]? statuses = null,
       string[]? assignees = null,
       byte[]? tiers = null,
-      string[]? routes = null);
+      string[]? routes = null,
+      string[]? localAuthorities = null);
 
    Task<ApiResponse<SignificantChangeProjectResponse>> GetProjectById(int id);
 

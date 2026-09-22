@@ -40,7 +40,8 @@ public class SignificantChangeProjectRepository(
       string[]? statuses = null,
       string[]? assignees = null,
       byte[]? tiers = null,
-      string[]? routes = null)
+      string[]? routes = null,
+      string[]? localAuthorities = null)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
 
@@ -55,7 +56,8 @@ public class SignificantChangeProjectRepository(
          statuses?.Length > 0 ? statuses.ToList() : null,
          assignees?.Length > 0 ? assignees.ToList() : null,
          tiers?.Length > 0 ? tiers.ToList() : null,
-         routes?.Length > 0 ? routes.ToList() : null);
+         routes?.Length > 0 ? routes.ToList() : null,
+         localAuthorities?.Length > 0 ? [.. localAuthorities] : null);
 
       ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>> result =
          await httpClientService.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
