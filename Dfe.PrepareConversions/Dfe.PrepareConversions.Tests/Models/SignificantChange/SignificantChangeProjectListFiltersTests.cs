@@ -15,6 +15,7 @@ public class SignificantChangeProjectListFiltersTests
    private static readonly string[] RouteOther = ["Other"];
    private static readonly string[] Tier2 = ["2"];
    private static readonly string[] LocalAuthorityKent = ["Kent"];
+   private static readonly string[] RegionLondon = ["London"];
 
    [Fact]
    public void PersistUsing_RehydratesFiltersFromStore()
@@ -25,7 +26,8 @@ public class SignificantChangeProjectListFiltersTests
          { SignificantChangeProjectListFilters.SigChangeFilterKeyword, KeywordBishop },
          { SignificantChangeProjectListFilters.SigChangeFilterStatuses, StatusPreDecision },
          { SignificantChangeProjectListFilters.SigChangeFilterTiers, Tier2 },
-         { SignificantChangeProjectListFilters.SigChangeFilterLocalAuthorities, LocalAuthorityKent }
+         { SignificantChangeProjectListFilters.SigChangeFilterLocalAuthorities, LocalAuthorityKent },
+         { SignificantChangeProjectListFilters.SigChangeFilterRegions, RegionLondon }
       };
 
       filters.PersistUsing(store);
@@ -34,6 +36,7 @@ public class SignificantChangeProjectListFiltersTests
       filters.SelectedStatuses.Should().BeEquivalentTo(StatusPreDecision);
       filters.SelectedTiers.Should().BeEquivalentTo(Tier2);
       filters.SelectedLocalAuthorities.Should().BeEquivalentTo(LocalAuthorityKent);
+      filters.SelectedRegions.Should().BeEquivalentTo(RegionLondon);
       filters.IsVisible.Should().BeTrue();
    }
 
@@ -45,7 +48,8 @@ public class SignificantChangeProjectListFiltersTests
       {
          { SignificantChangeProjectListFilters.SigChangeFilterKeyword, KeywordBishop },
          { SignificantChangeProjectListFilters.SigChangeFilterRoutes, RouteOther },
-         { SignificantChangeProjectListFilters.SigChangeFilterLocalAuthorities, LocalAuthorityKent }
+         { SignificantChangeProjectListFilters.SigChangeFilterLocalAuthorities, LocalAuthorityKent },
+         { SignificantChangeProjectListFilters.SigChangeFilterRegions, RegionLondon }
       };
 
       filters.PersistUsing(store);
@@ -55,6 +59,7 @@ public class SignificantChangeProjectListFiltersTests
       filters.Keyword.Should().BeNull();
       filters.SelectedRoutes.Should().BeEmpty();
       filters.SelectedLocalAuthorities.Should().BeEmpty();
+      filters.SelectedRegions.Should().BeEmpty();
    }
 
    [Fact]

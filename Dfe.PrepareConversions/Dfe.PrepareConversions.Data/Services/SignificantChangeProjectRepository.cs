@@ -52,7 +52,8 @@ public class SignificantChangeProjectRepository(
          filterOptions?.Assignees?.Length > 0 ? filterOptions.Assignees.ToList() : null,
          filterOptions?.Tiers?.Length > 0 ? filterOptions.Tiers.ToList() : null,
          filterOptions?.Routes?.Length > 0 ? filterOptions.Routes.ToList() : null,
-         filterOptions?.LocalAuthorities?.Length > 0 ? [.. filterOptions.LocalAuthorities] : null);
+         filterOptions?.LocalAuthorities?.Length > 0 ? [.. filterOptions.LocalAuthorities] : null,
+         filterOptions?.Regions?.Length > 0 ? [.. filterOptions.Regions] : null);
 
       ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>> result =
          await httpClientService.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
