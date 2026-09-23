@@ -48,8 +48,6 @@ public class SignificantChangeProjectListFilters
    [BindProperty]
    public string[] SelectedRegions { get; set; } = [];
 
-   [BindProperty]
-
    public bool IsVisible => !string.IsNullOrWhiteSpace(Keyword) ||
                             SelectedStatuses.Length > 0 ||
                             SelectedProjectOwners.Length > 0 ||
