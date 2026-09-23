@@ -34,6 +34,17 @@
                 </ul>
             }
 
+            @if (Model.SelectedRegions.Length > 0)
+            {
+                <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Region</h3>
+                <ul class="moj-filter-tags">
+                    @foreach (var region in Model.SelectedRegions)
+                    {
+                        <li><a class="moj-filter__tag" href="@Url.RouteUrl(ViewContext.RouteData.Values)?remove&SelectedRegions=@region"><span class="govuk-visually-hidden">Remove this filter</span> @SignificantChangeProjectListFilters.DisplayFor(Model.AvailableRegions, region)</a></li>
+                    }
+                </ul>
+            }
+
             @if (Model.SelectedLocalAuthorities.Length > 0)
             {
                 <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Local authority</h3>
@@ -124,6 +135,30 @@
                                                 @(Model.SelectedAssignees.Contains(assignee.Value) ? "checked" : null) />
                                                 <label class="govuk-label govuk-checkboxes__label" for="filter-assignee-@assignee.Value.Stub()">
                                                     @assignee.Display
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="govuk-accordion__section">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-region-heading" data-cy="select-projectlist-filter-region">
+                                            Region
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div class="govuk-accordion__section-content" aria-labelledby="accordion-region-heading" role="region" id="accordion-default-content-2">
+                                    <div class="govuk-checkboxes">
+                                        @foreach (var region in Model.AvailableRegions)
+                                        {
+                                            <div class="govuk-checkboxes__item">
+                                                <input class="govuk-checkboxes__input" id="filter-region-@region.Value.Stub()" name="SelectedRegions" type="checkbox" value="@region.Value" data-cy="select-projectlist-filter-region-@region.Value"
+                                                @(Model.SelectedRegions.Contains(region.Value) ? "checked" : null) />
+                                                <label class="govuk-label govuk-checkboxes__label" for="filter-region-@region.Value.Stub()">
+                                                    @region.Display
                                                 </label>
                                             </div>
                                         }

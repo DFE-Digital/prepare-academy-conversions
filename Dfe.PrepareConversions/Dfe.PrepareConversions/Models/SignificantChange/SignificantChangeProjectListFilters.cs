@@ -18,12 +18,14 @@ public class SignificantChangeProjectListFilters
    public const string SigChangeFilterTiers = nameof(SigChangeFilterTiers);
    public const string SigChangeFilterRoutes = nameof(SigChangeFilterRoutes);
    public const string SigChangeFilterLocalAuthorities = nameof(SigChangeFilterLocalAuthorities);
+   public const string SigChangeFilterRegions = nameof(SigChangeFilterRegions);
    private IDictionary<string, object?> _store = null!;
    public List<FilterValueDisplay> AvailableStatuses { get; set; } = new();
    public List<FilterValueDisplay> AvailableAssignees { get; set; } = new();
    public List<FilterValueDisplay> AvailableTiers { get; set; } = new();
    public List<FilterValueDisplay> AvailableRoutes { get; set; } = new();
    public List<FilterValueDisplay> AvailableLocalAuthorities { get; set; } = [];
+   public List<FilterValueDisplay> AvailableRegions { get; set; } = [];
 
    [BindProperty]
    public string? Keyword { get; set; }
@@ -43,11 +45,15 @@ public class SignificantChangeProjectListFilters
    [BindProperty]
    public string[] SelectedLocalAuthorities { get; set; } = [];
 
+   [BindProperty]
+   public string[] SelectedRegions { get; set; } = [];
+
    public bool IsVisible => !string.IsNullOrWhiteSpace(Keyword) ||
                             SelectedStatuses.Length > 0 ||
                             SelectedAssignees.Length > 0 ||
                             SelectedTiers.Length > 0 ||
                             SelectedLocalAuthorities.Length > 0 ||
+                            SelectedRegions.Length > 0 ||
                             SelectedRoutes.Length > 0;
 
 
@@ -73,6 +79,7 @@ public class SignificantChangeProjectListFilters
       SelectedTiers = Get(SigChangeFilterTiers);
       SelectedRoutes = Get(SigChangeFilterRoutes);
       SelectedLocalAuthorities = Get(SigChangeFilterLocalAuthorities);
+      SelectedRegions = Get(SigChangeFilterRegions);
 
       return this;
    }
@@ -91,6 +98,7 @@ public class SignificantChangeProjectListFilters
          SelectedTiers = Array.Empty<string>();
          SelectedRoutes = Array.Empty<string>();
          SelectedLocalAuthorities = [];
+         SelectedRegions = [];
 
          return;
       }
@@ -101,7 +109,7 @@ public class SignificantChangeProjectListFilters
          SelectedAssignees = GetAndRemove(SigChangeFilterAssignees, GetFromQuery(nameof(SelectedAssignees)), true);
          SelectedTiers = GetAndRemove(SigChangeFilterTiers, GetFromQuery(nameof(SelectedTiers)), true);
          SelectedRoutes = GetAndRemove(SigChangeFilterRoutes, GetFromQuery(nameof(SelectedRoutes)), true);
-         SelectedLocalAuthorities = GetAndRemove(SigChangeFilterLocalAuthorities, GetFromQuery(nameof(SelectedLocalAuthorities)), true);
+         SelectedRegions = GetAndRemove(SigChangeFilterRegions, GetFromQuery(nameof(SelectedRegions)), true);
 
          return;
       }
@@ -111,7 +119,8 @@ public class SignificantChangeProjectListFilters
                                  query.ContainsKey(nameof(SelectedAssignees)) ||
                                  query.ContainsKey(nameof(SelectedTiers)) ||
                                  query.ContainsKey(nameof(SelectedRoutes)) ||
-                                 query.ContainsKey(nameof(SelectedLocalAuthorities));
+                                 query.ContainsKey(nameof(SelectedLocalAuthorities)) ||
+                                 query.ContainsKey(nameof(SelectedRegions));
 
       if (activeFilterChanges)
       {
@@ -121,6 +130,7 @@ public class SignificantChangeProjectListFilters
          SelectedTiers = Cache(SigChangeFilterTiers, GetFromQuery(nameof(SelectedTiers)));
          SelectedRoutes = Cache(SigChangeFilterRoutes, GetFromQuery(nameof(SelectedRoutes)));
          SelectedLocalAuthorities = Cache(SigChangeFilterLocalAuthorities, GetFromQuery(nameof(SelectedLocalAuthorities)));
+         SelectedRegions = Cache(SigChangeFilterRegions, GetFromQuery(nameof(SelectedRegions)));
       }
       else
       {
@@ -130,6 +140,7 @@ public class SignificantChangeProjectListFilters
          SelectedTiers = Get(SigChangeFilterTiers, true);
          SelectedRoutes = Get(SigChangeFilterRoutes, true);
          SelectedLocalAuthorities = Get(SigChangeFilterLocalAuthorities, true);
+         SelectedRegions = Get(SigChangeFilterRegions, true);
       }
 
       string[] GetFromQuery(string key)
@@ -184,6 +195,7 @@ public class SignificantChangeProjectListFilters
       Cache(SigChangeFilterTiers, default);
       Cache(SigChangeFilterRoutes, default);
       Cache(SigChangeFilterLocalAuthorities, default);
+      Cache(SigChangeFilterRegions, default);
    }
    
    public static void ClearFiltersFrom(IDictionary<string, object?> store)
