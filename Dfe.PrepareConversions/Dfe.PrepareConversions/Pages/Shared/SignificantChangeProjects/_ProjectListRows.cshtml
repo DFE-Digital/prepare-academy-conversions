@@ -43,11 +43,6 @@
                     <span if="project.TypeOfSignificantChange.IsEmpty()" class="empty">Unconfirmed</span>
                     <span if="project.TypeOfSignificantChange.IsPresent()">@project.TypeOfSignificantChange</span>
                 </div>
-                <div id="@("proposed-decision-date-" + index)" class="govuk-!-margin-top-1">
-                    <strong>Proposed decision date:</strong>
-                    <span if="!project.ProposedDecisionDate.HasValue" class="empty">Unconfirmed</span>
-                    <span if="project.ProposedDecisionDate.HasValue">@project.ProposedDecisionDate.ToDateString()</span>
-                </div>
                 <div id="@("assigned-to-" + index)" class="do govuk-!-margin-top-1">
                     <strong>Assigned to:</strong>
                     <span if="project.AssignedUser == null || project.AssignedUser.FullName.IsEmpty()" class="empty">Unassigned</span>
