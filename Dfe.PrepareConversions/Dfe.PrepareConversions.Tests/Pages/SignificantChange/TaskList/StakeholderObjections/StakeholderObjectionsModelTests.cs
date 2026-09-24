@@ -157,6 +157,8 @@ public class StakeholderObjectionsModelTests
          TrustUkprn = "12345678",
          LocalAuthorityName = "Test local authority",
          TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "pre decision",
          StakeholderObjections = new SignificantChangeStakeholderObjectionsResponse(),
          LocalAuthorityName = "Test local authority"
