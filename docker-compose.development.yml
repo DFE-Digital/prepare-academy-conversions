@@ -4,8 +4,26 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      secrets:
+        - github_token
     command: /bin/bash -c "./docker-entrypoint.sh dotnet Dfe.PrepareConversions.dll"
     ports:
-      - 80:80/tcp
+      - 5003:8081
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: 8080
+      ASPNETCORE_HTTPS_PORTS: 8081
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/Dfe.PrepareConversions.pfx
+    volumes:
+      - ./.https:/https:ro
     env_file:
       - .env.development
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - 6379:6379
+
+secrets:
+  github_token:
+    environment: GITHUB_TOKEN
