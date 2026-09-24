@@ -35,4 +35,7 @@ public class SignificantChangeProjectViewBaseModel
    public SignificantChangeTaskStatus ProjectDatesStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public DateTime? ProposedDecisionDate { get; set; }
    public DateTime? ProposedChangeDate { get; set; }
+   public SignificantChangeLandTransactionConsent? LandTransactionConsent { get; set; }
+   public string LandTransactionConsentAdditionalInfo { get; set; }
+   public SignificantChangeTaskStatus LandTransactionConsentTaskStatus { get; set; }
 }

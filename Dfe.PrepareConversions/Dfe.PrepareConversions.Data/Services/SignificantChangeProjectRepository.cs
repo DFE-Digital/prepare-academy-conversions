@@ -5,6 +5,7 @@ using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -263,6 +264,23 @@ public class SignificantChangeProjectRepository(
       string path = string.Format(PathFor.SetSignificantChangeConsultationDuration, id);
 
       var result = await httpClientService.Put<SetSignificantChangeConsultationDurationCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
+   public async Task SetLandTransactionConsent(int id, SetSignificantChangeLandTransactionConsentCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeConsultationDuration, id);
+
+      
+      var result = await httpClientService.Put<SetSignificantChangeLandTransactionConsentCommand, object>(
          httpClient,
          path,
          command);
