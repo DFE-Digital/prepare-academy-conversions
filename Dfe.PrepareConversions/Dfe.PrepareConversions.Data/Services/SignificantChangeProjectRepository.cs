@@ -209,6 +209,22 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+   public async Task SetLocalAuthorityObjections(int id, SetSignificantChangeLocalAuthorityObjectionsCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeLocalAuthorityObjections, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeLocalAuthorityObjectionsCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+
    public async Task SetProjectDates(int id, SetSignificantChangeProjectDatesCommand command)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();

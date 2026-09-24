@@ -12,11 +12,11 @@ namespace Dfe.PrepareConversions.Tests.Utils;
 
 public class SignificantChangeTaskListBuilderTests
 {
-   
    [Theory]
    [InlineData(1, "consultation", "Consultation", new[] { "stakeholder-consultation", "consultation-duration", "admission-variation-consultation", "stakeholder-objections", "religious-body-consultation" })]
    [InlineData(5, "Proposed decision and conversion dates", "Proposed decision and conversion dates", new[] { "confirm-project-dates" })]
    [InlineData(10, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
+   [InlineData(15, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "local-authority-objections" })]
    public void Build_includes_ordered_sections_and_tasks_when_supplied(int sectionDisplayOrder, string sectionKey, string sectionTitle, string[] taskKeys)
    {
       var expectedSectionCount = 3;
@@ -143,7 +143,6 @@ public class SignificantChangeTaskListBuilderTests
 
       task.Status.Status.Should().Be(expectedTaskStatus);
    }
-
    
    [Theory]
    [MemberData(nameof(StatusCases))]
@@ -153,6 +152,23 @@ public class SignificantChangeTaskListBuilderTests
       const string taskKey = "consultation-duration";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.ConsultationDurationStatus = TaskStatus);
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
+      var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
+
+      task.Status.Status.Should().Be(expectedTaskStatus);
+   }
+   
+   [Theory]
+   [MemberData(nameof(StatusCases))]
+   public void Build_maps_local_authority_objections_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
+   {
+      const string sectionKey = "local-authority-objections";
+      const string taskKey = "local-authority-objections";
+
+      SignificantChangeProjectViewBaseModel project = BuildProject(p => p.LocalAuthorityObjectionsStatus = TaskStatus);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 

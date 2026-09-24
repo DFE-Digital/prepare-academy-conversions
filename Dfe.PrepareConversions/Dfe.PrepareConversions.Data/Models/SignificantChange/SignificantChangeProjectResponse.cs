@@ -21,5 +21,6 @@ public class SignificantChangeProjectResponse
    public SignificantChangeAdmissionVariationConsultationResponse AdmissionVariationConsultation { get; set;} = new();
    public SignificantChangeEqualitiesImpactAssessmentResponse EqualitiesImpactAssessment { get; set; } = new();
    public SignificantChangeReligiousBodyConsultationResponse ReligiousBodyConsultation { get; set; } = new();
+   public SignificantChangeLocalAuthorityObjectionsResponse LocalAuthorityObjections { get; set; } = new();
    public SignificantChangeProjectDatesResponse ProjectDates { get; set; } = new();
 }

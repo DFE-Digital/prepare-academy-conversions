@@ -38,6 +38,10 @@ public static class SignificantChangeProjectListHelper
          ReligiousBodyConsultationStatus = significantChangeProject.ReligiousBodyConsultation?.Status ?? SignificantChangeTaskStatus.NotStarted,
          ReligiousBodyConsultationTrustConsultedReligiousBody = significantChangeProject.ReligiousBodyConsultation?.TrustConsultedReligiousBody,
          ReligiousBodyConsultationTrustConsultedReligiousBodyNotConsultedReason = significantChangeProject.ReligiousBodyConsultation?.TrustConsultedReligiousBodyNotConsultedReason ?? string.Empty,
+         LocalAuthorityObjectionsStatus = significantChangeProject.LocalAuthorityObjections?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         LocalAuthorityRaisedObjections = significantChangeProject.LocalAuthorityObjections?.LocalAuthorityRaisedObjections,
+         LocalAuthorityObjectionsFurtherInformation = significantChangeProject.LocalAuthorityObjections?.LocalAuthorityObjectionsFurtherInformation ?? string.Empty,
+         LocalAuthorityObjectionsSupportingEvidenceLink = significantChangeProject.LocalAuthorityObjections?.SupportingEvidenceLink ?? string.Empty,
          ProjectDatesStatus = significantChangeProject.ProjectDates?.Status ?? SignificantChangeTaskStatus.NotStarted,
          ProposedDecisionDate = significantChangeProject.ProjectDates?.ProposedDecisionDate,
          ProposedChangeDate = significantChangeProject.ProjectDates?.ProposedChangeDate

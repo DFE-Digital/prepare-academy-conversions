@@ -569,6 +569,52 @@ public class SignificantChangeProjectRepositoryTests
 
    [Theory]
    [AutoMoqData]
+   public async Task SetLocalAuthorityObjections_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 79;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeLocalAuthorityObjections, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeLocalAuthorityObjectionsCommand command = new(true, "Objection details", "https://example.org/evidence");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeLocalAuthorityObjectionsCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetLocalAuthorityObjections(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeLocalAuthorityObjectionsCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetLocalAuthorityObjections_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 79;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeLocalAuthorityObjections, id);
+      SetSignificantChangeLocalAuthorityObjectionsCommand command = new(false, null, null);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeLocalAuthorityObjectionsCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetLocalAuthorityObjections(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+   [Theory]
+   [AutoMoqData]
    public async Task GetAllProjects_WithNoFilters_ShouldSendNullForEveryFilterMember(
       [Frozen] Mock<IHttpClientService> httpClientService,
       SignificantChangeProjectRepository sut)

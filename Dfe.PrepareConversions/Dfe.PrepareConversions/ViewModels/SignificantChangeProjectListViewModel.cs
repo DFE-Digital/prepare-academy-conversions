@@ -35,6 +35,10 @@ public class SignificantChangeProjectViewBaseModel
    public SignificantChangeTaskStatus ReligiousBodyConsultationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public bool? ReligiousBodyConsultationTrustConsultedReligiousBody { get; set; }
    public string ReligiousBodyConsultationTrustConsultedReligiousBodyNotConsultedReason { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus LocalAuthorityObjectionsStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public bool? LocalAuthorityRaisedObjections { get; set; }
+   public string LocalAuthorityObjectionsFurtherInformation { get; set; } = string.Empty;
+   public string LocalAuthorityObjectionsSupportingEvidenceLink { get; set; } = string.Empty;
    public SignificantChangeTaskStatus ProjectDatesStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public DateTime? ProposedDecisionDate { get; set; }
    public DateTime? ProposedChangeDate { get; set; }
