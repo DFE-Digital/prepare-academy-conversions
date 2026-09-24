@@ -75,7 +75,7 @@ public class LocalAuthorityObjectionsModelTests
          It.Is<SetSignificantChangeLocalAuthorityObjectionsCommand>(command =>
             command.LocalAuthorityRaisedObjections == localAuthorityRaisedObjections
             && command.LocalAuthorityObjectionsFurtherInformation == expectedFurtherInformation
-            && command.SupportingEvidenceLink == expectedEvidenceLink)), Times.Once);
+            && command.LocalAuthoritySupportingEvidenceLink == expectedEvidenceLink)), Times.Once);
    }
 
    [Fact]
@@ -141,7 +141,7 @@ public class LocalAuthorityObjectionsModelTests
             command.LocalAuthorityRaisedObjections.HasValue
             && command.LocalAuthorityRaisedObjections.Value
             && command.LocalAuthorityObjectionsFurtherInformation == "Objection details"
-            && command.SupportingEvidenceLink == null)), Times.Once);
+            && command.LocalAuthoritySupportingEvidenceLink == null)), Times.Once);
    }
 
    private static Mock<ISignificantChangeProjectRepository> BuildRepository(int id, SignificantChangeProjectResponse project)
@@ -181,6 +181,8 @@ public class LocalAuthorityObjectionsModelTests
          TrustName = "Example trust",
          TrustUkprn = "12345678",
          TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "pre decision",
          LocalAuthorityObjections = new SignificantChangeLocalAuthorityObjectionsResponse()
       };

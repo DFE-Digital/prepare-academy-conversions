@@ -7,5 +7,5 @@ public class SetSignificantChangeLocalAuthorityObjectionsCommand(
 {
    public bool? LocalAuthorityRaisedObjections { get; set; } = localAuthorityRaisedObjections;
    public string LocalAuthorityObjectionsFurtherInformation { get; set; } = localAuthorityObjectionsFurtherInformation;
-   public string SupportingEvidenceLink { get; set; } = supportingEvidenceLink;
+   public string LocalAuthoritySupportingEvidenceLink { get; set; } = supportingEvidenceLink;
 }
