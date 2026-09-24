@@ -16,6 +16,7 @@ using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareTransfers.Web.BackgroundServices;
 using Dfe.PrepareTransfers.Web.Services;
 using Dfe.PrepareTransfers.Web.Services.Interfaces;
+using GovUK.Dfe.FlexForms.Domain.Models.Messaging;
 using GovUK.Dfe.CoreLibs.Messaging.Contracts.Entities.Topics;
 using GovUK.Dfe.CoreLibs.Messaging.Contracts.Exceptions;
 using GovUK.Dfe.CoreLibs.Messaging.Contracts.Messages.Events;
@@ -243,11 +244,13 @@ public class Startup
          configureConsumers: x =>
          {
             x.AddConsumer<TransferApplicationSubmittedConsumer>();
+            x.AddConsumer<SignificantChangeApplicationSubmittedConsumer>();
          },
          configureBus: (context, cfg) =>
          {
             // Configure topic names for message types
             cfg.Message<TransferApplicationSubmittedEvent>(m => m.SetEntityName(TopicNames.TransferApplicationSubmitted));
+            cfg.Message<SchemaEventEnvelope>(m => m.SetEntityName("significant-change-application-submitted"));
 
             cfg.UseJsonSerializer();
          },
@@ -268,6 +271,12 @@ public class Startup
 
                e.ConfigureConsumeTopology = false;
                e.ConfigureConsumer<TransferApplicationSubmittedConsumer>(context);
+            });
+
+            cfg.SubscriptionEndpoint<SchemaEventEnvelope>("prepare-significant-change-application-submitted", e =>
+            {
+               e.ConfigureConsumeTopology = false;
+               e.ConfigureConsumer<SignificantChangeApplicationSubmittedConsumer>(context);
             });
          });
    }

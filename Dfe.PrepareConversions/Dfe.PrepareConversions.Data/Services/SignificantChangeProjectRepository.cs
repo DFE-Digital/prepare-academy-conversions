@@ -258,6 +258,22 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+   public async Task SetStakeholderObjections(int id, SetSignificantChangeStakeholderObjectionsCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeStakeholderObjections, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeStakeholderObjectionsCommand, object>(
+           httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+   
    public async Task SetConsultationDuration(int id, SetSignificantChangeConsultationDurationCommand command)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();

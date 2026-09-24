@@ -30,7 +30,7 @@ public class SignificantChangeTaskListModelTests
       Assert.IsType<PageResult>(result);
       Assert.NotNull(model.TaskList);
       Assert.Equal(3, model.TaskList.Sections.Count);
-      Assert.Equal(4, model.TaskList.Sections[0].Tasks.Count);
+      Assert.Equal(5, model.TaskList.Sections[0].Tasks.Count);
       repository.Verify(r => r.GetProjectById(id), Times.Once);
    }
 
@@ -63,6 +63,8 @@ public class SignificantChangeTaskListModelTests
          TrustName = "Example trust",
          TrustUkprn = "12345678",
          TypeOfSignificantChange = route,
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "pre decision"
       };
    }

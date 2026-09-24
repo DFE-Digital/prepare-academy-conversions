@@ -25,7 +25,7 @@ public class SignificantChangeProjectRepositoryTests
       [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
       SignificantChangeProjectRepository sut)
    {
-      CreateSignificantProjectCommand command = new(123456, 2, "Route", "10000001");
+      CreateSignificantProjectCommand command = new(123456, 2, "Route", "10000001", "ID_APP_123", "APP_REF_123");
       HttpClient httpClient = new();
       SignificantChangeProjectResponse expectedBody = new()
       {
@@ -36,7 +36,9 @@ public class SignificantChangeProjectRepositoryTests
          TrustName = "Example Trust",
          TrustUkprn = command.TrustUkprn,
          TypeOfSignificantChange = "Fast track",
-         Status = "Pre decision"
+         Status = "Pre decision",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
       };
 
       httpClientFactory
@@ -68,7 +70,7 @@ public class SignificantChangeProjectRepositoryTests
       [Frozen] Mock<IHttpClientService> httpClientService,
       SignificantChangeProjectRepository sut)
    {
-      CreateSignificantProjectCommand command = new(123456, 2, "Route", "10000001");
+      CreateSignificantProjectCommand command = new(123456, 2, "Route", "10000001", "ID_APP_123", "APP_REF_123");
 
       httpClientService
          .Setup(x => x.Post<CreateSignificantProjectCommand, SignificantChangeProjectResponse>(
@@ -94,8 +96,7 @@ public class SignificantChangeProjectRepositoryTests
 
       ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>> expectedBody = new()
       {
-         Data = new[]
-         {
+         Data = [
             new SignificantChangeProjectResponse
             {
                Id = 99,
@@ -105,9 +106,10 @@ public class SignificantChangeProjectRepositoryTests
                TrustName = "Example Trust",
                TrustUkprn = "10000001",
                TypeOfSignificantChange = "Fast track",
-               Status = "Pre decision"
-            }
-         },
+               Status = "Pre decision",
+               ApplicationId = "ID_APP_123",
+               ApplicationReference = "APP_REF_123"
+            }],
          Paging = new ApiV2PagingInfo
          {
             Page = page,
@@ -183,6 +185,8 @@ public class SignificantChangeProjectRepositoryTests
          TrustName = "Example Trust",
          TrustUkprn = "10000001",
          TypeOfSignificantChange = "Fast track",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "Pre decision"
       };
 
@@ -279,7 +283,7 @@ public class SignificantChangeProjectRepositoryTests
          SignificantChangeProjectId = 123,
          Decision = SignificantChangeDecisions.Approved,
          ApprovedConditionsSet = false,
-         DecisionDate = new DateTime(2026, 3, 27),
+         DecisionDate = new DateTime(2026, 3, 27, 0, 0, 0, DateTimeKind.Utc),
          DecisionMakerName = "Jane Smith"
       };
 
@@ -513,6 +517,56 @@ public class SignificantChangeProjectRepositoryTests
       exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }
 
+      [Theory]
+   [AutoMoqData]
+   public async Task SetStakeholderObjections_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 88;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeStakeholderObjections, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeStakeholderObjectionsCommand command = new(
+         SignificantChangeStakeholderObjection.YesNoFurtherInformationProvided,
+         "Additional information was provided");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeStakeholderObjectionsCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetStakeholderObjections(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeStakeholderObjectionsCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetStakeholderObjections_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 88;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeStakeholderObjections, id);
+      SetSignificantChangeStakeholderObjectionsCommand command = new(
+         SignificantChangeStakeholderObjection.YesNoFurtherInformationProvided,
+         "Reason");
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeStakeholderObjectionsCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetStakeholderObjections(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
    [Theory]
    [AutoMoqData]
    public async Task GetAllProjects_WithNoFilters_ShouldSendNullForEveryFilterMember(
@@ -593,10 +647,10 @@ public class SignificantChangeProjectRepositoryTests
       capturedQuery.Page.Should().Be(2);
       capturedQuery.Count.Should().Be(20);
       capturedQuery.Keyword.Should().Be("Example School");
-      capturedQuery.Status.Should().BeEquivalentTo(["PreDecision"]);
-      capturedQuery.Assignee.Should().BeEquivalentTo(["Assigned User", "Not assigned"]);
+      capturedQuery.Status.Should().BeEquivalentTo("PreDecision");
+      capturedQuery.Assignee.Should().BeEquivalentTo("Assigned User", "Not assigned");
       capturedQuery.Tier.Should().BeEquivalentTo([(byte)1, (byte)3]);
-      capturedQuery.Route.Should().BeEquivalentTo(["Change of age range"]);
+      capturedQuery.Route.Should().BeEquivalentTo("Change of age range");
    }
 
    [Theory]
