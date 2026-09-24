@@ -58,6 +58,11 @@ class SignificantChangeTaskList extends BasePage {
         cy.contains('a', 'Stakeholder consultation').click();
         return this;
     }
+
+    public openPlanningPermissionTask(): this {
+        cy.contains('a', 'Planning Permission').click();
+        return this;
+    }
 }
 
 const significantChangeTaskList = new SignificantChangeTaskList();

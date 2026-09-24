@@ -1,0 +1,72 @@
+@page "/significant-change/task-list/{id:int}/planning-permission"
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.PlanningPermission.IndexModel
+@using Dfe.PrepareConversions.Data.Models.SignificantChange
+@{
+   Layout = "_SignificantChangeTaskLayout";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@Model.Project.Id"
+      class="govuk-back-link">Back</a>
+}
+<p class="govuk-body">
+   Enter details of planning permission if it is required for significant change.
+</p>
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+         Has planning permission been secured?
+      </legend>
+      <inline-error for="@nameof(Model.PlanningPermissionAnswer)" />
+
+      <div class="govuk-radios" data-module="govuk-radios">
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.PlanningPermissionAnswer" class="govuk-radios__input"
+                   id="planning-permission-yes" type="radio" value="@PlanningPermissionAnswer.Yes"
+                   data-test="planning-permission-yes" />
+            <label class="govuk-label govuk-radios__label" for="planning-permission-yes">
+               Yes
+            </label>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.PlanningPermissionAnswer" class="govuk-radios__input"
+                 id="planning-permission-no" type="radio" value="@PlanningPermissionAnswer.No"
+                   aria-controls="conditional-planning-permission-no"
+                   data-test="planning-permission-no" />
+            <label class="govuk-label govuk-radios__label" for="planning-permission-no">
+               No
+            </label>
+         </div>
+
+         <div class="govuk-radios__conditional" id="conditional-planning-permission-no">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="PlanningPermissionAdditionalInformation">
+                  Additional information
+               </label>
+               <textarea asp-for="@Model.PlanningPermissionAdditionalInformation"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.PlanningPermissionAdditionalInformation))"
+                         rows="5" data-test="planning-permission-additional-information"></textarea>
+            </div>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.PlanningPermissionAnswer" class="govuk-radios__input"
+                   id="planning-permission-not-applicable" type="radio" value="@PlanningPermissionAnswer.NotApplicable"
+                   data-test="planning-permission-not-applicable" />
+            <label class="govuk-label govuk-radios__label" for="planning-permission-not-applicable">
+               Not applicable
+            </label>
+         </div>
+      </div>
+   </fieldset>
+</div>
+
+<div class="govuk-form-group">
+   <label class="govuk-label govuk-label--m" for="PlanningPermissionSupportingEvidence">
+      Supporting Evidence
+   </label>
+   <input asp-for="@Model.PlanningPermissionSupportingEvidence" class="govuk-input" type="text"
+          data-test="planning-permission-supporting-evidence" />
+</div>
