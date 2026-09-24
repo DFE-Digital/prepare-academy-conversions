@@ -34,28 +34,41 @@ public static class SignificantChangeTaskListBuilder
                3,
                Links.SignificantChange.AdmissionVariationConsultation,
                project => GetTaskStatus(project.AdmissionVariationStatus)),
+               
+            new SignificantChangeTaskDefinition(
+               "stakeholder-objections",
+               "Stakeholder objections",
+               5,
+               Links.SignificantChange.StakeholderObjections,
+               project => GetTaskStatus(project.StakeholderObjectionsStatus)),
+
             new SignificantChangeTaskDefinition(
                "religious-body-consultation",
                "Religious body consultation",
-               6,
+               10,
                Links.SignificantChange.ReligiousBodyConsultation,
                project => GetTaskStatus(project.ReligiousBodyConsultationStatus))
-         ]),
+         ]
+      ),
+
       new SignificantChangeTaskSectionDefinition(
          "Proposed decision and conversion dates",
          "Proposed decision and conversion dates",
-         2,
-         [ new SignificantChangeTaskDefinition(
+         5,
+         [ 
+            new SignificantChangeTaskDefinition(
             "confirm-project-dates",
             "Confirm project dates",
             1,
             Links.SignificantChange.ConfirmProjectDates,
             project => GetTaskStatus(project.ProjectDatesStatus))
-         ]),
+         ]
+      ),
+
       new SignificantChangeTaskSectionDefinition(
          "public-sector-equality-duty",
          "Public Sector Equality Duty",
-         3,
+         10,
          [
             new SignificantChangeTaskDefinition(
                "public-sector-equality-duty",
@@ -63,8 +76,8 @@ public static class SignificantChangeTaskListBuilder
                1,
                Links.SignificantChange.PublicSectorEqualityDuty,
                project => GetTaskStatus(project.EqualitiesImpactAssessmentStatus))
-         ])
-
+         ]
+      )
    ];
 
    public static SignificantChangeTaskListViewModel Build(SignificantChangeProjectViewBaseModel project)
