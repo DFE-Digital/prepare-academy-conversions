@@ -1,4 +1,5 @@
 @page "/significant-change/task-list/{id:int}/land-transaction"
+@using Dfe.PrepareConversions.Data.Models.SignificantChange
 @model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.LandTransaction.IndexModel
 @{
    Layout = "_SignificantChangeTaskLayout";
@@ -15,38 +16,41 @@
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
          Have the Land Transaction Team consented to the change?
       </legend>
-      <inline-error for="@nameof(Model.TrustConsultedStakeholders)" />
+      <inline-error for="@nameof(Model.LandTransactionConsent)" />
 
       <div class="govuk-radios" data-module="govuk-radios">
          <div class="govuk-radios__item">
-            <input asp-for="@Model.TrustConsultedStakeholders" class="govuk-radios__input"
-                   id="trust-consulted-stakeholders-yes" type="radio" value="true"
-                   data-test="trust-consulted-stakeholders-yes" />
-            <label class="govuk-label govuk-radios__label" for="trust-consulted-stakeholders-yes">
+            <input asp-for="@Model.LandTransactionConsent" class="govuk-radios__input"
+                   id="land-transaction-consent-yes" type="radio" value="@nameof(SignificantChangeLandTransactionConsent.Yes)" />
+            <label class="govuk-label govuk-radios__label" for="land-transaction-consent-yes">
                Yes
             </label>
          </div>
 
          <div class="govuk-radios__item">
-            <input asp-for="@Model.TrustConsultedStakeholders" class="govuk-radios__input"
-                   id="trust-consulted-stakeholders-no" type="radio" value="false"
-                   aria-controls="conditional-trust-consulted-stakeholders-no"
-                   data-test="trust-consulted-stakeholders-no" />
-            <label class="govuk-label govuk-radios__label" for="trust-consulted-stakeholders-no">
+            <input asp-for="@Model.LandTransactionConsent" class="govuk-radios__input"
+                   id="land-transaction-consent-awaiting-ltt" type="radio" value="@nameof(SignificantChangeLandTransactionConsent.No)" />
+            <label class="govuk-label govuk-radios__label" for="land-transaction-consent-awaiting-ltt">
                No
             </label>
          </div>
 
-         <div class="govuk-radios__conditional" id="conditional-trust-consulted-stakeholders-no">
-            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
-               <label class="govuk-label" for="TrustConsultedStakeholdersNotConsultedReason">
-                  Use this area for additional information relating to mitigations, actions and further investigations.
-               </label>
-               <inline-error for="@nameof(Model.TrustConsultedStakeholdersNotConsultedReason)" />
-               <textarea asp-for="@Model.TrustConsultedStakeholdersNotConsultedReason"
-                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.TrustConsultedStakeholdersNotConsultedReason))"
-                         rows="5" data-test="trust-consulted-stakeholders-not-consulted-reason"></textarea>
-            </div>
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.LandTransactionConsent" class="govuk-radios__input"
+                   id="land-transaction-consent-na" type="radio" value="@nameof(SignificantChangeLandTransactionConsent.NotApplicable)" />
+            <label class="govuk-label govuk-radios__label" for="land-transaction-consent-na">
+               Not Applicable
+            </label>
+         </div>
+
+         <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+            <label class="govuk-label" for="LandTransactionConsentAdditionalInfo">
+               Use this area for additional information relating to mitigations, actions and further investigations.
+            </label>
+            <inline-error for="@nameof(Model.LandTransactionConsentAdditionalInfo)" />
+            <textarea asp-for="@Model.LandTransactionConsentAdditionalInfo"
+                        class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.LandTransactionConsentAdditionalInfo))"
+                        rows="5" id="LandTransactionConsentAdditionalInfo"></textarea>
          </div>
       </div>
    </fieldset>

@@ -77,6 +77,20 @@ public static class SignificantChangeTaskListBuilder
                Links.SignificantChange.PublicSectorEqualityDuty,
                project => GetTaskStatus(project.EqualitiesImpactAssessmentStatus))
          ]
+      ),
+
+      new SignificantChangeTaskSectionDefinition(
+         "land-and-planning",
+         "Land and Planning",
+         10,
+         [
+            new SignificantChangeTaskDefinition(
+               "land-transaction-consent",
+               "Land Transaction",
+               1,
+               Links.SignificantChange.LandTransactionConsent,
+               project => GetTaskStatus(project.LandTransactionConsentTaskStatus))
+         ]
       )
    ];
 

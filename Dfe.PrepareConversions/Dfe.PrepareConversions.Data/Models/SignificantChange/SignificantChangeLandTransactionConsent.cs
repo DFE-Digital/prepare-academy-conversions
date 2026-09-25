@@ -4,6 +4,5 @@ public enum SignificantChangeLandTransactionConsent
 	{
 		No,
 		NotApplicable,
-		AwaitingLttDecision,
         Yes
 	}
