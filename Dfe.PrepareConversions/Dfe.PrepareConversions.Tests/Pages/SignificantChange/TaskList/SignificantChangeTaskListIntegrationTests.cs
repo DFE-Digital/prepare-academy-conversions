@@ -76,7 +76,7 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
 
       Document.QuerySelectorAll("h3.app-task-list__section").Select(x => x.TextContent.Trim())
-         .Should().OnlyContain(x=> x == "Consultation" || x == "Proposed decision and conversion dates" || x == "Public Sector Equality Duty");
+         .Should().OnlyContain(x=> x == "Consultation" || x == "Proposed decision and conversion dates" || x == "Public Sector Equality Duty" || x == "Financial details");
 
       var stakeholderConsultationLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Stakeholder consultation"));
@@ -119,6 +119,10 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       var religiousBodyStatusTag = Document.QuerySelector("#task-status-religious-body-consultation");
       religiousBodyStatusTag.Should().NotBeNull();
       religiousBodyStatusTag.TextContent.Should().Contain("Not started");
+
+      var fundingStatusTag = Document.QuerySelector("#task-status-funding");
+      fundingStatusTag.Should().NotBeNull();
+      fundingStatusTag.TextContent.Should().Contain("Not started");
    }
 
    [Fact]

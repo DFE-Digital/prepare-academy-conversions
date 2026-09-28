@@ -843,4 +843,50 @@ public class SignificantChangeProjectRepositoryTests
 
       exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetFunding_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 79;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeFunding, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeFundingCommand command = new(FundingAnswer.No, "Additional information", "Supporting evidence");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeFundingCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetFunding(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeFundingCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetFunding_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 79;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeFunding, id);
+      SetSignificantChangeFundingCommand command = new(FundingAnswer.No, "Additional information", "Supporting evidence");
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeFundingCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetFunding(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
 }

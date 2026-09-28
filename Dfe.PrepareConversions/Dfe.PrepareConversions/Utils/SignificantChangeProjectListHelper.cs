@@ -40,7 +40,11 @@ public static class SignificantChangeProjectListHelper
          ReligiousBodyConsultationTrustConsultedReligiousBodyNotConsultedReason = significantChangeProject.ReligiousBodyConsultation?.TrustConsultedReligiousBodyNotConsultedReason ?? string.Empty,
          ProjectDatesStatus = significantChangeProject.ProjectDates?.Status ?? SignificantChangeTaskStatus.NotStarted,
          ProposedDecisionDate = significantChangeProject.ProjectDates?.ProposedDecisionDate,
-         ProposedChangeDate = significantChangeProject.ProjectDates?.ProposedChangeDate
+         ProposedChangeDate = significantChangeProject.ProjectDates?.ProposedChangeDate,
+         FundingStatus = significantChangeProject.Funding?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         FundingAnswer = significantChangeProject.Funding?.FundingAnswer,
+         FundingAdditionalInformation = significantChangeProject.Funding?.AdditionalInformation ?? string.Empty,
+         FundingSupportingEvidence = significantChangeProject.Funding?.SupportingEvidence ?? string.Empty
       };
    }
 
