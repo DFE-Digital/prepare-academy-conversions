@@ -21,7 +21,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SignificantChange.ProjectList;
 public class SignificantChangeProjectListModelTests
 {
    [Fact]
-   public async Task OnGetAsync_FloatsSignedInUserToTopOfAssignees_ThenAlphabetical()
+   public async Task OnGetAsync_FloatsSignedInUserToTopOfProjectOwners_ThenAlphabetical()
    {
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(
          new SignificantChangeFilterParameters
@@ -38,7 +38,7 @@ public class SignificantChangeProjectListModelTests
 
       await sut.OnGetAsync();
 
-      sut.Filters.AvailableAssignees.Select(assignee => assignee.Display)
+      sut.Filters.AvailableProjectOwners.Select(projectOwner => projectOwner.Display)
          .Should().ContainInOrder("Ste Smith", "Alice Brown", "Zoe Adams");
    }
 
@@ -54,7 +54,7 @@ public class SignificantChangeProjectListModelTests
 
       sut.Filters.AvailableStatuses.Should().BeEmpty();
       sut.Filters.AvailableTiers.Should().BeEmpty();
-      sut.Filters.AvailableAssignees.Should().BeEmpty();
+      sut.Filters.AvailableProjectOwners.Should().BeEmpty();
       sut.Filters.AvailableRoutes.Should().BeEmpty();
       sut.Projects.Should().BeEmpty();
    }

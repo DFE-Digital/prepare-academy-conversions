@@ -94,6 +94,8 @@ public class SignificantChangeProjectAssignmentIntegrationTests : BaseIntegratio
          TrustUkprn = "12345678",
          AssignedUser = assignedUser,
          TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "Pre decision"
       };
    }

@@ -98,6 +98,8 @@ public class ReligiousBodyConsultationIntegrationTests(IntegrationTestingWebAppl
          TrustUkprn = "12345678",
          AssignedUser = new User("user-id", "assigned.user@test.local", "Assigned User"),
          TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "pre decision",
          StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse(),
          ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse()

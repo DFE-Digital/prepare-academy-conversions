@@ -34,7 +34,7 @@
                     <span if="project.TypeOfSignificantChange.IsPresent()">@project.TypeOfSignificantChange</span>
                 </div>
                 <div id="@("assigned-to-" + index)" class="do govuk-!-margin-top-1">
-                    <strong>Assigned to:</strong>
+                    <strong>Project owner:</strong>
                     <span if="project.AssignedUser == null || project.AssignedUser.FullName.IsEmpty()" class="empty">Unassigned</span>
                     <span if="project.AssignedUser != null && project.AssignedUser.FullName.IsPresent()">@project.AssignedUser.FullName</span>
                 </div>

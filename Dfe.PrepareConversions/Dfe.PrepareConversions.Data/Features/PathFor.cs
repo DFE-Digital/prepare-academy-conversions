@@ -51,6 +51,7 @@ public class PathFor
    public static string RecordSignificantChangeDecision => "/significant-change/decision";
    public static string GetSignificantChangeDecision => "/significant-change/decision/{0}";
    public static string SetSignificantChangeStakeholderConsultation => "/significant-change/{0}/SetStakeholderConsultation";
+   public static string SetSignificantChangeStakeholderObjections => "/significant-change/{0}/SetStakeholderObjections";
    public static string SetSignificantChangeConsultationDuration => "/significant-change/{0}/SetConsultationDuration";
    public static string SetAdmissionVariationConsultation => "/significant-change/{0}/SetSignificantChangeAdmissionVariationConsultation";
    public static string SetSignificantChangeEqualitiesImpactAssessment => "/significant-change/{0}/SetEqualitiesImpactAssessment";

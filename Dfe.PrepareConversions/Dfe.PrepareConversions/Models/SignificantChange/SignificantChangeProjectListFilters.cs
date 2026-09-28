@@ -14,33 +14,33 @@ public class SignificantChangeProjectListFilters
 {
    public const string SigChangeFilterKeyword = nameof(SigChangeFilterKeyword);
    public const string SigChangeFilterStatuses = nameof(SigChangeFilterStatuses);
-   public const string SigChangeFilterAssignees = nameof(SigChangeFilterAssignees);
+   public const string SigChangeFilterProjectOwners = nameof(SigChangeFilterProjectOwners);
    public const string SigChangeFilterTiers = nameof(SigChangeFilterTiers);
    public const string SigChangeFilterRoutes = nameof(SigChangeFilterRoutes);
    private IDictionary<string, object?> _store = null!;
-   public List<FilterValueDisplay> AvailableStatuses { get; set; } = new();
-   public List<FilterValueDisplay> AvailableAssignees { get; set; } = new();
-   public List<FilterValueDisplay> AvailableTiers { get; set; } = new();
-   public List<FilterValueDisplay> AvailableRoutes { get; set; } = new();
+   public List<FilterValueDisplay> AvailableStatuses { get; set; } = [];
+   public List<FilterValueDisplay> AvailableProjectOwners { get; set; } = [];
+   public List<FilterValueDisplay> AvailableTiers { get; set; } = [];
+   public List<FilterValueDisplay> AvailableRoutes { get; set; } = [];
 
    [BindProperty]
    public string? Keyword { get; set; }
 
    [BindProperty]
-   public string[] SelectedStatuses { get; set; } = Array.Empty<string>();
+   public string[] SelectedStatuses { get; set; } = [];
 
    [BindProperty]
-   public string[] SelectedAssignees { get; set; } = Array.Empty<string>();
+   public string[] SelectedProjectOwners { get; set; } = [];
 
    [BindProperty]
-   public string[] SelectedTiers { get; set; } = Array.Empty<string>();
+   public string[] SelectedTiers { get; set; } = [];
 
    [BindProperty]
-   public string[] SelectedRoutes { get; set; } = Array.Empty<string>();
+   public string[] SelectedRoutes { get; set; } = [];
 
    public bool IsVisible => !string.IsNullOrWhiteSpace(Keyword) ||
                             SelectedStatuses.Length > 0 ||
-                            SelectedAssignees.Length > 0 ||
+                            SelectedProjectOwners.Length > 0 ||
                             SelectedTiers.Length > 0 ||
                             SelectedRoutes.Length > 0;
 
@@ -63,7 +63,7 @@ public class SignificantChangeProjectListFilters
 
       Keyword = Get(SigChangeFilterKeyword).FirstOrDefault()?.Trim();
       SelectedStatuses = Get(SigChangeFilterStatuses);
-      SelectedAssignees = Get(SigChangeFilterAssignees);
+      SelectedProjectOwners = Get(SigChangeFilterProjectOwners);
       SelectedTiers = Get(SigChangeFilterTiers);
       SelectedRoutes = Get(SigChangeFilterRoutes);
 
@@ -80,7 +80,7 @@ public class SignificantChangeProjectListFilters
 
          Keyword = default;
          SelectedStatuses = Array.Empty<string>();
-         SelectedAssignees = Array.Empty<string>();
+         SelectedProjectOwners = Array.Empty<string>();
          SelectedTiers = Array.Empty<string>();
          SelectedRoutes = Array.Empty<string>();
 
@@ -90,7 +90,7 @@ public class SignificantChangeProjectListFilters
       if (query.ContainsKey("remove"))
       {
          SelectedStatuses = GetAndRemove(SigChangeFilterStatuses, GetFromQuery(nameof(SelectedStatuses)), true);
-         SelectedAssignees = GetAndRemove(SigChangeFilterAssignees, GetFromQuery(nameof(SelectedAssignees)), true);
+         SelectedProjectOwners = GetAndRemove(SigChangeFilterProjectOwners, GetFromQuery(nameof(SelectedProjectOwners)), true);
          SelectedTiers = GetAndRemove(SigChangeFilterTiers, GetFromQuery(nameof(SelectedTiers)), true);
          SelectedRoutes = GetAndRemove(SigChangeFilterRoutes, GetFromQuery(nameof(SelectedRoutes)), true);
 
@@ -99,7 +99,7 @@ public class SignificantChangeProjectListFilters
 
       bool activeFilterChanges = query.ContainsKey(nameof(Keyword)) ||
                                  query.ContainsKey(nameof(SelectedStatuses)) ||
-                                 query.ContainsKey(nameof(SelectedAssignees)) ||
+                                 query.ContainsKey(nameof(SelectedProjectOwners)) ||
                                  query.ContainsKey(nameof(SelectedTiers)) ||
                                  query.ContainsKey(nameof(SelectedRoutes));
 
@@ -107,7 +107,7 @@ public class SignificantChangeProjectListFilters
       {
          Keyword = Cache(SigChangeFilterKeyword, GetFromQuery(nameof(Keyword))).FirstOrDefault()?.Trim();
          SelectedStatuses = Cache(SigChangeFilterStatuses, GetFromQuery(nameof(SelectedStatuses)));
-         SelectedAssignees = Cache(SigChangeFilterAssignees, GetFromQuery(nameof(SelectedAssignees)));
+         SelectedProjectOwners = Cache(SigChangeFilterProjectOwners, GetFromQuery(nameof(SelectedProjectOwners)));
          SelectedTiers = Cache(SigChangeFilterTiers, GetFromQuery(nameof(SelectedTiers)));
          SelectedRoutes = Cache(SigChangeFilterRoutes, GetFromQuery(nameof(SelectedRoutes)));
       }
@@ -115,7 +115,7 @@ public class SignificantChangeProjectListFilters
       {
          Keyword = Get(SigChangeFilterKeyword, true).FirstOrDefault()?.Trim();
          SelectedStatuses = Get(SigChangeFilterStatuses, true);
-         SelectedAssignees = Get(SigChangeFilterAssignees, true);
+         SelectedProjectOwners = Get(SigChangeFilterProjectOwners, true);
          SelectedTiers = Get(SigChangeFilterTiers, true);
          SelectedRoutes = Get(SigChangeFilterRoutes, true);
       }
@@ -168,7 +168,7 @@ public class SignificantChangeProjectListFilters
    {
       Cache(SigChangeFilterKeyword, default);
       Cache(SigChangeFilterStatuses, default);
-      Cache(SigChangeFilterAssignees, default);
+      Cache(SigChangeFilterProjectOwners, default);
       Cache(SigChangeFilterTiers, default);
       Cache(SigChangeFilterRoutes, default);
    }

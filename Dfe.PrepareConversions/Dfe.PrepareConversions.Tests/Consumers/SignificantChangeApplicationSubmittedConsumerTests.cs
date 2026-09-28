@@ -1,0 +1,504 @@
+using Dfe.Academisation.CorrelationIdMiddleware;
+using Dfe.PrepareConversions.Consumers;
+using Dfe.PrepareConversions.Data;
+using Dfe.PrepareConversions.Data.Models.SignificantChange;
+using Dfe.PrepareConversions.Data.Services.Interfaces;
+using GovUK.Dfe.FlexForms.Domain.Models.Messaging;
+using MassTransit;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace Dfe.PrepareConversions.Tests.Consumers;
+
+public class SignificantChangeApplicationSubmittedConsumerTests
+{
+   [Fact]
+   public async Task Consume_creates_significant_change_project_from_payload()
+   {
+      var repository = new Mock<ISignificantChangeProjectRepository>();
+      repository
+         .Setup(x => x.CreateProject(It.IsAny<CreateSignificantProjectCommand>()))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.Created, BuildProjectResponse()));
+
+      var correlationContext = new Mock<ICorrelationContext>();
+      var logger = new Mock<ILogger<SignificantChangeApplicationSubmittedConsumer>>();
+      logger.Setup(x => x.IsEnabled(LogLevel.Information)).Returns(true);
+
+      var sut = new SignificantChangeApplicationSubmittedConsumer(repository.Object, correlationContext.Object, logger.Object);
+      var context = BuildContext(new SchemaEventEnvelope
+      {
+         MessageType = "SignificantChangeApplicationSubmitted",
+         TopicName = "significant-change-application-submitted",
+         Payload = new SchemaEventPayload
+         {
+            ApplicationId = "ID_APP_123",
+            ApplicationReference = "APP_REF_123",
+            Urn = "123456",
+            TrustUkprn = "10001234",
+            Tier = 1
+         },
+         Metadata = new SchemaEventMetadata
+         {
+            ApplicationReference = "APP_REF_123",
+            TemplateId = "template-a"
+         }
+      });
+
+      await sut.Consume(context.Object);
+
+      repository.Verify(x => x.CreateProject(
+         It.Is<CreateSignificantProjectCommand>(command =>
+            command.Urn == 123456 &&
+            command.TrustUkprn == "10001234" &&
+            command.Tier == 1 &&
+            command.Route == "Hardcoded temporary value" &&
+            command.ApplicationId == "ID_APP_123" &&
+            command.ApplicationReference == "APP_REF_123")), Times.Once);
+      correlationContext.Verify(x => x.SetContext(It.IsAny<Guid>()), Times.Once);
+   }
+
+   [Fact]
+   public async Task Consume_uses_payload_tier_and_route_when_present()
+   {
+      var repository = new Mock<ISignificantChangeProjectRepository>();
+      repository
+         .Setup(x => x.CreateProject(It.IsAny<CreateSignificantProjectCommand>()))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.Created, BuildProjectResponse()));
+
+      var correlationContext = new Mock<ICorrelationContext>();
+      var logger = new Mock<ILogger<SignificantChangeApplicationSubmittedConsumer>>();
+
+      var sut = new SignificantChangeApplicationSubmittedConsumer(repository.Object, correlationContext.Object, logger.Object);
+      var context = BuildContext(new SchemaEventEnvelope
+      {
+         MessageType = "SignificantChangeApplicationSubmitted",
+         TopicName = "significant-change-application-submitted",
+         Payload = new SchemaEventPayload
+         {
+            ApplicationId = "ID_APP_124",
+            ApplicationReference = "APP_REF_124",
+            Urn = "654321",
+            TrustUkprn = "10009999",
+            Tier = 1,
+            TypeOfSignificantChange = "TypeOfSignificantChange A"
+         },
+         Metadata = new SchemaEventMetadata
+         {
+            TemplateId = "unknown-template"
+         }
+      });
+
+      await sut.Consume(context.Object);
+
+      repository.Verify(x => x.CreateProject(
+         It.Is<CreateSignificantProjectCommand>(command =>
+            command.Urn == 654321 &&
+            command.TrustUkprn == "10009999" &&
+            command.Tier == 1 &&
+            command.Route == "Hardcoded temporary value" &&
+            command.ApplicationId == "ID_APP_124" &&
+            command.ApplicationReference == "APP_REF_124")), Times.Once);
+   }
+
+   [Fact]
+   public async Task Consume_throws_when_tier_missing()
+   {
+      var repository = new Mock<ISignificantChangeProjectRepository>();
+      repository
+         .Setup(x => x.CreateProject(It.IsAny<CreateSignificantProjectCommand>()))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.Created, BuildProjectResponse()));
+
+      var correlationContext = new Mock<ICorrelationContext>();
+      var logger = new Mock<ILogger<SignificantChangeApplicationSubmittedConsumer>>();
+
+      var sut = new SignificantChangeApplicationSubmittedConsumer(repository.Object, correlationContext.Object, logger.Object);
+      var context = BuildContext(new SchemaEventEnvelope
+      {
+         MessageType = "SignificantChangeApplicationSubmitted",
+         TopicName = "significant-change-application-submitted",
+         Payload = new SchemaEventPayload
+         {
+            ApplicationReference = "SIG-20260916-047",
+            ApplicationId = "ID_APP_MISSING_TIER",
+            Urn = "100010",
+            TrustUkprn = "10061000"
+         },
+         Metadata = new SchemaEventMetadata
+         {
+            TemplateId = "f12e2d96-c4bf-4135-919c-f04f4f1a7449"
+         }
+      });
+
+      await Assert.ThrowsAsync<InvalidOperationException>(() => sut.Consume(context.Object));
+
+      repository.Verify(x => x.CreateProject(It.IsAny<CreateSignificantProjectCommand>()), Times.Never);
+   }
+
+   [Fact]
+   public async Task Consume_does_nothing_for_unrelated_message_type()
+   {
+      var repository = new Mock<ISignificantChangeProjectRepository>();
+      var correlationContext = new Mock<ICorrelationContext>();
+      var logger = new Mock<ILogger<SignificantChangeApplicationSubmittedConsumer>>();
+      logger.Setup(x => x.IsEnabled(LogLevel.Information)).Returns(true);
+
+      var sut = new SignificantChangeApplicationSubmittedConsumer(repository.Object, correlationContext.Object, logger.Object);
+      var context = BuildContext(new SchemaEventEnvelope
+      {
+         MessageType = "SomethingElse",
+         TopicName = "another-topic",
+         Payload = new SchemaEventPayload(),
+         Metadata = new SchemaEventMetadata()
+      });
+
+      await sut.Consume(context.Object);
+
+      repository.Verify(x => x.CreateProject(It.IsAny<CreateSignificantProjectCommand>()), Times.Never);
+   }
+
+   [Fact]
+   public async Task Consume_creates_project_when_only_topic_name_matches()
+   {
+      var repository = new Mock<ISignificantChangeProjectRepository>();
+      repository
+         .Setup(x => x.CreateProject(It.IsAny<CreateSignificantProjectCommand>()))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.Created, BuildProjectResponse()));
+
+      var correlationContext = new Mock<ICorrelationContext>();
+      var logger = new Mock<ILogger<SignificantChangeApplicationSubmittedConsumer>>();
+
+      var sut = new SignificantChangeApplicationSubmittedConsumer(repository.Object, correlationContext.Object, logger.Object);
+      var context = BuildContext(new SchemaEventEnvelope
+      {
+         MessageType = "SomethingElse",
+         TopicName = "significant-change-application-submitted",
+         Payload = new SchemaEventPayload
+         {
+            ApplicationId = "ID_APP_123",
+            ApplicationReference = "APP_REF_123",
+            Urn = "123456",
+            TrustUkprn = "10001234",
+            Tier = 1
+         },
+         Metadata = new SchemaEventMetadata
+         {
+            ApplicationReference = "APP_REF_123",
+            TemplateId = "template-a"
+         }
+      });
+
+      await sut.Consume(context.Object);
+
+      repository.Verify(x => x.CreateProject(It.IsAny<CreateSignificantProjectCommand>()), Times.Once);
+   }
+
+   [Fact]
+   public async Task Consume_creates_project_when_only_message_type_matches()
+   {
+      var repository = new Mock<ISignificantChangeProjectRepository>();
+      repository
+         .Setup(x => x.CreateProject(It.IsAny<CreateSignificantProjectCommand>()))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.Created, BuildProjectResponse()));
+
+      var correlationContext = new Mock<ICorrelationContext>();
+      var logger = new Mock<ILogger<SignificantChangeApplicationSubmittedConsumer>>();
+
+      var sut = new SignificantChangeApplicationSubmittedConsumer(repository.Object, correlationContext.Object, logger.Object);
+      var context = BuildContext(new SchemaEventEnvelope
+      {
+         MessageType = "SignificantChangeApplicationSubmitted",
+         TopicName = "another-topic",
+         Payload = new SchemaEventPayload
+         {
+            ApplicationId = "ID_APP_123",
+            ApplicationReference = "APP_REF_123",
+            Urn = "123456",
+            TrustUkprn = "10001234",
+            Tier = 1
+         },
+         Metadata = new SchemaEventMetadata
+         {
+            ApplicationReference = "APP_REF_123",
+            TemplateId = "template-a"
+         }
+      });
+
+      await sut.Consume(context.Object);
+
+      repository.Verify(x => x.CreateProject(It.IsAny<CreateSignificantProjectCommand>()), Times.Once);
+   }
+
+   [Fact]
+   public async Task Consume_uses_header_correlation_id_when_valid_header_exists()
+   {
+      var repository = new Mock<ISignificantChangeProjectRepository>();
+      repository
+         .Setup(x => x.CreateProject(It.IsAny<CreateSignificantProjectCommand>()))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.Created, BuildProjectResponse()));
+
+      Guid headerCorrelationId = Guid.NewGuid();
+      Guid capturedCorrelationId = Guid.Empty;
+
+      var correlationContext = new Mock<ICorrelationContext>();
+      correlationContext
+         .Setup(x => x.SetContext(It.IsAny<Guid>()))
+         .Callback<Guid>(id => capturedCorrelationId = id);
+
+      var logger = new Mock<ILogger<SignificantChangeApplicationSubmittedConsumer>>();
+      logger.Setup(x => x.IsEnabled(LogLevel.Information)).Returns(true);
+
+      var sut = new SignificantChangeApplicationSubmittedConsumer(repository.Object, correlationContext.Object, logger.Object);
+      var context = BuildContext(BuildValidEnvelope(), headerCorrelationId.ToString(), Guid.NewGuid());
+
+      await sut.Consume(context.Object);
+
+      Assert.Equal(headerCorrelationId, capturedCorrelationId);
+   }
+
+   [Fact]
+   public async Task Consume_generates_correlation_id_when_header_and_message_id_are_missing()
+   {
+      var repository = new Mock<ISignificantChangeProjectRepository>();
+      repository
+         .Setup(x => x.CreateProject(It.IsAny<CreateSignificantProjectCommand>()))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.Created, BuildProjectResponse()));
+
+      Guid capturedCorrelationId = Guid.Empty;
+
+      var correlationContext = new Mock<ICorrelationContext>();
+      correlationContext
+         .Setup(x => x.SetContext(It.IsAny<Guid>()))
+         .Callback<Guid>(id => capturedCorrelationId = id);
+
+      var logger = new Mock<ILogger<SignificantChangeApplicationSubmittedConsumer>>();
+
+      var sut = new SignificantChangeApplicationSubmittedConsumer(repository.Object, correlationContext.Object, logger.Object);
+      var context = BuildContext(BuildValidEnvelope(), messageId: null, includeGeneratedMessageId: false);
+
+      await sut.Consume(context.Object);
+
+      Assert.NotEqual(Guid.Empty, capturedCorrelationId);
+   }
+
+   [Fact]
+   public async Task Consume_does_nothing_when_message_is_null()
+   {
+      var repository = new Mock<ISignificantChangeProjectRepository>();
+      var correlationContext = new Mock<ICorrelationContext>();
+      var logger = new Mock<ILogger<SignificantChangeApplicationSubmittedConsumer>>();
+      logger.Setup(x => x.IsEnabled(LogLevel.Information)).Returns(true);
+
+      var sut = new SignificantChangeApplicationSubmittedConsumer(repository.Object, correlationContext.Object, logger.Object);
+      var context = BuildContext(message: null);
+
+      await sut.Consume(context.Object);
+
+      repository.Verify(x => x.CreateProject(It.IsAny<CreateSignificantProjectCommand>()), Times.Never);
+      correlationContext.Verify(x => x.SetContext(It.IsAny<Guid>()), Times.Once);
+   }
+
+   [Fact]
+   public async Task Consume_wraps_exception_from_repository_with_context()
+   {
+      var repository = new Mock<ISignificantChangeProjectRepository>();
+      var expectedException = new HttpRequestException("boom");
+      repository
+         .Setup(x => x.CreateProject(It.IsAny<CreateSignificantProjectCommand>()))
+         .ThrowsAsync(expectedException);
+
+      var correlationContext = new Mock<ICorrelationContext>();
+      var logger = new Mock<ILogger<SignificantChangeApplicationSubmittedConsumer>>();
+
+      var sut = new SignificantChangeApplicationSubmittedConsumer(repository.Object, correlationContext.Object, logger.Object);
+      var context = BuildContext(BuildValidEnvelope());
+
+      var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => sut.Consume(context.Object));
+
+      Assert.Same(expectedException, ex.InnerException);
+      Assert.Contains("APP_REF_123", ex.Message);
+   }
+
+   [Fact]
+   public async Task Consume_throws_when_payload_is_null()
+   {
+      var repository = new Mock<ISignificantChangeProjectRepository>();
+      var correlationContext = new Mock<ICorrelationContext>();
+      var logger = new Mock<ILogger<SignificantChangeApplicationSubmittedConsumer>>();
+
+      var message = BuildValidEnvelope();
+      message.Payload = null;
+
+      var sut = new SignificantChangeApplicationSubmittedConsumer(repository.Object, correlationContext.Object, logger.Object);
+      var context = BuildContext(message);
+
+      var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => sut.Consume(context.Object));
+
+      Assert.Equal("Schema event payload is missing.", ex.InnerException?.Message);
+   }
+
+   [Fact]
+   public async Task Consume_throws_when_application_id_is_missing()
+   {
+      var repository = new Mock<ISignificantChangeProjectRepository>();
+      var correlationContext = new Mock<ICorrelationContext>();
+      var logger = new Mock<ILogger<SignificantChangeApplicationSubmittedConsumer>>();
+
+      var message = BuildValidEnvelope();
+      message.Payload.ApplicationId = null;
+
+      var sut = new SignificantChangeApplicationSubmittedConsumer(repository.Object, correlationContext.Object, logger.Object);
+      var context = BuildContext(message);
+
+      var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => sut.Consume(context.Object));
+
+      Assert.Equal("Schema event payload applicationId is missing.", ex.InnerException?.Message);
+   }
+
+   [Fact]
+   public async Task Consume_throws_when_application_reference_is_missing()
+   {
+      var repository = new Mock<ISignificantChangeProjectRepository>();
+      var correlationContext = new Mock<ICorrelationContext>();
+      var logger = new Mock<ILogger<SignificantChangeApplicationSubmittedConsumer>>();
+
+      var message = BuildValidEnvelope();
+      message.Payload.ApplicationReference = null;
+
+      var sut = new SignificantChangeApplicationSubmittedConsumer(repository.Object, correlationContext.Object, logger.Object);
+      var context = BuildContext(message);
+
+      var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => sut.Consume(context.Object));
+
+      Assert.Equal("Schema event payload applicationReference is missing.", ex.InnerException?.Message);
+   }
+
+   [Fact]
+   public async Task Consume_throws_when_urn_is_invalid()
+   {
+      var repository = new Mock<ISignificantChangeProjectRepository>();
+      var correlationContext = new Mock<ICorrelationContext>();
+      var logger = new Mock<ILogger<SignificantChangeApplicationSubmittedConsumer>>();
+
+      var message = BuildValidEnvelope();
+      message.Payload.Urn = "not-a-number";
+
+      var sut = new SignificantChangeApplicationSubmittedConsumer(repository.Object, correlationContext.Object, logger.Object);
+      var context = BuildContext(message);
+
+      var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => sut.Consume(context.Object));
+
+      Assert.Equal("Schema event payload urn is missing or invalid.", ex.InnerException?.Message);
+   }
+
+   [Fact]
+   public async Task Consume_throws_when_trust_ukprn_is_missing()
+   {
+      var repository = new Mock<ISignificantChangeProjectRepository>();
+      var correlationContext = new Mock<ICorrelationContext>();
+      var logger = new Mock<ILogger<SignificantChangeApplicationSubmittedConsumer>>();
+
+      var message = BuildValidEnvelope();
+      message.Payload.TrustUkprn = null;
+
+      var sut = new SignificantChangeApplicationSubmittedConsumer(repository.Object, correlationContext.Object, logger.Object);
+      var context = BuildContext(message);
+
+      var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => sut.Consume(context.Object));
+
+      Assert.Equal("Schema event payload trustUkprn is missing.", ex.InnerException?.Message);
+   }
+
+   [Fact]
+   public async Task Consume_throws_when_tier_is_invalid()
+   {
+      var repository = new Mock<ISignificantChangeProjectRepository>();
+      var correlationContext = new Mock<ICorrelationContext>();
+      var logger = new Mock<ILogger<SignificantChangeApplicationSubmittedConsumer>>();
+
+      var message = BuildValidEnvelope();
+      message.Payload.Tier = 2;
+
+      var sut = new SignificantChangeApplicationSubmittedConsumer(repository.Object, correlationContext.Object, logger.Object);
+      var context = BuildContext(message);
+
+      var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => sut.Consume(context.Object));
+
+      Assert.Equal("Schema event payload tier is invalid.", ex.InnerException?.Message);
+   }
+
+   private static SchemaEventEnvelope BuildValidEnvelope()
+   {
+      return new SchemaEventEnvelope
+      {
+         MessageType = "SignificantChangeApplicationSubmitted",
+         TopicName = "significant-change-application-submitted",
+         Payload = new SchemaEventPayload
+         {
+            ApplicationId = "ID_APP_123",
+            ApplicationReference = "APP_REF_123",
+            Urn = "123456",
+            TrustUkprn = "10001234",
+            Tier = 1
+         },
+         Metadata = new SchemaEventMetadata
+         {
+            ApplicationReference = "APP_REF_123",
+            TemplateId = "template-a"
+         }
+      };
+   }
+
+   private static SignificantChangeProjectResponse BuildProjectResponse()
+   {
+      return new SignificantChangeProjectResponse
+      {
+         Id = 1,
+         Urn = 123456,
+         Tier = 1,
+         SchoolName = "School",
+         TrustName = "Trust",
+         TrustUkprn = "10001234",
+         TypeOfSignificantChange = "TypeOfSignificantChange A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
+         Status = "Pre decision"
+      };
+   }
+
+   private static Mock<ConsumeContext<SchemaEventEnvelope>> BuildContext(
+      SchemaEventEnvelope message,
+      object correlationHeaderValue = null,
+      Guid? messageId = null,
+      bool includeGeneratedMessageId = true)
+   {
+      var headers = new Mock<Headers>();
+      object headerValue = correlationHeaderValue;
+      headers
+         .Setup(x => x.TryGetHeader("x-correlationId", out headerValue))
+         .Returns(correlationHeaderValue != null);
+
+      object emptyValue = null;
+      headers
+         .Setup(x => x.TryGetHeader(It.Is<string>(key => key != "x-correlationId"), out emptyValue))
+         .Returns(false);
+
+      var context = new Mock<ConsumeContext<SchemaEventEnvelope>>();
+      context.SetupGet(x => x.Message).Returns(message);
+      context.SetupGet(x => x.Headers).Returns(headers.Object);
+
+      Guid? resolvedMessageId = messageId;
+      if (!resolvedMessageId.HasValue && includeGeneratedMessageId)
+      {
+         resolvedMessageId = Guid.NewGuid();
+      }
+
+      context.SetupGet(x => x.MessageId).Returns(resolvedMessageId);
+
+      return context;
+   }
+}

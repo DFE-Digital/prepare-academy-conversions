@@ -38,13 +38,13 @@ public class IndexModel(ISignificantChangeProjectRepository significantChangePro
       Filters.PersistUsing(TempData).PopulateFrom(Request.Query);
 
       var response = await SignificantChangeProjectRepository.GetAllProjects(
-         CurrentPage,
-         PageSize,
-         Filters.Keyword,
-         Filters.SelectedStatuses,
-         Filters.SelectedAssignees,
-         Filters.GetSelectedTiersAsBytes(),
-         Filters.SelectedRoutes);
+         page: CurrentPage,
+         count: PageSize,
+         keyword: Filters.Keyword,
+         statuses: Filters.SelectedStatuses,
+         assignees: Filters.SelectedProjectOwners,
+         tiers: Filters.GetSelectedTiersAsBytes(),
+         routes: Filters.SelectedRoutes);
 
       Paging = response.Body?.Paging ?? new ApiV2PagingInfo { Page = CurrentPage, RecordCount = 0, NextPageUrl = null };
       Projects = response.Body?.Data?.Select(SignificantChangeProjectListHelper.Build).ToList() ?? [];
@@ -60,9 +60,9 @@ public class IndexModel(ISignificantChangeProjectRepository significantChangePro
 
       // Float the signed-in user to the top, exactly as all four existing list pages do.
       // NameOfUser is the "name" claim ("Last, First"); ConvertToFirstLast flips it to match the API.
-      Filters.AvailableAssignees = (filterParameters.Body?.AssignedUsers ?? [])
-         .OrderByDescending(assignee => assignee.Display.Equals(ProjectListHelper.ConvertToFirstLast(NameOfUser), StringComparison.OrdinalIgnoreCase))
-         .ThenBy(assignee => assignee.Display)
+      Filters.AvailableProjectOwners = (filterParameters.Body?.AssignedUsers ?? [])
+         .OrderByDescending(projectOwner => projectOwner.Display.Equals(ProjectListHelper.ConvertToFirstLast(NameOfUser), StringComparison.OrdinalIgnoreCase))
+         .ThenBy(projectOwner => projectOwner.Display)
          .ToList();
    }
 }

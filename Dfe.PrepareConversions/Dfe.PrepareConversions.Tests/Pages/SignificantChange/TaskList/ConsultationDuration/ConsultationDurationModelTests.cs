@@ -167,6 +167,8 @@ public class ConsultationDurationModelTests
          TrustName = "Example trust",
          TrustUkprn = "12345678",
          TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "pre decision",
          StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
          {
