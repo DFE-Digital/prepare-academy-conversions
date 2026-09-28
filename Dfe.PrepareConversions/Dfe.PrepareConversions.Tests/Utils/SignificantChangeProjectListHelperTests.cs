@@ -211,6 +211,8 @@ public class SignificantChangeProjectListHelperTests
       {
          Id = 1,
          Urn = 10000000,
+         ApplicationId = "12345",
+         ApplicationReference = "12345",
          Tier = 1,
          TrustName = "Trust name",
          TrustUkprn = "12345678",
