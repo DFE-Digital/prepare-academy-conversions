@@ -119,9 +119,9 @@ public class StakeholderObjectionsIntegrationTests(IntegrationTestingWebApplicat
          LocalAuthorityName = "Test local authority",
          AssignedUser = new User("user-id", "assigned.user@test.local", "Assigned User"),
          TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
          Status = "pre decision",
-         StakeholderObjections = new SignificantChangeStakeholderObjectionsResponse(),
-         LocalAuthorityName = "Test local authority"
-      };
+         StakeholderObjections = new SignificantChangeStakeholderObjectionsResponse()
    }
 }
