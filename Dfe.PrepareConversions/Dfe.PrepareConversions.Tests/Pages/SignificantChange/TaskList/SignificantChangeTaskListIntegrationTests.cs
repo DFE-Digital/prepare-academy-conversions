@@ -76,7 +76,16 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
 
       Document.QuerySelectorAll("h3.app-task-list__section").Select(x => x.TextContent.Trim())
-         .Should().OnlyContain(x=> x == "Consultation" || x == "Proposed decision and conversion dates" || x == "Public Sector Equality Duty" || x == "Land and Planning");
+         .Should().Equal(
+            "Key project dates",
+            "Admissions variation",
+            "Consultation details",
+            "Academy performance",
+            "Public Sector Equality Duty",
+            "Land transaction application and planning permission",
+            "Financial details",
+            "High Quality Trust Framework",
+            "Recommendation on how to proceed");
 
       var stakeholderConsultationLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Stakeholder consultation"));
@@ -89,6 +98,12 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
 
       religiousBodyConsultationLink.Should().NotBeNull();
       religiousBodyConsultationLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/religious-body-consultation");
+
+      var planningPermissionLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Planning Permission"));
+
+      planningPermissionLink.Should().NotBeNull();
+      planningPermissionLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/planning-permission");
 
       var publicSectorEqualityDutyLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Public Sector Equality Duty"));
