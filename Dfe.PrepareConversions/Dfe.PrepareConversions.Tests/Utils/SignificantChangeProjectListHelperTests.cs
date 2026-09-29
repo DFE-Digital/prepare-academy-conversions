@@ -231,7 +231,8 @@ public class SignificantChangeProjectListHelperTests
             AdditionalInformation = "Planning permission is still pending",
             SupportingEvidence = "Planning reference 12345",
             Status = SignificantChangeTaskStatus.InProgress
-         }
+         },
+         LocalAuthorityName = "Test local authority"
       };
 
       var viewModel = SignificantChangeProjectListHelper.Build(response);
@@ -347,7 +348,8 @@ public class SignificantChangeProjectListHelperTests
             AdditionalInformation = "Funding gap identified",
             SupportingEvidence = "Board minutes link",
             Status = SignificantChangeTaskStatus.Completed
-         }
+         },
+         LocalAuthorityName = "Test local authority"
       };
 
       var viewModel = SignificantChangeProjectListHelper.Build(response);
@@ -372,7 +374,8 @@ public class SignificantChangeProjectListHelperTests
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
          Status = "pre decision",
-         Funding = null
+         Funding = null,
+         LocalAuthorityName = "Test local authority"
       };
 
       var viewModel = SignificantChangeProjectListHelper.Build(response);

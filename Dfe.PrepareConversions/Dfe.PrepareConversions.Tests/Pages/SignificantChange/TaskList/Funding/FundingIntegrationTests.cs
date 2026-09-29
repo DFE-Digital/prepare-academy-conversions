@@ -123,7 +123,8 @@ public class FundingIntegrationTests(IntegrationTestingWebApplicationFactory fac
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
          Status = "pre decision",
-         Funding = new SignificantChangeFundingResponse()
+         Funding = new SignificantChangeFundingResponse(),
+         LocalAuthorityName = "Test local authority"
       };
    }
 }

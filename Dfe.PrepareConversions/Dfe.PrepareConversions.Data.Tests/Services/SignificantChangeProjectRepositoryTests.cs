@@ -109,7 +109,7 @@ public class SignificantChangeProjectRepositoryTests
                TypeOfSignificantChange = "Fast track",
                Status = "Pre decision",
                ApplicationId = "ID_APP_123",
-               ApplicationReference = "APP_REF_123"
+               ApplicationReference = "APP_REF_123",
                LocalAuthorityName = "Test local authority"
             },
             Paging = new ApiV2PagingInfo
