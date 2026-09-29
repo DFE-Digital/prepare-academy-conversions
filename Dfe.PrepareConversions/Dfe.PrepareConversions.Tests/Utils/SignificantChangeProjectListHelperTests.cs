@@ -21,6 +21,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Kent",
          Status = "approved with conditions"
       };
 
@@ -28,6 +29,7 @@ public class SignificantChangeProjectListHelperTests
 
       Assert.Equal("Approved with conditions", viewModel.Status);
       Assert.Equal("green", viewModel.StatusColour);
+      Assert.Equal("Kent", viewModel.LocalAuthorityName);
    }
 
    [Fact]
@@ -43,6 +45,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
          {
@@ -72,6 +75,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse
          {
@@ -91,8 +95,8 @@ public class SignificantChangeProjectListHelperTests
    [Fact]
    public void Build_Maps_project_dates_values_when_dates_are_set()
    {
-      var proposedDecisionDate = new DateTime(2024, 12, 15);
-      var proposedChangeDate = new DateTime(2025, 01, 20);
+      var proposedDecisionDate = new DateTime(2024, 12, 15, 0, 0, 0, DateTimeKind.Utc);
+      var proposedChangeDate = new DateTime(2025, 01, 20, 0, 0, 0, DateTimeKind.Utc);
 
       SignificantChangeProjectResponse response = new()
       {
@@ -104,6 +108,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          ProjectDates = new SignificantChangeProjectDatesResponse
          {
@@ -133,6 +138,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          ProjectDates = null
       };
@@ -186,6 +192,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          EqualitiesImpactAssessment = new SignificantChangeEqualitiesImpactAssessmentResponse
          {
@@ -248,6 +255,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          AdmissionVariationConsultation = new SignificantChangeAdmissionVariationConsultationResponse
          {
@@ -277,6 +285,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          ConsultationDuration = new SignificantChangeConsultationDurationResponse
          {
@@ -306,6 +315,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          ConsultationDuration = null
       };
