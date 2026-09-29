@@ -40,13 +40,13 @@ describe('Significant change - funding', () => {
             significantChangeFunding
                 .verifyPageLoaded()
                 .verifyAllOptionsPresent()
-                .verifyAdditionalInformationHidden()
+                .verifyFundingAdditionalInformationHidden()
                 .selectYes()
-                .verifyAdditionalInformationHidden()
+                .verifyFundingAdditionalInformationHidden()
                 .selectNotApplicable()
-                .verifyAdditionalInformationHidden()
+                .verifyFundingAdditionalInformationHidden()
                 .selectNo()
-                .verifyAdditionalInformationVisible();
+                .verifyFundingAdditionalInformationVisible();
         });
     });
 

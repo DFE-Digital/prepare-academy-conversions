@@ -33,12 +33,12 @@ class SignificantChangeFunding extends BasePage {
         return this;
     }
 
-    public verifyAdditionalInformationHidden(): this {
+    public verifyFundingAdditionalInformationHidden(): this {
         cy.getByDataTest('funding-additional-information').should('not.be.visible');
         return this;
     }
 
-    public verifyAdditionalInformationVisible(): this {
+    public verifyFundingAdditionalInformationVisible(): this {
         cy.getByDataTest('funding-additional-information').should('be.visible');
         return this;
     }
