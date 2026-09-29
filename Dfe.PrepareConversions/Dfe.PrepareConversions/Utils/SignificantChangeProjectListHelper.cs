@@ -17,6 +17,7 @@ public static class SignificantChangeProjectListHelper
          TrustUkprn = significantChangeProject.TrustUkprn,
          AssignedUser = significantChangeProject.AssignedUser,
          TypeOfSignificantChange = significantChangeProject.TypeOfSignificantChange,
+         LocalAuthorityName = significantChangeProject.LocalAuthorityName,
          Status = MapProjectStatus(significantChangeProject.Status),
          StatusColour = MapProjectStatusColour(significantChangeProject.Status),
          StakeholderConsultationStatus = significantChangeProject.StakeholderConsultation?.Status ?? SignificantChangeTaskStatus.NotStarted,
@@ -44,7 +45,11 @@ public static class SignificantChangeProjectListHelper
          FundingStatus = significantChangeProject.Funding?.Status ?? SignificantChangeTaskStatus.NotStarted,
          FundingAnswer = significantChangeProject.Funding?.FundingAnswer,
          FundingAdditionalInformation = significantChangeProject.Funding?.AdditionalInformation ?? string.Empty,
-         FundingSupportingEvidence = significantChangeProject.Funding?.SupportingEvidence ?? string.Empty
+         FundingSupportingEvidence = significantChangeProject.Funding?.SupportingEvidence ?? string.Empty,
+         PlanningPermissionTaskStatus = significantChangeProject.PlanningPermission?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         PlanningPermissionAnswer = significantChangeProject.PlanningPermission?.PlanningPermissionAnswer,
+         PlanningPermissionAdditionalInformation = significantChangeProject.PlanningPermission?.AdditionalInformation ?? string.Empty,
+         PlanningPermissionSupportingEvidence = significantChangeProject.PlanningPermission?.SupportingEvidence ?? string.Empty
       };
    }
 

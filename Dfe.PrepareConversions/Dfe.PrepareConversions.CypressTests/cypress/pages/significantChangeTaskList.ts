@@ -59,6 +59,11 @@ class SignificantChangeTaskList extends BasePage {
         return this;
     }
 
+    public openPlanningPermissionTask(): this {
+        cy.contains('a', 'Planning Permission').click();
+        return this;
+    }
+
     public verifyFundingTaskVisible(): this {
         cy.contains('a', 'Funding').should('be.visible');
         cy.getById('task-status-funding').should('be.visible');

@@ -14,6 +14,7 @@ public class SignificantChangeProjectViewBaseModel
    public required string TrustUkprn { get; set; }
    public User AssignedUser { get; set; }
    public required string TypeOfSignificantChange { get; set; }
+   public string LocalAuthorityName { get; set; } = string.Empty;
    public required string Status { get; set; }
    public required string StatusColour { get; set; }
    public SignificantChangeTaskStatus StakeholderConsultationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
@@ -42,4 +43,8 @@ public class SignificantChangeProjectViewBaseModel
    public FundingAnswer? FundingAnswer { get; set; }
    public string FundingAdditionalInformation { get; set; } = string.Empty;
    public string FundingSupportingEvidence { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus PlanningPermissionTaskStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public PlanningPermissionAnswer? PlanningPermissionAnswer { get; set; }
+   public string PlanningPermissionAdditionalInformation { get; set; } = string.Empty;
+   public string PlanningPermissionSupportingEvidence { get; set; } = string.Empty;
 }

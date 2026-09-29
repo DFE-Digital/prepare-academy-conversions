@@ -15,6 +15,7 @@ public class SignificantChangeTaskListBuilderTests
    
    [Theory]
    [InlineData(1, "consultation", "Consultation", new[] { "stakeholder-consultation", "consultation-duration", "admission-variation-consultation", "stakeholder-objections", "religious-body-consultation" })]
+   [InlineData(4, "land-and-planning", "Land and Planning", new[] { "planning-permission" })]
    [InlineData(5, "Proposed decision and conversion dates", "Proposed decision and conversion dates", new[] { "confirm-project-dates" })]
    [InlineData(7, "financial-details", "Financial details", new[] { "funding" })]
    [InlineData(10, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
@@ -154,6 +155,23 @@ public class SignificantChangeTaskListBuilderTests
       const string taskKey = "consultation-duration";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.ConsultationDurationStatus = TaskStatus);
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
+      var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
+
+      task.Status.Status.Should().Be(expectedTaskStatus);
+   }
+
+   [Theory]
+   [MemberData(nameof(StatusCases))]
+   public void Build_maps_land_and_planning_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
+   {
+      const string sectionKey = "land-and-planning";
+      const string taskKey = "planning-permission";
+
+      SignificantChangeProjectViewBaseModel project = BuildProject(p => p.PlanningPermissionTaskStatus = TaskStatus);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 

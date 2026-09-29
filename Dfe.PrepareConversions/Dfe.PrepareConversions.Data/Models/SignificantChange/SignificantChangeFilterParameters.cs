@@ -9,4 +9,5 @@ public class SignificantChangeFilterParameters
    public List<FilterValueDisplay> AssignedUsers { get; set; } = new();
    public List<FilterValueDisplay> Tiers { get; set; } = new();
    public List<FilterValueDisplay> Routes { get; set; } = new();
+   public List<FilterValueDisplay> LocalAuthorities { get; set; } = [];
 }
