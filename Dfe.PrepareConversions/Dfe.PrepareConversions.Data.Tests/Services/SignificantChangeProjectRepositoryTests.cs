@@ -97,7 +97,8 @@ public class SignificantChangeProjectRepositoryTests
 
       ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>> expectedBody = new()
       {
-         Data = [
+         Data =
+         [
             new SignificantChangeProjectResponse
             {
                Id = 99,
@@ -111,14 +112,10 @@ public class SignificantChangeProjectRepositoryTests
                ApplicationId = "ID_APP_123",
                ApplicationReference = "APP_REF_123",
                LocalAuthorityName = "Test local authority"
-            },
-            Paging = new ApiV2PagingInfo
-            {
-               Page = page,
-               RecordCount = 1,
-               NextPageUrl = "https://example.org/next"
             }
-      ]};
+         ],
+         Paging = new ApiV2PagingInfo { Page = page, RecordCount = 1, NextPageUrl = "https://example.org/next" }
+      };
 
       httpClientService
          .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
