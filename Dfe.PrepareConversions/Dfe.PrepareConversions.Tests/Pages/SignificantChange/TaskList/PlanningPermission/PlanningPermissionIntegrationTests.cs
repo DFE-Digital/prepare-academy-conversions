@@ -88,6 +88,7 @@ public class PlanningPermissionIntegrationTests(IntegrationTestingWebApplication
          Tier = 1,
          TrustName = "Example Trust",
          TrustUkprn = "12345678",
+         LocalAuthorityName = "Test local authority",
          AssignedUser = new User("user-id", "assigned.user@test.local", "Assigned User"),
          TypeOfSignificantChange = "Route A",
          Status = "pre decision",
