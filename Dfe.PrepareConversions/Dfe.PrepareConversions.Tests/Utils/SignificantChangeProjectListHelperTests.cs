@@ -22,6 +22,7 @@ public class SignificantChangeProjectListHelperTests
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
          LocalAuthorityName = "Kent",
+         RegionName = "London",
          Status = "approved with conditions"
       };
 
@@ -30,6 +31,7 @@ public class SignificantChangeProjectListHelperTests
       Assert.Equal("Approved with conditions", viewModel.Status);
       Assert.Equal("green", viewModel.StatusColour);
       Assert.Equal("Kent", viewModel.LocalAuthorityName);
+      Assert.Equal("London", viewModel.RegionName);
    }
 
    [Fact]
@@ -224,6 +226,7 @@ public class SignificantChangeProjectListHelperTests
          TrustName = "Trust name",
          TrustUkprn = "12345678",
          TypeOfSignificantChange = "Route A",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          PlanningPermission = new SignificantChangePlanningPermissionResponse
          {

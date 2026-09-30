@@ -109,16 +109,17 @@ public class SignificantChangeProjectRepositoryTests
                TypeOfSignificantChange = "Fast track",
                Status = "Pre decision",
                ApplicationId = "ID_APP_123",
-               ApplicationReference = "APP_REF_123"
+               ApplicationReference = "APP_REF_123",
                LocalAuthorityName = "Test local authority"
-            },
-            Paging = new ApiV2PagingInfo
-            {
-               Page = page,
-               RecordCount = 1,
-               NextPageUrl = "https://example.org/next"
             }
-      ]};
+         ],
+         Paging = new ApiV2PagingInfo
+         {
+            Page = page,
+            RecordCount = 1,
+            NextPageUrl = "https://example.org/next"
+         }
+      };
 
       httpClientService
          .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
@@ -595,6 +596,7 @@ public class SignificantChangeProjectRepositoryTests
       capturedQuery.Tier.Should().BeNull();
       capturedQuery.Route.Should().BeNull();
       capturedQuery.LocalAuthority.Should().BeNull();
+      capturedQuery.Region.Should().BeNull();
    }
 
    [Theory]
@@ -624,6 +626,7 @@ public class SignificantChangeProjectRepositoryTests
          [],
          [],
          [],
+         [],
          []));
 
       capturedQuery.Keyword.Should().BeNull();
@@ -632,6 +635,7 @@ public class SignificantChangeProjectRepositoryTests
       capturedQuery.Tier.Should().BeNull();
       capturedQuery.Route.Should().BeNull();
       capturedQuery.LocalAuthority.Should().BeNull();
+      capturedQuery.Region.Should().BeNull();
    }
 
    [Theory]
@@ -659,7 +663,8 @@ public class SignificantChangeProjectRepositoryTests
             ["Assigned User", "Not assigned"],
             [1, 3],
             ["Change of age range"],
-            ["Kent", "Bristol"]));
+            ["Kent", "Bristol"],
+            ["London", "North West"]));
 
       capturedQuery.Page.Should().Be(2);
       capturedQuery.Count.Should().Be(20);
@@ -669,6 +674,7 @@ public class SignificantChangeProjectRepositoryTests
       capturedQuery.Tier.Should().BeEquivalentTo([(byte)1, (byte)3]);
       capturedQuery.Route.Should().BeEquivalentTo("Change of age range");
       capturedQuery.LocalAuthority.Should().BeEquivalentTo("Kent", "Bristol");
+      capturedQuery.Region.Should().BeEquivalentTo("London", "North West");
    }
 
    [Theory]
@@ -685,7 +691,8 @@ public class SignificantChangeProjectRepositoryTests
          Tiers = [new FilterValueDisplay { Value = "1", Display = "Tier 1" }],
          AssignedUsers = [new FilterValueDisplay { Value = "Bob", Display = "Bob" }],
          Routes = [new FilterValueDisplay { Value = "Other", Display = "Other" }],
-         LocalAuthorities = [new FilterValueDisplay { Value = "Kent", Display = "Kent" }]
+         LocalAuthorities = [new FilterValueDisplay { Value = "Kent", Display = "Kent" }],
+         Regions = [new FilterValueDisplay { Value = "London", Display = "London" }]
       };
 
       httpClientFactory
@@ -724,6 +731,7 @@ public class SignificantChangeProjectRepositoryTests
       response.Body.AssignedUsers.Should().BeEmpty();
       response.Body.Routes.Should().BeEmpty();
       response.Body.LocalAuthorities.Should().BeEmpty();
+      response.Body.Regions.Should().BeEmpty();
    }
 
    [Theory]
