@@ -187,6 +187,7 @@ public class PlanningPermissionModelTests
          TrustUkprn = "12345678",
          TypeOfSignificantChange = "Route A",
          Status = "pre decision",
+         LocalAuthorityName = "Test local authority",
          PlanningPermission = new SignificantChangePlanningPermissionResponse()
       };
    }

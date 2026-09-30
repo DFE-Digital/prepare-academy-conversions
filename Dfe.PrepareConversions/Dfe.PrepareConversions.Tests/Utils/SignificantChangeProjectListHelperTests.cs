@@ -226,6 +226,7 @@ public class SignificantChangeProjectListHelperTests
          TrustName = "Trust name",
          TrustUkprn = "12345678",
          TypeOfSignificantChange = "Route A",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          PlanningPermission = new SignificantChangePlanningPermissionResponse
          {
