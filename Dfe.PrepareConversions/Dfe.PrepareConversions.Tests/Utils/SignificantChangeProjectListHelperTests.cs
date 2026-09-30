@@ -231,7 +231,8 @@ public class SignificantChangeProjectListHelperTests
             AdditionalInformation = "Planning permission is still pending",
             SupportingEvidence = "Planning reference 12345",
             Status = SignificantChangeTaskStatus.InProgress
-         }
+         },
+         LocalAuthorityName = "Test local authority"
       };
 
       var viewModel = SignificantChangeProjectListHelper.Build(response);
