@@ -167,7 +167,7 @@ public class SignificantChangeTaskListBuilderTests
    [MemberData(nameof(StatusCases))]
    public void Build_maps_local_authority_objections_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
    {
-      const string sectionKey = "local-authority-objections";
+      const string sectionKey = "land-transaction-application-and-planning-permission";
       const string taskKey = "local-authority-objections";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.LocalAuthorityObjectionsStatus = TaskStatus);
