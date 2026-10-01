@@ -20,7 +20,7 @@ public class SignificantChangeTaskListBuilderTests
    [InlineData(4, "academy-performance", "Academy performance", new string[0])]
    [InlineData(5, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
    [InlineData(6, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "planning-permission" })]
-   [InlineData(7, "financial-details", "Financial details", new string[0])]
+   [InlineData(7, "financial-details", "Financial details", new [] { "funding" })]
    [InlineData(8, "high-quality-trust-framework", "High Quality Trust Framework", new string[0])]
    [InlineData(9, "recommendation-on-how-to-proceed", "Recommendation on how to proceed", new string[0])]
    public void Build_includes_ordered_sections_and_tasks_when_supplied(int sectionDisplayOrder, string sectionKey, string sectionTitle, string[] taskKeys)
