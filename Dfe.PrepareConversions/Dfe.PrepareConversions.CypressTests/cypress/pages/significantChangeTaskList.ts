@@ -66,6 +66,22 @@ class SignificantChangeTaskList extends BasePage {
             .click();
         return this;
     }
+
+    public verifyFundingTaskVisible(): this {
+        cy.contains('a', 'Funding').should('be.visible');
+        cy.getById('task-status-funding').should('be.visible');
+        return this;
+    }
+
+    public verifyFundingTaskHidden(): this {
+        cy.contains('a', 'Funding').should('not.exist');
+        return this;
+    }
+
+    public openFundingTask(): this {
+        cy.contains('a', 'Funding').click();
+        return this;
+    }
 }
 
 const significantChangeTaskList = new SignificantChangeTaskList();

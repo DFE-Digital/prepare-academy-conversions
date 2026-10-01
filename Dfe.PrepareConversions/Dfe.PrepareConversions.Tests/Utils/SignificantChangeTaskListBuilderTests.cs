@@ -185,6 +185,23 @@ public class SignificantChangeTaskListBuilderTests
       task.Status.Status.Should().Be(expectedTaskStatus);
    }
 
+   [Theory]
+   [MemberData(nameof(StatusCases))]
+   public void Build_maps_funding_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
+   {
+      const string sectionKey = "financial-details";
+      const string taskKey = "funding";
+
+      SignificantChangeProjectViewBaseModel project = BuildProject(p => p.FundingStatus = TaskStatus);
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
+      var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
+
+      task.Status.Status.Should().Be(expectedTaskStatus);
+   }
+
    private static SignificantChangeProjectViewBaseModel BuildProject(Action<SignificantChangeProjectViewBaseModel> configure = null)
    {
       var project = new SignificantChangeProjectViewBaseModel

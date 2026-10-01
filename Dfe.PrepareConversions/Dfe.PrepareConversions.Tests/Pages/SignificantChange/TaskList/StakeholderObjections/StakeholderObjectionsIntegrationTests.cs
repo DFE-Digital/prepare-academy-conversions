@@ -109,8 +109,8 @@ public class StakeholderObjectionsIntegrationTests(IntegrationTestingWebApplicat
       return new SignificantChangeProjectResponse
       {
          Id = id,
-         ApplicationId = "12345",
-         ApplicationReference = "12345",
+         ApplicationId = "1234",
+         ApplicationReference = "56789",
          Urn = 10000000 + id,
          SchoolName = "Significant change school",
          Tier = 1,

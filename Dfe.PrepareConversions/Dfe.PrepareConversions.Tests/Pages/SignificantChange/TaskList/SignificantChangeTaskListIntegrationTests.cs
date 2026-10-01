@@ -134,6 +134,10 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       var religiousBodyStatusTag = Document.QuerySelector("#task-status-religious-body-consultation");
       religiousBodyStatusTag.Should().NotBeNull();
       religiousBodyStatusTag.TextContent.Should().Contain("Not started");
+
+      var fundingStatusTag = Document.QuerySelector("#task-status-funding");
+      fundingStatusTag.Should().NotBeNull();
+      fundingStatusTag.TextContent.Should().Contain("Not started");
    }
 
    [Fact]
