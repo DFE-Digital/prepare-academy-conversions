@@ -15,7 +15,8 @@ public interface ISignificantChangeProjectRepository
       string[]? Assignees = null,
       byte[]? Tiers = null,
       string[]? Routes = null,
-      string[]? LocalAuthorities = null);
+      string[]? LocalAuthorities = null,
+      string[]? Regions = null);
 
    Task<ApiResponse<SignificantChangeProjectResponse>> CreateProject(CreateSignificantProjectCommand command);
 

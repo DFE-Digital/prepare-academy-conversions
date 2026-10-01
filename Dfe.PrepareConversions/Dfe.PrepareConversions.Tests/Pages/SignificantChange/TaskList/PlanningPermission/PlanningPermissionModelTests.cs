@@ -185,6 +185,7 @@ public class PlanningPermissionModelTests
          Tier = 1,
          TrustName = "Example trust",
          TrustUkprn = "12345678",
+         LocalAuthorityName = "Test local authority",
          TypeOfSignificantChange = "Route A",
          Status = "pre decision",
          PlanningPermission = new SignificantChangePlanningPermissionResponse(),

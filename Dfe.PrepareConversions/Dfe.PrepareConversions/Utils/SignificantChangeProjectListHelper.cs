@@ -18,6 +18,7 @@ public static class SignificantChangeProjectListHelper
          AssignedUser = significantChangeProject.AssignedUser,
          TypeOfSignificantChange = significantChangeProject.TypeOfSignificantChange,
          LocalAuthorityName = significantChangeProject.LocalAuthorityName,
+         RegionName = significantChangeProject.RegionName,
          Status = MapProjectStatus(significantChangeProject.Status),
          StatusColour = MapProjectStatusColour(significantChangeProject.Status),
          StakeholderConsultationStatus = significantChangeProject.StakeholderConsultation?.Status ?? SignificantChangeTaskStatus.NotStarted,
