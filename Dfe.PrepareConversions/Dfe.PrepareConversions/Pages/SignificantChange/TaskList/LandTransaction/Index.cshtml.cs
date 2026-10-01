@@ -68,9 +68,13 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       SetSignificantChangeLandTransactionCommand command = new(
          LandTransactionApplication,
-         LandTransactionApplicationAdditionalInfo,
+         LandTransactionApplication == SignificantChange_Generic_YesNoNa.No
+            ? LandTransactionApplicationAdditionalInfo
+            : null,
          LandTransactionConsent,
-         LandTransactionConsentAdditionalInfo,
+         LandTransactionConsent == SignificantChange_Generic_YesNoNa.No
+            ? LandTransactionConsentAdditionalInfo
+            : null,
          LandTransactionSupportingEvidence
       );
 
