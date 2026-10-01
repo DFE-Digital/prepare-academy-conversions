@@ -66,6 +66,20 @@ public static class SignificantChangeTaskListBuilder
       ),
 
       new SignificantChangeTaskSectionDefinition(
+         "financial-details",
+         "Financial details",
+         7,
+         [
+            new SignificantChangeTaskDefinition(
+               "funding",
+               "Funding",
+               1,
+               Links.SignificantChange.Funding,
+               project => GetTaskStatus(project.FundingStatus))
+         ]
+      ),
+
+      new SignificantChangeTaskSectionDefinition(
          "public-sector-equality-duty",
          "Public Sector Equality Duty",
          10,

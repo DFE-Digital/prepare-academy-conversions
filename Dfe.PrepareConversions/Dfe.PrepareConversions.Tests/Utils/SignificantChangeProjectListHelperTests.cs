@@ -231,7 +231,8 @@ public class SignificantChangeProjectListHelperTests
             AdditionalInformation = "Planning permission is still pending",
             SupportingEvidence = "Planning reference 12345",
             Status = SignificantChangeTaskStatus.InProgress
-         }
+         },
+         LocalAuthorityName = "Test local authority"
       };
 
       var viewModel = SignificantChangeProjectListHelper.Build(response);
@@ -325,5 +326,63 @@ public class SignificantChangeProjectListHelperTests
       Assert.Null(viewModel.ConsultationLastedMinimumThreeWeeks);
       Assert.Equal(string.Empty, viewModel.ConsultationDurationNotMetReason);
       Assert.Equal(SignificantChangeTaskStatus.NotStarted, viewModel.ConsultationDurationStatus);
+   }
+
+   [Fact]
+   public void Build_Maps_nested_funding_values()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
+         Status = "pre decision",
+         Funding = new SignificantChangeFundingResponse
+         {
+            FundingAnswer = FundingAnswer.No,
+            AdditionalInformation = "Funding gap identified",
+            SupportingEvidence = "Board minutes link",
+            Status = SignificantChangeTaskStatus.Completed
+         },
+         LocalAuthorityName = "Test local authority"
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.Equal(FundingAnswer.No, viewModel.FundingAnswer);
+      Assert.Equal("Funding gap identified", viewModel.FundingAdditionalInformation);
+      Assert.Equal("Board minutes link", viewModel.FundingSupportingEvidence);
+      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.FundingStatus);
+   }
+
+   [Fact]
+   public void Build_Defaults_funding_when_section_is_missing()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
+         Status = "pre decision",
+         Funding = null,
+         LocalAuthorityName = "Test local authority"
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.Null(viewModel.FundingAnswer);
+      Assert.Equal(string.Empty, viewModel.FundingAdditionalInformation);
+      Assert.Equal(string.Empty, viewModel.FundingSupportingEvidence);
+      Assert.Equal(SignificantChangeTaskStatus.NotStarted, viewModel.FundingStatus);
    }
 }

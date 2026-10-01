@@ -97,7 +97,8 @@ public class SignificantChangeProjectRepositoryTests
 
       ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>> expectedBody = new()
       {
-         Data = [
+         Data =
+         [
             new SignificantChangeProjectResponse
             {
                Id = 99,
@@ -109,16 +110,12 @@ public class SignificantChangeProjectRepositoryTests
                TypeOfSignificantChange = "Fast track",
                Status = "Pre decision",
                ApplicationId = "ID_APP_123",
-               ApplicationReference = "APP_REF_123"
+               ApplicationReference = "APP_REF_123",
                LocalAuthorityName = "Test local authority"
-            },
-            Paging = new ApiV2PagingInfo
-            {
-               Page = page,
-               RecordCount = 1,
-               NextPageUrl = "https://example.org/next"
             }
-      ]};
+         ],
+         Paging = new ApiV2PagingInfo { Page = page, RecordCount = 1, NextPageUrl = "https://example.org/next" }
+      };
 
       httpClientService
          .Setup(x => x.Post<GetSignificantProjectsQuery, ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
@@ -906,6 +903,52 @@ public class SignificantChangeProjectRepositoryTests
          .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
 
       ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetConsultationDuration(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetFunding_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 79;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeFunding, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeFundingCommand command = new(FundingAnswer.No, "Additional information", "Supporting evidence");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeFundingCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetFunding(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeFundingCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetFunding_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 79;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeFunding, id);
+      SetSignificantChangeFundingCommand command = new(FundingAnswer.No, "Additional information", "Supporting evidence");
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeFundingCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetFunding(id, command));
 
       exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }

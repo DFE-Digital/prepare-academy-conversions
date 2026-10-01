@@ -148,8 +148,8 @@ public class StakeholderObjectionsModelTests
       return new SignificantChangeProjectResponse
       {
          Id = id,
-         ApplicationId = "12345",
-         ApplicationReference = "12345",
+         ApplicationId = "1234",
+         ApplicationReference = "56789",
          Urn = 10000000 + id,
          SchoolName = "Test school",
          Tier = 1,
@@ -157,7 +157,8 @@ public class StakeholderObjectionsModelTests
          TrustUkprn = "12345678",
          TypeOfSignificantChange = "Route A",
          Status = "pre decision",
-         StakeholderObjections = new SignificantChangeStakeholderObjectionsResponse()
+         StakeholderObjections = new SignificantChangeStakeholderObjectionsResponse(),
+         LocalAuthorityName = "Test local authority"
       };
    }
 

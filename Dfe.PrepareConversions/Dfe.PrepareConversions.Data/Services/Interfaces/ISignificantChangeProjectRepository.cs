@@ -40,5 +40,6 @@ public interface ISignificantChangeProjectRepository
    Task SetPlanningPermission(int id, SetSignificantChangePlanningPermissionCommand command);
    Task SetStakeholderObjections(int id, SetSignificantChangeStakeholderObjectionsCommand command);
    Task SetAdmissionVariationConsultation(int id, SetSignificantChangeAdmissionVariationConsultationCommand command);
+   Task SetFunding(int id, SetSignificantChangeFundingCommand command);
 
 }
