@@ -142,7 +142,14 @@ public static class SignificantChangeTaskListBuilder
          "financial-details",
          "Financial details",
          displayOrder,
-         []
+         [
+            new SignificantChangeTaskDefinition(
+               "funding",
+               "Funding",
+               1,
+               Links.SignificantChange.Funding,
+               project => GetTaskStatus(project.FundingStatus))
+         ]
       );
    }
 
