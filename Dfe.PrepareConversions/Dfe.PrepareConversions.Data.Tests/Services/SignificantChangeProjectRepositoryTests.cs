@@ -909,6 +909,63 @@ public class SignificantChangeProjectRepositoryTests
 
    [Theory]
    [AutoMoqData]
+   public async Task SetLandTransaction_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 67;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeLandTransaction, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeLandTransactionCommand command = new(
+         null,
+         "Application additional information",
+         null,
+         "Consent additional information",
+         "Supporting evidence");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeLandTransactionCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetLandTransaction(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeLandTransactionCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetLandTransaction_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 67;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeLandTransaction, id);
+      SetSignificantChangeLandTransactionCommand command = new(
+         null,
+         "Application additional information",
+         null,
+         "Consent additional information",
+         "Supporting evidence");
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeLandTransactionCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(
+         () => sut.SetLandTransaction(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+   [Theory]
+   [AutoMoqData]
    public async Task SetFunding_WhenApiCallSucceeds_ShouldPutToExpectedPath(
       [Frozen] Mock<IHttpClientService> httpClientService,
       [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
