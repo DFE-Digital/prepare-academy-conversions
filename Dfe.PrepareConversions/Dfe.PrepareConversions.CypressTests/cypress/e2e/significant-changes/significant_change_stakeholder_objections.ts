@@ -1,15 +1,16 @@
 /// <reference types="cypress" />
-const TASK_LIST_URL = /^.*\/significant-change\/task-list\/\d+(\?.*)?$/;
-
-const navigateToTaskPage = () => {
-    cy.login();
-    cy.acceptCookies();
-    cy.visit('/significant-change/project-list');
-    cy.getById('school-name-0').click();
-    cy.contains('a', 'Stakeholder objections').click();
-};
 
 describe('Stakeholder Objections Form', () => {
+    const TASK_LIST_URL = /^.*\/significant-change\/task-list\/\d+(\?.*)?$/;
+
+    const navigateToTaskPage = () => {
+        cy.login();
+        cy.acceptCookies();
+        cy.visit('/significant-change/project-list');
+        cy.getById('school-name-0').click();
+        cy.contains('a', 'Stakeholder objections').click();
+    };
+
     beforeEach(() => {
         navigateToTaskPage();
 
