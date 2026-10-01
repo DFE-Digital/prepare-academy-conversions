@@ -41,9 +41,12 @@ public static class SignificantChangeProjectListHelper
          ProjectDatesStatus = significantChangeProject.ProjectDates?.Status ?? SignificantChangeTaskStatus.NotStarted,
          ProposedDecisionDate = significantChangeProject.ProjectDates?.ProposedDecisionDate,
          ProposedChangeDate = significantChangeProject.ProjectDates?.ProposedChangeDate,
-         LandTransactionConsent = significantChangeProject.LandTransactionConsent?.LAndTransactionConsentSecured,
-         LandTransactionConsentAdditionalInfo = significantChangeProject.LandTransactionConsent?.LandTransactionConsentAdditionalInfo,
-         LandTransactionConsentTaskStatus = significantChangeProject.LandTransactionConsent?.Status ?? SignificantChangeTaskStatus.NotStarted
+         LandTransactionApplication = significantChangeProject.LandTransaction?.LandTransactionConsent,
+         LandTransactionApplicationAdditionalInfo = significantChangeProject.LandTransaction?.LandTransactionConsentAdditionalInfo ?? string.Empty,
+         LandTransactionConsent = significantChangeProject.LandTransaction?.LandTransactionConsent,
+         LandTransactionConsentAdditionalInfo = significantChangeProject.LandTransaction?.LandTransactionConsentAdditionalInfo ?? string.Empty,
+         LandTransactionSupportingEvidence = significantChangeProject.LandTransaction?.LandTransactionSupportingEvidence ?? string.Empty,
+         LandTransactionTaskStatus = significantChangeProject.LandTransaction?.Status ?? SignificantChangeTaskStatus.NotStarted
       };
    }
 

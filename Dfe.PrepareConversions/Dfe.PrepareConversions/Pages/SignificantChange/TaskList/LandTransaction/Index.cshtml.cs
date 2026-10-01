@@ -12,12 +12,21 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
    private readonly ErrorService _errorService = errorService;
 
    [BindProperty]
-   public SignificantChangeLandTransactionConsent? LandTransactionConsent { get; set; }
+   public SignificantChange_Generic_YesNoNa? LandTransactionApplication { get; set; }
+   
+   [BindProperty]
+   public string LandTransactionApplicationAdditionalInfo { get; set; }
+
+   [BindProperty]
+   public SignificantChange_Generic_YesNoNa? LandTransactionConsent { get; set; }
 
    [BindProperty]
    public string LandTransactionConsentAdditionalInfo { get; set; }
 
-   protected override string TaskTitle => "Land Transaction";
+   [BindProperty]
+   public string LandTransactionSupportingEvidence { get; set; }
+  
+   protected override string TaskTitle => "Land Transaction Application";
 
    public override async Task<IActionResult> OnGetAsync(int id)
    {
@@ -30,6 +39,9 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       LandTransactionConsent = Project.LandTransactionConsent;
       LandTransactionConsentAdditionalInfo = Project.LandTransactionConsentAdditionalInfo;
+      LandTransactionApplication = Project.LandTransactionApplication;
+      LandTransactionApplicationAdditionalInfo = Project.LandTransactionApplicationAdditionalInfo;
+      LandTransactionSupportingEvidence = Project.LandTransactionSupportingEvidence;
 
       return Page();
    }
@@ -48,24 +60,37 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       if (!ModelState.IsValid)
       {
          _errorService.AddErrors(
-            [nameof(LandTransactionConsent), nameof(LandTransactionConsentAdditionalInfo)],
+            [nameof(LandTransactionConsent), nameof(LandTransactionConsentAdditionalInfo), nameof(LandTransactionApplication), nameof(LandTransactionApplicationAdditionalInfo) ],
             ModelState);
 
          return Page();
       }
 
-      SetSignificantChangeLandTransactionConsentCommand command = new(
+      SetSignificantChangeLandTransactionCommand command = new(
+         LandTransactionApplication,
+         LandTransactionApplicationAdditionalInfo,
          LandTransactionConsent,
-         LandTransactionConsentAdditionalInfo);
+         LandTransactionConsentAdditionalInfo,
+         LandTransactionSupportingEvidence
+      );
 
-      await _repository.SetLandTransactionConsent(id, command);
+      await _repository.SetLandTransaction(id, command);
 
       return RedirectToTaskList(id);
    }
 
    private void Validate()
    {
+      if (!LandTransactionApplication.HasValue)
+         ModelState.AddModelError(nameof(LandTransactionApplication), "Select an option");
+
+      if (LandTransactionApplication == SignificantChange_Generic_YesNoNa.No && string.IsNullOrWhiteSpace(LandTransactionApplicationAdditionalInfo))
+         ModelState.AddModelError(nameof(LandTransactionApplicationAdditionalInfo), "Enter the additional information provided");
+
       if (!LandTransactionConsent.HasValue)
          ModelState.AddModelError(nameof(LandTransactionConsent), "Select an option");
+
+      if (LandTransactionConsent == SignificantChange_Generic_YesNoNa.No && string.IsNullOrWhiteSpace(LandTransactionConsentAdditionalInfo))
+         ModelState.AddModelError(nameof(LandTransactionConsentAdditionalInfo), "Enter the additional information provided");
    }
 }

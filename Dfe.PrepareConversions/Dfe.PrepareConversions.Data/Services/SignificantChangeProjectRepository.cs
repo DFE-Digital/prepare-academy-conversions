@@ -290,13 +290,13 @@ public class SignificantChangeProjectRepository(
       }
    }
 
-   public async Task SetLandTransactionConsent(int id, SetSignificantChangeLandTransactionConsentCommand command)
+   public async Task SetLandTransaction(int id, SetSignificantChangeLandTransactionCommand command)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
-      string path = string.Format(PathFor.SetSignificantChangeConsultationDuration, id);
+      string path = string.Format(PathFor.SetSignificantChangeLandTransaction, id);
 
       
-      var result = await httpClientService.Put<SetSignificantChangeLandTransactionConsentCommand, object>(
+      var result = await httpClientService.Put<SetSignificantChangeLandTransactionCommand, object>(
          httpClient,
          path,
          command);

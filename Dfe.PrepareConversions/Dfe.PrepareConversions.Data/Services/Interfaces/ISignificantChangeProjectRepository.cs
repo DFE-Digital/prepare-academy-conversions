@@ -35,6 +35,6 @@ public interface ISignificantChangeProjectRepository
    Task SetProjectDates(int id, SetSignificantChangeProjectDatesCommand command);
    Task SetStakeholderObjections(int id, SetSignificantChangeStakeholderObjectionsCommand command);
    Task SetAdmissionVariationConsultation(int id, SetSignificantChangeAdmissionVariationConsultationCommand command);
-   Task SetLandTransactionConsent(int id, SetSignificantChangeLandTransactionConsentCommand command);
+   Task SetLandTransaction(int id, SetSignificantChangeLandTransactionCommand command);
 
 }

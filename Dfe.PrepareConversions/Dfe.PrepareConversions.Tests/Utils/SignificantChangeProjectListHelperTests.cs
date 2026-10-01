@@ -285,4 +285,35 @@ public class SignificantChangeProjectListHelperTests
       Assert.Equal(string.Empty, viewModel.ConsultationDurationNotMetReason);
       Assert.Equal(SignificantChangeTaskStatus.NotStarted, viewModel.ConsultationDurationStatus);
    }
+
+   [Fact]
+   public void Build_Maps_nested_land_transaction_consent_values()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
+         Status = "pre decision",
+         LandTransaction = new SignificantChangeLandTransactionResponse
+         {
+            LandTransactionConsent = SignificantChange_Generic_YesNoNa.No,
+            LandTransactionConsentAdditionalInfo = "some additional info",
+            LandTransactionApplication = SignificantChange_Generic_YesNoNa.No,
+            LandTransactionApplicationAdditionalInfo = "some additional Info",
+            Status = SignificantChangeTaskStatus.Completed
+         }
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.Equal(ConsultationDurationAnswer.No, viewModel.ConsultationLastedMinimumThreeWeeks);
+      Assert.Equal("Consultation ran for two weeks only", viewModel.ConsultationDurationNotMetReason);
+      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.ConsultationDurationStatus);
+   }
 }
