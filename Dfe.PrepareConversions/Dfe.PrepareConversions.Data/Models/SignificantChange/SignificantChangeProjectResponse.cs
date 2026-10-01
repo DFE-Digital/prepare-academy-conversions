@@ -15,6 +15,7 @@ public class SignificantChangeProjectResponse
    public required string ApplicationId { get; set; }
    public required string ApplicationReference { get; set; }
    public required string Status { get; set; }
+   public required string LocalAuthorityName { get; set; }
    public SignificantChangeStakeholderConsultationResponse StakeholderConsultation { get; set; } = new();
    public SignificantChangeStakeholderObjectionsResponse StakeholderObjections { get; set; } = new();
    public SignificantChangeConsultationDurationResponse ConsultationDuration { get; set; } = new();
@@ -23,4 +24,6 @@ public class SignificantChangeProjectResponse
    public SignificantChangeReligiousBodyConsultationResponse ReligiousBodyConsultation { get; set; } = new();
    public SignificantChangeProjectDatesResponse ProjectDates { get; set; } = new();
    public SignificantChangeLandTransactionResponse LandTransaction { get; set; } = new();
+   public SignificantChangeFundingResponse Funding { get; set; } = new();
+   public SignificantChangePlanningPermissionResponse PlanningPermission { get; set; } = new();
 }

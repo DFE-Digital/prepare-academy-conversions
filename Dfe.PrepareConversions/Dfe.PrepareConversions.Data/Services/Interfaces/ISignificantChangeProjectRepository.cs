@@ -9,16 +9,20 @@ namespace Dfe.PrepareConversions.Data.Services.Interfaces;
 
 public interface ISignificantChangeProjectRepository
 {
+   public record SignificantChangeFilterOptions(
+      string? Keyword = null,
+      string[]? Statuses = null,
+      string[]? Assignees = null,
+      byte[]? Tiers = null,
+      string[]? Routes = null,
+      string[]? LocalAuthorities = null);
+
    Task<ApiResponse<SignificantChangeProjectResponse>> CreateProject(CreateSignificantProjectCommand command);
 
    Task<ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>> GetAllProjects(
       int page,
       int count,
-      string? keyword = null,
-      string[]? statuses = null,
-      string[]? assignees = null,
-      byte[]? tiers = null,
-      string[]? routes = null);
+      SignificantChangeFilterOptions? filterOptions = null);
 
    Task<ApiResponse<SignificantChangeProjectResponse>> GetProjectById(int id);
 
@@ -33,8 +37,10 @@ public interface ISignificantChangeProjectRepository
    Task SetEqualitiesImpactAssessment(int id, SetSignificantChangeEqualitiesImpactAssessmentCommand command);
    Task SetReligiousBodyConsultation(int id, SetSignificantChangeReligiousBodyConsultationCommand command);
    Task SetProjectDates(int id, SetSignificantChangeProjectDatesCommand command);
+   Task SetPlanningPermission(int id, SetSignificantChangePlanningPermissionCommand command);
    Task SetStakeholderObjections(int id, SetSignificantChangeStakeholderObjectionsCommand command);
    Task SetAdmissionVariationConsultation(int id, SetSignificantChangeAdmissionVariationConsultationCommand command);
    Task SetLandTransaction(int id, SetSignificantChangeLandTransactionCommand command);
+   Task SetFunding(int id, SetSignificantChangeFundingCommand command);
 
 }

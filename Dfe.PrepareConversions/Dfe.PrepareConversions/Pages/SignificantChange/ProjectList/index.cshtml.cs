@@ -40,11 +40,15 @@ public class IndexModel(ISignificantChangeProjectRepository significantChangePro
       var response = await SignificantChangeProjectRepository.GetAllProjects(
          CurrentPage,
          PageSize,
-         Filters.Keyword,
-         Filters.SelectedStatuses,
-         Filters.SelectedAssignees,
-         Filters.GetSelectedTiersAsBytes(),
-         Filters.SelectedRoutes);
+         new (
+            Filters.Keyword,
+            Filters.SelectedStatuses,
+            Filters.SelectedProjectOwners,
+            Filters.GetSelectedTiersAsBytes(),
+            Filters.SelectedRoutes,
+            Filters.SelectedLocalAuthorities
+         )
+      );
 
       Paging = response.Body?.Paging ?? new ApiV2PagingInfo { Page = CurrentPage, RecordCount = 0, NextPageUrl = null };
       Projects = response.Body?.Data?.Select(SignificantChangeProjectListHelper.Build).ToList() ?? [];
@@ -57,12 +61,13 @@ public class IndexModel(ISignificantChangeProjectRepository significantChangePro
       Filters.AvailableStatuses = filterParameters.Body?.Statuses ?? [];
       Filters.AvailableTiers = filterParameters.Body?.Tiers ?? [];
       Filters.AvailableRoutes = filterParameters.Body?.Routes ?? [];
+      Filters.AvailableLocalAuthorities = filterParameters.Body?.LocalAuthorities ?? [];
 
       // Float the signed-in user to the top, exactly as all four existing list pages do.
       // NameOfUser is the "name" claim ("Last, First"); ConvertToFirstLast flips it to match the API.
-      Filters.AvailableAssignees = (filterParameters.Body?.AssignedUsers ?? [])
-         .OrderByDescending(assignee => assignee.Display.Equals(ProjectListHelper.ConvertToFirstLast(NameOfUser), StringComparison.OrdinalIgnoreCase))
-         .ThenBy(assignee => assignee.Display)
+      Filters.AvailableProjectOwners = (filterParameters.Body?.AssignedUsers ?? [])
+         .OrderByDescending(projectOwner => projectOwner.Display.Equals(ProjectListHelper.ConvertToFirstLast(NameOfUser), StringComparison.OrdinalIgnoreCase))
+         .ThenBy(projectOwner => projectOwner.Display)
          .ToList();
    }
 }

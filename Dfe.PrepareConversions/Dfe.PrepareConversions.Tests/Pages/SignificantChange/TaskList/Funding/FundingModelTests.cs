@@ -2,7 +2,7 @@ using Dfe.PrepareConversions.Data;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Models;
-using Dfe.PrepareConversions.Pages.SignificantChange.TaskList.ConsultationDuration;
+using Dfe.PrepareConversions.Pages.SignificantChange.TaskList.Funding;
 using Dfe.PrepareConversions.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
@@ -17,17 +17,18 @@ using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Dfe.PrepareConversions.Tests.Pages.SignificantChange.TaskList.ConsultationDuration;
+namespace Dfe.PrepareConversions.Tests.Pages.SignificantChange.TaskList.Funding;
 
-public class ConsultationDurationModelTests
+public class FundingModelTests
 {
    [Fact]
    public async Task OnGetAsync_WhenProjectExists_ShouldPopulateValuesAndReturnPage()
    {
-      const int id = 601;
+      const int id = 611;
       SignificantChangeProjectResponse project = BuildProject(id);
-      project.ConsultationDuration.ConsultationLastedMinimumThreeWeeks = ConsultationDurationAnswer.No;
-      project.ConsultationDuration.ConsultationDurationNotMetReason = "Consultation ran for two weeks only";
+      project.Funding.FundingAnswer = FundingAnswer.No;
+      project.Funding.AdditionalInformation = "Funding gap identified";
+      project.Funding.SupportingEvidence = "Board minutes link";
 
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, project);
 
@@ -36,26 +37,28 @@ public class ConsultationDurationModelTests
       IActionResult result = await sut.OnGetAsync(id);
 
       result.Should().BeOfType<PageResult>();
-      sut.ConsultationLastedMinimumThreeWeeks.Should().Be(ConsultationDurationAnswer.No);
-      sut.ConsultationDurationNotMetReason.Should().Be("Consultation ran for two weeks only");
+      sut.FundingAnswer.Should().Be(FundingAnswer.No);
+      sut.AdditionalInformation.Should().Be("Funding gap identified");
+      sut.SupportingEvidence.Should().Be("Board minutes link");
       repository.Verify(x => x.GetProjectById(id), Times.Once);
    }
 
    [Theory]
-   [InlineData(ConsultationDurationAnswer.Yes)]
-   [InlineData(ConsultationDurationAnswer.NoSatisfactoryConsultationCarriedOut)]
-   public async Task OnPostAsync_WhenAnswerIsNotNo_ShouldSaveWithoutReasonAndRedirect(ConsultationDurationAnswer answer)
+   [InlineData(FundingAnswer.Yes)]
+   [InlineData(FundingAnswer.NotApplicable)]
+   public async Task OnPostAsync_WhenAnswerIsNotNo_ShouldSaveWithoutAdditionalInformationAndRedirect(FundingAnswer answer)
    {
-      const int id = 603;
+      const int id = 613;
 
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
       repository
-         .Setup(x => x.SetConsultationDuration(id, It.IsAny<SetSignificantChangeConsultationDurationCommand>()))
+         .Setup(x => x.SetFunding(id, It.IsAny<SetSignificantChangeFundingCommand>()))
          .Returns(Task.CompletedTask);
 
       IndexModel sut = BuildModel(repository.Object);
-      sut.ConsultationLastedMinimumThreeWeeks = answer;
-      sut.ConsultationDurationNotMetReason = "This should be cleared";
+      sut.FundingAnswer = answer;
+      sut.AdditionalInformation = "This should be cleared";
+      sut.SupportingEvidence = "Supporting evidence";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -63,71 +66,74 @@ public class ConsultationDurationModelTests
       redirect.PageName.Should().Be(Links.SignificantChange.SignificantChangeTaskList.Page);
       redirect.RouteValues.Should().ContainKey("id").WhoseValue.Should().Be(id);
 
-      repository.Verify(x => x.SetConsultationDuration(
+      repository.Verify(x => x.SetFunding(
          id,
-         It.Is<SetSignificantChangeConsultationDurationCommand>(command =>
-            command.ConsultationLastedMinimumThreeWeeks == answer
-            && command.ConsultationDurationNotMetReason == null)), Times.Once);
+         It.Is<SetSignificantChangeFundingCommand>(command =>
+            command.FundingAnswer == answer
+            && command.AdditionalInformation == null
+            && command.SupportingEvidence == "Supporting evidence")), Times.Once);
    }
 
    [Fact]
-   public async Task OnPostAsync_WhenAnswerIsNoWithReason_ShouldSaveAndRedirect()
+   public async Task OnPostAsync_WhenAnswerIsNoWithAdditionalInformation_ShouldSaveAndRedirect()
    {
-      const int id = 604;
+      const int id = 614;
 
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
       repository
-         .Setup(x => x.SetConsultationDuration(id, It.IsAny<SetSignificantChangeConsultationDurationCommand>()))
+         .Setup(x => x.SetFunding(id, It.IsAny<SetSignificantChangeFundingCommand>()))
          .Returns(Task.CompletedTask);
 
       IndexModel sut = BuildModel(repository.Object);
-      sut.ConsultationLastedMinimumThreeWeeks = ConsultationDurationAnswer.No;
-      sut.ConsultationDurationNotMetReason = "Consultation ran for two weeks only";
+      sut.FundingAnswer = FundingAnswer.No;
+      sut.AdditionalInformation = "Funding gap identified";
+      sut.SupportingEvidence = "Board minutes link";
 
       IActionResult result = await sut.OnPostAsync(id);
 
       Assert.IsType<RedirectToPageResult>(result);
 
-      repository.Verify(x => x.SetConsultationDuration(
+      repository.Verify(x => x.SetFunding(
          id,
-         It.Is<SetSignificantChangeConsultationDurationCommand>(command =>
-            command.ConsultationLastedMinimumThreeWeeks == ConsultationDurationAnswer.No
-            && command.ConsultationDurationNotMetReason == "Consultation ran for two weeks only")), Times.Once);
+         It.Is<SetSignificantChangeFundingCommand>(command =>
+            command.FundingAnswer == FundingAnswer.No
+            && command.AdditionalInformation == "Funding gap identified"
+            && command.SupportingEvidence == "Board minutes link")), Times.Once);
    }
 
    [Fact]
-   public async Task OnPostAsync_WhenAnswerIsNoWithoutReason_ShouldReturnPageWithValidationError()
+   public async Task OnPostAsync_WhenAnswerIsNoWithoutAdditionalInformation_ShouldReturnPageWithValidationError()
    {
-      const int id = 605;
+      const int id = 615;
 
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
 
       IndexModel sut = BuildModel(repository.Object);
-      sut.ConsultationLastedMinimumThreeWeeks = ConsultationDurationAnswer.No;
-      sut.ConsultationDurationNotMetReason = " ";
+      sut.FundingAnswer = FundingAnswer.No;
+      sut.AdditionalInformation = " ";
 
       IActionResult result = await sut.OnPostAsync(id);
 
       result.Should().BeOfType<PageResult>();
-      sut.ModelState.ContainsKey(nameof(IndexModel.ConsultationDurationNotMetReason)).Should().BeTrue();
-      repository.Verify(x => x.SetConsultationDuration(id, It.IsAny<SetSignificantChangeConsultationDurationCommand>()), Times.Never);
+      sut.ModelState.ContainsKey(nameof(IndexModel.AdditionalInformation)).Should().BeTrue();
+      repository.Verify(x => x.SetFunding(id, It.IsAny<SetSignificantChangeFundingCommand>()), Times.Never);
    }
 
    [Fact]
    public async Task OnPostAsync_WhenNoSelectionIsMade_ShouldReturnPageWithValidationError()
    {
-      const int id = 606;
+      const int id = 616;
 
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
 
       IndexModel sut = BuildModel(repository.Object);
-      sut.ConsultationLastedMinimumThreeWeeks = null;
+      sut.FundingAnswer = null;
 
       IActionResult result = await sut.OnPostAsync(id);
 
       result.Should().BeOfType<PageResult>();
-      sut.ModelState.ContainsKey(nameof(IndexModel.ConsultationLastedMinimumThreeWeeks)).Should().BeTrue();
-      repository.Verify(x => x.SetConsultationDuration(id, It.IsAny<SetSignificantChangeConsultationDurationCommand>()), Times.Never);
+      sut.ModelState.ContainsKey(nameof(IndexModel.FundingAnswer)).Should().BeTrue();
+      repository.Verify(x => x.SetFunding(id, It.IsAny<SetSignificantChangeFundingCommand>()), Times.Never);
    }
 
    private static Mock<ISignificantChangeProjectRepository> BuildRepository(int id, SignificantChangeProjectResponse project)
@@ -156,7 +162,7 @@ public class ConsultationDurationModelTests
       };
    }
 
-   private static SignificantChangeProjectResponse BuildProject(int id, bool? trustConsultedStakeholders = true)
+   private static SignificantChangeProjectResponse BuildProject(int id)
    {
       return new SignificantChangeProjectResponse
       {
@@ -170,12 +176,8 @@ public class ConsultationDurationModelTests
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
          Status = "pre decision",
-         LocalAuthorityName = "Test local authority",
-         StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
-         {
-            TrustConsultedStakeholders = trustConsultedStakeholders
-         },
-         ConsultationDuration = new SignificantChangeConsultationDurationResponse()
+         Funding = new SignificantChangeFundingResponse(),
+         LocalAuthorityName = "Test local authority"
       };
    }
 }

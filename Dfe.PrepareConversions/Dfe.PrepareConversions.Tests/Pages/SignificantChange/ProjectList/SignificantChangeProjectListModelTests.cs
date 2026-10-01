@@ -21,7 +21,7 @@ namespace Dfe.PrepareConversions.Tests.Pages.SignificantChange.ProjectList;
 public class SignificantChangeProjectListModelTests
 {
    [Fact]
-   public async Task OnGetAsync_FloatsSignedInUserToTopOfAssignees_ThenAlphabetical()
+   public async Task OnGetAsync_FloatsSignedInUserToTopOfProjectOwners_ThenAlphabetical()
    {
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(
          new SignificantChangeFilterParameters
@@ -38,7 +38,7 @@ public class SignificantChangeProjectListModelTests
 
       await sut.OnGetAsync();
 
-      sut.Filters.AvailableAssignees.Select(assignee => assignee.Display)
+      sut.Filters.AvailableProjectOwners.Select(projectOwner => projectOwner.Display)
          .Should().ContainInOrder("Ste Smith", "Alice Brown", "Zoe Adams");
    }
 
@@ -54,9 +54,33 @@ public class SignificantChangeProjectListModelTests
 
       sut.Filters.AvailableStatuses.Should().BeEmpty();
       sut.Filters.AvailableTiers.Should().BeEmpty();
-      sut.Filters.AvailableAssignees.Should().BeEmpty();
+      sut.Filters.AvailableProjectOwners.Should().BeEmpty();
       sut.Filters.AvailableRoutes.Should().BeEmpty();
+      sut.Filters.AvailableLocalAuthorities.Should().BeEmpty();
       sut.Projects.Should().BeEmpty();
+   }
+
+   [Fact]
+   public async Task OnGetAsync_ForwardsSelectedLocalAuthoritiesToRepository()
+   {
+      ISignificantChangeProjectRepository.SignificantChangeFilterOptions capturedFilterOptions = null;
+      Mock<ISignificantChangeProjectRepository> repository = BuildRepository(new SignificantChangeFilterParameters());
+
+      repository
+         .Setup(x => x.GetAllProjects(
+            It.IsAny<int>(),
+            It.IsAny<int>(),
+            It.IsAny<ISignificantChangeProjectRepository.SignificantChangeFilterOptions>()))
+         .Callback<int, int, ISignificantChangeProjectRepository.SignificantChangeFilterOptions>((_, _, options) =>
+            capturedFilterOptions = options)
+         .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(HttpStatusCode.OK, null));
+
+      IndexModel sut = BuildPageModel(repository.Object, "Smith, Ste", "?SelectedLocalAuthorities=Kent");
+
+      await sut.OnGetAsync();
+
+      capturedFilterOptions.Should().NotBeNull();
+      capturedFilterOptions.LocalAuthorities.Should().BeEquivalentTo("Kent");
    }
 
    private static Mock<ISignificantChangeProjectRepository> BuildRepository(
@@ -67,8 +91,8 @@ public class SignificantChangeProjectListModelTests
 
       repository
          .Setup(x => x.GetAllProjects(
-            It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(),
-            It.IsAny<string[]>(), It.IsAny<string[]>(), It.IsAny<byte[]>(), It.IsAny<string[]>()))
+            It.IsAny<int>(), It.IsAny<int>(),
+            It.IsAny<ISignificantChangeProjectRepository.SignificantChangeFilterOptions>()))
          .ReturnsAsync(new ApiResponse<ApiV2Wrapper<IEnumerable<SignificantChangeProjectResponse>>>(
             HttpStatusCode.OK, null));
 
@@ -81,10 +105,13 @@ public class SignificantChangeProjectListModelTests
    }
 
    private static IndexModel BuildPageModel(
-      ISignificantChangeProjectRepository repository, string signedInUserName)
+      ISignificantChangeProjectRepository repository,
+      string signedInUserName,
+      string queryString = "")
    {
       ClaimsPrincipal user = new(new ClaimsIdentity([new Claim("name", signedInUserName)]));
       DefaultHttpContext httpContext = new() { User = user };
+      httpContext.Request.QueryString = new QueryString(queryString);
 
       return new IndexModel(repository)
       {
