@@ -329,7 +329,7 @@ public class SignificantChangeProjectListHelperTests
    }
 
    [Fact]
-   public void Build_Maps_nested_land_transaction_consent_values()
+   public void Build_Maps_nested_land_transaction_values()
     {
       SignificantChangeProjectResponse response = new()
       {
@@ -345,19 +345,23 @@ public class SignificantChangeProjectListHelperTests
          LocalAuthorityName = "Test local authority",
          LandTransaction = new SignificantChangeLandTransactionResponse
          {
-            LandTransactionConsent = SignificantChange_Generic_YesNoNa.No,
-            LandTransactionConsentAdditionalInfo = "some additional info",
+            LandTransactionConsent = SignificantChange_Generic_YesNoNa.Yes,
+            LandTransactionConsentAdditionalInfo = "Consent additional info",
             LandTransactionApplication = SignificantChange_Generic_YesNoNa.No,
-            LandTransactionApplicationAdditionalInfo = "some additional Info",
+            LandTransactionApplicationAdditionalInfo = "Application additional info",
+            LandTransactionSupportingEvidence = "Supporting evidence link",
             Status = SignificantChangeTaskStatus.Completed
          }
       };
 
       var viewModel = SignificantChangeProjectListHelper.Build(response);
 
-      Assert.Equal(ConsultationDurationAnswer.No, viewModel.ConsultationLastedMinimumThreeWeeks);
-      Assert.Equal("Consultation ran for two weeks only", viewModel.ConsultationDurationNotMetReason);
-      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.ConsultationDurationStatus);
+      Assert.Equal(SignificantChange_Generic_YesNoNa.No, viewModel.LandTransactionApplication);
+      Assert.Equal("Application additional info", viewModel.LandTransactionApplicationAdditionalInfo);
+      Assert.Equal(SignificantChange_Generic_YesNoNa.Yes, viewModel.LandTransactionConsent);
+      Assert.Equal("Consent additional info", viewModel.LandTransactionConsentAdditionalInfo);
+      Assert.Equal("Supporting evidence link", viewModel.LandTransactionSupportingEvidence);
+      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.LandTransactionTaskStatus);
     }
 
    [Fact]
