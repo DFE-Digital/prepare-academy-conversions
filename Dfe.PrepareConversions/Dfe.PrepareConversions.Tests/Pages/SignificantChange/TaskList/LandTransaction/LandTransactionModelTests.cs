@@ -30,7 +30,7 @@ public class LandTransactionModelTests
       project.LandTransaction.LandTransactionApplicationAdditionalInfo = "Application details";
       project.LandTransaction.LandTransactionConsent = SignificantChangeGenericYesNoNa.Yes;
       project.LandTransaction.LandTransactionConsentAdditionalInfo = "Consent details";
-      project.LandTransaction.LandTransactionSupportingEvidence = "Evidence link";
+      project.LandTransaction.LandTransactionSupportingEvidence = "https://educationgovuk.sharepoint.com/sites/land-transaction/evidence";
 
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, project);
       IndexModel sut = BuildModel(repository.Object);
@@ -42,7 +42,7 @@ public class LandTransactionModelTests
       sut.LandTransactionApplicationAdditionalInfo.Should().Be("Application details");
       sut.LandTransactionConsent.Should().Be(SignificantChangeGenericYesNoNa.Yes);
       sut.LandTransactionConsentAdditionalInfo.Should().Be("Consent details");
-      sut.LandTransactionSupportingEvidence.Should().Be("Evidence link");
+      sut.LandTransactionSupportingEvidence.Should().Be("https://educationgovuk.sharepoint.com/sites/land-transaction/evidence");
       repository.Verify(x => x.GetProjectById(id), Times.Once);
    }
 
@@ -60,7 +60,7 @@ public class LandTransactionModelTests
       sut.LandTransactionApplicationAdditionalInfo = "Application details";
       sut.LandTransactionConsent = SignificantChangeGenericYesNoNa.No;
       sut.LandTransactionConsentAdditionalInfo = "Consent details";
-      sut.LandTransactionSupportingEvidence = "Evidence link";
+      sut.LandTransactionSupportingEvidence = "https://educationgovuk.sharepoint.com/sites/land-transaction/evidence";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -74,7 +74,7 @@ public class LandTransactionModelTests
             && command.LandTransactionApplicationAdditionalInfo == "Application details"
             && command.LandTransactionConsent == SignificantChangeGenericYesNoNa.No
             && command.LandTransactionConsentAdditionalInfo == "Consent details"
-            && command.LandTransactionSupportingEvidence == "Evidence link")), Times.Once);
+            && command.LandTransactionSupportingEvidence == "https://educationgovuk.sharepoint.com/sites/land-transaction/evidence")), Times.Once);
    }
 
    [Theory]
@@ -137,6 +137,23 @@ public class LandTransactionModelTests
       result.Should().BeOfType<PageResult>();
       sut.ModelState.ContainsKey(nameof(IndexModel.LandTransactionApplicationAdditionalInfo)).Should().BeTrue();
       sut.ModelState.ContainsKey(nameof(IndexModel.LandTransactionConsentAdditionalInfo)).Should().BeTrue();
+      repository.Verify(x => x.SetLandTransaction(id, It.IsAny<SetSignificantChangeLandTransactionCommand>()), Times.Never);
+   }
+
+   [Fact]
+   public async Task OnPostAsync_WhenSupportingEvidenceHasNoPath_ShouldReturnPageWithValidationError()
+   {
+      const int id = 806;
+      Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
+      IndexModel sut = BuildModel(repository.Object);
+      sut.LandTransactionApplication = SignificantChangeGenericYesNoNa.Yes;
+      sut.LandTransactionConsent = SignificantChangeGenericYesNoNa.Yes;
+      sut.LandTransactionSupportingEvidence = "https://educationgovuk.sharepoint.com/";
+
+      IActionResult result = await sut.OnPostAsync(id);
+
+      result.Should().BeOfType<PageResult>();
+      sut.ModelState.ContainsKey(nameof(IndexModel.LandTransactionSupportingEvidence)).Should().BeTrue();
       repository.Verify(x => x.SetLandTransaction(id, It.IsAny<SetSignificantChangeLandTransactionCommand>()), Times.Never);
    }
 

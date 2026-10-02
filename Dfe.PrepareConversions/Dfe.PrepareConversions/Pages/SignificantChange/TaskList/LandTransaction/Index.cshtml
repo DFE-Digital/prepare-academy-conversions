@@ -39,7 +39,7 @@
          <div class="govuk-radios__conditional" id="conditional-land-transaction-application-no">
             <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
                <label class="govuk-label" for="LandTransactionApplicationAdditionalInfo">
-                  Give Details
+                  Use this area for additional information relating to mitigations, actions and further investigations
                </label>
                <inline-error for="@nameof(Model.LandTransactionApplicationAdditionalInfo)" />
                <textarea asp-for="@Model.LandTransactionApplicationAdditionalInfo"
@@ -88,7 +88,7 @@
          <div class="govuk-radios__conditional" id="conditional-land-transaction-consent-no">
             <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
                <label class="govuk-label" for="LandTransactionConsentAdditionalInfo">
-                  Give Details
+                  Use this area for additional information relating to mitigations, actions and further investigations
                </label>
                <inline-error for="@nameof(Model.LandTransactionConsentAdditionalInfo)" />
                <textarea asp-for="@Model.LandTransactionConsentAdditionalInfo"
@@ -108,19 +108,4 @@
       </div>
    </fieldset>
 </div>
-<div class="govuk-form-group">
-   <fieldset class="govuk-fieldset" data-test="supporting-evidence-fieldset">
-      <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
-               <label class="govuk-label govuk-label--m" for="supporting-evidence">
-                  Supporting Evidence
-               </label>
-               <inline-error for="@nameof(Model.LandTransactionSupportingEvidence)" />
-               <input asp-for="@Model.LandTransactionSupportingEvidence"
-                           class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.LandTransactionSupportingEvidence))"
-                           type="text" id="supporting-evidence"
-                           placeholder="e.g. https://sharepoint.edu.gov.uk/evidence"
-                           >
-               </input>
-            </div>
-   </fieldset>
-</div>
+<supporting-evidence-input asp-for="@Model.LandTransactionSupportingEvidence" />

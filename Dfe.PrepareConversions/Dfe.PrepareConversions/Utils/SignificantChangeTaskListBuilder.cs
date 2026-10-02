@@ -93,7 +93,7 @@ public static class SignificantChangeTaskListBuilder
          ]),
       new SignificantChangeTaskSectionDefinition(
          "land-and-planning",
-         "Land and Planning",
+         "Land transaction application and planning permission",
          4,
          [
             new SignificantChangeTaskDefinition(

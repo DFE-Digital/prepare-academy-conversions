@@ -55,7 +55,10 @@ describe('Land Transaction Form', () => {
         cy.getByDataTest('land-transction-application-fieldset').within(() => {
             cy.contains('label', 'No').click();
             cy.get('textarea[name="LandTransactionApplicationAdditionalInfo"]').should('be.visible');
-            cy.contains('label', 'Give Details').click();
+            cy.contains(
+                'label',
+                'Use this area for additional information relating to mitigations, actions and further investigations'
+            ).click();
             cy.get('textarea[name="LandTransactionApplicationAdditionalInfo"]').should('have.focus');
 
             cy.contains('label', 'Yes').click();
@@ -65,7 +68,10 @@ describe('Land Transaction Form', () => {
         cy.getByDataTest('land-transction-consent-fieldset').within(() => {
             cy.contains('label', 'No').click();
             cy.get('textarea[name="LandTransactionConsentAdditionalInfo"]').should('be.visible');
-            cy.contains('label', 'Give Details').click();
+            cy.contains(
+                'label',
+                'Use this area for additional information relating to mitigations, actions and further investigations'
+            ).click();
             cy.get('textarea[name="LandTransactionConsentAdditionalInfo"]').should('have.focus');
 
             cy.contains('label', 'Not Applicable').click();
@@ -113,7 +119,7 @@ describe('Land Transaction Form', () => {
         cy.getByDataTest('land-transction-consent-fieldset').contains('label', 'No').click();
         cy.get('textarea[name="LandTransactionConsentAdditionalInfo"]').should('be.visible').clear();
         cy.get('textarea[name="LandTransactionConsentAdditionalInfo"]').type('Consent details');
-        cy.getById('supporting-evidence').type('Evidence link');
+        cy.getById('supporting-evidence').type('https://educationgovuk.sharepoint.com/sites/land-transaction/evidence');
 
         cy.contains('button', 'Save and continue').click();
         cy.urlPath().should('match', TASK_LIST_URL);
@@ -125,5 +131,17 @@ describe('Land Transaction Form', () => {
 
         cy.contains('button', 'Save and continue').click();
         cy.urlPath().should('match', TASK_LIST_URL);
+    });
+
+    it('should reject a supporting evidence link from an unapproved domain', () => {
+        cy.getByDataTest('land-transction-application-fieldset').contains('label', 'Yes').click();
+        cy.getByDataTest('land-transction-consent-fieldset').contains('label', 'Yes').click();
+        cy.getById('supporting-evidence').type('https://other.sharepoint.com/sites/team/evidence');
+
+        cy.contains('button', 'Save and continue').click();
+
+        cy.getById('supporting-evidence-error')
+            .should('be.visible')
+            .and('contain.text', 'Entry must be a valid gov uk SharePoint link');
     });
 });

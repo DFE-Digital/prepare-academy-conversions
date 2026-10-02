@@ -1,6 +1,7 @@
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Services;
+using Dfe.PrepareConversions.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -60,7 +61,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       if (!ModelState.IsValid)
       {
          _errorService.AddErrors(
-            [nameof(LandTransactionConsent), nameof(LandTransactionConsentAdditionalInfo), nameof(LandTransactionApplication), nameof(LandTransactionApplicationAdditionalInfo) ],
+            [nameof(LandTransactionConsent), nameof(LandTransactionConsentAdditionalInfo), nameof(LandTransactionApplication), nameof(LandTransactionApplicationAdditionalInfo), nameof(LandTransactionSupportingEvidence)],
             ModelState);
 
          return Page();
@@ -96,5 +97,8 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       if (LandTransactionConsent == SignificantChangeGenericYesNoNa.No && string.IsNullOrWhiteSpace(LandTransactionConsentAdditionalInfo))
          ModelState.AddModelError(nameof(LandTransactionConsentAdditionalInfo), "Enter the additional information provided");
+
+      if (!SharePointLinkValidator.IsValid(LandTransactionSupportingEvidence))
+         ModelState.AddModelError(nameof(LandTransactionSupportingEvidence), SharePointLinkValidator.ErrorMessage);
    }
 }

@@ -18,7 +18,7 @@ public class FundingIntegrationTests(IntegrationTestingWebApplicationFactory fac
       SignificantChangeProjectResponse project = BuildProject(id: 711);
       project.Funding.FundingAnswer = FundingAnswer.No;
       project.Funding.AdditionalInformation = "Funding gap identified";
-      project.Funding.SupportingEvidence = "Board minutes link";
+      project.Funding.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/funding/board-minutes";
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
@@ -29,7 +29,7 @@ public class FundingIntegrationTests(IntegrationTestingWebApplicationFactory fac
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='funding-additional-information']")!.Value
          .Should().Be("Funding gap identified");
       Document.QuerySelector<IHtmlInputElement>("[data-test='funding-supporting-evidence']")!.Value
-         .Should().Be("Board minutes link");
+         .Should().Be("https://educationgovuk.sharepoint.com/sites/funding/board-minutes");
    }
 
    [Fact]
