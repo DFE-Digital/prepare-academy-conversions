@@ -17,9 +17,7 @@ describe('Land Transaction Form', () => {
         // Clear project values so interaction and validation checks start from a blank form.
         cy.get('input[name="LandTransactionApplication"]').invoke('prop', 'checked', false);
         cy.get('input[name="LandTransactionConsent"]').invoke('prop', 'checked', false);
-        cy.get('textarea[name="LandTransactionApplicationAdditionalInfo"]').clear({ force: true });
-        cy.get('textarea[name="LandTransactionConsentAdditionalInfo"]').clear({ force: true });
-        cy.get('input[name="LandTransactionSupportingEvidence"]').clear({ force: true });
+        cy.get('input[name="LandTransactionSupportingEvidence"]').clear();
     });
 
     it('should expose both question groups with descriptive legends and correctly associated radio labels', () => {
@@ -81,6 +79,7 @@ describe('Land Transaction Form', () => {
     });
 
     it('should have no detectable WCAG 2.1 AA or 2.2 AA violations', () => {
+        cy.getByDataTest('land-transction-application-fieldset').should('be.visible');
         cy.executeAccessibilityTests();
     });
 
@@ -93,7 +92,9 @@ describe('Land Transaction Form', () => {
 
     it('should require details when either answer is No', () => {
         cy.getByDataTest('land-transction-application-fieldset').contains('label', 'No').click();
+        cy.get('textarea[name="LandTransactionApplicationAdditionalInfo"]').should('be.visible').clear();
         cy.getByDataTest('land-transction-consent-fieldset').contains('label', 'No').click();
+        cy.get('textarea[name="LandTransactionConsentAdditionalInfo"]').should('be.visible').clear();
         cy.contains('button', 'Save and continue').click();
 
         cy.getById('LandTransactionApplicationAdditionalInfo-error')
@@ -106,9 +107,11 @@ describe('Land Transaction Form', () => {
 
     it('should save both No answers with details and return to the task list', () => {
         cy.getByDataTest('land-transction-application-fieldset').contains('label', 'No').click();
+        cy.get('textarea[name="LandTransactionApplicationAdditionalInfo"]').should('be.visible').clear();
         cy.get('textarea[name="LandTransactionApplicationAdditionalInfo"]').type('Application details');
 
         cy.getByDataTest('land-transction-consent-fieldset').contains('label', 'No').click();
+        cy.get('textarea[name="LandTransactionConsentAdditionalInfo"]').should('be.visible').clear();
         cy.get('textarea[name="LandTransactionConsentAdditionalInfo"]').type('Consent details');
         cy.getById('supporting-evidence').type('Evidence link');
 
