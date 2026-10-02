@@ -76,7 +76,14 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
 
       Document.QuerySelectorAll("h3.app-task-list__section").Select(x => x.TextContent.Trim())
-         .Should().OnlyContain(x=> x == "Consultation" || x == "Proposed decision and conversion dates" || x == "Public Sector Equality Duty" || x == "Financial details" || x == "Land and Planning");
+         .Should().OnlyContain(x=> 
+            x == "Consultation" || 
+            x == "Proposed decision and conversion dates" || 
+            x == "Public Sector Equality Duty" || 
+            x == "Financial details" || 
+            x == "Land and Planning" || 
+            x == "Land transaction application and planning permission"
+         );
 
       var stakeholderConsultationLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Stakeholder consultation"));
@@ -90,16 +97,23 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       religiousBodyConsultationLink.Should().NotBeNull();
       religiousBodyConsultationLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/religious-body-consultation");
 
-      var publicSectorEqualityDutyLink = Document.QuerySelectorAll("a")
-         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Public Sector Equality Duty"));
-
-      publicSectorEqualityDutyLink.Should().NotBeNull();
-      publicSectorEqualityDutyLink!.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/public-sector-equality-duty");
       var confirmProjectDatesLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Confirm project dates"));
 
       confirmProjectDatesLink.Should().NotBeNull();
       confirmProjectDatesLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/confirm-project-dates");
+
+      var publicSectorEqualityDutyLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Public Sector Equality Duty"));
+
+      publicSectorEqualityDutyLink.Should().NotBeNull();
+      publicSectorEqualityDutyLink!.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/public-sector-equality-duty");
+
+      var localAuthorityObjectionsLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Local authority objections"));
+
+      localAuthorityObjectionsLink.Should().NotBeNull();
+      localAuthorityObjectionsLink!.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/local-authority-objections");
 
       Document.QuerySelectorAll("a").Any(a => a.TextContent != null && a.TextContent.Contains("Gather trust feedback"))
          .Should().BeFalse();
@@ -123,6 +137,10 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       var fundingStatusTag = Document.QuerySelector("#task-status-funding");
       fundingStatusTag.Should().NotBeNull();
       fundingStatusTag.TextContent.Should().Contain("Not started");
+
+      var localAuthorityObjectionsStatusTag = Document.QuerySelector("#task-status-local-authority-objections");
+      localAuthorityObjectionsStatusTag.Should().NotBeNull();
+      localAuthorityObjectionsStatusTag.TextContent.Should().Contain("Not started");
    }
 
    [Fact]
@@ -175,7 +193,8 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       SignificantChangeTaskStatus stakeholderConsultationStatus = SignificantChangeTaskStatus.NotStarted,
       bool? trustConsultedStakeholders = null,
       string trustConsultedStakeholdersNotConsultedReason = null,
-      SignificantChangeTaskStatus consultationDurationStatus = SignificantChangeTaskStatus.NotStarted)
+      SignificantChangeTaskStatus consultationDurationStatus = SignificantChangeTaskStatus.NotStarted,
+      SignificantChangeTaskStatus localAuthorityObjectionsStatus = SignificantChangeTaskStatus.NotStarted)
    {
       return new SignificantChangeProjectResponse
       {
@@ -200,6 +219,14 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
          ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse
          {
             Status = SignificantChangeTaskStatus.NotStarted
+         },
+         ConsultationDuration = new SignificantChangeConsultationDurationResponse
+         {
+            Status = consultationDurationStatus
+         },
+         LocalAuthorityObjections = new SignificantChangeLocalAuthorityObjectionsResponse
+         {
+            Status = localAuthorityObjectionsStatus
          }
       };
    }

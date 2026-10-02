@@ -93,7 +93,6 @@ public class PlanningPermissionIntegrationTests(IntegrationTestingWebApplication
          TypeOfSignificantChange = "Route A",
          Status = "pre decision",
          PlanningPermission = new SignificantChangePlanningPermissionResponse(),
-         LocalAuthorityName = "Test local authority"
       };
    }
 }

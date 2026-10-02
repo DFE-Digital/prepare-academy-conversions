@@ -468,7 +468,6 @@ public class SignificantChangeApplicationSubmittedConsumerTests
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
          Status = "Pre decision",
-         LocalAuthorityName = "Test local authority"
       };
    }
 
