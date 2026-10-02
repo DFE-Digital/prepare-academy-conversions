@@ -4,7 +4,7 @@ namespace Dfe.PrepareConversions.Utils;
 
 public static class SharePointLinkValidator
 {
-   public const string ErrorMessage = "Entry must be a valid gov uk SharePoint link.";
+   public const string ErrorMessage = "Entry must be a valid https gov uk SharePoint link and include a file path";
 
    public static bool IsValid(string link)
    {
