@@ -37,6 +37,7 @@ public static class SignificantChangeProjectListHelper
          EqualitiesImpactAssessmentCompleted = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactAssessmentCompleted,
          EqualitiesImpactIdentified = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactIdentified,
          EqualitiesImpactIdentifiedMitigation = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactIdentifiedMitigation ?? string.Empty,
+         EqualitiesImpactSupportingEvidence = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactSupportingEvidence ?? string.Empty,
          ReligiousBodyConsultationStatus = significantChangeProject.ReligiousBodyConsultation?.Status ?? SignificantChangeTaskStatus.NotStarted,
          ReligiousBodyConsultationTrustConsultedReligiousBody = significantChangeProject.ReligiousBodyConsultation?.TrustConsultedReligiousBody,
          ReligiousBodyConsultationTrustConsultedReligiousBodyNotConsultedReason = significantChangeProject.ReligiousBodyConsultation?.TrustConsultedReligiousBodyNotConsultedReason ?? string.Empty,

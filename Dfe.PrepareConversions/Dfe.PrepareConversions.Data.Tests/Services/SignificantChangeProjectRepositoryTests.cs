@@ -435,7 +435,7 @@ public class SignificantChangeProjectRepositoryTests
       const int id = 77;
       string expectedPath = string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, id);
       HttpClient httpClient = new();
-      SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(true, EqualitiesImpact.ImpactsIdentified, "Affected group and mitigation");
+      SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(true, EqualitiesImpact.Likely, "Affected group and mitigation", "sharepoint.edu.gov.uk/evidence");
 
       httpClientFactory
          .Setup(x => x.CreateAcademisationClient())
@@ -460,7 +460,7 @@ public class SignificantChangeProjectRepositoryTests
    {
       const int id = 77;
       string expectedPath = string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, id);
-      SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(true, EqualitiesImpact.None, null);
+      SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(true, EqualitiesImpact.Unlikely, null, "sharepoint.edu.gov.uk/evidence");
 
       httpClientService
          .Setup(x => x.Put<SetSignificantChangeEqualitiesImpactAssessmentCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
