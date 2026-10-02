@@ -107,6 +107,7 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Some authority",
          Status = "pre decision",
          LocalAuthorityObjections = new SignificantChangeLocalAuthorityObjectionsResponse
          {
@@ -139,6 +140,7 @@ public class SignificantChangeProjectListHelperTests
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
          Status = "pre decision",
+         LocalAuthorityName = "Some authority",
          LocalAuthorityObjections = null
       };
 
@@ -290,8 +292,7 @@ public class SignificantChangeProjectListHelperTests
             AdditionalInformation = "Planning permission is still pending",
             SupportingEvidence = "Planning reference 12345",
             Status = SignificantChangeTaskStatus.InProgress
-         },
-         LocalAuthorityName = "Test local authority"
+         }
       };
 
       var viewModel = SignificantChangeProjectListHelper.Build(response);

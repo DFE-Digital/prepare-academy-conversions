@@ -21,7 +21,7 @@ public class SignificantChangeTaskListBuilderTests
    [InlineData(15, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "local-authority-objections" })]
    public void Build_includes_ordered_sections_and_tasks_when_supplied(int sectionDisplayOrder, string sectionKey, string sectionTitle, string[] taskKeys)
    {
-      var expectedSectionCount = 5;
+      var expectedSectionCount = 6;
 
       SignificantChangeProjectViewBaseModel project = BuildProject();
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);

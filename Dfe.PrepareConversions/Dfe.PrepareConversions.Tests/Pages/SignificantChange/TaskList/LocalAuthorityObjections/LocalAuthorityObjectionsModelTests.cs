@@ -184,7 +184,8 @@ public class LocalAuthorityObjectionsModelTests
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
          Status = "pre decision",
-         LocalAuthorityObjections = new SignificantChangeLocalAuthorityObjectionsResponse()
+         LocalAuthorityObjections = new SignificantChangeLocalAuthorityObjectionsResponse(),
+         LocalAuthorityName = "Some authority"
       };
    }
 }
