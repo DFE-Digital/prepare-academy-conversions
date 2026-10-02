@@ -26,9 +26,9 @@ public class LandTransactionModelTests
    {
       const int id = 801;
       SignificantChangeProjectResponse project = BuildProject(id);
-      project.LandTransaction.LandTransactionApplication = SignificantChange_Generic_YesNoNa.No;
+      project.LandTransaction.LandTransactionApplication = SignificantChangeGenericYesNoNa.No;
       project.LandTransaction.LandTransactionApplicationAdditionalInfo = "Application details";
-      project.LandTransaction.LandTransactionConsent = SignificantChange_Generic_YesNoNa.Yes;
+      project.LandTransaction.LandTransactionConsent = SignificantChangeGenericYesNoNa.Yes;
       project.LandTransaction.LandTransactionConsentAdditionalInfo = "Consent details";
       project.LandTransaction.LandTransactionSupportingEvidence = "Evidence link";
 
@@ -38,9 +38,9 @@ public class LandTransactionModelTests
       IActionResult result = await sut.OnGetAsync(id);
 
       result.Should().BeOfType<PageResult>();
-      sut.LandTransactionApplication.Should().Be(SignificantChange_Generic_YesNoNa.No);
+      sut.LandTransactionApplication.Should().Be(SignificantChangeGenericYesNoNa.No);
       sut.LandTransactionApplicationAdditionalInfo.Should().Be("Application details");
-      sut.LandTransactionConsent.Should().Be(SignificantChange_Generic_YesNoNa.Yes);
+      sut.LandTransactionConsent.Should().Be(SignificantChangeGenericYesNoNa.Yes);
       sut.LandTransactionConsentAdditionalInfo.Should().Be("Consent details");
       sut.LandTransactionSupportingEvidence.Should().Be("Evidence link");
       repository.Verify(x => x.GetProjectById(id), Times.Once);
@@ -56,9 +56,9 @@ public class LandTransactionModelTests
          .Returns(Task.CompletedTask);
 
       IndexModel sut = BuildModel(repository.Object);
-      sut.LandTransactionApplication = SignificantChange_Generic_YesNoNa.No;
+      sut.LandTransactionApplication = SignificantChangeGenericYesNoNa.No;
       sut.LandTransactionApplicationAdditionalInfo = "Application details";
-      sut.LandTransactionConsent = SignificantChange_Generic_YesNoNa.No;
+      sut.LandTransactionConsent = SignificantChangeGenericYesNoNa.No;
       sut.LandTransactionConsentAdditionalInfo = "Consent details";
       sut.LandTransactionSupportingEvidence = "Evidence link";
 
@@ -70,18 +70,18 @@ public class LandTransactionModelTests
       repository.Verify(x => x.SetLandTransaction(
          id,
          It.Is<SetSignificantChangeLandTransactionCommand>(command =>
-            command.LandTransactionApplication == SignificantChange_Generic_YesNoNa.No
+            command.LandTransactionApplication == SignificantChangeGenericYesNoNa.No
             && command.LandTransactionApplicationAdditionalInfo == "Application details"
-            && command.LandTransactionConsent == SignificantChange_Generic_YesNoNa.No
+            && command.LandTransactionConsent == SignificantChangeGenericYesNoNa.No
             && command.LandTransactionConsentAdditionalInfo == "Consent details"
             && command.LandTransactionSupportingEvidence == "Evidence link")), Times.Once);
    }
 
    [Theory]
-   [InlineData(SignificantChange_Generic_YesNoNa.Yes)]
-   [InlineData(SignificantChange_Generic_YesNoNa.NotApplicable)]
+   [InlineData(SignificantChangeGenericYesNoNa.Yes)]
+   [InlineData(SignificantChangeGenericYesNoNa.NotApplicable)]
    public async Task OnPostAsync_WhenAnswerIsNotNo_ShouldClearThatAnswerDetails(
-      SignificantChange_Generic_YesNoNa answer)
+      SignificantChangeGenericYesNoNa answer)
    {
       const int id = 803;
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
@@ -127,9 +127,9 @@ public class LandTransactionModelTests
       const int id = 805;
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
       IndexModel sut = BuildModel(repository.Object);
-      sut.LandTransactionApplication = SignificantChange_Generic_YesNoNa.No;
+      sut.LandTransactionApplication = SignificantChangeGenericYesNoNa.No;
       sut.LandTransactionApplicationAdditionalInfo = " ";
-      sut.LandTransactionConsent = SignificantChange_Generic_YesNoNa.No;
+      sut.LandTransactionConsent = SignificantChangeGenericYesNoNa.No;
       sut.LandTransactionConsentAdditionalInfo = "";
 
       IActionResult result = await sut.OnPostAsync(id);

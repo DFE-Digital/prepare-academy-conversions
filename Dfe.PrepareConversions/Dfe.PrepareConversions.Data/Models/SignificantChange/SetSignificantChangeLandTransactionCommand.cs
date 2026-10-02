@@ -1,16 +1,16 @@
 namespace Dfe.PrepareConversions.Data.Models.SignificantChange;
 
 public class SetSignificantChangeLandTransactionCommand(
-   SignificantChange_Generic_YesNoNa? landTransactionApplication,
+   SignificantChangeGenericYesNoNa? landTransactionApplication,
    string landTransactionApplicationAdditionalInfo,
-   SignificantChange_Generic_YesNoNa? landTransactionConsent,
+   SignificantChangeGenericYesNoNa? landTransactionConsent,
    string landTransactionConsentAdditionalInfo, 
    string landTransactionSupportingEvidence)
 {
-   public SignificantChange_Generic_YesNoNa? LandTransactionApplication { get; set; } = landTransactionApplication;
+   public SignificantChangeGenericYesNoNa? LandTransactionApplication { get; set; } = landTransactionApplication;
    public string LandTransactionApplicationAdditionalInfo { get; set; } = landTransactionApplicationAdditionalInfo;
 
-   public SignificantChange_Generic_YesNoNa? LandTransactionConsent { get; set; } = landTransactionConsent;
+   public SignificantChangeGenericYesNoNa? LandTransactionConsent { get; set; } = landTransactionConsent;
    public string LandTransactionConsentAdditionalInfo { get; set; } = landTransactionConsentAdditionalInfo;
 
    public string LandTransactionSupportingEvidence { get; set; } = landTransactionSupportingEvidence;

@@ -1,6 +1,6 @@
 namespace Dfe.PrepareConversions.Data.Models.SignificantChange;
 
-public enum SignificantChange_Generic_YesNoNa
+public enum SignificantChangeGenericYesNoNa
 	{
 		Yes,
 		No,

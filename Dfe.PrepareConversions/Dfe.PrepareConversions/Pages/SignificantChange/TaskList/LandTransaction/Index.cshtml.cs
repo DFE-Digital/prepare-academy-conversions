@@ -12,13 +12,13 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
    private readonly ErrorService _errorService = errorService;
 
    [BindProperty]
-   public SignificantChange_Generic_YesNoNa? LandTransactionApplication { get; set; }
+   public SignificantChangeGenericYesNoNa? LandTransactionApplication { get; set; }
    
    [BindProperty]
    public string LandTransactionApplicationAdditionalInfo { get; set; }
 
    [BindProperty]
-   public SignificantChange_Generic_YesNoNa? LandTransactionConsent { get; set; }
+   public SignificantChangeGenericYesNoNa? LandTransactionConsent { get; set; }
 
    [BindProperty]
    public string LandTransactionConsentAdditionalInfo { get; set; }
@@ -68,11 +68,11 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       SetSignificantChangeLandTransactionCommand command = new(
          LandTransactionApplication,
-         LandTransactionApplication == SignificantChange_Generic_YesNoNa.No
+         LandTransactionApplication == SignificantChangeGenericYesNoNa.No
             ? LandTransactionApplicationAdditionalInfo
             : null,
          LandTransactionConsent,
-         LandTransactionConsent == SignificantChange_Generic_YesNoNa.No
+         LandTransactionConsent == SignificantChangeGenericYesNoNa.No
             ? LandTransactionConsentAdditionalInfo
             : null,
          LandTransactionSupportingEvidence
@@ -88,13 +88,13 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       if (!LandTransactionApplication.HasValue)
          ModelState.AddModelError(nameof(LandTransactionApplication), "Select an option");
 
-      if (LandTransactionApplication == SignificantChange_Generic_YesNoNa.No && string.IsNullOrWhiteSpace(LandTransactionApplicationAdditionalInfo))
+      if (LandTransactionApplication == SignificantChangeGenericYesNoNa.No && string.IsNullOrWhiteSpace(LandTransactionApplicationAdditionalInfo))
          ModelState.AddModelError(nameof(LandTransactionApplicationAdditionalInfo), "Enter the additional information provided");
 
       if (!LandTransactionConsent.HasValue)
          ModelState.AddModelError(nameof(LandTransactionConsent), "Select an option");
 
-      if (LandTransactionConsent == SignificantChange_Generic_YesNoNa.No && string.IsNullOrWhiteSpace(LandTransactionConsentAdditionalInfo))
+      if (LandTransactionConsent == SignificantChangeGenericYesNoNa.No && string.IsNullOrWhiteSpace(LandTransactionConsentAdditionalInfo))
          ModelState.AddModelError(nameof(LandTransactionConsentAdditionalInfo), "Enter the additional information provided");
    }
 }
