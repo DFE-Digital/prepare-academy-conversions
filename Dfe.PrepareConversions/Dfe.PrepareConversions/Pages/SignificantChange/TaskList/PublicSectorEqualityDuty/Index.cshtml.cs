@@ -17,7 +17,10 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
    public EqualitiesImpact? EqualitiesImpactIdentified { get; set; }
 
    [BindProperty]
-   public string EqualitiesImpactIdentifiedMitigation { get; set; }
+   public string LikelyDetails { get; set; }
+
+   [BindProperty]
+   public string SupportingEvidence { get; set; }
 
    protected override string TaskTitle => "Public Sector Equality Duty";
 
@@ -32,7 +35,8 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       EqualitiesImpactAssessmentCompleted = Project.EqualitiesImpactAssessmentCompleted;
       EqualitiesImpactIdentified = Project.EqualitiesImpactIdentified;
-      EqualitiesImpactIdentifiedMitigation = Project.EqualitiesImpactIdentifiedMitigation;
+      LikelyDetails = Project.EqualitiesImpactIdentifiedMitigation;
+      SupportingEvidence = Project.EqualitiesImpactSupportingEvidence;
 
       return Page();
    }
@@ -49,7 +53,8 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(
          EqualitiesImpactAssessmentCompleted,
          EqualitiesImpactIdentified,
-         EqualitiesImpactIdentified == EqualitiesImpact.ImpactsIdentified ? EqualitiesImpactIdentifiedMitigation : null);
+         EqualitiesImpactIdentified == EqualitiesImpact.Likely ? LikelyDetails : null,
+         SupportingEvidence);
 
       await _repository.SetEqualitiesImpactAssessment(id, command);
 

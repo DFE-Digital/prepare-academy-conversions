@@ -27,8 +27,9 @@ public class PublicSectorEqualityDutyModelTests
       const int id = 601;
       SignificantChangeProjectResponse project = BuildProject(id);
       project.EqualitiesImpactAssessment.EqualitiesImpactAssessmentCompleted = true;
-      project.EqualitiesImpactAssessment.EqualitiesImpactIdentified = EqualitiesImpact.ImpactsIdentified;
+      project.EqualitiesImpactAssessment.EqualitiesImpactIdentified = EqualitiesImpact.Likely;
       project.EqualitiesImpactAssessment.EqualitiesImpactIdentifiedMitigation = "Additional info required";
+      project.EqualitiesImpactAssessment.EqualitiesImpactSupportingEvidence = "sharepoint.edu.gov.uk/evidence";
 
       Mock<ISignificantChangeProjectRepository> repository = new();
       repository
@@ -41,8 +42,9 @@ public class PublicSectorEqualityDutyModelTests
 
       result.Should().BeOfType<PageResult>();
       sut.EqualitiesImpactAssessmentCompleted.Should().BeTrue();
-      sut.EqualitiesImpactIdentified.Should().Be(EqualitiesImpact.ImpactsIdentified);
-      sut.EqualitiesImpactIdentifiedMitigation.Should().Be("Additional info required");
+      sut.EqualitiesImpactIdentified.Should().Be(EqualitiesImpact.Likely);
+      sut.LikelyDetails.Should().Be("Additional info required");
+      sut.SupportingEvidence.Should().Be("sharepoint.edu.gov.uk/evidence");
       repository.Verify(x => x.GetProjectById(id), Times.Once);
    }
 
@@ -61,8 +63,8 @@ public class PublicSectorEqualityDutyModelTests
 
       IndexModel sut = BuildModel(repository.Object);
       sut.EqualitiesImpactAssessmentCompleted = true;
-      sut.EqualitiesImpactIdentified = EqualitiesImpact.None;
-      sut.EqualitiesImpactIdentifiedMitigation = "This should be cleared";
+      sut.EqualitiesImpactIdentified = EqualitiesImpact.Unlikely;
+      sut.LikelyDetails = "This should be cleared";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -74,7 +76,7 @@ public class PublicSectorEqualityDutyModelTests
          id,
          It.Is<SetSignificantChangeEqualitiesImpactAssessmentCommand>(command =>
             command.EqualitiesImpactAssessmentCompleted == true
-            && command.EqualitiesImpactIdentified == EqualitiesImpact.None
+            && command.EqualitiesImpactIdentified == EqualitiesImpact.Unlikely
             && command.EqualitiesImpactIdentifiedMitigation == null)), Times.Once);
    }
 
@@ -93,8 +95,8 @@ public class PublicSectorEqualityDutyModelTests
 
       IndexModel sut = BuildModel(repository.Object);
       sut.EqualitiesImpactAssessmentCompleted = true;
-      sut.EqualitiesImpactIdentified = EqualitiesImpact.ImpactsIdentified;
-      sut.EqualitiesImpactIdentifiedMitigation = "Pupils with SEND - additional transitional support planned";
+      sut.EqualitiesImpactIdentified = EqualitiesImpact.Likely;
+      sut.LikelyDetails = "Pupils with SEND - additional transitional support planned";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -106,7 +108,7 @@ public class PublicSectorEqualityDutyModelTests
          id,
          It.Is<SetSignificantChangeEqualitiesImpactAssessmentCommand>(command =>
             command.EqualitiesImpactAssessmentCompleted == true
-            && command.EqualitiesImpactIdentified == EqualitiesImpact.ImpactsIdentified
+            && command.EqualitiesImpactIdentified == EqualitiesImpact.Likely
             && command.EqualitiesImpactIdentifiedMitigation == "Pupils with SEND - additional transitional support planned")), Times.Once);
    }
 
