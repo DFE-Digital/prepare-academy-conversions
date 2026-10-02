@@ -169,7 +169,14 @@ public static class SignificantChangeTaskListBuilder
          "recommendation-on-how-to-proceed",
          "Recommendation on how to proceed",
          displayOrder,
-         []
+         [
+            new SignificantChangeTaskDefinition(
+               "significant-change-recommendation",
+               "Significant change recommendation",
+               1,
+               Links.SignificantChange.SignificantChangeRecommendation,
+               project => GetTaskStatus(project.RecommendationStatus))
+         ]
       );
    }
 
