@@ -332,6 +332,42 @@ public class SignificantChangeProjectListHelperTests
    }
 
    [Fact]
+   public void Build_Maps_nested_land_transaction_values()
+    {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
+         Status = "pre decision",
+         LocalAuthorityName = "Test local authority",
+         LandTransaction = new SignificantChangeLandTransactionResponse
+         {
+            LandTransactionConsent = SignificantChangeGenericYesNoNa.Yes,
+            LandTransactionConsentAdditionalInfo = "Consent additional info",
+            LandTransactionApplication = SignificantChangeGenericYesNoNa.No,
+            LandTransactionApplicationAdditionalInfo = "Application additional info",
+            LandTransactionSupportingEvidence = "Supporting evidence link",
+            Status = SignificantChangeTaskStatus.Completed
+         }
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.Equal(SignificantChangeGenericYesNoNa.No, viewModel.LandTransactionApplication);
+      Assert.Equal("Application additional info", viewModel.LandTransactionApplicationAdditionalInfo);
+      Assert.Equal(SignificantChangeGenericYesNoNa.Yes, viewModel.LandTransactionConsent);
+      Assert.Equal("Consent additional info", viewModel.LandTransactionConsentAdditionalInfo);
+      Assert.Equal("Supporting evidence link", viewModel.LandTransactionSupportingEvidence);
+      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.LandTransactionTaskStatus);
+    }
+
+   [Fact]
    public void Build_Maps_nested_funding_values()
    {
       SignificantChangeProjectResponse response = new()

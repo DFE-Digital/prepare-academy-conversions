@@ -93,7 +93,7 @@ public static class SignificantChangeTaskListBuilder
          ]),
       new SignificantChangeTaskSectionDefinition(
          "land-and-planning",
-         "Land and Planning",
+         "Land transaction application and planning permission",
          4,
          [
             new SignificantChangeTaskDefinition(
@@ -101,7 +101,13 @@ public static class SignificantChangeTaskListBuilder
                "Planning Permission",
                1,
                Links.SignificantChange.PlanningPermission,
-               project => GetTaskStatus(project.PlanningPermissionTaskStatus))
+               project => GetTaskStatus(project.PlanningPermissionTaskStatus)),
+            new SignificantChangeTaskDefinition(
+               "land-transaction-application",
+               "Land Transaction Application",
+               2,
+               Links.SignificantChange.LandTransactionConsent,
+               project => GetTaskStatus(project.LandTransactionTaskStatus))
          ]
       )
    ];
