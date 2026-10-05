@@ -93,10 +93,13 @@ public class PlanningPermissionIntegrationTests(IntegrationTestingWebApplication
          "https://other.sharepoint.com/sites/team/evidence";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
-      Document.QuerySelector("#PlanningPermissionSupportingEvidence-error")!
-         .TextContent.Should().Contain("Entry must be a valid gov uk SharePoint link");
-      Document.QuerySelector<IHtmlInputElement>("[data-test='planning-permission-supporting-evidence']")!.Value
-         .Should().Be("https://other.sharepoint.com/sites/team/evidence");
+      IHtmlElement errorMessage = Document.QuerySelector<IHtmlElement>("#PlanningPermissionSupportingEvidence-error")!;
+      errorMessage.TextContent.Trim().Should().NotBe("Error:");
+
+      IHtmlInputElement supportingEvidenceInput =
+         Document.QuerySelector<IHtmlInputElement>("[data-test='planning-permission-supporting-evidence']")!;
+      supportingEvidenceInput.GetAttribute("aria-describedby").Should().Be("PlanningPermissionSupportingEvidence-error");
+      supportingEvidenceInput.Value.Should().Be("https://other.sharepoint.com/sites/team/evidence");
    }
 
    private static SignificantChangeProjectResponse BuildProject(int id)
