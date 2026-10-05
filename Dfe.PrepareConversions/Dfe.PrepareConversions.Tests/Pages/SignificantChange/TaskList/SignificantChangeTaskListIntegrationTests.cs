@@ -76,7 +76,7 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
 
       Document.QuerySelectorAll("h3.app-task-list__section").Select(x => x.TextContent.Trim())
-         .Should().OnlyContain(x=> x == "Consultation" || x == "Proposed decision and conversion dates" || x == "Public Sector Equality Duty" || x == "Financial details" || x == "Land and Planning");
+         .Should().OnlyContain(x=> x == "Consultation" || x == "Proposed decision and conversion dates" || x == "Public Sector Equality Duty" || x == "Financial details" || x == "Land transaction application and planning permission");
 
       var stakeholderConsultationLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Stakeholder consultation"));
@@ -101,6 +101,12 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       confirmProjectDatesLink.Should().NotBeNull();
       confirmProjectDatesLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/confirm-project-dates");
 
+      var landTransactionLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Land Transaction Application"));
+
+      landTransactionLink.Should().NotBeNull();
+      landTransactionLink.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/land-transaction");
+
       Document.QuerySelectorAll("a").Any(a => a.TextContent != null && a.TextContent.Contains("Gather trust feedback"))
          .Should().BeFalse();
 
@@ -123,6 +129,10 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       var fundingStatusTag = Document.QuerySelector("#task-status-funding");
       fundingStatusTag.Should().NotBeNull();
       fundingStatusTag.TextContent.Should().Contain("Not started");
+
+      var landTransactionStatusTag = Document.QuerySelector("#task-status-land-transaction-application");
+      landTransactionStatusTag.Should().NotBeNull();
+      landTransactionStatusTag.TextContent.Should().Contain("Not started");
    }
 
    [Fact]

@@ -63,7 +63,7 @@ describe('Significant change - funding', () => {
             significantChangeFunding
                 .selectNo()
                 .enterAdditionalInformation('Funding gap identified')
-                .enterSupportingEvidence('Board minutes link')
+                .enterSupportingEvidence('https://educationgovuk.sharepoint.com/sites/funding/board-minutes')
                 .save();
 
             cy.url().should('match', /\/significant-change\/task-list\/\d+$/);

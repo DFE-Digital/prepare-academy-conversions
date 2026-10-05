@@ -28,7 +28,7 @@ public class PlanningPermissionModelTests
       SignificantChangeProjectResponse project = BuildProject(id);
       project.PlanningPermission.PlanningPermissionAnswer = PlanningPermissionAnswer.No;
       project.PlanningPermission.AdditionalInformation = "Planning decision expected next month";
-      project.PlanningPermission.SupportingEvidence = "Planning reference 12345";
+      project.PlanningPermission.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/planning/reference/12345";
 
       Mock<ISignificantChangeProjectRepository> repository = new();
       repository
@@ -42,7 +42,7 @@ public class PlanningPermissionModelTests
       result.Should().BeOfType<PageResult>();
       sut.PlanningPermissionAnswer.Should().Be(PlanningPermissionAnswer.No);
       sut.PlanningPermissionAdditionalInformation.Should().Be("Planning decision expected next month");
-      sut.PlanningPermissionSupportingEvidence.Should().Be("Planning reference 12345");
+      sut.PlanningPermissionSupportingEvidence.Should().Be("https://educationgovuk.sharepoint.com/sites/planning/reference/12345");
       repository.Verify(x => x.GetProjectById(id), Times.Once);
    }
 
@@ -62,7 +62,7 @@ public class PlanningPermissionModelTests
       IndexModel sut = BuildModel(repository.Object);
    sut.PlanningPermissionAnswer = PlanningPermissionAnswer.Yes;
       sut.PlanningPermissionAdditionalInformation = "This should be cleared";
-      sut.PlanningPermissionSupportingEvidence = "Planning approval reference 12345";
+      sut.PlanningPermissionSupportingEvidence = "https://educationgovuk.sharepoint.com/sites/planning/approval/12345";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -75,7 +75,7 @@ public class PlanningPermissionModelTests
          It.Is<SetSignificantChangePlanningPermissionCommand>(command =>
             command.PlanningPermissionAnswer == PlanningPermissionAnswer.Yes
             && command.AdditionalInformation == null
-            && command.SupportingEvidence == "Planning approval reference 12345")), Times.Once);
+            && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/planning/approval/12345")), Times.Once);
    }
 
    [Fact]
@@ -94,7 +94,7 @@ public class PlanningPermissionModelTests
       IndexModel sut = BuildModel(repository.Object);
    sut.PlanningPermissionAnswer = PlanningPermissionAnswer.No;
       sut.PlanningPermissionAdditionalInformation = "Planning permission is under review";
-      sut.PlanningPermissionSupportingEvidence = "Planning application reference 67890";
+      sut.PlanningPermissionSupportingEvidence = "https://educationgovuk-my.sharepoint.com/personal/planning/application/67890";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -107,7 +107,7 @@ public class PlanningPermissionModelTests
          It.Is<SetSignificantChangePlanningPermissionCommand>(command =>
             command.PlanningPermissionAnswer == PlanningPermissionAnswer.No
             && command.AdditionalInformation == "Planning permission is under review"
-            && command.SupportingEvidence == "Planning application reference 67890")), Times.Once);
+            && command.SupportingEvidence == "https://educationgovuk-my.sharepoint.com/personal/planning/application/67890")), Times.Once);
    }
 
    [Fact]
@@ -157,6 +157,26 @@ public class PlanningPermissionModelTests
       repository.Verify(x => x.SetPlanningPermission(id, It.IsAny<SetSignificantChangePlanningPermissionCommand>()), Times.Never);
    }
 
+   [Fact]
+   public async Task OnPostAsync_WhenSupportingEvidenceHasAnInvalidDomain_ShouldReturnPageWithValidationError()
+   {
+      const int id = 706;
+      Mock<ISignificantChangeProjectRepository> repository = new();
+      repository
+         .Setup(x => x.GetProjectById(id))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, BuildProject(id)));
+
+      IndexModel sut = BuildModel(repository.Object);
+      sut.PlanningPermissionAnswer = PlanningPermissionAnswer.Yes;
+      sut.PlanningPermissionSupportingEvidence = "https://other.sharepoint.com/sites/team/evidence";
+
+      IActionResult result = await sut.OnPostAsync(id);
+
+      result.Should().BeOfType<PageResult>();
+      sut.ModelState.ContainsKey(nameof(IndexModel.PlanningPermissionSupportingEvidence)).Should().BeTrue();
+      repository.Verify(x => x.SetPlanningPermission(id, It.IsAny<SetSignificantChangePlanningPermissionCommand>()), Times.Never);
+   }
+
    private static IndexModel BuildModel(ISignificantChangeProjectRepository repository)
    {
       DefaultHttpContext httpContext = new();
@@ -189,7 +209,6 @@ public class PlanningPermissionModelTests
          TypeOfSignificantChange = "Route A",
          Status = "pre decision",
          PlanningPermission = new SignificantChangePlanningPermissionResponse(),
-         LocalAuthorityName = "Test local authority"
       };
    }
 }

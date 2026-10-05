@@ -5,6 +5,7 @@ using Dfe.PrepareConversions.Data.Features;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -303,6 +304,23 @@ public class SignificantChangeProjectRepository(
       }
    }
 
+   public async Task SetLandTransaction(int id, SetSignificantChangeLandTransactionCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeLandTransaction, id);
+
+      
+      var result = await httpClientService.Put<SetSignificantChangeLandTransactionCommand, object>(
+          httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
+   
    public async Task SetFunding(int id, SetSignificantChangeFundingCommand command)
    {
       HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
@@ -318,4 +336,5 @@ public class SignificantChangeProjectRepository(
          throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
       }
    }
+
 }

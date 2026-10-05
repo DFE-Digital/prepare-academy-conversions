@@ -40,6 +40,12 @@ public class SignificantChangeProjectViewBaseModel
    public SignificantChangeTaskStatus ProjectDatesStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public DateTime? ProposedDecisionDate { get; set; }
    public DateTime? ProposedChangeDate { get; set; }
+   public SignificantChangeGenericYesNoNa? LandTransactionConsent { get; set; }
+   public string LandTransactionConsentAdditionalInfo { get; set; }
+   public SignificantChangeGenericYesNoNa? LandTransactionApplication { get; set; }
+   public string LandTransactionApplicationAdditionalInfo { get; set; }
+   public string LandTransactionSupportingEvidence { get; set; }
+   public SignificantChangeTaskStatus LandTransactionTaskStatus { get; set; }
    public SignificantChangeTaskStatus FundingStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public FundingAnswer? FundingAnswer { get; set; }
    public string FundingAdditionalInformation { get; set; } = string.Empty;
