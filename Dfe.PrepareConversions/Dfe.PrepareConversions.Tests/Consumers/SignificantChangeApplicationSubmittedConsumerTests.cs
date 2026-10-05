@@ -463,11 +463,11 @@ public class SignificantChangeApplicationSubmittedConsumerTests
          SchoolName = "School",
          TrustName = "Trust",
          TrustUkprn = "10001234",
+         LocalAuthorityName = "Test local authority",
          TypeOfSignificantChange = "TypeOfSignificantChange A",
          ApplicationId = "ID_APP_123",
          ApplicationReference = "APP_REF_123",
          Status = "Pre decision",
-         LocalAuthorityName = "Test local authority"
       };
    }
 

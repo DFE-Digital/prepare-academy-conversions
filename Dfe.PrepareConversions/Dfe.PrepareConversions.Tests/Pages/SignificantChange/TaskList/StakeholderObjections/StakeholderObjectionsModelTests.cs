@@ -155,10 +155,10 @@ public class StakeholderObjectionsModelTests
          Tier = 1,
          TrustName = "Example trust",
          TrustUkprn = "12345678",
+         LocalAuthorityName = "Test local authority",
          TypeOfSignificantChange = "Route A",
          Status = "pre decision",
          StakeholderObjections = new SignificantChangeStakeholderObjectionsResponse(),
-         LocalAuthorityName = "Test local authority"
       };
    }
 

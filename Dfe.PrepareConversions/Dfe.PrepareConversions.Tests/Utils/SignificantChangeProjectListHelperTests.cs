@@ -224,6 +224,7 @@ public class SignificantChangeProjectListHelperTests
          TrustName = "Trust name",
          TrustUkprn = "12345678",
          TypeOfSignificantChange = "Route A",
+         LocalAuthorityName = "Test local authority",
          Status = "pre decision",
          PlanningPermission = new SignificantChangePlanningPermissionResponse
          {
@@ -231,13 +232,12 @@ public class SignificantChangeProjectListHelperTests
             AdditionalInformation = "Planning permission is still pending",
             SupportingEvidence = "Planning reference 12345",
             Status = SignificantChangeTaskStatus.InProgress
-         },
-         LocalAuthorityName = "Test local authority"
+         }
       };
 
       var viewModel = SignificantChangeProjectListHelper.Build(response);
 
-   Assert.Equal(PlanningPermissionAnswer.No, viewModel.PlanningPermissionAnswer);
+      Assert.Equal(PlanningPermissionAnswer.No, viewModel.PlanningPermissionAnswer);
       Assert.Equal("Planning permission is still pending", viewModel.PlanningPermissionAdditionalInformation);
       Assert.Equal("Planning reference 12345", viewModel.PlanningPermissionSupportingEvidence);
       Assert.Equal(SignificantChangeTaskStatus.InProgress, viewModel.PlanningPermissionTaskStatus);
