@@ -1,6 +1,6 @@
 namespace Dfe.PrepareConversions.Data.Models.SignificantChange
 { 
-	public enum Recommendation
+	public enum SignificantChangeRecommendation
 	{
 		Approve = 0,
 		Decline = 1,
