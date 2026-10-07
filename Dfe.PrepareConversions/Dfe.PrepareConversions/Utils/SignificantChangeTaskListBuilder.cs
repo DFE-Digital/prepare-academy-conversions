@@ -103,6 +103,20 @@ public static class SignificantChangeTaskListBuilder
                Links.SignificantChange.PlanningPermission,
                project => GetTaskStatus(project.PlanningPermissionTaskStatus))
          ]
+      ),
+
+      new SignificantChangeTaskSectionDefinition(
+         "recommendation-on-how-to-proceed",
+         "Recommendation on how to proceed",
+         11,
+         [
+            new SignificantChangeTaskDefinition(
+               "admissions-variation-recommendation",
+               "Recommendation",
+               1,
+               Links.SignificantChange.AdmissionsVariationRecommendation,
+               project => GetTaskStatus(project.AdmissionsVariationRecommendationStatus))
+         ]
       )
    ];
 

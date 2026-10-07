@@ -76,7 +76,7 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}");
 
       Document.QuerySelectorAll("h3.app-task-list__section").Select(x => x.TextContent.Trim())
-         .Should().OnlyContain(x=> x == "Consultation" || x == "Proposed decision and conversion dates" || x == "Public Sector Equality Duty" || x == "Financial details" || x == "Land and Planning");
+         .Should().OnlyContain(x=> x == "Consultation" || x == "Proposed decision and conversion dates" || x == "Public Sector Equality Duty" || x == "Financial details" || x == "Land and Planning" || x == "Recommendation on how to proceed");
 
       var stakeholderConsultationLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Stakeholder consultation"));
@@ -123,6 +123,14 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       var fundingStatusTag = Document.QuerySelector("#task-status-funding");
       fundingStatusTag.Should().NotBeNull();
       fundingStatusTag.TextContent.Should().Contain("Not started");
+
+      var recommendationLink = Document.QuerySelectorAll("a")
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Recommendation"));
+
+      recommendationLink.Should().NotBeNull();
+      recommendationLink!.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/admissions-variation-recommendation");
+
+      Document.QuerySelector("#task-status-admissions-variation-recommendation")!.TextContent.Should().Contain("Not started");
    }
 
    [Fact]

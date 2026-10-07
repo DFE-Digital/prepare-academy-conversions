@@ -1,0 +1,52 @@
+@page "/significant-change/task-list/{id:int}/admissions-variation-recommendation"
+@using Dfe.Academisation.ExtensionMethods
+@using Dfe.PrepareConversions.Data.Models.SignificantChange
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.AdmissionsVariationRecommendation.IndexModel
+@{
+   Layout = "_SignificantChangeTaskLayout";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@Model.Project.Id"
+      class="govuk-back-link">Back</a>
+}
+
+<p class="govuk-body">
+   Enter a recommendation for this significant change.
+</p>
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+         What is your recommendation?
+      </legend>
+
+      <inline-error for="@nameof(Model.AdmissionsVariationRecommendationAnswer)" />
+
+      <div class="govuk-radios" data-module="govuk-radios">
+         @foreach (AdmissionsVariationRecommendationAnswer option in Model.RecommendationOptions)
+         {
+            var radioId = $"admissions-variation-recommendation-{option.ToString().ToLowerInvariant()}";
+
+            <div class="govuk-radios__item">
+               <input asp-for="@Model.AdmissionsVariationRecommendationAnswer" class="govuk-radios__input"
+                      id="@radioId" type="radio" value="@option"
+                      data-test="@radioId" />
+               <label class="govuk-label govuk-radios__label" for="@radioId">
+                  @option.ToDescription()
+               </label>
+            </div>
+         }
+      </div>
+   </fieldset>
+</div>
+
+<div class="govuk-form-group">
+   <label class="govuk-label" for="FurtherInformation">
+      Enter further information if required
+   </label>
+   <textarea asp-for="@Model.FurtherInformation"
+             class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.FurtherInformation))"
+             rows="5" data-test="admissions-variation-recommendation-further-information"></textarea>
+</div>

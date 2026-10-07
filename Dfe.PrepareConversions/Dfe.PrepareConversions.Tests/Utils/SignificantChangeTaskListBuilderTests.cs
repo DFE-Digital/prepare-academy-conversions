@@ -19,9 +19,10 @@ public class SignificantChangeTaskListBuilderTests
    [InlineData(5, "Proposed decision and conversion dates", "Proposed decision and conversion dates", new[] { "confirm-project-dates" })]
    [InlineData(7, "financial-details", "Financial details", new[] { "funding" })]
    [InlineData(10, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
+   [InlineData(11, "recommendation-on-how-to-proceed", "Recommendation on how to proceed", new[] { "admissions-variation-recommendation" })]
    public void Build_includes_ordered_sections_and_tasks_when_supplied(int sectionDisplayOrder, string sectionKey, string sectionTitle, string[] taskKeys)
    {
-      var expectedSectionCount = 5;
+      var expectedSectionCount = 6;
 
       SignificantChangeProjectViewBaseModel project = BuildProject();
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
@@ -189,6 +190,23 @@ public class SignificantChangeTaskListBuilderTests
       const string taskKey = "funding";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.FundingStatus = TaskStatus);
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
+      var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
+
+      task.Status.Status.Should().Be(expectedTaskStatus);
+   }
+
+   [Theory]
+   [MemberData(nameof(StatusCases))]
+   public void Build_maps_recommendation_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
+   {
+      const string sectionKey = "recommendation-on-how-to-proceed";
+      const string taskKey = "admissions-variation-recommendation";
+
+      SignificantChangeProjectViewBaseModel project = BuildProject(p => p.AdmissionsVariationRecommendationStatus = TaskStatus);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
