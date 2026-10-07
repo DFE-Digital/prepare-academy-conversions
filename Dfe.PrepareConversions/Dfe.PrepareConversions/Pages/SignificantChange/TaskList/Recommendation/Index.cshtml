@@ -18,7 +18,7 @@
       </legend>
       <inline-error for="@nameof(Model.RecommendationOptions)" />
 
-      <div class="govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios" id="SignificantChangeRecommendation">
+      <div class="govuk-form-group govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios" id="SignificantChangeRecommendation">
          @foreach (SignificantChangeRecommendation recommendation in Model.RecommendationOptions)
          {
             var radioId = $"{recommendation.ToString().ToLower()}-radio";
@@ -38,8 +38,8 @@
                Enter further information if required
             </label>
 
-            <textarea class="govuk-textarea govuk-!-width-full" asp-for="MoreInformation" rows="5"
-               data-test="recommendation-more-information" />></textarea>
+            <textarea class="govuk-textarea govuk-!-width-full" asp-for="@Model.MoreInformation" rows="5"
+               data-test="recommendation-more-information" id='MoreInformation'></textarea>
       </div>
    </fieldset>
 </div>

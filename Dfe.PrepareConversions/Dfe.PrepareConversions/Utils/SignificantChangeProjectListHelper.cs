@@ -53,7 +53,7 @@ public static class SignificantChangeProjectListHelper
          PlanningPermissionSupportingEvidence = significantChangeProject.PlanningPermission?.SupportingEvidence ?? string.Empty,
          RecommendationStatus = significantChangeProject.Recommendation?.Status ?? SignificantChangeTaskStatus.NotStarted,
          Recommendation = significantChangeProject.Recommendation?.Recommendation,
-         RecommendationMoreInformation = significantChangeProject.Recommendation?.MoreInformation ?? string.Empty,
+         RecommendationMoreInformation = significantChangeProject.Recommendation?.RecommendationMoreInformation ?? string.Empty,
       };
    }
 
