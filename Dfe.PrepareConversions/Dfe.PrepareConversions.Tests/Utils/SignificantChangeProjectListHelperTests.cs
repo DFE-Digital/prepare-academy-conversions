@@ -200,7 +200,8 @@ public class SignificantChangeProjectListHelperTests
          {
             EqualitiesImpactAssessmentCompleted = true,
             EqualitiesImpactIdentified = EqualitiesImpact.Likely,
-            EqualitiesImpactIdentifiedMitigation = "Need more info",
+            EqualitiesLikelyDetails = "Need more info",
+            EqualitiesSomeImpactDetails = "Some impact notes",
             Status = SignificantChangeTaskStatus.Completed,
             EqualitiesImpactSupportingEvidence = "sharepoint.edu.gov.uk/evidence"
          }
@@ -210,7 +211,8 @@ public class SignificantChangeProjectListHelperTests
 
       Assert.True(viewModel.EqualitiesImpactAssessmentCompleted);
       Assert.Equal(EqualitiesImpact.Likely, viewModel.EqualitiesImpactIdentified);
-      Assert.Equal("Need more info", viewModel.EqualitiesImpactIdentifiedMitigation);
+      Assert.Equal("Need more info", viewModel.EqualitiesLikelyDetails);
+      Assert.Equal("Some impact notes", viewModel.EqualitiesSomeImpactDetails);
       Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.EqualitiesImpactAssessmentStatus);
       Assert.Equal("sharepoint.edu.gov.uk/evidence", viewModel.EqualitiesImpactSupportingEvidence);
    }

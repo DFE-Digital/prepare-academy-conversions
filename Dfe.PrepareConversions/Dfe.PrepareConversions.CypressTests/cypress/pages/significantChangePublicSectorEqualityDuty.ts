@@ -59,19 +59,45 @@ class SignificantChangePublicSectorEqualityDuty extends BasePage {
         return this;
     }
 
-    public verifyAdditionalInformationHidden(): this {
+    public verifyLikelyAdditionalInformationHidden(): this {
         cy.getByDataTest('which-groups-affected').should('not.be.visible');
         return this;
     }
 
-    public verifyAdditionalInformationVisible(): this {
+    public verifyLikelyAdditionalInformationVisible(): this {
         cy.getByDataTest('which-groups-affected').should('be.visible');
         return this;
     }
 
-    public enterAdditionalInformation(text: string): this {
+    public verifySomeImpactAdditionalInformationHidden(): this {
+        cy.getByDataTest('some-impact-details').should('not.be.visible');
+        return this;
+    }
+
+    public verifySomeImpactAdditionalInformationVisible(): this {
+        cy.getByDataTest('some-impact-details').should('be.visible');
+        return this;
+    }
+
+    public enterLikelyAdditionalInformation(text: string): this {
         cy.getByDataTest('which-groups-affected').clear();
         cy.getByDataTest('which-groups-affected').type(text);
+        return this;
+    }
+
+    public enterSomeImpactAdditionalInformation(text: string): this {
+        cy.getByDataTest('some-impact-details').clear();
+        cy.getByDataTest('some-impact-details').type(text);
+        return this;
+    }
+
+    public clearLikelyAdditionalInformation(): this {
+        cy.getByDataTest('which-groups-affected').clear();
+        return this;
+    }
+
+    public clearSomeImpactAdditionalInformation(): this {
+        cy.getByDataTest('some-impact-details').clear();
         return this;
     }
 
@@ -88,6 +114,21 @@ class SignificantChangePublicSectorEqualityDuty extends BasePage {
 
     public save(): this {
         cy.getById('save-and-continue-button').click();
+        return this;
+    }
+
+    public verifyErrorSummaryContains(message: string): this {
+        cy.get('.govuk-error-summary').should('be.visible').and('contain.text', message);
+        return this;
+    }
+
+    public verifyInlineError(field: string, message: string): this {
+        cy.getById(`${field}-error`).should('contain.text', message);
+        return this;
+    }
+
+    public verifyStillOnPage(projectId: string): this {
+        cy.url().should('include', `/significant-change/task-list/${projectId}/public-sector-equality-duty`);
         return this;
     }
 }

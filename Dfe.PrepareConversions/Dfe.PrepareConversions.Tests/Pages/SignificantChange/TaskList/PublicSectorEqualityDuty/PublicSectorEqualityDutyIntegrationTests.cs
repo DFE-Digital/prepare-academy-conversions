@@ -18,7 +18,7 @@ public class PublicSectorEqualityDutyIntegrationTests(IntegrationTestingWebAppli
       SignificantChangeProjectResponse project = BuildProject(id: 701);
       project.EqualitiesImpactAssessment.EqualitiesImpactAssessmentCompleted = true;
       project.EqualitiesImpactAssessment.EqualitiesImpactIdentified = EqualitiesImpact.Likely;
-      project.EqualitiesImpactAssessment.EqualitiesImpactIdentifiedMitigation = "Additional info required";
+      project.EqualitiesImpactAssessment.EqualitiesLikelyDetails = "Additional info required";
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
@@ -40,7 +40,7 @@ public class PublicSectorEqualityDutyIntegrationTests(IntegrationTestingWebAppli
       const string supportingEvidence = "sharepoint.edu.gov.uk/evidence";
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, project.Id),
-         new SetSignificantChangeEqualitiesImpactAssessmentCommand(true, EqualitiesImpact.Unlikely, null, supportingEvidence),
+         new SetSignificantChangeEqualitiesImpactAssessmentCommand(true, EqualitiesImpact.Unlikely, null, null, supportingEvidence),
          new object());
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/public-sector-equality-duty");
@@ -63,7 +63,7 @@ public class PublicSectorEqualityDutyIntegrationTests(IntegrationTestingWebAppli
       const string supportingEvidence = "sharepoint.edu.gov.uk/evidence";
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, project.Id),
-         new SetSignificantChangeEqualitiesImpactAssessmentCommand(true, EqualitiesImpact.Likely, groups, supportingEvidence),
+         new SetSignificantChangeEqualitiesImpactAssessmentCommand(true, EqualitiesImpact.Likely, groups, null, supportingEvidence),
          new object());
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/public-sector-equality-duty");
@@ -75,6 +75,40 @@ public class PublicSectorEqualityDutyIntegrationTests(IntegrationTestingWebAppli
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");
+   }
+
+   [Fact]
+   public async Task Should_show_validation_error_when_likely_is_selected_without_additional_information()
+   {
+      SignificantChangeProjectResponse project = BuildProject(id: 704);
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
+
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/public-sector-equality-duty");
+
+      Document.QuerySelector<IHtmlInputElement>("#equalities-impact-likely")!.IsChecked = true;
+      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='which-groups-affected']")!.Value = "";
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
+
+      Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}/public-sector-equality-duty");
+      Document.QuerySelector<IHtmlElement>("#LikelyDetails-error")!
+         .TextContent.Should().Contain("Add additional information");
+   }
+
+   [Fact]
+   public async Task Should_show_validation_error_when_some_impact_is_selected_without_additional_information()
+   {
+      SignificantChangeProjectResponse project = BuildProject(id: 705);
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
+
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/public-sector-equality-duty");
+
+      Document.QuerySelector<IHtmlInputElement>("#equalities-impact-some")!.IsChecked = true;
+      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='some-impact-details']")!.Value = "";
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
+
+      Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}/public-sector-equality-duty");
+      Document.QuerySelector<IHtmlElement>("#SomeImpactDetails-error")!
+         .TextContent.Should().Contain("Add additional information");
    }
 
    private static SignificantChangeProjectResponse BuildProject(int id)

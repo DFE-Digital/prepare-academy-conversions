@@ -33,7 +33,8 @@ public class SignificantChangeProjectViewBaseModel
    public SignificantChangeTaskStatus EqualitiesImpactAssessmentStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public bool? EqualitiesImpactAssessmentCompleted { get; set; }
    public EqualitiesImpact? EqualitiesImpactIdentified { get; set; }
-   public string EqualitiesImpactIdentifiedMitigation { get; set; } = string.Empty;
+   public string EqualitiesLikelyDetails { get; set; } = string.Empty;
+   public string EqualitiesSomeImpactDetails { get; set; } = string.Empty;
    public string EqualitiesImpactSupportingEvidence { get; set; } = string.Empty;
    public SignificantChangeTaskStatus ReligiousBodyConsultationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public bool? ReligiousBodyConsultationTrustConsultedReligiousBody { get; set; }

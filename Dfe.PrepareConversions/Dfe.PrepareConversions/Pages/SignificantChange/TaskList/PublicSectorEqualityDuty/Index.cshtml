@@ -60,10 +60,23 @@
          <div class="govuk-radios__item">
             <input asp-for="@Model.EqualitiesImpactIdentified" class="govuk-radios__input"
                    id="equalities-impact-some" type="radio" value="@EqualitiesImpact.SomeImpact"
+                   aria-controls="conditional-equalities-some"
                    data-test="equalities-impact-some" />
             <label class="govuk-label govuk-radios__label" for="equalities-impact-some">
                Some impact
             </label>
+         </div>
+
+         <div class="govuk-radios__conditional" id="conditional-equalities-some">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="EqualitiesSomeImpactDetails">
+                  Use this area for additional information relating to mitigations, actions and further investigations.
+               </label>
+               <inline-error for="@nameof(Model.SomeImpactDetails)" />
+               <textarea asp-for="@Model.SomeImpactDetails" id="EqualitiesSomeImpactDetails"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.SomeImpactDetails))"
+                         rows="5" data-test="some-impact-details"></textarea>
+            </div>
          </div>
 
          <div class="govuk-radios__item">
@@ -76,13 +89,14 @@
             </label>
          </div>
 
-            <div class="govuk-radios__conditional" id="conditional-equalities-likely">
+         <div class="govuk-radios__conditional" id="conditional-equalities-likely">
             <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
-               <label class="govuk-label" for="EqualitiesImpactIdentifiedMitigation">
-                        Use this area for additional information relating to mitigations, actions and further investigations.
+               <label class="govuk-label" for="EqualitiesLikelyDetails">
+                  Use this area for additional information relating to mitigations, actions and further investigations.
                </label>
-               <textarea asp-for="@Model.LikelyDetails" id="EqualitiesImpactIdentifiedMitigation"
-                              class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.LikelyDetails))"
+               <inline-error for="@nameof(Model.LikelyDetails)" />
+               <textarea asp-for="@Model.LikelyDetails" id="EqualitiesLikelyDetails"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.LikelyDetails))"
                          rows="5" data-test="which-groups-affected"></textarea>
             </div>
          </div>

@@ -44,18 +44,77 @@ describe('Significant change - public sector equality duty', () => {
         });
     });
 
-    it('Should show additional information only when Likely is selected', () => {
+    it('Should show additional information when Some impact or Likely is selected', () => {
         withProject((projectId) => {
             cy.visit(`/significant-change/task-list/${projectId}/public-sector-equality-duty`);
 
             significantChangePublicSectorEqualityDuty
                 .verifyPageLoaded()
                 .selectUnlikely()
-                .verifyAdditionalInformationHidden()
+                .verifyLikelyAdditionalInformationHidden()
+                .verifySomeImpactAdditionalInformationHidden()
                 .selectSomeImpact()
-                .verifyAdditionalInformationHidden()
+                .verifySomeImpactAdditionalInformationVisible()
+                .verifyLikelyAdditionalInformationHidden()
                 .selectLikely()
-                .verifyAdditionalInformationVisible();
+                .verifyLikelyAdditionalInformationVisible()
+                .verifySomeImpactAdditionalInformationHidden();
+        });
+    });
+
+    it('Should require additional information when Likely is selected, then save and return to the task list', () => {
+        withProject((projectId) => {
+            cy.visit(`/significant-change/task-list/${projectId}/public-sector-equality-duty`);
+
+            const additionalInformation = 'Pupils with SEND will receive additional transitional support';
+            const supportingEvidence = `Likely evidence ${Date.now()}`;
+
+            significantChangePublicSectorEqualityDuty
+                .verifyPageLoaded()
+                .selectAssessmentCompletedYes()
+                .selectLikely()
+                .clearLikelyAdditionalInformation()
+                .save();
+
+            significantChangePublicSectorEqualityDuty
+                .verifyStillOnPage(projectId)
+                .verifyErrorSummaryContains('Add additional information')
+                .verifyInlineError('LikelyDetails', 'Add additional information');
+
+            significantChangePublicSectorEqualityDuty
+                .enterLikelyAdditionalInformation(additionalInformation)
+                .enterSupportingEvidence(supportingEvidence)
+                .save();
+
+            cy.url().should('match', TASK_LIST_URL);
+        });
+    });
+
+    it('Should require additional information when Some impact is selected, then save and return to the task list', () => {
+        withProject((projectId) => {
+            cy.visit(`/significant-change/task-list/${projectId}/public-sector-equality-duty`);
+
+            const additionalInformation = 'Some impact on pupils with EAL - monitoring planned';
+            const supportingEvidence = `Some impact evidence ${Date.now()}`;
+
+            significantChangePublicSectorEqualityDuty
+                .verifyPageLoaded()
+                .selectAssessmentCompletedYes()
+                .selectSomeImpact()
+                .clearSomeImpactAdditionalInformation()
+                .save();
+
+            significantChangePublicSectorEqualityDuty
+                .verifyStillOnPage(projectId)
+                .verifyErrorSummaryContains('Add additional information')
+                .verifyInlineError('SomeImpactDetails', 'Add additional information');
+
+            significantChangePublicSectorEqualityDuty
+                .enterSomeImpactAdditionalInformation(additionalInformation)
+                .enterSupportingEvidence(supportingEvidence)
+                .save();
+
+            cy.url().should('match', TASK_LIST_URL);
         });
     });
 
@@ -83,16 +142,18 @@ describe('Significant change - public sector equality duty', () => {
         });
     });
 
-    it('Should save some impact with supporting evidence', () => {
+    it('Should save some impact with additional information and supporting evidence', () => {
         withProject((projectId) => {
             cy.visit(`/significant-change/task-list/${projectId}/public-sector-equality-duty`);
 
+            const additionalInformation = 'Some impact on pupils with EAL - monitoring planned';
             const supportingEvidence = `Some impact evidence ${Date.now()}`;
 
             significantChangePublicSectorEqualityDuty
                 .verifyPageLoaded()
                 .selectAssessmentCompletedNo()
                 .selectSomeImpact()
+                .enterSomeImpactAdditionalInformation(additionalInformation)
                 .enterSupportingEvidence(supportingEvidence)
                 .save();
 
@@ -100,10 +161,12 @@ describe('Significant change - public sector equality duty', () => {
 
             cy.visit(`/significant-change/task-list/${projectId}/public-sector-equality-duty`);
 
-            significantChangePublicSectorEqualityDuty.verifySupportingEvidence(supportingEvidence);
+            significantChangePublicSectorEqualityDuty
+                .verifySupportingEvidence(supportingEvidence)
+                .verifySomeImpactAdditionalInformationVisible();
             cy.getByDataTest('assessment-completed-no').should('be.checked');
             cy.getByDataTest('equalities-impact-some').should('be.checked');
-            significantChangePublicSectorEqualityDuty.verifyAdditionalInformationHidden();
+            cy.getByDataTest('some-impact-details').should('have.value', additionalInformation);
         });
     });
 
@@ -118,7 +181,7 @@ describe('Significant change - public sector equality duty', () => {
                 .verifyPageLoaded()
                 .selectAssessmentCompletedYes()
                 .selectLikely()
-                .enterAdditionalInformation(additionalInformation)
+                .enterLikelyAdditionalInformation(additionalInformation)
                 .enterSupportingEvidence(supportingEvidence)
                 .save();
 
@@ -128,7 +191,7 @@ describe('Significant change - public sector equality duty', () => {
 
             significantChangePublicSectorEqualityDuty
                 .verifyPageLoaded()
-                .verifyAdditionalInformationVisible()
+                .verifyLikelyAdditionalInformationVisible()
                 .verifySupportingEvidence(supportingEvidence);
             cy.getByDataTest('equalities-impact-likely').should('be.checked');
             cy.getByDataTest('which-groups-affected').should('have.value', additionalInformation);
