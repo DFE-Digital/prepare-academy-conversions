@@ -60,7 +60,10 @@ class SignificantChangeTaskList extends BasePage {
     }
 
     public openPlanningPermissionTask(): this {
-        cy.contains('a', 'Planning Permission').click();
+        cy.contains('h3.app-task-list__section', 'Land transaction application and planning permission')
+            .next('.app-task-list')
+            .contains('a', 'Planning Permission')
+            .click();
         return this;
     }
 
