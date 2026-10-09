@@ -2,13 +2,13 @@
 
 describe('Significant Useful Information', () => {
     const navigateToTaskPage = () => {
-    cy.login();
-    cy.acceptCookies();
-    cy.visit('/significant-change/project-list');
-    cy.getById('school-name-0').click();
-    cy.get('.app-task-list').within(() => {
-        cy.get('a').first().click();
-    });
+        cy.login();
+        cy.acceptCookies();
+        cy.visit('/significant-change/project-list');
+        cy.getById('school-name-0').click();
+        cy.get('.app-task-list').within(() => {
+            cy.get('a').first().click();
+        });
     };
 
     beforeEach(() => {

@@ -2,11 +2,11 @@
 
 describe('Significant application page', () => {
     const navigateToApplicationPage = () => {
-    cy.login();
-    cy.acceptCookies();
-    cy.visit('/significant-change/project-list');
-    cy.getById('school-name-0').click();
-    cy.contains('a', 'Application form').click();
+        cy.login();
+        cy.acceptCookies();
+        cy.visit('/significant-change/project-list');
+        cy.getById('school-name-0').click();
+        cy.contains('a', 'Application form').click();
     };
 
     beforeEach(() => {
@@ -16,10 +16,12 @@ describe('Significant application page', () => {
     it('should render the application page', () => {
         cy.url().should('include', '/significant-change/application');
 
-        cy.getByDataTest('application-form-page').should('exist').within(() => {
-            cy.getByDataTest('significant-change-project-header').should('exist');
-            cy.getByDataTest('significant-change-submenu').should('exist');
-        });
+        cy.getByDataTest('application-form-page')
+            .should('exist')
+            .within(() => {
+                cy.getByDataTest('significant-change-project-header').should('exist');
+                cy.getByDataTest('significant-change-submenu').should('exist');
+            });
     });
 
     it('should higlight the appliaction form link in the submenu', () => {
