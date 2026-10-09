@@ -82,6 +82,17 @@ class SignificantChangeTaskList extends BasePage {
         cy.contains('a', 'Funding').click();
         return this;
     }
+
+    public verifyRecommendationTaskVisible(): this {
+        cy.contains('a', 'Significant change recommendation').should('be.visible');
+        cy.getById('task-status-significant-change-recommendation').should('be.visible');
+        return this;
+    }
+
+    public openRecommendationTask(): this {
+        cy.contains('a', 'Significant change recommendation').click();
+        return this;
+    }
 }
 
 const significantChangeTaskList = new SignificantChangeTaskList();

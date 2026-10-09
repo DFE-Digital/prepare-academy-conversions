@@ -51,10 +51,30 @@ public static class SignificantChangeProjectListHelper
          PlanningPermissionAnswer = significantChangeProject.PlanningPermission?.PlanningPermissionAnswer,
          PlanningPermissionAdditionalInformation = significantChangeProject.PlanningPermission?.AdditionalInformation ?? string.Empty,
          PlanningPermissionSupportingEvidence = significantChangeProject.PlanningPermission?.SupportingEvidence ?? string.Empty,
-         RecommendationStatus = significantChangeProject.Recommendation?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         RecommendationStatus = MapRecommendationStatus(significantChangeProject.Recommendation),
          Recommendation = significantChangeProject.Recommendation?.Recommendation,
          RecommendationMoreInformation = significantChangeProject.Recommendation?.RecommendationMoreInformation ?? string.Empty,
       };
+   }
+
+   private static SignificantChangeTaskStatus MapRecommendationStatus(SignificantChangeRecommendationResponse? recommendation)
+   {
+      if (recommendation is null)
+      {
+         return SignificantChangeTaskStatus.NotStarted;
+      }
+
+      if (recommendation.Recommendation is not null)
+      {
+         return SignificantChangeTaskStatus.Completed;
+      }
+
+      if (!string.IsNullOrWhiteSpace(recommendation.RecommendationMoreInformation))
+      {
+         return SignificantChangeTaskStatus.InProgress;
+      }
+
+      return SignificantChangeTaskStatus.NotStarted;
    }
 
    public static string MapProjectStatus(string status)
