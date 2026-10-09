@@ -16,7 +16,7 @@
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
          Recommendation
       </legend>
-      <inline-error for="@nameof(Model.RecommendationOptions)" />
+      <inline-error for="@nameof(Model.Recommendation)" />
 
       <div class="govuk-form-group govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios" id="SignificantChangeRecommendation">
          @foreach (SignificantChangeRecommendation recommendation in Model.RecommendationOptions)
@@ -25,7 +25,7 @@
 
             <div class="govuk-radios__item">
                <input class="govuk-radios__input" type="radio" asp-for="@Model.Recommendation"
-                        title="@recommendation.ToString().ToLower()" value="@recommendation" id="@radioId"/>
+                        title="@recommendation.ToString().ToLower()" value="@recommendation" id="@radioId" data-test="@radioId"/>
                <label class="govuk-label govuk-radios__label" for="@radioId">
                   @recommendation
                </label>
