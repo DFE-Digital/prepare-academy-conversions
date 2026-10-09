@@ -199,18 +199,22 @@ public class SignificantChangeProjectListHelperTests
          EqualitiesImpactAssessment = new SignificantChangeEqualitiesImpactAssessmentResponse
          {
             EqualitiesImpactAssessmentCompleted = true,
-            EqualitiesImpactIdentified = EqualitiesImpact.ImpactsIdentified,
-            EqualitiesImpactIdentifiedMitigation = "Need more info",
-            Status = SignificantChangeTaskStatus.Completed
+            EqualitiesImpactIdentified = EqualitiesImpact.Likely,
+            EqualitiesLikelyDetails = "Need more info",
+            EqualitiesSomeImpactDetails = "Some impact notes",
+            Status = SignificantChangeTaskStatus.Completed,
+            EqualitiesImpactSupportingEvidence = "sharepoint.edu.gov.uk/evidence"
          }
       };
 
       var viewModel = SignificantChangeProjectListHelper.Build(response);
 
       Assert.True(viewModel.EqualitiesImpactAssessmentCompleted);
-      Assert.Equal(EqualitiesImpact.ImpactsIdentified, viewModel.EqualitiesImpactIdentified);
-      Assert.Equal("Need more info", viewModel.EqualitiesImpactIdentifiedMitigation);
+      Assert.Equal(EqualitiesImpact.Likely, viewModel.EqualitiesImpactIdentified);
+      Assert.Equal("Need more info", viewModel.EqualitiesLikelyDetails);
+      Assert.Equal("Some impact notes", viewModel.EqualitiesSomeImpactDetails);
       Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.EqualitiesImpactAssessmentStatus);
+      Assert.Equal("sharepoint.edu.gov.uk/evidence", viewModel.EqualitiesImpactSupportingEvidence);
    }
 
    [Fact]
@@ -239,7 +243,7 @@ public class SignificantChangeProjectListHelperTests
 
       var viewModel = SignificantChangeProjectListHelper.Build(response);
 
-   Assert.Equal(PlanningPermissionAnswer.No, viewModel.PlanningPermissionAnswer);
+      Assert.Equal(PlanningPermissionAnswer.No, viewModel.PlanningPermissionAnswer);
       Assert.Equal("Planning permission is still pending", viewModel.PlanningPermissionAdditionalInformation);
       Assert.Equal("Planning reference 12345", viewModel.PlanningPermissionSupportingEvidence);
       Assert.Equal(SignificantChangeTaskStatus.InProgress, viewModel.PlanningPermissionTaskStatus);

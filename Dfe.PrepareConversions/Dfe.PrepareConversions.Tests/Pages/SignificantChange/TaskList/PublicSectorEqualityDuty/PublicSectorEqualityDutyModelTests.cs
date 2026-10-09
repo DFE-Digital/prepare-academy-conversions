@@ -27,8 +27,9 @@ public class PublicSectorEqualityDutyModelTests
       const int id = 601;
       SignificantChangeProjectResponse project = BuildProject(id);
       project.EqualitiesImpactAssessment.EqualitiesImpactAssessmentCompleted = true;
-      project.EqualitiesImpactAssessment.EqualitiesImpactIdentified = EqualitiesImpact.ImpactsIdentified;
-      project.EqualitiesImpactAssessment.EqualitiesImpactIdentifiedMitigation = "Additional info required";
+      project.EqualitiesImpactAssessment.EqualitiesImpactIdentified = EqualitiesImpact.Likely;
+      project.EqualitiesImpactAssessment.EqualitiesLikelyDetails = "Additional info required";
+      project.EqualitiesImpactAssessment.EqualitiesImpactSupportingEvidence = "sharepoint.edu.gov.uk/evidence";
 
       Mock<ISignificantChangeProjectRepository> repository = new();
       repository
@@ -41,8 +42,9 @@ public class PublicSectorEqualityDutyModelTests
 
       result.Should().BeOfType<PageResult>();
       sut.EqualitiesImpactAssessmentCompleted.Should().BeTrue();
-      sut.EqualitiesImpactIdentified.Should().Be(EqualitiesImpact.ImpactsIdentified);
-      sut.EqualitiesImpactIdentifiedMitigation.Should().Be("Additional info required");
+      sut.EqualitiesImpactIdentified.Should().Be(EqualitiesImpact.Likely);
+      sut.LikelyDetails.Should().Be("Additional info required");
+      sut.SupportingEvidence.Should().Be("sharepoint.edu.gov.uk/evidence");
       repository.Verify(x => x.GetProjectById(id), Times.Once);
    }
 
@@ -61,8 +63,8 @@ public class PublicSectorEqualityDutyModelTests
 
       IndexModel sut = BuildModel(repository.Object);
       sut.EqualitiesImpactAssessmentCompleted = true;
-      sut.EqualitiesImpactIdentified = EqualitiesImpact.None;
-      sut.EqualitiesImpactIdentifiedMitigation = "This should be cleared";
+      sut.EqualitiesImpactIdentified = EqualitiesImpact.Unlikely;
+      sut.LikelyDetails = "This should be cleared";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -74,8 +76,9 @@ public class PublicSectorEqualityDutyModelTests
          id,
          It.Is<SetSignificantChangeEqualitiesImpactAssessmentCommand>(command =>
             command.EqualitiesImpactAssessmentCompleted == true
-            && command.EqualitiesImpactIdentified == EqualitiesImpact.None
-            && command.EqualitiesImpactIdentifiedMitigation == null)), Times.Once);
+            && command.EqualitiesImpactIdentified == EqualitiesImpact.Unlikely
+            && command.EqualitiesLikelyDetails == null
+            && command.EqualitiesSomeImpactDetails == null)), Times.Once);
    }
 
    [Fact]
@@ -93,8 +96,8 @@ public class PublicSectorEqualityDutyModelTests
 
       IndexModel sut = BuildModel(repository.Object);
       sut.EqualitiesImpactAssessmentCompleted = true;
-      sut.EqualitiesImpactIdentified = EqualitiesImpact.ImpactsIdentified;
-      sut.EqualitiesImpactIdentifiedMitigation = "Pupils with SEND - additional transitional support planned";
+      sut.EqualitiesImpactIdentified = EqualitiesImpact.Likely;
+      sut.LikelyDetails = "Pupils with SEND - additional transitional support planned";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -106,8 +109,88 @@ public class PublicSectorEqualityDutyModelTests
          id,
          It.Is<SetSignificantChangeEqualitiesImpactAssessmentCommand>(command =>
             command.EqualitiesImpactAssessmentCompleted == true
-            && command.EqualitiesImpactIdentified == EqualitiesImpact.ImpactsIdentified
-            && command.EqualitiesImpactIdentifiedMitigation == "Pupils with SEND - additional transitional support planned")), Times.Once);
+            && command.EqualitiesImpactIdentified == EqualitiesImpact.Likely
+            && command.EqualitiesLikelyDetails == "Pupils with SEND - additional transitional support planned"
+            && command.EqualitiesSomeImpactDetails == null)), Times.Once);
+   }
+
+   [Fact]
+   public async Task OnPostAsync_WhenLikelySelectedWithoutDetails_ShouldReturnPageWithValidationError()
+   {
+      const int id = 605;
+
+      Mock<ISignificantChangeProjectRepository> repository = new();
+      repository
+         .Setup(x => x.GetProjectById(id))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, BuildProject(id)));
+
+      IndexModel sut = BuildModel(repository.Object);
+      sut.EqualitiesImpactAssessmentCompleted = true;
+      sut.EqualitiesImpactIdentified = EqualitiesImpact.Likely;
+      sut.LikelyDetails = " ";
+
+      IActionResult result = await sut.OnPostAsync(id);
+
+      result.Should().BeOfType<PageResult>();
+      sut.ModelState.ContainsKey(nameof(IndexModel.LikelyDetails)).Should().BeTrue();
+      repository.Verify(
+         x => x.SetEqualitiesImpactAssessment(id, It.IsAny<SetSignificantChangeEqualitiesImpactAssessmentCommand>()),
+         Times.Never);
+   }
+
+   [Fact]
+   public async Task OnPostAsync_WhenSomeImpactSelectedWithoutDetails_ShouldReturnPageWithValidationError()
+   {
+      const int id = 606;
+
+      Mock<ISignificantChangeProjectRepository> repository = new();
+      repository
+         .Setup(x => x.GetProjectById(id))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, BuildProject(id)));
+
+      IndexModel sut = BuildModel(repository.Object);
+      sut.EqualitiesImpactAssessmentCompleted = true;
+      sut.EqualitiesImpactIdentified = EqualitiesImpact.SomeImpact;
+      sut.SomeImpactDetails = "";
+
+      IActionResult result = await sut.OnPostAsync(id);
+
+      result.Should().BeOfType<PageResult>();
+      sut.ModelState.ContainsKey(nameof(IndexModel.SomeImpactDetails)).Should().BeTrue();
+      repository.Verify(
+         x => x.SetEqualitiesImpactAssessment(id, It.IsAny<SetSignificantChangeEqualitiesImpactAssessmentCommand>()),
+         Times.Never);
+   }
+
+   [Fact]
+   public async Task OnPostAsync_WhenSomeImpactSelected_ShouldSaveSomeImpactDetailsAndRedirect()
+   {
+      const int id = 604;
+
+      Mock<ISignificantChangeProjectRepository> repository = new();
+      repository
+         .Setup(x => x.GetProjectById(id))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, BuildProject(id)));
+      repository
+         .Setup(x => x.SetEqualitiesImpactAssessment(id, It.IsAny<SetSignificantChangeEqualitiesImpactAssessmentCommand>()))
+         .Returns(Task.CompletedTask);
+
+      IndexModel sut = BuildModel(repository.Object);
+      sut.EqualitiesImpactAssessmentCompleted = true;
+      sut.EqualitiesImpactIdentified = EqualitiesImpact.SomeImpact;
+      sut.SomeImpactDetails = "Minor impact on pupils with EAL - monitoring planned";
+
+      IActionResult result = await sut.OnPostAsync(id);
+
+      RedirectToPageResult redirect = Assert.IsType<RedirectToPageResult>(result);
+      redirect.PageName.Should().Be(Links.SignificantChange.SignificantChangeTaskList.Page);
+
+      repository.Verify(x => x.SetEqualitiesImpactAssessment(
+         id,
+         It.Is<SetSignificantChangeEqualitiesImpactAssessmentCommand>(command =>
+            command.EqualitiesImpactIdentified == EqualitiesImpact.SomeImpact
+            && command.EqualitiesLikelyDetails == null
+            && command.EqualitiesSomeImpactDetails == "Minor impact on pupils with EAL - monitoring planned")), Times.Once);
    }
 
 

@@ -17,8 +17,8 @@ public class PublicSectorEqualityDutyIntegrationTests(IntegrationTestingWebAppli
    {
       SignificantChangeProjectResponse project = BuildProject(id: 701);
       project.EqualitiesImpactAssessment.EqualitiesImpactAssessmentCompleted = true;
-      project.EqualitiesImpactAssessment.EqualitiesImpactIdentified = EqualitiesImpact.ImpactsIdentified;
-      project.EqualitiesImpactAssessment.EqualitiesImpactIdentifiedMitigation = "Additional info required";
+      project.EqualitiesImpactAssessment.EqualitiesImpactIdentified = EqualitiesImpact.Likely;
+      project.EqualitiesImpactAssessment.EqualitiesLikelyDetails = "Additional info required";
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
@@ -26,7 +26,7 @@ public class PublicSectorEqualityDutyIntegrationTests(IntegrationTestingWebAppli
 
       Document.QuerySelector<IHtmlHeadingElement>("h1")!.TextContent.Trim().Should().Be("Public Sector Equality Duty");
       Document.QuerySelector<IHtmlInputElement>("#assessment-completed-yes")!.IsChecked.Should().BeTrue();
-      Document.QuerySelector<IHtmlInputElement>("#equalities-impact-impacts-identified")!.IsChecked.Should().BeTrue();
+      Document.QuerySelector<IHtmlInputElement>("#equalities-impact-likely")!.IsChecked.Should().BeTrue();
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='which-groups-affected']")!.Value
          .Should().Be("Additional info required");
    }
@@ -37,15 +37,17 @@ public class PublicSectorEqualityDutyIntegrationTests(IntegrationTestingWebAppli
       SignificantChangeProjectResponse project = BuildProject(id: 702);
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
+      const string supportingEvidence = "sharepoint.edu.gov.uk/evidence";
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, project.Id),
-         new SetSignificantChangeEqualitiesImpactAssessmentCommand(true, EqualitiesImpact.None, null),
+         new SetSignificantChangeEqualitiesImpactAssessmentCommand(true, EqualitiesImpact.Unlikely, null, null, supportingEvidence),
          new object());
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/public-sector-equality-duty");
 
       Document.QuerySelector<IHtmlInputElement>("#assessment-completed-yes")!.IsChecked = true;
-      Document.QuerySelector<IHtmlInputElement>("#equalities-impact-none")!.IsChecked = true;
+      Document.QuerySelector<IHtmlInputElement>("#equalities-impact-unlikely")!.IsChecked = true;
+      Document.QuerySelector<IHtmlInputElement>("[data-test='psed-supporting-evidence']")!.Value = supportingEvidence;
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");
@@ -58,19 +60,55 @@ public class PublicSectorEqualityDutyIntegrationTests(IntegrationTestingWebAppli
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
       const string groups = "Pupils with SEND - additional transitional support planned";
+      const string supportingEvidence = "sharepoint.edu.gov.uk/evidence";
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, project.Id),
-         new SetSignificantChangeEqualitiesImpactAssessmentCommand(true, EqualitiesImpact.ImpactsIdentified, groups),
+         new SetSignificantChangeEqualitiesImpactAssessmentCommand(true, EqualitiesImpact.Likely, groups, null, supportingEvidence),
          new object());
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/public-sector-equality-duty");
 
       Document.QuerySelector<IHtmlInputElement>("#assessment-completed-yes")!.IsChecked = true;
-      Document.QuerySelector<IHtmlInputElement>("#equalities-impact-impacts-identified")!.IsChecked = true;
+      Document.QuerySelector<IHtmlInputElement>("#equalities-impact-likely")!.IsChecked = true;
       Document.QuerySelector<IHtmlTextAreaElement>("[data-test='which-groups-affected']")!.Value = groups;
+      Document.QuerySelector<IHtmlInputElement>("[data-test='psed-supporting-evidence']")!.Value = supportingEvidence;
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");
+   }
+
+   [Fact]
+   public async Task Should_show_validation_error_when_likely_is_selected_without_additional_information()
+   {
+      SignificantChangeProjectResponse project = BuildProject(id: 704);
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
+
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/public-sector-equality-duty");
+
+      Document.QuerySelector<IHtmlInputElement>("#equalities-impact-likely")!.IsChecked = true;
+      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='which-groups-affected']")!.Value = "";
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
+
+      Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}/public-sector-equality-duty");
+      Document.QuerySelector<IHtmlElement>("#LikelyDetails-error")!
+         .TextContent.Should().Contain("Add additional information");
+   }
+
+   [Fact]
+   public async Task Should_show_validation_error_when_some_impact_is_selected_without_additional_information()
+   {
+      SignificantChangeProjectResponse project = BuildProject(id: 705);
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
+
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/public-sector-equality-duty");
+
+      Document.QuerySelector<IHtmlInputElement>("#equalities-impact-some")!.IsChecked = true;
+      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='some-impact-details']")!.Value = "";
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
+
+      Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}/public-sector-equality-duty");
+      Document.QuerySelector<IHtmlElement>("#SomeImpactDetails-error")!
+         .TextContent.Should().Contain("Add additional information");
    }
 
    private static SignificantChangeProjectResponse BuildProject(int id)
