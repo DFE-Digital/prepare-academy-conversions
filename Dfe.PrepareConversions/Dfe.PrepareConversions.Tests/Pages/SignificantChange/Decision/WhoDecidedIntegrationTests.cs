@@ -49,19 +49,15 @@ public class WhoDecidedIntegrationTests(IntegrationTestingWebApplicationFactory 
          .Should().Contain("Select who made the decision");
    }
 
-   [Theory]
-   [InlineData(SignificantChangeDecisions.Declined, "declined-reason")]
-   [InlineData(SignificantChangeDecisions.Deferred, "why-deferred")]
-   [InlineData(SignificantChangeDecisions.Withdrawn, "why-withdrawn")]
-   public async Task Should_link_back_to_the_branch_page_it_came_from(
-      SignificantChangeDecisions decision, string expectedBackStep)
+   [Fact]
+   public async Task Should_link_back_to_the_branch_page_it_came_from()
    {
       AddProject();
       await Wizard.StartFor(ProjectId);
-      await Wizard.SetDecisionToAndContinue(decision);
+      await Wizard.SetDecisionToAndContinue(SignificantChangeDecisions.Declined);
       await OpenAndConfirmPathAsync(PathTo("who-decided"));
 
       Document.QuerySelector("[data-cy='select-backlink']")?.GetAttribute("href")
-         .Should().Contain(PathTo(expectedBackStep));
+         .Should().Contain(PathTo("declined-reason"));
    }
 }

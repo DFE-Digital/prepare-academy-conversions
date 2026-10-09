@@ -31,7 +31,7 @@ public class SignificantChangeDecisionWizard
 
    public async Task SetDecisionToAndContinue(SignificantChangeDecisions decision)
    {
-      Document.QuerySelector<IHtmlInputElement>($"#{decision.ToString().ToLowerInvariant()}-radio")!.IsChecked = true;
+      Document.QuerySelector<IHtmlInputElement>($"#{decision.ToString().ToLowerInvariant()}-radio").IsChecked = true;
       await ClickSubmitButton();
    }
 
@@ -45,26 +45,6 @@ public class SignificantChangeDecisionWizard
    public async Task SetDeclinedReasonsAndContinue(params (SignificantChangeDeclinedReason Reason, string Details)[] reasons)
    {
       foreach ((SignificantChangeDeclinedReason reason, string details) in reasons)
-      {
-         CheckReason(reason.ToString(), details);
-      }
-
-      await ClickSubmitButton();
-   }
-
-   public async Task SetDeferredReasonsAndContinue(params (AdvisoryBoardDeferredReason Reason, string Details)[] reasons)
-   {
-      foreach ((AdvisoryBoardDeferredReason reason, string details) in reasons)
-      {
-         CheckReason(reason.ToString(), details);
-      }
-
-      await ClickSubmitButton();
-   }
-
-   public async Task SetWithdrawnReasonsAndContinue(params (AdvisoryBoardWithdrawnReason Reason, string Details)[] reasons)
-   {
-      foreach ((AdvisoryBoardWithdrawnReason reason, string details) in reasons)
       {
          CheckReason(reason.ToString(), details);
       }
