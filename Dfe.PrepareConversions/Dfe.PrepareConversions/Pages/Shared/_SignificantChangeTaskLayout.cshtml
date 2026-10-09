@@ -22,4 +22,20 @@
          </button>
       </form>
    </div>
+   <div class="govuk-grid-column-one-third">
+      <aside class="app-related-items" role="complementary" data-test="useful-information">
+         <h2 class="govuk-heading-s" id="aside-title">
+            Useful information
+         </h2>
+         <nav role="navigation" aria-labelledby="aside-title">
+            <ul class="govuk-list govuk-body-s">
+               <li class="govuk-!-margin-bottom-4">
+                  <a class="govuk-link" asp-page="@Links.SignificantChangeApplication.Index.Page" asp-route-id="@ViewContext.RouteData.Values["id"]" target="significantChangeApplication">Application form (opens in a new tab)</a>
+               </li>
+               <li class="govuk-!-margin-bottom-4">
+                  <a class="govuk-link" href="https://educationgovuk.sharepoint.com/sites/lvewp00299/SitePages/Our-guidance-and-documents.aspx" target="_blank">Guidance and documents (opens in a new tab)</a>
+               </li>
+            </ul>
+         </nav>
+      </aside>
 </div>
