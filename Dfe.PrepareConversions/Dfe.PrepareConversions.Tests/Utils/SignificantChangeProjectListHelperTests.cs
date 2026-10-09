@@ -235,7 +235,6 @@ public class SignificantChangeProjectListHelperTests
             SupportingEvidence = "Planning reference 12345",
             Status = SignificantChangeTaskStatus.InProgress
          },
-         LocalAuthorityName = "Test local authority"
       };
 
       var viewModel = SignificantChangeProjectListHelper.Build(response);
