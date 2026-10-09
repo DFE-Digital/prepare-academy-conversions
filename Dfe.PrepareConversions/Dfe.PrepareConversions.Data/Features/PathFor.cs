@@ -59,5 +59,6 @@ public class PathFor
    public static string SetSignificantChangeProjectDates => "/significant-change/{0}/SetSignificantChangeProjectDates";
    public static string SetSignificantChangeFunding => "/significant-change/{0}/SetFunding";
    public static string SetSignificantChangePlanningPermission => "/significant-change/{0}/SetPlanningPermission";
+   public static string SetSignificantChangeRecommendation => "/significant-change/{0}/SetRecommendation";
 
 }
