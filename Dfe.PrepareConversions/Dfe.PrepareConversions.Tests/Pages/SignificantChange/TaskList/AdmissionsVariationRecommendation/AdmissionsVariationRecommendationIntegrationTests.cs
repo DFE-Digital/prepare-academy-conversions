@@ -71,6 +71,20 @@ public class AdmissionsVariationRecommendationIntegrationTests(IntegrationTestin
    }
 
    [Fact]
+   public async Task Should_display_all_recommendation_options()
+   {
+      SignificantChangeProjectResponse project = BuildProject(id: 825);
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
+
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-recommendation");
+
+      Document.QuerySelector<IHtmlInputElement>("#admissions-variation-recommendation-approve").Should().NotBeNull();
+      Document.QuerySelector<IHtmlInputElement>("#admissions-variation-recommendation-defer").Should().NotBeNull();
+      Document.QuerySelector<IHtmlInputElement>("#admissions-variation-recommendation-decline").Should().NotBeNull();
+      Document.QuerySelector<IHtmlInputElement>("#admissions-variation-recommendation-notapplicable").Should().NotBeNull();
+   }
+
+   [Fact]
    public async Task Should_show_validation_error_when_no_selection_is_made()
    {
       SignificantChangeProjectResponse project = BuildProject(id: 824);

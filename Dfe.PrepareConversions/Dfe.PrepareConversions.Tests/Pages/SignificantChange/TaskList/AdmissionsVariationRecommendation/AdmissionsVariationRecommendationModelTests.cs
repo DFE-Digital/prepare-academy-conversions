@@ -64,7 +64,7 @@ public class AdmissionsVariationRecommendationModelTests
       repository.Verify(x => x.SetAdmissionsVariationRecommendation(
          id,
          It.Is<SetAdmissionsVariationRecommendationCommand>(command =>
-            command.AdmissionsVariationRecommendationAnswer == AdmissionsVariationRecommendationAnswer.Approve
+            command.RecommendationAnswer == AdmissionsVariationRecommendationAnswer.Approve
             && command.FurtherInformation == "Subject to funding confirmation")), Times.Once);
    }
 
