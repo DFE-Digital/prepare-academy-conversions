@@ -318,4 +318,20 @@ public class SignificantChangeProjectRepository(
          throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
       }
    }
+
+   public async Task SetAdmissionsVariationRecommendation(int id, SetAdmissionsVariationRecommendationCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.AdmissionsVariationRecommendation, id);
+
+      var result = await httpClientService.Put<SetAdmissionsVariationRecommendationCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
 }

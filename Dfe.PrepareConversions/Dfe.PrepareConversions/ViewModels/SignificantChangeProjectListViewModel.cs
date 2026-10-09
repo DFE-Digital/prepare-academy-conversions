@@ -48,4 +48,7 @@ public class SignificantChangeProjectViewBaseModel
    public PlanningPermissionAnswer? PlanningPermissionAnswer { get; set; }
    public string PlanningPermissionAdditionalInformation { get; set; } = string.Empty;
    public string PlanningPermissionSupportingEvidence { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus AdmissionsVariationRecommendationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public AdmissionsVariationRecommendationAnswer? AdmissionsVariationRecommendationAnswer { get; set; }
+   public string AdmissionsVariationRecommendationFurtherInformation { get; set; } = string.Empty;
 }

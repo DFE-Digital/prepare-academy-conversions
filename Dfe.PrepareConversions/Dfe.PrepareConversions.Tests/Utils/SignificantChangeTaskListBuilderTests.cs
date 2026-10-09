@@ -22,7 +22,7 @@ public class SignificantChangeTaskListBuilderTests
    [InlineData(6, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "planning-permission" })]
    [InlineData(7, "financial-details", "Financial details", new [] { "funding" })]
    [InlineData(8, "high-quality-trust-framework", "High Quality Trust Framework", new string[0])]
-   [InlineData(9, "recommendation-on-how-to-proceed", "Recommendation on how to proceed", new string[0])]
+   [InlineData(9, "recommendation-on-how-to-proceed", "Recommendation on how to proceed", new[] { "admissions-variation-recommendation" })]
    public void Build_includes_ordered_sections_and_tasks_when_supplied(int sectionDisplayOrder, string sectionKey, string sectionTitle, string[] taskKeys)
    {
       var expectedSectionCount = 9;
@@ -193,6 +193,23 @@ public class SignificantChangeTaskListBuilderTests
       const string taskKey = "funding";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.FundingStatus = TaskStatus);
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
+      var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
+
+      task.Status.Status.Should().Be(expectedTaskStatus);
+   }
+
+   [Theory]
+   [MemberData(nameof(StatusCases))]
+   public void Build_maps_recommendation_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
+   {
+      const string sectionKey = "recommendation-on-how-to-proceed";
+      const string taskKey = "admissions-variation-recommendation";
+
+      SignificantChangeProjectViewBaseModel project = BuildProject(p => p.AdmissionsVariationRecommendationStatus = TaskStatus);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 
