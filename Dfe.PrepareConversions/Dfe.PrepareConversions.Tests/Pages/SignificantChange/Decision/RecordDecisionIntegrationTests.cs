@@ -20,7 +20,7 @@ public class RecordDecisionIntegrationTests(IntegrationTestingWebApplicationFact
 
       Document.QuerySelectorAll("#SignificantChangeDecision input[type=radio]")
          .Select(r => r.Id)
-         .Should().BeEquivalentTo("approved-radio", "declined-radio", "deferred-radio", "withdrawn-radio");
+         .Should().BeEquivalentTo("approved-radio", "declined-radio");
    }
 
    [Fact]
@@ -36,8 +36,6 @@ public class RecordDecisionIntegrationTests(IntegrationTestingWebApplicationFact
    [Theory]
    [InlineData(SignificantChangeDecisions.Approved, "any-conditions")]
    [InlineData(SignificantChangeDecisions.Declined, "declined-reason")]
-   [InlineData(SignificantChangeDecisions.Deferred, "why-deferred")]
-   [InlineData(SignificantChangeDecisions.Withdrawn, "why-withdrawn")]
    public async Task Should_branch_to_the_correct_reason_page(SignificantChangeDecisions decision, string expectedStep)
    {
       AddProject();
@@ -65,11 +63,11 @@ public class RecordDecisionIntegrationTests(IntegrationTestingWebApplicationFact
    {
       AddProject();
       await Wizard.StartFor(ProjectId);
-      await Wizard.SetDecisionToAndContinue(SignificantChangeDecisions.Deferred);
+      await Wizard.SetDecisionToAndContinue(SignificantChangeDecisions.Declined);
 
       await OpenAndConfirmPathAsync(PathTo("record-decision"));
 
-      Document.QuerySelector<IHtmlInputElement>("#deferred-radio")!.IsChecked.Should().BeTrue();
+      Document.QuerySelector<IHtmlInputElement>("#declined-radio").IsChecked.Should().BeTrue();
    }
 
    [Fact]

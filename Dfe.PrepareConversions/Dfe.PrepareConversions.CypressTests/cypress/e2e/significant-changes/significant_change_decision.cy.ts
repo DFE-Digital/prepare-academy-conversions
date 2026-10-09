@@ -141,7 +141,7 @@ describe('Significant change record a decision', () => {
         withAProject((projectId) => {
             significantChangeDecision
                 .openFor(projectId)
-                .selectDecision('deferred')
+                .selectDecision('declined')
                 .submit()
                 .checkReason('performanceconcerns', 'Results declining')
                 .submit()
@@ -156,7 +156,7 @@ describe('Significant change record a decision', () => {
         withAProject((projectId) => {
             significantChangeDecision
                 .openFor(projectId)
-                .selectDecision('withdrawn')
+                .selectDecision('declined')
                 .submit()
                 .checkReason('other', 'Trust withdrew')
                 .submit()
