@@ -138,6 +138,10 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       var fundingStatusTag = Document.QuerySelector("#task-status-funding");
       fundingStatusTag.Should().NotBeNull();
       fundingStatusTag.TextContent.Should().Contain("Not started");
+
+      var recommendationStatusTag = Document.QuerySelector("#task-status-significant-change-recommendation");
+      recommendationStatusTag.Should().NotBeNull();
+      recommendationStatusTag.TextContent.Should().Contain("Not started");
    }
 
    [Fact]
