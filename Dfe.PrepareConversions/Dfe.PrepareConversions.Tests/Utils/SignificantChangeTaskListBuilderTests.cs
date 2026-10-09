@@ -14,15 +14,18 @@ public class SignificantChangeTaskListBuilderTests
 {
    
    [Theory]
-   [InlineData(1, "consultation", "Consultation", new[] { "stakeholder-consultation", "consultation-duration", "admission-variation-consultation", "stakeholder-objections", "religious-body-consultation" })]
-   [InlineData(4, "land-and-planning", "Land and Planning", new[] { "planning-permission" })]
-   [InlineData(5, "Proposed decision and conversion dates", "Proposed decision and conversion dates", new[] { "confirm-project-dates" })]
-   [InlineData(7, "financial-details", "Financial details", new[] { "funding" })]
-   [InlineData(10, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
-   [InlineData(11, "recommendation-on-how-to-proceed", "Recommendation on how to proceed", new[] { "admissions-variation-recommendation" })]
+   [InlineData(1, "key-project-dates", "Key project dates", new[] { "confirm-project-dates" })]
+   [InlineData(2, "admissions-variation", "Admissions variation", new string[0])]
+   [InlineData(3, "consultation-details", "Consultation details", new[] { "stakeholder-consultation", "consultation-duration", "admission-variation-consultation", "stakeholder-objections", "religious-body-consultation" })]
+   [InlineData(4, "academy-performance", "Academy performance", new string[0])]
+   [InlineData(5, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
+   [InlineData(6, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "planning-permission" })]
+   [InlineData(7, "financial-details", "Financial details", new [] { "funding" })]
+   [InlineData(8, "high-quality-trust-framework", "High Quality Trust Framework", new string[0])]
+   [InlineData(9, "recommendation-on-how-to-proceed", "Recommendation on how to proceed", new string[0])]
    public void Build_includes_ordered_sections_and_tasks_when_supplied(int sectionDisplayOrder, string sectionKey, string sectionTitle, string[] taskKeys)
    {
-      var expectedSectionCount = 6;
+      var expectedSectionCount = 9;
 
       SignificantChangeProjectViewBaseModel project = BuildProject();
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
@@ -53,7 +56,7 @@ public class SignificantChangeTaskListBuilderTests
    [MemberData(nameof(StatusCases))]
    public void Build_maps_stakeholder_consultation_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
    {
-      const string sectionKey = "consultation";
+      const string sectionKey = "consultation-details";
       const string taskKey = "stakeholder-consultation";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.StakeholderConsultationStatus = TaskStatus);
@@ -69,7 +72,7 @@ public class SignificantChangeTaskListBuilderTests
    [MemberData(nameof(StatusCases))]
    public void Build_maps_admission_variation_consultation_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
    {
-      const string sectionKey = "consultation";
+      const string sectionKey = "consultation-details";
       const string taskKey = "admission-variation-consultation";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.AdmissionVariationStatus = TaskStatus);
@@ -85,7 +88,7 @@ public class SignificantChangeTaskListBuilderTests
    [MemberData(nameof(StatusCases))]
    public void Build_maps_stakeholder_objections_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
    {
-      const string sectionKey = "consultation";
+      const string sectionKey = "consultation-details";
       const string taskKey = "stakeholder-objections";
       
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.StakeholderObjectionsStatus = TaskStatus);
@@ -101,7 +104,7 @@ public class SignificantChangeTaskListBuilderTests
    [MemberData(nameof(StatusCases))]
    public void Build_maps_religious_body_consultation_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
    {
-      const string sectionKey = "consultation";
+      const string sectionKey = "consultation-details";
       const string taskKey = "religious-body-consultation";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.ReligiousBodyConsultationStatus = TaskStatus);
@@ -117,7 +120,7 @@ public class SignificantChangeTaskListBuilderTests
    [MemberData(nameof(StatusCases))]
    public void Build_maps_confirm_project_dates_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
    {
-      const string sectionKey = "Proposed decision and conversion dates";
+      const string sectionKey = "key-project-dates";
       const string taskKey = "confirm-project-dates";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.ProjectDatesStatus = TaskStatus);
@@ -152,7 +155,7 @@ public class SignificantChangeTaskListBuilderTests
    [MemberData(nameof(StatusCases))]
    public void Build_maps_consultation_duration_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
    {
-      const string sectionKey = "consultation";
+      const string sectionKey = "consultation-details";
       const string taskKey = "consultation-duration";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.ConsultationDurationStatus = TaskStatus);
@@ -167,9 +170,9 @@ public class SignificantChangeTaskListBuilderTests
 
    [Theory]
    [MemberData(nameof(StatusCases))]
-   public void Build_maps_land_and_planning_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
+   public void Build_maps_planning_permission_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
    {
-      const string sectionKey = "land-and-planning";
+      const string sectionKey = "land-transaction-application-and-planning-permission";
       const string taskKey = "planning-permission";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.PlanningPermissionTaskStatus = TaskStatus);

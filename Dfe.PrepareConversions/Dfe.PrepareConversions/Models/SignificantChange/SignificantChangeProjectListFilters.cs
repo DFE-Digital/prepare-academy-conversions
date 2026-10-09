@@ -109,6 +109,7 @@ public class SignificantChangeProjectListFilters
          SelectedProjectOwners = GetAndRemove(SigChangeFilterProjectOwners, GetFromQuery(nameof(SelectedProjectOwners)), true);
          SelectedTiers = GetAndRemove(SigChangeFilterTiers, GetFromQuery(nameof(SelectedTiers)), true);
          SelectedRoutes = GetAndRemove(SigChangeFilterRoutes, GetFromQuery(nameof(SelectedRoutes)), true);
+         SelectedLocalAuthorities = GetAndRemove(SigChangeFilterLocalAuthorities, GetFromQuery(nameof(SelectedLocalAuthorities)), true);
          SelectedRegions = GetAndRemove(SigChangeFilterRegions, GetFromQuery(nameof(SelectedRegions)), true);
 
          return;
