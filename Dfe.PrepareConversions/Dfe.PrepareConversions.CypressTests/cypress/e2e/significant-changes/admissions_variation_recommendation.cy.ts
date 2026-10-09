@@ -4,8 +4,7 @@ import significantChangeTaskList from '../../pages/significantChangeTaskList';
 import { Logger } from '../../support/logger';
 
 const TASK_LIST_URL = /\/significant-change\/task-list\/\d+(\?.*)?$/;
-const RECOMMENDATION_PAGE_URL =
-    /\/significant-change\/task-list\/\d+\/admissions-variation-recommendation(\?.*)?$/;
+const RECOMMENDATION_PAGE_URL = /\/significant-change\/task-list\/\d+\/admissions-variation-recommendation(\?.*)?$/;
 
 const projectIdFrom = (url: string): string => url.split('?')[0].split('/').pop() as string;
 
