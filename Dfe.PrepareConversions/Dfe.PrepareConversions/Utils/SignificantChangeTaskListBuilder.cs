@@ -11,10 +11,50 @@ public static class SignificantChangeTaskListBuilder
 {
    private static readonly IReadOnlyList<SignificantChangeTaskSectionDefinition> TaskSections =
    [
-      new SignificantChangeTaskSectionDefinition(
-         "consultation",
-         "Consultation",
-         1,
+      KeyProjectsDatesSection(1),
+      AdmissionsVariationSection(2),
+      ConsultationDetailsSection(3),
+      AcademyPerformanceSection(4),
+      PublicSectorEqualityDutySection(5),
+      LandTransactionAndPlanningPermissionSection(6),
+      FinancialDetailsSection(7),
+      HighQualityTrustFrameworkSection(8),
+      RecommendationOnHowToProceedSection(9),
+   ];
+
+   private static SignificantChangeTaskSectionDefinition KeyProjectsDatesSection(int displayOrder)
+   {
+      return new SignificantChangeTaskSectionDefinition(
+         "key-project-dates",
+         "Key project dates",
+         displayOrder,
+         [
+            new SignificantChangeTaskDefinition(
+               "confirm-project-dates",
+               "Confirm project dates",
+               1,
+               Links.SignificantChange.ConfirmProjectDates,
+               project => GetTaskStatus(project.ProjectDatesStatus))
+         ]
+      );
+   }
+
+   private static SignificantChangeTaskSectionDefinition AdmissionsVariationSection(int displayOrder)
+   {
+      return new SignificantChangeTaskSectionDefinition(
+         "admissions-variation",
+         "Admissions variation",
+         displayOrder,
+         []
+      );
+   }
+
+   private static SignificantChangeTaskSectionDefinition ConsultationDetailsSection(int displayOrder)
+   {
+      return new SignificantChangeTaskSectionDefinition(
+         "consultation-details",
+         "Consultation details",
+         displayOrder,
          [
             new SignificantChangeTaskDefinition(
                "stakeholder-consultation",
@@ -28,61 +68,46 @@ public static class SignificantChangeTaskListBuilder
                2,
                Links.SignificantChange.ConsultationDuration,
                project => GetTaskStatus(project.ConsultationDurationStatus)),
-              new SignificantChangeTaskDefinition(
+            new SignificantChangeTaskDefinition(
                "admission-variation-consultation",
                "Admission variation consultation",
                3,
                Links.SignificantChange.AdmissionVariationConsultation,
                project => GetTaskStatus(project.AdmissionVariationStatus)),
-               
+
             new SignificantChangeTaskDefinition(
                "stakeholder-objections",
                "Stakeholder objections",
-               5,
+               4,
                Links.SignificantChange.StakeholderObjections,
                project => GetTaskStatus(project.StakeholderObjectionsStatus)),
 
             new SignificantChangeTaskDefinition(
                "religious-body-consultation",
                "Religious body consultation",
-               10,
+               5,
                Links.SignificantChange.ReligiousBodyConsultation,
                project => GetTaskStatus(project.ReligiousBodyConsultationStatus))
          ]
-      ),
+      );
+   }
 
-      new SignificantChangeTaskSectionDefinition(
-         "Proposed decision and conversion dates",
-         "Proposed decision and conversion dates",
-         5,
-         [ 
-            new SignificantChangeTaskDefinition(
-            "confirm-project-dates",
-            "Confirm project dates",
-            1,
-            Links.SignificantChange.ConfirmProjectDates,
-            project => GetTaskStatus(project.ProjectDatesStatus))
-         ]
-      ),
+   private static SignificantChangeTaskSectionDefinition AcademyPerformanceSection(int displayOrder)
+   {
+      return new SignificantChangeTaskSectionDefinition(
+         "academy-performance",
+         "Academy performance",
+         displayOrder,
+         []
+      );
+   }
 
-      new SignificantChangeTaskSectionDefinition(
-         "financial-details",
-         "Financial details",
-         7,
-         [
-            new SignificantChangeTaskDefinition(
-               "funding",
-               "Funding",
-               1,
-               Links.SignificantChange.Funding,
-               project => GetTaskStatus(project.FundingStatus))
-         ]
-      ),
-
-      new SignificantChangeTaskSectionDefinition(
+   private static SignificantChangeTaskSectionDefinition PublicSectorEqualityDutySection(int displayOrder)
+   {
+      return new SignificantChangeTaskSectionDefinition(
          "public-sector-equality-duty",
          "Public Sector Equality Duty",
-         10,
+         displayOrder,
          [
             new SignificantChangeTaskDefinition(
                "public-sector-equality-duty",
@@ -90,11 +115,16 @@ public static class SignificantChangeTaskListBuilder
                1,
                Links.SignificantChange.PublicSectorEqualityDuty,
                project => GetTaskStatus(project.EqualitiesImpactAssessmentStatus))
-         ]),
-      new SignificantChangeTaskSectionDefinition(
-         "land-and-planning",
-         "Land and Planning",
-         4,
+         ]
+      );
+   }
+
+   private static SignificantChangeTaskSectionDefinition LandTransactionAndPlanningPermissionSection(int displayOrder)
+   {
+      return new SignificantChangeTaskSectionDefinition(
+         "land-transaction-application-and-planning-permission",
+         "Land transaction application and planning permission",
+         displayOrder,
          [
             new SignificantChangeTaskDefinition(
                "planning-permission",
@@ -103,8 +133,45 @@ public static class SignificantChangeTaskListBuilder
                Links.SignificantChange.PlanningPermission,
                project => GetTaskStatus(project.PlanningPermissionTaskStatus))
          ]
-      )
-   ];
+      );
+   }
+
+   private static SignificantChangeTaskSectionDefinition FinancialDetailsSection(int displayOrder)
+   {
+      return new SignificantChangeTaskSectionDefinition(
+         "financial-details",
+         "Financial details",
+         displayOrder,
+         [
+            new SignificantChangeTaskDefinition(
+               "funding",
+               "Funding",
+               1,
+               Links.SignificantChange.Funding,
+               project => GetTaskStatus(project.FundingStatus))
+         ]
+      );
+   }
+
+   private static SignificantChangeTaskSectionDefinition HighQualityTrustFrameworkSection(int displayOrder)
+   {
+      return new SignificantChangeTaskSectionDefinition(
+         "high-quality-trust-framework",
+         "High Quality Trust Framework",
+         displayOrder,
+         []
+      );
+   }
+
+   private static SignificantChangeTaskSectionDefinition RecommendationOnHowToProceedSection(int displayOrder)
+   {
+      return new SignificantChangeTaskSectionDefinition(
+         "recommendation-on-how-to-proceed",
+         "Recommendation on how to proceed",
+         displayOrder,
+         []
+      );
+   }
 
    public static SignificantChangeTaskListViewModel Build(SignificantChangeProjectViewBaseModel project)
    {
@@ -126,8 +193,7 @@ public static class SignificantChangeTaskListBuilder
                   DisplayOrder = task.DisplayOrder,
                   Status = task.GetStatus(project)
                })]
-         })
-         .Where(section => section.Tasks.Any())];
+         })];
 
       return new SignificantChangeTaskListViewModel
       {
