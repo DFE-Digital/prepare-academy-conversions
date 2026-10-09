@@ -18,7 +18,7 @@ public class SignificantChangeTaskListBuilderTests
    [InlineData(3, "consultation-details", "Consultation details", new[] { "stakeholder-consultation", "consultation-duration", "admission-variation-consultation", "stakeholder-objections", "religious-body-consultation" })]
    [InlineData(4, "academy-performance", "Academy performance", new string[0])]
    [InlineData(5, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
-   [InlineData(6, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "planning-permission", "local-authority-objections" })]
+   [InlineData(6, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "local-authority-objections", "planning-permission" })]
    [InlineData(7, "financial-details", "Financial details", new [] { "funding" })]
    [InlineData(8, "high-quality-trust-framework", "High Quality Trust Framework", new string[0])]
    [InlineData(9, "recommendation-on-how-to-proceed", "Recommendation on how to proceed", new string[0])]
