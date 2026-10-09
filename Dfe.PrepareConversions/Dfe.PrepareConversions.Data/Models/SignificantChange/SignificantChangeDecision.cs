@@ -15,8 +15,6 @@ public class SignificantChangeDecision
    public bool? ApprovedConditionsSet { get; set; }
    public string ApprovedConditionsDetails { get; set; }
    public List<SignificantChangeDeclinedReasonDetails> DeclinedReasons { get; set; } = new();
-   public List<AdvisoryBoardDeferredReasonDetails> DeferredReasons { get; set; } = new();
-   public List<AdvisoryBoardWithdrawnReasonDetails> WithdrawnReasons { get; set; } = new();
    public DateTime? DecisionDate { get; set; }
    public DecisionMadeBy? DecisionMadeBy { get; set; }
    public string DecisionMakerName { get; set; }
@@ -45,26 +43,10 @@ public class SignificantChangeDecision
       {
          case SignificantChangeDecisions.Approved:
             DeclinedReasons.Clear();
-            DeferredReasons.Clear();
-            WithdrawnReasons.Clear();
             break;
          case SignificantChangeDecisions.Declined:
             ApprovedConditionsSet = null;
             ApprovedConditionsDetails = null;
-            DeferredReasons.Clear();
-            WithdrawnReasons.Clear();
-            break;
-         case SignificantChangeDecisions.Deferred:
-            ApprovedConditionsSet = null;
-            ApprovedConditionsDetails = null;
-            DeclinedReasons.Clear();
-            WithdrawnReasons.Clear();
-            break;
-         case SignificantChangeDecisions.Withdrawn:
-            ApprovedConditionsSet = null;
-            ApprovedConditionsDetails = null;
-            DeclinedReasons.Clear();
-            DeferredReasons.Clear();
             break;
          default:
             break;
