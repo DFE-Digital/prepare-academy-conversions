@@ -12,6 +12,11 @@
    <a asp-page="@Links.SignificantChange.ListView.Page" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
 }
 
+@if (Model.Banner != null)
+{
+    <partial name="Shared/_Banner" model="Model.Banner" />
+}
+
 <partial name="Shared/SignificantChangeProjects/_ProjectHeader" model="Model.Project" />
 
 <div class="govuk-grid-row">

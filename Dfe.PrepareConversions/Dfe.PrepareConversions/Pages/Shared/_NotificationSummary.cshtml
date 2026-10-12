@@ -5,4 +5,8 @@
    var notificationTitle = (string)TempData["NotificationTitle"];
    var notificationMessage = (string)TempData["NotificationMessage"];
 }
-@await Html.PartialAsync("_Banner", new BannerModel(notificationType, notificationTitle, notificationMessage))
+@await Html.PartialAsync("_Banner", new BannerModel(
+   notificationType,
+   notificationTitle,
+   [],
+   notificationMessage))

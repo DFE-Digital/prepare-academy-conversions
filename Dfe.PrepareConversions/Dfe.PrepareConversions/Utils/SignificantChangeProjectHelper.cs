@@ -50,7 +50,9 @@ public static class SignificantChangeProjectHelper
          PlanningPermissionTaskStatus = significantChangeProject.PlanningPermission?.Status ?? SignificantChangeTaskStatus.NotStarted,
          PlanningPermissionAnswer = significantChangeProject.PlanningPermission?.PlanningPermissionAnswer,
          PlanningPermissionAdditionalInformation = significantChangeProject.PlanningPermission?.AdditionalInformation ?? string.Empty,
-         PlanningPermissionSupportingEvidence = significantChangeProject.PlanningPermission?.SupportingEvidence ?? string.Empty
+         PlanningPermissionSupportingEvidence = significantChangeProject.PlanningPermission?.SupportingEvidence ?? string.Empty,
+         Decision = significantChangeProject.Decision,
+         DecisionDate = significantChangeProject.DecisionDate
       };
    }
 }

@@ -2,7 +2,7 @@
 
 @model BannerModel
 
-@if (!string.IsNullOrEmpty(Model.Type))
+@if (Model != null && !string.IsNullOrEmpty(Model.Type))
 {
    <div class="govuk-notification-banner govuk-notification-banner--@Model.Type" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
       <div class="govuk-notification-banner__header">
@@ -12,8 +12,12 @@
       </div>
       <div class="govuk-notification-banner__content">
          <h3 class="govuk-notification-banner__heading" id="notification-message">
-            @Model.Message
+            @Model.Heading
          </h3>
+         @foreach (var message in Model.Message)
+         {
+            <p class="govuk-body">@message</p>
+         }
       </div>
    </div>
 }
