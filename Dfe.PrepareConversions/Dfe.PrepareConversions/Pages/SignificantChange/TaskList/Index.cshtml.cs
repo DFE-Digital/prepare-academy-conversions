@@ -1,4 +1,3 @@
-using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Utils;
 using Dfe.PrepareConversions.ViewModels;
@@ -19,13 +18,15 @@ public class IndexModel(ISignificantChangeProjectRepository repository) : PageMo
    public async Task<IActionResult> OnGetAsync(int id)
    {
       var result = await _repository.GetProjectById(id);
+
       if (result.StatusCode == HttpStatusCode.NotFound)
       {
          return NotFound();
       }
 
-      Project = SignificantChangeProjectListHelper.Build(result.Body);
+      Project = SignificantChangeProjectHelper.Build(result.Body);
       TaskList = SignificantChangeTaskListBuilder.Build(Project);
+
       return Page();
    }
 }
