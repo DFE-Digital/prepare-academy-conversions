@@ -158,7 +158,7 @@ public class StakeholderObjectionsModelTests
          LocalAuthorityName = "Test local authority",
          TypeOfSignificantChange = "Route A",
          Status = "pre decision",
-         StakeholderObjections = new SignificantChangeStakeholderObjectionsResponse(),
+         StakeholderObjections = new SignificantChangeStakeholderObjectionsResponse()
       };
    }
 

@@ -208,7 +208,7 @@ public class PlanningPermissionModelTests
          LocalAuthorityName = "Test local authority",
          TypeOfSignificantChange = "Route A",
          Status = "pre decision",
-         PlanningPermission = new SignificantChangePlanningPermissionResponse(),
+         PlanningPermission = new SignificantChangePlanningPermissionResponse()
       };
    }
 }

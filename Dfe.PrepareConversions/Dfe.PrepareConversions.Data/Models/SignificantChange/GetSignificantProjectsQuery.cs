@@ -12,5 +12,6 @@ public record GetSignificantProjectsQuery(
    List<string>? Assignee = null,
    List<byte>? Tier = null,
    List<string>? Route = null,
-   List<string>? LocalAuthority = null
+   List<string>? LocalAuthority = null,
+   List<string>? Region = null
    );

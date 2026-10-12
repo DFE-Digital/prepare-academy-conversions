@@ -120,7 +120,7 @@ public class StakeholderObjectionsIntegrationTests(IntegrationTestingWebApplicat
          AssignedUser = new User("user-id", "assigned.user@test.local", "Assigned User"),
          TypeOfSignificantChange = "Route A",
          Status = "pre decision",
-         StakeholderObjections = new SignificantChangeStakeholderObjectionsResponse(),
+         StakeholderObjections = new SignificantChangeStakeholderObjectionsResponse()
       };
    }
 }

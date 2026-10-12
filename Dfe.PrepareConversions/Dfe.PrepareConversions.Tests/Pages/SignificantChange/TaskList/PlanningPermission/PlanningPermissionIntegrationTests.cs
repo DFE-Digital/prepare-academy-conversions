@@ -118,7 +118,7 @@ public class PlanningPermissionIntegrationTests(IntegrationTestingWebApplication
          AssignedUser = new User("user-id", "assigned.user@test.local", "Assigned User"),
          TypeOfSignificantChange = "Route A",
          Status = "pre decision",
-         PlanningPermission = new SignificantChangePlanningPermissionResponse(),
+         PlanningPermission = new SignificantChangePlanningPermissionResponse()
       };
    }
 }
