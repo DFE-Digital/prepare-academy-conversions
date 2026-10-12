@@ -189,9 +189,9 @@ public class SignificantChangeTaskListBuilderTests
    [MemberData(nameof(StatusCases))]
    public void Build_maps_land_transaction_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
    {
-      const string sectionKey = "land-and-planning";
+      const string sectionKey = "land-transaction-application-and-planning-permission";
       const string taskKey = "land-transaction-application";
-
+   
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.LandTransactionTaskStatus = TaskStatus);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
