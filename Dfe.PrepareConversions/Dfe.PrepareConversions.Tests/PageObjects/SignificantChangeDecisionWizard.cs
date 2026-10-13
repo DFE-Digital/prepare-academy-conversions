@@ -6,6 +6,8 @@ using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using System;
 using System.Threading.Tasks;
 
+using SignificantChangeDecisionMadeBy = Dfe.PrepareConversions.Data.Models.SignificantChange.DecisionMadeBy;
+
 namespace Dfe.PrepareConversions.Tests.PageObjects;
 
 public class SignificantChangeDecisionWizard
@@ -72,7 +74,7 @@ public class SignificantChangeDecisionWizard
       await ClickSubmitButton();
    }
 
-   public async Task SetDecisionByAndContinue(DecisionMadeBy decisionMadeBy)
+   public async Task SetDecisionByAndContinue(SignificantChangeDecisionMadeBy decisionMadeBy)
    {
       Document.QuerySelector<IHtmlInputElement>($"#{decisionMadeBy.ToString().ToLowerInvariant()}-radio")!.IsChecked = true;
       await ClickSubmitButton();
