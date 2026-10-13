@@ -27,6 +27,7 @@
             var decisionClass = Model.Decision.Decision switch
             {
                SignificantChangeDecisions.Approved => "govuk-tag--green",
+               SignificantChangeDecisions.Withdrawn => "govuk-tag--purple",
                _ => "govuk-tag--red"
             };
          }
@@ -71,19 +72,37 @@
       </div>
    }
 
-   @if (Model.Decision.Decision is SignificantChangeDecisions.Declined)
+   @if (Model.Decision.Decision is SignificantChangeDecisions.Declined or SignificantChangeDecisions.Withdrawn)
    {
       <div class="govuk-summary-list__row">
          <dt class="govuk-summary-list__key">Reasons</dt>
          <dd class="govuk-summary-list__value" id="reasons">
-            @foreach (SignificantChangeDeclinedReasonDetails reason in Model.Decision.DeclinedReasons)
+            @if (Model.Decision.Decision == SignificantChangeDecisions.Declined)
+            {
+               foreach (SignificantChangeDeclinedReasonDetails reason in Model.Decision.DeclinedReasons)
                {
                   <div>@reason.Reason.ToDescription():</div>
                   <div class="govuk-!-margin-bottom-2">@reason.Details</div>
                }
+            }
+            else
+            {
+               foreach (AdvisoryBoardWithdrawnReasonDetails reason in Model.Decision.WithdrawnReasons)
+               {
+                  <div>@reason.Reason.ToDescription():</div>
+                  <div class="govuk-!-margin-bottom-2">@reason.Details</div>
+               }
+            }
          </dd>
          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.SignificantChangeDecision.DeclineReason.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-reasons-btn">
+            @{
+               var reasonPage = Model.Decision.Decision switch
+               {
+                  SignificantChangeDecisions.Declined => Links.SignificantChangeDecision.DeclineReason.Page,
+                  _ => Links.SignificantChangeDecision.WhyWithdrawn.Page
+               };
+            }
+            <a class="govuk-link" asp-page="@reasonPage" asp-route-id="@Model.Id" asp-route-obl="true" id="change-reasons-btn">
                Change<span class="govuk-visually-hidden"> reasons</span>
             </a>
          </dd>

@@ -66,6 +66,7 @@ public class WhoDecidedModel(ISignificantChangeProjectRepository repository,
       {
          SignificantChangeDecisions.Approved => Links.SignificantChangeDecision.AnyConditions,
          SignificantChangeDecisions.Declined => Links.SignificantChangeDecision.DeclineReason,
+         SignificantChangeDecisions.Withdrawn => Links.SignificantChangeDecision.WhyWithdrawn,
          _ => Links.SignificantChangeDecision.RecordDecision
       };
    }

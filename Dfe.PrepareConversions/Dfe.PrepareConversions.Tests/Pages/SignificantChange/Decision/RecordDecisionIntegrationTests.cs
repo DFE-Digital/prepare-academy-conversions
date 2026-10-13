@@ -20,7 +20,7 @@ public class RecordDecisionIntegrationTests(IntegrationTestingWebApplicationFact
 
       Document.QuerySelectorAll("#SignificantChangeDecision input[type=radio]")
          .Select(r => r.Id)
-         .Should().BeEquivalentTo("approved-radio", "declined-radio");
+         .Should().BeEquivalentTo("approved-radio", "declined-radio", "withdrawn-radio");
    }
 
    [Fact]
@@ -36,6 +36,7 @@ public class RecordDecisionIntegrationTests(IntegrationTestingWebApplicationFact
    [Theory]
    [InlineData(SignificantChangeDecisions.Approved, "any-conditions")]
    [InlineData(SignificantChangeDecisions.Declined, "declined-reason")]
+   [InlineData(SignificantChangeDecisions.Withdrawn, "why-withdrawn")]
    public async Task Should_branch_to_the_correct_reason_page(SignificantChangeDecisions decision, string expectedStep)
    {
       AddProject();

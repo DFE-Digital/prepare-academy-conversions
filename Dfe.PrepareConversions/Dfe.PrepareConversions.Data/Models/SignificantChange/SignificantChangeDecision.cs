@@ -15,6 +15,7 @@ public class SignificantChangeDecision
    public bool? ApprovedConditionsSet { get; set; }
    public string ApprovedConditionsDetails { get; set; }
    public List<SignificantChangeDeclinedReasonDetails> DeclinedReasons { get; set; } = new();
+   public List<AdvisoryBoardWithdrawnReasonDetails> WithdrawnReasons { get; set; } = new();
    public DateTime? DecisionDate { get; set; }
    public DecisionMadeBy? DecisionMadeBy { get; set; }
    public string DecisionMakerName { get; set; }
@@ -43,10 +44,17 @@ public class SignificantChangeDecision
       {
          case SignificantChangeDecisions.Approved:
             DeclinedReasons.Clear();
+            WithdrawnReasons.Clear();
             break;
          case SignificantChangeDecisions.Declined:
             ApprovedConditionsSet = null;
             ApprovedConditionsDetails = null;
+            WithdrawnReasons.Clear();
+            break;
+         case SignificantChangeDecisions.Withdrawn:
+            ApprovedConditionsSet = null;
+            ApprovedConditionsDetails = null;
+            DeclinedReasons.Clear();
             break;
          default:
             break;
