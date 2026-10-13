@@ -72,6 +72,7 @@ public class RecordDecisionModel : SignificantChangeDecisionBaseModel
       {
          SignificantChangeDecisions.Approved => RedirectToPage(Links.SignificantChangeDecision.AnyConditions.Page, LinkParameters),
          SignificantChangeDecisions.Declined => RedirectToPage(Links.SignificantChangeDecision.DeclineReason.Page, LinkParameters),
+         SignificantChangeDecisions.Withdrawn => RedirectToPage(Links.SignificantChangeDecision.WhyWithdrawn.Page, LinkParameters),
          _ => RedirectToPage(Links.SignificantChangeDecision.AnyConditions.Page, LinkParameters)
       };
    }

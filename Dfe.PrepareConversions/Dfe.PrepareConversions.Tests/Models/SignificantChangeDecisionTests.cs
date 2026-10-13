@@ -35,6 +35,18 @@ public class SignificantChangeDecisionTests
    }
 
    [Fact]
+   public void Switching_to_withdrawn_clears_declined_reasons()
+   {
+      SignificantChangeDecision decision = new() { Decision = SignificantChangeDecisions.Declined };
+      decision.DeclinedReasons.Add(
+         new SignificantChangeDeclinedReasonDetails(SignificantChangeDeclinedReason.Other, "Waiting"));
+
+      decision.Decision = SignificantChangeDecisions.Withdrawn;
+
+      decision.DeclinedReasons.Should().BeEmpty();
+   }
+
+   [Fact]
    public void Reassigning_the_same_decision_keeps_the_answers()
    {
       SignificantChangeDecision decision = new() { Decision = SignificantChangeDecisions.Declined };

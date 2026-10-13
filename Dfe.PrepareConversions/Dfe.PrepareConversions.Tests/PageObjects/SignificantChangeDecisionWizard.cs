@@ -29,6 +29,16 @@ public class SignificantChangeDecisionWizard
       await Document.QuerySelector<IHtmlButtonElement>("#submit-btn")!.SubmitAsync();
    }
 
+   public async Task SetWithdrawnReasonsAndContinue(params (AdvisoryBoardWithdrawnReason Reason, string Details)[] reasons)
+   {
+      foreach ((AdvisoryBoardWithdrawnReason reason, string details) in reasons)
+      {
+         CheckReason(reason.ToString(), details);
+      }
+
+      await ClickSubmitButton();
+   }
+
    public async Task SetDecisionToAndContinue(SignificantChangeDecisions decision)
    {
       Document.QuerySelector<IHtmlInputElement>($"#{decision.ToString().ToLowerInvariant()}-radio").IsChecked = true;
