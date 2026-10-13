@@ -4,6 +4,6 @@ namespace Dfe.PrepareConversions.Data.Models.SignificantChange
 	{
 		Approve = 0,
 		Decline = 1,
-		Defer = 2
+		Withdraw = 2
 	}
 }
