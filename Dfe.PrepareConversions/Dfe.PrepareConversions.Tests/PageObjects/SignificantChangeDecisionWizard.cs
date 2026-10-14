@@ -3,6 +3,7 @@ using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using System;
 using System.Threading.Tasks;
 
@@ -52,13 +53,9 @@ public class SignificantChangeDecisionWizard
       await ClickSubmitButton();
    }
 
-   public async Task SetDeclinedReasonsAndContinue(params (SignificantChangeDeclinedReason Reason, string Details)[] reasons)
+   public async Task SetDeclinedReasonAndContinue(string reason)
    {
-      foreach ((SignificantChangeDeclinedReason reason, string details) in reasons)
-      {
-         CheckReason(reason.ToString(), details);
-      }
-
+      Document.QuerySelector<IHtmlTextAreaElement>("#declinedReason-txtarea").Value = reason;
       await ClickSubmitButton();
    }
 

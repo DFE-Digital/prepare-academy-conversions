@@ -106,16 +106,14 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
    }
 
    [Fact]
-   public async Task Should_send_declined_reasons_using_the_api_enum_values()
+   public async Task Should_send_declined_reason()
    {
       AddProject();
       AddDecisionPostStub();
 
       await Wizard.StartFor(ProjectId);
       await Wizard.SetDecisionToAndContinue(SignificantChangeDecisions.Declined);
-      await Wizard.SetDeclinedReasonsAndContinue(
-         (SignificantChangeDeclinedReason.Governance, "Weak governance"),
-         (SignificantChangeDeclinedReason.ChoiceOfTrust, "Trust not suitable"));
+      await Wizard.SetDeclinedReasonAndContinue("Trust not suitable");
       await Wizard.SetDecisionByAndContinue(DecisionMadeBy.Minister);
       await Wizard.SetDecisionMakerNameAndContinue("Jane Smith");
       await Wizard.SetDecisionDateAndContinue(DecisionDate);
@@ -128,11 +126,8 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
          "the API requires ApprovedConditionsSet to be null unless the decision is Approved");
 
       JArray declined = (JArray)Field(posted, "DeclinedReasons");
-      declined.Should().HaveCount(2);
-      declined.Select(r => Field(r, "Reason").Value<int>())
-         .Should().BeEquivalentTo(GovernanceAndChoiceOfTrustReasons);
-      declined.Select(r => Field(r, "Details").Value<string>())
-         .Should().BeEquivalentTo("Weak governance", "Trust not suitable");
+      declined.Values<string>().Should().Contain("Trust not suitable");
+
    }
 
    [Fact]
@@ -199,10 +194,7 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
       {
          SignificantChangeProjectId = ProjectId,
          Decision = SignificantChangeDecisions.Declined,
-         DeclinedReasons =
-         [
-            new(SignificantChangeDeclinedReason.Governance, "Weak governance")
-         ],
+         DeclinedReason = "Weak governance",
          DecisionMadeBy = DecisionMadeBy.None,
          DecisionDate = DecisionDate
       };
@@ -214,8 +206,7 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
       await Wizard.StartFor(ProjectId);
       Document.QuerySelector<IHtmlInputElement>("#declined-radio")!.IsChecked = true;
       await Wizard.ClickSubmitButton();
-      await Wizard.SetDeclinedReasonsAndContinue(
-         (SignificantChangeDeclinedReason.Governance, "Weak governance"));
+      await Wizard.SetDeclinedReasonAndContinue("Weak governance");
       await Wizard.SetDecisionByAndContinue(DecisionMadeBy.None);
       await Wizard.SetDecisionDateAndContinue(DecisionDate);
       await Wizard.ClickSubmitButton();
