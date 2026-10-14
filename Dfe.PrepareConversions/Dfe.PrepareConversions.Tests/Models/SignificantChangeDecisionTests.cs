@@ -30,7 +30,7 @@ public class SignificantChangeDecisionTests
 
       decision.Decision = SignificantChangeDecisions.Approved;
 
-      decision.DeclinedReason.Should().BeEmpty("the API rejects reasons that do not match the decision");
+      decision.DeclinedReason.Should().BeNullOrEmpty();
    }
 
    [Fact]
