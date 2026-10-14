@@ -26,7 +26,7 @@ public class HqtfConsiderationModelTests
    {
       const int id = 901;
       SignificantChangeProjectResponse project = BuildProject(id);
-      project.HQTFConsideration.HQTFConsiderationAnswer = HqtfConsiderationAnswer.Yes;
+      project.HQTFConsideration.HqtfConsiderationAnswer = HqtfConsiderationAnswer.Yes;
       project.HQTFConsideration.AdditionalInformation = "Governance gap identified";
       project.HQTFConsideration.SupportingEvidence = "Trust improvement plan";
 
@@ -177,7 +177,7 @@ public class HqtfConsiderationModelTests
          LocalAuthorityName = "Test local authority",
          TypeOfSignificantChange = "Route A",
          Status = "pre decision",
-         HQTFConsideration = new SignificantChangeHQTFConsiderationResponse()
+         HQTFConsideration = new SignificantChangeHqtfConsiderationResponse()
       };
    }
 }

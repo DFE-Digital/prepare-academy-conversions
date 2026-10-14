@@ -17,7 +17,7 @@ public class HqtfConsiderationIntegrationTests(IntegrationTestingWebApplicationF
    public async Task Should_display_hqtf_consideration_page_with_existing_values()
    {
       SignificantChangeProjectResponse project = BuildProject(id: 911);
-      project.HQTFConsideration.HQTFConsiderationAnswer = HqtfConsiderationAnswer.Yes;
+      project.HQTFConsideration.HqtfConsiderationAnswer = HqtfConsiderationAnswer.Yes;
       project.HQTFConsideration.AdditionalInformation = "Finance and operations risk";
       project.HQTFConsideration.SupportingEvidence = "Audit report";
 
@@ -146,7 +146,7 @@ public class HqtfConsiderationIntegrationTests(IntegrationTestingWebApplicationF
          AssignedUser = new User("user-id", "assigned.user@test.local", "Assigned User"),
          TypeOfSignificantChange = "Route A",
          Status = "pre decision",
-         HQTFConsideration = new SignificantChangeHQTFConsiderationResponse()
+         HQTFConsideration = new SignificantChangeHqtfConsiderationResponse()
       };
    }
 }

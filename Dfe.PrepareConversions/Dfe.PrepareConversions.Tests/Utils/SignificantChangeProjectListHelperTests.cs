@@ -260,9 +260,9 @@ public class SignificantChangeProjectListHelperTests
          TypeOfSignificantChange = "Route A",
          LocalAuthorityName = "Test local authority",
          Status = "pre decision",
-         HQTFConsideration = new SignificantChangeHQTFConsiderationResponse
+         HQTFConsideration = new SignificantChangeHqtfConsiderationResponse
          {
-            HQTFConsiderationAnswer = HqtfConsiderationAnswer.Yes,
+            HqtfConsiderationAnswer = HqtfConsiderationAnswer.Yes,
             AdditionalInformation = "Workforce capacity risk identified",
             SupportingEvidence = "Trust board minutes",
             Status = SignificantChangeTaskStatus.Completed

@@ -52,7 +52,7 @@ public static class SignificantChangeProjectListHelper
          PlanningPermissionAdditionalInformation = significantChangeProject.PlanningPermission?.AdditionalInformation ?? string.Empty,
          PlanningPermissionSupportingEvidence = significantChangeProject.PlanningPermission?.SupportingEvidence ?? string.Empty,
          HQTFConsiderationStatus = significantChangeProject.HQTFConsideration?.Status ?? SignificantChangeTaskStatus.NotStarted,
-         HQTFConsiderationAnswer = significantChangeProject.HQTFConsideration?.HQTFConsiderationAnswer,
+         HQTFConsiderationAnswer = significantChangeProject.HQTFConsideration?.HqtfConsiderationAnswer,
          HQTFConsiderationAdditionalInformation = significantChangeProject.HQTFConsideration?.AdditionalInformation ?? string.Empty,
          HQTFConsiderationSupportingEvidence = significantChangeProject.HQTFConsideration?.SupportingEvidence ?? string.Empty
       };
