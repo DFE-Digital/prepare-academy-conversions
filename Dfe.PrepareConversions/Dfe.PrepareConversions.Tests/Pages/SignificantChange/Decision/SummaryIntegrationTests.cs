@@ -125,9 +125,7 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
       Field(posted, "ApprovedConditionsSet").Type.Should().Be(JTokenType.Null,
          "the API requires ApprovedConditionsSet to be null unless the decision is Approved");
 
-      JArray declined = (JArray)Field(posted, "DeclinedReasons");
-      declined.Values<string>().Should().Contain("Trust not suitable");
-
+      Field(posted, "DeclinedReason").Value<string>().Should().Be("Trust not suitable");
    }
 
    [Fact]
