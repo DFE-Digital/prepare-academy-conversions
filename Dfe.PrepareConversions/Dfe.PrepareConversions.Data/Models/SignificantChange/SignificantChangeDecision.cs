@@ -8,13 +8,32 @@ namespace Dfe.PrepareConversions.Data.Models.SignificantChange;
 public class SignificantChangeDecision
 {
    private SignificantChangeDecisions? _decision;
+   private string _declinedReason = string.Empty;
 
    public int AdvisoryBoardDecisionId { get; set; }
 
    public int? SignificantChangeProjectId { get; set; }
    public bool? ApprovedConditionsSet { get; set; }
    public string ApprovedConditionsDetails { get; set; }
-   public List<SignificantChangeDeclinedReasonDetails> DeclinedReasons { get; set; } = new();
+   public string DeclinedReason
+   {
+      get => _declinedReason;
+      set
+      {
+         _declinedReason = value ?? string.Empty;
+         if (string.IsNullOrWhiteSpace(_declinedReason))
+            DeclinedReasons.Clear();
+         else
+         {
+            DeclinedReasons.Clear();
+            DeclinedReasons.Add(_declinedReason);
+         }
+      }
+   }
+
+   // For API compatibility the decision should carry an array of declined reasons.
+   public List<string> DeclinedReasons { get; set; } = new();
+
    public List<AdvisoryBoardWithdrawnReasonDetails> WithdrawnReasons { get; set; } = new();
    public DateTime? DecisionDate { get; set; }
    public DecisionMadeBy? DecisionMadeBy { get; set; }
@@ -43,6 +62,7 @@ public class SignificantChangeDecision
       switch (decision)
       {
          case SignificantChangeDecisions.Approved:
+            DeclinedReason = string.Empty;
             DeclinedReasons.Clear();
             WithdrawnReasons.Clear();
             break;
@@ -54,6 +74,7 @@ public class SignificantChangeDecision
          case SignificantChangeDecisions.Withdrawn:
             ApprovedConditionsSet = null;
             ApprovedConditionsDetails = null;
+            DeclinedReason = string.Empty;
             DeclinedReasons.Clear();
             break;
          default:

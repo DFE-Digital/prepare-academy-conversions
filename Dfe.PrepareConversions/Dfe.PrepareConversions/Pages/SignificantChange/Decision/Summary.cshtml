@@ -72,21 +72,27 @@
       </div>
    }
 
-   @if (Model.Decision.Decision is SignificantChangeDecisions.Declined or SignificantChangeDecisions.Withdrawn)
+   @if (Model.Decision.Decision == SignificantChangeDecisions.Declined)
+   {
+      <div class="govuk-summary-list__row">
+         <dt class="govuk-summary-list__key">Why was this project declined?</dt>
+         <dd class="govuk-summary-list__value" id="declined-rationale">
+            <span>@Model.Decision.DeclinedReason</span>
+         </dd>
+         <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" asp-page="@Links.SignificantChangeDecision.DeclineReason.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-decline-reason-btn">
+               Change
+            </a>
+         </dd>
+      </div>
+   }
+
+   @if (Model.Decision.Decision is SignificantChangeDecisions.Withdrawn)
    {
       <div class="govuk-summary-list__row">
          <dt class="govuk-summary-list__key">Reasons</dt>
          <dd class="govuk-summary-list__value" id="reasons">
-            @if (Model.Decision.Decision == SignificantChangeDecisions.Declined)
-            {
-               foreach (SignificantChangeDeclinedReasonDetails reason in Model.Decision.DeclinedReasons)
-               {
-                  <div>@reason.Reason.ToDescription():</div>
-                  <div class="govuk-!-margin-bottom-2">@reason.Details</div>
-               }
-            }
-            else
-            {
+            @{
                foreach (AdvisoryBoardWithdrawnReasonDetails reason in Model.Decision.WithdrawnReasons)
                {
                   <div>@reason.Reason.ToDescription():</div>

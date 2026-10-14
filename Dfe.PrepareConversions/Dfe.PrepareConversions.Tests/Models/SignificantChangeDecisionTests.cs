@@ -23,39 +23,36 @@ public class SignificantChangeDecisionTests
    }
 
    [Fact]
-   public void Switching_from_declined_to_approved_clears_the_declined_reasons()
+   public void Switching_from_declined_to_approved_clears_the_declined_reason()
    {
       SignificantChangeDecision decision = new() { Decision = SignificantChangeDecisions.Declined };
-      decision.DeclinedReasons.Add(
-         new SignificantChangeDeclinedReasonDetails(SignificantChangeDeclinedReason.Finance, "Cost"));
+      decision.DeclinedReason = "Cost";
 
       decision.Decision = SignificantChangeDecisions.Approved;
 
-      decision.DeclinedReasons.Should().BeEmpty("the API rejects reasons that do not match the decision");
+      decision.DeclinedReason.Should().BeEmpty("the API rejects reasons that do not match the decision");
    }
 
    [Fact]
    public void Switching_to_withdrawn_clears_declined_reasons()
    {
       SignificantChangeDecision decision = new() { Decision = SignificantChangeDecisions.Declined };
-      decision.DeclinedReasons.Add(
-         new SignificantChangeDeclinedReasonDetails(SignificantChangeDeclinedReason.Other, "Waiting"));
+      decision.DeclinedReason = "Waiting";
 
       decision.Decision = SignificantChangeDecisions.Withdrawn;
 
-      decision.DeclinedReasons.Should().BeEmpty();
+      decision.DeclinedReason.Should().BeNullOrEmpty();
    }
 
    [Fact]
    public void Reassigning_the_same_decision_keeps_the_answers()
    {
       SignificantChangeDecision decision = new() { Decision = SignificantChangeDecisions.Declined };
-      decision.DeclinedReasons.Add(
-         new SignificantChangeDeclinedReasonDetails(SignificantChangeDeclinedReason.Finance, "Cost"));
+      decision.DeclinedReason = "Cost";
 
       decision.Decision = SignificantChangeDecisions.Declined;
 
-      decision.DeclinedReasons.Should().HaveCount(1);
+      decision.DeclinedReason.Should().Be("Cost");
    }
 
    [Theory]
