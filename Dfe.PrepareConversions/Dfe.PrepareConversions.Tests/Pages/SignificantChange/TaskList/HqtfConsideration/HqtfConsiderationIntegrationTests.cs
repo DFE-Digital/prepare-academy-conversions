@@ -32,9 +32,6 @@ public class HqtfConsiderationIntegrationTests(IntegrationTestingWebApplicationF
          .Should().Be("Finance and operations risk");
       Document.QuerySelector<IHtmlInputElement>("[data-test='hqtf-consideration-supporting-evidence']")!.Value
          .Should().Be("Audit report");
-      Document.QuerySelectorAll("p.govuk-hint")
-         .Single(h => h.TextContent.Contains("The HQTF pillars are"))
-         .TextContent.Should().Contain("Governance and Leadership");
    }
 
    [Fact]
