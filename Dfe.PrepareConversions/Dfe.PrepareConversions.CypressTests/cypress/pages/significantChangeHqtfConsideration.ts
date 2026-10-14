@@ -14,7 +14,7 @@ class SignificantChangeHqtfConsideration extends BasePage {
         return this;
     }
 
-    public verifyAllOptionsPresent(): this {
+    public verifyHqtfAllOptionsPresent(): this {
         cy.getByDataTest('hqtf-consideration-yes').should('exist');
         cy.getByDataTest('hqtf-consideration-no').should('exist');
         cy.getByDataTest('hqtf-consideration-not-applicable').should('exist');
@@ -24,42 +24,42 @@ class SignificantChangeHqtfConsideration extends BasePage {
         return this;
     }
 
-    public selectYes(): this {
+    public selectHqtfYes(): this {
         cy.getByDataTest('hqtf-consideration-yes').check();
         return this;
     }
 
-    public selectNo(): this {
+    public selectHqtfNo(): this {
         cy.getByDataTest('hqtf-consideration-no').check();
         return this;
     }
 
-    public selectNotApplicable(): this {
+    public selectHqtfNotApplicable(): this {
         cy.getByDataTest('hqtf-consideration-not-applicable').check();
         return this;
     }
 
-    public verifyAdditionalInformationHidden(): this {
+    public verifyHqtfAdditionalInformationHidden(): this {
         cy.getByDataTest('hqtf-consideration-additional-information').should('not.be.visible');
         return this;
     }
 
-    public verifyAdditionalInformationVisible(): this {
+    public verifyHqtfAdditionalInformationVisible(): this {
         cy.getByDataTest('hqtf-consideration-additional-information').should('be.visible');
         return this;
     }
 
-    public enterAdditionalInformation(text: string): this {
+    public enterHqtfAdditionalInformation(text: string): this {
         cy.getByDataTest('hqtf-consideration-additional-information').clear().type(text);
         return this;
     }
 
-    public clearAdditionalInformation(): this {
+    public clearHqtfAdditionalInformation(): this {
         cy.getByDataTest('hqtf-consideration-additional-information').clear();
         return this;
     }
 
-    public enterSupportingEvidence(text: string): this {
+    public enterHqtfSupportingEvidence(text: string): this {
         cy.getByDataTest('hqtf-consideration-supporting-evidence').clear().type(text);
         return this;
     }

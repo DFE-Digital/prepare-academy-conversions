@@ -40,7 +40,7 @@ describe('Significant change - HQTF consideration', () => {
         withProject(() => {
             significantChangeTaskList.openHqtfConsiderationTask();
 
-            significantChangeHqtfConsideration.verifyPageLoaded().verifyAllOptionsPresent();
+            significantChangeHqtfConsideration.verifyPageLoaded().verifyHqtfAllOptionsPresent();
         });
     });
 
@@ -50,12 +50,12 @@ describe('Significant change - HQTF consideration', () => {
 
             significantChangeHqtfConsideration
                 .verifyPageLoaded()
-                .selectNo()
-                .verifyAdditionalInformationHidden()
-                .selectNotApplicable()
-                .verifyAdditionalInformationHidden()
-                .selectYes()
-                .verifyAdditionalInformationVisible();
+                .selectHqtfNo()
+                .verifyHqtfAdditionalInformationHidden()
+                .selectHqtfNotApplicable()
+                .verifyHqtfAdditionalInformationHidden()
+                .selectHqtfYes()
+                .verifyHqtfAdditionalInformationVisible();
         });
     });
 
@@ -63,16 +63,16 @@ describe('Significant change - HQTF consideration', () => {
         withProject((projectId) => {
             cy.visit(`/significant-change/task-list/${projectId}/hqtf-consideration`);
 
-            significantChangeHqtfConsideration.selectYes().clearAdditionalInformation().save();
+            significantChangeHqtfConsideration.selectHqtfYes().clearHqtfAdditionalInformation().save();
 
             significantChangeHqtfConsideration
                 .verifyErrorSummaryContains('Add details of the issues or risks identified')
                 .verifyInlineError('AdditionalInformation', 'Add details of the issues or risks identified');
 
             significantChangeHqtfConsideration
-                .selectYes()
-                .enterAdditionalInformation('Workforce capacity risk identified against HQTF pillars')
-                .enterSupportingEvidence('Trust board minutes')
+                .selectHqtfYes()
+                .enterHqtfAdditionalInformation('Workforce capacity risk identified against HQTF pillars')
+                .enterHqtfSupportingEvidence('Trust board minutes')
                 .save();
 
             cy.url().should('match', TASK_LIST_URL);
@@ -86,8 +86,8 @@ describe('Significant change - HQTF consideration', () => {
 
             significantChangeHqtfConsideration
                 .verifyPageLoaded()
-                .selectNo()
-                .enterSupportingEvidence('No issues identified evidence')
+                .selectHqtfNo()
+                .enterHqtfSupportingEvidence('No issues identified evidence')
                 .save();
 
             cy.url().should('match', TASK_LIST_URL);
@@ -99,7 +99,7 @@ describe('Significant change - HQTF consideration', () => {
         withProject((projectId) => {
             cy.visit(`/significant-change/task-list/${projectId}/hqtf-consideration`);
 
-            significantChangeHqtfConsideration.verifyPageLoaded().selectNotApplicable().save();
+            significantChangeHqtfConsideration.verifyPageLoaded().selectHqtfNotApplicable().save();
 
             cy.url().should('match', TASK_LIST_URL);
             significantChangeTaskList.verifyHqtfConsiderationTaskVisible();
