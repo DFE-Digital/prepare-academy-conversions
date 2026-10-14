@@ -7,7 +7,10 @@ class SignificantChangeHqtfConsideration extends BasePage {
     public verifyPageLoaded(): this {
         cy.checkPath(this.path);
         this.verifyHeading('High Quality Trust Framework (HQTF) consideration');
-        cy.contains('legend', 'Have any issues or risks been identified with regards to the High Quality Trust Framework (HQTF) pillars?').should('be.visible');
+        cy.contains(
+            'legend',
+            'Have any issues or risks been identified with regards to the High Quality Trust Framework (HQTF) pillars?'
+        ).should('be.visible');
         return this;
     }
 

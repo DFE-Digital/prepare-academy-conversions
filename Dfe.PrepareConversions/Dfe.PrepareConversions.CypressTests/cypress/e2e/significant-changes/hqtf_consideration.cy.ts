@@ -63,10 +63,7 @@ describe('Significant change - HQTF consideration', () => {
         withProject((projectId) => {
             cy.visit(`/significant-change/task-list/${projectId}/hqtf-consideration`);
 
-            significantChangeHqtfConsideration
-                .selectYes()
-                .clearAdditionalInformation()
-                .save();
+            significantChangeHqtfConsideration.selectYes().clearAdditionalInformation().save();
 
             significantChangeHqtfConsideration
                 .verifyErrorSummaryContains('Add details of the issues or risks identified')
@@ -102,10 +99,7 @@ describe('Significant change - HQTF consideration', () => {
         withProject((projectId) => {
             cy.visit(`/significant-change/task-list/${projectId}/hqtf-consideration`);
 
-            significantChangeHqtfConsideration
-                .verifyPageLoaded()
-                .selectNotApplicable()
-                .save();
+            significantChangeHqtfConsideration.verifyPageLoaded().selectNotApplicable().save();
 
             cy.url().should('match', TASK_LIST_URL);
             significantChangeTaskList.verifyHqtfConsiderationTaskVisible();
