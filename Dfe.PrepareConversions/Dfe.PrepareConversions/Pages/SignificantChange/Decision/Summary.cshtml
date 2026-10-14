@@ -87,33 +87,20 @@
       </div>
    }
 
-   @if (Model.Decision.Decision is SignificantChangeDecisions.Withdrawn)
-   {
-      <div class="govuk-summary-list__row">
-         <dt class="govuk-summary-list__key">Reasons</dt>
-         <dd class="govuk-summary-list__value" id="reasons">
-            @{
-               foreach (AdvisoryBoardWithdrawnReasonDetails reason in Model.Decision.WithdrawnReasons)
-               {
-                  <div>@reason.Reason.ToDescription():</div>
-                  <div class="govuk-!-margin-bottom-2">@reason.Details</div>
-               }
-            }
-         </dd>
-         <dd class="govuk-summary-list__actions">
-            @{
-               var reasonPage = Model.Decision.Decision switch
-               {
-                  SignificantChangeDecisions.Declined => Links.SignificantChangeDecision.DeclineReason.Page,
-                  _ => Links.SignificantChangeDecision.WhyWithdrawn.Page
-               };
-            }
-            <a class="govuk-link" asp-page="@reasonPage" asp-route-id="@Model.Id" asp-route-obl="true" id="change-reasons-btn">
-               Change<span class="govuk-visually-hidden"> reasons</span>
-            </a>
-         </dd>
-      </div>
-   }
+    @if (Model.Decision.Decision == SignificantChangeDecisions.Withdrawn)
+    {
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Why was this project withdrawn?</dt>
+            <dd class="govuk-summary-list__value" id="withdrawn-rationale">
+                <span>@Model.Decision.WithdrawnReason</span>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" asp-page="@Links.SignificantChangeDecision.WhyWithdrawn.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="change-withdrawn-reason-btn">
+                    Change
+                </a>
+            </dd>
+        </div>
+    }
 
    <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">Decision maker's role</dt>

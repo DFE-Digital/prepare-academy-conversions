@@ -29,14 +29,9 @@ public class SignificantChangeDecisionWizard
    {
       await Document.QuerySelector<IHtmlButtonElement>("#submit-btn")!.SubmitAsync();
    }
-
-   public async Task SetWithdrawnReasonsAndContinue(params (AdvisoryBoardWithdrawnReason Reason, string Details)[] reasons)
+   public async Task SetWithdrawnReasonAndContinue(string reason)
    {
-      foreach ((AdvisoryBoardWithdrawnReason reason, string details) in reasons)
-      {
-         CheckReason(reason.ToString(), details);
-      }
-
+      Document.QuerySelector<IHtmlTextAreaElement>("#withdrawnReason-txtarea").Value = reason;
       await ClickSubmitButton();
    }
 
@@ -77,12 +72,5 @@ public class SignificantChangeDecisionWizard
       Document.QuerySelector<IHtmlInputElement>("#decision-date-month")!.Value = date.Month.ToString();
       Document.QuerySelector<IHtmlInputElement>("#decision-date-year")!.Value = date.Year.ToString();
       await ClickSubmitButton();
-   }
-
-   private void CheckReason(string reasonName, string details)
-   {
-      string id = $"#{reasonName.ToLowerInvariant()}";
-      Document.QuerySelector<IHtmlInputElement>($"{id}-checkbox")!.IsChecked = true;
-      Document.QuerySelector<IHtmlTextAreaElement>($"{id}-txtarea")!.Value = details;
    }
 }
