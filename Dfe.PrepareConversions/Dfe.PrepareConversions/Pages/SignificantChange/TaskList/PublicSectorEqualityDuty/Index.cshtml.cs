@@ -9,10 +9,12 @@ namespace Dfe.PrepareConversions.Pages.SignificantChange.TaskList.PublicSectorEq
 public class IndexModel(ISignificantChangeProjectRepository repository, ErrorService errorService) : BaseSignificantChangeTaskPageModel(repository)
 {
    private readonly ISignificantChangeProjectRepository _repository = repository;
-   private readonly ErrorService _errorService = errorService;
 
    [BindProperty]
    public bool? EqualitiesImpactAssessmentCompleted { get; set; }
+
+   [BindProperty]
+   public string EqualitiesImpactAssessmentNoReason { get; set; }
 
    [BindProperty]
    public EqualitiesImpact? EqualitiesImpactIdentified { get; set; }
@@ -42,6 +44,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       LikelyDetails = Project.EqualitiesLikelyDetails;
       SomeImpactDetails = Project.EqualitiesSomeImpactDetails;
       SupportingEvidence = Project.EqualitiesImpactSupportingEvidence;
+      EqualitiesImpactAssessmentNoReason = Project.EqualitiesImpactAssessmentNoReason;
 
       return Page();
    }
@@ -59,8 +62,8 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       if (!ModelState.IsValid)
       {
-         _errorService.AddErrors(
-            [nameof(EqualitiesImpactIdentified), nameof(LikelyDetails), nameof(SomeImpactDetails)],
+         errorService.AddErrors(
+            [nameof(EqualitiesImpactIdentified), nameof(LikelyDetails), nameof(SomeImpactDetails), nameof(EqualitiesImpactAssessmentNoReason)],
             ModelState);
 
          return Page();
@@ -68,6 +71,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(
          EqualitiesImpactAssessmentCompleted,
+         EqualitiesImpactAssessmentCompleted == false ? EqualitiesImpactAssessmentNoReason : null,
          EqualitiesImpactIdentified,
          EqualitiesImpactIdentified == EqualitiesImpact.Likely ? LikelyDetails : null,
          EqualitiesImpactIdentified == EqualitiesImpact.SomeImpact ? SomeImpactDetails : null,
@@ -85,5 +89,8 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       if (EqualitiesImpactIdentified == EqualitiesImpact.SomeImpact && string.IsNullOrWhiteSpace(SomeImpactDetails))
          ModelState.AddModelError(nameof(SomeImpactDetails), "Add additional information");
+
+      if (EqualitiesImpactAssessmentCompleted == false && string.IsNullOrWhiteSpace(EqualitiesImpactAssessmentNoReason))
+         ModelState.AddModelError(nameof(EqualitiesImpactAssessmentNoReason), "Add additional information");
    }
 }

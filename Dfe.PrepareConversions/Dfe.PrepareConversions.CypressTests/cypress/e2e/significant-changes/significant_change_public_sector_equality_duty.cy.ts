@@ -62,6 +62,24 @@ describe('Significant change - public sector equality duty', () => {
         });
     });
 
+    it('Should show and require additional information when No is selected for the assessment', () => {
+        withProject((projectId) => {
+            cy.visit(`/significant-change/task-list/${projectId}/public-sector-equality-duty`);
+
+            significantChangePublicSectorEqualityDuty
+                .verifyPageLoaded()
+                .selectAssessmentCompletedNo()
+                .verifyNoReasonAdditionalInformationVisible()
+                .clearNoReasonAdditionalInformation()
+                .save();
+
+            significantChangePublicSectorEqualityDuty
+                .verifyStillOnPage(projectId)
+                .verifyErrorSummaryContains('Add additional information')
+                .verifyInlineError('EqualitiesImpactAssessmentNoReason', 'Add additional information');
+        });
+    });
+
     it('Should require additional information when Likely is selected, then save and return to the task list', () => {
         withProject((projectId) => {
             cy.visit(`/significant-change/task-list/${projectId}/public-sector-equality-duty`);
@@ -152,6 +170,7 @@ describe('Significant change - public sector equality duty', () => {
             significantChangePublicSectorEqualityDuty
                 .verifyPageLoaded()
                 .selectAssessmentCompletedNo()
+                .enterNoReasonAdditionalInformation('No impact on pupils with SEND or EAL')
                 .selectSomeImpact()
                 .enterSomeImpactAdditionalInformation(additionalInformation)
                 .enterSupportingEvidence(supportingEvidence)

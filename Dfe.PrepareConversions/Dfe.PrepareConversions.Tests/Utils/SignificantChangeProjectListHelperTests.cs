@@ -199,6 +199,7 @@ public class SignificantChangeProjectListHelperTests
          EqualitiesImpactAssessment = new SignificantChangeEqualitiesImpactAssessmentResponse
          {
             EqualitiesImpactAssessmentCompleted = true,
+            EqualitiesImpactAssessmentNoReason = "No impact identified",
             EqualitiesImpactIdentified = EqualitiesImpact.Likely,
             EqualitiesLikelyDetails = "Need more info",
             EqualitiesSomeImpactDetails = "Some impact notes",
@@ -210,6 +211,7 @@ public class SignificantChangeProjectListHelperTests
       var viewModel = SignificantChangeProjectListHelper.Build(response);
 
       Assert.True(viewModel.EqualitiesImpactAssessmentCompleted);
+      Assert.Equal("No impact identified", viewModel.EqualitiesImpactAssessmentNoReason);
       Assert.Equal(EqualitiesImpact.Likely, viewModel.EqualitiesImpactIdentified);
       Assert.Equal("Need more info", viewModel.EqualitiesLikelyDetails);
       Assert.Equal("Some impact notes", viewModel.EqualitiesSomeImpactDetails);

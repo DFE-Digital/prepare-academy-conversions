@@ -44,6 +44,22 @@ class SignificantChangePublicSectorEqualityDuty extends BasePage {
         return this;
     }
 
+    public verifyNoReasonAdditionalInformationVisible(): this {
+        cy.getByDataTest('no-reason-details').should('be.visible');
+        return this;
+    }
+
+    public clearNoReasonAdditionalInformation(): this {
+        cy.getByDataTest('no-reason-details').clear();
+        return this;
+    }
+
+    public enterNoReasonAdditionalInformation(text: string): this {
+        cy.getByDataTest('no-reason-details').clear();
+        cy.getByDataTest('no-reason-details').type(text);
+        return this;
+    }
+
     public selectUnlikely(): this {
         cy.getByDataTest('equalities-impact-unlikely').check();
         return this;

@@ -32,6 +32,7 @@ public class SignificantChangeProjectViewBaseModel
    public string ConsultationNoAdmissionVariationReason { get; set; } = string.Empty;
    public SignificantChangeTaskStatus EqualitiesImpactAssessmentStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public bool? EqualitiesImpactAssessmentCompleted { get; set; }
+   public string EqualitiesImpactAssessmentNoReason { get; set; } = string.Empty;
    public EqualitiesImpact? EqualitiesImpactIdentified { get; set; }
    public string EqualitiesLikelyDetails { get; set; } = string.Empty;
    public string EqualitiesSomeImpactDetails { get; set; } = string.Empty;

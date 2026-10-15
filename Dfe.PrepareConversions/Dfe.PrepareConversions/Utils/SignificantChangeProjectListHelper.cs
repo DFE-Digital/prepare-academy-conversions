@@ -35,6 +35,7 @@ public static class SignificantChangeProjectListHelper
          ConsultationNoAdmissionVariationReason = significantChangeProject.AdmissionVariationConsultation?.ConsultationNoAdmissionVariationReason ?? string.Empty,
          EqualitiesImpactAssessmentStatus = significantChangeProject.EqualitiesImpactAssessment?.Status ?? SignificantChangeTaskStatus.NotStarted,
          EqualitiesImpactAssessmentCompleted = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactAssessmentCompleted,
+         EqualitiesImpactAssessmentNoReason = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactAssessmentNoReason ?? string.Empty,
          EqualitiesImpactIdentified = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesImpactIdentified,
          EqualitiesLikelyDetails = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesLikelyDetails ?? string.Empty,
          EqualitiesSomeImpactDetails = significantChangeProject.EqualitiesImpactAssessment?.EqualitiesSomeImpactDetails ?? string.Empty,

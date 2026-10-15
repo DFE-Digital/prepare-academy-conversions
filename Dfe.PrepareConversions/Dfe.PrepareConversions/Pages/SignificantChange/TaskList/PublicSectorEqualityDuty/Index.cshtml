@@ -30,11 +30,24 @@
 
          <div class="govuk-radios__item">
             <input asp-for="@Model.EqualitiesImpactAssessmentCompleted" class="govuk-radios__input"
-                       id="assessment-completed-no" type="radio" value="false"
-                       data-test="assessment-completed-no" />
-                <label class="govuk-label govuk-radios__label" for="assessment-completed-no">
+                   id="assessment-completed-no" type="radio" value="false"
+                   data-test="assessment-completed-no"
+                   aria-controls="conditional-equalities-no-reason" />
+            <label class="govuk-label govuk-radios__label" for="assessment-completed-no">
                No
             </label>
+         </div>
+
+            <div class="govuk-radios__conditional" id="conditional-equalities-no-reason">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+                    <label class="govuk-label" for="EqualitiesImpactAssessmentNoReason">
+                  Use this area for additional information relating to mitigations, actions and further investigations.
+               </label>
+                    <inline-error for="@nameof(Model.EqualitiesImpactAssessmentNoReason)" />
+                    <textarea asp-for="@Model.EqualitiesImpactAssessmentNoReason" id="EqualitiesImpactAssessmentNoReason"
+                              class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.EqualitiesImpactAssessmentNoReason))"
+                              rows="5" data-test="no-reason-details"></textarea>
+            </div>
          </div>
       </div>
    </fieldset>

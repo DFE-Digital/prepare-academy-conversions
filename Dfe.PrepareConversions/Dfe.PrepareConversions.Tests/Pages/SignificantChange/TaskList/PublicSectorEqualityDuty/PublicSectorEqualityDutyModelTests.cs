@@ -49,6 +49,32 @@ public class PublicSectorEqualityDutyModelTests
    }
 
    [Fact]
+   public async Task OnPostAsync_WhenPsedNoSelectedWithoutDetails_ShouldReturnPageWithValidationError()
+   {
+      const int id = 605;
+
+      Mock<ISignificantChangeProjectRepository> repository = new();
+      repository
+         .Setup(x => x.GetProjectById(id))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, BuildProject(id)));
+
+      IndexModel sut = BuildModel(repository.Object);
+      sut.EqualitiesImpactAssessmentCompleted = false;
+      sut.EqualitiesImpactAssessmentNoReason = null;
+
+      sut.EqualitiesImpactIdentified = EqualitiesImpact.Likely;
+      sut.LikelyDetails = "test123";
+
+      IActionResult result = await sut.OnPostAsync(id);
+
+      result.Should().BeOfType<PageResult>();
+      sut.ModelState.ContainsKey(nameof(IndexModel.EqualitiesImpactAssessmentNoReason)).Should().BeTrue();
+      repository.Verify(
+         x => x.SetEqualitiesImpactAssessment(id, It.IsAny<SetSignificantChangeEqualitiesImpactAssessmentCommand>()),
+         Times.Never);
+   }
+
+   [Fact]
    public async Task OnPostAsync_WhenNoImpactsIdentified_ShouldSaveAndRedirect()
    {
       const int id = 602;
