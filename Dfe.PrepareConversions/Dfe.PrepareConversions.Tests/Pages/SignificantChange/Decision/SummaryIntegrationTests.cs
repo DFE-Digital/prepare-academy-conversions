@@ -187,6 +187,7 @@ public class SummaryIntegrationTests(IntegrationTestingWebApplicationFactory fac
             new(SignificantChangeDeclinedReason.Governance, "Weak governance")
          ],
          DecisionMadeBy = DecisionMadeBy.Minister,
+         DecisionMakerName = "Minister Smith",
          DecisionDate = DecisionDate
       };
       _factory.AddPutWithJsonRequest(

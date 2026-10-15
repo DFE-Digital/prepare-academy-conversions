@@ -33,6 +33,12 @@ public class SignificantChangeDecisionWizard
 
    public async Task SetDecisionToAndContinue(SignificantChangeDecisions decision)
    {
+      // Uncheck all radios first to ensure only the desired radio is checked
+      foreach (var radio in Document.QuerySelectorAll("#SignificantChangeDecision input[type=radio]"))
+      {
+         ((IHtmlInputElement)radio).IsChecked = false;
+      }
+
       Document.QuerySelector<IHtmlInputElement>($"#{decision.ToString().ToLowerInvariant()}-radio")!.IsChecked = true;
       await ClickSubmitButton();
    }

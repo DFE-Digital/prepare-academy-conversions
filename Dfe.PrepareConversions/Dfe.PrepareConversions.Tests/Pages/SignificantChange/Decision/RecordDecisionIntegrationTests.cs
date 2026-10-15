@@ -1,6 +1,7 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
+using Dfe.PrepareConversions.Data.Features;
 using FluentAssertions;
 using System.Linq;
 using System.Threading.Tasks;
@@ -81,5 +82,19 @@ public class RecordDecisionIntegrationTests(IntegrationTestingWebApplicationFact
 
       Document.QuerySelector("[data-cy='select-backlink']")?.GetAttribute("href")
          .Should().Contain($"/significant-change/task-list/{ProjectId}");
+   }
+
+   [Fact]
+   public async Task Should_allow_approved_decision_in_current_flow_when_recorded_decision_is_not_approved()
+   {
+      AddProject();
+      _factory.AddGetWithJsonResponse(
+         string.Format(PathFor.GetSignificantChangeDecision, ProjectId),
+         new SignificantChangeDecision { Decision = SignificantChangeDecisions.Deferred });
+      await Wizard.StartFor(ProjectId);
+
+      await Wizard.SetDecisionToAndContinue(SignificantChangeDecisions.Approved);
+
+      Document.Url.Should().Be(BuildRequestAddress(PathTo("any-conditions")));
    }
 }
