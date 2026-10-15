@@ -26,4 +26,5 @@ public class SignificantChangeProjectResponse
    public SignificantChangeProjectDatesResponse ProjectDates { get; set; } = new();
    public SignificantChangeFundingResponse Funding { get; set; } = new();
    public SignificantChangePlanningPermissionResponse PlanningPermission { get; set; } = new();
+   public SignificantChangeRecommendationResponse Recommendation { get; set; } = new();
 }

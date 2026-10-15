@@ -1,0 +1,45 @@
+@page "/significant-change/task-list/{id:int}/significant-change-recommendation"
+@using Dfe.PrepareConversions.Data.Models.SignificantChange
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.Recommendation.IndexModel
+@{
+   Layout = "_SignificantChangeTaskLayout";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@Model.Project.Id"
+      class="govuk-back-link">Back</a>
+}
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+         Recommendation
+      </legend>
+      <inline-error for="@nameof(Model.Recommendation)" />
+
+      <div class="govuk-form-group govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios" id="SignificantChangeRecommendation">
+         @foreach (SignificantChangeRecommendation recommendation in Model.RecommendationOptions)
+         {
+            var radioId = $"{recommendation.ToString().ToLower()}-radio";
+
+            <div class="govuk-radios__item">
+               <input class="govuk-radios__input" type="radio" asp-for="@Model.Recommendation"
+                        title="@recommendation.ToString().ToLower()" value="@recommendation" id="@radioId" data-test="@radioId"/>
+               <label class="govuk-label govuk-radios__label" for="@radioId">
+                  @recommendation
+               </label>
+            </div>
+         }
+      </div>
+            
+      <div class="govuk-form-group" id="more-information">
+            <label class="govuk-label govuk-label--m" for="MoreInformation">
+               Enter further information if required
+            </label>
+
+            <textarea class="govuk-textarea govuk-!-width-full" asp-for="@Model.MoreInformation" rows="5"
+               data-test="recommendation-more-information" id='MoreInformation'></textarea>
+      </div>
+   </fieldset>
+</div>
