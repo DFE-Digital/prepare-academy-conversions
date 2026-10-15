@@ -125,6 +125,10 @@ public static class Links
       public static readonly LinkItem DecisionDate = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/DecisionDate");
       public static readonly LinkItem Summary = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/Summary");
    }
+   public static class SignificantChangeApplication
+   {
+      public static readonly LinkItem Index = AddLinkItem(page: "/SignificantChange/Application/Index");
+   }
    public static class FormAMat
    {
       public static readonly LinkItem Index = AddLinkItem(backText: "Back", page: "/FormAMat/Index");
