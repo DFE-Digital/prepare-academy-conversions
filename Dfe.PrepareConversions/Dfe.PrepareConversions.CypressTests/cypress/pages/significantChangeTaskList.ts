@@ -82,6 +82,23 @@ class SignificantChangeTaskList extends BasePage {
         cy.contains('a', 'Funding').click();
         return this;
     }
+
+    public verifyAdmissionsVariationRecommendationTaskVisible(): this {
+        cy.contains('h3.app-task-list__section', 'Recommendation on how to proceed')
+            .next('.app-task-list')
+            .contains('a', 'Recommendation')
+            .should('be.visible');
+        cy.getById('task-status-admissions-variation-recommendation').should('be.visible');
+        return this;
+    }
+
+    public openAdmissionsVariationRecommendationTask(): this {
+        cy.contains('h3.app-task-list__section', 'Recommendation on how to proceed')
+            .next('.app-task-list')
+            .contains('a', 'Recommendation')
+            .click();
+        return this;
+    }
 }
 
 const significantChangeTaskList = new SignificantChangeTaskList();

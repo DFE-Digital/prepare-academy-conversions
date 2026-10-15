@@ -959,4 +959,50 @@ public class SignificantChangeProjectRepositoryTests
 
       exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetAdmissionsVariationRecommendation_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 80;
+      string expectedPath = string.Format(PathFor.AdmissionsVariationRecommendation, id);
+      HttpClient httpClient = new();
+      SetAdmissionsVariationRecommendationCommand command = new(AdmissionsVariationRecommendationAnswer.Approve, "Further detail");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetAdmissionsVariationRecommendationCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetAdmissionsVariationRecommendation(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetAdmissionsVariationRecommendationCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetAdmissionsVariationRecommendation_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 80;
+      string expectedPath = string.Format(PathFor.AdmissionsVariationRecommendation, id);
+      SetAdmissionsVariationRecommendationCommand command = new(AdmissionsVariationRecommendationAnswer.Approve, "Further detail");
+
+      httpClientService
+         .Setup(x => x.Put<SetAdmissionsVariationRecommendationCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetAdmissionsVariationRecommendation(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
 }

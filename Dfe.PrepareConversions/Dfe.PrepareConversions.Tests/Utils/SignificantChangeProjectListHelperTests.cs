@@ -363,6 +363,61 @@ public class SignificantChangeProjectListHelperTests
    }
 
    [Fact]
+   public void Build_Maps_nested_admissions_variation_recommendation_values()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
+         Status = "pre decision",
+         AdmissionsVariationRecommendation = new SignificantChangeAdmissionsVariationRecommendationResponse
+         {
+            AdmissionsVariationRecommendationAnswer = AdmissionsVariationRecommendationAnswer.NotApplicable,
+            FurtherInformation = "No admission variation required",
+            Status = SignificantChangeTaskStatus.Completed
+         },
+         LocalAuthorityName = "Test local authority"
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.Equal(AdmissionsVariationRecommendationAnswer.NotApplicable, viewModel.AdmissionsVariationRecommendationAnswer);
+      Assert.Equal("No admission variation required", viewModel.AdmissionsVariationRecommendationFurtherInformation);
+      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.AdmissionsVariationRecommendationStatus);
+   }
+
+   [Fact]
+   public void Build_Defaults_admissions_variation_recommendation_when_section_is_missing()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
+         Status = "pre decision",
+         AdmissionsVariationRecommendation = null,
+         LocalAuthorityName = "Test local authority"
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.Null(viewModel.AdmissionsVariationRecommendationAnswer);
+      Assert.Equal(string.Empty, viewModel.AdmissionsVariationRecommendationFurtherInformation);
+      Assert.Equal(SignificantChangeTaskStatus.NotStarted, viewModel.AdmissionsVariationRecommendationStatus);
+   }
+
+   [Fact]
    public void Build_Defaults_funding_when_section_is_missing()
    {
       SignificantChangeProjectResponse response = new()
