@@ -1,5 +1,4 @@
 
-using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Models;
@@ -49,15 +48,9 @@ public class WhoDecidedModel(ISignificantChangeProjectRepository repository,
       SignificantChangeDecision decision = GetDecisionFromSession(id);
       decision.DecisionMadeBy = DecisionMadeBy;
 
-      // The API only requires a decision maker's name when someone actually made the decision.
-      bool skipName = DecisionMadeBy == Data.Models.AdvisoryBoardDecision.DecisionMadeBy.None;
-      if (skipName) decision.DecisionMakerName = null;
-
       SetDecisionInSession(id, decision);
 
-      return skipName
-         ? RedirectToPage(Links.SignificantChangeDecision.DecisionDate.Page, LinkParameters)
-         : RedirectToPage(Links.SignificantChangeDecision.DecisionMaker.Page, LinkParameters);
+      return  RedirectToPage(Links.SignificantChangeDecision.DecisionMaker.Page, LinkParameters);
    }
 
    private static LinkItem GetPageForBackLink(SignificantChangeDecision decision)
