@@ -252,6 +252,38 @@ public class SignificantChangeProjectListHelperTests
    }
   
    [Fact]
+   public void Build_Maps_nested_hqtf_consideration_values()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         ApplicationId = "12345",
+         ApplicationReference = "12345",
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         LocalAuthorityName = "Test local authority",
+         Status = "pre decision",
+         HQTFConsideration = new SignificantChangeHqtfConsiderationResponse
+         {
+            HqtfConsiderationAnswer = HqtfConsiderationAnswer.Yes,
+            AdditionalInformation = "Workforce capacity risk identified",
+            SupportingEvidence = "Trust board minutes",
+            Status = SignificantChangeTaskStatus.Completed
+         }
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.Equal(HqtfConsiderationAnswer.Yes, viewModel.HQTFConsiderationAnswer);
+      Assert.Equal("Workforce capacity risk identified", viewModel.HQTFConsiderationAdditionalInformation);
+      Assert.Equal("Trust board minutes", viewModel.HQTFConsiderationSupportingEvidence);
+      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.HQTFConsiderationStatus);
+   }
+
+   [Fact]
    public void Build_Maps_nested_admission_variation_values()
    {
       SignificantChangeProjectResponse response = new()
