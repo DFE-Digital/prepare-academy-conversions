@@ -318,4 +318,20 @@ public class SignificantChangeProjectRepository(
          throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
       }
    }
+
+   public async Task SetHQTFConsideration(int id, SetSignificantChangeHqtfConsiderationCommand command)
+   {
+      HttpClient httpClient = httpClientFactory.CreateAcademisationClient();
+      string path = string.Format(PathFor.SetSignificantChangeHqtfConsideration, id);
+
+      var result = await httpClientService.Put<SetSignificantChangeHqtfConsiderationCommand, object>(
+         httpClient,
+         path,
+         command);
+
+      if (!result.Success)
+      {
+         throw new ApiResponseException($"Request to Api failed | StatusCode - {result.StatusCode}");
+      }
+   }
 }

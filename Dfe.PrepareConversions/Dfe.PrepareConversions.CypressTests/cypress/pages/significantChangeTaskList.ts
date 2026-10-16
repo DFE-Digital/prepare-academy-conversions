@@ -82,6 +82,20 @@ class SignificantChangeTaskList extends BasePage {
         cy.contains('a', 'Funding').click();
         return this;
     }
+
+    public verifyHqtfConsiderationTaskVisible(): this {
+        cy.contains('a', 'High Quality Trust Framework (HQTF) consideration').should('be.visible');
+        cy.getById('task-status-hqtf-consideration').should('be.visible');
+        return this;
+    }
+
+    public openHqtfConsiderationTask(): this {
+        cy.contains('h3.app-task-list__section', 'High Quality Trust Framework')
+            .next('.app-task-list')
+            .contains('a', 'High Quality Trust Framework (HQTF) consideration')
+            .click();
+        return this;
+    }
 }
 
 const significantChangeTaskList = new SignificantChangeTaskList();
