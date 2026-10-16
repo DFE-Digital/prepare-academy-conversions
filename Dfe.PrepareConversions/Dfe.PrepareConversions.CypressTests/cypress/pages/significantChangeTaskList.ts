@@ -93,7 +93,7 @@ class SignificantChangeTaskList extends BasePage {
         cy.contains('a', 'Public Sector Equality Duty').click();
         return this;
     }
-    
+
     public verifyHqtfConsiderationTaskVisible(): this {
         cy.contains('a', 'High Quality Trust Framework (HQTF) consideration').should('be.visible');
         cy.getById('task-status-hqtf-consideration').should('be.visible');
