@@ -27,4 +27,5 @@ public class SignificantChangeProjectResponse
    public SignificantChangeLandTransactionResponse LandTransaction { get; set; } = new();
    public SignificantChangeFundingResponse Funding { get; set; } = new();
    public SignificantChangePlanningPermissionResponse PlanningPermission { get; set; } = new();
+   public SignificantChangeHqtfConsiderationResponse HQTFConsideration { get; set; } = new();
 }

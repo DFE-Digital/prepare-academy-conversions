@@ -112,6 +112,7 @@ public static class Links
       public static readonly LinkItem LandTransactionConsent = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/LandTransaction/Index");
       public static readonly LinkItem Funding = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Funding/Index");
       public static readonly LinkItem PlanningPermission = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/PlanningPermission/Index");
+      public static readonly LinkItem HqtfConsideration = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/HqtfConsideration/Index");
    }
 
     public static class SignificantChangeDecision
@@ -125,6 +126,10 @@ public static class Links
       public static readonly LinkItem DecisionMaker = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/DecisionMaker");
       public static readonly LinkItem DecisionDate = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/DecisionDate");
       public static readonly LinkItem Summary = AddLinkItem(backText: "Back", page: "/SignificantChange/Decision/Summary");
+   }
+   public static class SignificantChangeApplication
+   {
+      public static readonly LinkItem Index = AddLinkItem(page: "/SignificantChange/Application/Index");
    }
    public static class FormAMat
    {

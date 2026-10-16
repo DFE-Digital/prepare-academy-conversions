@@ -4,7 +4,7 @@
 @{
     var id = ViewContext.RouteData.Values["id"];
 }
-<nav class="moj-sub-navigation" aria-label="Sub navigation">
+<nav class="moj-sub-navigation" aria-label="Sub navigation" data-test="significant-change-submenu">
     <ul class="moj-sub-navigation__list govuk-!-margin-top-6">
         <li class="moj-sub-navigation__item">
             <sub-menu-link class="moj-sub-navigation__link" asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@id">
@@ -14,6 +14,11 @@
         <li class="moj-sub-navigation__item">
             <sub-menu-link class="moj-sub-navigation__link" data-cy="significant_change_record_decision_menu" asp-page="@Links.SignificantChangeDecision.RecordDecision.Page" asp-route-id="@id">
                 Record a decision
+            </sub-menu-link>
+        </li>
+        <li class="moj-sub-navigation__item">
+            <sub-menu-link class="moj-sub-navigation__link" asp-page="@Links.SignificantChangeApplication.Index.Page" asp-route-id="@id">
+                Application form
             </sub-menu-link>
         </li>
     </ul>

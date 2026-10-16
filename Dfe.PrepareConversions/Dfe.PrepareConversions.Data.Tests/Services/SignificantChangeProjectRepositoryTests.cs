@@ -435,7 +435,7 @@ public class SignificantChangeProjectRepositoryTests
       const int id = 77;
       string expectedPath = string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, id);
       HttpClient httpClient = new();
-      SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(true, EqualitiesImpact.ImpactsIdentified, "Affected group and mitigation");
+      SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(true, null, EqualitiesImpact.Likely, "Affected group and mitigation", null, "sharepoint.edu.gov.uk/evidence");
 
       httpClientFactory
          .Setup(x => x.CreateAcademisationClient())
@@ -460,7 +460,7 @@ public class SignificantChangeProjectRepositoryTests
    {
       const int id = 77;
       string expectedPath = string.Format(PathFor.SetSignificantChangeEqualitiesImpactAssessment, id);
-      SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(true, EqualitiesImpact.None, null);
+      SetSignificantChangeEqualitiesImpactAssessmentCommand command = new(true, null, EqualitiesImpact.Unlikely, null, null, "sharepoint.edu.gov.uk/evidence");
 
       httpClientService
          .Setup(x => x.Put<SetSignificantChangeEqualitiesImpactAssessmentCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
@@ -1013,6 +1013,52 @@ public class SignificantChangeProjectRepositoryTests
          .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
 
       ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetFunding(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetHQTFConsideration_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 80;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeHqtfConsideration, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeHqtfConsiderationCommand command = new(HqtfConsiderationAnswer.Yes, "Workforce risk", "Board minutes");
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeHqtfConsiderationCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetHQTFConsideration(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeHqtfConsiderationCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetHQTFConsideration_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 80;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeHqtfConsideration, id);
+      SetSignificantChangeHqtfConsiderationCommand command = new(HqtfConsiderationAnswer.No, null, "Evidence");
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeHqtfConsiderationCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(() => sut.SetHQTFConsideration(id, command));
 
       exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }
