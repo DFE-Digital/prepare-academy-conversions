@@ -83,6 +83,14 @@ class SignificantChangeTaskList extends BasePage {
         return this;
     }
 
+    public verifyPublicSectorEqualityDutyTaskVisible(): this {
+        cy.contains('a', 'Public Sector Equality Duty').should('be.visible');
+        cy.getById('task-status-public-sector-equality-duty').should('be.visible');
+        return this;
+    }
+
+    public openPublicSectorEqualityDutyTask(): this {
+        cy.contains('a', 'Public Sector Equality Duty').click();
     public verifyHqtfConsiderationTaskVisible(): this {
         cy.contains('a', 'High Quality Trust Framework (HQTF) consideration').should('be.visible');
         cy.getById('task-status-hqtf-consideration').should('be.visible');
