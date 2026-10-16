@@ -148,7 +148,10 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       var localAuthorityObjectionsStatusTag = Document.QuerySelector("#task-status-local-authority-objections");
       localAuthorityObjectionsStatusTag.Should().NotBeNull();
       localAuthorityObjectionsStatusTag.TextContent.Should().Contain("Not started");
+<<<<<<< HEAD
       
+=======
+>>>>>>> a564c25cac1425cea5d29235c831fa6e8212d2da
       var hqtfConsiderationLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("High Quality Trust Framework (HQTF) consideration"));
 
