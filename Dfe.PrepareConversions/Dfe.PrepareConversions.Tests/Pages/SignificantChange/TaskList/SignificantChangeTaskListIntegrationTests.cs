@@ -110,6 +110,7 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
 
       publicSectorEqualityDutyLink.Should().NotBeNull();
       publicSectorEqualityDutyLink!.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/public-sector-equality-duty");
+      
       var confirmProjectDatesLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Confirm project dates"));
 
