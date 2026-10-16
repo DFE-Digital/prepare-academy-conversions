@@ -28,7 +28,7 @@ public class FundingModelTests
       SignificantChangeProjectResponse project = BuildProject(id);
       project.Funding.FundingAnswer = FundingAnswer.No;
       project.Funding.AdditionalInformation = "Funding gap identified";
-      project.Funding.SupportingEvidence = "Board minutes link";
+      project.Funding.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/funding/board-minutes";
 
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, project);
 
@@ -39,7 +39,7 @@ public class FundingModelTests
       result.Should().BeOfType<PageResult>();
       sut.FundingAnswer.Should().Be(FundingAnswer.No);
       sut.AdditionalInformation.Should().Be("Funding gap identified");
-      sut.SupportingEvidence.Should().Be("Board minutes link");
+      sut.SupportingEvidence.Should().Be("https://educationgovuk.sharepoint.com/sites/funding/board-minutes");
       repository.Verify(x => x.GetProjectById(id), Times.Once);
    }
 
@@ -58,7 +58,7 @@ public class FundingModelTests
       IndexModel sut = BuildModel(repository.Object);
       sut.FundingAnswer = answer;
       sut.AdditionalInformation = "This should be cleared";
-      sut.SupportingEvidence = "Supporting evidence";
+      sut.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/funding/evidence";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -71,7 +71,7 @@ public class FundingModelTests
          It.Is<SetSignificantChangeFundingCommand>(command =>
             command.FundingAnswer == answer
             && command.AdditionalInformation == null
-            && command.SupportingEvidence == "Supporting evidence")), Times.Once);
+            && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/funding/evidence")), Times.Once);
    }
 
    [Fact]
@@ -87,7 +87,7 @@ public class FundingModelTests
       IndexModel sut = BuildModel(repository.Object);
       sut.FundingAnswer = FundingAnswer.No;
       sut.AdditionalInformation = "Funding gap identified";
-      sut.SupportingEvidence = "Board minutes link";
+      sut.SupportingEvidence = "https://educationgovuk.sharepoint.com/sites/funding/board-minutes";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -98,7 +98,7 @@ public class FundingModelTests
          It.Is<SetSignificantChangeFundingCommand>(command =>
             command.FundingAnswer == FundingAnswer.No
             && command.AdditionalInformation == "Funding gap identified"
-            && command.SupportingEvidence == "Board minutes link")), Times.Once);
+            && command.SupportingEvidence == "https://educationgovuk.sharepoint.com/sites/funding/board-minutes")), Times.Once);
    }
 
    [Fact]
@@ -133,6 +133,22 @@ public class FundingModelTests
 
       result.Should().BeOfType<PageResult>();
       sut.ModelState.ContainsKey(nameof(IndexModel.FundingAnswer)).Should().BeTrue();
+      repository.Verify(x => x.SetFunding(id, It.IsAny<SetSignificantChangeFundingCommand>()), Times.Never);
+   }
+
+   [Fact]
+   public async Task OnPostAsync_WhenSupportingEvidenceIsNotASharePointLink_ShouldReturnPageWithValidationError()
+   {
+      const int id = 617;
+      Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
+      IndexModel sut = BuildModel(repository.Object);
+      sut.FundingAnswer = FundingAnswer.Yes;
+      sut.SupportingEvidence = "http://educationgovuk.sharepoint.com/sites/team/evidence";
+
+      IActionResult result = await sut.OnPostAsync(id);
+
+      result.Should().BeOfType<PageResult>();
+      sut.ModelState.ContainsKey(nameof(IndexModel.SupportingEvidence)).Should().BeTrue();
       repository.Verify(x => x.SetFunding(id, It.IsAny<SetSignificantChangeFundingCommand>()), Times.Never);
    }
 

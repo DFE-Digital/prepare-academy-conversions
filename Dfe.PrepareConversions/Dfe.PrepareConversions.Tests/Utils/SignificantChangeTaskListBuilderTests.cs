@@ -19,7 +19,7 @@ public class SignificantChangeTaskListBuilderTests
    [InlineData(3, "consultation-details", "Consultation details", new[] { "stakeholder-consultation", "consultation-duration", "admission-variation-consultation", "stakeholder-objections", "religious-body-consultation" })]
    [InlineData(4, "academy-performance", "Academy performance", new string[0])]
    [InlineData(5, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]
-   [InlineData(6, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "planning-permission" })]
+   [InlineData(6, "land-transaction-application-and-planning-permission", "Land transaction application and planning permission", new[] { "planning-permission", "land-transaction-application" })]
    [InlineData(7, "financial-details", "Financial details", new [] { "funding" })]
    [InlineData(8, "high-quality-trust-framework", "High Quality Trust Framework", new[] { "hqtf-consideration" })]
    [InlineData(9, "recommendation-on-how-to-proceed", "Recommendation on how to proceed", new string[0])]
@@ -176,6 +176,23 @@ public class SignificantChangeTaskListBuilderTests
       const string taskKey = "planning-permission";
 
       SignificantChangeProjectViewBaseModel project = BuildProject(p => p.PlanningPermissionTaskStatus = TaskStatus);
+
+      SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
+
+      var section = Assert.Single(result.Sections, s => s.Key == sectionKey);
+      var task = Assert.Single(section.Tasks, t => t.Key == taskKey);
+
+      task.Status.Status.Should().Be(expectedTaskStatus);
+   }
+
+   [Theory]
+   [MemberData(nameof(StatusCases))]
+   public void Build_maps_land_transaction_status_to_task_status(SignificantChangeTaskStatus TaskStatus, string expectedTaskStatus)
+   {
+      const string sectionKey = "land-transaction-application-and-planning-permission";
+      const string taskKey = "land-transaction-application";
+   
+      SignificantChangeProjectViewBaseModel project = BuildProject(p => p.LandTransactionTaskStatus = TaskStatus);
 
       SignificantChangeTaskListViewModel result = SignificantChangeTaskListBuilder.Build(project);
 

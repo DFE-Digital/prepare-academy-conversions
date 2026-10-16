@@ -20,12 +20,12 @@
         <p class="govuk-body">These tasks help you gather and record the information needed for this project.</p>
         <p class="govuk-body">You can complete them in any order.</p>
 
-        @foreach (var taskSection in Model.TaskList.Sections)
+        @foreach (SignificantChangeTaskSectionViewModel taskSection in Model.TaskList.Sections)
         {
             <h3 class="app-task-list__section govuk-!-margin-top-8">@taskSection.Title</h3>
             <div class="app-task-list">
                 <ul class="app-task-list__items govuk-!-padding-left-0">
-                    @foreach (var taskItem in taskSection.Tasks)
+                    @foreach (SignificantChangeTaskItemViewModel taskItem in taskSection.Tasks)
                     {
                         <li class="app-task-list__item">
                             <span class="app-task-list__task-name">

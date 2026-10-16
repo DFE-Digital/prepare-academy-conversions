@@ -1,0 +1,38 @@
+@using Microsoft.AspNetCore.Mvc.Rendering
+@model SupportingEvidenceInputViewModel
+@{
+   bool showError = !string.IsNullOrWhiteSpace(Model.ErrorMessage);
+   TagBuilder input = new("input");
+   input.AddCssClass("govuk-input");
+   input.Attributes["id"] = Model.Id;
+   input.Attributes["name"] = Model.Name;
+   input.Attributes["value"] = Model.Value ?? string.Empty;
+   input.Attributes["type"] = "text";
+   input.Attributes["placeholder"] = "e.g. https://educationgovuk.sharepoint.com/your-evidence-location";
+
+   if (showError)
+   {
+      input.AddCssClass("govuk-input--error");
+      input.Attributes["aria-describedby"] = $"{Model.Id}-error";
+   }
+
+   if (!string.IsNullOrWhiteSpace(Model.DataTest))
+   {
+      input.Attributes["data-test"] = Model.DataTest;
+   }
+
+   input.TagRenderMode = TagRenderMode.SelfClosing;
+}
+
+<div class="govuk-form-group @(showError ? "govuk-form-group--error" : "")">
+   <label class="govuk-label" for="@Model.Id">
+      Supporting evidence
+   </label>
+   @if (showError)
+   {
+      <span id="@Model.Id-error" class="govuk-error-message">
+         <span class="govuk-visually-hidden">Error:</span> @Model.ErrorMessage
+      </span>
+   }
+   @input
+</div>

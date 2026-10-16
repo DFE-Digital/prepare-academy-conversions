@@ -131,7 +131,13 @@ public static class SignificantChangeTaskListBuilder
                "Planning Permission",
                1,
                Links.SignificantChange.PlanningPermission,
-               project => GetTaskStatus(project.PlanningPermissionTaskStatus))
+               project => GetTaskStatus(project.PlanningPermissionTaskStatus)),
+            new SignificantChangeTaskDefinition(
+               "land-transaction-application",
+               "Land Transaction Application",
+               2,
+               Links.SignificantChange.LandTransactionConsent,
+               project => GetTaskStatus(project.LandTransactionTaskStatus))
          ]
       );
    }
