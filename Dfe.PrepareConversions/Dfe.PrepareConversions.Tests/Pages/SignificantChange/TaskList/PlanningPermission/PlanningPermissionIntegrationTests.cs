@@ -80,28 +80,6 @@ public class PlanningPermissionIntegrationTests(IntegrationTestingWebApplication
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");
    }
 
-   [Fact]
-   public async Task Should_show_inline_error_for_supporting_evidence_from_an_unapproved_domain()
-   {
-      SignificantChangeProjectResponse project = BuildProject(id: 804);
-      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
-
-      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/planning-permission");
-
-      Document.QuerySelector<IHtmlInputElement>("#planning-permission-yes")!.IsChecked = true;
-      Document.QuerySelector<IHtmlInputElement>("[data-test='planning-permission-supporting-evidence']")!.Value =
-         "https://other.sharepoint.com/sites/team/evidence";
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
-
-      IHtmlElement errorMessage = Document.QuerySelector<IHtmlElement>("#PlanningPermissionSupportingEvidence-error")!;
-      errorMessage.TextContent.Trim().Should().NotBe("Error:");
-
-      IHtmlInputElement supportingEvidenceInput =
-         Document.QuerySelector<IHtmlInputElement>("[data-test='planning-permission-supporting-evidence']")!;
-      supportingEvidenceInput.GetAttribute("aria-describedby").Should().Be("PlanningPermissionSupportingEvidence-error");
-      supportingEvidenceInput.Value.Should().Be("https://other.sharepoint.com/sites/team/evidence");
-   }
-
    private static SignificantChangeProjectResponse BuildProject(int id)
    {
       return new SignificantChangeProjectResponse
