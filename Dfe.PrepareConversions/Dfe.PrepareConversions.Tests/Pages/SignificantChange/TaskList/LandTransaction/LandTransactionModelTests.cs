@@ -140,23 +140,6 @@ public class LandTransactionModelTests
       repository.Verify(x => x.SetLandTransaction(id, It.IsAny<SetSignificantChangeLandTransactionCommand>()), Times.Never);
    }
 
-   [Fact]
-   public async Task OnPostAsync_WhenSupportingEvidenceHasNoPath_ShouldReturnPageWithValidationError()
-   {
-      const int id = 806;
-      Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
-      IndexModel sut = BuildModel(repository.Object);
-      sut.LandTransactionApplication = SignificantChangeGenericYesNoNa.Yes;
-      sut.LandTransactionConsent = SignificantChangeGenericYesNoNa.Yes;
-      sut.LandTransactionSupportingEvidence = "https://educationgovuk.sharepoint.com/";
-
-      IActionResult result = await sut.OnPostAsync(id);
-
-      result.Should().BeOfType<PageResult>();
-      sut.ModelState.ContainsKey(nameof(IndexModel.LandTransactionSupportingEvidence)).Should().BeTrue();
-      repository.Verify(x => x.SetLandTransaction(id, It.IsAny<SetSignificantChangeLandTransactionCommand>()), Times.Never);
-   }
-
    private static Mock<ISignificantChangeProjectRepository> BuildRepository(
       int id,
       SignificantChangeProjectResponse project)

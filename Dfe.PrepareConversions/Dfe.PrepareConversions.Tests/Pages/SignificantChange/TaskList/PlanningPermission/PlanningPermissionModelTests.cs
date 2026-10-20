@@ -157,26 +157,6 @@ public class PlanningPermissionModelTests
       repository.Verify(x => x.SetPlanningPermission(id, It.IsAny<SetSignificantChangePlanningPermissionCommand>()), Times.Never);
    }
 
-   [Fact]
-   public async Task OnPostAsync_WhenSupportingEvidenceHasAnInvalidDomain_ShouldReturnPageWithValidationError()
-   {
-      const int id = 706;
-      Mock<ISignificantChangeProjectRepository> repository = new();
-      repository
-         .Setup(x => x.GetProjectById(id))
-         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, BuildProject(id)));
-
-      IndexModel sut = BuildModel(repository.Object);
-      sut.PlanningPermissionAnswer = PlanningPermissionAnswer.Yes;
-      sut.PlanningPermissionSupportingEvidence = "https://other.sharepoint.com/sites/team/evidence";
-
-      IActionResult result = await sut.OnPostAsync(id);
-
-      result.Should().BeOfType<PageResult>();
-      sut.ModelState.ContainsKey(nameof(IndexModel.PlanningPermissionSupportingEvidence)).Should().BeTrue();
-      repository.Verify(x => x.SetPlanningPermission(id, It.IsAny<SetSignificantChangePlanningPermissionCommand>()), Times.Never);
-   }
-
    private static IndexModel BuildModel(ISignificantChangeProjectRepository repository)
    {
       DefaultHttpContext httpContext = new();

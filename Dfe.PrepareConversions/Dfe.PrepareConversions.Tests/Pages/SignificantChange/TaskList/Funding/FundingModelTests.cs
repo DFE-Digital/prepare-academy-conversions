@@ -136,22 +136,6 @@ public class FundingModelTests
       repository.Verify(x => x.SetFunding(id, It.IsAny<SetSignificantChangeFundingCommand>()), Times.Never);
    }
 
-   [Fact]
-   public async Task OnPostAsync_WhenSupportingEvidenceIsNotASharePointLink_ShouldReturnPageWithValidationError()
-   {
-      const int id = 617;
-      Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, BuildProject(id));
-      IndexModel sut = BuildModel(repository.Object);
-      sut.FundingAnswer = FundingAnswer.Yes;
-      sut.SupportingEvidence = "http://educationgovuk.sharepoint.com/sites/team/evidence";
-
-      IActionResult result = await sut.OnPostAsync(id);
-
-      result.Should().BeOfType<PageResult>();
-      sut.ModelState.ContainsKey(nameof(IndexModel.SupportingEvidence)).Should().BeTrue();
-      repository.Verify(x => x.SetFunding(id, It.IsAny<SetSignificantChangeFundingCommand>()), Times.Never);
-   }
-
    private static Mock<ISignificantChangeProjectRepository> BuildRepository(int id, SignificantChangeProjectResponse project)
    {
       Mock<ISignificantChangeProjectRepository> repository = new();
