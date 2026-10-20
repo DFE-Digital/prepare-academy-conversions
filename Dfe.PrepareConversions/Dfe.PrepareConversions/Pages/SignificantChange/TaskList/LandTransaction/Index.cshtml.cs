@@ -98,8 +98,5 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       if (LandTransactionConsent == SignificantChangeGenericYesNoNa.No && string.IsNullOrWhiteSpace(LandTransactionConsentAdditionalInfo))
          ModelState.AddModelError(nameof(LandTransactionConsentAdditionalInfo), "Enter the additional information provided");
-
-      if (!LandTransactionSupportingEvidence.IsEmpty() && !LandTransactionSupportingEvidence.StartsWith("https://", System.StringComparison.OrdinalIgnoreCase))
-         ModelState.AddModelError(nameof(LandTransactionSupportingEvidence), "Supporting Evidence must be a link");
    }
 }

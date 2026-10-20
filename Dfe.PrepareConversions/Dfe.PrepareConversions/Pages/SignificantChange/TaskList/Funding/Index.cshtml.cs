@@ -77,8 +77,5 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       if (FundingAnswer == FundingAnswerType.No && string.IsNullOrWhiteSpace(AdditionalInformation))
          ModelState.AddModelError(nameof(AdditionalInformation), "Add additional information");
-      
-       if (!SupportingEvidence.IsEmpty() && !SupportingEvidence.StartsWith("https://", System.StringComparison.OrdinalIgnoreCase))
-         ModelState.AddModelError(nameof(SupportingEvidence), "Supporting Evidence must be a link");
    }
 }

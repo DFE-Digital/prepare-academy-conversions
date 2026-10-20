@@ -71,8 +71,5 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
    {
       if (!PlanningPermissionAnswer.HasValue)
          ModelState.AddModelError(nameof(PlanningPermissionAnswer), "Select an option");
-
-      if (!PlanningPermissionSupportingEvidence.IsEmpty() && !PlanningPermissionSupportingEvidence.StartsWith("https://", System.StringComparison.OrdinalIgnoreCase))
-         ModelState.AddModelError(nameof(PlanningPermissionSupportingEvidence), "Supporting Evidence must be a link");
    }
 }
