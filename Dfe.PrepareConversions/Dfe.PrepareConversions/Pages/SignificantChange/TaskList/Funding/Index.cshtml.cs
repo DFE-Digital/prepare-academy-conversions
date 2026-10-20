@@ -1,3 +1,4 @@
+using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Services;
@@ -76,8 +77,8 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
 
       if (FundingAnswer == FundingAnswerType.No && string.IsNullOrWhiteSpace(AdditionalInformation))
          ModelState.AddModelError(nameof(AdditionalInformation), "Add additional information");
-
-      if (!SharePointLinkValidator.IsValid(SupportingEvidence))
-         ModelState.AddModelError(nameof(SupportingEvidence), SharePointLinkValidator.ErrorMessage);
+      
+       if (!SupportingEvidence.IsEmpty() && !SupportingEvidence.StartsWith("https://", System.StringComparison.OrdinalIgnoreCase))
+         ModelState.AddModelError(nameof(SupportingEvidence), "Supporting Evidence must be a link");
    }
 }

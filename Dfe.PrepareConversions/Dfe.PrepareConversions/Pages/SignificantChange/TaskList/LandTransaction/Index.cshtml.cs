@@ -4,6 +4,7 @@ using Dfe.PrepareConversions.Services;
 using Dfe.PrepareConversions.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Dfe.Academisation.ExtensionMethods;
 
 namespace Dfe.PrepareConversions.Pages.SignificantChange.TaskList.LandTransaction;
 
@@ -98,7 +99,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       if (LandTransactionConsent == SignificantChangeGenericYesNoNa.No && string.IsNullOrWhiteSpace(LandTransactionConsentAdditionalInfo))
          ModelState.AddModelError(nameof(LandTransactionConsentAdditionalInfo), "Enter the additional information provided");
 
-      if (!SharePointLinkValidator.IsValid(LandTransactionSupportingEvidence))
-         ModelState.AddModelError(nameof(LandTransactionSupportingEvidence), SharePointLinkValidator.ErrorMessage);
+      if (!LandTransactionSupportingEvidence.IsEmpty() && !LandTransactionSupportingEvidence.StartsWith("https://", System.StringComparison.OrdinalIgnoreCase))
+         ModelState.AddModelError(nameof(LandTransactionSupportingEvidence), "Supporting Evidence must be a link");
    }
 }

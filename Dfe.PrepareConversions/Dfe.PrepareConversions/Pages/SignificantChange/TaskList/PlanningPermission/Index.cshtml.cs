@@ -1,3 +1,4 @@
+using Dfe.Academisation.ExtensionMethods;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Data.Services.Interfaces;
 using Dfe.PrepareConversions.Services;
@@ -71,7 +72,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       if (!PlanningPermissionAnswer.HasValue)
          ModelState.AddModelError(nameof(PlanningPermissionAnswer), "Select an option");
 
-      if (!SharePointLinkValidator.IsValid(PlanningPermissionSupportingEvidence))
-         ModelState.AddModelError(nameof(PlanningPermissionSupportingEvidence), SharePointLinkValidator.ErrorMessage);
+      if (!PlanningPermissionSupportingEvidence.IsEmpty() && !PlanningPermissionSupportingEvidence.StartsWith("https://", System.StringComparison.OrdinalIgnoreCase))
+         ModelState.AddModelError(nameof(PlanningPermissionSupportingEvidence), "Supporting Evidence must be a link");
    }
 }
