@@ -152,6 +152,42 @@ public class SignificantChangeProjectListHelperTests
       Assert.Equal(SignificantChangeTaskStatus.NotStarted, viewModel.ProjectDatesStatus);
    }
 
+   [Fact]
+   public void Build_Maps_nested_admissions_variation_values()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
+         Status = "pre decision",
+         AdmissionsVariation = new SignificantChangeAdmissionsVariationResponse
+         {
+            Status = SignificantChangeTaskStatus.Completed,
+            AdmissionsVariationRequired = true,
+            AdmissionsVariationSupportingEvidence = "Admission policy",
+            AdmissionsVariationLocalAuthoritySupportive = true,
+            AdmissionsVariationPupilPlacePlanningSupportive = false,
+            AdmissionsVariationAdmissionsTeamSupportive = true
+         }
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.AdmissionsVariationStatus);
+      Assert.True(viewModel.AdmissionsVariationRequired);
+      Assert.Equal("Admission policy", viewModel.AdmissionsVariationSupportingEvidence);
+      Assert.True(viewModel.AdmissionsVariationLocalAuthoritySupportive);
+      Assert.False(viewModel.AdmissionsVariationPupilPlacePlanningTeamSupportive);
+      Assert.True(viewModel.AdmissionsVariationAdmissionsTeamSupportive);
+   }
+
    [Theory]
    [InlineData("PreDecision", "Pre decision")]
    [InlineData("Approved", "Approved")]

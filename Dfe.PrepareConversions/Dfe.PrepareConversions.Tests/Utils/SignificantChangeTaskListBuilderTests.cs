@@ -15,7 +15,7 @@ public class SignificantChangeTaskListBuilderTests
    
    [Theory]
    [InlineData(1, "key-project-dates", "Key project dates", new[] { "confirm-project-dates" })]
-   [InlineData(2, "admissions-variation", "Admissions variation", new string[0])]
+   [InlineData(2, "admissions-variation", "Admissions variation", new[] { "admissions-variation-details" })]
    [InlineData(3, "consultation-details", "Consultation details", new[] { "stakeholder-consultation", "consultation-duration", "admission-variation-consultation", "stakeholder-objections", "religious-body-consultation" })]
    [InlineData(4, "academy-performance", "Academy performance", new string[0])]
    [InlineData(5, "public-sector-equality-duty", "Public Sector Equality Duty", new[] { "public-sector-equality-duty" })]

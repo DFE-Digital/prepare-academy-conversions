@@ -43,6 +43,12 @@ public class SignificantChangeProjectViewBaseModel
    public SignificantChangeTaskStatus ProjectDatesStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public DateTime? ProposedDecisionDate { get; set; }
    public DateTime? ProposedChangeDate { get; set; }
+   public SignificantChangeTaskStatus AdmissionsVariationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public bool? AdmissionsVariationRequired { get; set; }
+   public string AdmissionsVariationSupportingEvidence { get; set; } = string.Empty;
+   public bool? AdmissionsVariationLocalAuthoritySupportive { get; set; }
+   public bool? AdmissionsVariationPupilPlacePlanningTeamSupportive { get; set; }
+   public bool? AdmissionsVariationAdmissionsTeamSupportive { get; set; }
    public SignificantChangeTaskStatus FundingStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public FundingAnswer? FundingAnswer { get; set; }
    public string FundingAdditionalInformation { get; set; } = string.Empty;

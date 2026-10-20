@@ -43,5 +43,6 @@ public interface ISignificantChangeProjectRepository
    Task SetAdmissionVariationConsultation(int id, SetSignificantChangeAdmissionVariationConsultationCommand command);
    Task SetFunding(int id, SetSignificantChangeFundingCommand command);
    Task SetHQTFConsideration(int id, SetSignificantChangeHqtfConsiderationCommand command);
+   Task SetAdmissionsVariation(int id, SetSignificantChangeAdmissionsVariationCommand command);
 
 }
