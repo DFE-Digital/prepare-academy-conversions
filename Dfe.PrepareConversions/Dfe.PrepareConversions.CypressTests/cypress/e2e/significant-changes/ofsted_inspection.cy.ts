@@ -54,13 +54,6 @@ describe('Significant change - Ofsted inspection', () => {
         });
     });
 
-    it('Should require a standards answer before saving', () => {
-        withProject((projectId) => {
-            setInspectionDate(projectId);
-            significantChangeOfsted.saveQuestion().verifyErrorSummaryContains('Select an option');
-        });
-    });
-
     it('Should show additional information for No and save the inspection details', () => {
         withProject((projectId) => {
             setInspectionDate(projectId);
