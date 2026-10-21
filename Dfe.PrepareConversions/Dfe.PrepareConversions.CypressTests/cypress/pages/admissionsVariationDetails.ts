@@ -38,7 +38,9 @@ class AdmissionsVariationDetails extends BasePage {
         cy.url().should('include', `/${this.path}/support`);
         cy.get('h1').should('contain.text', 'Admissions variation details');
         cy.contains('legend', 'Is the local authority supportive of the admissions variation?').should('be.visible');
-        cy.contains('legend', 'Is the Pupil Place Planning Team supportive of the admissions variation?').should('be.visible');
+        cy.contains('legend', 'Is the Pupil Place Planning Team supportive of the admissions variation?').should(
+            'be.visible'
+        );
         cy.contains('legend', 'Is the Admissions Team supportive of the admissions variation?').should('be.visible');
         return this;
     }
