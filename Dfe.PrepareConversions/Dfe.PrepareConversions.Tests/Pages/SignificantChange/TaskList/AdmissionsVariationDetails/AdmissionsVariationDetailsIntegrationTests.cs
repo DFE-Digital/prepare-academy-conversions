@@ -115,7 +115,7 @@ public class AdmissionsVariationDetailsIntegrationTests(IntegrationTestingWebApp
       SignificantChangeProjectResponse project = BuildProject(706);
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
-      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-details/support");
+      await OpenPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-details/support");
 
       Document.Url.Should().EndWith($"/significant-change/task-list/{project.Id}/admissions-variation-details");
    }
