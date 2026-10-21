@@ -3,6 +3,7 @@ using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using System;
 using System.Threading.Tasks;
 
@@ -30,6 +31,11 @@ public class SignificantChangeDecisionWizard
    {
       await Document.QuerySelector<IHtmlButtonElement>("#submit-btn")!.SubmitAsync();
    }
+   public async Task SetWithdrawnReasonAndContinue(string reason)
+   {
+      Document.QuerySelector<IHtmlTextAreaElement>("#withdrawnReason-txtarea").Value = reason;
+      await ClickSubmitButton();
+   }
 
    public async Task SetDecisionToAndContinue(SignificantChangeDecisions decision)
    {
@@ -39,7 +45,7 @@ public class SignificantChangeDecisionWizard
          ((IHtmlInputElement)radio).IsChecked = false;
       }
 
-      Document.QuerySelector<IHtmlInputElement>($"#{decision.ToString().ToLowerInvariant()}-radio")!.IsChecked = true;
+      Document.QuerySelector<IHtmlInputElement>($"#{decision.ToString().ToLowerInvariant()}-radio").IsChecked = true;
       await ClickSubmitButton();
    }
 
@@ -50,33 +56,9 @@ public class SignificantChangeDecisionWizard
       await ClickSubmitButton();
    }
 
-   public async Task SetDeclinedReasonsAndContinue(params (SignificantChangeDeclinedReason Reason, string Details)[] reasons)
+   public async Task SetDeclinedReasonAndContinue(string reason)
    {
-      foreach ((SignificantChangeDeclinedReason reason, string details) in reasons)
-      {
-         CheckReason(reason.ToString(), details);
-      }
-
-      await ClickSubmitButton();
-   }
-
-   public async Task SetDeferredReasonsAndContinue(params (AdvisoryBoardDeferredReason Reason, string Details)[] reasons)
-   {
-      foreach ((AdvisoryBoardDeferredReason reason, string details) in reasons)
-      {
-         CheckReason(reason.ToString(), details);
-      }
-
-      await ClickSubmitButton();
-   }
-
-   public async Task SetWithdrawnReasonsAndContinue(params (AdvisoryBoardWithdrawnReason Reason, string Details)[] reasons)
-   {
-      foreach ((AdvisoryBoardWithdrawnReason reason, string details) in reasons)
-      {
-         CheckReason(reason.ToString(), details);
-      }
-
+      Document.QuerySelector<IHtmlTextAreaElement>("#declinedReason-txtarea").Value = reason;
       await ClickSubmitButton();
    }
 
@@ -98,12 +80,5 @@ public class SignificantChangeDecisionWizard
       Document.QuerySelector<IHtmlInputElement>("#decision-date-month")!.Value = date.Month.ToString();
       Document.QuerySelector<IHtmlInputElement>("#decision-date-year")!.Value = date.Year.ToString();
       await ClickSubmitButton();
-   }
-
-   private void CheckReason(string reasonName, string details)
-   {
-      string id = $"#{reasonName.ToLowerInvariant()}";
-      Document.QuerySelector<IHtmlInputElement>($"{id}-checkbox")!.IsChecked = true;
-      Document.QuerySelector<IHtmlTextAreaElement>($"{id}-txtarea")!.Value = details;
    }
 }

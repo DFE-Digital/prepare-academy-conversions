@@ -32,8 +32,11 @@ public class SignificantChangeProjectViewBaseModel
    public string ConsultationNoAdmissionVariationReason { get; set; } = string.Empty;
    public SignificantChangeTaskStatus EqualitiesImpactAssessmentStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public bool? EqualitiesImpactAssessmentCompleted { get; set; }
+   public string EqualitiesImpactAssessmentNoReason { get; set; } = string.Empty;
    public EqualitiesImpact? EqualitiesImpactIdentified { get; set; }
-   public string EqualitiesImpactIdentifiedMitigation { get; set; } = string.Empty;
+   public string EqualitiesLikelyDetails { get; set; } = string.Empty;
+   public string EqualitiesSomeImpactDetails { get; set; } = string.Empty;
+   public string EqualitiesImpactSupportingEvidence { get; set; } = string.Empty;
    public SignificantChangeTaskStatus ReligiousBodyConsultationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public bool? ReligiousBodyConsultationTrustConsultedReligiousBody { get; set; }
    public string ReligiousBodyConsultationTrustConsultedReligiousBodyNotConsultedReason { get; set; } = string.Empty;
@@ -48,8 +51,11 @@ public class SignificantChangeProjectViewBaseModel
    public PlanningPermissionAnswer? PlanningPermissionAnswer { get; set; }
    public string PlanningPermissionAdditionalInformation { get; set; } = string.Empty;
    public string PlanningPermissionSupportingEvidence { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus HQTFConsiderationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public HqtfConsiderationAnswer? HQTFConsiderationAnswer { get; set; }
+   public string HQTFConsiderationAdditionalInformation { get; set; } = string.Empty;
+   public string HQTFConsiderationSupportingEvidence { get; set; } = string.Empty;
    public SignificantChangeDecisions? Decision { get; set; }
    public DateTime? DecisionDate { get; set; }
-
    public bool IsReadOnly => Decision == SignificantChangeDecisions.Approved;
 }

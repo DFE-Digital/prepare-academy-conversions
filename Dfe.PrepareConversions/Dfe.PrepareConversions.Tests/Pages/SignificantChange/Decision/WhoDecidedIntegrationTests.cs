@@ -39,7 +39,6 @@ public class WhoDecidedIntegrationTests(IntegrationTestingWebApplicationFactory 
 
    [Theory]
    [InlineData(SignificantChangeDecisions.Declined, "declined-reason")]
-   [InlineData(SignificantChangeDecisions.Deferred, "why-deferred")]
    [InlineData(SignificantChangeDecisions.Withdrawn, "why-withdrawn")]
    public async Task Should_link_back_to_the_branch_page_it_came_from(
       SignificantChangeDecisions decision, string expectedBackStep)
