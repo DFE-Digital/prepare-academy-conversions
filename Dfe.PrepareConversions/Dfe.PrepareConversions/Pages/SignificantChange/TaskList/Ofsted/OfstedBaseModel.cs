@@ -9,7 +9,7 @@ namespace Dfe.PrepareConversions.Pages.SignificantChange.TaskList.Ofsted
    public abstract class OfstedBaseModel(ISignificantChangeProjectRepository repository, ISession session) : BaseSignificantChangeTaskPageModel(repository)
    {
       public const string OFSTED_INSPECTION_SESSION_KEY = "SignificantChangeOfstedInspection";
-      internal string OfstedSessionKey(int id) => $"{OFSTED_INSPECTION_SESSION_KEY}_{id}";
+      internal static string OfstedSessionKey(int id) => $"{OFSTED_INSPECTION_SESSION_KEY}_{id}";
 
       protected SetSignificantChangeOfstedInspectionCommand GetOfstedInspectionFromSession(int id)
       {
