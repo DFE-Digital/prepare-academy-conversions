@@ -44,6 +44,10 @@
                 </ul>
             </div>
         }
+        <a asp-page="@Links.SignificantChangePreview.Index.Page" asp-route-id="@Model.Project.Id"
+            class="govuk-button govuk-button--secondary govuk-!-margin-bottom-2" data-cy="significant_change_preview_button">
+            Preview
+        </a>
 
         <div class="govuk-input__wrapper">
             <partial name="Shared/SignificantChangeProjects/_RecordADecisionButton" model="@Model.Project" />
