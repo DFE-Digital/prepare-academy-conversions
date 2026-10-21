@@ -425,4 +425,66 @@ public class SignificantChangeProjectListHelperTests
       Assert.Equal(string.Empty, viewModel.FundingSupportingEvidence);
       Assert.Equal(SignificantChangeTaskStatus.NotStarted, viewModel.FundingStatus);
    }
+
+   [Fact]
+   public void Build_Maps_nested_ofsted_inspection_values()
+   {
+      DateTime inspectionDate = new(2025, 9, 15);
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
+         Status = "pre decision",
+         OfstedInspection = new SignificantChangeOfstedInspectionResponse
+         {
+            InspectionDate = inspectionDate,
+            MeetsOfstedStandards = false,
+            AdditionalInformation = "Improvement actions are underway",
+            SupportingEvidence = "School improvement plan",
+            Status = SignificantChangeTaskStatus.Completed
+         }
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.Equal(inspectionDate, viewModel.OfstedInspectionDate);
+      Assert.False(viewModel.MeetsOfstedStandards);
+      Assert.Equal("Improvement actions are underway", viewModel.OfstedInspectionAdditionalInformation);
+      Assert.Equal("School improvement plan", viewModel.OfstedSuportingEvidence);
+      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.OfstedInspectionStatus);
+   }
+
+   [Fact]
+   public void Build_Defaults_ofsted_inspection_when_section_is_missing()
+   {
+      SignificantChangeProjectResponse response = new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
+         LocalAuthorityName = "Test local authority",
+         Status = "pre decision",
+         OfstedInspection = null
+      };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.Null(viewModel.OfstedInspectionDate);
+      Assert.Null(viewModel.MeetsOfstedStandards);
+      Assert.Equal(string.Empty, viewModel.OfstedInspectionAdditionalInformation);
+      Assert.Equal(string.Empty, viewModel.OfstedSuportingEvidence);
+      Assert.Equal(SignificantChangeTaskStatus.NotStarted, viewModel.OfstedInspectionStatus);
+   }
 }

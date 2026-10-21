@@ -111,6 +111,8 @@ public static class Links
       public static readonly LinkItem ConfirmProjectDates = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/ConfirmProjectDates/Index");
       public static readonly LinkItem Funding = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Funding/Index");
       public static readonly LinkItem PlanningPermission = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/PlanningPermission/Index");
+      public static readonly LinkItem OfstedInspection = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Ofsted/Index");
+      public static readonly LinkItem OfstedInspectionQuestion = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Ofsted/InspectionQuestion");
       public static readonly LinkItem HqtfConsideration = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/HqtfConsideration/Index");
    }
 
