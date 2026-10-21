@@ -87,7 +87,14 @@ public static class SignificantChangeTaskListBuilder
                "Religious body consultation",
                5,
                Links.SignificantChange.ReligiousBodyConsultation,
-               project => GetTaskStatus(project.ReligiousBodyConsultationStatus))
+               project => GetTaskStatus(project.ReligiousBodyConsultationStatus)),
+
+            new SignificantChangeTaskDefinition(
+               "local-authority-objections",
+               "Local authority objections",
+               6,
+               Links.SignificantChange.LocalAuthorityObjections,
+               project => GetTaskStatus(project.LocalAuthorityObjectionsStatus)),
          ]
       );
    }
@@ -129,7 +136,7 @@ public static class SignificantChangeTaskListBuilder
             new SignificantChangeTaskDefinition(
                "planning-permission",
                "Planning Permission",
-               1,
+               2,
                Links.SignificantChange.PlanningPermission,
                project => GetTaskStatus(project.PlanningPermissionTaskStatus))
          ]
