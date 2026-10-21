@@ -821,6 +821,56 @@ public class SignificantChangeProjectRepositoryTests
 
       exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
    }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetOfstedInspection_WhenApiCallSucceeds_ShouldPutToExpectedPath(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      [Frozen] Mock<IDfeHttpClientFactory> httpClientFactory,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 79;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeOfstedInspection, id);
+      HttpClient httpClient = new();
+      SetSignificantChangeOfstedInspectionCommand command =
+         new(new DateTime(2025, 9, 19), false, "Improvement needed", null);
+
+      httpClientFactory
+         .Setup(x => x.CreateAcademisationClient())
+         .Returns(httpClient);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeOfstedInspectionCommand, object>(httpClient, expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.OK, new object()));
+
+      await sut.SetOfstedInspection(id, command);
+
+      httpClientService.Verify(
+         x => x.Put<SetSignificantChangeOfstedInspectionCommand, object>(httpClient, expectedPath, command),
+         Times.Once);
+   }
+
+   [Theory]
+   [AutoMoqData]
+   public async Task SetOfstedInspection_WhenApiCallFails_ShouldThrowApiResponseException(
+      [Frozen] Mock<IHttpClientService> httpClientService,
+      SignificantChangeProjectRepository sut)
+   {
+      const int id = 79;
+      string expectedPath = string.Format(PathFor.SetSignificantChangeOfstedInspection, id);
+      SetSignificantChangeOfstedInspectionCommand command =
+         new(new DateTime(2025, 9, 19), true, null, null);
+
+      httpClientService
+         .Setup(x => x.Put<SetSignificantChangeOfstedInspectionCommand, object>(
+            It.IsAny<HttpClient>(), expectedPath, command))
+         .ReturnsAsync(new ApiResponse<object>(HttpStatusCode.InternalServerError, null));
+
+      ApiResponseException exception = await Assert.ThrowsAsync<ApiResponseException>(
+         () => sut.SetOfstedInspection(id, command));
+
+      exception.Message.Should().Be("Request to Api failed | StatusCode - InternalServerError");
+   }
   
     [Theory]
    [AutoMoqData]
