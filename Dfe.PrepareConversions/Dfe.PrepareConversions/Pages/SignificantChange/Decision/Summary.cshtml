@@ -120,28 +120,24 @@
          </a>
       </dd>
    </div>
-
-   @if (Model.Decision.DecisionMadeBy != DecisionMadeBy.None)
-   {
-      <div class="govuk-summary-list__row">
-         <dt class="govuk-summary-list__key">Decision maker's name</dt>
-         <dd class="govuk-summary-list__value">
-            @if (!string.IsNullOrWhiteSpace(Model.Decision.DecisionMakerName))
-            {
-               <div id="decision-maker-name">@Model.Decision.DecisionMakerName</div>
-            }
-            else
-            {
-               <span class="empty">Empty</span>
-            }
-         </dd>
-         <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" asp-page="@Links.SignificantChangeDecision.DecisionMaker.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="decision-maker-btn">
-               Change<span class="govuk-visually-hidden"> decision maker's name</span>
-            </a>
-         </dd>
-      </div>
-   }
+   <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Decision maker's name</dt>
+      <dd class="govuk-summary-list__value">
+         @if (!string.IsNullOrWhiteSpace(Model.Decision.DecisionMakerName))
+         {
+            <div id="decision-maker-name">@Model.Decision.DecisionMakerName</div>
+         }
+         else
+         {
+            <span class="empty">Empty</span>
+         }
+      </dd>
+      <dd class="govuk-summary-list__actions">
+         <a class="govuk-link" asp-page="@Links.SignificantChangeDecision.DecisionMaker.Page" asp-route-id="@Model.Id" asp-route-obl="true" id="decision-maker-btn">
+            Change<span class="govuk-visually-hidden"> decision maker's name</span>
+         </a>
+      </dd>
+   </div>
 
    <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">Date of decision</dt>

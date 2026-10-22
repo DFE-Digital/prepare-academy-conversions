@@ -55,4 +55,7 @@ public class SignificantChangeProjectViewBaseModel
    public HqtfConsiderationAnswer? HQTFConsiderationAnswer { get; set; }
    public string HQTFConsiderationAdditionalInformation { get; set; } = string.Empty;
    public string HQTFConsiderationSupportingEvidence { get; set; } = string.Empty;
+   public SignificantChangeDecisions? Decision { get; set; }
+   public DateTime? DecisionDate { get; set; }
+   public bool IsReadOnly => Decision == SignificantChangeDecisions.Approved;
 }
