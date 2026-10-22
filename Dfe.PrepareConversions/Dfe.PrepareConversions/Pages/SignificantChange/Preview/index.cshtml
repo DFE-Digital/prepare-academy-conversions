@@ -1,10 +1,13 @@
 @page "/significant-change/preview/{id:int}"
 @model Dfe.PrepareConversions.Pages.SignificantChange.Preview.IndexModel
 @using Dfe.Academisation.ExtensionMethods
-@using Dfe.PrepareConversions.Data.Models.SignificantChange
-@using Dfe.PrepareTransfers.Web.Helpers.TagHelpers
 @{
-    ViewData["Title"] = "Preview";
+    ViewData["Title"] = "Significant Change - Preview";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.ListView.Page" class="govuk-back-link">@Links.ProjectList.Index.BackText</a>
 }
 
 <div class="govuk-grid-row">
@@ -34,6 +37,9 @@
                         <div class="govuk-grid-column-two-thirds">
                             <span class="govuk-caption-l">@Model.Project.SchoolName</span>
                             <h1 class="govuk-heading-xl">Preview</h1>
+                        </div>
+                        <div class="govuk-grid-column-one-third govuk-!-text-align-right">
+                            <partial name="Shared/SignificantChangeProjects/_RecordADecisionButton" model="@Model.Project" />
                         </div>
                     </div>
                 </div>
