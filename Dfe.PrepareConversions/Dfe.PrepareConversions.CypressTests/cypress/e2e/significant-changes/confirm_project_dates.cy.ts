@@ -67,6 +67,29 @@ describe('Significant change confirm project dates', () => {
         assertProjectDatesStatus('Completed');
     });
 
+    it('returns to the preview when a task is opened from there', () => {
+        clearProjectDates();
+        cy.visit(`/significant-change/preview/${projectId}`);
+        cy.get(`a[href*="${confirmProjectDatesPath}"]`).first().click();
+
+        cy.get('.govuk-back-link')
+            .should('have.attr', 'href', `/significant-change/preview/${projectId}`)
+            .click();
+        cy.location('pathname').should('eq', `/significant-change/preview/${projectId}`);
+
+        cy.get(`a[href*="${confirmProjectDatesPath}"]`).first().click();
+        cy.location('search').should('include', 'returnToPreview=True');
+        cy.getById('proposed-decision-date-day').clear().type('21');
+        cy.getById('proposed-decision-date-month').clear().type('11');
+        cy.getById('proposed-decision-date-year').clear().type('2026');
+        cy.getById('proposed-change-date-day').clear().type('22');
+        cy.getById('proposed-change-date-month').clear().type('12');
+        cy.getById('proposed-change-date-year').clear().type('2026');
+        cy.getByDataCy('select-common-submitbutton').click();
+
+        cy.location('pathname').should('eq', `/significant-change/preview/${projectId}`);
+    });
+
     const partialDateCases = [
         { part: 'day', missingParts: 'a month and year' },
         { part: 'month', missingParts: 'a day and year' },

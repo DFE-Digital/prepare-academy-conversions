@@ -1,8 +1,10 @@
+using System.ComponentModel;
+
 namespace Dfe.PrepareConversions.Data.Models.SignificantChange;
 
 public enum ConsultationDurationAnswer
 {
-   Yes = 1,
-   NoSatisfactoryConsultationCarriedOut = 2,
-   No = 3
+   [Description("Yes")]Yes = 1,
+   [Description("No - satisfactory consultation carried out")] NoSatisfactoryConsultationCarriedOut = 2,
+   [Description("No")] No = 3
 }

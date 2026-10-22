@@ -6,7 +6,7 @@
 
 @section BeforeMain
 {
-   <a asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@Model.Project.Id"
+   <a asp-page="@(Model.ReturnToPreview ? Links.SignificantChangePreview.Index.Page : Links.SignificantChange.SignificantChangeTaskList.Page)" asp-route-id="@Model.Project.Id"
       class="govuk-back-link">Back</a>
 }
 
