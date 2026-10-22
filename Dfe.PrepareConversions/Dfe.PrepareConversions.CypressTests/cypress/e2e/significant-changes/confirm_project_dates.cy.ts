@@ -72,9 +72,7 @@ describe('Significant change confirm project dates', () => {
         cy.visit(`/significant-change/preview/${projectId}`);
         cy.get(`a[href*="${confirmProjectDatesPath}"]`).first().click();
 
-        cy.get('.govuk-back-link')
-            .should('have.attr', 'href', `/significant-change/preview/${projectId}`)
-            .click();
+        cy.get('.govuk-back-link').should('have.attr', 'href', `/significant-change/preview/${projectId}`).click();
         cy.location('pathname').should('eq', `/significant-change/preview/${projectId}`);
 
         cy.get(`a[href*="${confirmProjectDatesPath}"]`).first().click();
