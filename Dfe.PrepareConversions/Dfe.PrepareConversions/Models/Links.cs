@@ -113,6 +113,7 @@ public static class Links
       public static readonly LinkItem PlanningPermission = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/PlanningPermission/Index");
       public static readonly LinkItem SignificantChangeRecommendation = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/Recommendation/Index");
       public static readonly LinkItem HqtfConsideration = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/HqtfConsideration/Index");
+      public static readonly LinkItem FhaRisksOrIssuesRaised = AddLinkItem(backText: "Back", page: "/SignificantChange/TaskList/FhaRisksOrIssuesRaised/Index");
    }
 
     public static class SignificantChangeDecision

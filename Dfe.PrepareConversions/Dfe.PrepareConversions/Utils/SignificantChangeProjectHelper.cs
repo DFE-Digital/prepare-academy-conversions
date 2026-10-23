@@ -61,6 +61,10 @@ public static class SignificantChangeProjectHelper
          HQTFConsiderationAnswer = significantChangeProject.HQTFConsideration?.HqtfConsiderationAnswer,
          HQTFConsiderationAdditionalInformation = significantChangeProject.HQTFConsideration?.AdditionalInformation ?? string.Empty,
          HQTFConsiderationSupportingEvidence = significantChangeProject.HQTFConsideration?.SupportingEvidence ?? string.Empty,
+         FHARisksOrIssuesRaisedStatus = significantChangeProject.FHARisksOrIssuesRaised?.Status ?? SignificantChangeTaskStatus.NotStarted,
+         FHARisksOrIssuesRaised = significantChangeProject.FHARisksOrIssuesRaised?.FhaRisksOrIssuesRaised,
+         FHARisksOrIssuesRaisedAdditionalInformation = significantChangeProject.FHARisksOrIssuesRaised?.AdditionalInformation ?? string.Empty,
+         FHARisksOrIssuesRaisedSupportingEvidence = significantChangeProject.FHARisksOrIssuesRaised?.SupportingEvidence ?? string.Empty,
          Decision = significantChangeProject.Decision,
          DecisionDate = significantChangeProject.DecisionDate
       };

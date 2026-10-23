@@ -44,5 +44,6 @@ public interface ISignificantChangeProjectRepository
    Task SetFunding(int id, SetSignificantChangeFundingCommand command);
    Task SetRecommendation(int id, SetSignificantChangeRecommendationCommand command);
    Task SetHQTFConsideration(int id, SetSignificantChangeHqtfConsiderationCommand command);
+   Task SetFhaRisksOrIssuesRaised(int id, SetSignificantChangeFhaRisksOrIssuesRaisedCommand command);
 
 }

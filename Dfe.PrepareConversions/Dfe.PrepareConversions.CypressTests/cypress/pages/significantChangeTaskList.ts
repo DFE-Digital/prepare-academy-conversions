@@ -83,6 +83,17 @@ class SignificantChangeTaskList extends BasePage {
         return this;
     }
 
+    public verifyFhaRisksOrIssuesRaisedTaskVisible(): this {
+        cy.contains('a', 'Financial health assessment (FHA) risks or issues raised').should('be.visible');
+        cy.getById('task-status-fha-risks-or-issues-raised').should('be.visible');
+        return this;
+    }
+
+    public openFhaRisksOrIssuesRaisedTask(): this {
+        cy.contains('a', 'Financial health assessment (FHA) risks or issues raised').click();
+        return this;
+    }
+
     public verifyRecommendationTaskVisible(): this {
         cy.contains('a', 'Significant change recommendation').should('be.visible');
         cy.getById('task-status-significant-change-recommendation').should('be.visible');
