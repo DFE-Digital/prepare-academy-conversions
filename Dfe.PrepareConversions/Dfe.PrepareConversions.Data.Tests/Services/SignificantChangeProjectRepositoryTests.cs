@@ -1016,7 +1016,7 @@ public class SignificantChangeProjectRepositoryTests
       const int id = 81;
       string expectedPath = string.Format(PathFor.SetSignificantChangeAdmissionsVariation, id);
       HttpClient httpClient = new();
-      SetSignificantChangeAdmissionsVariationCommand command = new(true, "Admissions policy", true, false, true);
+      SetSignificantChangeAdmissionsVariationCommand command = new(true, "Admissions policy", true, false, true, null, null, null);
 
       httpClientFactory
          .Setup(x => x.CreateAcademisationClient())
@@ -1041,7 +1041,7 @@ public class SignificantChangeProjectRepositoryTests
    {
       const int id = 81;
       string expectedPath = string.Format(PathFor.SetSignificantChangeAdmissionsVariation, id);
-      SetSignificantChangeAdmissionsVariationCommand command = new(true, "Admissions policy", true, false, true);
+      SetSignificantChangeAdmissionsVariationCommand command = new(true, "Admissions policy", true, false, true, null, null, null);
 
       httpClientService
          .Setup(x => x.Put<SetSignificantChangeAdmissionsVariationCommand, object>(It.IsAny<HttpClient>(), expectedPath, command))

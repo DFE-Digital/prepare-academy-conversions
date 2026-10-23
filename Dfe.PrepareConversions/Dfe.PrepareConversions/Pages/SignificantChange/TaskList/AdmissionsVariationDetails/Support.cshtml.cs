@@ -19,6 +19,15 @@ public class SupportModel(ISignificantChangeProjectRepository repository, ErrorS
    [BindProperty]
    public bool? AdmissionsTeamSupportive { get; set; }
 
+   [BindProperty]
+   public string? LocalAuthoritySupportiveAdditionalInformation { get; set; }
+
+   [BindProperty]
+   public string? PupilPlacePlanningSupportiveAdditionalInformation { get; set; }
+
+   [BindProperty]
+   public string? AdmissionsTeamSupportiveAdditionalInformation { get; set; }
+
    protected override string TaskTitle => "Admissions variation details";
 
    public override async Task<IActionResult> OnGetAsync(int id)
@@ -38,6 +47,9 @@ public class SupportModel(ISignificantChangeProjectRepository repository, ErrorS
       LocalAuthoritySupportive = draft.AdmissionsVariationLocalAuthoritySupportive;
       PupilPlacePlanningTeamSupportive = draft.AdmissionsVariationPupilPlacePlanningSupportive;
       AdmissionsTeamSupportive = draft.AdmissionsVariationAdmissionsTeamSupportive;
+      LocalAuthoritySupportiveAdditionalInformation = draft.AdmissionsVariationLocalAuthoritySupportiveAdditionalInformation;
+      PupilPlacePlanningSupportiveAdditionalInformation = draft.AdmissionsVariationPupilPlacePlanningSupportiveAdditionalInformation;
+      AdmissionsTeamSupportiveAdditionalInformation = draft.AdmissionsVariationAdmissionsTeamSupportiveAdditionalInformation;
       return Page();
    }
 
@@ -72,7 +84,10 @@ public class SupportModel(ISignificantChangeProjectRepository repository, ErrorS
       {
          AdmissionsVariationLocalAuthoritySupportive = LocalAuthoritySupportive,
          AdmissionsVariationPupilPlacePlanningSupportive = PupilPlacePlanningTeamSupportive,
-         AdmissionsVariationAdmissionsTeamSupportive = AdmissionsTeamSupportive
+         AdmissionsVariationAdmissionsTeamSupportive = AdmissionsTeamSupportive,
+         AdmissionsVariationLocalAuthoritySupportiveAdditionalInformation = LocalAuthoritySupportiveAdditionalInformation,
+         AdmissionsVariationPupilPlacePlanningSupportiveAdditionalInformation = PupilPlacePlanningSupportiveAdditionalInformation,
+         AdmissionsVariationAdmissionsTeamSupportiveAdditionalInformation = AdmissionsTeamSupportiveAdditionalInformation
       };
 
       await repository.SetAdmissionsVariation(id, command);

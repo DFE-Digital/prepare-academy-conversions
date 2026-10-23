@@ -49,6 +49,9 @@ public class SignificantChangeProjectViewBaseModel
    public bool? AdmissionsVariationLocalAuthoritySupportive { get; set; }
    public bool? AdmissionsVariationPupilPlacePlanningTeamSupportive { get; set; }
    public bool? AdmissionsVariationAdmissionsTeamSupportive { get; set; }
+   public string? AdmissionsVariationLocalAuthoritySupportiveAdditionalInformation { get; set; }
+   public string? AdmissionsVariationPupilPlacePlanningSupportiveAdditionalInformation { get; set; }
+   public string? AdmissionsVariationAdmissionsTeamSupportiveAdditionalInformation { get; set; }
    public SignificantChangeTaskStatus FundingStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public FundingAnswer? FundingAnswer { get; set; }
    public string FundingAdditionalInformation { get; set; } = string.Empty;
