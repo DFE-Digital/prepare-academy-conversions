@@ -148,6 +148,10 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       fundingStatusTag.Should().NotBeNull();
       fundingStatusTag.TextContent.Should().Contain("Not started");
 
+      var recommendationStatusTag = Document.QuerySelector("#task-status-significant-change-recommendation");
+      recommendationStatusTag.Should().NotBeNull();
+      recommendationStatusTag.TextContent.Should().Contain("Not started");
+
       var hqtfConsiderationLink = Document.QuerySelectorAll("a")
          .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("High Quality Trust Framework (HQTF) consideration"));
 

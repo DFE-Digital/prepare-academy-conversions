@@ -57,8 +57,14 @@ public class SignificantChangeProjectViewBaseModel
    public PlanningPermissionAnswer? PlanningPermissionAnswer { get; set; }
    public string PlanningPermissionAdditionalInformation { get; set; } = string.Empty;
    public string PlanningPermissionSupportingEvidence { get; set; } = string.Empty;
+   public SignificantChangeTaskStatus RecommendationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
+   public SignificantChangeRecommendation? Recommendation { get; set; }
+   public string RecommendationMoreInformation { get; set; } = string.Empty;
    public SignificantChangeTaskStatus HQTFConsiderationStatus { get; set; } = SignificantChangeTaskStatus.NotStarted;
    public HqtfConsiderationAnswer? HQTFConsiderationAnswer { get; set; }
    public string HQTFConsiderationAdditionalInformation { get; set; } = string.Empty;
    public string HQTFConsiderationSupportingEvidence { get; set; } = string.Empty;
+   public SignificantChangeDecisions? Decision { get; set; }
+   public DateTime? DecisionDate { get; set; }
+   public bool IsReadOnly => Decision == SignificantChangeDecisions.Approved;
 }

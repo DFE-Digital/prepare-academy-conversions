@@ -91,6 +91,17 @@ class SignificantChangeTaskList extends BasePage {
         return this;
     }
 
+    public verifyRecommendationTaskVisible(): this {
+        cy.contains('a', 'Significant change recommendation').should('be.visible');
+        cy.getById('task-status-significant-change-recommendation').should('be.visible');
+        return this;
+    }
+
+    public openRecommendationTask(): this {
+        cy.contains('a', 'Significant change recommendation').click();
+        return this;
+    }
+
     public verifyPublicSectorEqualityDutyTaskVisible(): this {
         cy.contains('a', 'Public Sector Equality Duty').should('be.visible');
         cy.getById('task-status-public-sector-equality-duty').should('be.visible');
@@ -109,10 +120,7 @@ class SignificantChangeTaskList extends BasePage {
     }
 
     public openHqtfConsiderationTask(): this {
-        cy.contains('h3.app-task-list__section', 'High Quality Trust Framework')
-            .next('.app-task-list')
-            .contains('a', 'High Quality Trust Framework (HQTF) consideration')
-            .click();
+        cy.contains('h3.app-task-list__section', 'High Quality Trust Framework').next('.app-task-list').click();
         return this;
     }
 }

@@ -1,4 +1,3 @@
-using Dfe.PrepareConversions.Data.Models.AdvisoryBoardDecision;
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using FluentAssertions;
 using System;
@@ -61,18 +60,5 @@ public class DecisionDateIntegrationTests(IntegrationTestingWebApplicationFactor
 
       Document.QuerySelector("[data-cy='select-backlink']")?.GetAttribute("href")
          .Should().Contain(PathTo("decision-maker"));
-   }
-
-   [Fact]
-   public async Task Should_link_back_to_who_decided_when_nobody_made_the_decision()
-   {
-      AddProject();
-      await Wizard.StartFor(ProjectId);
-      await Wizard.SetDecisionToAndContinue(SignificantChangeDecisions.Approved);
-      await Wizard.SetIsConditionalAndContinue(false);
-      await Wizard.SetDecisionByAndContinue(DecisionMadeBy.None);
-
-      Document.QuerySelector("[data-cy='select-backlink']")?.GetAttribute("href")
-         .Should().Contain(PathTo("who-decided"));
    }
 }

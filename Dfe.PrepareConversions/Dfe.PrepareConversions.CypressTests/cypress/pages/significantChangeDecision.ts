@@ -9,7 +9,7 @@ class SignificantChangeDecision extends BasePage {
         return this;
     }
 
-    public selectDecision(decision: 'approved' | 'declined' | 'deferred' | 'withdrawn'): this {
+    public selectDecision(decision: 'approved' | 'declined' | 'withdrawn'): this {
         cy.getById(`${decision}-radio`).check();
         return this;
     }

@@ -27,7 +27,7 @@ public abstract class BaseSignificantChangeTaskPageModel(ISignificantChangeProje
       if (result.StatusCode == HttpStatusCode.NotFound || result.Body == null)
          return NotFound();
 
-      Project = SignificantChangeProjectListHelper.Build(result.Body);
+      Project = SignificantChangeProjectHelper.Build(result.Body);
 
       ViewData["SchoolName"] = Project.SchoolName;
       ViewData["TaskTitle"] = TaskTitle;
