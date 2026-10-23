@@ -20,7 +20,7 @@ public class SignificantChangeProjectHelperTests
          Status = SignificantChangeTaskStatus.InProgress
       };
 
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
+      var viewModel = SignificantChangeProjectHelper.Build(response);
 
       Assert.False(viewModel.StakeholderConsultationTrustConsultedStakeholders);
       Assert.Equal("Consultation planned", viewModel.StakeholderConsultationTrustConsultedStakeholdersNotConsultedReason);
@@ -38,7 +38,7 @@ public class SignificantChangeProjectHelperTests
          Status = SignificantChangeTaskStatus.Completed
       };
 
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
+      var viewModel = SignificantChangeProjectHelper.Build(response);
 
       Assert.False(viewModel.ReligiousBodyConsultationTrustConsultedReligiousBody);
       Assert.Equal("Further action needed", viewModel.ReligiousBodyConsultationTrustConsultedReligiousBodyNotConsultedReason);
@@ -59,7 +59,7 @@ public class SignificantChangeProjectHelperTests
          Status = SignificantChangeTaskStatus.Completed
       };
 
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
+      var viewModel = SignificantChangeProjectHelper.Build(response);
 
       Assert.Equal(proposedDecisionDate, viewModel.ProposedDecisionDate);
       Assert.Equal(proposedChangeDate, viewModel.ProposedChangeDate);
@@ -72,7 +72,7 @@ public class SignificantChangeProjectHelperTests
       SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
       response.ProjectDates = null;
 
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
+      var viewModel = SignificantChangeProjectHelper.Build(response);
 
       Assert.Null(viewModel.ProposedDecisionDate);
       Assert.Null(viewModel.ProposedChangeDate);
@@ -94,7 +94,7 @@ public class SignificantChangeProjectHelperTests
             EqualitiesImpactSupportingEvidence = "sharepoint.edu.gov.uk/evidence"
          };
 
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
+      var viewModel = SignificantChangeProjectHelper.Build(response);
 
       Assert.True(viewModel.EqualitiesImpactAssessmentCompleted);
       Assert.Equal("No impact identified", viewModel.EqualitiesImpactAssessmentNoReason);
@@ -117,7 +117,7 @@ public class SignificantChangeProjectHelperTests
          Status = SignificantChangeTaskStatus.InProgress
       };
 
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
+      var viewModel = SignificantChangeProjectHelper.Build(response);
 
       Assert.Equal(PlanningPermissionAnswer.No, viewModel.PlanningPermissionAnswer);
       Assert.Equal("Planning permission is still pending", viewModel.PlanningPermissionAdditionalInformation);
@@ -156,7 +156,7 @@ public class SignificantChangeProjectHelperTests
          Status = SignificantChangeTaskStatus.Completed
       };
 
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
+      var viewModel = SignificantChangeProjectHelper.Build(response);
 
       Assert.False(viewModel.ConsultationIncludeAdmissionVariation);
       Assert.Equal("Consultation focused on governance only", viewModel.ConsultationNoAdmissionVariationReason);
@@ -174,7 +174,7 @@ public class SignificantChangeProjectHelperTests
          Status = SignificantChangeTaskStatus.Completed
       };
 
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
+      var viewModel = SignificantChangeProjectHelper.Build(response);
 
       Assert.Equal(ConsultationDurationAnswer.No, viewModel.ConsultationLastedMinimumThreeWeeks);
       Assert.Equal("Consultation ran for two weeks only", viewModel.ConsultationDurationNotMetReason);
@@ -187,7 +187,7 @@ public class SignificantChangeProjectHelperTests
       SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
       response.ConsultationDuration = null;
 
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
+      var viewModel = SignificantChangeProjectHelper.Build(response);
 
       Assert.Null(viewModel.ConsultationLastedMinimumThreeWeeks);
       Assert.Equal(string.Empty, viewModel.ConsultationDurationNotMetReason);
@@ -206,7 +206,7 @@ public class SignificantChangeProjectHelperTests
          Status = SignificantChangeTaskStatus.Completed
       };
 
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
+      var viewModel = SignificantChangeProjectHelper.Build(response);
 
       Assert.Equal(FundingAnswer.No, viewModel.FundingAnswer);
       Assert.Equal("Funding gap identified", viewModel.FundingAdditionalInformation);
@@ -220,7 +220,7 @@ public class SignificantChangeProjectHelperTests
       SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
          response.Funding = null;
 
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
+      var viewModel = SignificantChangeProjectHelper.Build(response);
 
       Assert.Null(viewModel.FundingAnswer);
       Assert.Equal(string.Empty, viewModel.FundingAdditionalInformation);
@@ -239,7 +239,7 @@ public class SignificantChangeProjectHelperTests
          Status = SignificantChangeTaskStatus.Completed
       };
 
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
+      var viewModel = SignificantChangeProjectHelper.Build(response);
 
       Assert.Equal(RecommendationOptions.Approve, viewModel.Recommendation);
       Assert.Equal("Yes", viewModel.RecommendationMoreInformation);
@@ -252,7 +252,7 @@ public class SignificantChangeProjectHelperTests
       SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
       response.Recommendation = null;
 
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
+      var viewModel = SignificantChangeProjectHelper.Build(response);
 
       Assert.Null(viewModel.Recommendation);
       Assert.Equal(string.Empty, viewModel.RecommendationMoreInformation);
