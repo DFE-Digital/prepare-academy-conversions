@@ -11,11 +11,14 @@
       class="govuk-back-link">Back</a>
 }
 
+<p class="govuk-body">
+   Enter a recommendation for this significant change.
+</p>
 <div class="govuk-form-group">
    <fieldset class="govuk-fieldset">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-         Recommendation
-      </legend>
+   <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      What is your recommendation?
+   </legend>
       <inline-error for="@nameof(Model.Recommendation)" />
 
       <div class="govuk-form-group govuk-radios @ModelState.GetErrorStyleClass()" data-module="govuk-radios" id="SignificantChangeRecommendation">
