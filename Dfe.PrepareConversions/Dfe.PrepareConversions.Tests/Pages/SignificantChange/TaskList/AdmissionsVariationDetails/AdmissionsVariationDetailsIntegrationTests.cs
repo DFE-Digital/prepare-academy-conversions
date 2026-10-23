@@ -35,7 +35,7 @@ public class AdmissionsVariationDetailsIntegrationTests(IntegrationTestingWebApp
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeAdmissionsVariation, project.Id),
-         new SetSignificantChangeAdmissionsVariationCommand(false, "Admissions policy", null, null, null),
+         new SetSignificantChangeAdmissionsVariationCommand(false, "Admissions policy", null, null, null, null, null, null),
          new object());
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-details");
@@ -75,13 +75,21 @@ public class AdmissionsVariationDetailsIntegrationTests(IntegrationTestingWebApp
    }
 
    [Fact]
-   public async Task Should_save_all_five_answers_after_both_pages_are_completed()
+   public async Task Should_save_all_answers_after_both_pages_are_completed()
    {
       SignificantChangeProjectResponse project = BuildProject(704);
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.SetSignificantChangeAdmissionsVariation, project.Id),
-         new SetSignificantChangeAdmissionsVariationCommand(true, "Admissions policy", true, false, true),
+         new SetSignificantChangeAdmissionsVariationCommand(
+            true,
+            "Admissions policy",
+            true,
+            false,
+            true,
+            null,
+            "Pupil place planning concerns",
+            null),
          new object());
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-details");
@@ -91,9 +99,47 @@ public class AdmissionsVariationDetailsIntegrationTests(IntegrationTestingWebApp
       Document.QuerySelector<IHtmlInputElement>("#local-authority-supportive-yes")!.IsChecked = true;
       Document.QuerySelector<IHtmlInputElement>("#pupil-place-planning-supportive-no")!.IsChecked = true;
       Document.QuerySelector<IHtmlInputElement>("#admissions-team-supportive-yes")!.IsChecked = true;
+      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='pupil-place-planning-supportive-additional-information']")!
+         .Value = "Pupil place planning concerns";
       await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");
+   }
+
+   [Fact]
+   public async Task Should_render_a_conditional_textbox_for_each_no_option()
+   {
+      SignificantChangeProjectResponse project = BuildProject(707);
+      project.AdmissionsVariation.AdmissionsVariationLocalAuthoritySupportive = false;
+      project.AdmissionsVariation.AdmissionsVariationPupilPlacePlanningSupportive = false;
+      project.AdmissionsVariation.AdmissionsVariationAdmissionsTeamSupportive = false;
+      project.AdmissionsVariation.AdmissionsVariationLocalAuthoritySupportiveAdditionalInformation = "Local authority concern";
+      project.AdmissionsVariation.AdmissionsVariationPupilPlacePlanningSupportiveAdditionalInformation = "Pupil place planning concern";
+      project.AdmissionsVariation.AdmissionsVariationAdmissionsTeamSupportiveAdditionalInformation = "Admissions team concern";
+      _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
+
+      await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-details");
+      Document.QuerySelector<IHtmlInputElement>("#admissions-variation-required-yes")!.IsChecked = true;
+      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
+
+      Document.QuerySelector("#local-authority-supportive-no")!.GetAttribute("aria-controls")
+         .Should().Be("conditional-local-authority-supportive-no");
+      Document.QuerySelector("#pupil-place-planning-supportive-no")!.GetAttribute("aria-controls")
+         .Should().Be("conditional-pupil-place-planning-supportive-no");
+      Document.QuerySelector("#admissions-team-supportive-no")!.GetAttribute("aria-controls")
+         .Should().Be("conditional-admissions-team-supportive-no");
+      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='local-authority-supportive-additional-information']")
+         .Should().NotBeNull();
+      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='pupil-place-planning-supportive-additional-information']")
+         .Should().NotBeNull();
+      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='admissions-team-supportive-additional-information']")
+         .Should().NotBeNull();
+      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='local-authority-supportive-additional-information']")!
+         .Value.Should().Be("Local authority concern");
+      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='pupil-place-planning-supportive-additional-information']")!
+         .Value.Should().Be("Pupil place planning concern");
+      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='admissions-team-supportive-additional-information']")!
+         .Value.Should().Be("Admissions team concern");
    }
 
    [Fact]

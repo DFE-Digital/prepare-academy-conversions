@@ -63,7 +63,10 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
             SupportingEvidence,
             Project.AdmissionsVariationLocalAuthoritySupportive,
             Project.AdmissionsVariationPupilPlacePlanningTeamSupportive,
-            Project.AdmissionsVariationAdmissionsTeamSupportive);
+            Project.AdmissionsVariationAdmissionsTeamSupportive,
+            Project.AdmissionsVariationLocalAuthoritySupportiveAdditionalInformation,
+            Project.AdmissionsVariationPupilPlacePlanningSupportiveAdditionalInformation,
+            Project.AdmissionsVariationAdmissionsTeamSupportiveAdditionalInformation);
 
          HttpContext.Session.Set(DraftSessionKey(id), draft);
          return RedirectToPage("./Support", new { id });
@@ -72,6 +75,9 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       SetSignificantChangeAdmissionsVariationCommand command = new(
          false,
          SupportingEvidence,
+         null,
+         null,
+         null,
          null,
          null,
          null);

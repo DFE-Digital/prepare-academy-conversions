@@ -270,10 +270,13 @@ public class SignificantChangeProjectHelperTests
             AdmissionsVariationSupportingEvidence = "Admission policy",
             AdmissionsVariationLocalAuthoritySupportive = true,
             AdmissionsVariationPupilPlacePlanningSupportive = false,
-            AdmissionsVariationAdmissionsTeamSupportive = true
+            AdmissionsVariationAdmissionsTeamSupportive = true,
+            AdmissionsVariationAdmissionsTeamSupportiveAdditionalInformation = "Foo",
+            AdmissionsVariationLocalAuthoritySupportiveAdditionalInformation = "Bar",
+            AdmissionsVariationPupilPlacePlanningSupportiveAdditionalInformation = "Sandwich"
          };
 
-      var viewModel = SignificantChangeProjectListHelper.Build(response);
+      var viewModel = SignificantChangeProjectHelper.Build(response);
 
       Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.AdmissionsVariationStatus);
       Assert.True(viewModel.AdmissionsVariationRequired);

@@ -16,7 +16,7 @@
          Is the local authority supportive of the admissions variation?
       </legend>
       <inline-error for="@nameof(Model.LocalAuthoritySupportive)" />
-      <div class="govuk-radios">
+      <div class="govuk-radios" data-module="govuk-radios">
          <div class="govuk-radios__item">
             <input asp-for="LocalAuthoritySupportive" class="govuk-radios__input"
                    id="local-authority-supportive-yes" type="radio" value="true"
@@ -26,8 +26,20 @@
          <div class="govuk-radios__item">
             <input asp-for="LocalAuthoritySupportive" class="govuk-radios__input"
                    id="local-authority-supportive-no" type="radio" value="false"
+                   aria-controls="conditional-local-authority-supportive-no"
                    data-test="local-authority-supportive-no" />
             <label class="govuk-label govuk-radios__label" for="local-authority-supportive-no">No</label>
+         </div>
+         <div class="govuk-radios__conditional" id="conditional-local-authority-supportive-no">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="LocalAuthoritySupportiveAdditionalInformation">
+                  Give details
+               </label>
+               <inline-error for="@nameof(Model.LocalAuthoritySupportiveAdditionalInformation)" />
+               <textarea asp-for="LocalAuthoritySupportiveAdditionalInformation"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.LocalAuthoritySupportiveAdditionalInformation))"
+                         rows="5" data-test="local-authority-supportive-additional-information"></textarea>
+            </div>
          </div>
       </div>
    </fieldset>
@@ -39,7 +51,7 @@
          Is the Pupil Place Planning Team supportive of the admissions variation?
       </legend>
       <inline-error for="@nameof(Model.PupilPlacePlanningTeamSupportive)" />
-      <div class="govuk-radios">
+      <div class="govuk-radios" data-module="govuk-radios">
          <div class="govuk-radios__item">
             <input asp-for="PupilPlacePlanningTeamSupportive" class="govuk-radios__input"
                    id="pupil-place-planning-supportive-yes" type="radio" value="true"
@@ -49,8 +61,20 @@
          <div class="govuk-radios__item">
             <input asp-for="PupilPlacePlanningTeamSupportive" class="govuk-radios__input"
                    id="pupil-place-planning-supportive-no" type="radio" value="false"
+                   aria-controls="conditional-pupil-place-planning-supportive-no"
                    data-test="pupil-place-planning-supportive-no" />
             <label class="govuk-label govuk-radios__label" for="pupil-place-planning-supportive-no">No</label>
+         </div>
+         <div class="govuk-radios__conditional" id="conditional-pupil-place-planning-supportive-no">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="PupilPlacePlanningSupportiveAdditionalInformation">
+                  Give details
+               </label>
+               <inline-error for="@nameof(Model.PupilPlacePlanningSupportiveAdditionalInformation)" />
+               <textarea asp-for="PupilPlacePlanningSupportiveAdditionalInformation"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.PupilPlacePlanningSupportiveAdditionalInformation))"
+                         rows="5" data-test="pupil-place-planning-supportive-additional-information"></textarea>
+            </div>
          </div>
       </div>
    </fieldset>
@@ -62,7 +86,7 @@
          Is the Admissions Team supportive of the admissions variation?
       </legend>
       <inline-error for="@nameof(Model.AdmissionsTeamSupportive)" />
-      <div class="govuk-radios">
+      <div class="govuk-radios" data-module="govuk-radios">
          <div class="govuk-radios__item">
             <input asp-for="AdmissionsTeamSupportive" class="govuk-radios__input"
                    id="admissions-team-supportive-yes" type="radio" value="true"
@@ -72,8 +96,20 @@
          <div class="govuk-radios__item">
             <input asp-for="AdmissionsTeamSupportive" class="govuk-radios__input"
                    id="admissions-team-supportive-no" type="radio" value="false"
+                   aria-controls="conditional-admissions-team-supportive-no"
                    data-test="admissions-team-supportive-no" />
             <label class="govuk-label govuk-radios__label" for="admissions-team-supportive-no">No</label>
+         </div>
+         <div class="govuk-radios__conditional" id="conditional-admissions-team-supportive-no">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="AdmissionsTeamSupportiveAdditionalInformation">
+                  Give details
+               </label>
+               <inline-error for="@nameof(Model.AdmissionsTeamSupportiveAdditionalInformation)" />
+               <textarea asp-for="AdmissionsTeamSupportiveAdditionalInformation"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.AdmissionsTeamSupportiveAdditionalInformation))"
+                         rows="5" data-test="admissions-team-supportive-additional-information"></textarea>
+            </div>
          </div>
       </div>
    </fieldset>
