@@ -42,6 +42,7 @@ public interface ISignificantChangeProjectRepository
    Task SetStakeholderObjections(int id, SetSignificantChangeStakeholderObjectionsCommand command);
    Task SetAdmissionVariationConsultation(int id, SetSignificantChangeAdmissionVariationConsultationCommand command);
    Task SetFunding(int id, SetSignificantChangeFundingCommand command);
+   Task SetRecommendation(int id, SetSignificantChangeRecommendationCommand command);
    Task SetHQTFConsideration(int id, SetSignificantChangeHqtfConsiderationCommand command);
 
 }

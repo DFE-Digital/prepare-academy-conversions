@@ -1,8 +1,10 @@
 using Dfe.PrepareConversions.Data.Models.SignificantChange;
 using Dfe.PrepareConversions.Utils;
+using FluentAssertions;
 using System;
 using Xunit;
 
+using RecommendationOptions = Dfe.PrepareConversions.Data.Models.SignificantChange.SignificantChangeRecommendation;
 namespace Dfe.PrepareConversions.Tests.Utils;
 
 public class SignificantChangeProjectHelperTests
@@ -10,24 +12,12 @@ public class SignificantChangeProjectHelperTests
    [Fact]
    public void Build_Maps_nested_consult_stakeholders_values()
    {
-      SignificantChangeProjectResponse response = new()
+      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+      response.StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
       {
-         Id = 1,
-         Urn = 10000000,
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         ApplicationId = "ID_APP_123",
-         ApplicationReference = "APP_REF_123",
-         LocalAuthorityName = "Test local authority",
-         Status = "pre decision",
-         StakeholderConsultation = new SignificantChangeStakeholderConsultationResponse
-         {
-            TrustConsultedStakeholders = false,
-            TrustConsultedStakeholdersNotConsultedReason = "Consultation planned",
-            Status = SignificantChangeTaskStatus.InProgress
-         }
+         TrustConsultedStakeholders = false,
+         TrustConsultedStakeholdersNotConsultedReason = "Consultation planned",
+         Status = SignificantChangeTaskStatus.InProgress
       };
 
       var viewModel = SignificantChangeProjectHelper.Build(response);
@@ -40,24 +30,12 @@ public class SignificantChangeProjectHelperTests
    [Fact]
    public void Build_Maps_nested_religious_body_consultation_values()
    {
-      SignificantChangeProjectResponse response = new()
+      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+      response.ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse
       {
-         Id = 1,
-         Urn = 10000000,
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         ApplicationId = "ID_APP_123",
-         ApplicationReference = "APP_REF_123",
-         LocalAuthorityName = "Test local authority",
-         Status = "pre decision",
-         ReligiousBodyConsultation = new SignificantChangeReligiousBodyConsultationResponse
-         {
-            TrustConsultedReligiousBody = false,
-            TrustConsultedReligiousBodyNotConsultedReason = "Further action needed",
-            Status = SignificantChangeTaskStatus.Completed
-         }
+         TrustConsultedReligiousBody = false,
+         TrustConsultedReligiousBodyNotConsultedReason = "Further action needed",
+         Status = SignificantChangeTaskStatus.Completed
       };
 
       var viewModel = SignificantChangeProjectHelper.Build(response);
@@ -73,24 +51,12 @@ public class SignificantChangeProjectHelperTests
       var proposedDecisionDate = new DateTime(2024, 12, 15, 0, 0, 0, DateTimeKind.Utc);
       var proposedChangeDate = new DateTime(2025, 01, 20, 0, 0, 0, DateTimeKind.Utc);
 
-      SignificantChangeProjectResponse response = new()
+      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+      response.ProjectDates = new SignificantChangeProjectDatesResponse
       {
-         Id = 1,
-         Urn = 10000000,
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         ApplicationId = "ID_APP_123",
-         ApplicationReference = "APP_REF_123",
-         LocalAuthorityName = "Test local authority",
-         Status = "pre decision",
-         ProjectDates = new SignificantChangeProjectDatesResponse
-         {
-            ProposedDecisionDate = proposedDecisionDate,
-            ProposedChangeDate = proposedChangeDate,
-            Status = SignificantChangeTaskStatus.Completed
-         }
+         ProposedDecisionDate = proposedDecisionDate,
+         ProposedChangeDate = proposedChangeDate,
+         Status = SignificantChangeTaskStatus.Completed
       };
 
       var viewModel = SignificantChangeProjectHelper.Build(response);
@@ -103,20 +69,8 @@ public class SignificantChangeProjectHelperTests
    [Fact]
    public void Build_Maps_project_dates_to_not_started_when_null()
    {
-      SignificantChangeProjectResponse response = new()
-      {
-         Id = 1,
-         Urn = 10000000,
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         ApplicationId = "ID_APP_123",
-         ApplicationReference = "APP_REF_123",
-         LocalAuthorityName = "Test local authority",
-         Status = "pre decision",
-         ProjectDates = null
-      };
+      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+      response.ProjectDates = null;
 
       var viewModel = SignificantChangeProjectHelper.Build(response);
 
@@ -128,19 +82,8 @@ public class SignificantChangeProjectHelperTests
    [Fact]
    public void Build_Maps_nested_equalities_impact_assessment_values()
    {
-      SignificantChangeProjectResponse response = new()
-      {
-         Id = 1,
-         Urn = 10000000,
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         ApplicationId = "ID_APP_123",
-         ApplicationReference = "APP_REF_123",
-         LocalAuthorityName = "Test local authority",
-         Status = "pre decision",
-         EqualitiesImpactAssessment = new SignificantChangeEqualitiesImpactAssessmentResponse
+      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+      response.EqualitiesImpactAssessment = new SignificantChangeEqualitiesImpactAssessmentResponse
          {
             EqualitiesImpactAssessmentCompleted = true,
             EqualitiesImpactAssessmentNoReason = "No impact identified",
@@ -149,8 +92,7 @@ public class SignificantChangeProjectHelperTests
             EqualitiesSomeImpactDetails = "Some impact notes",
             Status = SignificantChangeTaskStatus.Completed,
             EqualitiesImpactSupportingEvidence = "sharepoint.edu.gov.uk/evidence"
-         }
-      };
+         };
 
       var viewModel = SignificantChangeProjectHelper.Build(response);
 
@@ -166,25 +108,13 @@ public class SignificantChangeProjectHelperTests
    [Fact]
    public void Build_Maps_nested_planning_permission_values()
    {
-      SignificantChangeProjectResponse response = new()
+      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+      response.PlanningPermission = new SignificantChangePlanningPermissionResponse
       {
-         Id = 1,
-         Urn = 10000000,
-         ApplicationId = "12345",
-         ApplicationReference = "12345",
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         LocalAuthorityName = "Test local authority",
-         Status = "pre decision",
-         PlanningPermission = new SignificantChangePlanningPermissionResponse
-         {
-            PlanningPermissionAnswer = PlanningPermissionAnswer.No,
-            AdditionalInformation = "Planning permission is still pending",
-            SupportingEvidence = "Planning reference 12345",
-            Status = SignificantChangeTaskStatus.InProgress
-         }
+         PlanningPermissionAnswer = PlanningPermissionAnswer.No,
+         AdditionalInformation = "Planning permission is still pending",
+         SupportingEvidence = "Planning reference 12345",
+         Status = SignificantChangeTaskStatus.InProgress
       };
 
       var viewModel = SignificantChangeProjectHelper.Build(response);
@@ -194,30 +124,18 @@ public class SignificantChangeProjectHelperTests
       Assert.Equal("Planning reference 12345", viewModel.PlanningPermissionSupportingEvidence);
       Assert.Equal(SignificantChangeTaskStatus.InProgress, viewModel.PlanningPermissionTaskStatus);
    }
-  
+
    [Fact]
    public void Build_Maps_nested_hqtf_consideration_values()
    {
-      SignificantChangeProjectResponse response = new()
-      {
-         Id = 1,
-         Urn = 10000000,
-         ApplicationId = "12345",
-         ApplicationReference = "12345",
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         LocalAuthorityName = "Test local authority",
-         Status = "pre decision",
-         HQTFConsideration = new SignificantChangeHqtfConsiderationResponse
+         SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+         response.HQTFConsideration = new SignificantChangeHqtfConsiderationResponse
          {
             HqtfConsiderationAnswer = HqtfConsiderationAnswer.Yes,
             AdditionalInformation = "Workforce capacity risk identified",
             SupportingEvidence = "Trust board minutes",
             Status = SignificantChangeTaskStatus.Completed
-         }
-      };
+         };
 
       var viewModel = SignificantChangeProjectHelper.Build(response);
 
@@ -230,24 +148,12 @@ public class SignificantChangeProjectHelperTests
    [Fact]
    public void Build_Maps_nested_admission_variation_values()
    {
-      SignificantChangeProjectResponse response = new()
+      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+      response.AdmissionVariationConsultation = new SignificantChangeAdmissionVariationConsultationResponse
       {
-         Id = 1,
-         Urn = 10000000,
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         ApplicationId = "ID_APP_123",
-         ApplicationReference = "APP_REF_123",
-         LocalAuthorityName = "Test local authority",
-         Status = "pre decision",
-         AdmissionVariationConsultation = new SignificantChangeAdmissionVariationConsultationResponse
-         {
-            ConsultationIncludeAdmissionVariation = false,
-            ConsultationNoAdmissionVariationReason = "Consultation focused on governance only",
-            Status = SignificantChangeTaskStatus.Completed
-         }
+         ConsultationIncludeAdmissionVariation = false,
+         ConsultationNoAdmissionVariationReason = "Consultation focused on governance only",
+         Status = SignificantChangeTaskStatus.Completed
       };
 
       var viewModel = SignificantChangeProjectHelper.Build(response);
@@ -260,24 +166,12 @@ public class SignificantChangeProjectHelperTests
    [Fact]
    public void Build_Maps_nested_consultation_duration_values()
    {
-      SignificantChangeProjectResponse response = new()
+      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+      response.ConsultationDuration = new SignificantChangeConsultationDurationResponse
       {
-         Id = 1,
-         Urn = 10000000,
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         ApplicationId = "ID_APP_123",
-         ApplicationReference = "APP_REF_123",
-         LocalAuthorityName = "Test local authority",
-         Status = "pre decision",
-         ConsultationDuration = new SignificantChangeConsultationDurationResponse
-         {
-            ConsultationLastedMinimumThreeWeeks = ConsultationDurationAnswer.No,
-            ConsultationDurationNotMetReason = "Consultation ran for two weeks only",
-            Status = SignificantChangeTaskStatus.Completed
-         }
+         ConsultationLastedMinimumThreeWeeks = ConsultationDurationAnswer.No,
+         ConsultationDurationNotMetReason = "Consultation ran for two weeks only",
+         Status = SignificantChangeTaskStatus.Completed
       };
 
       var viewModel = SignificantChangeProjectHelper.Build(response);
@@ -290,20 +184,8 @@ public class SignificantChangeProjectHelperTests
    [Fact]
    public void Build_Defaults_consultation_duration_when_section_is_missing()
    {
-      SignificantChangeProjectResponse response = new()
-      {
-         Id = 1,
-         Urn = 10000000,
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         ApplicationId = "ID_APP_123",
-         ApplicationReference = "APP_REF_123",
-         LocalAuthorityName = "Test local authority",
-         Status = "pre decision",
-         ConsultationDuration = null
-      };
+      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+      response.ConsultationDuration = null;
 
       var viewModel = SignificantChangeProjectHelper.Build(response);
 
@@ -315,25 +197,13 @@ public class SignificantChangeProjectHelperTests
    [Fact]
    public void Build_Maps_nested_funding_values()
    {
-      SignificantChangeProjectResponse response = new()
+      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+      response.Funding = new SignificantChangeFundingResponse
       {
-         Id = 1,
-         Urn = 10000000,
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         ApplicationId = "ID_APP_123",
-         ApplicationReference = "APP_REF_123",
-         Status = "pre decision",
-         Funding = new SignificantChangeFundingResponse
-         {
-            FundingAnswer = FundingAnswer.No,
-            AdditionalInformation = "Funding gap identified",
-            SupportingEvidence = "Board minutes link",
-            Status = SignificantChangeTaskStatus.Completed
-         },
-         LocalAuthorityName = "Test local authority"
+         FundingAnswer = FundingAnswer.No,
+         AdditionalInformation = "Funding gap identified",
+         SupportingEvidence = "Board minutes link",
+         Status = SignificantChangeTaskStatus.Completed
       };
 
       var viewModel = SignificantChangeProjectHelper.Build(response);
@@ -347,20 +217,8 @@ public class SignificantChangeProjectHelperTests
    [Fact]
    public void Build_Defaults_funding_when_section_is_missing()
    {
-      SignificantChangeProjectResponse response = new()
-      {
-         Id = 1,
-         Urn = 10000000,
-         Tier = 1,
-         TrustName = "Trust name",
-         TrustUkprn = "12345678",
-         TypeOfSignificantChange = "Route A",
-         ApplicationId = "ID_APP_123",
-         ApplicationReference = "APP_REF_123",
-         Status = "pre decision",
-         Funding = null,
-         LocalAuthorityName = "Test local authority"
-      };
+      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+         response.Funding = null;
 
       var viewModel = SignificantChangeProjectHelper.Build(response);
 
@@ -369,4 +227,49 @@ public class SignificantChangeProjectHelperTests
       Assert.Equal(string.Empty, viewModel.FundingSupportingEvidence);
       Assert.Equal(SignificantChangeTaskStatus.NotStarted, viewModel.FundingStatus);
    }
+
+   [Fact]
+   public void Build_Maps_nested_recommendation_values()
+   {
+      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+      response.Recommendation = new SignificantChangeRecommendationResponse
+      {
+         Recommendation = RecommendationOptions.Approve,
+         RecommendationMoreInformation = "Yes",
+         Status = SignificantChangeTaskStatus.Completed
+      };
+
+      var viewModel = SignificantChangeProjectHelper.Build(response);
+
+      Assert.Equal(RecommendationOptions.Approve, viewModel.Recommendation);
+      Assert.Equal("Yes", viewModel.RecommendationMoreInformation);
+      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.RecommendationStatus);
+   }
+
+   [Fact]
+   public void Build_Defaults_recommendation_when_section_is_missing()
+   {
+      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+      response.Recommendation = null;
+
+      var viewModel = SignificantChangeProjectHelper.Build(response);
+
+      Assert.Null(viewModel.Recommendation);
+      Assert.Equal(string.Empty, viewModel.RecommendationMoreInformation);
+      Assert.Equal(SignificantChangeTaskStatus.NotStarted, viewModel.RecommendationStatus);
+   }
+
+   private static SignificantChangeProjectResponse BuildSignificantChangeProjectResponse() => new()
+      {
+         Id = 1,
+         Urn = 10000000,
+         Tier = 1,
+         TrustName = "Trust name",
+         TrustUkprn = "12345678",
+         TypeOfSignificantChange = "Route A",
+         LocalAuthorityName = "Test local authority",
+         ApplicationId = "ID_APP_123",
+         ApplicationReference = "APP_REF_123",
+         Status = "pre decision"
+      };
 }

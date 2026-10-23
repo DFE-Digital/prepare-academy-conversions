@@ -13,6 +13,7 @@ public class SignificantChangeProjectResponse : SignificantChangeProjectSearchRe
    public SignificantChangeProjectDatesResponse ProjectDates { get; set; } = new();
    public SignificantChangeFundingResponse Funding { get; set; } = new();
    public SignificantChangePlanningPermissionResponse PlanningPermission { get; set; } = new();
+   public SignificantChangeRecommendationResponse Recommendation { get; set; } = new();
    public SignificantChangeHqtfConsiderationResponse HQTFConsideration { get; set; } = new();
    public SignificantChangeDecisions? Decision { get; set; }
    public DateTime? DecisionDate { get; set; }
