@@ -112,9 +112,7 @@ class SignificantChangeTaskList extends BasePage {
     }
 
     public openHqtfConsiderationTask(): this {
-        cy.contains('h3.app-task-list__section', 'High Quality Trust Framework')
-            .next('.app-task-list')
-            .click();
+        cy.contains('h3.app-task-list__section', 'High Quality Trust Framework').next('.app-task-list').click();
         return this;
     }
 }
