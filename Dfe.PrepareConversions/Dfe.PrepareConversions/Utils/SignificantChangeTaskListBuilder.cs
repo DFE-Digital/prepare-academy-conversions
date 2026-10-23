@@ -159,7 +159,14 @@ public static class SignificantChangeTaskListBuilder
          "high-quality-trust-framework",
          "High Quality Trust Framework",
          displayOrder,
-         []
+         [
+            new SignificantChangeTaskDefinition(
+               "hqtf-consideration",
+               "High Quality Trust Framework (HQTF) consideration",
+               1,
+               Links.SignificantChange.HqtfConsideration,
+               project => GetTaskStatus(project.HQTFConsiderationStatus))
+         ]
       );
    }
 

@@ -1,0 +1,74 @@
+@page "/significant-change/task-list/{id:int}/hqtf-consideration"
+@model Dfe.PrepareConversions.Pages.SignificantChange.TaskList.HqtfConsideration.IndexModel
+@using Dfe.PrepareConversions.Data.Models.SignificantChange
+@{
+   Layout = "_SignificantChangeTaskLayout";
+}
+
+@section BeforeMain
+{
+   <a asp-page="@Links.SignificantChange.SignificantChangeTaskList.Page" asp-route-id="@Model.Project.Id"
+      class="govuk-back-link">Back</a>
+}
+
+<div class="govuk-form-group">
+   <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            Have any issues or risks been identified with regards to the High Quality Trust Framework (HQTF) pillars?
+      </legend>
+      <p class="govuk-hint">
+         The High Quality Trust Framework (HQTF) pillars are High Quality and Inclusive Education, School Improvement, Workforce, Finance and Operations, Governance and Leadership
+      </p>
+      <inline-error for="@nameof(Model.HQTFConsiderationAnswer)" />
+
+      <div class="govuk-radios" data-module="govuk-radios">
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.HQTFConsiderationAnswer" class="govuk-radios__input"
+                   id="hqtf-consideration-yes" type="radio" value="@HqtfConsiderationAnswer.Yes"
+                   aria-controls="conditional-hqtf-consideration-yes"
+                   data-test="hqtf-consideration-yes" />
+            <label class="govuk-label govuk-radios__label" for="hqtf-consideration-yes">
+               Yes
+            </label>
+         </div>
+
+         <div class="govuk-radios__conditional" id="conditional-hqtf-consideration-yes">
+            <div class="govuk-form-group @ModelState.GetErrorStyleClass()">
+               <label class="govuk-label" for="AdditionalInformation">
+                  Use this area for additional information relating to mitigations, actions and further investigations.
+               </label>
+               <inline-error for="@nameof(Model.AdditionalInformation)" />
+               <textarea asp-for="@Model.AdditionalInformation"
+                         class="govuk-textarea @ModelState.GetTextAreaErrorStyles(nameof(Model.AdditionalInformation))"
+                         rows="5" data-test="hqtf-consideration-additional-information"></textarea>
+            </div>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.HQTFConsiderationAnswer" class="govuk-radios__input"
+                   id="hqtf-consideration-no" type="radio" value="@HqtfConsiderationAnswer.No"
+                   data-test="hqtf-consideration-no" />
+            <label class="govuk-label govuk-radios__label" for="hqtf-consideration-no">
+               No
+            </label>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input asp-for="@Model.HQTFConsiderationAnswer" class="govuk-radios__input"
+                   id="hqtf-consideration-not-applicable" type="radio" value="@HqtfConsiderationAnswer.NotApplicable"
+                   data-test="hqtf-consideration-not-applicable" />
+            <label class="govuk-label govuk-radios__label" for="hqtf-consideration-not-applicable">
+               Not applicable
+            </label>
+         </div>
+      </div>
+   </fieldset>
+</div>
+
+<div class="govuk-form-group">
+   <label class="govuk-label govuk-label--m" for="SupportingEvidence">
+      Supporting evidence
+   </label>
+   <input asp-for="@Model.SupportingEvidence" class="govuk-input" type="text"
+          data-test="hqtf-consideration-supporting-evidence" />
+</div>
