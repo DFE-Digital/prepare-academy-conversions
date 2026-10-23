@@ -61,5 +61,6 @@ public class PathFor
    public static string SetSignificantChangePlanningPermission => "/significant-change/{0}/SetPlanningPermission";
    public static string SetSignificantChangeRecommendation => "/significant-change/{0}/SetRecommendation";
    public static string SetSignificantChangeHqtfConsideration => "/significant-change/{0}/SetHQTFConsideration";
+   public static string SetSignificantChangeAdmissionsVariation => "/significant-change/{0}/SetAdmissionsVariation";
 
 }

@@ -259,6 +259,31 @@ public class SignificantChangeProjectHelperTests
       Assert.Equal(SignificantChangeTaskStatus.NotStarted, viewModel.RecommendationStatus);
    }
 
+      [Fact]
+   public void Build_Maps_nested_admissions_variation_values()
+   {
+      SignificantChangeProjectResponse response = BuildSignificantChangeProjectResponse();
+      response.AdmissionsVariation = new SignificantChangeAdmissionsVariationResponse
+         {
+            Status = SignificantChangeTaskStatus.Completed,
+            AdmissionsVariationRequired = true,
+            AdmissionsVariationSupportingEvidence = "Admission policy",
+            AdmissionsVariationLocalAuthoritySupportive = true,
+            AdmissionsVariationPupilPlacePlanningSupportive = false,
+            AdmissionsVariationAdmissionsTeamSupportive = true
+         };
+
+      var viewModel = SignificantChangeProjectListHelper.Build(response);
+
+      Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.AdmissionsVariationStatus);
+      Assert.True(viewModel.AdmissionsVariationRequired);
+      Assert.Equal("Admission policy", viewModel.AdmissionsVariationSupportingEvidence);
+      Assert.True(viewModel.AdmissionsVariationLocalAuthoritySupportive);
+      Assert.False(viewModel.AdmissionsVariationPupilPlacePlanningTeamSupportive);
+      Assert.True(viewModel.AdmissionsVariationAdmissionsTeamSupportive);
+   }
+
+
    private static SignificantChangeProjectResponse BuildSignificantChangeProjectResponse() => new()
       {
          Id = 1,

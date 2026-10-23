@@ -59,6 +59,14 @@ class SignificantChangeTaskList extends BasePage {
         return this;
     }
 
+    public openAdmissionsVariationDetailsTask(): this {
+        cy.contains('h3.app-task-list__section', 'Admissions variation')
+            .next('.app-task-list')
+            .contains('a', 'Admissions variation details')
+            .click();
+        return this;
+    }
+
     public openPlanningPermissionTask(): this {
         cy.contains('h3.app-task-list__section', 'Land transaction application and planning permission')
             .next('.app-task-list')
