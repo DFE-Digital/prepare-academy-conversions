@@ -102,6 +102,35 @@ public class ConfirmProjectDatesModelTests
    }
 
    [Fact]
+   public async Task OnPostAsync_WhenReturnToPreviewIsSet_ShouldSaveAndRedirectToPreview()
+   {
+      const int id = 408;
+      var proposedDecisionDate = new DateTime(2024, 12, 15);
+      var proposedChangeDate = new DateTime(2025, 01, 20);
+
+      Mock<ISignificantChangeProjectRepository> repository = new();
+      repository
+         .Setup(x => x.GetProjectById(id))
+         .ReturnsAsync(new ApiResponse<SignificantChangeProjectResponse>(HttpStatusCode.OK, BuildProject(id)));
+      repository
+         .Setup(x => x.SetProjectDates(id, It.IsAny<SetSignificantChangeProjectDatesCommand>()))
+         .Returns(Task.CompletedTask);
+
+      IndexModel sut = BuildModel(repository.Object);
+      sut.ReturnToPreview = true;
+      sut.ProposedDecisionDate = proposedDecisionDate;
+      sut.ProposedChangeDate = proposedChangeDate;
+
+      IActionResult result = await sut.OnPostAsync(id);
+
+      RedirectToPageResult redirect = Assert.IsType<RedirectToPageResult>(result);
+      redirect.PageName.Should().Be(Links.SignificantChangePreview.Index.Page);
+      redirect.RouteValues.Should().ContainKey("id").WhoseValue.Should().Be(id);
+
+      repository.Verify(x => x.SetProjectDates(id, It.IsAny<SetSignificantChangeProjectDatesCommand>()), Times.Once);
+   }
+
+   [Fact]
    public async Task OnPostAsync_WhenProposedDecisionDateIsMissing_ShouldSaveAndRedirect()
    {
       const int id = 404;
