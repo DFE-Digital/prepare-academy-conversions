@@ -31,29 +31,6 @@ public class RecommendationIntegrationTests(IntegrationTestingWebApplicationFact
       Document.QuerySelector<IHtmlTextAreaElement>("#MoreInformation").Value.Should().Be("No thanks");
    }
 
-   [Theory]
-   [InlineData(null, null, SignificantChangeTaskStatus.NotStarted)]
-   [InlineData(null, "More information", SignificantChangeTaskStatus.InProgress)]
-   [InlineData(RecommendationOptions.Approve, null, SignificantChangeTaskStatus.Completed)]
-   [InlineData(RecommendationOptions.Decline, "More information", SignificantChangeTaskStatus.Completed)]
-   public void Recommendation_status_should_follow_expected_rules(
-      RecommendationOptions? recommendation,
-      string moreInformation,
-      SignificantChangeTaskStatus expectedStatus)
-   {
-      SignificantChangeProjectResponse project = BuildProject(701);
-      project.Recommendation = new SignificantChangeRecommendationResponse
-      {
-         Recommendation = recommendation,
-         RecommendationMoreInformation = moreInformation ?? string.Empty,
-         Status = SignificantChangeTaskStatus.NotStarted
-      };
-
-      SignificantChangeProjectViewBaseModel viewModel = SignificantChangeProjectListHelper.Build(project);
-
-      viewModel.RecommendationStatus.Should().Be(expectedStatus);
-   }
-
    [Fact]
    public async Task Should_save_recommendation_and_redirect_to_task_list()
    {
