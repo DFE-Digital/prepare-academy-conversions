@@ -12,7 +12,7 @@ NOTE: remember to update unreleased link when making a new release
 ---
 ## [1.31.0][1.31.0] - 2026-10-26
 ### Added
-- [296559](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_boards/board/t/Significant%20changes/Stories?workitem=296559) - Add religious body consultation task for significant change
+- [296559](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/296559) - Add religious body consultation task for significant change
 - [296556](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/296556) - Add Task - Consultation duration
 - [305712](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/305712) - Add Task - Public-Sector-Equality-Duty
 - [298244](https://dfe-gov-uk.visualstudio.com/Academies-and-Free-Schools-SIP/_workitems/edit/298244) - FHA - add additional mandatory items
