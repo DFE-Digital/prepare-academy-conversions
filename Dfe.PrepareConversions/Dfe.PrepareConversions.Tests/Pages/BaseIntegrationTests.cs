@@ -60,6 +60,12 @@ public abstract partial class BaseIntegrationTests : IClassFixture<IntegrationTe
       Document.Url.Should().Be(BuildRequestAddress(expectedPath ?? path), because ?? "navigation should be successful");
       return resultDocument;
    }
+   protected async Task<IDocument> OpenPathAsync(string path, string expectedPath = null, string because = null)
+   {
+      var resultDocument = await Context.OpenAsync(BuildRequestAddress(path));
+
+      return resultDocument;
+   }
 
    protected void VerifyElementDoesNotExist(string dataTest)
    {
