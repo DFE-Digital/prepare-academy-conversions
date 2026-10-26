@@ -17,10 +17,8 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
    [BindProperty]
    public AdmissionsVariationRecommendationAnswer? AdmissionsVariationRecommendationAnswer { get; set; }
 
-   [BindProperty]
-   public string FurtherInformation { get; set; }
 
-   protected override string TaskTitle => "Recommendation";
+   protected override string TaskTitle => "Admissions variation recommendation";
 
    public IEnumerable<AdmissionsVariationRecommendationAnswer> RecommendationOptions =>
       Enum.GetValues(typeof(AdmissionsVariationRecommendationAnswer))
@@ -36,7 +34,6 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
       }
 
       AdmissionsVariationRecommendationAnswer = Project.AdmissionsVariationRecommendationAnswer;
-      FurtherInformation = Project.AdmissionsVariationRecommendationFurtherInformation;
 
       return Page();
    }
@@ -59,7 +56,7 @@ public class IndexModel(ISignificantChangeProjectRepository repository, ErrorSer
          return Page();
       }
 
-      SetAdmissionsVariationRecommendationCommand command = new(AdmissionsVariationRecommendationAnswer!.Value, FurtherInformation);
+      SetAdmissionsVariationRecommendationCommand command = new(AdmissionsVariationRecommendationAnswer!.Value);
 
       await _repository.SetAdmissionsVariationRecommendation(id, command);
 

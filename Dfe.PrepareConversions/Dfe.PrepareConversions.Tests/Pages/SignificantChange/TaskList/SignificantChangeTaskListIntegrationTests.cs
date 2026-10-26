@@ -140,7 +140,7 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
       fundingStatusTag.TextContent.Should().Contain("Not started");
 
       var recommendationLink = Document.QuerySelectorAll("a")
-         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Recommendation"));
+         .SingleOrDefault(a => a.TextContent != null && a.TextContent.Contains("Admission Variation recommendation"));
 
       recommendationLink.Should().NotBeNull();
       recommendationLink!.GetAttribute("href").Should().Contain($"/significant-change/task-list/{project.Id}/admissions-variation-recommendation");
@@ -246,8 +246,7 @@ public class SignificantChangeTaskListIntegrationTests(IntegrationTestingWebAppl
          AdmissionsVariationRecommendation = new SignificantChangeAdmissionsVariationRecommendationResponse
          {
             Status = admissionsVariationRecommendationStatus,
-            AdmissionsVariationRecommendationAnswer = AdmissionsVariationRecommendationAnswer.Approve,
-            FurtherInformation = "Approved subject to conditions"
+            AdmissionsVariationRecommendationAnswer = AdmissionsVariationRecommendationAnswer.Approve
          }
       };
    }

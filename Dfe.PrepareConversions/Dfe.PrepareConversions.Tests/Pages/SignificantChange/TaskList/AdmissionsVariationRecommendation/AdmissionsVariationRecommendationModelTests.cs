@@ -26,8 +26,7 @@ public class AdmissionsVariationRecommendationModelTests
    {
       const int id = 811;
       SignificantChangeProjectResponse project = BuildProject(id);
-      project.AdmissionsVariationRecommendation.AdmissionsVariationRecommendationAnswer = AdmissionsVariationRecommendationAnswer.Defer;
-      project.AdmissionsVariationRecommendation.FurtherInformation = "Awaiting trust response";
+      project.AdmissionsVariationRecommendation.AdmissionsVariationRecommendationAnswer = AdmissionsVariationRecommendationAnswer.Approve;
 
       Mock<ISignificantChangeProjectRepository> repository = BuildRepository(id, project);
 
@@ -36,8 +35,7 @@ public class AdmissionsVariationRecommendationModelTests
       IActionResult result = await sut.OnGetAsync(id);
 
       result.Should().BeOfType<PageResult>();
-      sut.AdmissionsVariationRecommendationAnswer.Should().Be(AdmissionsVariationRecommendationAnswer.Defer);
-      sut.FurtherInformation.Should().Be("Awaiting trust response");
+      sut.AdmissionsVariationRecommendationAnswer.Should().Be(AdmissionsVariationRecommendationAnswer.Approve);
       repository.Verify(x => x.GetProjectById(id), Times.Once);
    }
 
@@ -53,7 +51,6 @@ public class AdmissionsVariationRecommendationModelTests
 
       IndexModel sut = BuildModel(repository.Object);
       sut.AdmissionsVariationRecommendationAnswer = AdmissionsVariationRecommendationAnswer.Approve;
-      sut.FurtherInformation = "Subject to funding confirmation";
 
       IActionResult result = await sut.OnPostAsync(id);
 
@@ -64,8 +61,7 @@ public class AdmissionsVariationRecommendationModelTests
       repository.Verify(x => x.SetAdmissionsVariationRecommendation(
          id,
          It.Is<SetAdmissionsVariationRecommendationCommand>(command =>
-            command.RecommendationAnswer == AdmissionsVariationRecommendationAnswer.Approve
-            && command.FurtherInformation == "Subject to funding confirmation")), Times.Once);
+            command.RecommendationAnswer == AdmissionsVariationRecommendationAnswer.Approve)), Times.Once);
    }
 
    [Fact]

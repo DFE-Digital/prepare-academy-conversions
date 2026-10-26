@@ -17,17 +17,14 @@ public class AdmissionsVariationRecommendationIntegrationTests(IntegrationTestin
    {
       SignificantChangeProjectResponse project = BuildProject(id: 821);
       project.AdmissionsVariationRecommendation.AdmissionsVariationRecommendationAnswer = AdmissionsVariationRecommendationAnswer.Decline;
-      project.AdmissionsVariationRecommendation.FurtherInformation = "Does not meet criteria";
 
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-recommendation");
 
-      Document.QuerySelector<IHtmlHeadingElement>("h1")!.TextContent.Trim().Should().Be("Recommendation");
-      Document.Body!.TextContent.Should().Contain("Enter a recommendation for this significant change.");
+      Document.QuerySelector<IHtmlHeadingElement>("h1")!.TextContent.Trim().Should().Be("Admissions variation recommendation");
+      Document.Body!.TextContent.Should().Contain("Enter a recommendation for this admissions variation.");
       Document.QuerySelector<IHtmlInputElement>("#admissions-variation-recommendation-decline")!.IsChecked.Should().BeTrue();
-      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='admissions-variation-recommendation-further-information']")!.Value
-         .Should().Be("Does not meet criteria");
    }
 
    [Fact]
@@ -38,7 +35,7 @@ public class AdmissionsVariationRecommendationIntegrationTests(IntegrationTestin
 
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.AdmissionsVariationRecommendation, project.Id),
-         new SetAdmissionsVariationRecommendationCommand(AdmissionsVariationRecommendationAnswer.Approve, null),
+         new SetAdmissionsVariationRecommendationCommand(AdmissionsVariationRecommendationAnswer.Approve),
          new object());
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-recommendation");
@@ -50,22 +47,20 @@ public class AdmissionsVariationRecommendationIntegrationTests(IntegrationTestin
    }
 
    [Fact]
-   public async Task Should_save_recommendation_with_further_information()
+   public async Task Should_save_recommendation()
    {
       SignificantChangeProjectResponse project = BuildProject(id: 823);
       _factory.AddGetWithJsonResponse(string.Format(PathFor.GetSignificantChangeProjectById, project.Id), project);
 
-      const string furtherInformation = "Subject to board approval";
       _factory.AddPutWithJsonRequest(
          string.Format(PathFor.AdmissionsVariationRecommendation, project.Id),
-         new SetAdmissionsVariationRecommendationCommand(AdmissionsVariationRecommendationAnswer.Defer, furtherInformation),
+         new SetAdmissionsVariationRecommendationCommand(AdmissionsVariationRecommendationAnswer.Approve),
          new object());
 
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-recommendation");
 
-      Document.QuerySelector<IHtmlInputElement>("#admissions-variation-recommendation-defer")!.IsChecked = true;
-      Document.QuerySelector<IHtmlTextAreaElement>("[data-test='admissions-variation-recommendation-further-information']")!.Value = furtherInformation;
-      await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
+      Document.QuerySelector<IHtmlInputElement>("#admissions-variation-recommendation-approve")!.IsChecked = true;
+     await Document.QuerySelector<IHtmlFormElement>("form")!.SubmitAsync();
 
       Document.Url.Should().EndWith($"significant-change/task-list/{project.Id}");
    }
@@ -79,7 +74,6 @@ public class AdmissionsVariationRecommendationIntegrationTests(IntegrationTestin
       await OpenAndConfirmPathAsync($"/significant-change/task-list/{project.Id}/admissions-variation-recommendation");
 
       Document.QuerySelector<IHtmlInputElement>("#admissions-variation-recommendation-approve").Should().NotBeNull();
-      Document.QuerySelector<IHtmlInputElement>("#admissions-variation-recommendation-defer").Should().NotBeNull();
       Document.QuerySelector<IHtmlInputElement>("#admissions-variation-recommendation-decline").Should().NotBeNull();
       Document.QuerySelector<IHtmlInputElement>("#admissions-variation-recommendation-notapplicable").Should().NotBeNull();
    }

@@ -379,7 +379,6 @@ public class SignificantChangeProjectListHelperTests
          AdmissionsVariationRecommendation = new SignificantChangeAdmissionsVariationRecommendationResponse
          {
             AdmissionsVariationRecommendationAnswer = AdmissionsVariationRecommendationAnswer.NotApplicable,
-            FurtherInformation = "No admission variation required",
             Status = SignificantChangeTaskStatus.Completed
          },
          LocalAuthorityName = "Test local authority"
@@ -388,7 +387,6 @@ public class SignificantChangeProjectListHelperTests
       var viewModel = SignificantChangeProjectListHelper.Build(response);
 
       Assert.Equal(AdmissionsVariationRecommendationAnswer.NotApplicable, viewModel.AdmissionsVariationRecommendationAnswer);
-      Assert.Equal("No admission variation required", viewModel.AdmissionsVariationRecommendationFurtherInformation);
       Assert.Equal(SignificantChangeTaskStatus.Completed, viewModel.AdmissionsVariationRecommendationStatus);
    }
 
@@ -413,7 +411,6 @@ public class SignificantChangeProjectListHelperTests
       var viewModel = SignificantChangeProjectListHelper.Build(response);
 
       Assert.Null(viewModel.AdmissionsVariationRecommendationAnswer);
-      Assert.Equal(string.Empty, viewModel.AdmissionsVariationRecommendationFurtherInformation);
       Assert.Equal(SignificantChangeTaskStatus.NotStarted, viewModel.AdmissionsVariationRecommendationStatus);
    }
 

@@ -52,8 +52,7 @@ public static class SignificantChangeProjectListHelper
          PlanningPermissionAdditionalInformation = significantChangeProject.PlanningPermission?.AdditionalInformation ?? string.Empty,
          PlanningPermissionSupportingEvidence = significantChangeProject.PlanningPermission?.SupportingEvidence ?? string.Empty,
          AdmissionsVariationRecommendationStatus = significantChangeProject.AdmissionsVariationRecommendation?.Status ?? SignificantChangeTaskStatus.NotStarted,
-         AdmissionsVariationRecommendationAnswer = significantChangeProject.AdmissionsVariationRecommendation?.AdmissionsVariationRecommendationAnswer,
-         AdmissionsVariationRecommendationFurtherInformation = significantChangeProject.AdmissionsVariationRecommendation?.FurtherInformation ?? string.Empty
+         AdmissionsVariationRecommendationAnswer = significantChangeProject.AdmissionsVariationRecommendation?.AdmissionsVariationRecommendationAnswer
       };
    }
 
